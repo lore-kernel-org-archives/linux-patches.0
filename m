@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B3D25FA13;
-	Tue,  8 Apr 2025 11:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591F6227EBD;
+	Tue,  8 Apr 2025 11:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112548; cv=none; b=AVbv44NKmpYE6EkOBbqoZSxQt1D+R7N687bwIxIBnUJl1yKJVmiqMlFZSDMFhYiAMAVpJjxueWeywEQmoYkNvvx1WSdVHfqzSWg0pXbxary+ZxYkMnPY9Fq2CCMAdhz0FBXLBfGYCT5phjtVr8+vqo4TvB22Wnjgzh4jiHC1szc=
+	t=1744112551; cv=none; b=i3da9fyPkk8HZWFGfLEMRxAmey/z7B068wWQLmLJADzoaRmUIffObcam3pBOi8A0t+wuH90fxOHOt9bk/tovX/3H52IMRlMluhajed7wlWDMoT9oOpVzi3J12nBr6QtiTPTHY6ha8JOrgBtty2ZCvVlTwGj0qxsaSsB8RopA27E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112548; c=relaxed/simple;
-	bh=G8k57NmaKyqNhuPv/HZNJMu4cCJdjTC/nEVrtrquU8I=;
+	s=arc-20240116; t=1744112551; c=relaxed/simple;
+	bh=0jv8bcja8u+r1HEjUX9WvubmSHRbRk3332QpzddFa68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vx8Jc9rXHMkatM3CpAX2SvmwcgTGGYn7kUu9zC1EKZuVrAX2qsByPhtJd4m/OeP6fZikFIvSzUv1r3AgQM3kLD8RrzM+kCnzaj+VvcgVx2FgMoiyW7ViHmKDE5XXIMVW5k5TuLrXfd2gtfd5om8dblMEfWRXXKE32xd1Zu4odHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCx1m3KF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knCtpl1G4qwx6in1CcYOJBCe0xBPA1TSlITGSaS07ZmsYuTIwWVHnCjR8Bys8A3JKIWGDjlrsg7QbeVnzqIR1T0Coxo6MDfl3Voot1IxJwOpDX45aKaQ8IrWhrNfzV4/pvaj+qJS3aokxX2YrYXvHQebWinTI1TiydZOv9ZFtsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwQ/zOll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCx1m3KF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31356C4CEE5;
-	Tue,  8 Apr 2025 11:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwQ/zOll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F7DC4CEE5;
+	Tue,  8 Apr 2025 11:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112548;
-	bh=G8k57NmaKyqNhuPv/HZNJMu4cCJdjTC/nEVrtrquU8I=;
+	s=korg; t=1744112551;
+	bh=0jv8bcja8u+r1HEjUX9WvubmSHRbRk3332QpzddFa68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCx1m3KFrjgOwFKLVtDnZQPTJzDkvJi2pf7HYNUMdHE/5DGVHztTMzyB4Pv+2Ta9m
-	 LgYLSiEVwGYafpZDqvBluvZjqx9NvcD/RHE2JT/LIqWAne0WvXniob/J95H4ns5swL
-	 m/CsCUi0U73PwyS8IwlbCqXi+Xi2OmpoSFQqEESQ=
+	b=pwQ/zOll1aWE5Gf6t1SQYeKyB0Q/rwV6/h8NWnRWIPl5hyWC4EkznyHqtFo3MAo4m
+	 o5gI83sD08AQJppN9kK1dGDfSVv8YrJ11l1EWvMCBA+LVL3x36cEusnRILWQGKvLC2
+	 C/eFmho16EaSlFiHdimkONaAy1ACzGDKqZAvrxu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Kiran K <kiran.k@intel.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Bin Lan <bin.lan.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 108/279] Bluetooth: hci_event: Align BR/EDR JUST_WORKS paring with LE
-Date: Tue,  8 Apr 2025 12:48:11 +0200
-Message-ID: <20250408104829.259431921@linuxfoundation.org>
+Subject: [PATCH 5.15 109/279] bpf, sockmap: Fix race between element replace and close()
+Date: Tue,  8 Apr 2025 12:48:12 +0200
+Message-ID: <20250408104829.287385541@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,54 +53,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit b25e11f978b63cb7857890edb3a698599cddb10e upstream.
+commit ed1fc5d76b81a4d681211333c026202cad4d5649 upstream.
 
-This aligned BR/EDR JUST_WORKS method with LE which since 92516cd97fd4
-("Bluetooth: Always request for user confirmation for Just Works")
-always request user confirmation with confirm_hint set since the
-likes of bluetoothd have dedicated policy around JUST_WORKS method
-(e.g. main.conf:JustWorksRepairing).
+Element replace (with a socket different from the one stored) may race
+with socket's close() link popping & unlinking. __sock_map_delete()
+unconditionally unrefs the (wrong) element:
 
-CVE: CVE-2024-8805
-Cc: stable@vger.kernel.org
-Fixes: ba15a58b179e ("Bluetooth: Fix SSP acceptor just-works confirmation without MITM")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Kiran K <kiran.k@intel.com>
+// set map[0] = s0
+map_update_elem(map, 0, s0)
+
+// drop fd of s0
+close(s0)
+  sock_map_close()
+    lock_sock(sk)               (s0!)
+    sock_map_remove_links(sk)
+      link = sk_psock_link_pop()
+      sock_map_unlink(sk, link)
+        sock_map_delete_from_link
+                                        // replace map[0] with s1
+                                        map_update_elem(map, 0, s1)
+                                          sock_map_update_elem
+                                (s1!)       lock_sock(sk)
+                                            sock_map_update_common
+                                              psock = sk_psock(sk)
+                                              spin_lock(&stab->lock)
+                                              osk = stab->sks[idx]
+                                              sock_map_add_link(..., &stab->sks[idx])
+                                              sock_map_unref(osk, &stab->sks[idx])
+                                                psock = sk_psock(osk)
+                                                sk_psock_put(sk, psock)
+                                                  if (refcount_dec_and_test(&psock))
+                                                    sk_psock_drop(sk, psock)
+                                              spin_unlock(&stab->lock)
+                                            unlock_sock(sk)
+          __sock_map_delete
+            spin_lock(&stab->lock)
+            sk = *psk                        // s1 replaced s0; sk == s1
+            if (!sk_test || sk_test == sk)   // sk_test (s0) != sk (s1); no branch
+              sk = xchg(psk, NULL)
+            if (sk)
+              sock_map_unref(sk, psk)        // unref s1; sks[idx] will dangle
+                psock = sk_psock(sk)
+                sk_psock_put(sk, psock)
+                  if (refcount_dec_and_test())
+                    sk_psock_drop(sk, psock)
+            spin_unlock(&stab->lock)
+    release_sock(sk)
+
+Then close(map) enqueues bpf_map_free_deferred, which finally calls
+sock_map_free(). This results in some refcount_t warnings along with
+a KASAN splat [1].
+
+Fix __sock_map_delete(), do not allow sock_map_unref() on elements that
+may have been replaced.
+
+[1]:
+BUG: KASAN: slab-use-after-free in sock_map_free+0x10e/0x330
+Write of size 4 at addr ffff88811f5b9100 by task kworker/u64:12/1063
+
+CPU: 14 UID: 0 PID: 1063 Comm: kworker/u64:12 Not tainted 6.12.0+ #125
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+Workqueue: events_unbound bpf_map_free_deferred
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x68/0x90
+ print_report+0x174/0x4f6
+ kasan_report+0xb9/0x190
+ kasan_check_range+0x10f/0x1e0
+ sock_map_free+0x10e/0x330
+ bpf_map_free_deferred+0x173/0x320
+ process_one_work+0x846/0x1420
+ worker_thread+0x5b3/0xf80
+ kthread+0x29e/0x360
+ ret_from_fork+0x2d/0x70
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 1202:
+ kasan_save_stack+0x1e/0x40
+ kasan_save_track+0x10/0x30
+ __kasan_slab_alloc+0x85/0x90
+ kmem_cache_alloc_noprof+0x131/0x450
+ sk_prot_alloc+0x5b/0x220
+ sk_alloc+0x2c/0x870
+ unix_create1+0x88/0x8a0
+ unix_create+0xc5/0x180
+ __sock_create+0x241/0x650
+ __sys_socketpair+0x1ce/0x420
+ __x64_sys_socketpair+0x92/0x100
+ do_syscall_64+0x93/0x180
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Freed by task 46:
+ kasan_save_stack+0x1e/0x40
+ kasan_save_track+0x10/0x30
+ kasan_save_free_info+0x37/0x60
+ __kasan_slab_free+0x4b/0x70
+ kmem_cache_free+0x1a1/0x590
+ __sk_destruct+0x388/0x5a0
+ sk_psock_destroy+0x73e/0xa50
+ process_one_work+0x846/0x1420
+ worker_thread+0x5b3/0xf80
+ kthread+0x29e/0x360
+ ret_from_fork+0x2d/0x70
+ ret_from_fork_asm+0x1a/0x30
+
+The buggy address belongs to the object at ffff88811f5b9080
+ which belongs to the cache UNIX-STREAM of size 1984
+The buggy address is located 128 bytes inside of
+ freed 1984-byte region [ffff88811f5b9080, ffff88811f5b9840)
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11f5b8
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+memcg:ffff888127d49401
+flags: 0x17ffffc0000040(head|node=0|zone=2|lastcpupid=0x1fffff)
+page_type: f5(slab)
+raw: 0017ffffc0000040 ffff8881042e4500 dead000000000122 0000000000000000
+raw: 0000000000000000 00000000800f000f 00000001f5000000 ffff888127d49401
+head: 0017ffffc0000040 ffff8881042e4500 dead000000000122 0000000000000000
+head: 0000000000000000 00000000800f000f 00000001f5000000 ffff888127d49401
+head: 0017ffffc0000003 ffffea00047d6e01 ffffffffffffffff 0000000000000000
+head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88811f5b9000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88811f5b9080: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                   ^
+ ffff88811f5b9180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88811f5b9200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+Disabling lock debugging due to kernel taint
+
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 14 PID: 1063 at lib/refcount.c:25 refcount_warn_saturate+0xce/0x150
+CPU: 14 UID: 0 PID: 1063 Comm: kworker/u64:12 Tainted: G    B              6.12.0+ #125
+Tainted: [B]=BAD_PAGE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+Workqueue: events_unbound bpf_map_free_deferred
+RIP: 0010:refcount_warn_saturate+0xce/0x150
+Code: 34 73 eb 03 01 e8 82 53 ad fe 0f 0b eb b1 80 3d 27 73 eb 03 00 75 a8 48 c7 c7 80 bd 95 84 c6 05 17 73 eb 03 01 e8 62 53 ad fe <0f> 0b eb 91 80 3d 06 73 eb 03 00 75 88 48 c7 c7 e0 bd 95 84 c6 05
+RSP: 0018:ffff88815c49fc70 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff88811f5b9100 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: 0000000000000002 R08: 0000000000000001 R09: ffffed10bcde6349
+R10: ffff8885e6f31a4b R11: 0000000000000000 R12: ffff88813be0b000
+R13: ffff88811f5b9100 R14: ffff88811f5b9080 R15: ffff88813be0b024
+FS:  0000000000000000(0000) GS:ffff8885e6f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055dda99b0250 CR3: 000000015dbac000 CR4: 0000000000752ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn.cold+0x5f/0x1ff
+ ? refcount_warn_saturate+0xce/0x150
+ ? report_bug+0x1ec/0x390
+ ? handle_bug+0x58/0x90
+ ? exc_invalid_op+0x13/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? refcount_warn_saturate+0xce/0x150
+ sock_map_free+0x2e5/0x330
+ bpf_map_free_deferred+0x173/0x320
+ process_one_work+0x846/0x1420
+ worker_thread+0x5b3/0xf80
+ kthread+0x29e/0x360
+ ret_from_fork+0x2d/0x70
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+irq event stamp: 10741
+hardirqs last  enabled at (10741): [<ffffffff84400ec6>] asm_sysvec_apic_timer_interrupt+0x16/0x20
+hardirqs last disabled at (10740): [<ffffffff811e532d>] handle_softirqs+0x60d/0x770
+softirqs last  enabled at (10506): [<ffffffff811e55a9>] __irq_exit_rcu+0x109/0x210
+softirqs last disabled at (10301): [<ffffffff811e55a9>] __irq_exit_rcu+0x109/0x210
+
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 14 PID: 1063 at lib/refcount.c:28 refcount_warn_saturate+0xee/0x150
+CPU: 14 UID: 0 PID: 1063 Comm: kworker/u64:12 Tainted: G    B   W          6.12.0+ #125
+Tainted: [B]=BAD_PAGE, [W]=WARN
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+Workqueue: events_unbound bpf_map_free_deferred
+RIP: 0010:refcount_warn_saturate+0xee/0x150
+Code: 17 73 eb 03 01 e8 62 53 ad fe 0f 0b eb 91 80 3d 06 73 eb 03 00 75 88 48 c7 c7 e0 bd 95 84 c6 05 f6 72 eb 03 01 e8 42 53 ad fe <0f> 0b e9 6e ff ff ff 80 3d e6 72 eb 03 00 0f 85 61 ff ff ff 48 c7
+RSP: 0018:ffff88815c49fc70 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff88811f5b9100 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: 0000000000000003 R08: 0000000000000001 R09: ffffed10bcde6349
+R10: ffff8885e6f31a4b R11: 0000000000000000 R12: ffff88813be0b000
+R13: ffff88811f5b9100 R14: ffff88811f5b9080 R15: ffff88813be0b024
+FS:  0000000000000000(0000) GS:ffff8885e6f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055dda99b0250 CR3: 000000015dbac000 CR4: 0000000000752ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn.cold+0x5f/0x1ff
+ ? refcount_warn_saturate+0xee/0x150
+ ? report_bug+0x1ec/0x390
+ ? handle_bug+0x58/0x90
+ ? exc_invalid_op+0x13/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? refcount_warn_saturate+0xee/0x150
+ sock_map_free+0x2d3/0x330
+ bpf_map_free_deferred+0x173/0x320
+ process_one_work+0x846/0x1420
+ worker_thread+0x5b3/0xf80
+ kthread+0x29e/0x360
+ ret_from_fork+0x2d/0x70
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+irq event stamp: 10741
+hardirqs last  enabled at (10741): [<ffffffff84400ec6>] asm_sysvec_apic_timer_interrupt+0x16/0x20
+hardirqs last disabled at (10740): [<ffffffff811e532d>] handle_softirqs+0x60d/0x770
+softirqs last  enabled at (10506): [<ffffffff811e55a9>] __irq_exit_rcu+0x109/0x210
+softirqs last disabled at (10301): [<ffffffff811e55a9>] __irq_exit_rcu+0x109/0x210
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241202-sockmap-replace-v1-3-1e88579e7bd5@rbox.co
 Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ net/core/sock_map.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4859,19 +4859,16 @@ static void hci_user_confirm_request_evt
- 		goto unlock;
- 	}
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -411,15 +411,14 @@ static void *sock_map_lookup_sys(struct
+ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ 			     struct sock **psk)
+ {
+-	struct sock *sk;
++	struct sock *sk = NULL;
+ 	int err = 0;
  
--	/* If no side requires MITM protection; auto-accept */
-+	/* If no side requires MITM protection; use JUST_CFM method */
- 	if ((!loc_mitm || conn->remote_cap == HCI_IO_NO_INPUT_OUTPUT) &&
- 	    (!rem_mitm || conn->io_capability == HCI_IO_NO_INPUT_OUTPUT)) {
+ 	if (irqs_disabled())
+ 		return -EOPNOTSUPP; /* locks here are hardirq-unsafe */
  
--		/* If we're not the initiators request authorization to
--		 * proceed from user space (mgmt_user_confirm with
--		 * confirm_hint set to 1). The exception is if neither
--		 * side had MITM or if the local IO capability is
--		 * NoInputNoOutput, in which case we do auto-accept
-+		/* If we're not the initiator of request authorization and the
-+		 * local IO capability is not NoInputNoOutput, use JUST_WORKS
-+		 * method (mgmt_user_confirm with confirm_hint set to 1).
- 		 */
- 		if (!test_bit(HCI_CONN_AUTH_PEND, &conn->flags) &&
--		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT &&
--		    (loc_mitm || rem_mitm)) {
-+		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT) {
- 			BT_DBG("Confirming auto-accept as acceptor");
- 			confirm_hint = 1;
- 			goto confirm;
+ 	raw_spin_lock_bh(&stab->lock);
+-	sk = *psk;
+-	if (!sk_test || sk_test == sk)
++	if (!sk_test || sk_test == *psk)
+ 		sk = xchg(psk, NULL);
+ 
+ 	if (likely(sk))
 
 
