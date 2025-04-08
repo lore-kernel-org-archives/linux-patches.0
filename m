@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40FC26B957;
-	Tue,  8 Apr 2025 12:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B98E26656B;
+	Tue,  8 Apr 2025 12:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114754; cv=none; b=kzjMT/Qvp98h9lRaVDbuhPFkuAGiY/ZahRpcDNYiC95yth5t0MOTaFmtOCXILtKzHaTNITd7VLDaf1htVkJHO/1bdbp/mlBQe3XuotD21Qws2wPmF76nokXg4y7bkpFCJ04GqWFsNavs2N3LGAuGmaN6xSSNCSIDzfvDsuljjic=
+	t=1744114757; cv=none; b=k91X6T4IdgxJIj/B79Lb0AT0CtGe/+287PWU+OY5vlR6AK9DP0MMuOuxBblbqe0bwi8l1Dz/nZXsZe9k3ot6pyT5UbmJJHG1FI4hDv4iAhUBHXXKyiN3TyYQkzUu/Kwv6DRd+QnCYob3/wLob/lGulBd4O1B5ssqNgh6oVB/XK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114754; c=relaxed/simple;
-	bh=ag20USvnRthSAJlBon1sdTCNEBS9ovt8WjNKVMszi0Q=;
+	s=arc-20240116; t=1744114757; c=relaxed/simple;
+	bh=6fdUp93M//cC/BQ4PMNLv+zHqczR3cibRxNAwvQ4P3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMcUjJB15rnUoaX1g69I8/w/GOZ6mI2rHdPqMCA3Ox8gdW/MdoEKHAjmLkv+OENmzTCtn12s8FS54Bb/ZZE2NhqVl2QoBdp8YghNfaHInOnVOBwebfBcRL0sEV8gdsH3EGZYodldfdpCVSSGwvw6zvgqk2HmAj49yeJHt2F2DS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5uPsk++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RB8T4ErjIz0Ack+Yt3LE/X/2ZrfYhibHurTBlxINcr7LBaR0dXAENfEFvlEZK2vxgZwpKgaY8i9kd3vXjjAyiTSiGyOkjdJawk4VaiofjDCrgkIBHJapT0zy/MUl9yRLfzsszR232pVVnq00OrnlAYXIuLlClNdURNItHXgBB70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKt7Q58z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5uPsk++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276AFC4CEE5;
-	Tue,  8 Apr 2025 12:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKt7Q58z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA37C4CEE5;
+	Tue,  8 Apr 2025 12:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114754;
-	bh=ag20USvnRthSAJlBon1sdTCNEBS9ovt8WjNKVMszi0Q=;
+	s=korg; t=1744114757;
+	bh=6fdUp93M//cC/BQ4PMNLv+zHqczR3cibRxNAwvQ4P3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5uPsk++6XDZI0hYS/gY87AMiOQvAHSrvrL48Fe6kMt1lJlLBOnWj/AehnmIR2Fn8
-	 F5WtoXxC8M0SKkMWP+RiPe8kKqk+4QYbmGuzxiU8FXdlAkrSsKTfrE0QhooiM8khre
-	 1kVc159hxrIZFDmUWe67WWb24NHRHvomLTzcgTIg=
+	b=hKt7Q58zBjDp0ZMfXA5eb+ZlMF9Lh0rMVL5hFDZ198T+7SJ2rDeEnx9YN5yo+yDXT
+	 8sepPo8rmLVFtMge03xLsIjDg5fiYp942gAfeiXlLWKi+twhUSlkVtCs4+Gb/e6yQn
+	 PqmLRbSbMgiQLFYS5jVCjVJLgQN6M5u2e/PxUqic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 224/499] perf arm-spe: Fix load-store operation checking
-Date: Tue,  8 Apr 2025 12:47:16 +0200
-Message-ID: <20250408104856.796959550@linuxfoundation.org>
+Subject: [PATCH 6.13 225/499] perf bench: Fix perf bench syscall loop count
+Date: Tue,  8 Apr 2025 12:47:17 +0200
+Message-ID: <20250408104856.821628958@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,62 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit e1d47850bbf79a541c9b3bacdd562f5e0112274d ]
+[ Upstream commit 957d194163bf983da98bf7ec7e4f86caff8cd0eb ]
 
-The ARM_SPE_OP_LD and ARM_SPE_OP_ST operations are secondary operation
-type, they are overlapping with other second level's operation types
-belonging to SVE and branch operations.  As a result, a non load-store
-operation can be parsed for data source and memory sample.
+Command 'perf bench syscall fork -l 100000' offers option -l to run for
+a specified number of iterations. However this option is not always
+observed. The number is silently limited to 10000 iterations as can be
+seen:
 
-To fix the issue, this commit introduces a is_ldst_op() macro for
-checking LDST operation, and apply the checking when synthesize data
-source and memory samples.
+Output before:
+ # perf bench syscall fork -l 100000
+ # Running 'syscall/fork' benchmark:
+ # Executed 10,000 fork() calls
+     Total time: 23.388 [sec]
 
-Fixes: a89dbc9b988f ("perf arm-spe: Set sample's data source field")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250304111240.3378214-7-leo.yan@arm.com
+    2338.809800 usecs/op
+            427 ops/sec
+ #
+
+When explicitly specified with option -l or --loops, also observe
+higher number of iterations:
+
+Output after:
+ # perf bench syscall fork -l 100000
+ # Running 'syscall/fork' benchmark:
+ # Executed 100,000 fork() calls
+     Total time: 716.982 [sec]
+
+    7169.829510 usecs/op
+            139 ops/sec
+ #
+
+This patch fixes the issue for basic execve fork and getpgid.
+
+Fixes: ece7f7c0507c ("perf bench syscall: Add fork syscall benchmark")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Tested-by: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/r/20250304092349.2618082-1-tmricht@linux.ibm.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/arm-spe.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/bench/syscall.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index dbf13f47879c0..e1f7b01cd5221 100644
---- a/tools/perf/util/arm-spe.c
-+++ b/tools/perf/util/arm-spe.c
-@@ -37,6 +37,8 @@
- #include "../../arch/arm64/include/asm/cputype.h"
- #define MAX_TIMESTAMP (~0ULL)
+diff --git a/tools/perf/bench/syscall.c b/tools/perf/bench/syscall.c
+index ea4dfc07cbd6b..e7dc216f717f5 100644
+--- a/tools/perf/bench/syscall.c
++++ b/tools/perf/bench/syscall.c
+@@ -22,8 +22,7 @@
+ #define __NR_fork -1
+ #endif
  
-+#define is_ldst_op(op)		(!!((op) & ARM_SPE_OP_LDST))
-+
- struct arm_spe {
- 	struct auxtrace			auxtrace;
- 	struct auxtrace_queues		queues;
-@@ -605,6 +607,10 @@ static u64 arm_spe__synth_data_source(struct arm_spe_queue *speq,
- 	union perf_mem_data_src	data_src = { .mem_op = PERF_MEM_OP_NA };
- 	bool is_common = arm_spe__is_common_ds_encoding(speq);
+-#define LOOPS_DEFAULT 10000000
+-static	int loops = LOOPS_DEFAULT;
++static	int loops;
  
-+	/* Only synthesize data source for LDST operations */
-+	if (!is_ldst_op(record->op))
-+		return 0;
+ static const struct option options[] = {
+ 	OPT_INTEGER('l', "loop",	&loops,		"Specify number of loops"),
+@@ -80,6 +79,18 @@ static int bench_syscall_common(int argc, const char **argv, int syscall)
+ 	const char *name = NULL;
+ 	int i;
+ 
++	switch (syscall) {
++	case __NR_fork:
++	case __NR_execve:
++		/* Limit default loop to 10000 times to save time */
++		loops = 10000;
++		break;
++	default:
++		loops = 10000000;
++		break;
++	}
 +
- 	if (record->op & ARM_SPE_OP_LD)
- 		data_src.mem_op = PERF_MEM_OP_LOAD;
- 	else if (record->op & ARM_SPE_OP_ST)
-@@ -705,7 +711,7 @@ static int arm_spe_sample(struct arm_spe_queue *speq)
- 	 * When data_src is zero it means the record is not a memory operation,
- 	 * skip to synthesize memory sample for this case.
- 	 */
--	if (spe->sample_memory && data_src) {
-+	if (spe->sample_memory && is_ldst_op(record->op)) {
- 		err = arm_spe__synth_mem_sample(speq, spe->memory_id, data_src);
- 		if (err)
- 			return err;
++	/* Options -l and --loops override default above */
+ 	argc = parse_options(argc, argv, options, bench_syscall_usage, 0);
+ 
+ 	gettimeofday(&start, NULL);
+@@ -94,16 +105,9 @@ static int bench_syscall_common(int argc, const char **argv, int syscall)
+ 			break;
+ 		case __NR_fork:
+ 			test_fork();
+-			/* Only loop 10000 times to save time */
+-			if (i == 10000)
+-				loops = 10000;
+ 			break;
+ 		case __NR_execve:
+ 			test_execve();
+-			/* Only loop 10000 times to save time */
+-			if (i == 10000)
+-				loops = 10000;
+-			break;
+ 		default:
+ 			break;
+ 		}
 -- 
 2.39.5
 
