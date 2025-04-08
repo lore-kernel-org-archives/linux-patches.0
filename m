@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B48268C6B;
-	Tue,  8 Apr 2025 11:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831D3266F17;
+	Tue,  8 Apr 2025 11:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113156; cv=none; b=UCpYrXG6UAxEgbWiYsSfAdKAJe3dKA+af5+eBdFC/PhoGmWfTU02du38WxYyltvQ7kFDa+kJ/pJvmfPBLiSU0WSCy0QwqnIeox76EL+xE9D/f7YIvi5K+ul81XwKwrIME3/VIQuZdC2RxNho76CT41c6D4tNVn7YJH31q+ytA/U=
+	t=1744113159; cv=none; b=OTNKZRmhu2xkeVMWjbkQFtdw+258zlziaVdKlZWX3mmkEOpE/tKW0K7OWn0qgiwauJ+CvxlCK/yzBzN0ETGQRfLAP8JjTpEPM2lk1zd7PQJ8JVBHJiozN8MFLHRiek8I9I8fc0jR0fVgQRZIhR4g+tB9qQJpebRZ+ier5s/CQlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113156; c=relaxed/simple;
-	bh=0FRFwgza53t0d2Z1USVSyF0oYLSbDxdRexafvArgSbg=;
+	s=arc-20240116; t=1744113159; c=relaxed/simple;
+	bh=+67/diASUDLM+eJq08PV2mIQkkr1mAkmGXloTy6wJAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bYm4Y5pSrUlLH1G1+kZCCtttpuKnKxeMvqCIPfiK/ANWlNe/5H3sB/BUFPJUdgRD/+in3I18EXVrXhgS3E5KqJSUqB5ZPZSteWDd1q9aN2kVaIQV9lDf3QAZTQwnc+vBKK3I5VHlp+PZNhOvGOKZkDA9d8FplwXPkPf7u0b3U2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnWrNA9m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lp8PO6DuO7EShZo5JQplMtA9dFoFjRksRwNeLTJV7Ktcz6ycnTV3h4+vXQVP8TI/6RLKM5d0VOPldgHaZ8AfXgmFa4gN8Lfjakx8593M5S0xZ99c9JDN8TcuKlNFGKUwQc40PfyvOt4TLN6Tu2HlW4ZjvlCMISmNVReMWAlWZm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ebhk/CI5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnWrNA9m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9350C4CEE5;
-	Tue,  8 Apr 2025 11:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ebhk/CI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F117C4CEE5;
+	Tue,  8 Apr 2025 11:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113156;
-	bh=0FRFwgza53t0d2Z1USVSyF0oYLSbDxdRexafvArgSbg=;
+	s=korg; t=1744113158;
+	bh=+67/diASUDLM+eJq08PV2mIQkkr1mAkmGXloTy6wJAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnWrNA9mTvtsrA3D3Qk6QQv9PNV4NZGw1ioi8kV8r+2M1O8MrirOJDRjCYXa50TXi
-	 5MNYa/PnVVCSqRkLg2VhDMkJ/cG97zPFJSwYJ4EbvjXGEneedzh0RrPNer/+LNUhjM
-	 Kg/M0zR44HhknHsgTZ4ERFdN2j2tyADr+5DMvOcc=
+	b=Ebhk/CI5bO2CJ5uKInZRXj0Cwad3IRmGSuCx4RgFSSw6CBHB9NHqohrB+e3K4S9zz
+	 p6PoKIVbjGPcS39vx8pbABZvXgiI99KYi3QhiBhF0VsJt/QaxkoOA1CkG0WCGyVOsD
+	 O1PCLd7q2LYRRvpNKvmEZOOB/D0+4rrB7xIiVzc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/268] PCI: xilinx-cpm: Fix IRQ domain leak in error path of probe
-Date: Tue,  8 Apr 2025 12:47:44 +0200
-Message-ID: <20250408104829.931157091@linuxfoundation.org>
+Subject: [PATCH 6.6 054/268] drm/mediatek: dp: drm_err => dev_err in HPD path to avoid NULL ptr
+Date: Tue,  8 Apr 2025 12:47:45 +0200
+Message-ID: <20250408104829.957778744@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -45,67 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 57b0302240741e73fe51f88404b3866e0d2933ad ]
+[ Upstream commit 106a6de46cf4887d535018185ec528ce822d6d84 ]
 
-The IRQ domain allocated for the PCIe controller is not freed if
-resource_list_first_type() returns NULL, leading to a resource leak.
+The function mtk_dp_wait_hpd_asserted() may be called before the
+`mtk_dp->drm_dev` pointer is assigned in mtk_dp_bridge_attach().
+Specifically it can be called via this callpath:
+ - mtk_edp_wait_hpd_asserted
+ - [panel probe]
+ - dp_aux_ep_probe
 
-This fix ensures properly cleaning up the allocated IRQ domain in
-the error path.
+Using "drm" level prints anywhere in this callpath causes a NULL
+pointer dereference. Change the error message directly in
+mtk_dp_wait_hpd_asserted() to dev_err() to avoid this. Also change the
+error messages in mtk_dp_parse_capabilities(), which is called by
+mtk_dp_wait_hpd_asserted().
 
-Fixes: 49e427e6bdd1 ("Merge branch 'pci/host-probe-refactor'")
-Signed-off-by: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
-[kwilczynski: added missing Fixes: tag, refactored to use one of the goto labels]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://lore.kernel.org/r/20250224155025.782179-2-thippeswamy.havalige@amd.com
+While touching these prints, also add the error code to them to make
+future debugging easier.
+
+Fixes: 7eacba9a083b ("drm/mediatek: dp: Add .wait_hpd_asserted() for AUX bus")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250116094249.1.I29b0b621abb613ddc70ab4996426a3909e1aa75f@changeid/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-cpm.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-xilinx-cpm.c b/drivers/pci/controller/pcie-xilinx-cpm.c
-index 4a787a941674b..51379d791005b 100644
---- a/drivers/pci/controller/pcie-xilinx-cpm.c
-+++ b/drivers/pci/controller/pcie-xilinx-cpm.c
-@@ -594,15 +594,17 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
- 		return err;
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index be4de26c77f91..199527643093a 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1648,7 +1648,7 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
  
- 	bus = resource_list_first_type(&bridge->windows, IORESOURCE_BUS);
--	if (!bus)
--		return -ENODEV;
-+	if (!bus) {
-+		err = -ENODEV;
-+		goto err_free_irq_domains;
-+	}
- 
- 	port->variant = of_device_get_match_data(dev);
- 
- 	err = xilinx_cpm_pcie_parse_dt(port, bus->res);
- 	if (err) {
- 		dev_err(dev, "Parsing DT failed\n");
--		goto err_parse_dt;
-+		goto err_free_irq_domains;
+ 	ret = drm_dp_dpcd_readb(&mtk_dp->aux, DP_MSTM_CAP, &val);
+ 	if (ret < 1) {
+-		drm_err(mtk_dp->drm_dev, "Read mstm cap failed\n");
++		dev_err(mtk_dp->dev, "Read mstm cap failed: %zd\n", ret);
+ 		return ret == 0 ? -EIO : ret;
  	}
  
- 	xilinx_cpm_pcie_init_port(port);
-@@ -626,7 +628,7 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
- 	xilinx_cpm_free_interrupts(port);
- err_setup_irq:
- 	pci_ecam_free(port->cfg);
--err_parse_dt:
-+err_free_irq_domains:
- 	xilinx_cpm_free_irq_domains(port);
- 	return err;
- }
+@@ -1658,7 +1658,7 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+ 					DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
+ 					&val);
+ 		if (ret < 1) {
+-			drm_err(mtk_dp->drm_dev, "Read irq vector failed\n");
++			dev_err(mtk_dp->dev, "Read irq vector failed: %zd\n", ret);
+ 			return ret == 0 ? -EIO : ret;
+ 		}
+ 
+@@ -1941,7 +1941,7 @@ static int mtk_dp_wait_hpd_asserted(struct drm_dp_aux *mtk_aux, unsigned long wa
+ 
+ 	ret = mtk_dp_parse_capabilities(mtk_dp);
+ 	if (ret) {
+-		drm_err(mtk_dp->drm_dev, "Can't parse capabilities\n");
++		dev_err(mtk_dp->dev, "Can't parse capabilities: %d\n", ret);
+ 		return ret;
+ 	}
+ 
 -- 
 2.39.5
 
