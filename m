@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A135820CCD8;
-	Tue,  8 Apr 2025 12:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A75E26981A;
+	Tue,  8 Apr 2025 12:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113932; cv=none; b=GpunDCVcEGkC3jMKq1Wrs4yCb0gF2GjVpFEFzxrIDJq+V+fxIYT8+ZBnlaa1Sx/v/TkNDv2rOR9x4k7hFvMsrUMweWfY1rJlvwmoKtiTUBfML86wk37oVfLiub6b6lgS6h6qfeM/X73jc9ZlXnBLbHYDoXc8mpXuput2h48gMrU=
+	t=1744113935; cv=none; b=ZfW1ykX0WjOBOuDEqHe149m+G+hAhRxiOMxVbTri7HX0Kb92MAip4e/dhFi/VK4UHM92CYd0UGY5yVKeoSCo2FIcgZfiPQcJkdkiYFWjyWcL0/5fIYKsqH3Dz5PuO1v/l1NHttW4pWGcgUQ6kmpj2GgqDLWwEdJGVGt9SpTl8i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113932; c=relaxed/simple;
-	bh=OX6qR3L/NKSwsIc6OKCubasMoBWHqNhlPZ4B53rpJjo=;
+	s=arc-20240116; t=1744113935; c=relaxed/simple;
+	bh=CNTgS/93Rv7MpNitHWTkj0/Pa7fC8liVf1flgHEDjMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAZjQl1EJgJFZZkRG+sdEpS8Ki1SGziA+yNl9cKup6ivW51B3OU5rAdgcrbOalfS6B3DGCCjph9/tyjehCjuofiMiBfkqT/+5Ja4dyzPvm0osA6MXGLLadFiQxKZRExc3wZe32GNVAUNF4+qJwTQINQlD2evAsC0mjLsMicpIV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k44ODJd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cg72yBtKprarShAacy2YgLD/aStZV+o4EocsRfxpVMABuScDbynQFoJsIWI6v/kTu6H7Zoe6NMGeS0IfdBL3eLQbwEZLJJszoM+7fItqWHIrjfsmaQV/rbi47ebWHFCCDQq2i/EJ9g9pM0eUqK4bV6OqvDt2drv24heLBPAW09M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9d7rOwt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k44ODJd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17FEC4CEE5;
-	Tue,  8 Apr 2025 12:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9d7rOwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F8C4CEE5;
+	Tue,  8 Apr 2025 12:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113932;
-	bh=OX6qR3L/NKSwsIc6OKCubasMoBWHqNhlPZ4B53rpJjo=;
+	s=korg; t=1744113934;
+	bh=CNTgS/93Rv7MpNitHWTkj0/Pa7fC8liVf1flgHEDjMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k44ODJd//Wlg8IHs7EVkDjx8eE9hUixWvpDS7rYi3X+xd3vhAr0TwJNSyt1YLIRqy
-	 kEKs18prBNs640KlMs97tUM9TlhOivJd+xj3aUWG6lbNoAnbisizkPHJifN1XOR3hD
-	 pvnbJmQjaiOvZWg3aljpfAMDYot9Rx0W7nY49lAc=
+	b=q9d7rOwtk/1JCg9wA+6Fgrz5FfdveDIB/Sn3orWcWqzDwyp9bE+ClyxRyR/ySz4fT
+	 rQGlfb/Ilb9Qz9tNcFpfyrpZuOOv5S4VbNUQPOQfKCg7b/1MRUppuNlDAk4XOwOlPd
+	 oYMdbkcZkQBd7XkIMhlmOGjk8OTefg9BoASde/jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ingo Molnar <mingo@kernel.org>,
+	Gannon Kolding <gannon.kolding@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/154] x86/irq: Define trace events conditionally
-Date: Tue,  8 Apr 2025 12:49:36 +0200
-Message-ID: <20250408104816.386663167@linuxfoundation.org>
+Subject: [PATCH 5.4 026/154] ACPI: resource: IRQ override for Eluktronics MECH-17
+Date: Tue,  8 Apr 2025 12:49:27 +0200
+Message-ID: <20250408104816.104963660@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,46 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Gannon Kolding <gannon.kolding@gmail.com>
 
-[ Upstream commit 9de7695925d5d2d2085681ba935857246eb2817d ]
+[ Upstream commit 607ab6f85f4194b644ea95ac5fe660ef575db3b4 ]
 
-When both of X86_LOCAL_APIC and X86_THERMAL_VECTOR are disabled,
-the irq tracing produces a W=1 build warning for the tracing
-definitions:
+The Eluktronics MECH-17 (GM7RG7N) needs IRQ overriding for the
+keyboard to work.
 
-  In file included from include/trace/trace_events.h:27,
-                 from include/trace/define_trace.h:113,
-                 from arch/x86/include/asm/trace/irq_vectors.h:383,
-                 from arch/x86/kernel/irq.c:29:
-  include/trace/stages/init.h:2:23: error: 'str__irq_vectors__trace_system_name' defined but not used [-Werror=unused-const-variable=]
+Adding a DMI_MATCH entry for this laptop model makes the internal
+keyboard function normally.
 
-Make the tracepoints conditional on the same symbosl that guard
-their usage.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250225213236.3141752-1-arnd@kernel.org
+Signed-off-by: Gannon Kolding <gannon.kolding@gmail.com>
+Link: https://patch.msgid.link/20250127093902.328361-1-gannon.kolding@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/irq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/resource.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index 7dfd0185767cc..76600d8f69376 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -20,8 +20,10 @@
- #include <asm/hw_irq.h>
- #include <asm/desc.h>
- 
-+#if defined(CONFIG_X86_LOCAL_APIC) || defined(CONFIG_X86_THERMAL_VECTOR)
- #define CREATE_TRACE_POINTS
- #include <asm/trace/irq_vectors.h>
-+#endif
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(irq_cpustat_t, irq_stat);
- EXPORT_PER_CPU_SYMBOL(irq_stat);
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 2750518a5d5e1..11264bb4061e7 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -482,6 +482,12 @@ static const struct dmi_system_id asus_laptop[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
++			DMI_MATCH(DMI_BOARD_NAME, "MECH-17"),
++		},
++	},
+ 	{
+ 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
+ 		.matches = {
 -- 
 2.39.5
 
