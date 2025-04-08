@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D872B267F6E;
-	Tue,  8 Apr 2025 11:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9D0263C8A;
+	Tue,  8 Apr 2025 11:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113404; cv=none; b=s+xwYIV4xy78oK+CAo60wtTJg2ieoWcKq9nCmnZ0x3j98f4i14IrlZp9zvUgVg/TNHkq4oy/KK4tUVbcFuq5mtuccfTPFxWrMlLekBua77IBh8MRQw8NVCkn5PB0YYnQ0X7MY+jgcjdZEZVLHWyTUPYRtD02nxBMTkQ/zEeRJsI=
+	t=1744113408; cv=none; b=ayhZNiZApkvSSR2k+FW5pqZylnSI1hhn6NN+WoZT1kPbDJUwRjqqtawdXygjzppAfPwm2wBq09iOfSKKCCfEKB7E9OnKXvEWQAuxthgxDxok3p+Sd4kD5Qyrqt7nto3WNtgNS6JNPa8dE5qYsWBUKcAy5oElrJX0TQBRwQVzLQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113404; c=relaxed/simple;
-	bh=nh+qVWbdCmVkP/HZwM5y2w86G1g9ucZvUHTQPc7e8OQ=;
+	s=arc-20240116; t=1744113408; c=relaxed/simple;
+	bh=LcNNn20zPWtcMCb05LmIHzwTTtoo9a/wNjQbMG2AnMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilWPikvVgMwTeHf2abO3yB7UYw3EvJQH7uoH0PzKYf4b0XGYtKqrzBTpt7shwpH4wNInZnP8Zl69M/WaPRvnvW6tOWv3iGZK+p7xW7CMAyDBR+O0oYUyfDLrnlML7NxPLJdmgMwNaexGA7mWb/X1DbWnTc9U38tjZuH/a4CpsTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufoHgesK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QGhI+zaFcgSKrXZEV9gzRpFWNqXTSPc+HRUKsVMjkVTWtqEAbXFWyzWlvoL4C2VsY9c8IdD94EWgPXywVad5xJqMDKFzkg9w8/cZfBZITf9hUZM+tGou4x8p0ofRAtMWVm9wq6MT9X1JlGvMMsjLVQ6XqEUUAYwGqNojccbVsGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+1bZQry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufoHgesK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48691C4CEE5;
-	Tue,  8 Apr 2025 11:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+1bZQry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDAEC4CEE5;
+	Tue,  8 Apr 2025 11:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113404;
-	bh=nh+qVWbdCmVkP/HZwM5y2w86G1g9ucZvUHTQPc7e8OQ=;
+	s=korg; t=1744113408;
+	bh=LcNNn20zPWtcMCb05LmIHzwTTtoo9a/wNjQbMG2AnMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufoHgesKKYasJqyiwTL3JqXoip4/qF+yA+0rswmmiQ/x02kwnb0N5UHNNHXbLk6cE
-	 MbGZRqSrdFJKvkQJMrT63LiGIem9t0gST4ebn/HG8xdlRN7giK3e4Po98Q5DHU8tsy
-	 uAZIgCiBRdPZ6Jlgmn88cvkIQSP/InMbmz+Tk+VA=
+	b=A+1bZQryDVx9dufjxXwQtglPQ2V8CitO1XamvcdNseaGfXuXRpP1CNr5US1QurJjE
+	 R4EsvZQgXrNEmBSIogs29OrP0DTYryvmD5r2X9eJ1q74TZhCNUCqI57AUCf9Y90ZuD
+	 4lGVVlKQpQw+S/NiKzYGU4iFKmN1J+cHAw936FUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/268] rndis_host: Flag RNDIS modems as WWAN devices
-Date: Tue,  8 Apr 2025 12:49:17 +0200
-Message-ID: <20250408104832.470117194@linuxfoundation.org>
+Subject: [PATCH 6.6 111/268] iio: accel: mma8452: Ensure error return on failure to matching oversampling ratio
+Date: Tue,  8 Apr 2025 12:48:42 +0200
+Message-ID: <20250408104831.493533900@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,68 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lubomir Rintel <lkundrak@v3.sk>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 67d1a8956d2d62fe6b4c13ebabb57806098511d8 ]
+[ Upstream commit df330c808182a8beab5d0f84a6cbc9cff76c61fc ]
 
-Set FLAG_WWAN instead of FLAG_ETHERNET for RNDIS interfaces on Mobile
-Broadband Modems, as opposed to regular Ethernet adapters.
+If a match was not found, then the write_raw() callback would return
+the odr index, not an error. Return -EINVAL if this occurs.
+To avoid similar issues in future, introduce j, a new indexing variable
+rather than using ret for this purpose.
 
-Otherwise NetworkManager gets confused, misjudges the device type,
-and wouldn't know it should connect a modem to get the device to work.
-What would be the result depends on ModemManager version -- older
-ModemManager would end up disconnecting a device after an unsuccessful
-probe attempt (if it connected without needing to unlock a SIM), while
-a newer one might spawn a separate PPP connection over a tty interface
-instead, resulting in a general confusion and no end of chaos.
-
-The only way to get this work reliably is to fix the device type
-and have good enough version ModemManager (or equivalent).
-
-Fixes: 63ba395cd7a5 ("rndis_host: support Novatel Verizon USB730L")
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
-Link: https://patch.msgid.link/20250325095842.1567999-1-lkundrak@v3.sk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 79de2ee469aa ("iio: accel: mma8452: claim direct mode during write raw")
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250217140135.896574-2-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rndis_host.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/iio/accel/mma8452.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/rndis_host.c b/drivers/net/usb/rndis_host.c
-index 7b3739b29c8f7..bb0bf14158727 100644
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -630,6 +630,16 @@ static const struct driver_info	zte_rndis_info = {
- 	.tx_fixup =	rndis_tx_fixup,
- };
+diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+index f42a887114865..16a0de6002be0 100644
+--- a/drivers/iio/accel/mma8452.c
++++ b/drivers/iio/accel/mma8452.c
+@@ -711,7 +711,7 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct mma8452_data *data = iio_priv(indio_dev);
+-	int i, ret;
++	int i, j, ret;
  
-+static const struct driver_info	wwan_rndis_info = {
-+	.description =	"Mobile Broadband RNDIS device",
-+	.flags =	FLAG_WWAN | FLAG_POINTTOPOINT | FLAG_FRAMING_RN | FLAG_NO_SETINT,
-+	.bind =		rndis_bind,
-+	.unbind =	rndis_unbind,
-+	.status =	rndis_status,
-+	.rx_fixup =	rndis_rx_fixup,
-+	.tx_fixup =	rndis_tx_fixup,
-+};
-+
- /*-------------------------------------------------------------------------*/
+ 	ret = iio_device_claim_direct_mode(indio_dev);
+ 	if (ret)
+@@ -771,14 +771,18 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
+ 		break;
  
- static const struct usb_device_id	products [] = {
-@@ -666,9 +676,11 @@ static const struct usb_device_id	products [] = {
- 	USB_INTERFACE_INFO(USB_CLASS_WIRELESS_CONTROLLER, 1, 3),
- 	.driver_info = (unsigned long) &rndis_info,
- }, {
--	/* Novatel Verizon USB730L */
-+	/* Mobile Broadband Modem, seen in Novatel Verizon USB730L and
-+	 * Telit FN990A (RNDIS)
-+	 */
- 	USB_INTERFACE_INFO(USB_CLASS_MISC, 4, 1),
--	.driver_info = (unsigned long) &rndis_info,
-+	.driver_info = (unsigned long)&wwan_rndis_info,
- },
- 	{ },		// END
- };
+ 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
+-		ret = mma8452_get_odr_index(data);
++		j = mma8452_get_odr_index(data);
+ 
+ 		for (i = 0; i < ARRAY_SIZE(mma8452_os_ratio); i++) {
+-			if (mma8452_os_ratio[i][ret] == val) {
++			if (mma8452_os_ratio[i][j] == val) {
+ 				ret = mma8452_set_power_mode(data, i);
+ 				break;
+ 			}
+ 		}
++		if (i == ARRAY_SIZE(mma8452_os_ratio)) {
++			ret = -EINVAL;
++			break;
++		}
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.39.5
 
