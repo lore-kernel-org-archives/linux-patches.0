@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42994268FE7;
-	Tue,  8 Apr 2025 11:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6124022257E;
+	Tue,  8 Apr 2025 11:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113322; cv=none; b=K75sZrg5N0IMVAM2Dn/z9P6sbVR4aDBgPmSo6x6dwbJHWPza/dZn3GaMYN6kLecsBKfmPQhhf7frD33POVI+32omNsCzfOvX+zdk+1iCarbs9/F7epnsPaZWDez2PU6FdoIk8+jy4c+Ni1jxfWaiJ6h8XYb3X8i0wcSn7HqjMes=
+	t=1744113324; cv=none; b=o4vIg4HnMZN+vJNduQADAyBj2dhkqiXK7BaoN9/dVTqSglIRjGhB0wAi4JEH+DMw3N9ExVB4ZL6CvDJhKap1jDS2noLX4eM69elPhSbKjUXN0HnXsPD3IAVcaD6TD5HbRFWVI/LGNw/LBqEV9LhTXCYMOzAUcfr924gvBkDldas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113322; c=relaxed/simple;
-	bh=ZuIWmZJTDq1mcGB7Y4+gpBjS3oHydLC0x+NNfQYbDtM=;
+	s=arc-20240116; t=1744113324; c=relaxed/simple;
+	bh=zKiaUj/8HfElq06piJwtHm5mJKj96N8jp9Mt8pm80OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPLzdSNNwd9j5270RZdnabPcF7vr56KWiXdrZu46v4hyBX/2SUSDSAxDO96agDQooIYYBotw5aZYvhBOf3c8zXTFa0jBCGUI04ex1SC95paDfyjZwg5ks2gMhiSP5eAGlbi6WvCVt0vb1DzJHuc+O/9SX5dhI4D+X5Lymc9mk+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDPKjWV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/Tfjz2g/u48EFZNoXLnhKaVsUbcYmUHulfMcz95ejciGwgBMbQ9pL6WRsnKyzig2Tiouf4KfJz7gATB7n/S5kShQjsnQelhv7NzYmBukmGZIj7BHcMxjNJRxT/GERGw1h5E1SJteXTzYvkBEABvLoEIzyyLuEHoojx11VmJtDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRTryQ0b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDPKjWV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECF2C4CEE5;
-	Tue,  8 Apr 2025 11:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRTryQ0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA467C4CEE5;
+	Tue,  8 Apr 2025 11:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113321;
-	bh=ZuIWmZJTDq1mcGB7Y4+gpBjS3oHydLC0x+NNfQYbDtM=;
+	s=korg; t=1744113324;
+	bh=zKiaUj/8HfElq06piJwtHm5mJKj96N8jp9Mt8pm80OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDPKjWV89iAEFeK50I8DYUcZs5t6HiNFGcOgdCLYZ6C0XLX6oowWhbrGnpocf4Tbm
-	 oNRf5CgSci8gklQrg5qJv2xchDWcziwsGq/CWD55639OqxV7LUgfjrhFTEOEd+ieKI
-	 j5bso6aUsjgab6K5UxF7jfmjbqIe4Hnnvg//B0fc=
+	b=gRTryQ0bxuDyhWbJ1nCg6PZnTq0WLcRrk5tl75muOysElBtjOdkM5F6LJ3rRKuH+6
+	 ffVjxU4Y4BtpiaAhzfpEBFVIokHOh9Vym5L+QOB7pYr6xJKqkHalaDrVpG7HXYb4zQ
+	 er2PvKWG+j8aOo9WRD5CHdiLn4cHNp+TKsv3P5GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/268] fs/ntfs3: Prevent integer overflow in hdr_first_de()
-Date: Tue,  8 Apr 2025 12:48:48 +0200
-Message-ID: <20250408104831.653210128@linuxfoundation.org>
+Subject: [PATCH 6.6 118/268] dmaengine: fsl-edma: cleanup chan after dma_async_device_unregister
+Date: Tue,  8 Apr 2025 12:48:49 +0200
+Message-ID: <20250408104831.679434829@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,36 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 6bb81b94f7a9cba6bde9a905cef52a65317a8b04 ]
+[ Upstream commit c9c59da76ce9cb3f215b66eb3708cda1134a5206 ]
 
-The "de_off" and "used" variables come from the disk so they both need to
-check.  The problem is that on 32bit systems if they're both greater than
-UINT_MAX - 16 then the check does work as intended because of an integer
-overflow.
+There is kernel dump when do module test:
+sysfs: cannot create duplicate filename
+/devices/platform/soc@0/44000000.bus/44000000.dma-controller/dma/dma0chan0
+ __dma_async_device_channel_register+0x128/0x19c
+ dma_async_device_register+0x150/0x454
+ fsl_edma_probe+0x6cc/0x8a0
+ platform_probe+0x68/0xc8
 
-Fixes: 60ce8dfde035 ("fs/ntfs3: Fix wrong if in hdr_first_de")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+fsl_edma_cleanup_vchan will unlink vchan.chan.device_node, while
+dma_async_device_unregister  needs the link to do
+__dma_async_device_channel_unregister. So need move fsl_edma_cleanup_vchan
+after dma_async_device_unregister to make sure channel could be freed.
+
+So clean up chan after dma_async_device_unregister to address this.
+
+Fixes: 6f93b93b2a1b ("dmaengine: fsl-edma: kill the tasklets upon exit")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20250228071720.3780479-1-peng.fan@oss.nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs.h | 2 +-
+ drivers/dma/fsl-edma-main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index 964e27c7b9016..c1d1c4a7cf4d6 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -717,7 +717,7 @@ static inline struct NTFS_DE *hdr_first_de(const struct INDEX_HDR *hdr)
- 	struct NTFS_DE *e;
- 	u16 esize;
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index cd394eae47d17..cc9923ab686dc 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -675,9 +675,9 @@ static int fsl_edma_remove(struct platform_device *pdev)
+ 	struct fsl_edma_engine *fsl_edma = platform_get_drvdata(pdev);
  
--	if (de_off >= used || de_off + sizeof(struct NTFS_DE) > used )
-+	if (de_off >= used || size_add(de_off, sizeof(struct NTFS_DE)) > used)
- 		return NULL;
+ 	fsl_edma_irq_exit(pdev, fsl_edma);
+-	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+ 	of_dma_controller_free(np);
+ 	dma_async_device_unregister(&fsl_edma->dma_dev);
++	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+ 	fsl_disable_clocks(fsl_edma, fsl_edma->drvdata->dmamuxs);
  
- 	e = Add2Ptr(hdr, de_off);
+ 	return 0;
 -- 
 2.39.5
 
