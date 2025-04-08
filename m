@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087A1269AE8;
-	Tue,  8 Apr 2025 12:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4997026A0D4;
+	Tue,  8 Apr 2025 12:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116392; cv=none; b=Gtfp/CRAQJ75L0PqSC+PhXi5Ff3u0Fg/ZN92YV8Tje4HzkjosL7swMJtPZYHAhuriTIizZm/NETNLW5klXMNYOmVr6FstWqUJaCs+qeJZ7kvBzrHb0MD3NuXrhNmY9kxmLDgKOiUHa1H35sxlsbCujkRHdaTe9A2fSRe/9r1Ce0=
+	t=1744116394; cv=none; b=JaUI6yCXCyKXY6KRi056RAhteXAne0X1INy8e0UI4zKQ9e6jkzHkTOh/7atq6dk9zUdi7qVkL2Qf0qLIFlBQTMWKJ4tk6woBln813TWLY9Ke3ec6iPgmoAUOza35BlMvv07RATAgTh1hyTESuWr6MSd3g9f9hsTxYVGLIqRAV8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116392; c=relaxed/simple;
-	bh=sCW4+VMU3bYudgNLsHTt5bAw2dOwcC8qsx4hrHR+7E8=;
+	s=arc-20240116; t=1744116394; c=relaxed/simple;
+	bh=0HtLWYsA2ZcyUSnPODtxZHEUhP16xWNkSiBA4SfIrYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrhZ4mWld7XjFnMIMK/370HA3+j0rS22mfvmWQTeTekz/WBQi+YORpveSgvDgOhb+nkagQQupn+nZvs1AXaFFPEa81lkEgJ/PO9RKvShB2t3lxmhMDrz4+wrVaBr9Kc92N9Gd9S7mhKN4u20X0MjBzHUtaK3hguCvBmV5UhSWU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3EEVc8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWR5bZzBxq54j6qyLurI39JQQ4ZlMfNgy+D+TgUi/ePHEx1FyicfBiJmvBXSDCYrsa7ulqWKaooE5M4hkVUQ2SnSBi1DdGvOutsAniGQet2FvNU2ZHr3/7rUcrKtWfwOFo5NUNwblWr+aZpCYzZttGymEUU6T4BCR+vcqJaxB9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rt/UT9dA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3EEVc8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4A4C4CEE5;
-	Tue,  8 Apr 2025 12:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rt/UT9dA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE420C4CEE5;
+	Tue,  8 Apr 2025 12:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116391;
-	bh=sCW4+VMU3bYudgNLsHTt5bAw2dOwcC8qsx4hrHR+7E8=;
+	s=korg; t=1744116394;
+	bh=0HtLWYsA2ZcyUSnPODtxZHEUhP16xWNkSiBA4SfIrYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3EEVc8K38Eil83aB2/EOl/BdiUCI6G6taO1otYoeA1fdX8kTsyPjKQm1QZBkb39C
-	 qp+uDiqVAh/28ri1wrMbuR+m9ujDwhY3x5XHx3+1CweNmG9M381TIB5ffQdvQRdWN4
-	 zMbx48g3r68RH4KUt8lPJhDN1VqO9XInCZtIVKVg=
+	b=Rt/UT9dAzJ0sprLPRoJOxTyH5+AyhiTsgGTV80SH1HIf1NINSWPKPzkUycdOO1TKh
+	 B6W1+w6G6QbgbXKn+dDzJBScAtjWd4j20Es6T+ghnLzZMkV3jbVc3GBR/BdOCmHJxL
+	 wC+EKa19WAyh0dCb78p8uWPhhnXoVy5tjFFCGRbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/423] crypto: tegra - Set IV to NULL explicitly for AES ECB
-Date: Tue,  8 Apr 2025 12:47:28 +0200
-Message-ID: <20250408104848.567854699@linuxfoundation.org>
+Subject: [PATCH 6.12 123/423] remoteproc: qcom_q6v5_pas: Use resource with CX PD for MSM8226
+Date: Tue,  8 Apr 2025 12:47:29 +0200
+Message-ID: <20250408104848.592579701@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,38 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Luca Weiss <luca@lucaweiss.eu>
 
-[ Upstream commit bde558220866e74f19450e16d9a2472b488dfedf ]
+[ Upstream commit ba785ff4162a65f18ed501019637a998b752b5ad ]
 
-It may happen that the variable req->iv may have stale values or
-zero sized buffer by default and may end up getting used during
-encryption/decryption. This inturn may corrupt the results or break the
-operation. Set the req->iv variable to NULL explicitly for algorithms
-like AES-ECB where IV is not used.
+MSM8226 requires the CX power domain, so use the msm8996_adsp_resource
+which has cx under proxy_pd_names and is otherwise equivalent.
 
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Fixes: fb4f07cc9399 ("remoteproc: qcom: pas: Add MSM8226 ADSP support")
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250128-pas-singlepd-v1-1-85d9ae4b0093@lucaweiss.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index 3308962f11c59..0ed0515e1ed54 100644
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -443,6 +443,9 @@ static int tegra_aes_crypt(struct skcipher_request *req, bool encrypt)
- 	if (!req->cryptlen)
- 		return 0;
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index a1636bbf36118..ea4a91f37b506 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1419,7 +1419,7 @@ static const struct adsp_data sm8650_mpss_resource = {
+ };
  
-+	if (ctx->alg == SE_ALG_ECB)
-+		req->iv = NULL;
-+
- 	rctx->encrypt = encrypt;
- 	rctx->config = tegra234_aes_cfg(ctx->alg, encrypt);
- 	rctx->crypto_config = tegra234_aes_crypto_cfg(ctx->alg, encrypt);
+ static const struct of_device_id adsp_of_match[] = {
+-	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
++	{ .compatible = "qcom,msm8226-adsp-pil", .data = &msm8996_adsp_resource},
+ 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
+ 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
+ 	{ .compatible = "qcom,msm8996-adsp-pil", .data = &msm8996_adsp_resource},
 -- 
 2.39.5
 
