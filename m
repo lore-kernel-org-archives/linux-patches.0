@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB3626461E;
-	Tue,  8 Apr 2025 12:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235B2269AE8;
+	Tue,  8 Apr 2025 12:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115747; cv=none; b=XdgyCt7uOBDJBmLBEd7rhd8qomKi4g4XfZYRjD+by/QKyVI2vHmabsuXhscoiMtuuCH9Y0CHZ8ba7bAT7XFBeKW19PNRcJOG+g30b+h2iaj2uKy3eLjB7z6HGcH5lPZIKlGEpuKfq1NEQbE6tFoA6VWhYyWgpuEMFcUrNM+QZB8=
+	t=1744115750; cv=none; b=jf9uKPydWAXUco9pOxGi0b3AGWShdkVTZLWVXUbkL54pMcxOCTHd4G39z1Ew0KnIEEnqjiNYxAbE5Y/uPpo8MVpFxu+e/7S9F+V4j4FQIPjDQRdeYXQuF3OjfFyK8tMy9KIRtKmrYYnembVz8qJcoJLnanPlI5yLZS/SVZBxvQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115747; c=relaxed/simple;
-	bh=r8/JN5bT213eNxj26jSQ12X194yy9UadwXg6MXCr0lk=;
+	s=arc-20240116; t=1744115750; c=relaxed/simple;
+	bh=hzA0J1x6dfRyqc3/eUZQSGtdus2TxhaaLZWk826buys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pj3zAUMdOPnV1p8d5mpT3LL4kdGrUAcleS3jN7XvwQqeX/YD7S/Tr+TEnpWuzcvlJLZnyKvtImQuUITuRIRJ0ykW5o13r72isS1cmBYdqwBoUoKAECzcCXndP8ivbia9SHLcpihvLRZW3C6TAeTumf4NcwcnSoAmcEUuCBIdHc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvkeNNW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WerbH+8TzcUT8Ux4DsPF04r/fgaIEBXzh9ldvzzvsWKfWg/GbvZNXszb06+hzPuLBylmtQXUrv7w2Aec9d/PGsCu1PjLZLOJ4Zh7B4pxlNMcjJDlvnAvIuNtTqT/hc+p0JAJQH/9cNLyjvWSdAtX0q49KRpa6yygKtJ4fbPcX14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFhqHwI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvkeNNW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A68C4CEE7;
-	Tue,  8 Apr 2025 12:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFhqHwI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D378C4CEE5;
+	Tue,  8 Apr 2025 12:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115747;
-	bh=r8/JN5bT213eNxj26jSQ12X194yy9UadwXg6MXCr0lk=;
+	s=korg; t=1744115750;
+	bh=hzA0J1x6dfRyqc3/eUZQSGtdus2TxhaaLZWk826buys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvkeNNW0pu8PJABc2ZJ3hsl99qAz1qIwD+/g91g5R4QoquzsiP96FfRTh/YPTbALe
-	 7R6E5m+og85VLHl0cdKm2T2/8mqq3z0EU8svPq/c/GR50lTnSiA3QeRXrCAdOmnNV1
-	 wCZO+KPUrWdDGNUcG1wzX4WgzD5rUQrLbux8thq8=
+	b=mFhqHwI78V76xSjO7Z3Y2HYsjvTauHgjvovXCoCid8aOBXh0+MKAO0GIzucS5YHBJ
+	 BZTmsFDagIUZSEutCv8gpM2V0PEQLb21hgp3GtvVjlZXJ4dfDH374OVBBop19lzbIz
+	 9pWCdklP6ogwKtIxf3AAvpkn/LikqoauOYW5HgJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Lechner <dlechner@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/204] iio: accel: mma8452: Ensure error return on failure to matching oversampling ratio
-Date: Tue,  8 Apr 2025 12:50:20 +0200
-Message-ID: <20250408104822.987291730@linuxfoundation.org>
+Subject: [PATCH 6.1 091/204] iio: accel: msa311: Fix failure to release runtime pm if direct mode claim fails.
+Date: Tue,  8 Apr 2025 12:50:21 +0200
+Message-ID: <20250408104823.016632149@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -53,56 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit df330c808182a8beab5d0f84a6cbc9cff76c61fc ]
+[ Upstream commit 60a0cf2ebab92011055ab7db6553c0fc3c546938 ]
 
-If a match was not found, then the write_raw() callback would return
-the odr index, not an error. Return -EINVAL if this occurs.
-To avoid similar issues in future, introduce j, a new indexing variable
-rather than using ret for this purpose.
+Reorder the claiming of direct mode and runtime pm calls to simplify
+handling a little.  For correct error handling, after the reorder
+iio_device_release_direct_mode() must be claimed in an error occurs
+in pm_runtime_resume_and_get()
 
-Fixes: 79de2ee469aa ("iio: accel: mma8452: claim direct mode during write raw")
+Fixes: 1ca2cfbc0c33 ("iio: add MEMSensing MSA311 3-axis accelerometer driver")
 Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250217140135.896574-2-jic23@kernel.org
+Link: https://patch.msgid.link/20250217140135.896574-7-jic23@kernel.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma8452.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/iio/accel/msa311.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index 3ba28c2ff68a3..ad7b7770d5262 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -711,7 +711,7 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
- {
- 	struct mma8452_data *data = iio_priv(indio_dev);
--	int i, ret;
-+	int i, j, ret;
+diff --git a/drivers/iio/accel/msa311.c b/drivers/iio/accel/msa311.c
+index 2fded37591717..9b5c36f2322f1 100644
+--- a/drivers/iio/accel/msa311.c
++++ b/drivers/iio/accel/msa311.c
+@@ -595,23 +595,25 @@ static int msa311_read_raw_data(struct iio_dev *indio_dev,
+ 	__le16 axis;
+ 	int err;
  
- 	ret = iio_device_claim_direct_mode(indio_dev);
- 	if (ret)
-@@ -771,14 +771,18 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
- 		break;
+-	err = pm_runtime_resume_and_get(dev);
++	err = iio_device_claim_direct_mode(indio_dev);
+ 	if (err)
+ 		return err;
  
- 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
--		ret = mma8452_get_odr_index(data);
-+		j = mma8452_get_odr_index(data);
+-	err = iio_device_claim_direct_mode(indio_dev);
+-	if (err)
++	err = pm_runtime_resume_and_get(dev);
++	if (err) {
++		iio_device_release_direct_mode(indio_dev);
+ 		return err;
++	}
  
- 		for (i = 0; i < ARRAY_SIZE(mma8452_os_ratio); i++) {
--			if (mma8452_os_ratio[i][ret] == val) {
-+			if (mma8452_os_ratio[i][j] == val) {
- 				ret = mma8452_set_power_mode(data, i);
- 				break;
- 			}
+ 	mutex_lock(&msa311->lock);
+ 	err = msa311_get_axis(msa311, chan, &axis);
+ 	mutex_unlock(&msa311->lock);
+ 
+-	iio_device_release_direct_mode(indio_dev);
+-
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
+ 
++	iio_device_release_direct_mode(indio_dev);
++
+ 	if (err) {
+ 		dev_err(dev, "can't get axis %s (%pe)\n",
+ 			chan->datasheet_name, ERR_PTR(err));
+@@ -757,10 +759,6 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
+ 	unsigned int odr;
+ 	int err;
+ 
+-	err = pm_runtime_resume_and_get(dev);
+-	if (err)
+-		return err;
+-
+ 	/*
+ 	 * Sampling frequency changing is prohibited when buffer mode is
+ 	 * enabled, because sometimes MSA311 chip returns outliers during
+@@ -770,6 +768,12 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
+ 	if (err)
+ 		return err;
+ 
++	err = pm_runtime_resume_and_get(dev);
++	if (err) {
++		iio_device_release_direct_mode(indio_dev);
++		return err;
++	}
++
+ 	err = -EINVAL;
+ 	for (odr = 0; odr < ARRAY_SIZE(msa311_odr_table); odr++)
+ 		if (val == msa311_odr_table[odr].integral &&
+@@ -780,11 +784,11 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
+ 			break;
  		}
-+		if (i == ARRAY_SIZE(mma8452_os_ratio)) {
-+			ret = -EINVAL;
-+			break;
-+		}
- 		break;
- 	default:
- 		ret = -EINVAL;
+ 
+-	iio_device_release_direct_mode(indio_dev);
+-
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
+ 
++	iio_device_release_direct_mode(indio_dev);
++
+ 	if (err)
+ 		dev_err(dev, "can't update frequency (%pe)\n", ERR_PTR(err));
+ 
 -- 
 2.39.5
 
