@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F138A206F18;
-	Tue,  8 Apr 2025 12:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF36206F18;
+	Tue,  8 Apr 2025 12:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114725; cv=none; b=CgzKA5fvPaAo377dWD2bbl4abAi5jHln7N8EaCRlJFxbSjHqZgzFuAY0uIRZ/DUs2hUOB/bNH5H1bbazQswTQH9W5bc1z807QDuRLenh7KKJk39L6cYWQ/SR+B3fkhrfCn0FnMhnZ7ARuI6rhIQuWWPj+/wCeREIirA86d7gGQc=
+	t=1744114727; cv=none; b=TBB0PSiJ9uVppp/P+tMg8InwO5q9VECLwUoAN3HFAZuOfmQi1mPcPaizzjAXIPRW5cHjPBvD372tlnmregrlXVXynngtT6J/AG8IYvE+Txj45oKTcB+IdMG5tkUn7mpNEFfp5ez8IpKsK9lcCE4QiAC/GdEnqldcBtRrIjIZjIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114725; c=relaxed/simple;
-	bh=d+0drtCsFZ2t5vdYEb23k5nWa4J4SK7SBKqiMk8lfy4=;
+	s=arc-20240116; t=1744114727; c=relaxed/simple;
+	bh=ALx2zBFl2hFmTHGDneDCXIKjKV/giaXYS64TP4Hv30Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uN4U7fV2kcjJLy6j3VnxbdJq8xmcr4f4WsFHImjgkStXkJubzQe9eWs6lJfY38LlLkC74J8ktHXIg997NvbdHC1nfPi8HGBXUQ/Utl3+J+4HfBDN59u6yPxozVY+m+VZRt5KdwRdh0+apkHDjeo/ksYFSj5SGY7l+jTo1PEOXxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHr3DfTL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSxK9cwp/lnAUrV3hslXrSRh5jn4RLJroq/+71FyQfcqQ/qla0cmSogxdvO8760lMFejoE9idBmuc6kP/nzVi7nSOVlNHf7cpoFz4QyBhXyF9uSTa6AJPyL5NpJA5Q/TMCZRqPHbPFTcvLyjBHJmsddnySlR/JYTwSOz+MNV/CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnBtXPTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHr3DfTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAF4C4CEE5;
-	Tue,  8 Apr 2025 12:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnBtXPTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBF2C4CEE5;
+	Tue,  8 Apr 2025 12:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114724;
-	bh=d+0drtCsFZ2t5vdYEb23k5nWa4J4SK7SBKqiMk8lfy4=;
+	s=korg; t=1744114727;
+	bh=ALx2zBFl2hFmTHGDneDCXIKjKV/giaXYS64TP4Hv30Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHr3DfTLazywxaZTwbwYE2yca/UjKX2/qy5/nrXGvxTzkxmFvFhlkqKtQGBPv2589
-	 WSYuVm00a2sEUlL7QcY+n0oxKukz8zFXKUn15owmqRuYft7Ov2gw0TiLuESjOTiQUQ
-	 JCGs/7SgAL5uU/1BsXQLE46SSZVcC/ZeIfsnAzsE=
+	b=wnBtXPTUcT2BwND5J9kI0NxFNu1LqFfwSGXae5uH8BQ7S2DB2IPD2/r3toLDjxX8g
+	 5BtxrjaXJ03lYvdoGqTRFOAIRn6zhaFBqUQyhbdPBhWvN+/xpIda7pX5J1L7pt1r+p
+	 X9K3q1fJkZEKd5e2540JIB/XhcRlUnWQhVuHQ8TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Duberstein <tamird@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 173/499] rust: fix signature of rust_fmt_argument
-Date: Tue,  8 Apr 2025 12:46:25 +0200
-Message-ID: <20250408104855.490856438@linuxfoundation.org>
+Subject: [PATCH 6.13 174/499] crypto: tegra - Fix format specifier in tegra_sha_prep_cmd()
+Date: Tue,  8 Apr 2025 12:46:26 +0200
+Message-ID: <20250408104855.515309592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,76 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 901b3290bd4dc35e613d13abd03c129e754dd3dd ]
+[ Upstream commit 795e5bdb0ada2c77ea28611d88f1d5d7ca9b2f4d ]
 
-Without this change, the rest of this series will emit the following
-error message:
+When building for 32-bit targets, for which ssize_t is 'int' instead of
+'long', there is a warning due to an incorrect format specifier:
 
-error[E0308]: `if` and `else` have incompatible types
-  --> <linux>/rust/kernel/print.rs:22:22
-   |
-21 | #[export]
-   | --------- expected because of this
-22 | unsafe extern "C" fn rust_fmt_argument(
-   |                      ^^^^^^^^^^^^^^^^^ expected `u8`, found `i8`
-   |
-   = note: expected fn item `unsafe extern "C" fn(*mut u8, *mut u8, *mut c_void) -> *mut u8 {bindings::rust_fmt_argument}`
-              found fn item `unsafe extern "C" fn(*mut i8, *mut i8, *const c_void) -> *mut i8 {print::rust_fmt_argument}`
+  In file included from include/linux/printk.h:610,
+                   from include/linux/kernel.h:31,
+                   from include/linux/clk.h:13,
+                   from drivers/crypto/tegra/tegra-se-hash.c:7:
+  drivers/crypto/tegra/tegra-se-hash.c: In function 'tegra_sha_prep_cmd':
+  drivers/crypto/tegra/tegra-se-hash.c:343:26: error: format '%lu' expects argument of type 'long unsigned int', but argument 6 has type 'ssize_t' {aka 'int'} [-Werror=format=]
+    343 |         dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
+        |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ...
+  drivers/crypto/tegra/tegra-se-hash.c:343:59: note: format string is defined here
+    343 |         dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
+        |                                                         ~~^
+        |                                                           |
+        |                                                           long unsigned int
+        |                                                         %u
+  cc1: all warnings being treated as errors
 
-The error may be different depending on the architecture.
+Use '%zd', the proper specifier for ssize_t, to resolve the warning.
 
-To fix this, change the void pointer argument to use a const pointer,
-and change the imports to use crate::ffi instead of core::ffi for
-integer types.
-
-Fixes: 787983da7718 ("vsprintf: add new `%pA` format specifier")
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20250303-export-macro-v3-1-41fbad85a27f@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: ff4b7df0b511 ("crypto: tegra - Fix HASH intermediate result handling")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vsprintf.c       | 2 +-
- rust/kernel/print.rs | 7 +++----
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/crypto/tegra/tegra-se-hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/vsprintf.c b/lib/vsprintf.c
-index 9d3dac38a3f4a..2b86b2c72897f 100644
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -2299,7 +2299,7 @@ int __init no_hash_pointers_enable(char *str)
- early_param("no_hash_pointers", no_hash_pointers_enable);
+diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
+index 65a50f29bd7e6..42d007b7af45d 100644
+--- a/drivers/crypto/tegra/tegra-se-hash.c
++++ b/drivers/crypto/tegra/tegra-se-hash.c
+@@ -340,7 +340,7 @@ static int tegra_sha_prep_cmd(struct tegra_sha_ctx *ctx, u32 *cpuvaddr,
+ 	cpuvaddr[i++] = host1x_uclass_incr_syncpt_cond_f(1) |
+ 			host1x_uclass_incr_syncpt_indx_f(se->syncpt_id);
  
- /* Used for Rust formatting ('%pA'). */
--char *rust_fmt_argument(char *buf, char *end, void *ptr);
-+char *rust_fmt_argument(char *buf, char *end, const void *ptr);
+-	dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
++	dev_dbg(se->dev, "msg len %llu msg left %llu sz %zd cfg %#x",
+ 		msg_len, msg_left, rctx->datbuf.size, rctx->config);
  
- /*
-  * Show a '%p' thing.  A kernel extension is that the '%p' is followed
-diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
-index b19ee490be58f..61ee36c5e5f5d 100644
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -6,12 +6,11 @@
- //!
- //! Reference: <https://docs.kernel.org/core-api/printk-basics.html>
- 
--use core::{
-+use crate::{
-     ffi::{c_char, c_void},
--    fmt,
-+    str::RawFormatter,
- };
--
--use crate::str::RawFormatter;
-+use core::fmt;
- 
- // Called from `vsprintf` with format specifier `%pA`.
- #[expect(clippy::missing_safety_doc)]
+ 	return i;
 -- 
 2.39.5
 
