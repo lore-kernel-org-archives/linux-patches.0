@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECED22690FA;
-	Tue,  8 Apr 2025 12:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441562686A5;
+	Tue,  8 Apr 2025 12:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115143; cv=none; b=uWoHcqhyu4gy7D11ITvHZqvU+pBdXs6c3gyphJXpPHzYflxw5xJ6R4UwUMhi5cghWTNplceQAYNXYnzwF0+NlSvbLZivzZRpieKEPZpkH46F6hpMvCWjFWr7nf1nKoIHmRjBXGtYT1Yf5PVm/kBfSrfwvOp+Kn6L7ndcHKqAGGE=
+	t=1744115145; cv=none; b=BP8Wz8aJleI46q6TlIfi+2oPwKQxOgBh9ylkdUDe8SIhbntBuSw6ld3SU53Zyb2Azg335/sFRoB5hPVzAXU742aFkIE4aKwrni9zreDruuB6yR8afNMZQKeD6N2J7SOVPwv2oMat+qOWFFeArVD4UPuuxm7qyyomqlDbZcPu6NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115143; c=relaxed/simple;
-	bh=cE71sAvVkYL3JCzcKYZx0WCvptJnY3Z528QyeEE4TEE=;
+	s=arc-20240116; t=1744115145; c=relaxed/simple;
+	bh=WAYdlSY3tg9zhob5uewiLvxDQGh6GBlgAGAwKABraMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfEQI3fc1b7UauEffO/epwOSoi45SYUOhWWw+SqwBux/3QXXSKVxgutv6+IyXt8d1tR3MxiDR8iHNEo+zu4Uw7Q4rwHwZuPggA8A5HiU5DPiGkEUKg/KXbaCavwTdphQCwE5VjN3LntrReLueWqizO2vo8K6DKWiaJMWBW+czAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWcj+Cc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3aMJNmrb24x7ZLCeyR49XcGAkjbgcL9g6a31YiaGzP4q1dOUDC8+5bsphD5pTwruw8j6j73NzbJZZr2ROC2/OLUCJSfDjirnk/b1kmJtUynDSVSa3HuxKG8hG7tjA/mKzzGh1/87eIdYMv6NisBtldGdOtbFujazHbSKEfZAyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p3MShnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWcj+Cc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A22C4CEE5;
-	Tue,  8 Apr 2025 12:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p3MShnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FD2C4CEE5;
+	Tue,  8 Apr 2025 12:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115142;
-	bh=cE71sAvVkYL3JCzcKYZx0WCvptJnY3Z528QyeEE4TEE=;
+	s=korg; t=1744115145;
+	bh=WAYdlSY3tg9zhob5uewiLvxDQGh6GBlgAGAwKABraMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWcj+Cc9UulOJH/iNOsQ8gZwvf2U6avS0iEGgV4rln56q4UqzvpDkh4mXAEdNuPLX
-	 3cbbU+sOTBfmgNDObIK9U6cO5Xf/tYSqp0RVlRoPNH1Jvg24PMeoPI4N9FGJHpGSv0
-	 mdojqMpVOAG3AwcqjgDvXc8ScVf/5wjQMWvh8nOo=
+	b=0p3MShnXezH0+rYVar4jcuCkBs7yXwrrtLTn0VZBauz/qYLf6O1wclrBzmz4x9TuO
+	 PBCj3QfYf7UtAAe68RH2WJBQufPTNZi57RMuNvtHMKHapFTUyBqUsXNmgX5BaopavF
+	 eXxL+td/GFgfq1F/Uo9Hf6P74VWWvMI0LG7SlGHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
+	Vladis Dronov <vdronov@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Sean Christopherson <sean.j.christopherson@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 365/499] riscv: Fix check_unaligned_access_all_cpus
-Date: Tue,  8 Apr 2025 12:49:37 +0200
-Message-ID: <20250408104900.331860798@linuxfoundation.org>
+Subject: [PATCH 6.13 339/499] x86/sgx: Warn explicitly if X86_FEATURE_SGX_LC is not enabled
+Date: Tue,  8 Apr 2025 12:49:11 +0200
+Message-ID: <20250408104859.677638787@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,75 +57,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Vladis Dronov <vdronov@redhat.com>
 
-[ Upstream commit e6d0adf2eb5bb3244cb21a7a15899aa058bd384f ]
+[ Upstream commit 65be5c95d08eedda570a6c888a12384c77fe7614 ]
 
-check_vector_unaligned_access_emulated_all_cpus(), like its name
-suggests, will return true when all cpus emulate unaligned vector
-accesses. If the function returned false it may have been because
-vector isn't supported at all (!has_vector()) or because at least
-one cpu doesn't emulate unaligned vector accesses. Since false may
-be returned for two cases, checking for it isn't sufficient when
-attempting to determine if we should proceed with the vector speed
-check. Move the !has_vector() functionality to
-check_unaligned_access_all_cpus() in order for
-check_vector_unaligned_access_emulated_all_cpus() to return false
-for a single case.
+The kernel requires X86_FEATURE_SGX_LC to be able to create SGX enclaves,
+not just X86_FEATURE_SGX.
 
-Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250304120014.143628-13-ajones@ventanamicro.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+There is quite a number of hardware which has X86_FEATURE_SGX but not
+X86_FEATURE_SGX_LC. A kernel running on such hardware does not create
+the /dev/sgx_enclave file and does so silently.
+
+Explicitly warn if X86_FEATURE_SGX_LC is not enabled to properly notify
+users that the kernel disabled the SGX driver.
+
+The X86_FEATURE_SGX_LC, a.k.a. SGX Launch Control, is a CPU feature
+that enables LE (Launch Enclave) hash MSRs to be writable (with
+additional opt-in required in the 'feature control' MSR) when running
+enclaves, i.e. using a custom root key rather than the Intel proprietary
+key for enclave signing.
+
+I've hit this issue myself and have spent some time researching where
+my /dev/sgx_enclave file went on SGX-enabled hardware.
+
+Related links:
+
+  https://github.com/intel/linux-sgx/issues/837
+  https://patchwork.kernel.org/project/platform-driver-x86/patch/20180827185507.17087-3-jarkko.sakkinen@linux.intel.com/
+
+[ mingo: Made the error message a bit more verbose, and added other cases
+         where the kernel fails to create the /dev/sgx_enclave device node. ]
+
+Signed-off-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Kai Huang <kai.huang@intel.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Sean Christopherson <sean.j.christopherson@intel.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250309172215.21777-2-vdronov@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c       |  6 ------
- arch/riscv/kernel/unaligned_access_speed.c | 11 +++++++----
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/sgx/driver.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index aacbd9d7196e7..4354c87c0376f 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -609,12 +609,6 @@ bool __init check_vector_unaligned_access_emulated_all_cpus(void)
- {
- 	int cpu;
+diff --git a/arch/x86/kernel/cpu/sgx/driver.c b/arch/x86/kernel/cpu/sgx/driver.c
+index 22b65a5f5ec6c..7f8d1e11dbee2 100644
+--- a/arch/x86/kernel/cpu/sgx/driver.c
++++ b/arch/x86/kernel/cpu/sgx/driver.c
+@@ -150,13 +150,15 @@ int __init sgx_drv_init(void)
+ 	u64 xfrm_mask;
+ 	int ret;
  
--	if (!has_vector()) {
--		for_each_online_cpu(cpu)
--			per_cpu(vector_misaligned_access, cpu) = RISCV_HWPROBE_MISALIGNED_VECTOR_UNSUPPORTED;
--		return false;
--	}
--
- 	schedule_on_each_cpu(check_vector_unaligned_access_emulated);
+-	if (!cpu_feature_enabled(X86_FEATURE_SGX_LC))
++	if (!cpu_feature_enabled(X86_FEATURE_SGX_LC)) {
++		pr_info("SGX disabled: SGX launch control CPU feature is not available, /dev/sgx_enclave disabled.\n");
+ 		return -ENODEV;
++	}
  
- 	for_each_online_cpu(cpu)
-diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
-index 2e41b42498c76..78ab4cb2ab050 100644
---- a/arch/riscv/kernel/unaligned_access_speed.c
-+++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -406,13 +406,16 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
+ 	cpuid_count(SGX_CPUID, 0, &eax, &ebx, &ecx, &edx);
  
- static int __init check_unaligned_access_all_cpus(void)
- {
--	bool all_cpus_emulated, all_cpus_vec_unsupported;
-+	bool all_cpus_emulated;
-+	int cpu;
- 
- 	all_cpus_emulated = check_unaligned_access_emulated_all_cpus();
--	all_cpus_vec_unsupported = check_vector_unaligned_access_emulated_all_cpus();
- 
--	if (!all_cpus_vec_unsupported &&
--	    IS_ENABLED(CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS)) {
-+	if (!has_vector()) {
-+		for_each_online_cpu(cpu)
-+			per_cpu(vector_misaligned_access, cpu) = RISCV_HWPROBE_MISALIGNED_VECTOR_UNSUPPORTED;
-+	} else if (!check_vector_unaligned_access_emulated_all_cpus() &&
-+		   IS_ENABLED(CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS)) {
- 		kthread_run(vec_check_unaligned_access_speed_all_cpus,
- 			    NULL, "vec_check_unaligned_access_speed_all_cpus");
+ 	if (!(eax & 1))  {
+-		pr_err("SGX disabled: SGX1 instruction support not available.\n");
++		pr_info("SGX disabled: SGX1 instruction support not available, /dev/sgx_enclave disabled.\n");
+ 		return -ENODEV;
  	}
+ 
+@@ -173,8 +175,10 @@ int __init sgx_drv_init(void)
+ 	}
+ 
+ 	ret = misc_register(&sgx_dev_enclave);
+-	if (ret)
++	if (ret) {
++		pr_info("SGX disabled: Unable to register the /dev/sgx_enclave driver (%d).\n", ret);
+ 		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
