@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07324268FCB;
-	Tue,  8 Apr 2025 11:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68EA268FD5;
+	Tue,  8 Apr 2025 11:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111583; cv=none; b=BA2AeS9UsfFBmwQlS+WQoHRnqFHbrlSSNdQHCEK/3GBydCSQoZX4TrO457li46Qy5twmP2Ped1BNKeMobvB4iudnGDm7WlLrBVED5FHKRnfmtgycyeB5svkPaDk5b6xutx35ebSCinH+rqL08aTcXWGkbN8tgeYAnDo7vovgZ0E=
+	t=1744111585; cv=none; b=ZfoSB1kLP4ZNgvtrkklUzPKGuyGsjKBy63cMBzsNWLx8+ELd1Cf7nQJv0Y+YAqcedGrQ2gX/u5Ss4/TspqaCwAoru8znLwchDODn252vwm/IbJrhDRNQ+UYL4/f2xdrPCi2ftgTlwNjnhjvad+mEeMpfun7Y51HhxMnS7xa7sjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111583; c=relaxed/simple;
-	bh=b1knjCQNePHusw4FN0KUj6XyvqJRTlR4W25IVCiL/MM=;
+	s=arc-20240116; t=1744111585; c=relaxed/simple;
+	bh=JgTWD54CwU4kOVVpT/D1H69xqEZGib9pmIjVwyGmVCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c53xuLAzGUutI/Wcb4dPqEhA0ekgynJJ3TWpcMj+r/Vz3oNEuUjdyrW+iw+9IE1oMqA5fqT7ml4/+x29LFddEnqdcGKt57SYoep+AykTB6THCou/cOjNH4mK+JDMPaJjgDHperonBt+yxhVVBavgznycFK4/jL6MwwHAQPx+bSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsYAo+Gp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pC2ynH4pkGwUVWcrRWQmBGmCUW64zHeE0RfkKn+L6K4Lb5nhZxoMmFsTfOPNk2qUeuwZb/Dl1rofBMbGNpq5bFe9IAQ0YyIk1Zy+zWdnKejvwqld0A55dDqpV35XNJTWPfXzWVQ0V7Jvhz3fPgyAfUmAK/8Od9D15ddBA6N5zOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpYNzPYO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsYAo+Gp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6346DC4CEE5;
-	Tue,  8 Apr 2025 11:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpYNzPYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342EFC4CEEA;
+	Tue,  8 Apr 2025 11:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111582;
-	bh=b1knjCQNePHusw4FN0KUj6XyvqJRTlR4W25IVCiL/MM=;
+	s=korg; t=1744111585;
+	bh=JgTWD54CwU4kOVVpT/D1H69xqEZGib9pmIjVwyGmVCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsYAo+GpCRO1/o6MkQHLGtuSuN+zAruk3NXqOcRxGrGzN0iaO9RkeOZlhV18CIuxZ
-	 VNgi/Px9DSkJmnYEHyZ69/8YdZ0ti93tkUkFJGKnRX3AWo6xOQH8NVMrXmSRD4RbaE
-	 XyT0zjmF/f5++7V6tH4lcZlrrUSGsNOvnzF/xc1s=
+	b=kpYNzPYOSlwpH6HHwNIk1cG2W5v28wqycBq9A680mccokH7qzWvYZkzRiIpcfqEhH
+	 rT5xM41Cak0nCOD58nqjB8HONhPZoIvIKl1oqoW107zK8M7N7kuGwTBq7zB2iZJUfq
+	 tBgll1aj7LiYjoK5fF/ZplenEbdqvD9IzFdqSZ5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 466/731] perf pmu: Dynamically allocate tool PMU
-Date: Tue,  8 Apr 2025 12:46:03 +0200
-Message-ID: <20250408104925.118339732@linuxfoundation.org>
+Subject: [PATCH 6.14 484/731] perf tests: Fix data symbol test with LTO builds
+Date: Tue,  8 Apr 2025 12:46:21 +0200
+Message-ID: <20250408104925.534321936@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,99 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 72c6f57a4193f2eadceb52261315438719c4c1ad ]
+[ Upstream commit 36e7748d33bf6a82e558009e03448e9321465e05 ]
 
-perf_pmus__destroy() treats all PMUs as allocated and free's them so we
-can't have any static PMUs that are added to the PMU lists. Fix it by
-allocating the tool PMU in the same way as the others. Current users of
-the tool PMU already use find_pmu() and not perf_pmus__tool_pmu(), so
-rename the function to add 'new' to avoid it being misused in the
-future.
+With LTO builds, although regular builds could also see this as
+all the code is in one file, the datasym workload can realize the
+buf1.reserved data is never accessed. The compiler moves the
+variable to bss and only keeps the data1 and data2 parts as
+separate variables. This causes the symbol check to fail in the
+test. Make the variable volatile to disable the more aggressive
+optimization. Rename the variable to make which buf1 in perf is
+being referred to.
 
-perf_pmus__fake_pmu() can remain as static as it's not added to the
-PMU lists.
+Before:
 
-Fixes the following error:
+  $ perf test -vv "data symbol"
+  126: Test data symbol:
+  --- start ---
+  test child forked, pid 299808
+  perf does not have symbol 'buf1'
+  perf is missing symbols - skipping test
+  ---- end(-2) ----
+  126: Test data symbol                                                : Skip
+  $ nm perf|grep buf1
+  0000000000a5fa40 b buf1.0
+  0000000000a5fa48 b buf1.1
 
-  $ perf bench internals pmu-scan
+After:
 
-  # Running 'internals/pmu-scan' benchmark:
-  Computing performance of sysfs PMU event scan for 100 times
-  munmap_chunk(): invalid pointer
-  Aborted (core dumped)
+  $ nm perf|grep buf1
+  0000000000a53a00 d buf1
+  $ perf test -vv "data symbol"126: Test data symbol:
+  --- start ---
+  test child forked, pid 302166
+   a53a00-a53a39 l buf1
+  perf does have symbol 'buf1'
+  Recording workload...
+  Waiting for "perf record has started" message
+  OK
+  Cleaning up files...
+  ---- end(0) ----
+  126: Test data symbol                                                : Ok
 
-Fixes: 240505b2d0ad ("perf tool_pmu: Factor tool events into their own PMU")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250226104111.564443-2-james.clark@linaro.org
+Fixes: 3dfc01fe9d12 ("perf test: Add 'datasym' test workload")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250226230109.314580-1-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmus.c     |  2 +-
- tools/perf/util/tool_pmu.c | 23 +++++++++++------------
- tools/perf/util/tool_pmu.h |  2 +-
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ tools/perf/tests/shell/test_data_symbol.sh | 17 +++++++++--------
+ tools/perf/tests/workloads/datasym.c       | 11 ++++++-----
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
-index 8a0a919415d49..6498021acef01 100644
---- a/tools/perf/util/pmus.c
-+++ b/tools/perf/util/pmus.c
-@@ -268,7 +268,7 @@ static void pmu_read_sysfs(unsigned int to_read_types)
+diff --git a/tools/perf/tests/shell/test_data_symbol.sh b/tools/perf/tests/shell/test_data_symbol.sh
+index c86da02350596..7da606db97cb4 100755
+--- a/tools/perf/tests/shell/test_data_symbol.sh
++++ b/tools/perf/tests/shell/test_data_symbol.sh
+@@ -18,7 +18,7 @@ skip_if_no_mem_event() {
  
- 	if ((to_read_types & PERF_TOOL_PMU_TYPE_TOOL_MASK) != 0 &&
- 	    (read_pmu_types & PERF_TOOL_PMU_TYPE_TOOL_MASK) == 0) {
--		tool_pmu = perf_pmus__tool_pmu();
-+		tool_pmu = tool_pmu__new();
- 		list_add_tail(&tool_pmu->list, &other_pmus);
+ skip_if_no_mem_event || exit 2
+ 
+-skip_test_missing_symbol buf1
++skip_test_missing_symbol workload_datasym_buf1
+ 
+ TEST_PROGRAM="perf test -w datasym"
+ PERF_DATA=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
+@@ -26,18 +26,19 @@ ERR_FILE=$(mktemp /tmp/__perf_test.stderr.XXXXX)
+ 
+ check_result() {
+ 	# The memory report format is as below:
+-	#    99.92%  ...  [.] buf1+0x38
++	#    99.92%  ...  [.] workload_datasym_buf1+0x38
+ 	result=$(perf mem report -i ${PERF_DATA} -s symbol_daddr -q 2>&1 |
+-		 awk '/buf1/ { print $4 }')
++		 awk '/workload_datasym_buf1/ { print $4 }')
+ 
+-	# Testing is failed if has no any sample for "buf1"
++	# Testing is failed if has no any sample for "workload_datasym_buf1"
+ 	[ -z "$result" ] && return 1
+ 
+ 	while IFS= read -r line; do
+-		# The "data1" and "data2" fields in structure "buf1" have
+-		# offset "0x0" and "0x38", returns failure if detect any
+-		# other offset value.
+-		if [ "$line" != "buf1+0x0" ] && [ "$line" != "buf1+0x38" ]; then
++		# The "data1" and "data2" fields in structure
++		# "workload_datasym_buf1" have offset "0x0" and "0x38", returns
++		# failure if detect any other offset value.
++		if [ "$line" != "workload_datasym_buf1+0x0" ] && \
++		   [ "$line" != "workload_datasym_buf1+0x38" ]; then
+ 			return 1
+ 		fi
+ 	done <<< "$result"
+diff --git a/tools/perf/tests/workloads/datasym.c b/tools/perf/tests/workloads/datasym.c
+index 8ddb2aa6a049e..1d0b7d64e1ba1 100644
+--- a/tools/perf/tests/workloads/datasym.c
++++ b/tools/perf/tests/workloads/datasym.c
+@@ -10,7 +10,8 @@ typedef struct _buf {
+ 	char data2;
+ } buf __attribute__((aligned(64)));
+ 
+-static buf buf1 = {
++/* volatile to try to avoid the compiler seeing reserved as unused. */
++static volatile buf workload_datasym_buf1 = {
+ 	/* to have this in the data section */
+ 	.reserved[0] = 1,
+ };
+@@ -34,8 +35,8 @@ static int datasym(int argc, const char **argv)
+ 	alarm(sec);
+ 
+ 	while (!done) {
+-		buf1.data1++;
+-		if (buf1.data1 == 123) {
++		workload_datasym_buf1.data1++;
++		if (workload_datasym_buf1.data1 == 123) {
+ 			/*
+ 			 * Add some 'noise' in the loop to work around errata
+ 			 * 1694299 on Arm N1.
+@@ -49,9 +50,9 @@ static int datasym(int argc, const char **argv)
+ 			 * longer a continuous repeating pattern that interacts
+ 			 * badly with the bias.
+ 			 */
+-			buf1.data1++;
++			workload_datasym_buf1.data1++;
+ 		}
+-		buf1.data2 += buf1.data1;
++		workload_datasym_buf1.data2 += workload_datasym_buf1.data1;
  	}
- 	if ((to_read_types & PERF_TOOL_PMU_TYPE_HWMON_MASK) != 0 &&
-diff --git a/tools/perf/util/tool_pmu.c b/tools/perf/util/tool_pmu.c
-index 3a68debe71437..9156745ea180d 100644
---- a/tools/perf/util/tool_pmu.c
-+++ b/tools/perf/util/tool_pmu.c
-@@ -490,17 +490,16 @@ int evsel__tool_pmu_read(struct evsel *evsel, int cpu_map_idx, int thread)
  	return 0;
  }
- 
--struct perf_pmu *perf_pmus__tool_pmu(void)
-+struct perf_pmu *tool_pmu__new(void)
- {
--	static struct perf_pmu tool = {
--		.name = "tool",
--		.type = PERF_PMU_TYPE_TOOL,
--		.aliases = LIST_HEAD_INIT(tool.aliases),
--		.caps = LIST_HEAD_INIT(tool.caps),
--		.format = LIST_HEAD_INIT(tool.format),
--	};
--	if (!tool.events_table)
--		tool.events_table = find_core_events_table("common", "common");
--
--	return &tool;
-+	struct perf_pmu *tool = zalloc(sizeof(struct perf_pmu));
-+
-+	tool->name = strdup("tool");
-+	tool->type = PERF_PMU_TYPE_TOOL;
-+	INIT_LIST_HEAD(&tool->aliases);
-+	INIT_LIST_HEAD(&tool->caps);
-+	INIT_LIST_HEAD(&tool->format);
-+	tool->events_table = find_core_events_table("common", "common");
-+
-+	return tool;
- }
-diff --git a/tools/perf/util/tool_pmu.h b/tools/perf/util/tool_pmu.h
-index a60184859080f..c6ad1dd90a56d 100644
---- a/tools/perf/util/tool_pmu.h
-+++ b/tools/perf/util/tool_pmu.h
-@@ -51,6 +51,6 @@ int evsel__tool_pmu_open(struct evsel *evsel,
- 			 int start_cpu_map_idx, int end_cpu_map_idx);
- int evsel__tool_pmu_read(struct evsel *evsel, int cpu_map_idx, int thread);
- 
--struct perf_pmu *perf_pmus__tool_pmu(void);
-+struct perf_pmu *tool_pmu__new(void);
- 
- #endif /* __TOOL_PMU_H */
 -- 
 2.39.5
 
