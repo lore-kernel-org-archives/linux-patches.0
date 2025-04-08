@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006D1207E14;
-	Tue,  8 Apr 2025 11:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F7B267B7F;
+	Tue,  8 Apr 2025 11:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111235; cv=none; b=TM/UoivuNGX52sG7fKK4QaKSvWxNCnRYU6inIZ5ADfLOeAN9Tu/qJPzfHua9rouqoKuNprMiPlWa4un5tUCxoFDGjEMmQVSbTF6SrzulHPFlFQAvvWk+QhDgxSEyq0V/7D677JiMmGuXhzPSGUq7LNuYfugVj5URwDg1xwWdL0M=
+	t=1744111238; cv=none; b=nQcJ7BlGvQCeP2LkE9uMqJuYv3U57C3+vU++fOy3un6gAnCVPwJHKrUfpuDIjww4KG9+lMeePYY+3tUsqhYkphCIGH5p+/2CymbzJJsCopcLDMFwuKFUwVGNuIe1LF9+gS/Ql+dgakmkJo/lnVD6FL1nNGBbuxaGPLqZdXm/F/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111235; c=relaxed/simple;
-	bh=1FOIL3PO8UzH//Lml0ej4bMRmJ+quQrq3k82aQLVDUY=;
+	s=arc-20240116; t=1744111238; c=relaxed/simple;
+	bh=AdDONNAPUeDd7ueiBc6DSdomyniH6b7Q0949TLCOpaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ldzl+Krlf5vdDy39BwEBqMH1xKcC9v8SirZrP5T/2ugicwF+fbcX5ab+GQ3v44yRoe20WtJpC3EKq9oqKqxRcyVyru/heEsJqsGRyY4GBcJpX8MzEv784umB8y+wWlSIfDLIifgLT3cwjbr2s4+IfJaYCfoWz7vLnSYhRt2ljco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKwihWhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipZsPRCrr2Y9mHOtS9M858QGxvbOJdqR6MI5ILtWK39DthBSh55T0Kd38vySrwWjlMWTvk/X9Xv6ej/DyUYPqVvPpTT4WnsRfqPkL28CGwj1tvTAOd30Am1d4P1XMuhlziAMsiMpiW+ncnM1OKOJPYlsMyexoCekA6ttLOCSlM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi1nDtoR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKwihWhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856E5C4CEE5;
-	Tue,  8 Apr 2025 11:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi1nDtoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5A7C4CEE5;
+	Tue,  8 Apr 2025 11:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111234;
-	bh=1FOIL3PO8UzH//Lml0ej4bMRmJ+quQrq3k82aQLVDUY=;
+	s=korg; t=1744111237;
+	bh=AdDONNAPUeDd7ueiBc6DSdomyniH6b7Q0949TLCOpaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKwihWhzkHqbdegDmdcqGi7pf1IH5592RL6Dv829/lbONBazr+uBbXkh1Hcj7A03M
-	 TnJprOIkKnA6aYhKJlcbuH9kPjCk00UVapd5RTSQRH8oCnFmIrk7vNG6OA5rxaWEti
-	 Y43MjWX1OMN9X3LP0zZcw29ZxVpzG7WxgMhB46ZI=
+	b=Wi1nDtoRmQtLKXTIR1hHCV8I7r9jxlELCXbCaqFXpFK+yhkw4zPmW4dBBCxhjdgkP
+	 Ni7Bqeh+sWmCbxfu/kPn80bm+kWu7atZzSV3VdXN1B1IYTlfPpC9jYz8yuiiamkqGx
+	 HMfOHRhrtQx4rqny+mG6Zzof0B4qrEqaAOIM8+m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Akhil R <akhilrajeev@nvidia.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 358/731] crypto: bpf - Add MODULE_DESCRIPTION for skcipher
-Date: Tue,  8 Apr 2025 12:44:15 +0200
-Message-ID: <20250408104922.600601530@linuxfoundation.org>
+Subject: [PATCH 6.14 359/731] crypto: tegra - Use HMAC fallback when keyslots are full
+Date: Tue,  8 Apr 2025 12:44:16 +0200
+Message-ID: <20250408104922.623504992@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit f307c87ea06c64b87fcd3221a682cd713cde51e9 ]
+[ Upstream commit f80a2e2e77bedd0aa645a60f89b4f581c70accda ]
 
-All modules should have a description, building with extra warnings
-enabled prints this outfor the for bpf_crypto_skcipher module:
+The intermediate results for HMAC is stored in the allocated keyslot by
+the hardware. Dynamic allocation of keyslot during an operation is hence
+not possible. As the number of keyslots are limited in the hardware,
+fallback to the HMAC software implementation if keyslots are not available
 
-WARNING: modpost: missing MODULE_DESCRIPTION() in crypto/bpf_crypto_skcipher.o
-
-Add a description line.
-
-Fixes: fda4f71282b2 ("bpf: crypto: add skcipher to bpf crypto")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/bpf_crypto_skcipher.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/tegra/tegra-se-hash.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/bpf_crypto_skcipher.c b/crypto/bpf_crypto_skcipher.c
-index b5e657415770a..a88798d3e8c87 100644
---- a/crypto/bpf_crypto_skcipher.c
-+++ b/crypto/bpf_crypto_skcipher.c
-@@ -80,3 +80,4 @@ static void __exit bpf_crypto_skcipher_exit(void)
- module_init(bpf_crypto_skcipher_init);
- module_exit(bpf_crypto_skcipher_exit);
- MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Symmetric key cipher support for BPF");
+diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
+index 8bed13552ab9e..65a50f29bd7e6 100644
+--- a/drivers/crypto/tegra/tegra-se-hash.c
++++ b/drivers/crypto/tegra/tegra-se-hash.c
+@@ -632,13 +632,18 @@ static int tegra_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+ 			     unsigned int keylen)
+ {
+ 	struct tegra_sha_ctx *ctx = crypto_ahash_ctx(tfm);
++	int ret;
+ 
+ 	if (aes_check_keylen(keylen))
+ 		return tegra_hmac_fallback_setkey(ctx, key, keylen);
+ 
++	ret = tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
++	if (ret)
++		return tegra_hmac_fallback_setkey(ctx, key, keylen);
++
+ 	ctx->fallback = false;
+ 
+-	return tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
++	return 0;
+ }
+ 
+ static int tegra_sha_init(struct ahash_request *req)
 -- 
 2.39.5
 
