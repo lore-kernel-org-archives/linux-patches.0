@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077A9219301;
-	Tue,  8 Apr 2025 11:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFE8219301;
+	Tue,  8 Apr 2025 11:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112437; cv=none; b=uvUu2LSZuqjMuN0a/p9mZo3gp4wU0f6QSbOfyWl+zAcipZ8IoY+S056BUWw6tgYg/Qtc83/G2OgRuwTVfP3UiwGBy7Zq1pSr0gKmg1SBmgIoDFDYySrpHQlFK6IrkLgRVRIzeQmCnKkA+Y1fO0Ej2YSl/MOLloe5BMQqV5yEuYM=
+	t=1744112439; cv=none; b=YM0nIlnh1B4ysu+VG0H1bCOVKAjt8ge/vGODvAUT/Qsrj2fFPJ1b8hGHkd+mIGdeHrMDrpWQBwLC4ERmolGCSNNXl2Ypt139NohDTdjKx24mDffk3ZCWNjEolo7x8gcTdvD+55FAbNdEv8gVyRpkKper0GoDypIX5UVuVWI3O50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112437; c=relaxed/simple;
-	bh=pGt2rYwrzbJ/z1+UH8lFCylk+rUo8i02vZcsgYQzj0I=;
+	s=arc-20240116; t=1744112439; c=relaxed/simple;
+	bh=LjK27GKHtyQCL6Gfv5Kx5AuZs2L/CKjQHiZTUVqqw7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFBC7T6rJca3gqszt5aeVCezPn+VJfl2/BARhnCyO71a3l25VPeQSloBwZCfjjqIR6S0SbMX194uAM0tEZr8mOcEIjYpVqWGEGYm1d5F0aKaZUtk0bQv7rOQGUF3n0V6EcC5OfI7sdZcOqEK+jelVUKI9XErAeIUsjofsoy13wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Edp7Jcyf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBqxxFdx2D/85IFFymRqIiiol71dx5A3/KWIgAFedeMtVu7d+F+e4A7BUAa5frWp5MUaH7hoCG5kJOOvQdS+J02t2SI3uwCulJR0UBjeBPSa/p+FqJfujYjzTaGa0SO1yL8tyS3wPq/70iCJwpYqPwgZ2CSCXb0U6SP0dm3TlMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrDcgAh5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Edp7Jcyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BE1C4CEE5;
-	Tue,  8 Apr 2025 11:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrDcgAh5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47E5C4CEE5;
+	Tue,  8 Apr 2025 11:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112436;
-	bh=pGt2rYwrzbJ/z1+UH8lFCylk+rUo8i02vZcsgYQzj0I=;
+	s=korg; t=1744112439;
+	bh=LjK27GKHtyQCL6Gfv5Kx5AuZs2L/CKjQHiZTUVqqw7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Edp7JcyfsICfqWxBrR+UUNwoIJWvPerLuw8vH1QSMRIFzXQlbsIGtjvRZLiFY5mVv
-	 CI9hBwv10tn/NoJmi5M2qlseQJIVQITD4XR4Jl6g2TCGmx+aUaErIuqkYWZWHTmYZ/
-	 UiZi2wftimhpqWdTdIIyv51cB0pwdqnPqNzfE3BE=
+	b=UrDcgAh5dosp7cQAEs48rz5lKOLjE3XBftVE28whCjvlqZQHZk5NvLg0gNZCGdo/F
+	 LUUn7sxPVEeEAFwToa+0XBoioFXKH491X5iTRKXyjrNxWEP+bSEm8y1Bj5zKLVJTiC
+	 qTrc4MmQddh2sN+sNXZrMTM49bRlouDf5FzqI+gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/279] ASoC: codecs: wm0010: Fix error handling path in wm0010_spi_probe()
-Date: Tue,  8 Apr 2025 12:47:30 +0200
-Message-ID: <20250408104828.152329275@linuxfoundation.org>
+Subject: [PATCH 5.15 068/279] cifs: Fix integer overflow while processing acregmax mount option
+Date: Tue,  8 Apr 2025 12:47:31 +0200
+Message-ID: <20250408104828.178707294@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit ed92bc5264c4357d4fca292c769ea9967cd3d3b6 ]
+[ Upstream commit 7489161b1852390b4413d57f2457cd40b34da6cc ]
 
-Free some resources in the error handling path of the probe, as already
-done in the remove function.
+User-provided mount parameter acregmax of type u32 is intended to have
+an upper limit, but before it is validated, the value is converted from
+seconds to jiffies which can lead to an integer overflow.
 
-Fixes: e3523e01869d ("ASoC: wm0010: Add initial wm0010 DSP driver")
-Fixes: fd8b96574456 ("ASoC: wm0010: Clear IRQ as wake source and include missing header")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/5139ba1ab8c4c157ce04e56096a0f54a1683195c.1741549792.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 5780464614f6 ("cifs: Add new parameter "acregmax" for distinct file and directory metadata timeout")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm0010.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/cifs/fs_context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm0010.c b/sound/soc/codecs/wm0010.c
-index 28b4656c4e149..b2f87af1bfc87 100644
---- a/sound/soc/codecs/wm0010.c
-+++ b/sound/soc/codecs/wm0010.c
-@@ -952,7 +952,7 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 	if (ret) {
- 		dev_err(wm0010->dev, "Failed to set IRQ %d as wake source: %d\n",
- 			irq, ret);
--		return ret;
-+		goto free_irq;
- 	}
- 
- 	if (spi->max_speed_hz)
-@@ -964,9 +964,18 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 				     &soc_component_dev_wm0010, wm0010_dai,
- 				     ARRAY_SIZE(wm0010_dai));
- 	if (ret < 0)
--		return ret;
-+		goto disable_irq_wake;
- 
- 	return 0;
-+
-+disable_irq_wake:
-+	irq_set_irq_wake(wm0010->irq, 0);
-+
-+free_irq:
-+	if (wm0010->irq)
-+		free_irq(wm0010->irq, wm0010);
-+
-+	return ret;
- }
- 
- static int wm0010_spi_remove(struct spi_device *spi)
+diff --git a/fs/cifs/fs_context.c b/fs/cifs/fs_context.c
+index fb3651513f83a..d86cbed997fdd 100644
+--- a/fs/cifs/fs_context.c
++++ b/fs/cifs/fs_context.c
+@@ -1055,11 +1055,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		ctx->got_wsize = true;
+ 		break;
+ 	case Opt_acregmax:
+-		ctx->acregmax = HZ * result.uint_32;
+-		if (ctx->acregmax > CIFS_MAX_ACTIMEO) {
++		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
+ 			cifs_errorf(fc, "acregmax too large\n");
+ 			goto cifs_parse_mount_err;
+ 		}
++		ctx->acregmax = HZ * result.uint_32;
+ 		break;
+ 	case Opt_acdirmax:
+ 		ctx->acdirmax = HZ * result.uint_32;
 -- 
 2.39.5
 
