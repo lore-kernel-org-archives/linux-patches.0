@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18B71FBCB2;
-	Tue,  8 Apr 2025 11:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639361FBCB2;
+	Tue,  8 Apr 2025 11:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110503; cv=none; b=HDXC0BYzYOm7ZnAyIG65ijGQ+bwkK7+La2x2BkUMEgDPRbsGRcDaT7xgfP/yM8inYpWWL7Pkg6avXFi7IpcZV808gSYnWe3txLHy2rVMyYASqUfKahOj/PkHKwgFSxxZpMuRlZ97mSzsONFwgX1pIhEXdL23HOKyh/77blYctzw=
+	t=1744110506; cv=none; b=iWvmgFYFAqgWFy16aHNGF4dMHwTDv+n06r6xDX3WTUFSdTKxx0ekVNEbp9OQWpeIqIFZzODSySqECwrtRVE3rHNFnmrwJ0d9pwSIvBGwWNpfgbKaLyy1JO7FBlfsIHuTekASCGw1q79yGmHf/aAUwaTkGNyN+AkGpqsAqAOJDIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110503; c=relaxed/simple;
-	bh=vdaz0aLwlLZLMkSErmkdnCnp5AuCV4FUDZ6IfJuQgU4=;
+	s=arc-20240116; t=1744110506; c=relaxed/simple;
+	bh=j93atKpkvIL7wTiCYkFwV8ZJIoqyuuwNztd3m9lIVZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttSQLzpOFYke0zgDzenkFxTFjc4I0JTwd2htiUrltu8JtoxLJcMmY+fmqaz2s6O0EiSaWYKvXAPVtPzHfzJxu6dW1NO08SWUzTury59ktzpH94ZdJi9HhYwUFPExqOnydhIo9gE776jSnEGaTRJPI7BRDpomaBNKHPmKvN/dnzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGkNjW7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ozdTfEb7GfutN+fwtOUT1xDcwoZJpGltvHbSud4iBNQjUSX6LomxAQqOo86eRctAa4pEtz7LSk2Ws0WpVpO1P2juC/yjpU3m3EhUAhdoZ/XBgpC2HSWmZ8QkJ9N/BqnTBhKZIKY5TuqDMLcok3s7ttdzWxATpqCXdMNDjHLXw1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+j1vjyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGkNjW7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F528C4CEE5;
-	Tue,  8 Apr 2025 11:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+j1vjyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2965C4CEE5;
+	Tue,  8 Apr 2025 11:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110503;
-	bh=vdaz0aLwlLZLMkSErmkdnCnp5AuCV4FUDZ6IfJuQgU4=;
+	s=korg; t=1744110506;
+	bh=j93atKpkvIL7wTiCYkFwV8ZJIoqyuuwNztd3m9lIVZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGkNjW7+m+5zRmeVq6+tQorMsO60QAgDy57v6LIL8gChRtw2EAKbero0o1X2yBMsP
-	 eLd5rQSJzUoj67d83bt6C8f4Ss0W+mXmAeCqVy+Fwomf0y4l04BFpVci23WZ/kHpRY
-	 60wetwP5zPfheC23pvrm7LkxmA3aWIxqnuleTABA=
+	b=0+j1vjyAVi4TOCB3MxfAizivM5TIVW6p0ocn+wfCexoUn3I/dApBeHpdYbY6i6FJ6
+	 PiMS0ne7jsxZp8SR5k8if3OH0jV5iFjwkAf6RW6raoqahyY3gNzFOH3dD2hwMhOzl2
+	 D1nmTudx3RPDlZV3RtY/8hkjrdN8vd87hyWnD5AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Kleen <ak@linux.intel.com>,
-	Alexey Budankov <alexey.budankov@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 048/731] perf/x86/lbr: Fix shorter LBRs call stacks for the system-wide mode
-Date: Tue,  8 Apr 2025 12:39:05 +0200
-Message-ID: <20250408104915.393358149@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	David Hildenbrand <david@redhat.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Peter Newman <peternewman@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Carl Worth <carl@os.amperecomputing.com>,
+	Amit Singh Tomar <amitsinght@marvell.com>,
+	Shanker Donthineni <sdonthineni@nvidia.com>
+Subject: [PATCH 6.14 039/731] x86/resctrl: Fix allocation of cleanest CLOSID on platforms with no monitors
+Date: Tue,  8 Apr 2025 12:38:56 +0200
+Message-ID: <20250408104915.184392117@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,153 +61,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: James Morse <james.morse@arm.com>
 
-[ Upstream commit 3cec9fd03543c1e2919f906353e5cba079ae0a7c ]
+[ Upstream commit a121798ae669351ec0697c94f71c3a692b2a755b ]
 
-In the system-wide mode, LBR callstacks are shorter in comparison to
-the per-process mode.
+Commit
 
-LBR MSRs are reset during a context switch in the system-wide mode. For
-the LBR call stack, the LBRs should be always saved/restored during a
-context switch.
+  6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
 
-Use the space in task_struct to save/restore the LBR call stack data.
+added logic that causes resctrl to search for the CLOSID with the fewest dirty
+cache lines when creating a new control group, if requested by the arch code.
+This depends on the values read from the llc_occupancy counters. The logic is
+applicable to architectures where the CLOSID effectively forms part of the
+monitoring identifier and so do not allow complete freedom to choose an unused
+monitoring identifier for a given CLOSID.
 
-For a system-wide event, it's unnecessagy to update the
-lbr_callstack_users for each threads. Add a variable in x86_pmu to
-indicate whether the system-wide event is active.
+This support missed that some platforms may not have these counters.  This
+causes a NULL pointer dereference when creating a new control group as the
+array was not allocated by dom_data_init().
 
-Fixes: 76cb2c617f12 ("perf/x86/intel: Save/restore LBR stack during context switch")
-Reported-by: Andi Kleen <ak@linux.intel.com>
-Reported-by: Alexey Budankov <alexey.budankov@linux.intel.com>
-Debugged-by: Alexey Budankov <alexey.budankov@linux.intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250314172700.438923-5-kan.liang@linux.intel.com
+As this feature isn't necessary on platforms that don't have cache occupancy
+monitors, add this to the check that occurs when a new control group is
+allocated.
+
+Fixes: 6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Carl Worth <carl@os.amperecomputing.com> # arm64
+Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Tested-by: Peter Newman <peternewman@google.com>
+Tested-by: Amit Singh Tomar <amitsinght@marvell.com> # arm64
+Tested-by: Shanker Donthineni <sdonthineni@nvidia.com> # arm64
+Tested-by: Babu Moger <babu.moger@amd.com>
+Link: https://lore.kernel.org/r/20250311183715.16445-2-james.morse@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/lbr.c  | 47 ++++++++++++++++++++++++++++++------
- arch/x86/events/perf_event.h |  1 +
- 2 files changed, 40 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
-index dafeee216f3b6..24719adbcd7ea 100644
---- a/arch/x86/events/intel/lbr.c
-+++ b/arch/x86/events/intel/lbr.c
-@@ -422,11 +422,17 @@ static __always_inline bool lbr_is_reset_in_cstate(void *ctx)
- 	return !rdlbr_from(((struct x86_perf_task_context *)ctx)->tos, NULL);
- }
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 6419e04d8a7b2..04b653d613e88 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -157,7 +157,8 @@ static int closid_alloc(void)
  
-+static inline bool has_lbr_callstack_users(void *ctx)
-+{
-+	return task_context_opt(ctx)->lbr_callstack_users ||
-+	       x86_pmu.lbr_callstack_users;
-+}
-+
- static void __intel_pmu_lbr_restore(void *ctx)
- {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+ 	lockdep_assert_held(&rdtgroup_mutex);
  
--	if (task_context_opt(ctx)->lbr_callstack_users == 0 ||
-+	if (!has_lbr_callstack_users(ctx) ||
- 	    task_context_opt(ctx)->lbr_stack_state == LBR_NONE) {
- 		intel_pmu_lbr_reset();
- 		return;
-@@ -503,7 +509,7 @@ static void __intel_pmu_lbr_save(void *ctx)
- {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
- 
--	if (task_context_opt(ctx)->lbr_callstack_users == 0) {
-+	if (!has_lbr_callstack_users(ctx)) {
- 		task_context_opt(ctx)->lbr_stack_state = LBR_NONE;
- 		return;
- 	}
-@@ -543,6 +549,7 @@ void intel_pmu_lbr_sched_task(struct perf_event_pmu_context *pmu_ctx,
- 			      struct task_struct *task, bool sched_in)
- {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+	struct perf_ctx_data *ctx_data;
- 	void *task_ctx;
- 
- 	if (!cpuc->lbr_users)
-@@ -553,14 +560,18 @@ void intel_pmu_lbr_sched_task(struct perf_event_pmu_context *pmu_ctx,
- 	 * the task was scheduled out, restore the stack. Otherwise flush
- 	 * the LBR stack.
- 	 */
--	task_ctx = pmu_ctx ? pmu_ctx->task_ctx_data : NULL;
-+	rcu_read_lock();
-+	ctx_data = rcu_dereference(task->perf_ctx_data);
-+	task_ctx = ctx_data ? ctx_data->data : NULL;
- 	if (task_ctx) {
- 		if (sched_in)
- 			__intel_pmu_lbr_restore(task_ctx);
- 		else
- 			__intel_pmu_lbr_save(task_ctx);
-+		rcu_read_unlock();
- 		return;
- 	}
-+	rcu_read_unlock();
- 
- 	/*
- 	 * Since a context switch can flip the address space and LBR entries
-@@ -589,9 +600,19 @@ void intel_pmu_lbr_add(struct perf_event *event)
- 
- 	cpuc->br_sel = event->hw.branch_reg.reg;
- 
--	if (branch_user_callstack(cpuc->br_sel) && event->pmu_ctx->task_ctx_data)
--		task_context_opt(event->pmu_ctx->task_ctx_data)->lbr_callstack_users++;
-+	if (branch_user_callstack(cpuc->br_sel)) {
-+		if (event->attach_state & PERF_ATTACH_TASK) {
-+			struct task_struct *task = event->hw.target;
-+			struct perf_ctx_data *ctx_data;
- 
-+			rcu_read_lock();
-+			ctx_data = rcu_dereference(task->perf_ctx_data);
-+			if (ctx_data)
-+				task_context_opt(ctx_data->data)->lbr_callstack_users++;
-+			rcu_read_unlock();
-+		} else
-+			x86_pmu.lbr_callstack_users++;
-+	}
- 	/*
- 	 * Request pmu::sched_task() callback, which will fire inside the
- 	 * regular perf event scheduling, so that call will:
-@@ -665,9 +686,19 @@ void intel_pmu_lbr_del(struct perf_event *event)
- 	if (!x86_pmu.lbr_nr)
- 		return;
- 
--	if (branch_user_callstack(cpuc->br_sel) &&
--	    event->pmu_ctx->task_ctx_data)
--		task_context_opt(event->pmu_ctx->task_ctx_data)->lbr_callstack_users--;
-+	if (branch_user_callstack(cpuc->br_sel)) {
-+		if (event->attach_state & PERF_ATTACH_TASK) {
-+			struct task_struct *task = event->hw.target;
-+			struct perf_ctx_data *ctx_data;
-+
-+			rcu_read_lock();
-+			ctx_data = rcu_dereference(task->perf_ctx_data);
-+			if (ctx_data)
-+				task_context_opt(ctx_data->data)->lbr_callstack_users--;
-+			rcu_read_unlock();
-+		} else
-+			x86_pmu.lbr_callstack_users--;
-+	}
- 
- 	if (event->hw.flags & PERF_X86_EVENT_LBR_SELECT)
- 		cpuc->lbr_select = 0;
-diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
-index ce7c98364d5b6..b93b526d6834a 100644
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -914,6 +914,7 @@ struct x86_pmu {
- 		const int	*lbr_sel_map;	   /* lbr_select mappings */
- 		int		*lbr_ctl_map;	   /* LBR_CTL mappings */
- 	};
-+	u64		lbr_callstack_users;	   /* lbr callstack system wide users */
- 	bool		lbr_double_abort;	   /* duplicated lbr aborts */
- 	bool		lbr_pt_coexist;		   /* (LBR|BTS) may coexist with PT */
- 
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID) &&
++	    is_llc_occupancy_enabled()) {
+ 		cleanest_closid = resctrl_find_cleanest_closid();
+ 		if (cleanest_closid < 0)
+ 			return cleanest_closid;
 -- 
 2.39.5
 
