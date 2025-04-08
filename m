@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621722690C0;
-	Tue,  8 Apr 2025 11:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F83422424C;
+	Tue,  8 Apr 2025 11:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111842; cv=none; b=uYlfKaXo2mq5pFsuDmPW1PGS8tqlRZYytjtqo2K4MsYFglRkaG8NGg8sJTaAN2VdHuVNjw50qRfZm0RtYa4s0ZXH3yTTbw0McMhkw9/KED2djbm4n9MHBKcIjV2Eu9z1SBz/4O5z7HixvsO59no3P6DC4/a3xy2S1dpCQuRGk5Y=
+	t=1744111845; cv=none; b=MkCdT3j4GMcK3bBvHoAOM31pg8xEQJHiwowKJnX1Jhd0pnBkLbCuQggN6chj0yzcI+KB0/tfaRgPcFBHi1R0U6S0dHmrh86T0Q+QXiIqudp9fxLUqtNrhZm5vq5SiRFGeVJB/pacNNxuOLmmVT1Ndrer+9YndtnPpQKYoKFAxok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111842; c=relaxed/simple;
-	bh=6nMAZlCS1kNXGpWUqtvEj4ZFKHoav+m6Gw5zg5SOI/0=;
+	s=arc-20240116; t=1744111845; c=relaxed/simple;
+	bh=9G9yG/FPqBUxQ9KJpgmXsVVl3HlkYmvtNoSyl3ArjCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7IKEdpJ7aOH1oRDsxMY+3j0Ab+VPtdpN+piIZfiTrPGARKzZneAPpaqrPCWsPQD+ll1nHAME1dUW3NBmTjn/sd4PpRW8mYuptMCznvKX/84HDYAxijJi7rxi84UfcGz21YgP1CNvxn6BXtaKgQYHPjFN/LMRc5HHM1KsWROzEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3sLi1H4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R2ZjbUw0ua5hqJbKiEz+SL4f7AKdbzTox81FsfEFdrVJy3nm4YnXr2kMELjgmxcoCyxqgABeL4SpJLOYczJdj/jK/feOEBwtq6msCW4fraYA51VAiqelEXXBK7UnJht2mAZ3/0Q8F7qwTcqXWSGRoBzkXJ8Xz8zOxe5RnT+Vi3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/O1DJRt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3sLi1H4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CF2C4CEEA;
-	Tue,  8 Apr 2025 11:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/O1DJRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B6FC4CEE5;
+	Tue,  8 Apr 2025 11:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111842;
-	bh=6nMAZlCS1kNXGpWUqtvEj4ZFKHoav+m6Gw5zg5SOI/0=;
+	s=korg; t=1744111844;
+	bh=9G9yG/FPqBUxQ9KJpgmXsVVl3HlkYmvtNoSyl3ArjCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3sLi1H4QpNNf0ZSVFE2XbJBRBMlW15FMBxhNYBs+8mvdJ55K1MOl2qKDMvcOLnlN
-	 tu84FMN0DIiVm7jWoFjV48LsKTYZl4JsLADcfLI2Mkn+hB0aARjZjVvMHO0eGMxs4z
-	 LIRNu3WWHBw3S9DU7n1MQtsiBvzRYKuTCXElobjw=
+	b=x/O1DJRt/dFj+4JPW2kJwi//ZiHzpY6Umo3kvlssdUH/x2F1BmUsz8OYQiXwh2/aO
+	 /6LlBFpxKXlbBLUoSW5ntDeMtwKzwrMBwpDIylYaohbDQ/8ehAN8T74M5Qd6k1enKH
+	 ExO2lUFvyiP2q+YUKWSs2ni/Vd6GVz6GsTOqOtbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 579/731] spufs: fix a leak in spufs_create_context()
-Date: Tue,  8 Apr 2025 12:47:56 +0200
-Message-ID: <20250408104927.741678742@linuxfoundation.org>
+Subject: [PATCH 6.14 580/731] fs/9p: fix NULL pointer dereference on mkdir
+Date: Tue,  8 Apr 2025 12:47:57 +0200
+Message-ID: <20250408104927.764438224@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,37 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Christian Schoenebeck <linux_oss@crudebyte.com>
 
-[ Upstream commit 0f5cce3fc55b08ee4da3372baccf4bcd36a98396 ]
+[ Upstream commit 3f61ac7c65bdb26accb52f9db66313597e759821 ]
 
-Leak fixes back in 2008 missed one case - if we are trying to set affinity
-and spufs_mkdir() fails, we need to drop the reference to neighbor.
+When a 9p tree was mounted with option 'posixacl', parent directory had a
+default ACL set for its subdirectories, e.g.:
 
-Fixes: 58119068cb27 "[POWERPC] spufs: Fix memory leak on SPU affinity"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+  setfacl -m default:group:simpsons:rwx parentdir
+
+then creating a subdirectory crashed 9p client, as v9fs_fid_add() call in
+function v9fs_vfs_mkdir_dotl() sets the passed 'fid' pointer to NULL
+(since dafbe689736) even though the subsequent v9fs_set_create_acl() call
+expects a valid non-NULL 'fid' pointer:
+
+  [   37.273191] BUG: kernel NULL pointer dereference, address: 0000000000000000
+  ...
+  [   37.322338] Call Trace:
+  [   37.323043]  <TASK>
+  [   37.323621] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+  [   37.324448] ? page_fault_oops (arch/x86/mm/fault.c:714)
+  [   37.325532] ? search_module_extables (kernel/module/main.c:3733)
+  [   37.326742] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.328006] ? search_bpf_extables (kernel/bpf/core.c:804)
+  [   37.329142] ? exc_page_fault (./arch/x86/include/asm/paravirt.h:686 arch/x86/mm/fault.c:1488 arch/x86/mm/fault.c:1538)
+  [   37.330196] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:574)
+  [   37.331330] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.332562] ? v9fs_fid_xattr_get (fs/9p/xattr.c:30) 9p
+  [   37.333824] v9fs_fid_xattr_set (fs/9p/fid.h:23 fs/9p/xattr.c:121) 9p
+  [   37.335077] v9fs_set_acl (fs/9p/acl.c:276) 9p
+  [   37.336112] v9fs_set_create_acl (fs/9p/acl.c:307) 9p
+  [   37.337326] v9fs_vfs_mkdir_dotl (fs/9p/vfs_inode_dotl.c:411) 9p
+  [   37.338590] vfs_mkdir (fs/namei.c:4313)
+  [   37.339535] do_mkdirat (fs/namei.c:4336)
+  [   37.340465] __x64_sys_mkdir (fs/namei.c:4354)
+  [   37.341455] do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+  [   37.342447] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fix this by simply swapping the sequence of these two calls in
+v9fs_vfs_mkdir_dotl(), i.e. calling v9fs_set_create_acl() before
+v9fs_fid_add().
+
+Fixes: dafbe689736f ("9p fid refcount: cleanup p9_fid_put calls")
+Reported-by: syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com
+Signed-off-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <E1tsiI6-002iMG-Kh@kylie.crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/cell/spufs/inode.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/9p/vfs_inode_dotl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
-index c566e7997f2c1..9f9e4b8716278 100644
---- a/arch/powerpc/platforms/cell/spufs/inode.c
-+++ b/arch/powerpc/platforms/cell/spufs/inode.c
-@@ -460,8 +460,11 @@ spufs_create_context(struct inode *inode, struct dentry *dentry,
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index 143ac03b7425c..3397939fd2d5a 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -407,8 +407,8 @@ static int v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
+ 			 err);
+ 		goto error;
  	}
- 
- 	ret = spufs_mkdir(inode, dentry, flags, mode & 0777);
--	if (ret)
-+	if (ret) {
-+		if (neighbor)
-+			put_spu_context(neighbor);
- 		goto out_aff_unlock;
-+	}
- 
- 	if (affinity) {
- 		spufs_set_affinity(flags, SPUFS_I(d_inode(dentry))->i_ctx,
+-	v9fs_fid_add(dentry, &fid);
+ 	v9fs_set_create_acl(inode, fid, dacl, pacl);
++	v9fs_fid_add(dentry, &fid);
+ 	d_instantiate(dentry, inode);
+ 	err = 0;
+ 	inc_nlink(dir);
 -- 
 2.39.5
 
