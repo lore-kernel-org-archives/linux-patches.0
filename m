@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1C322171A;
-	Tue,  8 Apr 2025 11:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F594265CC8;
+	Tue,  8 Apr 2025 11:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110482; cv=none; b=CZWHiMBiYYf1HeBJylD3LJDpJSCy2sw4mIwkuAwzJm6vtdwamIO1jiSCu1+M+UOrri2khPuq4YwsT9zH8TpL4RNMvV2Nc113XL43NmZPCjXJXSmS79LKxyfdvh4aU8eZD/ucR0xwZt7IFdiPbNR6s7x4iaNqHPMdJII+3q/2Hmc=
+	t=1744110485; cv=none; b=nqEQm4cqlVttzn6ddkTzIwSmnVkZ8cbdOo5I/opRd/G56P1z7Ak4IxQcweQcxE3m6SwD17aJ1w25F5CqsZ3XOGz74DSEn4LVhWrG3znpu9de/lKQf9AsMUXllvnhyZVIxEyHUJBqHDEH71+8Sc12ZtCCaSMYoI4bZPRbau6bAIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110482; c=relaxed/simple;
-	bh=Byvg1H6Ei+xjKkRHM75XFT2a102zuP1uNRXxkdDwyQY=;
+	s=arc-20240116; t=1744110485; c=relaxed/simple;
+	bh=g/hFzIXuMryhcZST0ykU8dk1zmVibns0d1LwjU9S1vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW7SizmW1SWF8cvBPsAVjW1aIhspBljvfc5IzQmFGA+iJyNsqz6YuoTvMDho3Xrgimb2uaRXg311t/pBvqfCj0gk+9NFXSRCbkG4piOO02v2363DxkkSK06/KSQ4sgpxjavb04MAu3ADP3sHYu8GjOggTxAqyxVZTb8SWx1Bhp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYl2jwIr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErYy41GFf7iX1EbcsiOkZwlN0YoxLCK+2JcO36I3WNQ7d6BS28Jw+uNAxABIfPTJ4BL1CcxdYxok/iCQ2gOfbosEH0xaqsZ0Ssrwa5n8ApCkST+8zegU3pmP9pXFZibO7/pxPN6QF8bI3Q6VNOCAGnhtq8OdjDVITUq7N3h16nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnPbMxbK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYl2jwIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6B4C4CEEA;
-	Tue,  8 Apr 2025 11:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnPbMxbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4784C4CEE5;
+	Tue,  8 Apr 2025 11:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110482;
-	bh=Byvg1H6Ei+xjKkRHM75XFT2a102zuP1uNRXxkdDwyQY=;
+	s=korg; t=1744110485;
+	bh=g/hFzIXuMryhcZST0ykU8dk1zmVibns0d1LwjU9S1vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYl2jwIrtQULXWLr7sY9GS3WUvFp1In7Z4WSobZYmqULWz40kF9v1WwkQvyszHZb4
-	 slo0lSPeWstHbKR37KqOvP3cjICaH71GaeYvW1B5rJ6E9HkEA93b49Sy6hJI1LdSX2
-	 zxcyHdhunqNoQpoMmVR1kUppxe9aFZgpuqQWlA2Q=
+	b=GnPbMxbKQr6zPRXfCAzNFQtRGXTXad2ekc+eOGqmT6TXneiHTLef0ubjpKPJcnPZ6
+	 aPCedIC+5+CpoIyDM/bKza6G+TylT9jwAdKqO60bsqc9TXGDV9xWo0BVX7Q4SDAaUV
+	 EvoffI2XmSrx85MMaFFGcuzYVFsmStoS1ovg6IUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Rameshkumar Sundaram <quic_ramess@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 043/731] lockdep: Dont disable interrupts on RT in disable_irq_nosync_lockdep.*()
-Date: Tue,  8 Apr 2025 12:39:00 +0200
-Message-ID: <20250408104915.279286927@linuxfoundation.org>
+Subject: [PATCH 6.14 079/731] wifi: ath12k: Fix pdev lookup in WBM error processing
+Date: Tue,  8 Apr 2025 12:39:36 +0200
+Message-ID: <20250408104916.108511620@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,79 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Rameshkumar Sundaram <quic_ramess@quicinc.com>
 
-[ Upstream commit 87886b32d669abc11c7be95ef44099215e4f5788 ]
+[ Upstream commit 4e635b81db9d69bbb836afae8cb402978ff966a4 ]
 
-disable_irq_nosync_lockdep() disables interrupts with lockdep enabled to
-avoid false positive reports by lockdep that a certain lock has not been
-acquired with disabled interrupts. The user of this macros expects that
-a lock can be acquried without disabling interrupts because the IRQ line
-triggering the interrupt is disabled.
+Currently in ath12k_dp_rx_process_wbm_err(), when processing packets
+received on the WBM error ring, pdev validation is done based upon the
+hw_link_id. But hw_link_id corresponds to link id of a given partner pdev
+in a MLO hardware group, and is not the correct index to use to lookup a
+pdev in an SoC(ab). As a result, pdev validation fails, and the reaped
+packets are dropped instead of being processed.
 
-This triggers a warning on PREEMPT_RT because after
-disable_irq_nosync_lockdep.*() the following spinlock_t now is acquired
-with disabled interrupts.
+The correct index to use is the pdev_id, which is already derived in the
+function. So update the logic to validate the pdev based upon the pdev_id
+instead of the hw_link_id. This matches the logic used in other Rx ring
+processing functions.
 
-On PREEMPT_RT there is no difference between spin_lock() and
-spin_lock_irq() so avoiding disabling interrupts in this case works for
-the two remaining callers as of today.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Don't disable interrupts on PREEMPT_RT in disable_irq_nosync_lockdep.*().
-
-Closes: https://lore.kernel.org/760e34f9-6034-40e0-82a5-ee9becd24438@roeck-us.net
-Fixes: e8106b941ceab ("[PATCH] lockdep: core, add enable/disable_irq_irqsave/irqrestore() APIs")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250212103619.2560503-2-bigeasy@linutronix.de
+Fixes: 1a73acb5fba4 ("wifi: ath12k: move to HW link id based receive handling")
+Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
+Link: https://patch.msgid.link/20250102043048.2596791-1-quic_ramess@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 8cd9327e4e78d..a1b1be9bf73b2 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -448,7 +448,7 @@ irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
- static inline void disable_irq_nosync_lockdep(unsigned int irq)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_disable();
- #endif
- }
-@@ -456,7 +456,7 @@ static inline void disable_irq_nosync_lockdep(unsigned int irq)
- static inline void disable_irq_nosync_lockdep_irqsave(unsigned int irq, unsigned long *flags)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_save(*flags);
- #endif
- }
-@@ -471,7 +471,7 @@ static inline void disable_irq_lockdep(unsigned int irq)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index dad35bfd83f62..68d609f2ac60e 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -4032,7 +4032,7 @@ int ath12k_dp_rx_process_wbm_err(struct ath12k_base *ab,
+ 						      hw_links[hw_link_id].pdev_idx);
+ 		ar = partner_ab->pdevs[pdev_id].ar;
  
- static inline void enable_irq_lockdep(unsigned int irq)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_enable();
- #endif
- 	enable_irq(irq);
-@@ -479,7 +479,7 @@ static inline void enable_irq_lockdep(unsigned int irq)
- 
- static inline void enable_irq_lockdep_irqrestore(unsigned int irq, unsigned long *flags)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_restore(*flags);
- #endif
- 	enable_irq(irq);
+-		if (!ar || !rcu_dereference(ar->ab->pdevs_active[hw_link_id])) {
++		if (!ar || !rcu_dereference(ar->ab->pdevs_active[pdev_id])) {
+ 			dev_kfree_skb_any(msdu);
+ 			continue;
+ 		}
 -- 
 2.39.5
 
