@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F51A94A;
-	Tue,  8 Apr 2025 12:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6325AA94A;
+	Tue,  8 Apr 2025 12:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114012; cv=none; b=hs91+hzN9upj4eMEwd3pYec0twvY74seSMcxMMnYW94qQW7yRBssCM9DMU7qeQoSRhtCxgcZGlGYF/glA1vC9XMRd/8p/PiiFqcAp2I9DooMswaU9fy6Z9OBj3ViIrRP3xClFUb2XShGyMK8u5xu3J0AEPka+37e9Qp8ruletJo=
+	t=1744114015; cv=none; b=MLpJ+1XaPNAIWjbo1YLAHlwGvJ1m7zq+NOv25DuLNbNa2KCeoFKg8KwubqcPzzYJj74iirm/DH/PzMWGBHgbjBxhHOIlwQSvzzuyGM9l0Ojo5b4w2IaBTGOnHymuHCfdeBcagGwV5jpqM7yogRVNwfOTRLfR6s8am69lWzdxWio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114012; c=relaxed/simple;
-	bh=GXwQI7BMsQistbBUT96wFjbiyPKjzweEsGFdUwomASM=;
+	s=arc-20240116; t=1744114015; c=relaxed/simple;
+	bh=IzX4CLeOskOh3qWUQa3yZQbaEhixITC/TJKlJTtcIfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9V7+uG91MN84XNsk1Dk4EuAjmYlgBDNXBV3o3BMZueWopYgy0agw7L7eK8KGDcaMc0rORHG/aTgnlcZ2N46oKzegx42dOopIOgqynOlHQ/ylo8GmZxKpkXHAn/1dSwDdV0kmlM8sQpMNrVNgVkM0vaccOsOYUBsIwkfPi1W4tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+po1u2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIs7ZqWDpFGjH3tHowSP+2OLMXfsJ6WNc9y9E1LiBgUr2jQNzAfgc1akStGSFlR4KVKERZhoshWShXLm2B+xc/irRJBP6wjk4g6f/ffCCOk2bhueD8XKaefHzVAQflqWLzGbh/4ROm3oJrS22tUndSZsvBQA5mvErexmMrpyQ9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LI5wULa/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+po1u2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317B8C4CEE5;
-	Tue,  8 Apr 2025 12:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI5wULa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9C7C4CEE5;
+	Tue,  8 Apr 2025 12:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114012;
-	bh=GXwQI7BMsQistbBUT96wFjbiyPKjzweEsGFdUwomASM=;
+	s=korg; t=1744114015;
+	bh=IzX4CLeOskOh3qWUQa3yZQbaEhixITC/TJKlJTtcIfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+po1u2MrBOdfiom39XEUMtAq88Dredb+35CCDqFo6k/59K/2sbe3p5cvQBY4VIe3
-	 CDHCirMU3podGVAhUGoR+Ct6W3/pLcodEjzhQ7KoP1C0YOtbNeC/AIGrtcTjbbgei3
-	 LAWF8D8zk29eUDle2s4wJJB7DlxPzb9X5ClUwibI=
+	b=LI5wULa/PXZZlGV5htEri5vDhhw+JNpswh89Og3nMA8YxsLcUIqzBrWnAaWGJcM79
+	 KbSCOkv5lr+u1PCSabDKAhbTygsOmE+ZSJ3HJyQvmWbp7YR82k8jWPQOHY3QpDLSDo
+	 YHDVbmwW597AnLsqyL6tp9c8AjFByvAp3Qxq5lnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanya Agarwal <tanyaagarwal25699@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 103/154] lib: 842: Improve error handling in sw842_compress()
-Date: Tue,  8 Apr 2025 12:50:44 +0200
-Message-ID: <20250408104818.631905926@linuxfoundation.org>
+Subject: [PATCH 5.4 104/154] pinctrl: renesas: rza2: Fix missing of_node_put() call
+Date: Tue,  8 Apr 2025 12:50:45 +0200
+Message-ID: <20250408104818.666772252@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-[ Upstream commit af324dc0e2b558678aec42260cce38be16cc77ca ]
+[ Upstream commit abcdeb4e299a11ecb5a3ea0cce00e68e8f540375 ]
 
-The static code analysis tool "Coverity Scan" pointed the following
-implementation details out for further development considerations:
-CID 1309755: Unused value
-In sw842_compress: A value assigned to a variable is never used. (CWE-563)
-returned_value: Assigning value from add_repeat_template(p, repeat_count)
-to ret here, but that stored value is overwritten before it can be used.
+of_parse_phandle_with_fixed_args() requires its caller to
+call into of_node_put() on the node pointer from the output
+structure, but such a call is currently missing.
 
-Conclusion:
-Add error handling for the return value from an add_repeat_template()
-call.
+Call into of_node_put() to rectify that.
 
-Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
-Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b59d0e782706 ("pinctrl: Add RZ/A2 pin and gpio controller")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250305163753.34913-5-fabrizio.castro.jz@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/842/842_compress.c | 2 ++
+ drivers/pinctrl/pinctrl-rza2.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/lib/842/842_compress.c b/lib/842/842_compress.c
-index c02baa4168e16..055356508d97c 100644
---- a/lib/842/842_compress.c
-+++ b/lib/842/842_compress.c
-@@ -532,6 +532,8 @@ int sw842_compress(const u8 *in, unsigned int ilen,
- 		}
- 		if (repeat_count) {
- 			ret = add_repeat_template(p, repeat_count);
-+			if (ret)
-+				return ret;
- 			repeat_count = 0;
- 			if (next == last) /* reached max repeat bits */
- 				goto repeat;
+diff --git a/drivers/pinctrl/pinctrl-rza2.c b/drivers/pinctrl/pinctrl-rza2.c
+index 8c3174d007507..fb6dccc5c304f 100644
+--- a/drivers/pinctrl/pinctrl-rza2.c
++++ b/drivers/pinctrl/pinctrl-rza2.c
+@@ -253,6 +253,8 @@ static int rza2_gpio_register(struct rza2_pinctrl_priv *priv)
+ 		return ret;
+ 	}
+ 
++	of_node_put(of_args.np);
++
+ 	if ((of_args.args[0] != 0) ||
+ 	    (of_args.args[1] != 0) ||
+ 	    (of_args.args[2] != priv->npins)) {
 -- 
 2.39.5
 
