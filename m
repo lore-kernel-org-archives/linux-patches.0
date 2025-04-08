@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4947E267F6C;
-	Tue,  8 Apr 2025 11:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30BE2690CB;
+	Tue,  8 Apr 2025 11:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110361; cv=none; b=HAaqmiK+MGrQ0pBe4vJp/QJ+9rKtFlQe4g/5160ra+A5awnmR36jVwmrSE4TboAztn1w280vj6yY3uhrAyB59rRieQwPWQBkeTa0WBcNW45BERUAxY0cnRCFeMPwnkhrDKZ6UWblXpIK7DNeAA/YYIpCjW+FwTHxo2E+AFrEVUQ=
+	t=1744110364; cv=none; b=J9mePEFy7pg0nqLew4nQGImKjTgYMDsVOVTlYTw4zGx0afpi3Ljsu4GnRfhKhycSsO8q4NvlYggRQRDk1kkPVvvW+xsH+DwWo/hrWz3WCf3jVBjizVHK7xDyT8FRWJG9IKjRULOfQQuogCLJCrKMOy69TGvOfYoFQPLs116MMnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110361; c=relaxed/simple;
-	bh=VDgPDM1mdONIYJwtnjfJr8Anf4xlknYva0+9HHyuGUM=;
+	s=arc-20240116; t=1744110364; c=relaxed/simple;
+	bh=8EnOY9V6NNS+Zw3jnbu8CQ1Gkq1aKDf7CKoOGMnvBG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZ+e/Jb/gmwTpa8Ug0lAPHaJ7K/Qz+Pl5f946AQRJBfGklxVtqn4XxbwskjYiDrZFuy1ug/M/Ei3v8Csn4xKnb3IvGIeAW3qe3XcHwIUCvwTWpYqllJNJGZQEVQtIFfgvhCOGSgWWo20AQG0PwaFTs9g121Tq22hs+sAqKqNMH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNYZK40c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIBHP0ZTzM2mqVBky7KCntkJ5z+/KX5yiz2nZ+J1KBPMxIqRRW/zTzE8IhxjlqRUepw7fcia9bNVRx9P/ByEZLUr29t1QRGIoaeuKOiFlIAHZAKqUzHV5FmoL50b2r5bgVc02mjpKfdgI18UvVKZz0itDntoZi7DGIpsR59jfJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHxkqMbV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNYZK40c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF753C4CEE5;
-	Tue,  8 Apr 2025 11:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHxkqMbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C8DC4CEE5;
+	Tue,  8 Apr 2025 11:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110361;
-	bh=VDgPDM1mdONIYJwtnjfJr8Anf4xlknYva0+9HHyuGUM=;
+	s=korg; t=1744110363;
+	bh=8EnOY9V6NNS+Zw3jnbu8CQ1Gkq1aKDf7CKoOGMnvBG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNYZK40cNHX9H+eQdVxkXKWBiQOyBg/gMeZ2KuxQyHYEyp2XYcGo1JO468CIuB7Sb
-	 p5m7hQss3iNS7wZA/xYt3q31Ie4PgEbQBEs0odDCnOUTUPRfweTcfcJ6zMIN26u3WQ
-	 E3vjMfUB47SrgDG49uiUd8lsIz3PBY/9vmD0oFQc=
+	b=tHxkqMbVMsT8hUBkPXBltbDb4DvUYLY59oZ+cROUMJRYeJ7J07e57BhceGBORulNz
+	 4FD/Xex64jGl04XWCRf+4mlvSJSHS4ckmPyr3PU+Pm+mwkSRZlMCZf/31ZgmDEcZ4w
+	 h1BICEKMlZvHzvlDKiaiHanan/K+XtMXN7J4NzrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Luck <tony.luck@intel.com>,
 	Gary Wang <gary.c.wang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 034/731] EDAC/ie31200: Fix the DIMM size mask for several SoCs
-Date: Tue,  8 Apr 2025 12:38:51 +0200
-Message-ID: <20250408104915.065907895@linuxfoundation.org>
+Subject: [PATCH 6.14 035/731] EDAC/ie31200: Fix the error path order of ie31200_init()
+Date: Tue,  8 Apr 2025 12:38:52 +0200
+Message-ID: <20250408104915.089772861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,42 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 3427befbbca6b19fe0e37f91d66ce5221de70bf1 ]
+[ Upstream commit 231e341036d9988447e3b3345cf741a98139199e ]
 
-The DIMM size mask for {Sky, Kaby, Coffee} Lake is not bits{7:0},
-but bits{5:0}. Fix it.
+The error path order of ie31200_init() is incorrect, fix it.
 
-Fixes: 953dee9bbd24 ("EDAC, ie31200_edac: Add Skylake support")
+Fixes: 709ed1bcef12 ("EDAC/ie31200: Fallback if host bridge device is already initialized")
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Tested-by: Gary Wang <gary.c.wang@intel.com>
-Link: https://lore.kernel.org/r/20250310011411.31685-3-qiuxu.zhuo@intel.com
+Link: https://lore.kernel.org/r/20250310011411.31685-4-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/ie31200_edac.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/edac/ie31200_edac.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
-index c3d34d1fc9ad7..da4008c22f0d3 100644
+index da4008c22f0d3..9b02a6b43ab58 100644
 --- a/drivers/edac/ie31200_edac.c
 +++ b/drivers/edac/ie31200_edac.c
-@@ -165,6 +165,7 @@
- #define IE31200_MAD_DIMM_0_OFFSET		0x5004
- #define IE31200_MAD_DIMM_0_OFFSET_SKL		0x500C
- #define IE31200_MAD_DIMM_SIZE			GENMASK_ULL(7, 0)
-+#define IE31200_MAD_DIMM_SIZE_SKL		GENMASK_ULL(5, 0)
- #define IE31200_MAD_DIMM_A_RANK			BIT(17)
- #define IE31200_MAD_DIMM_A_RANK_SHIFT		17
- #define IE31200_MAD_DIMM_A_RANK_SKL		BIT(10)
-@@ -378,7 +379,7 @@ static void __iomem *ie31200_map_mchbar(struct pci_dev *pdev)
- static void __skl_populate_dimm_info(struct dimm_data *dd, u32 addr_decode,
- 				     int chan)
- {
--	dd->size = (addr_decode >> (chan << 4)) & IE31200_MAD_DIMM_SIZE;
-+	dd->size = (addr_decode >> (chan << 4)) & IE31200_MAD_DIMM_SIZE_SKL;
- 	dd->dual_rank = (addr_decode & (IE31200_MAD_DIMM_A_RANK_SKL << (chan << 4))) ? 1 : 0;
- 	dd->x16_width = ((addr_decode & (IE31200_MAD_DIMM_A_WIDTH_SKL << (chan << 4))) >>
- 				(IE31200_MAD_DIMM_A_WIDTH_SKL_SHIFT + (chan << 4)));
+@@ -621,7 +621,7 @@ static int __init ie31200_init(void)
+ 
+ 	pci_rc = pci_register_driver(&ie31200_driver);
+ 	if (pci_rc < 0)
+-		goto fail0;
++		return pci_rc;
+ 
+ 	if (!mci_pdev) {
+ 		ie31200_registered = 0;
+@@ -632,11 +632,13 @@ static int __init ie31200_init(void)
+ 			if (mci_pdev)
+ 				break;
+ 		}
++
+ 		if (!mci_pdev) {
+ 			edac_dbg(0, "ie31200 pci_get_device fail\n");
+ 			pci_rc = -ENODEV;
+-			goto fail1;
++			goto fail0;
+ 		}
++
+ 		pci_rc = ie31200_init_one(mci_pdev, &ie31200_pci_tbl[i]);
+ 		if (pci_rc < 0) {
+ 			edac_dbg(0, "ie31200 init fail\n");
+@@ -644,12 +646,12 @@ static int __init ie31200_init(void)
+ 			goto fail1;
+ 		}
+ 	}
+-	return 0;
+ 
++	return 0;
+ fail1:
+-	pci_unregister_driver(&ie31200_driver);
+-fail0:
+ 	pci_dev_put(mci_pdev);
++fail0:
++	pci_unregister_driver(&ie31200_driver);
+ 
+ 	return pci_rc;
+ }
 -- 
 2.39.5
 
