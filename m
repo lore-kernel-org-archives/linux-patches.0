@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504C26B089;
-	Tue,  8 Apr 2025 12:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED61268C72;
+	Tue,  8 Apr 2025 12:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116092; cv=none; b=B01LwNX7xvmwy1IaIuW6f0Vqgt48EtlMhMmqoQa/bDzCR4+JUw19UVW28PBIV+x4K+BZBiB9nNDfVX+mqlzc2Q8Jys8DR2tztYVu42kCOYy7WaQpZUK0ROzcIJUSBRlkIeHfSPskgZovyXF6DXpoOZYPbp470Ii4iaa8ndIEihQ=
+	t=1744116095; cv=none; b=sHhX+6QFChWe8DKxhzWK53pLXGyI5saKYimJKQh+jZfQp/VIisQmox9q23XVFNr7N9pNCuNcTLJD0FWdrwX3zhGNHE95f+Ae53nRqWzeHnVmxFvB8ezErN7jPpzouS7njbRjQUgnoSO/8tbi+vuMmZ31FB7dtKpshID8ebvvomY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116092; c=relaxed/simple;
-	bh=fm0xxESJiCSNXHUAF6zMQFjZV3uF/+fe10WWcCsJMMg=;
+	s=arc-20240116; t=1744116095; c=relaxed/simple;
+	bh=c4ae1/lzLHcN3kSemlPcpFr1DlWEDGmdc1SEE5Zp7Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBnqIP04gIo7QDcV0zGzSjXSHV42RmE/IkF+dnPLShjEW1GNnayTSKqFcZI93ZFhVSD+QhrMbsFsoHDbiTyEgGsHe+UjIdY1QOKrv+X7DKPemBDZeZaM5TeT1n3tvj0rUAAILvcQ4JDLSReoOKYffp2ADcd7vm6moIMyO8X2oO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7hjT9R6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czL8Ng7wNLBnFK+UzstrPmUlJo7aUY9OMIC+rQAO716TWFpMegZbHXz41eY3uo8DMGi+NX4HmG21fA0FFRfGDTn+cbV1KX6JVo43uxn4U18B9o10/lOlPv+HamUxji2jOT7D/apk3VmEWa7LNRV9byI9DtgaSybLfiFweN7iOGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z00bvvFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7hjT9R6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2774C4CEE5;
-	Tue,  8 Apr 2025 12:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z00bvvFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E076C4CEE5;
+	Tue,  8 Apr 2025 12:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116092;
-	bh=fm0xxESJiCSNXHUAF6zMQFjZV3uF/+fe10WWcCsJMMg=;
+	s=korg; t=1744116094;
+	bh=c4ae1/lzLHcN3kSemlPcpFr1DlWEDGmdc1SEE5Zp7Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7hjT9R6tx4F3iBLVAQaW3QJsZ144dL4t0cB+dlqknPPw1ydOTjnYdPr0AWJLHyZC
-	 9Tvg8r02jIw59WDm8txALjzDovZ22qiGAGdb19u4ay5Ls7UDPtp4oJQz1bng7td2D+
-	 MELzsRj1VRMzwUNkgWf2kXHoAYxVrzILgrk68vK4=
+	b=z00bvvFeJu9pY0NMOJ4S2RpMf98mLYwwVdMKGluS6DL0bOXb6+3xaHN7EiHjWBRTm
+	 BVZB/b0EW3f80h01aiz0W3zc8fId3iF5YXjWmXoySadBXuxcB1TGjQR3oLTH676gKS
+	 5kZ7By/xF6jYqjHO55MXn752XPhWBZ9VktPk4XZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Loughlin <kevinloughlin@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/423] x86/sev: Add missing RIP_REL_REF() invocations during sme_enable()
-Date: Tue,  8 Apr 2025 12:45:39 +0200
-Message-ID: <20250408104846.036165251@linuxfoundation.org>
+Subject: [PATCH 6.12 014/423] lockdep/mm: Fix might_fault() lockdep check of current->mm->mmap_lock
+Date: Tue,  8 Apr 2025 12:45:40 +0200
+Message-ID: <20250408104846.059063061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,50 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Loughlin <kevinloughlin@google.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 72dafb567760320f2de7447cd6e979bf9d4e5d17 ]
+[ Upstream commit a1b65f3f7c6f7f0a08a7dba8be458c6415236487 ]
 
-The following commit:
+Turns out that this commit, about 10 years ago:
 
-  1c811d403afd ("x86/sev: Fix position dependent variable references in startup code")
+  9ec23531fd48 ("sched/preempt, mm/fault: Trigger might_sleep() in might_fault() with disabled pagefaults")
 
-introduced RIP_REL_REF() to force RIP-relative accesses to global variables,
-as needed to prevent crashes during early SEV/SME startup code.
+... accidentally (and unnessecarily) put the lockdep part of
+__might_fault() under CONFIG_DEBUG_ATOMIC_SLEEP=y.
 
-For completeness, RIP_REL_REF() should be used with additional variables during
-sme_enable():
+This is potentially notable because large distributions such as
+Ubuntu are running with !CONFIG_DEBUG_ATOMIC_SLEEP.
 
-  https://lore.kernel.org/all/CAMj1kXHnA0fJu6zh634=fbJswp59kSRAbhW+ubDGj1+NYwZJ-Q@mail.gmail.com/
+Restore the debug check.
 
-Access these vars with RIP_REL_REF() to prevent problem reoccurence.
+[ mingo: Update changelog. ]
 
-Fixes: 1c811d403afd ("x86/sev: Fix position dependent variable references in startup code")
-Signed-off-by: Kevin Loughlin <kevinloughlin@google.com>
+Fixes: 9ec23531fd48 ("sched/preempt, mm/fault: Trigger might_sleep() in might_fault() with disabled pagefaults")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20241122202322.977678-1-kevinloughlin@google.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241104135517.536628371@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
-index ac33b2263a434..b922b9fea6b64 100644
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -562,7 +562,7 @@ void __head sme_enable(struct boot_params *bp)
- 	}
- 
- 	RIP_REL_REF(sme_me_mask) = me_mask;
--	physical_mask &= ~me_mask;
--	cc_vendor = CC_VENDOR_AMD;
-+	RIP_REL_REF(physical_mask) &= ~me_mask;
-+	RIP_REL_REF(cc_vendor) = CC_VENDOR_AMD;
- 	cc_set_mask(me_mask);
+diff --git a/mm/memory.c b/mm/memory.c
+index 525f96ad65b8d..01c0b3a5a4d66 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6718,10 +6718,8 @@ void __might_fault(const char *file, int line)
+ 	if (pagefault_disabled())
+ 		return;
+ 	__might_sleep(file, line);
+-#if defined(CONFIG_DEBUG_ATOMIC_SLEEP)
+ 	if (current->mm)
+ 		might_lock_read(&current->mm->mmap_lock);
+-#endif
  }
+ EXPORT_SYMBOL(__might_fault);
+ #endif
 -- 
 2.39.5
 
