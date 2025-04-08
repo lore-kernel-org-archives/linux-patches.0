@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED272676E0;
-	Tue,  8 Apr 2025 11:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ED8267F48;
+	Tue,  8 Apr 2025 11:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110903; cv=none; b=lA2s4KZ8jDDwEDkUOfJBgC+GLxD+MuYXWk/VW6BGvAVNXmdflPeTMn0epzrIiZ7vfljkiqYUTxVK9t95PWGvhjAyhauNKcyLhioUgCuw9s26SMhiJF6hx1uKHvopIQGVc80hv57vZ/FwnU6CQ1SAPOX9gnkQKkqf2l2RR2xtDow=
+	t=1744110906; cv=none; b=HMrqNvc1kp8bPUV11l7sv5+VzgL9HlpkASDI/MSvtw/kcNeBspvQbO0v/UfR67p/VdoiIsidV3vPCpi2Loz8yobTbddoMFnWlSG7i1Fa7dAj5uIg/b350lgTulENrXWInCCMvbNaF2Nv0VYoIJxX3nYpF0rwRRN43jrQ5AocLOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110903; c=relaxed/simple;
-	bh=s+6OigATznJrCoMSbyjyMyxPjO8oiEmVsJuuQhHuuoc=;
+	s=arc-20240116; t=1744110906; c=relaxed/simple;
+	bh=SBhgwA/7znVom8v4v6FUsL7Cnl/+my8vyB+wi2eYPPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IsM5lzXy20QPAOtu7wWypStFW7aqX5HiMYBbFqo48+SmCOHx5gEgUpZvfLK1HQzHuMuNLg+4Z6CCZw+PxtHxasLVSe0nlCUxsEU8fIqRzunQxyhUHD8swCvAxAJLnnViW8pdoFs56Z3cVeClYnNz+d6UVNtAYQ0qCHkbAUA7/5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8vtBHBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AtVPnGgk0qUgm3zmC1H0JgTWu6BFg7ASbKpX5++2HgMMoYuqi7FhC98TBzapRcsmNtypvyDz0QgD3ZPenl5EbvVIGcV7YhV28iaxlUhQ0Z/cKR77fCF+ogHP12m0oli52MuOYWnpnLConHnNVK1VpkUIxny3/HjK3as0KGva8cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uk2fOvVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8vtBHBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D60C4CEE5;
-	Tue,  8 Apr 2025 11:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uk2fOvVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984B2C4CEE5;
+	Tue,  8 Apr 2025 11:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110903;
-	bh=s+6OigATznJrCoMSbyjyMyxPjO8oiEmVsJuuQhHuuoc=;
+	s=korg; t=1744110905;
+	bh=SBhgwA/7znVom8v4v6FUsL7Cnl/+my8vyB+wi2eYPPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8vtBHBRwfYx+2W+w+vLeoCXVUybly+Y9EH3oarR2ZqT2yQ7OwIX0jvmpJKERZHBU
-	 ZFw6bafD2RriBTIDXt41Hvvfd1dtdn4s2X9n4N93N1bfmCgyzoxBNAXE5nA/Dxl2j0
-	 NNlzYDhwhX9fBNM7jSVWyFlmqY3721v/0M91px5E=
+	b=Uk2fOvVuBCjhkDkdm7wcme5AsyWKbUKggstFwrFPJzqrdvkuESXYE8y8enPCVBzDs
+	 N1mIW0w3UQUNuS8SJ9aRYEQeW+43x07hnWj17yJXL/qPYYBsNkaDtyVv3DkheIZ9pI
+	 06UbIl6vhMqoJBTvFXbeQdDtlD3d/F190tOrtbBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 237/731] net: dsa: mv88e6xxx: fix atu_move_port_mask for 6341 family
-Date: Tue,  8 Apr 2025 12:42:14 +0200
-Message-ID: <20250408104919.793846180@linuxfoundation.org>
+Subject: [PATCH 6.14 238/731] net: dsa: mv88e6xxx: enable PVT for 6321 switch
+Date: Tue,  8 Apr 2025 12:42:15 +0200
+Message-ID: <20250408104919.817756711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,43 +55,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 4ae01ec007716986e1a20f1285eb013cbf188830 ]
+[ Upstream commit f85c69369854a43af2c5d3b3896da0908d713133 ]
 
-The atu_move_port_mask for 6341 family (Topaz) is 0xf, not 0x1f. The
-PortVec field is 8 bits wide, not 11 as in 6390 family. Fix this.
+Commit f36456522168 ("net: dsa: mv88e6xxx: move PVT description in
+info") did not enable PVT for 6321 switch. Fix it.
 
-Fixes: e606ca36bbf2 ("net: dsa: mv88e6xxx: rework ATU Remove")
+Fixes: f36456522168 ("net: dsa: mv88e6xxx: move PVT description in info")
 Signed-off-by: Marek Behún <kabel@kernel.org>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-3-kabel@kernel.org
+Link: https://patch.msgid.link/20250317173250.28780-4-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 5db96ca52505a..841da8437738c 100644
+index 841da8437738c..d8f037da5e294 100644
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5818,7 +5818,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.global1_addr = 0x1b,
- 		.global2_addr = 0x1c,
- 		.age_time_coeff = 3750,
--		.atu_move_port_mask = 0x1f,
-+		.atu_move_port_mask = 0xf,
- 		.g1_irqs = 9,
+@@ -6274,6 +6274,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
  		.g2_irqs = 10,
  		.stats_type = STATS_TYPE_BANK0 | STATS_TYPE_BANK1,
-@@ -6296,7 +6296,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.global1_addr = 0x1b,
- 		.global2_addr = 0x1c,
- 		.age_time_coeff = 3750,
--		.atu_move_port_mask = 0x1f,
-+		.atu_move_port_mask = 0xf,
- 		.g1_irqs = 9,
- 		.g2_irqs = 10,
- 		.stats_type = STATS_TYPE_BANK0 | STATS_TYPE_BANK1,
+ 		.atu_move_port_mask = 0xf,
++		.pvt = true,
+ 		.multi_chip = true,
+ 		.edsa_support = MV88E6XXX_EDSA_SUPPORTED,
+ 		.ptp_support = true,
 -- 
 2.39.5
 
