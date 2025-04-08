@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30C3207E14;
-	Tue,  8 Apr 2025 11:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D44F19AD5C;
+	Tue,  8 Apr 2025 11:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112463; cv=none; b=LzolSedOe8JbcEjCW+TfhZvlrJCCluXp7iFjE060qCLgJ9kn8rYaT8E15Arc6Y54SM0wSgN/bdmi9fPtP/u+4QLBBAapzZzPa5FmVEpx7nySwTfzCwptDyPFUTFAjfKisyGTWrwPdiPK9/eqkXBHdr/23T632cHsimIRiY+f/44=
+	t=1744112466; cv=none; b=t0v/qHOz2g0JkIKbCuhwLuUEP8j/oeUBwKyFLilnKg7YoOKGKPHTDYfIQ6f41/yD1imHqAcNBgOpLhCBPN3nTIXJtcugxHldESNjOJlqMEnkbaMfi61PNiDK1ZfGx9Q8hgQXo53F/Cj4NxXyt+cXbNCv6DAVzODJ2nB84V3sKOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112463; c=relaxed/simple;
-	bh=5an+s9gKEOdi7GVR9gH0q6vyqQ6EYTy5QZ81mhVYIEk=;
+	s=arc-20240116; t=1744112466; c=relaxed/simple;
+	bh=YJExC8rur4smSnTmJcXRjlwp6mSYn1d1yAyqs/+6wrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEVWQbALqRU5683atGWXj6GohlwSoPUX83ZCO356p3/O9ZuQrjXu/gfJyWrSVgGjiiOw29R5/hsAABb/z64Bc46Q9SkhB8BHTVmMG1a6e6PNXTwfaLJXxhKaKA9/9JPtLeUcMC7YoSnoiR6ZT3OT8WFFfAnPbcvF7NF0B6YyiAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANC4kpgi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9jSxTlDndKMYI4PrdABWIZAUlZQWd3DEfv/JGsd0cBfMJf1zGluAjuZdzcPUHDH6lRWd0ER7BV7r5DI54RO7Gn57MzM0WJwKNFtrZQjfSFrLz9GHpf1AG4eLweTE1XmpAxjmm37ygIOli+HFDB6a9KGP9op2jn/ECEGM7yFlZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njVgJa90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANC4kpgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52266C4CEE5;
-	Tue,  8 Apr 2025 11:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njVgJa90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB9DC4CEE5;
+	Tue,  8 Apr 2025 11:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112463;
-	bh=5an+s9gKEOdi7GVR9gH0q6vyqQ6EYTy5QZ81mhVYIEk=;
+	s=korg; t=1744112466;
+	bh=YJExC8rur4smSnTmJcXRjlwp6mSYn1d1yAyqs/+6wrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANC4kpgiAvmYBnCDCsI+XOFG+lIbmTypi1D2vMD2Xagbyykq6Me76IB6E0Wwin1HB
-	 ZYAlM4o7omB0VFb0YpItuglKSf6VHIj3cs69Zj+8y4526vvJw0Gn0GDyPRmSilS7gE
-	 N1TBYvh0EmDqumLw7IQGOSKUOEYe50gEz6GiFzWg=
+	b=njVgJa90fIU3HFrC6w95V6V2h/S33hIUXKHsFHHyN3fSDdIOUDsJu2Y13dWwVt3gu
+	 b8a+biHe+KVBdpzACc+GQdWYYXZlBxUBfpiIqPLkMEUdoM1ArQJmtjsjGErp8+YrYW
+	 DyPkcnquwseTlAJ28rN3RDd5dzcXdJg4kBBsdVR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/279] drm/amd/display: Fix null check for pipe_ctx->plane_state in resource_build_scaling_params
-Date: Tue,  8 Apr 2025 12:47:39 +0200
-Message-ID: <20250408104828.397190936@linuxfoundation.org>
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 077/279] smb: client: Fix match_session bug preventing session reuse
+Date: Tue,  8 Apr 2025 12:47:40 +0200
+Message-ID: <20250408104828.425071529@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,43 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit 374c9faac5a763a05bc3f68ad9f73dab3c6aec90 ]
+commit 605b249ea96770ac4fac4b8510a99e0f8442be5e upstream.
 
-Null pointer dereference issue could occur when pipe_ctx->plane_state
-is null. The fix adds a check to ensure 'pipe_ctx->plane_state' is not
-null before accessing. This prevents a null pointer dereference.
+Fix a bug in match_session() that can causes the session to not be
+reused in some cases.
 
-Found by code review.
+Reproduction steps:
 
-Fixes: 3be5262e353b ("drm/amd/display: Rename more dc_surface stuff to plane_state")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 63e6a77ccf239337baa9b1e7787cde9fa0462092)
+mount.cifs //server/share /mnt/a -o credentials=creds
+mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
+cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+
+mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
+mount.cifs //server/share /mnt/a -o credentials=creds
+cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/cifs/connect.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index de5192ee2b022..a84280b65821b 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1026,7 +1026,8 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
- 	DC_LOGGER_INIT(pipe_ctx->stream->ctx->logger);
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1582,9 +1582,8 @@ out_err:
  
- 	/* Invalid input */
--	if (!plane_state->dst_rect.width ||
-+	if (!plane_state ||
-+			!plane_state->dst_rect.width ||
- 			!plane_state->dst_rect.height ||
- 			!plane_state->src_rect.width ||
- 			!plane_state->src_rect.height) {
--- 
-2.39.5
-
+ static int match_session(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+ {
+-	if (ctx->sectype != Unspecified &&
+-	    ctx->sectype != ses->sectype)
+-		return 0;
++	struct TCP_Server_Info *server = ses->server;
++	enum securityEnum ctx_sec, ses_sec;
+ 
+ 	/*
+ 	 * If an existing session is limited to less channels than
+@@ -1597,11 +1596,19 @@ static int match_session(struct cifs_ses
+ 	}
+ 	spin_unlock(&ses->chan_lock);
+ 
+-	switch (ses->sectype) {
++	ctx_sec = server->ops->select_sectype(server, ctx->sectype);
++	ses_sec = server->ops->select_sectype(server, ses->sectype);
++
++	if (ctx_sec != ses_sec)
++		return 0;
++
++	switch (ctx_sec) {
+ 	case Kerberos:
+ 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
+ 			return 0;
+ 		break;
++	case NTLMv2:
++	case RawNTLMSSP:
+ 	default:
+ 		/* NULL username means anonymous session */
+ 		if (ses->user_name == NULL) {
 
 
