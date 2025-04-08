@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B77926658B;
-	Tue,  8 Apr 2025 11:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA8F26658B;
+	Tue,  8 Apr 2025 11:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112005; cv=none; b=YjbRMUrcM2GewhfcMeUO9ejOze+aqIvciFE+i1cN0MTuGKbdCgBVFdg1Z2diM8Mqzp++u+BIzcdJs9xpkYvqH4AjWOHt/7qelzy97+vOiNSBmp/5QWz4jp4WEnz13uO//5+7YF+Rw+T0gQwfmwS7XV+foHhGzyBF6qQpGqkw96E=
+	t=1744112007; cv=none; b=H4QaYGbVPAXDKZGN691+oHWZ7S/l5NvIbipR+f96ylQ9Jg46vPevCNSa4LNyqWiioy/UkvRUc0yl/64TIwAYZIAJqt/EgWwPu/8CXhqn9GonD0ECsttiALqCdA8sa94Acju8HRLWQDi1V6pEKOr2JVQKGYzHVi8cDCKBCblTRxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112005; c=relaxed/simple;
-	bh=hRJ7WE9per4BhrkMe2NPFKEGH4WQkTDIhXKUcKH/PXc=;
+	s=arc-20240116; t=1744112007; c=relaxed/simple;
+	bh=8KdIjk0H07HsKq/xX7yUK2OWB95AeiMd+upGe54dlGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoHf/gW6nOkEwxMkBwLLVX4XtuyWwLdoflM2tsBKWNct1e9BfnkIa2Xgi3X/R7osgSHAu/FIy7b249/pFzhru+9VuJ15qyT4HU8iPECms7o+GB2sGH8VT8D7rDbnebHzByGnm8jXeZ/H2u4oEKTLg48nHvMO1MpBNjmQhhM28c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCQ9oeKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iXBQa4stjrwpujynZTWh4iFkXKzQ2cyuDpJ7htkMzX13udCJRMDyH2sIbcxYYCMKDIBZGGmI3Cv8L3WBh43Pkhk7SBOBm1SMPHvn9/uZ8R5lIro7chqFqEHRDB6xLmxAww4JLAPwg9pPJhOKe73s0voDuYY8i+3AKogllfFjC6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBsnvdsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCQ9oeKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB059C4CEE5;
-	Tue,  8 Apr 2025 11:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBsnvdsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515ABC4CEE5;
+	Tue,  8 Apr 2025 11:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112005;
-	bh=hRJ7WE9per4BhrkMe2NPFKEGH4WQkTDIhXKUcKH/PXc=;
+	s=korg; t=1744112007;
+	bh=8KdIjk0H07HsKq/xX7yUK2OWB95AeiMd+upGe54dlGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCQ9oeKqXtMFNmjuwenb7WXKRcMtOBLoLfP/8UuSZv4MC+yX2XnCGnwjvgKNSGyl8
-	 HxAb2WNZgzjk+QV/7/nmK0ey3HtepBPm8rStNKz7pZ2cVE8S8/dbHkR2f+3E2LwR+Q
-	 Wuon6MKYY2fQscZjkPoF+NNGZgFX/1eYFYthJWBI=
+	b=TBsnvdscaLQISv13wx0Ga5/k2asdMuzNpZPLZkNjqezJd8lKZuk79kkHc1ncZdRGu
+	 8YBSowTTLlmu9QfiBeMYPPKlGo7Rs9fSl2zy+77z5p2CBhXizbT2nuO/PHKZP0g7O5
+	 x7Af3Yet0dMoCflU0sYTMo6ZQv29KT3HQxzq+IP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 601/731] spi: cadence: Fix out-of-bounds array access in cdns_mrvl_xspi_setup_clock()
-Date: Tue,  8 Apr 2025 12:48:18 +0200
-Message-ID: <20250408104928.252201645@linuxfoundation.org>
+Subject: [PATCH 6.14 592/731] riscv: Fix set up of cpu hotplug callbacks
+Date: Tue,  8 Apr 2025 12:48:09 +0200
+Message-ID: <20250408104928.045213355@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -46,52 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-[ Upstream commit 7ba0847fa1c22e7801cebfe5f7b75aee4fae317e ]
+[ Upstream commit 05ee21f0fcb8ca29bf42bd6cbce109f2e49c167f ]
 
-If requested_clk > 128, cdns_mrvl_xspi_setup_clock() iterates over the
-entire cdns_mrvl_xspi_clk_div_list array without breaking out early,
-causing 'i' to go beyond the array bounds.
+CPU hotplug callbacks should be set up even if we detected all
+current cpus emulate misaligned accesses, since we want to
+ensure our expectations of all cpus emulating is maintained.
 
-Fix that by stopping the loop when it gets to the last entry, clamping
-the clock to the minimum 6.25 MHz.
-
-Fixes the following warning with an UBSAN kernel:
-
-  vmlinux.o: warning: objtool: cdns_mrvl_xspi_setup_clock: unexpected end of section .text.cdns_mrvl_xspi_setup_clock
-
-Fixes: 26d34fdc4971 ("spi: cadence: Add clock configuration for Marvell xSPI overlay")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503282236.UhfRsF3B-lkp@intel.com/
-Link: https://lore.kernel.org/r/gs2ooxfkblnee6cc5yfcxh7nu4wvoqnuv4lrllkhccxgcac2jg@7snmwd73jkhs
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://patch.msgid.link/h6bef6wof6zpjfp3jbhrkigqsnykdfy6j4qmmvb6gsabhianhj@k57a7hwpa3bj
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6e5ce7f2eae3 ("riscv: Decouple emulated unaligned accesses from access speed")
+Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250304120014.143628-15-ajones@ventanamicro.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-xspi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/unaligned_access_speed.c | 27 +++++++++++-----------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
-index aed98ab143346..6dcba0e0ddaa3 100644
---- a/drivers/spi/spi-cadence-xspi.c
-+++ b/drivers/spi/spi-cadence-xspi.c
-@@ -432,7 +432,7 @@ static bool cdns_mrvl_xspi_setup_clock(struct cdns_xspi_dev *cdns_xspi,
- 	u32 clk_reg;
- 	bool update_clk = false;
+diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
+index bca798153e37d..84694a44f3da4 100644
+--- a/arch/riscv/kernel/unaligned_access_speed.c
++++ b/arch/riscv/kernel/unaligned_access_speed.c
+@@ -247,13 +247,6 @@ static void __init check_unaligned_access_speed_all_cpus(void)
+ 	/* Check core 0. */
+ 	smp_call_on_cpu(0, check_unaligned_access, bufs[0], true);
  
--	while (i < ARRAY_SIZE(cdns_mrvl_xspi_clk_div_list)) {
-+	while (i < (ARRAY_SIZE(cdns_mrvl_xspi_clk_div_list) - 1)) {
- 		clk_val = MRVL_XSPI_CLOCK_DIVIDED(
- 				cdns_mrvl_xspi_clk_div_list[i]);
- 		if (clk_val <= requested_clk)
+-	/*
+-	 * Setup hotplug callbacks for any new CPUs that come online or go
+-	 * offline.
+-	 */
+-	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
+-				  riscv_online_cpu, riscv_offline_cpu);
+-
+ out:
+ 	for_each_cpu(cpu, cpu_online_mask) {
+ 		if (bufs[cpu])
+@@ -386,13 +379,6 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
+ {
+ 	schedule_on_each_cpu(check_vector_unaligned_access);
+ 
+-	/*
+-	 * Setup hotplug callbacks for any new CPUs that come online or go
+-	 * offline.
+-	 */
+-	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
+-				  riscv_online_cpu_vec, NULL);
+-
+ 	return 0;
+ }
+ #else /* CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS */
+@@ -418,6 +404,19 @@ static int __init check_unaligned_access_all_cpus(void)
+ 			    NULL, "vec_check_unaligned_access_speed_all_cpus");
+ 	}
+ 
++	/*
++	 * Setup hotplug callbacks for any new CPUs that come online or go
++	 * offline.
++	 */
++#ifdef CONFIG_RISCV_PROBE_UNALIGNED_ACCESS
++	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
++				  riscv_online_cpu, riscv_offline_cpu);
++#endif
++#ifdef CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS
++	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
++				  riscv_online_cpu_vec, NULL);
++#endif
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
