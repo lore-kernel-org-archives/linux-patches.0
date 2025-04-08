@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E651FCFF3;
-	Tue,  8 Apr 2025 12:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A6D1FCFF3;
+	Tue,  8 Apr 2025 12:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115485; cv=none; b=E7pKXVoJM5LnmcP7iKvpromcsIFkBOrZJtSySU03HlMY16uexYqCB76SV3H79zvKo7nE5diQJwLlwh7LQBnEnAw5oYLOsUa58bEPlaobk9619qMr1sYirW87p+ps5s0ZcD8miTAkVB9FsIEGsipOsu1WrxNnPohEKmcRSzZgLRg=
+	t=1744115487; cv=none; b=MVfwUo0/W0HXxtf1ecLnXpcFicpHBn+Lc9hBmK6JCTE1R0AipDKcoO3DVLLbqqeuzoROzuzCWo2T2dyiOgS2d0EvmdW95Pe0PL94DxHLrvSW5iC67s0iiKeYq8+gNpACZVanuMybGTkXW0U+S1tJQcW7SY2oig5avjcngS5QNyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115485; c=relaxed/simple;
-	bh=Bja0JJF075JqHfxKo41rPGZpyNiiHYECMNO8BSUIKw4=;
+	s=arc-20240116; t=1744115487; c=relaxed/simple;
+	bh=15z6SxpM/Q4ynXVg0b+d1DcmdKhsEAm0gPrFInUbT9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmU5Y2XegB4ayl9Wb4EQCymTtsVTLlZ9GugW1nHdi0szJnUAP5eNS3/4lonU0dMMOgose8sgBW/hj5q9D0MQ3ff24L7rEGmQ7jrwXaGTxI+1cOO32jZzilkDUsx/hyhva2dPvM/csthu0QY0se8C6LwCvFvKQZrhlXuOBAr8YTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTRJQUyj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vlt3Dg4iHkmbJLPNR3PT+Y5WN56gh5h5VJS0qPlwB3NoS4NdzC0vCluwuBV7Ds5FAUj7DZzkxIZu+Rd1ghVK0kc1R7rgqTGiGanGysEqYK5L5wkfbJM76tb5g5E0yc3+9auuAAjh2mRZBN2acxIY0EXG9dEYwK4z7dPtFuM95Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avN0GSLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTRJQUyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C84C4CEE5;
-	Tue,  8 Apr 2025 12:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avN0GSLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59313C4CEE5;
+	Tue,  8 Apr 2025 12:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115485;
-	bh=Bja0JJF075JqHfxKo41rPGZpyNiiHYECMNO8BSUIKw4=;
+	s=korg; t=1744115487;
+	bh=15z6SxpM/Q4ynXVg0b+d1DcmdKhsEAm0gPrFInUbT9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTRJQUyjJhp0u5mausXr4Uvm0EJCQ9XtSDJfbG9yiyIQdDqnhFhOyV8Th4Gr4NDqs
-	 ZxpmgN/ZMPCh3hsuVnuUAkXa3gnvUVfYNvgkw3um5GCOZns+oUPOBDceSGrJawLyJp
-	 HgvJygQwbHPZuSkOQDz9PziiJWR4VXhGqOYlJIzg=
+	b=avN0GSLULvJ2rhR/IMIVaj6OUDKTUqbB9mBcITodE9voIrrTfQ0kFHWsbFYizzYlO
+	 TEjcWvkgXInBP0tuIXfQYVx6ynYWamGIMQYEhv8OLqBZuuRzg1mUzzInJ3B/3xqMYY
+	 w8bWFNAWRnS8Th8Pxly/ymhezRaTXrRJD9HtVpE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.13 465/499] KVM: SVM: Dont change target vCPU state on AP Creation VMGEXIT error
-Date: Tue,  8 Apr 2025 12:51:17 +0200
-Message-ID: <20250408104902.836686332@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.13 492/499] nfsd: allow SC_STATUS_FREEABLE when searching via nfs4_lookup_stateid()
+Date: Tue,  8 Apr 2025 12:51:44 +0200
+Message-ID: <20250408104903.629136267@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,78 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit d26638bfcdfc5c8c4e085dc3f5976a0443abab3c upstream.
+commit d1bc15b147d35b4cb7ca99a9a7d79d41ca342c13 upstream.
 
-If KVM rejects an AP Creation event, leave the target vCPU state as-is.
-Nothing in the GHCB suggests the hypervisor is *allowed* to muck with vCPU
-state on failure, let alone required to do so.  Furthermore, kicking only
-in the !ON_INIT case leads to divergent behavior, and even the "kick" case
-is non-deterministic.
+The pynfs DELEG8 test fails when run against nfsd. It acquires a
+delegation and then lets the lease time out. It then tries to use the
+deleg stateid and expects to see NFS4ERR_DELEG_REVOKED, but it gets
+bad NFS4ERR_BAD_STATEID instead.
 
-E.g. if an ON_INIT request fails, the guest can successfully retry if the
-fixed AP Creation request is made prior to sending INIT.  And if a !ON_INIT
-fails, the guest can successfully retry if the fixed AP Creation request is
-handled before the target vCPU processes KVM's
-KVM_REQ_UPDATE_PROTECTED_GUEST_STATE.
+When a delegation is revoked, it's initially marked with
+SC_STATUS_REVOKED, or SC_STATUS_ADMIN_REVOKED and later, it's marked
+with the SC_STATUS_FREEABLE flag, which denotes that it is waiting for
+s FREE_STATEID call.
 
-Fixes: e366f92ea99e ("KVM: SEV: Support SEV-SNP AP Creation NAE event")
+nfs4_lookup_stateid() accepts a statusmask that includes the status
+flags that a found stateid is allowed to have. Currently, that mask
+never includes SC_STATUS_FREEABLE, which means that revoked delegations
+are (almost) never found.
+
+Add SC_STATUS_FREEABLE to the always-allowed status flags, and remove it
+from nfsd4_delegreturn() since it's now always implied.
+
+Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/20250227012541.3234589-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4state.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3945,16 +3945,12 @@ static int sev_snp_ap_creation(struct vc
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6902,7 +6902,7 @@ nfsd4_lookup_stateid(struct nfsd4_compou
+ 		 */
+ 		statusmask |= SC_STATUS_REVOKED;
  
- 	/*
- 	 * The target vCPU is valid, so the vCPU will be kicked unless the
--	 * request is for CREATE_ON_INIT. For any errors at this stage, the
--	 * kick will place the vCPU in an non-runnable state.
-+	 * request is for CREATE_ON_INIT.
- 	 */
- 	kick = true;
+-	statusmask |= SC_STATUS_ADMIN_REVOKED;
++	statusmask |= SC_STATUS_ADMIN_REVOKED | SC_STATUS_FREEABLE;
  
- 	mutex_lock(&target_svm->sev_es.snp_vmsa_mutex);
+ 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
+ 		CLOSE_STATEID(stateid))
+@@ -7557,9 +7557,7 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
+ 	if ((status = fh_verify(rqstp, &cstate->current_fh, S_IFREG, 0)))
+ 		return status;
  
--	target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
--	target_svm->sev_es.snp_ap_waiting_for_reset = true;
--
- 	/* Interrupt injection mode shouldn't change for AP creation */
- 	if (request < SVM_VMGEXIT_AP_DESTROY) {
- 		u64 sev_features;
-@@ -4000,20 +3996,23 @@ static int sev_snp_ap_creation(struct vc
- 		target_svm->sev_es.snp_vmsa_gpa = svm->vmcb->control.exit_info_2;
- 		break;
- 	case SVM_VMGEXIT_AP_DESTROY:
-+		target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
- 		break;
- 	default:
- 		vcpu_unimpl(vcpu, "vmgexit: invalid AP creation request [%#x] from guest\n",
- 			    request);
- 		ret = -EINVAL;
--		break;
-+		goto out;
- 	}
- 
--out:
-+	target_svm->sev_es.snp_ap_waiting_for_reset = true;
-+
- 	if (kick) {
- 		kvm_make_request(KVM_REQ_UPDATE_PROTECTED_GUEST_STATE, target_vcpu);
- 		kvm_vcpu_kick(target_vcpu);
- 	}
- 
-+out:
- 	mutex_unlock(&target_svm->sev_es.snp_vmsa_mutex);
- 
- 	return ret;
+-	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG,
+-				      SC_STATUS_REVOKED | SC_STATUS_FREEABLE,
+-				      &s, nn);
++	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG, SC_STATUS_REVOKED, &s, nn);
+ 	if (status)
+ 		goto out;
+ 	dp = delegstateid(s);
 
 
