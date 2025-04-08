@@ -1,46 +1,45 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C8A2F44;
-	Tue,  8 Apr 2025 00:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3908D4A04;
+	Tue,  8 Apr 2025 03:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744073984; cv=none; b=kaFXigp8K2MIbU+W6nQVn4AGf6+3ICcrvkEivKxk9ooMWLIewNZaExBuncObbqW2XOmoUrbwgJOucjssr9g0wzaS5PIdzsJMOa7U0T4XQIwpw49hHI2rdc2d8xmjZ7KrxBsu1AFM7gWdRHGcHcVwDsRglUPKBIUwAntuUUu7jVk=
+	t=1744082719; cv=none; b=RTlNKNXSvJGPbj8T1G+jG2MgWprA68r3a2A/0fRnTV/qpBzknwS1VpAh5E+WEtorHFhfVj7dGNa03VfH+zr8OXvLLoiptb6LdnhAd0pjOpIPUlv2pbBpdXh4WxOBHl+NY2Jybcnjy5b56+Dnjm2Fl2wJ3txj91Z9Jd3Ktp5QHWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744073984; c=relaxed/simple;
-	bh=530cCthsBxJGAnh29VV+3qHeJI8/he7x9Z7tJ7Ive7Y=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EtZhaYvq0s+RX5V+s7yBMWQxPpaFumdyD/4fOcnDen1tgAKJ25OpawLUSz1bYqwvo2NkkwaDvkGtqctb8PPcOp6gOK8YoV/cy9+9K6JBgVvrrAiNy9ivWtBLTmHWlFSLKZQzIHRUroFneZ2RDjOwL1JqZjU6SJyKQkplQBMSR4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
+	s=arc-20240116; t=1744082719; c=relaxed/simple;
+	bh=De9S0jKXQHWL4ddOS+2LDXVwVwuUSfQ6GnrVTLPs2yU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=T/lf1Cz3NnkRH1nsec9U9P8SXv0a21g5VPoF9sIb747flv4o+x9GvyVpwpZOUPqcKDP+CHULo/+r2xdfaTtsGFBijHiizjod+yOcGRyLmqfudmwloQVfvmVJseweXW9pnYkHB+SBeKNTPI387sIbZkKJkeyPriM9noJrFux5Xcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5380R3sF032020;
-	Tue, 8 Apr 2025 00:59:23 GMT
-Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45tug8k4ch-1
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5383GKqd014976;
+	Mon, 7 Apr 2025 20:25:02 -0700
+Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45tyt4b0k1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Tue, 08 Apr 2025 00:59:23 +0000 (GMT)
-Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
+	Mon, 07 Apr 2025 20:25:01 -0700 (PDT)
+Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 7 Apr 2025 17:59:21 -0700
+ 15.1.2507.43; Mon, 7 Apr 2025 20:25:01 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 7 Apr 2025 17:59:17 -0700
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Mon, 7 Apr 2025 20:24:57 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
-CC: <Tim.Huang@amd.com>, <Jesse.Zhang@amd.com>, <patches@lists.linux.dev>,
-        <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <harry.wentland@amd.com>,
-        <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>,
-        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
-        <Xinhui.Pan@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-        <chiahsuan.chung@amd.com>, <alex.hung@amd.com>,
-        <daniel.wheeler@amd.com>, <hersenxs.wu@amd.com>
-Subject: [PATCH 5.10.y] drm/amd/pm: Fix negative array index read
-Date: Tue, 8 Apr 2025 08:59:16 +0800
-Message-ID: <20250408005916.3362084-1-jianqi.ren.cn@windriver.com>
+CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
+        <harry.wentland@amd.com>, <sunpeng.li@amd.com>,
+        <Rodrigo.Siqueira@amd.com>, <alexander.deucher@amd.com>,
+        <christian.koenig@amd.com>, <Xinhui.Pan@amd.com>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <amd-gfx@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <chiahsuan.chung@amd.com>,
+        <alex.hung@amd.com>, <daniel.wheeler@amd.com>, <hersenxs.wu@amd.com>
+Subject: [PATCH 5.10.y] drm/amd/display: Skip inactive planes within ModeSupportAndSystemConfiguration
+Date: Tue, 8 Apr 2025 11:24:56 +0800
+Message-ID: <20250408032456.3437393-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,97 +49,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-GUID: 7PQuZLHbPOKsCVgyxeGy_nUbdk4xh-_p
-X-Authority-Analysis: v=2.4 cv=YJefyQGx c=1 sm=1 tr=0 ts=67f474eb cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=zd2uoN0lAAAA:8 a=t7CeM3EgAAAA:8 a=U7fDvu6cvwUxRHWrC4cA:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: 7PQuZLHbPOKsCVgyxeGy_nUbdk4xh-_p
+X-Proofpoint-ORIG-GUID: 5-F-MLBWDWSd1-w6nLaD6MTbksbZORpR
+X-Authority-Analysis: v=2.4 cv=RMSzH5i+ c=1 sm=1 tr=0 ts=67f4970d cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=zd2uoN0lAAAA:8 a=t7CeM3EgAAAA:8 a=jWJrOWpaenu_S2W2EP4A:9 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: 5-F-MLBWDWSd1-w6nLaD6MTbksbZORpR
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_07,2025-04-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 bulkscore=0 mlxlogscore=999 adultscore=0 lowpriorityscore=0
- mlxscore=0 clxscore=1011 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504080005
+ definitions=2025-04-08_01,2025-04-07_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=999 spamscore=0 priorityscore=1501 adultscore=0 clxscore=1015
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504080022
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit c8c19ebf7c0b202a6a2d37a52ca112432723db5f ]
+[ Upstream commit a54f7e866cc73a4cb71b8b24bb568ba35c8969df ]
 
-Avoid using the negative values
-for clk_idex as an index into an array pptable->DpmDescriptor.
+[Why]
+Coverity reports Memory - illegal accesses.
 
-V2: fix clk_index return check (Tim Huang)
+[How]
+Skip inactive planes.
 
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Minor conflict resolved due to code context change.]
+[get_pipe_idx() was introduced as a helper by
+dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321") in v6.0.
+This patch backports it to make code clearer. And minor conflict is
+resolved due to code context change.]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   | 21 ++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ .../drm/amd/display/dc/dml/display_mode_vba.c | 27 ++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-index a7773b6453d5..0af9ee3a520a 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -900,19 +900,22 @@ static int navi10_get_current_clk_freq_by_table(struct smu_context *smu,
- 					   value);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
+index b32093136089..7dfcb1e0a6ff 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
+@@ -825,11 +825,30 @@ static unsigned int CursorBppEnumToBits(enum cursor_bpp ebpp)
+ 	}
  }
  
--static bool navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
-+static int navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
++static unsigned int get_pipe_idx(struct display_mode_lib *mode_lib, unsigned int plane_idx)
++{
++	int pipe_idx = -1;
++	int i;
++
++	ASSERT(plane_idx < DC__NUM_DPP__MAX);
++
++	for (i = 0; i < DC__NUM_DPP__MAX ; i++) {
++		if (plane_idx == mode_lib->vba.pipe_plane[i]) {
++			pipe_idx = i;
++			break;
++		}
++	}
++	ASSERT(pipe_idx >= 0);
++
++	return pipe_idx;
++}
++
+ void ModeSupportAndSystemConfiguration(struct display_mode_lib *mode_lib)
  {
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
- 	DpmDescriptor_t *dpm_desc = NULL;
--	uint32_t clk_index = 0;
-+	int clk_index = 0;
+ 	soc_bounding_box_st *soc = &mode_lib->vba.soc;
+ 	unsigned int k;
+ 	unsigned int total_pipes = 0;
++	unsigned int pipe_idx = 0;
  
- 	clk_index = smu_cmn_to_asic_specific_index(smu,
- 						   CMN2ASIC_MAPPING_CLK,
- 						   clk_type);
-+	if (clk_index < 0)
-+		return clk_index;
-+
- 	dpm_desc = &pptable->DpmDescriptor[clk_index];
+ 	mode_lib->vba.VoltageLevel = mode_lib->vba.cache_pipes[0].clks_cfg.voltage;
+ 	mode_lib->vba.ReturnBW = mode_lib->vba.ReturnBWPerState[mode_lib->vba.VoltageLevel][mode_lib->vba.maxMpcComb];
+@@ -849,8 +868,14 @@ void ModeSupportAndSystemConfiguration(struct display_mode_lib *mode_lib)
+ 		mode_lib->vba.DISPCLK = soc->clock_limits[mode_lib->vba.VoltageLevel].dispclk_mhz;
  
- 	/* 0 - Fine grained DPM, 1 - Discrete DPM */
--	return dpm_desc->SnapToDiscrete == 0 ? true : false;
-+	return dpm_desc->SnapToDiscrete == 0 ? 1 : 0;
+ 	// Total Available Pipes Support Check
+-	for (k = 0; k < mode_lib->vba.NumberOfActivePlanes; ++k)
++	for (k = 0; k < mode_lib->vba.NumberOfActivePlanes; ++k) {
++		pipe_idx = get_pipe_idx(mode_lib, k);
++		if (pipe_idx == -1) {
++			ASSERT(0);
++			continue; // skip inactive planes
++		}
+ 		total_pipes += mode_lib->vba.DPPPerPlane[k];
++	}
+ 	ASSERT(total_pipes <= DC__NUM_DPP__MAX);
  }
  
- static inline bool navi10_od_feature_is_supported(struct smu_11_0_overdrive_table *od_table, enum SMU_11_0_ODFEATURE_CAP cap)
-@@ -964,7 +967,11 @@ static int navi10_print_clk_levels(struct smu_context *smu,
- 		if (ret)
- 			return size;
- 
--		if (!navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (!ret) {
- 			for (i = 0; i < count; i++) {
- 				ret = smu_v11_0_get_dpm_freq_by_index(smu, clk_type, i, &value);
- 				if (ret)
-@@ -1127,7 +1134,11 @@ static int navi10_force_clk_levels(struct smu_context *smu,
- 	case SMU_UCLK:
- 	case SMU_FCLK:
- 		/* There is only 2 levels for fine grained DPM */
--		if (navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (ret) {
- 			soft_max_level = (soft_max_level >= 1 ? 1 : 0);
- 			soft_min_level = (soft_min_level >= 1 ? 1 : 0);
- 		}
 -- 
 2.34.1
 
