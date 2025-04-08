@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4394E26F472;
-	Tue,  8 Apr 2025 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5150826F472;
+	Tue,  8 Apr 2025 12:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117037; cv=none; b=LxQa//P0CYXtSzz/nZ++7lD7WavaRK/E+ZdPEo46JM2YW4P1rANXIhIh2EEp4hf9vHCVvkqVVLNYZQ8TU7Khg+fpZQ1OeWNyn13CUJ9ePARHBoDXodJ0kbBLdwXO3zm1TFB5TPtvfs0uhPic7RsmzEO2yOqRo/MX3VWq7SHAhHQ=
+	t=1744117040; cv=none; b=hqgtUV0gjM1fUxcqjWV75Dqzn6cBNzOBCMkR6zacoHgwFcIh6kov5Fpndd3gSz1jASiHSgHbcO0Re/gPc1cEVsf5b9FIWK2nfme/NdA8W2mQ914Zy+qlSy2DjiS+h15BYh2LDzG6g0TCeZhMmQt6OcnPJiSkZw0jH17vQveerxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117037; c=relaxed/simple;
-	bh=zXfM+II0If8UCZ8py85sYSCQGKihGcw+6c2QYYafX9o=;
+	s=arc-20240116; t=1744117040; c=relaxed/simple;
+	bh=kDDmZLDCwn9YI++ns5kQJsSMLSaBPdtrPh/BsYP7W5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjpBP8UG6TFzgiLFdasCC+PjeuJyClPjMs2YNytMggqZLl3pJRnaUa4mO1IgA6mzYkwEbxT10nqoNyVdJbVKrhKd+B02tBaZkV5HSG3ZEIB3JTswWeaILhC3Mzj3TqDWh7eeTqkh9tcci9T9pFTJxMNUGGPUSxsMNjG/o2LYLhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5iuZaRR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JecDNupzC2VZjZX2600N3AM91IRZO6lqWsrxqfLhVMalMgQkON8JHUJhDBLF0QuWraQtVtt3hu/+NrgbVrzpzD/NxMFTPcHVt0WlfPqPFT0r/LEfbJG7uGB8Uq8NzFiBO+m6BF63Lg5fSvVVr0rH0pe/ZIQX2Igr+iSNvROoEX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtIobWoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5iuZaRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3315C4CEE5;
-	Tue,  8 Apr 2025 12:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtIobWoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D77C4CEE5;
+	Tue,  8 Apr 2025 12:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117037;
-	bh=zXfM+II0If8UCZ8py85sYSCQGKihGcw+6c2QYYafX9o=;
+	s=korg; t=1744117039;
+	bh=kDDmZLDCwn9YI++ns5kQJsSMLSaBPdtrPh/BsYP7W5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5iuZaRR4GHoA5LVY2wnLngh6Pz7H3gvhWVYeZ7ucy7pViOMGu1CF+Cmlqh7kFbzg
-	 pq3FFBY/9xTinkgjY3bji5dDxvSwsPuaeYKAhCuLv8BE0uVuqOh8tLzFoGh9juyzlp
-	 6rA+sykw+vJN9eozq7H7avB+zniB/nO7QGSW88KU=
+	b=VtIobWozu2Br8GfUMUWNa16GTFmNTCr217yaxnzskITg1sWStI7S42+vh2+ADeXPW
+	 DT0v6qgRuf78oPBOnF4yu3tL3EgSEItdNy0IIVdX4QXnBDe52YyE0VzwE6E+g+kBjD
+	 2NCUCBaFb62V/VIw6/hTqekT8jkSmrP9PvNd0ZA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	WANG Rui <wangrui@loongson.cn>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 362/423] rust: Fix enabling Rust and building with GCC for LoongArch
-Date: Tue,  8 Apr 2025 12:51:28 +0200
-Message-ID: <20250408104854.291181208@linuxfoundation.org>
+Subject: [PATCH 6.12 363/423] LoongArch: Increase ARCH_DMA_MINALIGN up to 16
+Date: Tue,  8 Apr 2025 12:51:29 +0200
+Message-ID: <20250408104854.318988093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,42 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WANG Rui <wangrui@loongson.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 13c23cb4ed09466d73f1beae8956810b95add6ef upstream.
+commit 4103cfe9dcb88010ae4911d3ff417457d1b6a720 upstream.
 
-This patch fixes a build issue on LoongArch when Rust is enabled and
-compiled with GCC by explicitly setting the bindgen target and skipping
-C flags that Clang doesn't support.
+ARCH_DMA_MINALIGN is 1 by default, but some LoongArch-specific devices
+(such as APBDMA) require 16 bytes alignment. When the data buffer length
+is too small, the hardware may make an error writing cacheline. Thus, it
+is dangerous to allocate a small memory buffer for DMA. It's always safe
+to define ARCH_DMA_MINALIGN as L1_CACHE_BYTES but unnecessary (kmalloc()
+need small memory objects). Therefore, just increase it to 16.
 
 Cc: stable@vger.kernel.org
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
+Tested-by: Binbin Zhou <zhoubinbin@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/include/asm/cache.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -227,7 +227,8 @@ bindgen_skip_c_flags := -mno-fp-ret-in-3
- 	-mfunction-return=thunk-extern -mrecord-mcount -mabi=lp64 \
- 	-mindirect-branch-cs-prefix -mstack-protector-guard% -mtraceback=no \
- 	-mno-pointers-to-nested-functions -mno-string \
--	-mno-strict-align -mstrict-align \
-+	-mno-strict-align -mstrict-align -mdirect-extern-access \
-+	-mexplicit-relocs -mno-check-zero-division \
- 	-fconserve-stack -falign-jumps=% -falign-loops=% \
- 	-femit-struct-debug-baseonly -fno-ipa-cp-clone -fno-ipa-sra \
- 	-fno-partial-inlining -fplugin-arg-arm_ssp_per_task_plugin-% \
-@@ -241,6 +242,7 @@ bindgen_skip_c_flags := -mno-fp-ret-in-3
- # Derived from `scripts/Makefile.clang`.
- BINDGEN_TARGET_x86	:= x86_64-linux-gnu
- BINDGEN_TARGET_arm64	:= aarch64-linux-gnu
-+BINDGEN_TARGET_loongarch	:= loongarch64-linux-gnusf
- BINDGEN_TARGET		:= $(BINDGEN_TARGET_$(SRCARCH))
+--- a/arch/loongarch/include/asm/cache.h
++++ b/arch/loongarch/include/asm/cache.h
+@@ -8,6 +8,8 @@
+ #define L1_CACHE_SHIFT		CONFIG_L1_CACHE_SHIFT
+ #define L1_CACHE_BYTES		(1 << L1_CACHE_SHIFT)
  
- # All warnings are inhibited since GCC builds are very experimental,
++#define ARCH_DMA_MINALIGN	(16)
++
+ #define __read_mostly __section(".data..read_mostly")
+ 
+ #endif /* _ASM_CACHE_H */
 
 
