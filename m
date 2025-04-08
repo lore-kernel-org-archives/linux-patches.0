@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346E526FA6F;
-	Tue,  8 Apr 2025 12:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E3C280A4D;
+	Tue,  8 Apr 2025 12:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116567; cv=none; b=OO4KEyhpcXu9h4+JT2hJD8IdmMsP0iwA9zsBrm+3iLELuoVPRBPRz122HhHmeqrGgGzXFVoLzb1emdVHo+ItOU3sTHFanMOYIqCJhbY1xhsKthup4eb/f4IyHJtI24Tg0PwGcZ2Mjw5WVKlcvJT9DSynWV5EQ0r8KJ0X6vpKvb8=
+	t=1744116570; cv=none; b=Fn1EJ0i5aP3mgrCHFJ7pNWoOIRp99Ls7WbBrqL06yVF2pMtJpcReBnrqEReQz38+d8CE6oDyK0kpWkrACf3YmMOxuLZt8pPKiLN0sEHUgoj0qL2MQo9imN1ozdja7xg9v3Fef45bTzkZgJbDK0xWWfLrPzXSbur5f1lZy2rPB54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116567; c=relaxed/simple;
-	bh=Ptyl4+ISPh845D6FkzHdyfQUrYcq75nRCtR1OIFJl9o=;
+	s=arc-20240116; t=1744116570; c=relaxed/simple;
+	bh=tWtnSqWtHOVx02zjR0kUpEyFTcD4sLU1URTWMPallAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YEbNoyKElhL3ityLPmCY55B4P5IXajThQt5ovb7eHgddlAO+jeaezrJhxDr3UYqxPrT3ZRzv5I08ZvQRE7ao7XkXJYaA3rKO0pDCun/pVBPZpv6LiggbYF8IiW43rMweRROazKMIkFHE3ScukrBXTbgx4uCcScIr7X3N1aJo0C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xz47DSJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YOtLMs+tLOQ57jWEiS5Be943jP82OxdELpKOjq8WQSjw/dEa2QNnxAqGWdUw8YcH2vKnmCd7lBE539EjwbfrpfnpdGN2iZIqmJcJjXCkxSunxtE8A773USMyR+PgAAJA3iKW5F/8NN3qcpUg3gtVAyMzlyfZKRyQDxIdT/ZKLmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gevjw4EO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xz47DSJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC934C4CEEB;
-	Tue,  8 Apr 2025 12:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gevjw4EO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9BFC4CEE5;
+	Tue,  8 Apr 2025 12:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116567;
-	bh=Ptyl4+ISPh845D6FkzHdyfQUrYcq75nRCtR1OIFJl9o=;
+	s=korg; t=1744116569;
+	bh=tWtnSqWtHOVx02zjR0kUpEyFTcD4sLU1URTWMPallAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xz47DSJltZ2jo9oY+9L0QfP2foEO1KhGSfI+pqtIJdU62C9ul/3TI6+kvV5BVSlrd
-	 /4PrpnQ/SviENYZj0/K60ASyFVzVJxOpCuElfP6hTu5lgFLG7U4ff4t7zMDJM4qV24
-	 G1hbGuiqzB6piKDS/0j3t7DgTJBvDjhw3HXNJz60=
+	b=gevjw4EO0ti8FPB6HL9VagdwMKmrPG5zybCr3+Y9k7hpui1MtvVWAvTEN2BDD2CKi
+	 ap0zIVxnOQTXwacuTtizpivjr2fZewsQj17zbypLOEBAmcSGoc86LpH1b5SeQsPt3p
+	 5duV4yKeR6ckiU3OISrS5FjxtTm5C3Wy+beEN0tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/423] iio: adc: ad4130: Fix comparison of channel setups
-Date: Tue,  8 Apr 2025 12:48:34 +0200
-Message-ID: <20250408104850.119050443@linuxfoundation.org>
+Subject: [PATCH 6.12 189/423] iio: adc: ad7124: Fix comparison of channel configs
+Date: Tue,  8 Apr 2025 12:48:35 +0200
+Message-ID: <20250408104850.141119165@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 280acb19824663d55a3f4d09087c76fabe86fa3c ]
+[ Upstream commit 05a5d874f7327b75e9bc4359618017e047cc129c ]
 
 Checking the binary representation of two structs (of the same type)
 for equality doesn't have the same semantic as comparing all members for
@@ -70,86 +70,80 @@ the comparison by member is the one that is needed.
 
 Convert the comparison accordingly to compare the members one after
 another. Also add a static_assert guard to (somewhat) ensure that when
-struct ad4130_setup_info is expanded, the comparison is adapted, too.
+struct ad7124_channel_config::config_props is expanded, the comparison
+is adapted, too.
 
 This issue is somewhat theoretic, but using memcmp() on a struct is a
 bad pattern that is worth fixing.
 
-Fixes: 62094060cf3a ("iio: adc: ad4130: add AD4130 driver")
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250303114659.1672695-12-u.kleine-koenig@baylibre.com
+Link: https://patch.msgid.link/20250303114659.1672695-13-u.kleine-koenig@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad4130.c | 41 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7124.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/ad4130.c b/drivers/iio/adc/ad4130.c
-index de32cc9d18c5e..712f95f53c9ec 100644
---- a/drivers/iio/adc/ad4130.c
-+++ b/drivers/iio/adc/ad4130.c
-@@ -223,6 +223,10 @@ enum ad4130_pin_function {
- 	AD4130_PIN_FN_VBIAS = BIT(3),
- };
+diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
+index 8d94bc2b1cac3..30a7392c4f8b9 100644
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -147,7 +147,11 @@ struct ad7124_chip_info {
+ struct ad7124_channel_config {
+ 	bool live;
+ 	unsigned int cfg_slot;
+-	/* Following fields are used to compare equality. */
++	/*
++	 * Following fields are used to compare for equality. If you
++	 * make adaptations in it, you most likely also have to adapt
++	 * ad7124_find_similar_live_cfg(), too.
++	 */
+ 	struct_group(config_props,
+ 		enum ad7124_ref_sel refsel;
+ 		bool bipolar;
+@@ -334,15 +338,38 @@ static struct ad7124_channel_config *ad7124_find_similar_live_cfg(struct ad7124_
+ 								  struct ad7124_channel_config *cfg)
+ {
+ 	struct ad7124_channel_config *cfg_aux;
+-	ptrdiff_t cmp_size;
+ 	int i;
  
-+/*
-+ * If you make adaptations in this struct, you most likely also have to adapt
-+ * ad4130_setup_info_eq(), too.
-+ */
- struct ad4130_setup_info {
- 	unsigned int			iout0_val;
- 	unsigned int			iout1_val;
-@@ -591,6 +595,40 @@ static irqreturn_t ad4130_irq_handler(int irq, void *private)
- 	return IRQ_HANDLED;
- }
- 
-+static bool ad4130_setup_info_eq(struct ad4130_setup_info *a,
-+				 struct ad4130_setup_info *b)
-+{
+-	cmp_size = sizeof_field(struct ad7124_channel_config, config_props);
 +	/*
 +	 * This is just to make sure that the comparison is adapted after
-+	 * struct ad4130_setup_info was changed.
++	 * struct ad7124_channel_config was changed.
 +	 */
-+	static_assert(sizeof(*a) ==
++	static_assert(sizeof_field(struct ad7124_channel_config, config_props) ==
 +		      sizeof(struct {
-+				     unsigned int iout0_val;
-+				     unsigned int iout1_val;
-+				     unsigned int burnout;
-+				     unsigned int pga;
-+				     unsigned int fs;
-+				     u32 ref_sel;
-+				     enum ad4130_filter_mode filter_mode;
-+				     bool ref_bufp;
-+				     bool ref_bufm;
++				     enum ad7124_ref_sel refsel;
++				     bool bipolar;
++				     bool buf_positive;
++				     bool buf_negative;
++				     unsigned int vref_mv;
++				     unsigned int pga_bits;
++				     unsigned int odr;
++				     unsigned int odr_sel_bits;
++				     unsigned int filter_type;
 +			     }));
 +
-+	if (a->iout0_val != b->iout0_val ||
-+	    a->iout1_val != b->iout1_val ||
-+	    a->burnout != b->burnout ||
-+	    a->pga != b->pga ||
-+	    a->fs != b->fs ||
-+	    a->ref_sel != b->ref_sel ||
-+	    a->filter_mode != b->filter_mode ||
-+	    a->ref_bufp != b->ref_bufp ||
-+	    a->ref_bufm != b->ref_bufm)
-+		return false;
-+
-+	return true;
-+}
-+
- static int ad4130_find_slot(struct ad4130_state *st,
- 			    struct ad4130_setup_info *target_setup_info,
- 			    unsigned int *slot, bool *overwrite)
-@@ -604,8 +642,7 @@ static int ad4130_find_slot(struct ad4130_state *st,
- 		struct ad4130_slot_info *slot_info = &st->slots_info[i];
+ 	for (i = 0; i < st->num_channels; i++) {
+ 		cfg_aux = &st->channels[i].cfg;
  
- 		/* Immediately accept a matching setup info. */
--		if (!memcmp(target_setup_info, &slot_info->setup,
--			    sizeof(*target_setup_info))) {
-+		if (ad4130_setup_info_eq(target_setup_info, &slot_info->setup)) {
- 			*slot = i;
- 			return 0;
- 		}
+ 		if (cfg_aux->live &&
+-		    !memcmp(&cfg->config_props, &cfg_aux->config_props, cmp_size))
++		    cfg->refsel == cfg_aux->refsel &&
++		    cfg->bipolar == cfg_aux->bipolar &&
++		    cfg->buf_positive == cfg_aux->buf_positive &&
++		    cfg->buf_negative == cfg_aux->buf_negative &&
++		    cfg->vref_mv == cfg_aux->vref_mv &&
++		    cfg->pga_bits == cfg_aux->pga_bits &&
++		    cfg->odr == cfg_aux->odr &&
++		    cfg->odr_sel_bits == cfg_aux->odr_sel_bits &&
++		    cfg->filter_type == cfg_aux->filter_type)
+ 			return cfg_aux;
+ 	}
+ 
 -- 
 2.39.5
 
