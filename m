@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A039B26988A;
-	Tue,  8 Apr 2025 11:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8A4267B7F;
+	Tue,  8 Apr 2025 11:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110382; cv=none; b=hjeqGJJS8DkLwDFYGI7+5lcegadZlulL+KyDXULlJpE5dgtyBTwZkxqYreiufABVek/Xvpue0dfD36eApiyNbIz/K8WNd2Qx8gDjfEH/91kRh8yk5rdwnz/w/ltOVexY1k+DXmtE55nUJzj4uKsUB/bna9eLmIl6GJT0fH6y/Ds=
+	t=1744110385; cv=none; b=jApXgXw5N7tDTU2kQMXsWHYq/fc2ai5jqwVYZaYCCQCzq4VeEinUnHwzRsb8qTQpEdlWLS4pHpqAH3/uGTiYCMWchNlxyzxTaqiHcdm7TyJGQ5tIpV35PommXE65Hcc1JwqBqEs99hIwjNBjkHc97NXTdFoRKv5Un4Zm96tqBlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110382; c=relaxed/simple;
-	bh=JZLaGGhi98l2h9URx/5qTaNr0ILeTesuZ8EbDPdayEI=;
+	s=arc-20240116; t=1744110385; c=relaxed/simple;
+	bh=ZPLT87GT9lsFp+pe7PJ33fv/eu4uNE2UJzkEL6CWBV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4J9wnfMGDdhPhBBr+MQgv/+Nlcv1H3uQ5ZvMLQ0XbY9z1IBAqVC77PLRUI7kNaXjhNI33f+jwcDoD7FUOToe/Hva6qyFsoZ9rCM4ctVMJHW8tSiSCErxVJaVDKBuiV7RLYb+1VJJrS5iAcCMRDv1UQlnrvijUhmW+KMP4uOMTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E78NVMyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5Rrj4rl/1DBJWeqOhNZfJmIAsbrD+hPofMfLJPaCG9AA/Fr1caqbFWJK8ohr+Rx5f6ND+aQ8JglNCXxK6x4DzVJzvFUSo9D10QAFc402eCGXbVGKsZAv0JA3TzNUKKfw25q43Y3j5h7dbvWLzxciiSirFtTy/75w74StfLmgR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooEQjUv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E78NVMyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3158AC4CEEB;
-	Tue,  8 Apr 2025 11:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooEQjUv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4722C4CEE5;
+	Tue,  8 Apr 2025 11:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110382;
-	bh=JZLaGGhi98l2h9URx/5qTaNr0ILeTesuZ8EbDPdayEI=;
+	s=korg; t=1744110385;
+	bh=ZPLT87GT9lsFp+pe7PJ33fv/eu4uNE2UJzkEL6CWBV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E78NVMyu/XcCNdO1b8lzRNi140yZ8a67J4rq6N6ETk/CW5ydhce7PB5SQsSyrwoL8
-	 c4ZyvksEjaJ86u46xI9V0aiwmSBntWvjKwiQN8vDpFcHLs5LvShh7YVoBx700a2+8S
-	 cRWlAnBSka3nKRIfHSGL2OORgxBBVY3cMe0uOrjA=
+	b=ooEQjUv/Ne4rHJ1sCUHoHvtd/COCkTSDBdDrDyt3eSU6i8IcJxy0norqCnhcnZ97D
+	 uuJzjMfUpxD9z7qRjYGo3PGGoVdCk69IWpu0va3u+UL7Lg6B5KxW5C3HPXnQHQ4aB7
+	 6RjQF1YxHlS0iftIXzG0nEstjYPS1NBBy8YyKzho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Kees Cook <kees@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 007/731] seccomp: fix the __secure_computing() stub for !HAVE_ARCH_SECCOMP_FILTER
-Date: Tue,  8 Apr 2025 12:38:24 +0200
-Message-ID: <20250408104914.429719733@linuxfoundation.org>
+Subject: [PATCH 6.14 008/731] smack: dont compile ipv6 code unless ipv6 is configured
+Date: Tue,  8 Apr 2025 12:38:25 +0200
+Message-ID: <20250408104914.453539805@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,95 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit b37778bec82ba82058912ca069881397197cd3d5 ]
+[ Upstream commit bfcf4004bcbce2cb674b4e8dbd31ce0891766bac ]
 
-Depending on CONFIG_HAVE_ARCH_SECCOMP_FILTER, __secure_computing(NULL)
-will crash or not. This is not consistent/safe, especially considering
-that after the previous change __secure_computing(sd) is always called
-with sd == NULL.
+I want to be sure that ipv6-specific code
+is not compiled in kernel binaries
+if ipv6 is not configured.
 
-Fortunately, if CONFIG_HAVE_ARCH_SECCOMP_FILTER=n, __secure_computing()
-has no callers, these architectures use secure_computing_strict(). Yet
-it make sense make __secure_computing(NULL) safe in this case.
+[1] was getting rid of "unused variable" warning, but,
+with that, it also mandated compilation of a handful ipv6-
+specific functions in ipv4-only kernel configurations:
 
-Note also that with this change we can unexport secure_computing_strict()
-and change the current callers to use __secure_computing(NULL).
+smk_ipv6_localhost, smack_ipv6host_label, smk_ipv6_check.
 
-Fixes: 8cf8dfceebda ("seccomp: Stub for !HAVE_ARCH_SECCOMP_FILTER")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250128150307.GA15325@redhat.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Their compiled bodies are likely to be removed by compiler
+from the resulting binary, but, to be on the safe side,
+I remove them from the compiler view.
+
+[1]
+Fixes: 00720f0e7f28 ("smack: avoid unused 'sip' variable warning")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seccomp.h |  8 ++------
- kernel/seccomp.c        | 14 ++++++++++----
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ security/smack/smack.h     |  6 ++++++
+ security/smack/smack_lsm.c | 10 +++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/seccomp.h b/include/linux/seccomp.h
-index e45531455d3bb..d55949071c30e 100644
---- a/include/linux/seccomp.h
-+++ b/include/linux/seccomp.h
-@@ -22,8 +22,9 @@
- #include <linux/atomic.h>
- #include <asm/seccomp.h>
+diff --git a/security/smack/smack.h b/security/smack/smack.h
+index 4608b07607a3d..c4d998972ba56 100644
+--- a/security/smack/smack.h
++++ b/security/smack/smack.h
+@@ -152,6 +152,7 @@ struct smk_net4addr {
+ 	struct smack_known	*smk_label;	/* label */
+ };
  
--#ifdef CONFIG_HAVE_ARCH_SECCOMP_FILTER
- extern int __secure_computing(const struct seccomp_data *sd);
-+
-+#ifdef CONFIG_HAVE_ARCH_SECCOMP_FILTER
- static inline int secure_computing(void)
- {
- 	if (unlikely(test_syscall_work(SECCOMP)))
-@@ -32,11 +33,6 @@ static inline int secure_computing(void)
++#if IS_ENABLED(CONFIG_IPV6)
+ /*
+  * An entry in the table identifying IPv6 hosts.
+  */
+@@ -162,7 +163,9 @@ struct smk_net6addr {
+ 	int			smk_masks;	/* mask size */
+ 	struct smack_known	*smk_label;	/* label */
+ };
++#endif /* CONFIG_IPV6 */
+ 
++#ifdef SMACK_IPV6_PORT_LABELING
+ /*
+  * An entry in the table identifying ports.
+  */
+@@ -175,6 +178,7 @@ struct smk_port_label {
+ 	short			smk_sock_type;	/* Socket type */
+ 	short			smk_can_reuse;
+ };
++#endif /* SMACK_IPV6_PORT_LABELING */
+ 
+ struct smack_known_list_elem {
+ 	struct list_head	list;
+@@ -315,7 +319,9 @@ extern struct smack_known smack_known_web;
+ extern struct mutex	smack_known_lock;
+ extern struct list_head smack_known_list;
+ extern struct list_head smk_net4addr_list;
++#if IS_ENABLED(CONFIG_IPV6)
+ extern struct list_head smk_net6addr_list;
++#endif /* CONFIG_IPV6 */
+ 
+ extern struct mutex     smack_onlycap_lock;
+ extern struct list_head smack_onlycap_list;
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 239773cdcdcf4..85f3d4337ca19 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -2492,6 +2492,7 @@ static struct smack_known *smack_ipv4host_label(struct sockaddr_in *sip)
+ 	return NULL;
  }
- #else
- extern void secure_computing_strict(int this_syscall);
--static inline int __secure_computing(const struct seccomp_data *sd)
--{
--	secure_computing_strict(sd->nr);
--	return 0;
--}
- #endif
  
- extern long prctl_get_seccomp(void);
-diff --git a/kernel/seccomp.c b/kernel/seccomp.c
-index 7bbb408431ebc..3231f63d93d89 100644
---- a/kernel/seccomp.c
-+++ b/kernel/seccomp.c
-@@ -29,13 +29,11 @@
- #include <linux/syscalls.h>
- #include <linux/sysctl.h>
++#if IS_ENABLED(CONFIG_IPV6)
+ /*
+  * smk_ipv6_localhost - Check for local ipv6 host address
+  * @sip: the address
+@@ -2559,6 +2560,7 @@ static struct smack_known *smack_ipv6host_label(struct sockaddr_in6 *sip)
  
-+#include <asm/syscall.h>
-+
- /* Not exposed in headers: strictly internal use only. */
- #define SECCOMP_MODE_DEAD	(SECCOMP_MODE_FILTER + 1)
- 
--#ifdef CONFIG_HAVE_ARCH_SECCOMP_FILTER
--#include <asm/syscall.h>
--#endif
--
- #ifdef CONFIG_SECCOMP_FILTER
- #include <linux/file.h>
- #include <linux/filter.h>
-@@ -1074,6 +1072,14 @@ void secure_computing_strict(int this_syscall)
- 	else
- 		BUG();
+ 	return NULL;
  }
-+int __secure_computing(const struct seccomp_data *sd)
-+{
-+	int this_syscall = sd ? sd->nr :
-+		syscall_get_nr(current, current_pt_regs());
-+
-+	secure_computing_strict(this_syscall);
-+	return 0;
-+}
- #else
++#endif /* CONFIG_IPV6 */
  
- #ifdef CONFIG_SECCOMP_FILTER
+ /**
+  * smack_netlbl_add - Set the secattr on a socket
+@@ -2663,6 +2665,7 @@ static int smk_ipv4_check(struct sock *sk, struct sockaddr_in *sap)
+ 	return rc;
+ }
+ 
++#if IS_ENABLED(CONFIG_IPV6)
+ /**
+  * smk_ipv6_check - check Smack access
+  * @subject: subject Smack label
+@@ -2695,6 +2698,7 @@ static int smk_ipv6_check(struct smack_known *subject,
+ 	rc = smk_bu_note("IPv6 check", subject, object, MAY_WRITE, rc);
+ 	return rc;
+ }
++#endif /* CONFIG_IPV6 */
+ 
+ #ifdef SMACK_IPV6_PORT_LABELING
+ /**
+@@ -3027,7 +3031,9 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
+ 		return 0;
+ 	if (addrlen < offsetofend(struct sockaddr, sa_family))
+ 		return 0;
+-	if (IS_ENABLED(CONFIG_IPV6) && sap->sa_family == AF_INET6) {
++
++#if IS_ENABLED(CONFIG_IPV6)
++	if (sap->sa_family == AF_INET6) {
+ 		struct sockaddr_in6 *sip = (struct sockaddr_in6 *)sap;
+ 		struct smack_known *rsp = NULL;
+ 
+@@ -3047,6 +3053,8 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
+ 
+ 		return rc;
+ 	}
++#endif /* CONFIG_IPV6 */
++
+ 	if (sap->sa_family != AF_INET || addrlen < sizeof(struct sockaddr_in))
+ 		return 0;
+ 	rc = smk_ipv4_check(sock->sk, (struct sockaddr_in *)sap);
 -- 
 2.39.5
 
