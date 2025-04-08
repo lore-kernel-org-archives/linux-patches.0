@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D3D266EEA;
-	Tue,  8 Apr 2025 11:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C3D2641CC;
+	Tue,  8 Apr 2025 11:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112764; cv=none; b=RWu42BwuWlwlKwRWo04pUaIb3EX/e6esP4E3IV+w3HYXBh99ZkdM8a0111HztS6Js95UqkS9EhDyYMMAVVKuYl/UF2mCNMfkvcQ7f/hLGocGYIYZhGM8rCsSQHdnyrpQ75e3Uh6tA7EdBhUCwz3s+27hFXOgHDNk2SildbRmnbw=
+	t=1744112767; cv=none; b=TV1u5w7rr7I8tYd1o5Ba0wjPRSUzwleID7wXWmkCfXD7kOmatIa9UkXptWWXgIlfLn+gqIkDhmba8q/3mPVynRffiwzPOhDoWKJLeIvthxI1rNH3fm73C++W4rQUkpWxX300wWHKtPinEorl+OXDOGTzr1hHGFKqiRwBNrB66M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112764; c=relaxed/simple;
-	bh=4po1vhgvDtyhJGH7VWw19LkicjV4LivNvu5TTCl1DWk=;
+	s=arc-20240116; t=1744112767; c=relaxed/simple;
+	bh=gaM3MlcdUrBsGzx+j8kORm2DuQr4pPpflf+q7LVSS1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJAfSIum1x7kAWOJqXnW9g1IXBIEXsRnVIPpfWPL+5+Yc6qtiMbPB9bzl52m7veBfaMdrC6WUDoZ81KfWW2rIkmSpXW4UHgCYQt9BkVJUIMBwJ2AmkoVGpxVr3WR3q5ivBH8pmJFkKK2hM2PhgdzkxOyZ+TgR8CeKyGWWZzfa9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhEbobM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6Wg+sRV8Kh9HP/0RMEVyqxkKPbOOw+1hk39ZNXosIH7ORzQeuQ6/GAF/cXZGq3aVPdwEssKlulxmvUdPUZkOgKmwJUA+8lhm9oY3r9c+6q+2Wlsn4xc31Eso1gaKMeBtgGU+XDC3NIfO78TXpjfLvIthtrr91oDu1ni4EB2Mv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFx+rm2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhEbobM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E260CC4CEE7;
-	Tue,  8 Apr 2025 11:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFx+rm2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8F3C4CEE5;
+	Tue,  8 Apr 2025 11:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112764;
-	bh=4po1vhgvDtyhJGH7VWw19LkicjV4LivNvu5TTCl1DWk=;
+	s=korg; t=1744112767;
+	bh=gaM3MlcdUrBsGzx+j8kORm2DuQr4pPpflf+q7LVSS1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhEbobM8pZhH3eewBL+LHwiCo3JZtTU+Xia0DBzrpEmpi5AqhTPsQ1rkVcn5ShaDc
-	 oXwVZ3ssdJ9FkzxxOr2Uex8ajce7RI6J4AzKOzcj6hvVOH6BtioYPSza+/Ul15ifHb
-	 WXDGpsLuUlXvqrNjcHv6iQnW20J/UIg7PDK/1fg4=
+	b=nFx+rm2k0dPQw4nBdGEHdaihk/Xaa1X6fV8AK+OdeErPehJ6SZNB9LpaPdRVPt1BU
+	 CDDXgcIPK36Qc5UZgl1UB0jWE3jDRjUljO+/hPQ5aUCRAIL8QEdf549Eo3gxV9sBgd
+	 SNyfENvV3+kk8HuvgtxOAqQqXyJGO3wOrqTEoJVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 189/279] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
-Date: Tue,  8 Apr 2025 12:49:32 +0200
-Message-ID: <20250408104831.443395451@linuxfoundation.org>
+Subject: [PATCH 5.15 190/279] mfd: sm501: Switch to BIT() to mitigate integer overflows
+Date: Tue,  8 Apr 2025 12:49:33 +0200
+Message-ID: <20250408104831.468057996@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,89 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
+[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
 
-When cur_qp isn't NULL, in order to avoid fetching the QP from
-the radix tree again we check if the next cqe QP is identical to
-the one we already have.
+If offset end up being high enough, right hand expression in functions
+like sm501_gpio_set() shifted left for that number of bits, may
+not fit in int type.
 
-The bug however is that we are checking if the QP is identical by
-checking the QP number inside the CQE against the QP number inside the
-mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
-FW so it should be matched against mlx5_core_qp which is our FW QP
-number.
+Just in case, fix that by using BIT() both as an option safe from
+overflow issues and to make this step look similar to other gpio
+drivers.
 
-Otherwise we could use the wrong QP when handling a CQE which could
-cause the kernel trace below.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-This issue is mainly noticeable over QPs 0 & 1, since for now they are
-the only QPs in our driver whereas the QP number inside mlx5_ib_qp
-doesn't match the QP number inside mlx5_core_qp.
-
-BUG: kernel NULL pointer dereference, address: 0000000000000012
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP
- CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
- Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
- RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
- RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
- RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
- R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
- R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
- FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
- Call Trace:
-  <TASK>
-  ? __die+0x20/0x60
-  ? page_fault_oops+0x150/0x3e0
-  ? exc_page_fault+0x74/0x130
-  ? asm_exc_page_fault+0x22/0x30
-  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
-  __ib_process_cq+0x5a/0x150 [ib_core]
-  ib_cq_poll_work+0x31/0x90 [ib_core]
-  process_one_work+0x169/0x320
-  worker_thread+0x288/0x3a0
-  ? work_busy+0xb0/0xb0
-  kthread+0xd7/0x1f0
-  ? kthreads_online_cpu+0x130/0x130
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork+0x2d/0x50
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f61be273d369 ("sm501: add gpiolib support")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/sm501.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index a190fb5815913..f3becb506125e 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -481,7 +481,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
- 	}
+diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
+index 3ac4508a6742a..78dcbf8e2c15d 100644
+--- a/drivers/mfd/sm501.c
++++ b/drivers/mfd/sm501.c
+@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
+ {
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
+@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+ 	void __iomem *regs = smchip->regbase;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	unsigned long save;
+ 	unsigned long ddr;
  
- 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
--	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
-+	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
- 		/* We do not have to take the QP table lock here,
- 		 * because CQs will be locked while QPs are removed
- 		 * from the table.
+@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
+ {
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
 -- 
 2.39.5
 
