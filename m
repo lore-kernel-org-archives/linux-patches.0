@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C6E267AF2;
-	Tue,  8 Apr 2025 11:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C13F263C90;
+	Tue,  8 Apr 2025 11:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112486; cv=none; b=kncBkmle7bIBPfGzoUXywoZBMhnFmpCBb2B0XsVAFbI4Re8260EQBXGAgPb5PuVxsHZ2CQySuzt0ZDVyiwRVDFtEqfH0pmzvvbBFZZZ6p3d/0Ue7BIG1KJfN+yPALv51rC+z2SMX6WmCcswvken1N4CPERSUpst0SWLoL8e6GP8=
+	t=1744112489; cv=none; b=P+Uk8e9cE+DN4XM3poYildH4/SWh6WVPhdWcdC1eK/3lnNMqmx/bTjwm+GerI5TOpm8B4cXggviCMKoFcKej2VEsHPcobI6T6Yy8FZ40pk1qfmWBiZYkh47g0uPz7y+Sr38JQZLSKeEFslnrtAZhyeN1e5lItA817ky7X6TQsGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112486; c=relaxed/simple;
-	bh=M6NRKdE2dqTP5mnqkXS//O2iUGb8amp+7UCn7cGUWws=;
+	s=arc-20240116; t=1744112489; c=relaxed/simple;
+	bh=5zdKLb4EUL4cIupZQy/WUXGaSULw/Uqqqxmjao66mXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snSBK9zh9JNDvs0mrEfcpjd8jf57LvpUa0tlK1agLmWyil8gT+hoOVmNrOoknbjHRJ2CZaOeCMinIFTYXixUfb6q/3YAjsXJsRCNifeIsQ9WN1D9WJw7MZpwqWp4jSawYq5E1BTjLATm9Ytbk4iyQRw7y9XWqOZ7vtJ/37XJNVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ft3kzF/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AM9xoW68eaxSMIyCU7aVsX2lcVBXOe9dp1m0COdAFbrDJLWxJwPKvYb2VAHRDNMib825neHMg6f+vGUFE+7olgCnWRDmgm1Pn06Ith/mKIe6qmX+4lL1YYOTXgxu2c+geJAQfu0dc9xvYU6TpH9Lp5TggFLR+pM4pv9eIT+CiaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRNctEx7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ft3kzF/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F62C4CEE5;
-	Tue,  8 Apr 2025 11:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRNctEx7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C764C4CEE5;
+	Tue,  8 Apr 2025 11:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112486;
-	bh=M6NRKdE2dqTP5mnqkXS//O2iUGb8amp+7UCn7cGUWws=;
+	s=korg; t=1744112489;
+	bh=5zdKLb4EUL4cIupZQy/WUXGaSULw/Uqqqxmjao66mXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ft3kzF/Pw9woF4Joe1D3bSbO+aOOaw/lAfbjKhX11q6nLdgYc9lGPBND9USqvBDG1
-	 txwXrHR5eBbzHRvPCCRnLKwPfrvCPF4dFBmY/MZkwcpjpXcTVEsgHQpWc18Aqbe/PI
-	 4XpegXFVVEGWVyejF8yJcwhSJghvPBBkE/J5FeCA=
+	b=MRNctEx75jneBzPKh6mvY1dw+tx7ix3AP/gzZOeUuXfLpaLl6c7EAV0kpBc3FuInr
+	 BKvnwUz0q001m6GOBMzKcZDiOGo/pZUWESDzyu70fPjyzjchc/67oMlsqgtMPX9siM
+	 EQ8dfMENlAEHfVVB7dAKzSirbaeAt8ACAGhlrrdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/279] firmware: imx-scu: fix OF node leak in .probe()
-Date: Tue,  8 Apr 2025 12:47:42 +0200
-Message-ID: <20250408104828.476962791@linuxfoundation.org>
+Subject: [PATCH 5.15 088/279] RDMA/hns: Fix a missing rollback in error path of hns_roce_create_qp_common()
+Date: Tue,  8 Apr 2025 12:47:51 +0200
+Message-ID: <20250408104828.723286461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit fbf10b86f6057cf79300720da4ea4b77e6708b0d ]
+[ Upstream commit 444907dd45cbe62fd69398805b6e2c626fab5b3a ]
 
-imx_scu_probe() calls of_parse_phandle_with_args(), but does not
-release the OF node reference obtained by it. Add a of_node_put() call
-after done with the node.
+When ib_copy_to_udata() fails in hns_roce_create_qp_common(),
+hns_roce_qp_remove() should be called in the error path to
+clean up resources in hns_roce_qp_store().
 
-Fixes: f25a066d1a07 ("firmware: imx-scu: Support one TX and one RX")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 0f00571f9433 ("RDMA/hns: Use new SQ doorbell register for HIP09")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250311084857.3803665-6-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/hns/hns_roce_qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
-index dca79caccd01c..fa25c082109ac 100644
---- a/drivers/firmware/imx/imx-scu.c
-+++ b/drivers/firmware/imx/imx-scu.c
-@@ -279,6 +279,7 @@ static int imx_scu_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index d7f620eb4f21d..3875563abf374 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1117,7 +1117,7 @@ static int hns_roce_create_qp_common(struct hns_roce_dev *hr_dev,
+ 				       min(udata->outlen, sizeof(resp)));
+ 		if (ret) {
+ 			ibdev_err(ibdev, "copy qp resp failed!\n");
+-			goto err_store;
++			goto err_flow_ctrl;
+ 		}
+ 	}
  
- 	sc_ipc->fast_ipc = of_device_is_compatible(args.np, "fsl,imx8-mu-scu");
-+	of_node_put(args.np);
- 
- 	num_channel = sc_ipc->fast_ipc ? 2 : SCU_MU_CHAN_NUM;
- 	for (i = 0; i < num_channel; i++) {
 -- 
 2.39.5
 
