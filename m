@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E76A267B9C;
-	Tue,  8 Apr 2025 12:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3FB2698A0;
+	Tue,  8 Apr 2025 12:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113783; cv=none; b=aM046QAencP3vuC+wH3lkkA8RR3BTSSn0/kJqRoKbV/oBFjBe1BLXp9C3w+fUYCnkB/ZULDq+JIZXykfwcjmYKfqrAQzlGyNXVpkRTg1BsjvxZa4u++HPfs+MTwJ35Uva20nbG5g+OhlIBfRpJ1sEE+tXUQqiklvxrdBv6ckhqc=
+	t=1744113785; cv=none; b=N3nmhMO8Qc3YQnq4Fs8cHFkSdZOVjjDdKXCsB4LhzF+nrAW9LdVd+5XhYqzpxblqWKHFG03CtliQ1jpicmkhbw5xvfbthshnGsfwhbY3g4BBWEjCKiDFwMhdv++60Y1bN9/j697r6rrc5o/MkqxF84zqmIkWzVydI5iHpkD8wmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113783; c=relaxed/simple;
-	bh=BOLTJjWAjdZAc9KOsMu/u/r3LR5MoeO1bi8R021/ABk=;
+	s=arc-20240116; t=1744113785; c=relaxed/simple;
+	bh=pIFA8qeLvjeIUZJACk4uFvVVKDzULxTbv4eVAqXOwIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0VkFDpIHr7znxOpjOI6UI+341Epzu74wQGrgFlDOHUGp12frBL8DC434RSAcXn/4swRpfjjh0QJGfXcdObrgTG/fLguN0TBTRjorukvammuFRT+zKy1aIaBMGikwPmAFwPGWey3548SsL+lO/SZEvXgKFvsGquGM93Xa33KsQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPiE/jXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJt9MNeknVHa7gsOLiJNGwqNFBBjhQ7syOZkaVCc3D7fdf6TCaC5zfUtbuI++jtH5CE5DrGQITAgmGxqkFb5GDCmNrUU5X+fEQVtyzj3C+YK/+43YEYGjM9GMV3M3FCbZ8o9ShpJNdySDBmFhonclsjMrHHsWrtYxTALFJ2NPGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJTRNN4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPiE/jXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA45BC4CEE5;
-	Tue,  8 Apr 2025 12:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJTRNN4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50181C4CEE5;
+	Tue,  8 Apr 2025 12:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113783;
-	bh=BOLTJjWAjdZAc9KOsMu/u/r3LR5MoeO1bi8R021/ABk=;
+	s=korg; t=1744113785;
+	bh=pIFA8qeLvjeIUZJACk4uFvVVKDzULxTbv4eVAqXOwIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPiE/jXFsL2K+LtFx8VamiGz4gQljNgFO0ejHBgBa1xs2MZlPL86YRoAJDi7FsJ3v
-	 9ZfM8oQMeTTNXBKC+P8Ync1wI0qDtTLOvtjVP+jp0by0TQoGJO28b7Eu4uYCufeBLI
-	 A1Ngz1FXF7Xzj2iqcLUL79StgcSj0d5UkNXGr8hw=
+	b=GJTRNN4JVKWMAsiWDH/TQ0zIBhjEROaA8ebjSSzt89sTROcit4RF/foEum3OhZHrz
+	 hMDPJfemt2BUWk2ODn9ybv6qVcucu1kZweJS9WqhM7gKMjKC5HfwMeVVx4NJdI3ZVi
+	 pAJHoMfor7nbN2yQTT1xFLZB8wCy+rBAl42oE9RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kashavkin <akashavkin@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/154] netfilter: nft_exthdr: fix offset with ipv4_find_option()
-Date: Tue,  8 Apr 2025 12:49:20 +0200
-Message-ID: <20250408104815.896841353@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Michael Kelley <mhkelley@outlook.com>
+Subject: [PATCH 5.4 002/154] clockevents/drivers/i8253: Fix stop sequence for timer 0
+Date: Tue,  8 Apr 2025 12:49:03 +0200
+Message-ID: <20250408104815.374879543@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,78 +53,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kashavkin <akashavkin@gmail.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 6edd78af9506bb182518da7f6feebd75655d9a0e ]
+commit 531b2ca0a940ac9db03f246c8b77c4201de72b00 upstream.
 
-There is an incorrect calculation in the offset variable which causes
-the nft_skb_copy_to_reg() function to always return -EFAULT. Adding the
-start variable is redundant. In the __ip_options_compile() function the
-correct offset is specified when finding the function. There is no need
-to add the size of the iphdr structure to the offset.
+According to the data sheet, writing the MODE register should stop the
+counter (and thus the interrupts). This appears to work on real hardware,
+at least modern Intel and AMD systems. It should also work on Hyper-V.
 
-Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
-Signed-off-by: Alexey Kashavkin <akashavkin@gmail.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, on some buggy virtual machines the mode change doesn't have any
+effect until the counter is subsequently loaded (or perhaps when the IRQ
+next fires).
+
+So, set MODE 0 and then load the counter, to ensure that those buggy VMs
+do the right thing and the interrupts stop. And then write MODE 0 *again*
+to stop the counter on compliant implementations too.
+
+Apparently, Hyper-V keeps firing the IRQ *repeatedly* even in mode zero
+when it should only happen once, but the second MODE write stops that too.
+
+Userspace test program (mostly written by tglx):
+=====
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <stdint.h>
+ #include <sys/io.h>
+
+static __always_inline void __out##bwl(type value, uint16_t port)	\
+{									\
+	asm volatile("out" #bwl " %" #bw "0, %w1"			\
+		     : : "a"(value), "Nd"(port));			\
+}									\
+									\
+static __always_inline type __in##bwl(uint16_t port)			\
+{									\
+	type value;							\
+	asm volatile("in" #bwl " %w1, %" #bw "0"			\
+		     : "=a"(value) : "Nd"(port));			\
+	return value;							\
+}
+
+BUILDIO(b, b, uint8_t)
+
+ #define inb __inb
+ #define outb __outb
+
+ #define PIT_MODE	0x43
+ #define PIT_CH0	0x40
+ #define PIT_CH2	0x42
+
+static int is8254;
+
+static void dump_pit(void)
+{
+	if (is8254) {
+		// Latch and output counter and status
+		outb(0xC2, PIT_MODE);
+		printf("%02x %02x %02x\n", inb(PIT_CH0), inb(PIT_CH0), inb(PIT_CH0));
+	} else {
+		// Latch and output counter
+		outb(0x0, PIT_MODE);
+		printf("%02x %02x\n", inb(PIT_CH0), inb(PIT_CH0));
+	}
+}
+
+int main(int argc, char* argv[])
+{
+	int nr_counts = 2;
+
+	if (argc > 1)
+		nr_counts = atoi(argv[1]);
+
+	if (argc > 2)
+		is8254 = 1;
+
+	if (ioperm(0x40, 4, 1) != 0)
+		return 1;
+
+	dump_pit();
+
+	printf("Set oneshot\n");
+	outb(0x38, PIT_MODE);
+	outb(0x00, PIT_CH0);
+	outb(0x0F, PIT_CH0);
+
+	dump_pit();
+	usleep(1000);
+	dump_pit();
+
+	printf("Set periodic\n");
+	outb(0x34, PIT_MODE);
+	outb(0x00, PIT_CH0);
+	outb(0x0F, PIT_CH0);
+
+	dump_pit();
+	usleep(1000);
+	dump_pit();
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	printf("Set stop (%d counter writes)\n", nr_counts);
+	outb(0x30, PIT_MODE);
+	while (nr_counts--)
+		outb(0xFF, PIT_CH0);
+
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	printf("Set MODE 0\n");
+	outb(0x30, PIT_MODE);
+
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	return 0;
+}
+=====
+
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Co-developed-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Michael Kelley <mhkelley@outlook.com>
+Link: https://lore.kernel.org/all/20240802135555.564941-2-dwmw2@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_exthdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/mshyperv.c |   11 -----------
+ drivers/clocksource/i8253.c    |   36 +++++++++++++++++++++++++-----------
+ include/linux/i8253.h          |    1 -
+ 3 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index ca268293cfa12..de43abf6d1191 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -83,7 +83,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	unsigned char optbuf[sizeof(struct ip_options) + 40];
- 	struct ip_options *opt = (struct ip_options *)optbuf;
- 	struct iphdr *iph, _iph;
--	unsigned int start;
- 	bool found = false;
- 	__be32 info;
- 	int optlen;
-@@ -91,7 +90,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	iph = skb_header_pointer(skb, 0, sizeof(_iph), &_iph);
- 	if (!iph)
- 		return -EBADMSG;
--	start = sizeof(struct iphdr);
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -16,7 +16,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/kexec.h>
+-#include <linux/i8253.h>
+ #include <linux/random.h>
+ #include <asm/processor.h>
+ #include <asm/hypervisor.h>
+@@ -310,16 +309,6 @@ static void __init ms_hyperv_init_platfo
+ 	if (efi_enabled(EFI_BOOT))
+ 		x86_platform.get_nmi_reason = hv_get_nmi_reason;
  
- 	optlen = iph->ihl * 4 - (int)sizeof(struct iphdr);
- 	if (optlen <= 0)
-@@ -101,7 +99,7 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	/* Copy the options since __ip_options_compile() modifies
- 	 * the options.
- 	 */
--	if (skb_copy_bits(skb, start, opt->__data, optlen))
-+	if (skb_copy_bits(skb, sizeof(struct iphdr), opt->__data, optlen))
- 		return -EBADMSG;
- 	opt->optlen = optlen;
+-	/*
+-	 * Hyper-V VMs have a PIT emulation quirk such that zeroing the
+-	 * counter register during PIT shutdown restarts the PIT. So it
+-	 * continues to interrupt @18.2 HZ. Setting i8253_clear_counter
+-	 * to false tells pit_shutdown() not to zero the counter so that
+-	 * the PIT really is shutdown. Generation 2 VMs don't have a PIT,
+-	 * and setting this value has no effect.
+-	 */
+-	i8253_clear_counter_on_shutdown = false;
+-
+ #if IS_ENABLED(CONFIG_HYPERV)
+ 	/*
+ 	 * Setup the hook to get control post apic initialization.
+--- a/drivers/clocksource/i8253.c
++++ b/drivers/clocksource/i8253.c
+@@ -20,13 +20,6 @@
+ DEFINE_RAW_SPINLOCK(i8253_lock);
+ EXPORT_SYMBOL(i8253_lock);
  
-@@ -116,18 +114,18 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 		found = target == IPOPT_SSRR ? opt->is_strictroute :
- 					       !opt->is_strictroute;
- 		if (found)
--			*offset = opt->srr + start;
-+			*offset = opt->srr;
- 		break;
- 	case IPOPT_RR:
- 		if (!opt->rr)
- 			break;
--		*offset = opt->rr + start;
-+		*offset = opt->rr;
- 		found = true;
- 		break;
- 	case IPOPT_RA:
- 		if (!opt->router_alert)
- 			break;
--		*offset = opt->router_alert + start;
-+		*offset = opt->router_alert;
- 		found = true;
- 		break;
- 	default:
--- 
-2.39.5
-
+-/*
+- * Handle PIT quirk in pit_shutdown() where zeroing the counter register
+- * restarts the PIT, negating the shutdown. On platforms with the quirk,
+- * platform specific code can set this to false.
+- */
+-bool i8253_clear_counter_on_shutdown __ro_after_init = true;
+-
+ #ifdef CONFIG_CLKSRC_I8253
+ /*
+  * Since the PIT overflows every tick, its not very useful
+@@ -112,12 +105,33 @@ void clockevent_i8253_disable(void)
+ {
+ 	raw_spin_lock(&i8253_lock);
+ 
++	/*
++	 * Writing the MODE register should stop the counter, according to
++	 * the datasheet. This appears to work on real hardware (well, on
++	 * modern Intel and AMD boxes; I didn't dig the Pegasos out of the
++	 * shed).
++	 *
++	 * However, some virtual implementations differ, and the MODE change
++	 * doesn't have any effect until either the counter is written (KVM
++	 * in-kernel PIT) or the next interrupt (QEMU). And in those cases,
++	 * it may not stop the *count*, only the interrupts. Although in
++	 * the virt case, that probably doesn't matter, as the value of the
++	 * counter will only be calculated on demand if the guest reads it;
++	 * it's the interrupts which cause steal time.
++	 *
++	 * Hyper-V apparently has a bug where even in mode 0, the IRQ keeps
++	 * firing repeatedly if the counter is running. But it *does* do the
++	 * right thing when the MODE register is written.
++	 *
++	 * So: write the MODE and then load the counter, which ensures that
++	 * the IRQ is stopped on those buggy virt implementations. And then
++	 * write the MODE again, which is the right way to stop it.
++	 */
+ 	outb_p(0x30, PIT_MODE);
++	outb_p(0, PIT_CH0);
++	outb_p(0, PIT_CH0);
+ 
+-	if (i8253_clear_counter_on_shutdown) {
+-		outb_p(0, PIT_CH0);
+-		outb_p(0, PIT_CH0);
+-	}
++	outb_p(0x30, PIT_MODE);
+ 
+ 	raw_spin_unlock(&i8253_lock);
+ }
+--- a/include/linux/i8253.h
++++ b/include/linux/i8253.h
+@@ -21,7 +21,6 @@
+ #define PIT_LATCH	((PIT_TICK_RATE + HZ/2) / HZ)
+ 
+ extern raw_spinlock_t i8253_lock;
+-extern bool i8253_clear_counter_on_shutdown;
+ extern struct clock_event_device i8253_clockevent;
+ extern void clockevent_i8253_init(bool oneshot);
+ extern void clockevent_i8253_disable(void);
 
 
