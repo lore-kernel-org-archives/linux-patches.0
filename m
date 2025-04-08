@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D0326B087;
-	Tue,  8 Apr 2025 12:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CE01AAA32;
+	Tue,  8 Apr 2025 12:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115800; cv=none; b=Ekm8ilG7Wwq4st5iL7QUkK5NqTB89hYnzjsXCyeM+8EO6UR3HvjfcSfKAjVoGlk995uWckiZqEXbBTG+OOQqATJp0tTlxfqjyM1biG3CypdMGHFNNvaRVltGgFcwtuicv18CQ+NlH0Qt6zOQEyj8rwXw5xrwoYJnNyuJTUqhAL4=
+	t=1744115803; cv=none; b=rbYkQ4U1rofDqjO1kCc4DM4BB9/WpVr2DG0BWLbweEobu2V4nyex7xhmGypPKgwBFOn9c1ALbtuCGnCevfdqZy270YaTei+YXn7F5wTghkobHV4dKTh4/44+ob9B9YioVQhjzBToriIhqhDGgpEcUjdifrLD2cxp5+Kzd251W7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115800; c=relaxed/simple;
-	bh=ehsXiEZtnulUdkDrwhbpkqovKFmquMSThMQQEGjPy8c=;
+	s=arc-20240116; t=1744115803; c=relaxed/simple;
+	bh=kDU9jiqjC725864a22GjtjhhYim1q5pE5UjE1Bl55X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HNCxIhL6GWfMxY9hd/ERHu1kXVnCbBtMomLhenGj0G9APAXI8/3mRZIrmY1dSuAyOLA9ct6rWMqGdc9UZBcUMHXxWsD8kAaCxYnzPIWpoL/wy7HVU3ZkKttaMrUrrCh4tvmHynbkiiApDvmbdkcZPPh+j3lh0414G+IoW5Qz8l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+46J0wD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VpqM5sUNVWCZRZEVTIrGW+MVyo4O7h59LWYkQRUR0OdXQfTxO0jU4R0dlTBl0gBWVI7M1BSIkhANbpkPK2AOejutbvFi7SlldRWTAkao4Ug/kzCQNM+m0ed3Cx7IlpGyzRjtdXLYW6+nI/XkY5IxtlFIDmrMSkkJXfH3HKv0d60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4Ssbh9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+46J0wD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F73C4CEE5;
-	Tue,  8 Apr 2025 12:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4Ssbh9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2B6C4CEE5;
+	Tue,  8 Apr 2025 12:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115800;
-	bh=ehsXiEZtnulUdkDrwhbpkqovKFmquMSThMQQEGjPy8c=;
+	s=korg; t=1744115802;
+	bh=kDU9jiqjC725864a22GjtjhhYim1q5pE5UjE1Bl55X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+46J0wDlvF4eepW2G5+9zMe/XAfmJB28IBLGN7Zqar58ow04ZfuQcKWDM+xgNHX+
-	 FhoT6IWhHHv+7JyinRo6VL75qD8CSk+cSq3C/I8ka+Vic+X1BSdhAzSEwM1o8Rh1VC
-	 I2csJ3jOGuT6hnrBu56LVo557GTBwZVe8VHijzdU=
+	b=z4Ssbh9HmN4+MJtxN6AwRo65xSmW/2CSmeUikq6vM/KrW7HHkIoAuPb5Glv2HERKK
+	 UlPlbY6ScchqrdJQ4Ju/W2EldCHiM63iWvkCEUEm4gt/DbqoVNEES1oRb5tM7+UvXo
+	 CZ0SknwDkz8GBw2beb0qlZBEwvB/8/HMFhHkaNG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Kees Cook <kees@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/204] staging: rtl8723bs: select CONFIG_CRYPTO_LIB_AES
-Date: Tue,  8 Apr 2025 12:50:38 +0200
-Message-ID: <20250408104823.502226080@linuxfoundation.org>
+Subject: [PATCH 6.1 109/204] fs/procfs: fix the comment above proc_pid_wchan()
+Date: Tue,  8 Apr 2025 12:50:39 +0200
+Message-ID: <20250408104823.531370643@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -45,46 +48,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit b2a9a6a26b7e954297e51822e396572026480bad ]
+[ Upstream commit 6287fbad1cd91f0c25cdc3a580499060828a8f30 ]
 
-This fixes the following issue:
-ERROR: modpost: "aes_expandkey" [drivers/staging/rtl8723bs/r8723bs.ko]
-undefined!
-ERROR: modpost: "aes_encrypt" [drivers/staging/rtl8723bs/r8723bs.ko]
-undefined!
+proc_pid_wchan() used to report kernel addresses to user space but that is
+no longer the case today.  Bring the comment above proc_pid_wchan() in
+sync with the implementation.
 
-Fixes: 7d40753d8820 ("staging: rtl8723bs: use in-kernel aes encryption in OMAC1 routines")
-Fixes: 3d3a170f6d80 ("staging: rtl8723bs: use in-kernel aes encryption")
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/tencent_0BDDF3A721708D16A2E7C3DAFF0FEC79A105@qq.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20250319210222.1518771-1-bvanassche@acm.org
+Fixes: b2f73922d119 ("fs/proc, core/debug: Don't expose absolute kernel addresses via wchan")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ fs/proc/base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/rtl8723bs/Kconfig b/drivers/staging/rtl8723bs/Kconfig
-index f23e29b679fb5..14afcbbd61045 100644
---- a/drivers/staging/rtl8723bs/Kconfig
-+++ b/drivers/staging/rtl8723bs/Kconfig
-@@ -5,6 +5,7 @@ config RTL8723BS
- 	depends on m
- 	select CFG80211_WEXT
- 	select CRYPTO
-+	select CRYPTO_LIB_AES
- 	select CRYPTO_LIB_ARC4
- 	help
- 	This option enables support for RTL8723BS SDIO drivers, such as
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index 82e4a8805bae6..fb169bdfd9a8e 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -415,7 +415,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
+ #ifdef CONFIG_KALLSYMS
+ /*
+  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
+- * Returns the resolved symbol.  If that fails, simply return the address.
++ * Returns the resolved symbol to user space.
+  */
+ static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
+ 			  struct pid *pid, struct task_struct *task)
 -- 
 2.39.5
 
