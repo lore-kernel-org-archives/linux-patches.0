@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF81267B89;
-	Tue,  8 Apr 2025 11:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69021266EEA;
+	Tue,  8 Apr 2025 11:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112753; cv=none; b=ajqXOTF0pac/Z2fTu15OKO114PDWEaZ/15ngxXBGLNjjjMJBiDxdJLg6dnlA3jToIyRgViz+mgNRV+epDgC9giZzIXZMAARrhJcnO+Y14RH63L8RLgMODHAuyZlOiXdDQJF+mfud5e3S4TrNHByW3tOyLJ6lD4DQT+jWW7oTIUU=
+	t=1744112756; cv=none; b=Oyg9DuFaQE5+Dgq6G8l9UrZzeFrsKtkYxkFcZGd1XhP52PjSFymwilPdu6Vm1IsApcb3/CMgfn8aQFWxYMUVGjo/414k/QGdVUs1kSkUYkgAuAe31NcYtXECU3LP2VTtfk6orb3Ho7jpT3ADIuRfMK/hfsgIBxnVPfTDY82utW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112753; c=relaxed/simple;
-	bh=xa5MbHBZO5M434h1sM5KPpiDZ5ot3x12AEv4sxuOiWA=;
+	s=arc-20240116; t=1744112756; c=relaxed/simple;
+	bh=gS3u/LbQXSOYkfmzAIgjGa0glgOQu/FDQOgOOD6l4nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUxabiSrFtp2GSGGDEmE9NZRXmSD7SWJ7dIdmn06AOwUMVpKZJAcgoT9JyK1gKougkuKEKmBYGODTz6lf/49Ne9aVDCC4AkpAFJZCmBc6QW6OChL7qRKC6aORjvktnMTRFxR/25UVqcKuO9Dt8ChxVHdCd45ZcU+130D8Bo7Bj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dctJQItL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hxky06w8k+xvDtjVY/3uRLqi7iWjJZkVEp6HwcjhJ+9fq5Jbx/bXoT00CsbBwXc+zaxFLEWE3ELlsCKSZyn+jmvBFTT9vpjuC1iXOQ9y/nJgQaLhlgHGGLSU8ioXwqc67JwDkLaZ3UaxsWRlAwxoR6kMFx6afiazBr5wbE3+Ego=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfRZ3+ea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dctJQItL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C691C4CEE5;
-	Tue,  8 Apr 2025 11:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfRZ3+ea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91AFC4CEE5;
+	Tue,  8 Apr 2025 11:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112753;
-	bh=xa5MbHBZO5M434h1sM5KPpiDZ5ot3x12AEv4sxuOiWA=;
+	s=korg; t=1744112756;
+	bh=gS3u/LbQXSOYkfmzAIgjGa0glgOQu/FDQOgOOD6l4nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dctJQItLf/zSgv04jNsMueBW6/m7QZiZLgpiUdTN3XYWGZhz6WijIJ7myHPrH7mY/
-	 BkKA4G7f9hDQP0BHGcn6EfGfu/Xc5o3Jjto7oCelaCdMaSRpUTfYLBthHMFDWexhrg
-	 UjH/DmcMqGTZJpWuZ5i0qiV584y9Cd577GKC4OOE=
+	b=BfRZ3+eaIXPp1K5hemuKFKsAKdaW8+yORznyLw++wq6ECqyAWmCnvoz76QVvi21Df
+	 0BW46ynrC1dFvO5B3j4J2IqKMqEyXlQ7MVLdXSvjkOnnQDg7Z39jKauJtUOr0Ue37S
+	 YGt9sTDuIU9uoWDtcaRYtJNKOJTtKMsvoQfWNPYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Jann Horn <jannh@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/279] clk: amlogic: g12a: fix mmc A peripheral clock
-Date: Tue,  8 Apr 2025 12:49:28 +0200
-Message-ID: <20250408104831.325969505@linuxfoundation.org>
+Subject: [PATCH 5.15 186/279] x86/entry: Fix ORC unwinder for PUSH_REGS with save_ret=1
+Date: Tue,  8 Apr 2025 12:49:29 +0200
+Message-ID: <20250408104831.353428070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,43 +59,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 0079e77c08de692cb20b38e408365c830a44b1ef ]
+[ Upstream commit 57e2428f8df8263275344566e02c277648a4b7f1 ]
 
-The bit index of the peripheral clock for mmc A is wrong
-This was probably not a problem for mmc A as the peripheral is likely left
-enabled by the bootloader.
+PUSH_REGS with save_ret=1 is used by interrupt entry helper functions that
+initially start with a UNWIND_HINT_FUNC ORC state.
 
-No issues has been reported so far but it could be a problem, most likely
-some form of conflict between the ethernet and mmc A clock, breaking
-ethernet on init.
+However, save_ret=1 means that we clobber the helper function's return
+address (and then later restore the return address further down on the
+stack); after that point, the only thing on the stack we can unwind through
+is the IRET frame, so use UNWIND_HINT_IRET_REGS until we have a full
+pt_regs frame.
 
-Use the value provided by the documentation for mmc A before this
-becomes an actual problem.
+( An alternate approach would be to move the pt_regs->di overwrite down
+  such that it is the final step of pt_regs setup; but I don't want to
+  rearrange entry code just to make unwinding a tiny bit more elegant. )
 
-Fixes: 085a4ea93d54 ("clk: meson: g12a: add peripheral clock controller")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241213-amlogic-clk-g12a-mmca-fix-v1-1-5af421f58b64@baylibre.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 9e809d15d6b6 ("x86/entry: Reduce the code footprint of the 'idtentry' macro")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/r/20250325-2025-03-unwind-fixes-v1-1-acd774364768@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/g12a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/entry/calling.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
-index a623596c1e490..d13a60fefc1b8 100644
---- a/drivers/clk/meson/g12a.c
-+++ b/drivers/clk/meson/g12a.c
-@@ -4199,7 +4199,7 @@ static MESON_GATE(g12a_spicc_1,			HHI_GCLK_MPEG0,	14);
- static MESON_GATE(g12a_hiu_reg,			HHI_GCLK_MPEG0,	19);
- static MESON_GATE(g12a_mipi_dsi_phy,		HHI_GCLK_MPEG0,	20);
- static MESON_GATE(g12a_assist_misc,		HHI_GCLK_MPEG0,	23);
--static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	4);
-+static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	24);
- static MESON_GATE(g12a_emmc_b,			HHI_GCLK_MPEG0,	25);
- static MESON_GATE(g12a_emmc_c,			HHI_GCLK_MPEG0,	26);
- static MESON_GATE(g12a_audio_codec,		HHI_GCLK_MPEG0,	28);
+diff --git a/arch/x86/entry/calling.h b/arch/x86/entry/calling.h
+index b00a3a95fbfab..16e12b45b151a 100644
+--- a/arch/x86/entry/calling.h
++++ b/arch/x86/entry/calling.h
+@@ -70,6 +70,8 @@ For 32-bit we have the following conventions - kernel is built with
+ 	pushq	%rsi		/* pt_regs->si */
+ 	movq	8(%rsp), %rsi	/* temporarily store the return address in %rsi */
+ 	movq	%rdi, 8(%rsp)	/* pt_regs->di (overwriting original return address) */
++	/* We just clobbered the return address - use the IRET frame for unwinding: */
++	UNWIND_HINT_IRET_REGS offset=3*8
+ 	.else
+ 	pushq   %rdi		/* pt_regs->di */
+ 	pushq   %rsi		/* pt_regs->si */
 -- 
 2.39.5
 
