@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C0283688;
-	Tue,  8 Apr 2025 12:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CDC27F4D5;
+	Tue,  8 Apr 2025 12:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117157; cv=none; b=WCZAJ5i9PC35VFH/KEs8i1SLyOaaYVoHNr9wOKvueY5DUwNqkOn0V98eLHuQcjwluJE5vOGgkPGUnN+RIpDvFjkVBKiKeP4M8Fcb0QuwOEx4/MQbJkevWBM6UM8B3/Wa4gTQ92WmCsZ8oPkyvbExXvvGObZQcXWCGNKwMot5sS8=
+	t=1744117160; cv=none; b=HjsjjuE2HXSLJtXUSItvEbDk0eIpH/zvY9scTdkbCn9LhMjjRTqDxHv7WeM9LEQoV/rAXcQ8PW6qYgAFBL8YLl40gTnlJEbShf/kqIEKBA99DIyHFifq3/5HOj3Wg43FdKcXR5BPSVBYaVcg2nA7EGxeB+s08gC7vHkt9tnWi58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117157; c=relaxed/simple;
-	bh=ZcS7QY9z5rvP8VNmls7UHI/w6Gv3ijAQNPcPC7ZRf7o=;
+	s=arc-20240116; t=1744117160; c=relaxed/simple;
+	bh=5Y++awOS64NZXp8i7DFq0I+ULUslFjk6jlroqEeKwzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgLQTUQ8H1C1iyTQxJVC5SV/8Ih++AkZtBZzleHDfrvcYw5CweX6L2OeitxKQXEW3vDx5MbbLl3AturA51V4fhWyTX/rtNKIa5x7in8QRPoCvOnBIY+pUpg/XQ2U0C7yV+aacdfTTjwCaRF2rCC8bcr4zZyQvihhu6LP37fCiR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O5FSQny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbhRYVcjukP/SPZ5pO7kPDPiM1qr2miQNZef8SnidVkch174Ux/5USXmbs4jEObM+mfY0AIML/PP8N23RR1bn2tT/0HHGnACV8KB+7nHmdGVDlR9b5FLu0CStNNHJO7wejfQqyQLGdyNY2WYNLYsOekPm26+O//C02CWExRlXOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2Fsex9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O5FSQny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56823C4CEE7;
-	Tue,  8 Apr 2025 12:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2Fsex9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08566C4CEE5;
+	Tue,  8 Apr 2025 12:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117157;
-	bh=ZcS7QY9z5rvP8VNmls7UHI/w6Gv3ijAQNPcPC7ZRf7o=;
+	s=korg; t=1744117160;
+	bh=5Y++awOS64NZXp8i7DFq0I+ULUslFjk6jlroqEeKwzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1O5FSQnyWbeEH28PdCVAQaf/za+nz36enGfIRap9sj8Mx1mamb5wlAbr5pT0hCVIU
-	 i34yv5sUz4I0mPp6gRnuxsnFDDBNitUTwu0Exs9YEchA6y0gE5IYWpMXEbr15uAVYN
-	 ShsZFCh3mkbiK+RZBUJ0wKUZEITzh9EUIA2+0U94=
+	b=o2Fsex9U+42KA8wGVQXuoFt4f81Xe4G+20Floo7gwFW3C6Qw1nVaQHvKqQx6sP7x7
+	 v4E3FCZ7I03cEW2E7XCtB23ZkN+RcDl2rPPwX81MLGAUttPfwMAwK42m1jw9bzilHl
+	 z2BuoR0v9TNhHL39FtyRCc71jaYQFhH8LUV5BPus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 388/423] media: omap3isp: Handle ARM dma_iommu_mapping
-Date: Tue,  8 Apr 2025 12:51:54 +0200
-Message-ID: <20250408104854.927363138@linuxfoundation.org>
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 406/423] tracing/osnoise: Fix possible recursive locking for cpus_read_lock()
+Date: Tue,  8 Apr 2025 12:52:12 +0200
+Message-ID: <20250408104855.368149883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,41 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 
-commit 6bc076eec6f85f778f33a8242b438e1bd9fcdd59 upstream.
+commit 7e6b3fcc9c5294aeafed0dbe1a09a1bc899bd0f2 upstream.
 
-It's no longer practical for the OMAP IOMMU driver to trick
-arm_setup_iommu_dma_ops() into ignoring its presence, so let's use the
-same tactic as other IOMMU API users on 32-bit ARM and explicitly kick
-the arch code's dma_iommu_mapping out of the way to avoid problems.
+Lockdep reports this deadlock log:
 
-Fixes: 4720287c7bf7 ("iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()")
+osnoise: could not start sampling thread
+============================================
+WARNING: possible recursive locking detected
+--------------------------------------------
+       CPU0
+       ----
+  lock(cpu_hotplug_lock);
+  lock(cpu_hotplug_lock);
+
+ Call Trace:
+  <TASK>
+  print_deadlock_bug+0x282/0x3c0
+  __lock_acquire+0x1610/0x29a0
+  lock_acquire+0xcb/0x2d0
+  cpus_read_lock+0x49/0x120
+  stop_per_cpu_kthreads+0x7/0x60
+  start_kthread+0x103/0x120
+  osnoise_hotplug_workfn+0x5e/0x90
+  process_one_work+0x44f/0xb30
+  worker_thread+0x33e/0x5e0
+  kthread+0x206/0x3b0
+  ret_from_fork+0x31/0x50
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+This is the deadlock scenario:
+osnoise_hotplug_workfn()
+  guard(cpus_read_lock)();      // first lock call
+  start_kthread(cpu)
+    if (IS_ERR(kthread)) {
+      stop_per_cpu_kthreads(); {
+        cpus_read_lock();      // second lock call. Cause the AA deadlock
+      }
+    }
+
+It is not necessary to call stop_per_cpu_kthreads() which stops osnoise
+kthread for every other CPUs in the system if a failure occurs during
+hotplug of a certain CPU.
+For start_per_cpu_kthreads(), if the start_kthread() call fails,
+this function calls stop_per_cpu_kthreads() to handle the error.
+Therefore, similarly, there is no need to call stop_per_cpu_kthreads()
+again within start_kthread().
+So just remove stop_per_cpu_kthreads() from start_kthread to solve this issue.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Tested-by: Sicelo A. Mhlongo <absicsz@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Link: https://lore.kernel.org/20250321095249.2739397-1-ranxiaokai627@163.com
+Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
+Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/omap3isp/isp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/trace/trace_osnoise.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/platform/ti/omap3isp/isp.c
-+++ b/drivers/media/platform/ti/omap3isp/isp.c
-@@ -1961,6 +1961,13 @@ static int isp_attach_iommu(struct isp_d
- 	struct dma_iommu_mapping *mapping;
- 	int ret;
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -2038,7 +2038,6 @@ static int start_kthread(unsigned int cp
  
-+	/* We always want to replace any default mapping from the arch code */
-+	mapping = to_dma_iommu_mapping(isp->dev);
-+	if (mapping) {
-+		arm_iommu_detach_device(isp->dev);
-+		arm_iommu_release_mapping(mapping);
-+	}
-+
- 	/*
- 	 * Create the ARM mapping, used by the ARM DMA mapping core to allocate
- 	 * VAs. This will allocate a corresponding IOMMU domain.
+ 	if (IS_ERR(kthread)) {
+ 		pr_err(BANNER "could not start sampling thread\n");
+-		stop_per_cpu_kthreads();
+ 		return -ENOMEM;
+ 	}
+ 
 
 
