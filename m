@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B0826461E;
-	Tue,  8 Apr 2025 12:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CE726461E;
+	Tue,  8 Apr 2025 12:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115845; cv=none; b=isKNBQOWoyneLIrRJol4pu9qDfztta9+ZQlBNoLpV2SdJtp/g1J1SqbOM8eRD9Ay6nP0WR2LARY7XZmIXk9AsdI0K76q23qh5vBaQB/chcnKheMb/4JcjUDKxo/VaAYmt6jc0ON5eJPLJ3kZWDi5MIGBL1ewD1jnN1xjK1zyKZw=
+	t=1744115848; cv=none; b=u5d6RkFmeAnwJOrBmsuwyVeH5qJYArDKbr9E1U5Os2SjrLHs0SHlip9wod6VKSYCZJurBE5YAZ0BclkXGby74LZVcTg9Ak9VlRCwkg/QdObEsu+Gk/v5AokfNt3zeKkEYrt8RpEzW2wjkgdwYloXACs3DmFDkP4p7+OAEROB2q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115845; c=relaxed/simple;
-	bh=MzQ8qzoHAXByLMg6nJkBOm/FSicGgGJDHBGchc1/Hx4=;
+	s=arc-20240116; t=1744115848; c=relaxed/simple;
+	bh=km8jtQ/IUHZ2RmfrFr052cR+MCvsI6sJQOc0+GW46J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3nF0S5w/N+ryo0bsvMUKsjLwAUy7vxbuAInVqIksfTDzajmNKqyQhornyolmZWOu534NrrRxSVqYLDxN2FFoMuSY9OUqP5aZbxjdtHoR85X0YV5VVgDco4OmHSLlnX5/equKFt+LQ9FSuBbjTAqfDhMXVJMemjbfMI8mK3iEkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ+3ku3A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMG3RpEaClMsqwt/fLCk1hL+MzrtS2h0xHm73KaJmo7s5kPcowmuAlFyFewJIlvRLzaLbf5LNDXCPcKjsxbSBWxJHWZ9eA+9SwU0TNQrM4o2BWpVrZe7Pn9A4P1+dy6D3PafkNP/N0KF235ZhH/fIB0vKZavqKI49oXj6Jn7Hck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZSjvssX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ+3ku3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A0AC4CEE5;
-	Tue,  8 Apr 2025 12:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZSjvssX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CCDC4CEE5;
+	Tue,  8 Apr 2025 12:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115845;
-	bh=MzQ8qzoHAXByLMg6nJkBOm/FSicGgGJDHBGchc1/Hx4=;
+	s=korg; t=1744115848;
+	bh=km8jtQ/IUHZ2RmfrFr052cR+MCvsI6sJQOc0+GW46J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ+3ku3AJLqylD6exN9cE2+8CejAj320JmWm1Y3GlYhVF3oHQp7/9C9pVda+l0Kir
-	 hhhovm/ulHVJEQPr2BOsa9b+xZTy1VMjt9akn/ShGCAbDz/+v7TQejAI5d6xjt3f/R
-	 cXU92wZCQpK/W1Cweq4QPPuG3MzDOJU1G1vwsNqo=
+	b=QZSjvssX4l1uu9jES51ghD+GwDjufGgzIspKLm+RUGb58pEXO69oohdydpb/2YrF+
+	 UdZ7MFJMZCLcCMTe9m24F/1a+FDk+CXdymxr0xvPM4YlJxJANeInJZMpvlcE91ihLu
+	 3efPRtXqBM7yaBtYh3jrPBw9Eo3GbJN6V0JTM+us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Zhang Guanghui <zhang.guanghui@cestc.cn>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/204] wifi: iwlwifi: mvm: use the right version of the rate API
-Date: Tue,  8 Apr 2025 12:50:57 +0200
-Message-ID: <20250408104824.032147450@linuxfoundation.org>
+Subject: [PATCH 6.1 128/204] nvme-tcp: fix possible UAF in nvme_tcp_poll
+Date: Tue,  8 Apr 2025 12:50:58 +0200
+Message-ID: <20250408104824.059352112@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,54 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit a03e2082e678ea10d0d8bdf3ed933eb05a8ddbb0 ]
+[ Upstream commit 8c1624b63a7d24142a2bbc3a5ee7e95f004ea36e ]
 
-The firmware uses the newer version of the API in recent devices. For
-older devices, we translate the rate to the new format.
-Don't parse the rate with old parsing macros.
+nvme_tcp_poll() may race with the send path error handler because
+it may complete the request while it is actively being polled for
+completion, resulting in a UAF panic [1]:
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.13d70cdcbb4e.Ic92193bce4013b70a823cfef250ee79c16cf7c17@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+We should make sure to stop polling when we see an error when
+trying to read from the socket. Hence make sure to propagate the
+error so that the block layer breaks the polling cycle.
+
+[1]:
+--
+[35665.692310] nvme nvme2: failed to send request -13
+[35665.702265] nvme nvme2: unsupported pdu type (3)
+[35665.702272] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[35665.702542] nvme nvme2: queue 1 receive failed:  -22
+[35665.703209] #PF: supervisor write access in kernel mode
+[35665.703213] #PF: error_code(0x0002) - not-present page
+[35665.703214] PGD 8000003801cce067 P4D 8000003801cce067 PUD 37e6f79067 PMD 0
+[35665.703220] Oops: 0002 [#1] SMP PTI
+[35665.703658] nvme nvme2: starting error recovery
+[35665.705809] Hardware name: Inspur aaabbb/YZMB-00882-104, BIOS 4.1.26 09/22/2022
+[35665.705812] Workqueue: kblockd blk_mq_requeue_work
+[35665.709172] RIP: 0010:_raw_spin_lock+0xc/0x30
+[35665.715788] Call Trace:
+[35665.716201]  <TASK>
+[35665.716613]  ? show_trace_log_lvl+0x1c1/0x2d9
+[35665.717049]  ? show_trace_log_lvl+0x1c1/0x2d9
+[35665.717457]  ? blk_mq_request_bypass_insert+0x2c/0xb0
+[35665.717950]  ? __die_body.cold+0x8/0xd
+[35665.718361]  ? page_fault_oops+0xac/0x140
+[35665.718749]  ? blk_mq_start_request+0x30/0xf0
+[35665.719144]  ? nvme_tcp_queue_rq+0xc7/0x170 [nvme_tcp]
+[35665.719547]  ? exc_page_fault+0x62/0x130
+[35665.719938]  ? asm_exc_page_fault+0x22/0x30
+[35665.720333]  ? _raw_spin_lock+0xc/0x30
+[35665.720723]  blk_mq_request_bypass_insert+0x2c/0xb0
+[35665.721101]  blk_mq_requeue_work+0xa5/0x180
+[35665.721451]  process_one_work+0x1e8/0x390
+[35665.721809]  worker_thread+0x53/0x3d0
+[35665.722159]  ? process_one_work+0x390/0x390
+[35665.722501]  kthread+0x124/0x150
+[35665.722849]  ? set_kthread_struct+0x50/0x50
+[35665.723182]  ret_from_fork+0x1f/0x30
+
+Reported-by: Zhang Guanghui <zhang.guanghui@cestc.cn>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/host/tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-index 105f283b777d2..fce8950007bbb 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-@@ -1272,7 +1272,7 @@ iwl_mvm_decode_he_phy_ru_alloc(struct iwl_mvm_rx_phy_data *phy_data,
- 	 */
- 	u8 ru = le32_get_bits(phy_data->d1, IWL_RX_PHY_DATA1_HE_RU_ALLOC_MASK);
- 	u32 rate_n_flags = phy_data->rate_n_flags;
--	u32 he_type = rate_n_flags & RATE_MCS_HE_TYPE_MSK_V1;
-+	u32 he_type = rate_n_flags & RATE_MCS_HE_TYPE_MSK;
- 	u8 offs = 0;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index da9d510d3d4f1..6dd19322c7f8e 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2518,6 +2518,7 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
+ {
+ 	struct nvme_tcp_queue *queue = hctx->driver_data;
+ 	struct sock *sk = queue->sock->sk;
++	int ret;
  
- 	rx_status->bw = RATE_INFO_BW_HE_RU;
-@@ -1327,13 +1327,13 @@ iwl_mvm_decode_he_phy_ru_alloc(struct iwl_mvm_rx_phy_data *phy_data,
- 
- 	if (he_mu)
- 		he_mu->flags2 |=
--			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK_V1,
-+			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK,
- 						   rate_n_flags),
- 					 IEEE80211_RADIOTAP_HE_MU_FLAGS2_BW_FROM_SIG_A_BW);
--	else if (he_type == RATE_MCS_HE_TYPE_TRIG_V1)
-+	else if (he_type == RATE_MCS_HE_TYPE_TRIG)
- 		he->data6 |=
- 			cpu_to_le16(IEEE80211_RADIOTAP_HE_DATA6_TB_PPDU_BW_KNOWN) |
--			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK_V1,
-+			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK,
- 						   rate_n_flags),
- 					 IEEE80211_RADIOTAP_HE_DATA6_TB_PPDU_BW);
+ 	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
+ 		return 0;
+@@ -2525,9 +2526,9 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
+ 	set_bit(NVME_TCP_Q_POLLING, &queue->flags);
+ 	if (sk_can_busy_loop(sk) && skb_queue_empty_lockless(&sk->sk_receive_queue))
+ 		sk_busy_loop(sk, true);
+-	nvme_tcp_try_recv(queue);
++	ret = nvme_tcp_try_recv(queue);
+ 	clear_bit(NVME_TCP_Q_POLLING, &queue->flags);
+-	return queue->nr_cqe;
++	return ret < 0 ? ret : queue->nr_cqe;
  }
+ 
+ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
 -- 
 2.39.5
 
