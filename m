@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96E6268C72;
-	Tue,  8 Apr 2025 12:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF7265CDF;
+	Tue,  8 Apr 2025 12:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114153; cv=none; b=Oli93lzKXOWNwkpluZDg0cebDMw8sZCd3hfs8am3cunfvprhOxYviFJ8cjiHKlmTrsS3XXW587uA5td5Hghova48zflXfdKKNP2XS3PJlm7LNiWYUTuvOm+MKEhbera6hztpJOIc3BZxBxbFtqBvLiZpaom/yriMckHi+cyywvM=
+	t=1744114156; cv=none; b=aR9k1NjTiHt2jW1TeIhEyQf4vZ8kwOgghAvJQnJeqnUE6xWWfNeGNOlB+vOKyz8xbXbQ3x1nFjEOHYuPkGfdEtInRXFtOMPbW/BC0eEcP/naSnvbL2g+4g6P/fcy+6bgDdausim/W9BI8E2pRmJoL6oAS5/p1KZJ5/9Ygbt+LX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114153; c=relaxed/simple;
-	bh=M472JmImbQhCTU/3KDqyW3dtNaACoxcl2gHagpKFJzQ=;
+	s=arc-20240116; t=1744114156; c=relaxed/simple;
+	bh=5uXPoX8dDQxgHpyphVScwehFy1rP0TJpbxGftFUp3zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfYX5sAhhL8H6Hd7LgM8vSuaffgrJ3NLjnDvdWDrW73mm6M5XxD+IPrdKUeiCsDxvWlCONo91tXWtx8QQYGE52n0HaPMr6cMtBefKtoLMgodfT/iYvfgtQAqxMPV59+0KL9JQAUft/DC6stAXLe6W1ODqRnjBZWPm3Uxce+P+9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgikgqRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mTekRpu9m70C2/ZzqL2hiqpLUmEkxkvfIF6NiDO6GzQmn0XdM0vXoWe9W27gpKOVp2IqLwU2j7bt/RQ+LcYN6extFReQzzECD4whXdeGZpHeOs1eqye08D+w/WZKZ9d6FRTqtP+1e1kkqCGQTqQmmKBy8nsCI24PlDR8eelF1JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyL3Qg4s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgikgqRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C9DC4CEE5;
-	Tue,  8 Apr 2025 12:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyL3Qg4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6359C4CEE5;
+	Tue,  8 Apr 2025 12:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114153;
-	bh=M472JmImbQhCTU/3KDqyW3dtNaACoxcl2gHagpKFJzQ=;
+	s=korg; t=1744114156;
+	bh=5uXPoX8dDQxgHpyphVScwehFy1rP0TJpbxGftFUp3zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgikgqRgD1OznFSdYnU7BmL2d/sVCK9bfI6i3ZFm5RFmVd4rjlcaXjoDI3QUsuFdO
-	 /YSMAXuagRDX3v13dsvvWGq+qluJAmwQ35e7um+ENn4gChKBOe4YK3aTNzJyZ/C6pF
-	 BmMGaNOP30YI9BIacyPbtTf7XXEFZxCTK4e3boJk=
+	b=XyL3Qg4sremIt0QdjCCh70Q+racJjX//2Ojy5BWEMFEywQ+I7Son9/utRT6EWr09O
+	 aB33Y1Rj3fxmdWYxNTERZMBLcLMhgaYcuDj6jqeBmBQ8/Q1Hs/TzLrrVNCrCYx0lir
+	 tzOvABQ2tfW05PP5F6LuHHbthwCLkiqM4/5mIAu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 117/154] iio: accel: mma8452: Ensure error return on failure to matching oversampling ratio
-Date: Tue,  8 Apr 2025 12:50:58 +0200
-Message-ID: <20250408104819.072464515@linuxfoundation.org>
+Subject: [PATCH 5.4 118/154] perf units: Fix insufficient array space
+Date: Tue,  8 Apr 2025 12:50:59 +0200
+Message-ID: <20250408104819.102631036@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit df330c808182a8beab5d0f84a6cbc9cff76c61fc ]
+[ Upstream commit cf67629f7f637fb988228abdb3aae46d0c1748fe ]
 
-If a match was not found, then the write_raw() callback would return
-the odr index, not an error. Return -EINVAL if this occurs.
-To avoid similar issues in future, introduce j, a new indexing variable
-rather than using ret for this purpose.
+No need to specify the array size, let the compiler figure that out.
 
-Fixes: 79de2ee469aa ("iio: accel: mma8452: claim direct mode during write raw")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250217140135.896574-2-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This addresses this compiler warning that was noticed while build
+testing on fedora rawhide:
+
+  31    15.81 fedora:rawhide                : FAIL gcc version 15.0.1 20250225 (Red Hat 15.0.1-0) (GCC)
+    util/units.c: In function 'unit_number__scnprintf':
+    util/units.c:67:24: error: initializer-string for array of 'char' is too long [-Werror=unterminated-string-initialization]
+       67 |         char unit[4] = "BKMG";
+          |                        ^~~~~~
+    cc1: all warnings being treated as errors
+
+Fixes: 9808143ba2e54818 ("perf tools: Add unit_number__scnprintf function")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/r/20250310194534.265487-3-acme@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma8452.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/perf/util/units.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index 74942bfc676a1..ecf24ca653d92 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -710,7 +710,7 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
+diff --git a/tools/perf/util/units.c b/tools/perf/util/units.c
+index a46762aec4c9f..24c83b8b8c980 100644
+--- a/tools/perf/util/units.c
++++ b/tools/perf/util/units.c
+@@ -57,7 +57,7 @@ unsigned long convert_unit(unsigned long value, char *unit)
+ 
+ int unit_number__scnprintf(char *buf, size_t size, u64 n)
  {
- 	struct mma8452_data *data = iio_priv(indio_dev);
--	int i, ret;
-+	int i, j, ret;
+-	char unit[4] = "BKMG";
++	char unit[] = "BKMG";
+ 	int i = 0;
  
- 	ret = iio_device_claim_direct_mode(indio_dev);
- 	if (ret)
-@@ -770,14 +770,18 @@ static int mma8452_write_raw(struct iio_dev *indio_dev,
- 		break;
- 
- 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
--		ret = mma8452_get_odr_index(data);
-+		j = mma8452_get_odr_index(data);
- 
- 		for (i = 0; i < ARRAY_SIZE(mma8452_os_ratio); i++) {
--			if (mma8452_os_ratio[i][ret] == val) {
-+			if (mma8452_os_ratio[i][j] == val) {
- 				ret = mma8452_set_power_mode(data, i);
- 				break;
- 			}
- 		}
-+		if (i == ARRAY_SIZE(mma8452_os_ratio)) {
-+			ret = -EINVAL;
-+			break;
-+		}
- 		break;
- 	default:
- 		ret = -EINVAL;
+ 	while (((n / 1024) > 1) && (i < 3)) {
 -- 
 2.39.5
 
