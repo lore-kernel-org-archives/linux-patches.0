@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FAB207E14;
-	Tue,  8 Apr 2025 11:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCE335973;
+	Tue,  8 Apr 2025 11:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112275; cv=none; b=ZIi2SSp+04Irw0pNxeSt7oxQRpXKtWVfyhi/O/i7/KCbO+TjP+tj+njQe2quE9Oq9K6dw1cvZAqmP7hkfCjCXrLmwG3PyJqf0LsEu+xwIAesGOZVG9kFAlMlcOdQuQa9bU7zNSkALdBqezqE/5pso7ns30ZTFYRYXtKH3TKknj4=
+	t=1744112278; cv=none; b=msAjdzkFuKwCEJI/3uJ6s9+OgJyyg+cmOfF8uUn5lXuJ2l6vpe6VIlLoBeNt42Z0h6OtZC4BhSnYKJ3CU5PuqlU2yFmY1vqgStznFLX1ekF3ZvRTjMTSZ82mQyv4Cknp6e6XaHUMDgg3+Pzrt1oUkL53/JZL+ep+xOHR8Dkr3lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112275; c=relaxed/simple;
-	bh=fJ+fYPnmEiPqt2ZWhdTkqTxIDeeFhwrT8enLGJ35+pg=;
+	s=arc-20240116; t=1744112278; c=relaxed/simple;
+	bh=MzZ+5RR+pQAd8oBuIttK5bl/t5ZWGZp3kj78e4hIDcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mv/fYQvPt0HjzB5D5lcGNaOAD4zlZ1hwwWJuMAML/A4TyQ5shIIlZVjyIBDOBwO0vO+tfwEAPYdj6lzC5ZJvvG7rRd6e5bPPvdm1qUEDFS99FuvM/tDujeWF20NkjzByd0NfjLqMWnIBMIdxcKBYOYuReSZpzN7VsnENMjHv+ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6YHIwN3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TZSNWyjXzqeMP7YGmmj70nNKtE4LMD20DK48JolGxdZC+FoR7+7HR0vy1tSLfYUljvdS4PML07TrfaW/BODa4mx6nTNNVPrs8zuE4fP8Qq8cu0YGPpkfoXfhN6Po1iXlNvdvBj67bi+vr5Bw7AyeeELTL5tnq3ZGDM0vleJubi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjDC85Q8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6YHIwN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B862BC4CEE7;
-	Tue,  8 Apr 2025 11:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjDC85Q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2AEC4CEE5;
+	Tue,  8 Apr 2025 11:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112275;
-	bh=fJ+fYPnmEiPqt2ZWhdTkqTxIDeeFhwrT8enLGJ35+pg=;
+	s=korg; t=1744112277;
+	bh=MzZ+5RR+pQAd8oBuIttK5bl/t5ZWGZp3kj78e4hIDcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6YHIwN3B+FE9iYcx2JbomlsibhWy9IaEwQ3R22UGf8p260YJcKs9xo4WsTdUCsWL
-	 R5Or8Z9ekKZn3an0sSTySKHLiKKFyM+1J4JhMF9e2rQxNnSVAOw+ECgv+PrbzKNr4x
-	 XlFR/kt8V9h85/tT8DVbeyZL4i0UG1iZuOCOufZU=
+	b=OjDC85Q8qAak/d4OQHU/od1LY/qkEncDs8jc8dC8JfO2sqy7/cDF7FJAtlSuG5B5H
+	 mIpWoNvArA8vbMmVdDBjIsctQeNxIkVag0YUtyRuazYX9i3v56R0GGEHCKNXZUcHiw
+	 hFxvh4d9AhhzI6zwLvFu0v105VwXU+OpVTIiqSNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 001/279] vlan: fix memory leak in vlan_newlink()
-Date: Tue,  8 Apr 2025 12:46:24 +0200
-Message-ID: <20250408104826.367428030@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 010/279] netpoll: hold rcu read lock in __netpoll_send_skb()
+Date: Tue,  8 Apr 2025 12:46:33 +0200
+Message-ID: <20250408104826.650704382@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,87 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 72a0b329114b1caa8e69dfa7cdad1dd3c69b8602 upstream.
+[ Upstream commit 505ead7ab77f289f12d8a68ac83da068e4d4408b ]
 
-Blamed commit added back a bug I fixed in commit 9bbd917e0bec
-("vlan: fix memory leak in vlan_dev_set_egress_priority")
+The function __netpoll_send_skb() is being invoked without holding the
+RCU read lock. This oversight triggers a warning message when
+CONFIG_PROVE_RCU_LIST is enabled:
 
-If a memory allocation fails in vlan_changelink() after other allocations
-succeeded, we need to call vlan_dev_free_egress_priority()
-to free all allocated memory because after a failed ->newlink()
-we do not call any methods like ndo_uninit() or dev->priv_destructor().
+	net/core/netpoll.c:330 suspicious rcu_dereference_check() usage!
 
-In following example, if the allocation for last element 2000:2001 fails,
-we need to free eight prior allocations:
+	 netpoll_send_skb
+	 netpoll_send_udp
+	 write_ext_msg
+	 console_flush_all
+	 console_unlock
+	 vprintk_emit
 
-ip link add link dummy0 dummy0.100 type vlan id 100 \
-	egress-qos-map 1:2 2:3 3:4 4:5 5:6 6:7 7:8 8:9 2000:2001
+To prevent npinfo from disappearing unexpectedly, ensure that
+__netpoll_send_skb() is protected with the RCU read lock.
 
-syzbot report was:
-
-BUG: memory leak
-unreferenced object 0xffff888117bd1060 (size 32):
-comm "syz-executor408", pid 3759, jiffies 4294956555 (age 34.090s)
-hex dump (first 32 bytes):
-09 00 00 00 00 a0 00 00 00 00 00 00 00 00 00 00 ................
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
-backtrace:
-[<ffffffff83fc60ad>] kmalloc include/linux/slab.h:600 [inline]
-[<ffffffff83fc60ad>] vlan_dev_set_egress_priority+0xed/0x170 net/8021q/vlan_dev.c:193
-[<ffffffff83fc6628>] vlan_changelink+0x178/0x1d0 net/8021q/vlan_netlink.c:128
-[<ffffffff83fc67c8>] vlan_newlink+0x148/0x260 net/8021q/vlan_netlink.c:185
-[<ffffffff838b1278>] rtnl_newlink_create net/core/rtnetlink.c:3363 [inline]
-[<ffffffff838b1278>] __rtnl_newlink+0xa58/0xdc0 net/core/rtnetlink.c:3580
-[<ffffffff838b1629>] rtnl_newlink+0x49/0x70 net/core/rtnetlink.c:3593
-[<ffffffff838ac66c>] rtnetlink_rcv_msg+0x21c/0x5c0 net/core/rtnetlink.c:6089
-[<ffffffff839f9c37>] netlink_rcv_skb+0x87/0x1d0 net/netlink/af_netlink.c:2501
-[<ffffffff839f8da7>] netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-[<ffffffff839f8da7>] netlink_unicast+0x397/0x4c0 net/netlink/af_netlink.c:1345
-[<ffffffff839f9266>] netlink_sendmsg+0x396/0x710 net/netlink/af_netlink.c:1921
-[<ffffffff8384dbf6>] sock_sendmsg_nosec net/socket.c:714 [inline]
-[<ffffffff8384dbf6>] sock_sendmsg+0x56/0x80 net/socket.c:734
-[<ffffffff8384e15c>] ____sys_sendmsg+0x36c/0x390 net/socket.c:2488
-[<ffffffff838523cb>] ___sys_sendmsg+0x8b/0xd0 net/socket.c:2542
-[<ffffffff838525b8>] __sys_sendmsg net/socket.c:2571 [inline]
-[<ffffffff838525b8>] __do_sys_sendmsg net/socket.c:2580 [inline]
-[<ffffffff838525b8>] __se_sys_sendmsg net/socket.c:2578 [inline]
-[<ffffffff838525b8>] __x64_sys_sendmsg+0x78/0xf0 net/socket.c:2578
-[<ffffffff845ad8d5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-[<ffffffff845ad8d5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-[<ffffffff8460006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 37aa50c539bc ("vlan: introduce vlan_dev_free_egress_priority")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2899656b494dcd1 ("netpoll: take rcu_read_lock_bh() in netpoll_send_skb_on_dev()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250306-netpoll_rcu_v2-v2-1-bc4f5c51742a@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_netlink.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/core/netpoll.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/8021q/vlan_netlink.c
-+++ b/net/8021q/vlan_netlink.c
-@@ -186,10 +186,14 @@ static int vlan_newlink(struct net *src_
- 	else if (dev->mtu > max_mtu)
- 		return -EINVAL;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 597e83e2bce86..87f5a837410c1 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -326,6 +326,7 @@ static int netpoll_owner_active(struct net_device *dev)
+ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ {
+ 	netdev_tx_t status = NETDEV_TX_BUSY;
++	netdev_tx_t ret = NET_XMIT_DROP;
+ 	struct net_device *dev;
+ 	unsigned long tries;
+ 	/* It is up to the caller to keep npinfo alive. */
+@@ -334,11 +335,12 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 	lockdep_assert_irqs_disabled();
  
-+	/* Note: If this initial vlan_changelink() fails, we need
-+	 * to call vlan_dev_free_egress_priority() to free memory.
-+	 */
- 	err = vlan_changelink(dev, tb, data, extack);
--	if (err)
--		return err;
--	err = register_vlan_dev(dev, extack);
-+
-+	if (!err)
-+		err = register_vlan_dev(dev, extack);
-+
- 	if (err)
- 		vlan_dev_free_egress_priority(dev);
- 	return err;
+ 	dev = np->dev;
++	rcu_read_lock();
+ 	npinfo = rcu_dereference_bh(dev->npinfo);
+ 
+ 	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
+ 		dev_kfree_skb_irq(skb);
+-		return NET_XMIT_DROP;
++		goto out;
+ 	}
+ 
+ 	/* don't get messages out of order, and no recursion */
+@@ -377,7 +379,10 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 		skb_queue_tail(&npinfo->txq, skb);
+ 		schedule_delayed_work(&npinfo->tx_work,0);
+ 	}
+-	return NETDEV_TX_OK;
++	ret = NETDEV_TX_OK;
++out:
++	rcu_read_unlock();
++	return ret;
+ }
+ 
+ netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+-- 
+2.39.5
+
 
 
