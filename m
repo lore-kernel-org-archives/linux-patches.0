@@ -1,39 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7E626A08A;
-	Tue,  8 Apr 2025 12:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C453926A083;
+	Tue,  8 Apr 2025 12:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114805; cv=none; b=DQyJpzKGHXwqIHAWBhHN/bgiXj5vvMH34kRB1yFtqBexd1H7PHHft99uRKDYUhOrYLlaoIyjjhdiWXGKH5zUGAdt7lTKIrq/bLGAfLYIBhkdrLg6DygnUgkCmhWZDeQw+NmK/uWkIjd0rBNLAu87pCJoxpv1HsR5bquanSx586A=
+	t=1744114807; cv=none; b=ICsJeLeLgsjCZL25AkOq8O/Ge2fDDkZFKEb/5TPDqJuu3tKxsgqsJ9fVNCRZMBWv19Ds65/1xYgwTs+6DjGuuVBALvVMs8kWMgb8U6/7DLig9usrSeuMqSL2aifQD8Syawns5qXrl+fCWm+ZE8AX8ucPtwU8OqIuX2fcD+VF/kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114805; c=relaxed/simple;
-	bh=BOzkViWY6HicS6LT258cIFDcpVesjhv+PdwlhwgHFUM=;
+	s=arc-20240116; t=1744114807; c=relaxed/simple;
+	bh=+VTpk9flG7fYl0NqcpV48wv6sr2KnhDFhntwKWm3Nho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkEE9XAKdyxXhZVgx7gA2YxQV9v5iZfNJAEdQuLqst7dH+XNCLF8myfaJXEdmeFmi+Bxnk6rGHrl6Md2ENoYe4DGgPvp4F39tlszt4iAFbddj/lD7ACB5g8IjCPAUhLxMyksCjjYRPHUQizfTi4bCTORkii1Bux8Fhwq9BTY/78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jku5xUOT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GDO1jC7RZgilr/9bxljkfLKhiXqYRYvilPXEew22PbDILF5YUntwXYJzUgRfrr26QUjxpDmFYr8I8An/Z9GHiGghcuGMKNRYXMO3T46lZcOxvCNPbB0s4Yct23N+d98xdDXFGDFxKt/N6yAyBTimgTHO97Wo7n/kBVtkJw0JQf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSVCnukP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jku5xUOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85922C4CEE5;
-	Tue,  8 Apr 2025 12:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSVCnukP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9D8C4CEE7;
+	Tue,  8 Apr 2025 12:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114805;
-	bh=BOzkViWY6HicS6LT258cIFDcpVesjhv+PdwlhwgHFUM=;
+	s=korg; t=1744114807;
+	bh=+VTpk9flG7fYl0NqcpV48wv6sr2KnhDFhntwKWm3Nho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jku5xUOTA8eNGa+30fMl9W24FHnZYphH9HbbqdfchG1r0ro3r12oPxz3b190Cm/Mc
-	 tw/1RP4l7ZMDTc4W5W2wcuWBBsunGK527/gY10RmLFykN5OtR4wX/1Jpo89kC2OkkS
-	 Km11fnhnxbt8TCkXHDR3HkICYE7ncxbykYvYPTOs=
+	b=TSVCnukPHMTsHh6PNGhMyYg7NfKqcpgO4+1gGpsu9AIIH1Ug9kFogKfejM6/oa1u3
+	 z0GTeoxZ5V0yrQQoEo5Xc2ZrGmqZSBOexrsmihXWl1ukYkLuLt50i+fAvWtBtiTqvm
+	 pnPNI2fzoGw+XIs1U8myodT/PTA27Oezv0Xfsmu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veronika Molnarova <vmolnaro@redhat.com>,
-	Qiao Zhao <qzhao@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Alex Shi <alexs@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dave Airlie <airlied@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Jerome Glisse <jglisse@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Karol Herbst <kherbst@redhat.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Lyude <lyude@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Xu <peterx@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	SeongJae Park <sj@kernel.org>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Barry Song <v-songbaohua@oppo.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 240/499] perf test stat_all_pmu.sh: Correctly check perf stat result
-Date: Tue,  8 Apr 2025 12:47:32 +0200
-Message-ID: <20250408104857.201066132@linuxfoundation.org>
+Subject: [PATCH 6.13 241/499] kernel/events/uprobes: handle device-exclusive entries correctly in __replace_page()
+Date: Tue,  8 Apr 2025 12:47:33 +0200
+Message-ID: <20250408104857.227376244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,124 +74,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veronika Molnarova <vmolnaro@redhat.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 02ba09c8ab9406f30c5c63b7cfd4b300c3c2c32c ]
+[ Upstream commit 096cbb80ab3fd85a9035ec17a1312c2a7db8bc8c ]
 
-Test case "stat_all_pmu.sh" is not correctly checking 'perf stat' output
-due to a poor design. Firstly, having the 'set -e' option with a trap
-catching the sigexit causes the shell to exit immediately if 'perf stat' ends
-with any non-zero value, which is then caught by the trap reporting an
-unexpected signal. This causes events that should be parsed by the if-else
-statement to be caught by the trap handler and are reported as errors:
+Ever since commit b756a3b5e7ea ("mm: device exclusive memory access") we
+can return with a device-exclusive entry from page_vma_mapped_walk().
 
-    $ perf test -vv "perf all pmu"
-    Testing i915/actual-frequency/
-    Unexpected signal in main
-    Error:
-    Access to performance monitoring and observability operations is limited.
+__replace_page() is not prepared for that, so teach it about these PFN
+swap PTEs.  Note that device-private entries are so far not applicable on
+that path, because GUP would never have returned such folios (conversion
+to device-private happens by page migration, not in-place conversion of
+the PTE).
 
-Secondly, the if-else branches are not exclusive as the checking if the
-event is present in the output log covers also the "<not supported>"
-events, which should be accepted, and also the "Bad name events", which
-should be rejected.
+There is a race between GUP and us locking the folio to look it up using
+page_vma_mapped_walk(), so this is likely a fix (unless something else
+could prevent that race, but it doesn't look like).  pte_pfn() on
+something that is not a present pte could give use garbage, and we'd
+wrongly mess up the mapcount because it was already adjusted by calling
+folio_remove_rmap_pte() when making the entry device-exclusive.
 
-Remove the "set -e" option from the test case, correctly parse the
-"perf stat" output log and check its return value. Add the missing
-outputs for the 'perf stat' result and also add logs messages to
-report the branch that parsed the event for more info.
-
-Fixes: 7e73ea40295620e7 ("perf test: Ignore security failures in all PMU test")
-Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
-Tested-by: Qiao Zhao <qzhao@redhat.com>
-Link: https://lore.kernel.org/r/20241122231233.79509-1-vmolnaro@redhat.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250210193801.781278-9-david@redhat.com
+Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Tested-by: Alistair Popple <apopple@nvidia.com>
+Cc: Alex Shi <alexs@kernel.org>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dave Airlie <airlied@gmail.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Lyude <lyude@redhat.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Yanteng Si <si.yanteng@linux.dev>
+Cc: Barry Song <v-songbaohua@oppo.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_all_pmu.sh | 48 ++++++++++++++++++--------
- 1 file changed, 34 insertions(+), 14 deletions(-)
+ kernel/events/uprobes.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/shell/stat_all_pmu.sh b/tools/perf/tests/shell/stat_all_pmu.sh
-index 8b148b300be11..9c466c0efa857 100755
---- a/tools/perf/tests/shell/stat_all_pmu.sh
-+++ b/tools/perf/tests/shell/stat_all_pmu.sh
-@@ -2,7 +2,6 @@
- # perf all PMU test (exclusive)
- # SPDX-License-Identifier: GPL-2.0
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 3c34761c9ae73..5e43a3e3f414f 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -173,6 +173,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
+ 	DEFINE_FOLIO_VMA_WALK(pvmw, old_folio, vma, addr, 0);
+ 	int err;
+ 	struct mmu_notifier_range range;
++	pte_t pte;
  
--set -e
- err=0
- result=""
- 
-@@ -16,34 +15,55 @@ trap trap_cleanup EXIT TERM INT
- # Test all PMU events; however exclude parameterized ones (name contains '?')
- for p in $(perf list --raw-dump pmu | sed 's/[[:graph:]]\+?[[:graph:]]\+[[:space:]]//g')
- do
--  echo "Testing $p"
--  result=$(perf stat -e "$p" true 2>&1)
--  if echo "$result" | grep -q "$p"
-+  echo -n "Testing $p -- "
-+  output=$(perf stat -e "$p" true 2>&1)
-+  stat_result=$?
-+  if echo "$output" | grep -q "$p"
-   then
-     # Event seen in output.
--    continue
--  fi
--  if echo "$result" | grep -q "<not supported>"
--  then
--    # Event not supported, so ignore.
--    continue
-+    if [ $stat_result -eq 0 ] && ! echo "$output" | grep -q "<not supported>"
-+    then
-+      # Event supported.
-+      echo "supported"
-+      continue
-+    elif echo "$output" | grep -q "<not supported>"
-+    then
-+      # Event not supported, so ignore.
-+      echo "not supported"
-+      continue
-+    elif echo "$output" | grep -q "No permission to enable"
-+    then
-+      # No permissions, so ignore.
-+      echo "no permission to enable"
-+      continue
-+    elif echo "$output" | grep -q "Bad event name"
-+    then
-+      # Non-existent event.
-+      echo "Error: Bad event name"
-+      echo "$output"
-+      err=1
-+      continue
-+    fi
-   fi
--  if echo "$result" | grep -q "Access to performance monitoring and observability operations is limited."
+ 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, mm, addr,
+ 				addr + PAGE_SIZE);
+@@ -192,6 +193,16 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
+ 	if (!page_vma_mapped_walk(&pvmw))
+ 		goto unlock;
+ 	VM_BUG_ON_PAGE(addr != pvmw.address, old_page);
++	pte = ptep_get(pvmw.pte);
 +
-+  if echo "$output" | grep -q "Access to performance monitoring and observability operations is limited."
-   then
-     # Access is limited, so ignore.
-+    echo "access limited"
-     continue
-   fi
++	/*
++	 * Handle PFN swap PTES, such as device-exclusive ones, that actually
++	 * map pages: simply trigger GUP again to fix it up.
++	 */
++	if (unlikely(!pte_present(pte))) {
++		page_vma_mapped_walk_done(&pvmw);
++		goto unlock;
++	}
  
-   # We failed to see the event and it is supported. Possibly the workload was
-   # too small so retry with something longer.
--  result=$(perf stat -e "$p" perf bench internals synthesize 2>&1)
--  if echo "$result" | grep -q "$p"
-+  output=$(perf stat -e "$p" perf bench internals synthesize 2>&1)
-+  if echo "$output" | grep -q "$p"
-   then
-     # Event seen in output.
-+    echo "supported"
-     continue
-   fi
-   echo "Error: event '$p' not printed in:"
--  echo "$result"
-+  echo "$output"
-   err=1
- done
+ 	if (new_page) {
+ 		folio_get(new_folio);
+@@ -206,7 +217,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
+ 		inc_mm_counter(mm, MM_ANONPAGES);
+ 	}
  
+-	flush_cache_page(vma, addr, pte_pfn(ptep_get(pvmw.pte)));
++	flush_cache_page(vma, addr, pte_pfn(pte));
+ 	ptep_clear_flush(vma, addr, pvmw.pte);
+ 	if (new_page)
+ 		set_pte_at(mm, addr, pvmw.pte,
 -- 
 2.39.5
 
