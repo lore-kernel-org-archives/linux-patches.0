@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454ED227BA4;
-	Tue,  8 Apr 2025 12:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0C2227BA4;
+	Tue,  8 Apr 2025 12:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114124; cv=none; b=ROa3MdngeGBAgqHIZQBbkgqBa/CASf9w24mihihLZtfcCUG5mh1WJVqFvapQpblUsVFlZ9aN0BAp4J1uwxtYSrkdI4iDCjy+6TKM3akhnmoh5c6bZ1od5efgqW7HHVFw/9sPfMb7qfhvBwJrxyS1UzQlLnjwfN57dp5P4FW4RNA=
+	t=1744114127; cv=none; b=H43JHROqaK2vdLm49MLD3noyhENv7/UKuA1wp6xRZjIEFfce12uM28XOIzgs8vH18nE9jMYXfmHJb7vH+9cfmmAdZhxHyqXbfXDZvueW9e4J5+XmcdUsjZqA9yV/t7POfsWEolgRbu0u1htt+yWEVhFD18aVya6X1Tbkj3Ka/WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114124; c=relaxed/simple;
-	bh=fcjajxgHEYncO3d9XsVwUcLF67i/fF53fwaaIGbWIoA=;
+	s=arc-20240116; t=1744114127; c=relaxed/simple;
+	bh=hHnR7HL7TFGPs+VKLlPa4J3sgmvfuSsbV89LMsHzryo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBOq8S5O0YlOaXFas7qODagWFmAU8cpSon26b4c68JpqKS1YY7InqPMmKv381T7Tw2NoLOC0m2n0rmpOyi+vtVsSsfMfiAUgXJqS7TdJzbvMW5ziqFqdpF2gPUNB3KcHTE1tOHkJgIjmJ1pun6AcYe9jq1DRT2rJsIrwpJfTr4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bE999J4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBe+QhNfZc16yyGN8IFzLT045WKJhLgAIyyrj+3tliSWDKCrl02hBv39J0CN2Yje/XTivmmbG9EwfuIZQayTC37bjP0s2YJhMLrWaF+MV6nmTc2IiLjYUTMt1w5zI93fYP1r27+T1/FgdFnL/DSWDpSGJmWiNrjVgXBUrcqEPhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJjSa8u6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bE999J4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6178C4CEE5;
-	Tue,  8 Apr 2025 12:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJjSa8u6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A9CC4CEE5;
+	Tue,  8 Apr 2025 12:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114124;
-	bh=fcjajxgHEYncO3d9XsVwUcLF67i/fF53fwaaIGbWIoA=;
+	s=korg; t=1744114126;
+	bh=hHnR7HL7TFGPs+VKLlPa4J3sgmvfuSsbV89LMsHzryo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bE999J4sBljIK7mGBBhWcnruWkFvtljlhwSd26hzAqCpU6fcPeiDnXiTKO3j9Wg+I
-	 ogo2xK73RQNdK5liCNIcIj2DOhk4OnQ3aKIlwkERHpAacM/+iEnLNTqHsKsdE7jeKN
-	 KjUUHBulBY6kyNYY6liyF/ONlchVl86SRXA+9Glg=
+	b=NJjSa8u6XciUMKDKbscJZVu5pGh9xWN/TB5hMkqEZ3wARFJqdhUj0PBY0TlVZK03+
+	 0JHGdtpm7Dv/wFiM/bhercxhjqn24LymebfgCTnhxh03Ar7vOqcGiOhDuahtHnVSuW
+	 ztB4BAkuj5OLIOSIdu0wxK+S+I6Ex2L3OL/goEzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Oberhollenzer <david.oberhollenzer@sigma-star.at>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 144/154] net: dsa: mv88e6xxx: propperly shutdown PPU re-enable timer on destroy
-Date: Tue,  8 Apr 2025 12:51:25 +0200
-Message-ID: <20250408104819.922172501@linuxfoundation.org>
+Subject: [PATCH 5.4 145/154] arcnet: Add NULL check in com20020pci_probe()
+Date: Tue,  8 Apr 2025 12:51:26 +0200
+Message-ID: <20250408104819.952482480@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,123 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit a58d882841a0750da3c482cd3d82432b1c7edb77 ]
+[ Upstream commit fda8c491db2a90ff3e6fbbae58e495b4ddddeca3 ]
 
-The mv88e6xxx has an internal PPU that polls PHY state. If we want to
-access the internal PHYs, we need to disable the PPU first. Because
-that is a slow operation, a 10ms timer is used to re-enable it,
-canceled with every access, so bulk operations effectively only
-disable it once and re-enable it some 10ms after the last access.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+com20020pci_probe() does not check for this case, which results in a
+NULL pointer dereference.
 
-If a PHY is accessed and then the mv88e6xxx module is removed before
-the 10ms are up, the PPU re-enable ends up accessing a dangling pointer.
+Add NULL check after devm_kasprintf() to prevent this issue and ensure
+no resources are left allocated.
 
-This especially affects probing during bootup. The MDIO bus and PHY
-registration may succeed, but registration with the DSA framework
-may fail later on (e.g. because the CPU port depends on another,
-very slow device that isn't done probing yet, returning -EPROBE_DEFER).
-In this case, probe() fails, but the MDIO subsystem may already have
-accessed the MIDO bus or PHYs, arming the timer.
-
-This is fixed as follows:
- - If probe fails after mv88e6xxx_phy_init(), make sure we also call
-   mv88e6xxx_phy_destroy() before returning
- - In mv88e6xxx_remove(), make sure we do the teardown in the correct
-   order, calling mv88e6xxx_phy_destroy() after unregistering the
-   switch device.
- - In mv88e6xxx_phy_destroy(), destroy both the timer and the work item
-   that the timer might schedule, synchronously waiting in case one of
-   the callbacks already fired and destroying the timer first, before
-   waiting for the work item.
- - Access to the PPU is guarded by a mutex, the worker acquires it
-   with a mutex_trylock(), not proceeding with the expensive shutdown
-   if that fails. We grab the mutex in mv88e6xxx_phy_destroy() to make
-   sure the slow PPU shutdown is already done or won't even enter, when
-   we wait for the work item.
-
-Fixes: 2e5f032095ff ("dsa: add support for the Marvell 88E6131 switch chip")
-Signed-off-by: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20250401135705.92760-1-david.oberhollenzer@sigma-star.at
+Fixes: 6b17a597fc2f ("arcnet: restoring support for multiple Sohard Arcnet cards")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250402135036.44697-1-bsdhenrymartin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 11 +++++++----
- drivers/net/dsa/mv88e6xxx/phy.c  |  3 +++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/arcnet/com20020-pci.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index cf3d574374376..047e328b770d1 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5151,13 +5151,13 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 	err = mv88e6xxx_switch_reset(chip);
- 	mv88e6xxx_reg_unlock(chip);
- 	if (err)
--		goto out;
-+		goto out_phy;
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index 9d9e4200064f9..00a80f0adece4 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -250,18 +250,33 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 			card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-tx",
+ 							dev->dev_id, i);
++			if (!card->tx_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:green:tx:%d-%d",
+ 							dev->dev_id, i);
+-
++			if (!card->tx_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.dev = &dev->dev;
+ 			card->recon_led.brightness_set = led_recon_set;
+ 			card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-recon",
+ 							dev->dev_id, i);
++			if (!card->recon_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:red:recon:%d-%d",
+ 							dev->dev_id, i);
++			if (!card->recon_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.dev = &dev->dev;
  
- 	if (np) {
- 		chip->irq = of_irq_get(np, 0);
- 		if (chip->irq == -EPROBE_DEFER) {
- 			err = chip->irq;
--			goto out;
-+			goto out_phy;
- 		}
- 	}
- 
-@@ -5176,7 +5176,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 	mv88e6xxx_reg_unlock(chip);
- 
- 	if (err)
--		goto out;
-+		goto out_phy;
- 
- 	if (chip->info->g2_irqs > 0) {
- 		err = mv88e6xxx_g2_irq_setup(chip);
-@@ -5216,6 +5216,8 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 		mv88e6xxx_g1_irq_free(chip);
- 	else
- 		mv88e6xxx_irq_poll_free(chip);
-+out_phy:
-+	mv88e6xxx_phy_destroy(chip);
- out:
- 	if (pdata)
- 		dev_put(pdata->netdev);
-@@ -5233,7 +5235,6 @@ static void mv88e6xxx_remove(struct mdio_device *mdiodev)
- 		mv88e6xxx_ptp_free(chip);
- 	}
- 
--	mv88e6xxx_phy_destroy(chip);
- 	mv88e6xxx_unregister_switch(chip);
- 	mv88e6xxx_mdios_unregister(chip);
- 
-@@ -5247,6 +5248,8 @@ static void mv88e6xxx_remove(struct mdio_device *mdiodev)
- 		mv88e6xxx_g1_irq_free(chip);
- 	else
- 		mv88e6xxx_irq_poll_free(chip);
-+
-+	mv88e6xxx_phy_destroy(chip);
- }
- 
- static const struct of_device_id mv88e6xxx_of_match[] = {
-diff --git a/drivers/net/dsa/mv88e6xxx/phy.c b/drivers/net/dsa/mv88e6xxx/phy.c
-index 252b5b3a3efef..d2104bd346ea2 100644
---- a/drivers/net/dsa/mv88e6xxx/phy.c
-+++ b/drivers/net/dsa/mv88e6xxx/phy.c
-@@ -197,7 +197,10 @@ static void mv88e6xxx_phy_ppu_state_init(struct mv88e6xxx_chip *chip)
- 
- static void mv88e6xxx_phy_ppu_state_destroy(struct mv88e6xxx_chip *chip)
- {
-+	mutex_lock(&chip->ppu_mutex);
- 	del_timer_sync(&chip->ppu_timer);
-+	cancel_work_sync(&chip->ppu_work);
-+	mutex_unlock(&chip->ppu_mutex);
- }
- 
- int mv88e6185_phy_ppu_read(struct mv88e6xxx_chip *chip, struct mii_bus *bus,
+ 			ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
 -- 
 2.39.5
 
