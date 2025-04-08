@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF1F1DDA0C;
-	Tue,  8 Apr 2025 10:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76557266B4B;
+	Tue,  8 Apr 2025 10:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109763; cv=none; b=pYs9aLTpVeLzoD6IzRQzuDLKUBYJXKEzjg61FW6nnWezc4DKrYDXglab2IMC3hYbgSbL2JjNhySscGcm0OANNyxQljjWsBoP5YzX0si6ogN6Ixo5c070lqTjVZ1m3r8mNObUmSdujMRGt2oTIBi5m511x+Iz3wTUxmfvMWHXa1s=
+	t=1744109765; cv=none; b=EL3TdC0+vgOp9BwjLcrIJL0BpnO8pwAT12JVwgQGCMsHFSV/1eESkitOcevMCSm1SC5xBOeeXtiErT0h5J7ELEIadO+ihwgJXLLNXhBKkynuzGcEqFJ3WoUM4b5vLwcLeUOFgb+2hSod9n+yTyhKU30iG99trTndMukPVoEssYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109763; c=relaxed/simple;
-	bh=YsgehcfqK50m+D0Fm04iiXuyVC63aZpRyfqUG/rakQw=;
+	s=arc-20240116; t=1744109765; c=relaxed/simple;
+	bh=RsrR7QSOShDvUonAHmtezU5k4A+nOk8XHb6GrCfFODY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qb52g0OuQbiTjLuVO3Aa64Zx83jTwTyg2pYYfr1wIWS5w8Ga3jI/FxB9Zia3w3zbxZca596cUjR7ZsG67yvcQZWTDUI8VH2BZPKNppHyTGDDWN3bjfUOegHL9iY5oe5WjeYj3CoFsa7p/fL2m2/xYOZdHqhLpbuYePyR1z2gOz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdtzH+1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9i/9nooR9vUu+6P9EVkyOEqBX+8vJGQ3/WJ/Y6FZLdluj9BAxrifNQtH4LBnedwOJSGU8CWRINWrBsn64dDTPyV2snol01VAejDxmEOouvUP1l3lia1KV1N5ontm13HuFo49PK3o4H9xWEw3ZQOUFasQG32bQ5x0a7PgBIrOL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AugwBjUc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdtzH+1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565C2C4CEE5;
-	Tue,  8 Apr 2025 10:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AugwBjUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CDFC4CEE5;
+	Tue,  8 Apr 2025 10:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109762;
-	bh=YsgehcfqK50m+D0Fm04iiXuyVC63aZpRyfqUG/rakQw=;
+	s=korg; t=1744109765;
+	bh=RsrR7QSOShDvUonAHmtezU5k4A+nOk8XHb6GrCfFODY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdtzH+1DlgVQwqf5vCed08+LZcF+5V3PXCdx1+Y0W3GgApDHgymUDY9vzQcl6kXsn
-	 8+yPm9cODOokXI6ViIg4ghZ7XRrl7Jc5upSqqI1j9a1os2I7cWjOEBq62y5TJVifvW
-	 eyeXoUsmJMHbw1XfrQW3i4IzwqgiGDKPlS1Lued4=
+	b=AugwBjUclzWTWiBMtaRocp+SpMBoJKdRbvfltVNTwgD0hXsV052XyJ86UdzRMqoha
+	 qI32hL91PdLEv43llK8vSiVe5o9gVLUzklkoG066fP7Vj2pf7umsF2HtVJvGtg+o06
+	 svmruBYfBOAKUBh3fuVX/d7COVCWeIVBQ1/IE4QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Abdelkareem Abdelsaamad <kareemem@amazon.com>
-Subject: [PATCH 5.10 006/227] x86/kexec: fix memory leak of elf header buffer
-Date: Tue,  8 Apr 2025 12:46:24 +0200
-Message-ID: <20250408104820.565104123@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 007/227] fbdev: hyperv_fb: iounmap() the correct memory when removing a device
+Date: Tue,  8 Apr 2025 12:46:25 +0200
+Message-ID: <20250408104820.597859488@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,83 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit b3e34a47f98974d0844444c5121aaff123004e57 upstream.
+[ Upstream commit 7241c886a71797cc51efc6fadec7076fcf6435c2 ]
 
-This is reported by kmemleak detector:
+When a Hyper-V framebuffer device is removed, or the driver is unbound
+from a device, any allocated and/or mapped memory must be released. In
+particular, MMIO address space that was mapped to the framebuffer must
+be unmapped. Current code unmaps the wrong address, resulting in an
+error like:
 
-unreferenced object 0xffffc900002a9000 (size 4096):
-  comm "kexec", pid 14950, jiffies 4295110793 (age 373.951s)
-  hex dump (first 32 bytes):
-    7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00  .ELF............
-    04 00 3e 00 01 00 00 00 00 00 00 00 00 00 00 00  ..>.............
-  backtrace:
-    [<0000000016a8ef9f>] __vmalloc_node_range+0x101/0x170
-    [<000000002b66b6c0>] __vmalloc_node+0xb4/0x160
-    [<00000000ad40107d>] crash_prepare_elf64_headers+0x8e/0xcd0
-    [<0000000019afff23>] crash_load_segments+0x260/0x470
-    [<0000000019ebe95c>] bzImage64_load+0x814/0xad0
-    [<0000000093e16b05>] arch_kexec_kernel_image_load+0x1be/0x2a0
-    [<000000009ef2fc88>] kimage_file_alloc_init+0x2ec/0x5a0
-    [<0000000038f5a97a>] __do_sys_kexec_file_load+0x28d/0x530
-    [<0000000087c19992>] do_syscall_64+0x3b/0x90
-    [<0000000066e063a4>] entry_SYSCALL_64_after_hwframe+0x44/0xae
+[ 4093.980597] iounmap: bad address 00000000c936c05c
 
-In crash_prepare_elf64_headers(), a buffer is allocated via vmalloc() to
-store elf headers.  While it's not freed back to system correctly when
-kdump kernel is reloaded or unloaded.  Then memory leak is caused.  Fix it
-by introducing x86 specific function arch_kimage_file_post_load_cleanup(),
-and freeing the buffer there.
+followed by a stack dump.
 
-And also remove the incorrect elf header buffer freeing code.  Before
-calling arch specific kexec_file loading function, the image instance has
-been initialized.  So 'image->elf_headers' must be NULL.  It doesn't make
-sense to free the elf header buffer in the place.
+Commit d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for
+Hyper-V frame buffer driver") changed the kind of address stored in
+info->screen_base, and the iounmap() call in hvfb_putmem() was not
+updated accordingly.
 
-Three different people have reported three bugs about the memory leak on
-x86_64 inside Redhat.
+Fix this by updating hvfb_putmem() to unmap the correct address.
 
-Link: https://lkml.kernel.org/r/20220223113225.63106-2-bhe@redhat.com
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Acked-by: Dave Young <dyoung@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Conflict due to 179350f00e06 ("x86: Use ELF fields defined in 'struct
-  kimage'") not in the tree ]
-Signed-off-by: Abdelkareem Abdelsaamad <kareemem@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for Hyper-V frame buffer driver")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250209235252.2987-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250209235252.2987-1-mhklinux@outlook.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/machine_kexec_64.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/hyperv_fb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/machine_kexec_64.c
-+++ b/arch/x86/kernel/machine_kexec_64.c
-@@ -402,9 +402,6 @@ void machine_kexec(struct kimage *image)
- #ifdef CONFIG_KEXEC_FILE
- void *arch_kexec_kernel_image_load(struct kimage *image)
- {
--	vfree(image->arch.elf_headers);
--	image->arch.elf_headers = NULL;
--
- 	if (!image->fops || !image->fops->load)
- 		return ERR_PTR(-ENOEXEC);
+diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
+index f0a66a344d870..d523cd4de9d47 100644
+--- a/drivers/video/fbdev/hyperv_fb.c
++++ b/drivers/video/fbdev/hyperv_fb.c
+@@ -1129,7 +1129,7 @@ static void hvfb_putmem(struct hv_device *hdev, struct fb_info *info)
  
-@@ -540,6 +537,15 @@ overflow:
- 	       (int)ELF64_R_TYPE(rel[i].r_info), value);
- 	return -ENOEXEC;
- }
-+
-+int arch_kimage_file_post_load_cleanup(struct kimage *image)
-+{
-+	vfree(image->arch.elf_headers);
-+	image->arch.elf_headers = NULL;
-+	image->arch.elf_headers_sz = 0;
-+
-+	return kexec_image_post_load_cleanup_default(image);
-+}
- #endif /* CONFIG_KEXEC_FILE */
- 
- static int
+ 	if (par->need_docopy) {
+ 		vfree(par->dio_vp);
+-		iounmap(info->screen_base);
++		iounmap(par->mmio_vp);
+ 		vmbus_free_mmio(par->mem->start, screen_fb_size);
+ 	} else {
+ 		hvfb_release_phymem(hdev, info->fix.smem_start,
+-- 
+2.39.5
+
 
 
