@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C0268C66;
-	Tue,  8 Apr 2025 11:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750B267B89;
+	Tue,  8 Apr 2025 11:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113041; cv=none; b=VYp0R2vOz+n8h/WADRfNLTZXf4zC8dUu3Cbi8z37+n9dwgYPUjX/CnuC2G0eAG2+QrqduWwaFAu2YUM8OWywIbFe6czTvGRkM9lM+RVjYVsgnODQPWJ7ZzlyqvdQVy3nKubMiBCNK6zcz+g/BqolZYq6OwcWihDlNl5/fY0h5RA=
+	t=1744113044; cv=none; b=o3EdrDNYksCcq0jLmWpkam36hcYk73NOdlrPuUiBoefJUVWJ8u+TbQJ7CvzNbOvAB69EFSozu40FvYRpb6cZlPI+5YlYKvQ03cOqfzh/zeeA6Q/2YvIse1tqoMCTBXU6rY1vbzaJ1+gYwZhAOmYs87izw+D9MzoQk1ArnF0bFRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113041; c=relaxed/simple;
-	bh=F/kMBogxKCQE/kWV+R5w6FzMyhzpcVpvp3k96avBRJs=;
+	s=arc-20240116; t=1744113044; c=relaxed/simple;
+	bh=eg0VsIdB+G8O8kARkaCq4k4unAuuGCUwlO0s9JdGc8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrpKCZObZWztqjLZzq8sqVqhLBzBK1cHYmOOnC+wZd+6Utie2nIrhJBOqAn72W4xsM2ouPzOl0S+Rht+v5pPe1nGhmWZ7IG8rGrbYNGo5RnSE/8ihuJHqKabrLJjgj3XUeXLiYP46ykDhs13QIqPx4qo7BfXauB8g9jeDfwYBEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwPxVfaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOkKDSAG8M7HVlyqgSNi0Iv97fFrY5wDqfQ+xoEW3w4gLacghtd6S204tC1EOcwbJLgOfJyruEKOAcypE+mPHL5vpWK7CAFtmlP+jEx/SBtAzmy2la5uZNwsXlTgG+7uZeLWZhxByGhCBrbBVWIgO6Emprn+BZMhrS6mfhnPYS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vwy5aaYj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwPxVfaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1993EC4CEE5;
-	Tue,  8 Apr 2025 11:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vwy5aaYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB26C4CEE5;
+	Tue,  8 Apr 2025 11:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113041;
-	bh=F/kMBogxKCQE/kWV+R5w6FzMyhzpcVpvp3k96avBRJs=;
+	s=korg; t=1744113044;
+	bh=eg0VsIdB+G8O8kARkaCq4k4unAuuGCUwlO0s9JdGc8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwPxVfaOJVvQm030i56OV/Lxd+NiE3RiFz+eVb9iLXu+8OQxXM9ZcqPLBHtQNQBAW
-	 MVzXhw4jAWJxRafoFnN8hTH8lliFw/2BK5BlTF3Z8mUuNdk0N/rw/dCkfVcK34//8Z
-	 hTU1eiw/KszyQHNkjCrC6ArtPmV9im9WbL7dgTqA=
+	b=Vwy5aaYjB/qX+W6Dt0m4WwcZ2+KiSA9EemM3qBjsLdspOQcNKl7/nckjgrPQJEGhQ
+	 aShgeSbtAZVHZx7mEAdSd2irfcPXo6alUsoQgOX5I1lfJACSQx7e6x1CRPTx2AtNg2
+	 FZwLGlaFEvgYLUkeTcJxVe5DlmvJcXvzGTleRALc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <anup@brainfault.org>,
+	Tim Schumacher <tim.schumacher1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/268] RISC-V: KVM: Disable the kernel perf counter during configure
-Date: Tue,  8 Apr 2025 12:47:04 +0200
-Message-ID: <20250408104828.869865155@linuxfoundation.org>
+Subject: [PATCH 6.6 014/268] selinux: Chain up tool resolving errors in install_policy.sh
+Date: Tue,  8 Apr 2025 12:47:05 +0200
+Message-ID: <20250408104828.896185335@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,40 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@rivosinc.com>
+From: Tim Schumacher <tim.schumacher1@huawei.com>
 
-[ Upstream commit bbb622488749478955485765ddff9d56be4a7e4b ]
+[ Upstream commit 6ae0042f4d3f331e841495eb0a3d51598e593ec2 ]
 
-The perf event should be marked disabled during the creation as
-it is not ready to be scheduled until there is SBI PMU start call
-or config matching is called with auto start. Otherwise, event add/start
-gets called during perf_event_create_kernel_counter function.
-It will be enabled and scheduled to run via perf_event_enable during
-either the above mentioned scenario.
+Subshell evaluations are not exempt from errexit, so if a command is
+not available, `which` will fail and exit the script as a whole.
+This causes the helpful error messages to not be printed if they are
+tacked on using a `$?` comparison.
 
-Fixes: 0cb74b65d2e5 ("RISC-V: KVM: Implement perf support without sampling")
+Resolve the issue by using chains of logical operators, which are not
+subject to the effects of errexit.
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20250303-kvm_pmu_improve-v2-1-41d177e45929@rivosinc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: e37c1877ba5b1 ("scripts/selinux: modernize mdp")
+Signed-off-by: Tim Schumacher <tim.schumacher1@huawei.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/selinux/install_policy.sh | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index cee1b9ca4ec48..e2e2a115afb5c 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -468,6 +468,7 @@ int kvm_riscv_vcpu_pmu_ctr_cfg_match(struct kvm_vcpu *vcpu, unsigned long ctr_ba
- 		.type = etype,
- 		.size = sizeof(struct perf_event_attr),
- 		.pinned = true,
-+		.disabled = true,
- 		/*
- 		 * It should never reach here if the platform doesn't support the sscofpmf
- 		 * extension as mode filtering won't work without it.
+diff --git a/scripts/selinux/install_policy.sh b/scripts/selinux/install_policy.sh
+index 24086793b0d8d..db40237e60ce7 100755
+--- a/scripts/selinux/install_policy.sh
++++ b/scripts/selinux/install_policy.sh
+@@ -6,27 +6,24 @@ if [ `id -u` -ne 0 ]; then
+ 	exit 1
+ fi
+ 
+-SF=`which setfiles`
+-if [ $? -eq 1 ]; then
++SF=`which setfiles` || {
+ 	echo "Could not find setfiles"
+ 	echo "Do you have policycoreutils installed?"
+ 	exit 1
+-fi
++}
+ 
+-CP=`which checkpolicy`
+-if [ $? -eq 1 ]; then
++CP=`which checkpolicy` || {
+ 	echo "Could not find checkpolicy"
+ 	echo "Do you have checkpolicy installed?"
+ 	exit 1
+-fi
++}
+ VERS=`$CP -V | awk '{print $1}'`
+ 
+-ENABLED=`which selinuxenabled`
+-if [ $? -eq 1 ]; then
++ENABLED=`which selinuxenabled` || {
+ 	echo "Could not find selinuxenabled"
+ 	echo "Do you have libselinux-utils installed?"
+ 	exit 1
+-fi
++}
+ 
+ if selinuxenabled; then
+     echo "SELinux is already enabled"
 -- 
 2.39.5
 
