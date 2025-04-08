@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9028D267F5B;
-	Tue,  8 Apr 2025 11:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443C9265CAF;
+	Tue,  8 Apr 2025 11:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110519; cv=none; b=N0QKjrlFRsVGvtJnn67oTG9PiMDHxWhjRkfljsmhNhK6c6BPR8+N1NnX1/W5XWMSw8xVVO/MEvQMx66QYQBJa82GW/7wlSZCLdNClhzhQKZ+jRLhTD/nCmTCARzN0mqkWHkZCW3/pQa4XgBTAxKgvokzR6s0eX9sNAcBBiv0+KM=
+	t=1744110522; cv=none; b=qmEFq1Zl8FqU7kC0lPJzD+AiKawXBGamQbrF+kxgQkNCCrNskzzjies3Vu5HNf0kIi9mq3W+aYIB8ElZgn3RpHMoh8c8j2j5rj9ySW6VVoP0GL+5sxALRqWB7jMKi7JmJEoYbv7ME9W/8puaXVt7hjOiqMBAXWKQIISTmu6TYSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110519; c=relaxed/simple;
-	bh=uzX5zqLgFAJQbJ3LvienJVzjyQH7m+jRQYI2AB0cV34=;
+	s=arc-20240116; t=1744110522; c=relaxed/simple;
+	bh=0NjHSK7N5TzxOP1QP0Y/RDjo0qok1E36PPxanSSoNWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=civ3AoM98CWVwI1kWD5PlJ8/U6ur6gQXFuGRTwZ6+Kma4+tkHJ371CfUqTMfAgGScnEcoIepawpFJMUsLA2nZYResFa5aRdnK8pXkcKXkmMBfIH7BLFi5LffutiOm3/yxysoa6uXj2tc+PU7ne/7rP1lluj9urFfER0eNGpp/sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdcw4lhp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUrVIqwdnrsBx65GMipEjNkdpLfWJeEwtird6uyHXCO8ay4N9SZYbuY6O/JokyjzXLgeKvzHrrar6nWdh2Bw2JGwmUucrw70/hjBMn03oIz54R0SzUqcPqo1b8L3VleOoOfHyRo5D9vqOwtXvKvPA6yB7OAww5B2gm6npLQjgQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2C+t9WS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdcw4lhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E4BC4CEE5;
-	Tue,  8 Apr 2025 11:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2C+t9WS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C846DC4CEE5;
+	Tue,  8 Apr 2025 11:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110519;
-	bh=uzX5zqLgFAJQbJ3LvienJVzjyQH7m+jRQYI2AB0cV34=;
+	s=korg; t=1744110522;
+	bh=0NjHSK7N5TzxOP1QP0Y/RDjo0qok1E36PPxanSSoNWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdcw4lhp1fxGbBb2NAQCypFLISc7C2MVcTP7OA24AMfyVOWh8IAj6Bxg2bZ7W2jFm
-	 6FVnnE7LRaZjKXZF4YA9BsNf0OHITJoOp1oI4cx68lwp8AstKTaNxg2uo8BcTISQlh
-	 wE8pphS9OjrIcgAZy9k345u7FhiWy73BFrZHeBzs=
+	b=p2C+t9WSApykmD8AFDFb4lmv9APIDFo6evxg2+IMiRGauEojvwLWjawO3w7vYoMTg
+	 ROb8UVStHl4wpXY8MUeV35SK3cWMwQf/dzNzr/AO81HqrYXQgn9CDa0ra3r3a6+f0I
+	 c3mk6vjvVRIKiv/xAOryXz6rmhs4UMElVRCTPdIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
-	Jan Kara <jack@suse.cz>,
-	Kees Cook <kees@kernel.org>,
-	Joel Granados <joel.granados@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 095/731] coredump: Fixes core_pipe_limit sysctl proc_handler
-Date: Tue,  8 Apr 2025 12:39:52 +0200
-Message-ID: <20250408104916.479339371@linuxfoundation.org>
+Subject: [PATCH 6.14 096/731] io_uring/io-wq: eliminate redundant io_work_get_acct() calls
+Date: Tue,  8 Apr 2025 12:39:53 +0200
+Message-ID: <20250408104916.502984607@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,53 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 049439e22825507a90d4dedf3934e24fd0a8ff62 ]
+[ Upstream commit 3c75635f8ed482300931327847c50068a865a648 ]
 
-proc_dointvec converts a string to a vector of signed int, which is
-stored in the unsigned int .data core_pipe_limit.
-It was thus authorized to write a negative value to core_pipe_limit
-sysctl which once stored in core_pipe_limit, leads to the signed int
-dump_count check against core_pipe_limit never be true. The same can be
-achieved with core_pipe_limit set to INT_MAX.
+Instead of calling io_work_get_acct() again, pass acct to
+io_wq_insert_work() and io_wq_remove_pending().
 
-Any negative write or >= to INT_MAX in core_pipe_limit sysctl would
-hypothetically allow a user to create very high load on the system by
-running processes that produces a coredump in case the core_pattern
-sysctl is configured to pipe core files to user space helper.
-Memory or PID exhaustion should happen before but it anyway breaks the
-core_pipe_limit semantic.
+This atomic access in io_work_get_acct() was done under the
+`acct->lock`, and optimizing it away reduces lock contention a bit.
 
-This commit fixes this by changing core_pipe_limit sysctl's proc_handler
-to proc_dointvec_minmax and bound checking between SYSCTL_ZERO and
-SYSCTL_INT_MAX.
-
-Fixes: a293980c2e26 ("exec: let do_coredump() limit the number of concurrent dumps to pipes")
-Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Link: https://lore.kernel.org/r/20250128133927.3989681-2-max.kellermann@ionos.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 486ba4d84d62 ("io_uring/io-wq: do not use bogus hash value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/coredump.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/io-wq.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/coredump.c b/fs/coredump.c
-index 4375c70144d0a..4ebec51fe4f22 100644
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -1016,7 +1016,9 @@ static const struct ctl_table coredump_sysctls[] = {
- 		.data		= &core_pipe_limit,
- 		.maxlen		= sizeof(unsigned int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	{
- 		.procname       = "core_file_note_size_limit",
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index 91019b4d03088..f7d09698e43ce 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -916,9 +916,8 @@ static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
+ 	} while (work);
+ }
+ 
+-static void io_wq_insert_work(struct io_wq *wq, struct io_wq_work *work)
++static void io_wq_insert_work(struct io_wq *wq, struct io_wq_acct *acct, struct io_wq_work *work)
+ {
+-	struct io_wq_acct *acct = io_work_get_acct(wq, work);
+ 	unsigned int hash;
+ 	struct io_wq_work *tail;
+ 
+@@ -964,7 +963,7 @@ void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work)
+ 	}
+ 
+ 	raw_spin_lock(&acct->lock);
+-	io_wq_insert_work(wq, work);
++	io_wq_insert_work(wq, acct, work);
+ 	clear_bit(IO_ACCT_STALLED_BIT, &acct->flags);
+ 	raw_spin_unlock(&acct->lock);
+ 
+@@ -1034,10 +1033,10 @@ static bool io_wq_worker_cancel(struct io_worker *worker, void *data)
+ }
+ 
+ static inline void io_wq_remove_pending(struct io_wq *wq,
++					struct io_wq_acct *acct,
+ 					 struct io_wq_work *work,
+ 					 struct io_wq_work_node *prev)
+ {
+-	struct io_wq_acct *acct = io_work_get_acct(wq, work);
+ 	unsigned int hash = io_get_work_hash(work);
+ 	struct io_wq_work *prev_work = NULL;
+ 
+@@ -1064,7 +1063,7 @@ static bool io_acct_cancel_pending_work(struct io_wq *wq,
+ 		work = container_of(node, struct io_wq_work, list);
+ 		if (!match->fn(work, match->data))
+ 			continue;
+-		io_wq_remove_pending(wq, work, prev);
++		io_wq_remove_pending(wq, acct, work, prev);
+ 		raw_spin_unlock(&acct->lock);
+ 		io_run_cancel(work, wq);
+ 		match->nr_pending++;
 -- 
 2.39.5
 
