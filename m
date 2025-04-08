@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E17267B15;
-	Tue,  8 Apr 2025 12:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849E4269D01;
+	Tue,  8 Apr 2025 12:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114329; cv=none; b=A6c5LnSSVb3swOqEUuVDWybPLpmyuEY2HaD2uyCOc3XpsXoJ3Liwn/10VJa/tzHzmbosycMzbZ/52zy2ZSQvFgPI07wBS/dFEzYcS6IuuF5Oa2Fj/L1W4bm9BLH6w8RnGVQTNF4KY4alKXp8FKwfZCoLApV/P7klpAGZdtIEqE4=
+	t=1744114332; cv=none; b=Of2UPKbON4QxBXizxyezyslXJVZeYlCFY4EDZlkwTNNKtL0dsVBwVrPPsjkNukNUTf3wt2FAftbh0i8wWTFEqpCCDS4cMBl97vJIhp7k8+3rXyFXZykerf4A5URB3HIREPLEtQL7KzjpKVfhd8jLv+rro1VVsKAidp0ZuF3U26w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114329; c=relaxed/simple;
-	bh=7e1rJXm1YXtp76SbCQc178EWhmS5mFdsTWwFzGThy14=;
+	s=arc-20240116; t=1744114332; c=relaxed/simple;
+	bh=Zure017i/Nrw/JU9/tYsjtqHN20f8674ZrioCHSEaBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fTF04S7nDeUkGNN03d1JHg6daCTLBXFvvopAbgtgdHm1k+AYK+gCtDdd3ed/xRjG6dG9tCSRhlnBSy2IMw99qgvKkjGylIqGTyLoup+8wW/pJDPh32m4HqnXGXOJExgajxorzOCAd6L4mHpilS9z+T3Fpej2SxUBT9qdij2kjkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6UR5lc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plLjzTnlhnE0OoLuLMnDeiuMTfi5AsqdJpU3yXxVgVcmNk9rId4VNT44BbzhdgTkdMMjo6fRbAAAH/QOnvN4+iAsgYzxkvV2yX0V5TBcYNRmntC6NxXDlS/zmVbV8pwnXCGcnZlnLk831VLeE9+4OBRo0tBg0DJEpLWPo79dphg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC7pVfIw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6UR5lc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAA6C4CEE7;
-	Tue,  8 Apr 2025 12:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC7pVfIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13117C4CEE5;
+	Tue,  8 Apr 2025 12:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114329;
-	bh=7e1rJXm1YXtp76SbCQc178EWhmS5mFdsTWwFzGThy14=;
+	s=korg; t=1744114332;
+	bh=Zure017i/Nrw/JU9/tYsjtqHN20f8674ZrioCHSEaBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6UR5lc3nALeSlP2VmfWkKel5wpSqbwfpLPSyALyjjLlEqG83L/CDC4laaA6yQvDB
-	 Sb4vslHBBYnKYkBcBYHBUJBIkbq1NcX7rwxRU/Lek5sLqJGiTz89voEsq8OcIbxmx6
-	 9yT+jA46iVbu84Is3goZEpptC/0cdqBiqjbNcHlg=
+	b=CC7pVfIwDrcme7mYSyBi05tE/6wqga01HUM6xSCjIMNJS8wKCzePxYmHz+e4O3qX5
+	 bL5cQfsU6aBNme9c/3XSfFqCbkeLO1OTtILJLrAklCSJpwpsUpx5JQKQoMqdyGXet2
+	 no5ux94qPeiJktt2nbk8lYTod6v7WwN6xX8ClrVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 066/499] drm/panthor: Fix race condition when gathering fdinfo group samples
-Date: Tue,  8 Apr 2025 12:44:38 +0200
-Message-ID: <20250408104852.876809747@linuxfoundation.org>
+Subject: [PATCH 6.13 067/499] drm: xlnx: zynqmp: Fix max dma segment size
+Date: Tue,  8 Apr 2025 12:44:39 +0200
+Message-ID: <20250408104852.900353353@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,53 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 0590c94c3596d6c1a3d549ae611366f2ad4e1d8d ]
+[ Upstream commit 28b529a98525123acd37372a04d21e87ec2edcf7 ]
 
-Commit e16635d88fa0 ("drm/panthor: add DRM fdinfo support") failed to
-protect access to groups with an xarray lock, which could lead to
-use-after-free errors.
+Fix "mapping sg segment longer than device claims to support" warning by
+setting the max segment size.
 
-Fixes: e16635d88fa0 ("drm/panthor: add DRM fdinfo support")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250130172851.941597-6-adrian.larumbe@collabora.com
-Link: https://patchwork.freedesktop.org/patch/msgid/20250107173310.88329-1-florent.tomasin@arm.com
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Tested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250115-xilinx-formats-v2-10-160327ca652a@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 2 ++
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index ef4bec7ff9c71..eb2c2ca375d77 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2862,6 +2862,7 @@ void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile)
- 	if (IS_ERR_OR_NULL(gpool))
- 		return;
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index 07c4d184e7a1f..5f9228ab4f1f0 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -231,6 +231,8 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
-+	xa_lock(&gpool->xa);
- 	xa_for_each(&gpool->xa, i, group) {
- 		mutex_lock(&group->fdinfo.lock);
- 		pfile->stats.cycles += group->fdinfo.data.cycles;
-@@ -2870,6 +2871,7 @@ void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile)
- 		group->fdinfo.data.time = 0;
- 		mutex_unlock(&group->fdinfo.lock);
- 	}
-+	xa_unlock(&gpool->xa);
- }
++	dma_set_max_seg_size(&pdev->dev, DMA_BIT_MASK(32));
++
+ 	/* Try the reserved memory. Proceed if there's none. */
+ 	of_reserved_mem_device_init(&pdev->dev);
  
- static void group_sync_upd_work(struct work_struct *work)
 -- 
 2.39.5
 
