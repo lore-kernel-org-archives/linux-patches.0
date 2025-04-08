@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DBC224AEF;
-	Tue,  8 Apr 2025 11:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4272207E14;
+	Tue,  8 Apr 2025 11:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112096; cv=none; b=N5da7/nVyUyMpNGODE9MnGhdbWQkVBRis36QZCbAq7rw+tcuwefUF4AutF+h9sB3HkMPU8kYP26J+zAwcp659IxSClzsNymyy7U1S1R2HYV5BquLVcw71d/uzfWpdOWNMgxW9waGP08dPAjC/0nMIntXJOocqeFvqOp97HyAb8E=
+	t=1744112098; cv=none; b=g9gu2A5C+WCAxHpHzL8ztBXe1ANxn8u1MyWzkdaR5JbnRt6SjgjQSt6tMQo23sLZvOzSzEuJrXBqQXhL7zeEqTj+moPFpxgcP5p8HQTWtM4t9163cB6e0VMQrviTkm4C1TugznUlhvK8p9vdgvX7PiYDBHYdl295zJNoJZ0K5ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112096; c=relaxed/simple;
-	bh=GmUl6XpMlQ3KkHNsWWcOWcSfcmoyKivibZ3e6FRtnJQ=;
+	s=arc-20240116; t=1744112098; c=relaxed/simple;
+	bh=srzEnh/5zxq0poR+r5FDJYz21dt7mHXcK/RNTy5yYGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8jkQrigwiyTLI8P4VT1oJoIOTx8A/muoVE55qHO2TQl8grTa1ex1ZcSP++7Kq9WaaTgoCaxPg6Qt2uadZn4drqTZ7vFpeVmLPvHnL5tcFmQnY/W8IqGIFdgJszXBTOZuUW4R/W9YRzSFkF8yhAC+fQooBCwEZdgeVqf3/BGdAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFrJv/z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzjObcvGf0NF+VIAcCKULg8JMNoGsyePZH/E6Kn4T/Jyzze5vxMD/hbV+Hx1zHg2VzXmw+agYLlCuuUFRBLJCPg4vGG2NuqpCPHyZ56yPBmRsTcyb0fZcPvxVY7AJg2AZrlc28Z1nCfXY54r9ti5MxMtR/YVZDf7O3VfiifBFXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AVj/eNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFrJv/z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E2CC4CEE5;
-	Tue,  8 Apr 2025 11:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AVj/eNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55316C4CEE5;
+	Tue,  8 Apr 2025 11:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112096;
-	bh=GmUl6XpMlQ3KkHNsWWcOWcSfcmoyKivibZ3e6FRtnJQ=;
+	s=korg; t=1744112098;
+	bh=srzEnh/5zxq0poR+r5FDJYz21dt7mHXcK/RNTy5yYGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFrJv/z/ME0Nkck+t0FATPH2Peq17qSU5pUbXpwENBYz7s3rTPgX8Iz1LGgtYg1rW
-	 ETdwWzpOhzwvdisAzVhY/4RBDozHq1+wETWVX9rHNp81hRv9S+CsMf3u80WY87d46z
-	 sfpN1B39agUivTPgLTslj0FY5ufEkP2hDenm+n0A=
+	b=0AVj/eNgw+/xje2EPFQAqJ/jL1WwmHnfW+pr/vzZFvgsW7N8wOTApxr+Ey1UTdCTb
+	 QXOJrkq+xPJh3QRKW2FVP6Koks6GluJ7T49EaG0M/ai+b4Q8ZfJTkZmd7Stvmph/Dt
+	 gStHSYbjvkIl2JQIKGwaLqtUnxpR+ZEcxwon6TOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Annapurve <vannapurve@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ryan Afranji <afranji@google.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: [PATCH 6.14 673/731] x86/tdx: Fix arch_safe_halt() execution for TDX VMs
-Date: Tue,  8 Apr 2025 12:49:30 +0200
-Message-ID: <20250408104929.922128461@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 638/731] net: fix geneve_opt length integer overflow
+Date: Tue,  8 Apr 2025 12:48:55 +0200
+Message-ID: <20250408104929.109430412@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -58,159 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Annapurve <vannapurve@google.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 9f98a4f4e7216dbe366010b4cdcab6b220f229c4 upstream.
+[ Upstream commit b27055a08ad4b415dcf15b63034f9cb236f7fb40 ]
 
-Direct HLT instruction execution causes #VEs for TDX VMs which is routed
-to hypervisor via TDCALL. If HLT is executed in STI-shadow, resulting #VE
-handler will enable interrupts before TDCALL is routed to hypervisor
-leading to missed wakeup events, as current TDX spec doesn't expose
-interruptibility state information to allow #VE handler to selectively
-enable interrupts.
+struct geneve_opt uses 5 bit length for each single option, which
+means every vary size option should be smaller than 128 bytes.
 
-Commit bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-prevented the idle routines from executing HLT instruction in STI-shadow.
-But it missed the paravirt routine which can be reached via this path
-as an example:
+However, all current related Netlink policies cannot promise this
+length condition and the attacker can exploit a exact 128-byte size
+option to *fake* a zero length option and confuse the parsing logic,
+further achieve heap out-of-bounds read.
 
-	kvm_wait()       =>
-        safe_halt()      =>
-        raw_safe_halt()  =>
-        arch_safe_halt() =>
-        irq.safe_halt()  =>
-        pv_native_safe_halt()
+One example crash log is like below:
 
-To reliably handle arch_safe_halt() for TDX VMs, introduce explicit
-dependency on CONFIG_PARAVIRT and override paravirt halt()/safe_halt()
-routines with TDX-safe versions that execute direct TDCALL and needed
-interrupt flag updates. Executing direct TDCALL brings in additional
-benefit of avoiding HLT related #VEs altogether.
+[    3.905425] ==================================================================
+[    3.905925] BUG: KASAN: slab-out-of-bounds in nla_put+0xa9/0xe0
+[    3.906255] Read of size 124 at addr ffff888005f291cc by task poc/177
+[    3.906646]
+[    3.906775] CPU: 0 PID: 177 Comm: poc-oob-read Not tainted 6.1.132 #1
+[    3.907131] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[    3.907784] Call Trace:
+[    3.907925]  <TASK>
+[    3.908048]  dump_stack_lvl+0x44/0x5c
+[    3.908258]  print_report+0x184/0x4be
+[    3.909151]  kasan_report+0xc5/0x100
+[    3.909539]  kasan_check_range+0xf3/0x1a0
+[    3.909794]  memcpy+0x1f/0x60
+[    3.909968]  nla_put+0xa9/0xe0
+[    3.910147]  tunnel_key_dump+0x945/0xba0
+[    3.911536]  tcf_action_dump_1+0x1c1/0x340
+[    3.912436]  tcf_action_dump+0x101/0x180
+[    3.912689]  tcf_exts_dump+0x164/0x1e0
+[    3.912905]  fw_dump+0x18b/0x2d0
+[    3.913483]  tcf_fill_node+0x2ee/0x460
+[    3.914778]  tfilter_notify+0xf4/0x180
+[    3.915208]  tc_new_tfilter+0xd51/0x10d0
+[    3.918615]  rtnetlink_rcv_msg+0x4a2/0x560
+[    3.919118]  netlink_rcv_skb+0xcd/0x200
+[    3.919787]  netlink_unicast+0x395/0x530
+[    3.921032]  netlink_sendmsg+0x3d0/0x6d0
+[    3.921987]  __sock_sendmsg+0x99/0xa0
+[    3.922220]  __sys_sendto+0x1b7/0x240
+[    3.922682]  __x64_sys_sendto+0x72/0x90
+[    3.922906]  do_syscall_64+0x5e/0x90
+[    3.923814]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[    3.924122] RIP: 0033:0x7e83eab84407
+[    3.924331] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
+[    3.925330] RSP: 002b:00007ffff505e370 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
+[    3.925752] RAX: ffffffffffffffda RBX: 00007e83eaafa740 RCX: 00007e83eab84407
+[    3.926173] RDX: 00000000000001a8 RSI: 00007ffff505e3c0 RDI: 0000000000000003
+[    3.926587] RBP: 00007ffff505f460 R08: 00007e83eace1000 R09: 000000000000000c
+[    3.926977] R10: 0000000000000000 R11: 0000000000000202 R12: 00007ffff505f3c0
+[    3.927367] R13: 00007ffff505f5c8 R14: 00007e83ead1b000 R15: 00005d4fbbe6dcb8
 
-As tested by Ryan Afranji:
+Fix these issues by enforing correct length condition in related
+policies.
 
-  "Tested with the specjbb2015 benchmark. It has heavy lock contention which leads
-   to many halt calls. TDX VMs suffered a poor score before this patchset.
-
-   Verified the major performance improvement with this patchset applied."
-
-Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-Signed-off-by: Vishal Annapurve <vannapurve@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Tested-by: Ryan Afranji <afranji@google.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250228014416.3925664-3-vannapurve@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Fixes: 4ece47787077 ("lwtunnel: add options setting and dumping for geneve")
+Fixes: 0ed5269f9e41 ("net/sched: add tunnel option support to act_tunnel_key")
+Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://patch.msgid.link/20250402165632.6958-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig           |    1 +
- arch/x86/coco/tdx/tdx.c    |   26 +++++++++++++++++++++++++-
- arch/x86/include/asm/tdx.h |    4 ++--
- arch/x86/kernel/process.c  |    2 +-
- 4 files changed, 29 insertions(+), 4 deletions(-)
+ net/ipv4/ip_tunnel_core.c  | 2 +-
+ net/netfilter/nft_tunnel.c | 2 +-
+ net/sched/act_tunnel_key.c | 2 +-
+ net/sched/cls_flower.c     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -902,6 +902,7 @@ config INTEL_TDX_GUEST
- 	depends on X86_64 && CPU_SUP_INTEL
- 	depends on X86_X2APIC
- 	depends on EFI_STUB
-+	depends on PARAVIRT
- 	select ARCH_HAS_CC_PLATFORM
- 	select X86_MEM_ENCRYPT
- 	select X86_MCE
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -14,6 +14,7 @@
- #include <asm/ia32.h>
- #include <asm/insn.h>
- #include <asm/insn-eval.h>
-+#include <asm/paravirt_types.h>
- #include <asm/pgtable.h>
- #include <asm/set_memory.h>
- #include <asm/traps.h>
-@@ -398,7 +399,7 @@ static int handle_halt(struct ve_info *v
- 	return ve_instr_len(ve);
- }
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 364ea798511ea..f65d2f7273813 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -451,7 +451,7 @@ static const struct nla_policy
+ geneve_opt_policy[LWTUNNEL_IP_OPT_GENEVE_MAX + 1] = {
+ 	[LWTUNNEL_IP_OPT_GENEVE_CLASS]	= { .type = NLA_U16 },
+ 	[LWTUNNEL_IP_OPT_GENEVE_TYPE]	= { .type = NLA_U8 },
+-	[LWTUNNEL_IP_OPT_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 128 },
++	[LWTUNNEL_IP_OPT_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 127 },
+ };
  
--void __cpuidle tdx_safe_halt(void)
-+void __cpuidle tdx_halt(void)
- {
- 	const bool irq_disabled = false;
+ static const struct nla_policy
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index 2e40f575aed9f..0c63d1367cf7a 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -335,7 +335,7 @@ static int nft_tunnel_obj_erspan_init(const struct nlattr *attr,
+ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GENEVE_MAX + 1] = {
+ 	[NFTA_TUNNEL_KEY_GENEVE_CLASS]	= { .type = NLA_U16 },
+ 	[NFTA_TUNNEL_KEY_GENEVE_TYPE]	= { .type = NLA_U8 },
+-	[NFTA_TUNNEL_KEY_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 128 },
++	[NFTA_TUNNEL_KEY_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 127 },
+ };
  
-@@ -409,6 +410,16 @@ void __cpuidle tdx_safe_halt(void)
- 		WARN_ONCE(1, "HLT instruction emulation failed\n");
- }
+ static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index af7c998459488..e296714803dc0 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -68,7 +68,7 @@ geneve_opt_policy[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_MAX + 1] = {
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_CLASS]	   = { .type = NLA_U16 },
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_TYPE]	   = { .type = NLA_U8 },
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_DATA]	   = { .type = NLA_BINARY,
+-						       .len = 128 },
++						       .len = 127 },
+ };
  
-+static void __cpuidle tdx_safe_halt(void)
-+{
-+	tdx_halt();
-+	/*
-+	 * "__cpuidle" section doesn't support instrumentation, so stick
-+	 * with raw_* variant that avoids tracing hooks.
-+	 */
-+	raw_local_irq_enable();
-+}
-+
- static int read_msr(struct pt_regs *regs, struct ve_info *ve)
- {
- 	struct tdx_module_args args = {
-@@ -1110,6 +1121,19 @@ void __init tdx_early_init(void)
- 	x86_platform.guest.enc_kexec_finish	     = tdx_kexec_finish;
+ static const struct nla_policy
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 03505673d5234..099ff6a3e1f51 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -766,7 +766,7 @@ geneve_opt_policy[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1] = {
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_CLASS]      = { .type = NLA_U16 },
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_TYPE]       = { .type = NLA_U8 },
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]       = { .type = NLA_BINARY,
+-						       .len = 128 },
++						       .len = 127 },
+ };
  
- 	/*
-+	 * Avoid "sti;hlt" execution in TDX guests as HLT induces a #VE that
-+	 * will enable interrupts before HLT TDCALL invocation if executed
-+	 * in STI-shadow, possibly resulting in missed wakeup events.
-+	 *
-+	 * Modify all possible HLT execution paths to use TDX specific routines
-+	 * that directly execute TDCALL and toggle the interrupt state as
-+	 * needed after TDCALL completion. This also reduces HLT related #VEs
-+	 * in addition to having a reliable halt logic execution.
-+	 */
-+	pv_ops.irq.safe_halt = tdx_safe_halt;
-+	pv_ops.irq.halt = tdx_halt;
-+
-+	/*
- 	 * TDX intercepts the RDMSR to read the X2APIC ID in the parallel
- 	 * bringup low level code. That raises #VE which cannot be handled
- 	 * there.
---- a/arch/x86/include/asm/tdx.h
-+++ b/arch/x86/include/asm/tdx.h
-@@ -58,7 +58,7 @@ void tdx_get_ve_info(struct ve_info *ve)
- 
- bool tdx_handle_virt_exception(struct pt_regs *regs, struct ve_info *ve);
- 
--void tdx_safe_halt(void);
-+void tdx_halt(void);
- 
- bool tdx_early_handle_ve(struct pt_regs *regs);
- 
-@@ -72,7 +72,7 @@ void __init tdx_dump_td_ctls(u64 td_ctls
- #else
- 
- static inline void tdx_early_init(void) { };
--static inline void tdx_safe_halt(void) { };
-+static inline void tdx_halt(void) { };
- 
- static inline bool tdx_early_handle_ve(struct pt_regs *regs) { return false; }
- 
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -939,7 +939,7 @@ void __init select_idle_routine(void)
- 		static_call_update(x86_idle, mwait_idle);
- 	} else if (cpu_feature_enabled(X86_FEATURE_TDX_GUEST)) {
- 		pr_info("using TDX aware idle routine\n");
--		static_call_update(x86_idle, tdx_safe_halt);
-+		static_call_update(x86_idle, tdx_halt);
- 	} else {
- 		static_call_update(x86_idle, default_idle);
- 	}
+ static const struct nla_policy
+-- 
+2.39.5
+
 
 
