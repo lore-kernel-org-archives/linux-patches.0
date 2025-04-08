@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23659267F4F;
-	Tue,  8 Apr 2025 12:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7610263F4D;
+	Tue,  8 Apr 2025 12:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115188; cv=none; b=ZWOqhIekIUc55ov0t0V5K5YB70dj5kuyzwqMlHpuNQd5S+c36WZSFekeuPDk+5qaJa90LVA0hefqmVcBBtGl6rrASw15TSpMkCAh/7fVBhQbV8gyaVapYd84hXjU+PdhBMZz8JqxLidLe7mSn69I2yNzM4qMTZ77Yov/0iK4dNM=
+	t=1744115190; cv=none; b=FARAUYdDCsz4GmsUeM+Fkuy/kdnKzUaFURDyWefC2+Q8lvqLKKbzoQTFVtbqz4UAs5ZgLP0hPiAhgccYarSR3FjWTc+HVtTQKymYKfndDHyKITAMgQo/V+Fp4X+hpd1eDXbjwsW5O4MHsh/bgQoTDXQptmzAnZIxNOIog64Wud0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115188; c=relaxed/simple;
-	bh=yfBB0wx4R1r62REePHe4+LwT2e4Zwl2M/fgqfCuFwks=;
+	s=arc-20240116; t=1744115190; c=relaxed/simple;
+	bh=O5c4FFOv3dRprQ2rwx91uoTRLFaHqzQKZvfWe2SQ/WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mN3swFr/gjMksTt3jcwCiiKOfTenKbX8V/c97Ga5Jg0W3tnYV0e408kVj626ZnjJo5bYXRl2Kpv4z+ob+K6aDl87uMsgzFk5LnYSMVKkYDq7hP8jHY6VANQAZC7wO2cXnHkJHc3R5Qq3eCHhruCYYPczPhdlSVcOas+kuOe8vn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TABv+sUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oT0f5a6jfB+7xRkmvbzwLzGqxZ5c5ilObuNA0QRoOdPHln4A8Y2slMatm/VpZgctyOdUjwqLIk2K9rKYEXxM2c+i1MP5eSjCNBugwooBVo4ZpjbawG5R1iSPI9MqSpZnjaRxB3zYclOBhtT7O5PSlmSsa5Vfuk58gtR3qLuMJOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQdOebH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TABv+sUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93C8C4CEE5;
-	Tue,  8 Apr 2025 12:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQdOebH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597B3C4CEE5;
+	Tue,  8 Apr 2025 12:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115188;
-	bh=yfBB0wx4R1r62REePHe4+LwT2e4Zwl2M/fgqfCuFwks=;
+	s=korg; t=1744115190;
+	bh=O5c4FFOv3dRprQ2rwx91uoTRLFaHqzQKZvfWe2SQ/WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TABv+sUqAJZ0EEfwYreMCZOejm4wI/5ARznj34Lcn1SPvsyY+SHGwVEh8Ns8SrIHm
-	 3KdDv8myhxWeY15eJvdY1nH60y5cl3zNQX1HtLOsyXH5ZYrWmBNxCU5ifNsEnDe7ni
-	 TqaevrY1tVMynKWLgOfOTBR+dKNFU2dLahqQ1CiI=
+	b=QQdOebH/eOCHJruAMVZ5iEr6Fh6gilGHNQwSuSjGGPr9HfwrckDmcWiATnRaL5HuW
+	 ErD2kzTFdj9DseW622Ew56sOdk8t9ngBFIva6UXVnu7zsXQF7A9B82eCwwTUMz0Bb9
+	 aJEV6rIcjqMn1+3jLPjRTiJVY2qYrNuDLHsqT4Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lukas Hetzenecker <lukas@hetzenecker.me>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 343/499] net: devmem: do not WARN conditionally after netdev_rx_queue_restart()
-Date: Tue,  8 Apr 2025 12:49:15 +0200
-Message-ID: <20250408104859.778349245@linuxfoundation.org>
+Subject: [PATCH 6.13 344/499] platform/surface: aggregator_registry: Add Support for Surface Pro 11
+Date: Tue,  8 Apr 2025 12:49:16 +0200
+Message-ID: <20250408104859.803564402@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,53 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Lukas Hetzenecker <lukas@hetzenecker.me>
 
-[ Upstream commit a70f891e0fa0435379ad4950e156a15a4ef88b4d ]
+[ Upstream commit a05507cef0ee6a0af402c0d7e994115033ff746b ]
 
-When devmem socket is closed, netdev_rx_queue_restart() is called to
-reset queue by the net_devmem_unbind_dmabuf(). But callback may return
--ENETDOWN if the interface is down because queues are already freed
-when the interface is down so queue reset is not needed.
-So, it should not warn if the return value is -ENETDOWN.
+Add SAM client device nodes for the Surface Pro 11 (Intel).
+Like with the Surface Pro 10 already, the node group
+is compatible, so it can be reused.
 
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250309134219.91670-8-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lukas Hetzenecker <lukas@hetzenecker.me>
+Link: https://lore.kernel.org/r/20250310232803.23691-1-lukas@hetzenecker.me
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devmem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/surface/surface_aggregator_registry.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/devmem.c b/net/core/devmem.c
-index 11b91c12ee113..17f8a83a5ee74 100644
---- a/net/core/devmem.c
-+++ b/net/core/devmem.c
-@@ -108,6 +108,7 @@ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
- 	struct netdev_rx_queue *rxq;
- 	unsigned long xa_idx;
- 	unsigned int rxq_idx;
-+	int err;
+diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
+index d4f32ad665305..a594d5fcfcfd1 100644
+--- a/drivers/platform/surface/surface_aggregator_registry.c
++++ b/drivers/platform/surface/surface_aggregator_registry.c
+@@ -371,7 +371,7 @@ static const struct software_node *ssam_node_group_sp8[] = {
+ 	NULL,
+ };
  
- 	if (binding->list.next)
- 		list_del(&binding->list);
-@@ -119,7 +120,8 @@ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
+-/* Devices for Surface Pro 9 (Intel/x86) and 10 */
++/* Devices for Surface Pro 9, 10 and 11 (Intel/x86) */
+ static const struct software_node *ssam_node_group_sp9[] = {
+ 	&ssam_node_root,
+ 	&ssam_node_hub_kip,
+@@ -430,6 +430,9 @@ static const struct acpi_device_id ssam_platform_hub_acpi_match[] = {
+ 	/* Surface Pro 10 */
+ 	{ "MSHW0510", (unsigned long)ssam_node_group_sp9 },
  
- 		rxq_idx = get_netdev_rx_queue_index(rxq);
++	/* Surface Pro 11 */
++	{ "MSHW0583", (unsigned long)ssam_node_group_sp9 },
++
+ 	/* Surface Book 2 */
+ 	{ "MSHW0107", (unsigned long)ssam_node_group_gen5 },
  
--		WARN_ON(netdev_rx_queue_restart(binding->dev, rxq_idx));
-+		err = netdev_rx_queue_restart(binding->dev, rxq_idx);
-+		WARN_ON(err && err != -ENETDOWN);
- 	}
- 
- 	xa_erase(&net_devmem_dmabuf_bindings, binding->id);
 -- 
 2.39.5
 
