@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B118B266F17;
-	Tue,  8 Apr 2025 11:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F92A227BA4;
+	Tue,  8 Apr 2025 11:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113204; cv=none; b=EymshWE0GlHMx03zKcWCoAlJPaQyJDJYElENm+eGmSox/HJskbXmKC8hDk30C0a+05/yCkuGdROd+ZsEEl6GqkOY2ZsCRGrfBNYgt83usouowFSgWAtPeBitb39spYOG3Ah4otaFmAh9Ape70HTgTnkTIwlXPAOALHu+9Gi4wzk=
+	t=1744113207; cv=none; b=Z5viKCGo6que0AW0d48IPX+Uozwn4YtsYY8HC1REPNP2q6cijd+9Zdh7wLnb6NpV2OTYhaektE+pIMrSYVn0f8jgiHVOGG29wcpnS6HoNNEbrFZVglB8Ar3JI6x7sxdNXCpDmvtneOva3KCrhHr4nKfpM+qMc5bpLu0fQMqhMfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113204; c=relaxed/simple;
-	bh=ncYxAwUKpJUdUyiuscK0Ijr4EV8lukFCl299iveVom8=;
+	s=arc-20240116; t=1744113207; c=relaxed/simple;
+	bh=7Zm5MHhNP0WJbG+tpgISk4apGunnGgcTdEXAMkhvVys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFE7UxARp09lEhigHdrgusgsyuiwW9V1i7xmPjtXvS2W26O3+WfYJLVNirk40h1RXsxCTd1CIovRJLVAokrMf/mlB7lb3IxbgoJpfLy9Ts4UwG7IHuY2cPfn3U3+zHt1rLfEGitoRgkouwYXxAqDyxYnhKJUT5PQQeGgz4qkYI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swDgPSjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdl/kjb1l7T2W0Ge3AcbuR1vvdFRRemgW1XVa46jAMLhDHkNKnkKD6AVR2pVHs4o2172KBvOFyT61v0+jRAXO3V+77uG6TPYtQGhxPB4G/lLukUc5raKk5FyP+P6f5KqHe3VfkFRBaaCPBRg1SFQRWVS+DFVth6+F2XaqYxpmL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FShQ8XjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swDgPSjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197E2C4CEE7;
-	Tue,  8 Apr 2025 11:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FShQ8XjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EC9C4CEE5;
+	Tue,  8 Apr 2025 11:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113204;
-	bh=ncYxAwUKpJUdUyiuscK0Ijr4EV8lukFCl299iveVom8=;
+	s=korg; t=1744113207;
+	bh=7Zm5MHhNP0WJbG+tpgISk4apGunnGgcTdEXAMkhvVys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swDgPSjR2VjsFw2BhKko9Kewl5KU31Zx5rSPmPQdiyIVpeydCujmly9TkkWGXs2pV
-	 Bzf189CarZoDSUUbnBx1KE6ZkKwFeFMbzikwUxwUX28Xfc+q7OjflNLEUwdLxNg1OL
-	 bKnWHtlgNWTH0Zfd6rhVD16K9NoZiSSBcYaxAY3Y=
+	b=FShQ8XjNQp3yv0L7WCJErfOEUmpAWAq8TgEmOIa86xLA6eqGch583IvL6jbSJ6rjS
+	 vawIYpYbVkBCE44x1AoRxFVbTt6ntpXBAKnGDQ5FNJV68qeCdLlrTTdZbrgjWb6+wh
+	 TtXpb63P+/14VQGVAOg8rn1fRfi1IWxCQmrHZYKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Brendan Jackman <jackmanb@google.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/268] x86/traps: Make exc_double_fault() consistently noreturn
-Date: Tue,  8 Apr 2025 12:47:13 +0200
-Message-ID: <20250408104829.107108371@linuxfoundation.org>
+Subject: [PATCH 6.6 066/268] of: property: Increase NR_FWNODE_REFERENCE_ARGS
+Date: Tue,  8 Apr 2025 12:47:57 +0200
+Message-ID: <20250408104830.278844829@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,125 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 8085fcd78c1a3dbdf2278732579009d41ce0bc4e ]
+[ Upstream commit eb50844d728f11e87491f7c7af15a4a737f1159d ]
 
-The CONFIG_X86_ESPFIX64 version of exc_double_fault() can return to its
-caller, but the !CONFIG_X86_ESPFIX64 version never does.  In the latter
-case the compiler and/or objtool may consider it to be implicitly
-noreturn.
+Currently, the following two macros have different values:
 
-However, due to the currently inflexible way objtool detects noreturns,
-a function's noreturn status needs to be consistent across configs.
+// The maximal argument count for firmware node reference
+ #define NR_FWNODE_REFERENCE_ARGS	8
+// The maximal argument count for DT node reference
+ #define MAX_PHANDLE_ARGS 16
 
-The current workaround for this issue is to suppress unreachable
-warnings for exc_double_fault()'s callers.  Unfortunately that can
-result in ORC coverage gaps and potentially worse issues like inert
-static calls and silently disabled CPU mitigations.
+It may cause firmware node reference's argument count out of range if
+directly assign DT node reference's argument count to firmware's.
 
-Instead, prevent exc_double_fault() from ever being implicitly marked
-noreturn by forcing a return behind a never-taken conditional.
+drivers/of/property.c:of_fwnode_get_reference_args() is doing the direct
+assignment, so may cause firmware's argument count @args->nargs got out
+of range, namely, in [9, 16].
 
-Until a more integrated noreturn detection method exists, this is likely
-the least objectionable workaround.
+Fix by increasing NR_FWNODE_REFERENCE_ARGS to 16 to meet DT requirement.
+Will align both macros later to avoid such inconsistency.
 
-Fixes: 55eeab2a8a11 ("objtool: Ignore exc_double_fault() __noreturn warnings")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/r/d1f4026f8dc35d0de6cc61f2684e0cb6484009d1.1741975349.git.jpoimboe@kernel.org
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250225-fix_arg_count-v4-1-13cdc519eb31@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/traps.c | 18 +++++++++++++++++-
- tools/objtool/check.c   | 31 +------------------------------
- 2 files changed, 18 insertions(+), 31 deletions(-)
+ include/linux/fwnode.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
-index 37b8e20c03a9f..d8d9bc5a9b328 100644
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -377,6 +377,21 @@ __visible void __noreturn handle_stack_overflow(struct pt_regs *regs,
- }
- #endif
+diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
+index 525cc031596b6..7efb4493e51c0 100644
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -83,7 +83,7 @@ struct fwnode_endpoint {
+ #define SWNODE_GRAPH_PORT_NAME_FMT		"port@%u"
+ #define SWNODE_GRAPH_ENDPOINT_NAME_FMT		"endpoint@%u"
  
-+/*
-+ * Prevent the compiler and/or objtool from marking the !CONFIG_X86_ESPFIX64
-+ * version of exc_double_fault() as noreturn.  Otherwise the noreturn mismatch
-+ * between configs triggers objtool warnings.
-+ *
-+ * This is a temporary hack until we have compiler or plugin support for
-+ * annotating noreturns.
-+ */
-+#ifdef CONFIG_X86_ESPFIX64
-+#define always_true() true
-+#else
-+bool always_true(void);
-+bool __weak always_true(void) { return true; }
-+#endif
-+
- /*
-  * Runs on an IST stack for x86_64 and on a special task stack for x86_32.
-  *
-@@ -512,7 +527,8 @@ DEFINE_IDTENTRY_DF(exc_double_fault)
+-#define NR_FWNODE_REFERENCE_ARGS	8
++#define NR_FWNODE_REFERENCE_ARGS	16
  
- 	pr_emerg("PANIC: double fault, error_code: 0x%lx\n", error_code);
- 	die("double fault", regs, error_code);
--	panic("Machine halted.");
-+	if (always_true())
-+		panic("Machine halted.");
- 	instrumentation_end();
- }
- 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 6e59e7f578ffe..5824aa68ff961 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4511,35 +4511,6 @@ static int validate_sls(struct objtool_file *file)
- 	return warnings;
- }
- 
--static bool ignore_noreturn_call(struct instruction *insn)
--{
--	struct symbol *call_dest = insn_call_dest(insn);
--
--	/*
--	 * FIXME: hack, we need a real noreturn solution
--	 *
--	 * Problem is, exc_double_fault() may or may not return, depending on
--	 * whether CONFIG_X86_ESPFIX64 is set.  But objtool has no visibility
--	 * to the kernel config.
--	 *
--	 * Other potential ways to fix it:
--	 *
--	 *   - have compiler communicate __noreturn functions somehow
--	 *   - remove CONFIG_X86_ESPFIX64
--	 *   - read the .config file
--	 *   - add a cmdline option
--	 *   - create a generic objtool annotation format (vs a bunch of custom
--	 *     formats) and annotate it
--	 */
--	if (!strcmp(call_dest->name, "exc_double_fault")) {
--		/* prevent further unreachable warnings for the caller */
--		insn->sym->warned = 1;
--		return true;
--	}
--
--	return false;
--}
--
- static int validate_reachable_instructions(struct objtool_file *file)
- {
- 	struct instruction *insn, *prev_insn;
-@@ -4556,7 +4527,7 @@ static int validate_reachable_instructions(struct objtool_file *file)
- 		prev_insn = prev_insn_same_sec(file, insn);
- 		if (prev_insn && prev_insn->dead_end) {
- 			call_dest = insn_call_dest(prev_insn);
--			if (call_dest && !ignore_noreturn_call(prev_insn)) {
-+			if (call_dest) {
- 				WARN_INSN(insn, "%s() is missing a __noreturn annotation",
- 					  call_dest->name);
- 				warnings++;
+ /**
+  * struct fwnode_reference_args - Fwnode reference with additional arguments
 -- 
 2.39.5
 
