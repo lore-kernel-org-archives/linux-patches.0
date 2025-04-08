@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA296207E14;
-	Tue,  8 Apr 2025 12:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2834207E14;
+	Tue,  8 Apr 2025 12:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115148; cv=none; b=VV9hG8sOs4gZhu5f/r0ZxME0Db24RgmWbJ44L8dXMlvFFFeNGDQ3Xh9PHlmKf3bvL5HHxyKuSLil2CFgLZ7c4oUBKkxUcoWyKd5QX8uEW7oTFuL8wpSY7Kn1/dPkbD91TFwl3Degte4AmA6UdsRQ639lHE4L+SxkD9+Mjmqilrk=
+	t=1744115151; cv=none; b=u+VehJQs8yaVXWN5/IKOaQPwVWqwb4ytkiJ6CIOFMrQ/CF/X/NJ3/7Jb1LmsOe6PWj3l+hgVd50KzutiZ8ekMlhX4Cpi0C1CvylVtVIxf8PAmf0E1B+v8gsbJmmxwM20ro4udlkNrEAxbvdZ9Va2xIlksrtFk60UcYafRorwLGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115148; c=relaxed/simple;
-	bh=eFsRBsfCTL+8hfkxa2ASBtSPQdwPxOpdFxQ4BMFEAfI=;
+	s=arc-20240116; t=1744115151; c=relaxed/simple;
+	bh=BVwLT77x7m0uGLpZANJtCtM1ztOc9wyyMrKppp21euU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZSSVu+1w6XYTA3PG7k2YP6dc39QZSOxVmsUWktZ4eWZFcyhxSyRHdnkp0+MydSXWHITKZbFi5InSyiSaODwIpI4rO5My9+qescYWFZZM6du2FvCqakZsdwv9StyNBReanF8N20/P+Lglmr5O8DCILbLIkO+HwX0B+5z0aE+tv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ighg/fdE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ShJ8UwNVozJwLui+J566PoHiURsrV/J3ZlNdBl0oK/0m+8R2OIUrukJ/L0CkPOAgtjsFupDVN3Kiux1N4mCQqm36LqMqYkRjcx6IF6Ee76UxpxYTG2ND/Gdo7fBOz2QNVcVmVQ1ZW7Zc6ZHyd1v7uBnrhmW8Tc+mbqv4cCshkiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg17awPP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ighg/fdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77000C4CEE5;
-	Tue,  8 Apr 2025 12:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg17awPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A385C4CEE5;
+	Tue,  8 Apr 2025 12:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115147;
-	bh=eFsRBsfCTL+8hfkxa2ASBtSPQdwPxOpdFxQ4BMFEAfI=;
+	s=korg; t=1744115150;
+	bh=BVwLT77x7m0uGLpZANJtCtM1ztOc9wyyMrKppp21euU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ighg/fdEHX3PKgflfJe0GBca54hTVNi//MPvhBG0L6rhfx/GrAQ2Arq1kQt/kQnBj
-	 UcAfjxkGgbxV1fBmTKSoJqUPB+BF7CNmV5qpA6d70RFU8zjbJyuSiNjCYt6XNsQCM/
-	 HUPtAOwIyugdoBfBDtAGwpNHXzIo9D1rLHqy4jcc=
+	b=wg17awPP2lyLiJCZQV4Oxt8o2SzFWXz6i4k8b7BlknHHEgwPm/P3H8DoxNa+weabF
+	 +VUGNB58MCvG6UPwQQKkgL8Q6+afM+EOZ80wtHBL8gWKuU8FwY1i/ZCIXDWG2d8U4/
+	 /Z5F+fLCyHA46ForYOTcAY5Stxyxwe4zonXTAShw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 366/499] firmware: cs_dsp: Ensure cs_dsp_load[_coeff]() returns 0 on success
-Date: Tue,  8 Apr 2025 12:49:38 +0200
-Message-ID: <20250408104900.356969727@linuxfoundation.org>
+Subject: [PATCH 6.13 367/499] ALSA: hda/realtek: Fix built-in mic breakage on ASUS VivoBook X515JA
+Date: Tue,  8 Apr 2025 12:49:39 +0200
+Message-ID: <20250408104900.382217575@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,65 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 2593f7e0dc93a898a84220b3fb180d86f1ca8c60 ]
+[ Upstream commit 84c3c08f5a6c2e2209428b76156bcaf349c3a62d ]
 
-Set ret = 0 on successful completion of the processing loop in
-cs_dsp_load() and cs_dsp_load_coeff() to ensure that the function
-returns 0 on success.
+ASUS VivoBook X515JA with PCI SSID 1043:14f2 also hits the same issue
+as other VivoBook model about the mic pin assignment, and the same
+workaround is required to apply ALC256_FIXUP_ASUS_MIC_NO_PRESENCE
+quirk.
 
-All normal firmware files will have at least one data block, and
-processing this block will set ret == 0, from the result of either
-regmap_raw_write() or cs_dsp_parse_coeff().
-
-The kunit tests create a dummy firmware file that contains only the
-header, without any data blocks. This gives cs_dsp a file to "load"
-that will not cause any side-effects. As there aren't any data blocks,
-the processing loop will not set ret == 0.
-
-Originally there was a line after the processing loop:
-
-    ret = regmap_async_complete(regmap);
-
-which would set ret == 0 before the function returned.
-
-Commit fe08b7d5085a ("firmware: cs_dsp: Remove async regmap writes")
-changed the regmap write to a normal sync write, so the call to
-regmap_async_complete() wasn't necessary and was removed. It was
-overlooked that the ret here wasn't only to check the result of
-regmap_async_complete(), it also set the final return value of the
-function.
-
-Fixes: fe08b7d5085a ("firmware: cs_dsp: Remove async regmap writes")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250323170529.197205-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219902
+Link: https://patch.msgid.link/20250326152205.26733-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index 42433c19eb308..560724ce21aa3 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -1631,6 +1631,7 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
- 
- 	cs_dsp_debugfs_save_wmfwname(dsp, file);
- 
-+	ret = 0;
- out_fw:
- 	cs_dsp_buf_free(&buf_list);
- 
-@@ -2338,6 +2339,7 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
- 
- 	cs_dsp_debugfs_save_binname(dsp, file);
- 
-+	ret = 0;
- out_fw:
- 	cs_dsp_buf_free(&buf_list);
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 17bdacf222441..834f3bba21181 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10707,6 +10707,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1493, "ASUS GV601VV/VU/VJ/VQ/VI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x14d3, "ASUS G614JY/JZ/JG", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x14e3, "ASUS G513PI/PU/PV", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x14f2, "ASUS VivoBook X515JA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1503, "ASUS G733PY/PZ/PZV/PYV", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.39.5
 
