@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AF21AAA32;
-	Tue,  8 Apr 2025 12:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EC81AAA32;
+	Tue,  8 Apr 2025 12:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115790; cv=none; b=h5acrdMJ7XmQFUIgYvDs+eTlj+mw0dfbZSpPSFIDV5uowidmXelWty1Ef+5HHoNJ/nsPIVHnPHDbmmBvHccGZJ5+dkgaUp2ubpW14t4PKeQBw9YQBCbeioKHxrwuS3QM6dzYM5py98HY9iUvJDtCK6n+TwnWYQztbJcbL0UI0oA=
+	t=1744115792; cv=none; b=MhI8q1sjmrWbe0keNQBb9705h5AfUBny4V0cL0W01CvJ4tzx/1k9wISdhZy3g6zi4LHZQPKtuvaWQvVI2WdBpB3inTLEtPzJjoiVOgr7uQ5yi176h7vMJFcN/1pQehrEyyjjMV5KloPm1WPbeQztj1WeaXWisxGCgDtVXlbjSIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115790; c=relaxed/simple;
-	bh=f/lNBnP38XS/u/yQmFZzIgL1fJSnVC3D9KsyXQlkXzU=;
+	s=arc-20240116; t=1744115792; c=relaxed/simple;
+	bh=wsY2/b6E4YquKT9jqVffAQCwmj2JIyffV/lK3D1a5Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slque0WVMFlW4SeINtZr+R891S9EfUW/FJ9vtrypTTOI2SroizeaFjUkYHWO3YeBSFuYM6TDvvFDUSkQCERYBkwKBVVCDodWvewlgWoUJLuB5TNtvWmslWz9klj/+EX5uCWjUNJ1FXMjd12zL+4CStjKgzEBrXz/kSR4xF44iII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cStclAe0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfjmOcXng0ipGNJgcv07NcuxcR5Q/j5+ZxS3zrjugyX8PF2M+oH+QbrDCf5Q/eqAKPXOKRMZn7LlUQYichf3FMY9488YqJvXQ1qQE0GGGtSj0uq4sK44iyQIwXXdA45ILPnXA9zKvtwOb1bP5t01WHBslCymKiIKS5jZDYtjpZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRsvDn7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cStclAe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D13C4CEE5;
-	Tue,  8 Apr 2025 12:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRsvDn7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C24C4CEE5;
+	Tue,  8 Apr 2025 12:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115789;
-	bh=f/lNBnP38XS/u/yQmFZzIgL1fJSnVC3D9KsyXQlkXzU=;
+	s=korg; t=1744115792;
+	bh=wsY2/b6E4YquKT9jqVffAQCwmj2JIyffV/lK3D1a5Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cStclAe0Iaw3fjbCkLCyyPT2gCkb2WuCPdnkxeLzZWe5Df43Kn6ZnGyPVeiSW39ac
-	 27eifEmFVn0jlhtr2dK1AXN207mk1CgxX83b8DPbQCXaa3FyjsQ9fMfc2DuQoWh0FW
-	 zRlMs+oN6IPemJG1/f7PZjRVMAOVK2wcMGmiRkh0=
+	b=wRsvDn7pUnFKgmb5ZBEvPXHVw04qJugJ9ztHib6sQ0wbTcoTqonCvs6Fe/hwiCXYq
+	 e/ArYmgrd2czlx31GZGkt/CXynXr6QHKZnSxovxEorAsSxLzoKM8ftombk+H6Vwnw+
+	 u8+YRo5O1N2nJ0hRPlTVYxat8yZaVKMcxzlVPjSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/204] perf python: Fixup description of sample.id event member
-Date: Tue,  8 Apr 2025 12:50:34 +0200
-Message-ID: <20250408104823.387341969@linuxfoundation.org>
+Subject: [PATCH 6.1 105/204] perf python: Decrement the refcount of just created event on failure
+Date: Tue,  8 Apr 2025 12:50:35 +0200
+Message-ID: <20250408104823.416141709@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -54,34 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 1376c195e8ad327bb9f2d32e0acc5ac39e7cb30a ]
+[ Upstream commit 3de5a2bf5b4847f7a59a184568f969f8fe05d57f ]
 
-Some old cut'n'paste error, its "ip", so the description should be
-"event ip", not "event type".
+To avoid a leak if we have the python object but then something happens
+and we need to return the operation, decrement the offset of the newly
+created object.
 
-Fixes: 877108e42b1b9ba6 ("perf tools: Initial python binding")
+Fixes: 377f698db12150a1 ("perf python: Add struct evsel into struct pyrf_event")
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250312203141.285263-2-acme@kernel.org
+Link: https://lore.kernel.org/r/20250312203141.285263-5-acme@kernel.org
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/python.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 5be5fa2391de2..9ae5ffea91b48 100644
+index 9ae5ffea91b48..894a9966599fd 100644
 --- a/tools/perf/util/python.c
 +++ b/tools/perf/util/python.c
-@@ -181,7 +181,7 @@ struct pyrf_event {
- };
+@@ -1109,6 +1109,7 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
  
- #define sample_members \
--	sample_member_def(sample_ip, ip, T_ULONGLONG, "event type"),			 \
-+	sample_member_def(sample_ip, ip, T_ULONGLONG, "event ip"),			 \
- 	sample_member_def(sample_pid, pid, T_INT, "event pid"),			 \
- 	sample_member_def(sample_tid, tid, T_INT, "event tid"),			 \
- 	sample_member_def(sample_time, time, T_ULONGLONG, "event timestamp"),		 \
+ 		evsel = evlist__event2evsel(evlist, event);
+ 		if (!evsel) {
++			Py_DECREF(pyevent);
+ 			Py_INCREF(Py_None);
+ 			return Py_None;
+ 		}
+@@ -1120,9 +1121,12 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
+ 		/* Consume the even only after we parsed it out. */
+ 		perf_mmap__consume(&md->core);
+ 
+-		if (err)
++		if (err) {
++			Py_DECREF(pyevent);
+ 			return PyErr_Format(PyExc_OSError,
+ 					    "perf: can't parse sample, err=%d", err);
++		}
++
+ 		return pyevent;
+ 	}
+ end:
 -- 
 2.39.5
 
