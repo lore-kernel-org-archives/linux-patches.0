@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716CF2676E1;
-	Tue,  8 Apr 2025 11:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8D422257E;
+	Tue,  8 Apr 2025 11:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113145; cv=none; b=LG6mke+lfj0thoxuS0K+kg3RNhKdLOV1maeQrprCTB5GiX832c9yprjwbzg2RtZXxtusTKWezCbgYmd6Oo0MjHsHZFLFySC212x2yR4R8hIUmP0gg1gcvDzbHcMh89Q8pLtJZMiD2BxSI4OD0T4bxPsuhls7gEUt31icME1rcXk=
+	t=1744113149; cv=none; b=dRoxtbeuRztQIlaij8S6lbSsXQuGNNZ/7UFWQxJuVbSlOliriYYAddkr61miqCgAYMJNnsroSEgTg8PDYcgbWCUS1L0HZdi08/lRYOJn/aTsbcS/3kO+jNs8YJx9FAnFcjDH6BtkzsY5YnBoLH/IFL2F/bLYXltarb/ly1n0298=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113145; c=relaxed/simple;
-	bh=0QXs6IDCTTPykhgHrEEA3cOPqbwaPyKtRozVVSK6Vpw=;
+	s=arc-20240116; t=1744113149; c=relaxed/simple;
+	bh=FdFRaDDgjWavtNAc7mjeTscpsD0fcECDyo/9/aAc+3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oseERYeTPJA45K9Dysgzqy0BYnjAeNyw6Id49hG8Q6wyEGCDlD1WCpKQ6tgwMuoeHdQ5cJqAdYz4xEjK9h830PYE3UVa1Absw7FL6LSn6DxCsM3oZWOxM9RiFS12yEiqRiHXl8mLDT+S3tVhkEErswJzxiHZG0ONRWmLFX9UoAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8QmSGYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gfd4nRKg/mpP7EjMSd0epFQFaFTl94CS+eec26YaggaGnZyp7UMB7H6PoX6uxKyrqIP8t4RpR/0VN6ePDfpUwtD3j7WvdaC7qpiGp4CajjeOJWeEdyCAnraVvDlYK6KM+YAqUytMGiF7npZMvIx+b2T0KIF60P8Fn7fh1rJT6AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZn+8t2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8QmSGYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F5CC4CEED;
-	Tue,  8 Apr 2025 11:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZn+8t2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD9C4CEE5;
+	Tue,  8 Apr 2025 11:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113145;
-	bh=0QXs6IDCTTPykhgHrEEA3cOPqbwaPyKtRozVVSK6Vpw=;
+	s=korg; t=1744113148;
+	bh=FdFRaDDgjWavtNAc7mjeTscpsD0fcECDyo/9/aAc+3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8QmSGYVs90oTxaMw6Okb7rNMR5IzymLGljXrfjzT+0cr90CNfG+qz4XCHibN0H4w
-	 dwDT8YLRukKzJn8F0BSqUswL8r8WhqT4wRGPj2qpsVKa+P23DQ6MYj6cjx1xWzWse+
-	 d1Lo1rYbPRcJUUmVWWslklqqnQr7d3hacG2tgV4Q=
+	b=iZn+8t2LxH28zNZRG98zf/QOZenQA7zMuDHhr5ozMB9PIVhQmvulGeN2KSjIOYOQn
+	 mA13qbNveQecojvT1271O/YXFaQU9m7DUf3H5oXbzFKZIaakWKhQ/qhHKDLZVDVf7n
+	 7b0E+i7tlECBs97vMJF+TB2dg33op/lD1nd/9YNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Aravamudan <naravamudan@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Raphael Norwitz <raphael.norwitz@nutanix.com>,
-	Amey Narkhede <ameynarkhede03@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/268] PCI: Avoid reset when disabled via sysfs
-Date: Tue,  8 Apr 2025 12:47:41 +0200
-Message-ID: <20250408104829.850087654@linuxfoundation.org>
+Subject: [PATCH 6.6 051/268] drm/amd/display: fix type mismatch in CalculateDynamicMetadataParameters()
+Date: Tue,  8 Apr 2025 12:47:42 +0200
+Message-ID: <20250408104829.878050641@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -58,65 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nishanth Aravamudan <naravamudan@nvidia.com>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-[ Upstream commit 479380efe1625e251008d24b2810283db60d6fcd ]
+[ Upstream commit c3c584c18c90a024a54716229809ba36424f9660 ]
 
-After d88f521da3ef ("PCI: Allow userspace to query and set device reset
-mechanism"), userspace can disable reset of specific PCI devices by writing
-an empty string to the sysfs reset_method file.
+There is a type mismatch between what CalculateDynamicMetadataParameters()
+takes and what is passed to it. Currently this function accepts several
+args as signed long but it's called with unsigned integers and integer. On
+some systems where long is 32 bits and one of these unsigned int params is
+greater than INT_MAX it may cause passing input params as negative values.
 
-However, pci_slot_resettable() does not check pci_reset_supported(), which
-means that pci_reset_function() will still reset the device even if
-userspace has disabled all the reset methods.
+Fix this by changing these argument types from long to unsigned int and to
+int respectively. Also this will align the function's definition with
+similar functions in other dcn* drivers.
 
-I was able to reproduce this issue with a vfio device passed to a qemu
-guest, where I had disabled PCI reset via sysfs.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Add an explicit check of pci_reset_supported() in both
-pci_slot_resettable() and pci_bus_resettable() to ensure both the reset
-status and reset execution are bypassed if an administrator disables it for
-a device.
-
-Link: https://lore.kernel.org/r/20250207205600.1846178-1-naravamudan@nvidia.com
-Fixes: d88f521da3ef ("PCI: Allow userspace to query and set device reset mechanism")
-Signed-off-by: Nishanth Aravamudan <naravamudan@nvidia.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
-Cc: Amey Narkhede <ameynarkhede03@gmail.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Yishai Hadas <yishaih@nvidia.com>
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: Kevin Tian <kevin.tian@intel.com>
+Fixes: 6725a88f88a7 ("drm/amd/display: Add DCN3 DML")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 095fa1910d36d..bcce569a83395 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5714,6 +5714,8 @@ static bool pci_bus_resettable(struct pci_bus *bus)
- 		return false;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+index ad741a723c0e8..72ffa1abebaa1 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+@@ -281,10 +281,10 @@ static void CalculateDynamicMetadataParameters(
+ 		double DISPCLK,
+ 		double DCFClkDeepSleep,
+ 		double PixelClock,
+-		long HTotal,
+-		long VBlank,
+-		long DynamicMetadataTransmittedBytes,
+-		long DynamicMetadataLinesBeforeActiveRequired,
++		unsigned int HTotal,
++		unsigned int VBlank,
++		unsigned int DynamicMetadataTransmittedBytes,
++		int DynamicMetadataLinesBeforeActiveRequired,
+ 		int InterlaceEnable,
+ 		bool ProgressiveToInterlaceUnitInOPP,
+ 		double *Tsetup,
+@@ -3277,8 +3277,8 @@ static double CalculateWriteBackDelay(
  
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
-+		if (!pci_reset_supported(dev))
-+			return false;
- 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
- 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
- 			return false;
-@@ -5790,6 +5792,8 @@ static bool pci_slot_resettable(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
-+		if (!pci_reset_supported(dev))
-+			return false;
- 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
- 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
- 			return false;
+ 
+ static void CalculateDynamicMetadataParameters(int MaxInterDCNTileRepeaters, double DPPCLK, double DISPCLK,
+-		double DCFClkDeepSleep, double PixelClock, long HTotal, long VBlank, long DynamicMetadataTransmittedBytes,
+-		long DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
++		double DCFClkDeepSleep, double PixelClock, unsigned int HTotal, unsigned int VBlank, unsigned int DynamicMetadataTransmittedBytes,
++		int DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
+ 		double *Tsetup, double *Tdmbf, double *Tdmec, double *Tdmsks)
+ {
+ 	double TotalRepeaterDelayTime = 0;
 -- 
 2.39.5
 
