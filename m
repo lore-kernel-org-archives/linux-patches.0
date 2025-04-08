@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD603224239;
-	Tue,  8 Apr 2025 12:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F15F2638B8;
+	Tue,  8 Apr 2025 12:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115067; cv=none; b=Hsv4Nv1pmC82z67Gtx7A+j15IkPFP8MZ0ZwCJHQmzM3eJaehyG2f/84dH3aj7idmZKeyyT1odYumiKp0mvamjzeki3t5hfnyxRGb+yODUxflucWaCuAEPe3ww87J8XPevyLjmPz9bZMTwhM34DUKVKlnREbrY+ryptu5ytvy/j4=
+	t=1744115070; cv=none; b=rQlpAP+TQ9IEKxtmllBwE5ecJv+adfmXtfBzDrnTMczuDRKSWwmY7F7csX2C0M5aMdJ6J8/P0Aqh6X/1wX2neRbbBcTAgmoe8KdZlzlgcAJo0lzHwSm9XXsqX6fD1ZhtTeEoYR1OkJr6RwrCxOpoeJUaY2XFbm9Zn+7VeZ0fnAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115067; c=relaxed/simple;
-	bh=H5vnoLqwpbRu85936aJKBDZBrkxxKACqRisU8/2yIF8=;
+	s=arc-20240116; t=1744115070; c=relaxed/simple;
+	bh=Al2ZnEHR5TetOzIxVZ/BkKR1/BTLuA4syuMjSqzQd70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJjz5jlTYxMXwwGS0UNse4nxx45RchoVZbwytgMjYTti0ko/KMAGVg29ZY9w/gD+SpQqgVGjuU2rtNHYBPxvQtC3UMBxND7Z5QHNrZEWDPh2tM8v2Qo1RADVoWDgxJbt0Fj1IIlNTn7LQkEV4YjTFZh9r5Mz7SO3JZqnZsPEVIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQg2PhBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brDXr48kuvEefX8JBRLxADeIznXwk3Cuiuk736lb90SuYK9aFBeqI+dzb9TUhhRxe9ov9j9uE9JDruK1F8VWwkbKhmGKS0wtkFBM8dnEZu2X1Ughd+f5pyRJN3KA8eRELZlaj0tgjaXsg6j/kybHd/GOmyjmH3U5miB8JfjIwzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0plPLLqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQg2PhBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3590FC4CEEA;
-	Tue,  8 Apr 2025 12:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0plPLLqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B5CC4CEE5;
+	Tue,  8 Apr 2025 12:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115067;
-	bh=H5vnoLqwpbRu85936aJKBDZBrkxxKACqRisU8/2yIF8=;
+	s=korg; t=1744115070;
+	bh=Al2ZnEHR5TetOzIxVZ/BkKR1/BTLuA4syuMjSqzQd70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQg2PhByzUJezqRGBjRpQ+zNtHKo9oEHxTQGncEGtxyqs7g1vFAuysPnpBGXQpJl1
-	 sb4Ql6TrqAUhLgHxqBQktIC4nGqv2DHvEj47Yo6GzvGrBsxGgmKZargRz1dyPAFlrN
-	 2gBbQ46sx8CPgYBlIDV6/zihOyZFgYg0zU3BlfG0=
+	b=0plPLLqARwCoaF6WBkvmKyDO2CMC5GjWXggC4F+Y83dcfIP14BeiOPAYLLBFmjZ4a
+	 OtV3G4LmZuYh0LhddV2s8hNmnmd4fOLeboqC62TDb++TttrQ27aUJ/QaXgE3HhTDla
+	 7HHoR/fQEQe7vlMRpx+untmQ+V4jrs1MjoUBvjNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 335/499] wifi: mac80211: flush the station before moving it to UN-AUTHORIZED state
-Date: Tue,  8 Apr 2025 12:49:07 +0200
-Message-ID: <20250408104859.579474193@linuxfoundation.org>
+Subject: [PATCH 6.13 298/499] objtool/loongarch: Add unwind hints in prepare_frametrace()
+Date: Tue,  8 Apr 2025 12:48:30 +0200
+Message-ID: <20250408104858.647827756@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,75 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 43e04077170799d0e6289f3e928f727e401b3d79 ]
+[ Upstream commit 7c977393b8277ed319e92e4b598b26598c9d30c0 ]
 
-We first want to flush the station to make sure we no longer have any
-frames being Tx by the station before the station is moved to
-un-authorized state. Failing to do that will lead to races: a frame may
-be sent after the station's state has been changed.
+If 'regs' points to a local stack variable, prepare_frametrace() stores
+all registers to the stack.  This confuses objtool as it expects them to
+be restored from the stack later.
 
-Since the API clearly states that the driver can't fail the sta_state()
-transition down the list of state, we can easily flush the station
-first, and only then call the driver's sta_state().
+The stores don't affect stack tracing, so use unwind hints to hide them
+from objtool.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250306123626.450bc40e8b04.I636ba96843c77f13309c15c9fd6eb0c5a52a7976@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes the following warnings:
+
+  arch/loongarch/kernel/traps.o: warning: objtool: show_stack+0xe0: stack state mismatch: reg1[22]=-1+0 reg2[22]=-2-160
+  arch/loongarch/kernel/traps.o: warning: objtool: show_stack+0xe0: stack state mismatch: reg1[23]=-1+0 reg2[23]=-2-152
+
+Fixes: cb8a2ef0848c ("LoongArch: Add ORC stack unwinder support")
+Reported-by: kernel test robot <lkp@intel.com>
+Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/270cadd8040dda74db2307f23497bb68e65db98d.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202503280703.OARM8SrY-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/loongarch/include/asm/stacktrace.h   |  3 +++
+ arch/loongarch/include/asm/unwind_hints.h | 10 +++++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index aa22f09e6d145..49095f19a0f22 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -4,7 +4,7 @@
-  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright (C) 2015 - 2017 Intel Deutschland GmbH
-- * Copyright (C) 2018-2023 Intel Corporation
-+ * Copyright (C) 2018-2024 Intel Corporation
-  */
+diff --git a/arch/loongarch/include/asm/stacktrace.h b/arch/loongarch/include/asm/stacktrace.h
+index f23adb15f418f..fc8b64773794a 100644
+--- a/arch/loongarch/include/asm/stacktrace.h
++++ b/arch/loongarch/include/asm/stacktrace.h
+@@ -8,6 +8,7 @@
+ #include <asm/asm.h>
+ #include <asm/ptrace.h>
+ #include <asm/loongarch.h>
++#include <asm/unwind_hints.h>
+ #include <linux/stringify.h>
  
- #include <linux/module.h>
-@@ -1317,9 +1317,13 @@ static int _sta_info_move_state(struct sta_info *sta,
- 		sta->sta.addr, new_state);
+ enum stack_type {
+@@ -43,6 +44,7 @@ int get_stack_info(unsigned long stack, struct task_struct *task, struct stack_i
+ static __always_inline void prepare_frametrace(struct pt_regs *regs)
+ {
+ 	__asm__ __volatile__(
++		UNWIND_HINT_SAVE
+ 		/* Save $ra */
+ 		STORE_ONE_REG(1)
+ 		/* Use $ra to save PC */
+@@ -80,6 +82,7 @@ static __always_inline void prepare_frametrace(struct pt_regs *regs)
+ 		STORE_ONE_REG(29)
+ 		STORE_ONE_REG(30)
+ 		STORE_ONE_REG(31)
++		UNWIND_HINT_RESTORE
+ 		: "=m" (regs->csr_era)
+ 		: "r" (regs->regs)
+ 		: "memory");
+diff --git a/arch/loongarch/include/asm/unwind_hints.h b/arch/loongarch/include/asm/unwind_hints.h
+index a01086ad9ddea..2c68bc72736c9 100644
+--- a/arch/loongarch/include/asm/unwind_hints.h
++++ b/arch/loongarch/include/asm/unwind_hints.h
+@@ -23,6 +23,14 @@
+ 	UNWIND_HINT sp_reg=ORC_REG_SP type=UNWIND_HINT_TYPE_CALL
+ .endm
  
- 	/* notify the driver before the actual changes so it can
--	 * fail the transition
-+	 * fail the transition if the state is increasing.
-+	 * The driver is required not to fail when the transition
-+	 * is decreasing the state, so first, do all the preparation
-+	 * work and only then, notify the driver.
- 	 */
--	if (test_sta_flag(sta, WLAN_STA_INSERTED)) {
-+	if (new_state > sta->sta_state &&
-+	    test_sta_flag(sta, WLAN_STA_INSERTED)) {
- 		int err = drv_sta_state(sta->local, sta->sdata, sta,
- 					sta->sta_state, new_state);
- 		if (err)
-@@ -1395,6 +1399,16 @@ static int _sta_info_move_state(struct sta_info *sta,
- 		break;
- 	}
- 
-+	if (new_state < sta->sta_state &&
-+	    test_sta_flag(sta, WLAN_STA_INSERTED)) {
-+		int err = drv_sta_state(sta->local, sta->sdata, sta,
-+					sta->sta_state, new_state);
+-#endif /* __ASSEMBLY__ */
++#else /* !__ASSEMBLY__ */
 +
-+		WARN_ONCE(err,
-+			  "Driver is not allowed to fail if the sta_state is transitioning down the list: %d\n",
-+			  err);
-+	}
++#define UNWIND_HINT_SAVE \
++	UNWIND_HINT(UNWIND_HINT_TYPE_SAVE, 0, 0, 0)
 +
- 	sta->sta_state = new_state;
++#define UNWIND_HINT_RESTORE \
++	UNWIND_HINT(UNWIND_HINT_TYPE_RESTORE, 0, 0, 0)
++
++#endif /* !__ASSEMBLY__ */
  
- 	return 0;
+ #endif /* _ASM_LOONGARCH_UNWIND_HINTS_H */
 -- 
 2.39.5
 
