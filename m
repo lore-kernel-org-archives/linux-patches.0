@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A235F2690D7;
-	Tue,  8 Apr 2025 11:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA6220CCD8;
+	Tue,  8 Apr 2025 11:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113430; cv=none; b=DjJLVDX5DlACgrBfUsGNZTra7td8UHv2XdIcH03UfzZVVTT7gi/ppgtGYyqcBQkii+mtOMWB3tLCetZdujG8vs21sAjQqTY5k+dRJKcq49FIICrWjHtZjfDOm+zhymcd7mEm2IkfTydekEkvrYqrLNHNwoXEIIUt/er0K5uRe7g=
+	t=1744113433; cv=none; b=WXOz5+kTSflU4M3k9uJ0LaEpPQp8KmEdhTL/+8Jx5R+0rrX5HEMZXXnxHu8vVDiaTQgy7EtAPwrLCWZL5mE+a4gxm9peLvcW+p5w1vEQk3MHPQ7QMxCZtH7t3x/3IB2E6ZNlMzHSMvdi8sowFPJJGULn5KNtUU+BQEC0Ft6Wcug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113430; c=relaxed/simple;
-	bh=Z8XHTJJKCJiquucQGqgLhHtIpS/pzMk3hn8mwkOFBGA=;
+	s=arc-20240116; t=1744113433; c=relaxed/simple;
+	bh=OnT3XjOn4ZyJ6VzpElZrrpnUk/tVy/BOUq2u7eNKKkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhDkIhsVg6fi19IxeZvrLJsP6ShPwWi58yPHZq9wVKjC1a7JOV95XWlE/jvIcpQM6s/FTuOGzTyxmWRHgyj0lIFlvTpom+60dNwXmHhE7Ccz8Czc4nKynF2k6MEA4wGGe0iELuSuUrxwwka+MbeM+2h8Hr0PVt2i2Ub3JkN3z1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFThCE0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHNW+bvCSRAbYV9sIlm+g+vPwU73Bb6X78IOgSzx646NAkUJ7Q/BosJRjb6lINqZN5nMs2l/RrOs3GV9ZH4AAfHdPXQVfNTAlxP1J5EfdWTlmYHHVkNd4n5RJvXC3l63CqOztC+ZYSYMdK+3oaznwKAc+2b9PbPkGt/WQQYxbZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7tvWAXc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFThCE0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CADC4CEE5;
-	Tue,  8 Apr 2025 11:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7tvWAXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1655C4CEE5;
+	Tue,  8 Apr 2025 11:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113430;
-	bh=Z8XHTJJKCJiquucQGqgLhHtIpS/pzMk3hn8mwkOFBGA=;
+	s=korg; t=1744113433;
+	bh=OnT3XjOn4ZyJ6VzpElZrrpnUk/tVy/BOUq2u7eNKKkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFThCE0SqSMi88oQ4A5K41Aa+fCqrKwq59PmHL8DUcup0fLotnNCCrGpDH1U54F3N
-	 aZtGUcXCuqZ4XQe28gwu1sMlmQl/3K6CShhljCBHa4wu+MaCLxvO9zRQHhC4YfpRI7
-	 90AuKyasQulRzbGVe8+Bplg1WdISPgAndqgehbd0=
+	b=w7tvWAXcjPn58jHfztNGl00CVp4CIG3m9zS8055PZxV3oOITdTo/8Iilyd9k62GiM
+	 cYRgVD+D4EgoOyi/8hXCW13I6om66RAFUBJAwDhTOgKEGpENiQuy6K8RAqOUbRu5C3
+	 /adGIibtZgk+W6qdcRZVIdTQfjwo81YC0mn29NnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Zhang <wh1sper@zju.edu.cn>,
-	Mike Christie <michael.christie@oracle.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Lama Kayal <lkayal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/268] vhost-scsi: Fix handling of multiple calls to vhost_scsi_set_endpoint
-Date: Tue,  8 Apr 2025 12:48:38 +0200
-Message-ID: <20250408104831.383076865@linuxfoundation.org>
+Subject: [PATCH 6.6 150/268] net/mlx5e: SHAMPO, Make reserved size independent of page size
+Date: Tue,  8 Apr 2025 12:49:21 +0200
+Message-ID: <20250408104832.582197450@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -54,174 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Lama Kayal <lkayal@nvidia.com>
 
-[ Upstream commit 5dd639a1646ef5fe8f4bf270fad47c5c3755b9b6 ]
+[ Upstream commit fab05835688526f9de123d1e98e4d1f838da4e22 ]
 
-If vhost_scsi_set_endpoint is called multiple times without a
-vhost_scsi_clear_endpoint between them, we can hit multiple bugs
-found by Haoran Zhang:
+When hw-gro is enabled, the maximum number of header entries that are
+needed per wqe (hd_per_wqe) is calculated based on the size of the
+reservations among other parameters.
 
-1. Use-after-free when no tpgs are found:
+Miscalculation of the size of reservations leads to incorrect
+calculation of hd_per_wqe as 0, particularly in the case of large page
+size like in aarch64, this prevents the SHAMPO header from being
+correctly initialized in the device, ultimately causing the following
+cqe err that indicates a violation of PD.
 
-This fixes a use after free that occurs when vhost_scsi_set_endpoint is
-called more than once and calls after the first call do not find any
-tpgs to add to the vs_tpg. When vhost_scsi_set_endpoint first finds
-tpgs to add to the vs_tpg array match=true, so we will do:
+ mlx5_core 0000:00:08.0 eth2: ERR CQE on RQ: 0x1180
+ mlx5_core 0000:00:08.0 eth2: Error cqe on cqn 0x510, ci 0x0, qn 0x1180, opcode 0xe, syndrome  0x4, vendor syndrome 0x32
+ 00000000: 00 00 00 00 04 4a 00 00 00 00 00 00 20 00 93 32
+ 00000010: 55 00 00 00 fb cc 00 00 00 00 00 00 07 18 00 00
+ 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4a
+ 00000030: 00 00 00 9a 93 00 32 04 00 00 00 00 00 00 da e1
 
-vhost_vq_set_backend(vq, vs_tpg);
-...
+Use the correct formula for calculating the size of reservations,
+precisely it shouldn't be dependent on page size, instead use the
+correct multiply of MLX5E_SHAMPO_WQ_BASE_RESRV_SIZE.
 
-kfree(vs->vs_tpg);
-vs->vs_tpg = vs_tpg;
-
-If vhost_scsi_set_endpoint is called again and no tpgs are found
-match=false so we skip the vhost_vq_set_backend call leaving the
-pointer to the vs_tpg we then free via:
-
-kfree(vs->vs_tpg);
-vs->vs_tpg = vs_tpg;
-
-If a scsi request is then sent we do:
-
-vhost_scsi_handle_vq -> vhost_scsi_get_req -> vhost_vq_get_backend
-
-which sees the vs_tpg we just did a kfree on.
-
-2. Tpg dir removal hang:
-
-This patch fixes an issue where we cannot remove a LIO/target layer
-tpg (and structs above it like the target) dir due to the refcount
-dropping to -1.
-
-The problem is that if vhost_scsi_set_endpoint detects a tpg is already
-in the vs->vs_tpg array or if the tpg has been removed so
-target_depend_item fails, the undepend goto handler will do
-target_undepend_item on all tpgs in the vs_tpg array dropping their
-refcount to 0. At this time vs_tpg contains both the tpgs we have added
-in the current vhost_scsi_set_endpoint call as well as tpgs we added in
-previous calls which are also in vs->vs_tpg.
-
-Later, when vhost_scsi_clear_endpoint runs it will do
-target_undepend_item on all the tpgs in the vs->vs_tpg which will drop
-their refcount to -1. Userspace will then not be able to remove the tpg
-and will hang when it tries to do rmdir on the tpg dir.
-
-3. Tpg leak:
-
-This fixes a bug where we can leak tpgs and cause them to be
-un-removable because the target name is overwritten when
-vhost_scsi_set_endpoint is called multiple times but with different
-target names.
-
-The bug occurs if a user has called VHOST_SCSI_SET_ENDPOINT and setup
-a vhost-scsi device to target/tpg mapping, then calls
-VHOST_SCSI_SET_ENDPOINT again with a new target name that has tpgs we
-haven't seen before (target1 has tpg1 but target2 has tpg2). When this
-happens we don't teardown the old target tpg mapping and just overwrite
-the target name and the vs->vs_tpg array. Later when we do
-vhost_scsi_clear_endpoint, we are passed in either target1 or target2's
-name and we will only match that target's tpgs when we loop over the
-vs->vs_tpg. We will then return from the function without doing
-target_undepend_item on the tpgs.
-
-Because of all these bugs, it looks like being able to call
-vhost_scsi_set_endpoint multiple times was never supported. The major
-user, QEMU, already has checks to prevent this use case. So to fix the
-issues, this patch prevents vhost_scsi_set_endpoint from being called
-if it's already successfully added tpgs. To add, remove or change the
-tpg config or target name, you must do a vhost_scsi_clear_endpoint
-first.
-
-Fixes: 25b98b64e284 ("vhost scsi: alloc cmds per vq instead of session")
-Fixes: 4f7f46d32c98 ("tcm_vhost: Use vq->private_data to indicate if the endpoint is setup")
-Reported-by: Haoran Zhang <wh1sper@zju.edu.cn>
-Closes: https://lore.kernel.org/virtualization/e418a5ee-45ca-4d18-9b5d-6f8b6b1add8e@oracle.com/T/#me6c0041ce376677419b9b2563494172a01487ecb
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-Id: <20250129210922.121533-1-michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Fixes: e5ca8fb08ab2 ("net/mlx5e: Add control path for SHAMPO feature")
+Signed-off-by: Lama Kayal <lkayal@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1742732906-166564-1-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 99813232c25e9..8d8a22504d71f 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -1688,14 +1688,19 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
- 		}
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+index 30507b7c2fb17..775010e94cb7c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+@@ -408,7 +408,7 @@ u8 mlx5e_shampo_get_log_pkt_per_rsrv(struct mlx5_core_dev *mdev,
+ 				     struct mlx5e_params *params)
+ {
+ 	u32 resrv_size = BIT(mlx5e_shampo_get_log_rsrv_size(mdev, params)) *
+-			 PAGE_SIZE;
++			 MLX5E_SHAMPO_WQ_BASE_RESRV_SIZE;
  
-+	if (vs->vs_tpg) {
-+		pr_err("vhost-scsi endpoint already set for %s.\n",
-+		       vs->vs_vhost_wwpn);
-+		ret = -EEXIST;
-+		goto out;
-+	}
-+
- 	len = sizeof(vs_tpg[0]) * VHOST_SCSI_MAX_TARGET;
- 	vs_tpg = kzalloc(len, GFP_KERNEL);
- 	if (!vs_tpg) {
- 		ret = -ENOMEM;
- 		goto out;
- 	}
--	if (vs->vs_tpg)
--		memcpy(vs_tpg, vs->vs_tpg, len);
- 
- 	mutex_lock(&vhost_scsi_mutex);
- 	list_for_each_entry(tpg, &vhost_scsi_list, tv_tpg_list) {
-@@ -1711,12 +1716,6 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
- 		tv_tport = tpg->tport;
- 
- 		if (!strcmp(tv_tport->tport_name, t->vhost_wwpn)) {
--			if (vs->vs_tpg && vs->vs_tpg[tpg->tport_tpgt]) {
--				mutex_unlock(&tpg->tv_tpg_mutex);
--				mutex_unlock(&vhost_scsi_mutex);
--				ret = -EEXIST;
--				goto undepend;
--			}
- 			/*
- 			 * In order to ensure individual vhost-scsi configfs
- 			 * groups cannot be removed while in use by vhost ioctl,
-@@ -1763,15 +1762,15 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
- 		}
- 		ret = 0;
- 	} else {
--		ret = -EEXIST;
-+		ret = -ENODEV;
-+		goto free_tpg;
- 	}
- 
- 	/*
--	 * Act as synchronize_rcu to make sure access to
--	 * old vs->vs_tpg is finished.
-+	 * Act as synchronize_rcu to make sure requests after this point
-+	 * see a fully setup device.
- 	 */
- 	vhost_scsi_flush(vs);
--	kfree(vs->vs_tpg);
- 	vs->vs_tpg = vs_tpg;
- 	goto out;
- 
-@@ -1791,6 +1790,7 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
- 			target_undepend_item(&tpg->se_tpg.tpg_group.cg_item);
- 		}
- 	}
-+free_tpg:
- 	kfree(vs_tpg);
- out:
- 	mutex_unlock(&vs->dev.mutex);
-@@ -1893,6 +1893,7 @@ vhost_scsi_clear_endpoint(struct vhost_scsi *vs,
- 	vhost_scsi_flush(vs);
- 	kfree(vs->vs_tpg);
- 	vs->vs_tpg = NULL;
-+	memset(vs->vs_vhost_wwpn, 0, sizeof(vs->vs_vhost_wwpn));
- 	WARN_ON(vs->vs_events_nr);
- 	mutex_unlock(&vs->dev.mutex);
- 	return 0;
+ 	return order_base_2(DIV_ROUND_UP(resrv_size, params->sw_mtu));
+ }
+@@ -881,7 +881,8 @@ static u32 mlx5e_shampo_get_log_cq_size(struct mlx5_core_dev *mdev,
+ 					struct mlx5e_params *params,
+ 					struct mlx5e_xsk_param *xsk)
+ {
+-	int rsrv_size = BIT(mlx5e_shampo_get_log_rsrv_size(mdev, params)) * PAGE_SIZE;
++	int rsrv_size = BIT(mlx5e_shampo_get_log_rsrv_size(mdev, params)) *
++		MLX5E_SHAMPO_WQ_BASE_RESRV_SIZE;
+ 	u16 num_strides = BIT(mlx5e_mpwqe_get_log_num_strides(mdev, params, xsk));
+ 	int pkt_per_rsrv = BIT(mlx5e_shampo_get_log_pkt_per_rsrv(mdev, params));
+ 	u8 log_stride_sz = mlx5e_mpwqe_get_log_stride_size(mdev, params, xsk);
+@@ -1094,7 +1095,8 @@ u32 mlx5e_shampo_hd_per_wqe(struct mlx5_core_dev *mdev,
+ 			    struct mlx5e_params *params,
+ 			    struct mlx5e_rq_param *rq_param)
+ {
+-	int resv_size = BIT(mlx5e_shampo_get_log_rsrv_size(mdev, params)) * PAGE_SIZE;
++	int resv_size = BIT(mlx5e_shampo_get_log_rsrv_size(mdev, params)) *
++		MLX5E_SHAMPO_WQ_BASE_RESRV_SIZE;
+ 	u16 num_strides = BIT(mlx5e_mpwqe_get_log_num_strides(mdev, params, NULL));
+ 	int pkt_per_resv = BIT(mlx5e_shampo_get_log_pkt_per_rsrv(mdev, params));
+ 	u8 log_stride_sz = mlx5e_mpwqe_get_log_stride_size(mdev, params, NULL);
 -- 
 2.39.5
 
