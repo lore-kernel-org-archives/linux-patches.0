@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737C1374C4;
-	Tue,  8 Apr 2025 11:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C10D374C4;
+	Tue,  8 Apr 2025 11:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110876; cv=none; b=i5YD4vSgUdDdG00K5Nsvp+C2LzI+4MZTfutCN3s2Aoi6Eqo8PLe2ofb3SB4KmGKwkSASQBDodrtlmNIIe/u+4NsB2rcSlSLAZTeIuDRjubS5nyMDgLwuqVxU9bZI+dhpmnG6kLNMA5zSN7pPg5jX2A7/Y6LmIF0FbFb+XEM+a+M=
+	t=1744110879; cv=none; b=Hr1v+KqGo8Hy4bbutr8JmFIbMhMogROskQmTPFyNlskg01AH8gwJtrpakz4jc8spVffeRRhFNzNg8mCQ5ry2bExftYwir/PPe46StW+OVhdKqH42y8tgCR4UVyYXMgqix7mQm4WSJa8k/wJ/dSbOdw3fr+U8MWUbp9wJALIupsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110876; c=relaxed/simple;
-	bh=I/qAMPxl/XRnzGfvp1RM6+Ch1r15n3zvdL8vVJzTTxc=;
+	s=arc-20240116; t=1744110879; c=relaxed/simple;
+	bh=wk/xtwginFcXnG40EUV6/2zXeIE+dp1qMXK9ycDwmDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzJurBbnr27T6ObOQOIBCx+ygqCdZelArfi5p0/siCRJUvt1btn0fKaB4VemQ4m+xR1pMXBH/1wrMCKXptI4DTEGerzz6L5Yh4glQ19yufcFLk8O5NIw5YhDMasNxaEbGS5YHocyJm701uHQcrxipXwilAPhw/047viCMBMDhtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRSxYXSt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTnPSUYYXjx1M7l4JUe5nevB9QislVMcsZW9sqR2+jjcFVciM9aV0qdJoDot0XnmB83M0eo9Vdbj3t8WwSG7rKaPaeSqDe/hK5PXq3IT5epKo/dK8/giF4w/jJK9yVxklpEArt+97C7p44ulac89SZljFxgV3K2w7b6wMWgKpps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5j7y2Fh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRSxYXSt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A20C4CEE5;
-	Tue,  8 Apr 2025 11:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5j7y2Fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8C8C4CEE5;
+	Tue,  8 Apr 2025 11:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110876;
-	bh=I/qAMPxl/XRnzGfvp1RM6+Ch1r15n3zvdL8vVJzTTxc=;
+	s=korg; t=1744110879;
+	bh=wk/xtwginFcXnG40EUV6/2zXeIE+dp1qMXK9ycDwmDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRSxYXStHRyf/xwD97pt46Ty77BQIE/MK7RVElrhyh294s/RLM9IOHXk2RArdWkBY
-	 rjEdxPb+hdEdt7KQ2RIGHwJl3/gWsUd82Srm4oK2Q/st5s9+5zVb3uwRyGj3wucyag
-	 S5JwwI4dTdl7yQ1UjdaR7O+WuWFWPICzWJKnD4Cc=
+	b=N5j7y2FhaIxNaSh4VHtCzZQcHyP1jtzL/8wouqD5rXtn08slXUtwpvqOibZwywnKC
+	 4VH/wWeOcNYjqZki9qsvrmsoYXhh5NU4id7mfZRXXTVjoPjKC5271TwrudZGhBQFAe
+	 zqVQMuvIEPsbS0AqOO2HhC+QzjbPtkrmy7qY9v00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Kumar <maheshkumar657g@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jan Glaza <jan.glaza@intel.com>,
+	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 228/731] ext4: avoid journaling sb update on error if journal is destroying
-Date: Tue,  8 Apr 2025 12:42:05 +0200
-Message-ID: <20250408104919.584152168@linuxfoundation.org>
+Subject: [PATCH 6.14 211/731] ice: validate queue quanta parameters to prevent OOB access
+Date: Tue,  8 Apr 2025 12:41:48 +0200
+Message-ID: <20250408104919.190168856@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,171 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Jan Glaza <jan.glaza@intel.com>
 
-[ Upstream commit ce2f26e73783b4a7c46a86e3af5b5c8de0971790 ]
+[ Upstream commit e2f7d3f7331b92cb820da23e8c45133305da1e63 ]
 
-Presently we always BUG_ON if trying to start a transaction on a journal marked
-with JBD2_UNMOUNT, since this should never happen. However, while ltp running
-stress tests, it was observed that in case of some error handling paths, it is
-possible for update_super_work to start a transaction after the journal is
-destroyed eg:
+Add queue wraparound prevention in quanta configuration.
+Ensure end_qid does not overflow by validating start_qid and num_queues.
 
-(umount)
-ext4_kill_sb
-  kill_block_super
-    generic_shutdown_super
-      sync_filesystem /* commits all txns */
-      evict_inodes
-        /* might start a new txn */
-      ext4_put_super
-	flush_work(&sbi->s_sb_upd_work) /* flush the workqueue */
-        jbd2_journal_destroy
-          journal_kill_thread
-            journal->j_flags |= JBD2_UNMOUNT;
-          jbd2_journal_commit_transaction
-            jbd2_journal_get_descriptor_buffer
-              jbd2_journal_bmap
-                ext4_journal_bmap
-                  ext4_map_blocks
-                    ...
-                    ext4_inode_error
-                      ext4_handle_error
-                        schedule_work(&sbi->s_sb_upd_work)
-
-                                               /* work queue kicks in */
-                                               update_super_work
-                                                 jbd2_journal_start
-                                                   start_this_handle
-                                                     BUG_ON(journal->j_flags &
-                                                            JBD2_UNMOUNT)
-
-Hence, introduce a new mount flag to indicate journal is destroying and only do
-a journaled (and deferred) update of sb if this flag is not set. Otherwise, just
-fallback to an un-journaled commit.
-
-Further, in the journal destroy path, we have the following sequence:
-
-  1. Set mount flag indicating journal is destroying
-  2. force a commit and wait for it
-  3. flush pending sb updates
-
-This sequence is important as it ensures that, after this point, there is no sb
-update that might be journaled so it is safe to update the sb outside the
-journal. (To avoid race discussed in 2d01ddc86606)
-
-Also, we don't need a similar check in ext4_grp_locked_error since it is only
-called from mballoc and AFAICT it would be always valid to schedule work here.
-
-Fixes: 2d01ddc86606 ("ext4: save error info to sb through journal if available")
-Reported-by: Mahesh Kumar <maheshkumar657g@gmail.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/9613c465d6ff00cd315602f99283d5f24018c3f7.1742279837.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 015307754a19 ("ice: Support VF queue rate limit and quanta size configuration")
+Reviewed-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jan Glaza <jan.glaza@intel.com>
+Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h      |  3 ++-
- fs/ext4/ext4_jbd2.h | 15 +++++++++++++++
- fs/ext4/super.c     | 16 ++++++++--------
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 7f5fd1a433662..df30d9f235123 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1821,7 +1821,8 @@ static inline int ext4_valid_inum(struct super_block *sb, unsigned long ino)
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 346aee373ccd4..df13f5110168d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1900,13 +1900,21 @@ static int ice_vc_cfg_q_bw(struct ice_vf *vf, u8 *msg)
   */
- enum {
- 	EXT4_MF_MNTDIR_SAMPLED,
--	EXT4_MF_FC_INELIGIBLE	/* Fast commit ineligible */
-+	EXT4_MF_FC_INELIGIBLE,	/* Fast commit ineligible */
-+	EXT4_MF_JOURNAL_DESTROY	/* Journal is in process of destroying */
- };
- 
- static inline void ext4_set_mount_flag(struct super_block *sb, int bit)
-diff --git a/fs/ext4/ext4_jbd2.h b/fs/ext4/ext4_jbd2.h
-index 930778e507cc4..ada46189b0860 100644
---- a/fs/ext4/ext4_jbd2.h
-+++ b/fs/ext4/ext4_jbd2.h
-@@ -521,6 +521,21 @@ static inline int ext4_journal_destroy(struct ext4_sb_info *sbi, journal_t *jour
+ static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
  {
- 	int err = 0;
++	u16 quanta_prof_id, quanta_size, start_qid, num_queues, end_qid, i;
+ 	enum virtchnl_status_code v_ret = VIRTCHNL_STATUS_SUCCESS;
+-	u16 quanta_prof_id, quanta_size, start_qid, end_qid, i;
+ 	struct virtchnl_quanta_cfg *qquanta =
+ 		(struct virtchnl_quanta_cfg *)msg;
+ 	struct ice_vsi *vsi;
+ 	int ret;
  
-+	/*
-+	 * At this point only two things can be operating on the journal.
-+	 * JBD2 thread performing transaction commit and s_sb_upd_work
-+	 * issuing sb update through the journal. Once we set
-+	 * EXT4_JOURNAL_DESTROY, new ext4_handle_error() calls will not
-+	 * queue s_sb_upd_work and ext4_force_commit() makes sure any
-+	 * ext4_handle_error() calls from the running transaction commit are
-+	 * finished. Hence no new s_sb_upd_work can be queued after we
-+	 * flush it here.
-+	 */
-+	ext4_set_mount_flag(sbi->s_sb, EXT4_MF_JOURNAL_DESTROY);
++	start_qid = qquanta->queue_select.start_queue_id;
++	num_queues = qquanta->queue_select.num_queues;
 +
-+	ext4_force_commit(sbi->s_sb);
-+	flush_work(&sbi->s_sb_upd_work);
++	if (check_add_overflow(start_qid, num_queues, &end_qid)) {
++		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
++		goto err;
++	}
 +
- 	err = jbd2_journal_destroy(journal);
- 	sbi->s_journal = NULL;
- 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index f658c017055f3..b666ef71a034a 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -716,9 +716,13 @@ static void ext4_handle_error(struct super_block *sb, bool force_ro, int error,
- 		 * In case the fs should keep running, we need to writeout
- 		 * superblock through the journal. Due to lock ordering
- 		 * constraints, it may not be safe to do it right here so we
--		 * defer superblock flushing to a workqueue.
-+		 * defer superblock flushing to a workqueue. We just need to be
-+		 * careful when the journal is already shutting down. If we get
-+		 * here in that case, just update the sb directly as the last
-+		 * transaction won't commit anyway.
- 		 */
--		if (continue_fs && journal)
-+		if (continue_fs && journal &&
-+		    !ext4_test_mount_flag(sb, EXT4_MF_JOURNAL_DESTROY))
- 			schedule_work(&EXT4_SB(sb)->s_sb_upd_work);
- 		else
- 			ext4_commit_super(sb);
-@@ -1303,7 +1307,6 @@ static void ext4_put_super(struct super_block *sb)
- 	ext4_unregister_li_request(sb);
- 	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
- 
--	flush_work(&sbi->s_sb_upd_work);
- 	destroy_workqueue(sbi->rsv_conversion_wq);
- 	ext4_release_orphan_info(sb);
- 
-@@ -1313,7 +1316,8 @@ static void ext4_put_super(struct super_block *sb)
- 		if ((err < 0) && !aborted) {
- 			ext4_abort(sb, -err, "Couldn't clean up the journal");
- 		}
--	}
-+	} else
-+		flush_work(&sbi->s_sb_upd_work);
- 
- 	ext4_es_unregister_shrinker(sbi);
- 	timer_shutdown_sync(&sbi->s_err_report);
-@@ -4972,8 +4976,6 @@ static int ext4_load_and_init_journal(struct super_block *sb,
- 	return 0;
- 
- out:
--	/* flush s_sb_upd_work before destroying the journal. */
--	flush_work(&sbi->s_sb_upd_work);
- 	ext4_journal_destroy(sbi, sbi->s_journal);
- 	return -EINVAL;
- }
-@@ -5663,8 +5665,6 @@ failed_mount8: __maybe_unused
- 	sbi->s_ea_block_cache = NULL;
- 
- 	if (sbi->s_journal) {
--		/* flush s_sb_upd_work before journal destroy. */
--		flush_work(&sbi->s_sb_upd_work);
- 		ext4_journal_destroy(sbi, sbi->s_journal);
+ 	if (!test_bit(ICE_VF_STATE_ACTIVE, vf->vf_states)) {
+ 		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
+ 		goto err;
+@@ -1918,8 +1926,6 @@ static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
+ 		goto err;
  	}
- failed_mount3a:
+ 
+-	end_qid = qquanta->queue_select.start_queue_id +
+-		  qquanta->queue_select.num_queues;
+ 	if (end_qid > ICE_MAX_RSS_QS_PER_VF ||
+ 	    end_qid > min_t(u16, vsi->alloc_txq, vsi->alloc_rxq)) {
+ 		dev_err(ice_pf_to_dev(vf->pf), "VF-%d trying to configure more than allocated number of queues: %d\n",
+@@ -1948,7 +1954,6 @@ static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
+ 		goto err;
+ 	}
+ 
+-	start_qid = qquanta->queue_select.start_queue_id;
+ 	for (i = start_qid; i < end_qid; i++)
+ 		vsi->tx_rings[i]->quanta_prof_id = quanta_prof_id;
+ 
 -- 
 2.39.5
 
