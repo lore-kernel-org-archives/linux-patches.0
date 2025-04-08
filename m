@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9378C264FA0;
-	Tue,  8 Apr 2025 11:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DA125FA04;
+	Tue,  8 Apr 2025 11:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110865; cv=none; b=j35sUyDmYr23vmsEpQI+8aE77YDQyme39DGw/g358sBR+BViOx4hV54PI5HFJclmkaAfIKRLnOTmQ4oIH6jxZvXyy+r3n3UX4q3vJt/8DeWnhsA+uHI1AM6iomEJOa4gmPFEtv/73f2g7rnBDDSEwexdMqN6keSoy4XtdN8mWNg=
+	t=1744110868; cv=none; b=DginPEiNR+kIaR4SDeMsFNgAPgYQANg6yZPMbn9x4pnbblJwDisNEFAYoRSdsGuWIWPW5MTiuEN889n/HlL5Q6nEQTZ+Mb6cBWBrzJTUUBhAzlGpqolOv35lvG/YSv8W/jFN9e1uZb+hTb0QNpfHriMzMDGrMJYAUf89ia6W/iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110865; c=relaxed/simple;
-	bh=V/WOyLXgsR1l1JDbv0LuWZas7UN53lB2zHweVAzmePk=;
+	s=arc-20240116; t=1744110868; c=relaxed/simple;
+	bh=xwCy25e1b7gDf0nrQWW+1AnxU+FAClrpvHXz3EU9KI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXE3ZIdbtZacfuEi107H9C658kenTdmtzJE1cditFCQjdtEB8lT4lHRVjxVVSCOC16Mis/DW4U58FiNE/5Kqj44pIY5PQNxdZcFM1ongVd+RaalqJ2rvIZs88OHN3Bkh1MZ3lHjdAjiZPrJaBhTULwW/ywJbtUxgYSiQgPTx9+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYeTknnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=by5THo9udzT3aA3TmX3Xe2W7NgRulGInlIFF6qlP/31YP/oCImBCBVaqvZeRilhbaPSrKSVzEoLrK2YRjg9ilJLiSQwy6gRM1/C2x6svd+bLU0jp4FLLd1k8FxLI3z7eowi5AtcTjlDVM71TI3kIsDw/PBMdmoNWb5AJLqzOMnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPC/KDds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYeTknnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24421C4CEEA;
-	Tue,  8 Apr 2025 11:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPC/KDds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FB1C4CEE5;
+	Tue,  8 Apr 2025 11:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110865;
-	bh=V/WOyLXgsR1l1JDbv0LuWZas7UN53lB2zHweVAzmePk=;
+	s=korg; t=1744110868;
+	bh=xwCy25e1b7gDf0nrQWW+1AnxU+FAClrpvHXz3EU9KI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYeTknnIXyieaUYVRGIWIzDpy+3oJCBEBGqKrIZrCKcm/Sy9aPzajT3jsZTZwioYA
-	 UTDtgjJIYYYbEvGfv6Al3Ggm6ujDtOxo8tepKGRxy8C0yUz6nUuSTwyJzzJBP4jwOt
-	 g1EmEdNvgdqqR+9x815GhlhnCFdz5LLMMfJ/xJ3U=
+	b=KPC/KDds/iei+XtQ14ntAxF3iR+FBYhrbGp+uM8BS17bzLaYCeVyP9hSbbzUZIwSe
+	 Uev9TWr8eKkc7hKx75MLoOEsulACwqurhfJfwZz0x+lCRf3lkbetkmwvDAi7DDMABI
+	 sCgAt4vhAN0nL5CQVcsjW6tgn3AzeIOeuoU1EBkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 224/731] ptp: ocp: reject unsupported periodic output flags
-Date: Tue,  8 Apr 2025 12:42:01 +0200
-Message-ID: <20250408104919.490940942@linuxfoundation.org>
+Subject: [PATCH 6.14 225/731] nvmet: pci-epf: Always configure BAR0 as 64-bit
+Date: Tue,  8 Apr 2025 12:42:02 +0200
+Message-ID: <20250408104919.513924693@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,43 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 8dcfc910a81d8b53f59f8b23211e81f2a91f84f9 ]
+[ Upstream commit 1cf0184c0ac4f1e936bb3b089894bbeb0a9eb2bc ]
 
-The ptp_ocp_signal_from_perout() function supports PTP_PEROUT_DUTY_CYCLE
-and PTP_PEROUT_PHASE. It does not support PTP_PEROUT_ONE_SHOT, but does not
-reject a request with such an unsupported flag.
+NVMe PCIe Transport Specification 1.1, section 2.1.10, claims that the
+BAR0 type is Implementation Specific.
 
-Add the appropriate check to ensure that unsupported requests are rejected
-both for PTP_PEROUT_ONE_SHOT as well as any future flags.
+However, in NVMe 1.1, the type is required to be 64-bit.
 
-Fixes: 1aa66a3a135a ("ptp: ocp: Program the signal generators via PTP_CLK_REQ_PEROUT")
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250312-jk-net-fixes-supported-extts-flags-v2-5-ea930ba82459@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Thus, to make our PCI EPF work on as many host systems as possible,
+always configure the BAR0 type to be 64-bit.
+
+In the rare case that the underlying PCI EPC does not support configuring
+BAR0 as 64-bit, the call to pci_epc_set_bar() will fail, and we will
+return a failure back to the user.
+
+This should not be a problem, as most PCI EPCs support configuring a BAR
+as 64-bit (and those EPCs with .only_64bit set to true in epc_features
+only support configuring the BAR as 64-bit).
+
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/target/pci-epf.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index b651087f426f5..4a87af0980d69 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -2090,6 +2090,10 @@ ptp_ocp_signal_from_perout(struct ptp_ocp *bp, int gen,
- {
- 	struct ptp_ocp_signal s = { };
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index b1e31483f1574..99563648c318f 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -2129,8 +2129,15 @@ static int nvmet_pci_epf_configure_bar(struct nvmet_pci_epf *nvme_epf)
+ 		return -ENODEV;
+ 	}
  
-+	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
-+			   PTP_PEROUT_PHASE))
-+		return -EOPNOTSUPP;
-+
- 	s.polarity = bp->signal[gen].polarity;
- 	s.period = ktime_set(req->period.sec, req->period.nsec);
- 	if (!s.period)
+-	if (epc_features->bar[BAR_0].only_64bit)
+-		epf->bar[BAR_0].flags |= PCI_BASE_ADDRESS_MEM_TYPE_64;
++	/*
++	 * While NVMe PCIe Transport Specification 1.1, section 2.1.10, claims
++	 * that the BAR0 type is Implementation Specific, in NVMe 1.1, the type
++	 * is required to be 64-bit. Thus, for interoperability, always set the
++	 * type to 64-bit. In the rare case that the PCI EPC does not support
++	 * configuring BAR0 as 64-bit, the call to pci_epc_set_bar() will fail,
++	 * and we will return failure back to the user.
++	 */
++	epf->bar[BAR_0].flags |= PCI_BASE_ADDRESS_MEM_TYPE_64;
+ 
+ 	/*
+ 	 * Calculate the size of the register bar: NVMe registers first with
 -- 
 2.39.5
 
