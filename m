@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BDC19AD5C;
-	Tue,  8 Apr 2025 11:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A215E207E14;
+	Tue,  8 Apr 2025 11:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112183; cv=none; b=ggpUdg0WVrUIwIP18dWC8tLE5aSI2LN9Rle1Vajw4PYYI7IjKi6T7b/S1anCpYvOwIO71iEt77tmVGThimQ47n2PcIrlys37osKCeFJDkM1Klbxe9g/S/yjJiRQSxdwebUqddY8rqPC7JIu1Hj2BAT3CsFpg2FPK8slqnlsVuM8=
+	t=1744112186; cv=none; b=gKJieGIl6Ul3Oc/WIv+0qidBErEmmZepmmpwvkivCeTGy30qqIGHETbEj2newPb1RMUB6M7UUvb78BYFugG92+i8bHOIpiwH14qYjwXccvDpLMQ/8nFuPafL8/bJbtjyH5fWWo2WJvECr8KKM3nmGZiDuEkQOCCBku2k+E8/PS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112183; c=relaxed/simple;
-	bh=1LOJfeZjmOwlhg469fbkHKlIEsD3AEHaK8d9GkjSu/Q=;
+	s=arc-20240116; t=1744112186; c=relaxed/simple;
+	bh=CCxQy7C3vnPly9f2nDeYip+XTvIJuDrTgCYR+CJ+ocY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/h23QacuS8qcAB8zCtJysPme/aVMmkDbDqP2hscoF3x88oADWP3ZYiEjN7zjaoGZdMFfiGpL4KfpwvM4HCUtvUjRLBOBdqzxPqgmfMqXkTY9qHXpoAim+O7abkvEBMJhHpmHy6nY3baMuIQfgG2oA/NEfNDJCwk1CzxB/zNsQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYXVZn12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMyHCmTukAt2nxV5qi1NGxS9tADaS8Xurv99TdDVFtIuahG5JwL0JrHY/cln+9eFVif8y3FfYan8NqUqKdMjnCGrEAAqfJCljVFeVcf4fvhHuVnq26CyPQMtkq19CL1308wc0e15JuQWwSCVGStdGECla45WEc2Z6ohhXwdplAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egwO1pHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYXVZn12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B6CC4CEE5;
-	Tue,  8 Apr 2025 11:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egwO1pHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB40C4CEE5;
+	Tue,  8 Apr 2025 11:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112183;
-	bh=1LOJfeZjmOwlhg469fbkHKlIEsD3AEHaK8d9GkjSu/Q=;
+	s=korg; t=1744112186;
+	bh=CCxQy7C3vnPly9f2nDeYip+XTvIJuDrTgCYR+CJ+ocY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYXVZn12ktUYLSyhtyrju4CoPB/UHQJovT4gYdik7IHFvCJQedyweA6BDV7dGq30q
-	 tM/j9g6S2IAqVMGFbEunA+JzVXx0byR9cLl3mdaNptNcVtwcj8jpfiUZuj0yuxk+uR
-	 +RVo6rPWPmh3O6HqVC/uwBgMjith/Q5pByEG8sgQ=
+	b=egwO1pHpiy9evThYHBAdnqfFDOlDb5T7EIhUJVeLAROheLIRlfqZpQpITsTEbjgF8
+	 U7KtDRQEyREfApIk4pJBUaD7nMfR7zvIsAvTdqpTplatOuPTg+q49bCEjiXIDLltTe
+	 nGcp1yL6tgYfO9jzcWnlEhgZz9pZej2lvoeK9miQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.14 679/731] perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read
-Date: Tue,  8 Apr 2025 12:49:36 +0200
-Message-ID: <20250408104930.061334450@linuxfoundation.org>
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.14 706/731] exfat: fix potential wrong error return from get_block
+Date: Tue,  8 Apr 2025 12:50:03 +0200
+Message-ID: <20250408104930.692799524@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,128 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Sungjong Seo <sj1557.seo@samsung.com>
 
-commit f9bdf1f953392c9edd69a7f884f78c0390127029 upstream.
+commit 59c30e31425833385e6644ad33151420e37eabe1 upstream.
 
-The WARN_ON(this_cpu_read(cpu_hw_events.enabled)) in the
-intel_pmu_save_and_restart_reload() is triggered, when sampling read
-topdown events.
+If there is no error, get_block() should return 0. However, when bh_read()
+returns 1, get_block() also returns 1 in the same manner.
 
-In a NMI handler, the cpu_hw_events.enabled is set and used to indicate
-the status of core PMU. The generic pmu->pmu_disable_count, updated in
-the perf_pmu_disable/enable pair, is not touched.
-However, the perf_pmu_disable/enable pair is invoked when sampling read
-in a NMI handler. The cpuc->enabled is mistakenly set by the
-perf_pmu_enable().
+Let's set err to 0, if there is no error from bh_read()
 
-Avoid disabling PMU if the core PMU is already disabled.
-Merge the logic together.
-
-Fixes: 7b2c05a15d29 ("perf/x86/intel: Generic support for hardware TopDown metrics")
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250121152303.3128733-2-kan.liang@linux.intel.com
+Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   41 +++++++++++++++++++++++------------------
- arch/x86/events/intel/ds.c   |   11 +----------
- arch/x86/events/perf_event.h |    2 +-
- 3 files changed, 25 insertions(+), 29 deletions(-)
+ fs/exfat/inode.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2779,28 +2779,33 @@ static u64 icl_update_topdown_event(stru
- 
- DEFINE_STATIC_CALL(intel_pmu_update_topdown_event, x86_perf_event_update);
- 
--static void intel_pmu_read_topdown_event(struct perf_event *event)
-+static void intel_pmu_read_event(struct perf_event *event)
- {
--	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
-+		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+		bool pmu_enabled = cpuc->enabled;
+--- a/fs/exfat/inode.c
++++ b/fs/exfat/inode.c
+@@ -391,6 +391,8 @@ static int exfat_get_block(struct inode
+ 			/* Zero unwritten part of a block */
+ 			memset(bh_result->b_data + size, 0,
+ 			       bh_result->b_size - size);
 +
-+		/* Only need to call update_topdown_event() once for group read. */
-+		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
-+			return;
-+
-+		cpuc->enabled = 0;
-+		if (pmu_enabled)
-+			intel_pmu_disable_all();
-+
-+		if (is_topdown_event(event))
-+			static_call(intel_pmu_update_topdown_event)(event);
-+		else
-+			intel_pmu_drain_pebs_buffer();
-+
-+		cpuc->enabled = pmu_enabled;
-+		if (pmu_enabled)
-+			intel_pmu_enable_all(0);
- 
--	/* Only need to call update_topdown_event() once for group read. */
--	if ((cpuc->txn_flags & PERF_PMU_TXN_READ) &&
--	    !is_slots_event(event))
- 		return;
-+	}
- 
--	perf_pmu_disable(event->pmu);
--	static_call(intel_pmu_update_topdown_event)(event);
--	perf_pmu_enable(event->pmu);
--}
--
--static void intel_pmu_read_event(struct perf_event *event)
--{
--	if (event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD)
--		intel_pmu_auto_reload_read(event);
--	else if (is_topdown_count(event))
--		intel_pmu_read_topdown_event(event);
--	else
--		x86_perf_event_update(event);
-+	x86_perf_event_update(event);
- }
- 
- static void intel_pmu_enable_fixed(struct perf_event *event)
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -953,7 +953,7 @@ unlock:
- 	return 1;
- }
- 
--static inline void intel_pmu_drain_pebs_buffer(void)
-+void intel_pmu_drain_pebs_buffer(void)
- {
- 	struct perf_sample_data data;
- 
-@@ -2094,15 +2094,6 @@ get_next_pebs_record_by_bit(void *base,
- 	return NULL;
- }
- 
--void intel_pmu_auto_reload_read(struct perf_event *event)
--{
--	WARN_ON(!(event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD));
--
--	perf_pmu_disable(event->pmu);
--	intel_pmu_drain_pebs_buffer();
--	perf_pmu_enable(event->pmu);
--}
--
- /*
-  * Special variant of intel_pmu_save_and_restart() for auto-reload.
-  */
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1648,7 +1648,7 @@ void intel_pmu_pebs_disable_all(void);
- 
- void intel_pmu_pebs_sched_task(struct perf_event_pmu_context *pmu_ctx, bool sched_in);
- 
--void intel_pmu_auto_reload_read(struct perf_event *event);
-+void intel_pmu_drain_pebs_buffer(void);
- 
- void intel_pmu_store_pebs_lbrs(struct lbr_entry *lbr);
- 
++			err = 0;
+ 		} else {
+ 			/*
+ 			 * The range has not been written, clear the mapped flag
 
 
