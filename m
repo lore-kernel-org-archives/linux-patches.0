@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844FC26F453;
-	Tue,  8 Apr 2025 12:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE9526A1C4;
+	Tue,  8 Apr 2025 12:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115180; cv=none; b=kGLzPKmKdwdtx+ZBOmmDc78yEu2EJ6eZ+fZvz75+pXdMbs3CEfS4ZDraTX0q+9MklIF+GwiFRSqCfjsOpo6nJYpNXMCN9g4zfiCWpgkpQFXY4CcPboO71ZsjkC3f4Wa9GL2zlXpgNFbiJau5CpxVr7wj5iUEuPFH5BE/Qq3xufI=
+	t=1744115182; cv=none; b=MhK6CqhRfPBRvV5R8SAiihdVY5V+y/Pe7Pvnfq72ML3W9YPBNDQS8MXeLXe3T6giBGdlAQWW8mX8kSguQiacHZNjzBp14TlJdhwbMnd6NPlTLD9vbOaPl+8l5nizrhjfYmO+VoQ6PMTKiWCnnCnBJpiZ3x1ZwtfmwIeDfkLRiJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115180; c=relaxed/simple;
-	bh=HzV3oDwi1vk9KKIlMEb/LegV+pEaMJxETqlszwoxJvo=;
+	s=arc-20240116; t=1744115182; c=relaxed/simple;
+	bh=+tMsSGuSjyDAfvwhzJodcdKZ3ZpJ1Iq9cLNDN+xaVf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJaVq/I8xCo5d2wz/ekzgt9NmeZC4xKw16OvtiYMbbY2uvAMd52FfJhrl/chx+asYN4KWvUf7VCn/2c2TyymRqS4IM0oo9ZJQQiaROY47itjeI5GuPxXMvLAAeKBAjfwagtsAaS8dhYWDszYuLx040Qm1FMnH5JFWijKqcYfvzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ua/r9fY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jzHYbbeofPUuvrziHn1qmf9TsRHn/NGUF5YBv7+LDeb/MJDuPHtpHfZaFGg84Cd3uCsBhY5jb+hLNXdKo6KTcFYTZFL1QjCM345P9namNJ9N5g77O1TWf6cPDgFbblYbgEi4WgWi0SMG/JX87oDFdqKMORWw1EsreV+Ju5X2EEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulSb74z+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ua/r9fY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B029EC4CEED;
-	Tue,  8 Apr 2025 12:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulSb74z+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F59CC4CEE5;
+	Tue,  8 Apr 2025 12:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115180;
-	bh=HzV3oDwi1vk9KKIlMEb/LegV+pEaMJxETqlszwoxJvo=;
+	s=korg; t=1744115182;
+	bh=+tMsSGuSjyDAfvwhzJodcdKZ3ZpJ1Iq9cLNDN+xaVf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ua/r9fY6FNqxhAu9GCB6bertZI4c97c9W0IzVOzZdF/aXq0C2m6VIfxxUqR8wlGVK
-	 fwn4EoIWuPthTnlSAYHJdxy1YJP8dW0sI/Y5dCPXVdazMAweRCtRigr7QIILDYrTz6
-	 HN4zJupB35YTbprkj9+LjDe0FuVFfwRZ4WTvhkQU=
+	b=ulSb74z+Vie/x7B6uk40m60HdI/pRpYOnvBjZC+FirfnkjHufyhlJV2x9ySExmOwW
+	 Z9VVJTCB1/hl9P6rB3Bxu2qpKT6OK7HD4t5LMAIi0ptU4tzYzeT940mSi9QyDrl2zt
+	 kea+Tp5xbxvwI5JxgznOnpLFa37uT+/xLwzZ/Sl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 377/499] nvme/ioctl: dont warn on vectorized uring_cmd with fixed buffer
-Date: Tue,  8 Apr 2025 12:49:49 +0200
-Message-ID: <20250408104900.635352321@linuxfoundation.org>
+Subject: [PATCH 6.13 341/499] nvme-pci: fix stuck reset on concurrent DPC and HP
+Date: Tue,  8 Apr 2025 12:49:13 +0200
+Message-ID: <20250408104859.729611020@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,38 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit eada75467fca0b016b9b22212637c07216135c20 ]
+[ Upstream commit 3f674e7b670b7b7d9261935820e4eba3c059f835 ]
 
-The vectorized io_uring NVMe passthru opcodes don't yet support fixed
-buffers. But since userspace can trigger this condition based on the
-io_uring SQE parameters, it shouldn't cause a kernel warning.
+The PCIe error handling has the nvme driver quiesce the device, attempt
+to restart it, then wait for that restart to complete.
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Fixes: 23fd22e55b76 ("nvme: wire up fixed buffer support for nvme passthrough")
+A PCIe DPC event also toggles the PCIe link. If the slot doesn't have
+out-of-band presence detection, this will trigger a pciehp
+re-enumeration.
+
+The error handling that calls nvme_error_resume is holding the device
+lock while this happens. This lock blocks pciehp's request to disconnect
+the driver from proceeding.
+
+Meanwhile the nvme's reset can't make forward progress because its
+device isn't there anymore with outstanding IO, and the timeout handler
+won't do anything to fix it because the device is undergoing error
+handling.
+
+End result: deadlocked.
+
+Fix this by having the timeout handler short cut the disabling for a
+disconnected PCIe device. The downside is that we're relying on an IO
+timeout to clean up this mess, which could be a minute by default.
+
+Tested-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index 24e2c702da7a2..fed6b29098ad3 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -141,7 +141,7 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
- 		struct iov_iter iter;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 563118b176d1c..99022be16d2a9 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1413,9 +1413,20 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req)
+ 	struct nvme_dev *dev = nvmeq->dev;
+ 	struct request *abort_req;
+ 	struct nvme_command cmd = { };
++	struct pci_dev *pdev = to_pci_dev(dev->dev);
+ 	u32 csts = readl(dev->bar + NVME_REG_CSTS);
+ 	u8 opcode;
  
- 		/* fixedbufs is only for non-vectored io */
--		if (WARN_ON_ONCE(flags & NVME_IOCTL_VEC)) {
-+		if (flags & NVME_IOCTL_VEC) {
- 			ret = -EINVAL;
- 			goto out;
- 		}
++	/*
++	 * Shutdown the device immediately if we see it is disconnected. This
++	 * unblocks PCIe error handling if the nvme driver is waiting in
++	 * error_resume for a device that has been removed. We can't unbind the
++	 * driver while the driver's error callback is waiting to complete, so
++	 * we're relying on a timeout to break that deadlock if a removal
++	 * occurs while reset work is running.
++	 */
++	if (pci_dev_is_disconnected(pdev))
++		nvme_change_ctrl_state(&dev->ctrl, NVME_CTRL_DELETING);
+ 	if (nvme_state_terminal(&dev->ctrl))
+ 		goto disable;
+ 
+@@ -1423,7 +1434,7 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req)
+ 	 * the recovery mechanism will surely fail.
+ 	 */
+ 	mb();
+-	if (pci_channel_offline(to_pci_dev(dev->dev)))
++	if (pci_channel_offline(pdev))
+ 		return BLK_EH_RESET_TIMER;
+ 
+ 	/*
 -- 
 2.39.5
 
