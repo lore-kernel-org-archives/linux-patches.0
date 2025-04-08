@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A1C26B2B1;
-	Tue,  8 Apr 2025 12:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46ED26A0A8;
+	Tue,  8 Apr 2025 12:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113653; cv=none; b=KWGnyRQb0wdaFjsvoIJBkZL5+YJRyNapgSDCqMhW1tRFWA2AnpDtEf1eIhntAQrfPVvXtgR3aYChjJyDbC6+Q4ACKjA+xo0z+BWDJs/Iw3OGd3eoM7Nf7cXUh1zCKWOIIk7VNtpDZ0sbWNavchHUdfyJV+d2Xj0X7OUB1hEzjw8=
+	t=1744113655; cv=none; b=eY/u9Oijilv/cibUcnVkBOlL/HW8dosOHwyyPdP9Z7TaGt0t3J9SVBYwkO2gZEqW8YU9aX4vVPQdQIu2va4H3cnawOpfW5Hy1MavLfBwsDle+j+v/+1Wkwol5WX0YPblR4GdTqOq4m0D9Xcm9H97shXU+Fo58ZxVmGuvoCNu5xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113653; c=relaxed/simple;
-	bh=B+ZfQ9Ws6i+nc4fP8qPBX33+5zbnffjiVnF3RW6ODWA=;
+	s=arc-20240116; t=1744113655; c=relaxed/simple;
+	bh=gVEK7Qpr2Xd59IaP9ANU/Geg2Cug4meAq3VVzlZvCyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKClgYQLuMSlVAqbihwQMyK006RRYU+jmjjt+G6kEKfB5P6BEZmStNHepCTojd7ks4fM3fBaiPtQg62/hA1VoDnyi7gGAv25+s9FveQRDSM8JWuO8BJpsJvZrOwiTdApm2aR0wZL6vtFdad9t7v1IFiW3FHW874DtsiGPSzxygo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Own3dYZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC7ou7pfNG0R/PkYZDHfoIMol61N7iRNccmwURHqd5LmBbPzscGgtxBaWualT9SmvOzjX2wymqg76JfWvp/mvIP9jcBAxCD30tdYVFH/1mOWYpYZgQUfjnKu5fcwOi5EVSo2nZ9kQiRuU0roW7cEt+pBz4fvCkxf8USNneYePMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH9965Ig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Own3dYZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8A2C4CEE7;
-	Tue,  8 Apr 2025 12:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH9965Ig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB26C4CEE5;
+	Tue,  8 Apr 2025 12:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113652;
-	bh=B+ZfQ9Ws6i+nc4fP8qPBX33+5zbnffjiVnF3RW6ODWA=;
+	s=korg; t=1744113655;
+	bh=gVEK7Qpr2Xd59IaP9ANU/Geg2Cug4meAq3VVzlZvCyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Own3dYZisMaxSEKfuxs1xkX3jdlH+RkyfQdxr25qQZ30JSZLT6p10xk/wLQwYOVbr
-	 LdDAu25LnmijLT55P038rJubHGP/EdhpJCkucEUmrrKbKQnc+bdPqjNqIq7MXtRO+5
-	 uJEEYbiPaSZ4axcKP1wUGffQjEO3ZmGumldcWZGg=
+	b=xH9965Ig8fL84BZYLCiCU4AKrRVfMBi1PUeiicWcqcAJhlFPyFlTJnVBSdTVHjL+l
+	 Ja1fENSKD0a9XD4sJ6nYpEiDkukntJE05VDk+PxlpEE2FZrcoMFRtw/1aTSVdEes6e
+	 gSWbdUugDWXI0IO6afj/7QQ8fvdk4cUeYST22P2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Lichtner <olichtne@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Herton R. Krzesinski" <herton@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 200/268] x86/uaccess: Improve performance by aligning writes to 8 bytes in copy_user_generic(), on non-FSRM/ERMS CPUs
-Date: Tue,  8 Apr 2025 12:50:11 +0200
-Message-ID: <20250408104833.949716807@linuxfoundation.org>
+Subject: [PATCH 6.6 201/268] ASoC: codecs: rt5665: Fix some error handling paths in rt5665_probe()
+Date: Tue,  8 Apr 2025 12:50:12 +0200
+Message-ID: <20250408104833.976343369@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -53,187 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herton R. Krzesinski <herton@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit b5322b6ec06a6c58650f52abcd2492000396363b ]
+[ Upstream commit 1ebd4944266e86a7ce274f197847f5a6399651e8 ]
 
-History of the performance regression:
-======================================
+Should an error occur after a successful regulator_bulk_enable() call,
+regulator_bulk_disable() should be called, as already done in the remove
+function.
 
-Since the following series of user copy updates were merged upstream
-~2 years ago via:
+Instead of adding an error handling path in the probe, switch from
+devm_regulator_bulk_get() to devm_regulator_bulk_get_enable() and
+simplify the remove function and some other places accordingly.
 
-  a5624566431d ("Merge branch 'x86-rep-insns': x86 user copy clarifications")
+Finally, add a missing const when defining rt5665_supply_names to please
+checkpatch and constify a few bytes.
 
-.. copy_user_generic() on x86_64 stopped doing alignment of the
-writes to the destination to a 8 byte boundary for the non FSRM case.
-
-Previously, this was done through the ALIGN_DESTINATION macro that
-was used in the now removed copy_user_generic_unrolled function.
-
-Turns out this change causes some loss of performance/throughput on
-some use cases and specific CPU/platforms without FSRM and ERMS.
-
-Lately I got two reports of performance/throughput issues after a
-RHEL 9 kernel pulled the same upstream series with updates to user
-copy functions. Both reports consisted of running specific
-networking/TCP related testing using iperf3.
-
-Partial upstream fix
-====================
-
-The first report was related to a Linux Bridge testing using VMs on a
-specific machine with an AMD CPU (EPYC 7402), and after a brief
-investigation it turned out that the later change via:
-
-  ca96b162bfd2 ("x86: bring back rep movsq for user access on CPUs without ERMS")
-
-... helped/fixed the performance issue.
-
-However, after the later commit/fix was applied, then I got another
-regression reported in a multistream TCP test on a 100Gbit mlx5 nic, also
-running on an AMD based platform (AMD EPYC 7302 CPU), again that was using
-iperf3 to run the test. That regression was after applying the later
-fix/commit, but only this didn't help in telling the whole history.
-
-Testing performed to pinpoint residual regression
-=================================================
-
-So I narrowed down the second regression use case, but running it
-without traffic through a NIC, on localhost, in trying to narrow down
-CPU usage and not being limited by other factor like network bandwidth.
-I used another system also with an AMD CPU (AMD EPYC 7742). Basically,
-I run iperf3 in server and client mode in the same system, for example:
-
- - Start the server binding it to CPU core/thread 19:
-   $ taskset -c 19 iperf3 -D -s -B 127.0.0.1 -p 12000
-
- - Start the client always binding/running on CPU core/thread 17, using
-   perf to get statistics:
-   $ perf stat -o stat.txt taskset -c 17 iperf3 -c 127.0.0.1 -b 0/1000 -V \
-       -n 50G --repeating-payload -l 16384 -p 12000 --cport 12001 2>&1 \
-       > stat-19.txt
-
-For the client, always running/pinned to CPU 17. But for the iperf3 in
-server mode, I did test runs using CPUs 19, 21, 23 or not pinned to any
-specific CPU. So it basically consisted with four runs of the same
-commands, just changing the CPU which the server is pinned, or without
-pinning by removing the taskset call before the server command. The CPUs
-were chosen based on NUMA node they were on, this is the relevant output
-of lscpu on the system:
-
-  $ lscpu
-  ...
-    Model name:             AMD EPYC 7742 64-Core Processor
-  ...
-  Caches (sum of all):
-    L1d:                    2 MiB (64 instances)
-    L1i:                    2 MiB (64 instances)
-    L2:                     32 MiB (64 instances)
-    L3:                     256 MiB (16 instances)
-  NUMA:
-    NUMA node(s):           4
-    NUMA node0 CPU(s):      0,1,8,9,16,17,24,25,32,33,40,41,48,49,56,57,64,65,72,73,80,81,88,89,96,97,104,105,112,113,120,121
-    NUMA node1 CPU(s):      2,3,10,11,18,19,26,27,34,35,42,43,50,51,58,59,66,67,74,75,82,83,90,91,98,99,106,107,114,115,122,123
-    NUMA node2 CPU(s):      4,5,12,13,20,21,28,29,36,37,44,45,52,53,60,61,68,69,76,77,84,85,92,93,100,101,108,109,116,117,124,125
-    NUMA node3 CPU(s):      6,7,14,15,22,23,30,31,38,39,46,47,54,55,62,63,70,71,78,79,86,87,94,95,102,103,110,111,118,119,126,127
-  ...
-
-So for the server run, when picking a CPU, I chose CPUs to be not on the same
-node. The reason is with that I was able to get/measure relevant
-performance differences when changing the alignment of the writes to the
-destination in copy_user_generic.
-
-Testing shows up to +81% performance improvement under iperf3
-=============================================================
-
-Here's a summary of the iperf3 runs:
-
-  # Vanilla upstream alignment:
-
-		     CPU      RATE          SYS          TIME     sender-receiver
-	Server bind   19: 13.0Gbits/sec 28.371851000 33.233499566 86.9%-70.8%
-	Server bind   21: 12.9Gbits/sec 28.283381000 33.586486621 85.8%-69.9%
-	Server bind   23: 11.1Gbits/sec 33.660190000 39.012243176 87.7%-64.5%
-	Server bind none: 18.9Gbits/sec 19.215339000 22.875117865 86.0%-80.5%
-
-  # With the attached patch (aligning writes in non ERMS/FSRM case):
-
-		     CPU      RATE          SYS          TIME     sender-receiver
-	Server bind   19: 20.8Gbits/sec 14.897284000 20.811101382 75.7%-89.0%
-	Server bind   21: 20.4Gbits/sec 15.205055000 21.263165909 75.4%-89.7%
-	Server bind   23: 20.2Gbits/sec 15.433801000 21.456175000 75.5%-89.8%
-	Server bind none: 26.1Gbits/sec 12.534022000 16.632447315 79.8%-89.6%
-
-So I consistently got better results when aligning the write. The
-results above were run on 6.14.0-rc6/rc7 based kernels. The sys is sys
-time and then the total time to run/transfer 50G of data. The last
-field is the CPU usage of sender/receiver iperf3 process. It's also
-worth to note that each pair of iperf3 runs may get slightly different
-results on each run, but I always got consistent higher results with
-the write alignment for this specific test of running the processes
-on CPUs in different NUMA nodes.
-
-Linus Torvalds helped/provided this version of the patch. Initially I
-proposed a version which aligned writes for all cases in
-rep_movs_alternative, however it used two extra registers and thus
-Linus provided an enhanced version that only aligns the write on the
-large_movsq case, which is sufficient since the problem happens only
-on those AMD CPUs like ones mentioned above without ERMS/FSRM, and
-also doesn't require using extra registers. Also, I validated that
-aligning only on large_movsq case is really enough for getting the
-performance back.
-
-I also tested this patch on an old Intel based non-ERMS/FRMS system
-(with Xeon E5-2667 - Sandy Bridge based) and didn't get any problems:
-no performance enhancement but also no regression either, using the
-same iperf3 based benchmark. Also newer Intel processors after
-Sandy Bridge usually have ERMS and should not be affected by this change.
-
-[ mingo: Updated the changelog. ]
-
-Fixes: ca96b162bfd2 ("x86: bring back rep movsq for user access on CPUs without ERMS")
-Fixes: 034ff37d3407 ("x86: rewrite '__copy_user_nocache' function")
-Reported-by: Ondrej Lichtner <olichtne@redhat.com>
-Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Herton R. Krzesinski <herton@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250320142213.2623518-1-herton@redhat.com
+Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/e3c2aa1b2fdfa646752d94f4af968630c0d58248.1742629525.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/copy_user_64.S | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/soc/codecs/rt5665.c | 24 ++++--------------------
+ 1 file changed, 4 insertions(+), 20 deletions(-)
 
-diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
-index 0a81aafed7f88..0544a24baedb5 100644
---- a/arch/x86/lib/copy_user_64.S
-+++ b/arch/x86/lib/copy_user_64.S
-@@ -74,6 +74,24 @@ SYM_FUNC_START(rep_movs_alternative)
- 	_ASM_EXTABLE_UA( 0b, 1b)
+diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
+index a39de4a7df002..532d1d6958af3 100644
+--- a/sound/soc/codecs/rt5665.c
++++ b/sound/soc/codecs/rt5665.c
+@@ -31,9 +31,7 @@
+ #include "rl6231.h"
+ #include "rt5665.h"
  
- .Llarge_movsq:
-+	/* Do the first possibly unaligned word */
-+0:	movq (%rsi),%rax
-+1:	movq %rax,(%rdi)
-+
-+	_ASM_EXTABLE_UA( 0b, .Lcopy_user_tail)
-+	_ASM_EXTABLE_UA( 1b, .Lcopy_user_tail)
-+
-+	/* What would be the offset to the aligned destination? */
-+	leaq 8(%rdi),%rax
-+	andq $-8,%rax
-+	subq %rdi,%rax
-+
-+	/* .. and update pointers and count to match */
-+	addq %rax,%rdi
-+	addq %rax,%rsi
-+	subq %rax,%rcx
-+
-+	/* make %rcx contain the number of words, %rax the remainder */
- 	movq %rcx,%rax
- 	shrq $3,%rcx
- 	andl $7,%eax
+-#define RT5665_NUM_SUPPLIES 3
+-
+-static const char *rt5665_supply_names[RT5665_NUM_SUPPLIES] = {
++static const char * const rt5665_supply_names[] = {
+ 	"AVDD",
+ 	"MICVDD",
+ 	"VBAT",
+@@ -46,7 +44,6 @@ struct rt5665_priv {
+ 	struct gpio_desc *gpiod_ldo1_en;
+ 	struct gpio_desc *gpiod_reset;
+ 	struct snd_soc_jack *hs_jack;
+-	struct regulator_bulk_data supplies[RT5665_NUM_SUPPLIES];
+ 	struct delayed_work jack_detect_work;
+ 	struct delayed_work calibrate_work;
+ 	struct delayed_work jd_check_work;
+@@ -4471,8 +4468,6 @@ static void rt5665_remove(struct snd_soc_component *component)
+ 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
+ 
+ 	regmap_write(rt5665->regmap, RT5665_RESET, 0);
+-
+-	regulator_bulk_disable(ARRAY_SIZE(rt5665->supplies), rt5665->supplies);
+ }
+ 
+ #ifdef CONFIG_PM
+@@ -4758,7 +4753,7 @@ static int rt5665_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct rt5665_platform_data *pdata = dev_get_platdata(&i2c->dev);
+ 	struct rt5665_priv *rt5665;
+-	int i, ret;
++	int ret;
+ 	unsigned int val;
+ 
+ 	rt5665 = devm_kzalloc(&i2c->dev, sizeof(struct rt5665_priv),
+@@ -4774,24 +4769,13 @@ static int rt5665_i2c_probe(struct i2c_client *i2c)
+ 	else
+ 		rt5665_parse_dt(rt5665, &i2c->dev);
+ 
+-	for (i = 0; i < ARRAY_SIZE(rt5665->supplies); i++)
+-		rt5665->supplies[i].supply = rt5665_supply_names[i];
+-
+-	ret = devm_regulator_bulk_get(&i2c->dev, ARRAY_SIZE(rt5665->supplies),
+-				      rt5665->supplies);
++	ret = devm_regulator_bulk_get_enable(&i2c->dev, ARRAY_SIZE(rt5665_supply_names),
++					     rt5665_supply_names);
+ 	if (ret != 0) {
+ 		dev_err(&i2c->dev, "Failed to request supplies: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = regulator_bulk_enable(ARRAY_SIZE(rt5665->supplies),
+-				    rt5665->supplies);
+-	if (ret != 0) {
+-		dev_err(&i2c->dev, "Failed to enable supplies: %d\n", ret);
+-		return ret;
+-	}
+-
+-
+ 	rt5665->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev,
+ 							"realtek,ldo1-en",
+ 							GPIOD_OUT_HIGH);
 -- 
 2.39.5
 
