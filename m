@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A56269801;
-	Tue,  8 Apr 2025 12:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943DC269823;
+	Tue,  8 Apr 2025 12:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113618; cv=none; b=BWOPJhRIP2fd4jak7L0y4JLhNgmw3w0xwUDPT0NCMoWpZ0PfV8aTJ7Qpy7d3PGc5dQAvK0bWZg5hBsXIsxZCaPIWvodTSrimGxbwUBnSBe7rERc8Daw+BTdFUVWL1AEQ7ImbjEO7hbwefKmx8saKH5MYLN/Nx2Evd7ohGZAkloE=
+	t=1744113620; cv=none; b=jljx6RmVKlr+6gvUWLwL52mv7oeEtbUD9VVhEvLLpua70nSVQXp2QbZ6JsVRw8rkY0KhMPpQtuthADhSPRSYykA05XvZ/q4fdTADbG+68ZdTo9TTPNdGAVIkyeBLDMLlWTJFH1Zh0JDCraLUvq8hAJPC/IsnDBXhPSOktb+jdv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113618; c=relaxed/simple;
-	bh=Np45aB7spLmtQbiolo4UmxF8Itf3AwAZqgik6yO0abc=;
+	s=arc-20240116; t=1744113620; c=relaxed/simple;
+	bh=kNQilbdSLlZnJ/73cbcr6fmajA84b0L4bK8+J7o6fXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeEKcNAUFWEQaEA8ZEd79IB684Nh1dYymRGgNuWxLptfKPKXMDcswBqbFPaXIPnmK7rPqjJhB4eVLvfRZtkV4D6u8jGiZJvzgVwC7muHxhWTzlQOhFCz5Du6+d/+FaoU5AMBXVe6LS0QPcK/35O6eTx0oBBcVuujHXpqfVn2noE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKj2c5yi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hnB4caNzTgXmN4RgB3tEq4H04Aqkl8w9tp5BKmPbpSGdfiut+vplr66qtJjmYJZnVrzEVC03tCwsXDqzvmcUrSLWA/5v+9SaFDyDTyjkn81s5wzrYffYiDONvZf4uR8FVnASm+3XTtno3GbEJ3m+zIcolOtBR8WKX+jgadnTKQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upkqHFl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKj2c5yi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BC7C4CEE5;
-	Tue,  8 Apr 2025 12:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upkqHFl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED27AC4CEE5;
+	Tue,  8 Apr 2025 12:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113617;
-	bh=Np45aB7spLmtQbiolo4UmxF8Itf3AwAZqgik6yO0abc=;
+	s=korg; t=1744113620;
+	bh=kNQilbdSLlZnJ/73cbcr6fmajA84b0L4bK8+J7o6fXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKj2c5yi7ZyODVl7RZ/0K0AK03f2Wo485sShUgLEq6vjdg0fSZhMdnr6Mvs2yuJDi
-	 SfXYA4k8uCj9fzEPC2muiqY+UPJzy9xQTMRpmuXvcWzOx0NGqxgT5xBV+lrr88YjT3
-	 UIWluutYnMSUfWM+VrJpzbjN+z0T2kSaS16aN6VM=
+	b=upkqHFl+s7u/n7tdEVCxJ/opd0eEP1rhKfZ1QpPxx2gQkidmFH56DJZYm3IOIFcxH
+	 fwoTnxbfNNNjs9RwIL6zLA11f4GaX1jpdGqbC3n8+qRpu0MqAmGJOHHHSQ0Iu+hFwe
+	 TdZ+ABVU/9BzVKnz0bnvIwKP29FJ/bGP7trL4zG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Tom Zanussi <zanussi@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 225/268] tracing: Switch trace_events_hist.c code over to use guard()
-Date: Tue,  8 Apr 2025 12:50:36 +0200
-Message-ID: <20250408104834.651196950@linuxfoundation.org>
+Subject: [PATCH 6.6 226/268] tracing/hist: Add poll(POLLIN) support on hist file
+Date: Tue,  8 Apr 2025 12:50:37 +0200
+Message-ID: <20250408104834.681326102@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -55,97 +54,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 2b36a97aeeb71b1e4a48bfedc7f21f44aeb1e6fb ]
+[ Upstream commit 1bd13edbbed6e7e396f1aab92b224a4775218e68 ]
 
-There are a couple functions in trace_events_hist.c that have "goto out" or
-equivalent on error in order to release locks that were taken. This can be
-error prone or just simply make the code more complex.
+Add poll syscall support on the `hist` file. The Waiter will be waken
+up when the histogram is updated with POLLIN.
 
-Switch every location that ends with unlocking a mutex on error over to
-using the guard(mutex)() infrastructure to let the compiler worry about
-releasing locks. This makes the code easier to read and understand.
+Currently, there is no way to wait for a specific event in userspace.
+So user needs to peek the `trace` periodicaly, or wait on `trace_pipe`.
+But it is not a good idea to peek at the `trace` for an event that
+randomly happens. And `trace_pipe` is not coming back until a page is
+filled with events.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
+This allows a user to wait for a specific event on the `hist` file. User
+can set a histogram trigger on the event which they want to monitor
+and poll() on its `hist` file. Since this poll() returns POLLIN, the next
+poll() will return soon unless a read() happens on that hist file.
+
+NOTE: To read the hist file again, you must set the file offset to 0,
+but just for monitoring the event, you may not need to read the
+histogram.
+
+Cc: Shuah Khan <shuah@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/20241219201345.694601480@goodmis.org
+Link: https://lore.kernel.org/173527247756.464571.14236296701625509931.stgit@devnote2
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Tom Zanussi <zanussi@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Stable-dep-of: 0b4ffbe4888a ("tracing: Correct the refcount if the hist/hist_debug file fails to open")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 32 ++++++++++----------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ include/linux/trace_events.h     | 14 +++++++
+ kernel/trace/trace_events.c      | 14 +++++++
+ kernel/trace/trace_events_hist.c | 70 ++++++++++++++++++++++++++++++--
+ 3 files changed, 95 insertions(+), 3 deletions(-)
 
+diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
+index aa1bc41726620..fe95d13c5e4d8 100644
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -683,6 +683,20 @@ struct trace_event_file {
+ 	atomic_t		tm_ref;	/* trigger-mode reference counter */
+ };
+ 
++#ifdef CONFIG_HIST_TRIGGERS
++extern struct irq_work hist_poll_work;
++extern wait_queue_head_t hist_poll_wq;
++
++static inline void hist_poll_wakeup(void)
++{
++	if (wq_has_sleeper(&hist_poll_wq))
++		irq_work_queue(&hist_poll_work);
++}
++
++#define hist_poll_wait(file, wait)	\
++	poll_wait(file, &hist_poll_wq, wait)
++#endif
++
+ #define __TRACE_EVENT_FLAGS(name, value)				\
+ 	static int __init trace_init_flags_##name(void)			\
+ 	{								\
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 15041912c277d..562efd6685726 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3077,6 +3077,20 @@ static bool event_in_systems(struct trace_event_call *call,
+ 	return !*p || isspace(*p) || *p == ',';
+ }
+ 
++#ifdef CONFIG_HIST_TRIGGERS
++/*
++ * Wake up waiter on the hist_poll_wq from irq_work because the hist trigger
++ * may happen in any context.
++ */
++static void hist_poll_event_irq_work(struct irq_work *work)
++{
++	wake_up_all(&hist_poll_wq);
++}
++
++DEFINE_IRQ_WORK(hist_poll_work, hist_poll_event_irq_work);
++DECLARE_WAIT_QUEUE_HEAD(hist_poll_wq);
++#endif
++
+ static struct trace_event_file *
+ trace_create_new_event(struct trace_event_call *call,
+ 		       struct trace_array *tr)
 diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 604d63380a90b..755db2451fb2d 100644
+index 755db2451fb2d..49b7811dec9f8 100644
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -5605,25 +5605,19 @@ static int hist_show(struct seq_file *m, void *v)
+@@ -5322,6 +5322,8 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 
+ 	if (resolve_var_refs(hist_data, key, var_ref_vals, true))
+ 		hist_trigger_actions(hist_data, elt, buffer, rec, rbe, key, var_ref_vals);
++
++	hist_poll_wakeup();
+ }
+ 
+ static void hist_trigger_stacktrace_print(struct seq_file *m,
+@@ -5601,15 +5603,36 @@ static void hist_trigger_show(struct seq_file *m,
+ 		   n_entries, (u64)atomic64_read(&hist_data->map->drops));
+ }
+ 
++struct hist_file_data {
++	struct file *file;
++	u64 last_read;
++};
++
++static u64 get_hist_hit_count(struct trace_event_file *event_file)
++{
++	struct hist_trigger_data *hist_data;
++	struct event_trigger_data *data;
++	u64 ret = 0;
++
++	list_for_each_entry(data, &event_file->triggers, list) {
++		if (data->cmd_ops->trigger_type == ETT_EVENT_HIST) {
++			hist_data = data->private_data;
++			ret += atomic64_read(&hist_data->map->hits);
++		}
++	}
++	return ret;
++}
++
+ static int hist_show(struct seq_file *m, void *v)
  {
++	struct hist_file_data *hist_file = m->private;
  	struct event_trigger_data *data;
  	struct trace_event_file *event_file;
--	int n = 0, ret = 0;
-+	int n = 0;
+ 	int n = 0;
  
--	mutex_lock(&event_mutex);
-+	guard(mutex)(&event_mutex);
+ 	guard(mutex)(&event_mutex);
  
- 	event_file = event_file_file(m->private);
--	if (unlikely(!event_file)) {
--		ret = -ENODEV;
--		goto out_unlock;
--	}
-+	if (unlikely(!event_file))
-+		return -ENODEV;
+-	event_file = event_file_file(m->private);
++	event_file = event_file_file(hist_file->file);
+ 	if (unlikely(!event_file))
+ 		return -ENODEV;
  
- 	list_for_each_entry(data, &event_file->triggers, list) {
+@@ -5617,27 +5640,68 @@ static int hist_show(struct seq_file *m, void *v)
  		if (data->cmd_ops->trigger_type == ETT_EVENT_HIST)
  			hist_trigger_show(m, data, n++);
  	}
--
-- out_unlock:
--	mutex_unlock(&event_mutex);
--
--	return ret;
-+	return 0;
++	hist_file->last_read = get_hist_hit_count(event_file);
++
+ 	return 0;
  }
  
- static int event_hist_open(struct inode *inode, struct file *file)
-@@ -5884,25 +5878,19 @@ static int hist_debug_show(struct seq_file *m, void *v)
- {
- 	struct event_trigger_data *data;
- 	struct trace_event_file *event_file;
--	int n = 0, ret = 0;
-+	int n = 0;
- 
--	mutex_lock(&event_mutex);
++static __poll_t event_hist_poll(struct file *file, struct poll_table_struct *wait)
++{
++	struct trace_event_file *event_file;
++	struct seq_file *m = file->private_data;
++	struct hist_file_data *hist_file = m->private;
++
 +	guard(mutex)(&event_mutex);
- 
- 	event_file = event_file_file(m->private);
--	if (unlikely(!event_file)) {
--		ret = -ENODEV;
--		goto out_unlock;
--	}
-+	if (unlikely(!event_file))
-+		return -ENODEV;
- 
- 	list_for_each_entry(data, &event_file->triggers, list) {
- 		if (data->cmd_ops->trigger_type == ETT_EVENT_HIST)
- 			hist_trigger_debug_show(m, data, n++);
- 	}
--
-- out_unlock:
--	mutex_unlock(&event_mutex);
--
--	return ret;
++
++	event_file = event_file_data(file);
++	if (!event_file)
++		return EPOLLERR;
++
++	hist_poll_wait(file, wait);
++
++	if (hist_file->last_read != get_hist_hit_count(event_file))
++		return EPOLLIN | EPOLLRDNORM;
++
 +	return 0;
++}
++
++static int event_hist_release(struct inode *inode, struct file *file)
++{
++	struct seq_file *m = file->private_data;
++	struct hist_file_data *hist_file = m->private;
++
++	kfree(hist_file);
++	return tracing_single_release_file_tr(inode, file);
++}
++
+ static int event_hist_open(struct inode *inode, struct file *file)
+ {
++	struct hist_file_data *hist_file;
+ 	int ret;
+ 
+ 	ret = tracing_open_file_tr(inode, file);
+ 	if (ret)
+ 		return ret;
+ 
++	hist_file = kzalloc(sizeof(*hist_file), GFP_KERNEL);
++	if (!hist_file)
++		return -ENOMEM;
++	hist_file->file = file;
++
+ 	/* Clear private_data to avoid warning in single_open() */
+ 	file->private_data = NULL;
+-	return single_open(file, hist_show, file);
++	ret = single_open(file, hist_show, hist_file);
++	if (ret)
++		kfree(hist_file);
++	return ret;
  }
  
- static int event_hist_debug_open(struct inode *inode, struct file *file)
+ const struct file_operations event_hist_fops = {
+ 	.open = event_hist_open,
+ 	.read = seq_read,
+ 	.llseek = seq_lseek,
+-	.release = tracing_single_release_file_tr,
++	.release = event_hist_release,
++	.poll = event_hist_poll,
+ };
+ 
+ #ifdef CONFIG_HIST_TRIGGERS_DEBUG
 -- 
 2.39.5
 
