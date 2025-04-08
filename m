@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28B02690FB;
-	Tue,  8 Apr 2025 11:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD12269833;
+	Tue,  8 Apr 2025 11:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111493; cv=none; b=oqMbcuov++ZzgbsYPkr7j7giPqbEZ29HgrxDJDm/9XLe3RztdhCd/ZkKJuu/GbC9rfQzQLRFS9+lvN+cZyNyP30vAcuLDzqPDGcIsMFIbLF9vJMjq+jyJYbPW9PmWGkR/lGE7N8EeyJQHJNM704rpbM3RYSsH1pq4n6PaKpui34=
+	t=1744111496; cv=none; b=Q1P2FIbaGTSYL2faB3a3835tRTDCzETqn0CokY7j6mWDgU4/FfTYy9T6MD32Nu5VMFAOhF0uk1WAH+XuediB6bEUaM7GxayJYrVxdC5x/xWPA5GiQfZ8kuKuAACHCIYLhhdqc3m7fLkaG4SFuqoy90+sfBQ8LCINdk/+rujK1R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111493; c=relaxed/simple;
-	bh=uaGGJXQiR31qpE6ifimTnIu7BUnIv7TSlhkRdCWZ+Hk=;
+	s=arc-20240116; t=1744111496; c=relaxed/simple;
+	bh=FXVVh05W0skyIWgcDe0c1+Hh4Ohxk8otwQwYR/MLSEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Iv252dktJbfKG1vlHvmK66MKaM3hemRyUpdUVyO6T37q1krfBnaPTDIVzzY5RMoAURn3psZ2JcqbYsRAJhR9QZoZ1IoxkONfvxbr+Z4uSlA0w2xccETmUyVnCAgDI6qgz5zAfnfw53SHfSOGvRzT81gKj4nP4EVlTtxs79In6Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpzD85Ns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=br5FFO1gE838FxPhv9lmkqHXkGiPzz9jVc+NwI8OHVb5RWo5foAZ7HnLNy7Al0wGaAVBpd6kM91kdKLo42T5EtIq5cFCtnSajWMCkdvd9TllPfUxDaMtezqHtEJVRhWm8OD8eDebnbMVneFHE6SRqTwhrNXDKsRGpxNhe0L3xag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hwNseTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpzD85Ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC3FC4CEE7;
-	Tue,  8 Apr 2025 11:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hwNseTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9314C4CEE7;
+	Tue,  8 Apr 2025 11:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111493;
-	bh=uaGGJXQiR31qpE6ifimTnIu7BUnIv7TSlhkRdCWZ+Hk=;
+	s=korg; t=1744111496;
+	bh=FXVVh05W0skyIWgcDe0c1+Hh4Ohxk8otwQwYR/MLSEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpzD85NsQbhLXI5tUNE3OG3RQ6PYYydzzjW+/1ZPCchXcKTpYF3h9xqN78puuCACk
-	 L9v9COln8QAilXwtxqr9U9aDOJyCUc2PbWQk23/paF3o5CN95e78axKANcwfJxu+KF
-	 zMBl5jmsCS/Hq2/UFxcaxrLHwxtnLA/BXk3x+ylc=
+	b=0hwNseTbqRi+f6DW6AtyzFks9HdHOCuulE5AEYnA3oenwvWMzp7YH+xMrW9AAjg1i
+	 6Cwb5R3/YKqklj1D91zMqfMGpIrKkp6/P6AoSQG14dmDetptLrNRdOtve2idFNrtHk
+	 zrmg6qoJijSYlqrVutFhdHvAya9cS0+f6F1pkNAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 451/731] iio: adc: ad7124: Really disable all channels at probe time
-Date: Tue,  8 Apr 2025 12:45:48 +0200
-Message-ID: <20250408104924.770055971@linuxfoundation.org>
+Subject: [PATCH 6.14 425/731] mfd: sm501: Switch to BIT() to mitigate integer overflows
+Date: Tue,  8 Apr 2025 12:45:22 +0200
+Message-ID: <20250408104924.159611093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,68 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e903868b4ce73d1ba3663d5e0718424946cebd99 ]
+[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
 
-If one or more of the 16 channels are enabled and the driver is not
-aware of that, unexpected things happen because different channels are
-used than intended. To prevent that, all channels should be disabled at
-probe time. In Commit 4be339af334c ("iio: adc: ad7124: Disable all
-channels at probe time") I intended do that, however only the channels
-that are potentially used by the driver and not all channels are
-disabled since then. So disable all 16 channels and not only the used
-ones.
+If offset end up being high enough, right hand expression in functions
+like sm501_gpio_set() shifted left for that number of bits, may
+not fit in int type.
 
-Also fix the same issue in the .disable_all() callback.
+Just in case, fix that by using BIT() both as an option safe from
+overflow issues and to make this step look similar to other gpio
+drivers.
 
-Fixes: 4be339af334c ("iio: adc: ad7124: Disable all channels at probe time")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250204115023.265813-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: f61be273d369 ("sm501: add gpiolib support")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/mfd/sm501.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 2fdeb32479522..6bc418d388202 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -550,11 +550,10 @@ static int ad7124_disable_one(struct ad_sigma_delta *sd, unsigned int chan)
- 
- static int ad7124_disable_all(struct ad_sigma_delta *sd)
+diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
+index 0469e85d72cff..7ee293b09f628 100644
+--- a/drivers/mfd/sm501.c
++++ b/drivers/mfd/sm501.c
+@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
  {
--	struct ad7124_state *st = container_of(sd, struct ad7124_state, sd);
- 	int ret;
- 	int i;
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
+@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+ 	void __iomem *regs = smchip->regbase;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	unsigned long save;
+ 	unsigned long ddr;
  
--	for (i = 0; i < st->num_channels; i++) {
-+	for (i = 0; i < 16; i++) {
- 		ret = ad7124_disable_one(sd, i);
- 		if (ret < 0)
- 			return ret;
-@@ -1017,11 +1016,10 @@ static int ad7124_setup(struct ad7124_state *st)
- 		 * set all channels to this default value.
- 		 */
- 		ad7124_set_channel_odr(st, i, 10);
--
--		/* Disable all channels to prevent unintended conversions. */
--		ad_sd_write_reg(&st->sd, AD7124_CHANNEL(i), 2, 0);
- 	}
- 
-+	ad7124_disable_all(&st->sd);
-+
- 	ret = ad_sd_write_reg(&st->sd, AD7124_ADC_CONTROL, 2, st->adc_control);
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Failed to setup CONTROL register\n");
+@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
+ {
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
 -- 
 2.39.5
 
