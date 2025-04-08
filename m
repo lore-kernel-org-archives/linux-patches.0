@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE6C269882;
-	Tue,  8 Apr 2025 12:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638A226A1A3;
+	Tue,  8 Apr 2025 12:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115876; cv=none; b=dIR+dIVThV6IHXrUr0TgtdGmLRexRp33WYdw3W7ePxULCDo3GS/zWwpxMsvnv7Ajit5IuBaY3Fne9NQivIuDM1o8zRqjUxPp1v4DqZxY8JUbXc4fLzgFC1ranitiSeVroG0MheEI7KP6GFNCBD1k1Rzr/PbbI/rj5zZCULvTeuo=
+	t=1744115879; cv=none; b=nBOlQhAuKs9UmTyr6xKnYYlv8D16rcN4+hKplEkHF7B3yo9wN2RASGR8tfkMMeM8TS7e6CNnxucPF6d6ndj3YKNI7vmBYHYPnDflIWJ1STqk+N1PvDxg0/jmTBPqadiowuJB6yXVs65nbpPINnYr7U5EaaF7RrVAZj6/SoyfLZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115876; c=relaxed/simple;
-	bh=bc1WiDrg3QT+isVk8e4Zx3muIybg2W6paJ3Vw43kp7U=;
+	s=arc-20240116; t=1744115879; c=relaxed/simple;
+	bh=IyTzrGIxRqsz4vf5E/1xpuARLc5pfRH5XtjEFK6FlwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5rk4xHKVvRwjH1cesxrWYy1Ls3qLIissxSUCpv4xKsFffn7DpiWEZD0Puyl1NbSwHzVLztzj0YBwrvqvZqjMZ28i7PYfTeBn2nCXWPG4I7C8wO2TA7YbG2x//+7rLyEl0VCpmGyNYc1B0KCeq5EmKtWqFR8vVznrbTxF9WTZlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdQR/wL4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQuSRX9aodM8IyjzYJymMTCNh5mZyhrCCaZQZ+EYTGGOAmWnHbIsQkcmPaDp4qlUjeGWp8oT4Stk4HwhDEy8QVwwUoN2WTG79V8Lg6qnjT2FWICdpvRkyhIw0U1nrVlscSsT6CXXoMD/mslqWyAlFMz+u1OQ/VGK8Fn0t/Ih//w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhqrtrbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdQR/wL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF1FC4CEE5;
-	Tue,  8 Apr 2025 12:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhqrtrbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7921C4CEE5;
+	Tue,  8 Apr 2025 12:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115876;
-	bh=bc1WiDrg3QT+isVk8e4Zx3muIybg2W6paJ3Vw43kp7U=;
+	s=korg; t=1744115879;
+	bh=IyTzrGIxRqsz4vf5E/1xpuARLc5pfRH5XtjEFK6FlwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdQR/wL4s6EI53XIB1gnuF3wSW5u+JPWhBxMhVmaMrALDOHas42Z1SW1RLVAwi22m
-	 mUiuuZ+qA65X9xdkfyT3RAnBI7UIi7HForm/1AJmmT1QbAv9JPU3aUKNDZjUthc8Fv
-	 svasWJpPQDYCiCqObNarIY/ENGKtb3LdBxG67mSw=
+	b=dhqrtrbxZedhODdcn5pd7m1wcQWjR8U2893cTlODJYX8Rdds6CFizilqQhUzhGo6h
+	 KbJuV7zhXYt6Vb/Z5nBGQW5oq58ABeaTCOTpVV+IF+v8KYTk9IwahEb1o/g12iptLH
+	 7y2LVaVyeIgaR2EBXyklnbePyHd/Ski6QbuMfacU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/204] HID: i2c-hid: improve i2c_hid_get_report error message
-Date: Tue,  8 Apr 2025 12:51:07 +0200
-Message-ID: <20250408104824.318058490@linuxfoundation.org>
+Subject: [PATCH 6.1 138/204] ALSA: hda/realtek: Add support for ASUS ROG Strix G614 Laptops using CS35L41 HDA
+Date: Tue,  8 Apr 2025 12:51:08 +0200
+Message-ID: <20250408104824.346171417@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,41 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 723aa55c08c9d1e0734e39a815fd41272eac8269 ]
+[ Upstream commit 9120b2b4ad0dad2f6bbb6bcacd0456f806fda62d ]
 
-We have two places to print "failed to set a report to ...",
-use "get a report from" instead of "set a report to", it makes
-people who knows less about the module to know where the error
-happened.
+Add support for ASUS G614PH/PM/PP and G614FH/FM/FP.
 
-Before:
-i2c_hid_acpi i2c-FTSC1000:00: failed to set a report to device: -11
+Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
 
-After:
-i2c_hid_acpi i2c-FTSC1000:00: failed to get a report from device: -11
-
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250305170714.755794-4-sbinding@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 0b05bb1e4410e..8a7ac016b1abe 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -261,7 +261,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
- 			     ihid->rawbuf, recv_len + sizeof(__le16));
- 	if (error) {
- 		dev_err(&ihid->client->dev,
--			"failed to set a report to device: %d\n", error);
-+			"failed to get a report from device: %d\n", error);
- 		return error;
- 	}
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 55fc63472ddc2..841338c82e807 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9996,7 +9996,9 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
++	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
