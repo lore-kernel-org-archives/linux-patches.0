@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B872676C9;
-	Tue,  8 Apr 2025 12:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC79263F3B;
+	Tue,  8 Apr 2025 12:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113847; cv=none; b=dLBDWHzHLBK3LpApx8mRrslrRwbC99cUARQ67+KhGi91qfRzSlgnr9oMI4tYXse4doNaqqnPwc0hp5DjDzcHKvftcSgHvbciZHlTiyz2KMEHzRfX5gId/ZHjF1Rl3HhGtIsrdi7qGXfJgxuzeCHKMza65rbDWkrzGJ+Xa9GwBIk=
+	t=1744113850; cv=none; b=gQmPwj35d/WAG/Fk9bx3YoXgtGjqDW00vXhce5TjQzQrFsdmrEWf2TUxPQM8rulcaeVAXyfzLmTLkUSe2HWy/+NxyMN4X59dHul3jkdis4xzeAlTuIsY289jfTRvyHMyyYky1gYc0zIlebQnexNZHL+4YZR1JSPibgTQ+tZ8tPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113847; c=relaxed/simple;
-	bh=DZaayEnv2WORFHFYmcSScR7HcmJaZxJFierseHOZ0oE=;
+	s=arc-20240116; t=1744113850; c=relaxed/simple;
+	bh=GZRHOZDaFVLphiZ2wKmkZlX4OvR3TCFH2T16vIs36Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Djtgc+SP3FnklqSvdVHWxX99p/1Y+8oye+wTAnOuBeSKMpVL7zaEXiIx0pt4rsxTlkmfbuanY6irBTiyYId2KoJ2GtrQa3kHiZTvIKiG588jgb/Odc9UrZpnT+0JGbNqfmwTZemO2wXycg3vSWWT65KGJfXvlxBfk3g+gVeQtwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlYKhsT/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gM7PuWb4MzWqaRAdGR9Rsz4T30oI8droAsBStyf3hx+Kum9rD8wo8D6V8rxBcJjm4YOUWIUNSVQN0DyVRyOsUax33KMpdrrfNarGZnTKu84yBF9r7IcOP9WwRBMNt+FcO2mHvxg4BK0qK5Ht4294KhQJd/FztsbVV3qjk50wbHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df3Nimrt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlYKhsT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23923C4CEE5;
-	Tue,  8 Apr 2025 12:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df3Nimrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68D9C4CEE5;
+	Tue,  8 Apr 2025 12:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113847;
-	bh=DZaayEnv2WORFHFYmcSScR7HcmJaZxJFierseHOZ0oE=;
+	s=korg; t=1744113850;
+	bh=GZRHOZDaFVLphiZ2wKmkZlX4OvR3TCFH2T16vIs36Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlYKhsT/BidkvFdZ8dv9JT7Y1Qz3YzhI2h3KYxL/xGaUvsohhvrfdBcX4w/DRfOf5
-	 oVQvkVgBod7bs/22Fj2VM/Uz1jEjlx1U7gjj5Q1LNJR0iK8kUmrpFUDk7Uy4PNfYNu
-	 qNkwt+oOXeegrYH7jkU7reT20ZSwAJo77h3jPHh4=
+	b=Df3NimrtbE6sQmGoX3paOFKPyMuwqagSFTFKRIrQmrHlELEEaETKXXZFNhLaWYoNk
+	 dHjxqizYArtFPonDjbOzTui00y/oKYs9pp2mObR2bb0qtmVkWdeUKbxV0J7jObgcJa
+	 51OXsCuL2eRfmAH9usVkGUR9//M0irYB8CEUFRqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
-Subject: [PATCH 5.4 043/154] drm/atomic: Filter out redundant DPMS calls
-Date: Tue,  8 Apr 2025 12:49:44 +0200
-Message-ID: <20250408104816.650270375@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 044/154] drm/amd/display: Assign normalized_pix_clk when color depth = 14
+Date: Tue,  8 Apr 2025 12:49:45 +0200
+Message-ID: <20250408104816.685352163@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -44,67 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit de93ddf88088f7624b589d0ff3af9effb87e8f3b upstream.
+commit 79e31396fdd7037c503e6add15af7cb00633ea92 upstream.
 
-Video players (eg. mpv) do periodic XResetScreenSaver() calls to
-keep the screen on while the video playing. The modesetting ddx
-plumbs these straight through into the kernel as DPMS setproperty
-ioctls, without any filtering whatsoever. When implemented via
-atomic these end up as empty commits on the crtc (which will
-nonetheless take one full frame), which leads to a dropped
-frame every time XResetScreenSaver() is called.
+[WHY & HOW]
+A warning message "WARNING: CPU: 4 PID: 459 at ... /dc_resource.c:3397
+calculate_phy_pix_clks+0xef/0x100 [amdgpu]" occurs because the
+display_color_depth == COLOR_DEPTH_141414 is not handled. This is
+observed in Radeon RX 6600 XT.
 
-Let's just filter out redundant DPMS property changes in the
-kernel to avoid this issue.
+It is fixed by assigning pix_clk * (14 * 3) / 24 - same as the rests.
 
-v2: Explain the resulting commits a bit better (Sima)
-    Document the behaviour in uapi docs (Sima)
+Also fixes the indentation in get_norm_pix_clk.
 
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 274a87eb389f58eddcbc5659ab0b180b37e92775)
 Cc: stable@vger.kernel.org
-Testcase: igt/kms_flip/flip-vs-dpms-on-nop
-Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250219160239.17502-1-ville.syrjala@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |    4 ++++
- drivers/gpu/drm/drm_connector.c   |    4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -929,6 +929,10 @@ int drm_atomic_connector_commit_dpms(str
- 
- 	if (mode != DRM_MODE_DPMS_ON)
- 		mode = DRM_MODE_DPMS_OFF;
-+
-+	if (connector->dpms == mode)
-+		goto out;
-+
- 	connector->dpms = mode;
- 
- 	crtc = connector->state->crtc;
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -912,6 +912,10 @@ static const struct drm_prop_enum_list h
-  * 	implemented in the DRM core.  This is the only standard connector
-  * 	property that userspace can change.
-  *
-+ * 	On atomic drivers any DPMS setproperty ioctl where the value does not
-+ * 	change is completely skipped, otherwise a full atomic commit will occur.
-+ * 	On legacy drivers the exact behavior is driver specific.
-+ *
-  * 	Note that this property cannot be set through the MODE_ATOMIC ioctl,
-  * 	userspace must use "ACTIVE" on the CRTC instead.
-  *
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -1834,10 +1834,13 @@ static int get_norm_pix_clk(const struct
+ 			break;
+ 		case COLOR_DEPTH_121212:
+ 			normalized_pix_clk = (pix_clk * 36) / 24;
+-		break;
++			break;
++		case COLOR_DEPTH_141414:
++			normalized_pix_clk = (pix_clk * 42) / 24;
++			break;
+ 		case COLOR_DEPTH_161616:
+ 			normalized_pix_clk = (pix_clk * 48) / 24;
+-		break;
++			break;
+ 		default:
+ 			ASSERT(0);
+ 		break;
 
 
