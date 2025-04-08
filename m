@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A592D2690EB;
-	Tue,  8 Apr 2025 12:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6B62676CF;
+	Tue,  8 Apr 2025 12:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116445; cv=none; b=Buc03NSPfxCqtbuwD12kP3JeHkS4YFJYlBDxZhdvXmwXLTQEo34i1EPNEIC/oVCyhoTVhl+9sp1CkI5MIJKqWOiVASCCssA4jAxqhQt0zGeQPJkpwlrwZP5Sj77kLgEbK5S+zvqDPuBVLaxHjpCtREBIvSHmK6TMdtEQP1yigxI=
+	t=1744116448; cv=none; b=LdRTKQnYUNU5mf966hytS+tb2x9yeqfSvoFV6BBT9c+6vncm8rX2xVKc3faazIfFt9bP5fWLXaIJGzAcIXq8CHztzCec4LKbhan8ycjDKts7aSn3rzgfqp7BzHlj0acpOugApug1BFZsrEHTi1CdbPldQFYdOqtavs8/qCr6etM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116445; c=relaxed/simple;
-	bh=1MIMfGdD3CqNQvCNJzOkt+XNPU9IaqgU3IfHPPiZUmU=;
+	s=arc-20240116; t=1744116448; c=relaxed/simple;
+	bh=Qk/JU/+a/TLzm5e/pnT+TeyV1rY5IgW4V5LPVZo7GzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVx3TnP+2qzRu9R3iKV12R0I+WptLLQ8p9LBkejhKlhpbUd8ukT6D6JX+5HWOnEdEkRMkJ7gLSn+MQ2lAWighE4FmwT4OZod1ef3Y1Bo5MxtUw8dm/3YFVplKAK5yuxkvqp+JBUkAz0t/A2K7LLAaCG5xuDO5JsMZ/jzYAQQlsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYXrLCeJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eRxRmI9yK/+TMTdkvoJU/dN3PDB8V1p8EwnQ3ngSu/lIZE7LXZFGvAAjW3YD5hNDB8X6Qqs3gI258sLDLJcdNcOlpl6WtgoHtpQI0Mov92sRWqsDCNR0ysrv/11FBbBNAA4LPdS6nE8VWDGBcowoN+b7MpptDvuEUoC7Ak9+gXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrVyFDwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYXrLCeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA74C4CEE5;
-	Tue,  8 Apr 2025 12:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrVyFDwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBC0C4CEE5;
+	Tue,  8 Apr 2025 12:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116445;
-	bh=1MIMfGdD3CqNQvCNJzOkt+XNPU9IaqgU3IfHPPiZUmU=;
+	s=korg; t=1744116447;
+	bh=Qk/JU/+a/TLzm5e/pnT+TeyV1rY5IgW4V5LPVZo7GzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYXrLCeJmc9mFaeUGlVz0F6PWQO9nGo1g8/4xwag2HmFTmDD12R3BJB4mXO41RytH
-	 7OzZFbHVC2HcxFnh8XoUay/YR7e2EPVF95103EcoJlExLjYAS6iiQ5Z8eu7dW48zHy
-	 6kajAaARbmAKhcJcxUL7XiNjGtaw8eOiAgOQWmPw=
+	b=PrVyFDwun9fUoluSsO11eST4qVSFCTe5xM5gQLbZWJ5FTimJEREcBxwTZeY9Cr4MA
+	 kGK9uFiVovOrzGNNuNT3ICiZyWEjxoutjW5QrcZVCUro22+BbwvU3wypDXVhNmRSeq
+	 wBKRjw5wDKwV8ns/+zMwEPoE4Rvu8h1pBcYSm/8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bairavi Alagappan <bairavix.alagappan@intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/423] pinctrl: npcm8xx: Fix incorrect struct npcm8xx_pincfg assignment
-Date: Tue,  8 Apr 2025 12:47:50 +0200
-Message-ID: <20250408104849.086659495@linuxfoundation.org>
+Subject: [PATCH 6.12 145/423] crypto: qat - remove access to parity register for QAT GEN4
+Date: Tue,  8 Apr 2025 12:47:51 +0200
+Message-ID: <20250408104849.109058504@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,55 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Bairavi Alagappan <bairavix.alagappan@intel.com>
 
-[ Upstream commit 113ec87b0f26a17b02c58aa2714a9b8f1020eed9 ]
+[ Upstream commit 92c6a707d82f0629debf1c21dd87717776d96af2 ]
 
-Sparse is not happy about implementation of the NPCM8XX_PINCFG()
+The firmware already handles parity errors reported by the accelerators
+by clearing them through the corresponding SSMSOFTERRORPARITY register.
+To ensure consistent behavior and prevent race conditions between the
+driver and firmware, remove the logic that checks the SSMSOFTERRORPARITY
+registers.
 
- pinctrl-npcm8xx.c:1314:9: warning: obsolete array initializer, use C99 syntax
- pinctrl-npcm8xx.c:1315:9: warning: obsolete array initializer, use C99 syntax
- ...
- pinctrl-npcm8xx.c:1412:9: warning: obsolete array initializer, use C99 syntax
- pinctrl-npcm8xx.c:1413:9: warning: too many warnings
+Additionally, change the return type of the function
+adf_handle_rf_parr_err() to void, as it consistently returns false.
+Parity errors are recoverable and do not necessitate a device reset.
 
-which uses index-based assignment in a wrong way, i.e. it missed
-the equal sign and hence the index is simply ignored, while the
-entries are indexed naturally. This is not a problem as the pin
-numbering repeats the natural order, but it might be in case of
-shuffling the entries. Fix this by adding missed equal sign and
-reformat a bit for better readability.
-
-Fixes: acf4884a5717 ("pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/20250318105932.2090926-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 895f7d532c84 ("crypto: qat - add handling of errors from ERRSOU2 for QAT GEN4")
+Signed-off-by: Bairavi Alagappan <bairavix.alagappan@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../intel/qat/qat_common/adf_gen4_ras.c       | 57 ++-----------------
+ 1 file changed, 5 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index 17825bbe14213..f6a1e684a3864 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -1290,12 +1290,14 @@ static struct npcm8xx_func npcm8xx_funcs[] = {
- };
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+index bf0ea09faa650..0f7f00a19e7dc 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+@@ -1043,63 +1043,16 @@ static bool adf_handle_ssmcpppar_err(struct adf_accel_dev *accel_dev,
+ 	return reset_required;
+ }
  
- #define NPCM8XX_PINCFG(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) \
--	[a] { .fn0 = fn_ ## b, .reg0 = NPCM8XX_GCR_ ## c, .bit0 = d, \
-+	[a] = {								  \
-+			.flag = q,					  \
-+			.fn0 = fn_ ## b, .reg0 = NPCM8XX_GCR_ ## c, .bit0 = d, \
- 			.fn1 = fn_ ## e, .reg1 = NPCM8XX_GCR_ ## f, .bit1 = g, \
- 			.fn2 = fn_ ## h, .reg2 = NPCM8XX_GCR_ ## i, .bit2 = j, \
- 			.fn3 = fn_ ## k, .reg3 = NPCM8XX_GCR_ ## l, .bit3 = m, \
- 			.fn4 = fn_ ## n, .reg4 = NPCM8XX_GCR_ ## o, .bit4 = p, \
--			.flag = q }
-+	}
+-static bool adf_handle_rf_parr_err(struct adf_accel_dev *accel_dev,
++static void adf_handle_rf_parr_err(struct adf_accel_dev *accel_dev,
+ 				   void __iomem *csr, u32 iastatssm)
+ {
+-	struct adf_dev_err_mask *err_mask = GET_ERR_MASK(accel_dev);
+-	u32 reg;
+-
+ 	if (!(iastatssm & ADF_GEN4_IAINTSTATSSM_SSMSOFTERRORPARITY_BIT))
+-		return false;
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_SRC);
+-	reg &= ADF_GEN4_SSMSOFTERRORPARITY_SRC_BIT;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_SRC, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_ATH_CPH);
+-	reg &= err_mask->parerr_ath_cph_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_ATH_CPH, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_CPR_XLT);
+-	reg &= err_mask->parerr_cpr_xlt_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_CPR_XLT, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_DCPR_UCS);
+-	reg &= err_mask->parerr_dcpr_ucs_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_DCPR_UCS, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_PKE);
+-	reg &= err_mask->parerr_pke_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_PKE, reg);
+-	}
+-
+-	if (err_mask->parerr_wat_wcp_mask) {
+-		reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_WAT_WCP);
+-		reg &= err_mask->parerr_wat_wcp_mask;
+-		if (reg) {
+-			ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-			ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_WAT_WCP,
+-				   reg);
+-		}
+-	}
++		return;
  
- /* Drive strength controlled by NPCM8XX_GP_N_ODSC */
- #define DRIVE_STRENGTH_LO_SHIFT		8
++	ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+ 	dev_err(&GET_DEV(accel_dev), "Slice ssm soft parity error reported");
+ 
+-	return false;
++	return;
+ }
+ 
+ static bool adf_handle_ser_err_ssmsh(struct adf_accel_dev *accel_dev,
+@@ -1171,8 +1124,8 @@ static bool adf_handle_iaintstatssm(struct adf_accel_dev *accel_dev,
+ 	reset_required |= adf_handle_slice_hang_error(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_spppar_err(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_ssmcpppar_err(accel_dev, csr, iastatssm);
+-	reset_required |= adf_handle_rf_parr_err(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_ser_err_ssmsh(accel_dev, csr, iastatssm);
++	adf_handle_rf_parr_err(accel_dev, csr, iastatssm);
+ 
+ 	ADF_CSR_WR(csr, ADF_GEN4_IAINTSTATSSM, iastatssm);
+ 
 -- 
 2.39.5
 
