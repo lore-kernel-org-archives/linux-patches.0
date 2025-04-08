@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3553226A097;
-	Tue,  8 Apr 2025 12:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C3726A097;
+	Tue,  8 Apr 2025 12:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114362; cv=none; b=EZDF/n0Z72Vnfe+1O0/Om+ACjoaPwLquRZxsnyEAKqPv1N7J18yl2NA9XEMKXT+9mTgm7fG5INkte9TEvBhOzBT/KZabYu3kIKYLQ+qYFVur686OjeNH3uDCuPTkJMi/VtHmwUoWrX4NkyQ194IGUmD/6KubED3VZljDV+Uu0uw=
+	t=1744114364; cv=none; b=M9Ir+3futsuwo3YqMnXGzlvc0YHCbsf+PjjYrxNU7tQepwxRQk/nPkf8Ha/ILo5CWWZFj7hJArLryiyqjn49nd41ur/tqzAk0jS9B4fjNAydAFfVUXI/oKeUwi8ay+EsY9uBGEhYBMevi9oTtSo/vtlPt8gy1POBDzdAifRtk4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114362; c=relaxed/simple;
-	bh=rqVbv6vPUziszWUzPlJY3QF3FLzqA0D9+hQa7v13snw=;
+	s=arc-20240116; t=1744114364; c=relaxed/simple;
+	bh=AB/7GxWOCpz9bTirJD+Q5Jpm4AmaCPOUooL7jApvJ9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Km0TdBOQc5HnZNpYi75O/4T9XbHSIvbwQ38TnTGDYQdlilj1Ej3Y8+yfwatNUf7C1MX8gemK4Z6vjCcLZGbJkYq3cyUwWPTJdOJwgqAV4ZNyfEn+5G7RzfqRvceOQs/enULOmPtaGsV6NZPOkQireNuKE+TMMb8gQfA5+YQIrbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS6QYstF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l2vZ84+HFJbopIddorRvq3LTK1155j8J5D15yKDih6zSwq8XHCyLKLuxX7Bq3bj6x3u9sc2QfsNIvE76NUbKKXPkJpaKEVYNv9kxz5Oo/tVD9QmyWqXJ5ClDCqWATHhZKwnwI2kVZgeInS08a4Muj9CcnBESREDQdX08PgBntJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDbrsmW9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS6QYstF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FE2C4CEE5;
-	Tue,  8 Apr 2025 12:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDbrsmW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4E6C4CEE5;
+	Tue,  8 Apr 2025 12:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114362;
-	bh=rqVbv6vPUziszWUzPlJY3QF3FLzqA0D9+hQa7v13snw=;
+	s=korg; t=1744114364;
+	bh=AB/7GxWOCpz9bTirJD+Q5Jpm4AmaCPOUooL7jApvJ9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tS6QYstF5rj9rLJbYTF0sj1FBk21/JbDbeBJOZDHVVqa0EuvBW9ssPXb9JsqctFwm
-	 yJc974iQReC7CJ5lwf5CUCKbT2axZZ5v5EDjphvvEG84TjnZYKc1Hbr/fC1yuwWWSp
-	 1pk8o8JhGyCmjx9ETqDCVld850gE4rdt9iKmXNwU=
+	b=qDbrsmW98K+0qLGPxjhXH7J8ZOA0lnpJv5OgLTLiAjocTqUBLalbmHPqvAUCwC99G
+	 Pdzb+rdVEd6OMeba8bufCAqmX0skxdB5/rTdqBbOGmn29nQz001kqUirP+xYstQK6C
+	 urXOBbOM4c1FQnSW6W0+XrgUHN6fBRy5eWGOT3PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lin cao <lin.cao@amd.com>,
-	Jingwen Chen <Jingwen.Chen2@amd.com>,
-	Victor Skvortsov <victor.skvortsov@amd.com>,
-	Zhigang Luo <zhigang.luo@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Daniel Stodden <dns@arista.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 077/499] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
-Date: Tue,  8 Apr 2025 12:44:49 +0200
-Message-ID: <20250408104853.146576525@linuxfoundation.org>
+Subject: [PATCH 6.13 078/499] PCI/ASPM: Fix link state exit during switch upstream function removal
+Date: Tue,  8 Apr 2025 12:44:50 +0200
+Message-ID: <20250408104853.172231203@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -57,174 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Daniel Stodden <daniel.stodden@gmail.com>
 
-[ Upstream commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 ]
+[ Upstream commit cbf937dcadfd571a434f8074d057b32cd14fbea5 ]
 
-RLCG Register Access is a way for virtual functions to safely access GPU
-registers in a virtualized environment., including TLB flushes and
-register reads. When multiple threads or VFs try to access the same
-registers simultaneously, it can lead to race conditions. By using the
-RLCG interface, the driver can serialize access to the registers. This
-means that only one thread can access the registers at a time,
-preventing conflicts and ensuring that operations are performed
-correctly. Additionally, when a low-priority task holds a mutex that a
-high-priority task needs, ie., If a thread holding a spinlock tries to
-acquire a mutex, it can lead to priority inversion. register access in
-amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
+Before 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to
+avoid use-after-free"), we would free the ASPM link only after the last
+function on the bus pertaining to the given link was removed.
 
-The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
-called, which attempts to acquire the mutex. This function is invoked
-from amdgpu_sriov_wreg, which in turn is called from
-gmc_v11_0_flush_gpu_tlb.
+That was too late. If function 0 is removed before sibling function,
+link->downstream would point to free'd memory after.
 
-The [ BUG: Invalid wait context ] indicates that a thread is trying to
-acquire a mutex while it is in a context that does not allow it to sleep
-(like holding a spinlock).
+After above change, we freed the ASPM parent link state upon any function
+removal on the bus pertaining to a given link.
 
-Fixes the below:
+That is too early. If the link is to a PCIe switch with MFD on the upstream
+port, then removing functions other than 0 first would free a link which
+still remains parent_link to the remaining downstream ports.
 
-[  253.013423] =============================
-[  253.013434] [ BUG: Invalid wait context ]
-[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
-[  253.013464] -----------------------------
-[  253.013475] kworker/0:1/10 is trying to lock:
-[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.013815] other info that might help us debug this:
-[  253.013827] context-{4:4}
-[  253.013835] 3 locks held by kworker/0:1/10:
-[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
-[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
-[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
-[  253.014154] stack backtrace:
-[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
-[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
-[  253.014224] Workqueue: events work_for_cpu_fn
-[  253.014241] Call Trace:
-[  253.014250]  <TASK>
-[  253.014260]  dump_stack_lvl+0x9b/0xf0
-[  253.014275]  dump_stack+0x10/0x20
-[  253.014287]  __lock_acquire+0xa47/0x2810
-[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014321]  lock_acquire+0xd1/0x300
-[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014562]  ? __lock_acquire+0xa6b/0x2810
-[  253.014578]  __mutex_lock+0x85/0xe20
-[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014782]  ? sched_clock_noinstr+0x9/0x10
-[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014808]  ? local_clock_noinstr+0xe/0xc0
-[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.015029]  mutex_lock_nested+0x1b/0x30
-[  253.015044]  ? mutex_lock_nested+0x1b/0x30
-[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
-[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
-[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
-[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
-[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
-[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
-[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
-[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
-[  253.017493]  local_pci_probe+0x4b/0xb0
-[  253.017746]  work_for_cpu_fn+0x1a/0x30
-[  253.017995]  process_one_work+0x21e/0x680
-[  253.018248]  worker_thread+0x190/0x330
-[  253.018500]  ? __pfx_worker_thread+0x10/0x10
-[  253.018746]  kthread+0xe7/0x120
-[  253.018988]  ? __pfx_kthread+0x10/0x10
-[  253.019231]  ret_from_fork+0x3c/0x60
-[  253.019468]  ? __pfx_kthread+0x10/0x10
-[  253.019701]  ret_from_fork_asm+0x1a/0x30
-[  253.019939]  </TASK>
+The resulting GPFs are especially frequent during hot-unplug, because
+pciehp removes devices on the link bus in reverse order.
 
-v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
+On that switch, function 0 is the virtual P2P bridge to the internal bus.
+Free exactly when function 0 is removed -- before the parent link is
+obsolete, but after all subordinate links are gone.
 
-Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
-Cc: lin cao <lin.cao@amd.com>
-Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
-Cc: Victor Skvortsov <victor.skvortsov@amd.com>
-Cc: Zhigang Luo <zhigang.luo@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/e12898835f25234561c9d7de4435590d957b85d9.1734924854.git.dns@arista.com
+Fixes: 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free")
+Signed-off-by: Daniel Stodden <dns@arista.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   | 5 +++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   | 3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/pci/pcie/aspm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 3780d50fd3ae8..cb9e627b407d9 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4219,7 +4219,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	mutex_init(&adev->grbm_idx_mutex);
- 	mutex_init(&adev->mn_lock);
- 	mutex_init(&adev->virt.vf_errors.lock);
--	mutex_init(&adev->virt.rlcg_reg_lock);
- 	hash_init(adev->mn_hash);
- 	mutex_init(&adev->psp.mutex);
- 	mutex_init(&adev->notifier_lock);
-@@ -4245,6 +4244,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	spin_lock_init(&adev->se_cac_idx_lock);
- 	spin_lock_init(&adev->audio_endpt_idx_lock);
- 	spin_lock_init(&adev->mm_stats.lock);
-+	spin_lock_init(&adev->virt.rlcg_reg_lock);
- 	spin_lock_init(&adev->wb.lock);
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 28567d457613b..042ade95ff812 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1250,16 +1250,16 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
+ 	parent_link = link->parent;
  
- 	INIT_LIST_HEAD(&adev->reset_list);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index c704e9803e110..a4846581cc888 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -1017,6 +1017,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v, u32 f
- 	void *scratch_reg2;
- 	void *scratch_reg3;
- 	void *spare_int;
-+	unsigned long flags;
+ 	/*
+-	 * link->downstream is a pointer to the pci_dev of function 0.  If
+-	 * we remove that function, the pci_dev is about to be deallocated,
+-	 * so we can't use link->downstream again.  Free the link state to
+-	 * avoid this.
++	 * Free the parent link state, no later than function 0 (i.e.
++	 * link->downstream) being removed.
+ 	 *
+-	 * If we're removing a non-0 function, it's possible we could
+-	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
+-	 * programming the same ASPM Control value for all functions of
+-	 * multi-function devices, so disable ASPM for all of them.
++	 * Do not free the link state any earlier. If function 0 is a
++	 * switch upstream port, this link state is parent_link to all
++	 * subordinate ones.
+ 	 */
++	if (pdev != link->downstream)
++		goto out;
++
+ 	pcie_config_aspm_link(link, 0);
+ 	list_del(&link->sibling);
+ 	free_link_state(link);
+@@ -1270,6 +1270,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
+ 		pcie_config_aspm_path(parent_link);
+ 	}
  
- 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
- 		dev_err(adev->dev,
-@@ -1038,7 +1039,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v, u32 f
- 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
- 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
- 
--	mutex_lock(&adev->virt.rlcg_reg_lock);
-+	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
- 
- 	if (reg_access_ctrl->spare_int)
- 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
-@@ -1097,7 +1098,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v, u32 f
- 
- 	ret = readl(scratch_reg0);
- 
--	mutex_unlock(&adev->virt.rlcg_reg_lock);
-+	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
- 
- 	return ret;
++ out:
+ 	mutex_unlock(&aspm_lock);
+ 	up_read(&pci_bus_sem);
  }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 5381b8d596e62..0ca73343a7689 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -279,7 +279,8 @@ struct amdgpu_virt {
- 	/* the ucode id to signal the autoload */
- 	uint32_t autoload_ucode_id;
- 
--	struct mutex rlcg_reg_lock;
-+	/* Spinlock to protect access to the RLCG register interface */
-+	spinlock_t rlcg_reg_lock;
- 
- 	union amd_sriov_ras_caps ras_en_caps;
- 	union amd_sriov_ras_caps ras_telemetry_en_caps;
 -- 
 2.39.5
 
