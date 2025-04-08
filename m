@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700EC224F6;
-	Tue,  8 Apr 2025 11:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A96264614;
+	Tue,  8 Apr 2025 11:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111097; cv=none; b=eCGxWUt2bLHGiUmfhnXfSQf6o5LAO8IszJ0ttYUCDx5zCiCxkSxRJWZhTLnVnIQ8yufk02Q/VL4/RBfoYHCzCoflNlY2lFymbKZDvOq/RDijza9e8sQLEt44yXWMaDsdwdzRdQDDmDFCg79CzH9b20EUUgX+cJrc3a6Fcs0RsKQ=
+	t=1744111100; cv=none; b=b4H3v1VpZUxtAhm5nWsWf3tzdh6PmUaBvnR/N98Ke026NJDmi0EaNFfdnA5ODzeY/hywElUDaZqxHl/ogCFQ63R5xaD5GbTDEquSRxUsvoEosS1fl3vC7a9TlgLnDb8ZSksvSuZCFBCD8UDz0VhWsno5vd/kCiMpCIhw6Sp7umg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111097; c=relaxed/simple;
-	bh=5lwqtocACR1gOzM5Ab1io7mZUIdjYKPLY4eossYfSMc=;
+	s=arc-20240116; t=1744111100; c=relaxed/simple;
+	bh=MKeP33v8MfBJCf5qoaSju+O8jaEEV1a3MxcD2HGf/3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i9/LqfmM/TR0nBWVcNNLAVtO4qk/6pZwMRW/LGsShZVpFBTVXGxG6R0AzzcN6b+kOMA+ebituY/d6EAt7SxfYClSfzzHYYHsVQiptJQ2nA96e3Eb8cz55mzpAT+BYRxGxAbqwttbcnMyrX4kjqzARflRV1CVn0OhbBHFOiQ5IW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bbm5dcue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PGtg5YwzQGOu2SB2jGWVw+6gkADpOcMdTFjc2PgBKLIuFl+/yl5SEBnFHWIQpXFJrxfBwwpFidUZv/gPUNZyE2mhmLeodT6dwz2DPIoD5TJauzoOuDMk9QpZjN3nPY1wnim1Gk21alZ7osiO2kUV7PPBPeyXST9YSJNOh9/ygsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqk11jFT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bbm5dcue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40D6C4CEE5;
-	Tue,  8 Apr 2025 11:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqk11jFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9515FC4CEE5;
+	Tue,  8 Apr 2025 11:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111097;
-	bh=5lwqtocACR1gOzM5Ab1io7mZUIdjYKPLY4eossYfSMc=;
+	s=korg; t=1744111099;
+	bh=MKeP33v8MfBJCf5qoaSju+O8jaEEV1a3MxcD2HGf/3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bbm5dcuezTlsQh4LZ8mppwdisucnRjvzNjQd1J7Z2kzJ9+rZ8tNOOUxFV0FdFTWmM
-	 ZAfYI4X+XaWZSvKW5KF5lrxA/230SGlyB+il2qAOGGQJzP502Mm+1udCYa5fKJhRgh
-	 L0Vg99uUTltqmb+GUvMfAmOoxVzWlwUVfIshQGj4=
+	b=bqk11jFTjHk8put8zfRGDgfMe0q6BLFwYBOjN6IDTdK1Zm3oGCz3Jdb4EWHy1cLvU
+	 xA728rB0TixAZHRZ4vzwy0fUbO5zL5+uMUt3NRzdMLVdFhO2CD7tPhGImILKkaQ0FN
+	 n8qbVqWbmxyawCR53pG617RryVe/UlTX+JspM6lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jim Quinlan <james.quinlan@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 308/731] PCI: brcmstb: Fix error path after a call to regulator_bulk_get()
-Date: Tue,  8 Apr 2025 12:43:25 +0200
-Message-ID: <20250408104921.441448245@linuxfoundation.org>
+Subject: [PATCH 6.14 309/731] PCI: brcmstb: Fix potential premature regulator disabling
+Date: Tue,  8 Apr 2025 12:43:26 +0200
+Message-ID: <20250408104921.464452244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,43 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit 3651ad5249c51cf7eee078e12612557040a6bdb4 ]
+[ Upstream commit b7de1b60ecab2f7b6f05d8116e93228a0bbb8563 ]
 
-If the regulator_bulk_get() returns an error and no regulators
-are created, we need to set their number to zero.
+The platform supports enabling and disabling regulators only on
+ports below the Root Complex.
 
-If we don't do this and the PCIe link up fails, a call to the
-regulator_bulk_free() will result in a kernel panic.
-
-While at it, print the error value, as we cannot return an error
-upwards as the kernel will WARN() on an error from add_bus().
+Thus, we need to verify this both when adding and removing the bus,
+otherwise regulators may be disabled prematurely when a bus further
+down the topology is removed.
 
 Fixes: 9e6be018b263 ("PCI: brcmstb: Enable child bus device regulators from DT")
 Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250214173944.47506-5-james.quinlan@broadcom.com
-[kwilczynski: commit log, use comma in the message to match style with
-other similar messages]
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250214173944.47506-6-james.quinlan@broadcom.com
+[kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-brcmstb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index 8b728c0f7f421..1495d770b4c2c 100644
+index 1495d770b4c2c..3d7dbfcd689e3 100644
 --- a/drivers/pci/controller/pcie-brcmstb.c
 +++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1368,7 +1368,8 @@ static int brcm_pcie_add_bus(struct pci_bus *bus)
+@@ -1392,7 +1392,7 @@ static void brcm_pcie_remove_bus(struct pci_bus *bus)
+ 	struct subdev_regulators *sr = pcie->sr;
+ 	struct device *dev = &bus->dev;
  
- 		ret = regulator_bulk_get(dev, sr->num_supplies, sr->supplies);
- 		if (ret) {
--			dev_info(dev, "No regulators for downstream device\n");
-+			dev_info(dev, "Did not get regulators, err=%d\n", ret);
-+			pcie->sr = NULL;
- 			goto no_regulators;
- 		}
+-	if (!sr)
++	if (!sr || !bus->parent || !pci_is_root_bus(bus->parent))
+ 		return;
  
+ 	if (regulator_bulk_disable(sr->num_supplies, sr->supplies))
 -- 
 2.39.5
 
