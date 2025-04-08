@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2AD3AC1C;
-	Tue,  8 Apr 2025 11:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24962676DE;
+	Tue,  8 Apr 2025 11:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112956; cv=none; b=KeTEH5Nl3bAtc9SPNPhrz6BzyjwIU4dmJ90cZFxjnN3CPr2yj5RSaopp/lBvwTQz0r/mNlTCWbM4XIsd6iLohcXXxntUnTV55+XwCYxFmbr3NJM7Y0htQyUssJqKwDFdNU7mVIPDOzSAwBBSo09FsogDPSTlDOWhgS6IDyYqrCQ=
+	t=1744112958; cv=none; b=FN/z/FfwWV8emGAPUgDiS2sPY/bKaPJzIX89FV+sjL/rs20yDmYOdqCSyBSRWsUaPJjw2/jzCt6zXtAvn3tuMn8wIDUvKOhLW0wDE9acnGG3NJHaV41zRVKXvDspJApQWxY0qy/XwY9ttiQGk+eV8dptqjIVR7z8eXypdnSw0UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112956; c=relaxed/simple;
-	bh=APQpdh38OJZNTxalekmIQ7L+jlehVHeyuab3zTj1KKY=;
+	s=arc-20240116; t=1744112958; c=relaxed/simple;
+	bh=uizRlo33MIM1CiliC+xHX+WO1UM5P3ZobZmviZVPRB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L1CsBkFQneB/xq8eMXGJ6eE+JZKQo48hFj94+oJWZRkNbw3tZdqgQdQHkjGKMnhWqcXvXhn3AJH8Pcz9KjdN4K35SxXigYqXFXuS1tB/kp1+RlbG3PoGB8YQhUxqPQbCz4TLbdtkQcKGfURjl8s5Yp2dvWUpgwp9iFZN+6V6vCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXchbvK3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f21EuObMzsSN7xU80PL+W2bfmu+mYQdTVGQCaqnRu3bbEAbPghjOweXbSr8APc/0Yys8A0j9G2RU3IpXcikUnPWuwWvqv7zkq08Lugi5IdO0OIu0tfviZZTk7MPpWWpDdUX4s2gde/fGm8B5/JFYdEa7Z4w8nZehUvOnQXtW2M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRgS1V4Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXchbvK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A39C4CEE5;
-	Tue,  8 Apr 2025 11:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRgS1V4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6399CC4CEE5;
+	Tue,  8 Apr 2025 11:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112956;
-	bh=APQpdh38OJZNTxalekmIQ7L+jlehVHeyuab3zTj1KKY=;
+	s=korg; t=1744112958;
+	bh=uizRlo33MIM1CiliC+xHX+WO1UM5P3ZobZmviZVPRB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXchbvK3ZG5+0camcmf1dWcolKOFSWGPCrdv5MQUazGvbDB/YgY30yH488JwOUGXe
-	 LdqDsWO4d6FVx/VWXPbVZL6I360fp0RGafgyLsf62db4+viRiuZAbN1FWGbgttFlQw
-	 i0EQ4pAd2tQSqgR/kMjRCojtleSP3yDdlqu0Xe80=
+	b=DRgS1V4ZCBheKkdcbFocm2Yi99b8SV3p9zjBGKntE9H3uOUZuBbz2VdDwtE+s75AA
+	 lHRd/jubOCNLb9OSTx89l8XkSDRd59qQrBAHqPbnvJouvpCK61uO4jQxEcAp48cTo6
+	 VjZA+HDg2j9cY+6mlM0gkp5CDpVUjfA2YcqNbFI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 5.15 261/279] ntb_perf: Delete duplicate dmaengine_unmap_put() call in perf_copy_chunk()
-Date: Tue,  8 Apr 2025 12:50:44 +0200
-Message-ID: <20250408104833.428044167@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 262/279] btrfs: handle errors from btrfs_dec_ref() properly
+Date: Tue,  8 Apr 2025 12:50:45 +0200
+Message-ID: <20250408104833.455189858@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -44,45 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 4279e72cab31dd3eb8c89591eb9d2affa90ab6aa upstream.
+commit 5eb178f373b4f16f3b42d55ff88fc94dd95b93b1 upstream.
 
-The function call “dmaengine_unmap_put(unmap)” was used in an if branch.
-The same call was immediately triggered by a subsequent goto statement.
-Thus avoid such a call repetition.
+In walk_up_proc() we BUG_ON(ret) from btrfs_dec_ref().  This is
+incorrect, we have proper error handling here, return the error.
 
-This issue was detected by using the Coccinelle software.
-
-Fixes: 5648e56d03fa ("NTB: ntb_perf: Add full multi-port NTB API support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/test/ntb_perf.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/btrfs/extent-tree.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/ntb/test/ntb_perf.c
-+++ b/drivers/ntb/test/ntb_perf.c
-@@ -839,10 +839,8 @@ static int perf_copy_chunk(struct perf_t
- 	dma_set_unmap(tx, unmap);
- 
- 	ret = dma_submit_error(dmaengine_submit(tx));
--	if (ret) {
--		dmaengine_unmap_put(unmap);
-+	if (ret)
- 		goto err_free_resource;
--	}
- 
- 	dmaengine_unmap_put(unmap);
- 
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -5461,7 +5461,10 @@ static noinline int walk_up_proc(struct
+ 				ret = btrfs_dec_ref(trans, root, eb, 1);
+ 			else
+ 				ret = btrfs_dec_ref(trans, root, eb, 0);
+-			BUG_ON(ret); /* -ENOMEM */
++			if (ret) {
++				btrfs_abort_transaction(trans, ret);
++				return ret;
++			}
+ 			if (is_fstree(root->root_key.objectid)) {
+ 				ret = btrfs_qgroup_trace_leaf_items(trans, eb);
+ 				if (ret) {
 
 
