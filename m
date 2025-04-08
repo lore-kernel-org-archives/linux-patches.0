@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB9C207E14;
-	Tue,  8 Apr 2025 11:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6556126561C;
+	Tue,  8 Apr 2025 11:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111453; cv=none; b=AMTLGTo46ZLApbXaVe4A/WyTNH8zKK79Fm3Jm94Nyy9HWIy4zqvaxk6z/n3XgHymwmAh+dZHQ0MIpFiRqBKGL9FbU4N0Q7gSn7QlsfZC96r9uw5YEEITWAiKDrLxSAH96hOx7FIKKf9JEf2O00ilJzCwH7+mQP15WCwR6W2LSMA=
+	t=1744111456; cv=none; b=q1mtQXvBMq69zCkOcf0jc9cqWHxUh4Vpx6awch/v3XL/+kCrqAg7fsXbLt6pxkwvxbprLsCa7MgvptSLjbH5ZL7UjpJY/Jq+i65ERkqiqyvuT9XcfLceaNLCqw/AKWo5lH86pbQiFlmlGKWpR4mRi+wVJNASOh8ebR4H2XJAc9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111453; c=relaxed/simple;
-	bh=n+ceyoTN1H7Om8Z7fR86I7mygkOm9aPGPxrITuKkB/w=;
+	s=arc-20240116; t=1744111456; c=relaxed/simple;
+	bh=u4d5DT9FQNIlCVsypp6NU2Q5QHLXMIxS1FCFGaK1LQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsU6OosKLlMo0oV9BLFh2s7QA9urCPuPjoFJk2pOf+YOnXhjW3peMjY8NtYFtCe1qSxYNvtTRZbosKttP0TxBbX78ePS3htaj2B2Y2LTKWKz7ciC+MsGHSYhUDHK0qxHPTQTyBm6gdK2KVVncp7l9K3WEUSNotMY4toZADO4HxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh9EI9iw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7tHs3cNon4sh3mesIMHW4409hl/qR6sDnoLKzwkjEwy4R6Ltqggf+mzkLTbXmL5Y6vC5ppKt5EHZNgZumDcJpg2pfYiL4/KgzB82ntyppANovgrQh91Yd0PMaS9ZAmH1Kd+904Jl/o0PW3hAVqVhINbPQpdENvk0UlsKWuZ2fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbZOXIqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh9EI9iw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C89C4CEE5;
-	Tue,  8 Apr 2025 11:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbZOXIqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB061C4CEE5;
+	Tue,  8 Apr 2025 11:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111453;
-	bh=n+ceyoTN1H7Om8Z7fR86I7mygkOm9aPGPxrITuKkB/w=;
+	s=korg; t=1744111456;
+	bh=u4d5DT9FQNIlCVsypp6NU2Q5QHLXMIxS1FCFGaK1LQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rh9EI9iwNl2yOxUMeoqi7Ul5Rl99afMa2m7lmuvFpr4qn8f+dMfL3VKiWyY2V7n+N
-	 cDvPWe35DxaU8CTIaFGgJJfAlyX+Z5yv1e+oNe/bEYAyT0iNy0AwX4+VJcUsnuEULl
-	 EnRltfN/4bREXXzthVx3odP5hb8l26nkyiqiSP04=
+	b=lbZOXIqUVY7UFMfAP7sjdsd3edBp/5rX5hwumNarFlg/2VOqX9IxIzoHnw/Ky6Tfi
+	 whY1zEeZguCWeoMj0Sh/1Qe0DFG11RnOqgNAjHWevbDxhq+sG5DRzeRQ6bIfJUVXyu
+	 y2KK4FasuaoUY11xcOXi2Av0RbrqcfJY9XrBNJ+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
+	Benson Leung <bleung@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 437/731] staging: gpib: Fix pr_err format warning
-Date: Tue,  8 Apr 2025 12:45:34 +0200
-Message-ID: <20250408104924.437721048@linuxfoundation.org>
+Subject: [PATCH 6.14 438/731] usb: typec: thunderbolt: Fix loops that iterate TYPEC_PLUG_SOP_P and TYPEC_PLUG_SOP_PP
+Date: Tue,  8 Apr 2025 12:45:35 +0200
+Message-ID: <20250408104924.460813000@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,43 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Benson Leung <bleung@chromium.org>
 
-[ Upstream commit 03ec050c437bb4e7c5d215bbeedaa93932f13b35 ]
+[ Upstream commit b51c1e8d2f49342b2087338c72511326fdb7b172 ]
 
-This patch fixes the following compile warning:
+Fixes these Smatch static checker warnings:
+drivers/usb/typec/altmodes/thunderbolt.c:116 tbt_altmode_work() warn: why is zero skipped 'i'
+drivers/usb/typec/altmodes/thunderbolt.c:147 tbt_enter_modes_ordered() warn: why is zero skipped 'i'
+drivers/usb/typec/altmodes/thunderbolt.c:328 tbt_altmode_remove() warn: why is zero skipped 'i'
 
-drivers/staging/gpib/hp_82341/hp_82341.c: In function 'hp_82341_attach':
-./include/linux/kern_levels.h:5:25: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'u32' {aka 'unsigned int'} [-Wformat=]
-
-It was introduced in
-
-commit baf8855c9160 ("staging: gpib: fix address space mixup")
-
-but was not detected as the build of the driver depended on BROKEN.
-
-Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250124105900.27592-2-dpenkler@gmail.com
+Fixes: 100e25738659 ("usb: typec: Add driver for Thunderbolt 3 Alternate Mode")
+Signed-off-by: Benson Leung <bleung@chromium.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/Z5Psp615abaaId6J@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/hp_82341/hp_82341.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/altmodes/thunderbolt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/gpib/hp_82341/hp_82341.c b/drivers/staging/gpib/hp_82341/hp_82341.c
-index 0ddae295912fa..589c4fee1d562 100644
---- a/drivers/staging/gpib/hp_82341/hp_82341.c
-+++ b/drivers/staging/gpib/hp_82341/hp_82341.c
-@@ -718,7 +718,7 @@ int hp_82341_attach(gpib_board_t *board, const gpib_board_config_t *config)
- 	for (i = 0; i < hp_82341_num_io_regions; ++i) {
- 		start_addr = iobase + i * hp_priv->io_region_offset;
- 		if (!request_region(start_addr, hp_82341_region_iosize, "hp_82341")) {
--			pr_err("hp_82341: failed to allocate io ports 0x%lx-0x%lx\n",
-+			pr_err("hp_82341: failed to allocate io ports 0x%x-0x%x\n",
- 			       start_addr,
- 			       start_addr + hp_82341_region_iosize - 1);
- 			return -EIO;
+diff --git a/drivers/usb/typec/altmodes/thunderbolt.c b/drivers/usb/typec/altmodes/thunderbolt.c
+index 1b475b1d98e78..94e47d30e5989 100644
+--- a/drivers/usb/typec/altmodes/thunderbolt.c
++++ b/drivers/usb/typec/altmodes/thunderbolt.c
+@@ -112,7 +112,7 @@ static void tbt_altmode_work(struct work_struct *work)
+ 	return;
+ 
+ disable_plugs:
+-	for (int i = TYPEC_PLUG_SOP_PP; i > 0; --i) {
++	for (int i = TYPEC_PLUG_SOP_PP; i >= 0; --i) {
+ 		if (tbt->plug[i])
+ 			typec_altmode_put_plug(tbt->plug[i]);
+ 
+@@ -143,7 +143,7 @@ static int tbt_enter_modes_ordered(struct typec_altmode *alt)
+ 	if (tbt->plug[TYPEC_PLUG_SOP_P]) {
+ 		ret = typec_cable_altmode_enter(alt, TYPEC_PLUG_SOP_P, NULL);
+ 		if (ret < 0) {
+-			for (int i = TYPEC_PLUG_SOP_PP; i > 0; --i) {
++			for (int i = TYPEC_PLUG_SOP_PP; i >= 0; --i) {
+ 				if (tbt->plug[i])
+ 					typec_altmode_put_plug(tbt->plug[i]);
+ 
+@@ -324,7 +324,7 @@ static void tbt_altmode_remove(struct typec_altmode *alt)
+ {
+ 	struct tbt_altmode *tbt = typec_altmode_get_drvdata(alt);
+ 
+-	for (int i = TYPEC_PLUG_SOP_PP; i > 0; --i) {
++	for (int i = TYPEC_PLUG_SOP_PP; i >= 0; --i) {
+ 		if (tbt->plug[i])
+ 			typec_altmode_put_plug(tbt->plug[i]);
+ 	}
 -- 
 2.39.5
 
