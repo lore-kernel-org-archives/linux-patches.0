@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888E0268FF0;
-	Tue,  8 Apr 2025 12:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F220CCD8;
+	Tue,  8 Apr 2025 12:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115308; cv=none; b=sAPBXoADvMqYwmZkolbJ/PEeyqYsW4eAeqwnEjXOfnXrk1MrrBix1G9Oat1aSQ0i5aIzL0XKFHSpApfz28FS824s3ZS0o8V2y501dUTPGLoKerZ3CeP3pjmOyf3QtHzfO6hGIZC2yryLZKE2M9JS3sHcJSX00gz8lMAV0UuB+Go=
+	t=1744115311; cv=none; b=MjZ6QMo3kA0wNdWruTl6idEJU1Ybmbnl3ptBP4PIz0BHk39mCGZB2Z9eTeivFn/JN9uY7cml7T08xVnFU88ellDrkIQlGM7A4+YjJsy0vzhGpamkRJmAHQe/dtTsHjcxFJTkwsHdX3rxs1kZBysXWEqx3Ijvzsu3yxNp/7qZ4Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115308; c=relaxed/simple;
-	bh=LuJE7POaSfn21Ry+OMeszzEDsgy4p8sTJwq0owslzc4=;
+	s=arc-20240116; t=1744115311; c=relaxed/simple;
+	bh=KB1b5zYMoUA04Uznv6r9FAA9ssPEgVDLOtmwMZVcWoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkPFrk6WfoWdDtI43r4xmUG14i1ugv7YQxkFYr7+H7RNfOgSZYtHn4/BCZTVI0mjBJbrZlFVYEzQbE4YF0YXJYCyx9gfftEvGgRRRr4Cjbg2OmTNJq9A+U64FKrVRRiwVcOiCxbtot2RNuGU99vr1bFOkwo6NoWXs38zVfj5YyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfEIFP3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvgqlBneMpsALq+0nRqGhMd8+/N2fnf4VOBRhv94zch3xj2SvKAn9i8LJLqmvgegzuZ4WTcwj+IOERqKWXI8XNAoZ9dE3KtpRrxof9Wi3JPgIsJlyu37rOnQuN70+ozvzfMQNPAE+EST4+tl4tT6hNVk8A5eYT4a3nfB9vDWeNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZdY7lvT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfEIFP3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A95C4CEE7;
-	Tue,  8 Apr 2025 12:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZdY7lvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FD3C4CEE7;
+	Tue,  8 Apr 2025 12:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115308;
-	bh=LuJE7POaSfn21Ry+OMeszzEDsgy4p8sTJwq0owslzc4=;
+	s=korg; t=1744115311;
+	bh=KB1b5zYMoUA04Uznv6r9FAA9ssPEgVDLOtmwMZVcWoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfEIFP3QwfLe5P8N74RxO6NCfZTSI9oVBRL0Ayfp5tdmbtXeaBCWAdASg2FyrBihx
-	 ha+0Y0ntb16yvRLEIuSZizV+rQO9PWRJrfZFeEtXMGemwts85/6iKPRPrI0o9QNdWu
-	 XDFYgcPLy0y06x+ZTxedUg9Kh+hHHt9h/MJC6FO0=
+	b=SZdY7lvTTmDxU9nqoI20Ai17mKk1hs4IBjafI3A1b2TQGyyzX47yRqW1yQfztXYPP
+	 dbAD9huBRhJNXygwpSoDd7OFBJC+hAfxDfwAr8BGJ25JF0bpZEL20/3ffwgwrbL7e9
+	 GNy6cyWLCuYXH3SqX6BXJvuofhn11Azt0z0H/CRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Debin Zhu <mowenroot@163.com>,
-	Bitao Ouyang <1985755126@qq.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 387/499] netlabel: Fix NULL pointer exception caused by CALIPSO on IPv4 sockets
-Date: Tue,  8 Apr 2025 12:49:59 +0200
-Message-ID: <20250408104900.881247741@linuxfoundation.org>
+Subject: [PATCH 6.13 378/499] nvme-pci: skip nvme_write_sq_db on empty rqlist
+Date: Tue,  8 Apr 2025 12:49:50 +0200
+Message-ID: <20250408104900.659375523@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,84 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Debin Zhu <mowenroot@163.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 078aabd567de3d63d37d7673f714e309d369e6e2 ]
+[ Upstream commit 288ff0d10beb069355036355d5f7612579dc869c ]
 
-When calling netlbl_conn_setattr(), addr->sa_family is used
-to determine the function behavior. If sk is an IPv4 socket,
-but the connect function is called with an IPv6 address,
-the function calipso_sock_setattr() is triggered.
-Inside this function, the following code is executed:
+nvme_submit_cmds() should check the rqlist before calling
+nvme_write_sq_db(); if the list is empty, it must return immediately.
 
-sk_fullsock(__sk) ? inet_sk(__sk)->pinet6 : NULL;
-
-Since sk is an IPv4 socket, pinet6 is NULL, leading to a
-null pointer dereference.
-
-This patch fixes the issue by checking if inet6_sk(sk)
-returns a NULL pointer before accessing pinet6.
-
-Signed-off-by: Debin Zhu <mowenroot@163.com>
-Signed-off-by: Bitao Ouyang <1985755126@qq.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Link: https://patch.msgid.link/20250401124018.4763-1-mowenroot@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: beadf0088501 ("nvme-pci: reverse request order in nvme_queue_rqs")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/nvme/host/pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index dbcea9fee6262..62618a058b8fa 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1072,8 +1072,13 @@ static int calipso_sock_getattr(struct sock *sk,
- 	struct ipv6_opt_hdr *hop;
- 	int opt_len, len, ret_val = -ENOMSG, offset;
- 	unsigned char *opt;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
-+		return -EAFNOSUPPORT;
- 
-+	txopts = txopt_get(pinfo);
- 	if (!txopts || !txopts->hopopt)
- 		goto done;
- 
-@@ -1125,8 +1130,13 @@ static int calipso_sock_setattr(struct sock *sk,
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 99022be16d2a9..e6c27175880bb 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -990,6 +990,9 @@ static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct rq_list *rqlist)
  {
- 	int ret_val;
- 	struct ipv6_opt_hdr *old, *new;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
-+		return -EAFNOSUPPORT;
+ 	struct request *req;
  
-+	txopts = txopt_get(pinfo);
- 	old = NULL;
- 	if (txopts)
- 		old = txopts->hopopt;
-@@ -1153,8 +1163,13 @@ static int calipso_sock_setattr(struct sock *sk,
- static void calipso_sock_delattr(struct sock *sk)
- {
- 	struct ipv6_opt_hdr *new_hop;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
++	if (rq_list_empty(rqlist))
 +		return;
- 
-+	txopts = txopt_get(pinfo);
- 	if (!txopts || !txopts->hopopt)
- 		goto done;
- 
++
+ 	spin_lock(&nvmeq->sq_lock);
+ 	while ((req = rq_list_pop(rqlist))) {
+ 		struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
 -- 
 2.39.5
 
