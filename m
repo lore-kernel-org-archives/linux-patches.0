@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A152686BC;
-	Tue,  8 Apr 2025 12:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDCA2686BC;
+	Tue,  8 Apr 2025 12:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114263; cv=none; b=t1EoJTyRrw2ysnk1Hn1nDHqALuGCa1juCGmSCnskjhjErT59i/MaMGxFdYs+lIcygtA2iQFDG4pDyesQ66AYUGKVuyUOYXzTK4B5OoefnwMPAZUnElxGQp9XVrEmx44XvEq0jyDXBgR1ViKIB4nUIl9xUhFETi6A4o15UMfC+Bk=
+	t=1744114266; cv=none; b=RR42N3X4WI8NZZQQaZ0zakyWjuNNJnelpdhersfVUVHkT9O+H5kwfxk+jK4VygkDTLgSrB9FuoEwxESZVeckcWnaantEgzMMrGR2i7kWvh7uksdf+kU9eaVKUhCk4fEugaP1JFXgFdZgzEvxWoKYfIirPn7cO1cxy3IO1PeETLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114263; c=relaxed/simple;
-	bh=zpiLYDrILTXHEX9QPxaKBZwydK/F3Tu48kl1cIc3Psc=;
+	s=arc-20240116; t=1744114266; c=relaxed/simple;
+	bh=a4duq88HcugUXLifFySfpJUcBAEisQMIbuDkCeM9sEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZZK6bsW7Yv7y5MP6DFOQ/fvJv6TN6f8XKsqCB4RFkkuoy7FD7swLhvcMhlD0ivn/iV2cghvG/efdc3iemvdYIwCTgYH0NkRzFflZ9Z+nuiwq9j24HXjyiP1sL5bHfICHJ0GHNZttCL2xJfOJVNfYYHORU9j5Yba1J2pVpAPPaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2BO1x7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r6uQ5WDzezjPZ/FpMALJ60OsejxrrcMoegj7bBRKTaL3LZI/zz1dgav0RTIvTpI6VI9bB1phrxmpyRWXWIdS5AS10u8US9HT3fE+3clYXjY3V0Tjho89d2Hqkstb9if8vE2o4yUiR762l5sVoUIBCzRAcpJlvRWZlS46TrHlF9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZlp5MbC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2BO1x7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD9EC4CEE5;
-	Tue,  8 Apr 2025 12:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZlp5MbC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996A3C4CEE5;
+	Tue,  8 Apr 2025 12:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114263;
-	bh=zpiLYDrILTXHEX9QPxaKBZwydK/F3Tu48kl1cIc3Psc=;
+	s=korg; t=1744114266;
+	bh=a4duq88HcugUXLifFySfpJUcBAEisQMIbuDkCeM9sEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2BO1x7a6vVTGgFHEpznKirySROmWP2+mqCkm/gelEqfltXoV+rTZK2hlmWjItxjs
-	 n3pdpOSm63CUgt9SIQ65DuswsvzB1L9v9eSUhEi3rH5Lte2NE6jLXIoEMB/kTI0edH
-	 rEk0wECxu0vh3c4b7KQ0GyZfRFRHaMWNVUsHjQ5o=
+	b=cZlp5MbCVDCxsmXFameMZ8gnvujQucCsBFINb5REejIUO/AXf9r5y+ranYz4ScYHa
+	 FOIgTGzWuhQTJ2ZahEzUgvJYEhwUISv60TgVWqiv2L4UTBgbeDazV850McfHgThWEU
+	 MegUD14AaUv2h1C2zw/gJL45vyZcFE+CCHP2Ia3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konstantin Andreev <andreev@swemel.ru>,
 	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 006/499] smack: dont compile ipv6 code unless ipv6 is configured
-Date: Tue,  8 Apr 2025 12:43:38 +0200
-Message-ID: <20250408104851.413859309@linuxfoundation.org>
+Subject: [PATCH 6.13 007/499] smack: ipv4/ipv6: tcp/dccp/sctp: fix incorrect child socket label
+Date: Tue,  8 Apr 2025 12:43:39 +0200
+Message-ID: <20250408104851.439219045@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
@@ -53,129 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit bfcf4004bcbce2cb674b4e8dbd31ce0891766bac ]
+[ Upstream commit 6cce0cc3861337b3ad8d4ac131d6e47efa0954ec ]
 
-I want to be sure that ipv6-specific code
-is not compiled in kernel binaries
-if ipv6 is not configured.
+Since inception [1], SMACK initializes ipv* child socket security
+for connection-oriented communications (tcp/sctp/dccp)
+during accept() syscall, in the security_sock_graft() hook:
 
-[1] was getting rid of "unused variable" warning, but,
-with that, it also mandated compilation of a handful ipv6-
-specific functions in ipv4-only kernel configurations:
+| void smack_sock_graft(struct sock *sk, ...)
+| {
+|     // only ipv4 and ipv6 are eligible here
+|     // ...
+|     ssp = sk->sk_security; // socket security
+|     ssp->smk_in = skp;     // process label: smk_of_current()
+|     ssp->smk_out = skp;    // process label: smk_of_current()
+| }
 
-smk_ipv6_localhost, smack_ipv6host_label, smk_ipv6_check.
+This approach is incorrect for two reasons:
 
-Their compiled bodies are likely to be removed by compiler
-from the resulting binary, but, to be on the safe side,
-I remove them from the compiler view.
+A) initialization occurs too late for child socket security:
 
-[1]
-Fixes: 00720f0e7f28 ("smack: avoid unused 'sip' variable warning")
+   The child socket is created by the kernel once the handshake
+   completes (e.g., for tcp: after receiving ack for syn+ack).
+
+   Data can legitimately start arriving to the child socket
+   immediately, long before the application calls accept()
+   on the socket.
+
+   Those data are (currently — were) processed by SMACK using
+   incorrect child socket security attributes.
+
+B) Incoming connection requests are handled using the listening
+   socket's security, hence, the child socket must inherit the
+   listening socket's security attributes.
+
+   smack_sock_graft() initilizes the child socket's security with
+   a process label, as is done for a new socket()
+
+   But ... the process label is not necessarily the same as the
+   listening socket label. A privileged application may legitimately
+   set other in/out labels for a listening socket.
+
+   When this happens, SMACK processes incoming packets using
+   incorrect socket security attributes.
+
+In [2] Michael Lontke noticed (A) and fixed it in [3] by adding
+socket initialization into security_sk_clone_security() hook like
+
+| void smack_sk_clone_security(struct sock *oldsk, struct sock *newsk)
+| {
+|    *(struct socket_smack *)newsk->sk_security =
+|    *(struct socket_smack *)oldsk->sk_security;
+| }
+
+This initializes the child socket security with the parent (listening)
+socket security at the appropriate time.
+
+I was forced to revisit this old story because
+
+smack_sock_graft() was left in place by [3] and continues overwriting
+the child socket's labels with the process label,
+and there might be a reason for this, so I undertook a study.
+
+If the process label differs from the listening socket's labels,
+the following occurs for ipv4:
+
+assigning the smk_out is not accompanied by netlbl_sock_setattr,
+so the outgoing packet's cipso label does not change.
+
+So, the only effect of this assignment for interhost communications
+is a divergence between the program-visible “out” socket label and
+the cipso network label. For intrahost communications this label,
+however, becomes visible via secmark netfilter marking, and is
+checked for access rights by the client, receiving side.
+
+Assigning the smk_in affects both interhost and intrahost
+communications: the server begins to check access rights against
+an wrong label.
+
+Access check against wrong label (smk_in or smk_out),
+unsurprisingly fails, breaking the connection.
+
+The above affects protocols that calls security_sock_graft()
+during accept(), namely: {tcp,dccp,sctp}/{ipv4,ipv6}
+One extra security_sock_graft() caller, crypto/af_alg.c`af_alg_accept
+is not affected, because smack_sock_graft() does nothing for PF_ALG.
+
+To reproduce, assign non-default in/out labels to a listening socket,
+setup rules between these labels and client label, attempt to connect
+and send some data.
+
+Ipv6 specific: ipv6 packets do not convey SMACK labels. To reproduce
+the issue in interhost communications set opposite labels in
+/smack/ipv6host on both hosts.
+Ipv6 intrahost communications do not require tricking, because SMACK
+labels are conveyed via secmark netfilter marking.
+
+So, currently smack_sock_graft() is not useful, but harmful,
+therefore, I have removed it.
+
+This fixes the issue for {tcp,dccp}/{ipv4,ipv6},
+but not sctp/{ipv4,ipv6}.
+
+Although this change is necessary for sctp+smack to function
+correctly, it is not sufficient because:
+sctp/ipv4 does not call security_sk_clone() and
+sctp/ipv6 ignores SMACK completely.
+
+These are separate issues, belong to other subsystem,
+and should be addressed separately.
+
+[1] 2008-02-04,
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+[2] Michael Lontke, 2022-08-31, SMACK LSM checks wrong object label
+                                during ingress network traffic
+Link: https://lore.kernel.org/linux-security-module/6324997ce4fc092c5020a4add075257f9c5f6442.camel@elektrobit.com/
+
+[3] 2022-08-31, michael.lontke,
+    commit 4ca165fc6c49 ("SMACK: Add sk_clone_security LSM hook")
 
 Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
 Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack.h     |  6 ++++++
- security/smack/smack_lsm.c | 10 +++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ security/smack/smack_lsm.c | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/security/smack/smack.h b/security/smack/smack.h
-index dbf8d7226eb56..1c3656b5e3b91 100644
---- a/security/smack/smack.h
-+++ b/security/smack/smack.h
-@@ -152,6 +152,7 @@ struct smk_net4addr {
- 	struct smack_known	*smk_label;	/* label */
- };
- 
-+#if IS_ENABLED(CONFIG_IPV6)
- /*
-  * An entry in the table identifying IPv6 hosts.
-  */
-@@ -162,7 +163,9 @@ struct smk_net6addr {
- 	int			smk_masks;	/* mask size */
- 	struct smack_known	*smk_label;	/* label */
- };
-+#endif /* CONFIG_IPV6 */
- 
-+#ifdef SMACK_IPV6_PORT_LABELING
- /*
-  * An entry in the table identifying ports.
-  */
-@@ -175,6 +178,7 @@ struct smk_port_label {
- 	short			smk_sock_type;	/* Socket type */
- 	short			smk_can_reuse;
- };
-+#endif /* SMACK_IPV6_PORT_LABELING */
- 
- struct smack_known_list_elem {
- 	struct list_head	list;
-@@ -314,7 +318,9 @@ extern struct smack_known smack_known_web;
- extern struct mutex	smack_known_lock;
- extern struct list_head smack_known_list;
- extern struct list_head smk_net4addr_list;
-+#if IS_ENABLED(CONFIG_IPV6)
- extern struct list_head smk_net6addr_list;
-+#endif /* CONFIG_IPV6 */
- 
- extern struct mutex     smack_onlycap_lock;
- extern struct list_head smack_onlycap_list;
 diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 0c476282e2794..bc8f0d0b4c7cd 100644
+index bc8f0d0b4c7cd..27ae52f54a6bf 100644
 --- a/security/smack/smack_lsm.c
 +++ b/security/smack/smack_lsm.c
-@@ -2508,6 +2508,7 @@ static struct smack_known *smack_ipv4host_label(struct sockaddr_in *sip)
- 	return NULL;
+@@ -4366,29 +4366,6 @@ static int smack_socket_getpeersec_dgram(struct socket *sock,
+ 	return 0;
  }
  
-+#if IS_ENABLED(CONFIG_IPV6)
- /*
-  * smk_ipv6_localhost - Check for local ipv6 host address
-  * @sip: the address
-@@ -2575,6 +2576,7 @@ static struct smack_known *smack_ipv6host_label(struct sockaddr_in6 *sip)
- 
- 	return NULL;
- }
-+#endif /* CONFIG_IPV6 */
- 
+-/**
+- * smack_sock_graft - Initialize a newly created socket with an existing sock
+- * @sk: child sock
+- * @parent: parent socket
+- *
+- * Set the smk_{in,out} state of an existing sock based on the process that
+- * is creating the new socket.
+- */
+-static void smack_sock_graft(struct sock *sk, struct socket *parent)
+-{
+-	struct socket_smack *ssp;
+-	struct smack_known *skp = smk_of_current();
+-
+-	if (sk == NULL ||
+-	    (sk->sk_family != PF_INET && sk->sk_family != PF_INET6))
+-		return;
+-
+-	ssp = smack_sock(sk);
+-	ssp->smk_in = skp;
+-	ssp->smk_out = skp;
+-	/* cssp->smk_packet is already set in smack_inet_csk_clone() */
+-}
+-
  /**
-  * smack_netlbl_add - Set the secattr on a socket
-@@ -2679,6 +2681,7 @@ static int smk_ipv4_check(struct sock *sk, struct sockaddr_in *sap)
- 	return rc;
- }
+  * smack_inet_conn_request - Smack access check on connect
+  * @sk: socket involved
+@@ -5195,7 +5172,6 @@ static struct security_hook_list smack_hooks[] __ro_after_init = {
+ 	LSM_HOOK_INIT(sk_free_security, smack_sk_free_security),
+ #endif
+ 	LSM_HOOK_INIT(sk_clone_security, smack_sk_clone_security),
+-	LSM_HOOK_INIT(sock_graft, smack_sock_graft),
+ 	LSM_HOOK_INIT(inet_conn_request, smack_inet_conn_request),
+ 	LSM_HOOK_INIT(inet_csk_clone, smack_inet_csk_clone),
  
-+#if IS_ENABLED(CONFIG_IPV6)
- /**
-  * smk_ipv6_check - check Smack access
-  * @subject: subject Smack label
-@@ -2711,6 +2714,7 @@ static int smk_ipv6_check(struct smack_known *subject,
- 	rc = smk_bu_note("IPv6 check", subject, object, MAY_WRITE, rc);
- 	return rc;
- }
-+#endif /* CONFIG_IPV6 */
- 
- #ifdef SMACK_IPV6_PORT_LABELING
- /**
-@@ -3043,7 +3047,9 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
- 		return 0;
- 	if (addrlen < offsetofend(struct sockaddr, sa_family))
- 		return 0;
--	if (IS_ENABLED(CONFIG_IPV6) && sap->sa_family == AF_INET6) {
-+
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (sap->sa_family == AF_INET6) {
- 		struct sockaddr_in6 *sip = (struct sockaddr_in6 *)sap;
- 		struct smack_known *rsp = NULL;
- 
-@@ -3063,6 +3069,8 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
- 
- 		return rc;
- 	}
-+#endif /* CONFIG_IPV6 */
-+
- 	if (sap->sa_family != AF_INET || addrlen < sizeof(struct sockaddr_in))
- 		return 0;
- 	rc = smk_ipv4_check(sock->sk, (struct sockaddr_in *)sap);
 -- 
 2.39.5
 
