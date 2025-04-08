@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2711926A0AB;
-	Tue,  8 Apr 2025 11:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED3126A0D3;
+	Tue,  8 Apr 2025 11:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113231; cv=none; b=czKMsrqH6aqKPEv1CLsKICywumWF+mWxM8OIbpLEnUvxar+w8C7S7iNQMNxZXdFc8ZOczUgXd+j9KnxM97TDO5ESaCtn7MbsexWMXxyu8iiwwsMrilf3AfRO3gYw3hzRc/u+6/OYi62nDdU85wFRxAuyK3o2nEN7zVYO+AkY8yw=
+	t=1744113234; cv=none; b=a8hCAEdmYu3cHLdYCe4VjiB3wWkXlf924KU5SnxCVxE00i+bjH+ZYeBR5WD7Zh5EPMp91DpSN+EmQkPHuhleezwJE4WYjod5XjantixZaReGSX+4gnFh2syllpQI8GHz5HSc3wkw4lwF9FejS3uCH8ykDG32YZvpHQaPL5CbNiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113231; c=relaxed/simple;
-	bh=KlxYQUWaX5LB4R8vsZAUoMt4tn9roZWyOtTaCqkBbkk=;
+	s=arc-20240116; t=1744113234; c=relaxed/simple;
+	bh=jrYV/tj3gws3Y2DzK2M9dqrcQF634sCqVKbeQIXDN1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HkJ6+VNWZi72bzdTmykuWJNCqDnzFKgh0w5fVSUqMmQu7Az/rQZwWteF3YsDuNJrOw3hom2F+LJeMbOmdyaCOybqgesZ+srDYnD7oDbfnEDlu30heQiueyR/Mj4Ksky10PMHAHgKRnrCO7UUE8EammJxWfs3Qw0IJ0iKU+dICgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGTH+kvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AWgcKhZOOsXEC1lHlpvbtb7S0dR+0Qw9PM7leQJ26qzrXSxX3gIC5yltCawwtJu+aTrtv/4TD+NmSzKFHKxpQFlKZlgdjRbUeXAKn4EBIHxyGScepc48cXRHbJSaYuxkY0zAzv6Y0+DI3KVDb/rP1LpLFtUtnP8NcKbD90GJzuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FODzV1WW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGTH+kvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBADC4CEE5;
-	Tue,  8 Apr 2025 11:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FODzV1WW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56289C4CEE5;
+	Tue,  8 Apr 2025 11:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113231;
-	bh=KlxYQUWaX5LB4R8vsZAUoMt4tn9roZWyOtTaCqkBbkk=;
+	s=korg; t=1744113233;
+	bh=jrYV/tj3gws3Y2DzK2M9dqrcQF634sCqVKbeQIXDN1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGTH+kvL0uHnVQ21beRCKNsoT0CB4BY5UcRzIR7FS0PVYHnxHouR8xJEhsSafsiki
-	 +PNiKuzUgiJgVqslnn5HW9np770o/KpQsX2THoDm2rYdrQa9T1Yx/Pa0weWVw11l5R
-	 HcHeG8JewbXrEoV/HGlrPAoFkjRVpyOKUwnNvoHQ=
+	b=FODzV1WW/z1brCZyPturm5gbyaqKWM42ZobhduMZkTeAlGVFVnAqey2S7p8inpGW+
+	 94DhQp3fOk5EwJjTqKJUjAxiPMmMY544u9T+EHmKK5JA+fEag0W7pcJoEvDTaCJbX6
+	 xzQ/t8AsKsIBh4cBticQ/YRr2fF9N21nLoX7GkAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/268] remoteproc: qcom_q6v5_mss: Handle platforms with one power domain
-Date: Tue,  8 Apr 2025 12:48:14 +0200
-Message-ID: <20250408104830.734798360@linuxfoundation.org>
+Subject: [PATCH 6.6 084/268] IB/mad: Check available slots before posting receive WRs
+Date: Tue,  8 Apr 2025 12:48:15 +0200
+Message-ID: <20250408104830.759676178@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -54,85 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@lucaweiss.eu>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 4641840341f37dc8231e0840ec1514b4061b4322 ]
+[ Upstream commit 37826f0a8c2f6b6add5179003b8597e32a445362 ]
 
-For example MSM8974 has mx voltage rail exposed as regulator and only cx
-voltage rail is exposed as power domain. This power domain (cx) is
-attached internally in power domain and cannot be attached in this driver.
+The ib_post_receive_mads() function handles posting receive work
+requests (WRs) to MAD QPs and is called in two cases:
+1) When a MAD port is opened.
+2) When a receive WQE is consumed upon receiving a new MAD.
 
-Fixes: 8750cf392394 ("remoteproc: qcom_q6v5_mss: Allow replacing regulators with power domains")
-Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Link: https://lore.kernel.org/r/20250217-msm8226-modem-v5-4-2bc74b80e0ae@lucaweiss.eu
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Whereas, if MADs arrive during the port open phase, a race condition
+might cause an extra WR to be posted, exceeding the QP’s capacity.
+This leads to failures such as:
+infiniband mlx5_0: ib_post_recv failed: -12
+infiniband mlx5_0: Couldn't post receive WRs
+infiniband mlx5_0: Couldn't start port
+infiniband mlx5_0: Couldn't open port 1
+
+Fix this by checking the current receive count before posting a new WR.
+If the QP’s receive queue is full, do not post additional WRs.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/c4984ba3c3a98a5711a558bccefcad789587ecf1.1741875592.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_mss.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/mad.c | 38 ++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 2d717f2ed396c..8f93489aa0d49 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -1838,6 +1838,13 @@ static int q6v5_pds_attach(struct device *dev, struct device **devs,
- 	while (pd_names[num_pds])
- 		num_pds++;
- 
-+	/* Handle single power domain */
-+	if (num_pds == 1 && dev->pm_domain) {
-+		devs[0] = dev;
-+		pm_runtime_enable(dev);
-+		return 1;
-+	}
-+
- 	for (i = 0; i < num_pds; i++) {
- 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
- 		if (IS_ERR_OR_NULL(devs[i])) {
-@@ -1858,8 +1865,15 @@ static int q6v5_pds_attach(struct device *dev, struct device **devs,
- static void q6v5_pds_detach(struct q6v5 *qproc, struct device **pds,
- 			    size_t pd_count)
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 58befbaaf0ad5..242434c09e8d8 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -2671,11 +2671,11 @@ static int ib_mad_post_receive_mads(struct ib_mad_qp_info *qp_info,
+ 				    struct ib_mad_private *mad)
  {
-+	struct device *dev = qproc->dev;
- 	int i;
+ 	unsigned long flags;
+-	int post, ret;
+ 	struct ib_mad_private *mad_priv;
+ 	struct ib_sge sg_list;
+ 	struct ib_recv_wr recv_wr;
+ 	struct ib_mad_queue *recv_queue = &qp_info->recv_queue;
++	int ret = 0;
  
-+	/* Handle single power domain */
-+	if (pd_count == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
+ 	/* Initialize common scatter list fields */
+ 	sg_list.lkey = qp_info->port_priv->pd->local_dma_lkey;
+@@ -2685,7 +2685,7 @@ static int ib_mad_post_receive_mads(struct ib_mad_qp_info *qp_info,
+ 	recv_wr.sg_list = &sg_list;
+ 	recv_wr.num_sge = 1;
+ 
+-	do {
++	while (true) {
+ 		/* Allocate and map receive buffer */
+ 		if (mad) {
+ 			mad_priv = mad;
+@@ -2693,10 +2693,8 @@ static int ib_mad_post_receive_mads(struct ib_mad_qp_info *qp_info,
+ 		} else {
+ 			mad_priv = alloc_mad_private(port_mad_size(qp_info->port_priv),
+ 						     GFP_ATOMIC);
+-			if (!mad_priv) {
+-				ret = -ENOMEM;
+-				break;
+-			}
++			if (!mad_priv)
++				return -ENOMEM;
+ 		}
+ 		sg_list.length = mad_priv_dma_size(mad_priv);
+ 		sg_list.addr = ib_dma_map_single(qp_info->port_priv->device,
+@@ -2705,37 +2703,41 @@ static int ib_mad_post_receive_mads(struct ib_mad_qp_info *qp_info,
+ 						 DMA_FROM_DEVICE);
+ 		if (unlikely(ib_dma_mapping_error(qp_info->port_priv->device,
+ 						  sg_list.addr))) {
+-			kfree(mad_priv);
+ 			ret = -ENOMEM;
+-			break;
++			goto free_mad_priv;
+ 		}
+ 		mad_priv->header.mapping = sg_list.addr;
+ 		mad_priv->header.mad_list.mad_queue = recv_queue;
+ 		mad_priv->header.mad_list.cqe.done = ib_mad_recv_done;
+ 		recv_wr.wr_cqe = &mad_priv->header.mad_list.cqe;
+-
+-		/* Post receive WR */
+ 		spin_lock_irqsave(&recv_queue->lock, flags);
+-		post = (++recv_queue->count < recv_queue->max_active);
+-		list_add_tail(&mad_priv->header.mad_list.list, &recv_queue->list);
++		if (recv_queue->count >= recv_queue->max_active) {
++			/* Fully populated the receive queue */
++			spin_unlock_irqrestore(&recv_queue->lock, flags);
++			break;
++		}
++		recv_queue->count++;
++		list_add_tail(&mad_priv->header.mad_list.list,
++			      &recv_queue->list);
+ 		spin_unlock_irqrestore(&recv_queue->lock, flags);
 +
- 	for (i = 0; i < pd_count; i++)
- 		dev_pm_domain_detach(pds[i], false);
+ 		ret = ib_post_recv(qp_info->qp, &recv_wr, NULL);
+ 		if (ret) {
+ 			spin_lock_irqsave(&recv_queue->lock, flags);
+ 			list_del(&mad_priv->header.mad_list.list);
+ 			recv_queue->count--;
+ 			spin_unlock_irqrestore(&recv_queue->lock, flags);
+-			ib_dma_unmap_single(qp_info->port_priv->device,
+-					    mad_priv->header.mapping,
+-					    mad_priv_dma_size(mad_priv),
+-					    DMA_FROM_DEVICE);
+-			kfree(mad_priv);
+ 			dev_err(&qp_info->port_priv->device->dev,
+ 				"ib_post_recv failed: %d\n", ret);
+ 			break;
+ 		}
+-	} while (post);
++	}
+ 
++	ib_dma_unmap_single(qp_info->port_priv->device,
++			    mad_priv->header.mapping,
++			    mad_priv_dma_size(mad_priv), DMA_FROM_DEVICE);
++free_mad_priv:
++	kfree(mad_priv);
+ 	return ret;
  }
-@@ -2471,13 +2485,13 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 			.supply = "pll",
- 			.uA = 100000,
- 		},
--		{}
--	},
--	.fallback_proxy_supply = (struct qcom_mss_reg_res[]) {
- 		{
- 			.supply = "mx",
- 			.uV = 1050000,
- 		},
-+		{}
-+	},
-+	.fallback_proxy_supply = (struct qcom_mss_reg_res[]) {
- 		{
- 			.supply = "cx",
- 			.uA = 100000,
-@@ -2503,7 +2517,6 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 		NULL
- 	},
- 	.proxy_pd_names = (char*[]){
--		"mx",
- 		"cx",
- 		NULL
- 	},
+ 
 -- 
 2.39.5
 
