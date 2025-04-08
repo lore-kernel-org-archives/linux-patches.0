@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38C1267B89;
-	Tue,  8 Apr 2025 11:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9B7266EEA;
+	Tue,  8 Apr 2025 11:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112825; cv=none; b=IbnynT+yA1Y8CCoYaYDVdYcte7AHNxKCvrPZap2/81DWO7klfoV8RpviuPK02Z+7FQLBzWPNC0sVoGnL4GUaUOasanLq3HVb1LwcTjeu7xX4DbWSxfTQ1A70/1gDX8bXY6iV6pRbJ7Kn/hgtoENnTRIjOOihgaKBF7Z9C+QKlN4=
+	t=1744112827; cv=none; b=gYaHia+HIDAUKr/Hao8/WXBssisIxhzoFNKoT7jwVOHnj3O2+F/P7UkR1jeRW0te99mP5D3txTHC/kKNLLTXYYDdBFjNLS2ulr7nB00OCGixq6qeKg5vmeVhhxqjQvkFTL6HdKTE5ly3JZUm/sZlaCfmg7vjUOGTAhCYO7GMIXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112825; c=relaxed/simple;
-	bh=xiIBBEbjTMWtNx1A/4Og4aumWQEY8JGb01wjfWUlj5E=;
+	s=arc-20240116; t=1744112827; c=relaxed/simple;
+	bh=qMmVol4nnnGo8Vi/rHeKOII4TIGXD5jbdDt1ciAGM8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXqGLcbvRsGtfhrf/IOe+YWJ1cXkjLSCc4K2s7UuJqi8TfO4MtXIqrDHdjbawhLvoa9q6jk61zuZ/sphSU8HBEOWH/2e/qYikW0e6LUSSfRh9u4bAqh1tCUD4xHmqT4hCIg39MEpWr4eBJndDUKM0W3fntWW47lPGfjpCSMpzgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IQZqpuO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKuM493Uu2H60lEThEr9fXNxeQjPVolSd9qaY+TM42VLAUqWHIz660DuWcKgjpCb/PSbRJNzkahM1XwwPNwfirKJpkNqtlJVaMRp+qSkrRpIflja4OW92XzOod6Fz1A1xgFLsyIG/pZsZ2SuGlpy9Bb17vtCJ17hNVqxq0WlC9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiin43OO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IQZqpuO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8249BC4CEE5;
-	Tue,  8 Apr 2025 11:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiin43OO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29464C4CEE5;
+	Tue,  8 Apr 2025 11:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112824;
-	bh=xiIBBEbjTMWtNx1A/4Og4aumWQEY8JGb01wjfWUlj5E=;
+	s=korg; t=1744112827;
+	bh=qMmVol4nnnGo8Vi/rHeKOII4TIGXD5jbdDt1ciAGM8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IQZqpuOki0Vzs+axajMqks31DjTcj+wIZmN90Ofp+ZKU+OWaOByKyade4H57odIV
-	 Wx23rApXNrhktVl8hC3s30S8b+Q2i359XmsXI3nB1BBm8NiMmf5weaDLfLF4jCbCBa
-	 5Tsun5JtJKg+U7WDSWdNbj0RBESh5BkRS1rr/F/s=
+	b=iiin43OO/bQ6L0IUkivFS1fXsnmgavtmunt8NLxzPHK4/B5N20KezhpKAyUOKLbyC
+	 Hoh1XUFrdFoykeIa/8k1auvtNmXQ8POzDdwUovedk+sL9wa0H8qRzVvCBygOgbOpWZ
+	 PM5MLgJyyA0KofyBBEsf8L6lsudhmCLk6hZBYYPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Will McVicker <willmcvicker@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/279] libbpf: Fix hypothetical STT_SECTION extern NULL deref case
-Date: Tue,  8 Apr 2025 12:49:14 +0200
-Message-ID: <20250408104830.946648016@linuxfoundation.org>
+Subject: [PATCH 5.15 172/279] clk: samsung: Fix UBSAN panic in samsung_clk_init()
+Date: Tue,  8 Apr 2025 12:49:15 +0200
+Message-ID: <20250408104830.974212500@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,39 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Will McVicker <willmcvicker@google.com>
 
-[ Upstream commit e0525cd72b5979d8089fe524a071ea93fd011dc9 ]
+[ Upstream commit d19d7345a7bcdb083b65568a11b11adffe0687af ]
 
-Fix theoretical NULL dereference in linker when resolving *extern*
-STT_SECTION symbol against not-yet-existing ELF section. Not sure if
-it's possible in practice for valid ELF object files (this would require
-embedded assembly manipulations, at which point BTF will be missing),
-but fix the s/dst_sym/dst_sec/ typo guarding this condition anyways.
+With UBSAN_ARRAY_BOUNDS=y, I'm hitting the below panic due to
+dereferencing `ctx->clk_data.hws` before setting
+`ctx->clk_data.num = nr_clks`. Move that up to fix the crash.
 
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Fixes: a46349227cd8 ("libbpf: Add linker extern resolution support for functions and global variables")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20250220002821.834400-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
+  <snip>
+  Call trace:
+   samsung_clk_init+0x110/0x124 (P)
+   samsung_clk_init+0x48/0x124 (L)
+   samsung_cmu_register_one+0x3c/0xa0
+   exynos_arm64_register_cmu+0x54/0x64
+   __gs101_cmu_top_of_clk_init_declare+0x28/0x60
+   ...
+
+Fixes: e620a1e061c4 ("drivers/clk: convert VL struct to struct_size")
+Signed-off-by: Will McVicker <willmcvicker@google.com>
+Link: https://lore.kernel.org/r/20250212183253.509771-1-willmcvicker@google.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 2 +-
+ drivers/clk/samsung/clk.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 2adf55f487430..fc91814a35e8e 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -1966,7 +1966,7 @@ static int linker_append_elf_sym(struct bpf_linker *linker, struct src_obj *obj,
+diff --git a/drivers/clk/samsung/clk.c b/drivers/clk/samsung/clk.c
+index 1949ae7851b2e..0468ce5506aef 100644
+--- a/drivers/clk/samsung/clk.c
++++ b/drivers/clk/samsung/clk.c
+@@ -64,11 +64,11 @@ struct samsung_clk_provider *__init samsung_clk_init(struct device_node *np,
+ 	if (!ctx)
+ 		panic("could not allocate clock provider context.\n");
  
- 	obj->sym_map[src_sym_idx] = dst_sym_idx;
++	ctx->clk_data.num = nr_clks;
+ 	for (i = 0; i < nr_clks; ++i)
+ 		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
  
--	if (sym_type == STT_SECTION && dst_sym) {
-+	if (sym_type == STT_SECTION && dst_sec) {
- 		dst_sec->sec_sym_idx = dst_sym_idx;
- 		dst_sym->st_value = 0;
- 	}
+ 	ctx->reg_base = base;
+-	ctx->clk_data.num = nr_clks;
+ 	spin_lock_init(&ctx->lock);
+ 
+ 	return ctx;
 -- 
 2.39.5
 
