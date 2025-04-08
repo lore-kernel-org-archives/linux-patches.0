@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24E4267B10;
-	Tue,  8 Apr 2025 12:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBEB280CE5;
+	Tue,  8 Apr 2025 12:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116624; cv=none; b=uYTISc5aObdUU8+oTPVswYrCzUQi2yfCsGrnPjNQlxL6lolZURb9jYqRYt0VxFOuF/ppM2N5wGHYikh9rhitwfk+0QV9tz9sOrsMrujrpPnQ+tJFbkYBTqlA8tX0vyQ1sJCltdTHGHZAiqRMPRYEDR5C5jQh9Iuy2/ZbAy5v1M0=
+	t=1744116626; cv=none; b=qz2KYjI1jQqUIcK/j3v4zXocrZTb5WiXImSs4y41y8Fm4Eetfi4Amdp6E8jLRos9yQ6X55whf5ubwGdllIrxgL1ffepwYBCElf6kZM+a3tnOVxtp5jhMWQp/8Bt3wJRroEnaqxigJWPpv2QDDncvmqY/9XfbjaX2t3l8LU/i/ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116624; c=relaxed/simple;
-	bh=FgRMGBwYgzAwnerlM8JGZzV9fvUsqfm6hBLkvrpVntM=;
+	s=arc-20240116; t=1744116626; c=relaxed/simple;
+	bh=+KJLeT9AD3KsHs/sAQtkSyJJG/eZMEhYBrm77DBd6+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvAtnKN/H6aAjc+fIg12w+LcKeoHQU9DVmPHnh5oHxBvByO6vIu71sFKb122cBtq5BH5BNxlKBt/gzdPLPUUbJe3iKkZa1BGfVJErtbffByjqdZT7O9by7tEimFTTdbkyV1biV1IhTJ2YfVt2Vo3MMagqVXtWPaM+EOFHMkzct8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzTkG4u7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puq1g3Hm1gPEZwCgdR9yyivboci9oqoiXYoLVeQOdE2ZQPP21BxxYWZC0MjBZIByIU/GkFqBG+JIuLmEbJac8OHLV47bos5BaVuEI5taML4NeTGuKuZaZHABpjpLGKLtXVQOD40QwNsgNS3keFuCMM817qGbuISOj3jyazdyHRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I01Prwkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzTkG4u7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC5EC4CEE5;
-	Tue,  8 Apr 2025 12:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I01Prwkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0052AC4CEE5;
+	Tue,  8 Apr 2025 12:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116623;
-	bh=FgRMGBwYgzAwnerlM8JGZzV9fvUsqfm6hBLkvrpVntM=;
+	s=korg; t=1744116626;
+	bh=+KJLeT9AD3KsHs/sAQtkSyJJG/eZMEhYBrm77DBd6+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzTkG4u7p2G8OUS/gapG5lof6qtPQz8WQFSNbWypTMsAwXa5ryNuR8457vVxHiaBc
-	 qgoWR6Uw2sz1dLBCmskxShcFGcH1rWiYxwrzPYa8hxJrbdqCK55ghNhpc7ufQWedGy
-	 hItyp5RQZd6BPkL5qJO/CytJcYeEE/K9OEJyXzHo=
+	b=I01PrwkkT/X72uBk6qP9jCVHGwgTMqOk/Ud0/X8hjgG3VVKg+5k6p515qXDo6Cn3L
+	 PNGsWzftoMuqyi0NG5DixAI8pjbHkO7SoxdwR/HHkkHE61FI7tLmfcog/vKO1vX0KR
+	 HrDYLR3o4Cklx6Nk+chzQbvnmkJYJn5b5YC3MfPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/423] um: Pass the correct Rust target and options with gcc
-Date: Tue,  8 Apr 2025 12:48:53 +0200
-Message-ID: <20250408104850.556158770@linuxfoundation.org>
+Subject: [PATCH 6.12 208/423] um: remove copy_from_kernel_nofault_allowed
+Date: Tue,  8 Apr 2025 12:48:54 +0200
+Message-ID: <20250408104850.579842858@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,55 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 5550187c4c21740942c32a9ae56f9f472a104cb4 ]
+[ Upstream commit 84a6fc378471fbeaf48f8604566a5a33a3d63c18 ]
 
-In order to work around some issues with disabling SSE on older versions
-of gcc (compilation would fail upon seeing a function declaration
-containing a float, even if it was never called or defined), the
-corresponding CFLAGS and RUSTFLAGS were only set when using clang.
+There is no need to override the default version of this function
+anymore as UML now has proper _nofault memory access functions.
 
-However, this led to two problems:
-- Newer gcc versions also wouldn't get the correct flags, despite not
-  having the bug.
-- The RUSTFLAGS for setting the rust target definition were not set,
-  despite being unrelated. This works by chance for x86_64, as the
-  built-in default target is close enough, but not for 32-bit x86.
+Doing this also fixes the fact that the implementation was incorrect as
+using mincore() will incorrectly flag pages as inaccessible if they were
+swapped out by the host.
 
-Move the target definition outside the conditional block, and update the
-condition to take into account the gcc version.
-
-Fixes: a3046a618a28 ("um: Only disable SSE on clang to work around old GCC bugs")
-Signed-off-by: David Gow <davidgow@google.com>
-Link: https://patch.msgid.link/20250210105353.2238769-2-davidgow@google.com
+Fixes: f75b1b1bedfb ("um: Implement probe_kernel_read()")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20250210160926.420133-3-benjamin@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile.um | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/um/include/shared/os.h |  1 -
+ arch/um/kernel/Makefile     |  2 +-
+ arch/um/kernel/maccess.c    | 19 --------------
+ arch/um/os-Linux/process.c  | 51 -------------------------------------
+ 4 files changed, 1 insertion(+), 72 deletions(-)
+ delete mode 100644 arch/um/kernel/maccess.c
 
-diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
-index a46b1397ad01c..c86cbd9cbba38 100644
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -7,12 +7,13 @@ core-y += arch/x86/crypto/
- # GCC versions < 11. See:
- # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99652
- #
--ifeq ($(CONFIG_CC_IS_CLANG),y)
--KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
--KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
-+ifeq ($(call gcc-min-version, 110000)$(CONFIG_CC_IS_CLANG),y)
-+KBUILD_CFLAGS +=  -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
- KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
- endif
+diff --git a/arch/um/include/shared/os.h b/arch/um/include/shared/os.h
+index 9a039d6f1f748..77a8593f219a1 100644
+--- a/arch/um/include/shared/os.h
++++ b/arch/um/include/shared/os.h
+@@ -218,7 +218,6 @@ extern int os_protect_memory(void *addr, unsigned long len,
+ extern int os_unmap_memory(void *addr, int len);
+ extern int os_drop_memory(void *addr, int length);
+ extern int can_drop_memory(void);
+-extern int os_mincore(void *addr, unsigned long len);
  
-+KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
-+
- ifeq ($(CONFIG_X86_32),y)
- START := 0x8048000
+ /* execvp.c */
+ extern int execvp_noalloc(char *buf, const char *file, char *const argv[]);
+diff --git a/arch/um/kernel/Makefile b/arch/um/kernel/Makefile
+index f8567b933ffaa..4df1cd0d20179 100644
+--- a/arch/um/kernel/Makefile
++++ b/arch/um/kernel/Makefile
+@@ -17,7 +17,7 @@ extra-y := vmlinux.lds
+ obj-y = config.o exec.o exitcode.o irq.o ksyms.o mem.o \
+ 	physmem.o process.o ptrace.o reboot.o sigio.o \
+ 	signal.o sysrq.o time.o tlb.o trap.o \
+-	um_arch.o umid.o maccess.o kmsg_dump.o capflags.o skas/
++	um_arch.o umid.o kmsg_dump.o capflags.o skas/
+ obj-y += load_file.o
  
+ obj-$(CONFIG_BLK_DEV_INITRD) += initrd.o
+diff --git a/arch/um/kernel/maccess.c b/arch/um/kernel/maccess.c
+deleted file mode 100644
+index 8ccd56813f684..0000000000000
+--- a/arch/um/kernel/maccess.c
++++ /dev/null
+@@ -1,19 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (C) 2013 Richard Weinberger <richrd@nod.at>
+- */
+-
+-#include <linux/uaccess.h>
+-#include <linux/kernel.h>
+-#include <os.h>
+-
+-bool copy_from_kernel_nofault_allowed(const void *src, size_t size)
+-{
+-	void *psrc = (void *)rounddown((unsigned long)src, PAGE_SIZE);
+-
+-	if ((unsigned long)src < PAGE_SIZE || size <= 0)
+-		return false;
+-	if (os_mincore(psrc, size + src - psrc) <= 0)
+-		return false;
+-	return true;
+-}
+diff --git a/arch/um/os-Linux/process.c b/arch/um/os-Linux/process.c
+index e52dd37ddadcc..2686120ab2325 100644
+--- a/arch/um/os-Linux/process.c
++++ b/arch/um/os-Linux/process.c
+@@ -223,57 +223,6 @@ int __init can_drop_memory(void)
+ 	return ok;
+ }
+ 
+-static int os_page_mincore(void *addr)
+-{
+-	char vec[2];
+-	int ret;
+-
+-	ret = mincore(addr, UM_KERN_PAGE_SIZE, vec);
+-	if (ret < 0) {
+-		if (errno == ENOMEM || errno == EINVAL)
+-			return 0;
+-		else
+-			return -errno;
+-	}
+-
+-	return vec[0] & 1;
+-}
+-
+-int os_mincore(void *addr, unsigned long len)
+-{
+-	char *vec;
+-	int ret, i;
+-
+-	if (len <= UM_KERN_PAGE_SIZE)
+-		return os_page_mincore(addr);
+-
+-	vec = calloc(1, (len + UM_KERN_PAGE_SIZE - 1) / UM_KERN_PAGE_SIZE);
+-	if (!vec)
+-		return -ENOMEM;
+-
+-	ret = mincore(addr, UM_KERN_PAGE_SIZE, vec);
+-	if (ret < 0) {
+-		if (errno == ENOMEM || errno == EINVAL)
+-			ret = 0;
+-		else
+-			ret = -errno;
+-
+-		goto out;
+-	}
+-
+-	for (i = 0; i < ((len + UM_KERN_PAGE_SIZE - 1) / UM_KERN_PAGE_SIZE); i++) {
+-		if (!(vec[i] & 1)) {
+-			ret = 0;
+-			goto out;
+-		}
+-	}
+-
+-	ret = 1;
+-out:
+-	free(vec);
+-	return ret;
+-}
+-
+ void init_new_thread_signals(void)
+ {
+ 	set_handler(SIGSEGV);
 -- 
 2.39.5
 
