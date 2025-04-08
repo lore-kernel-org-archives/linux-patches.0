@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35B726656B;
-	Tue,  8 Apr 2025 12:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6C8269801;
+	Tue,  8 Apr 2025 12:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115946; cv=none; b=SKa3CmymMvqlxpzFCNT7rAFNdP8wLA+9hYbCEITXVhTaqHfVjcYvjo3yKUZzurKEcsKxP3NOL5ZSsZK7cQVgUwziqA8McRYFxApGP8zWVDqT6RnY1xHxjD/UENKrhiZH3Vu9wKmSLHwOwbF5tZarwOYNKg0ce1D31G7wJwRoUV8=
+	t=1744115949; cv=none; b=pu744R33SeOb5GE5JyZfzrq53sT+Oyh8r6kNTDfeqIWnrVOieuk8r9RZppPlWqJpj1Sl6duqV34lm8IaMUW8VMqfFbzl9v8VRylW7nmLqIY0Tl9TX9U9liFH5oa5qBEQzYcFN3BpWjEaZpM0RNQSFdmFM7w9I+TziXP3rEt42fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115946; c=relaxed/simple;
-	bh=RJgEsPz09RqPmewBWq56XAKo5riW5txdGQgS6z2T5Mc=;
+	s=arc-20240116; t=1744115949; c=relaxed/simple;
+	bh=UlhvLk5FlU9u6fbjGuWAFkA3d5eiv0xPvoY9KE1WTL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O218vfKGvwtsVwvbvupeOBcgUOSvMbtqIoSlsuXRHDEoKQ1r5kI5svsF2KHXZ74SfmWyVSPHbX/M/AczGqo0SH1+U3JA/r25bHJCn6O7fs57s2oXzeGdIshFiFLwkJVVPVD5jnpXZ78MqW7IJWlSZOZAc7FrXZAsjnI10ulIEcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIbIVu5/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmIC+DqwtjDYSeScOWxWTcG0KMDBwszmYDCGLpMNzOS5Bre/0iDQdolH4cqgQMwTPbGUcy7fI3wnysc4MVU9a9oVHB3Z58qsYV3ZJ6Pcxid7nhy5wq1pjdzVblWD5pLt+s76KvwvTl6NHyxdvS1x/HJVC5qE93PUPP/Y1jswbZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQkQswoR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIbIVu5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443D0C4CEE5;
-	Tue,  8 Apr 2025 12:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQkQswoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9C4C4CEE5;
+	Tue,  8 Apr 2025 12:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115946;
-	bh=RJgEsPz09RqPmewBWq56XAKo5riW5txdGQgS6z2T5Mc=;
+	s=korg; t=1744115949;
+	bh=UlhvLk5FlU9u6fbjGuWAFkA3d5eiv0xPvoY9KE1WTL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIbIVu5/M76K+t9+7T/eHf5xOdNt/i3MQfkfemz5aZw99uo/MQ8Xh9mAH8tKnImxv
-	 SxXLCBKpA8qC+7SDn9j0n5SIqOrJVzGc7BmoZZ5eMp2i7ne9WzdvugmNRY9VE3KPFT
-	 f/hb/OF9esDytRubW2FPFJZj+kKdjFlB24lh0NrU=
+	b=vQkQswoRD27gTIN3jJxGaP4POVEsvlyBz4ichktLgo++mE2MvxNppmqYD+emgXDml
+	 9UtYbBXh7wNMFwa9hAhXlBVvcY0mASVPAgOEoXDlOuEfuD4VLJSsbCMgFKL520tiYv
+	 0HLh7/Q3I4GicnOF1ODrxDmxPNCPl8/0AIYdUp1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/204] context_tracking: Always inline ct_{nmi,irq}_{enter,exit}()
-Date: Tue,  8 Apr 2025 12:50:54 +0200
-Message-ID: <20250408104823.947997892@linuxfoundation.org>
+Subject: [PATCH 6.1 115/204] ksmbd: use aead_request_free to match aead_request_alloc
+Date: Tue,  8 Apr 2025 12:50:45 +0200
+Message-ID: <20250408104823.695867831@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -55,55 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 9ac50f7311dc8b39e355582f14c1e82da47a8196 ]
+[ Upstream commit 6171063e9d046ffa46f51579b2ca4a43caef581a ]
 
-Thanks to CONFIG_DEBUG_SECTION_MISMATCH, empty functions can be
-generated out of line.  These can be called from noinstr code, so make
-sure they're always inlined.
+Use aead_request_free() instead of kfree() to properly free memory
+allocated by aead_request_alloc(). This ensures sensitive crypto data
+is zeroed before being freed.
 
-Fixes the following warnings:
-
-  vmlinux.o: warning: objtool: irqentry_nmi_enter+0xa2: call to ct_nmi_enter() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_nmi_exit+0x16: call to ct_nmi_exit() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_exit+0x78: call to ct_irq_exit() leaves .noinstr.text section
-
-Fixes: 6f0e6c1598b1 ("context_tracking: Take IRQ eqs entrypoints over RCU")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Frederic Weisbecker <frederic@kernel.org>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/8509bce3f536bcd4ae7af3a2cf6930d48c5e631a.1743481539.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/d1eca076-fdde-484a-b33e-70e0d167c36d@infradead.org
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/context_tracking_irq.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/server/auth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/context_tracking_irq.h b/include/linux/context_tracking_irq.h
-index c50b5670c4a52..197916ee91a4b 100644
---- a/include/linux/context_tracking_irq.h
-+++ b/include/linux/context_tracking_irq.h
-@@ -10,12 +10,12 @@ void ct_irq_exit_irqson(void);
- void ct_nmi_enter(void);
- void ct_nmi_exit(void);
- #else
--static inline void ct_irq_enter(void) { }
--static inline void ct_irq_exit(void) { }
-+static __always_inline void ct_irq_enter(void) { }
-+static __always_inline void ct_irq_exit(void) { }
- static inline void ct_irq_enter_irqson(void) { }
- static inline void ct_irq_exit_irqson(void) { }
--static inline void ct_nmi_enter(void) { }
--static inline void ct_nmi_exit(void) { }
-+static __always_inline void ct_nmi_enter(void) { }
-+static __always_inline void ct_nmi_exit(void) { }
- #endif
- 
- #endif
+diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
+index 8e24a6665abdb..c34b30642bfdd 100644
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -1211,7 +1211,7 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+ free_sg:
+ 	kfree(sg);
+ free_req:
+-	kfree(req);
++	aead_request_free(req);
+ free_ctx:
+ 	ksmbd_release_crypto_ctx(ctx);
+ 	return rc;
 -- 
 2.39.5
 
