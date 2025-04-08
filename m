@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E65135973;
-	Tue,  8 Apr 2025 11:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F249268685;
+	Tue,  8 Apr 2025 11:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112216; cv=none; b=OOIXQPenMfax4E0KIFfWdUXc8QLOUTRTg+d5ag7HK6KqRLYRQ3YAl1LPNeqJMBxGY32QZuadKiXl5DiH0Xbypo9o/0Op13ODxsK+2ujPvybviCAYm382jeFmgjh7zhG87G7dxn3bj2X/urLy0aKG/WdDEKlvz8PNjVy26hIpfI8=
+	t=1744112219; cv=none; b=uM2J9miWmBZCtIGqylUQtl4e4KuALsQjuv4OnqGGe0DfxGnHxfiHicp+VH48aM1oQste5EydGUao2sVAygIlex2MR+L4wi25/Mat3+0UL59A/M3anJdiz05n4bnHs7k4cUpl8O4+PZizF+gSmpiFf2QWziI4qdtk5LT3/DmcAQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112216; c=relaxed/simple;
-	bh=zyxuP9lwY9UnwfkY5Yt0QiiadPQQxpchsmY4OJqlTiA=;
+	s=arc-20240116; t=1744112219; c=relaxed/simple;
+	bh=4DgITDyIKJ5wU3JeV6o4FXSOTXeZvWu+rYIyqk3WSdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3nSCzolmnrivwm+YQUyL5QRGr0NpaP/i4/WkPCMLVEY+E/5YVMx/G0piiZ2nK0krVZAKpYYnGyT+wCvf4JtpQF+Zjj7pe9GmX9kUfvZFgXv7TnGG/J+lW2Zeb0eye7zriOiVKPzkS+YOEOfkWDUUXlkpaztxkUshkCUa2d5n8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtfvRx4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RSw3gdqyMOEizs5R5xhmyq+ecwUYrUFtswwFvKScSpZWq/hbLu31g6xT9DX5mVQQFIQTMi7ZiR0HlsTgL8BtHA10oCYDI9n2bgIX6tpsjxgSpmmdZXoBesDKcmZnbjeFTYaZwyDXxBIac96wtgF92vKczG54i8zcnOm7CESur/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjZWzLUI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtfvRx4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3263C4CEE5;
-	Tue,  8 Apr 2025 11:36:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjZWzLUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFFBC4CEE5;
+	Tue,  8 Apr 2025 11:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112216;
-	bh=zyxuP9lwY9UnwfkY5Yt0QiiadPQQxpchsmY4OJqlTiA=;
+	s=korg; t=1744112218;
+	bh=4DgITDyIKJ5wU3JeV6o4FXSOTXeZvWu+rYIyqk3WSdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtfvRx4zv2c3j6vdT5a9iLQm+j1vk/KESvoDkv8uXEXhXvCbXgBfyh9inIwXpztfO
-	 znylo1S6PWY+8m+iQGbZICnbe0PB35CZWX0oIZuHdKFB0Ax2XO7gM2vBu9aXGojTSs
-	 8LU3XakxelmuRBcbJ4nSkauNeezMBLUH2uG55o9I=
+	b=PjZWzLUI7vTDPVLYKWoClisGrFno264m8qxPi9uog+CUzPH7aN8lz8OExq0u9InPY
+	 OMyONzCmp0XX6HA/YpSIMpl7aXrb6x/UGHjgD/V4bVgYFp3AYUpCsNwxMz0J0+hoEm
+	 KnzaYiu1rAii6oejuEhUWRc60Nw5rxzM5s0K7YHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Acs <acsjakub@amazon.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	linux-ext4@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mahmoud Adam <mngyadam@amazon.com>,
-	security@kernel.org
-Subject: [PATCH 6.14 716/731] ext4: fix OOB read when checking dotdot dir
-Date: Tue,  8 Apr 2025 12:50:13 +0200
-Message-ID: <20250408104930.928950471@linuxfoundation.org>
+	Wouter Bijlsma <wouter@wouterbijlsma.nl>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.14 717/731] PCI/bwctrl: Fix NULL pointer dereference on bus number exhaustion
+Date: Tue,  8 Apr 2025 12:50:14 +0200
+Message-ID: <20250408104930.952804357@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -49,106 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Acs, Jakub <acsjakub@amazon.de>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit d5e206778e96e8667d3bde695ad372c296dc9353 upstream.
+commit 667f053b05f00a007738cd7ed6fa1901de19dc7e upstream.
 
-Mounting a corrupted filesystem with directory which contains '.' dir
-entry with rec_len == block size results in out-of-bounds read (later
-on, when the corrupted directory is removed).
+When BIOS neglects to assign bus numbers to PCI bridges, the kernel
+attempts to correct that during PCI device enumeration.  If it runs out
+of bus numbers, no pci_bus is allocated and the "subordinate" pointer in
+the bridge's pci_dev remains NULL.
 
-ext4_empty_dir() assumes every ext4 directory contains at least '.'
-and '..' as directory entries in the first data block. It first loads
-the '.' dir entry, performs sanity checks by calling ext4_check_dir_entry()
-and then uses its rec_len member to compute the location of '..' dir
-entry (in ext4_next_entry). It assumes the '..' dir entry fits into the
-same data block.
+The PCIe bandwidth controller erroneously does not check for a NULL
+subordinate pointer and dereferences it on probe.
 
-If the rec_len of '.' is precisely one block (4KB), it slips through the
-sanity checks (it is considered the last directory entry in the data
-block) and leaves "struct ext4_dir_entry_2 *de" point exactly past the
-memory slot allocated to the data block. The following call to
-ext4_check_dir_entry() on new value of de then dereferences this pointer
-which results in out-of-bounds mem access.
+Bandwidth control of unusable devices below the bridge is of questionable
+utility, so simply error out instead.  This mirrors what PCIe hotplug does
+since commit 62e4492c3063 ("PCI: Prevent NULL dereference during pciehp
+probe").
 
-Fix this by extending __ext4_check_dir_entry() to check for '.' dir
-entries that reach the end of data block. Make sure to ignore the phony
-dir entries for checksum (by checking name_len for non-zero).
+The PCI core emits a message with KERN_INFO severity if it has run out of
+bus numbers.  PCIe hotplug emits an additional message with KERN_ERR
+severity to inform the user that hotplug functionality is disabled at the
+bridge.  A similar message for bandwidth control does not seem merited,
+given that its only purpose so far is to expose an up-to-date link speed
+in sysfs and throttle the link speed on certain laptops with limited
+Thermal Design Power.  So error out silently.
 
-Note: This is reported by KASAN as use-after-free in case another
-structure was recently freed from the slot past the bound, but it is
-really an OOB read.
+User-visible messages:
 
-This issue was found by syzkaller tool.
+  pci 0000:16:02.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+  [...]
+  pci_bus 0000:45: busn_res: [bus 45-74] end is updated to 74
+  pci 0000:16:02.0: devices behind bridge are unusable because [bus 45-74] cannot be assigned for them
+  [...]
+  pcieport 0000:16:02.0: pciehp: Hotplug bridge without secondary bus, ignoring
+  [...]
+  BUG: kernel NULL pointer dereference
+  RIP: pcie_update_link_speed
+  pcie_bwnotif_enable
+  pcie_bwnotif_probe
+  pcie_port_probe_service
+  really_probe
 
-Call Trace:
-[   38.594108] BUG: KASAN: slab-use-after-free in __ext4_check_dir_entry+0x67e/0x710
-[   38.594649] Read of size 2 at addr ffff88802b41a004 by task syz-executor/5375
-[   38.595158]
-[   38.595288] CPU: 0 UID: 0 PID: 5375 Comm: syz-executor Not tainted 6.14.0-rc7 #1
-[   38.595298] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[   38.595304] Call Trace:
-[   38.595308]  <TASK>
-[   38.595311]  dump_stack_lvl+0xa7/0xd0
-[   38.595325]  print_address_description.constprop.0+0x2c/0x3f0
-[   38.595339]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595349]  print_report+0xaa/0x250
-[   38.595359]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595368]  ? kasan_addr_to_slab+0x9/0x90
-[   38.595378]  kasan_report+0xab/0xe0
-[   38.595389]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595400]  __ext4_check_dir_entry+0x67e/0x710
-[   38.595410]  ext4_empty_dir+0x465/0x990
-[   38.595421]  ? __pfx_ext4_empty_dir+0x10/0x10
-[   38.595432]  ext4_rmdir.part.0+0x29a/0xd10
-[   38.595441]  ? __dquot_initialize+0x2a7/0xbf0
-[   38.595455]  ? __pfx_ext4_rmdir.part.0+0x10/0x10
-[   38.595464]  ? __pfx___dquot_initialize+0x10/0x10
-[   38.595478]  ? down_write+0xdb/0x140
-[   38.595487]  ? __pfx_down_write+0x10/0x10
-[   38.595497]  ext4_rmdir+0xee/0x140
-[   38.595506]  vfs_rmdir+0x209/0x670
-[   38.595517]  ? lookup_one_qstr_excl+0x3b/0x190
-[   38.595529]  do_rmdir+0x363/0x3c0
-[   38.595537]  ? __pfx_do_rmdir+0x10/0x10
-[   38.595544]  ? strncpy_from_user+0x1ff/0x2e0
-[   38.595561]  __x64_sys_unlinkat+0xf0/0x130
-[   38.595570]  do_syscall_64+0x5b/0x180
-[   38.595583]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: ac27a0ec112a0 ("[PATCH] ext4: initial copy of files from ext3")
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: linux-ext4@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Mahmoud Adam <mngyadam@amazon.com>
-Cc: stable@vger.kernel.org
-Cc: security@kernel.org
-Link: https://patch.msgid.link/b3ae36a6794c4a01944c7d70b403db5b@amazon.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 665745f27487 ("PCI/bwctrl: Re-add BW notification portdrv as PCIe BW controller")
+Reported-by: Wouter Bijlsma <wouter@wouterbijlsma.nl>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219906
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Tested-by: Wouter Bijlsma <wouter@wouterbijlsma.nl>
+Cc: stable@vger.kernel.org # v6.13+
+Link: https://lore.kernel.org/r/3b6c8d973aedc48860640a9d75d20528336f1f3c.1742669372.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/dir.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/pcie/bwctrl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ext4/dir.c
-+++ b/fs/ext4/dir.c
-@@ -104,6 +104,9 @@ int __ext4_check_dir_entry(const char *f
- 	else if (unlikely(le32_to_cpu(de->inode) >
- 			le32_to_cpu(EXT4_SB(dir->i_sb)->s_es->s_inodes_count)))
- 		error_msg = "inode out of bounds";
-+	else if (unlikely(next_offset == size && de->name_len == 1 &&
-+			  de->name[0] == '.'))
-+		error_msg = "'.' directory cannot be the last in data block";
- 	else
- 		return 0;
+--- a/drivers/pci/pcie/bwctrl.c
++++ b/drivers/pci/pcie/bwctrl.c
+@@ -294,6 +294,10 @@ static int pcie_bwnotif_probe(struct pci
+ 	struct pci_dev *port = srv->port;
+ 	int ret;
  
++	/* Can happen if we run out of bus numbers during enumeration. */
++	if (!port->subordinate)
++		return -ENODEV;
++
+ 	struct pcie_bwctrl_data *data = devm_kzalloc(&srv->device,
+ 						     sizeof(*data), GFP_KERNEL);
+ 	if (!data)
 
 
