@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11078269AF4;
-	Tue,  8 Apr 2025 11:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB12288CB;
+	Tue,  8 Apr 2025 11:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111973; cv=none; b=PCSSXql+/V1Th1HhzEEQkxt06et1kcfih66bgCsj1Merz5rlEJ0vtuEQFJljh7X36hlChTaPiy3oeVnJN+6FPPUzHK4HrUyegDxwCoTIZjHqmwkiKfAeBdUkX7qsEs7Jay+1PfOarSknTI6YtMxjGQdKtW5dUGxnmua4p1irfZc=
+	t=1744111975; cv=none; b=IQgBSOs9m9ufB4uZzixT0U/h+TO5qVkBkuCCuRMcUQFScwQbJZiHcIV0rMD1+co5253rzH57aEcZ7Z5xjgCGpsQOtMejCwkBa5SbNeSobszRsKhZgCeYrPc66K2imC7m3mdo5I2wKUp8xO8buoyJjmphxNdtEDzDdlt38a8muUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111973; c=relaxed/simple;
-	bh=QCEhF7gYV/DdAZW8HsSrUrG4KPQ/9WmOjGmW/CkZ07Q=;
+	s=arc-20240116; t=1744111975; c=relaxed/simple;
+	bh=K7qKA0rwhSFmG85An63Ol1CYUnNTCR5CBBpxSf0hSIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evG4ymxA8sJmvQWLOGhRxmc1dFNMA5X9c+EdK+KBQJxrCmVe9/9CygDhe+oVLSmHcd47hFqkCAclzBOX8Lv0HkuoQACERH8Xmf8WDUYK8gMxt7PaaTqPVLQtTqqj9JSMriOrS8M1CHtVfgUpoZRzK0Nx57Zz7oGXuYfPq6KdEeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSQKWLXd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3UWir0JkfgzRqI1B16JkaMAgMCYE+bc8JJstl67frHqMwKwkbpIzR3lMWiprmORemXUoB2A71uf6a0p1iBcNDgDbobJqzDkbDncmSwuqHYA6klxkKWBeYWz8Ixmb7KtcunPa+6m+UGNDRS1M+dPm5/smPlIH9J2UIjS697fSkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJjZIqq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSQKWLXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B68C4CEE5;
-	Tue,  8 Apr 2025 11:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJjZIqq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20D5C4CEE5;
+	Tue,  8 Apr 2025 11:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111972;
-	bh=QCEhF7gYV/DdAZW8HsSrUrG4KPQ/9WmOjGmW/CkZ07Q=;
+	s=korg; t=1744111975;
+	bh=K7qKA0rwhSFmG85An63Ol1CYUnNTCR5CBBpxSf0hSIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSQKWLXd4gbRT3BmFry8DBhk8MSrGOuxo5804oaj12vmhJtDPfcNvm6RsiYm3t6oe
-	 JLG5ts5ylmB/D81z+iLmr7qlhNICfkdAe3j5W9q3RgyO94qArKJjqmQEiIKt+4OCV6
-	 wBtuNnRR71CE9QKii/5WekyASxYEBb7u7IBWPeJ4=
+	b=RJjZIqq4bU7R1rcN6tu1xjEr8cdkJwECB4wiNqt+g6gm6VMJU/qDstI2//AHVSuWD
+	 AinG8QZXMVXIW+cZG76ZjFuEwj0f7kq6+wzm650gLIvLA2UvQxXII8X2XTNUAferuo
+	 /saffXCTBkeBxsB08J4ynsUGnYD/GqBXvRHGgZK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matt Dowling <madowlin@amazon.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 627/731] udp: Fix multiple wraparounds of sk->sk_rmem_alloc.
-Date: Tue,  8 Apr 2025 12:48:44 +0200
-Message-ID: <20250408104928.857526755@linuxfoundation.org>
+Subject: [PATCH 6.14 628/731] udp: Fix memory accounting leak.
+Date: Tue,  8 Apr 2025 12:48:45 +0200
+Message-ID: <20250408104928.880233589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,134 +55,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5a465a0da13ee9fbd7d3cd0b2893309b0fe4b7e3 ]
+[ Upstream commit df207de9d9e7a4d92f8567e2c539d9c8c12fd99d ]
 
-__udp_enqueue_schedule_skb() has the following condition:
+Matt Dowling reported a weird UDP memory usage issue.
 
-  if (atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf)
-          goto drop;
+Under normal operation, the UDP memory usage reported in /proc/net/sockstat
+remains close to zero.  However, it occasionally spiked to 524,288 pages
+and never dropped.  Moreover, the value doubled when the application was
+terminated.  Finally, it caused intermittent packet drops.
 
-sk->sk_rcvbuf is initialised by net.core.rmem_default and later can
-be configured by SO_RCVBUF, which is limited by net.core.rmem_max,
-or SO_RCVBUFFORCE.
+We can reproduce the issue with the script below [0]:
 
-If we set INT_MAX to sk->sk_rcvbuf, the condition is always false
-as sk->sk_rmem_alloc is also signed int.
+  1. /proc/net/sockstat reports 0 pages
 
-Then, the size of the incoming skb is added to sk->sk_rmem_alloc
-unconditionally.
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 0
 
-This results in integer overflow (possibly multiple times) on
-sk->sk_rmem_alloc and allows a single socket to have skb up to
-net.core.udp_mem[1].
+  2. Run the script till the report reaches 524,288
 
-For example, if we set a large value to udp_mem[1] and INT_MAX to
-sk->sk_rcvbuf and flood packets to the socket, we can see multiple
-overflows:
+    # python3 test.py & sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> PAGE_SHIFT
 
-  # cat /proc/net/sockstat | grep UDP:
-  UDP: inuse 3 mem 7956736  <-- (7956736 << 12) bytes > INT_MAX * 15
-                                             ^- PAGE_SHIFT
-  # ss -uam
-  State  Recv-Q      ...
-  UNCONN -1757018048 ...    <-- flipping the sign repeatedly
-         skmem:(r2537949248,rb2147483646,t0,tb212992,f1984,w0,o0,bl0,d0)
+  3. Kill the socket and confirm the number never drops
 
-Previously, we had a boundary check for INT_MAX, which was removed by
-commit 6a1f12dd85a8 ("udp: relax atomic operation on sk->sk_rmem_alloc").
+    # pkill python3 && sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 524288
 
-A complete fix would be to revert it and cap the right operand by
-INT_MAX:
+  4. (necessary since v6.0) Trigger proto_memory_pcpu_drain()
 
-  rmem = atomic_add_return(size, &sk->sk_rmem_alloc);
-  if (rmem > min(size + (unsigned int)sk->sk_rcvbuf, INT_MAX))
-          goto uncharge_drop;
+    # python3 test.py & sleep 1 && pkill python3
 
-but we do not want to add the expensive atomic_add_return() back just
-for the corner case.
+  5. The number doubles
 
-Casting rmem to unsigned int prevents multiple wraparounds, but we still
-allow a single wraparound.
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 1048577
 
-  # cat /proc/net/sockstat | grep UDP:
-  UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> 12
+The application set INT_MAX to SO_RCVBUF, which triggered an integer
+overflow in udp_rmem_release().
 
-  # ss -uam
-  State  Recv-Q      ...
-  UNCONN -2147482816 ...   <-- INT_MAX + 831 bytes
-         skmem:(r2147484480,rb2147483646,t0,tb212992,f3264,w0,o0,bl0,d14468947)
+When a socket is close()d, udp_destruct_common() purges its receive
+queue and sums up skb->truesize in the queue.  This total is calculated
+and stored in a local unsigned integer variable.
 
-So, let's define rmem and rcvbuf as unsigned int and check skb->truesize
-only when rcvbuf is large enough to lower the overflow possibility.
+The total size is then passed to udp_rmem_release() to adjust memory
+accounting.  However, because the function takes a signed integer
+argument, the total size can wrap around, causing an overflow.
 
-Note that we still have a small chance to see overflow if multiple skbs
-to the same socket are processed on different core at the same time and
-each size does not exceed the limit but the total size does.
+Then, the released amount is calculated as follows:
 
-Note also that we must ignore skb->truesize for a small buffer as
-explained in commit 363dc73acacb ("udp: be less conservative with
-sock rmem accounting").
+  1) Add size to sk->sk_forward_alloc.
+  2) Round down sk->sk_forward_alloc to the nearest lower multiple of
+      PAGE_SIZE and assign it to amount.
+  3) Subtract amount from sk->sk_forward_alloc.
+  4) Pass amount >> PAGE_SHIFT to __sk_mem_reduce_allocated().
 
-Fixes: 6a1f12dd85a8 ("udp: relax atomic operation on sk->sk_rmem_alloc")
+When the issue occurred, the total in udp_destruct_common() was 2147484480
+(INT_MAX + 833), which was cast to -2147482816 in udp_rmem_release().
+
+At 1) sk->sk_forward_alloc is changed from 3264 to -2147479552, and
+2) sets -2147479552 to amount.  3) reverts the wraparound, so we don't
+see a warning in inet_sock_destruct().  However, udp_memory_allocated
+ends up doubling at 4).
+
+Since commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
+memory_allocated"), memory usage no longer doubles immediately after
+a socket is close()d because __sk_mem_reduce_allocated() caches the
+amount in udp_memory_per_cpu_fw_alloc.  However, the next time a UDP
+socket receives a packet, the subtraction takes effect, causing UDP
+memory usage to double.
+
+This issue makes further memory allocation fail once the socket's
+sk->sk_rmem_alloc exceeds net.ipv4.udp_rmem_min, resulting in packet
+drops.
+
+To prevent this issue, let's use unsigned int for the calculation and
+call sk_forward_alloc_add() only once for the small delta.
+
+Note that first_packet_length() also potentially has the same problem.
+
+[0]:
+from socket import *
+
+SO_RCVBUFFORCE = 33
+INT_MAX = (2 ** 31) - 1
+
+s = socket(AF_INET, SOCK_DGRAM)
+s.bind(('', 0))
+s.setsockopt(SOL_SOCKET, SO_RCVBUFFORCE, INT_MAX)
+
+c = socket(AF_INET, SOCK_DGRAM)
+c.connect(s.getsockname())
+
+data = b'a' * 100
+
+while True:
+    c.send(data)
+
+Fixes: f970bd9e3a06 ("udp: implement memory accounting helpers")
+Reported-by: Matt Dowling <madowlin@amazon.com>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250401184501.67377-2-kuniyu@amazon.com
+Link: https://patch.msgid.link/20250401184501.67377-3-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ net/ipv4/udp.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index a9bb9ce5438ea..31f7bfec23590 100644
+index 31f7bfec23590..3fe85ecec2361 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -1726,17 +1726,25 @@ static int udp_rmem_schedule(struct sock *sk, int size)
- int __udp_enqueue_schedule_skb(struct sock *sk, struct sk_buff *skb)
+@@ -1626,12 +1626,12 @@ static bool udp_skb_has_head_state(struct sk_buff *skb)
+ }
+ 
+ /* fully reclaim rmem/fwd memory allocated for skb */
+-static void udp_rmem_release(struct sock *sk, int size, int partial,
+-			     bool rx_queue_lock_held)
++static void udp_rmem_release(struct sock *sk, unsigned int size,
++			     int partial, bool rx_queue_lock_held)
  {
- 	struct sk_buff_head *list = &sk->sk_receive_queue;
--	int rmem, err = -ENOMEM;
-+	unsigned int rmem, rcvbuf;
- 	spinlock_t *busy = NULL;
--	int size, rcvbuf;
-+	int size, err = -ENOMEM;
+ 	struct udp_sock *up = udp_sk(sk);
+ 	struct sk_buff_head *sk_queue;
+-	int amt;
++	unsigned int amt;
  
--	/* Immediately drop when the receive queue is full.
--	 * Always allow at least one packet.
--	 */
- 	rmem = atomic_read(&sk->sk_rmem_alloc);
- 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
--	if (rmem > rcvbuf)
--		goto drop;
-+	size = skb->truesize;
-+
-+	/* Immediately drop when the receive queue is full.
-+	 * Cast to unsigned int performs the boundary check for INT_MAX.
-+	 */
-+	if (rmem + size > rcvbuf) {
-+		if (rcvbuf > INT_MAX >> 1)
-+			goto drop;
-+
-+		/* Always allow at least one packet for small buffer. */
-+		if (rmem > rcvbuf)
-+			goto drop;
-+	}
+ 	if (likely(partial)) {
+ 		up->forward_deficit += size;
+@@ -1651,10 +1651,8 @@ static void udp_rmem_release(struct sock *sk, int size, int partial,
+ 	if (!rx_queue_lock_held)
+ 		spin_lock(&sk_queue->lock);
  
- 	/* Under mem pressure, it might be helpful to help udp_recvmsg()
- 	 * having linear skbs :
-@@ -1746,10 +1754,10 @@ int __udp_enqueue_schedule_skb(struct sock *sk, struct sk_buff *skb)
- 	 */
- 	if (rmem > (rcvbuf >> 1)) {
- 		skb_condense(skb);
 -
-+		size = skb->truesize;
- 		busy = busylock_acquire(sk);
- 	}
--	size = skb->truesize;
-+
- 	udp_set_dev_scratch(skb);
+-	sk_forward_alloc_add(sk, size);
+-	amt = (sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
+-	sk_forward_alloc_add(sk, -amt);
++	amt = (size + sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
++	sk_forward_alloc_add(sk, size - amt);
  
- 	atomic_add(size, &sk->sk_rmem_alloc);
+ 	if (amt)
+ 		__sk_mem_reduce_allocated(sk, amt >> PAGE_SHIFT);
+@@ -1844,7 +1842,7 @@ EXPORT_SYMBOL_GPL(skb_consume_udp);
+ 
+ static struct sk_buff *__first_packet_length(struct sock *sk,
+ 					     struct sk_buff_head *rcvq,
+-					     int *total)
++					     unsigned int *total)
+ {
+ 	struct sk_buff *skb;
+ 
+@@ -1877,8 +1875,8 @@ static int first_packet_length(struct sock *sk)
+ {
+ 	struct sk_buff_head *rcvq = &udp_sk(sk)->reader_queue;
+ 	struct sk_buff_head *sk_queue = &sk->sk_receive_queue;
++	unsigned int total = 0;
+ 	struct sk_buff *skb;
+-	int total = 0;
+ 	int res;
+ 
+ 	spin_lock_bh(&rcvq->lock);
 -- 
 2.39.5
 
