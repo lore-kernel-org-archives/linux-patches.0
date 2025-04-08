@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9684926E140;
-	Tue,  8 Apr 2025 12:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFAC2777F2;
+	Tue,  8 Apr 2025 12:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116486; cv=none; b=T6/1t/w2pr6ogKzzEmVbIGp6yur8f1Ij2Qc5aTO73VANl4PuaP0pVjhAxuML3UpkXviGxcbr7iXKK+t0/CcqNQOwzyWBN7zSztPSEAFCZ8q3Hy0RvBeSE91Y9vexLUB6dqE2BYSB7Docgd2RJ/Wsz0RWJeWt8OG0FSFNw9NQzZ4=
+	t=1744116489; cv=none; b=e/kQvpOu1B/IG6hePSakenFzWc1l6o909VoeVM1e5G+9/5QN3Rz7zW26mWF+4JLADwybe1YQCvVHD5rVif9gUZgXVljb0K/gEHP/VJnbHuvYaBsb3wOp6gwkQmdMNKfR4xqMM6ltcy3sVx5pqHHtzQoS9KxGyT7tAtWd/oIZGiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116486; c=relaxed/simple;
-	bh=N9KHmUp76SzbvGkcX6FvFJlOuGR8oJFG+Z3WuPnLpsI=;
+	s=arc-20240116; t=1744116489; c=relaxed/simple;
+	bh=7nIVFnJZNdyYHT3zNxs1fmgFb5m5KlX00NlpsOPhosQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WP9+4y4MBc1OQQr9zwDCIHnjO/rGC59GFKmgctAQtMiNordWAOTpfp9Kii+KxTef3t9gZCR46Y76qpmzm3XcdfV0EMxrMnWIRTD6O2Rg4EMB/3utxIQDISikkQp7ecJSZLqc+Ley+NnDf408IhJR8AFepPVZqtJQ6g8DZZNAsZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLfJigQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDz29ZMptTM3Fg723v4asoeqvlIDyoLVSYwz0RIvyup4eHIilI+ld8DcOs5YIujZr2kwhTeCpqH6E51HNBezrQrPowr39X4P7NE+SplK+ND1awYbJb+Wpde01/pgIkZOaYE5yl7xmBdBExNtF45hnxmbvC39cI3LvBj3mF2K3c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRkFDbHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLfJigQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D0DC4CEE5;
-	Tue,  8 Apr 2025 12:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRkFDbHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FE6C4CEE7;
+	Tue,  8 Apr 2025 12:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116486;
-	bh=N9KHmUp76SzbvGkcX6FvFJlOuGR8oJFG+Z3WuPnLpsI=;
+	s=korg; t=1744116489;
+	bh=7nIVFnJZNdyYHT3zNxs1fmgFb5m5KlX00NlpsOPhosQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLfJigQ+xFkeka8G0FmgUKtjqe8eupL/SVePE91dOwkoJ6aMpUJBN/PaAixqc6033
-	 tuUF0FPsKZrcB+1OaAZ7P3pSOQbNx9vqNxq1inSJ8x8bHF2LMqaLUgGZVHVnqLNJ0T
-	 o6gtxxA0gLm9fYz6xLpn+GUlga6TU1hIFyuAb+gc=
+	b=wRkFDbHHJu34Zd2ofCDDvnwBNsd5WLGOocI+JeCLumIZol7E0qUNIhdc7tT7rFoXq
+	 4HNwqiq2jAHtW7fmJlYHMJPQI/Q9h7s3hTKfXTIFHXFUPIK+IFHPMGQtBNX8x51njf
+	 7yuNvOs+M2BoursaevYB8TSjRbKbVfi22/ZuDevg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	syzbot+f60349ba1f9f08df349f@syzkaller.appspotmail.com,
+	Wang Liang <wangliang74@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/423] x86/dumpstack: Fix inaccurate unwinding from exception stacks due to misplaced assignment
-Date: Tue,  8 Apr 2025 12:48:03 +0200
-Message-ID: <20250408104849.397324771@linuxfoundation.org>
+Subject: [PATCH 6.12 158/423] RDMA/core: Fix use-after-free when rename device name
+Date: Tue,  8 Apr 2025 12:48:04 +0200
+Message-ID: <20250408104849.420831038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,66 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 2c118f50d7fd4d9aefc4533a26f83338b2906b7a ]
+[ Upstream commit 1d6a9e7449e2a0c1e2934eee7880ba8bd1e464cd ]
 
-Commit:
+Syzbot reported a slab-use-after-free with the following call trace:
 
-  2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
+==================================================================
+BUG: KASAN: slab-use-after-free in nla_put+0xd3/0x150 lib/nlattr.c:1099
+Read of size 5 at addr ffff888140ea1c60 by task syz.0.988/10025
 
-was intended to ensure alignment of the stack pointer; but it also moved
-the initialization of the "stack" variable down into the loop header.
+CPU: 0 UID: 0 PID: 10025 Comm: syz.0.988
+Not tainted 6.14.0-rc4-syzkaller-00859-gf77f12010f67 #0
+Hardware name: Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0x16e/0x5b0 mm/kasan/report.c:521
+ kasan_report+0x143/0x180 mm/kasan/report.c:634
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
+ nla_put+0xd3/0x150 lib/nlattr.c:1099
+ nla_put_string include/net/netlink.h:1621 [inline]
+ fill_nldev_handle+0x16e/0x200 drivers/infiniband/core/nldev.c:265
+ rdma_nl_notify_event+0x561/0xef0 drivers/infiniband/core/nldev.c:2857
+ ib_device_notify_register+0x22/0x230 drivers/infiniband/core/device.c:1344
+ ib_register_device+0x1292/0x1460 drivers/infiniband/core/device.c:1460
+ rxe_register_device+0x233/0x350 drivers/infiniband/sw/rxe/rxe_verbs.c:1540
+ rxe_net_add+0x74/0xf0 drivers/infiniband/sw/rxe/rxe_net.c:550
+ rxe_newlink+0xde/0x1a0 drivers/infiniband/sw/rxe/rxe.c:212
+ nldev_newlink+0x5ea/0x680 drivers/infiniband/core/nldev.c:1795
+ rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
+ rdma_nl_rcv+0x6dd/0x9e0 drivers/infiniband/core/netlink.c:259
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8de/0xcb0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:709 [inline]
+ __sock_sendmsg+0x221/0x270 net/socket.c:724
+ ____sys_sendmsg+0x53a/0x860 net/socket.c:2564
+ ___sys_sendmsg net/socket.c:2618 [inline]
+ __sys_sendmsg+0x269/0x350 net/socket.c:2650
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f42d1b8d169
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 ...
+RSP: 002b:00007f42d2960038 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f42d1da6320 RCX: 00007f42d1b8d169
+RDX: 0000000000000000 RSI: 00004000000002c0 RDI: 000000000000000c
+RBP: 00007f42d1c0e2a0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f42d1da6320 R15: 00007ffe399344a8
+ </TASK>
 
-This was likely intended as a no-op cleanup, since the commit
-message does not mention it; however, this caused a behavioral change
-because the value of "regs" is different between the two places.
+Allocated by task 10025:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4294 [inline]
+ __kmalloc_node_track_caller_noprof+0x28b/0x4c0 mm/slub.c:4313
+ __kmemdup_nul mm/util.c:61 [inline]
+ kstrdup+0x42/0x100 mm/util.c:81
+ kobject_set_name_vargs+0x61/0x120 lib/kobject.c:274
+ dev_set_name+0xd5/0x120 drivers/base/core.c:3468
+ assign_name drivers/infiniband/core/device.c:1202 [inline]
+ ib_register_device+0x178/0x1460 drivers/infiniband/core/device.c:1384
+ rxe_register_device+0x233/0x350 drivers/infiniband/sw/rxe/rxe_verbs.c:1540
+ rxe_net_add+0x74/0xf0 drivers/infiniband/sw/rxe/rxe_net.c:550
+ rxe_newlink+0xde/0x1a0 drivers/infiniband/sw/rxe/rxe.c:212
+ nldev_newlink+0x5ea/0x680 drivers/infiniband/core/nldev.c:1795
+ rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
+ rdma_nl_rcv+0x6dd/0x9e0 drivers/infiniband/core/netlink.c:259
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8de/0xcb0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:709 [inline]
+ __sock_sendmsg+0x221/0x270 net/socket.c:724
+ ____sys_sendmsg+0x53a/0x860 net/socket.c:2564
+ ___sys_sendmsg net/socket.c:2618 [inline]
+ __sys_sendmsg+0x269/0x350 net/socket.c:2650
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Originally, get_stack_pointer() used the regs provided by the caller; after
-that commit, get_stack_pointer() instead uses the regs at the top of the
-stack frame the unwinder is looking at. Often, there are no such regs at
-all, and "regs" is NULL, causing get_stack_pointer() to fall back to the
-task's current stack pointer, which is not what we want here, but probably
-happens to mostly work. Other times, the original regs will point to
-another regs frame - in that case, the linear guess unwind logic in
-show_trace_log_lvl() will start unwinding too far up the stack, causing the
-first frame found by the proper unwinder to never be visited, resulting in
-a stack trace consisting purely of guess lines.
+Freed by task 10035:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+ kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:576
+ poison_slab_object mm/kasan/common.c:247 [inline]
+ __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
+ kasan_slab_free include/linux/kasan.h:233 [inline]
+ slab_free_hook mm/slub.c:2353 [inline]
+ slab_free mm/slub.c:4609 [inline]
+ kfree+0x196/0x430 mm/slub.c:4757
+ kobject_rename+0x38f/0x410 lib/kobject.c:524
+ device_rename+0x16a/0x200 drivers/base/core.c:4525
+ ib_device_rename+0x270/0x710 drivers/infiniband/core/device.c:402
+ nldev_set_doit+0x30e/0x4c0 drivers/infiniband/core/nldev.c:1146
+ rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
+ rdma_nl_rcv+0x6dd/0x9e0 drivers/infiniband/core/netlink.c:259
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8de/0xcb0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:709 [inline]
+ __sock_sendmsg+0x221/0x270 net/socket.c:724
+ ____sys_sendmsg+0x53a/0x860 net/socket.c:2564
+ ___sys_sendmsg net/socket.c:2618 [inline]
+ __sys_sendmsg+0x269/0x350 net/socket.c:2650
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fix it by moving the "stack = " assignment back where it belongs.
+This is because if rename device happens, the old name is freed in
+ib_device_rename() with lock, but ib_device_notify_register() may visit
+the dev name locklessly by event RDMA_REGISTER_EVENT or
+RDMA_NETDEV_ATTACH_EVENT.
 
-Fixes: 2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250325-2025-03-unwind-fixes-v1-2-acd774364768@google.com
+Fix this by hold devices_rwsem in ib_device_notify_register().
+
+Reported-by: syzbot+f60349ba1f9f08df349f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=25bc6f0ed2b88b9eb9b8
+Fixes: 9cbed5aab5ae ("RDMA/nldev: Add support for RDMA monitoring")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20250313092421.944658-1-wangliang74@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/dumpstack.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/device.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
-index a7d562697e50e..b2b118a8c09be 100644
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -195,6 +195,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 	printk("%sCall Trace:\n", log_lvl);
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 9de3236873429..46102f179955b 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -1366,9 +1366,11 @@ static void ib_device_notify_register(struct ib_device *device)
+ 	u32 port;
+ 	int ret;
  
- 	unwind_start(&state, task, regs, stack);
-+	stack = stack ?: get_stack_pointer(task, regs);
- 	regs = unwind_get_entry_regs(&state, &partial);
++	down_read(&devices_rwsem);
++
+ 	ret = rdma_nl_notify_event(device, 0, RDMA_REGISTER_EVENT);
+ 	if (ret)
+-		return;
++		goto out;
  
- 	/*
-@@ -213,9 +214,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 	 * - hardirq stack
- 	 * - entry stack
- 	 */
--	for (stack = stack ?: get_stack_pointer(task, regs);
--	     stack;
--	     stack = stack_info.next_sp) {
-+	for (; stack; stack = stack_info.next_sp) {
- 		const char *stack_name;
+ 	rdma_for_each_port(device, port) {
+ 		netdev = ib_device_get_netdev(device, port);
+@@ -1379,8 +1381,11 @@ static void ib_device_notify_register(struct ib_device *device)
+ 					   RDMA_NETDEV_ATTACH_EVENT);
+ 		dev_put(netdev);
+ 		if (ret)
+-			return;
++			goto out;
+ 	}
++
++out:
++	up_read(&devices_rwsem);
+ }
  
- 		stack = PTR_ALIGN(stack, sizeof(long));
+ /**
 -- 
 2.39.5
 
