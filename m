@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C10D374C4;
-	Tue,  8 Apr 2025 11:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABA025FA04;
+	Tue,  8 Apr 2025 11:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110879; cv=none; b=Hr1v+KqGo8Hy4bbutr8JmFIbMhMogROskQmTPFyNlskg01AH8gwJtrpakz4jc8spVffeRRhFNzNg8mCQ5ry2bExftYwir/PPe46StW+OVhdKqH42y8tgCR4UVyYXMgqix7mQm4WSJa8k/wJ/dSbOdw3fr+U8MWUbp9wJALIupsk=
+	t=1744110881; cv=none; b=BLcfLu4mqwCWko8TqUoOmbsSquw09gZWQd+ADcmAglfNzIR2rAYeF4EdxD3OX1UibiaHheXr5qe/KpClaLGJld4ttlRReBXoRpFp4jHWWtI7XVadIQTCFcNARimqCS2nd2p8eey2p1QYd7UgBumI+Vygm2yxnon3niaZ9THMJMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110879; c=relaxed/simple;
-	bh=wk/xtwginFcXnG40EUV6/2zXeIE+dp1qMXK9ycDwmDk=;
+	s=arc-20240116; t=1744110881; c=relaxed/simple;
+	bh=N27tBPx4wo/XGHSaxSqO6vCy9rpKw+1VQwmUmEVApLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTnPSUYYXjx1M7l4JUe5nevB9QislVMcsZW9sqR2+jjcFVciM9aV0qdJoDot0XnmB83M0eo9Vdbj3t8WwSG7rKaPaeSqDe/hK5PXq3IT5epKo/dK8/giF4w/jJK9yVxklpEArt+97C7p44ulac89SZljFxgV3K2w7b6wMWgKpps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5j7y2Fh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqO7LpWrCNWfIYqELlKuvY3tuJcAB4AZRL/h6cUrchgwV6ucPfJFFtegnC22t1Hw9EwuEdCbO3gT+DNWSKlfk9EGLTOmqc5bpgaiNbZQBzu95HSAKLj37DlJOJMEETkiaf/GPQ7lOclOUgmHoIQePaisMTfQJ3naQOP5teUdPQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlDmXh4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5j7y2Fh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8C8C4CEE5;
-	Tue,  8 Apr 2025 11:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlDmXh4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5170AC4CEE5;
+	Tue,  8 Apr 2025 11:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110879;
-	bh=wk/xtwginFcXnG40EUV6/2zXeIE+dp1qMXK9ycDwmDk=;
+	s=korg; t=1744110881;
+	bh=N27tBPx4wo/XGHSaxSqO6vCy9rpKw+1VQwmUmEVApLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5j7y2FhaIxNaSh4VHtCzZQcHyP1jtzL/8wouqD5rXtn08slXUtwpvqOibZwywnKC
-	 4VH/wWeOcNYjqZki9qsvrmsoYXhh5NU4id7mfZRXXTVjoPjKC5271TwrudZGhBQFAe
-	 zqVQMuvIEPsbS0AqOO2HhC+QzjbPtkrmy7qY9v00=
+	b=XlDmXh4eVX6l/wmHkW4quhk8pe9QuOzeARNfMMkeb/epXrSHd+5CZo3QEqGSktqfS
+	 q+kd6OjyidrvczivC7fWhLxaH3ai+Efi6/PY2rLJh4+cMDr46eJW5IOfWoUD2Nv4Ud
+	 mAmVhdN1XqkMiEZa2/XGBnHy9NGkwPwxrVvrbwaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jan Glaza <jan.glaza@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 211/731] ice: validate queue quanta parameters to prevent OOB access
-Date: Tue,  8 Apr 2025 12:41:48 +0200
-Message-ID: <20250408104919.190168856@linuxfoundation.org>
+Subject: [PATCH 6.14 229/731] eth: bnxt: fix out-of-range access of vnic_info array
+Date: Tue,  8 Apr 2025 12:42:06 +0200
+Message-ID: <20250408104919.607872034@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,69 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Glaza <jan.glaza@intel.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit e2f7d3f7331b92cb820da23e8c45133305da1e63 ]
+[ Upstream commit 919f9f497dbcee75d487400e8f9815b74a6a37df ]
 
-Add queue wraparound prevention in quanta configuration.
-Ensure end_qid does not overflow by validating start_qid and num_queues.
+The bnxt_queue_{start | stop}() access vnic_info as much as allocated,
+which indicates bp->nr_vnics.
+So, it should not reach bp->vnic_info[bp->nr_vnics].
 
-Fixes: 015307754a19 ("ice: Support VF queue rate limit and quanta size configuration")
-Reviewed-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jan Glaza <jan.glaza@intel.com>
-Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 661958552eda ("eth: bnxt: do not use BNXT_VNIC_NTUPLE unconditionally in queue restart logic")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250316025837.939527-1-ap420073@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index 346aee373ccd4..df13f5110168d 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -1900,13 +1900,21 @@ static int ice_vc_cfg_q_bw(struct ice_vf *vf, u8 *msg)
-  */
- static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
- {
-+	u16 quanta_prof_id, quanta_size, start_qid, num_queues, end_qid, i;
- 	enum virtchnl_status_code v_ret = VIRTCHNL_STATUS_SUCCESS;
--	u16 quanta_prof_id, quanta_size, start_qid, end_qid, i;
- 	struct virtchnl_quanta_cfg *qquanta =
- 		(struct virtchnl_quanta_cfg *)msg;
- 	struct ice_vsi *vsi;
- 	int ret;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 55f553debd3b2..0ddc3d41e2d81 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -15651,7 +15651,7 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
+ 	cpr = &rxr->bnapi->cp_ring;
+ 	cpr->sw_stats->rx.rx_resets++;
  
-+	start_qid = qquanta->queue_select.start_queue_id;
-+	num_queues = qquanta->queue_select.num_queues;
-+
-+	if (check_add_overflow(start_qid, num_queues, &end_qid)) {
-+		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
-+		goto err;
-+	}
-+
- 	if (!test_bit(ICE_VF_STATE_ACTIVE, vf->vf_states)) {
- 		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
- 		goto err;
-@@ -1918,8 +1926,6 @@ static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
- 		goto err;
- 	}
+-	for (i = 0; i <= bp->nr_vnics; i++) {
++	for (i = 0; i < bp->nr_vnics; i++) {
+ 		vnic = &bp->vnic_info[i];
  
--	end_qid = qquanta->queue_select.start_queue_id +
--		  qquanta->queue_select.num_queues;
- 	if (end_qid > ICE_MAX_RSS_QS_PER_VF ||
- 	    end_qid > min_t(u16, vsi->alloc_txq, vsi->alloc_rxq)) {
- 		dev_err(ice_pf_to_dev(vf->pf), "VF-%d trying to configure more than allocated number of queues: %d\n",
-@@ -1948,7 +1954,6 @@ static int ice_vc_cfg_q_quanta(struct ice_vf *vf, u8 *msg)
- 		goto err;
- 	}
+ 		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
+@@ -15679,7 +15679,7 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
+ 	struct bnxt_vnic_info *vnic;
+ 	int i;
  
--	start_qid = qquanta->queue_select.start_queue_id;
- 	for (i = start_qid; i < end_qid; i++)
- 		vsi->tx_rings[i]->quanta_prof_id = quanta_prof_id;
- 
+-	for (i = 0; i <= bp->nr_vnics; i++) {
++	for (i = 0; i < bp->nr_vnics; i++) {
+ 		vnic = &bp->vnic_info[i];
+ 		vnic->mru = 0;
+ 		bnxt_hwrm_vnic_update(bp, vnic,
 -- 
 2.39.5
 
