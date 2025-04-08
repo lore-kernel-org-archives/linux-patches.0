@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A922F266583;
-	Tue,  8 Apr 2025 11:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D520219301;
+	Tue,  8 Apr 2025 11:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112115; cv=none; b=ApbvPYA/fuNh5qUpOMRnZaO1mvA9IuJpHSWoNmwcHNqqEcECYqOko0K77HizoJ2wJq+pp+wCnY/j5X77h17a7Fjrzcp49Vpecxc0u04XHXABS5EVLdwagn5TVYaMC2Tu4pW7cpa8qZlnScIP9MGXtiJafoSmBvZbpo9ccOOHNLs=
+	t=1744112118; cv=none; b=jQIg1wgthxWlLwJPZuJMFT6YdykXojqZcNF0KIwylswguxrzjTR87x5yMk7EzeSaiuA4faTHyMjGkHzDJeG9p384DVQJTCG4NsLVJ3qdQmfvVtQ57ogd/vMYvriBTOQcUmVmWxVZuE6jdciybAPYeMS9ddtXlSdEXIGaQylD+3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112115; c=relaxed/simple;
-	bh=+MZfQtF1empAdbmlXPSIT4cIWOagdTxp10h8WVEGao4=;
+	s=arc-20240116; t=1744112118; c=relaxed/simple;
+	bh=Y4tMvST6cjI8usn0KpLZf4gT7DEnKdHJZr3oksGUPeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9G4P51W5Pn2ivQLwVfgTpOW+TnNBKeErpi5j6K0gDxolawxdVirwwGu//TnYYiH08Lj2qLh2w8miPK8XRyQGstvYzDvSGBdrs4PLmxSY6LfQrDDcDBv+cJOmaYR/zpDJM5nsypObYBS5YQ6Zi7AfBDEsLSJIvBt03t7jQFNYeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd6n+Mgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knzEb7tWApCd3ZtzJ+W7w0tcfbICPOQvTBZML9HZdS3oX2xh1a+mYUjmm4KU4YRH+CFPBttIb+INh7v7Gs9AIZo5tXyVVl4Y0nSkvWkiaU+nVq4uIrYsGBvx2uYcpPhFxdqemUWIDDvmUmdxBBxTz0EgP4kKmS7EFq0AFm5u960=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6D2rQp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd6n+Mgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97503C4CEE7;
-	Tue,  8 Apr 2025 11:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6D2rQp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E006C4CEE7;
+	Tue,  8 Apr 2025 11:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112115;
-	bh=+MZfQtF1empAdbmlXPSIT4cIWOagdTxp10h8WVEGao4=;
+	s=korg; t=1744112117;
+	bh=Y4tMvST6cjI8usn0KpLZf4gT7DEnKdHJZr3oksGUPeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sd6n+Mgx3Wc7Zbwb5TiBW+MRPgl5bbxty/1wZSR6gpPupojeNPNnCVsBg8mXK803j
-	 TStzA0+EIUd4FumX7RzJKk+QV5Ez7/3PqHXA5SP8iBOGFQmy6NIMQ4cnv8dJPXvJPP
-	 7RtzJ4rET4jwJDX2AWCXV7vuL/sM8W90fxgy87s4=
+	b=A6D2rQp3JrZIYaPOglSURU4AK4UI4CpVpTqhvcehtBeEO0D9cct5B6cSBGmyvYfk7
+	 BiIxqea544DybgAwrQQt5wEnPXedIGgisxyumRbHQAWDZENL6hrP4RxA6AmlRjvPct
+	 DR1zWYugn+H6/HdhmG8Ig2PQo4R3s5Gk8A4Hr8f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Marquardt <davemarq@linux.ibm.com>,
-	Nick Child <nnac123@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Donald Hunter <donald.hunter@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 642/731] net: ibmveth: make veth_pool_store stop hanging
-Date: Tue,  8 Apr 2025 12:48:59 +0200
-Message-ID: <20250408104929.200195262@linuxfoundation.org>
+Subject: [PATCH 6.14 643/731] netlink: specs: rt_route: pull the ifa- prefix out of the names
+Date: Tue,  8 Apr 2025 12:49:00 +0200
+Message-ID: <20250408104929.223309636@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,209 +51,340 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Marquardt <davemarq@linux.ibm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 053f3ff67d7feefc75797863f3d84b47ad47086f ]
+[ Upstream commit 1a1eba0e9899c286914032c78708c614b016704b ]
 
-v2:
-- Created a single error handling unlock and exit in veth_pool_store
-- Greatly expanded commit message with previous explanatory-only text
+YAML specs don't normally include the C prefix name in the name
+of the YAML attr. Remove the ifa- prefix from all attributes
+in route-attrs and metrics and specify name-prefix instead.
 
-Summary: Use rtnl_mutex to synchronize veth_pool_store with itself,
-ibmveth_close and ibmveth_open, preventing multiple calls in a row to
-napi_disable.
+This is a bit risky, hopefully there aren't many users out there.
 
-Background: Two (or more) threads could call veth_pool_store through
-writing to /sys/devices/vio/30000002/pool*/*. You can do this easily
-with a little shell script. This causes a hang.
-
-I configured LOCKDEP, compiled ibmveth.c with DEBUG, and built a new
-kernel. I ran this test again and saw:
-
-    Setting pool0/active to 0
-    Setting pool1/active to 1
-    [   73.911067][ T4365] ibmveth 30000002 eth0: close starting
-    Setting pool1/active to 1
-    Setting pool1/active to 0
-    [   73.911367][ T4366] ibmveth 30000002 eth0: close starting
-    [   73.916056][ T4365] ibmveth 30000002 eth0: close complete
-    [   73.916064][ T4365] ibmveth 30000002 eth0: open starting
-    [  110.808564][  T712] systemd-journald[712]: Sent WATCHDOG=1 notification.
-    [  230.808495][  T712] systemd-journald[712]: Sent WATCHDOG=1 notification.
-    [  243.683786][  T123] INFO: task stress.sh:4365 blocked for more than 122 seconds.
-    [  243.683827][  T123]       Not tainted 6.14.0-01103-g2df0c02dab82-dirty #8
-    [  243.683833][  T123] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-    [  243.683838][  T123] task:stress.sh       state:D stack:28096 pid:4365  tgid:4365  ppid:4364   task_flags:0x400040 flags:0x00042000
-    [  243.683852][  T123] Call Trace:
-    [  243.683857][  T123] [c00000000c38f690] [0000000000000001] 0x1 (unreliable)
-    [  243.683868][  T123] [c00000000c38f840] [c00000000001f908] __switch_to+0x318/0x4e0
-    [  243.683878][  T123] [c00000000c38f8a0] [c000000001549a70] __schedule+0x500/0x12a0
-    [  243.683888][  T123] [c00000000c38f9a0] [c00000000154a878] schedule+0x68/0x210
-    [  243.683896][  T123] [c00000000c38f9d0] [c00000000154ac80] schedule_preempt_disabled+0x30/0x50
-    [  243.683904][  T123] [c00000000c38fa00] [c00000000154dbb0] __mutex_lock+0x730/0x10f0
-    [  243.683913][  T123] [c00000000c38fb10] [c000000001154d40] napi_enable+0x30/0x60
-    [  243.683921][  T123] [c00000000c38fb40] [c000000000f4ae94] ibmveth_open+0x68/0x5dc
-    [  243.683928][  T123] [c00000000c38fbe0] [c000000000f4aa20] veth_pool_store+0x220/0x270
-    [  243.683936][  T123] [c00000000c38fc70] [c000000000826278] sysfs_kf_write+0x68/0xb0
-    [  243.683944][  T123] [c00000000c38fcb0] [c0000000008240b8] kernfs_fop_write_iter+0x198/0x2d0
-    [  243.683951][  T123] [c00000000c38fd00] [c00000000071b9ac] vfs_write+0x34c/0x650
-    [  243.683958][  T123] [c00000000c38fdc0] [c00000000071bea8] ksys_write+0x88/0x150
-    [  243.683966][  T123] [c00000000c38fe10] [c0000000000317f4] system_call_exception+0x124/0x340
-    [  243.683973][  T123] [c00000000c38fe50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
-    ...
-    [  243.684087][  T123] Showing all locks held in the system:
-    [  243.684095][  T123] 1 lock held by khungtaskd/123:
-    [  243.684099][  T123]  #0: c00000000278e370 (rcu_read_lock){....}-{1:2}, at: debug_show_all_locks+0x50/0x248
-    [  243.684114][  T123] 4 locks held by stress.sh/4365:
-    [  243.684119][  T123]  #0: c00000003a4cd3f8 (sb_writers#3){.+.+}-{0:0}, at: ksys_write+0x88/0x150
-    [  243.684132][  T123]  #1: c000000041aea888 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x154/0x2d0
-    [  243.684143][  T123]  #2: c0000000366fb9a8 (kn->active#64){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x160/0x2d0
-    [  243.684155][  T123]  #3: c000000035ff4cb8 (&dev->lock){+.+.}-{3:3}, at: napi_enable+0x30/0x60
-    [  243.684166][  T123] 5 locks held by stress.sh/4366:
-    [  243.684170][  T123]  #0: c00000003a4cd3f8 (sb_writers#3){.+.+}-{0:0}, at: ksys_write+0x88/0x150
-    [  243.684183][  T123]  #1: c00000000aee2288 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x154/0x2d0
-    [  243.684194][  T123]  #2: c0000000366f4ba8 (kn->active#64){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x160/0x2d0
-    [  243.684205][  T123]  #3: c000000035ff4cb8 (&dev->lock){+.+.}-{3:3}, at: napi_disable+0x30/0x60
-    [  243.684216][  T123]  #4: c0000003ff9bbf18 (&rq->__lock){-.-.}-{2:2}, at: __schedule+0x138/0x12a0
-
->From the ibmveth debug, two threads are calling veth_pool_store, which
-calls ibmveth_close and ibmveth_open. Here's the sequence:
-
-  T4365             T4366
-  ----------------- ----------------- ---------
-  veth_pool_store   veth_pool_store
-                    ibmveth_close
-  ibmveth_close
-  napi_disable
-                    napi_disable
-  ibmveth_open
-  napi_enable                         <- HANG
-
-ibmveth_close calls napi_disable at the top and ibmveth_open calls
-napi_enable at the top.
-
-https://docs.kernel.org/networking/napi.html]] says
-
-  The control APIs are not idempotent. Control API calls are safe
-  against concurrent use of datapath APIs but an incorrect sequence of
-  control API calls may result in crashes, deadlocks, or race
-  conditions. For example, calling napi_disable() multiple times in a
-  row will deadlock.
-
-In the normal open and close paths, rtnl_mutex is acquired to prevent
-other callers. This is missing from veth_pool_store. Use rtnl_mutex in
-veth_pool_store fixes these hangs.
-
-Signed-off-by: Dave Marquardt <davemarq@linux.ibm.com>
-Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-Reviewed-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250402154403.386744-1-davemarq@linux.ibm.com
+Fixes: 023289b4f582 ("doc/netlink: Add spec for rt route messages")
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://patch.msgid.link/20250403013706.2828322-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 39 +++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 12 deletions(-)
+ Documentation/netlink/specs/rt_route.yaml | 180 +++++++++++-----------
+ 1 file changed, 91 insertions(+), 89 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index b619a3ec245b2..04192190bebab 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1802,18 +1802,22 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 	long value = simple_strtol(buf, NULL, 10);
- 	long rc;
+diff --git a/Documentation/netlink/specs/rt_route.yaml b/Documentation/netlink/specs/rt_route.yaml
+index a674103e5bc4e..292469c7d4b9f 100644
+--- a/Documentation/netlink/specs/rt_route.yaml
++++ b/Documentation/netlink/specs/rt_route.yaml
+@@ -80,165 +80,167 @@ definitions:
+ attribute-sets:
+   -
+     name: route-attrs
++    name-prefix: rta-
+     attributes:
+       -
+-        name: rta-dst
++        name: dst
+         type: binary
+         display-hint: ipv4
+       -
+-        name: rta-src
++        name: src
+         type: binary
+         display-hint: ipv4
+       -
+-        name: rta-iif
++        name: iif
+         type: u32
+       -
+-        name: rta-oif
++        name: oif
+         type: u32
+       -
+-        name: rta-gateway
++        name: gateway
+         type: binary
+         display-hint: ipv4
+       -
+-        name: rta-priority
++        name: priority
+         type: u32
+       -
+-        name: rta-prefsrc
++        name: prefsrc
+         type: binary
+         display-hint: ipv4
+       -
+-        name: rta-metrics
++        name: metrics
+         type: nest
+-        nested-attributes: rta-metrics
++        nested-attributes: metrics
+       -
+-        name: rta-multipath
++        name: multipath
+         type: binary
+       -
+-        name: rta-protoinfo # not used
++        name: protoinfo # not used
+         type: binary
+       -
+-        name: rta-flow
++        name: flow
+         type: u32
+       -
+-        name: rta-cacheinfo
++        name: cacheinfo
+         type: binary
+         struct: rta-cacheinfo
+       -
+-        name: rta-session # not used
++        name: session # not used
+         type: binary
+       -
+-        name: rta-mp-algo # not used
++        name: mp-algo # not used
+         type: binary
+       -
+-        name: rta-table
++        name: table
+         type: u32
+       -
+-        name: rta-mark
++        name: mark
+         type: u32
+       -
+-        name: rta-mfc-stats
++        name: mfc-stats
+         type: binary
+       -
+-        name: rta-via
++        name: via
+         type: binary
+       -
+-        name: rta-newdst
++        name: newdst
+         type: binary
+       -
+-        name: rta-pref
++        name: pref
+         type: u8
+       -
+-        name: rta-encap-type
++        name: encap-type
+         type: u16
+       -
+-        name: rta-encap
++        name: encap
+         type: binary # tunnel specific nest
+       -
+-        name: rta-expires
++        name: expires
+         type: u32
+       -
+-        name: rta-pad
++        name: pad
+         type: binary
+       -
+-        name: rta-uid
++        name: uid
+         type: u32
+       -
+-        name: rta-ttl-propagate
++        name: ttl-propagate
+         type: u8
+       -
+-        name: rta-ip-proto
++        name: ip-proto
+         type: u8
+       -
+-        name: rta-sport
++        name: sport
+         type: u16
+       -
+-        name: rta-dport
++        name: dport
+         type: u16
+       -
+-        name: rta-nh-id
++        name: nh-id
+         type: u32
+       -
+-        name: rta-flowlabel
++        name: flowlabel
+         type: u32
+         byte-order: big-endian
+         display-hint: hex
+   -
+-    name: rta-metrics
++    name: metrics
++    name-prefix: rtax-
+     attributes:
+       -
+-        name: rtax-unspec
++        name: unspec
+         type: unused
+         value: 0
+       -
+-        name: rtax-lock
++        name: lock
+         type: u32
+       -
+-        name: rtax-mtu
++        name: mtu
+         type: u32
+       -
+-        name: rtax-window
++        name: window
+         type: u32
+       -
+-        name: rtax-rtt
++        name: rtt
+         type: u32
+       -
+-        name: rtax-rttvar
++        name: rttvar
+         type: u32
+       -
+-        name: rtax-ssthresh
++        name: ssthresh
+         type: u32
+       -
+-        name: rtax-cwnd
++        name: cwnd
+         type: u32
+       -
+-        name: rtax-advmss
++        name: advmss
+         type: u32
+       -
+-        name: rtax-reordering
++        name: reordering
+         type: u32
+       -
+-        name: rtax-hoplimit
++        name: hoplimit
+         type: u32
+       -
+-        name: rtax-initcwnd
++        name: initcwnd
+         type: u32
+       -
+-        name: rtax-features
++        name: features
+         type: u32
+       -
+-        name: rtax-rto-min
++        name: rto-min
+         type: u32
+       -
+-        name: rtax-initrwnd
++        name: initrwnd
+         type: u32
+       -
+-        name: rtax-quickack
++        name: quickack
+         type: u32
+       -
+-        name: rtax-cc-algo
++        name: cc-algo
+         type: string
+       -
+-        name: rtax-fastopen-no-cookie
++        name: fastopen-no-cookie
+         type: u32
  
-+	rtnl_lock();
-+
- 	if (attr == &veth_active_attr) {
- 		if (value && !pool->active) {
- 			if (netif_running(netdev)) {
- 				if (ibmveth_alloc_buffer_pool(pool)) {
- 					netdev_err(netdev,
- 						   "unable to alloc pool\n");
--					return -ENOMEM;
-+					rc = -ENOMEM;
-+					goto unlock_err;
- 				}
- 				pool->active = 1;
- 				ibmveth_close(netdev);
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->active = 1;
- 			}
-@@ -1833,48 +1837,59 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 
- 			if (i == IBMVETH_NUM_BUFF_POOLS) {
- 				netdev_err(netdev, "no active pool >= MTU\n");
--				return -EPERM;
-+				rc = -EPERM;
-+				goto unlock_err;
- 			}
- 
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->active = 0;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			}
- 			pool->active = 0;
- 		}
- 	} else if (attr == &veth_num_attr) {
- 		if (value <= 0 || value > IBMVETH_MAX_POOL_COUNT) {
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto unlock_err;
- 		} else {
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->size = value;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->size = value;
- 			}
- 		}
- 	} else if (attr == &veth_size_attr) {
- 		if (value <= IBMVETH_BUFF_OH || value > IBMVETH_MAX_BUF_SIZE) {
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto unlock_err;
- 		} else {
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->buff_size = value;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->buff_size = value;
- 			}
- 		}
- 	}
-+	rtnl_unlock();
- 
- 	/* kick the interrupt handler to allocate/deallocate pools */
- 	ibmveth_interrupt(netdev->irq, netdev);
- 	return count;
-+
-+unlock_err:
-+	rtnl_unlock();
-+	return rc;
- }
- 
- 
+ operations:
+@@ -254,18 +256,18 @@ operations:
+           value: 26
+           attributes:
+             - rtm-family
+-            - rta-src
++            - src
+             - rtm-src-len
+-            - rta-dst
++            - dst
+             - rtm-dst-len
+-            - rta-iif
+-            - rta-oif
+-            - rta-ip-proto
+-            - rta-sport
+-            - rta-dport
+-            - rta-mark
+-            - rta-uid
+-            - rta-flowlabel
++            - iif
++            - oif
++            - ip-proto
++            - sport
++            - dport
++            - mark
++            - uid
++            - flowlabel
+         reply:
+           value: 24
+           attributes: &all-route-attrs
+@@ -278,34 +280,34 @@ operations:
+             - rtm-scope
+             - rtm-type
+             - rtm-flags
+-            - rta-dst
+-            - rta-src
+-            - rta-iif
+-            - rta-oif
+-            - rta-gateway
+-            - rta-priority
+-            - rta-prefsrc
+-            - rta-metrics
+-            - rta-multipath
+-            - rta-flow
+-            - rta-cacheinfo
+-            - rta-table
+-            - rta-mark
+-            - rta-mfc-stats
+-            - rta-via
+-            - rta-newdst
+-            - rta-pref
+-            - rta-encap-type
+-            - rta-encap
+-            - rta-expires
+-            - rta-pad
+-            - rta-uid
+-            - rta-ttl-propagate
+-            - rta-ip-proto
+-            - rta-sport
+-            - rta-dport
+-            - rta-nh-id
+-            - rta-flowlabel
++            - dst
++            - src
++            - iif
++            - oif
++            - gateway
++            - priority
++            - prefsrc
++            - metrics
++            - multipath
++            - flow
++            - cacheinfo
++            - table
++            - mark
++            - mfc-stats
++            - via
++            - newdst
++            - pref
++            - encap-type
++            - encap
++            - expires
++            - pad
++            - uid
++            - ttl-propagate
++            - ip-proto
++            - sport
++            - dport
++            - nh-id
++            - flowlabel
+       dump:
+         request:
+           value: 26
 -- 
 2.39.5
 
