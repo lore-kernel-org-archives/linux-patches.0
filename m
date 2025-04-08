@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14EDA94A;
-	Tue,  8 Apr 2025 12:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F64A94A;
+	Tue,  8 Apr 2025 12:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114002; cv=none; b=ZXj/JFWzjZgplkzYy2O0DZKAElul25Bm+OxATQoh8jkcFA3BK++VvIQCrbartziV1JC/I5XsTkHBguTDR+6Py3CanKwFxwQ3YF36+PNFFOmEW7R1dgynOwxYiUlknrmhWg08YxdiTH9KVYeiV7ToTQ3Ve1tgcgwKz0Y+S2pVdXY=
+	t=1744114004; cv=none; b=jv1UMhltsM+qgVLu10LfgS4xpcQh1l5Bf0CZbF3a3Fv7V2ZQnrPdUvMqN1jEn5EgoWml9/Ko/o/fCFaXwmpax2RezXJEShMeiMAN198O3Ay8fZR6qg0HtacIk3GtTcoTp3C9BA9H8JTN/8yULWjm59fFi+4nvR87tkLiOuWSfqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114002; c=relaxed/simple;
-	bh=qlI9oP/tTz1/Vx0VOc8+9/Wt7Nm6jPvzTRcZDVltyrc=;
+	s=arc-20240116; t=1744114004; c=relaxed/simple;
+	bh=ZQDul53xiOQQjlEfA6uMstHv811WeGIgpiiYOP0Tdy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4CV7LrFI1Sarhi3RGWs+TdbPkfiknRfJGbX/Y/j1tdAWHn86j8Cbe89PwmDf+oB+L/V8xCfO0JQLCMneWPJ4bL5B0NCBkl/4628/1pDxgcyxWqc/8qmuFh5OE9KWa2eciKbP3cFjwJexGJwMycNoj8990SJjXLfrATQXAYZbGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpOD82h3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzJMop+pdlE7RPV0Wxw7yVfd9r5y8Rl24it165NYRAwZoZs6QvKNW7Z2gP2VD8Xj/nEpyohip3+yGtVA9PoLz+av9P17vngcShCY29DGHn7Q0Kjz1omJZBAhCMujGyTW3Tf954MKHQW6u/0CMvzc6VpGHGYrHNHPH6QsZhR34CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K98vYPYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpOD82h3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7362EC4CEE5;
-	Tue,  8 Apr 2025 12:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K98vYPYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2162EC4CEE5;
+	Tue,  8 Apr 2025 12:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114001;
-	bh=qlI9oP/tTz1/Vx0VOc8+9/Wt7Nm6jPvzTRcZDVltyrc=;
+	s=korg; t=1744114004;
+	bh=ZQDul53xiOQQjlEfA6uMstHv811WeGIgpiiYOP0Tdy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpOD82h3FLVTvNbs3SjVLQaIGRE0/d6MIdMe8Inl7ayt1RAxLbXIxTzdAOymzrBUR
-	 pdAtjgTQMs0Rhw4DkhnJL1VJKL3htSD631LESX3rXaA7+fxtfhkvSATPEGD/NVUexl
-	 j14nfKK1XsFNbjekYsHVI00MjEsoqB+o+RQWqpJM=
+	b=K98vYPYFaFLmJ0gSwmYwSixEJUuAn2VF9vbLGSROKvPAg9u14U6V6DN9SataDEFYG
+	 h5poAkuZIskZGVtvTOArbvXGrHXnBRsb0/tpP6o0QjvaI3o2LCzGFrmPRZex5i2iVb
+	 mEgJNONfpa93dYKMNl/QR8/ug0QjpklVGVG7ozZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Danila Chernetsov <listdansp@mail.ru>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 099/154] mdacon: rework dependency list
-Date: Tue,  8 Apr 2025 12:50:40 +0200
-Message-ID: <20250408104818.498704427@linuxfoundation.org>
+Subject: [PATCH 5.4 100/154] fbdev: sm501fb: Add some geometry checks.
+Date: Tue,  8 Apr 2025 12:50:41 +0200
+Message-ID: <20250408104818.532700368@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 5bbcc7645f4b244ffb5ac6563fbe9d3d42194447 ]
+[ Upstream commit aee50bd88ea5fde1ff4cc021385598f81a65830c ]
 
-mdacon has roughly the same dependencies as vgacon but expresses them
-as a negative list instead of a positive list, with the only practical
-difference being PowerPC/CHRP, which uses vga16fb instead of vgacon.
+Added checks for xoffset, yoffset settings.
+Incorrect settings of these parameters can lead to errors
+in sm501fb_pan_ functions.
 
-The CONFIG_MDA_CONSOLE description advises to only turn it on when vgacon
-is also used because MDA/Hercules-only systems should be using vgacon
-instead, so just change the list to enforce that directly for simplicity.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-The probing was broken from 2002 to 2008, this improves on the fix
-that was added then: If vgacon is a loadable module, then mdacon
-cannot be built-in now, and the list of systems that support vgacon
-is carried over.
-
-Fixes: 0b9cf3aa6b1e ("mdacon messing up default vc's - set default to vc13-16 again")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 5fc404e47bdf ("[PATCH] fb: SM501 framebuffer driver")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/console/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/sm501fb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/video/console/Kconfig b/drivers/video/console/Kconfig
-index 3b432a18b5ab6..60102eea17abc 100644
---- a/drivers/video/console/Kconfig
-+++ b/drivers/video/console/Kconfig
-@@ -23,7 +23,7 @@ config VGA_CONSOLE
- 	  Say Y.
+diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
+index 3dd1b1d76e983..a7acf0acd3e92 100644
+--- a/drivers/video/fbdev/sm501fb.c
++++ b/drivers/video/fbdev/sm501fb.c
+@@ -326,6 +326,13 @@ static int sm501fb_check_var(struct fb_var_screeninfo *var,
+ 	if (var->xres_virtual > 4096 || var->yres_virtual > 2048)
+ 		return -EINVAL;
  
- config MDA_CONSOLE
--	depends on !M68K && !PARISC && ISA
-+	depends on VGA_CONSOLE && ISA
- 	tristate "MDA text console (dual-headed)"
- 	---help---
- 	  Say Y here if you have an old MDA or monochrome Hercules graphics
++	/* geometry sanity checks */
++	if (var->xres + var->xoffset > var->xres_virtual)
++		return -EINVAL;
++
++	if (var->yres + var->yoffset > var->yres_virtual)
++		return -EINVAL;
++
+ 	/* can cope with 8,16 or 32bpp */
+ 
+ 	if (var->bits_per_pixel <= 8)
 -- 
 2.39.5
 
