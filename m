@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AA4267B89;
-	Tue,  8 Apr 2025 12:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F411D20CCD8;
+	Tue,  8 Apr 2025 12:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114049; cv=none; b=C0eFIbmVNECah+Li6Uh0g0QCVcUPOpbfJOeWyDCSsPV72scAH4M5hklLft4XpzWKdblH8wDKy7C5fsgkUqdFUAXLQ8LH1tp79wILivxudqVu+PkFfDh7NESW4dFMUuyodEHRIzek+YWIG0Tk05ri5mHNUe5uh5kDnPwTjk+peBU=
+	t=1744114052; cv=none; b=gwDhEUHJj1r7eWU0yyopt7F4YKUy62v3vIyhe/Rwtqcdod786Gogg7yDCCbiRKSm70uXLrFnQZ8376rfCjlif4CoqKriY+ETK9R1v5l3BRMA+gs0SYqRn3h7Y9x5DaG5Q7n9+nrQci6oTRZOIphOKb7LJijaiUT3pZocgBaNs28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114049; c=relaxed/simple;
-	bh=n83DTev8TuKt8atIN7FBVUFAgLo4ACIevw1ZyvUyv0Q=;
+	s=arc-20240116; t=1744114052; c=relaxed/simple;
+	bh=9S3DKbbKfaFcXvDRvPWS7rYzCa5MnKjJ5ZIzGIE63XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfCCkPUK5+Ael0thW7MJPVbYT4p/fEbGB2LzmAOqCiLVqRfh6gEyhUSDPda8VOeY/LinfJbTUfmmqVUC4jgNTm0r+K5/LOnF8x/8o1uhfY0MPKGZdy0pYVbuYbmn6tqca0g20DFGhWMreCKLA6tLjtSAYD6tgsuDmSFq5d9MLCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3X+/ev2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5NgvQdmddAdsASv2motVrxdsF0XJ/19EtRsEXkOdvvrlKTOW7ywprEPZV7m0l2Y4TKK8nN8hzxUFMZDPGdfWtXUfEf/FmfJPI73F5g+jqeDBfkb1nGDiisC1ANBfQCRpRZSFY88x1TgqvQ2uOlfkfPvCJrKE960V48qRXl6gug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyvvCgMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3X+/ev2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E151AC4CEE5;
-	Tue,  8 Apr 2025 12:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyvvCgMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8427DC4CEE5;
+	Tue,  8 Apr 2025 12:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114049;
-	bh=n83DTev8TuKt8atIN7FBVUFAgLo4ACIevw1ZyvUyv0Q=;
+	s=korg; t=1744114051;
+	bh=9S3DKbbKfaFcXvDRvPWS7rYzCa5MnKjJ5ZIzGIE63XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3X+/ev2eqAAVyq1UI7mhU3FN/iAmYptU2ICA1SBU17jEPkF+qNaXxxDE42ld2Oce
-	 Ahvr1M2o8cOvbEpuMksSEItWIs0owvAlLO/2JTc11vB0tv6NSJpJyD6YAXBlESx+ZA
-	 1mUMN7/pA2o4dRzFCwoZypCXgCKxFv5rN6Xvxcoo=
+	b=uyvvCgMVZkNpNYIygg89C8hIvkOB7EyS9gJilhgKTkWJRQngGgqYsTKDVIoJmopbB
+	 rSpWzoFpl0rQrZNHWtYZnBcz12etXMo2thNLrPzdqVM/UITH6DoNRjBsZIDs722Xzn
+	 m0Anxq/XQFvExAT5qcaPW5MZNcbk3aY6RiJJrEH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Oliver Neukum <oneukum@suse.com>,
+	Minjoong Kim <pwn9uin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 077/154] net: usb: usbnet: restore usb%d name exception for local mac addresses
-Date: Tue,  8 Apr 2025 12:50:18 +0200
-Message-ID: <20250408104817.778850790@linuxfoundation.org>
+Subject: [PATCH 5.4 068/154] atm: Fix NULL pointer dereference
+Date: Tue,  8 Apr 2025 12:50:09 +0200
+Message-ID: <20250408104817.478554984@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,78 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Minjoong Kim <pwn9uin@gmail.com>
 
-commit 2ea396448f26d0d7d66224cb56500a6789c7ed07 upstream.
+commit bf2986fcf82a449441f9ee4335df19be19e83970 upstream.
 
-commit 8a7d12d674ac ("net: usb: usbnet: fix name regression") assumed
-that local addresses always came from the kernel, but some devices hand
-out local mac addresses so we ended up with point-to-point devices with
-a mac set by the driver, renaming to eth%d when they used to be named
-usb%d.
+When MPOA_cache_impos_rcvd() receives the msg, it can trigger
+Null Pointer Dereference Vulnerability if both entry and
+holding_time are NULL. Because there is only for the situation
+where entry is NULL and holding_time exists, it can be passed
+when both entry and holding_time are NULL. If these are NULL,
+the entry will be passd to eg_cache_put() as parameter and
+it is referenced by entry->use code in it.
 
-Userspace should not rely on device name, but for the sake of stability
-restore the local mac address check portion of the naming exception:
-point to point devices which either have no mac set by the driver or
-have a local mac handed out by the driver will keep the usb%d name.
+kasan log:
 
-(some USB LTE modems are known to hand out a stable mac from the locally
-administered range; that mac appears to be random (different for
-mulitple devices) and can be reset with device-specific commands, so
-while such devices would benefit from getting a OUI reserved, we have
-to deal with these and might as well preserve the existing behavior
-to avoid breaking fragile openwrt configurations and such on upgrade.)
+[    3.316691] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006:I
+[    3.317568] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+[    3.318188] CPU: 3 UID: 0 PID: 79 Comm: ex Not tainted 6.14.0-rc2 #102
+[    3.318601] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[    3.319298] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.319677] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.321220] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.321596] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.322112] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.322643] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.323181] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.323707] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.324185] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.325042] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.325545] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.326430] Call Trace:
+[    3.326725]  <TASK>
+[    3.326927]  ? die_addr+0x3c/0xa0
+[    3.327330]  ? exc_general_protection+0x161/0x2a0
+[    3.327662]  ? asm_exc_general_protection+0x26/0x30
+[    3.328214]  ? vprintk_emit+0x15e/0x420
+[    3.328543]  ? eg_cache_remove_entry+0xa5/0x470
+[    3.328910]  ? eg_cache_remove_entry+0x9a/0x470
+[    3.329294]  ? __pfx_eg_cache_remove_entry+0x10/0x10
+[    3.329664]  ? console_unlock+0x107/0x1d0
+[    3.329946]  ? __pfx_console_unlock+0x10/0x10
+[    3.330283]  ? do_syscall_64+0xa6/0x1a0
+[    3.330584]  ? entry_SYSCALL_64_after_hwframe+0x47/0x7f
+[    3.331090]  ? __pfx_prb_read_valid+0x10/0x10
+[    3.331395]  ? down_trylock+0x52/0x80
+[    3.331703]  ? vprintk_emit+0x15e/0x420
+[    3.331986]  ? __pfx_vprintk_emit+0x10/0x10
+[    3.332279]  ? down_trylock+0x52/0x80
+[    3.332527]  ? _printk+0xbf/0x100
+[    3.332762]  ? __pfx__printk+0x10/0x10
+[    3.333007]  ? _raw_write_lock_irq+0x81/0xe0
+[    3.333284]  ? __pfx__raw_write_lock_irq+0x10/0x10
+[    3.333614]  msg_from_mpoad+0x1185/0x2750
+[    3.333893]  ? __build_skb_around+0x27b/0x3a0
+[    3.334183]  ? __pfx_msg_from_mpoad+0x10/0x10
+[    3.334501]  ? __alloc_skb+0x1c0/0x310
+[    3.334809]  ? __pfx___alloc_skb+0x10/0x10
+[    3.335283]  ? _raw_spin_lock+0xe0/0xe0
+[    3.335632]  ? finish_wait+0x8d/0x1e0
+[    3.335975]  vcc_sendmsg+0x684/0xba0
+[    3.336250]  ? __pfx_vcc_sendmsg+0x10/0x10
+[    3.336587]  ? __pfx_autoremove_wake_function+0x10/0x10
+[    3.337056]  ? fdget+0x176/0x3e0
+[    3.337348]  __sys_sendto+0x4a2/0x510
+[    3.337663]  ? __pfx___sys_sendto+0x10/0x10
+[    3.337969]  ? ioctl_has_perm.constprop.0.isra.0+0x284/0x400
+[    3.338364]  ? sock_ioctl+0x1bb/0x5a0
+[    3.338653]  ? __rseq_handle_notify_resume+0x825/0xd20
+[    3.339017]  ? __pfx_sock_ioctl+0x10/0x10
+[    3.339316]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
+[    3.339727]  ? selinux_file_ioctl+0xa4/0x260
+[    3.340166]  __x64_sys_sendto+0xe0/0x1c0
+[    3.340526]  ? syscall_exit_to_user_mode+0x123/0x140
+[    3.340898]  do_syscall_64+0xa6/0x1a0
+[    3.341170]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    3.341533] RIP: 0033:0x44a380
+[    3.341757] Code: 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c00
+[    3.343078] RSP: 002b:00007ffc1d404098 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[    3.343631] RAX: ffffffffffffffda RBX: 00007ffc1d404458 RCX: 000000000044a380
+[    3.344306] RDX: 000000000000019c RSI: 00007ffc1d4040b0 RDI: 0000000000000003
+[    3.344833] RBP: 00007ffc1d404260 R08: 0000000000000000 R09: 0000000000000000
+[    3.345381] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    3.346015] R13: 00007ffc1d404448 R14: 00000000004c17d0 R15: 0000000000000001
+[    3.346503]  </TASK>
+[    3.346679] Modules linked in:
+[    3.346956] ---[ end trace 0000000000000000 ]---
+[    3.347315] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.347737] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.349157] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.349517] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.350103] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.350610] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.351246] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.351785] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.352404] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.353099] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.353544] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.354072] note: ex[79] exited with irqs disabled
+[    3.354458] note: ex[79] exited with preempt_count 1
 
-Link: https://lkml.kernel.org/r/20241203130457.904325-1-asmadeus@codewreck.org
-Fixes: 8a7d12d674ac ("net: usb: usbnet: fix name regression")
-Cc: stable@vger.kernel.org
-Tested-by: Ahmed Naseef <naseefkm@gmail.com>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20250326-usbnet_rename-v2-1-57eb21fcff26@atmark-techno.com
+Signed-off-by: Minjoong Kim <pwn9uin@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250322105200.14981-1-pwn9uin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ net/atm/mpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -167,6 +167,17 @@ int usbnet_get_ethernet_addr(struct usbn
- }
- EXPORT_SYMBOL_GPL(usbnet_get_ethernet_addr);
- 
-+static bool usbnet_needs_usb_name_format(struct usbnet *dev, struct net_device *net)
-+{
-+	/* Point to point devices which don't have a real MAC address
-+	 * (or report a fake local one) have historically used the usb%d
-+	 * naming. Preserve this..
-+	 */
-+	return (dev->driver_info->flags & FLAG_POINTTOPOINT) != 0 &&
-+		(is_zero_ether_addr(net->dev_addr) ||
-+		 is_local_ether_addr(net->dev_addr));
-+}
-+
- static void intr_complete (struct urb *urb)
- {
- 	struct usbnet	*dev = urb->context;
-@@ -1730,13 +1741,11 @@ usbnet_probe (struct usb_interface *udev
- 		if (status < 0)
- 			goto out1;
- 
--		// heuristic:  "usb%d" for links we know are two-host,
--		// else "eth%d" when there's reasonable doubt.  userspace
--		// can rename the link if it knows better.
-+		/* heuristic: rename to "eth%d" if we are not sure this link
-+		 * is two-host (these links keep "usb%d")
-+		 */
- 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
--		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
--		     /* somebody touched it*/
--		     !is_zero_ether_addr(net->dev_addr)))
-+		    !usbnet_needs_usb_name_format(dev, net))
- 			strscpy(net->name, "eth%d", sizeof(net->name));
- 		/* WLAN devices should always be named "wlan%d" */
- 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+--- a/net/atm/mpc.c
++++ b/net/atm/mpc.c
+@@ -1314,6 +1314,8 @@ static void MPOA_cache_impos_rcvd(struct
+ 	holding_time = msg->content.eg_info.holding_time;
+ 	dprintk("(%s) entry = %p, holding_time = %u\n",
+ 		mpc->dev->name, entry, holding_time);
++	if (entry == NULL && !holding_time)
++		return;
+ 	if (entry == NULL && holding_time) {
+ 		entry = mpc->eg_ops->add_entry(msg, mpc);
+ 		mpc->eg_ops->put(entry);
 
 
