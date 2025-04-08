@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AD3268C72;
-	Tue,  8 Apr 2025 12:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8837C2690EB;
+	Tue,  8 Apr 2025 12:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114038; cv=none; b=FPeUNiLhDd42/EY1dbOGy5tGMIeYqMJlcqdD8F+0ro5zW0YeChfFWXkQHWbulcmbwyS87lvCw+SQwHIT5Q1jhTxfssIUyUy3bX0WHFgHpnPUKuEFtOJ6xTE2lMOO7fCJA8lvicElaG2WYrGtCHFN2Ded1RZHdFXIz+VzRsaJxpI=
+	t=1744114041; cv=none; b=jj3FKd5OyanCXTL/Q6nAPdKWt+GOSH9lkqY3jQBmb8L8YKFvB6OCdUVgACw69ki8kOeoewkR5wEZNIRe4IUke5CNVHvHMC1Mc9gv9Je8QtgJWLZ0e17es35ofDFr5PJ1ubXcbiDlVQUIKIDonq+wpJ1RsvOIw4Q8Cbz0LYd9aVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114038; c=relaxed/simple;
-	bh=BsvamZ0vTokLb1AaBkzR5ol3GAjhWD65i8u1pqPP32k=;
+	s=arc-20240116; t=1744114041; c=relaxed/simple;
+	bh=Kmxb2RMimlN8jiRTxK1ckedzpmGzBybFr71oRt0HyRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzE7RB1Euk5i9y369IdWis5o8aYeS2cRhzORKLbGlW1K5uBnreb6Ot8DNkAgOZ4gqKlo3x3VCtjzzz7ubRNutRdkUNTTH3ukDNleH1sZkGGZLJCSgFZ6VldVoz8iUd6AjYRrtVd0dLcxoystezFTKlWCpdBZPGc/e7B3x4HX4Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+SRBSPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P57HtQNpoN1UfhWVDB3LQSNf1SGzuMkoZGBWAUdfG8Cpz7K1UOulHOh1svr+RPsV9HqSFc7ZAQcJeBHdD3lIbNyNCgVLUCp8BOJ+1uZsnZyhPdy2mNTTLW3EDFyRIZGD52bG5uJW6hrSMEJwOlf6F7xbtBILm9/lHVvE98qOpiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccV3OIqZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+SRBSPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8DCC4CEE5;
-	Tue,  8 Apr 2025 12:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccV3OIqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA24C4CEE5;
+	Tue,  8 Apr 2025 12:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114038;
-	bh=BsvamZ0vTokLb1AaBkzR5ol3GAjhWD65i8u1pqPP32k=;
+	s=korg; t=1744114041;
+	bh=Kmxb2RMimlN8jiRTxK1ckedzpmGzBybFr71oRt0HyRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+SRBSPKgY0mhujbNdnqHvSEPCWFVqk2dwLgtlzb3mpM2wX3fW5zP/TTrfaL7FNzd
-	 /IBRKpEKc8fvHijp2cmU57e5zgQdyipwG3WTiFWLQXQMQ1sHTnT78ZzuGEO/3nGsTv
-	 fSgmkC2G6N+k1IW9RD3jaW+Ig5xGp/1ftM2jinlY=
+	b=ccV3OIqZRSzLuHLleotVHw6ewP4j6r2vTaKnQXM0zIG6scPa484dy8TV8l+a0Bzld
+	 3FNrbu/XeuEaP2xzFXxuUbccch4pkbOHnoZfwBcv/qGpfSpChkCWVXkX/EHtlKximG
+	 clykUFz+/gNoXAKFpp9NaKEJmDNUcWhDW8fPDivU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 5.4 073/154] counter: stm32-lptimer-cnt: fix error handling when enabling
-Date: Tue,  8 Apr 2025 12:50:14 +0200
-Message-ID: <20250408104817.646441761@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Cameron Williams <cang1@live.co.uk>
+Subject: [PATCH 5.4 074/154] tty: serial: 8250: Add some more device IDs
+Date: Tue,  8 Apr 2025 12:50:15 +0200
+Message-ID: <20250408104817.679083694@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -50,87 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit 8744dcd4fc7800de2eb9369410470bb2930d4c14 upstream.
+commit be6a23650908e2f827f2e7839a3fbae41ccb5b63 upstream.
 
-In case the stm32_lptim_set_enable_state() fails to update CMP and ARR,
-a timeout error is raised, by regmap_read_poll_timeout. It may happen,
-when the lptimer runs on a slow clock, and the clock is gated only
-few times during the polling.
+These card IDs got missed the first time around.
 
-Badly, when this happen, STM32_LPTIM_ENABLE in CR register has been set.
-So the 'enable' state in sysfs wrongly lies on the counter being
-correctly enabled, due to CR is read as one in stm32_lptim_is_enabled().
-
-To fix both issues:
-- enable the clock before writing CMP, ARR and polling ISR bits. It will
-avoid the possible timeout error.
-- clear the ENABLE bit in CR and disable the clock in the error path.
-
-Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20250224170657.3368236-1-fabrice.gasnier@foss.st.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Link: https://lore.kernel.org/r/DB7PR02MB380295BCC879CCF91315AC38C4C12@DB7PR02MB3802.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -58,37 +58,43 @@ static int stm32_lptim_set_enable_state(
- 		return 0;
- 	}
- 
-+	ret = clk_enable(priv->clk);
-+	if (ret)
-+		goto disable_cnt;
-+
- 	/* LP timer must be enabled before writing CMP & ARR */
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_ARR, priv->ceiling);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_CMP, 0);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
- 				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_ICR,
- 			   STM32_LPTIM_CMPOKCF_ARROKCF);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
--	ret = clk_enable(priv->clk);
--	if (ret) {
--		regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
--		return ret;
--	}
- 	priv->enabled = true;
- 
- 	/* Start LP timer in continuous mode */
- 	return regmap_update_bits(priv->regmap, STM32_LPTIM_CR,
- 				  STM32_LPTIM_CNTSTRT, STM32_LPTIM_CNTSTRT);
-+
-+disable_clk:
-+	clk_disable(priv->clk);
-+disable_cnt:
-+	regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
-+
-+	return ret;
- }
- 
- static int stm32_lptim_setup(struct stm32_lptim_cnt *priv, int enable)
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -5132,6 +5132,14 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_2_115200 },
++	{       PCI_VENDOR_ID_INTASHIELD, 0x0BA2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{       PCI_VENDOR_ID_INTASHIELD, 0x0BA3,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
+ 	/*
+ 	 * Brainboxes UC-235/246
+ 	 */
+@@ -5312,6 +5320,14 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_4_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C42,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_4_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C43,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_4_115200 },
+ 	/*
+ 	 * Brainboxes UC-420
+ 	 */
 
 
