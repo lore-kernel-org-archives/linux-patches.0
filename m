@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB2726E142;
-	Tue,  8 Apr 2025 12:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C55125F97B;
+	Tue,  8 Apr 2025 12:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114219; cv=none; b=LYiQbuc5uTyE43gMdcpkT3qMhDmqciSgIHFBTGu5O+p14/ze85XjPWaLLxszFjiq81eeIJoOD2SOdI0MiH8AdBlwdCQwRlOT2zc+WoHIQJrybMJjU+4xTD38SlGya3085Y+LCXZpKIXZfQrdgbcpSp22AgHySQWo3WgXfuqKCwE=
+	t=1744114221; cv=none; b=AzBlUQt/dCrLnspUVS7A/5Xd32Re9mKArwKkX1O06H10gP23tMJADqs8xi0ZOV6tPKqXm82w6iVFZvSQrxSinCIjLjONE33jKsHb6sZhuEMKVf5S/q2b4Jws2w2G6WmGxF76H+3DMmkZelfalqpPvzHm6adPmNFpjlcPn+qAPjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114219; c=relaxed/simple;
-	bh=IbttMNfJUpTFxGU9vETCRT6QJCZg1kem5ZYNor6To04=;
+	s=arc-20240116; t=1744114221; c=relaxed/simple;
+	bh=9nbKgK9rENStrwAVd5aGNVI71xVAbmlmjkrNtrrzkdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVUeODBXzi/+CnztYXclvKdREhCRMQOL4H60nT/iSpK+BW4NkF40rudDedTRgH/TeMDI8xa7RkPboy59+m8M8oFswo9ZoppHq9C+ky4nJKi5bEYfOv85PrPuvKEOzAWGoHtHoJBVH38LEohioQA6pyjoZFQKQc7l4D4zpr16p5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTmWDqgj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/TW/hVOpr2JybpCG7wmipSwHSuzE8tw3NHLwfky3OI7rDUui8sXRX2s5QU6bCbgkjkREjxmr8LVbuyj2oHuwdZIJMxJnveoh47E5wj90u2ivXxRGv478vgmy/3DH1Ye/Hgx2Je3ubSQ4m55U23wjITgd3qc/vCbz3QQ09QY954=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEB0RJly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTmWDqgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24670C4CEEB;
-	Tue,  8 Apr 2025 12:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEB0RJly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9895C4CEE5;
+	Tue,  8 Apr 2025 12:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114218;
-	bh=IbttMNfJUpTFxGU9vETCRT6QJCZg1kem5ZYNor6To04=;
+	s=korg; t=1744114221;
+	bh=9nbKgK9rENStrwAVd5aGNVI71xVAbmlmjkrNtrrzkdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTmWDqgjLyLLYU7+uCHoyzqhfLvMOickKL3ljjC4iSoKqRuLNBtnu8YffNY0XlAV7
-	 vqz5qhEqZz6TwEaIqvFOZboWMf6gIFSs1XWkWPP33bqJSrrUE8jd/2+D8Ah94UTJKz
-	 PXPAa1BVyQAUioDL7TZF5sRfFT6+1k5PscKuiZZg=
+	b=dEB0RJlyP/rsHBaEf+IvuoTKNBufvZT6cDNt7je56H4l3IdfWqaKENwsLb3V31lup
+	 P50axUEWXAQhLrmRoVYECFfc3TiS/3Cgm/HBEMveb2Hrk+lKHYe69FIzKVQDYPMCor
+	 qPGjL+mbOXyCIt8bIe5Jwh8wJWMrtkfJkJG4tFFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Schumacher <tim.schumacher1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Gary Wang <gary.c.wang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 025/499] selinux: Chain up tool resolving errors in install_policy.sh
-Date: Tue,  8 Apr 2025 12:43:57 +0200
-Message-ID: <20250408104851.874469234@linuxfoundation.org>
+Subject: [PATCH 6.13 026/499] EDAC/ie31200: Fix the size of EDAC_MC_LAYER_CHIP_SELECT layer
+Date: Tue,  8 Apr 2025 12:43:58 +0200
+Message-ID: <20250408104851.897856949@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,64 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Schumacher <tim.schumacher1@huawei.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 6ae0042f4d3f331e841495eb0a3d51598e593ec2 ]
+[ Upstream commit d59d844e319d97682c8de29b88d2d60922a683b3 ]
 
-Subshell evaluations are not exempt from errexit, so if a command is
-not available, `which` will fail and exit the script as a whole.
-This causes the helpful error messages to not be printed if they are
-tacked on using a `$?` comparison.
+The EDAC_MC_LAYER_CHIP_SELECT layer pertains to the rank, not the DIMM.
+Fix its size to reflect the number of ranks instead of the number of DIMMs.
+Also delete the unused macros IE31200_{DIMMS,RANKS}.
 
-Resolve the issue by using chains of logical operators, which are not
-subject to the effects of errexit.
-
-Fixes: e37c1877ba5b1 ("scripts/selinux: modernize mdp")
-Signed-off-by: Tim Schumacher <tim.schumacher1@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 7ee40b897d18 ("ie31200_edac: Introduce the driver")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Gary Wang <gary.c.wang@intel.com>
+Link: https://lore.kernel.org/r/20250310011411.31685-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/selinux/install_policy.sh | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/edac/ie31200_edac.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/scripts/selinux/install_policy.sh b/scripts/selinux/install_policy.sh
-index 24086793b0d8d..db40237e60ce7 100755
---- a/scripts/selinux/install_policy.sh
-+++ b/scripts/selinux/install_policy.sh
-@@ -6,27 +6,24 @@ if [ `id -u` -ne 0 ]; then
- 	exit 1
- fi
+diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
+index 4fc16922dc1af..c3d34d1fc9ad7 100644
+--- a/drivers/edac/ie31200_edac.c
++++ b/drivers/edac/ie31200_edac.c
+@@ -94,8 +94,6 @@
+ 	 (((did) & PCI_DEVICE_ID_INTEL_IE31200_HB_CFL_MASK) ==                 \
+ 	  PCI_DEVICE_ID_INTEL_IE31200_HB_CFL_MASK))
  
--SF=`which setfiles`
--if [ $? -eq 1 ]; then
-+SF=`which setfiles` || {
- 	echo "Could not find setfiles"
- 	echo "Do you have policycoreutils installed?"
- 	exit 1
--fi
-+}
+-#define IE31200_DIMMS			4
+-#define IE31200_RANKS			8
+ #define IE31200_RANKS_PER_CHANNEL	4
+ #define IE31200_DIMMS_PER_CHANNEL	2
+ #define IE31200_CHANNELS		2
+@@ -429,7 +427,7 @@ static int ie31200_probe1(struct pci_dev *pdev, int dev_idx)
  
--CP=`which checkpolicy`
--if [ $? -eq 1 ]; then
-+CP=`which checkpolicy` || {
- 	echo "Could not find checkpolicy"
- 	echo "Do you have checkpolicy installed?"
- 	exit 1
--fi
-+}
- VERS=`$CP -V | awk '{print $1}'`
- 
--ENABLED=`which selinuxenabled`
--if [ $? -eq 1 ]; then
-+ENABLED=`which selinuxenabled` || {
- 	echo "Could not find selinuxenabled"
- 	echo "Do you have libselinux-utils installed?"
- 	exit 1
--fi
-+}
- 
- if selinuxenabled; then
-     echo "SELinux is already enabled"
+ 	nr_channels = how_many_channels(pdev);
+ 	layers[0].type = EDAC_MC_LAYER_CHIP_SELECT;
+-	layers[0].size = IE31200_DIMMS;
++	layers[0].size = IE31200_RANKS_PER_CHANNEL;
+ 	layers[0].is_virt_csrow = true;
+ 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
+ 	layers[1].size = nr_channels;
 -- 
 2.39.5
 
