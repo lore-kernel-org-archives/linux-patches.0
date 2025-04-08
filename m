@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB4268FEB;
-	Tue,  8 Apr 2025 11:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F64268FEB;
+	Tue,  8 Apr 2025 11:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112080; cv=none; b=rQ9qCNk4kryMH/GdKz8Fvhha6OC5bCwE5l9Ufoz3Hve2lkYjYmTKw7NQS4bQWG2kTiGZSNovPDXoOMkut5vr9/CczYoGoaPL+0z8ACzT/pSQ6KGtArZI4ch2cmvWicDqXRRhPT6nJEr9jTkfiTbQPBq3o/dawKUtMiMM3CUu3R8=
+	t=1744112082; cv=none; b=hza5bJ89ASKl8/+PbQNEcMpFf9VG7QqjT3gIeQHn7ajKImihNhvfEACfrWv5R7+7r9VR5NVcdbEeBt+nHfGpU2f3EsJolN99TtmP/Fg/rwUCRpMRNFiEJbKtDHTLXtcFGuSbaptxQCWhZiurpqFRUcHJQl3XB5TNnky3OoV6LCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112080; c=relaxed/simple;
-	bh=fgpgr6VBSY2AyNsqhptCLjji5GIAD66g1kPgVl3PKwY=;
+	s=arc-20240116; t=1744112082; c=relaxed/simple;
+	bh=c2ivwaaHJuSXJ8gUruGXLB9kHMhB86n1N/SwBhgHqWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRcm5gnC6bhfzBfbPMWccwkTv9L3pbV9xN4UII7CY2vwbYSNuTtemXEwVaayVw8/asFzwt8sZVpeBzYhPbH1BkP6G1jt9oKvz1P1iJWrKv6F+59P+ykAV/LOxfn8sBwKYvyMM9W4q8B6ns9TV8cXU6fyeE4ZgF1oHqP16hj7Oa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6sPVkLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wwh7ZqWdGffzeFYsq0vp/UpAGaUVXDVyP9tVg57vnGP7Q5DejkJFXF47vVncHY3XbwHomP9oc9mAsUhdcQGfncVbVv1Sc2x0l7Cj26tX2piR76TZ90XVeRgCr/3kdKkw03Wq9qI0G7Fd931oZeILSiYLaUfLHf15CHpm3ZHK+O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLtdBGj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6sPVkLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1A0C4CEE7;
-	Tue,  8 Apr 2025 11:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLtdBGj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5031BC4CEE5;
+	Tue,  8 Apr 2025 11:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112080;
-	bh=fgpgr6VBSY2AyNsqhptCLjji5GIAD66g1kPgVl3PKwY=;
+	s=korg; t=1744112082;
+	bh=c2ivwaaHJuSXJ8gUruGXLB9kHMhB86n1N/SwBhgHqWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6sPVkLSFt1RnJyQCiVdpblYuH+ArhlW4p83+k6+A702FotH7IiJBpGLDnCriKvj9
-	 5DcUtuvIdbONwH6X3UYb814rmJH3wlg2qBMFo5V1/QVE+gS27lDVScpzk0YpAax1Hz
-	 hVpHdeT6QCuGI6IojaRnHyUTfZIhIubbQusA5xEw=
+	b=fLtdBGj4B4hB1P086WwGBNsyg4VuvEwfRa+x2cLUPl+gC/3wLdKn/vLd8sQ9rtk6d
+	 ZgRhhPdL7/hCxyTai1dWDQZ9r4MVFKi20MhYpm7egfo4Uj2mQ73pul+yXHZ69R2+H2
+	 BXe56duhMGU0G1hW4Hic18QSO+66SGkaV0kYNXPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Li <vincent.mc.li@gmail.com>,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 667/731] LoongArch: BPF: Use move_addr() for BPF_PSEUDO_FUNC
-Date: Tue,  8 Apr 2025 12:49:24 +0200
-Message-ID: <20250408104929.781635558@linuxfoundation.org>
+	Tianyu Lan <tiala@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.14 668/731] x86/hyperv: Fix check of return value from snp_set_vmsa()
+Date: Tue,  8 Apr 2025 12:49:25 +0200
+Message-ID: <20250408104929.804161976@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,54 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Tianyu Lan <tiala@microsoft.com>
 
-commit 52266f1015a8b5aabec7d127f83d105f702b388e upstream.
+commit e792d843aa3c9d039074cdce728d5803262e57a7 upstream.
 
-Vincent reported that running XDP synproxy program on LoongArch results
-in the following error:
-
-    JIT doesn't support bpf-to-bpf calls
-
-With dmesg:
-
-    multi-func JIT bug 1391 != 1390
-
-The root cause is that verifier will refill the imm with the correct
-addresses of bpf_calls for BPF_PSEUDO_FUNC instructions and then run
-the last pass of JIT. So we generate different JIT code for the same
-instruction in two passes (one for placeholder and the other for the
-real address). Let's use move_addr() instead.
-
-See commit 64f50f6575721ef0 ("LoongArch, bpf: Use 4 instructions for
-function address in JIT") for a similar fix.
+snp_set_vmsa() returns 0 as success result and so fix it.
 
 Cc: stable@vger.kernel.org
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Fixes: bb035ef0cc91 ("LoongArch: BPF: Support mixing bpf2bpf and tailcalls")
-Reported-by: Vincent Li <vincent.mc.li@gmail.com>
-Tested-by: Vincent Li <vincent.mc.li@gmail.com>
-Closes: https://lore.kernel.org/loongarch/CAK3+h2yfM9FTNiXvEQBkvtuoJrvzmN4c_NZsFXqEk4Cj1tsBNA@mail.gmail.com/T/#u
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 44676bb9d566 ("x86/hyperv: Add smp support for SEV-SNP guest")
+Signed-off-by: Tianyu Lan <tiala@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20250313085217.45483-1-ltykernel@gmail.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250313085217.45483-1-ltykernel@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/hyperv/ivm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -935,7 +935,10 @@ static int build_insn(const struct bpf_i
- 	{
- 		const u64 imm64 = (u64)(insn + 1)->imm << 32 | (u32)insn->imm;
+--- a/arch/x86/hyperv/ivm.c
++++ b/arch/x86/hyperv/ivm.c
+@@ -338,7 +338,7 @@ int hv_snp_boot_ap(u32 cpu, unsigned lon
+ 	vmsa->sev_features = sev_status >> 2;
  
--		move_imm(ctx, dst, imm64, is32);
-+		if (bpf_pseudo_func(insn))
-+			move_addr(ctx, dst, imm64);
-+		else
-+			move_imm(ctx, dst, imm64, is32);
- 		return 1;
- 	}
- 
+ 	ret = snp_set_vmsa(vmsa, true);
+-	if (!ret) {
++	if (ret) {
+ 		pr_err("RMPADJUST(%llx) failed: %llx\n", (u64)vmsa, ret);
+ 		free_page((u64)vmsa);
+ 		return ret;
 
 
