@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFB2192F2;
-	Tue,  8 Apr 2025 11:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4740374C4;
+	Tue,  8 Apr 2025 11:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110967; cv=none; b=ZetZvHvaLsyygfaDkILPB1aYvc6MLFS+zEXhZzoZZw33sh+7Wjj1+uO7+rNvDEPAQ3RiUmrhy55xNyQ8hwbEnE2pnU+Z9Y6YqmDbNzohhIBrqXD11QvSx8bqtprboMFT763eThYTaCh84lQ72KTeeG0x1+W53p5ODKZK22wD8lo=
+	t=1744110969; cv=none; b=QJP7B5lVIFD5HgJLc3bsWXXXRCrFnq/sUGjvK3LD4MBEeAbZXm3DgWwZhQ8gBj0UP/jUgb7S0HB50QCViCyG66PcKPTp2QgWk5Hw6n7ObL17r2kf/v9jCpHCCVew/bRYHz7a3vcCf7LfaIdIzvtukFmhvvFVAQgEXc6QhlQrESI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110967; c=relaxed/simple;
-	bh=bv68yh5WS8XLjel2TNBlvmSH26ojUv604AAOJ6nSzxk=;
+	s=arc-20240116; t=1744110969; c=relaxed/simple;
+	bh=fZLXLKrAvsxYOY5gr29OkaGgeDM30r+PO7kCSc74hfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSDmtsulexuj2sQCW85VKxSxqoAnC3HelWPQi7tQnwQAKpFFDBOrJgNHIk2HmcXDq5ROXcUYjFVmBG39umZIp6B1xqPifYmKgxeoQEtaV1qd1IGmaRSfVO05cF08OkhEGr5a5Rf5Cb8A+dtrifIA3xN+acwVxY8Dh1fKnk2qfko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/JndbLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPNFys3ponFYmIhy8jf+tlAS9BK+NDPuEWHj63kzWYFXKziEH8LoGVYpAjrDnUDuk9ax89o3jrdBfaKk3l8eWrpgmSGYFVwt+x5gvZDjDiZr7f4urD0A4jRk6JNaK4TVECKMblMsGYSEmJrSIe9K0wmbiEJaAbe2Tsaf7rlg28Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mw4Nz6Tl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/JndbLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9792C4CEE5;
-	Tue,  8 Apr 2025 11:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mw4Nz6Tl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BCFC4CEE5;
+	Tue,  8 Apr 2025 11:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110967;
-	bh=bv68yh5WS8XLjel2TNBlvmSH26ojUv604AAOJ6nSzxk=;
+	s=korg; t=1744110969;
+	bh=fZLXLKrAvsxYOY5gr29OkaGgeDM30r+PO7kCSc74hfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/JndbLV0nXOh76Ytj46uXbYEYDJilFz89MaLS9BWYILHXAwoKmZJrxh/wD247G39
-	 F/1LYd0pc7HYjuVv37UvkAQuYdD7W9gEOukH4lKLuienqzavJ2LVYYMN4v0lxgA9nl
-	 IOTzQIkooPOUm64hoORAMDcEB6l/MZeGLnddTcHQ=
+	b=mw4Nz6TlXzG+LC5ZZ3luIT5+0DzgPUyM8Oz3Yl3T6plq9TBsgfFshqoANENbDKMe2
+	 qID1kpsaTDBywTgFehL401fBIYSogejfkXdlV/16EIt1SVUwAk68BbuaDBO4BEbTDc
+	 iHN8Rwu6e7IZPU9k4WwqTxL9vGmupgvX10ZVu3t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Nishiyama <nishiyama.pedro@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 253/731] Bluetooth: Add quirk for broken READ_VOICE_SETTING
-Date: Tue,  8 Apr 2025 12:42:30 +0200
-Message-ID: <20250408104920.169297433@linuxfoundation.org>
+Subject: [PATCH 6.14 262/731] net: Fix the devmem sock opts and msgs for parisc
+Date: Tue,  8 Apr 2025 12:42:39 +0200
+Message-ID: <20250408104920.377011819@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,71 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Nishiyama <nishiyama.pedro@gmail.com>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit ff26b2dd6568392f60fa67a4e58279938025c3af ]
+[ Upstream commit fd87b7783802b45cdd261b273e6b2b792823064d ]
 
-Some fake controllers cannot be initialized because they return a smaller
-report than expected for READ_VOICE_SETTING.
+The devmem socket options and socket control message definitions
+introduced in the TCP devmem series[1] incorrectly continued the socket
+definitions for arch/parisc.
 
-Signed-off-by: Pedro Nishiyama <nishiyama.pedro@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 1f04b0e5e3b9 ("Bluetooth: btusb: Fix regression in the initialization of fake Bluetooth controllers")
+The UAPI change seems safe as there are currently no drivers that
+declare support for devmem TCP RX via PP_FLAG_ALLOW_UNREADABLE_NETMEM.
+Hence, fixing this UAPI should be safe.
+
+Fix the devmem socket options and socket control message definitions to
+reflect the series followed by arch/parisc.
+
+[1]
+https://lore.kernel.org/lkml/20240910171458.219195-10-almasrymina@google.com/
+
+Fixes: 8f0b3cc9a4c10 ("tcp: RX path for devmem TCP")
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250324074228.3139088-1-praan@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h      | 8 ++++++++
- include/net/bluetooth/hci_core.h | 4 ++++
- net/bluetooth/hci_sync.c         | 3 +++
- 3 files changed, 15 insertions(+)
+ arch/parisc/include/uapi/asm/socket.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 3ec915738112b..295d97e312e1d 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -354,6 +354,14 @@ enum {
- 	 * during the hdev->setup vendor callback.
- 	 */
- 	HCI_QUIRK_FIXUP_LE_EXT_ADV_REPORT_PHY,
-+
-+	/* When this quirk is set, the HCI_OP_READ_VOICE_SETTING command is
-+	 * skipped. This is required for a subset of the CSR controller clones
-+	 * which erroneously claim to support it.
-+	 *
-+	 * This quirk must be set before hci_register_dev is called.
-+	 */
-+	HCI_QUIRK_BROKEN_READ_VOICE_SETTING,
- };
+diff --git a/arch/parisc/include/uapi/asm/socket.h b/arch/parisc/include/uapi/asm/socket.h
+index aa9cd4b951fe5..96831c9886065 100644
+--- a/arch/parisc/include/uapi/asm/socket.h
++++ b/arch/parisc/include/uapi/asm/socket.h
+@@ -132,16 +132,16 @@
+ #define SO_PASSPIDFD		0x404A
+ #define SO_PEERPIDFD		0x404B
  
- /* HCI device flags */
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 6281063cbd8e4..8649ad17408bb 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1925,6 +1925,10 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- 	((dev)->commands[20] & 0x10 && \
- 	 !test_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks))
+-#define SO_DEVMEM_LINEAR	78
+-#define SCM_DEVMEM_LINEAR	SO_DEVMEM_LINEAR
+-#define SO_DEVMEM_DMABUF	79
+-#define SCM_DEVMEM_DMABUF	SO_DEVMEM_DMABUF
+-#define SO_DEVMEM_DONTNEED	80
+-
+ #define SCM_TS_OPT_ID		0x404C
  
-+#define read_voice_setting_capable(dev) \
-+	((dev)->commands[9] & 0x04 && \
-+	 !test_bit(HCI_QUIRK_BROKEN_READ_VOICE_SETTING, &(dev)->quirks))
+ #define SO_RCVPRIORITY		0x404D
+ 
++#define SO_DEVMEM_LINEAR	0x404E
++#define SCM_DEVMEM_LINEAR	SO_DEVMEM_LINEAR
++#define SO_DEVMEM_DMABUF	0x404F
++#define SCM_DEVMEM_DMABUF	SO_DEVMEM_DMABUF
++#define SO_DEVMEM_DONTNEED	0x4050
 +
- /* Use enhanced synchronous connection if command is supported and its quirk
-  * has not been set.
-  */
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index dd770ef5ec368..0c6a85abba2c5 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3696,6 +3696,9 @@ static int hci_read_local_name_sync(struct hci_dev *hdev)
- /* Read Voice Setting */
- static int hci_read_voice_setting_sync(struct hci_dev *hdev)
- {
-+	if (!read_voice_setting_capable(hdev))
-+		return 0;
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_READ_VOICE_SETTING,
- 				     0, NULL, HCI_CMD_TIMEOUT);
- }
+ #if !defined(__KERNEL__)
+ 
+ #if __BITS_PER_LONG == 64
 -- 
 2.39.5
 
