@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3AF26B94D;
-	Tue,  8 Apr 2025 12:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3F32236FC;
+	Tue,  8 Apr 2025 12:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116132; cv=none; b=tdDo7x7py5lr5VH4goT3fgnzEM8rqQNDEjOOZJozZOPY4jg1PtNgiAGfL4L3bPmpeQY3b/typm2kSMNqg9uUlO8hYwWC7Eq9Pg+Idixo4WNMDciL5zp9X5YG9SMuuX2wYTi8pSx9yZ20MkynNZEfkVoIN503WqxrMLRqY1SJitg=
+	t=1744116135; cv=none; b=ryY91vLtvN620vSdJJr1VvTLkzjBipzA+VC8G8DF40ARWfRmUdDy1yVceTunlO1niPmQaSFMPTkLGkYyLYMJLo2w/KXSNKjyD4TmkSpSRN8Q/m6WqTSUvsTeZL/mztA19bl6NmuoCHIK0Oup3R02I0Obie61Og6Xuzs/WFjL37s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116132; c=relaxed/simple;
-	bh=b+02XH1FHUzocuvhF8SeZdvFpfmaSr9AtqukqWNsqv8=;
+	s=arc-20240116; t=1744116135; c=relaxed/simple;
+	bh=04ElTJrxENLrbJO1zWJMlsxjHyQfWftvtAi86Q+rlAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdOvFHNJEZluNQTRiB//RPFN8sMpMj49etrPTHKQa45N1Ysts1ssbJrrOEJMvIZEGN9q1bANNyIGSmyuAn6BfYXxGQiq6so6b3Zf9QqeUERZWlFmQ0JNWwzSWbc3iAxXczl1z0HpLcWyh68C4609tnr9CQbOMCdg8PMY/GEvMGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESpMfTt+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J9wCKuCOUX+r6pZc6QdmtVhBMrUxYrTbFPxVDRyNKiRr8JZMN/hZkO0tE9qc+yginH1PSmA53rmEFIAZ/+cyp37LE9FiCWM1DuuwRkK5a3w0z793McH/fKGcpuioS8g2FBxooRBhy07IWTc1MfGkMKycOwj61p9W5x1GWrmjUMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbhHDxos; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESpMfTt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4602C4CEE7;
-	Tue,  8 Apr 2025 12:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbhHDxos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F64C4CEE7;
+	Tue,  8 Apr 2025 12:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116132;
-	bh=b+02XH1FHUzocuvhF8SeZdvFpfmaSr9AtqukqWNsqv8=;
+	s=korg; t=1744116134;
+	bh=04ElTJrxENLrbJO1zWJMlsxjHyQfWftvtAi86Q+rlAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESpMfTt+C/lFS9HJPPGRU28P3yhS92nQb1/XKo/yFsFhoe/p01eScrlBM0l8ETwU9
-	 1uqg7UBmsqPBetVNTqK++WYMWoYek8MkI9cJU5mlKTFDR+RNg60MCcnpGjC50WEeX4
-	 fJzruUtQuJi38+XUs13tsBrTloHgz2zByH4ddFYc=
+	b=HbhHDxosbVxblNNmkZ3cnCHW3V00dNp+gEIESOphtoNxicjTP4ldVGkPVx4yYur/I
+	 q2Uh4oEOtbS4EyLjpBjauBij7KVWUmmWDPZ5EiaG+VEcSgSCYLYxXmmAPgt02lAKgz
+	 AGQ1Yu7+QyOQhrMe/abpeNM8pW+ogtCqCClKpR34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tao Chen <chen.dylane@linux.dev>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/423] lockdep: Dont disable interrupts on RT in disable_irq_nosync_lockdep.*()
-Date: Tue,  8 Apr 2025 12:45:53 +0200
-Message-ID: <20250408104846.382179344@linuxfoundation.org>
+Subject: [PATCH 6.12 028/423] perf/ring_buffer: Allow the EPOLLRDNORM flag for poll
+Date: Tue,  8 Apr 2025 12:45:54 +0200
+Message-ID: <20250408104846.404668411@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -53,79 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Tao Chen <chen.dylane@linux.dev>
 
-[ Upstream commit 87886b32d669abc11c7be95ef44099215e4f5788 ]
+[ Upstream commit c96fff391c095c11dc87dab35be72dee7d217cde ]
 
-disable_irq_nosync_lockdep() disables interrupts with lockdep enabled to
-avoid false positive reports by lockdep that a certain lock has not been
-acquired with disabled interrupts. The user of this macros expects that
-a lock can be acquried without disabling interrupts because the IRQ line
-triggering the interrupt is disabled.
+The poll man page says POLLRDNORM is equivalent to POLLIN. For poll(),
+it seems that if user sets pollfd with POLLRDNORM in userspace, perf_poll
+will not return until timeout even if perf_output_wakeup called,
+whereas POLLIN returns.
 
-This triggers a warning on PREEMPT_RT because after
-disable_irq_nosync_lockdep.*() the following spinlock_t now is acquired
-with disabled interrupts.
-
-On PREEMPT_RT there is no difference between spin_lock() and
-spin_lock_irq() so avoiding disabling interrupts in this case works for
-the two remaining callers as of today.
-
-Don't disable interrupts on PREEMPT_RT in disable_irq_nosync_lockdep.*().
-
-Closes: https://lore.kernel.org/760e34f9-6034-40e0-82a5-ee9becd24438@roeck-us.net
-Fixes: e8106b941ceab ("[PATCH] lockdep: core, add enable/disable_irq_irqsave/irqrestore() APIs")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250212103619.2560503-2-bigeasy@linutronix.de
+Fixes: 76369139ceb9 ("perf: Split up buffer handling from core code")
+Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250314030036.2543180-1-chen.dylane@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/events/ring_buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 457151f9f263d..b378fbf885ce3 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -448,7 +448,7 @@ irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
- static inline void disable_irq_nosync_lockdep(unsigned int irq)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_disable();
- #endif
- }
-@@ -456,7 +456,7 @@ static inline void disable_irq_nosync_lockdep(unsigned int irq)
- static inline void disable_irq_nosync_lockdep_irqsave(unsigned int irq, unsigned long *flags)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_save(*flags);
- #endif
- }
-@@ -471,7 +471,7 @@ static inline void disable_irq_lockdep(unsigned int irq)
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 4f46f688d0d49..bbfa22c0a1597 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -19,7 +19,7 @@
  
- static inline void enable_irq_lockdep(unsigned int irq)
+ static void perf_output_wakeup(struct perf_output_handle *handle)
  {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_enable();
- #endif
- 	enable_irq(irq);
-@@ -479,7 +479,7 @@ static inline void enable_irq_lockdep(unsigned int irq)
+-	atomic_set(&handle->rb->poll, EPOLLIN);
++	atomic_set(&handle->rb->poll, EPOLLIN | EPOLLRDNORM);
  
- static inline void enable_irq_lockdep_irqrestore(unsigned int irq, unsigned long *flags)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_restore(*flags);
- #endif
- 	enable_irq(irq);
+ 	handle->event->pending_wakeup = 1;
+ 
 -- 
 2.39.5
 
