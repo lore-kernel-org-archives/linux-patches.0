@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BCB2192F2;
-	Tue,  8 Apr 2025 11:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8065E219301;
+	Tue,  8 Apr 2025 11:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112264; cv=none; b=erHYIOFO6YLwtD3SSq1H6GSUV1SY8hnhuWhEYPt1v87C3iEgCXMGzp+NjT7Ew+oe4Wlsn9W7p9EhTM+aibrBWUeE8E2+nxMHfuiz6BmqLGwXm5CO8Sn3hAKoY7cdbgI5o0smkEkuJryrVsSRQ//ocHXMWZPdQxJJWZueguxSBZE=
+	t=1744112267; cv=none; b=Wd91mAdlIvsEIAJHU9yfSpil4e14hr70gsFnEQDc4AqK6+fCJQ5r/qpUMy2fQukdQKhkJjVEzuO1C4cJGiHx+uTdyYbC9hc5v4O/kh3jgk4rogSUc+FWaNCDa9K5NIU+cuoTOHUAFndPhMyGb3w8YvsA19KjzYyMXdstF9dqHk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112264; c=relaxed/simple;
-	bh=LaS6NqoLVIUbkFpq2TC8otRuejSOtq1+Uk+zehbXNVA=;
+	s=arc-20240116; t=1744112267; c=relaxed/simple;
+	bh=ZqitNxwKg1aJ9R0j1a7GLLQnFN/+2HDb45AV/NELkLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBccIyswMcsSHqZMHAq8AOTgigIdquLxvCg9pmhRG3Btobpk11Juw5tW+5rXveWA2W/jcBt/tMmjImwflAgWZM1I+hB7VMAglbxx2+0vERLoFDOnKgSqfSraemzb2ex5doGbmKnR+bQm3z0kUB8cMWvtSXdXChoiu2XZhBabIlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcvSQ+d1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OSzEFtD/79wZ1z77uam33q5B0GTkrI1ztSZd6jCB949RZHkCSijKIkeSZUD7tmE5lPdvgezNM7KJ2A6nOreQenarufiB6h5+IO1J9MZElwirs95ybKr2IhMTDY4H7TEXF/GSGKHBw3ywesRyVrclbZtCeHGHJsk0+m734xhKZyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYnyTh9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcvSQ+d1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EC6C4CEE5;
-	Tue,  8 Apr 2025 11:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYnyTh9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FCEC4CEE5;
+	Tue,  8 Apr 2025 11:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112264;
-	bh=LaS6NqoLVIUbkFpq2TC8otRuejSOtq1+Uk+zehbXNVA=;
+	s=korg; t=1744112267;
+	bh=ZqitNxwKg1aJ9R0j1a7GLLQnFN/+2HDb45AV/NELkLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcvSQ+d1CB1xds8Wxg+9D98X2hlPkGdDK2x6nik6+e4BiA9qL9u4UzLhZdUhlCytS
-	 XcbOTsLzJP8VNOM6Jnx/8KfQCFndnnF4hJBJsLQvRp8G8Tx2hEqhzIY2yUeYUnJwGy
-	 hWZMKNdmU2ksA0GULPoamr+RD0mQVF8PwgiKaB8k=
+	b=QYnyTh9AjmUVRMa9YgWArHZFfWUIEFC29ID9ZQa/+JP4DVbr+XezHUDJAb9L/BJfR
+	 mffCnZqAJOw1HKTzKW8ha19cFGBPRwXwgfPdTrXux5dP47aVTay2O6qdHi1VGLHueX
+	 n4V7EJzNt865fR+m7CtgTmsZp8kwsCci7pCbS1zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.14 726/731] nfsd: put dl_stid if fail to queue dl_recall
-Date: Tue,  8 Apr 2025 12:50:23 +0200
-Message-ID: <20250408104931.161693656@linuxfoundation.org>
+Subject: [PATCH 6.14 727/731] NFSD: Add a Kconfig setting to enable delegated timestamps
+Date: Tue,  8 Apr 2025 12:50:24 +0200
+Message-ID: <20250408104931.184231104@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,102 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 230ca758453c63bd38e4d9f4a21db698f7abada8 upstream.
+commit 26a80762153ba0dc98258b5e6d2e9741178c5114 upstream.
 
-Before calling nfsd4_run_cb to queue dl_recall to the callback_wq, we
-increment the reference count of dl_stid.
-We expect that after the corresponding work_struct is processed, the
-reference count of dl_stid will be decremented through the callback
-function nfsd4_cb_recall_release.
-However, if the call to nfsd4_run_cb fails, the incremented reference
-count of dl_stid will not be decremented correspondingly, leading to the
-following nfs4_stid leak:
-unreferenced object 0xffff88812067b578 (size 344):
-  comm "nfsd", pid 2761, jiffies 4295044002 (age 5541.241s)
-  hex dump (first 32 bytes):
-    01 00 00 00 6b 6b 6b 6b b8 02 c0 e2 81 88 ff ff  ....kkkk........
-    00 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 ad 4e ad de  .kkkkkkk.....N..
-  backtrace:
-    kmem_cache_alloc+0x4b9/0x700
-    nfsd4_process_open1+0x34/0x300
-    nfsd4_open+0x2d1/0x9d0
-    nfsd4_proc_compound+0x7a2/0xe30
-    nfsd_dispatch+0x241/0x3e0
-    svc_process_common+0x5d3/0xcc0
-    svc_process+0x2a3/0x320
-    nfsd+0x180/0x2e0
-    kthread+0x199/0x1d0
-    ret_from_fork+0x30/0x50
-    ret_from_fork_asm+0x1b/0x30
-unreferenced object 0xffff8881499f4d28 (size 368):
-  comm "nfsd", pid 2761, jiffies 4295044005 (age 5541.239s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 30 4d 9f 49 81 88 ff ff  ........0M.I....
-    30 4d 9f 49 81 88 ff ff 20 00 00 00 01 00 00 00  0M.I.... .......
-  backtrace:
-    kmem_cache_alloc+0x4b9/0x700
-    nfs4_alloc_stid+0x29/0x210
-    alloc_init_deleg+0x92/0x2e0
-    nfs4_set_delegation+0x284/0xc00
-    nfs4_open_delegation+0x216/0x3f0
-    nfsd4_process_open2+0x2b3/0xee0
-    nfsd4_open+0x770/0x9d0
-    nfsd4_proc_compound+0x7a2/0xe30
-    nfsd_dispatch+0x241/0x3e0
-    svc_process_common+0x5d3/0xcc0
-    svc_process+0x2a3/0x320
-    nfsd+0x180/0x2e0
-    kthread+0x199/0x1d0
-    ret_from_fork+0x30/0x50
-    ret_from_fork_asm+0x1b/0x30
-Fix it by checking the result of nfsd4_run_cb and call nfs4_put_stid if
-fail to queue dl_recall.
+After three tries, we still see test failures with delegated
+timestamps. Disable them by default, but leave the implementation
+intact so that development can continue.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Cc: stable@vger.kernel.org # v6.14
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/nfsd/Kconfig     |   12 +++++++++++-
+ fs/nfsd/nfs4state.c |   16 ++++++++++++++--
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
+--- a/fs/nfsd/Kconfig
++++ b/fs/nfsd/Kconfig
+@@ -172,6 +172,16 @@ config NFSD_LEGACY_CLIENT_TRACKING
+ 	  recoverydir, or spawn a process directly using a usermodehelper
+ 	  upcall.
+ 
+-	  These legacy client tracking methods have proven to be probelmatic
++	  These legacy client tracking methods have proven to be problematic
+ 	  and will be removed in the future. Say Y here if you need support
+ 	  for them in the interim.
++
++config NFSD_V4_DELEG_TIMESTAMPS
++	bool "Support delegated timestamps"
++	depends on NFSD_V4
++	default n
++	help
++	  NFSD implements delegated timestamps according to
++	  draft-ietf-nfsv4-delstid-08 "Extending the Opening of Files". This
++	  is currently an experimental feature and is therefore left disabled
++	  by default.
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -1050,6 +1050,12 @@ static struct nfs4_ol_stateid * nfs4_all
- 	return openlockstateid(stid);
+@@ -5958,11 +5958,23 @@ nfsd4_verify_setuid_write(struct nfsd4_o
+ 	return 0;
  }
  
-+/*
-+ * As the sc_free callback of deleg, this may be called by nfs4_put_stid
-+ * in nfsd_break_one_deleg.
-+ * Considering nfsd_break_one_deleg is called with the flc->flc_lock held,
-+ * this function mustn't ever sleep.
-+ */
- static void nfs4_free_deleg(struct nfs4_stid *stid)
++#ifdef CONFIG_NFSD_V4_DELEG_TIMESTAMPS
++static bool nfsd4_want_deleg_timestamps(const struct nfsd4_open *open)
++{
++	return open->op_deleg_want & OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS;
++}
++#else /* CONFIG_NFSD_V4_DELEG_TIMESTAMPS */
++static bool nfsd4_want_deleg_timestamps(const struct nfsd4_open *open)
++{
++	return false;
++}
++#endif /* CONFIG NFSD_V4_DELEG_TIMESTAMPS */
++
+ static struct nfs4_delegation *
+ nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+ 		    struct svc_fh *parent)
  {
- 	struct nfs4_delegation *dp = delegstateid(stid);
-@@ -5414,6 +5420,7 @@ static const struct nfsd4_callback_ops n
- 
- static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+-	bool deleg_ts = open->op_deleg_want & OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS;
++	bool deleg_ts = nfsd4_want_deleg_timestamps(open);
+ 	struct nfs4_client *clp = stp->st_stid.sc_client;
+ 	struct nfs4_file *fp = stp->st_stid.sc_file;
+ 	struct nfs4_clnt_odstate *odstate = stp->st_clnt_odstate;
+@@ -6161,8 +6173,8 @@ static void
+ nfs4_open_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+ 		     struct svc_fh *currentfh)
  {
-+	bool queued;
- 	/*
- 	 * We're assuming the state code never drops its reference
- 	 * without first removing the lease.  Since we're in this lease
-@@ -5422,7 +5429,10 @@ static void nfsd_break_one_deleg(struct
- 	 * we know it's safe to take a reference.
- 	 */
- 	refcount_inc(&dp->dl_stid.sc_count);
--	WARN_ON_ONCE(!nfsd4_run_cb(&dp->dl_recall));
-+	queued = nfsd4_run_cb(&dp->dl_recall);
-+	WARN_ON_ONCE(!queued);
-+	if (!queued)
-+		nfs4_put_stid(&dp->dl_stid);
- }
- 
- /* Called from break_lease() with flc_lock held. */
+-	bool deleg_ts = open->op_deleg_want & OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS;
+ 	struct nfs4_openowner *oo = openowner(stp->st_stateowner);
++	bool deleg_ts = nfsd4_want_deleg_timestamps(open);
+ 	struct nfs4_client *clp = stp->st_stid.sc_client;
+ 	struct svc_fh *parent = NULL;
+ 	struct nfs4_delegation *dp;
 
 
