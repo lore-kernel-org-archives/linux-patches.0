@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED82B267B65;
-	Tue,  8 Apr 2025 10:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC5E269885;
+	Tue,  8 Apr 2025 10:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109798; cv=none; b=Mqqczlyd8SCt487NQoAuCcJTl8TawcYiqXdvyQVtk9isUQV6k9rd6DJSBks+b1mLyHDUw9LSBqfhIkVfXGmKGaSg8bFOVYnm6t1IxjpOdktmIWAYPAxr6Pvnbx/4WMwejGq0skxO4molYDlEpfL81/rViHqg4hBFCHcqJwybGrM=
+	t=1744109800; cv=none; b=mEBBuV+vd4K9T1E0YILZGv7CH4V08Qoq108HD5nou+dAXtL9fQdVFmnJSxnRhDEA2LGmrD+8g2A/bazcGt5WCp2I8DSphjciWgzMcjPoYGOl+Rlcf2k94xCsYV4Xot3zSFKH/itDMhEgT6OIcfJcyZVU+Jr4RLcK8400+YYt35Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109798; c=relaxed/simple;
-	bh=/E2Z01D+DUWhsl5XFzEAPEsrL7cKyrbygSWiFXtprvw=;
+	s=arc-20240116; t=1744109800; c=relaxed/simple;
+	bh=TaSUeY9obYRmwc1ZCZwbFWeZmZsUBzVD7R6OGsMgRp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMstfplw/B9+rNB9Vcd2VE2UyraJy1H0POj40MBN2vBCzPK+lHDaqyduijhllFaVy4Qdqq3cqZXbSINnvAc2QyllbjcM9PDkax0yXIO42KbrbV4y//aQyJJWgWv0t8CM8z7rbB2x2fLItb3nG7o/O0kAKw2so+UtlxMuOx+92sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9gaPUAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pe2JZWinTJe9dkDkB+QWgi3vePlJoRG3DJNrIsBAwu0C1Tall34+xmG/M3zTpFH46msr/KpSbsk29SU3znWj4+XJoQ/6zLC8N1/pOy/n2O6q2ogLDJNcPBWmW4ZSNisA9v3/7XnqWdE00WpxHd5SoQGx2r2HuTa0qADh1okaDlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pxr/ME9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9gaPUAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC88C4CEE5;
-	Tue,  8 Apr 2025 10:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pxr/ME9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDD8C4CEE5;
+	Tue,  8 Apr 2025 10:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109797;
-	bh=/E2Z01D+DUWhsl5XFzEAPEsrL7cKyrbygSWiFXtprvw=;
+	s=korg; t=1744109799;
+	bh=TaSUeY9obYRmwc1ZCZwbFWeZmZsUBzVD7R6OGsMgRp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9gaPUAvAM8JTAfF+mFohAjwkIjEGW7vlfTtb+7h1dA3J/ZMPgLOsq3+PkxoVZLwM
-	 VXhe7Nekpru87qPRiDxMmZ3pq/p82oaqYi//AJwFdLu92UjYrHiaw6pXk/kuQYQiOr
-	 0E8+Rzlq29dID5/rXJ4v1UTMLs5DehNEBUh7sCP8=
+	b=Pxr/ME9AHG2AVJ6pLJ9YWLKvkYqIcSvT3+7kRSB/iajKvskNvj7p+Lri+FEd4x/5L
+	 e/oYIEwDLHS6WcPr4ludiAGO50OFGZAhVP07sMrxx3SfzYi7donYkTJfy2N878Wz2R
+	 pt1VUZZnfguO8kHc2oMddzeYL6mDrO2YgwtsagQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/227] ASoC: codecs: wm0010: Fix error handling path in wm0010_spi_probe()
-Date: Tue,  8 Apr 2025 12:47:15 +0200
-Message-ID: <20250408104822.110993970@linuxfoundation.org>
+Subject: [PATCH 5.10 058/227] i2c: ali1535: Fix an error handling path in ali1535_probe()
+Date: Tue,  8 Apr 2025 12:47:16 +0200
+Message-ID: <20250408104822.143905657@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -54,55 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit ed92bc5264c4357d4fca292c769ea9967cd3d3b6 ]
+[ Upstream commit 9b5463f349d019a261f1e80803447efca3126151 ]
 
-Free some resources in the error handling path of the probe, as already
-done in the remove function.
+If i2c_add_adapter() fails, the request_region() call in ali1535_setup()
+must be undone by a corresponding release_region() call, as done in the
+remove function.
 
-Fixes: e3523e01869d ("ASoC: wm0010: Add initial wm0010 DSP driver")
-Fixes: fd8b96574456 ("ASoC: wm0010: Clear IRQ as wake source and include missing header")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/5139ba1ab8c4c157ce04e56096a0f54a1683195c.1741549792.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/0daf63d7a2ce74c02e2664ba805bbfadab7d25e5.1741031571.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm0010.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-ali1535.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm0010.c b/sound/soc/codecs/wm0010.c
-index 28b4656c4e149..b2f87af1bfc87 100644
---- a/sound/soc/codecs/wm0010.c
-+++ b/sound/soc/codecs/wm0010.c
-@@ -952,7 +952,7 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 	if (ret) {
- 		dev_err(wm0010->dev, "Failed to set IRQ %d as wake source: %d\n",
- 			irq, ret);
--		return ret;
-+		goto free_irq;
- 	}
+diff --git a/drivers/i2c/busses/i2c-ali1535.c b/drivers/i2c/busses/i2c-ali1535.c
+index fb93152845f43..b36b75fc5b089 100644
+--- a/drivers/i2c/busses/i2c-ali1535.c
++++ b/drivers/i2c/busses/i2c-ali1535.c
+@@ -490,6 +490,8 @@ MODULE_DEVICE_TABLE(pci, ali1535_ids);
  
- 	if (spi->max_speed_hz)
-@@ -964,9 +964,18 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 				     &soc_component_dev_wm0010, wm0010_dai,
- 				     ARRAY_SIZE(wm0010_dai));
- 	if (ret < 0)
--		return ret;
-+		goto disable_irq_wake;
+ static int ali1535_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ {
++	int ret;
++
+ 	if (ali1535_setup(dev)) {
+ 		dev_warn(&dev->dev,
+ 			"ALI1535 not detected, module not inserted.\n");
+@@ -501,7 +503,15 @@ static int ali1535_probe(struct pci_dev *dev, const struct pci_device_id *id)
  
- 	return 0;
+ 	snprintf(ali1535_adapter.name, sizeof(ali1535_adapter.name),
+ 		"SMBus ALI1535 adapter at %04x", ali1535_offset);
+-	return i2c_add_adapter(&ali1535_adapter);
++	ret = i2c_add_adapter(&ali1535_adapter);
++	if (ret)
++		goto release_region;
 +
-+disable_irq_wake:
-+	irq_set_irq_wake(wm0010->irq, 0);
++	return 0;
 +
-+free_irq:
-+	if (wm0010->irq)
-+		free_irq(wm0010->irq, wm0010);
-+
++release_region:
++	release_region(ali1535_smba, ALI1535_SMB_IOSIZE);
 +	return ret;
  }
  
- static int wm0010_spi_remove(struct spi_device *spi)
+ static void ali1535_remove(struct pci_dev *dev)
 -- 
 2.39.5
 
