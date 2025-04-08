@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E64A267731;
-	Tue,  8 Apr 2025 12:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DB3269B0D;
+	Tue,  8 Apr 2025 12:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114856; cv=none; b=Jx5u+nKy3Ln7ENCrm5AMnq2kU0a/AoXLHL+pWhpV9QQAM2Kas3ecvVG1/kgQI/6i3fsSXfWDj9IpfK46aDCKoNcIbEzlcBy7itQKv9lZDnU3rRLP3QU5xRuhe/QUxKs5UjOs0Fct2NgAJUwtwo10/ZM8haZksKJVID9mp5NLLQM=
+	t=1744114858; cv=none; b=JHLsII/0vUyezDNcZ5t0+9xLHrtH695vGqaXZ9TedeiWSEz2o94FSAXIHhb2dgcHAiH+MWFO5UoEBfA60K5tvp45fnP0GP2oJB49MAmXJo9PRJFmCjQwII9nUwXU0e8BetY/kSfnmHSTGl6MDmaffC9lVIIZNvcO2K7ee+iP5ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114856; c=relaxed/simple;
-	bh=2q29jxExubdqLbHAGl1rFaOchh+kNnbxAjr/OyhMS+4=;
+	s=arc-20240116; t=1744114858; c=relaxed/simple;
+	bh=csE/cZC2w5AaUSmBNWanOCZIFlRkuD62aYGm7NX/h0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0b2/DR6FCmg6B6xnmm5+MjuYP2S0c/U3uYSe+9iPCS9/rGXnQ5bkZ5QiyTJB1smBPHJ2GoXE8cZ4yUk2LOLYHoortjEBW2te23L1/J5CBs3bbKquohfpnzPe4K+j6V4tm/UCmkPOW8UxyD2R/zdv/gKT46YStKncJDaU4RVVDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pc+oBnuK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lU1xyrGy/SHypL2nu7tQ7d9rrlIsDMiivJe0Z/jsP2otM8EsQZKTk/dfxIrFz8tn3oysueACnGbRnNwfHfhpYBHDtnUP4l8lBNS7J66F6lJ+V04dKl1XL5xQv+NRqECneWfn4S9Hr5og/Qea3QDo0dGbSNMuLH4ohi7cKozzJa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgLv/A/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pc+oBnuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96040C4CEE5;
-	Tue,  8 Apr 2025 12:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgLv/A/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED9CC4CEEA;
+	Tue,  8 Apr 2025 12:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114855;
-	bh=2q29jxExubdqLbHAGl1rFaOchh+kNnbxAjr/OyhMS+4=;
+	s=korg; t=1744114858;
+	bh=csE/cZC2w5AaUSmBNWanOCZIFlRkuD62aYGm7NX/h0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pc+oBnuKCXyrt3bPJvT850euB0BHlCC5RQcgSr7Hpo676L8B0OG5sLcPc38nhmZPP
-	 LbmghsitlFJU9NYDNWYmE9qv9VKb08x2UE5f2DqEiqrCTl80r9c7HxOj/dqvVLk/GJ
-	 mejFrDjMEB3TVPB5ashkfYQcZ9NJwMFj+813xzi4=
+	b=JgLv/A/9o1NTDQLowLbeQcT6KCSWI9x4DOzKJSl3A9TlSeVpx5+KRlLsSNHTr1f8f
+	 q0wUlOQSdNPsJafRXhIq0wfIKim7yWno52mVBlTS0WJbDvnlALxJ6gQx0ry35wAwov
+	 /HwPMbO8D8HWkp0nxw6oArk/aI0uOLodwUAT/pTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 261/499] perf: intel-tpebs: Fix incorrect usage of zfree()
-Date: Tue,  8 Apr 2025 12:47:53 +0200
-Message-ID: <20250408104857.722962410@linuxfoundation.org>
+Subject: [PATCH 6.13 262/499] staging: rtl8723bs: select CONFIG_CRYPTO_LIB_AES
+Date: Tue,  8 Apr 2025 12:47:54 +0200
+Message-ID: <20250408104857.751025204@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,43 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit 6d2dcd635204c023eb5328ad7d38b198a5558c9b ]
+[ Upstream commit b2a9a6a26b7e954297e51822e396572026480bad ]
 
-zfree() requires an address otherwise it frees what's in name, rather
-than name itself. Pass the address of name to fix it.
+This fixes the following issue:
+ERROR: modpost: "aes_expandkey" [drivers/staging/rtl8723bs/r8723bs.ko]
+undefined!
+ERROR: modpost: "aes_encrypt" [drivers/staging/rtl8723bs/r8723bs.ko]
+undefined!
 
-This was the only incorrect occurrence in Perf found using a search.
-
-Fixes: 8db5cabcf1b6 ("perf stat: Fork and launch 'perf record' when 'perf stat' needs to get retire latency value for a metric.")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250319101614.190922-1-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 7d40753d8820 ("staging: rtl8723bs: use in-kernel aes encryption in OMAC1 routines")
+Fixes: 3d3a170f6d80 ("staging: rtl8723bs: use in-kernel aes encryption")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/tencent_0BDDF3A721708D16A2E7C3DAFF0FEC79A105@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-tpebs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/intel-tpebs.c b/tools/perf/util/intel-tpebs.c
-index 50a3c3e071606..2c421b475b3b8 100644
---- a/tools/perf/util/intel-tpebs.c
-+++ b/tools/perf/util/intel-tpebs.c
-@@ -254,7 +254,7 @@ int tpebs_start(struct evlist *evsel_list)
- 		new = zalloc(sizeof(*new));
- 		if (!new) {
- 			ret = -1;
--			zfree(name);
-+			zfree(&name);
- 			goto err;
- 		}
- 		new->name = name;
+diff --git a/drivers/staging/rtl8723bs/Kconfig b/drivers/staging/rtl8723bs/Kconfig
+index 8d48c61961a6b..353e6ee2c1450 100644
+--- a/drivers/staging/rtl8723bs/Kconfig
++++ b/drivers/staging/rtl8723bs/Kconfig
+@@ -4,6 +4,7 @@ config RTL8723BS
+ 	depends on WLAN && MMC && CFG80211
+ 	depends on m
+ 	select CRYPTO
++	select CRYPTO_LIB_AES
+ 	select CRYPTO_LIB_ARC4
+ 	help
+ 	This option enables support for RTL8723BS SDIO drivers, such as
 -- 
 2.39.5
 
