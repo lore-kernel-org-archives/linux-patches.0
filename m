@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEAB26A0B0;
-	Tue,  8 Apr 2025 11:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3B267B77;
+	Tue,  8 Apr 2025 11:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110127; cv=none; b=qXFUx2j8mEZEAQQvb2oa/wPPWVl/I0K8mZGNKPOfr99rWn2qLEvwc41xtbfJ4m9F0Z6Wu+NfVmScBxronxA+vGHctQ5QUmGRYHZB+YeEalvvojn7vQmp3xdtA7IuGtIilK7yB9EG41/nfThSKeGNys3u9N34ONYxmEuoxNkL0JQ=
+	t=1744110129; cv=none; b=JxWeKKgC2AI+RNs2fBYoAwozX/tevPCichFJAl/KqBM4vPfMPFf2wP6XN7ZhROgC+UNa6FM1rtm7pUr/mMuOaqumJXKSwUdFH8CJmIcQVlxpNV63xFdmBBhQ2nz1LBqT/Obe/H2yqt0dkKxIGKBfDQEb8lv/TM0JkA+A84hVX+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110127; c=relaxed/simple;
-	bh=p2oLZ+rKFl48JIRVQrhK9pWjsiIxlHt9Gs6UdEnsTGA=;
+	s=arc-20240116; t=1744110129; c=relaxed/simple;
+	bh=THGL5TH1+0l0u+zn7OBkVawpB7KIOyZ3HS4SL065FP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckNGIoW9wqS+H9HlcQePTJHv2b1hz7C9zGULPxuQkK8T+5rZM2o9YlHU2/tS9XP3Tg38mCZebCdziYUzt2TtqcxJ2Df6oU7iWqFoDjEHaq1X4Dy+iD4w8pbyrxOJE7fM5Z1+eUptesrwjPvj9wppkDutKArS0RhGOMTavpUKJd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzfNyz5e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g46KecmU4FeP5SgdAbERIyebyCZRgTPlbFvTA+WYTrV8ynRXOVk01l6aFDVaKZwOpx96M3b29VsWns5Gz3DGVCFkILMWUbokoqPgCRXJxn9LzM9uiDvszYTmxWK4VJuw59O++uX4FHJoMznoCN07pXll2WyeEOcCnHTXVznFFMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCDqZI0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzfNyz5e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C64EC4CEE5;
-	Tue,  8 Apr 2025 11:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCDqZI0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B725FC4CEEA;
+	Tue,  8 Apr 2025 11:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110126;
-	bh=p2oLZ+rKFl48JIRVQrhK9pWjsiIxlHt9Gs6UdEnsTGA=;
+	s=korg; t=1744110129;
+	bh=THGL5TH1+0l0u+zn7OBkVawpB7KIOyZ3HS4SL065FP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzfNyz5esdcr1wqDo8tnjqvOKlkTB0kneTwC0wv6HqfMkVpqz1Qx7EROm3BE+aqND
-	 ofq7MD+A/tLw0b3hnMkJpGv7ZyHU4SAh3FJTssTUcIXAOTV1givzqwlQxzcN+B74PN
-	 YJCTkZaCRACXIv/B+2A7SQ24B4a+6aNJfbWJCTXo=
+	b=dCDqZI0UFIFL4jJrcCoax3kqEHR1kMHzC2kXaDbz9c5X7LL+2Hrgyc0vn5B2doGBb
+	 YBywWXwZqRT+z2HNI1IZ4kWgYEvHtV1zY4Zt/YodfGMw/ASmQrA5OHS5REaz7Nv9an
+	 7R3qNixwXfHXu+Kd3XvYemN7B/yBvYQguIJWtYNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Gherdovich <ggherdovich@suse.cz>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/227] ACPI: processor: idle: Return an error if both P_LVL{2,3} idle states are invalid
-Date: Tue,  8 Apr 2025 12:49:16 +0200
-Message-ID: <20250408104825.655545706@linuxfoundation.org>
+Subject: [PATCH 5.10 179/227] octeontx2-af: Fix mbox INTR handler when num VFs > 64
+Date: Tue,  8 Apr 2025 12:49:17 +0200
+Message-ID: <20250408104825.684154129@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,55 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Gherdovich <ggherdovich@suse.cz>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 9e9b893404d43894d69a18dd2fc8fcf1c36abb7e ]
+[ Upstream commit 0fdba88a211508984eb5df62008c29688692b134 ]
 
-Prior to commit 496121c02127 ("ACPI: processor: idle: Allow probing on
-platforms with one ACPI C-state"), the acpi_idle driver wouldn't load on
-systems without a valid C-State at least as deep as C2.
+When number of RVU VFs > 64, the vfs value passed to "rvu_queue_work"
+function is incorrect. Due to which mbox workqueue entries for
+VFs 0 to 63 never gets added to workqueue.
 
-The behavior was desirable for guests on hypervisors such as VMWare
-ESXi, which by default don't have the _CST ACPI method, and set the C2
-and C3 latencies to 101 and 1001 microseconds respectively via the FADT,
-to signify they're unsupported.
-
-Since the above change though, these virtualized deployments end up
-loading acpi_idle, and thus entering the default C1 C-State set by
-acpi_processor_get_power_info_default(); this is undesirable for a
-system that's communicating to the OS it doesn't want C-States (missing
-_CST, and invalid C2/C3 in FADT).
-
-Make acpi_processor_get_power_info_fadt() return -ENODEV in that case,
-so that acpi_processor_get_cstate_info() exits early and doesn't set
-pr->flags.power = 1.
-
-Fixes: 496121c02127 ("ACPI: processor: idle: Allow probing on platforms with one ACPI C-state")
-Signed-off-by: Giovanni Gherdovich <ggherdovich@suse.cz>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20250328143040.9348-1-ggherdovich@suse.cz
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9bdc47a6e328 ("octeontx2-af: Mbox communication support btw AF and it's VFs")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250327091441.1284-1-gakula@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index ae07927910ca0..42c7bdb352d20 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -270,6 +270,10 @@ static int acpi_processor_get_power_info_fadt(struct acpi_processor *pr)
- 			 ACPI_CX_DESC_LEN, "ACPI P_LVL3 IOPORT 0x%x",
- 			 pr->power.states[ACPI_STATE_C3].address);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 78309821ce298..f8e86f2535635 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -2056,7 +2056,7 @@ static irqreturn_t rvu_mbox_intr_handler(int irq, void *rvu_irq)
+ 		rvupf_write64(rvu, RVU_PF_VFPF_MBOX_INTX(1), intr);
  
-+	if (!pr->power.states[ACPI_STATE_C2].address &&
-+	    !pr->power.states[ACPI_STATE_C3].address)
-+		return -ENODEV;
-+
- 	return 0;
- }
+ 		rvu_queue_work(&rvu->afvf_wq_info, 64, vfs, intr);
+-		vfs -= 64;
++		vfs = 64;
+ 	}
  
+ 	intr = rvupf_read64(rvu, RVU_PF_VFPF_MBOX_INTX(0));
 -- 
 2.39.5
 
