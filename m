@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287C622257E;
-	Tue,  8 Apr 2025 11:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71402641CC;
+	Tue,  8 Apr 2025 11:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113295; cv=none; b=BTt1vsmItwdQNRTB9vN6uRbZvYT3FGCjMHFM2LE+fl0tGW2EkER7NprEVI0ebVDIv3I8624U3Q5yqqhMQzZnhqXG8GnNv6yiOM3kjDMVgQ+UdTINtNXFgTuOiA5J3bzoWX6X1Bvg3oGU+ikgPbWoX7ZcRprA7P4Jk5OdXRLVrE0=
+	t=1744113297; cv=none; b=FGi8/wtYLcaeBmd0uUaAKsOYUVIRGmEZCMx3Xmy7VxFzsnHbOe0mjZJNS8wxlzlJPj/uiKHHcL87svVUhFaNPLZFXNT2KP39oDm9kT3rqZQ5Bhg59Pxn+Twufii0SWic8xLrN5445sTOLnn5HGqV2xTXDuXgLtcyqAEAI/quUH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113295; c=relaxed/simple;
-	bh=qgHy8JCKEv27O1G5FIy+4GUZR6Gl3aY64H2/H3RA5IA=;
+	s=arc-20240116; t=1744113297; c=relaxed/simple;
+	bh=TsPl/zdeJQxGgpmhiFYjnKbNtOdm6nZvyle0jbI3g0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ph4d0FBJp1QReAaWcFEMRote4hNSKWD4Ni4AiNS1iFRDrloV6ela180N6eKuwJDS6wLnhgbLGuTtlJ++Eer0/5Wibl5h1sOJMroIkOm7sjqDpy7TrHQGyKh/P/kMlKazpfBriG1ol8bzNfUMJNLMzSdsDj3REJ3Fzp5BxSQCY7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sims8fRw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQpZB1F8GYv9tmkf7NXdyYdYI90W+bn7iOyn/hmjCkG+YJDw9FIxoZI2IGGKbpF/aRTZX9G+n9wOyBYk6QZoOw8UJgd6/Y4Cw5jKBb36WUT0E7l04cadDGDYsSTRL7QqjXlz1NIwgyXkmhBYxYeYia3YoLoX3IFTv/C9SExC5+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEC/3V90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sims8fRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEBBC4CEE5;
-	Tue,  8 Apr 2025 11:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEC/3V90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E21C4CEE5;
+	Tue,  8 Apr 2025 11:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113295;
-	bh=qgHy8JCKEv27O1G5FIy+4GUZR6Gl3aY64H2/H3RA5IA=;
+	s=korg; t=1744113297;
+	bh=TsPl/zdeJQxGgpmhiFYjnKbNtOdm6nZvyle0jbI3g0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sims8fRw7Ley4N1ysLwInYv7Mqf3nxfoPQn7lLkCa96YC3UL7xhx/VWt9R+X2Trit
-	 cOz5KnWQcCLCwV6UYjXbKMN2cybG/2xJoyqW8I22cNgI0HR09d/MLSbkDh2BzweE5i
-	 /6fMP7HLd/qSSCaqI7k5cXomokGsjTjWi8Stjijs=
+	b=OEC/3V90/EhuDAnzMXulQbE2P/P9x/HlucXoIQyS2H9G/J7pcbT32dY2NymiI2U0r
+	 6GpukHX7qaENcoc+KZzcYMr21+L/k3Wmfqtvz8P/2J8ciWM4e0zM3Wtp/clPB57psS
+	 q6nVqes4QgsDjdWlp/jgmy+/2KMXAok2djU5i5Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Viktor Malik <vmalik@redhat.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/268] selftests/bpf: Fix string read in strncmp benchmark
-Date: Tue,  8 Apr 2025 12:48:00 +0200
-Message-ID: <20250408104830.357877504@linuxfoundation.org>
+Subject: [PATCH 6.6 105/268] soundwire: slave: fix an OF node reference leak in soundwire slave device
+Date: Tue,  8 Apr 2025 12:48:36 +0200
+Message-ID: <20250408104831.326664432@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -47,84 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit de07b182899227d5fd1ca7a1a7d495ecd453d49c ]
+[ Upstream commit aac2f8363f773ae1f65aab140e06e2084ac6b787 ]
 
-The strncmp benchmark uses the bpf_strncmp helper and a hand-written
-loop to compare two strings. The values of the strings are filled from
-userspace. One of the strings is non-const (in .bss) while the other is
-const (in .rodata) since that is the requirement of bpf_strncmp.
+When initializing a soundwire slave device, an OF node is stored to the
+device with refcount incremented. However, the refcount is not
+decremented in .release(), thus call of_node_put() in
+sdw_slave_release().
 
-The problem is that in the hand-written loop, Clang optimizes the reads
-from the const string to always return 0 which breaks the benchmark.
-
-Use barrier_var to prevent the optimization.
-
-The effect can be seen on the strncmp-no-helper variant.
-
-Before this change:
-
-    # ./bench strncmp-no-helper
-    Setting up benchmark 'strncmp-no-helper'...
-    Benchmark 'strncmp-no-helper' started.
-    Iter   0 (112.309us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   1 (-23.238us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   2 ( 58.994us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   3 (-30.466us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   4 ( 29.996us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   5 ( 16.949us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Iter   6 (-60.035us): hits    0.000M/s (  0.000M/prod), drops    0.000M/s, total operations    0.000M/s
-    Summary: hits    0.000 ± 0.000M/s (  0.000M/prod), drops    0.000 ± 0.000M/s, total operations    0.000 ± 0.000M/s
-
-After this change:
-
-    # ./bench strncmp-no-helper
-    Setting up benchmark 'strncmp-no-helper'...
-    Benchmark 'strncmp-no-helper' started.
-    Iter   0 ( 77.711us): hits    5.534M/s (  5.534M/prod), drops    0.000M/s, total operations    5.534M/s
-    Iter   1 ( 11.215us): hits    6.006M/s (  6.006M/prod), drops    0.000M/s, total operations    6.006M/s
-    Iter   2 (-14.253us): hits    5.931M/s (  5.931M/prod), drops    0.000M/s, total operations    5.931M/s
-    Iter   3 ( 59.087us): hits    6.005M/s (  6.005M/prod), drops    0.000M/s, total operations    6.005M/s
-    Iter   4 (-21.379us): hits    6.010M/s (  6.010M/prod), drops    0.000M/s, total operations    6.010M/s
-    Iter   5 (-20.310us): hits    5.861M/s (  5.861M/prod), drops    0.000M/s, total operations    5.861M/s
-    Iter   6 ( 53.937us): hits    6.004M/s (  6.004M/prod), drops    0.000M/s, total operations    6.004M/s
-    Summary: hits    5.969 ± 0.061M/s (  5.969M/prod), drops    0.000 ± 0.000M/s, total operations    5.969 ± 0.061M/s
-
-Fixes: 9c42652f8be3 ("selftests/bpf: Add benchmark for bpf_strncmp() helper")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/bpf/20250313122852.1365202-1-vmalik@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a2e484585ad3 ("soundwire: core: add device tree support for slave devices")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20241205034844.2784964-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/strncmp_bench.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soundwire/slave.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/progs/strncmp_bench.c b/tools/testing/selftests/bpf/progs/strncmp_bench.c
-index 18373a7df76e6..f47bf88f8d2a7 100644
---- a/tools/testing/selftests/bpf/progs/strncmp_bench.c
-+++ b/tools/testing/selftests/bpf/progs/strncmp_bench.c
-@@ -35,7 +35,10 @@ static __always_inline int local_strncmp(const char *s1, unsigned int sz,
- SEC("tp/syscalls/sys_enter_getpgid")
- int strncmp_no_helper(void *ctx)
+diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
+index 060c2982e26b0..0aadfc2010287 100644
+--- a/drivers/soundwire/slave.c
++++ b/drivers/soundwire/slave.c
+@@ -12,6 +12,7 @@ static void sdw_slave_release(struct device *dev)
  {
--	if (local_strncmp(str, cmp_str_len + 1, target) < 0)
-+	const char *target_str = target;
-+
-+	barrier_var(target_str);
-+	if (local_strncmp(str, cmp_str_len + 1, target_str) < 0)
- 		__sync_add_and_fetch(&hits, 1);
- 	return 0;
+ 	struct sdw_slave *slave = dev_to_sdw_dev(dev);
+ 
++	of_node_put(slave->dev.of_node);
+ 	mutex_destroy(&slave->sdw_dev_lock);
+ 	kfree(slave);
  }
 -- 
 2.39.5
