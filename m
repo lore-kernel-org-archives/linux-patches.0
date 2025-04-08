@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF4D268FD0;
-	Tue,  8 Apr 2025 12:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EC926F443;
+	Tue,  8 Apr 2025 12:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114665; cv=none; b=b1v1uZOCRACBQvrZ4Ty6gYmn30ytz2lHr/FQB4t4SWBWXPWE++soXcW5QxMf5zd8pUej3LYjeQf0PUFD3ckCDd7cwpskCmJOJXSIIgXyMMH+u6tCvMXufPZyaobXCCuQbnSGnWFuhzZZH7bI1vXNvQWsoTYbyeZh9C+6824U2O0=
+	t=1744114669; cv=none; b=Yey+Nwll9Fb03hcI0H3uefQe76RmBc2doKNjqPQEpnnbsoN6yOPrSftkkx/yxWfCTv8S6NGMP4UPBDYZ8fKYOrUilOY8H5gQKOaejIyzv/7IE6TxwIayAcwO1dKa2ccya65MNh7KKdSSMpprWYsjpKxtyxPYuD67B4pJZ6l2T3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114665; c=relaxed/simple;
-	bh=uYxTZEkdaHJVIUf0UaR8nLpg6uTRqmMj41DhwXVsd2g=;
+	s=arc-20240116; t=1744114669; c=relaxed/simple;
+	bh=lk/PlWermvrU1ATLDZM7euW0Pj+9mSOswdTFNFzfv2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5sYm2cpdiuytPpNdo/cTghVv1Q/egbzJlUeHXrcXL4Eb6EVn5lWX22ZuvrRrchvGQIY+8FHIVmqABaobh9IDcnxfHJiHC4sQKMa2l+FyV3oHI3RaJU7FCEFat4P0lYc9ihxEzs5W3TCARkW4OGOdkuImh0aAZym5MD5AKB6ZyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkgaVpoc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpXfUbDIF22IjaRP4y11eJowyCoce6mzO0/uOVvpT90Pb2VLvnjSLRsQpS/T2xhLJgtVfuXbHB3YsSNqzDMUGK2lf7Htq6WoeD/PwV3Vsq6j83YKJ2HT30gfkS6/pGw8mIDf5aZ44ewIkx3Qv7TY/GHutA/P9sTGgRprHyU8sVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZI+i0Qq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkgaVpoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96F8C4AF0B;
-	Tue,  8 Apr 2025 12:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZI+i0Qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78D1C4CEF2;
+	Tue,  8 Apr 2025 12:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114665;
-	bh=uYxTZEkdaHJVIUf0UaR8nLpg6uTRqmMj41DhwXVsd2g=;
+	s=korg; t=1744114668;
+	bh=lk/PlWermvrU1ATLDZM7euW0Pj+9mSOswdTFNFzfv2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkgaVpocZO4N9ABzhVOmvF9+qp522q7HGDZPuGuoK+bKGQaLF2hAuChRvy+WXJzeX
-	 vwmKYqM2UQdGMOMzdwK/QDuItk5zrphiiS0x9gsXM+1c3FxA3Fo51euLmmXDW9w7H9
-	 CHvHMBdimAALAlqFF23V/l1tvuwHapbj8G2vWpm4=
+	b=XZI+i0QqEc9E3jRj8on5KUw+xqcaFhgZOCzXJywdD2fq5MlQQIycLbsElkCy+tZBB
+	 AE+Zeuo54dTNeoXQRkHo5UaOxM4gYFHCz33v1YPdhe6fa56KUmUVIMvH9ebXg5p08f
+	 shgX4+oU0W8ig63OfYT0RQvNhHa+fauMLfJulVo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 190/499] mfd: sm501: Switch to BIT() to mitigate integer overflows
-Date: Tue,  8 Apr 2025 12:46:42 +0200
-Message-ID: <20250408104855.918842193@linuxfoundation.org>
+Subject: [PATCH 6.13 191/499] leds: Fix LED_OFF brightness race
+Date: Tue,  8 Apr 2025 12:46:43 +0200
+Message-ID: <20250408104855.945470618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,61 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
+[ Upstream commit 2c70953b6f535f7698ccbf22c1f5ba26cb6c2816 ]
 
-If offset end up being high enough, right hand expression in functions
-like sm501_gpio_set() shifted left for that number of bits, may
-not fit in int type.
+While commit fa15d8c69238 ("leds: Fix set_brightness_delayed() race")
+successfully forces led_set_brightness() to be called with LED_OFF at
+least once when switching from blinking to LED on state so that
+hw-blinking can be disabled, another race remains. Indeed in
+led_set_brightness(LED_OFF) followed by led_set_brightness(any)
+scenario the following CPU scheduling can happen:
 
-Just in case, fix that by using BIT() both as an option safe from
-overflow issues and to make this step look similar to other gpio
-drivers.
+    CPU0                                     CPU1
+    ----                                     ----
+ set_brightness_delayed() {
+   test_and_clear_bit(BRIGHTNESS_OFF)
+                                         led_set_brightness(LED_OFF) {
+                                           set_bit(BRIGHTNESS_OFF)
+					   queue_work()
+                                         }
+                                         led_set_brightness(any) {
+                                           set_bit(BRIGHTNESS)
+					   queue_work() //already queued
+                                         }
+   test_and_clear_bit(BRIGHTNESS)
+     /* LED set with brightness any */
+ }
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+ /* From previous CPU1 queue_work() */
+ set_brightness_delayed() {
+   test_and_clear_bit(BRIGHTNESS_OFF)
+     /* LED turned off */
+   test_and_clear_bit(BRIGHTNESS)
+     /* Clear from previous run, LED remains off */
 
-Fixes: f61be273d369 ("sm501: add gpiolib support")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
+In that case the led_set_brightness(LED_OFF)/led_set_brightness(any)
+sequence will be effectively executed in reverse order and LED will
+remain off.
+
+With the introduction of commit 32360bf6a5d4 ("leds: Introduce ordered
+workqueue for LEDs events instead of system_wq") the race is easier to
+trigger as sysfs brightness configuration does not wait for
+set_brightness_delayed() work to finish (flush_work() removal).
+
+Use delayed_set_value to optionnally re-configure brightness after a
+LED_OFF. That way a LED state could be configured more that once but
+final state will always be as expected. Ensure that delayed_set_value
+modification is seen before set_bit() using smp_mb__before_atomic().
+
+Fixes: fa15d8c69238 ("leds: Fix set_brightness_delayed() race")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/19c81177059dab7b656c42063958011a8e4d1a66.1740050412.git.repk@triplefau.lt
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/sm501.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/leds/led-core.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
-index 0469e85d72cff..7ee293b09f628 100644
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
-@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
- 	void __iomem *regs = smchip->regbase;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	unsigned long save;
- 	unsigned long ddr;
+diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
+index f6c46d2e5276b..e3d8ddcff5670 100644
+--- a/drivers/leds/led-core.c
++++ b/drivers/leds/led-core.c
+@@ -159,8 +159,19 @@ static void set_brightness_delayed(struct work_struct *ws)
+ 	 * before this work item runs once. To make sure this works properly
+ 	 * handle LED_SET_BRIGHTNESS_OFF first.
+ 	 */
+-	if (test_and_clear_bit(LED_SET_BRIGHTNESS_OFF, &led_cdev->work_flags))
++	if (test_and_clear_bit(LED_SET_BRIGHTNESS_OFF, &led_cdev->work_flags)) {
+ 		set_brightness_delayed_set_brightness(led_cdev, LED_OFF);
++		/*
++		 * The consecutives led_set_brightness(LED_OFF),
++		 * led_set_brightness(LED_FULL) could have been executed out of
++		 * order (LED_FULL first), if the work_flags has been set
++		 * between LED_SET_BRIGHTNESS_OFF and LED_SET_BRIGHTNESS of this
++		 * work. To avoid ending with the LED turned off, turn the LED
++		 * on again.
++		 */
++		if (led_cdev->delayed_set_value != LED_OFF)
++			set_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags);
++	}
  
-@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
+ 	if (test_and_clear_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags))
+ 		set_brightness_delayed_set_brightness(led_cdev, led_cdev->delayed_set_value);
+@@ -331,10 +342,13 @@ void led_set_brightness_nopm(struct led_classdev *led_cdev, unsigned int value)
+ 	 * change is done immediately afterwards (before the work runs),
+ 	 * it uses a separate work_flag.
+ 	 */
+-	if (value) {
+-		led_cdev->delayed_set_value = value;
++	led_cdev->delayed_set_value = value;
++	/* Ensure delayed_set_value is seen before work_flags modification */
++	smp_mb__before_atomic();
++
++	if (value)
+ 		set_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags);
+-	} else {
++	else {
+ 		clear_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags);
+ 		clear_bit(LED_SET_BLINK, &led_cdev->work_flags);
+ 		set_bit(LED_SET_BRIGHTNESS_OFF, &led_cdev->work_flags);
 -- 
 2.39.5
 
