@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AC0227EBD;
-	Tue,  8 Apr 2025 11:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E65135973;
+	Tue,  8 Apr 2025 11:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112213; cv=none; b=d08hgyuBI1MIL4hpvtivk6WBuOgsx2eCsfeABmSrDWqrhi+BuTdfyP8psZJRehNRXle+8R0umXyNt+9l95V7WIXzO9ccD+HA6ZQT77mnpOzVUzbQbpD8PRnzPsX1H7PleW0eqm45A7U9kRNfxYsF8vMBAuRGu3v9Off4ViIXYNU=
+	t=1744112216; cv=none; b=OOIXQPenMfax4E0KIFfWdUXc8QLOUTRTg+d5ag7HK6KqRLYRQ3YAl1LPNeqJMBxGY32QZuadKiXl5DiH0Xbypo9o/0Op13ODxsK+2ujPvybviCAYm382jeFmgjh7zhG87G7dxn3bj2X/urLy0aKG/WdDEKlvz8PNjVy26hIpfI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112213; c=relaxed/simple;
-	bh=a4nIaeQ8Kep0mS7vPnZwwVXXqEzQAGQd1UMxO9adHJ8=;
+	s=arc-20240116; t=1744112216; c=relaxed/simple;
+	bh=zyxuP9lwY9UnwfkY5Yt0QiiadPQQxpchsmY4OJqlTiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czDz+TYa5rR1R/fAxUqeK4B5xbtOD17AnmIJIoWAs58r51NptHrKEOUP38wQSgIndFk/UQPgqkhVQ/O4K5aVaM3K2NWvXnwwvHODM6kwc8t32+3smBl7ufdvPmMgGOaBQ3PfkUJDFQ8v7gPvoY7/ehLPd6fQYOURGQVkSZEjOIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGrnsQYf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3nSCzolmnrivwm+YQUyL5QRGr0NpaP/i4/WkPCMLVEY+E/5YVMx/G0piiZ2nK0krVZAKpYYnGyT+wCvf4JtpQF+Zjj7pe9GmX9kUfvZFgXv7TnGG/J+lW2Zeb0eye7zriOiVKPzkS+YOEOfkWDUUXlkpaztxkUshkCUa2d5n8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtfvRx4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGrnsQYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C416C4CEE5;
-	Tue,  8 Apr 2025 11:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtfvRx4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3263C4CEE5;
+	Tue,  8 Apr 2025 11:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112213;
-	bh=a4nIaeQ8Kep0mS7vPnZwwVXXqEzQAGQd1UMxO9adHJ8=;
+	s=korg; t=1744112216;
+	bh=zyxuP9lwY9UnwfkY5Yt0QiiadPQQxpchsmY4OJqlTiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGrnsQYf5ogwz1GujJsQJxdaTEvUArtWhfWSiHy6U0a/vCrZx77d0giFxuR81SaQC
-	 Aj7FnpmwXgCgPnYaoudbtliGCyqxcGSaNHwu8yfatd+Cv3ewGBfYhoUxfWYHFc17Du
-	 uhEDKXzty9iSjfTMv8w/6VgxSeWAjcKAdn5cr9+4=
+	b=TtfvRx4zv2c3j6vdT5a9iLQm+j1vk/KESvoDkv8uXEXhXvCbXgBfyh9inIwXpztfO
+	 znylo1S6PWY+8m+iQGbZICnbe0PB35CZWX0oIZuHdKFB0Ax2XO7gM2vBu9aXGojTSs
+	 8LU3XakxelmuRBcbJ4nSkauNeezMBLUH2uG55o9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Kees Cook <kees@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Andy Lutomirski <luto@kernel.org>
-Subject: [PATCH 6.14 680/731] uprobes/x86: Harden uretprobe syscall trampoline check
-Date: Tue,  8 Apr 2025 12:49:37 +0200
-Message-ID: <20250408104930.084971030@linuxfoundation.org>
+	Jakub Acs <acsjakub@amazon.de>,
+	Theodore Tso <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	linux-ext4@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mahmoud Adam <mngyadam@amazon.com>,
+	security@kernel.org
+Subject: [PATCH 6.14 716/731] ext4: fix OOB read when checking dotdot dir
+Date: Tue,  8 Apr 2025 12:50:13 +0200
+Message-ID: <20250408104930.928950471@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -57,92 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Acs, Jakub <acsjakub@amazon.de>
 
-commit fa6192adc32f4fdfe5b74edd5b210e12afd6ecc0 upstream.
+commit d5e206778e96e8667d3bde695ad372c296dc9353 upstream.
 
-Jann reported a possible issue when trampoline_check_ip returns
-address near the bottom of the address space that is allowed to
-call into the syscall if uretprobes are not set up:
+Mounting a corrupted filesystem with directory which contains '.' dir
+entry with rec_len == block size results in out-of-bounds read (later
+on, when the corrupted directory is removed).
 
-   https://lore.kernel.org/bpf/202502081235.5A6F352985@keescook/T/#m9d416df341b8fbc11737dacbcd29f0054413cbbf
+ext4_empty_dir() assumes every ext4 directory contains at least '.'
+and '..' as directory entries in the first data block. It first loads
+the '.' dir entry, performs sanity checks by calling ext4_check_dir_entry()
+and then uses its rec_len member to compute the location of '..' dir
+entry (in ext4_next_entry). It assumes the '..' dir entry fits into the
+same data block.
 
-Though the mmap minimum address restrictions will typically prevent
-creating mappings there, let's make sure uretprobe syscall checks
-for that.
+If the rec_len of '.' is precisely one block (4KB), it slips through the
+sanity checks (it is considered the last directory entry in the data
+block) and leaves "struct ext4_dir_entry_2 *de" point exactly past the
+memory slot allocated to the data block. The following call to
+ext4_check_dir_entry() on new value of de then dereferences this pointer
+which results in out-of-bounds mem access.
 
-Fixes: ff474a78cef5 ("uprobe: Add uretprobe syscall to speed up return probe")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: Andy Lutomirski <luto@kernel.org>
+Fix this by extending __ext4_check_dir_entry() to check for '.' dir
+entries that reach the end of data block. Make sure to ignore the phony
+dir entries for checksum (by checking name_len for non-zero).
+
+Note: This is reported by KASAN as use-after-free in case another
+structure was recently freed from the slot past the bound, but it is
+really an OOB read.
+
+This issue was found by syzkaller tool.
+
+Call Trace:
+[   38.594108] BUG: KASAN: slab-use-after-free in __ext4_check_dir_entry+0x67e/0x710
+[   38.594649] Read of size 2 at addr ffff88802b41a004 by task syz-executor/5375
+[   38.595158]
+[   38.595288] CPU: 0 UID: 0 PID: 5375 Comm: syz-executor Not tainted 6.14.0-rc7 #1
+[   38.595298] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   38.595304] Call Trace:
+[   38.595308]  <TASK>
+[   38.595311]  dump_stack_lvl+0xa7/0xd0
+[   38.595325]  print_address_description.constprop.0+0x2c/0x3f0
+[   38.595339]  ? __ext4_check_dir_entry+0x67e/0x710
+[   38.595349]  print_report+0xaa/0x250
+[   38.595359]  ? __ext4_check_dir_entry+0x67e/0x710
+[   38.595368]  ? kasan_addr_to_slab+0x9/0x90
+[   38.595378]  kasan_report+0xab/0xe0
+[   38.595389]  ? __ext4_check_dir_entry+0x67e/0x710
+[   38.595400]  __ext4_check_dir_entry+0x67e/0x710
+[   38.595410]  ext4_empty_dir+0x465/0x990
+[   38.595421]  ? __pfx_ext4_empty_dir+0x10/0x10
+[   38.595432]  ext4_rmdir.part.0+0x29a/0xd10
+[   38.595441]  ? __dquot_initialize+0x2a7/0xbf0
+[   38.595455]  ? __pfx_ext4_rmdir.part.0+0x10/0x10
+[   38.595464]  ? __pfx___dquot_initialize+0x10/0x10
+[   38.595478]  ? down_write+0xdb/0x140
+[   38.595487]  ? __pfx_down_write+0x10/0x10
+[   38.595497]  ext4_rmdir+0xee/0x140
+[   38.595506]  vfs_rmdir+0x209/0x670
+[   38.595517]  ? lookup_one_qstr_excl+0x3b/0x190
+[   38.595529]  do_rmdir+0x363/0x3c0
+[   38.595537]  ? __pfx_do_rmdir+0x10/0x10
+[   38.595544]  ? strncpy_from_user+0x1ff/0x2e0
+[   38.595561]  __x64_sys_unlinkat+0xf0/0x130
+[   38.595570]  do_syscall_64+0x5b/0x180
+[   38.595583]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: ac27a0ec112a0 ("[PATCH] ext4: initial copy of files from ext3")
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: linux-ext4@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Mahmoud Adam <mngyadam@amazon.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250212220433.3624297-1-jolsa@kernel.org
+Cc: security@kernel.org
+Link: https://patch.msgid.link/b3ae36a6794c4a01944c7d70b403db5b@amazon.de
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/uprobes.c |   14 +++++++++-----
- include/linux/uprobes.h   |    2 ++
- kernel/events/uprobes.c   |    2 +-
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ fs/ext4/dir.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -357,19 +357,23 @@ void *arch_uprobe_trampoline(unsigned lo
- 	return &insn;
- }
+--- a/fs/ext4/dir.c
++++ b/fs/ext4/dir.c
+@@ -104,6 +104,9 @@ int __ext4_check_dir_entry(const char *f
+ 	else if (unlikely(le32_to_cpu(de->inode) >
+ 			le32_to_cpu(EXT4_SB(dir->i_sb)->s_es->s_inodes_count)))
+ 		error_msg = "inode out of bounds";
++	else if (unlikely(next_offset == size && de->name_len == 1 &&
++			  de->name[0] == '.'))
++		error_msg = "'.' directory cannot be the last in data block";
+ 	else
+ 		return 0;
  
--static unsigned long trampoline_check_ip(void)
-+static unsigned long trampoline_check_ip(unsigned long tramp)
- {
--	unsigned long tramp = uprobe_get_trampoline_vaddr();
--
- 	return tramp + (uretprobe_syscall_check - uretprobe_trampoline_entry);
- }
- 
- SYSCALL_DEFINE0(uretprobe)
- {
- 	struct pt_regs *regs = task_pt_regs(current);
--	unsigned long err, ip, sp, r11_cx_ax[3];
-+	unsigned long err, ip, sp, r11_cx_ax[3], tramp;
-+
-+	/* If there's no trampoline, we are called from wrong place. */
-+	tramp = uprobe_get_trampoline_vaddr();
-+	if (unlikely(tramp == UPROBE_NO_TRAMPOLINE_VADDR))
-+		goto sigill;
- 
--	if (regs->ip != trampoline_check_ip())
-+	/* Make sure the ip matches the only allowed sys_uretprobe caller. */
-+	if (unlikely(regs->ip != trampoline_check_ip(tramp)))
- 		goto sigill;
- 
- 	err = copy_from_user(r11_cx_ax, (void __user *)regs->sp, sizeof(r11_cx_ax));
---- a/include/linux/uprobes.h
-+++ b/include/linux/uprobes.h
-@@ -39,6 +39,8 @@ struct page;
- 
- #define MAX_URETPROBE_DEPTH		64
- 
-+#define UPROBE_NO_TRAMPOLINE_VADDR	(~0UL)
-+
- struct uprobe_consumer {
- 	/*
- 	 * handler() can return UPROBE_HANDLER_REMOVE to signal the need to
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -2180,8 +2180,8 @@ void uprobe_copy_process(struct task_str
-  */
- unsigned long uprobe_get_trampoline_vaddr(void)
- {
-+	unsigned long trampoline_vaddr = UPROBE_NO_TRAMPOLINE_VADDR;
- 	struct xol_area *area;
--	unsigned long trampoline_vaddr = -1;
- 
- 	/* Pairs with xol_add_vma() smp_store_release() */
- 	area = READ_ONCE(current->mm->uprobes_state.xol_area); /* ^^^ */
 
 
