@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39EC2676CF;
-	Tue,  8 Apr 2025 12:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ECB26A0CF;
+	Tue,  8 Apr 2025 12:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115237; cv=none; b=XaoA92MA+1WQM2wcHAvNuibw3nhAQyK2rr45jcOfo3VDJ0N6XBpNlci62O+Qyg1wuz5K22Z3UW5D63yLkSKqn2+fmDEd1x28yMc0goh/EH+ZTg51mweKqfXwiJMx9Qm1HblIt2hzBcDSvg21pC5JNZbgjXnr30RJB8Ep0vKrxRc=
+	t=1744115240; cv=none; b=q0Mv1xDfkpzpiQdBV9VW9/3ZEzpHDaidxfp+1tKcacaBceBsoXhESMTXUgTVGW5p/tvUnclDA6FGQB6/KkG8XA0fvuGnCSbjy062YYVW3OHorBg4W4sdWOeJEifY2AOKyme7JTr+Wx8cItS7O/D42pn75ycU+MmIZLBmpcAdbco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115237; c=relaxed/simple;
-	bh=tRGyMxBAxDmj9YYBhnpDdZnvyi7jihiRsb+t69g3UkQ=;
+	s=arc-20240116; t=1744115240; c=relaxed/simple;
+	bh=AFAN788kI2hVxA0wHpR4/YbLCXBrbypBzxphoLxwjYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aplvheprMVhWeT90lfV6t+QuPx5GO1aE6KcfUfyLdOzNfDt/f+iWcsChi5PCsQjxU0Oe19hTPfTpDm3Z9zyVX76mh7rgmimBsv3WAa8uWo6X0ZgbIXft7NqulHSf9jGqtoMtpYK89UVrc3sUUtEyT2UnYXZIgj9pxg404TQ6Big=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HT0EA2JT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKwLbYAWHBbFNLglEw9RQZjL6+DYjydqj3AvipHIxnLpkhbBXdUyyc1LgY55m9kMrPhTPThHXblqGN3yhA7Bes2CjZBYqkpzFtrcXEAbENfu/NxB8IiNJtivSBzay+8Ro2VrRdMJ6eGn8DFAiOQjWmN1i0PgsUdQp3uHPSBRq7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCzvu7P7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HT0EA2JT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAE2C4CEE5;
-	Tue,  8 Apr 2025 12:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCzvu7P7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0C0C4CEE5;
+	Tue,  8 Apr 2025 12:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115237;
-	bh=tRGyMxBAxDmj9YYBhnpDdZnvyi7jihiRsb+t69g3UkQ=;
+	s=korg; t=1744115240;
+	bh=AFAN788kI2hVxA0wHpR4/YbLCXBrbypBzxphoLxwjYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HT0EA2JTfwWOJvE9+XsshDBVDk5Duh0gb7rb8wSjnMsqkqDdqObjarxzieWpo1qoH
-	 MmfRssJHfwUWyBZaQae5ZtCsYypEQEE+v5RDJdIxC/Hzxxo0BEgCOZ9nyYjXkOPtp7
-	 UmU5EvQlODqSWPl9NZVJdHAPDStxNq2mmGMED83I=
+	b=GCzvu7P734jSoEi3ea4lLDl2yUu6uEydrUByltlXul1J+tunM3j7OApusS5tExe1o
+	 RpSAeifIDOSWyX9bJO+9g2SgLDA10ZKbdziywnsMwp3/LKRX3FY9tG/uJbiO4KXWle
+	 9XPc9grFtNyiH/9qFI9rUhoAS05J9zsiTno/YWMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Oberhollenzer <david.oberhollenzer@sigma-star.at>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 400/499] net: dsa: mv88e6xxx: propperly shutdown PPU re-enable timer on destroy
-Date: Tue,  8 Apr 2025 12:50:12 +0200
-Message-ID: <20250408104901.200801302@linuxfoundation.org>
+Subject: [PATCH 6.13 401/499] net: fix geneve_opt length integer overflow
+Date: Tue,  8 Apr 2025 12:50:13 +0200
+Message-ID: <20250408104901.227731772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,123 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit a58d882841a0750da3c482cd3d82432b1c7edb77 ]
+[ Upstream commit b27055a08ad4b415dcf15b63034f9cb236f7fb40 ]
 
-The mv88e6xxx has an internal PPU that polls PHY state. If we want to
-access the internal PHYs, we need to disable the PPU first. Because
-that is a slow operation, a 10ms timer is used to re-enable it,
-canceled with every access, so bulk operations effectively only
-disable it once and re-enable it some 10ms after the last access.
+struct geneve_opt uses 5 bit length for each single option, which
+means every vary size option should be smaller than 128 bytes.
 
-If a PHY is accessed and then the mv88e6xxx module is removed before
-the 10ms are up, the PPU re-enable ends up accessing a dangling pointer.
+However, all current related Netlink policies cannot promise this
+length condition and the attacker can exploit a exact 128-byte size
+option to *fake* a zero length option and confuse the parsing logic,
+further achieve heap out-of-bounds read.
 
-This especially affects probing during bootup. The MDIO bus and PHY
-registration may succeed, but registration with the DSA framework
-may fail later on (e.g. because the CPU port depends on another,
-very slow device that isn't done probing yet, returning -EPROBE_DEFER).
-In this case, probe() fails, but the MDIO subsystem may already have
-accessed the MIDO bus or PHYs, arming the timer.
+One example crash log is like below:
 
-This is fixed as follows:
- - If probe fails after mv88e6xxx_phy_init(), make sure we also call
-   mv88e6xxx_phy_destroy() before returning
- - In mv88e6xxx_remove(), make sure we do the teardown in the correct
-   order, calling mv88e6xxx_phy_destroy() after unregistering the
-   switch device.
- - In mv88e6xxx_phy_destroy(), destroy both the timer and the work item
-   that the timer might schedule, synchronously waiting in case one of
-   the callbacks already fired and destroying the timer first, before
-   waiting for the work item.
- - Access to the PPU is guarded by a mutex, the worker acquires it
-   with a mutex_trylock(), not proceeding with the expensive shutdown
-   if that fails. We grab the mutex in mv88e6xxx_phy_destroy() to make
-   sure the slow PPU shutdown is already done or won't even enter, when
-   we wait for the work item.
+[    3.905425] ==================================================================
+[    3.905925] BUG: KASAN: slab-out-of-bounds in nla_put+0xa9/0xe0
+[    3.906255] Read of size 124 at addr ffff888005f291cc by task poc/177
+[    3.906646]
+[    3.906775] CPU: 0 PID: 177 Comm: poc-oob-read Not tainted 6.1.132 #1
+[    3.907131] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[    3.907784] Call Trace:
+[    3.907925]  <TASK>
+[    3.908048]  dump_stack_lvl+0x44/0x5c
+[    3.908258]  print_report+0x184/0x4be
+[    3.909151]  kasan_report+0xc5/0x100
+[    3.909539]  kasan_check_range+0xf3/0x1a0
+[    3.909794]  memcpy+0x1f/0x60
+[    3.909968]  nla_put+0xa9/0xe0
+[    3.910147]  tunnel_key_dump+0x945/0xba0
+[    3.911536]  tcf_action_dump_1+0x1c1/0x340
+[    3.912436]  tcf_action_dump+0x101/0x180
+[    3.912689]  tcf_exts_dump+0x164/0x1e0
+[    3.912905]  fw_dump+0x18b/0x2d0
+[    3.913483]  tcf_fill_node+0x2ee/0x460
+[    3.914778]  tfilter_notify+0xf4/0x180
+[    3.915208]  tc_new_tfilter+0xd51/0x10d0
+[    3.918615]  rtnetlink_rcv_msg+0x4a2/0x560
+[    3.919118]  netlink_rcv_skb+0xcd/0x200
+[    3.919787]  netlink_unicast+0x395/0x530
+[    3.921032]  netlink_sendmsg+0x3d0/0x6d0
+[    3.921987]  __sock_sendmsg+0x99/0xa0
+[    3.922220]  __sys_sendto+0x1b7/0x240
+[    3.922682]  __x64_sys_sendto+0x72/0x90
+[    3.922906]  do_syscall_64+0x5e/0x90
+[    3.923814]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[    3.924122] RIP: 0033:0x7e83eab84407
+[    3.924331] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
+[    3.925330] RSP: 002b:00007ffff505e370 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
+[    3.925752] RAX: ffffffffffffffda RBX: 00007e83eaafa740 RCX: 00007e83eab84407
+[    3.926173] RDX: 00000000000001a8 RSI: 00007ffff505e3c0 RDI: 0000000000000003
+[    3.926587] RBP: 00007ffff505f460 R08: 00007e83eace1000 R09: 000000000000000c
+[    3.926977] R10: 0000000000000000 R11: 0000000000000202 R12: 00007ffff505f3c0
+[    3.927367] R13: 00007ffff505f5c8 R14: 00007e83ead1b000 R15: 00005d4fbbe6dcb8
 
-Fixes: 2e5f032095ff ("dsa: add support for the Marvell 88E6131 switch chip")
-Signed-off-by: David Oberhollenzer <david.oberhollenzer@sigma-star.at>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20250401135705.92760-1-david.oberhollenzer@sigma-star.at
+Fix these issues by enforing correct length condition in related
+policies.
+
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Fixes: 4ece47787077 ("lwtunnel: add options setting and dumping for geneve")
+Fixes: 0ed5269f9e41 ("net/sched: add tunnel option support to act_tunnel_key")
+Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://patch.msgid.link/20250402165632.6958-1-linma@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 11 +++++++----
- drivers/net/dsa/mv88e6xxx/phy.c  |  3 +++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ net/ipv4/ip_tunnel_core.c  | 2 +-
+ net/netfilter/nft_tunnel.c | 2 +-
+ net/sched/act_tunnel_key.c | 2 +-
+ net/sched/cls_flower.c     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index d6e8398c07608..99279b7198765 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -7304,13 +7304,13 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 	err = mv88e6xxx_switch_reset(chip);
- 	mv88e6xxx_reg_unlock(chip);
- 	if (err)
--		goto out;
-+		goto out_phy;
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 364ea798511ea..f65d2f7273813 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -451,7 +451,7 @@ static const struct nla_policy
+ geneve_opt_policy[LWTUNNEL_IP_OPT_GENEVE_MAX + 1] = {
+ 	[LWTUNNEL_IP_OPT_GENEVE_CLASS]	= { .type = NLA_U16 },
+ 	[LWTUNNEL_IP_OPT_GENEVE_TYPE]	= { .type = NLA_U8 },
+-	[LWTUNNEL_IP_OPT_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 128 },
++	[LWTUNNEL_IP_OPT_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 127 },
+ };
  
- 	if (np) {
- 		chip->irq = of_irq_get(np, 0);
- 		if (chip->irq == -EPROBE_DEFER) {
- 			err = chip->irq;
--			goto out;
-+			goto out_phy;
- 		}
- 	}
+ static const struct nla_policy
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index 2e40f575aed9f..0c63d1367cf7a 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -335,7 +335,7 @@ static int nft_tunnel_obj_erspan_init(const struct nlattr *attr,
+ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GENEVE_MAX + 1] = {
+ 	[NFTA_TUNNEL_KEY_GENEVE_CLASS]	= { .type = NLA_U16 },
+ 	[NFTA_TUNNEL_KEY_GENEVE_TYPE]	= { .type = NLA_U8 },
+-	[NFTA_TUNNEL_KEY_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 128 },
++	[NFTA_TUNNEL_KEY_GENEVE_DATA]	= { .type = NLA_BINARY, .len = 127 },
+ };
  
-@@ -7329,7 +7329,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 	mv88e6xxx_reg_unlock(chip);
+ static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index af7c998459488..e296714803dc0 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -68,7 +68,7 @@ geneve_opt_policy[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_MAX + 1] = {
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_CLASS]	   = { .type = NLA_U16 },
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_TYPE]	   = { .type = NLA_U8 },
+ 	[TCA_TUNNEL_KEY_ENC_OPT_GENEVE_DATA]	   = { .type = NLA_BINARY,
+-						       .len = 128 },
++						       .len = 127 },
+ };
  
- 	if (err)
--		goto out;
-+		goto out_phy;
+ static const struct nla_policy
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 03505673d5234..099ff6a3e1f51 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -766,7 +766,7 @@ geneve_opt_policy[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1] = {
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_CLASS]      = { .type = NLA_U16 },
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_TYPE]       = { .type = NLA_U8 },
+ 	[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]       = { .type = NLA_BINARY,
+-						       .len = 128 },
++						       .len = 127 },
+ };
  
- 	if (chip->info->g2_irqs > 0) {
- 		err = mv88e6xxx_g2_irq_setup(chip);
-@@ -7363,6 +7363,8 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 		mv88e6xxx_g1_irq_free(chip);
- 	else
- 		mv88e6xxx_irq_poll_free(chip);
-+out_phy:
-+	mv88e6xxx_phy_destroy(chip);
- out:
- 	if (pdata)
- 		dev_put(pdata->netdev);
-@@ -7385,7 +7387,6 @@ static void mv88e6xxx_remove(struct mdio_device *mdiodev)
- 		mv88e6xxx_ptp_free(chip);
- 	}
- 
--	mv88e6xxx_phy_destroy(chip);
- 	mv88e6xxx_unregister_switch(chip);
- 
- 	mv88e6xxx_g1_vtu_prob_irq_free(chip);
-@@ -7398,6 +7399,8 @@ static void mv88e6xxx_remove(struct mdio_device *mdiodev)
- 		mv88e6xxx_g1_irq_free(chip);
- 	else
- 		mv88e6xxx_irq_poll_free(chip);
-+
-+	mv88e6xxx_phy_destroy(chip);
- }
- 
- static void mv88e6xxx_shutdown(struct mdio_device *mdiodev)
-diff --git a/drivers/net/dsa/mv88e6xxx/phy.c b/drivers/net/dsa/mv88e6xxx/phy.c
-index 8bb88b3d900db..ee9e5d7e52770 100644
---- a/drivers/net/dsa/mv88e6xxx/phy.c
-+++ b/drivers/net/dsa/mv88e6xxx/phy.c
-@@ -229,7 +229,10 @@ static void mv88e6xxx_phy_ppu_state_init(struct mv88e6xxx_chip *chip)
- 
- static void mv88e6xxx_phy_ppu_state_destroy(struct mv88e6xxx_chip *chip)
- {
-+	mutex_lock(&chip->ppu_mutex);
- 	del_timer_sync(&chip->ppu_timer);
-+	cancel_work_sync(&chip->ppu_work);
-+	mutex_unlock(&chip->ppu_mutex);
- }
- 
- int mv88e6185_phy_ppu_read(struct mv88e6xxx_chip *chip, struct mii_bus *bus,
+ static const struct nla_policy
 -- 
 2.39.5
 
