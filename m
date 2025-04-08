@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D4526E15E;
-	Tue,  8 Apr 2025 12:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA73126B0B8;
+	Tue,  8 Apr 2025 12:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115269; cv=none; b=YDi9bGLYkcRII2vl9hfDB4AZjN/WV1+I8jWIDs2iZhbWfx5orbRtMpNbsFLMYJ+fIHPy5lwnAL7kMHVWOC7IXQ9wpMNx+ylURTktsFCqwr/0ax7nly3Yo4niQs6rxyp4ED5kJ2dEqNb14iVGKUvFuuLZEOcGfbdMLdewU+6dgeE=
+	t=1744115271; cv=none; b=KherC/i7lnWj9F1BtO0quop0f4R+def77UMqFiG867cpIeKAhuZX1Ay/a4bLxi/bGT+L3N3rSlr4ohaNSe86M7kbl+5gNCHbq/kit1ce4vigd/8R7X6KT5ycUyndstlqsGM7qbZFgiHSDYAlGb/V3tWYss55SPiEz0dQp5mXPSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115269; c=relaxed/simple;
-	bh=MgNd/4jnxqVQl0ShPEakIgSE4ed9zjsh4fvFBtJOlHw=;
+	s=arc-20240116; t=1744115271; c=relaxed/simple;
+	bh=zU/gh6rC+ELSvs8brArW56gqEWbR/n0fUh+L0VEpEGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6VzXaMmvxDXtVS/dsSlvXOeaHlrIjnozEK80g/duzonjw7wbyk0r/F7E5CagVPz67WQSn73BmaDLpb1MfzZktG7JnP4J1t9mdpgrlatZ+pPr/uoVnGdhUWWmCzQH5Y8iIXuVwnkGuazWVumuzJkTLHR2HcKKRNs9KdIYBFy5eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6C8NmG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCzW1Sker1Qgw9Zh1g854bfPLRebTql3CSm5b1TywVXoLwG9+3CcNDrCQ6sbaf3xLbBE0kOj9d3dJLXagaDJe/XWXMPwdIcFFVpCHAHM4Hz9iesIynNzK75k8Nz/2BDFdVhVxlx0RMjU0c2c0Q5Ul1GnHgTQdGzrVq/DCEvDNC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKNlSCMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6C8NmG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2447FC4CEE5;
-	Tue,  8 Apr 2025 12:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKNlSCMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EB6C4CEE5;
+	Tue,  8 Apr 2025 12:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115268;
-	bh=MgNd/4jnxqVQl0ShPEakIgSE4ed9zjsh4fvFBtJOlHw=;
+	s=korg; t=1744115271;
+	bh=zU/gh6rC+ELSvs8brArW56gqEWbR/n0fUh+L0VEpEGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6C8NmG0cyFQWScDIE520x3QhaX2URh1PvYCDqYetrAO3t70kwjTIS74ItaGq1ncI
-	 yqlA9iaa8wkuizRukqMxW4TL/WbRIHedWRuA0ulzn1E8JwhK85k8hsGRNWqH2I/0u9
-	 qxEr/kwLvdCITWJh5wImu33/uyNijqfD+WQb7DMs=
+	b=hKNlSCMR5hLpKGJHP4gserYxGR51lbO9RPG+EgqQNBNTsj784B1Kk+dmx71UX+J+m
+	 bFoEVz6UKjAGe8q0+iY6hU8xnV3t9p7mPpMyaX64PbqYsuAg41r3ZDbBm9XqOn/h/Z
+	 7UnfuvBbN7JLVPXqx0A4FcmYX1VecrdG+kr5crkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Leo Yan <leo.yan@arm.com>,
+	Arjan van de Ven <arjan@linux.intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 410/499] perf/core: Fix child_total_time_enabled accounting bug at task exit
-Date: Tue,  8 Apr 2025 12:50:22 +0200
-Message-ID: <20250408104901.450067786@linuxfoundation.org>
+Subject: [PATCH 6.13 411/499] tools/power turbostat: report CoreThr per measurement interval
+Date: Tue,  8 Apr 2025 12:50:23 +0200
+Message-ID: <20250408104901.474177429@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,141 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit a3c3c66670cee11eb13aa43905904bf29cb92d32 ]
+[ Upstream commit f729775f79a9c942c6c82ed6b44bd030afe10423 ]
 
-The perf events code fails to account for total_time_enabled of
-inactive events.
+The CoreThr column displays total thermal throttling events
+since boot time.
 
-Here is a failure case for accounting total_time_enabled for
-CPU PMU events:
+Change it to report events during the measurement interval.
 
-  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 2s
-  ...
+This is more useful for showing a user the current conditions.
+Total events since boot time are still available to the user via
+/sys/devices/system/cpu/cpu*/thermal_throttle/*
 
-  armv8_pmuv3_0/event=0x08/: 1138698008 2289429840 2174835740
-  armv8_pmuv3_1/event=0x08/: 1826791390 1950025700 847648440
-                             `          `          `
-                             `          `          > total_time_running with child
-                             `          > total_time_enabled with child
-                             > count with child
+Document CoreThr on turbostat.8
 
-  Performance counter stats for 'stress-ng --pthread=2 -t 2s':
-
-       1,138,698,008      armv8_pmuv3_0/event=0x08/                                               (94.99%)
-       1,826,791,390      armv8_pmuv3_1/event=0x08/                                               (43.47%)
-
-The two events above are opened on two different CPU PMUs, for example,
-each event is opened for a cluster in an Arm big.LITTLE system, they
-will never run on the same CPU.  In theory, the total enabled time should
-be same for both events, as two events are opened and closed together.
-
-As the result show, the two events' total enabled time including
-child event is different (2289429840 vs 1950025700).
-
-This is because child events are not accounted properly
-if a event is INACTIVE state when the task exits:
-
-  perf_event_exit_event()
-   `> perf_remove_from_context()
-     `> __perf_remove_from_context()
-       `> perf_child_detach()   -> Accumulate child_total_time_enabled
-         `> list_del_event()    -> Update child event's time
-
-The problem is the time accumulation happens prior to child event's
-time updating. Thus, it misses to account the last period's time when
-the event exits.
-
-The perf core layer follows the rule that timekeeping is tied to state
-change. To address the issue, make __perf_remove_from_context()
-handle the task exit case by passing 'DETACH_EXIT' to it and
-invoke perf_event_state() for state alongside with accounting the time.
-
-Then, perf_child_detach() populates the time into the parent's time metrics.
-
-After this patch, the bug is fixed:
-
-  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 10s
-  ...
-  armv8_pmuv3_0/event=0x08/: 15396770398 32157963940 21898169000
-  armv8_pmuv3_1/event=0x08/: 22428964974 32157963940 10259794940
-
-   Performance counter stats for 'stress-ng --pthread=2 -t 10s':
-
-      15,396,770,398      armv8_pmuv3_0/event=0x08/                                               (68.10%)
-      22,428,964,974      armv8_pmuv3_1/event=0x08/                                               (31.90%)
-
-[ mingo: Clarified the changelog. ]
-
-Fixes: ef54c1a476aef ("perf: Rework perf_event_exit_event()")
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Leo Yan <leo.yan@arm.com>
-Link: https://lore.kernel.org/r/20250326082003.1630986-1-yeoreum.yun@arm.com
+Fixes: eae97e053fe30 ("turbostat: Support thermal throttle count print")
+Reported-by: Arjan van de Ven <arjan@linux.intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Cc: Chen Yu <yu.c.chen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ tools/power/x86/turbostat/turbostat.8 | 2 ++
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 1cecf092db808..2d2ff7ca95a5b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2407,6 +2407,7 @@ ctx_time_update_event(struct perf_event_context *ctx, struct perf_event *event)
- #define DETACH_GROUP	0x01UL
- #define DETACH_CHILD	0x02UL
- #define DETACH_DEAD	0x04UL
-+#define DETACH_EXIT	0x08UL
+diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
+index a7f7ed01421c1..172191f841cd4 100644
+--- a/tools/power/x86/turbostat/turbostat.8
++++ b/tools/power/x86/turbostat/turbostat.8
+@@ -168,6 +168,8 @@ The system configuration dump (if --quiet is not used) is followed by statistics
+ .PP
+ \fBPkgTmp\fP Degrees Celsius reported by the per-package Package Thermal Monitor.
+ .PP
++\fBCoreThr\fP Core Thermal Throttling events during the measurement interval.  Note that events since boot can be find in /sys/devices/system/cpu/cpu*/thermal_throttle/*
++.PP
+ \fBGFX%rc6\fP The percentage of time the GPU is in the "render C6" state, rc6, during the measurement interval. From /sys/class/drm/card0/power/rc6_residency_ms or /sys/class/drm/card0/gt/gt0/rc6_residency_ms or /sys/class/drm/card0/device/tile0/gtN/gtidle/idle_residency_ms depending on the graphics driver being used.
+ .PP
+ \fBGFXMHz\fP Instantaneous snapshot of what sysfs presents at the end of the measurement interval. From /sys/class/graphics/fb0/device/drm/card0/gt_cur_freq_mhz or /sys/class/drm/card0/gt_cur_freq_mhz or /sys/class/drm/card0/gt/gt0/rps_cur_freq_mhz or /sys/class/drm/card0/device/tile0/gtN/freq0/cur_freq depending on the graphics driver being used.
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 8ec677c639ece..08b1069d9ab54 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -3298,7 +3298,7 @@ void delta_core(struct core_data *new, struct core_data *old)
+ 	old->c6 = new->c6 - old->c6;
+ 	old->c7 = new->c7 - old->c7;
+ 	old->core_temp_c = new->core_temp_c;
+-	old->core_throt_cnt = new->core_throt_cnt;
++	old->core_throt_cnt = new->core_throt_cnt - old->core_throt_cnt;
+ 	old->mc6_us = new->mc6_us - old->mc6_us;
  
- /*
-  * Cross CPU call to remove a performance event
-@@ -2421,6 +2422,7 @@ __perf_remove_from_context(struct perf_event *event,
- 			   void *info)
- {
- 	struct perf_event_pmu_context *pmu_ctx = event->pmu_ctx;
-+	enum perf_event_state state = PERF_EVENT_STATE_OFF;
- 	unsigned long flags = (unsigned long)info;
- 
- 	ctx_time_update(cpuctx, ctx);
-@@ -2429,16 +2431,19 @@ __perf_remove_from_context(struct perf_event *event,
- 	 * Ensure event_sched_out() switches to OFF, at the very least
- 	 * this avoids raising perf_pending_task() at this time.
- 	 */
--	if (flags & DETACH_DEAD)
-+	if (flags & DETACH_EXIT)
-+		state = PERF_EVENT_STATE_EXIT;
-+	if (flags & DETACH_DEAD) {
- 		event->pending_disable = 1;
-+		state = PERF_EVENT_STATE_DEAD;
-+	}
- 	event_sched_out(event, ctx);
-+	perf_event_set_state(event, min(event->state, state));
- 	if (flags & DETACH_GROUP)
- 		perf_group_detach(event);
- 	if (flags & DETACH_CHILD)
- 		perf_child_detach(event);
- 	list_del_event(event, ctx);
--	if (flags & DETACH_DEAD)
--		event->state = PERF_EVENT_STATE_DEAD;
- 
- 	if (!pmu_ctx->nr_events) {
- 		pmu_ctx->rotate_necessary = 0;
-@@ -13405,12 +13410,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
- 		mutex_lock(&parent_event->child_mutex);
- 	}
- 
--	perf_remove_from_context(event, detach_flags);
--
--	raw_spin_lock_irq(&ctx->lock);
--	if (event->state > PERF_EVENT_STATE_EXIT)
--		perf_event_set_state(event, PERF_EVENT_STATE_EXIT);
--	raw_spin_unlock_irq(&ctx->lock);
-+	perf_remove_from_context(event, detach_flags | DETACH_EXIT);
- 
- 	/*
- 	 * Child events can be freed.
+ 	DELTA_WRAP32(new->core_energy.raw_value, old->core_energy.raw_value);
 -- 
 2.39.5
 
