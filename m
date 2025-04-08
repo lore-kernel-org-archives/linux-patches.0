@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3654A264614;
-	Tue,  8 Apr 2025 11:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF20E267F65;
+	Tue,  8 Apr 2025 11:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111026; cv=none; b=HI5iT5RBFSixMfb1j7Ovc/OOEf/RnSd/6x3BE4j+zio3MBX1ebXm2b6wrfp5CdnGDkQSqQOOEgDaB9lWwpDie5/1aBTjDUr8HKcN8PNpMf9UM/kptGZreezdf1FzxEH4FYmFzt8wX9ao6TEODh8KxaKh+NBvFq00MuYeNfcJ7s8=
+	t=1744111028; cv=none; b=aZR07L3hjxsnDvRtB4FR+4HMY81uDL59C5BsvY/GQrVBgNkOwfv3Qjcxu//U28clNAkfCTse8OhqYWIcwWussEWGZ06GMBS4lVaGwHzUIqZzODc4DFtDjh7tIyvK0R1H6frX2RbAiAsmbs2ICbvL9tCws0gu4zWrh3qBxOcoYKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111026; c=relaxed/simple;
-	bh=irrXn9Y36iKYbspbcIVr/RYa/6fU53pXePoAmHa6Lwc=;
+	s=arc-20240116; t=1744111028; c=relaxed/simple;
+	bh=d/Bvdnq2SFUtemWpMTMRxBT6pcnZPImzfL8okziOxLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCRws05Vh4A9j7oyOQBPUE0wlwfTu0PC8Vj6QUreY7BehLmfOzAPc6MmW2rP63CLUerYSe0zJDmubytnI9SHrsaE+azo1/puWk3B6v3G+Ls6Q355ECvfjCezRn9gQzGGwGHMzsU3syIn7QbfEEIHBuR/YNYkegaled8T6tqhbMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJ5gn0s5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOSAK+mN954m8zpc3Opz3LxLo+hMfw9MNXX9Syg5S9tVmXlaTOEfauUX6+1vqv5DSufxUMwb7dcRwmkUByMp+2BDYPyCpZIYvmo3QH7Epn7w4Xk7HV+/oKHpm9ilMcLP0GRsYuecsok941FvrDoXnnJKDUXBjVs86HgI5IYCiGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5Qmi8zE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJ5gn0s5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD44C4CEE5;
-	Tue,  8 Apr 2025 11:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5Qmi8zE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAEBC4CEE5;
+	Tue,  8 Apr 2025 11:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111026;
-	bh=irrXn9Y36iKYbspbcIVr/RYa/6fU53pXePoAmHa6Lwc=;
+	s=korg; t=1744111028;
+	bh=d/Bvdnq2SFUtemWpMTMRxBT6pcnZPImzfL8okziOxLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJ5gn0s5uqaBBuC4niAbsKSURBPVhD09C3KkdOuTDaRhGYyVFzfigoo+oDBoOOBbg
-	 k4to9r/SG+fZqR0HmEb48IB5+9olFNczfL8Vtu82N0Ku9fil8X5Z4R3WkENK10XeFq
-	 fBSVYW8P5D9tqQzJ6xs39kC4OHFRs/0c2TCoeDNg=
+	b=g5Qmi8zEZMCxqqdETVbKSStmBIH6q7cwqpjbdbS1LdqOYTipKrfk0/xVT1gUX6nQx
+	 0/EN62PeQUOK9HLBP6vy+0rXsL0Cd724kVUoZC4XC/LN7btpNXDFc/6qFxhzlK31gf
+	 lmxxnqBDfMk4AHuKeWs/bm0ty6RMRlRVW8y1i2nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Nishiyama <nishiyama.pedro@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Lang Yu <Lang.Yu@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 255/731] Bluetooth: btusb: Fix regression in the initialization of fake Bluetooth controllers
-Date: Tue,  8 Apr 2025 12:42:32 +0200
-Message-ID: <20250408104920.215030166@linuxfoundation.org>
+Subject: [PATCH 6.14 282/731] drm/amdgpu/umsch: declare umsch firmware
+Date: Tue,  8 Apr 2025 12:42:59 +0200
+Message-ID: <20250408104920.839040732@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,39 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Nishiyama <nishiyama.pedro@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 1f04b0e5e3b90b30f3ae7bee7e3d42a55fa91d5f ]
+[ Upstream commit fe652becdbfccf265f4cea0eb379418d08c6596a ]
 
-Set HCI_READ_VOICE_SETTING and HCI_READ_PAGE_SCAN_TYPE as broken.
+Needed to be properly picked up for the initrd, etc.
 
-Once the min/max length of the commands began to be asserted, these fake
-controllers can no longer be initialized because they return a smaller
-report for these commands.
-
-This affects various fake controllers reusing the 0A12:0001 VID/PID.
-
-Fixes: c8992cffbe74 ("Bluetooth: hci_event: Use of a function table to handle Command Complete")
-Signed-off-by: Pedro Nishiyama <nishiyama.pedro@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3488c79beafa ("drm/amdgpu: add initial support for UMSCH")
+Reviewed-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Lang Yu <Lang.Yu@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a0fc465458b2f..699ff21d97675 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2477,6 +2477,8 @@ static int btusb_setup_csr(struct hci_dev *hdev)
- 		set_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_FILTER_CLEAR_ALL, &hdev->quirks);
- 		set_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_READ_VOICE_SETTING, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_READ_PAGE_SCAN_TYPE, &hdev->quirks);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
+index 2cfa2447d13e7..78319988b0545 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
+@@ -32,6 +32,8 @@
+ #include "amdgpu_umsch_mm.h"
+ #include "umsch_mm_v4_0.h"
  
- 		/* Clear the reset quirk since this is not an actual
- 		 * early Bluetooth 1.1 device from CSR.
++MODULE_FIRMWARE("amdgpu/umsch_mm_4_0_0.bin");
++
+ int amdgpu_umsch_mm_submit_pkt(struct amdgpu_umsch_mm *umsch, void *pkt, int ndws)
+ {
+ 	struct amdgpu_ring *ring = &umsch->ring;
 -- 
 2.39.5
 
