@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E61B263C90;
-	Tue,  8 Apr 2025 11:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B074521ADAE;
+	Tue,  8 Apr 2025 11:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111459; cv=none; b=kUwHpxMHzeEWcSOy7+Sd4k2KLcTxCRmmuJfilbIPi5kK9702CDMR70dEkTjKN7CV5hynCg36AeLCb01jbuzU9JX0mJg6Jgy9d5kVWS+CMB1w0TkcLB5xgZdapjuXUZaDR6DyTbSsqQ7tejXZdo9UOSZ1xJKFCzUkTPoqU+woOVk=
+	t=1744111461; cv=none; b=lvLts7Blp/zMBVVkgVviSDfadSmtzJxBcY3jyOw6XcJznsrjkLSyBBsDiXqO2shX/UAD3/pLN+hVjl2z3Ygw1MHCp8MZHjSRTCWkyd+GC/US+3JPrHg2xPmGQ4DCtXQustvTtCzL71G9xkDwFG/TXVE64rRMTWU6Tl7PAvVIzlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111459; c=relaxed/simple;
-	bh=DwoWviIyMeCP9CD4YDTHf8kvF/pMsMJp51pDdTTDsqs=;
+	s=arc-20240116; t=1744111461; c=relaxed/simple;
+	bh=sDmlt128DUT6PboAh7TVGCVq0w6P2SB7KtAys4iPcMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7QIpkJDP9JNIhaJQEVi16DQYrh3AdyWKxi1u8RL0ij8GbLrslDg46p2j7ZOOlLJHu1x0SRA/JEZswZs5/vJGSWqGH97sLa/fCYAa+BLR1qtY26yFSrubSjEY9BNMdbZkfpAQUXIHQrmcVujl5PhVGB3gNVcAqwZfPWd9wpUGX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1/A+NW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rj7t78wYTHhBG84qNorivBpdPmom/rvd/sQPpWIEcyvn+Gholn29ufMh370p8pbsuC5H8vBwjJoBkl/WMGM77bmcUAP+wSmwr7GGLl8WvIbZHzXz0mFKrTXIX+wmPcsUXyP0dU9jTfRzQsi0VgD7liT6XHl+Qmk7mAvSnxddnyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hU41r+Ir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1/A+NW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0776C4CEE5;
-	Tue,  8 Apr 2025 11:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hU41r+Ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F82C4CEE5;
+	Tue,  8 Apr 2025 11:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111459;
-	bh=DwoWviIyMeCP9CD4YDTHf8kvF/pMsMJp51pDdTTDsqs=;
+	s=korg; t=1744111461;
+	bh=sDmlt128DUT6PboAh7TVGCVq0w6P2SB7KtAys4iPcMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1/A+NW1p7jb66kh8zjIe6jvnl+K+x7WtwagGMm+Nc8OenvF1JpceuN4+4VzUVI4C
-	 u28TFOTWavhkxL3h/4RV/talorJwKv2a8Amjo5v+o31tf0F112hy+UtK5j+2QIZxOL
-	 gO0xSjj+l9mxjJhPJrxwTf/NWdU/lU4UoPFYAAIw=
+	b=hU41r+Irgk30yZw9b6/ZHR2lsayVHADpQbXY6knAUlnck8osjIrPr+G1Lv9A27G+7
+	 XcnsaNqO4G2xwdLqfz8O4wV0KV3HA4nPqDKLWQIhm+Xe1gkD3x+YNiT/kEzO8hd7n9
+	 aZ6Q1+T4qNqjwfw9dGkOBBbzs2OP1aJYSdMidqaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Angelo Dureghello <adureghello@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 439/731] usb: typec: thunderbolt: Remove IS_ERR check for plug
-Date: Tue,  8 Apr 2025 12:45:36 +0200
-Message-ID: <20250408104924.483728083@linuxfoundation.org>
+Subject: [PATCH 6.14 440/731] iio: dac: adi-axi-dac: modify stream enable
+Date: Tue,  8 Apr 2025 12:45:37 +0200
+Message-ID: <20250408104924.506481504@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benson Leung <bleung@chromium.org>
+From: Angelo Dureghello <adureghello@baylibre.com>
 
-[ Upstream commit 9682c35ff6ecd76d9462d4749b8b413d3e8e605e ]
+[ Upstream commit 6cc60bc38e8428544f8f4f12ddb6cc05fc83a7da ]
 
-Fixes these Smatch static checker warnings:
-drivers/usb/typec/altmodes/thunderbolt.c:354 tbt_ready() warn: 'plug' is not an error pointer
+Change suggested from the AXI HDL team, modify the function
+axi_dac_data_stream_enable() to check for interface busy, to avoid
+possible issues when starting the stream.
 
-Fixes: 100e25738659 ("usb: typec: Add driver for Thunderbolt 3 Alternate Mode")
-Signed-off-by: Benson Leung <bleung@chromium.org>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/Z5PstnlA52Z1F2SU@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e61d7178429a ("iio: dac: adi-axi-dac: extend features")
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Link: https://patch.msgid.link/20250114-wip-bl-ad3552r-axi-v0-iio-testing-carlos-v4-3-979402e33545@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/altmodes/thunderbolt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/dac/adi-axi-dac.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/usb/typec/altmodes/thunderbolt.c b/drivers/usb/typec/altmodes/thunderbolt.c
-index 94e47d30e5989..6eadf7835f8f6 100644
---- a/drivers/usb/typec/altmodes/thunderbolt.c
-+++ b/drivers/usb/typec/altmodes/thunderbolt.c
-@@ -351,10 +351,10 @@ static bool tbt_ready(struct typec_altmode *alt)
- 	 */
- 	for (int i = 0; i < TYPEC_PLUG_SOP_PP + 1; i++) {
- 		plug = typec_altmode_get_plug(tbt->alt, i);
--		if (IS_ERR(plug))
-+		if (!plug)
- 			continue;
+diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
+index b143f7ed68472..ac871deb8063c 100644
+--- a/drivers/iio/dac/adi-axi-dac.c
++++ b/drivers/iio/dac/adi-axi-dac.c
+@@ -585,6 +585,14 @@ static int axi_dac_ddr_disable(struct iio_backend *back)
+ static int axi_dac_data_stream_enable(struct iio_backend *back)
+ {
+ 	struct axi_dac_state *st = iio_backend_get_priv(back);
++	int ret, val;
++
++	ret = regmap_read_poll_timeout(st->regmap,
++				AXI_DAC_UI_STATUS_REG, val,
++				FIELD_GET(AXI_DAC_UI_STATUS_IF_BUSY, val) == 0,
++				10, 100 * KILO);
++	if (ret)
++		return ret;
  
--		if (!plug || plug->svid != USB_TYPEC_TBT_SID)
-+		if (plug->svid != USB_TYPEC_TBT_SID)
- 			break;
- 
- 		plug->desc = "Thunderbolt3";
+ 	return regmap_set_bits(st->regmap, AXI_DAC_CUSTOM_CTRL_REG,
+ 			       AXI_DAC_CUSTOM_CTRL_STREAM_ENABLE);
 -- 
 2.39.5
 
