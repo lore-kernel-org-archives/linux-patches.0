@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D1926B2CD;
-	Tue,  8 Apr 2025 12:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1722526FA4C;
+	Tue,  8 Apr 2025 12:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116238; cv=none; b=hInybC7GuQLkoLYMATaepbeUA5IddZlgPrt68Vi4Plf+of1Cm+l+Pdy/9GMZEa5nkAiB+VlKQE1jwEZ7I+e4B+b7n1Iyp5pTkZ9iZCOqK+Iw2+/IBxAslFHG6yCUID5IFQ7a5iO8ZN2pcmwaIvHrSuuPh7CHXEqqRHFrzAelkRc=
+	t=1744116241; cv=none; b=Mr/xUkjrBV0Tc4YIVidHPZ9OU2PeZXye/l/rCxSgelkMfdAfGGP6Bvu0WyyB4eS3HCNYXtiSVv26VcMB05AOWNM9hRvzTdgL6Bq5Fe0R9l1gS2yDxk+BwYQNyvuNN47gvKEwwBzkq1SvEznGsUSuprkbvwx5vp7DkQkEIuoWZro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116238; c=relaxed/simple;
-	bh=DA5JV307KvoUz3lVrwetEmTBkrn0kjrnH/60UUpiDog=;
+	s=arc-20240116; t=1744116241; c=relaxed/simple;
+	bh=WK6nr6umOm3DdJ9lepMpCC+mjy8GAYt7sEte4OliaDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyRrEQwGjF7t5QIIqy+2UER1TxPT9N573jgSmajkLIeh47Da9/+mKy2btH9c2eTaO8COeANzI8Sahhfm/wAfY+6V5THtNcjpohkpPHxJ+QoB6xh3Fu31fEgxr99ftH8ClJws2xiacStR+CkZMLfxXCJDe8lLBvPyxuv4cm06q3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs6GGyEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IezMP17HIXbCygvIsYMNb00LyG/lu5Wh8kc45zt9OSx2Oje+oYc3aXVzD6BuTtMv5YChRMd4jPo5MBWAGa6LDaMCzZOaSHo/pVt+1FXnmCbCYTmLFzrzf8EXFD96FhkOfioKO5RXTPQtUxhjKYp4LMbO/Ov+LmZQbfsv+thEojY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUzdJZlP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs6GGyEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E763CC4CEE5;
-	Tue,  8 Apr 2025 12:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUzdJZlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A14DC4CEE5;
+	Tue,  8 Apr 2025 12:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116238;
-	bh=DA5JV307KvoUz3lVrwetEmTBkrn0kjrnH/60UUpiDog=;
+	s=korg; t=1744116241;
+	bh=WK6nr6umOm3DdJ9lepMpCC+mjy8GAYt7sEte4OliaDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gs6GGyEtf4SqK6AYkNAjcMQzoReqNYhoECVKcGzE5/WolL0upkU5Z83Hpf0uJyt19
-	 DTkN82uvxD94Exa/DiW4VxtSEHNzIbqyIHTJmlpnlVTB1l6UxGwbRGzCWRL27qdRqR
-	 cL38LDSbsmDI4D1xFB1dNKJaCIj/r/FshrZhZr6I=
+	b=vUzdJZlPs/8Iwe5XQCo7eQZsDG62nSnpnw4NOwKzS0tHwBOaqqfNRJLkO0Y5rjTAF
+	 3bEV3wDWwBSkIBjmXTIsAbCPhgnbBIUagiwcDscOnRQ4ywvivg3vBLYeMw0mHoApbM
+	 OaUGo2RjTKaXuBy37LkXs0PLYSoeNDVIa4ubaUQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/423] drm/msm/dpu: dont use active in atomic_check()
-Date: Tue,  8 Apr 2025 12:46:32 +0200
-Message-ID: <20250408104847.285662098@linuxfoundation.org>
+Subject: [PATCH 6.12 067/423] drm/msm/dsi/phy: Program clock inverters in correct register
+Date: Tue,  8 Apr 2025 12:46:33 +0200
+Message-ID: <20250408104847.307644760@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,63 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 25b4614843bcc56ba150f7c99905125a019e656c ]
+[ Upstream commit baf49072877726616c7f5943a6b45eb86bfeca0a ]
 
-The driver isn't supposed to consult crtc_state->active/active_check for
-resource allocation. Instead all resources should be allocated if
-crtc_state->enabled is set. Stop consulting active / active_changed in
-order to determine whether the hardware resources should be
-(re)allocated.
+Since SM8250 all downstream sources program clock inverters in
+PLL_CLOCK_INVERTERS_1 register and leave the PLL_CLOCK_INVERTERS as
+reset value (0x0).  The most recent Hardware Programming Guide for 3 nm,
+4 nm, 5 nm and 7 nm PHYs also mention PLL_CLOCK_INVERTERS_1.
 
-Fixes: ccc862b957c6 ("drm/msm/dpu: Fix reservation failures in modeset")
-Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
-Closes: https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
-Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/634489/
+Link: https://lore.kernel.org/r/20250129115504.40080-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/633393/
-Link: https://lore.kernel.org/r/20250123-drm-dirty-modeset-v2-1-bbfd3a6cd1a4@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +--
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index db6c57900781d..ecd595215a6be 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1191,10 +1191,6 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 798168180c1ab..a2c87c84aa05b 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -305,7 +305,7 @@ static void dsi_pll_commit(struct dsi_pll_7nm *pll, struct dsi_pll_config *confi
+ 	writel(pll->phy->cphy_mode ? 0x00 : 0x10,
+ 	       base + REG_DSI_7nm_PHY_PLL_CMODE_1);
+ 	writel(config->pll_clock_inverters,
+-	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS);
++	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS_1);
+ }
  
- 	DRM_DEBUG_ATOMIC("%s: check\n", dpu_crtc->name);
- 
--	/* force a full mode set if active state changed */
--	if (crtc_state->active_changed)
--		crtc_state->mode_changed = true;
--
- 	if (cstate->num_mixers) {
- 		rc = _dpu_crtc_check_and_setup_lm_bounds(crtc, crtc_state);
- 		if (rc)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 2cf8150adf81f..47b514c89ce66 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -718,12 +718,11 @@ static int dpu_encoder_virt_atomic_check(
- 		crtc_state->mode_changed = true;
- 	/*
- 	 * Release and Allocate resources on every modeset
--	 * Dont allocate when active is false.
- 	 */
- 	if (drm_atomic_crtc_needs_modeset(crtc_state)) {
- 		dpu_rm_release(global_state, drm_enc);
- 
--		if (!crtc_state->active_changed || crtc_state->enable)
-+		if (crtc_state->enable)
- 			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
- 					drm_enc, crtc_state, topology);
- 		if (!ret)
+ static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
