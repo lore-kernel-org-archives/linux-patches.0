@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB13266583;
-	Tue,  8 Apr 2025 11:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50EF2676C9;
+	Tue,  8 Apr 2025 11:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110978; cv=none; b=T56HTtz74PC+Am3sUdxy+53gcywh01GVG4tw8/ofsz/BFVouAzgPBKhmkPSYhAwrH3oXmr/2/J/bq/PEiSNmH9lIELAGfHUWlhEHBF2dxhWIklsyzAuvP6CbmUYONJOWYfvwA66+yFKyYVSkSjL1cwejaU+Mr+pJfPoGD8fKYSc=
+	t=1744110980; cv=none; b=tv4bgabY985WbBHlMxWsotmBkb24oVI8A7FCdyqkKAm+81D8M1Q1kqs1n/8FB95YhQepGk+RcjPtSO6MVUZ32RX8HBrB35d/SS+15Zc1EvavrlliojeJt3HP6tiuPSriycvffmAJ/hnTSEO2JqgFxhwMUxUyEgwudsiXZnCHXiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110978; c=relaxed/simple;
-	bh=qcaR/XolJUT++KnECSEer+pVxBlVa0O9BeivsU1D6ss=;
+	s=arc-20240116; t=1744110980; c=relaxed/simple;
+	bh=QgX4jtG3kBMVq6R5cowjYgTIQT+zldgFmNUd36y6+hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmO/kd8mnsPAjU//ydaa3J+WoRys/UvGDnrUNT1dT0E+/zwKtr0d9PQNIrASWQEao0ZfCp70j53RLAzSmTnuq9otYN/7Pj33gfTQ25vlB7FztvvzDI4OtCIWKBIx8xz7rK9rmSOJCivw0LRGoNpTVbYWttkkpsf/SnTdFmTOmTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHn8QeU1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RA9zInCtY027rHAp19xvx77CcBTn/Yh6+1j6k25N1FR5FNiFCICvmGcPKeW0A40RCqauzfyK/5CFY0GKH5O4X70i4HHrdgCkRFWa+bN4MlQak8jZ8ZDNIxut9ZOd0UpTitnyL/6Dbx0/znbm0BicQe8HKdLTN/tJP6io4D+Ztdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OqWv6lY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHn8QeU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAD6C4CEE7;
-	Tue,  8 Apr 2025 11:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OqWv6lY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DF1C4CEE7;
+	Tue,  8 Apr 2025 11:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110978;
-	bh=qcaR/XolJUT++KnECSEer+pVxBlVa0O9BeivsU1D6ss=;
+	s=korg; t=1744110980;
+	bh=QgX4jtG3kBMVq6R5cowjYgTIQT+zldgFmNUd36y6+hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHn8QeU1oNvLssUYq0pyxsie++dhEClA82imE9I/Ahy5IVdyYlLem9c64dE+BuhGF
-	 RAgGaraUo+gDMHTAR9i0DnZaUsRJ5I9AsNBr8TxCL/jGM35Awx4Q6NUZRNxFzK3JMO
-	 /UhIxeJ3NClM+OXUxItbhNMPPLaAYpISmRe4VX7Q=
+	b=0OqWv6lYvQUdyQpBG4yGxROLHHxik/B04bDxbC/OzaJH6B6v78oiS/pGaoPuiOrbg
+	 uxbcmgPvQVrcL1w8mM8137B6kp+tUCY8MTWlLcixDf39fsyjXK5NgDMxcJQu06cg89
+	 X/RjRmSqYqqMnI6Ehq5XllPCzGNUvOPIN0P0UA1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 265/731] rwonce: fix crash by removing READ_ONCE() for unaligned read
-Date: Tue,  8 Apr 2025 12:42:42 +0200
-Message-ID: <20250408104920.444579869@linuxfoundation.org>
+Subject: [PATCH 6.14 266/731] drm/bridge: ti-sn65dsi86: Fix multiple instances
+Date: Tue,  8 Apr 2025 12:42:43 +0200
+Message-ID: <20250408104920.468209405@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,48 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 47a60391ae0ed04ffbb9bd8dcd94ad9d08b41288 ]
+[ Upstream commit 574f5ee2c85a00a579549d50e9fc9c6c072ee4c4 ]
 
-When arm64 is built with LTO, it upgrades READ_ONCE() to ldar / ldapr
-(load-acquire) to avoid issues that can be caused by the compiler
-optimizing away implicit address dependencies.
+Each bridge instance creates up to four auxiliary devices with different
+names.  However, their IDs are always zero, causing duplicate filename
+errors when a system has multiple bridges:
 
-Unlike plain loads, these load-acquire instructions actually require an
-aligned address.
+    sysfs: cannot create duplicate filename '/bus/auxiliary/devices/ti_sn65dsi86.gpio.0'
 
-For now, fix it by removing the READ_ONCE() that the buggy commit
-introduced.
+Fix this by using a unique instance ID per bridge instance.  The
+instance ID is derived from the I2C adapter number and the bridge's I2C
+address, to support multiple instances on the same bus.
 
-Fixes: ece69af2ede1 ("rwonce: handle KCSAN like KASAN in read_word_at_a_time()")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/r/20250326203926.GA10484@ax162
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/7a68a0e3f927e26edca6040067fb653eb06efb79.1733840089.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/rwonce.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/asm-generic/rwonce.h b/include/asm-generic/rwonce.h
-index e9f2b84d2338c..52b969c7cef93 100644
---- a/include/asm-generic/rwonce.h
-+++ b/include/asm-generic/rwonce.h
-@@ -86,7 +86,12 @@ unsigned long read_word_at_a_time(const void *addr)
- 	kasan_check_read(addr, 1);
- 	kcsan_check_read(addr, 1);
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index e4d9006b59f1b..b3d617505dda7 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -480,6 +480,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 				       const char *name)
+ {
+ 	struct device *dev = pdata->dev;
++	const struct i2c_client *client = to_i2c_client(dev);
+ 	struct auxiliary_device *aux;
+ 	int ret;
  
--	return READ_ONCE(*(unsigned long *)addr);
-+	/*
-+	 * This load can race with concurrent stores to out-of-bounds memory,
-+	 * but READ_ONCE() can't be used because it requires higher alignment
-+	 * than plain loads in arm64 builds with LTO.
-+	 */
-+	return *(unsigned long *)addr;
- }
+@@ -488,6 +489,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 		return -ENOMEM;
  
- #endif /* __ASSEMBLY__ */
+ 	aux->name = name;
++	aux->id = (client->adapter->nr << 10) | client->addr;
+ 	aux->dev.parent = dev;
+ 	aux->dev.release = ti_sn65dsi86_aux_device_release;
+ 	device_set_of_node_from_dev(&aux->dev, dev);
 -- 
 2.39.5
 
