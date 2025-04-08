@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA0E268FED;
-	Tue,  8 Apr 2025 12:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F10526F45F;
+	Tue,  8 Apr 2025 12:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115691; cv=none; b=PCp6jN3uNSxaCX4YcQdNoH6IqYZF9tV9U6X98FcxdDgRloDT0Gxh661OG+pEe5vuoWAE3P6yzkatCy1jRZ9xiSj4v5z+I5rYGiGAbXGu4U5/PQmSnZzco5Q1qts8dCcQrsq2xACLRUjonoYMV8xx8gKykmLjskcpmFP9GcQQt1s=
+	t=1744115694; cv=none; b=OsuMQD6mkYH+Uu12yd9NE05SZJnwuu1EYu+QD8BafnNbGLzDz0XyuHnJZ3C9KKWL2FO1Itzt3/TKLyHftk/Bo1EHhjsuH8KmktqTyuZTXPAqOIVqAEbhSLO0Rz1aDAkCOTiQYTZ2UDsDB36rpZNbVYduB3mbMSf33Iv6CAuCYOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115691; c=relaxed/simple;
-	bh=exINIggIh+T/u0yM/FvwqOIa8NxVewEToXpNnxDuyWE=;
+	s=arc-20240116; t=1744115694; c=relaxed/simple;
+	bh=ym+q3y7HWrIEW7mV9f0jyJkrBBJNCNoC/zhLFhhs4Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RC1hQl7yF9pXv7uW0oOB/pjDDc+Npe1DukX+FpUiOYhIKYFkgW9loX3TyQhsnGNTz948+ldYkXLBqTI/MoW8JKQ+rUwXgjdPoa1TgcVcf1cBqp74UkisB4tQH9FgwhMEcuax4eRHphHwdyXTU+j4EHJWlv37bdLiQcQeDpBs04M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZ/h6ufW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUcO7+Eb5i045oRVBItDH3IICdfu35pDxWUpwbOuK9UPcy3sofb46c8boGsrkmYmoTx1MUky5TFwZvaJ/hwyNOTCJ262TP2OP3CJw3TklpNYyeowos0RaWnqpinyLvRxbOftG6oaNr21ADeqhmXtb6KN+0ZiFwWoEbWHuSqgbeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1LLGgV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZ/h6ufW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCBFC4CEE5;
-	Tue,  8 Apr 2025 12:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1LLGgV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D63C4CEE5;
+	Tue,  8 Apr 2025 12:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115691;
-	bh=exINIggIh+T/u0yM/FvwqOIa8NxVewEToXpNnxDuyWE=;
+	s=korg; t=1744115693;
+	bh=ym+q3y7HWrIEW7mV9f0jyJkrBBJNCNoC/zhLFhhs4Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZ/h6ufWWsJwKhOHOW7rDKn4QPg0BW+HL3GhIVQWuwutBYMVZgtZHTb35+08IxOXC
-	 aoEYKlNDJCcTE88YTDFpSLsRID9XdCNSInDOZsNP/oPyK5jn5UxdnJt3sMGSe03km5
-	 cprtzb+BTC4pac4CzBrp2z3vRtaDItjOL2HAOIx8=
+	b=E1LLGgV3vxwx8xl9oc72cAkh5h66cEDjigaADwQSJ5qVTzLfRODn7CuEKKkJxyfGc
+	 SaxbDT2LA1Pdn/M4irVFkdLVlH8rmGBC6aqpb99o+s/TouwI3RHl1dDyCu+2oOXTw1
+	 BvYo+gAuSTmobQ5Mn8umlpLzsNxrPaYFeEKgg1Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chiara Meiohas <cmeiohas@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/204] RDMA/mlx5: Fix calculation of total invalidated pages
-Date: Tue,  8 Apr 2025 12:49:57 +0200
-Message-ID: <20250408104822.328884926@linuxfoundation.org>
+Subject: [PATCH 6.1 068/204] RDMA/erdma: Prevent use-after-free in erdma_accept_newconn()
+Date: Tue,  8 Apr 2025 12:49:58 +0200
+Message-ID: <20250408104822.359176010@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,63 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chiara Meiohas <cmeiohas@nvidia.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 79195147644653ebffadece31a42181e4c48c07d ]
+[ Upstream commit 83437689249e6a17b25e27712fbee292e42e7855 ]
 
-When invalidating an address range in mlx5, there is an optimization to
-do UMR operations in chunks.
-Previously, the invalidation counter was incorrectly updated for the
-same indexes within a chunk. Now, the invalidation counter is updated
-only when a chunk is complete and mlx5r_umr_update_xlt() is called.
-This ensures that the counter accurately represents the number of pages
-invalidated using UMR.
+After the erdma_cep_put(new_cep) being called, new_cep will be freed,
+and the following dereference will cause a UAF problem. Fix this issue.
 
-Fixes: a3de94e3d61e ("IB/mlx5: Introduce ODP diagnostic counters")
-Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/560deb2433318e5947282b070c915f3c81fef77f.1741875692.git.leon@kernel.org
+Fixes: 920d93eac8b9 ("RDMA/erdma: Add connection management (CM) support")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_cm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 87fbee8061003..89682fe0747ff 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -275,9 +275,6 @@ static bool mlx5_ib_invalidate_range(struct mmu_interval_notifier *mni,
- 				blk_start_idx = idx;
- 				in_block = 1;
- 			}
--
--			/* Count page invalidations */
--			invalidations += idx - blk_start_idx + 1;
- 		} else {
- 			u64 umr_offset = idx & umr_block_mask;
+diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
+index 74f6348f240ac..1156ae62c4683 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cm.c
++++ b/drivers/infiniband/hw/erdma/erdma_cm.c
+@@ -704,7 +704,6 @@ static void erdma_accept_newconn(struct erdma_cep *cep)
+ 		erdma_cancel_mpatimer(new_cep);
  
-@@ -287,14 +284,19 @@ static bool mlx5_ib_invalidate_range(struct mmu_interval_notifier *mni,
- 						     MLX5_IB_UPD_XLT_ZAP |
- 						     MLX5_IB_UPD_XLT_ATOMIC);
- 				in_block = 0;
-+				/* Count page invalidations */
-+				invalidations += idx - blk_start_idx + 1;
- 			}
- 		}
+ 		erdma_cep_put(new_cep);
+-		new_cep->sock = NULL;
  	}
--	if (in_block)
-+	if (in_block) {
- 		mlx5r_umr_update_xlt(mr, blk_start_idx,
- 				     idx - blk_start_idx + 1, 0,
- 				     MLX5_IB_UPD_XLT_ZAP |
- 				     MLX5_IB_UPD_XLT_ATOMIC);
-+		/* Count page invalidations */
-+		invalidations += idx - blk_start_idx + 1;
-+	}
  
- 	mlx5_update_odp_stats(mr, invalidations, invalidations);
- 
+ 	if (new_s) {
 -- 
 2.39.5
 
