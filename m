@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA5D264FB6;
-	Tue,  8 Apr 2025 10:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E59267B6B;
+	Tue,  8 Apr 2025 10:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109669; cv=none; b=iurVv5f/xADz4ApnihJpi2TyPu6d/FvjR4SmNSnqvvU8SFJJf49fIPrRloQ4m/iKPlQ+jksrqxc8jqUveoac87RIyzibnRQX6L+dTDWPlTr5XF/nM6P2pq9BhvdMooft/NlbGtsRnMs/IaZm8yRfT0TJfl2iAmXSyUUraUDUW6A=
+	t=1744109673; cv=none; b=HcgxmkP5GzczXSWv3o1OUj4bBZ4pVapu5KGaJR689dd/ZISoS/qNJUFzGp3wSaW9kPVph+o1Gkyg0j4LE+PLljnOUJPxqbASgDVZmhiD1BH7Sz9dOQCK220HlAi7T2Moy2xuqhu8CcdfoNuB7qI5TaLZ+yOkcpKxUVytCk2vsnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109669; c=relaxed/simple;
-	bh=vjS18xhvJFnp1OkDXIqmgyOYc4ehhHy6rcBhRgD7p7g=;
+	s=arc-20240116; t=1744109673; c=relaxed/simple;
+	bh=omBvyt1M6RENj1wL4KS38cnHEqUNbHSOyDvX6WJGbBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxTI7nRfbDgDW0WbJVV5YPvbdNYptKyR2F795wrhq0aNEC9435W/C1ORfTRlMNkVZ4plNd2b0nIL7S3dD8LghW66JNd2sQHu79jC8lxwD7YW2e1zwvXnXI5h4ehWTAFCQ3wwBdh2qUaAKN7Pf/z9aRhFc9m8oKdq6uECcv5Q2xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzE9Z8Ym; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9IfYLjvC+rx1ybvq/X3mUW5gTQ6G2b4DeAY6yzrBjN9fqHJomePRRWlQwRvJizGmxw6mW/rpgJNj6xAYLb1arccuYn85O0Vq5IS27S0ctZlI/S1rc7vWUR9U9niR0JL/Pi4Bwcsb6RhJajsWlzC/6s/HE4gdYJo+9U8YJU68IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y42osU9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzE9Z8Ym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BC0C4CEF1;
-	Tue,  8 Apr 2025 10:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y42osU9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05846C4CEE5;
+	Tue,  8 Apr 2025 10:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109668;
-	bh=vjS18xhvJFnp1OkDXIqmgyOYc4ehhHy6rcBhRgD7p7g=;
+	s=korg; t=1744109671;
+	bh=omBvyt1M6RENj1wL4KS38cnHEqUNbHSOyDvX6WJGbBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzE9Z8YmCtjySjgNwBVgsORj/uHQp0g5SHVjCcsJyI8m2/Sud4vHqOl2c4uqsWdAw
-	 1JnEJQoDnUMXXvU7gwtlxkaeDtSNTRGH5MD0wrIqparioBk7DOzv+LPYKbC74Ox4cY
-	 1QmF21aQgNJ+a6csUg4e2TbmbG4om5CltJFS3jks=
+	b=Y42osU9ig7Q0hL9zB/DLVBEQYKA2yb3navVpcmlCCBXIGfQHBAG/6N6nmraGMWGb8
+	 VP7XliWXJIXxf73CRCd9g3Pzt1NkHD8KelcPJ+B/sufgA8+ZtRoWaXnppur2d5hxTe
+	 bV4Or3YdaPDgVOz7eUH0WcNDZlNi+efjOI7AHTfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/227] netfilter: nft_ct: fix use after free when attaching zone template
-Date: Tue,  8 Apr 2025 12:46:28 +0200
-Message-ID: <20250408104820.699516904@linuxfoundation.org>
+Subject: [PATCH 5.10 011/227] netfilter: nft_ct: Use __refcount_inc() for per-CPU nft_ct_pcpu_template.
+Date: Tue,  8 Apr 2025 12:46:29 +0200
+Message-ID: <20250408104820.729129270@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,45 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 34243b9ec856309339172b1507379074156947e8 ]
+[ Upstream commit 5cfe5612ca9590db69b9be29dc83041dbf001108 ]
 
-The conversion erroneously removed the refcount increment.
-In case we can use the percpu template, we need to increment
-the refcount, else it will be released when the skb gets freed.
+nft_ct_pcpu_template is a per-CPU variable and relies on disabled BH for its
+locking. The refcounter is read and if its value is set to one then the
+refcounter is incremented and variable is used - otherwise it is already
+in use and left untouched.
 
-In case the slowpath is taken, the new template already has a
-refcount of 1.
+Without per-CPU locking in local_bh_disable() on PREEMPT_RT the
+read-then-increment operation is not atomic and therefore racy.
 
-Fixes: 719774377622 ("netfilter: conntrack: convert to refcount_t api")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+This can be avoided by using unconditionally __refcount_inc() which will
+increment counter and return the old value as an atomic operation.
+In case the returned counter is not one, the variable is in use and we
+need to decrement counter. Otherwise we can use it.
+
+Use __refcount_inc() instead of read and a conditional increment.
+
+Fixes: edee4f1e9245 ("netfilter: nft_ct: add zone id set support")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 5cfe5612ca95 ("netfilter: nft_ct: Use __refcount_inc() for per-CPU nft_ct_pcpu_template.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nft_ct.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 78631804e5c53..4b75c7113de4d 100644
+index 4b75c7113de4d..f95f1dbc48dea 100644
 --- a/net/netfilter/nft_ct.c
 +++ b/net/netfilter/nft_ct.c
-@@ -260,9 +260,12 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
+@@ -239,6 +239,7 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
+ 	enum ip_conntrack_info ctinfo;
+ 	u16 value = nft_reg_load16(&regs->data[priv->sreg]);
+ 	struct nf_conn *ct;
++	int oldcnt;
+ 
+ 	ct = nf_ct_get(skb, &ctinfo);
+ 	if (ct) /* already tracked */
+@@ -259,10 +260,11 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
+ 
  	ct = this_cpu_read(nft_ct_pcpu_template);
  
- 	if (likely(refcount_read(&ct->ct_general.use) == 1)) {
-+		refcount_inc(&ct->ct_general.use);
+-	if (likely(refcount_read(&ct->ct_general.use) == 1)) {
+-		refcount_inc(&ct->ct_general.use);
++	__refcount_inc(&ct->ct_general.use, &oldcnt);
++	if (likely(oldcnt == 1)) {
  		nf_ct_zone_add(ct, &zone);
  	} else {
--		/* previous skb got queued to userspace */
-+		/* previous skb got queued to userspace, allocate temporary
-+		 * one until percpu template can be reused.
-+		 */
- 		ct = nf_ct_tmpl_alloc(nft_net(pkt), &zone, GFP_ATOMIC);
- 		if (!ct) {
- 			regs->verdict.code = NF_DROP;
++		refcount_dec(&ct->ct_general.use);
+ 		/* previous skb got queued to userspace, allocate temporary
+ 		 * one until percpu template can be reused.
+ 		 */
 -- 
 2.39.5
 
