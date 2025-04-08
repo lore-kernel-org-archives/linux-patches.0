@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3131D267F4F;
-	Tue,  8 Apr 2025 11:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0818F2686B9;
+	Tue,  8 Apr 2025 11:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111596; cv=none; b=JJxYpQwKPugU1oyBoJfWYe2BqD2XTLFhSm0nfznNeSD62oMCbllbhKoFkLZyvKBDOm3WtnZ9F0Bm+xlDlR2HhFH+g6Y9gPyIuJa0oSyFxibLWBmWlNqpvJUQY7zgfefIx0u3mMWep82WuGvqUJPyRsFiKHXBTtnXYvi1+iqbamg=
+	t=1744111599; cv=none; b=HAnFXFcsBk/CnEd8ZgFtED+FzdpNURnh6riagNDkKf35KStGPMzCP5/j9ngmfm+islZ0tNcdZBs8POvx2C25meiO54aALM6IE6RVh0qXweF6A2Cc+/5eC3V6K5aUPLh64+Vu81Et4wYuUHdYSo73Zm/B6ZIjaWNh1mOha1Ah5Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111596; c=relaxed/simple;
-	bh=fzAktsOQmi8kPpna5iqg+wIQOh56RUevtjZxyNbzj5Y=;
+	s=arc-20240116; t=1744111599; c=relaxed/simple;
+	bh=KYSGD5rW554IDLHIqRHsnXkrtJU2i+uFCbwSWwLgGc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+rBWJFZsA0qD3Z9NWtvWuClHEP7h/JdCaBegba5RzMAxztK2Z3dq4K13SZGJWsijyfOezL3yJDfnUrTphr3m0n7sBxszlxBzlH0U6kKQm5aEmvRFj1lXKPV10C+EqlONq0GYC9IelHVak7wPQPWzc1OxWsVBFNfaN/hSA8pjqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a04o82kf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYz+kidXII82rE2qpt3vfKN0exTt3HKr/EQtTc/QLxg80v/yAnw+b8MJnt9J4+3LyWvUWl0aXZdFn+y5T1VR/2BIZiJHDpCY43T4ktgClBsbxCnniH8Sx7q53OPKBxru2oeoiaZbIHJ8Tcd/jHydAfZO5txlY9jyEcBdyc68Ptk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJgdJP96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a04o82kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B782AC4CEE5;
-	Tue,  8 Apr 2025 11:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJgdJP96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62663C4CEE5;
+	Tue,  8 Apr 2025 11:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111596;
-	bh=fzAktsOQmi8kPpna5iqg+wIQOh56RUevtjZxyNbzj5Y=;
+	s=korg; t=1744111598;
+	bh=KYSGD5rW554IDLHIqRHsnXkrtJU2i+uFCbwSWwLgGc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a04o82kfcY70Nn9zbyoMtPStGj2AUWXcQTWabAapkhwdkCACArjA2SCQKkv3AaA0G
-	 Ep1bSfWjpqFYVBmIkk0CxKOFxSLB2052ar91nED/sB4dMmqv+GWxMLTPM12Me1sWr8
-	 bDAaQaivQfWBE3Zp9zH1fBFAhG0AxZo2F0jBMNAs=
+	b=gJgdJP96nhBCH7ZvL9a0nb3k3YN7cJy+m9aiJhJde0of4ZVzQ5H3p34ZnIIHQJN/g
+	 CM12QkZ5sneKW3rs+lxNe/64SrYz+bixxfbsUnoHvoMhEVwC7xrqIynI2nNDATZNMH
+	 xBc0NELmQIw9XOgsCIMeVsH48ZezXwrJS89d4cis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 488/731] dmaengine: fsl-edma: free irq correctly in remove path
-Date: Tue,  8 Apr 2025 12:46:25 +0200
-Message-ID: <20250408104925.628218863@linuxfoundation.org>
+Subject: [PATCH 6.14 489/731] dmaengine: ae4dma: Use the MSI count and its corresponding IRQ number
+Date: Tue,  8 Apr 2025 12:46:26 +0200
+Message-ID: <20250408104925.651261624@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,75 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit fa70c4c3c580c239a0f9e83a14770ab026e8d820 ]
+[ Upstream commit feba04e6fdf4daccc83fc09d499a3e32c178edb4 ]
 
-Add fsl_edma->txirq/errirq check to avoid below warning because no
-errirq at i.MX9 platform. Otherwise there will be kernel dump:
-WARNING: CPU: 0 PID: 11 at kernel/irq/devres.c:144 devm_free_irq+0x74/0x80
-Modules linked in:
-CPU: 0 UID: 0 PID: 11 Comm: kworker/u8:0 Not tainted 6.12.0-rc7#18
-Hardware name: NXP i.MX93 11X11 EVK board (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : devm_free_irq+0x74/0x80
-lr : devm_free_irq+0x48/0x80
-Call trace:
- devm_free_irq+0x74/0x80 (P)
- devm_free_irq+0x48/0x80 (L)
- fsl_edma_remove+0xc4/0xc8
- platform_remove+0x28/0x44
- device_remove+0x4c/0x80
+Instead of using the defined maximum hardware queue, which can lead to
+incorrect values if the counts mismatch, use the exact supported MSI
+count and its corresponding IRQ number.
 
-Fixes: 44eb827264de ("dmaengine: fsl-edma: request per-channel IRQ only when channel is allocated")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20250228071720.3780479-2-peng.fan@oss.nxp.com
+Fixes: 90a30e268d9b ("dmaengine: ae4dma: Add AMD ae4dma controller driver")
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Link: https://lore.kernel.org/r/20250203162511.911946-3-Basavaraj.Natikar@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-edma-main.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/dma/amd/ae4dma/ae4dma-pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-index 133bdb48d1a5c..e3e0e88a76d3c 100644
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -401,6 +401,7 @@ fsl_edma2_irq_init(struct platform_device *pdev,
+diff --git a/drivers/dma/amd/ae4dma/ae4dma-pci.c b/drivers/dma/amd/ae4dma/ae4dma-pci.c
+index aad0dc4294a39..587c5a10c1a8b 100644
+--- a/drivers/dma/amd/ae4dma/ae4dma-pci.c
++++ b/drivers/dma/amd/ae4dma/ae4dma-pci.c
+@@ -46,8 +46,8 @@ static int ae4_get_irqs(struct ae4_device *ae4)
  
- 		/* The last IRQ is for eDMA err */
- 		if (i == count - 1) {
-+			fsl_edma->errirq = irq;
- 			ret = devm_request_irq(&pdev->dev, irq,
- 						fsl_edma_err_handler,
- 						0, "eDMA2-ERR", fsl_edma);
-@@ -420,10 +421,13 @@ static void fsl_edma_irq_exit(
- 		struct platform_device *pdev, struct fsl_edma_engine *fsl_edma)
- {
- 	if (fsl_edma->txirq == fsl_edma->errirq) {
--		devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
-+		if (fsl_edma->txirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
  	} else {
--		devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
--		devm_free_irq(&pdev->dev, fsl_edma->errirq, fsl_edma);
-+		if (fsl_edma->txirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
-+		if (fsl_edma->errirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->errirq, fsl_edma);
+ 		ae4_msix->msix_count = ret;
+-		for (i = 0; i < MAX_AE4_HW_QUEUES; i++)
+-			ae4->ae4_irq[i] = ae4_msix->msix_entry[i].vector;
++		for (i = 0; i < ae4_msix->msix_count; i++)
++			ae4->ae4_irq[i] = pci_irq_vector(pdev, i);
  	}
- }
  
-@@ -620,6 +624,8 @@ static int fsl_edma_probe(struct platform_device *pdev)
- 	if (!fsl_edma)
- 		return -ENOMEM;
- 
-+	fsl_edma->errirq = -EINVAL;
-+	fsl_edma->txirq = -EINVAL;
- 	fsl_edma->drvdata = drvdata;
- 	fsl_edma->n_chans = chans;
- 	mutex_init(&fsl_edma->fsl_edma_mutex);
+ 	return ret;
 -- 
 2.39.5
 
