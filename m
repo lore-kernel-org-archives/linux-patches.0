@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C600224F6;
-	Tue,  8 Apr 2025 11:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A579121ADAE;
+	Tue,  8 Apr 2025 11:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110759; cv=none; b=IfpBVfJLDOER52xy52oCP2Iu4nEz9d1v/FgPxVkmtV9v1T0aVscExPoxptYcediei47wizRtEtL8bhFJg5NGjZ+Re2AHdLL98SaAyF1WPIQdZcg2xAvl7VkwlsKxANQ3di1+cSj6ZaV5AGj8+1sswwWKBprZuL0juhK7tVjGs+A=
+	t=1744110761; cv=none; b=sKxpa60TOzJlUxn7twpoqrRxlQ0pKDGVjYBEYK7ea0DuJ90M1bPeX29MiLl2Y1KixIhcaon/iGl+56z/QBFzSyXZJkkV/qaEJL+0MquuatIxEdnC9NKwk/m43Imus1nF170l3N7/fGK3OWWPjsRRxp+HQvgx0bes+9um4G0p9yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110759; c=relaxed/simple;
-	bh=DfKa25rcsAvHqZvS4d4FTLL7hqA2rnxpzWb4r1EGlH0=;
+	s=arc-20240116; t=1744110761; c=relaxed/simple;
+	bh=r0lwiJ1Bx3eoakeqZAfE4pQOdyJt5OLavp4IBsAQJVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfY+00BOKheRpABZML6QEtZj7uNAJsEwMmv139jSYSbT6EsXsEg/JAO2jimPb9VgQUGRCwN0YtZt20jtcFyX1Cxtv6GeWonc3kRzhRgAclYolfB+M/3DNb/HMtZbis/IQe4w7YrnqVQI5DLr68OzzTdzjr99oSh9/C5sE00LzXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6ynsfus; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TR/wN32hLNOgULXUgl2sZy8y/4pyTzqTDEDTu954aBNuuMLZGq4zhuwVWSkEVEALgG+zCyHvN04ZZtiVZ0A6iij/ooZa9kTyzlK1kPzRaXbkMFgoPQQazRlC3OSZOYbUP+9/hPbcgHrwz3QDa+6LGACs/xE1Iv3k8qPGJhoN+og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E56MQBdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6ynsfus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEC5C4CEE5;
-	Tue,  8 Apr 2025 11:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E56MQBdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C23C4CEEA;
+	Tue,  8 Apr 2025 11:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110758;
-	bh=DfKa25rcsAvHqZvS4d4FTLL7hqA2rnxpzWb4r1EGlH0=;
+	s=korg; t=1744110761;
+	bh=r0lwiJ1Bx3eoakeqZAfE4pQOdyJt5OLavp4IBsAQJVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6ynsfusXVNa6BzBAwb0FgQ2WtlYwFWyzTSdojWo4q60QSa9la+4A2e3yKQbi/qS3
-	 tqjqS/16P+yOlK1tr+ki9GhmN3G9sRV8AOtFUnooQoOfh71swfOQ0TUhIeeWzJl+Ax
-	 s2Wm21NaMQ17UUtuC/QSLxZWa11mXW4xiT62NvpY=
+	b=E56MQBdImD9c/5+sJO2TQlni+yV7Z1fcnkMiY+kblVyG+rBotKItMevJl/mDbqF1J
+	 eo73OxgcYN5MO6NDAlcjeZx4UMyLRx6VW90amvh5y4vB5N4jUq5n+tG9RafkbeWu8l
+	 23g3b72CXI9sRFxd+YGhYQsC0jnjlYhQiD8LseFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 184/731] arm64: dts: rockchip: Remove bluetooth node from rock-3a
-Date: Tue,  8 Apr 2025 12:41:21 +0200
-Message-ID: <20250408104918.558114612@linuxfoundation.org>
+Subject: [PATCH 6.14 185/731] bus: qcom-ssc-block-bus: Remove some duplicated iounmap() calls
+Date: Tue,  8 Apr 2025 12:41:22 +0200
+Message-ID: <20250408104918.580708215@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 6b68387cf5ff5d7b86b189135affb0c679e3384a ]
+[ Upstream commit a9ac4ba7dcace2b3b91e7b87bf0ba97c47edd94f ]
 
-The Bluetooth node described in the device tree is actually on an M.2
-slot. What module is present depends on what the end user installed,
-and should be left to an overlay.
+reg_mpm_sscaon_config[01] are allocated with devm_ioremap_resource(). So,
+they will be unmapped automatically by the manage resource framework.
 
-Remove the existing bluetooth node. This gets rid of bogus timeout
-errors.
+Remove the incorrect explicit iounmap() calls from the remove function.
 
-Fixes: 8cf890aabd45 ("arm64: dts: rockchip: Add nodes for SDIO/UART Wi-Fi/Bluetooth modules to Radxa Rock 3A")
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20250220165051.1889055-1-wens@kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 97d485edc1d9 ("bus: add driver for initializing the SSC bus on (some) qcom SoCs")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/efd06711b126e761a06eb5ef82daf9ad4e116a10.1740932040.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-rock-3a.dts | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/bus/qcom-ssc-block-bus.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-rock-3a.dts b/arch/arm64/boot/dts/rockchip/rk3568-rock-3a.dts
-index ac79140a9ecd6..44cfdfeed6681 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-rock-3a.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-rock-3a.dts
-@@ -778,20 +778,6 @@
- 	pinctrl-0 = <&uart1m0_xfer &uart1m0_ctsn &uart1m0_rtsn>;
- 	uart-has-rtscts;
- 	status = "okay";
--
--	bluetooth {
--		compatible = "brcm,bcm43438-bt";
--		clocks = <&rk809 1>;
--		clock-names = "lpo";
--		device-wakeup-gpios = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
--		host-wakeup-gpios = <&gpio4 RK_PB4 GPIO_ACTIVE_HIGH>;
--		shutdown-gpios = <&gpio4 RK_PB2 GPIO_ACTIVE_HIGH>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&bt_host_wake &bt_wake &bt_enable>;
--		vbat-supply = <&vcc3v3_sys>;
--		vddio-supply = <&vcc_1v8>;
--		/* vddio comes from regulator on module, use IO bank voltage instead */
--	};
- };
+diff --git a/drivers/bus/qcom-ssc-block-bus.c b/drivers/bus/qcom-ssc-block-bus.c
+index 85d781a32df4b..c95a985e34988 100644
+--- a/drivers/bus/qcom-ssc-block-bus.c
++++ b/drivers/bus/qcom-ssc-block-bus.c
+@@ -356,9 +356,6 @@ static void qcom_ssc_block_bus_remove(struct platform_device *pdev)
  
- &uart2 {
+ 	qcom_ssc_block_bus_deinit(&pdev->dev);
+ 
+-	iounmap(data->reg_mpm_sscaon_config0);
+-	iounmap(data->reg_mpm_sscaon_config1);
+-
+ 	qcom_ssc_block_bus_pds_disable(data->pds, data->num_pds);
+ 	qcom_ssc_block_bus_pds_detach(&pdev->dev, data->pds, data->num_pds);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.5
 
