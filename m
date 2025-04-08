@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7072720330;
-	Tue,  8 Apr 2025 12:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACDB20330;
+	Tue,  8 Apr 2025 12:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115490; cv=none; b=iy5Kr7C18yNHW5hkvQncbHH11ifdktNnpAZGDkQqf1Hf9hYQRYsbwF036Y8On+NR+e03Y0p6xMBjCBmJgBDiSfTItSLaRdk8L41zVknbXe7+GUp0x64X8/4px5qVXXgoclSom95fRB1vcV0M017u3u9k3EPP2s+vOGrzfz8Iw0I=
+	t=1744115493; cv=none; b=YT/yyvnwjmaZUKLAjSYV9C1wgIIjBEyDs/S/bIGuVHTVRV0JyrK0YjISt0E5YgGM0QEhjvIjwTFBcpks4R+hgkMWAUdmkq/15NBVqQ/+lyYm2JmVzwPAfQisOVJb65jHNh+CWTZ3JLxYSyBmZD0xO6GTSCxqAzDQdzRCbAZd2OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115490; c=relaxed/simple;
-	bh=nZyK7m61fWGD2HrFMZlsUjpyCBU7pXNZ9vaG93qEbtY=;
+	s=arc-20240116; t=1744115493; c=relaxed/simple;
+	bh=/1GiyDRRZILNrFG50YCZ5F7RRaP+pKitaT5Kw0WiKmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3NT8cYOgTks8hY++t3zN2tqIXDYHLTXrRUwUbxvvVLA+mJTYVLixLSQOp2nXiyhcQeO674dYIEsUnTOppHLIqxWzwcO4XqYSDYJI4ePzNmfbvO1EAz7I9kpPZ92tD9f0oz2lRhdNS5e/RxrhrOFnJfXhYrfZy5RMnOz8iV7/sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkBEP4pV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUSkGjYoaJMczMWecVlNuySwOh7ZSqgvC8WQDZj9ezeJqqtT9gcVOG6U/DFKI6KDhYx/kL+LiPTmy9lVSkvHTlXZLVH1tBRPCPzHJOZMxqCYHgNCO/hDiq//J24a1tbyiys25f52ENIh0WFP35HLyQVx3k1lWWUlTjuXlXCLHjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJKR1nWf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkBEP4pV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FA9C4CEE5;
-	Tue,  8 Apr 2025 12:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJKR1nWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCBBC4CEE5;
+	Tue,  8 Apr 2025 12:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115490;
-	bh=nZyK7m61fWGD2HrFMZlsUjpyCBU7pXNZ9vaG93qEbtY=;
+	s=korg; t=1744115493;
+	bh=/1GiyDRRZILNrFG50YCZ5F7RRaP+pKitaT5Kw0WiKmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkBEP4pVTe9TLJjSWCMVJToNEB1xsDT/5uFiObk2GkZOacNHX+kCB1CahJKY0FXkK
-	 T4UmPdNNvmWadjc/0/S565S3AKFWBGmPDfB5LUPDrOloCWMsPTJLwPmiGhT5kYIqi2
-	 XN7KOu+YCVVq9olkKzR6IvX8NifM0VQqgBviNMoE=
+	b=oJKR1nWf1PsImY62I4M0wcQmOYsvNRwXaIBTgX1r5VWf9LvYoGsAhnftN8H7FC9US
+	 vUDp+PWFTVyCV69uleqkuWL/E3ywn5+bgU7SO6LUmtrj0HgQ2XAYqDeO/jLo5FXXFh
+	 f+AT8AZsoOpWVqv5am/AChc4R7TuEKmcHq4jXPro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
+	Olga Kornievskaia <okorniev@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.13 493/499] nfsd: put dl_stid if fail to queue dl_recall
-Date: Tue,  8 Apr 2025 12:51:45 +0200
-Message-ID: <20250408104903.654108630@linuxfoundation.org>
+Subject: [PATCH 6.13 494/499] nfsd: fix management of listener transports
+Date: Tue,  8 Apr 2025 12:51:46 +0200
+Message-ID: <20250408104903.679052401@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,102 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit 230ca758453c63bd38e4d9f4a21db698f7abada8 upstream.
+commit d093c90892607be505e801469d6674459e69ab89 upstream.
 
-Before calling nfsd4_run_cb to queue dl_recall to the callback_wq, we
-increment the reference count of dl_stid.
-We expect that after the corresponding work_struct is processed, the
-reference count of dl_stid will be decremented through the callback
-function nfsd4_cb_recall_release.
-However, if the call to nfsd4_run_cb fails, the incremented reference
-count of dl_stid will not be decremented correspondingly, leading to the
-following nfs4_stid leak:
-unreferenced object 0xffff88812067b578 (size 344):
-  comm "nfsd", pid 2761, jiffies 4295044002 (age 5541.241s)
-  hex dump (first 32 bytes):
-    01 00 00 00 6b 6b 6b 6b b8 02 c0 e2 81 88 ff ff  ....kkkk........
-    00 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 ad 4e ad de  .kkkkkkk.....N..
-  backtrace:
-    kmem_cache_alloc+0x4b9/0x700
-    nfsd4_process_open1+0x34/0x300
-    nfsd4_open+0x2d1/0x9d0
-    nfsd4_proc_compound+0x7a2/0xe30
-    nfsd_dispatch+0x241/0x3e0
-    svc_process_common+0x5d3/0xcc0
-    svc_process+0x2a3/0x320
-    nfsd+0x180/0x2e0
-    kthread+0x199/0x1d0
-    ret_from_fork+0x30/0x50
-    ret_from_fork_asm+0x1b/0x30
-unreferenced object 0xffff8881499f4d28 (size 368):
-  comm "nfsd", pid 2761, jiffies 4295044005 (age 5541.239s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 30 4d 9f 49 81 88 ff ff  ........0M.I....
-    30 4d 9f 49 81 88 ff ff 20 00 00 00 01 00 00 00  0M.I.... .......
-  backtrace:
-    kmem_cache_alloc+0x4b9/0x700
-    nfs4_alloc_stid+0x29/0x210
-    alloc_init_deleg+0x92/0x2e0
-    nfs4_set_delegation+0x284/0xc00
-    nfs4_open_delegation+0x216/0x3f0
-    nfsd4_process_open2+0x2b3/0xee0
-    nfsd4_open+0x770/0x9d0
-    nfsd4_proc_compound+0x7a2/0xe30
-    nfsd_dispatch+0x241/0x3e0
-    svc_process_common+0x5d3/0xcc0
-    svc_process+0x2a3/0x320
-    nfsd+0x180/0x2e0
-    kthread+0x199/0x1d0
-    ret_from_fork+0x30/0x50
-    ret_from_fork_asm+0x1b/0x30
-Fix it by checking the result of nfsd4_run_cb and call nfs4_put_stid if
-fail to queue dl_recall.
+Currently, when no active threads are running, a root user using nfsdctl
+command can try to remove a particular listener from the list of previously
+added ones, then start the server by increasing the number of threads,
+it leads to the following problem:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+[  158.835354] refcount_t: addition on 0; use-after-free.
+[  158.835603] WARNING: CPU: 2 PID: 9145 at lib/refcount.c:25 refcount_warn_saturate+0x160/0x1a0
+[  158.836017] Modules linked in: rpcrdma rdma_cm iw_cm ib_cm ib_core nfsd auth_rpcgss nfs_acl lockd grace overlay isofs uinput snd_seq_dummy snd_hrtimer nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 rfkill ip_set nf_tables qrtr sunrpc vfat fat uvcvideo videobuf2_vmalloc videobuf2_memops uvc videobuf2_v4l2 videodev videobuf2_common snd_hda_codec_generic mc e1000e snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_seq snd_seq_device snd_pcm snd_timer snd soundcore sg loop dm_multipath dm_mod nfnetlink vsock_loopback vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vmw_vmci vsock xfs libcrc32c crct10dif_ce ghash_ce vmwgfx sha2_ce sha256_arm64 sr_mod sha1_ce cdrom nvme drm_client_lib drm_ttm_helper ttm nvme_core drm_kms_helper nvme_auth drm fuse
+[  158.840093] CPU: 2 UID: 0 PID: 9145 Comm: nfsd Kdump: loaded Tainted: G    B   W          6.13.0-rc6+ #7
+[  158.840624] Tainted: [B]=BAD_PAGE, [W]=WARN
+[  158.840802] Hardware name: VMware, Inc. VMware20,1/VBSA, BIOS VMW201.00V.24006586.BA64.2406042154 06/04/2024
+[  158.841220] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[  158.841563] pc : refcount_warn_saturate+0x160/0x1a0
+[  158.841780] lr : refcount_warn_saturate+0x160/0x1a0
+[  158.842000] sp : ffff800089be7d80
+[  158.842147] x29: ffff800089be7d80 x28: ffff00008e68c148 x27: ffff00008e68c148
+[  158.842492] x26: ffff0002e3b5c000 x25: ffff600011cd1829 x24: ffff00008653c010
+[  158.842832] x23: ffff00008653c000 x22: 1fffe00011cd1829 x21: ffff00008653c028
+[  158.843175] x20: 0000000000000002 x19: ffff00008653c010 x18: 0000000000000000
+[  158.843505] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[  158.843836] x14: 0000000000000000 x13: 0000000000000001 x12: ffff600050a26493
+[  158.844143] x11: 1fffe00050a26492 x10: ffff600050a26492 x9 : dfff800000000000
+[  158.844475] x8 : 00009fffaf5d9b6e x7 : ffff000285132493 x6 : 0000000000000001
+[  158.844823] x5 : ffff000285132490 x4 : ffff600050a26493 x3 : ffff8000805e72bc
+[  158.845174] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000098588000
+[  158.845528] Call trace:
+[  158.845658]  refcount_warn_saturate+0x160/0x1a0 (P)
+[  158.845894]  svc_recv+0x58c/0x680 [sunrpc]
+[  158.846183]  nfsd+0x1fc/0x348 [nfsd]
+[  158.846390]  kthread+0x274/0x2f8
+[  158.846546]  ret_from_fork+0x10/0x20
+[  158.846714] ---[ end trace 0000000000000000 ]---
+
+nfsd_nl_listener_set_doit() would manipulate the list of transports of
+server's sv_permsocks and close the specified listener but the other
+list of transports (server's sp_xprts list) would not be changed leading
+to the problem above.
+
+Instead, determined if the nfsdctl is trying to remove a listener, in
+which case, delete all the existing listener transports and re-create
+all-but-the-removed ones.
+
+Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |   44 +++++++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 23 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1050,6 +1050,12 @@ static struct nfs4_ol_stateid * nfs4_all
- 	return openlockstateid(stid);
- }
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1959,6 +1959,7 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 	struct svc_serv *serv;
+ 	LIST_HEAD(permsocks);
+ 	struct nfsd_net *nn;
++	bool delete = false;
+ 	int err, rem;
  
-+/*
-+ * As the sc_free callback of deleg, this may be called by nfs4_put_stid
-+ * in nfsd_break_one_deleg.
-+ * Considering nfsd_break_one_deleg is called with the flc->flc_lock held,
-+ * this function mustn't ever sleep.
-+ */
- static void nfs4_free_deleg(struct nfs4_stid *stid)
- {
- 	struct nfs4_delegation *dp = delegstateid(stid);
-@@ -5290,6 +5296,7 @@ static const struct nfsd4_callback_ops n
+ 	mutex_lock(&nfsd_mutex);
+@@ -2019,34 +2020,28 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 		}
+ 	}
  
- static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
- {
-+	bool queued;
- 	/*
- 	 * We're assuming the state code never drops its reference
- 	 * without first removing the lease.  Since we're in this lease
-@@ -5298,7 +5305,10 @@ static void nfsd_break_one_deleg(struct
- 	 * we know it's safe to take a reference.
- 	 */
- 	refcount_inc(&dp->dl_stid.sc_count);
--	WARN_ON_ONCE(!nfsd4_run_cb(&dp->dl_recall));
-+	queued = nfsd4_run_cb(&dp->dl_recall);
-+	WARN_ON_ONCE(!queued);
-+	if (!queued)
-+		nfs4_put_stid(&dp->dl_stid);
- }
+-	/* For now, no removing old sockets while server is running */
+-	if (serv->sv_nrthreads && !list_empty(&permsocks)) {
++	/*
++	 * If there are listener transports remaining on the permsocks list,
++	 * it means we were asked to remove a listener.
++	 */
++	if (!list_empty(&permsocks)) {
+ 		list_splice_init(&permsocks, &serv->sv_permsocks);
+-		spin_unlock_bh(&serv->sv_lock);
+-		err = -EBUSY;
+-		goto out_unlock_mtx;
++		delete = true;
+ 	}
++	spin_unlock_bh(&serv->sv_lock);
  
- /* Called from break_lease() with flc_lock held. */
+-	/* Close the remaining sockets on the permsocks list */
+-	while (!list_empty(&permsocks)) {
+-		xprt = list_first_entry(&permsocks, struct svc_xprt, xpt_list);
+-		list_move(&xprt->xpt_list, &serv->sv_permsocks);
+-
+-		/*
+-		 * Newly-created sockets are born with the BUSY bit set. Clear
+-		 * it if there are no threads, since nothing can pick it up
+-		 * in that case.
+-		 */
+-		if (!serv->sv_nrthreads)
+-			clear_bit(XPT_BUSY, &xprt->xpt_flags);
+-
+-		set_bit(XPT_CLOSE, &xprt->xpt_flags);
+-		spin_unlock_bh(&serv->sv_lock);
+-		svc_xprt_close(xprt);
+-		spin_lock_bh(&serv->sv_lock);
++	/* Do not remove listeners while there are active threads. */
++	if (serv->sv_nrthreads) {
++		err = -EBUSY;
++		goto out_unlock_mtx;
+ 	}
+ 
+-	spin_unlock_bh(&serv->sv_lock);
++	/*
++	 * Since we can't delete an arbitrary llist entry, destroy the
++	 * remaining listeners and recreate the list.
++	 */
++	if (delete)
++		svc_xprt_destroy_all(serv, net);
+ 
+ 	/* walk list of addrs again, open any that still don't exist */
+ 	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
+@@ -2073,6 +2068,9 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 
+ 		xprt = svc_find_listener(serv, xcl_name, net, sa);
+ 		if (xprt) {
++			if (delete)
++				WARN_ONCE(1, "Transport type=%s already exists\n",
++					  xcl_name);
+ 			svc_xprt_put(xprt);
+ 			continue;
+ 		}
 
 
