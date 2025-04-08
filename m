@@ -1,38 +1,38 @@
 Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5541E3DD7;
-	Tue,  8 Apr 2025 13:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704D01AF0CA;
+	Tue,  8 Apr 2025 13:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117741; cv=none; b=su9NFpg4+Cl7AGhS+JrRRbyh3chejccMuM7HEbNh3K5zGPfmGPhRu1dJiox4oQ2h+nJyLi7R7D8SUdQid/uCqWeqi9Z1OdKcAjzA1j5FmQs2IY3r89XqmUHM4g7qWhq2zgLElHhGW1tbZfT6hZlpjQplQETV0HUKQCJN+H0s1Z4=
+	t=1744118197; cv=none; b=m7tkl7y28I4IFTDLGQVYIcFZOIKODeFhwOupNSUv51/8vhF2+pDlZ9xfKrVNYLzsjo8o6r4xGJOn0EkCxNnjaPAfR8Zt7yW7CjYVmn4fLSg6XwJeIxv4aHdOW8UjSjLqFQnWooNEGaMOEq9v71hYzrmvSc2nw+WAA1XGPeERYsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117741; c=relaxed/simple;
-	bh=Z2if8Lm0m0TrsFCEOGBzFjsUoJATc/spSu3WueTBQOQ=;
+	s=arc-20240116; t=1744118197; c=relaxed/simple;
+	bh=MhEN1i5xu/9dGHu00/9Ckw1UTC+PDsvHzMy8BK1WVjA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I/jPBSuQdTNRHfIn0AuNSH3JWz3yhYS9z6TTtwZBLXbh7Qp0D7oWvMrozZGUny1SFV4VjcMihuroXyGj/2J2+WDpJJOpEcR4+L86KdsZjoPLPqfr+asFX1R2NQJW+YnHyFM5yqPvuaKGNK7K6fNmpsGm9Joubo2i5ZLMuhJC32Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=ZLAfvX77; arc=none smtp.client-ip=80.237.130.52
+	 In-Reply-To:Content-Type; b=kgFvhlDBtVxFy74v8c8i4/pcIqB6BXZRb9YwAKjO5cJBB3ocDkLDiAwAQeEowjnMR+LaWxt2nyASOkBiLsjjc+x7EIA8SS5wWAC1RLAQnZq0IKY+IeU+/6DB80anv6LPYB9GMQ/DpdsyhU/dMtp0QGdfCfsXmGI+qJZ/CYXcAHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=PqJRiyNB; arc=none smtp.client-ip=80.237.130.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="ZLAfvX77"
+	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="PqJRiyNB"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
 	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:
 	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
 	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=jpGXYT949Oku6ClLAdOg+rj915jzWwWHQ46B/Xut5n4=; t=1744117739;
-	x=1744549739; b=ZLAfvX77gDJZAkd7Ud2y6BUsSUmhwVf/UyR4XhteMrarZv5crWCu7T4LpbowV
-	Q6jR64GfTrOhC1GfB+nTU5S2xqtCuDpTxhEz0oivGhLAhuZZJXBDlGb8EhR8Jfim0U/dGoFQd47Jj
-	TeLLnjCN/kfoynf84MYs1GgtT62oi+RhaAfSzTEaOcfvvuBfyQ8+AF6o0i6Y0494Bw1KbZfLXpRZA
-	HCNpdoLRSc1b64ev8GHcKNG+HDUFtr23s0sUIO4Q762rc0Aafq94omOk8Je+NjwkA2XpFJx/j8K7d
-	TJ+qBUSrAn/ujn8z9/eIybHq80Cg39X1Zf/48gOVY26c9AsP9g==;
+	References; bh=caMTW2YFhPgzDBie2cfGBil1iBGo+AGd3ZOvs1aYh6c=; t=1744118195;
+	x=1744550195; b=PqJRiyNBc/T3HumFXgICkpcFY8h+qEZIdUg5AP4E6FFo+KLv0nEXI2FXGuwj0
+	2etlwDdodwOLvGnXZ/UHrOQdN+btbZKGu6BJTHy7xSdoqdGHDft/ESUAWp4VX6R7I9o+4KTU8nw8P
+	e8tTcLlxunW9dBBm96TZwE2hX6BerrGGAvI21aSfSKIk9ysu2rQOCYbK7mtH1dU8HUOVMfpzSvY9h
+	WzWIR1i1ZXjtCZ3iZFRV8a1DTTXxIhuYM6j+WuEL7JoqRYizEwmb6ldLEsSl8UTrphLXWv0RkADOD
+	aHOT+sKZJxNSwP+9b4NIS8V9fIdK64vki8KtQ9OXV4OhYg9Vgw==;
 Received: from [2a02:8108:8984:1d00:a0cf:1912:4be:477f]; authenticated
 	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
-	id 1u28h9-001zwO-0i;
-	Tue, 08 Apr 2025 15:08:51 +0200
-Message-ID: <7d11f01f-9adc-467c-95bc-c9ff4bbf6a0f@leemhuis.info>
-Date: Tue, 8 Apr 2025 15:08:49 +0200
+	id 1u28oa-0021Qh-2z;
+	Tue, 08 Apr 2025 15:16:33 +0200
+Message-ID: <c06b17f2-fc80-47a9-b108-8e53be3d4a76@leemhuis.info>
+Date: Tue, 8 Apr 2025 15:16:31 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,7 +40,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 000/499] 6.13.11-rc1 review
+Subject: Re: [PATCH 6.14 000/731] 6.14.2-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -48,9 +48,9 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Justin Forbes <jforbes@fedoraproject.org>, Ian Rogers <irogers@google.com>,
- Namhyung Kim <namhyung@kernel.org>
-References: <20250408104851.256868745@linuxfoundation.org>
+ Miguel Ojeda <ojeda@kernel.org>, Justin Forbes <jforbes@fedoraproject.org>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+References: <20250408104914.247897328@linuxfoundation.org>
 From: Thorsten Leemhuis <linux@leemhuis.info>
 Content-Language: de-DE, en-US
 Autocrypt: addr=linux@leemhuis.info; keydata=
@@ -96,33 +96,139 @@ Autocrypt: addr=linux@leemhuis.info; keydata=
  ysaCIZqWxrlhHWWmJMvowVMkB92uPVkxs5IMhSxHS4c2PfZ6D5kvrs3URvIc6zyOrgIaHNzR
  8AF4PXWPAuZu1oaG/XKwzMqN/Y/AoxWrCFZNHE27E1RrMhDgmyzIzWQTffJsVPDMQqDfLBhV
  ic3b8Yec+Kn+ExIF5IuLfHkUgIUs83kDGGbV+wM8NtlGmCXmatyavUwNCXMsuI24HPl7gV2h n7RI
-In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
+In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1744117739;25d1025c;
-X-HE-SMSGID: 1u28h9-001zwO-0i
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1744118195;b4e03392;
+X-HE-SMSGID: 1u28oa-0021Qh-2z
 
-On 08.04.25 12:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.13.11 release.
-> There are 499 patches in this series, all will be posted as a response
+On 08.04.25 12:38, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.2 release.
+> There are 731 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Compiling for Fedora failed:
+Compiling for Fedora failed for me:
 
-util/stat.c: In function ‘evsel__is_alias’:
-util/stat.c:565:16: error: implicit declaration of function ‘perf_pmu__name_no_suffix_match’ [-Wimplicit-function-declaration]
-  565 |         return perf_pmu__name_no_suffix_match(evsel_a->pmu, evsel_b->pmu->name);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-From a *very very* quick look I wonder if it might be due to this change,
-as it seems to depend on 63e287131cf0c5 ("perf pmu: Rename name matching
-for no suffix or wildcard variants") [v6.15-rc1]:
- 
-> Ian Rogers <irogers@google.com>
->     perf stat: Don't merge counters purely on name
+"""
+error[E0412]: cannot find type `Core` in module `device`
+  --> rust/kernel/pci.rs:69:58
+   |
+69 |         let pdev = unsafe { &*pdev.cast::<Device<device::Core>>() };
+   |                                                          ^^^^ not found in `device`
 
-But as I said, it was just a very very quick look, so I might be totally
-off track there.
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/pci.rs:240:35
+    |
+240 |     fn probe(dev: &Device<device::Core>, id_info: &Self::IdInfo) -> Result<Pin<KBox<Self>>>;
+    |                                   ^^^^ not found in `device`
 
-HTH, Ciao, Thorsten
+error[E0405]: cannot find trait `DeviceContext` in module `device`
+   --> rust/kernel/pci.rs:253:32ich of
+    |
+253 | pub struct Device<Ctx: device::DeviceContext = device::Normal>(
+    |                                ^^^^^^^^^^^^^ not found in `device`
+
+error[E0412]: cannot find type `Normal` in module `device`
+   --> rust/kernel/pci.rs:253:56
+    |
+253 | pub struct Device<Ctx: device::DeviceCchangeontext = device::Normal>(
+    |                                                        ^^^^^^ not found in `device`
+    |
+help: there is an enum variant `core::intrinsics::mir::BasicBlock::Normal` and 1 other; try using the variant's enum
+    |
+253 | pub struct Device<Ctx: device::DeviceContext = core::intrinsics::mir::BasicBlock>(
+    |                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+253 | pub struct Device<Ctx: device::DeviceContext = core::num::FpCategory>(
+    |                                                ~~~~~~~~~~~~~~~~~~~~~
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/pci.rs:411:21
+    |
+411 | impl Device<device::Core> {
+    |                     ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/pci.rs:425:31
+    |
+425 | impl Deref for Device<device::Core> {
+    |                               ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/pci.rs:439:27
+    |
+439 | impl From<&Device<device::Core>> for ARef<Device> {
+    |                           ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/pci.rs:440:34
+    |
+440 |     fn from(dev: &Device<device::Core>) -> Self {
+    |                                  ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+  --> rust/kernel/platform.rs:65:58
+   |
+65 |         let pdev = unsafe { &*pdev.cast::<Device<device::Core>>() };
+   |                                                          ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/platform.rs:167:35
+    |
+167 |     fn probe(dev: &Device<device::Core>, id_info: Option<&Self::IdInfo>)
+    |                                   ^^^^ not found in `device`
+
+error[E0405]: cannot find trait `DeviceContext` in module `device`
+   --> rust/kernel/platform.rs:182:32
+    |
+182 | pub struct Device<Ctx: device::DeviceContext = device::Normal>(
+    |                                ^^^^^^^^^^^^^ not found in `device`
+
+error[E0412]: cannot find type `Normal` in module `device`
+   --> rust/kernel/platform.rs:182:56
+    |
+182 | pub struct Device<Ctx: device::DeviceContext = device::Normal>(
+    |                                                        ^^^^^^ not found in `device`
+    |
+help: there is an enum variant `core::intrinsics::mir::BasicBlock::Normal` and 1 other; try using the variant's enum
+    |
+182 | pub struct Device<Ctx: device::DeviceContext = core::intrinsics::mir::BasicBlock>(
+    |                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+182 | pub struct Device<Ctx: device::DeviceContext = core::num::FpCategory>(
+    |                                                ~~~~~~~~~~~~~~~~~~~~~
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/platform.rs:193:31
+    |
+193 | impl Deref for Device<device::Core> {
+    |                               ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/platform.rs:207:27
+    |
+207 | impl From<&Device<device::Core>> for ARef<Device> {
+    |                           ^^^^ not found in `device`
+
+error[E0412]: cannot find type `Core` in module `device`
+   --> rust/kernel/platform.rs:208:34
+    |
+208 |     fn from(dev: &Device<device::Core>) -> Self {
+    |                                  ^^^^ not found in `device`
+
+error: aborting due to 15 previous errors
+
+Some errors have detailed explanations: E0405, E0412.
+For more information about an error, try `rustc --explain E0405`.
+make[2]: *** [rust/Makefile:482: rust/kernel.o] Error 1
+make[1]: *** [/builddir/build/BUILD/kernel-6.14.2-build/kernel-6.14.2-rc1/linux-6.14.2-0.rc1.300.vanilla.fc42.x86_64/Makefile:1283: prepare] Error 2
+make: *** [Makefile:259: __sub-make] Error 2
+"""
+
+
+From a quick look there seem to be three changes in this set that touch
+rust/kernel/pci.rs; if needed, I can take a closer look later or tomorrow
+what exactly is causing trouble (I just hope it's no new build requirement
+missing on my side or something like that).
+
+Ciao, Thorsten
