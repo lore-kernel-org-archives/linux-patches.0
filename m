@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083AC264A76;
-	Tue,  8 Apr 2025 11:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAD1265602;
+	Tue,  8 Apr 2025 11:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112695; cv=none; b=WK/cNAFtsDq/hUGivpWo95JiP/iEeqs513E0tAf1DISa88MTcN8JK+nuCLDWWivRQtFngs2WFJ1WxlSe8n8wI8IlRhdiZgr6fHwrL1Fl6QpyhiyJ5THSD5EEiOGITazCNnN/Z5Vn6Mhx52QpiMnxBAOyEqBgXqAP2/OHs0rYygo=
+	t=1744112697; cv=none; b=U5KJ02bECE6TLccbZYzp/BrUys2BBhuTmIWA1Jt+H4zBt7fpoMKptHu033ArYn0dtojE2HbU975WoI4FW02p2AS3Jngn2cxyE6px4oIShk/is+FxSvlp34QVvSzlZaMp3B1JWP6p252Z3POsM1ydckGD/dbhK8TkXML9On9lhZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112695; c=relaxed/simple;
-	bh=7yhcDCJAwuCkHr2/PKwixHD2bQQefvOpPGRkajLf2LU=;
+	s=arc-20240116; t=1744112697; c=relaxed/simple;
+	bh=lU82SEjUDhCxFgkytCRCF9GbIMn6odaKKepHxHDVc18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxYrlDh/545maINqIx74JzYdo3ZYb2RQZPieltONiLGIZ3Wp685Y2JoaLmjp3VrkljD+rmK4Ji6DRXiy5X+p3XbrT6/cUa1kQMy3qwLxyg7S0ZuEZyBTVtvVT/MZNaDrGpCMjzcjLL+FwKLZgeKqW5DMTMPGsV93VJ3seetg3hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc6f+hoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q1R9Nf/+7BoXVh+hyH0ZcSqYFr4oqw6Ytgto9t9olAfkfc/yQgON2rfpfenbMKDC2WAhRybQpvHp9mQFAOkUuUUoz9V22T/w17ffkzfChNqg4y5T5joM5eCRpjWFiuxLzTtWpPj/YwnUcPz6gDvrnaxj78DsmzkmVGmmm9crsDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0MOE9yp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc6f+hoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C135C4CEE5;
-	Tue,  8 Apr 2025 11:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0MOE9yp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C252CC4CEE5;
+	Tue,  8 Apr 2025 11:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112694;
-	bh=7yhcDCJAwuCkHr2/PKwixHD2bQQefvOpPGRkajLf2LU=;
+	s=korg; t=1744112697;
+	bh=lU82SEjUDhCxFgkytCRCF9GbIMn6odaKKepHxHDVc18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc6f+hoIbwBZlnsisgjj2yEsDdTZ5zIER+jWtfw7+SuYrhqwuf+voQ+NWK4sOVwd4
-	 h39J5oolgn51IaBxRhclX/ukZ1qA9O1BHH1MywBE9w8mf2Z4J5+p43Kqh3cie2SnKu
-	 gZj0i2mlAE7qk37ELfgINFaGFv3QTEBFn3qaPjkQ=
+	b=s0MOE9ypvM+6FYddl+wzf+zlGujAPi+8qr/kiglKq4tl1AYzxzzfuOFVKVo4Kz4if
+	 9XH4yCyl66kMh6DZEiCEbn7sZeqwhZr36ZG7e7u2VXswGGfSiuDRoiIFAtUjFGu/qz
+	 h7bQbduvRO7m/Qvn1GM/olLvIkC/ge/Wwc0aQXxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/279] drm/mediatek: dsi: fix error codes in mtk_dsi_host_transfer()
-Date: Tue,  8 Apr 2025 12:49:04 +0200
-Message-ID: <20250408104830.683110508@linuxfoundation.org>
+Subject: [PATCH 5.15 162/279] PCI: pciehp: Dont enable HPIE when resuming in poll mode
+Date: Tue,  8 Apr 2025 12:49:05 +0200
+Message-ID: <20250408104830.708814448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -49,68 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit dcb166ee43c3d594e7b73a24f6e8cf5663eeff2c ]
+[ Upstream commit 527664f738afb6f2c58022cd35e63801e5dc7aec ]
 
-There is a type bug because the return statement:
+PCIe hotplug can operate in poll mode without interrupt handlers using a
+polling kthread only.  eb34da60edee ("PCI: pciehp: Disable hotplug
+interrupt during suspend") failed to consider that and enables HPIE
+(Hot-Plug Interrupt Enable) unconditionally when resuming the Port.
 
-        return ret < 0 ? ret : recv_cnt;
+Only set HPIE if non-poll mode is in use. This makes
+pcie_enable_interrupt() match how pcie_enable_notification() already
+handles HPIE.
 
-The issue is that ret is an int, recv_cnt is a u32 and the function
-returns ssize_t, which is a signed long.  The way that the type promotion
-works is that the negative error codes are first cast to u32 and then
-to signed long.  The error codes end up being positive instead of
-negative and the callers treat them as success.
-
-Fixes: 81cc7e51c4f1 ("drm/mediatek: Allow commands to be sent during video mode")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202412210801.iADw0oIH-lkp@intel.com/
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/b754a408-4f39-4e37-b52d-7706c132e27f@stanley.mountain/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Link: https://lore.kernel.org/r/20250321162114.3939-1-ilpo.jarvinen@linux.intel.com
+Fixes: eb34da60edee ("PCI: pciehp: Disable hotplug interrupt during suspend")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dsi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pci/hotplug/pciehp_hpc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-index 3b55a83b7cdff..cac98f0104257 100644
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -920,12 +920,12 @@ static ssize_t mtk_dsi_host_transfer(struct mipi_dsi_host *host,
- 				     const struct mipi_dsi_msg *msg)
+diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
+index 7773009b8b32e..6647ade09f054 100644
+--- a/drivers/pci/hotplug/pciehp_hpc.c
++++ b/drivers/pci/hotplug/pciehp_hpc.c
+@@ -840,7 +840,9 @@ void pcie_enable_interrupt(struct controller *ctrl)
  {
- 	struct mtk_dsi *dsi = host_to_dsi(host);
--	u32 recv_cnt, i;
-+	ssize_t recv_cnt;
- 	u8 read_data[16];
- 	void *src_addr;
- 	u8 irq_flag = CMD_DONE_INT_FLAG;
- 	u32 dsi_mode;
--	int ret;
-+	int ret, i;
+ 	u16 mask;
  
- 	dsi_mode = readl(dsi->regs + DSI_MODE_CTRL);
- 	if (dsi_mode & MODE) {
-@@ -974,7 +974,7 @@ static ssize_t mtk_dsi_host_transfer(struct mipi_dsi_host *host,
- 	if (recv_cnt)
- 		memcpy(msg->rx_buf, src_addr, recv_cnt);
+-	mask = PCI_EXP_SLTCTL_HPIE | PCI_EXP_SLTCTL_DLLSCE;
++	mask = PCI_EXP_SLTCTL_DLLSCE;
++	if (!pciehp_poll_mode)
++		mask |= PCI_EXP_SLTCTL_HPIE;
+ 	pcie_write_cmd(ctrl, mask, mask);
+ }
  
--	DRM_INFO("dsi get %d byte data from the panel address(0x%x)\n",
-+	DRM_INFO("dsi get %zd byte data from the panel address(0x%x)\n",
- 		 recv_cnt, *((u8 *)(msg->tx_buf)));
- 
- restore_dsi_mode:
 -- 
 2.39.5
 
