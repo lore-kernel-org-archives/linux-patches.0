@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09B0268C44;
-	Tue,  8 Apr 2025 11:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D770265CAF;
+	Tue,  8 Apr 2025 11:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111298; cv=none; b=WCZOelBnoVrFGDral7XAGXt3AV/LvNSYrUfGkxJbCH0FORDWfXEb9bAYhOME7N1xNc7Y/cDEPXPbouzFDHY6CRgf9XgPiTsLBIwRTNFFHL8XMveGv1ZpwuyzZt1NwM5pidmOn/suI9qaE7M0pNsIxrY5GYyov7sszemahuPXIoY=
+	t=1744111301; cv=none; b=SVuY5qhc74QNsfpuar82UM61N0OoC+0NH2l+BFnosuonrEsY2bmSChX3z1YTDDB2MTbKJH7jyTikEeGG+4vHc9qhc7awQdavldb8yA69rIqqdjmXlt+cbztY3Ry1cu4jf99Lxh/cXlo1tTQ5vlpMvOoFSZJcguF4jIC3XtJrIUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111298; c=relaxed/simple;
-	bh=w1mlJ6/YkY6Aetrw4q51JhWfvb42091B68Gyd5FOqh0=;
+	s=arc-20240116; t=1744111301; c=relaxed/simple;
+	bh=q6RcL0NSdLinZrhQBMHm93McFPFy4uJl7jL2lSma4w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EAAgz3hdQmwn4KaBTxwbC3GyelvAWAhkL8t7vFh8WSc6dq2g3POr3+tJyciXmnUrNfefnTAecQsghxfKZO1aDEnsNaxbw6A6J2cSnk4sbQcROLyS4RsrBcPkIwGGWppb/Lci0VjrMrqIiz+C/KbmErHNQVlM5bKM7Q7uIy8yA5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsEoJ2K6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IAZ57jx0093bAyQdz7FPGVLM4KoFESp8LksPFgB+ttEKr4QQFR+moBE529fEBVvpZHds/GI9j91HAfVD+oMgJZ5fQCZuRjdEqIb0qkhMx3xFkQe2gW6guvQC4ZVje+mXJWXPzJwigARKWBGSHpCvXJUH6jZMe38T4ptBV8tts4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhLiV4R6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsEoJ2K6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A7EC4CEE7;
-	Tue,  8 Apr 2025 11:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhLiV4R6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBF7C4CEE5;
+	Tue,  8 Apr 2025 11:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111298;
-	bh=w1mlJ6/YkY6Aetrw4q51JhWfvb42091B68Gyd5FOqh0=;
+	s=korg; t=1744111301;
+	bh=q6RcL0NSdLinZrhQBMHm93McFPFy4uJl7jL2lSma4w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsEoJ2K6nyqZ2lRyJtBPbWeH6b/2jTHmnZyBmk/9hEJU1Vt4oVitbULulhqm5qVaD
-	 Ka9CtvfBKkgHrGOg70h9oRbq/shIuYXVkVl1zcBgQLkFinUcmMl7KPZI70wYtPxBGK
-	 8hmsIdI2df5NKlCs/QsGRF/hFLgathpgFVYPl8OU=
+	b=IhLiV4R60GvoDi71luLVWSzCcxkYbYvjXNM5OGTfZXOoIzdtnyQd4qOrSDvj5cIrZ
+	 y7SjIrpRUna3lU0Mi+ey2DNM+0xSlwxaR0AzolI2uvHdNZSrBpEmQco5m12BlLiJVy
+	 rWYgaNAFL6UTizx7WGyH/PWJtqPp3nLr+eZRXBT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 341/731] PCI: pciehp: Dont enable HPIE when resuming in poll mode
-Date: Tue,  8 Apr 2025 12:43:58 +0200
-Message-ID: <20250408104922.207094026@linuxfoundation.org>
+Subject: [PATCH 6.14 342/731] PCI/bwctrl: Fix pcie_bwctrl_select_speed() return type
+Date: Tue,  8 Apr 2025 12:43:59 +0200
+Message-ID: <20250408104922.229921185@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,42 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 527664f738afb6f2c58022cd35e63801e5dc7aec ]
+[ Upstream commit 026e4bffb0af9632f5a0bbf8d594f2aace44cf07 ]
 
-PCIe hotplug can operate in poll mode without interrupt handlers using a
-polling kthread only.  eb34da60edee ("PCI: pciehp: Disable hotplug
-interrupt during suspend") failed to consider that and enables HPIE
-(Hot-Plug Interrupt Enable) unconditionally when resuming the Port.
+pcie_bwctrl_select_speed() should take __fls() of the speed bit, not return
+it as a raw value. Instead of directly returning 2.5GT/s speed bit, simply
+assign the fallback speed (2.5GT/s) into supported_speeds variable to share
+the normal return path that calls pcie_supported_speeds2target_speed() to
+calculate __fls().
 
-Only set HPIE if non-poll mode is in use. This makes
-pcie_enable_interrupt() match how pcie_enable_notification() already
-handles HPIE.
+This code path is not very likely to execute because
+pcie_get_supported_speeds() should provide valid ->supported_speeds but a
+spec violating device could fail to synthesize any speed in
+pcie_get_supported_speeds(). It could also happen in case the
+supported_speeds intersection is empty (also a violation of the current
+PCIe specs).
 
-Link: https://lore.kernel.org/r/20250321162114.3939-1-ilpo.jarvinen@linux.intel.com
-Fixes: eb34da60edee ("PCI: pciehp: Disable hotplug interrupt during suspend")
+Link: https://lore.kernel.org/r/20250321163103.5145-1-ilpo.jarvinen@linux.intel.com
+Fixes: de9a6c8d5dbf ("PCI/bwctrl: Add pcie_set_target_speed() to set PCIe Link Speed")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pciehp_hpc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/pcie/bwctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
-index bb5a8d9f03ad9..28ab393af1c04 100644
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -842,7 +842,9 @@ void pcie_enable_interrupt(struct controller *ctrl)
- {
- 	u16 mask;
+diff --git a/drivers/pci/pcie/bwctrl.c b/drivers/pci/pcie/bwctrl.c
+index 0a5e7efbce2cc..58ba8142c9a31 100644
+--- a/drivers/pci/pcie/bwctrl.c
++++ b/drivers/pci/pcie/bwctrl.c
+@@ -113,7 +113,7 @@ static u16 pcie_bwctrl_select_speed(struct pci_dev *port, enum pci_bus_speed spe
+ 		up_read(&pci_bus_sem);
+ 	}
+ 	if (!supported_speeds)
+-		return PCI_EXP_LNKCAP2_SLS_2_5GB;
++		supported_speeds = PCI_EXP_LNKCAP2_SLS_2_5GB;
  
--	mask = PCI_EXP_SLTCTL_HPIE | PCI_EXP_SLTCTL_DLLSCE;
-+	mask = PCI_EXP_SLTCTL_DLLSCE;
-+	if (!pciehp_poll_mode)
-+		mask |= PCI_EXP_SLTCTL_HPIE;
- 	pcie_write_cmd(ctrl, mask, mask);
+ 	return pcie_supported_speeds2target_speed(supported_speeds & desired_speeds);
  }
- 
 -- 
 2.39.5
 
