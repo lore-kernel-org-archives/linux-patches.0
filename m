@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF4F2638B8;
-	Tue,  8 Apr 2025 12:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C524F26B960;
+	Tue,  8 Apr 2025 12:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114429; cv=none; b=ghrZeAmCEgHQngc2I2rp4gPic483JkqexcF8Lytg3txBkEOnrO+84hUYh5ECi1ziQpctn3tn7nOUHEDCupGsxGe7qm2NtAUS3In6+eXkDVPGzexjJzVOZdwJnEsNDMl+eLx8OnR8U/oAw6gXuR7ObOuOqqtCXVab7JoDQF3gV78=
+	t=1744114431; cv=none; b=phM4mkkgBAn0AZ8KVCxninASIYW47NC8DTJq3UEGt84/gITeowxUkJXmzDICb859AHehJ4T3t6WtDjWIR+EtU7JFhsHn6OXqeYSIsXIEWlfRjQIJXoKB2flFyot11qCFE/xSb+yqj+8EPz0mK7kW5eot9eIE2wOdq4PrP3rM1/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114429; c=relaxed/simple;
-	bh=4ks3joYJYg4ZgBZPDIyrmZ4Iwqh7Ass2Vizg0PzZpiY=;
+	s=arc-20240116; t=1744114431; c=relaxed/simple;
+	bh=26xILjm4xFd4S5m7hXcKDjauaF6AO5izTeS8XJ16728=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JcJYJxVQDWAHVyFlCRxMAHL+SiDWZwwCfdMDi/VTdmx7EzfQfc8smJy7HR5oJSQAIaH22cB7cQf6DuXCGMSadhogg+fyQCW2OnWiLvtds44tEYRXIoH9fz1+gEljRpBC3pX36RrS3NhHg3Gvl1Q7p12gkIMbkql2jH2V07GHFWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZRodT4W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O0bCVMUtqSjMPlrsq/l6rU/rSqsDoASf6cyw8qeDLXF3CVvkwt3iDOgP/2UlR3b/uAg0e7zxPDIKbaHGk3DjOKUbdoKoO723aMVNHQkz1wx1jqgXpgdhgvtd5WXiRpMRIQ1+DagCY4n7Qv0hm+VgKo065QcAupKmJHuW/Nhcx5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x07GI2nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZRodT4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC09C4CEE5;
-	Tue,  8 Apr 2025 12:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x07GI2nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CFC9C4CEE5;
+	Tue,  8 Apr 2025 12:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114429;
-	bh=4ks3joYJYg4ZgBZPDIyrmZ4Iwqh7Ass2Vizg0PzZpiY=;
+	s=korg; t=1744114431;
+	bh=26xILjm4xFd4S5m7hXcKDjauaF6AO5izTeS8XJ16728=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZRodT4WlGC3D3BLAGT8XIvFgI72mSqSQwvF9AxYccQreCD0zwHxgX7GB6Clal7gL
-	 6PQEdlmaj3T3MIPgStftfj4tBxCXUcnqQ9plGJ/xeK8RVjFi6gn89z9gKcmdvAEUIw
-	 TVL860huo2o8a6mYjLTdX5pHqb32dYPN0MK2lENw=
+	b=x07GI2nhTZNrwxh5vBbkY4oHrokHVbI6OdCrYtS3f4QnmqiXoOJSJEQFzgRocUv1o
+	 dcXQmhg7oQJza/pGz3Kbnv7Pwv51T6YEtUUeZ5eRxQGv0vskdaoKx03ynXfAEjBrSy
+	 D1no/gYTybocDRXcGsE5ow925pVA9dmujghvDGZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Jason-JH Lin <jason-jh.lin@mediatek.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 103/499] PCI: xilinx-cpm: Fix IRQ domain leak in error path of probe
-Date: Tue,  8 Apr 2025 12:45:15 +0200
-Message-ID: <20250408104853.780942004@linuxfoundation.org>
+Subject: [PATCH 6.13 104/499] drm/mediatek: Fix config_updating flag never false when no mbox channel
+Date: Tue,  8 Apr 2025 12:45:16 +0200
+Message-ID: <20250408104853.804724937@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,67 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
+From: Jason-JH Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 57b0302240741e73fe51f88404b3866e0d2933ad ]
+[ Upstream commit 4ba973c8bad04d59fd4efa62512f4d9cee131714 ]
 
-The IRQ domain allocated for the PCIe controller is not freed if
-resource_list_first_type() returns NULL, leading to a resource leak.
+When CONFIG_MTK_CMDQ is enabled, if the display is controlled by the CPU
+while other hardware is controlled by the GCE, the display will encounter
+a mbox request channel failure.
+However, it will still enter the CONFIG_MTK_CMDQ statement, causing the
+config_updating flag to never be set to false. As a result, no page flip
+event is sent back to user space, and the screen does not update.
 
-This fix ensures properly cleaning up the allocated IRQ domain in
-the error path.
-
-Fixes: 49e427e6bdd1 ("Merge branch 'pci/host-probe-refactor'")
-Signed-off-by: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
-[kwilczynski: added missing Fixes: tag, refactored to use one of the goto labels]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://lore.kernel.org/r/20250224155025.782179-2-thippeswamy.havalige@amd.com
+Fixes: da03801ad08f ("drm/mediatek: Move mtk_crtc_finish_page_flip() to ddp_cmdq_cb()")
+Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250224051301.3538484-1-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-cpm.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_crtc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-xilinx-cpm.c b/drivers/pci/controller/pcie-xilinx-cpm.c
-index a0f5e1d67b04c..1594d9e9e637a 100644
---- a/drivers/pci/controller/pcie-xilinx-cpm.c
-+++ b/drivers/pci/controller/pcie-xilinx-cpm.c
-@@ -570,15 +570,17 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
- 		return err;
+diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+index 5674f5707cca8..8f6fba4217ece 100644
+--- a/drivers/gpu/drm/mediatek/mtk_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
+@@ -620,13 +620,16 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
  
- 	bus = resource_list_first_type(&bridge->windows, IORESOURCE_BUS);
--	if (!bus)
--		return -ENODEV;
-+	if (!bus) {
-+		err = -ENODEV;
-+		goto err_free_irq_domains;
-+	}
- 
- 	port->variant = of_device_get_match_data(dev);
- 
- 	err = xilinx_cpm_pcie_parse_dt(port, bus->res);
- 	if (err) {
- 		dev_err(dev, "Parsing DT failed\n");
--		goto err_parse_dt;
-+		goto err_free_irq_domains;
+ 		mbox_send_message(mtk_crtc->cmdq_client.chan, cmdq_handle);
+ 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
++		goto update_config_out;
  	}
+-#else
++#endif
+ 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
+ 	mtk_crtc->config_updating = false;
+ 	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
+-#endif
  
- 	xilinx_cpm_pcie_init_port(port);
-@@ -602,7 +604,7 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
- 	xilinx_cpm_free_interrupts(port);
- err_setup_irq:
- 	pci_ecam_free(port->cfg);
--err_parse_dt:
-+err_free_irq_domains:
- 	xilinx_cpm_free_irq_domains(port);
- 	return err;
++#if IS_REACHABLE(CONFIG_MTK_CMDQ)
++update_config_out:
++#endif
+ 	mutex_unlock(&mtk_crtc->hw_lock);
  }
+ 
 -- 
 2.39.5
 
