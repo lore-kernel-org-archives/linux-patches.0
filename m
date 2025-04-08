@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC79263F3B;
-	Tue,  8 Apr 2025 12:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5D61AAA0F;
+	Tue,  8 Apr 2025 12:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113850; cv=none; b=gQmPwj35d/WAG/Fk9bx3YoXgtGjqDW00vXhce5TjQzQrFsdmrEWf2TUxPQM8rulcaeVAXyfzLmTLkUSe2HWy/+NxyMN4X59dHul3jkdis4xzeAlTuIsY289jfTRvyHMyyYky1gYc0zIlebQnexNZHL+4YZR1JSPibgTQ+tZ8tPw=
+	t=1744113853; cv=none; b=NH8C9MT6S0pj2EDmI+L/QBxa9gwSifaZnXb+Zkf+FqIloqWP32TGg5Te8E5gz7u9DGM9NlOs/pFp1RCKlhHbDsTG7rjKLmrFeBmFbqp77cWdzCfLkigRoqEMfJQ/GFVSto4AtIqza/C3luWRSaREWbT1VMBrFZ7nYfL7PqmE3Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113850; c=relaxed/simple;
-	bh=GZRHOZDaFVLphiZ2wKmkZlX4OvR3TCFH2T16vIs36Kg=;
+	s=arc-20240116; t=1744113853; c=relaxed/simple;
+	bh=/6equ692udvSl3OrppxMS1O6LM3nEOQoQZGbS7Bd4QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gM7PuWb4MzWqaRAdGR9Rsz4T30oI8droAsBStyf3hx+Kum9rD8wo8D6V8rxBcJjm4YOUWIUNSVQN0DyVRyOsUax33KMpdrrfNarGZnTKu84yBF9r7IcOP9WwRBMNt+FcO2mHvxg4BK0qK5Ht4294KhQJd/FztsbVV3qjk50wbHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df3Nimrt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsPYTyOzgXOAcM0wvGY5NilfayQg9RpaBuhqnv6A8ilo0Bp0+leht++rePNxJXVzGWAh8ccdnJKgSxeHJBkA9YZsKIrEAjxrACGx+19AUKFhgYj2jaYIJwwPzEbYaw4h91TUJhlmr/fqoXjwmW6kMIpjz05qlqdcxG6zd2eYV30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGfkfVO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df3Nimrt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68D9C4CEE5;
-	Tue,  8 Apr 2025 12:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGfkfVO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B701C4CEE5;
+	Tue,  8 Apr 2025 12:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113850;
-	bh=GZRHOZDaFVLphiZ2wKmkZlX4OvR3TCFH2T16vIs36Kg=;
+	s=korg; t=1744113852;
+	bh=/6equ692udvSl3OrppxMS1O6LM3nEOQoQZGbS7Bd4QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Df3NimrtbE6sQmGoX3paOFKPyMuwqagSFTFKRIrQmrHlELEEaETKXXZFNhLaWYoNk
-	 dHjxqizYArtFPonDjbOzTui00y/oKYs9pp2mObR2bb0qtmVkWdeUKbxV0J7jObgcJa
-	 51OXsCuL2eRfmAH9usVkGUR9//M0irYB8CEUFRqA=
+	b=jGfkfVO17wV/NfZWBaJfF4Q6xzZLVMZW8vXUFqhTdhMpmLZ2Wx1lRN7jrGIRIeNMv
+	 kQxisCKdRxFDxotnu04nB2IKi9YZY4dk656le366hVvnzVLm1ZVUK44rrbfEkHI0uy
+	 DaV8cSrJgYHf9XsvDQ+XtzKIVQF7O+BNASlUI4ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 044/154] drm/amd/display: Assign normalized_pix_clk when color depth = 14
-Date: Tue,  8 Apr 2025 12:49:45 +0200
-Message-ID: <20250408104816.685352163@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 045/154] qlcnic: fix memory leak issues in qlcnic_sriov_common.c
+Date: Tue,  8 Apr 2025 12:49:46 +0200
+Message-ID: <20250408104816.719748281@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,49 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 79e31396fdd7037c503e6add15af7cb00633ea92 upstream.
+commit d2b9d97e89c79c95f8b517e4fa43fd100f936acc upstream.
 
-[WHY & HOW]
-A warning message "WARNING: CPU: 4 PID: 459 at ... /dc_resource.c:3397
-calculate_phy_pix_clks+0xef/0x100 [amdgpu]" occurs because the
-display_color_depth == COLOR_DEPTH_141414 is not handled. This is
-observed in Radeon RX 6600 XT.
+Add qlcnic_sriov_free_vlans() in qlcnic_sriov_alloc_vlans() if
+any sriov_vlans fails to be allocated.
+Add qlcnic_sriov_free_vlans() to free the memory allocated by
+qlcnic_sriov_alloc_vlans() if "sriov->allowed_vlans" fails to
+be allocated.
 
-It is fixed by assigning pix_clk * (14 * 3) / 24 - same as the rests.
-
-Also fixes the indentation in get_norm_pix_clk.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 274a87eb389f58eddcbc5659ab0b180b37e92775)
+Fixes: 91b7282b613d ("qlcnic: Support VLAN id config.")
 Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250307094952.14874-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1834,10 +1834,13 @@ static int get_norm_pix_clk(const struct
- 			break;
- 		case COLOR_DEPTH_121212:
- 			normalized_pix_clk = (pix_clk * 36) / 24;
--		break;
-+			break;
-+		case COLOR_DEPTH_141414:
-+			normalized_pix_clk = (pix_clk * 42) / 24;
-+			break;
- 		case COLOR_DEPTH_161616:
- 			normalized_pix_clk = (pix_clk * 48) / 24;
--		break;
-+			break;
- 		default:
- 			ASSERT(0);
- 		break;
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -455,8 +455,10 @@ static int qlcnic_sriov_set_guest_vlan_m
+ 
+ 	num_vlans = sriov->num_allowed_vlans;
+ 	sriov->allowed_vlans = kcalloc(num_vlans, sizeof(u16), GFP_KERNEL);
+-	if (!sriov->allowed_vlans)
++	if (!sriov->allowed_vlans) {
++		qlcnic_sriov_free_vlans(adapter);
+ 		return -ENOMEM;
++	}
+ 
+ 	vlans = (u16 *)&cmd->rsp.arg[3];
+ 	for (i = 0; i < num_vlans; i++)
+@@ -2174,8 +2176,10 @@ int qlcnic_sriov_alloc_vlans(struct qlcn
+ 		vf = &sriov->vf_info[i];
+ 		vf->sriov_vlans = kcalloc(sriov->num_allowed_vlans,
+ 					  sizeof(*vf->sriov_vlans), GFP_KERNEL);
+-		if (!vf->sriov_vlans)
++		if (!vf->sriov_vlans) {
++			qlcnic_sriov_free_vlans(adapter);
+ 			return -ENOMEM;
++		}
+ 	}
+ 
+ 	return 0;
 
 
