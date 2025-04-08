@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631B269831;
-	Tue,  8 Apr 2025 11:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3C126B2D0;
+	Tue,  8 Apr 2025 11:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111549; cv=none; b=G4sfl8fFyfKC/e44tvcvzLOBHCKzyLE93eKR7gfDxorBKWmEa6fhgTo2CJF9ZNxgrgHZ3apMstNB4htXBOBBAZk9/1NtIW4yBYNDTjsLAeHfPqZk+x9iH9pdlpqXH7hvdRUGdQvMtKB+DNoaq1UULyrhkm6/xoQX2tP7v0c7yMo=
+	t=1744111552; cv=none; b=EIVilm9IODHUa57QaIt1/u5Ys5YcS4bVJvUrU85Ttbmr+qrIZc8UhWLVbdkaWk9OseiE9Mus5KCcCewVD0S4g4vEQhFJgIolB6X4GvvMrc0C8nfwkjTBGctGE9UXksLG+V9K3+dWFg1+IBKzwUKPUm4cY5W+cnnDoIIsFRTZYUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111549; c=relaxed/simple;
-	bh=j4inIDGWVbT1L7V73nrhykQ12JjR7TYi7BH9SKlrGhc=;
+	s=arc-20240116; t=1744111552; c=relaxed/simple;
+	bh=JX2HlB+DgoZRShvVLV37a3O1XNWzfuumHqRiR1uHxfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbfQ5u+boHafJqd/ijbHtfdcYK5nJhbPXrKd4xV4tYVjESvvPkAr4QI6nnx/5xeF3iIVjCqJzJeGsLJxot6sHZ0fOjXvOMg6fn4sjcJH0cGqA2Ev2lh04GHZbGoVzYFRl/zFwA1FzNYUSy/9fPkVwjcBmc0/aPD8lT3sQCrTk9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U32Y48pC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+r2llty2BwYeRo9VG+QQ0LieJ+uxuKLnflqq6EKr9IDfToV8Z6A9hOY1IroxDHUdAy63CL6t0xRTJKIZ0xWQvQ7MQocoF0xTj7fYFoDD2G/E+tihAOBj3BhqHqTLisVUnnNVabQWdWZzsrSKbTZSEf/0fNtdmmmuaD5NUykrgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U99+WfhK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U32Y48pC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94EAC4CEE7;
-	Tue,  8 Apr 2025 11:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U99+WfhK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753F6C4CEE5;
+	Tue,  8 Apr 2025 11:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111549;
-	bh=j4inIDGWVbT1L7V73nrhykQ12JjR7TYi7BH9SKlrGhc=;
+	s=korg; t=1744111551;
+	bh=JX2HlB+DgoZRShvVLV37a3O1XNWzfuumHqRiR1uHxfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U32Y48pC+zh+faWFp/FNAS2jZ1y8Jyy1au95dxSGhDmO96SFgCFAN/HbJkuqg9S0z
-	 9AUPxuR5iXEnbHjNxga2Mup5beln6k94qQ/GEc72GLWYpNos9VPRIuFeEZyW7MtXa1
-	 t4/6PDl7D5w6IMP7iu3KUNvg86hXPsw9LAvRsmNU=
+	b=U99+WfhKu6ub1oUU9FzcxEi8ST2r3OWYwC0D6q9ktgwqtqRJsi+xACKfbtuIQMzvL
+	 dgVZixerheea/mX6XgmRGUycg9hIkKR0AyF2lu/eQYgXdvE/H7QWVSGE7LetoM9MF+
+	 P9fP+oqFT9GUW68h2c52TOTD3yKL44mMKXYJBicY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 422/731] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
-Date: Tue,  8 Apr 2025 12:45:19 +0200
-Message-ID: <20250408104924.089738379@linuxfoundation.org>
+Subject: [PATCH 6.14 465/731] perf pmus: Restructure pmu_read_sysfs to scan fewer PMUs
+Date: Tue,  8 Apr 2025 12:46:02 +0200
+Message-ID: <20250408104925.095231358@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,89 +52,300 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
+[ Upstream commit 57e13264dcea670d5f42a067562f02aa923219e2 ]
 
-When cur_qp isn't NULL, in order to avoid fetching the QP from
-the radix tree again we check if the next cqe QP is identical to
-the one we already have.
+Rather than scanning core or all PMUs, allow pmu_read_sysfs to read
+some combination of core, other, hwmon and tool PMUs. The PMUs that
+should be read and are already read are held as bitmaps. It is known
+that a "hwmon_" prefix is necessary for a hwmon PMU's name, similarly
+with "tool", so only scan those PMUs in situations the PMU name or the
+PMU's type number make sense to.
 
-The bug however is that we are checking if the QP is identical by
-checking the QP number inside the CQE against the QP number inside the
-mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
-FW so it should be matched against mlx5_core_qp which is our FW QP
-number.
+The number of openat system calls reduces from 276 to 98 for a hwmon
+event. The number of openats for regular perf events isn't changed.
 
-Otherwise we could use the wrong QP when handling a CQE which could
-cause the kernel trace below.
-
-This issue is mainly noticeable over QPs 0 & 1, since for now they are
-the only QPs in our driver whereas the QP number inside mlx5_ib_qp
-doesn't match the QP number inside mlx5_core_qp.
-
-BUG: kernel NULL pointer dereference, address: 0000000000000012
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP
- CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
- Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
- RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
- RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
- RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
- R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
- R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
- FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
- Call Trace:
-  <TASK>
-  ? __die+0x20/0x60
-  ? page_fault_oops+0x150/0x3e0
-  ? exc_page_fault+0x74/0x130
-  ? asm_exc_page_fault+0x22/0x30
-  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
-  __ib_process_cq+0x5a/0x150 [ib_core]
-  ib_cq_poll_work+0x31/0x90 [ib_core]
-  process_one_work+0x169/0x320
-  worker_thread+0x288/0x3a0
-  ? work_busy+0xb0/0xb0
-  kthread+0xd7/0x1f0
-  ? kthreads_online_cpu+0x130/0x130
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork+0x2d/0x50
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20250201074320.746259-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 72c6f57a4193 ("perf pmu: Dynamically allocate tool PMU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/pmu.h  |   2 +
+ tools/perf/util/pmus.c | 146 +++++++++++++++++++++++++++--------------
+ 2 files changed, 97 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 4c54dc5780690..1aa5311b03e9f 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -490,7 +490,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
- 	}
+diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
+index dbed6c243a5ef..edd36c20aedc2 100644
+--- a/tools/perf/util/pmu.h
++++ b/tools/perf/util/pmu.h
+@@ -37,6 +37,8 @@ struct perf_pmu_caps {
+ };
  
- 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
--	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
-+	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
- 		/* We do not have to take the QP table lock here,
- 		 * because CQs will be locked while QPs are removed
- 		 * from the table.
+ enum {
++	PERF_PMU_TYPE_PE_START    = 0,
++	PERF_PMU_TYPE_PE_END      = 0xFFFEFFFF,
+ 	PERF_PMU_TYPE_HWMON_START = 0xFFFF0000,
+ 	PERF_PMU_TYPE_HWMON_END   = 0xFFFFFFFD,
+ 	PERF_PMU_TYPE_TOOL = 0xFFFFFFFE,
+diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
+index 60d81d69503e3..8a0a919415d49 100644
+--- a/tools/perf/util/pmus.c
++++ b/tools/perf/util/pmus.c
+@@ -37,10 +37,25 @@
+  */
+ static LIST_HEAD(core_pmus);
+ static LIST_HEAD(other_pmus);
+-static bool read_sysfs_core_pmus;
+-static bool read_sysfs_all_pmus;
++enum perf_tool_pmu_type {
++	PERF_TOOL_PMU_TYPE_PE_CORE,
++	PERF_TOOL_PMU_TYPE_PE_OTHER,
++	PERF_TOOL_PMU_TYPE_TOOL,
++	PERF_TOOL_PMU_TYPE_HWMON,
++
++#define PERF_TOOL_PMU_TYPE_PE_CORE_MASK (1 << PERF_TOOL_PMU_TYPE_PE_CORE)
++#define PERF_TOOL_PMU_TYPE_PE_OTHER_MASK (1 << PERF_TOOL_PMU_TYPE_PE_OTHER)
++#define PERF_TOOL_PMU_TYPE_TOOL_MASK (1 << PERF_TOOL_PMU_TYPE_TOOL)
++#define PERF_TOOL_PMU_TYPE_HWMON_MASK (1 << PERF_TOOL_PMU_TYPE_HWMON)
++
++#define PERF_TOOL_PMU_TYPE_ALL_MASK (PERF_TOOL_PMU_TYPE_PE_CORE_MASK |	\
++					PERF_TOOL_PMU_TYPE_PE_OTHER_MASK | \
++					PERF_TOOL_PMU_TYPE_TOOL_MASK |	\
++					PERF_TOOL_PMU_TYPE_HWMON_MASK)
++};
++static unsigned int read_pmu_types;
+ 
+-static void pmu_read_sysfs(bool core_only);
++static void pmu_read_sysfs(unsigned int to_read_pmus);
+ 
+ size_t pmu_name_len_no_suffix(const char *str)
+ {
+@@ -102,8 +117,7 @@ void perf_pmus__destroy(void)
+ 
+ 		perf_pmu__delete(pmu);
+ 	}
+-	read_sysfs_core_pmus = false;
+-	read_sysfs_all_pmus = false;
++	read_pmu_types = 0;
+ }
+ 
+ static struct perf_pmu *pmu_find(const char *name)
+@@ -129,6 +143,7 @@ struct perf_pmu *perf_pmus__find(const char *name)
+ 	struct perf_pmu *pmu;
+ 	int dirfd;
+ 	bool core_pmu;
++	unsigned int to_read_pmus = 0;
+ 
+ 	/*
+ 	 * Once PMU is loaded it stays in the list,
+@@ -139,11 +154,11 @@ struct perf_pmu *perf_pmus__find(const char *name)
+ 	if (pmu)
+ 		return pmu;
+ 
+-	if (read_sysfs_all_pmus)
++	if (read_pmu_types == PERF_TOOL_PMU_TYPE_ALL_MASK)
+ 		return NULL;
+ 
+ 	core_pmu = is_pmu_core(name);
+-	if (core_pmu && read_sysfs_core_pmus)
++	if (core_pmu && (read_pmu_types & PERF_TOOL_PMU_TYPE_PE_CORE_MASK))
+ 		return NULL;
+ 
+ 	dirfd = perf_pmu__event_source_devices_fd();
+@@ -151,15 +166,27 @@ struct perf_pmu *perf_pmus__find(const char *name)
+ 			       /*eager_load=*/false);
+ 	close(dirfd);
+ 
+-	if (!pmu) {
+-		/*
+-		 * Looking up an inidividual PMU failed. This may mean name is
+-		 * an alias, so read the PMUs from sysfs and try to find again.
+-		 */
+-		pmu_read_sysfs(core_pmu);
++	if (pmu)
++		return pmu;
++
++	/* Looking up an individual perf event PMU failed, check if a tool PMU should be read. */
++	if (!strncmp(name, "hwmon_", 6))
++		to_read_pmus |= PERF_TOOL_PMU_TYPE_HWMON_MASK;
++	else if (!strcmp(name, "tool"))
++		to_read_pmus |= PERF_TOOL_PMU_TYPE_TOOL_MASK;
++
++	if (to_read_pmus) {
++		pmu_read_sysfs(to_read_pmus);
+ 		pmu = pmu_find(name);
++		if (pmu)
++			return pmu;
+ 	}
+-	return pmu;
++	/* Read all necessary PMUs from sysfs and see if the PMU is found. */
++	to_read_pmus = PERF_TOOL_PMU_TYPE_PE_CORE_MASK;
++	if (!core_pmu)
++		to_read_pmus |= PERF_TOOL_PMU_TYPE_PE_OTHER_MASK;
++	pmu_read_sysfs(to_read_pmus);
++	return pmu_find(name);
+ }
+ 
+ static struct perf_pmu *perf_pmu__find2(int dirfd, const char *name)
+@@ -176,11 +203,11 @@ static struct perf_pmu *perf_pmu__find2(int dirfd, const char *name)
+ 	if (pmu)
+ 		return pmu;
+ 
+-	if (read_sysfs_all_pmus)
++	if (read_pmu_types == PERF_TOOL_PMU_TYPE_ALL_MASK)
+ 		return NULL;
+ 
+ 	core_pmu = is_pmu_core(name);
+-	if (core_pmu && read_sysfs_core_pmus)
++	if (core_pmu && (read_pmu_types & PERF_TOOL_PMU_TYPE_PE_CORE_MASK))
+ 		return NULL;
+ 
+ 	return perf_pmu__lookup(core_pmu ? &core_pmus : &other_pmus, dirfd, name,
+@@ -197,52 +224,60 @@ static int pmus_cmp(void *priv __maybe_unused,
+ }
+ 
+ /* Add all pmus in sysfs to pmu list: */
+-static void pmu_read_sysfs(bool core_only)
++static void pmu_read_sysfs(unsigned int to_read_types)
+ {
+-	int fd;
+-	DIR *dir;
+-	struct dirent *dent;
+ 	struct perf_pmu *tool_pmu;
+ 
+-	if (read_sysfs_all_pmus || (core_only && read_sysfs_core_pmus))
++	if ((read_pmu_types & to_read_types) == to_read_types) {
++		/* All requested PMU types have been read. */
+ 		return;
++	}
+ 
+-	fd = perf_pmu__event_source_devices_fd();
+-	if (fd < 0)
+-		return;
++	if (to_read_types & (PERF_TOOL_PMU_TYPE_PE_CORE_MASK | PERF_TOOL_PMU_TYPE_PE_OTHER_MASK)) {
++		int fd = perf_pmu__event_source_devices_fd();
++		DIR *dir;
++		struct dirent *dent;
++		bool core_only = (to_read_types & PERF_TOOL_PMU_TYPE_PE_OTHER_MASK) == 0;
+ 
+-	dir = fdopendir(fd);
+-	if (!dir) {
+-		close(fd);
+-		return;
+-	}
++		if (fd < 0)
++			goto skip_pe_pmus;
+ 
+-	while ((dent = readdir(dir))) {
+-		if (!strcmp(dent->d_name, ".") || !strcmp(dent->d_name, ".."))
+-			continue;
+-		if (core_only && !is_pmu_core(dent->d_name))
+-			continue;
+-		/* add to static LIST_HEAD(core_pmus) or LIST_HEAD(other_pmus): */
+-		perf_pmu__find2(fd, dent->d_name);
+-	}
++		dir = fdopendir(fd);
++		if (!dir) {
++			close(fd);
++			goto skip_pe_pmus;
++		}
+ 
+-	closedir(dir);
+-	if (list_empty(&core_pmus)) {
++		while ((dent = readdir(dir))) {
++			if (!strcmp(dent->d_name, ".") || !strcmp(dent->d_name, ".."))
++				continue;
++			if (core_only && !is_pmu_core(dent->d_name))
++				continue;
++			/* add to static LIST_HEAD(core_pmus) or LIST_HEAD(other_pmus): */
++			perf_pmu__find2(fd, dent->d_name);
++		}
++
++		closedir(dir);
++	}
++skip_pe_pmus:
++	if ((to_read_types & PERF_TOOL_PMU_TYPE_PE_CORE_MASK) && list_empty(&core_pmus)) {
+ 		if (!perf_pmu__create_placeholder_core_pmu(&core_pmus))
+ 			pr_err("Failure to set up any core PMUs\n");
+ 	}
+ 	list_sort(NULL, &core_pmus, pmus_cmp);
+-	if (!core_only) {
++
++	if ((to_read_types & PERF_TOOL_PMU_TYPE_TOOL_MASK) != 0 &&
++	    (read_pmu_types & PERF_TOOL_PMU_TYPE_TOOL_MASK) == 0) {
+ 		tool_pmu = perf_pmus__tool_pmu();
+ 		list_add_tail(&tool_pmu->list, &other_pmus);
+-		perf_pmus__read_hwmon_pmus(&other_pmus);
+ 	}
++	if ((to_read_types & PERF_TOOL_PMU_TYPE_HWMON_MASK) != 0 &&
++	    (read_pmu_types & PERF_TOOL_PMU_TYPE_HWMON_MASK) == 0)
++		perf_pmus__read_hwmon_pmus(&other_pmus);
++
+ 	list_sort(NULL, &other_pmus, pmus_cmp);
+-	if (!list_empty(&core_pmus)) {
+-		read_sysfs_core_pmus = true;
+-		if (!core_only)
+-			read_sysfs_all_pmus = true;
+-	}
++
++	read_pmu_types |= to_read_types;
+ }
+ 
+ static struct perf_pmu *__perf_pmus__find_by_type(unsigned int type)
+@@ -263,12 +298,21 @@ static struct perf_pmu *__perf_pmus__find_by_type(unsigned int type)
+ 
+ struct perf_pmu *perf_pmus__find_by_type(unsigned int type)
+ {
++	unsigned int to_read_pmus;
+ 	struct perf_pmu *pmu = __perf_pmus__find_by_type(type);
+ 
+-	if (pmu || read_sysfs_all_pmus)
++	if (pmu || (read_pmu_types == PERF_TOOL_PMU_TYPE_ALL_MASK))
+ 		return pmu;
+ 
+-	pmu_read_sysfs(/*core_only=*/false);
++	if (type >= PERF_PMU_TYPE_PE_START && type <= PERF_PMU_TYPE_PE_END) {
++		to_read_pmus = PERF_TOOL_PMU_TYPE_PE_CORE_MASK |
++			PERF_TOOL_PMU_TYPE_PE_OTHER_MASK;
++	} else if (type >= PERF_PMU_TYPE_HWMON_START && type <= PERF_PMU_TYPE_HWMON_END) {
++		to_read_pmus = PERF_TOOL_PMU_TYPE_HWMON_MASK;
++	} else {
++		to_read_pmus = PERF_TOOL_PMU_TYPE_TOOL_MASK;
++	}
++	pmu_read_sysfs(to_read_pmus);
+ 	pmu = __perf_pmus__find_by_type(type);
+ 	return pmu;
+ }
+@@ -282,7 +326,7 @@ struct perf_pmu *perf_pmus__scan(struct perf_pmu *pmu)
+ 	bool use_core_pmus = !pmu || pmu->is_core;
+ 
+ 	if (!pmu) {
+-		pmu_read_sysfs(/*core_only=*/false);
++		pmu_read_sysfs(PERF_TOOL_PMU_TYPE_ALL_MASK);
+ 		pmu = list_prepare_entry(pmu, &core_pmus, list);
+ 	}
+ 	if (use_core_pmus) {
+@@ -300,7 +344,7 @@ struct perf_pmu *perf_pmus__scan(struct perf_pmu *pmu)
+ struct perf_pmu *perf_pmus__scan_core(struct perf_pmu *pmu)
+ {
+ 	if (!pmu) {
+-		pmu_read_sysfs(/*core_only=*/true);
++		pmu_read_sysfs(PERF_TOOL_PMU_TYPE_PE_CORE_MASK);
+ 		return list_first_entry_or_null(&core_pmus, typeof(*pmu), list);
+ 	}
+ 	list_for_each_entry_continue(pmu, &core_pmus, list)
+@@ -316,7 +360,7 @@ static struct perf_pmu *perf_pmus__scan_skip_duplicates(struct perf_pmu *pmu)
+ 	const char *last_pmu_name = (pmu && pmu->name) ? pmu->name : "";
+ 
+ 	if (!pmu) {
+-		pmu_read_sysfs(/*core_only=*/false);
++		pmu_read_sysfs(PERF_TOOL_PMU_TYPE_ALL_MASK);
+ 		pmu = list_prepare_entry(pmu, &core_pmus, list);
+ 	} else
+ 		last_pmu_name_len = pmu_name_len_no_suffix(pmu->name ?: "");
 -- 
 2.39.5
 
