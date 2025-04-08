@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318A263F4D;
-	Tue,  8 Apr 2025 12:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84258263F4D;
+	Tue,  8 Apr 2025 12:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115373; cv=none; b=dkwySJyGv1jbLuAgZ/FKuH3Pnc4sJ63/7lm38/tb+4oCKR6WSu+4H4+XRjoOcPf8B87odO+TQiQqKm5YJN5vZgJ645xTUqt5Qjp7RWn48O47f03ejB+hZoVZMcIRCrDrYEHz9shs3EioGEspPIdu30mk4EIFTRzG/uWD2C9MlQg=
+	t=1744115375; cv=none; b=NwNuWBksKc2u0IPACYA1CjtYvSQNpiSj5KJ+BFrdAmNPXcWusBHE+9rQkp0bNsf1nPByL4pBy+Tja2RZApYVwTQdH67Zj5VwSs/KU7Pb/jv56kmlpwknmJBs7pxg4UvSceqB2zMGGK/9Rk5QEt0Ztlgqw5e6zH5cZO8GbKXr+VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115373; c=relaxed/simple;
-	bh=OYKxhML6i7nOsUu9cclVIW3PQNhAlanIXSkE+ZwZQz4=;
+	s=arc-20240116; t=1744115375; c=relaxed/simple;
+	bh=Cp7BIJypO95cW/jsfzrkRCOaZEnVAhML+KtgG9OcSF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZDqpSIt+RmB2PxZmawHN1Z8CCf5TgXzci8dYAe6LWHMaXOqO2YL0PY0TtxOY3xYjMv6oZCVbw+PZLM2uRAksMKaSFFzR+AyynW0ROevjS7GqG9MidUpPmEQFRb1C58lqn9ihHjLxRdNLqyICyO+tHCTOrPMaInphFbYYPo25S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBVCApdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q08pBCABsWUBVKqZCTXyunuuqCHHdP1fNrYivptv8W2w+zowQvM1LH2h7bvVANmnMgl+afNGYwmSbPJ+1mFB/j1xgC1n7eblaiPpBx4uYyM5SNxiEDTNzIqqS9cMFSnP0FYN/L6rRyDIDE66iyMblNv+Hr4oYY8MWBjW6v4xa2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkQgbnE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBVCApdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677B8C4CEE5;
-	Tue,  8 Apr 2025 12:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkQgbnE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1684BC4CEE5;
+	Tue,  8 Apr 2025 12:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115372;
-	bh=OYKxhML6i7nOsUu9cclVIW3PQNhAlanIXSkE+ZwZQz4=;
+	s=korg; t=1744115375;
+	bh=Cp7BIJypO95cW/jsfzrkRCOaZEnVAhML+KtgG9OcSF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBVCApdLZNk52azOfPLlqKnavxFM65rWLk/CaGE93OZ5A4JwVGiUwdwBK72BXzvPA
-	 Nssrs04KG7PY5Gtp5Lk/fBtwE7JonhpcV59VZxQXoAUwr3Y89sHUfozel8epX3eanx
-	 mEoe97jwVrEYpfR2H3UznGcIPjHGGlfoIvIFadyM=
+	b=hkQgbnE4rYcRug26ORUiO9f4DSkgOTDW5bCjurFONQo65xlHnNFXz6Cb2ri4WJ1/c
+	 GT1As7PvWMYGdH6ZVL/1qywf1OIQAS8JZJgstMkUGXvWJhqQZN4dMHsjYg9rw0dktU
+	 DHLuvqwS80/OZx6umStOF7EiyuDZ3dGFgRT8RVeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nihar Chaithanya <niharchaithanya@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 423/499] staging: gpib: agilent_82357a: Handle gpib_register_driver() errors
-Date: Tue,  8 Apr 2025 12:50:35 +0200
-Message-ID: <20250408104901.776191854@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.13 450/499] perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read
+Date: Tue,  8 Apr 2025 12:51:02 +0200
+Message-ID: <20250408104902.454823138@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,61 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nihar Chaithanya <niharchaithanya@gmail.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 9e43ebc613e2adb9b9e900e11a4099e104b61f2d ]
+commit f9bdf1f953392c9edd69a7f884f78c0390127029 upstream.
 
-The usb_register() function can fail and returns an error value which
-is not returned. The function gpib_register_driver() can also fail
-which can result in semi-registered module.
+The WARN_ON(this_cpu_read(cpu_hw_events.enabled)) in the
+intel_pmu_save_and_restart_reload() is triggered, when sampling read
+topdown events.
 
-In case gpib_register_driver() fails unregister the previous usb driver
-registering function. Return the error value if gpib_register_driver()
-or usb_register() functions fail. Add pr_err when registering driver
-fails also indicating the error value.
+In a NMI handler, the cpu_hw_events.enabled is set and used to indicate
+the status of core PMU. The generic pmu->pmu_disable_count, updated in
+the perf_pmu_disable/enable pair, is not touched.
+However, the perf_pmu_disable/enable pair is invoked when sampling read
+in a NMI handler. The cpuc->enabled is mistakenly set by the
+perf_pmu_enable().
 
-Signed-off-by: Nihar Chaithanya <niharchaithanya@gmail.com>
-Link: https://lore.kernel.org/r/20241230185633.175690-4-niharchaithanya@gmail.com
+Avoid disabling PMU if the core PMU is already disabled.
+Merge the logic together.
+
+Fixes: 7b2c05a15d29 ("perf/x86/intel: Generic support for hardware TopDown metrics")
+Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250121152303.3128733-2-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 8491e73a5223 ("staging: gpib: Fix Oops after disconnect in agilent usb")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../staging/gpib/agilent_82357a/agilent_82357a.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |   41 +++++++++++++++++++++++------------------
+ arch/x86/events/intel/ds.c   |   11 +----------
+ arch/x86/events/perf_event.h |    2 +-
+ 3 files changed, 25 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-index bf05fb4a736b3..261fb6d2e9916 100644
---- a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-+++ b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-@@ -1691,12 +1691,24 @@ static struct usb_driver agilent_82357a_bus_driver = {
- static int __init agilent_82357a_init_module(void)
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2779,28 +2779,33 @@ static u64 icl_update_topdown_event(stru
+ 
+ DEFINE_STATIC_CALL(intel_pmu_update_topdown_event, x86_perf_event_update);
+ 
+-static void intel_pmu_read_topdown_event(struct perf_event *event)
++static void intel_pmu_read_event(struct perf_event *event)
  {
- 	int i;
-+	int ret;
- 
- 	pr_info("agilent_82357a_gpib driver loading");
- 	for (i = 0; i < MAX_NUM_82357A_INTERFACES; ++i)
- 		agilent_82357a_driver_interfaces[i] = NULL;
--	usb_register(&agilent_82357a_bus_driver);
--	gpib_register_driver(&agilent_82357a_gpib_interface, THIS_MODULE);
+-	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
++		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++		bool pmu_enabled = cpuc->enabled;
 +
-+	ret = usb_register(&agilent_82357a_bus_driver);
-+	if (ret) {
-+		pr_err("agilent_82357a: usb_register failed: error = %d\n", ret);
-+		return ret;
-+	}
++		/* Only need to call update_topdown_event() once for group read. */
++		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
++			return;
 +
-+	ret = gpib_register_driver(&agilent_82357a_gpib_interface, THIS_MODULE);
-+	if (ret) {
-+		pr_err("agilent_82357a: gpib_register_driver failed: error = %d\n", ret);
-+		usb_deregister(&agilent_82357a_bus_driver);
-+		return ret;
++		cpuc->enabled = 0;
++		if (pmu_enabled)
++			intel_pmu_disable_all();
++
++		if (is_topdown_event(event))
++			static_call(intel_pmu_update_topdown_event)(event);
++		else
++			intel_pmu_drain_pebs_buffer();
++
++		cpuc->enabled = pmu_enabled;
++		if (pmu_enabled)
++			intel_pmu_enable_all(0);
+ 
+-	/* Only need to call update_topdown_event() once for group read. */
+-	if ((cpuc->txn_flags & PERF_PMU_TXN_READ) &&
+-	    !is_slots_event(event))
+ 		return;
 +	}
  
- 	return 0;
+-	perf_pmu_disable(event->pmu);
+-	static_call(intel_pmu_update_topdown_event)(event);
+-	perf_pmu_enable(event->pmu);
+-}
+-
+-static void intel_pmu_read_event(struct perf_event *event)
+-{
+-	if (event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD)
+-		intel_pmu_auto_reload_read(event);
+-	else if (is_topdown_count(event))
+-		intel_pmu_read_topdown_event(event);
+-	else
+-		x86_perf_event_update(event);
++	x86_perf_event_update(event);
  }
--- 
-2.39.5
-
+ 
+ static void intel_pmu_enable_fixed(struct perf_event *event)
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -953,7 +953,7 @@ unlock:
+ 	return 1;
+ }
+ 
+-static inline void intel_pmu_drain_pebs_buffer(void)
++void intel_pmu_drain_pebs_buffer(void)
+ {
+ 	struct perf_sample_data data;
+ 
+@@ -2100,15 +2100,6 @@ get_next_pebs_record_by_bit(void *base,
+ 	return NULL;
+ }
+ 
+-void intel_pmu_auto_reload_read(struct perf_event *event)
+-{
+-	WARN_ON(!(event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD));
+-
+-	perf_pmu_disable(event->pmu);
+-	intel_pmu_drain_pebs_buffer();
+-	perf_pmu_enable(event->pmu);
+-}
+-
+ /*
+  * Special variant of intel_pmu_save_and_restart() for auto-reload.
+  */
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1643,7 +1643,7 @@ void intel_pmu_pebs_disable_all(void);
+ 
+ void intel_pmu_pebs_sched_task(struct perf_event_pmu_context *pmu_ctx, bool sched_in);
+ 
+-void intel_pmu_auto_reload_read(struct perf_event *event);
++void intel_pmu_drain_pebs_buffer(void);
+ 
+ void intel_pmu_store_pebs_lbrs(struct lbr_entry *lbr);
+ 
 
 
