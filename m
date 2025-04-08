@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D828527F4F3;
-	Tue,  8 Apr 2025 12:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD2F27F4F3;
+	Tue,  8 Apr 2025 12:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117194; cv=none; b=on+Qw5NK/sUaAace0cieFaMruswYqbQvKj11jcFq919fukUhszhAkkIa2TU5Ee5yWzsDO/bT4afy69SykEiFjmwVS2bg6HC3EZWNocpJo+HNaCPBAJrC8ibjnKcju5aMmdITpgNkHF4iZ21C3mXoJ7V5RtzfbXW/LhbPNBLMdZA=
+	t=1744117197; cv=none; b=erJ7DLV7Lo/p8k2blEroPT2EVLBJDSHnexkKgzzcRfo5s1wjcoMHwP+nD2N/P/CSL1LtrKJHK+Uo0vCEb9L9bZ/ZVritvrEjiV6ukgffZT98ESuiYV6+pTXMdm/Y8qD94yK0ZUPxhNmKkFiUttfYvHSfVXQUYM80GHcM4ylHVWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117194; c=relaxed/simple;
-	bh=rY5jkUM5nCKnCafggQoSyP+Vl3RxeBH5Xo9rdCmQnKo=;
+	s=arc-20240116; t=1744117197; c=relaxed/simple;
+	bh=B5cBnsTyFlPxzNLJ3ejgnUtlE3/6QKyORf7UchYy5lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhtGXaujaD6/w7ukASKlSmmEtM56atFchs6owgn4ekfvuKAJBsY092gzTMS+rvZ/2XyDrTfBAdWPW42udygd5NGhA9seRB/56SFLoLyhmRGAiZ8JFrpUfO/Fv+tZxK1N84g7MyV2j85psGDbaNIM6rfQy8xRzto/wxy92X50dKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3Uv5wRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9+Ih41A3SFgl0ipKhGLuFWWZ/riNXO3XT4+HAd1kYITMd2q8JTGfGw0Zcywf8KEMGRzgFAYDnLQ05TONIb5JfpOHjtzKjX0Qf/t0ApawkQqnjMOmjCdTvClnWV0Ei6grYYh931zOSIrjQVvF4EfasYY8PmJCFL0YWbcsIYW1a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EczQPOw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3Uv5wRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DDEC4CEE5;
-	Tue,  8 Apr 2025 12:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EczQPOw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11017C4CEEC;
+	Tue,  8 Apr 2025 12:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117194;
-	bh=rY5jkUM5nCKnCafggQoSyP+Vl3RxeBH5Xo9rdCmQnKo=;
+	s=korg; t=1744117197;
+	bh=B5cBnsTyFlPxzNLJ3ejgnUtlE3/6QKyORf7UchYy5lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3Uv5wROJPWqI0ZdF02M1Avwo0HJb4kLIODfWWq00BUewMGWllcEZfMiv+P7OL9b9
-	 LZvbQA9AQs4Nu4oQW5LbAvNmaKV1FTr8sO9Muu837S7qd4zAKIh3bqEJaRfqG54iBy
-	 0L9UAm97YfvNLpEhZkqE4yjkNlvTnkz9+C3ypOeA=
+	b=EczQPOw6YTUJCAH3hdhpuHEgG8fveULrf81dKSPLUWR7rnp+Ec89RFOIFiQxjm4H6
+	 34Ab0WyLKYIESYnBRVTT0AStn3ZRUcdO6mvGYtogpTHNOfKWhqU3IgoXqrvmoHlC74
+	 vsUD8iWGZPcKH0efRQd2wRA8uyBFyB3GJTYKF00U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Li Lingfeng <lilingfeng3@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 418/423] nfsd: allow SC_STATUS_FREEABLE when searching via nfs4_lookup_stateid()
-Date: Tue,  8 Apr 2025 12:52:24 +0200
-Message-ID: <20250408104855.664727527@linuxfoundation.org>
+Subject: [PATCH 6.12 419/423] nfsd: put dl_stid if fail to queue dl_recall
+Date: Tue,  8 Apr 2025 12:52:25 +0200
+Message-ID: <20250408104855.689860711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,58 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-commit d1bc15b147d35b4cb7ca99a9a7d79d41ca342c13 upstream.
+commit 230ca758453c63bd38e4d9f4a21db698f7abada8 upstream.
 
-The pynfs DELEG8 test fails when run against nfsd. It acquires a
-delegation and then lets the lease time out. It then tries to use the
-deleg stateid and expects to see NFS4ERR_DELEG_REVOKED, but it gets
-bad NFS4ERR_BAD_STATEID instead.
+Before calling nfsd4_run_cb to queue dl_recall to the callback_wq, we
+increment the reference count of dl_stid.
+We expect that after the corresponding work_struct is processed, the
+reference count of dl_stid will be decremented through the callback
+function nfsd4_cb_recall_release.
+However, if the call to nfsd4_run_cb fails, the incremented reference
+count of dl_stid will not be decremented correspondingly, leading to the
+following nfs4_stid leak:
+unreferenced object 0xffff88812067b578 (size 344):
+  comm "nfsd", pid 2761, jiffies 4295044002 (age 5541.241s)
+  hex dump (first 32 bytes):
+    01 00 00 00 6b 6b 6b 6b b8 02 c0 e2 81 88 ff ff  ....kkkk........
+    00 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 ad 4e ad de  .kkkkkkk.....N..
+  backtrace:
+    kmem_cache_alloc+0x4b9/0x700
+    nfsd4_process_open1+0x34/0x300
+    nfsd4_open+0x2d1/0x9d0
+    nfsd4_proc_compound+0x7a2/0xe30
+    nfsd_dispatch+0x241/0x3e0
+    svc_process_common+0x5d3/0xcc0
+    svc_process+0x2a3/0x320
+    nfsd+0x180/0x2e0
+    kthread+0x199/0x1d0
+    ret_from_fork+0x30/0x50
+    ret_from_fork_asm+0x1b/0x30
+unreferenced object 0xffff8881499f4d28 (size 368):
+  comm "nfsd", pid 2761, jiffies 4295044005 (age 5541.239s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 30 4d 9f 49 81 88 ff ff  ........0M.I....
+    30 4d 9f 49 81 88 ff ff 20 00 00 00 01 00 00 00  0M.I.... .......
+  backtrace:
+    kmem_cache_alloc+0x4b9/0x700
+    nfs4_alloc_stid+0x29/0x210
+    alloc_init_deleg+0x92/0x2e0
+    nfs4_set_delegation+0x284/0xc00
+    nfs4_open_delegation+0x216/0x3f0
+    nfsd4_process_open2+0x2b3/0xee0
+    nfsd4_open+0x770/0x9d0
+    nfsd4_proc_compound+0x7a2/0xe30
+    nfsd_dispatch+0x241/0x3e0
+    svc_process_common+0x5d3/0xcc0
+    svc_process+0x2a3/0x320
+    nfsd+0x180/0x2e0
+    kthread+0x199/0x1d0
+    ret_from_fork+0x30/0x50
+    ret_from_fork_asm+0x1b/0x30
+Fix it by checking the result of nfsd4_run_cb and call nfs4_put_stid if
+fail to queue dl_recall.
 
-When a delegation is revoked, it's initially marked with
-SC_STATUS_REVOKED, or SC_STATUS_ADMIN_REVOKED and later, it's marked
-with the SC_STATUS_FREEABLE flag, which denotes that it is waiting for
-s FREE_STATEID call.
-
-nfs4_lookup_stateid() accepts a statusmask that includes the status
-flags that a found stateid is allowed to have. Currently, that mask
-never includes SC_STATUS_FREEABLE, which means that revoked delegations
-are (almost) never found.
-
-Add SC_STATUS_FREEABLE to the always-allowed status flags, and remove it
-from nfsd4_delegreturn() since it's now always implied.
-
-Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -6880,7 +6880,7 @@ nfsd4_lookup_stateid(struct nfsd4_compou
- 		 */
- 		statusmask |= SC_STATUS_REVOKED;
+@@ -1057,6 +1057,12 @@ static struct nfs4_ol_stateid * nfs4_all
+ 	return openlockstateid(stid);
+ }
  
--	statusmask |= SC_STATUS_ADMIN_REVOKED;
-+	statusmask |= SC_STATUS_ADMIN_REVOKED | SC_STATUS_FREEABLE;
++/*
++ * As the sc_free callback of deleg, this may be called by nfs4_put_stid
++ * in nfsd_break_one_deleg.
++ * Considering nfsd_break_one_deleg is called with the flc->flc_lock held,
++ * this function mustn't ever sleep.
++ */
+ static void nfs4_free_deleg(struct nfs4_stid *stid)
+ {
+ 	struct nfs4_delegation *dp = delegstateid(stid);
+@@ -5269,6 +5275,7 @@ static const struct nfsd4_callback_ops n
  
- 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
- 		CLOSE_STATEID(stateid))
-@@ -7535,9 +7535,7 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
- 	if ((status = fh_verify(rqstp, &cstate->current_fh, S_IFREG, 0)))
- 		return status;
+ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ {
++	bool queued;
+ 	/*
+ 	 * We're assuming the state code never drops its reference
+ 	 * without first removing the lease.  Since we're in this lease
+@@ -5277,7 +5284,10 @@ static void nfsd_break_one_deleg(struct
+ 	 * we know it's safe to take a reference.
+ 	 */
+ 	refcount_inc(&dp->dl_stid.sc_count);
+-	WARN_ON_ONCE(!nfsd4_run_cb(&dp->dl_recall));
++	queued = nfsd4_run_cb(&dp->dl_recall);
++	WARN_ON_ONCE(!queued);
++	if (!queued)
++		nfs4_put_stid(&dp->dl_stid);
+ }
  
--	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG,
--				      SC_STATUS_REVOKED | SC_STATUS_FREEABLE,
--				      &s, nn);
-+	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG, SC_STATUS_REVOKED, &s, nn);
- 	if (status)
- 		goto out;
- 	dp = delegstateid(s);
+ /* Called from break_lease() with flc_lock held. */
 
 
