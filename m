@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B0C267B15;
-	Tue,  8 Apr 2025 12:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F287265626;
+	Tue,  8 Apr 2025 12:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113911; cv=none; b=h2AwSMG8jAgwx1SueuhFift/nLreFbXYsYgpgpBA+wZw+yF2LJHaAzOguQfE1zHqqvRDedZcXqSJYKev1xAyBWHZOO3tj7C06/P9bdSCdQHOzJVXjRfoO5HnGHw1NoX5Crq826vRmbwI8x8O6vwPTVdBgduskrb1ngCFZyjD92E=
+	t=1744113914; cv=none; b=Ov2BXjRvVCY04gIajoiNOCIF8no9oX9I9ER+0MutWEQUwxucXxM6hfZeMv8Av1LgZytXLDq5cmxQ/l+Ll+uwuXIiW/WsKpf705wiIoDZhJ+xtBNnEns9IwUqMLjcsVQhuk8dg6qhdIlfZAF/+m6tljUCkay3n4ouiBKyM6PBrBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113911; c=relaxed/simple;
-	bh=ZufdNMqAB0bhcbhG53W4ZAidWXnEWo1nsa89515mUoo=;
+	s=arc-20240116; t=1744113914; c=relaxed/simple;
+	bh=ew9FCrOgIrk1M3mBV78IIplXNfg9nGh0xRyN7cmEafU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vl7XFikTCtF5TNmdRN5WHPJarA7RALMfTjgLFFTcSozDj+6iY3UAhXhqA7xO/lBDMy7JiQG9d7lA7kuNGxfRUmVMVGgXPg6X6axS0mzfKUhk52ENP1HpsbKXBWHn4s8XubQ9e+zCW2bUc99dq0xwf/tMDqul8QmLCPgHBO1JeIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7yxq+Nh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nV23OZi02Ru92N8kUdF+zuZJdgmbjZWGZPeuogBlg/QrqxElmyvPU7dG8iBtogh3gQKa0Rkl5uFSxmTNy2cO1xNEE3G3Is6EmMdMo9ITSt+ajTaJ7c/Mdq9X/CtYa1mA5Re3iMbyp5qwpY0Q18JSHGnnq9lIdSf8Lr1COG/zJlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRhFKMFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7yxq+Nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7AAC4CEE5;
-	Tue,  8 Apr 2025 12:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRhFKMFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD68C4CEE5;
+	Tue,  8 Apr 2025 12:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113911;
-	bh=ZufdNMqAB0bhcbhG53W4ZAidWXnEWo1nsa89515mUoo=;
+	s=korg; t=1744113913;
+	bh=ew9FCrOgIrk1M3mBV78IIplXNfg9nGh0xRyN7cmEafU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7yxq+NhMVrnoj2qDvbvP4zybjgGNCGOlFMjjaQlJEOMb+8hhHqfnAm2uGPq0bey+
-	 lupuo7gG3aBJJI4qoB+c8h3mIbDNW50KC1F9ikYpRxGHdlraRVrFAjdkNG0+DKhESf
-	 QoWkbpWp0SAEZY3y+2jKSSwZi8JAcXK/VrWXxOmY=
+	b=NRhFKMFbxD2UrAejrpXUQPIzlv6LRt9q99UBB1IhMsSi1v8ZzI1nxnY8ouZsttfrp
+	 BAPsOHVqWabL9gXijK3rW4W1hvSLG36JpQ7mNu+ThMLFuCtkAaoSTZbMSAAsByAFA0
+	 eWE7Rk5aMQHuf0RE3EaZOI+jtouBXtlbn716HNws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 065/154] drm/radeon: fix uninitialized size issue in radeon_vce_cs_parse()
-Date: Tue,  8 Apr 2025 12:50:06 +0200
-Message-ID: <20250408104817.379426289@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 030/154] ASoC: rsnd: dont indicate warning on rsnd_kctrl_accept_runtime()
+Date: Tue,  8 Apr 2025 12:49:31 +0200
+Message-ID: <20250408104816.225694286@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -50,44 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit dd8689b52a24807c2d5ce0a17cb26dc87f75235c upstream.
+[ Upstream commit c3fc002b206c6c83d1e3702b979733002ba6fb2c ]
 
-On the off chance that command stream passed from userspace via
-ioctl() call to radeon_vce_cs_parse() is weirdly crafted and
-first command to execute is to encode (case 0x03000001), the function
-in question will attempt to call radeon_vce_cs_reloc() with size
-argument that has not been properly initialized. Specifically, 'size'
-will point to 'tmp' variable before the latter had a chance to be
-assigned any value.
+rsnd_kctrl_accept_runtime() (1) is used for runtime convert rate
+(= Synchronous SRC Mode). Now, rsnd driver has 2 kctrls for it
 
-Play it safe and init 'tmp' with 0, thus ensuring that
-radeon_vce_cs_reloc() will catch an early error in cases like these.
+(A):	"SRC Out Rate Switch"
+(B):	"SRC Out Rate"		// it calls (1)
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+(A): can be called anytime
+(B): can be called only runtime, and will indicate warning if it was used
+   at non-runtime.
 
-Fixes: 2fc5703abda2 ("drm/radeon: check VCE relocation buffer range v3")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2d52de55f9ee7aaee0e09ac443f77855989c6b68)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To use runtime convert rate (= Synchronous SRC Mode), user might uses
+command in below order.
+
+(X):	> amixer set "SRC Out Rate" on
+	> aplay xxx.wav &
+(Y):	> amixer set "SRC Out Rate" 48010 // convert rate to 48010Hz
+
+(Y): calls B
+(X): calls both A and B.
+
+In this case, when user calls (X), it calls both (A) and (B), but it is not
+yet start running. So, (B) will indicate warning.
+
+This warning was added by commit b5c088689847 ("ASoC: rsnd: add warning
+message to rsnd_kctrl_accept_runtime()"), but the message sounds like the
+operation was not correct. Let's update warning message.
+
+The message is very SRC specific, implement it in src.c
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/8734gt2qed.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_vce.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sh/rcar/core.c | 14 --------------
+ sound/soc/sh/rcar/rsnd.h |  1 -
+ sound/soc/sh/rcar/src.c  | 18 +++++++++++++++++-
+ 3 files changed, 17 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_vce.c
-+++ b/drivers/gpu/drm/radeon/radeon_vce.c
-@@ -558,7 +558,7 @@ int radeon_vce_cs_parse(struct radeon_cs
- {
- 	int session_idx = -1;
- 	bool destroyed = false, created = false, allocated = false;
--	uint32_t tmp, handle = 0;
-+	uint32_t tmp = 0, handle = 0;
- 	uint32_t *size = &tmp;
- 	int i, r = 0;
+diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
+index df8d7b53b7600..1564809dff3c9 100644
+--- a/sound/soc/sh/rcar/core.c
++++ b/sound/soc/sh/rcar/core.c
+@@ -1612,20 +1612,6 @@ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io)
+ 	return 1;
+ }
  
+-int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io)
+-{
+-	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
+-	struct rsnd_priv *priv = rsnd_io_to_priv(io);
+-	struct device *dev = rsnd_priv_to_dev(priv);
+-
+-	if (!runtime) {
+-		dev_warn(dev, "Can't update kctrl when idle\n");
+-		return 0;
+-	}
+-
+-	return 1;
+-}
+-
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg)
+ {
+ 	cfg->cfg.val = cfg->val;
+diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
+index d47608ff5facc..ea7a9939981b5 100644
+--- a/sound/soc/sh/rcar/rsnd.h
++++ b/sound/soc/sh/rcar/rsnd.h
+@@ -737,7 +737,6 @@ struct rsnd_kctrl_cfg_s {
+ #define rsnd_kctrl_vals(x)	((x).val)	/* = (x).cfg.val[0] */
+ 
+ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io);
+-int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io);
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg);
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_s(struct rsnd_kctrl_cfg_s *cfg);
+ int rsnd_kctrl_new(struct rsnd_mod *mod,
+diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
+index fd52e26a3808b..577d50e2cf8c6 100644
+--- a/sound/soc/sh/rcar/src.c
++++ b/sound/soc/sh/rcar/src.c
+@@ -521,6 +521,22 @@ static irqreturn_t rsnd_src_interrupt(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
++static int rsnd_src_kctrl_accept_runtime(struct rsnd_dai_stream *io)
++{
++	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
++
++	if (!runtime) {
++		struct rsnd_priv *priv = rsnd_io_to_priv(io);
++		struct device *dev = rsnd_priv_to_dev(priv);
++
++		dev_warn(dev, "\"SRC Out Rate\" can use during running\n");
++
++		return 0;
++	}
++
++	return 1;
++}
++
+ static int rsnd_src_probe_(struct rsnd_mod *mod,
+ 			   struct rsnd_dai_stream *io,
+ 			   struct rsnd_priv *priv)
+@@ -584,7 +600,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
+ 			       rsnd_io_is_play(io) ?
+ 			       "SRC Out Rate" :
+ 			       "SRC In Rate",
+-			       rsnd_kctrl_accept_runtime,
++			       rsnd_src_kctrl_accept_runtime,
+ 			       rsnd_src_set_convert_rate,
+ 			       &src->sync, 192000);
+ 
+-- 
+2.39.5
+
 
 
