@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAF326981C;
-	Tue,  8 Apr 2025 12:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E123226981C;
+	Tue,  8 Apr 2025 12:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113639; cv=none; b=YEbRcGlMRXZzWjoZ2LqGPcqalXYzVvzFkfSabVn08MNx1WuN3CaEJVK0y0X1PC29DjyRHl6r1FzgIyCTlZC03X3E6tOmkbIl/5bDYkDpcAeVWzHCZkIR3wtcclr16tOlcbypY7AUV20UE1wgIPU9+OJjczrnF756baBqjZzcCuQ=
+	t=1744113642; cv=none; b=ZSf4+Toacqfq9ecjSqEMx2XWqj7LykdpHyCWtr37aNlxN8ggopOgZXMnHurz5GHreqZvHOM7WW6sGFXmiVLjrBfUM1OKOcA4kICBRpYLrzgPr6PR6w9QH92V57ucGz73SIE/vqJh6CtScD73GFiKWjA99vzI3mfFFeTOfpCjFqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113639; c=relaxed/simple;
-	bh=R2MJhlLqCM+XZEdah4jibaBZGAvXhF2nyYYPymTl+JM=;
+	s=arc-20240116; t=1744113642; c=relaxed/simple;
+	bh=vlkOnUG9sajosmLA4vPkl5Aqq8hSuHLz78YZAleIXOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULDZihiOBU1TEaouxVwr+0lH3AgqcC3pubvqTUs/FbiQW4+DkJVV9BMDf1BN3nMgtJIKhXmKwxytcw/ZxlME1ohkDlLVASqpQ2ETkR1OpNYszIaUfrSOzcS/mGvRBDxvDs9FZPvmOnx4qY0sp1sDxlS6D0/bzEbp93t18xQ69Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFwrGPj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4BpquXTHs7eJCEdDLUFQh7AeXyC1NIsTLUw6KBlDCQazVeE1k3Ahi6i3odc1FYVBPtabHpDJiofsX2Z50bN2dj2+KDWTt4aBVa7z22ls7eHT4EXZd8gRiac6dUOgl2GLtk3kectn5vXYrRg7hatWkgbiK2WxaSKiaRIuO7/D8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItfuW2kn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFwrGPj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C62C4CEE5;
-	Tue,  8 Apr 2025 12:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItfuW2kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A41C4CEE5;
+	Tue,  8 Apr 2025 12:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113639;
-	bh=R2MJhlLqCM+XZEdah4jibaBZGAvXhF2nyYYPymTl+JM=;
+	s=korg; t=1744113641;
+	bh=vlkOnUG9sajosmLA4vPkl5Aqq8hSuHLz78YZAleIXOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFwrGPj8Nhrd6Liulxi+xZPad+7K2dyh2FnVdRfsHWQ8x0vzJ/g5bH3nuaqTbbnZN
-	 /9e3fIHHFTnjdt0fchYZle3d8rkdAoLkPXHEW1X5Fj11yyQ8+oReIhwkxVUtrqjo2o
-	 6EW/l0/rABbHDlM/fjo5DJAOWFj4JbC6squSJE3U=
+	b=ItfuW2kn/qrKq35RmEku4xmcwmFMrtgrh8UbolmAIUshu/X3CElKbuJdyvmenQCyO
+	 Qt9eVwCGVjfi/yZTQbDbcaK7HK/wzS3SgaC5OASWXCiaEOYy6vmOewahXHmD3k0jTf
+	 3HhcudBZ3dV2rAfEchTIJZb5s18knCI59S62afRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Li <vincent.mc.li@gmail.com>,
 	Hengqi Chen <hengqi.chen@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 232/268] LoongArch: BPF: Fix off-by-one error in build_prologue()
-Date: Tue,  8 Apr 2025 12:50:43 +0200
-Message-ID: <20250408104834.846980240@linuxfoundation.org>
+Subject: [PATCH 6.6 233/268] LoongArch: BPF: Dont override subprogs return value
+Date: Tue,  8 Apr 2025 12:50:44 +0200
+Message-ID: <20250408104834.872684630@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -53,58 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit 7e2586991e36663c9bc48c828b83eab180ad30a9 upstream.
+commit 60f3caff1492e5b8616b9578c4bedb5c0a88ed14 upstream.
 
-Vincent reported that running BPF progs with tailcalls on LoongArch
-causes kernel hard lockup. Debugging the issues shows that the JITed
-image missing a jirl instruction at the end of the epilogue.
-
-There are two passes in JIT compiling, the first pass set the flags and
-the second pass generates JIT code based on those flags. With BPF progs
-mixing bpf2bpf and tailcalls, build_prologue() generates N insns in the
-first pass and then generates N+1 insns in the second pass. This makes
-epilogue_offset off by one and we will jump to some unexpected insn and
-cause lockup. Fix this by inserting a nop insn.
+The verifier test `calls: div by 0 in subprog` triggers a panic at the
+ld.bu instruction. The ld.bu insn is trying to load byte from memory
+address returned by the subprog. The subprog actually set the correct
+address at the a5 register (dedicated register for BPF return values).
+But at commit 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
+we also sign extended a5 to the a0 register (return value in LoongArch).
+For function call insn, we later propagate the a0 register back to a5
+register. This is right for native calls but wrong for bpf2bpf calls
+which expect zero-extended return value in a5 register. So only move a0
+to a5 for native calls (i.e. non-BPF_PSEUDO_CALL).
 
 Cc: stable@vger.kernel.org
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Fixes: bb035ef0cc91 ("LoongArch: BPF: Support mixing bpf2bpf and tailcalls")
-Reported-by: Vincent Li <vincent.mc.li@gmail.com>
-Tested-by: Vincent Li <vincent.mc.li@gmail.com>
-Closes: https://lore.kernel.org/loongarch/CAK3+h2w6WESdBN3UCr3WKHByD7D6Q_Ve1EDAjotVrnx6Or_c8g@mail.gmail.com/
-Closes: https://lore.kernel.org/bpf/CAK3+h2woEjG_N=-XzqEGaAeCmgu2eTCUc7p6bP4u8Q+DFHm-7g@mail.gmail.com/
+Fixes: 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
 Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    2 ++
- arch/loongarch/net/bpf_jit.h |    5 +++++
- 2 files changed, 7 insertions(+)
+ arch/loongarch/net/bpf_jit.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/arch/loongarch/net/bpf_jit.c
 +++ b/arch/loongarch/net/bpf_jit.c
-@@ -142,6 +142,8 @@ static void build_prologue(struct jit_ct
- 	 */
- 	if (seen_tail_call(ctx) && seen_call(ctx))
- 		move_reg(ctx, TCC_SAVED, REG_TCC);
-+	else
-+		emit_insn(ctx, nop);
+@@ -844,7 +844,10 @@ static int build_insn(const struct bpf_i
  
- 	ctx->stack_size = stack_adjust;
- }
---- a/arch/loongarch/net/bpf_jit.h
-+++ b/arch/loongarch/net/bpf_jit.h
-@@ -27,6 +27,11 @@ struct jit_data {
- 	struct jit_ctx ctx;
- };
- 
-+static inline void emit_nop(union loongarch_instruction *insn)
-+{
-+	insn->word = INSN_NOP;
-+}
+ 		move_addr(ctx, t1, func_addr);
+ 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, t1, 0);
+-		move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
 +
- #define emit_insn(ctx, func, ...)						\
- do {										\
- 	if (ctx->image != NULL) {						\
++		if (insn->src_reg != BPF_PSEUDO_CALL)
++			move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
++
+ 		break;
+ 
+ 	/* tail call */
 
 
