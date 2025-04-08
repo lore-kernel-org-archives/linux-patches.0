@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E888626982F;
-	Tue,  8 Apr 2025 12:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7321AAA32;
+	Tue,  8 Apr 2025 12:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115592; cv=none; b=a5i2Py89jzxpHu46B7T4sJ64c6ppvKFz0b2V+Wf9Ps6jUAMoCia9g95+6tgbU7vBKwHv9J3rFYKXJtBy9HBXxJy8h6rBUq7MSB4BPTO+rrPlVyXeX+/Cfh0EbJ6H+UCyWEel5/HqJBNqNx4sSRqGLCO5MTKbERW6Ht2DwqaBF4Q=
+	t=1744115594; cv=none; b=AJ1DThpqbDV+CmpKu+CUWIc750thRHWW5hvhA5Dh9KuTKWx0PeG3/ZUv2MzoN4Lt110oCedy4xo2W68XAV733JFeu2nykSsG2a20k6rgDPm1uJChbandthACwGbz6n2eHk+4Xp3reTJgnXd/zmDhcHt8FXWdNqyIU3ipqcJqNl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115592; c=relaxed/simple;
-	bh=xH6Vn5uHBdfPHrnkDUuJKMW1yFRYLd4XLW5JQAiRWoo=;
+	s=arc-20240116; t=1744115594; c=relaxed/simple;
+	bh=s0590kiVG+4lfEne1eYRXexyI4f+LbfWp1d2QFiHkwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swmqdXvjD1ZItmC/ZG84b6ykY8BYNV/559fW07yFG80Er4sjHgQabVOsfplgrHC+kTG66DLgXRxjhqg4cF7rOv6jK9Uo3FgUF56wv7VEOg/HXowTmiTWkS07Ws7OXkS9qexliGfT5fDFUh7v7osGP+GDwT0p3Ey5KjnYvPorgMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlgGCDvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C23IDaAv5oPbOn/zon3RYnpGYF0grvihJuqnSiuCu5MSPNclLjWZ8OKNv+9L1+Ty7aD44OpBw4e6ywzAgiengyHWhtTBhyMDdyWkyuZekJS3B3sop9KOezVDf0RkMRajkm3FfHXD34xrolTp4cnlYv32wf2MOP4bZzodXcRB9NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHRYEdGz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlgGCDvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5DFC4CEE5;
-	Tue,  8 Apr 2025 12:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHRYEdGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D610C4CEE5;
+	Tue,  8 Apr 2025 12:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115591;
-	bh=xH6Vn5uHBdfPHrnkDUuJKMW1yFRYLd4XLW5JQAiRWoo=;
+	s=korg; t=1744115594;
+	bh=s0590kiVG+4lfEne1eYRXexyI4f+LbfWp1d2QFiHkwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlgGCDvq52oXckSzp/3grQat6slaO5bnfXpu3O3XMXqSu6YxRmsL06h+/581IfPTo
-	 65HFuvSiU40SdGI+NHEE5alODNMK1F7/nDVbz8iWLplJE6TPi0+iH1AS8joywb561a
-	 dhQnYBcS3U3/gJjS120O6GZo5hbIvoYkpgTfEAEU=
+	b=hHRYEdGz8gd4Fs2fiIsc97EZ8YPhbzs0e5v2qeb0JDqr8HV1y4/2LRSr6ujR93SGQ
+	 bTYwr3Iu5/triz8WXN1Fv67JuADlSzv9k5T08M8KfuCbbz7Sh0K0fsUQvu4pL1+Q4T
+	 M8ZhdEI5s5s2nEzKQsNRIObh00WsP9JXMCaRYGBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/204] smack: dont compile ipv6 code unless ipv6 is configured
-Date: Tue,  8 Apr 2025 12:48:54 +0200
-Message-ID: <20250408104820.411913754@linuxfoundation.org>
+Subject: [PATCH 6.1 005/204] cpufreq: governor: Fix negative idle_time handling in dbs_update()
+Date: Tue,  8 Apr 2025 12:48:55 +0200
+Message-ID: <20250408104820.442182346@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,131 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Jie Zhan <zhanjie9@hisilicon.com>
 
-[ Upstream commit bfcf4004bcbce2cb674b4e8dbd31ce0891766bac ]
+[ Upstream commit 3698dd6b139dc37b35a9ad83d9330c1f99666c02 ]
 
-I want to be sure that ipv6-specific code
-is not compiled in kernel binaries
-if ipv6 is not configured.
+We observed an issue that the CPU frequency can't raise up with a 100% CPU
+load when NOHZ is off and the 'conservative' governor is selected.
 
-[1] was getting rid of "unused variable" warning, but,
-with that, it also mandated compilation of a handful ipv6-
-specific functions in ipv4-only kernel configurations:
+'idle_time' can be negative if it's obtained from get_cpu_idle_time_jiffy()
+when NOHZ is off.  This was found and explained in commit 9485e4ca0b48
+("cpufreq: governor: Fix handling of special cases in dbs_update()").
 
-smk_ipv6_localhost, smack_ipv6host_label, smk_ipv6_check.
+However, commit 7592019634f8 ("cpufreq: governors: Fix long idle detection
+logic in load calculation") introduced a comparison between 'idle_time' and
+'samling_rate' to detect a long idle interval.  While 'idle_time' is
+converted to int before comparison, it's actually promoted to unsigned
+again when compared with an unsigned 'sampling_rate'.  Hence, this leads to
+wrong idle interval detection when it's in fact 100% busy and sets
+policy_dbs->idle_periods to a very large value.  'conservative' adjusts the
+frequency to minimum because of the large 'idle_periods', such that the
+frequency can't raise up.  'Ondemand' doesn't use policy_dbs->idle_periods
+so it fortunately avoids the issue.
 
-Their compiled bodies are likely to be removed by compiler
-from the resulting binary, but, to be on the safe side,
-I remove them from the compiler view.
+Correct negative 'idle_time' to 0 before any use of it in dbs_update().
 
-[1]
-Fixes: 00720f0e7f28 ("smack: avoid unused 'sip' variable warning")
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Fixes: 7592019634f8 ("cpufreq: governors: Fix long idle detection logic in load calculation")
+Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://patch.msgid.link/20250213035510.2402076-1-zhanjie9@hisilicon.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack.h     |  6 ++++++
- security/smack/smack_lsm.c | 10 +++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq_governor.c | 45 +++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
-diff --git a/security/smack/smack.h b/security/smack/smack.h
-index aa15ff56ed6e7..eb22090f3bb85 100644
---- a/security/smack/smack.h
-+++ b/security/smack/smack.h
-@@ -152,6 +152,7 @@ struct smk_net4addr {
- 	struct smack_known	*smk_label;	/* label */
- };
+diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
+index 85da677c43d6b..c8bca3e77bcea 100644
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -145,7 +145,23 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 		time_elapsed = update_time - j_cdbs->prev_update_time;
+ 		j_cdbs->prev_update_time = update_time;
  
-+#if IS_ENABLED(CONFIG_IPV6)
- /*
-  * An entry in the table identifying IPv6 hosts.
-  */
-@@ -162,7 +163,9 @@ struct smk_net6addr {
- 	int			smk_masks;	/* mask size */
- 	struct smack_known	*smk_label;	/* label */
- };
-+#endif /* CONFIG_IPV6 */
- 
-+#ifdef SMACK_IPV6_PORT_LABELING
- /*
-  * An entry in the table identifying ports.
-  */
-@@ -175,6 +178,7 @@ struct smk_port_label {
- 	short			smk_sock_type;	/* Socket type */
- 	short			smk_can_reuse;
- };
-+#endif /* SMACK_IPV6_PORT_LABELING */
- 
- struct smack_known_list_elem {
- 	struct list_head	list;
-@@ -314,7 +318,9 @@ extern struct smack_known smack_known_web;
- extern struct mutex	smack_known_lock;
- extern struct list_head smack_known_list;
- extern struct list_head smk_net4addr_list;
-+#if IS_ENABLED(CONFIG_IPV6)
- extern struct list_head smk_net6addr_list;
-+#endif /* CONFIG_IPV6 */
- 
- extern struct mutex     smack_onlycap_lock;
- extern struct list_head smack_onlycap_list;
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 25995df15e82d..285103ffc75c6 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -2405,6 +2405,7 @@ static struct smack_known *smack_ipv4host_label(struct sockaddr_in *sip)
- 	return NULL;
- }
- 
-+#if IS_ENABLED(CONFIG_IPV6)
- /*
-  * smk_ipv6_localhost - Check for local ipv6 host address
-  * @sip: the address
-@@ -2472,6 +2473,7 @@ static struct smack_known *smack_ipv6host_label(struct sockaddr_in6 *sip)
- 
- 	return NULL;
- }
-+#endif /* CONFIG_IPV6 */
- 
- /**
-  * smack_netlbl_add - Set the secattr on a socket
-@@ -2575,6 +2577,7 @@ static int smk_ipv4_check(struct sock *sk, struct sockaddr_in *sap)
- 	return rc;
- }
- 
-+#if IS_ENABLED(CONFIG_IPV6)
- /**
-  * smk_ipv6_check - check Smack access
-  * @subject: subject Smack label
-@@ -2607,6 +2610,7 @@ static int smk_ipv6_check(struct smack_known *subject,
- 	rc = smk_bu_note("IPv6 check", subject, object, MAY_WRITE, rc);
- 	return rc;
- }
-+#endif /* CONFIG_IPV6 */
- 
- #ifdef SMACK_IPV6_PORT_LABELING
- /**
-@@ -2939,7 +2943,9 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
- 		return 0;
- 	if (addrlen < offsetofend(struct sockaddr, sa_family))
- 		return 0;
--	if (IS_ENABLED(CONFIG_IPV6) && sap->sa_family == AF_INET6) {
+-		idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
++		/*
++		 * cur_idle_time could be smaller than j_cdbs->prev_cpu_idle if
++		 * it's obtained from get_cpu_idle_time_jiffy() when NOHZ is
++		 * off, where idle_time is calculated by the difference between
++		 * time elapsed in jiffies and "busy time" obtained from CPU
++		 * statistics.  If a CPU is 100% busy, the time elapsed and busy
++		 * time should grow with the same amount in two consecutive
++		 * samples, but in practice there could be a tiny difference,
++		 * making the accumulated idle time decrease sometimes.  Hence,
++		 * in this case, idle_time should be regarded as 0 in order to
++		 * make the further process correct.
++		 */
++		if (cur_idle_time > j_cdbs->prev_cpu_idle)
++			idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
++		else
++			idle_time = 0;
 +
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (sap->sa_family == AF_INET6) {
- 		struct sockaddr_in6 *sip = (struct sockaddr_in6 *)sap;
- 		struct smack_known *rsp = NULL;
+ 		j_cdbs->prev_cpu_idle = cur_idle_time;
  
-@@ -2959,6 +2965,8 @@ static int smack_socket_connect(struct socket *sock, struct sockaddr *sap,
- 
- 		return rc;
- 	}
-+#endif /* CONFIG_IPV6 */
+ 		if (ignore_nice) {
+@@ -162,7 +178,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			 * calls, so the previous load value can be used then.
+ 			 */
+ 			load = j_cdbs->prev_load;
+-		} else if (unlikely((int)idle_time > 2 * sampling_rate &&
++		} else if (unlikely(idle_time > 2 * sampling_rate &&
+ 				    j_cdbs->prev_load)) {
+ 			/*
+ 			 * If the CPU had gone completely idle and a task has
+@@ -189,30 +205,15 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			load = j_cdbs->prev_load;
+ 			j_cdbs->prev_load = 0;
+ 		} else {
+-			if (time_elapsed >= idle_time) {
++			if (time_elapsed > idle_time)
+ 				load = 100 * (time_elapsed - idle_time) / time_elapsed;
+-			} else {
+-				/*
+-				 * That can happen if idle_time is returned by
+-				 * get_cpu_idle_time_jiffy().  In that case
+-				 * idle_time is roughly equal to the difference
+-				 * between time_elapsed and "busy time" obtained
+-				 * from CPU statistics.  Then, the "busy time"
+-				 * can end up being greater than time_elapsed
+-				 * (for example, if jiffies_64 and the CPU
+-				 * statistics are updated by different CPUs),
+-				 * so idle_time may in fact be negative.  That
+-				 * means, though, that the CPU was busy all
+-				 * the time (on the rough average) during the
+-				 * last sampling interval and 100 can be
+-				 * returned as the load.
+-				 */
+-				load = (int)idle_time < 0 ? 100 : 0;
+-			}
++			else
++				load = 0;
 +
- 	if (sap->sa_family != AF_INET || addrlen < sizeof(struct sockaddr_in))
- 		return 0;
- 	rc = smk_ipv4_check(sock->sk, (struct sockaddr_in *)sap);
+ 			j_cdbs->prev_load = load;
+ 		}
+ 
+-		if (unlikely((int)idle_time > 2 * sampling_rate)) {
++		if (unlikely(idle_time > 2 * sampling_rate)) {
+ 			unsigned int periods = idle_time / sampling_rate;
+ 
+ 			if (periods < idle_periods)
 -- 
 2.39.5
 
