@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5056326AAAB;
-	Tue,  8 Apr 2025 12:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37E7269D03;
+	Tue,  8 Apr 2025 12:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116723; cv=none; b=YuXw4GJ5wliR41mI3SCsFnQyK3bAXdX2IY7BrmMpd8H+aQiwEov8bP1KPYAb3cLXXW2U+VZFx+bsJSi/6VgsAIs58yAHDT8GMHDCmBgd18Iam75zbgwMWjdPLk9aWYj9ZvaJINcDY3e6uxR700JvVkhPuV3DgIML/Wz0XNlfO0I=
+	t=1744116726; cv=none; b=jqJNh7H9F45cxjj3Dyp8cdkVRXc8VlpfGC3Kb6V31zT/uxGrFPKKwRoG4k1jSkf0dkLCKVLJ2Q5g9nAXGHNVJMxyVzA+89d6MNpCMKbEZTtoCM0FLX8fISkUlenLyz0/zmIm/dAGu9aEV1SiHyw1RlF16zEq4dV2BMNdDx7Kt18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116723; c=relaxed/simple;
-	bh=Zf7g02Bevr2bxaXgmdEKuYIj8oIgLPmTGzvJ3lf51p4=;
+	s=arc-20240116; t=1744116726; c=relaxed/simple;
+	bh=Jz0fnuvDcRGHFDLuSi55+3d9gS+Mw1ousAjTxKrjMaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lR/V/QV6D70Od5S/bPdoGAeLQt4FhF1Yb+Pgyi6R+oyt0NBWq4Yvx1rxI0fvaivLNL6GWDz2WvkXjeouilHTwobUv2l3yToTfBliJ0uKp2J+KYYJwbes26LrkxfnJRmwjtHcArPC6rCW72gbztkRtkhx4DLzCU7Avf9DmxymZMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mv9/ah7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYT7m054fmgEgV5XLBuTe+BtndH/VtDSFVd9VPKK52SRwYrwScq7ZVR+UjXyus9bBDVeNxPyCV2GCKhSRroiLwbHjZL1PXt4dsKaCMStgIHnJsnO0Qnn/rzphX0wvDAO73L44JP7QjfILFHzci2pZk5CbSBL+ZGSbyraa5N8xAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDtx0oW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mv9/ah7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C17C4CEE5;
-	Tue,  8 Apr 2025 12:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDtx0oW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8496BC4CEE5;
+	Tue,  8 Apr 2025 12:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116723;
-	bh=Zf7g02Bevr2bxaXgmdEKuYIj8oIgLPmTGzvJ3lf51p4=;
+	s=korg; t=1744116725;
+	bh=Jz0fnuvDcRGHFDLuSi55+3d9gS+Mw1ousAjTxKrjMaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mv9/ah7mYiHPVB2t3g/lymgl2QhHNiQ7ra/p3OIKTXvnEaqFzN6Z4n3vf7AuWcuKB
-	 9WcTJr4Dh2bEoGS59oL8XejwqoLzE65jS3bm4eLUQkulUs9DVaRbRGZsj69fCfebSM
-	 m+S40hPn3slcdaN9k8bngQhMzPXrZN53eZLyQRD0=
+	b=LDtx0oW0Ir4Pb8JsT0GmDEH7kRrempFyS41QdZNlB2OLfItJprYaAeUQJfnjtoNu4
+	 QX5h7JFFFrKmDTPEt9ylOO+dtsxSSy4FRudvneSRdTl4SSxxGw4B/ptHBhpQazKnGJ
+	 I+mr/MHb6UNmW4yqvEnQDzG+GfbhQ7iPs0pOEKGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 245/423] octeontx2-af: Fix mbox INTR handler when num VFs > 64
-Date: Tue,  8 Apr 2025 12:49:31 +0200
-Message-ID: <20250408104851.438375761@linuxfoundation.org>
+Subject: [PATCH 6.12 219/423] staging: vchiq_arm: Fix possible NPR of keep-alive thread
+Date: Tue,  8 Apr 2025 12:49:05 +0200
+Message-ID: <20250408104850.829380038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,37 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 0fdba88a211508984eb5df62008c29688692b134 ]
+[ Upstream commit 3db89bc6d973e2bcaa852f6409c98c228f39a926 ]
 
-When number of RVU VFs > 64, the vfs value passed to "rvu_queue_work"
-function is incorrect. Due to which mbox workqueue entries for
-VFs 0 to 63 never gets added to workqueue.
+In case vchiq_platform_conn_state_changed() is never called or fails before
+driver removal, ka_thread won't be a valid pointer to a task_struct. So
+do the necessary checks before calling kthread_stop to avoid a crash.
 
-Fixes: 9bdc47a6e328 ("octeontx2-af: Mbox communication support btw AF and it's VFs")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250327091441.1284-1-gakula@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 863a756aaf49 ("staging: vc04_services: vchiq_core: Stop kthreads on vchiq module unload")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250309125014.37166-3-wahrenst@gmx.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index cd0d7b7774f1a..6575c422635b7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -2634,7 +2634,7 @@ static irqreturn_t rvu_mbox_intr_handler(int irq, void *rvu_irq)
- 		rvupf_write64(rvu, RVU_PF_VFPF_MBOX_INTX(1), intr);
+diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+index ecf6e9635a10b..97787002080a1 100644
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -1786,7 +1786,8 @@ static void vchiq_remove(struct platform_device *pdev)
+ 	kthread_stop(mgmt->state.slot_handler_thread);
  
- 		rvu_queue_work(&rvu->afvf_wq_info, 64, vfs, intr);
--		vfs -= 64;
-+		vfs = 64;
- 	}
+ 	arm_state = vchiq_platform_get_arm_state(&mgmt->state);
+-	kthread_stop(arm_state->ka_thread);
++	if (!IS_ERR_OR_NULL(arm_state->ka_thread))
++		kthread_stop(arm_state->ka_thread);
+ }
  
- 	intr = rvupf_read64(rvu, RVU_PF_VFPF_MBOX_INTX(0));
+ static struct platform_driver vchiq_driver = {
 -- 
 2.39.5
 
