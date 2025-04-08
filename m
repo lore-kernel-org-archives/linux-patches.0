@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E805B27C142;
-	Tue,  8 Apr 2025 12:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75D5269823;
+	Tue,  8 Apr 2025 12:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116954; cv=none; b=l+R2v2cEZW/LXJonJ2yMwtovS8Y+OCueEN4QmU95Hy5WGP0jn6dpS2HUwQvD4pwAvUwKbpz2yTa+9mJOMSAbYGfNzV+2ee+arjUlUOQeqCgdyOEf8yC9WC8K5IHYN0wD9/CU4y5HdPIpX4NTgHbMhasdgHsEW0xCO8wzFa5Lzic=
+	t=1744116956; cv=none; b=AVUJKSB0lE6vQQIIl75gHKM6PO2e8zw6VDlG1FNpUafhR54sT6U5IdJ9eOYE8BkG7KYKyb+vWiG7CQsyqNrxZPuJRTlnLm7JgjiT/yTQSNFxHp7n+4eqiV85GtxVC8QAqw3j8DGhu9yCnrovm8stO2U5bOloMyU4M+QHuw/KX8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116954; c=relaxed/simple;
-	bh=6fdzEuEwTK4bEXYECqFfYl/CR54dqtk39/t7ZlSTwTg=;
+	s=arc-20240116; t=1744116956; c=relaxed/simple;
+	bh=yPui536WXTEdjNxmqwp2NC0qgC570e9V2aSRImL4A4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHmJHKHwta2+FCGEG6bsxr6YaWxBcZSD9NFGaKZMBw1uwFTbkIk7KDrr0ksvB6QI4BslVmCN8XFtwMVics410z5URci663fM6WWV8yk37bKmWsZbhBK4kFELNWENqZu6wjkXt5e03jg0JnF9E6zhakC83TQ/knmSJimdfJMWT/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAVxER7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWWLY0J8dU7uvRpBeUVlWbBVCNoHjPS0P1YCBtu7pZq4xduwU9F1b6Lddtzh0GJt0U3LiuJrb8Vzzm6XckhDn0lTkWZTLXglCHIV42tzrDFJbFuuB/6Y+eKlyMkShYUykPqfwu/uGQTwuigNz7lLBei3AoxAnEiQKdxQxnFSXfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QX4QRFCi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAVxER7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A14BC4CEE5;
-	Tue,  8 Apr 2025 12:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QX4QRFCi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205B0C4CEE5;
+	Tue,  8 Apr 2025 12:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116953;
-	bh=6fdzEuEwTK4bEXYECqFfYl/CR54dqtk39/t7ZlSTwTg=;
+	s=korg; t=1744116956;
+	bh=yPui536WXTEdjNxmqwp2NC0qgC570e9V2aSRImL4A4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAVxER7OxP61GtVBwsVeBI9T2Q9xH9Hj56Xtm2FLoi2MYNNcdCESiKTw5CL/mLhz+
-	 BzPOs/nS3CVnu2aFCUc+wiKGWbJWvoU6hx+1aYMpiuiX23TeHp4fVQT9xdyCukz8du
-	 Bz3cBDhY5NEwdNxBUjvmzVU2ShKMAk2jdGZ9vyk0=
+	b=QX4QRFCivwdbCLW/1BkKhsV6FT1oZnpz6cid/zIW65Mkw8rsqZ6dC0dhQQKlbaXh8
+	 TYBpI0MVLaK0wvGukVE8Vm1xvJ0MvgDuibRCSw7cB9zQQ3BEOCNvZRpZUoOcFUVAVv
+	 bsoqYAgDNfSi/C+XW+cjXBf+UAo9wdeTysrXxLdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 330/423] sctp: add mutual exclusion in proc_sctp_do_udp_port()
-Date: Tue,  8 Apr 2025 12:50:56 +0200
-Message-ID: <20250408104853.512063725@linuxfoundation.org>
+Subject: [PATCH 6.12 304/423] fs/9p: fix NULL pointer dereference on mkdir
+Date: Tue,  8 Apr 2025 12:50:30 +0200
+Message-ID: <20250408104852.876469471@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,78 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christian Schoenebeck <linux_oss@crudebyte.com>
 
-[ Upstream commit 10206302af856791fbcc27a33ed3c3eb09b2793d ]
+[ Upstream commit 3f61ac7c65bdb26accb52f9db66313597e759821 ]
 
-We must serialize calls to sctp_udp_sock_stop() and sctp_udp_sock_start()
-or risk a crash as syzbot reported:
+When a 9p tree was mounted with option 'posixacl', parent directory had a
+default ACL set for its subdirectories, e.g.:
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000d: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
-CPU: 1 UID: 0 PID: 6551 Comm: syz.1.44 Not tainted 6.14.0-syzkaller-g7f2ff7b62617 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
- RIP: 0010:kernel_sock_shutdown+0x47/0x70 net/socket.c:3653
-Call Trace:
- <TASK>
-  udp_tunnel_sock_release+0x68/0x80 net/ipv4/udp_tunnel_core.c:181
-  sctp_udp_sock_stop+0x71/0x160 net/sctp/protocol.c:930
-  proc_sctp_do_udp_port+0x264/0x450 net/sctp/sysctl.c:553
-  proc_sys_call_handler+0x3d0/0x5b0 fs/proc/proc_sysctl.c:601
-  iter_file_splice_write+0x91c/0x1150 fs/splice.c:738
-  do_splice_from fs/splice.c:935 [inline]
-  direct_splice_actor+0x18f/0x6c0 fs/splice.c:1158
-  splice_direct_to_actor+0x342/0xa30 fs/splice.c:1102
-  do_splice_direct_actor fs/splice.c:1201 [inline]
-  do_splice_direct+0x174/0x240 fs/splice.c:1227
-  do_sendfile+0xafd/0xe50 fs/read_write.c:1368
-  __do_sys_sendfile64 fs/read_write.c:1429 [inline]
-  __se_sys_sendfile64 fs/read_write.c:1415 [inline]
-  __x64_sys_sendfile64+0x1d8/0x220 fs/read_write.c:1415
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  setfacl -m default:group:simpsons:rwx parentdir
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Reported-by: syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67ea5c01.050a0220.1547ec.012b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250331091532.224982-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+then creating a subdirectory crashed 9p client, as v9fs_fid_add() call in
+function v9fs_vfs_mkdir_dotl() sets the passed 'fid' pointer to NULL
+(since dafbe689736) even though the subsequent v9fs_set_create_acl() call
+expects a valid non-NULL 'fid' pointer:
+
+  [   37.273191] BUG: kernel NULL pointer dereference, address: 0000000000000000
+  ...
+  [   37.322338] Call Trace:
+  [   37.323043]  <TASK>
+  [   37.323621] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+  [   37.324448] ? page_fault_oops (arch/x86/mm/fault.c:714)
+  [   37.325532] ? search_module_extables (kernel/module/main.c:3733)
+  [   37.326742] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.328006] ? search_bpf_extables (kernel/bpf/core.c:804)
+  [   37.329142] ? exc_page_fault (./arch/x86/include/asm/paravirt.h:686 arch/x86/mm/fault.c:1488 arch/x86/mm/fault.c:1538)
+  [   37.330196] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:574)
+  [   37.331330] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.332562] ? v9fs_fid_xattr_get (fs/9p/xattr.c:30) 9p
+  [   37.333824] v9fs_fid_xattr_set (fs/9p/fid.h:23 fs/9p/xattr.c:121) 9p
+  [   37.335077] v9fs_set_acl (fs/9p/acl.c:276) 9p
+  [   37.336112] v9fs_set_create_acl (fs/9p/acl.c:307) 9p
+  [   37.337326] v9fs_vfs_mkdir_dotl (fs/9p/vfs_inode_dotl.c:411) 9p
+  [   37.338590] vfs_mkdir (fs/namei.c:4313)
+  [   37.339535] do_mkdirat (fs/namei.c:4336)
+  [   37.340465] __x64_sys_mkdir (fs/namei.c:4354)
+  [   37.341455] do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+  [   37.342447] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fix this by simply swapping the sequence of these two calls in
+v9fs_vfs_mkdir_dotl(), i.e. calling v9fs_set_create_acl() before
+v9fs_fid_add().
+
+Fixes: dafbe689736f ("9p fid refcount: cleanup p9_fid_put calls")
+Reported-by: syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com
+Signed-off-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <E1tsiI6-002iMG-Kh@kylie.crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sysctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/9p/vfs_inode_dotl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
-index 8e1e97be4df79..ee3eac338a9de 100644
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -525,6 +525,8 @@ static int proc_sctp_do_auth(const struct ctl_table *ctl, int write,
- 	return ret;
- }
- 
-+static DEFINE_MUTEX(sctp_sysctl_mutex);
-+
- static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
- {
-@@ -549,6 +551,7 @@ static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 		if (new_value > max || new_value < min)
- 			return -EINVAL;
- 
-+		mutex_lock(&sctp_sysctl_mutex);
- 		net->sctp.udp_port = new_value;
- 		sctp_udp_sock_stop(net);
- 		if (new_value) {
-@@ -561,6 +564,7 @@ static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 		lock_sock(sk);
- 		sctp_sk(sk)->udp_port = htons(net->sctp.udp_port);
- 		release_sock(sk);
-+		mutex_unlock(&sctp_sysctl_mutex);
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index 143ac03b7425c..3397939fd2d5a 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -407,8 +407,8 @@ static int v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
+ 			 err);
+ 		goto error;
  	}
- 
- 	return ret;
+-	v9fs_fid_add(dentry, &fid);
+ 	v9fs_set_create_acl(inode, fid, dacl, pacl);
++	v9fs_fid_add(dentry, &fid);
+ 	d_instantiate(dentry, inode);
+ 	err = 0;
+ 	inc_nlink(dir);
 -- 
 2.39.5
 
