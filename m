@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FE5269882;
-	Tue,  8 Apr 2025 12:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40E26E15A;
+	Tue,  8 Apr 2025 12:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116179; cv=none; b=BNi9nWd7/ydoipEj/2lN08zT642nW5FmsHoSsYIXTBVQ1CogE9PNy2rrtiuscBg3dnregKknbS3HIyGCTcM5oQ1j4rhr+KL9y0tyoNscMkSkBV73x3HsdfrDUmC5jAkq7Y4+uF7sPNXosr856CluDO7mAcRF/uh+P6Vm8JPp+Bk=
+	t=1744116182; cv=none; b=eru6NQZRdElndXNystU4bj5DiFtA8tgx73v6VxSSa/DqCeyN49TzkWvos+Ovb1j0kyWJLIXgilBHhn8DLXoKMX/9DVKQBBfzwYWJw9NuPbSREvrD14X2L9NjdQkfq/xmsuJAsB4jr+zCs2D73I1OrwsSlJzViPiKrNvOR9KrVuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116179; c=relaxed/simple;
-	bh=i/UHO8LsKhhUqshojVi+0XPb38g2CT55h3p0UpAuFN0=;
+	s=arc-20240116; t=1744116182; c=relaxed/simple;
+	bh=GOBgzOv45ptNLDLgbKf1eWjGneoBRM/6PgvuF1BvunM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTlC/6xi0aAwgMEk3iKMxw18gjyJWE2TOKyieqe+I8FCFJF3nwulDgHyl/LRafrBoo/kUmrQOMhqELMBxbeL6FePSOgRvRwNgEypEkKkkYGrpLvIz09bFRK/oiXWsLc6EK474kTljNI/dX92zsqmVrdlxgHGI8LHNMCJKGCatfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDYCehKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUpU7WumyLLZoqRseciqEgl4xiQzTXtslArOL9DJwZy2r9X3CUG/3P3jFELc/r4t/AVYbrmgljUBtPG/UniY69CaJEH0QOhpAQKnja0dEzXFCPNdztyceZ1afyU9No0CrWiZxmJBAbP+eTbgDAupQeW5E5W0kCjBJena5s20Rkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCe1r5dX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDYCehKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9C7C4CEE5;
-	Tue,  8 Apr 2025 12:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCe1r5dX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A4CC4CEE5;
+	Tue,  8 Apr 2025 12:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116179;
-	bh=i/UHO8LsKhhUqshojVi+0XPb38g2CT55h3p0UpAuFN0=;
+	s=korg; t=1744116182;
+	bh=GOBgzOv45ptNLDLgbKf1eWjGneoBRM/6PgvuF1BvunM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDYCehKs6QN+b0sX9BNXwd3pB7IsQYl41Gael8xttxvC4be00aJx9mlNp4K9EDJal
-	 uBqkpihepeNoF0Vp5iKnt5D7oXp/e/bLPaxm9xz81WHZHwY/aPwdp9E8vz6nPfRScm
-	 srVHMIfqU9U2kZsyhcZcN+L3DdAMRcdNRC1T76Gc=
+	b=xCe1r5dXXxd6YUrfdIA9Hlkl04gk4GH0dLsSGt7XJ6u4jKuqzS9mgPWsdMPPDbfRW
+	 otMU6Tgs8fenipKwSRNQ9dpY89efnNVDABIihJTSwTFMn2brQ6HrZ9BS1EU9lXOZ76
+	 dOOxf5HaAhggTzRnQ7gTNU9FTedXSpVqKf6fohnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchen Ding <dtcccc@linux.alibaba.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/423] sched/eevdf: Force propagating min_slice of cfs_rq when {en,de}queue tasks
-Date: Tue,  8 Apr 2025 12:45:33 +0200
-Message-ID: <20250408104845.878619541@linuxfoundation.org>
+Subject: [PATCH 6.12 043/423] dt-bindings: vendor-prefixes: add GOcontroll
+Date: Tue,  8 Apr 2025 12:46:09 +0200
+Message-ID: <20250408104846.752910895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,50 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchen Ding <dtcccc@linux.alibaba.com>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-[ Upstream commit 563bc2161b94571ea425bbe2cf69fd38e24cdedf ]
+[ Upstream commit 5f0d2de417166698c8eba433b696037ce04730da ]
 
-When a task is enqueued and its parent cgroup se is already on_rq, this
-parent cgroup se will not be enqueued again, and hence the root->min_slice
-leaves unchanged. The same issue happens when a task is dequeued and its
-parent cgroup se has other runnable entities, and the parent cgroup se
-will not be dequeued.
+GOcontroll produces embedded linux systems and IO modules to use in
+these systems, add its prefix.
 
-Force propagating min_slice when se doesn't need to be enqueued or
-dequeued. Ensure the se hierarchy always get the latest min_slice.
-
-Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
-Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250211063659.7180-1-dtcccc@linux.alibaba.com
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Link: https://patch.msgid.link/20250226-initial_display-v2-2-23fafa130817@gocontroll.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 49e340f9fa71b..ceb023629d48d 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7103,6 +7103,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 		update_cfs_group(se);
- 
- 		se->slice = slice;
-+		if (se != cfs_rq->curr)
-+			min_vruntime_cb_propagate(&se->run_node, NULL);
- 		slice = cfs_rq_min_slice(cfs_rq);
- 
- 		cfs_rq->h_nr_running++;
-@@ -7232,6 +7234,8 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
- 		update_cfs_group(se);
- 
- 		se->slice = slice;
-+		if (se != cfs_rq->curr)
-+			min_vruntime_cb_propagate(&se->run_node, NULL);
- 		slice = cfs_rq_min_slice(cfs_rq);
- 
- 		cfs_rq->h_nr_running -= h_nr_running;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index fbfce9b4ae6b8..71a1a399e1e1f 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -581,6 +581,8 @@ patternProperties:
+     description: GlobalTop Technology, Inc.
+   "^gmt,.*":
+     description: Global Mixed-mode Technology, Inc.
++  "^gocontroll,.*":
++    description: GOcontroll Modular Embedded Electronics B.V.
+   "^goldelico,.*":
+     description: Golden Delicious Computers GmbH & Co. KG
+   "^goodix,.*":
 -- 
 2.39.5
 
