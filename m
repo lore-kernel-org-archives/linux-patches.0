@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7078214205;
-	Tue,  8 Apr 2025 11:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A0214205;
+	Tue,  8 Apr 2025 11:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110703; cv=none; b=olH/f3XPYmhtIEXw0quNgnJidor0feW9SjpzOjmgX3b1OZtbwCLArf6sQsEpEsDjnGwp63Xt+OHx32VYm2ZwZWNUsVP6AOx6nJwEsbM0fNtVtwxnmod5O3LmI2ILKkwn3prVpjZDrol3IwgE0x7YaHHc4LBsM7JaXAAzSa7V9Hc=
+	t=1744110703; cv=none; b=B28Puq8R18FCfOq3ffYVPSfhrABaGcq7WvqWatnKNxiAWkhd1J42R9h381HtOmk5kgBduzsuw0PTHtEZNofp0QjBK09vN0+FgOl7A/Yp3rCty9eJPrvGPOPWEsXAOZNvxwtSyUT0Mpf+SQa4pcL9Eaqsyf1yXUKjMnxJcrC/Sa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744110703; c=relaxed/simple;
-	bh=8Y8EsNDG4XKtAO9h6oFcM8gjIeeoes2Ha4dtH2MjcEg=;
+	bh=BDNfXrDKbKmecv/jFDG9xIXKJIOzpCeglh1k0aGJwyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGpFiFaduEYn+OB0sXEHrXt/iv/YHav49GsMqQMsBeB/R0mFrkRRtRO0i69TueSWKtMNjVnSp0jWYWTAfrT2YdMDxbLXJqzvW0pfon2kmVW30nGTN8a9ORbKa8JwVQkAoyprGioAyi7D82soPzPMeCgG0tPSxnkIb8u8U+h0d84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmW+OHCr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dz9MEYA7jEiOoLRfm/QOQu1BbItg1leWypzFnkmnCjKWttFhKHSP9/TLE/sMjhDPAg02wiX3fuMIUhUn4Ipp218Po01484aG6MH41r3JUSHZrXo1StpW8AgzS3jKvrg/iOpISQBoGaqpkELJ05Lv22/u+tP5fijoDnIxV3m5lYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wv/go58/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmW+OHCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59253C4CEE5;
-	Tue,  8 Apr 2025 11:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wv/go58/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E54C4CEE7;
+	Tue,  8 Apr 2025 11:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110700;
-	bh=8Y8EsNDG4XKtAO9h6oFcM8gjIeeoes2Ha4dtH2MjcEg=;
+	s=korg; t=1744110703;
+	bh=BDNfXrDKbKmecv/jFDG9xIXKJIOzpCeglh1k0aGJwyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SmW+OHCrGwTBW3xLLT5kO/A4MvGPq4vgKY3mPWnyzaCPGtin4lBsygsrjtoiJBRbW
-	 bcxgsEfJDA/ew3fS3nWw5EsYMnQ6vi979QJJBfjPwFLdVFlDJOYstQO00kuuudG50B
-	 PFrP3HbCjMf2CQgql5fPLwVXtPe7DLcKxMZXawvo=
+	b=wv/go58/wzGO1v6FtaDNpPS2nWwdgt9fQt0xxatjSO2/7RH7TtLEPFX0zhNs/bDDS
+	 qJWK0IiI9CGV4TML9FBNTO5MUISpLMcNAFNghrmvKTCt7HvlNu3zyo1PVsU4voREmr
+	 eKbMFuxCp7T5hd2caFT4cMHOLhqsmMKmU/VlXzCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Coly Li <colyli@kernel.org>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 160/731] null_blk: do partial IO for bad blocks
-Date: Tue,  8 Apr 2025 12:40:57 +0200
-Message-ID: <20250408104917.997513793@linuxfoundation.org>
+Subject: [PATCH 6.14 161/731] badblocks: return boolean from badblocks_set() and badblocks_clear()
+Date: Tue,  8 Apr 2025 12:40:58 +0200
+Message-ID: <20250408104918.020604273@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,188 +54,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 567abc989e3c74c7f4e245492707208c37d27693 ]
+[ Upstream commit c8775aefba959cdfbaa25408a84d3dd15bbeb991 ]
 
-The current null_blk implementation checks if any bad blocks exist in
-the target blocks of each IO. If so, the IO fails and data is not
-transferred for all of the IO target blocks. However, when real storage
-devices have bad blocks, the devices may transfer data partially up to
-the first bad blocks (e.g., SAS drives). Especially, when the IO is a
-write operation, such partial IO leaves partially written data on the
-device.
+Change the return type of badblocks_set() and badblocks_clear()
+from int to bool, indicating success or failure. Specifically:
 
-To simulate such partial IO using null_blk, introduce the new parameter
-'badblocks_partial_io'. When this parameter is set,
-null_handle_badblocks() returns the number of the sectors for the
-partial IO as its third pointer argument. Pass the returned number of
-sectors to the following calls to null_handle_memory_backend() in
-null_process_cmd() and null_zone_write().
+- _badblocks_set() and _badblocks_clear() functions now return
+true for success and false for failure.
+- All calls to these functions are updated to handle the new
+boolean return type.
+- This change improves code clarity and ensures a more consistent
+handling of success and failure states.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20250226100613.1622564-6-shinichiro.kawasaki@wdc.com
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Coly Li <colyli@kernel.org>
+Acked-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://lore.kernel.org/r/20250227075507.151331-11-zhengqixing@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: d301f164c3fb ("badblocks: use sector_t instead of int to avoid truncation of badblocks length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c     | 40 ++++++++++++++++++++++++-------
- drivers/block/null_blk/null_blk.h |  4 ++--
- drivers/block/null_blk/zoned.c    |  9 ++++---
- 3 files changed, 40 insertions(+), 13 deletions(-)
+ block/badblocks.c             | 41 +++++++++++++++++------------------
+ drivers/block/null_blk/main.c | 14 ++++++------
+ drivers/md/md.c               | 35 +++++++++++++++---------------
+ drivers/nvdimm/badrange.c     |  2 +-
+ include/linux/badblocks.h     |  6 ++---
+ 5 files changed, 49 insertions(+), 49 deletions(-)
 
+diff --git a/block/badblocks.c b/block/badblocks.c
+index f84a35d683b1f..753250a04c3fa 100644
+--- a/block/badblocks.c
++++ b/block/badblocks.c
+@@ -836,8 +836,8 @@ static bool try_adjacent_combine(struct badblocks *bb, int prev)
+ }
+ 
+ /* Do exact work to set bad block range into the bad block table */
+-static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
+-			  int acknowledged)
++static bool _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
++			   int acknowledged)
+ {
+ 	int len = 0, added = 0;
+ 	struct badblocks_context bad;
+@@ -847,11 +847,11 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
+ 
+ 	if (bb->shift < 0)
+ 		/* badblocks are disabled */
+-		return 1;
++		return false;
+ 
+ 	if (sectors == 0)
+ 		/* Invalid sectors number */
+-		return 1;
++		return false;
+ 
+ 	if (bb->shift) {
+ 		/* round the start down, and the end up */
+@@ -981,7 +981,7 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
+ 
+ 	write_sequnlock_irqrestore(&bb->lock, flags);
+ 
+-	return sectors;
++	return sectors == 0;
+ }
+ 
+ /*
+@@ -1052,21 +1052,20 @@ static int front_splitting_clear(struct badblocks *bb, int prev,
+ }
+ 
+ /* Do the exact work to clear bad block range from the bad block table */
+-static int _badblocks_clear(struct badblocks *bb, sector_t s, int sectors)
++static bool _badblocks_clear(struct badblocks *bb, sector_t s, int sectors)
+ {
+ 	struct badblocks_context bad;
+ 	int prev = -1, hint = -1;
+ 	int len = 0, cleared = 0;
+-	int rv = 0;
+ 	u64 *p;
+ 
+ 	if (bb->shift < 0)
+ 		/* badblocks are disabled */
+-		return 1;
++		return false;
+ 
+ 	if (sectors == 0)
+ 		/* Invalid sectors number */
+-		return 1;
++		return false;
+ 
+ 	if (bb->shift) {
+ 		sector_t target;
+@@ -1186,9 +1185,9 @@ static int _badblocks_clear(struct badblocks *bb, sector_t s, int sectors)
+ 	write_sequnlock_irq(&bb->lock);
+ 
+ 	if (!cleared)
+-		rv = 1;
++		return false;
+ 
+-	return rv;
++	return true;
+ }
+ 
+ /* Do the exact work to check bad blocks range from the bad block table */
+@@ -1342,12 +1341,12 @@ EXPORT_SYMBOL_GPL(badblocks_check);
+  * decide how best to handle it.
+  *
+  * Return:
+- *  0: success
+- *  other: failed to set badblocks (out of space). Parital setting will be
++ *  true: success
++ *  false: failed to set badblocks (out of space). Parital setting will be
+  *  treated as failure.
+  */
+-int badblocks_set(struct badblocks *bb, sector_t s, int sectors,
+-			int acknowledged)
++bool badblocks_set(struct badblocks *bb, sector_t s, int sectors,
++		   int acknowledged)
+ {
+ 	return _badblocks_set(bb, s, sectors, acknowledged);
+ }
+@@ -1364,10 +1363,10 @@ EXPORT_SYMBOL_GPL(badblocks_set);
+  * drop the remove request.
+  *
+  * Return:
+- *  0: success
+- *  1: failed to clear badblocks
++ *  true: success
++ *  false: failed to clear badblocks
+  */
+-int badblocks_clear(struct badblocks *bb, sector_t s, int sectors)
++bool badblocks_clear(struct badblocks *bb, sector_t s, int sectors)
+ {
+ 	return _badblocks_clear(bb, s, sectors);
+ }
+@@ -1489,10 +1488,10 @@ ssize_t badblocks_store(struct badblocks *bb, const char *page, size_t len,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (badblocks_set(bb, sector, length, !unack))
++	if (!badblocks_set(bb, sector, length, !unack))
+ 		return -ENOSPC;
+-	else
+-		return len;
++
++	return len;
+ }
+ EXPORT_SYMBOL_GPL(badblocks_store);
+ 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index b0b009b1136d5..cca278f1d2ce7 100644
+index cca278f1d2ce7..f2a5f65abbf8b 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -474,6 +474,7 @@ NULLB_DEVICE_ATTR(shared_tag_bitmap, bool, NULL);
- NULLB_DEVICE_ATTR(fua, bool, NULL);
- NULLB_DEVICE_ATTR(rotational, bool, NULL);
- NULLB_DEVICE_ATTR(badblocks_once, bool, NULL);
-+NULLB_DEVICE_ATTR(badblocks_partial_io, bool, NULL);
- 
- static ssize_t nullb_device_power_show(struct config_item *item, char *page)
- {
-@@ -595,6 +596,7 @@ CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
- static struct configfs_attribute *nullb_device_attrs[] = {
- 	&nullb_device_attr_badblocks,
- 	&nullb_device_attr_badblocks_once,
-+	&nullb_device_attr_badblocks_partial_io,
- 	&nullb_device_attr_blocking,
- 	&nullb_device_attr_blocksize,
- 	&nullb_device_attr_cache_size,
-@@ -1309,19 +1311,40 @@ static inline blk_status_t null_handle_throttled(struct nullb_cmd *cmd)
- 	return sts;
- }
- 
-+/*
-+ * Check if the command should fail for the badblocks. If so, return
-+ * BLK_STS_IOERR and return number of partial I/O sectors to be written or read,
-+ * which may be less than the requested number of sectors.
-+ *
-+ * @cmd:        The command to handle.
-+ * @sector:     The start sector for I/O.
-+ * @nr_sectors: Specifies number of sectors to write or read, and returns the
-+ *              number of sectors to be written or read.
-+ */
- blk_status_t null_handle_badblocks(struct nullb_cmd *cmd, sector_t sector,
--				   sector_t nr_sectors)
-+				   unsigned int *nr_sectors)
- {
- 	struct badblocks *bb = &cmd->nq->dev->badblocks;
-+	struct nullb_device *dev = cmd->nq->dev;
-+	unsigned int block_sectors = dev->blocksize >> SECTOR_SHIFT;
- 	sector_t first_bad;
- 	int bad_sectors;
-+	unsigned int partial_io_sectors = 0;
- 
--	if (!badblocks_check(bb, sector, nr_sectors, &first_bad, &bad_sectors))
-+	if (!badblocks_check(bb, sector, *nr_sectors, &first_bad, &bad_sectors))
- 		return BLK_STS_OK;
- 
- 	if (cmd->nq->dev->badblocks_once)
- 		badblocks_clear(bb, first_bad, bad_sectors);
- 
-+	if (cmd->nq->dev->badblocks_partial_io) {
-+		if (!IS_ALIGNED(first_bad, block_sectors))
-+			first_bad = ALIGN_DOWN(first_bad, block_sectors);
-+		if (sector < first_bad)
-+			partial_io_sectors = first_bad - sector;
+@@ -561,14 +561,14 @@ static ssize_t nullb_device_badblocks_store(struct config_item *item,
+ 		goto out;
+ 	/* enable badblocks */
+ 	cmpxchg(&t_dev->badblocks.shift, -1, 0);
+-	if (buf[0] == '+')
+-		ret = badblocks_set(&t_dev->badblocks, start,
+-			end - start + 1, 1);
+-	else
+-		ret = badblocks_clear(&t_dev->badblocks, start,
+-			end - start + 1);
+-	if (ret == 0)
++	if (buf[0] == '+') {
++		if (badblocks_set(&t_dev->badblocks, start,
++				  end - start + 1, 1))
++			ret = count;
++	} else if (badblocks_clear(&t_dev->badblocks, start,
++				   end - start + 1)) {
+ 		ret = count;
 +	}
-+	*nr_sectors = partial_io_sectors;
-+
- 	return BLK_STS_IOERR;
- }
- 
-@@ -1380,18 +1403,19 @@ blk_status_t null_process_cmd(struct nullb_cmd *cmd, enum req_op op,
- 			      sector_t sector, unsigned int nr_sectors)
+ out:
+ 	kfree(orig);
+ 	return ret;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index f501bc5f68f1a..ef859ccb03661 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1754,7 +1754,7 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
+ 			count <<= sb->bblog_shift;
+ 			if (bb + 1 == 0)
+ 				break;
+-			if (badblocks_set(&rdev->badblocks, sector, count, 1))
++			if (!badblocks_set(&rdev->badblocks, sector, count, 1))
+ 				return -EINVAL;
+ 		}
+ 	} else if (sb->bblog_offset != 0)
+@@ -9850,7 +9850,6 @@ int rdev_set_badblocks(struct md_rdev *rdev, sector_t s, int sectors,
+ 		       int is_new)
  {
- 	struct nullb_device *dev = cmd->nq->dev;
-+	blk_status_t badblocks_ret = BLK_STS_OK;
- 	blk_status_t ret;
+ 	struct mddev *mddev = rdev->mddev;
+-	int rv;
  
--	if (dev->badblocks.shift != -1) {
--		ret = null_handle_badblocks(cmd, sector, nr_sectors);
-+	if (dev->badblocks.shift != -1)
-+		badblocks_ret = null_handle_badblocks(cmd, sector, &nr_sectors);
+ 	/*
+ 	 * Recording new badblocks for faulty rdev will force unnecessary
+@@ -9866,33 +9865,35 @@ int rdev_set_badblocks(struct md_rdev *rdev, sector_t s, int sectors,
+ 		s += rdev->new_data_offset;
+ 	else
+ 		s += rdev->data_offset;
+-	rv = badblocks_set(&rdev->badblocks, s, sectors, 0);
+-	if (rv == 0) {
+-		/* Make sure they get written out promptly */
+-		if (test_bit(ExternalBbl, &rdev->flags))
+-			sysfs_notify_dirent_safe(rdev->sysfs_unack_badblocks);
+-		sysfs_notify_dirent_safe(rdev->sysfs_state);
+-		set_mask_bits(&mddev->sb_flags, 0,
+-			      BIT(MD_SB_CHANGE_CLEAN) | BIT(MD_SB_CHANGE_PENDING));
+-		md_wakeup_thread(rdev->mddev->thread);
+-		return 1;
+-	} else
 +
-+	if (dev->memory_backed && nr_sectors) {
-+		ret = null_handle_memory_backed(cmd, op, sector, nr_sectors);
- 		if (ret != BLK_STS_OK)
- 			return ret;
- 	}
- 
--	if (dev->memory_backed)
--		return null_handle_memory_backed(cmd, op, sector, nr_sectors);
--
--	return BLK_STS_OK;
-+	return badblocks_ret;
++	if (!badblocks_set(&rdev->badblocks, s, sectors, 0))
+ 		return 0;
++
++	/* Make sure they get written out promptly */
++	if (test_bit(ExternalBbl, &rdev->flags))
++		sysfs_notify_dirent_safe(rdev->sysfs_unack_badblocks);
++	sysfs_notify_dirent_safe(rdev->sysfs_state);
++	set_mask_bits(&mddev->sb_flags, 0,
++		      BIT(MD_SB_CHANGE_CLEAN) | BIT(MD_SB_CHANGE_PENDING));
++	md_wakeup_thread(rdev->mddev->thread);
++	return 1;
  }
+ EXPORT_SYMBOL_GPL(rdev_set_badblocks);
  
- static void null_handle_cmd(struct nullb_cmd *cmd, sector_t sector,
-diff --git a/drivers/block/null_blk/null_blk.h b/drivers/block/null_blk/null_blk.h
-index ee60f3a887967..7bb6128dbaafb 100644
---- a/drivers/block/null_blk/null_blk.h
-+++ b/drivers/block/null_blk/null_blk.h
-@@ -64,6 +64,7 @@ struct nullb_device {
- 	unsigned int curr_cache;
- 	struct badblocks badblocks;
- 	bool badblocks_once;
-+	bool badblocks_partial_io;
+ int rdev_clear_badblocks(struct md_rdev *rdev, sector_t s, int sectors,
+ 			 int is_new)
+ {
+-	int rv;
+ 	if (is_new)
+ 		s += rdev->new_data_offset;
+ 	else
+ 		s += rdev->data_offset;
+-	rv = badblocks_clear(&rdev->badblocks, s, sectors);
+-	if ((rv == 0) && test_bit(ExternalBbl, &rdev->flags))
++
++	if (!badblocks_clear(&rdev->badblocks, s, sectors))
++		return 0;
++
++	if (test_bit(ExternalBbl, &rdev->flags))
+ 		sysfs_notify_dirent_safe(rdev->sysfs_badblocks);
+-	return rv;
++	return 1;
+ }
+ EXPORT_SYMBOL_GPL(rdev_clear_badblocks);
  
- 	unsigned int nr_zones;
- 	unsigned int nr_zones_imp_open;
-@@ -133,11 +134,10 @@ blk_status_t null_handle_discard(struct nullb_device *dev, sector_t sector,
- blk_status_t null_process_cmd(struct nullb_cmd *cmd, enum req_op op,
- 			      sector_t sector, unsigned int nr_sectors);
- blk_status_t null_handle_badblocks(struct nullb_cmd *cmd, sector_t sector,
--				   sector_t nr_sectors);
-+				   unsigned int *nr_sectors);
- blk_status_t null_handle_memory_backed(struct nullb_cmd *cmd, enum req_op op,
- 				       sector_t sector, sector_t nr_sectors);
+diff --git a/drivers/nvdimm/badrange.c b/drivers/nvdimm/badrange.c
+index a002ea6fdd842..ee478ccde7c6c 100644
+--- a/drivers/nvdimm/badrange.c
++++ b/drivers/nvdimm/badrange.c
+@@ -167,7 +167,7 @@ static void set_badblock(struct badblocks *bb, sector_t s, int num)
+ 	dev_dbg(bb->dev, "Found a bad range (0x%llx, 0x%llx)\n",
+ 			(u64) s * 512, (u64) num * 512);
+ 	/* this isn't an error as the hardware will still throw an exception */
+-	if (badblocks_set(bb, s, num, 1))
++	if (!badblocks_set(bb, s, num, 1))
+ 		dev_info_once(bb->dev, "%s: failed for sector %llx\n",
+ 				__func__, (u64) s);
+ }
+diff --git a/include/linux/badblocks.h b/include/linux/badblocks.h
+index 670f2dae692fb..8764bed9ff167 100644
+--- a/include/linux/badblocks.h
++++ b/include/linux/badblocks.h
+@@ -50,9 +50,9 @@ struct badblocks_context {
  
--
- #ifdef CONFIG_BLK_DEV_ZONED
- int null_init_zoned_dev(struct nullb_device *dev, struct queue_limits *lim);
- int null_register_zoned_dev(struct nullb *nullb);
-diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
-index 7677f6cf23f46..4e5728f459899 100644
---- a/drivers/block/null_blk/zoned.c
-+++ b/drivers/block/null_blk/zoned.c
-@@ -353,6 +353,7 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
- 	struct nullb_device *dev = cmd->nq->dev;
- 	unsigned int zno = null_zone_no(dev, sector);
- 	struct nullb_zone *zone = &dev->zones[zno];
-+	blk_status_t badblocks_ret = BLK_STS_OK;
- 	blk_status_t ret;
- 
- 	trace_nullb_zone_op(cmd, zno, zone->cond);
-@@ -413,9 +414,11 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
- 	}
- 
- 	if (dev->badblocks.shift != -1) {
--		ret = null_handle_badblocks(cmd, sector, nr_sectors);
--		if (ret != BLK_STS_OK)
-+		badblocks_ret = null_handle_badblocks(cmd, sector, &nr_sectors);
-+		if (badblocks_ret != BLK_STS_OK && !nr_sectors) {
-+			ret = badblocks_ret;
- 			goto unlock_zone;
-+		}
- 	}
- 
- 	if (dev->memory_backed) {
-@@ -438,7 +441,7 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
- 		zone->cond = BLK_ZONE_COND_FULL;
- 	}
- 
--	ret = BLK_STS_OK;
-+	ret = badblocks_ret;
- 
- unlock_zone:
- 	null_unlock_zone(dev, zone);
+ int badblocks_check(struct badblocks *bb, sector_t s, int sectors,
+ 		   sector_t *first_bad, int *bad_sectors);
+-int badblocks_set(struct badblocks *bb, sector_t s, int sectors,
+-			int acknowledged);
+-int badblocks_clear(struct badblocks *bb, sector_t s, int sectors);
++bool badblocks_set(struct badblocks *bb, sector_t s, int sectors,
++		   int acknowledged);
++bool badblocks_clear(struct badblocks *bb, sector_t s, int sectors);
+ void ack_all_badblocks(struct badblocks *bb);
+ ssize_t badblocks_show(struct badblocks *bb, char *page, int unack);
+ ssize_t badblocks_store(struct badblocks *bb, const char *page, size_t len,
 -- 
 2.39.5
 
