@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82035A94A;
-	Tue,  8 Apr 2025 11:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9D32641CC;
+	Tue,  8 Apr 2025 11:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112985; cv=none; b=jbXTQAPWxntGrwxORGiPmXNZNcAFzEzEx5tJR/x7JD+q6j2mavCm8bz+1cxQxBiXeEtpMYlzMEYj2BxfOXapAK+ictmnhbJDpYxitJtf3g3rpi3QG3KgcE3jYpFT1E8MAIt70ZZ9kSx93GukacTS+U9iL7krHkuag1mQDnF953c=
+	t=1744112988; cv=none; b=ofU6gCZmFlrbnWgEywIZxBN3iM2Xg7jsmar3TnisFBOlTc277kf/Eep93X2N+PJE5ehvNcsS7ZmWMmQnLFDFFcxdyd525cjhB4tcTXuh3y1u3qOITcI7bqaUeNzdqvidoXffSO6/97ASOd3Ky09OpBhVXU3skql/7XGZA1wfLl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112985; c=relaxed/simple;
-	bh=SeGNlcl2lW7xkWil2CebA/3fAxQzhuAuogYJ+cVgWYU=;
+	s=arc-20240116; t=1744112988; c=relaxed/simple;
+	bh=Uq4/HY7FYnmt1q2OcE3cdQxdbhOEoLp6a60QDUq9sKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wq93oG95R+cI3l2b/RXHBCgzJkjKXmw5UIavyysJuK7cIpynJF+mpQywIqtFSxLyzTuKq3Jtjy82EozJOlVQXCegqnkGx8+psLReQB3+WxkrZ3CXQE8TanZzwWk9EE49HPOxrF/0hK7BSocnwsrq0Bu+OhS9bRFPBCiXKYdGylU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5ZmiKDR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwAr0+rLC8+yvx3C5YvcTN2PUMBrIlP/G638yjwUVky2qwBaA1gypPr0VkzReJ8Yag5jlWnpdnUPgwaDVOmBY4WVDweVTy2wAkOW6ljyptvB+J272QePV/2pqjSqYhnQNy8R3S+fxvmHHFSDHbd085xh8M1YxkRvtTwDKS/gUGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrsUMxWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5ZmiKDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14211C4CEE5;
-	Tue,  8 Apr 2025 11:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrsUMxWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B327DC4CEE5;
+	Tue,  8 Apr 2025 11:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112985;
-	bh=SeGNlcl2lW7xkWil2CebA/3fAxQzhuAuogYJ+cVgWYU=;
+	s=korg; t=1744112988;
+	bh=Uq4/HY7FYnmt1q2OcE3cdQxdbhOEoLp6a60QDUq9sKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5ZmiKDR6tgsZY4YQTHRHV8uIUIjGChQ/tpj5OyTa4UxG0UmHWeiwAbzBPrQkBotG
-	 wzGJk6TfoE8ICyeI45zM26vQtaPXoY1Sls9CcGfhx9hPr+997SkyqLblkyjFooi00S
-	 xASDs4aVr8jsk0Iwc4i2v4ysaTehRDie/if0fXVo=
+	b=SrsUMxWS3qzqtj5wBAVYqvZka/jq+z0EjSt8HhgLKvXWS6qUBawuegyu5KJY/L5dP
+	 /2eOLQfFRsP73bsLCsa/+SIx/mcRTlSqJBkDKOb3xicHhEll/GO8yK9hVvv6o2oDvD
+	 95SVbG/IshL1RCIhQ5TLpu8+sfielW686PxyELg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 271/279] tracing/osnoise: Fix possible recursive locking for cpus_read_lock()
-Date: Tue,  8 Apr 2025 12:50:54 +0200
-Message-ID: <20250408104833.709603192@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>,
+	"Darrick J. Wong" <djwong@kernel.org>
+Subject: [PATCH 5.15 272/279] ext4: dont over-report free space or inodes in statvfs
+Date: Tue,  8 Apr 2025 12:50:55 +0200
+Message-ID: <20250408104833.736272904@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,75 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 7e6b3fcc9c5294aeafed0dbe1a09a1bc899bd0f2 upstream.
+commit f87d3af7419307ae26e705a2b2db36140db367a2 upstream.
 
-Lockdep reports this deadlock log:
+This fixes an analogus bug that was fixed in xfs in commit
+4b8d867ca6e2 ("xfs: don't over-report free space or inodes in
+statvfs") where statfs can report misleading / incorrect information
+where project quota is enabled, and the free space is less than the
+remaining quota.
 
-osnoise: could not start sampling thread
-============================================
-WARNING: possible recursive locking detected
---------------------------------------------
-       CPU0
-       ----
-  lock(cpu_hotplug_lock);
-  lock(cpu_hotplug_lock);
+This commit will resolve a test failure in generic/762 which tests for
+this bug.
 
- Call Trace:
-  <TASK>
-  print_deadlock_bug+0x282/0x3c0
-  __lock_acquire+0x1610/0x29a0
-  lock_acquire+0xcb/0x2d0
-  cpus_read_lock+0x49/0x120
-  stop_per_cpu_kthreads+0x7/0x60
-  start_kthread+0x103/0x120
-  osnoise_hotplug_workfn+0x5e/0x90
-  process_one_work+0x44f/0xb30
-  worker_thread+0x33e/0x5e0
-  kthread+0x206/0x3b0
-  ret_from_fork+0x31/0x50
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-This is the deadlock scenario:
-osnoise_hotplug_workfn()
-  guard(cpus_read_lock)();      // first lock call
-  start_kthread(cpu)
-    if (IS_ERR(kthread)) {
-      stop_per_cpu_kthreads(); {
-        cpus_read_lock();      // second lock call. Cause the AA deadlock
-      }
-    }
-
-It is not necessary to call stop_per_cpu_kthreads() which stops osnoise
-kthread for every other CPUs in the system if a failure occurs during
-hotplug of a certain CPU.
-For start_per_cpu_kthreads(), if the start_kthread() call fails,
-this function calls stop_per_cpu_kthreads() to handle the error.
-Therefore, similarly, there is no need to call stop_per_cpu_kthreads()
-again within start_kthread().
-So just remove stop_per_cpu_kthreads() from start_kthread to solve this issue.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250321095249.2739397-1-ranxiaokai627@163.com
-Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
-Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: stable@kernel.org
+Fixes: 689c958cbe6b ("ext4: add project quota support")
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/ext4/super.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -1560,7 +1560,6 @@ static int start_kthread(unsigned int cp
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6087,22 +6087,29 @@ static int ext4_statfs_project(struct su
+ 			     dquot->dq_dqb.dqb_bhardlimit);
+ 	limit >>= sb->s_blocksize_bits;
  
- 	if (IS_ERR(kthread)) {
- 		pr_err(BANNER "could not start sampling thread\n");
--		stop_per_cpu_kthreads();
- 		return -ENOMEM;
+-	if (limit && buf->f_blocks > limit) {
++	if (limit) {
++		uint64_t	remaining = 0;
++
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
  	}
  
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 			     dquot->dq_dqb.dqb_ihardlimit);
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t	remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
+ 	}
+ 
+ 	spin_unlock(&dquot->dq_dqb_lock);
 
 
