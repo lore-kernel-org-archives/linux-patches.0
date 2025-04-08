@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CC6207E14;
-	Tue,  8 Apr 2025 11:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180C7207E14;
+	Tue,  8 Apr 2025 11:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111387; cv=none; b=Y76rDXIVlgAZrCsqAmXBzcpJTa5oMIgY+HcOvJrwAiHHhDomqUYz6OuSr/ItemwRERqUPNtG+t3dShMREjJLDDcdvWids76cUlb1XtCmLay0RWPsz3bJIETkRa2aqjuY78HvJu77dvG8c94XiFmEw/6yu5W2Ve4ATpTuSk1pMEU=
+	t=1744111390; cv=none; b=nh0Wrhqy8X91uxdBEKlW0DslNeZP9GlXwNt91AT44Z1h1bd2bmt0ILwQcpawn/pL3SLLznTkLPEfgyiQHWiB9jKnh2MCHT02i58BzcaNBGOZNaVD0l++mnobUGxo85TsMRU8i/Nfa4bIdN6N1TKB1yepODOD6rnhT0TnFWCKfIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111387; c=relaxed/simple;
-	bh=xoWDFSKMdN+T5CrlwW1UnvVwfLDujFLX60mxCjWEVvA=;
+	s=arc-20240116; t=1744111390; c=relaxed/simple;
+	bh=1G+r4Y1rJST+LSI+VoIPfkRxZ+Jh6VAlR45f2N4MB00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ym7nXkvCsHTY/wAl/cvd4ppzVjeC3GgaFygjMeNxZaggVDKJSMjamTUAMelusXI7RnggpXjYvLTmTIoY4G3f6L76DYlYKNgT3J0peu7nyuJC/jJ+qj8IfqefuzeTA4l4j/dPdrJrGL2OmHx59QIQKZY1suzXjCNO9mdzWNB3hpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3cX8XBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJdL1Tjdaoq2hWvwpDEqMMgJPEXyc1+DFxncPhSqD8sA/WIxaD9ePknMYX+nxVLE48kROnD8oGah7tRWMzsjz4BOeAjC2LBBYQOlSqBvi3lRuCq6iSFPH9CqL+cph6RnrTYJfytetMEOnhNNG/mpd81w497ihvG7OPJ6Hx0baG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdvw2q0s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3cX8XBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08833C4CEE5;
-	Tue,  8 Apr 2025 11:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdvw2q0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F87AC4CEE5;
+	Tue,  8 Apr 2025 11:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111387;
-	bh=xoWDFSKMdN+T5CrlwW1UnvVwfLDujFLX60mxCjWEVvA=;
+	s=korg; t=1744111390;
+	bh=1G+r4Y1rJST+LSI+VoIPfkRxZ+Jh6VAlR45f2N4MB00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3cX8XBO+xCGJr7czSP9e1vGqFqn8CJ5wWAcYF/+tYDk6ouVkzZyGn9NLvsnVkiY8
-	 d3tEfpgqqAi8hHfa8iicrkpWjwLy31U5rNsgZtA6HxOSzryEwEpaGFsNmN06HMu0R5
-	 FwJAuiTJDO49/147I+LBQ6tH1+IKKgVfyOW7ib6E=
+	b=kdvw2q0s8R7dHK6/oDPLlf9GKn1v3B9/F68PsEzg8TIeaS8p04iU14X1Wpigh5WU2
+	 dMNgYIbeT+pBASmt/2OM2xHcnBnT0HQFg62QEb2HZD5BTQ/taMgWGhvFJsu0wnFLUS
+	 F/ciuyc1WaPiW+a94sZMCtpf/BK1GqM+vTtEYU4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 413/731] clk: amlogic: g12a: fix mmc A peripheral clock
-Date: Tue,  8 Apr 2025 12:45:10 +0200
-Message-ID: <20250408104923.881124013@linuxfoundation.org>
+Subject: [PATCH 6.14 414/731] pinctrl: bcm2835: dont -EINVAL on alternate funcs from get_direction()
+Date: Tue,  8 Apr 2025 12:45:11 +0200
+Message-ID: <20250408104923.905062697@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,43 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 0079e77c08de692cb20b38e408365c830a44b1ef ]
+[ Upstream commit 75f87f5d04f73645136d7a603c331d844fc5704a ]
 
-The bit index of the peripheral clock for mmc A is wrong
-This was probably not a problem for mmc A as the peripheral is likely left
-enabled by the bootloader.
+Since commit 9d846b1aebbe ("gpiolib: check the return value of
+gpio_chip::get_direction()") we check the return value of the
+get_direction() callback as per its API contract. This driver returns
+-EINVAL if the pin in question is set to one of the alternative
+(non-GPIO) functions. This isn't really an error that should be
+communicated to GPIOLIB so default to returning the "safe" value of
+INPUT in this case. The GPIO subsystem does not have the notion of
+"unknown" direction.
 
-No issues has been reported so far but it could be a problem, most likely
-some form of conflict between the ethernet and mmc A clock, breaking
-ethernet on init.
-
-Use the value provided by the documentation for mmc A before this
-becomes an actual problem.
-
-Fixes: 085a4ea93d54 ("clk: meson: g12a: add peripheral clock controller")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241213-amlogic-clk-g12a-mmca-fix-v1-1-5af421f58b64@baylibre.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 9d846b1aebbe ("gpiolib: check the return value of gpio_chip::get_direction()")
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/all/Z7VFB1nST6lbmBIo@finisterre.sirena.org.uk/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/20250219102750.38519-1-brgl@bgdev.pl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/g12a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/bcm/pinctrl-bcm2835.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
-index 563759c51f747..ceabebb1863d6 100644
---- a/drivers/clk/meson/g12a.c
-+++ b/drivers/clk/meson/g12a.c
-@@ -4323,7 +4323,7 @@ static MESON_GATE(g12a_spicc_1,			HHI_GCLK_MPEG0,	14);
- static MESON_GATE(g12a_hiu_reg,			HHI_GCLK_MPEG0,	19);
- static MESON_GATE(g12a_mipi_dsi_phy,		HHI_GCLK_MPEG0,	20);
- static MESON_GATE(g12a_assist_misc,		HHI_GCLK_MPEG0,	23);
--static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	4);
-+static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	24);
- static MESON_GATE(g12a_emmc_b,			HHI_GCLK_MPEG0,	25);
- static MESON_GATE(g12a_emmc_c,			HHI_GCLK_MPEG0,	26);
- static MESON_GATE(g12a_audio_codec,		HHI_GCLK_MPEG0,	28);
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+index cc1fe0555e196..eaeec096bc9a9 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+@@ -346,14 +346,14 @@ static int bcm2835_gpio_get_direction(struct gpio_chip *chip, unsigned int offse
+ 	struct bcm2835_pinctrl *pc = gpiochip_get_data(chip);
+ 	enum bcm2835_fsel fsel = bcm2835_pinctrl_fsel_get(pc, offset);
+ 
+-	/* Alternative function doesn't clearly provide a direction */
+-	if (fsel > BCM2835_FSEL_GPIO_OUT)
+-		return -EINVAL;
+-
+-	if (fsel == BCM2835_FSEL_GPIO_IN)
+-		return GPIO_LINE_DIRECTION_IN;
++	if (fsel == BCM2835_FSEL_GPIO_OUT)
++		return GPIO_LINE_DIRECTION_OUT;
+ 
+-	return GPIO_LINE_DIRECTION_OUT;
++	/*
++	 * Alternative function doesn't clearly provide a direction. Default
++	 * to INPUT.
++	 */
++	return GPIO_LINE_DIRECTION_IN;
+ }
+ 
+ static void bcm2835_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
 -- 
 2.39.5
 
