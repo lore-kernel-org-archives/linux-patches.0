@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCCB216E30;
-	Tue,  8 Apr 2025 11:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BDC19AD5C;
+	Tue,  8 Apr 2025 11:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112181; cv=none; b=AcpCq+0bwdEyM2ClnhTqAWEwnsJgiVpWT1PqTn0tghpgbN00V3OsWi8npKa7uhQsM9g/qOXeebKy21Rc6WoqCuhvW0/kvdIbLyqkZDuNPkYrRfqJxvaIrTpbJ28rvT1CtOzShkZYO+bC7mHin2Ky/RHN/sQ+KzBzrELcGnFlzTY=
+	t=1744112183; cv=none; b=ggpUdg0WVrUIwIP18dWC8tLE5aSI2LN9Rle1Vajw4PYYI7IjKi6T7b/S1anCpYvOwIO71iEt77tmVGThimQ47n2PcIrlys37osKCeFJDkM1Klbxe9g/S/yjJiRQSxdwebUqddY8rqPC7JIu1Hj2BAT3CsFpg2FPK8slqnlsVuM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112181; c=relaxed/simple;
-	bh=qfv9TNc9hA884Ysvb91gS3Y2iBBRZWU6osxU/Byb0j8=;
+	s=arc-20240116; t=1744112183; c=relaxed/simple;
+	bh=1LOJfeZjmOwlhg469fbkHKlIEsD3AEHaK8d9GkjSu/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5Uh4uRACCWfJ7Y2ea1toJ1ffFQgOmMUKwdH2x5vE4wAfv0F7ScI79UlqcRCCHwYrGsBoQYc1F3Rz9YsnsVy0Zb36hjjb7md0sPyOjja9n8kgjWEZ/uF1JUGEAifOGRsDDzRqq1ohduLb7ybmDh+ZOeVlBrErZOrz4uH6If9RpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMr2FDhM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/h23QacuS8qcAB8zCtJysPme/aVMmkDbDqP2hscoF3x88oADWP3ZYiEjN7zjaoGZdMFfiGpL4KfpwvM4HCUtvUjRLBOBdqzxPqgmfMqXkTY9qHXpoAim+O7abkvEBMJhHpmHy6nY3baMuIQfgG2oA/NEfNDJCwk1CzxB/zNsQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYXVZn12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMr2FDhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5F1C4CEE5;
-	Tue,  8 Apr 2025 11:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYXVZn12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B6CC4CEE5;
+	Tue,  8 Apr 2025 11:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112180;
-	bh=qfv9TNc9hA884Ysvb91gS3Y2iBBRZWU6osxU/Byb0j8=;
+	s=korg; t=1744112183;
+	bh=1LOJfeZjmOwlhg469fbkHKlIEsD3AEHaK8d9GkjSu/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMr2FDhMXPgwqjjzo1o0nNNAKQXHak5pzqMxBrpVwPxtl5xrXc3HViEQNzw6pNXu5
-	 9ZtpX3jHyAahJ9GqSZ30d2wTv8T5Lm3Pyhc1uW++PPZcEYV3zMdjPXeSz4Gqoh/k0Y
-	 RSLwK502z09A+O8XaV7ODIHg3dnG19vtmY/kuaAc=
+	b=HYXVZn12ktUYLSyhtyrju4CoPB/UHQJovT4gYdik7IHFvCJQedyweA6BDV7dGq30q
+	 tM/j9g6S2IAqVMGFbEunA+JzVXx0byR9cLl3mdaNptNcVtwcj8jpfiUZuj0yuxk+uR
+	 +RVo6rPWPmh3O6HqVC/uwBgMjith/Q5pByEG8sgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.14 705/731] exfat: fix random stack corruption after get_block
-Date: Tue,  8 Apr 2025 12:50:02 +0200
-Message-ID: <20250408104930.669025237@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.14 679/731] perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read
+Date: Tue,  8 Apr 2025 12:49:36 +0200
+Message-ID: <20250408104930.061334450@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,127 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 1bb7ff4204b6d4927e982cd256286c09ed4fd8ca upstream.
+commit f9bdf1f953392c9edd69a7f884f78c0390127029 upstream.
 
-When get_block is called with a buffer_head allocated on the stack, such
-as do_mpage_readpage, stack corruption due to buffer_head UAF may occur in
-the following race condition situation.
+The WARN_ON(this_cpu_read(cpu_hw_events.enabled)) in the
+intel_pmu_save_and_restart_reload() is triggered, when sampling read
+topdown events.
 
-     <CPU 0>                      <CPU 1>
-mpage_read_folio
-  <<bh on stack>>
-  do_mpage_readpage
-    exfat_get_block
-      bh_read
-        __bh_read
-	  get_bh(bh)
-          submit_bh
-          wait_on_buffer
-                              ...
-                              end_buffer_read_sync
-                                __end_buffer_read_notouch
-                                   unlock_buffer
-          <<keep going>>
-        ...
-      ...
-    ...
-  ...
-<<bh is not valid out of mpage_read_folio>>
-   .
-   .
-another_function
-  <<variable A on stack>>
-                                   put_bh(bh)
-                                     atomic_dec(bh->b_count)
-  * stack corruption here *
+In a NMI handler, the cpu_hw_events.enabled is set and used to indicate
+the status of core PMU. The generic pmu->pmu_disable_count, updated in
+the perf_pmu_disable/enable pair, is not touched.
+However, the perf_pmu_disable/enable pair is invoked when sampling read
+in a NMI handler. The cpuc->enabled is mistakenly set by the
+perf_pmu_enable().
 
-This patch returns -EAGAIN if a folio does not have buffers when bh_read
-needs to be called. By doing this, the caller can fallback to functions
-like block_read_full_folio(), create a buffer_head in the folio, and then
-call get_block again.
+Avoid disabling PMU if the core PMU is already disabled.
+Merge the logic together.
 
-Let's do not call bh_read() with on-stack buffer_head.
-
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
+Fixes: 7b2c05a15d29 ("perf/x86/intel: Generic support for hardware TopDown metrics")
+Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Tested-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Link: https://lkml.kernel.org/r/20250121152303.3128733-2-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/inode.c |   39 +++++++++++++++++++++++++++++++++------
- 1 file changed, 33 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/core.c |   41 +++++++++++++++++++++++------------------
+ arch/x86/events/intel/ds.c   |   11 +----------
+ arch/x86/events/perf_event.h |    2 +-
+ 3 files changed, 25 insertions(+), 29 deletions(-)
 
---- a/fs/exfat/inode.c
-+++ b/fs/exfat/inode.c
-@@ -344,7 +344,8 @@ static int exfat_get_block(struct inode
- 			 * The block has been partially written,
- 			 * zero the unwritten part and map the block.
- 			 */
--			loff_t size, off, pos;
-+			loff_t size, pos;
-+			void *addr;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2779,28 +2779,33 @@ static u64 icl_update_topdown_event(stru
  
- 			max_blocks = 1;
+ DEFINE_STATIC_CALL(intel_pmu_update_topdown_event, x86_perf_event_update);
  
-@@ -355,17 +356,41 @@ static int exfat_get_block(struct inode
- 			if (!bh_result->b_folio)
- 				goto done;
- 
-+			/*
-+			 * No buffer_head is allocated.
-+			 * (1) bmap: It's enough to fill bh_result without I/O.
-+			 * (2) read: The unwritten part should be filled with 0
-+			 *           If a folio does not have any buffers,
-+			 *           let's returns -EAGAIN to fallback to
-+			 *           per-bh IO like block_read_full_folio().
-+			 */
-+			if (!folio_buffers(bh_result->b_folio)) {
-+				err = -EAGAIN;
-+				goto done;
-+			}
+-static void intel_pmu_read_topdown_event(struct perf_event *event)
++static void intel_pmu_read_event(struct perf_event *event)
+ {
+-	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
++		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++		bool pmu_enabled = cpuc->enabled;
 +
- 			pos = EXFAT_BLK_TO_B(iblock, sb);
- 			size = ei->valid_size - pos;
--			off = pos & (PAGE_SIZE - 1);
-+			addr = folio_address(bh_result->b_folio) +
-+			       offset_in_folio(bh_result->b_folio, pos);
- 
--			folio_set_bh(bh_result, bh_result->b_folio, off);
-+			/* Check if bh->b_data points to proper addr in folio */
-+			if (bh_result->b_data != addr) {
-+				exfat_fs_error_ratelimit(sb,
-+					"b_data(%p) != folio_addr(%p)",
-+					bh_result->b_data, addr);
-+				err = -EINVAL;
-+				goto done;
-+			}
++		/* Only need to call update_topdown_event() once for group read. */
++		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
++			return;
 +
-+			/* Read a block */
- 			err = bh_read(bh_result, 0);
- 			if (err < 0)
--				goto unlock_ret;
-+				goto done;
++		cpuc->enabled = 0;
++		if (pmu_enabled)
++			intel_pmu_disable_all();
++
++		if (is_topdown_event(event))
++			static_call(intel_pmu_update_topdown_event)(event);
++		else
++			intel_pmu_drain_pebs_buffer();
++
++		cpuc->enabled = pmu_enabled;
++		if (pmu_enabled)
++			intel_pmu_enable_all(0);
  
--			folio_zero_segment(bh_result->b_folio, off + size,
--					off + sb->s_blocksize);
-+			/* Zero unwritten part of a block */
-+			memset(bh_result->b_data + size, 0,
-+			       bh_result->b_size - size);
- 		} else {
- 			/*
- 			 * The range has not been written, clear the mapped flag
-@@ -376,6 +401,8 @@ static int exfat_get_block(struct inode
- 	}
- done:
- 	bh_result->b_size = EXFAT_BLK_TO_B(max_blocks, sb);
-+	if (err < 0)
-+		clear_buffer_mapped(bh_result);
- unlock_ret:
- 	mutex_unlock(&sbi->s_lock);
- 	return err;
+-	/* Only need to call update_topdown_event() once for group read. */
+-	if ((cpuc->txn_flags & PERF_PMU_TXN_READ) &&
+-	    !is_slots_event(event))
+ 		return;
++	}
+ 
+-	perf_pmu_disable(event->pmu);
+-	static_call(intel_pmu_update_topdown_event)(event);
+-	perf_pmu_enable(event->pmu);
+-}
+-
+-static void intel_pmu_read_event(struct perf_event *event)
+-{
+-	if (event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD)
+-		intel_pmu_auto_reload_read(event);
+-	else if (is_topdown_count(event))
+-		intel_pmu_read_topdown_event(event);
+-	else
+-		x86_perf_event_update(event);
++	x86_perf_event_update(event);
+ }
+ 
+ static void intel_pmu_enable_fixed(struct perf_event *event)
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -953,7 +953,7 @@ unlock:
+ 	return 1;
+ }
+ 
+-static inline void intel_pmu_drain_pebs_buffer(void)
++void intel_pmu_drain_pebs_buffer(void)
+ {
+ 	struct perf_sample_data data;
+ 
+@@ -2094,15 +2094,6 @@ get_next_pebs_record_by_bit(void *base,
+ 	return NULL;
+ }
+ 
+-void intel_pmu_auto_reload_read(struct perf_event *event)
+-{
+-	WARN_ON(!(event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD));
+-
+-	perf_pmu_disable(event->pmu);
+-	intel_pmu_drain_pebs_buffer();
+-	perf_pmu_enable(event->pmu);
+-}
+-
+ /*
+  * Special variant of intel_pmu_save_and_restart() for auto-reload.
+  */
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1648,7 +1648,7 @@ void intel_pmu_pebs_disable_all(void);
+ 
+ void intel_pmu_pebs_sched_task(struct perf_event_pmu_context *pmu_ctx, bool sched_in);
+ 
+-void intel_pmu_auto_reload_read(struct perf_event *event);
++void intel_pmu_drain_pebs_buffer(void);
+ 
+ void intel_pmu_store_pebs_lbrs(struct lbr_entry *lbr);
+ 
 
 
