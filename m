@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616032690D5;
-	Tue,  8 Apr 2025 11:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F6A21ADAE;
+	Tue,  8 Apr 2025 11:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110530; cv=none; b=c6KGqOp2z1fJW/uyzwuQg5t1eheOtjDfViMe2gtMA3IVqvmOtlnXRbje0rs7z3366Va3nu7GsjSp6V5gYfUewc8GRYDSjyPfQScCua2jUyODBhrEzbmTixR3ae+pFOAjIjocQxEUQg0DIXcCei1FuC3gQLvr4sTJMnO326D9A+s=
+	t=1744110533; cv=none; b=A/i57ful0evB69KPhN0zNA608l7O+cZy64MQGhZL/ShlT3HB418UbvuQCEevt2ExhtvGzwUaL/3d3zyZHH5F2VEn2hqzG5OYk7HEemd8bw+SNlbjQ1mcn3TsPCN2emOhp7ZWE9+i+/LKtP51Sxxxc7lVAjJupcHKzQDzPxbdQXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110530; c=relaxed/simple;
-	bh=S+OdsDACiLO4a9kq9TlDHcWF6dFhNKP4wI9nfmyCspU=;
+	s=arc-20240116; t=1744110533; c=relaxed/simple;
+	bh=Yy8m4qcvTjYzcv/l0ZH1aj+DJdfuttKR5r7o0VlmE4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQRLkZC6DO3TrHfDsgVIbV4wZbvqBQ/6urONMAQQFBXfat2n5CJAfQv3LvZRvS1t0sNiwwdgSSYgafNTKtf/Yz7s1FEGb1hvaJWYxiffeKlbIrrjzsYpX4+Y01Um51aFM1YDuToScGOenKSooafriNXuGHW8MTvLqx73kqtRgWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHJOVfOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iM0EWj2iiDFMhzkdNKHUnojJb1p0HNMflOSspgMM+BQSA7X6sOzQKMCYhuKO77AyfK659/CZFVV1NHrAscuNViO1kFHwsLKZWApDn+GNmdwojwryYwFBeQ+QkRERV+V0IO3KCeWpxBL+YjKS54IcZrCD1WjyogSbkgcwIQ+PDok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jECiLibb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHJOVfOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E67C4CEEA;
-	Tue,  8 Apr 2025 11:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jECiLibb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94ABC4CEE7;
+	Tue,  8 Apr 2025 11:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110530;
-	bh=S+OdsDACiLO4a9kq9TlDHcWF6dFhNKP4wI9nfmyCspU=;
+	s=korg; t=1744110533;
+	bh=Yy8m4qcvTjYzcv/l0ZH1aj+DJdfuttKR5r7o0VlmE4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHJOVfOFjw8F1rzrT2c6aYTzRJckKmXyMlioY9NYBCRSgHbUTDsZTmkxEm8dInWfc
-	 bpdXLBO6FMlKZX4+nt50zFvZtYxLmPvNqUlfO1LppqZ1bye5Cs2dQePsiyZA0nwhFD
-	 o7fWMV8hcD5l2pgDbclkDR47D1rgMLAfcqSAUCxU=
+	b=jECiLibbLVAH2NEbqz5Krs4B3SpQK6k7gQIWGOd6TWjye6k0jSbnC9bxJI1Ge9abI
+	 Lcg7kdgZDt8pNkQZh91WTlrU5GPpq5CDY6FKnqtYn4DZgV2oxM4T8a7Ms2lbe3FsGN
+	 DAIlackd8f4eMyzplB3NPNgZ0mbt3HmyDEgTDoyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	Norman Maurer <norman_maurer@apple.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 099/731] io_uring: check for iowq alloc_workqueue failure
-Date: Tue,  8 Apr 2025 12:39:56 +0200
-Message-ID: <20250408104916.571483495@linuxfoundation.org>
+Subject: [PATCH 6.14 100/731] io_uring/net: improve recv bundles
+Date: Tue,  8 Apr 2025 12:39:57 +0200
+Message-ID: <20250408104916.595769758@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,34 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 7215469659cb9751a9bf80e43b24a48749004d26 ]
+[ Upstream commit 7c71a0af81ba72de9b2c501065e4e718aba9a271 ]
 
-alloc_workqueue() can fail even during init in io_uring_init(), check
-the result and panic if anything went wrong.
+Current recv bundles are only supported for multishot receives, and
+additionally they also always post at least 2 CQEs if more data is
+available than what a buffer will hold. This happens because the initial
+bundle recv will do a single buffer, and then do the rest of what is in
+the socket as a followup receive. As shown in a test program, if 1k
+buffers are available and 32k is available to receive in the socket,
+you'd get the following completions:
 
-Fixes: 73eaa2b583493 ("io_uring: use private workqueue for exit work")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/3a046063902f888f66151f89fa42f84063b9727b.1738343083.git.asml.silence@gmail.com
+bundle=1, mshot=0
+cqe res 1024
+cqe res 1024
+[...]
+cqe res 1024
+
+bundle=1, mshot=1
+cqe res 1024
+cqe res 31744
+
+where bundle=1 && mshot=0 will post 32 1k completions, and bundle=1 &&
+mshot=1 will post a 1k completion and then a 31k completion.
+
+To support bundle recv without multishot, it's possible to simply retry
+the recv immediately and post a single completion, rather than split it
+into two completions. With the below patch, the same test looks as
+follows:
+
+bundle=1, mshot=0
+cqe res 32768
+
+bundle=1, mshot=1
+cqe res 32768
+
+where mshot=0 works fine for bundles, and both of them post just a
+single 32k completion rather than split it into separate completions.
+Posting fewer completions is always a nice win, and not needing
+multishot for proper bundle efficiency is nice for cases that can't
+necessarily use multishot.
+
+Reported-by: Norman Maurer <norman_maurer@apple.com>
+Link: https://lore.kernel.org/r/184f9f92-a682-4205-a15d-89e18f664502@kernel.dk
+Fixes: 2f9c9515bdfd ("io_uring/net: support bundles for recv")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/net.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index f7acae5f7e1d0..573b3f542b82a 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3922,6 +3922,7 @@ static int __init io_uring_init(void)
- 					  SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT);
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 50e8a3ccc9de9..e9bea0235c130 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -76,6 +76,7 @@ struct io_sr_msg {
+ 	/* initialised and used only by !msg send variants */
+ 	u16				buf_group;
+ 	u16				buf_index;
++	bool				retry;
+ 	void __user			*msg_control;
+ 	/* used only for send zerocopy */
+ 	struct io_kiocb 		*notif;
+@@ -187,6 +188,7 @@ static inline void io_mshot_prep_retry(struct io_kiocb *req,
  
- 	iou_wq = alloc_workqueue("iou_exit", WQ_UNBOUND, 64);
-+	BUG_ON(!iou_wq);
+ 	req->flags &= ~REQ_F_BL_EMPTY;
+ 	sr->done_io = 0;
++	sr->retry = false;
+ 	sr->len = 0; /* get from the provided buffer */
+ 	req->buf_index = sr->buf_group;
+ }
+@@ -404,6 +406,7 @@ int io_sendmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
  
- #ifdef CONFIG_SYSCTL
- 	register_sysctl_init("kernel", kernel_io_uring_disabled_table);
+ 	sr->done_io = 0;
++	sr->retry = false;
+ 
+ 	if (req->opcode != IORING_OP_SEND) {
+ 		if (sqe->addr2 || sqe->file_index)
+@@ -786,6 +789,7 @@ int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 
+ 	sr->done_io = 0;
++	sr->retry = false;
+ 
+ 	if (unlikely(sqe->file_index || sqe->addr2))
+ 		return -EINVAL;
+@@ -834,6 +838,9 @@ int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	return io_recvmsg_prep_setup(req);
+ }
+ 
++/* bits to clear in old and inherit in new cflags on bundle retry */
++#define CQE_F_MASK	(IORING_CQE_F_SOCK_NONEMPTY|IORING_CQE_F_MORE)
++
+ /*
+  * Finishes io_recv and io_recvmsg.
+  *
+@@ -853,9 +860,19 @@ static inline bool io_recv_finish(struct io_kiocb *req, int *ret,
+ 	if (sr->flags & IORING_RECVSEND_BUNDLE) {
+ 		cflags |= io_put_kbufs(req, *ret, io_bundle_nbufs(kmsg, *ret),
+ 				      issue_flags);
++		if (sr->retry)
++			cflags = req->cqe.flags | (cflags & CQE_F_MASK);
+ 		/* bundle with no more immediate buffers, we're done */
+ 		if (req->flags & REQ_F_BL_EMPTY)
+ 			goto finish;
++		/* if more is available, retry and append to this one */
++		if (!sr->retry && kmsg->msg.msg_inq > 0 && *ret > 0) {
++			req->cqe.flags = cflags & ~CQE_F_MASK;
++			sr->len = kmsg->msg.msg_inq;
++			sr->done_io += *ret;
++			sr->retry = true;
++			return false;
++		}
+ 	} else {
+ 		cflags |= io_put_kbuf(req, *ret, issue_flags);
+ 	}
+@@ -1234,6 +1251,7 @@ int io_send_zc_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	struct io_kiocb *notif;
+ 
+ 	zc->done_io = 0;
++	zc->retry = false;
+ 	req->flags |= REQ_F_POLL_NO_LAZY;
+ 
+ 	if (unlikely(READ_ONCE(sqe->__pad2[0]) || READ_ONCE(sqe->addr3)))
 -- 
 2.39.5
 
