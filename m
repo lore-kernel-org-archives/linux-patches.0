@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34AA22257E;
-	Tue,  8 Apr 2025 11:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCF51DF27F;
+	Tue,  8 Apr 2025 11:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112243; cv=none; b=DLuQWEz0RcyGKpxlICRk2Hs3vTIYC/DkjYiNpx/avRmTafXJ0JprsTGslCU7H8lzuz7FRypIoJIY7ln60UUlcA508646UFg4t9vz7axSXc9/S5Qpc/AJNEjjUVtmLyDyZkYvUR4Y6UzA9V6OW/JHqsJR5vjDnxb/r3BVXKa7/HQ=
+	t=1744112245; cv=none; b=Qmm42oImlDrIBQZrRp289YdDr3p5BRh43G9vvkIAmTh+VlCCMBotYleS6WVvSHdcNvflfqRY5vN0BhCHD0+d1BkTLgl3QBCWbiUTcq+HQl87CzTwTWFx8vUJ6Z8H0Zy/80x5nBUCVxklqc23cD1gRQeWnq9nMc+Dn56JqjJIyeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112243; c=relaxed/simple;
-	bh=CwiJ7eI5HuqgqwamJf9k371SSKbz4nGUJkwR+hG/s/A=;
+	s=arc-20240116; t=1744112245; c=relaxed/simple;
+	bh=6qBXL6ZPuR/q4rPJF3HOYnpIte2hrBzlyocsBdvcIZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFCTRakpF6xnjOuumkrRUouZyzDaNIBtiYL7Z4KZXWVG6Y7zgNQb04W03Gm/rCZS8uEWGGvwf9LXFaKI2iSM3Fqo4vYjTxytcKJhCxHl5R+ymfyRxtkjX7RBNsO3pXkr4DJXD+mIOzATTA7a8qtoM7yis9UZkxw2r0HKegWxflM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=og9UqxXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpCLzAYXGdegd9Avs875eqQmEGFllU1RlUT3/YHEFxeQ9rw6LnnPjzqDxn1rbfK0GNV4J66yhyr6Mj6HLWMR5oubXaDGHg7ycJQnsFQrswi6TCj/VdCdeYrvV04jqbNINjvmG1woUJYV/UWPPiTGR5HpzcnymXTyC3Fj8aNjM64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYMCDvPD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="og9UqxXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B8CC4CEE5;
-	Tue,  8 Apr 2025 11:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYMCDvPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359ABC4CEE5;
+	Tue,  8 Apr 2025 11:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112242;
-	bh=CwiJ7eI5HuqgqwamJf9k371SSKbz4nGUJkwR+hG/s/A=;
+	s=korg; t=1744112245;
+	bh=6qBXL6ZPuR/q4rPJF3HOYnpIte2hrBzlyocsBdvcIZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=og9UqxXVbvgoa9SrHts0bjz4uCXtHTw5sSdmkfbmhCOprDguxHUseE1uYfSyK50Oq
-	 NgB/SNxQbcoQxnn0CrMWqgYh9JpmejnHTn0WuaSsCrxhj7DxaeCrPln3fhqaPsQQy7
-	 hirnzCMPrFGIQIh7Mj/Vs9LzQmX3f+sMS+xMEe5Q=
+	b=FYMCDvPD5T7f1XB0q4Llc6C3v7dISjg+iXBShnB4YEtv6Ivin6ilyAVG2pIFRzKh1
+	 k0+icO3jboIpzcBjOpUYAN+6BLwPiAtWndCn3+RS/ADLJ8lQRe4NSWuvrT76Q+qCAX
+	 6NiqFOF/ZbfbUZjDOZy7CrXpWA17bC4523x+KcBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Trond Myklebust <trondmy@hammerspace.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.14 729/731] NFSD: nfsd_unlink() clobbers non-zero status returned from fh_fill_pre_attrs()
-Date: Tue,  8 Apr 2025 12:50:26 +0200
-Message-ID: <20250408104931.230222891@linuxfoundation.org>
+Subject: [PATCH 6.14 730/731] NFSD: Never return NFS4ERR_FILE_OPEN when removing a directory
+Date: Tue,  8 Apr 2025 12:50:27 +0200
+Message-ID: <20250408104931.253045151@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,37 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit d7d8e3169b56e7696559a2427c922c0d55debcec upstream.
+commit 370345b4bd184a49ac68d6591801e5e3605b355a upstream.
 
-If fh_fill_pre_attrs() returns a non-zero status, the error flow
-takes it through out_unlock, which then overwrites the returned
-status code with
+RFC 8881 Section 18.25.4 paragraph 5 tells us that the server
+should return NFS4ERR_FILE_OPEN only if the target object is an
+opened file. This suggests that returning this status when removing
+a directory will confuse NFS clients.
 
-	err = nfserrno(host_err);
+This is a version-specific issue; nfsd_proc_remove/rmdir() and
+nfsd3_proc_remove/rmdir() already return nfserr_access as
+appropriate.
 
-Fixes: a332018a91c4 ("nfsd: handle failure to collect pre/post-op attrs more sanely")
+Unfortunately there is no quick way for nfsd4_remove() to determine
+whether the target object is a file or not, so the check is done in
+in nfsd_unlink() for now.
+
+Reported-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 466e16f0920f ("nfsd: check for EBUSY from vfs_rmdir/vfs_unink.")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nfsd/vfs.c |   24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
 --- a/fs/nfsd/vfs.c
 +++ b/fs/nfsd/vfs.c
-@@ -2011,11 +2011,9 @@ out_nfserr:
- 		 * error status.
+@@ -1931,9 +1931,17 @@ out:
+ 	return err;
+ }
+ 
+-/*
+- * Unlink a file or directory
+- * N.B. After this call fhp needs an fh_put
++/**
++ * nfsd_unlink - remove a directory entry
++ * @rqstp: RPC transaction context
++ * @fhp: the file handle of the parent directory to be modified
++ * @type: enforced file type of the object to be removed
++ * @fname: the name of directory entry to be removed
++ * @flen: length of @fname in octets
++ *
++ * After this call fhp needs an fh_put.
++ *
++ * Returns a generic NFS status code in network byte-order.
+  */
+ __be32
+ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+@@ -2007,10 +2015,14 @@ out_drop_write:
+ 	fh_drop_write(fhp);
+ out_nfserr:
+ 	if (host_err == -EBUSY) {
+-		/* name is mounted-on. There is no perfect
+-		 * error status.
++		/*
++		 * See RFC 8881 Section 18.25.4 para 4: NFSv4 REMOVE
++		 * wants a status unique to the object type.
  		 */
- 		err = nfserr_file_open;
--	} else {
--		err = nfserrno(host_err);
+-		err = nfserr_file_open;
++		if (type != S_IFDIR)
++			err = nfserr_file_open;
++		else
++			err = nfserr_acces;
  	}
  out:
--	return err;
-+	return err != nfs_ok ? err : nfserrno(host_err);
- out_unlock:
- 	inode_unlock(dirp);
- 	goto out_drop_write;
+ 	return err != nfs_ok ? err : nfserrno(host_err);
 
 
