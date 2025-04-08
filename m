@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5BB268C60;
-	Tue,  8 Apr 2025 10:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA07268C65;
+	Tue,  8 Apr 2025 10:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109918; cv=none; b=DV64UWs0LRP5pDCVvVy0Y0smCJU1bFAalh4mnj4/eKEPVQHliFnP1WCqO4PHHCSSd2LYYF1EbxrrEnxWXP/SAZN2TsZIfqimu51sS5p3rkOYibXc/AhulEoDxC30dgXm3pAngV8VFNmAVETyIx7Ah69ydOZxL7FjKhhN/aCMt+U=
+	t=1744109921; cv=none; b=Z1gDN/ZZnzU2qD6vjtkS7bwSCJv9j6I1oCa2238Iypk8CLFti0jgNydcKFnR08TcMb4z/nnsIVpcag3usKAZEkLemTw48oH59cDsWooSHuKEJnWTOtNcrbL2S6QLKcR5TxN/7M4NYTc4evFUFuhtgfuAj0LcQmD2FhzXW3QtKM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109918; c=relaxed/simple;
-	bh=tq5KdWgvX8XhpSnvIxGFVyxIghqWNv110NosiXvs75I=;
+	s=arc-20240116; t=1744109921; c=relaxed/simple;
+	bh=+AoJiFncLAZLwWYk8LqU4zCWWNX2p989PNx6Terqrxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+9gP5AF8SVehBdq6PYze7FK3f+8HalWGe8N3yBg62ZG7Kvx4CLuhhCK4iZEaPx3E8Cn+jtHSI1I0qR1uQQ8T8l1uY5ode/eNfefGICUL72+9EInDjzCM0+xmCf9Q7bbrYsVh4cBverUvCAtg4I4Vu6YpMUubA5FgZPoYV6/ZO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSefLeN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WdF1im++QRRoFl1cTU7keioG1ooUs6jpUByuc2HoRuD5qRQhXRSoCVExMWYq7uds702zVLSTc/XFiBjwqj8Pj7eqtXQbleei4tkOpxYtB9zDxrQuDlnlWEtFvtAeC3B2S1t/NSTbZQ+Y76Rs+ytVH7n7qhxeS/iaX1cTltN5V1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIuwG+kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSefLeN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1AFC4CEE5;
-	Tue,  8 Apr 2025 10:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIuwG+kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF927C4CEE5;
+	Tue,  8 Apr 2025 10:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109918;
-	bh=tq5KdWgvX8XhpSnvIxGFVyxIghqWNv110NosiXvs75I=;
+	s=korg; t=1744109921;
+	bh=+AoJiFncLAZLwWYk8LqU4zCWWNX2p989PNx6Terqrxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSefLeN/npbKGqnFeLVOB7GzGELkcW/t+1EM4Qo2Lcqgy7RbEq6E0gSuDn54r3HND
-	 lVpPNUD0w+qgHdwUl1/E7bSpKq0rUfWcypnusYdzv2QMNDwE/xxzMVTxB3a4Rb4CZw
-	 VRWn/VP10iRet4lOFXphjpurN9VCAZGT8TXzG6jw=
+	b=kIuwG+kvUgawuzoHHqHj0+BP1ElpAL91DcFBzMuUgtl5MNhVgr4WKNbPAc3OqVmM5
+	 xdH3vaKYeO0sLxaQoYDoaosUl8PJzhd4mcyoKk8u8Lxwd9WnqJb3CcS4alYNizs5w+
+	 wxilBvLosQtKCFLwX4qKho48CYw48x/BudE1pSvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gu Bowen <gubowen5@huawei.com>,
-	Aubin Constans <aubin.constans@microchip.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 084/227] mmc: atmel-mci: Add missing clk_disable_unprepare()
-Date: Tue,  8 Apr 2025 12:47:42 +0200
-Message-ID: <20250408104822.904315051@linuxfoundation.org>
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 5.10 102/227] counter: microchip-tcb-capture: Fix undefined counter channel state on probe
+Date: Tue,  8 Apr 2025 12:48:00 +0200
+Message-ID: <20250408104823.422550615@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -45,45 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gu Bowen <gubowen5@huawei.com>
+From: William Breathitt Gray <wbg@kernel.org>
 
-commit e51a349d2dcf1df8422dabb90b2f691dc7df6f92 upstream.
+commit c0c9c73434666dc99ee156b25e7e722150bee001 upstream.
 
-The error path when atmci_configure_dma() set dma fails in atmci driver
-does not correctly disable the clock.
-Add the missing clk_disable_unprepare() to the error path for pair with
-clk_prepare_enable().
+Hardware initialize of the timer counter channel does not occur on probe
+thus leaving the Count in an undefined state until the first
+function_write() callback is executed. Fix this by performing the proper
+hardware initialization during probe.
 
-Fixes: 467e081d23e6 ("mmc: atmel-mci: use probe deferring if dma controller is not ready yet")
-Signed-off-by: Gu Bowen <gubowen5@huawei.com>
-Acked-by: Aubin Constans <aubin.constans@microchip.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250225022856.3452240-1-gubowen5@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+Reported-by: Csókás Bence <csokas.bence@prolan.hu>
+Closes: https://lore.kernel.org/all/bfa70e78-3cc3-4295-820b-3925c26135cb@prolan.hu/
+Link: https://lore.kernel.org/r/20250305-preset-capture-mode-microchip-tcb-capture-v1-1-632c95c6421e@kernel.org
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/counter/microchip-tcb-capture.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2507,8 +2507,10 @@ static int atmci_probe(struct platform_d
- 	/* Get MCI capabilities and set operations according to it */
- 	atmci_get_cap(host);
- 	ret = atmci_configure_dma(host);
--	if (ret == -EPROBE_DEFER)
-+	if (ret == -EPROBE_DEFER) {
-+		clk_disable_unprepare(host->mck);
- 		goto err_dma_probe_defer;
-+	}
- 	if (ret == 0) {
- 		host->prepare_data = &atmci_prepare_data_dma;
- 		host->submit_data = &atmci_submit_data_dma;
+--- a/drivers/counter/microchip-tcb-capture.c
++++ b/drivers/counter/microchip-tcb-capture.c
+@@ -377,6 +377,25 @@ static int mchp_tc_probe(struct platform
+ 			channel);
+ 	}
+ 
++	/* Disable Quadrature Decoder and position measure */
++	ret = regmap_update_bits(regmap, ATMEL_TC_BMR, ATMEL_TC_QDEN | ATMEL_TC_POSEN, 0);
++	if (ret)
++		return ret;
++
++	/* Setup the period capture mode */
++	ret = regmap_update_bits(regmap, ATMEL_TC_REG(priv->channel[0], CMR),
++				 ATMEL_TC_WAVE | ATMEL_TC_ABETRG | ATMEL_TC_CMR_MASK |
++				 ATMEL_TC_TCCLKS,
++				 ATMEL_TC_CMR_MASK);
++	if (ret)
++		return ret;
++
++	/* Enable clock and trigger counter */
++	ret = regmap_write(regmap, ATMEL_TC_REG(priv->channel[0], CCR),
++			   ATMEL_TC_CLKEN | ATMEL_TC_SWTRG);
++	if (ret)
++		return ret;
++
+ 	priv->tc_cfg = tcb_config;
+ 	priv->regmap = regmap;
+ 	priv->counter.name = dev_name(&pdev->dev);
 
 
