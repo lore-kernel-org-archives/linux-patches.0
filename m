@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C7B2638B8;
-	Tue,  8 Apr 2025 12:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A70126A0A7;
+	Tue,  8 Apr 2025 12:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115051; cv=none; b=YCEOG2K9Rk8omsqBjbj7vq0mq/N122zdrH3NL2YnJvskI4Y6i1ez8Z6f+oQ/W/uETlWGqPVjMs/AHutyxZLNdqk3ZLAX/AJmhisMewF1cFzjzkmN3jdOmNSI1Sb4YWTyfFd+w+FFnN8uJiqKTRsQ6FVZ4hBlq9mTRz0iNXBFe+Y=
+	t=1744115054; cv=none; b=PdW/bc74eTpaekJtBsPbtpzd5rYyFgzClBGtEiPmpet50bnwbIZTA8HV535iI80/0C+hAp8+wyL+0aEuq95CoVNwwiomJ2ZEZFLpdDrxiU/RpU+k5oupPICVZXKwPrO77mkX8xVTic1AJXfteieJz9+tYTt4cu5kWRLFeidp88U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115051; c=relaxed/simple;
-	bh=SdUReQwx8uwbLB8QEJUlCD93XGD1XpAZPTbIldlsq+g=;
+	s=arc-20240116; t=1744115054; c=relaxed/simple;
+	bh=g+fiB9nnpM1Xl0QJJ7Q/eoLvhCRStzWTgbxqGl0Sj2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bC7WOgcCh7ZfFjh/Il2d0l8OINg0UCEfYwg/iUJq+2IblJNyczIHoaTbkfiqFIoN7YXsS6BNig0w7StA7Siynp99xtgg0qjCN6/4iVuWWpwa8VifreGVDwgi6rCHReiSKION7sc0Xdj9ZFFLgU9NwIhv4QyXk/Zafs7P5CFh+1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFAHMzqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfTqChV97eZ7zHU4O2QyBeRh5zl3Zmdz/CMS8VcBtuwJ17P2LTjjr6pVo9MnHSUtokyTtB2a+LoKwspFXAQVKwWoOOM0j4oF/B1BcOooEs2eBcW42E9l30Un4HKoAoSy656x/eBBMUR7NcCk3aWE2ZmLv4t0vz/vdj+7lhQHP58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLT8eVr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFAHMzqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E4AC4CEE5;
-	Tue,  8 Apr 2025 12:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLT8eVr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E09C4CEE5;
+	Tue,  8 Apr 2025 12:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115051;
-	bh=SdUReQwx8uwbLB8QEJUlCD93XGD1XpAZPTbIldlsq+g=;
+	s=korg; t=1744115054;
+	bh=g+fiB9nnpM1Xl0QJJ7Q/eoLvhCRStzWTgbxqGl0Sj2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFAHMzqtfTXRVVFBVBWAULYEbGBkirezybBO3uVnR+Dl+1kISyRO3co415nDblHMF
-	 u0tZkFgWwlM7d77s1I3+vWp3U4ou5Xo+8hueNUQwbAjrG/372FmyOrgU0YS+icmefG
-	 FgvHaRUu0DyCk1sqK+lQflBD7d5MDTWomptvb0F4=
+	b=CLT8eVr98Sxl99mUwLYlB0IlhabCU/WK4r6oxjo4Wxa6oq5SeENj0cqdNVklz2YsE
+	 Icb6imc28GCm1uYI3hRsWM+rPDNDycpPxFYbJ7fr+062BniYfwSPckVbzGlhALL3p3
+	 28O6DIx6NWjEA9EEMAG3oKpWGLlGBTGXTu4PnhOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 330/499] sched/deadline: Use online cpus for validating runtime
-Date: Tue,  8 Apr 2025 12:49:02 +0200
-Message-ID: <20250408104859.456009663@linuxfoundation.org>
+Subject: [PATCH 6.13 331/499] x86/hyperv/vtl: Stop kernel from probing VTL0 low memory
+Date: Tue,  8 Apr 2025 12:49:03 +0200
+Message-ID: <20250408104859.481244546@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,43 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-[ Upstream commit 14672f059d83f591afb2ee1fff56858efe055e5a ]
+[ Upstream commit 59115e2e25f42924181055ed7cc1d123af7598b7 ]
 
-The ftrace selftest reported a failure because writing -1 to
-sched_rt_runtime_us returns -EBUSY. This happens when the possible
-CPUs are different from active CPUs.
+For Linux, running in Hyper-V VTL (Virtual Trust Level), kernel in VTL2
+tries to access VTL0 low memory in probe_roms. This memory is not
+described in the e820 map. Initialize probe_roms call to no-ops
+during boot for VTL2 kernel to avoid this. The issue got identified
+in OpenVMM which detects invalid accesses initiated from kernel running
+in VTL2.
 
-Active CPUs are part of one root domain, while remaining CPUs are part
-of def_root_domain. Since active cpumask is being used, this results in
-cpus=0 when a non active CPUs is used in the loop.
-
-Fix it by looping over the online CPUs instead for validating the
-bandwidth calculations.
-
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lore.kernel.org/r/20250306052954.452005-2-sshegde@linux.ibm.com
+Co-developed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Tested-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250116061224.1701-1-namjain@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250116061224.1701-1-namjain@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/hyperv/hv_vtl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index d94f2ed6d1f46..cae0df561aea8 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -3168,7 +3168,7 @@ int sched_dl_global_validate(void)
- 	 * value smaller than the currently allocated bandwidth in
- 	 * any of the root_domains.
- 	 */
--	for_each_possible_cpu(cpu) {
-+	for_each_online_cpu(cpu) {
- 		rcu_read_lock_sched();
+diff --git a/arch/x86/hyperv/hv_vtl.c b/arch/x86/hyperv/hv_vtl.c
+index 04775346369c5..d04ccd4b3b4af 100644
+--- a/arch/x86/hyperv/hv_vtl.c
++++ b/arch/x86/hyperv/hv_vtl.c
+@@ -30,6 +30,7 @@ void __init hv_vtl_init_platform(void)
+ 	x86_platform.realmode_init = x86_init_noop;
+ 	x86_init.irqs.pre_vector_init = x86_init_noop;
+ 	x86_init.timers.timer_init = x86_init_noop;
++	x86_init.resources.probe_roms = x86_init_noop;
  
- 		if (dl_bw_visited(cpu, gen))
+ 	/* Avoid searching for BIOS MP tables */
+ 	x86_init.mpparse.find_mptable = x86_init_noop;
 -- 
 2.39.5
 
