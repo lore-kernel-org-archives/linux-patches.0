@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB61C227BB6;
-	Tue,  8 Apr 2025 11:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0177E224AEF;
+	Tue,  8 Apr 2025 11:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112256; cv=none; b=p4wCpq1fuA34kRucXqRGuDCSWtkkTs6Dh9CmaW40v6WczaSwZ0cK+Dp/WyYAKH52p5s0nrVJdWuAXxVk6NVHKts1mZ0Xss08GzZCWPC9lvYKx7cB+vN8fDUDAnfJHDhcPAU2rvKAhIJ7/95Yq2PAyyu7+r+T28xAg6opya1you0=
+	t=1744112259; cv=none; b=QdP4CWs6mvXWZZy8IiPfHdu7TtimS1igxd4x8f5TvEx8ILSMLL4YCXOvoU/Tpo1DpV8vEO+Va0+vbICOEKGulYHGC5HuaObmGF8eBTCkYxjKEwrEYF4tmolRcdVt8MP92OXa11oH8DZNm0v8U/M5aBLvYYyImFxJELySAsjhgAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112256; c=relaxed/simple;
-	bh=7fT2PmCX3MIEjDvYDIl6/8vVgzIlBWivuEamtsT3RRA=;
+	s=arc-20240116; t=1744112259; c=relaxed/simple;
+	bh=rK+dW1mEQ8+3c8kgSDGwcvL4rRqWp+ydwt9MDLqXCEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOhDOK5ZSmQVcbh7x7kgGGf3Yc6/fcthIiTDiC9JJw9o4iPCNAmFgzbtNn9AagXQ4XdKXDEeAiR6lWx83IA3Ar4M4nlV7czSX6oI4aum3hH/fvwkMRo3eW1wrmVzoMEyKL2zhjZDWEqPtWQ4wZh1w/YeMRN7s0B928B5QWjK8YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jS0ZhLH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pE9Z7JnxD9ZLl0RnFTDSEMTgOLGloh3IIstKm6qnglCR1gzGryMG/Et3Itp+P6qSMCUvbw3lze1P/lK9ZGI40XYIfrfj4aV6y76u61HCyRlx9+H6DOF2njBdNsHZ0CTN2Smt39jvgwO5Bdszm6exTvmEMkPYs9Lw1bLwLT+733s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ba75M3Md; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jS0ZhLH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3E8C4CEE5;
-	Tue,  8 Apr 2025 11:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba75M3Md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85314C4CEE5;
+	Tue,  8 Apr 2025 11:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112256;
-	bh=7fT2PmCX3MIEjDvYDIl6/8vVgzIlBWivuEamtsT3RRA=;
+	s=korg; t=1744112258;
+	bh=rK+dW1mEQ8+3c8kgSDGwcvL4rRqWp+ydwt9MDLqXCEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jS0ZhLH0qOuNseZtB+ew9ugOPKd29I34OIyWYNzGtjCz6Z9Ml0qpCUjgXYREszuVB
-	 BWh9SPM4aBwce3rSLF0fzAi06nHcGZt8Sv+0Cj5g218dvOaZKiXHY2sm0FVr8S8Ful
-	 MWAcKgd9dcuWzrgpEX59b8k5SYX5+eUdQ4X+9Y4w=
+	b=Ba75M3MdzIIgXWc8KF3I988EHrhaexV5LI+dWW0P/I5eJH5JkGPTc/E4LkYgjXsWT
+	 3dhvP3SjhnlXIcX6xrvoiSfLbqV4RgKv6TnkPT319jEHLuXK/xoytt0a5KrpMr3XtA
+	 wwVYbUGK/QGzOQRh3l2BIqr31eR+u5D9IthTk2/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 723/731] media: streamzap: fix race between device disconnection and urb callback
-Date: Tue,  8 Apr 2025 12:50:20 +0200
-Message-ID: <20250408104931.090899793@linuxfoundation.org>
+	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.14 724/731] nfsd: dont ignore the return code of svc_proc_register()
+Date: Tue,  8 Apr 2025 12:50:21 +0200
+Message-ID: <20250408104931.114928956@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,48 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit f656cfbc7a293a039d6a0c7100e1c846845148c1 upstream.
+commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
 
-Syzkaller has reported a general protection fault at function
-ir_raw_event_store_with_filter(). This crash is caused by a NULL pointer
-dereference of dev->raw pointer, even though it is checked for NULL in
-the same function, which means there is a race condition. It occurs due
-to the incorrect order of actions in the streamzap_disconnect() function:
-rc_unregister_device() is called before usb_kill_urb(). The dev->raw
-pointer is freed and set to NULL in rc_unregister_device(), and only
-after that usb_kill_urb() waits for in-progress requests to finish.
+Currently, nfsd_proc_stat_init() ignores the return value of
+svc_proc_register(). If the procfile creation fails, then the kernel
+will WARN when it tries to remove the entry later.
 
-If rc_unregister_device() is called while streamzap_callback() handler is
-not finished, this can lead to accessing freed resources. Thus
-rc_unregister_device() should be called after usb_kill_urb().
+Fix nfsd_proc_stat_init() to return the same type of pointer as
+svc_proc_register(), and fix up nfsd_net_init() to check that and fail
+the nfsd_net construction if it occurs.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+svc_proc_register() can fail if the dentry can't be allocated, or if an
+identical dentry already exists. The second case is pretty unlikely in
+the nfsd_net construction codepath, so if this happens, return -ENOMEM.
 
-Fixes: 8e9e60640067 ("V4L/DVB: staging/lirc: port lirc_streamzap to ir-core")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=34008406ee9a31b13c73
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
+Cc: stable@vger.kernel.org # v6.9
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |    9 ++++++++-
+ fs/nfsd/stats.c  |    4 ++--
+ fs/nfsd/stats.h  |    2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -385,8 +385,8 @@ static void streamzap_disconnect(struct
- 	if (!sz)
- 		return;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2204,8 +2204,14 @@ static __net_init int nfsd_net_init(stru
+ 					  NFSD_STATS_COUNTERS_NUM);
+ 	if (retval)
+ 		goto out_repcache_error;
++
+ 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
+ 	nn->nfsd_svcstats.program = &nfsd_programs[0];
++	if (!nfsd_proc_stat_init(net)) {
++		retval = -ENOMEM;
++		goto out_proc_error;
++	}
++
+ 	for (i = 0; i < sizeof(nn->nfsd_versions); i++)
+ 		nn->nfsd_versions[i] = nfsd_support_version(i);
+ 	for (i = 0; i < sizeof(nn->nfsd4_minorversions); i++)
+@@ -2215,13 +2221,14 @@ static __net_init int nfsd_net_init(stru
+ 	nfsd4_init_leases_net(nn);
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+-	nfsd_proc_stat_init(net);
+ #if IS_ENABLED(CONFIG_NFS_LOCALIO)
+ 	spin_lock_init(&nn->local_clients_lock);
+ 	INIT_LIST_HEAD(&nn->local_clients);
+ #endif
+ 	return 0;
  
--	rc_unregister_device(sz->rdev);
- 	usb_kill_urb(sz->urb_in);
-+	rc_unregister_device(sz->rdev);
- 	usb_free_urb(sz->urb_in);
- 	usb_free_coherent(usbdev, sz->buf_in_len, sz->buf_in, sz->dma_in);
++out_proc_error:
++	percpu_counter_destroy_many(nn->counter, NFSD_STATS_COUNTERS_NUM);
+ out_repcache_error:
+ 	nfsd_idmap_shutdown(net);
+ out_idmap_error:
+--- a/fs/nfsd/stats.c
++++ b/fs/nfsd/stats.c
+@@ -73,11 +73,11 @@ static int nfsd_show(struct seq_file *se
  
+ DEFINE_PROC_SHOW_ATTRIBUTE(nfsd);
+ 
+-void nfsd_proc_stat_init(struct net *net)
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
++	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
+ }
+ 
+ void nfsd_proc_stat_shutdown(struct net *net)
+--- a/fs/nfsd/stats.h
++++ b/fs/nfsd/stats.h
+@@ -10,7 +10,7 @@
+ #include <uapi/linux/nfsd/stats.h>
+ #include <linux/percpu_counter.h>
+ 
+-void nfsd_proc_stat_init(struct net *net);
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
+ void nfsd_proc_stat_shutdown(struct net *net);
+ 
+ static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
 
 
