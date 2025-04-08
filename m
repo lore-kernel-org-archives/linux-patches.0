@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC2D26A0E8;
-	Tue,  8 Apr 2025 12:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548962686BC;
+	Tue,  8 Apr 2025 12:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114250; cv=none; b=GSU3MRdYyVzbT5QdWypysHgmw+hL3UKCOrHS1b7RO2Ewkcc7vylFcAgZTOfrNp3X5K36jQGCSPASbByQW/OLS3Aa4kmA8r4RLgPHsd9Q2BIfyTNP9qPhptcOtAbxEhKoe2LTRNbJJNprXMdIwexoK2Lbdi5QXbyhJC1cB+BTKEk=
+	t=1744114253; cv=none; b=FV3a0qoZ+EisZFlRZAuF62MZKzZRoI7h4q41c7As6XRbklRsOj2MVRlH1YIZKEDG7MfLv6YS+LPuJ8mF9DaHvfEIj10h65onjFeqx4oWsDvo7nvtBnXQhBR3bNRySJuYonCt1WPubsrDe0L6QXebQlsxXopnQo58tsEBLwyWmFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114250; c=relaxed/simple;
-	bh=4R0A43lpm7emwK4EwMsJSrGViGjLK0LPRaKFMU1E4s4=;
+	s=arc-20240116; t=1744114253; c=relaxed/simple;
+	bh=fe+aH+tLJmve57Duq09apitXzr5eEGSDnlJAcc8Si/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Viun/BhO1+cRRll8e8JJBUWDy2ZX69asHiV6lQVHk2qvQXFWpUimeYhg3WcPtU0e97EvsghRDJUw4vVXRdxXRdFSxJVcxaeQluYgi2+3YxTA/3Jo4aHIry4Ee85R0LgPrVWHci2lRGxIG369rFNhdkHqrTP9cofv/zFpsz1mQTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMJza3Fb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r98qXSC3O052EGZa7caGNGbsBI1Gv0I6qc5bzQtrD4iRhmQQoZZPy2SJTuATVBk23iHKD/Dzwlagu1eUqfUPzvm9l1V5J6sERn+/zqSdzBlwcwtSU6UqQ9/L6t+BWiV94/DpiEfq7D7oW85g+pSSKrtRZk+2TJhdp8vvqmT+FtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILQ7rz2q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMJza3Fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE42FC4CEE5;
-	Tue,  8 Apr 2025 12:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILQ7rz2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D88C4CEE5;
+	Tue,  8 Apr 2025 12:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114250;
-	bh=4R0A43lpm7emwK4EwMsJSrGViGjLK0LPRaKFMU1E4s4=;
+	s=korg; t=1744114252;
+	bh=fe+aH+tLJmve57Duq09apitXzr5eEGSDnlJAcc8Si/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMJza3FbSMc5gFKBxLM/5aIJE6wvOTOS5zC8PtuAlK4zo09cRZrdRwk611T4X2A+s
-	 ZEm+z0mJD4RlJB+rK90v6wWvU5GENF4AYijS17fNO7LEwyoVAvPXPn9L6V+F0m+dO9
-	 7UvmNeG9zoqSP0xT98owFJ0muOXh8/IP0lm9be1Q=
+	b=ILQ7rz2qxo4fPIjNJsH78SueHsOIdmD6Z0v6ePRVop00kT3OEZTL1KAoEKpIG9qWL
+	 F1UrjTMoQKxTkdSJIhCQisIO6Mfzlr5pNgU7j5/1+fO70IzvsyELkm0gyeiA/NHk2k
+	 v8C77O+l3STxJ9OBI9SEvD8Y02yRD+TH1biD7j8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 036/499] lockdep: Dont disable interrupts on RT in disable_irq_nosync_lockdep.*()
-Date: Tue,  8 Apr 2025 12:44:08 +0200
-Message-ID: <20250408104852.147364843@linuxfoundation.org>
+Subject: [PATCH 6.13 037/499] cpufreq: Init cpufreq only for present CPUs
+Date: Tue,  8 Apr 2025 12:44:09 +0200
+Message-ID: <20250408104852.171611642@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,79 +52,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Jacky Bai <ping.bai@nxp.com>
 
-[ Upstream commit 87886b32d669abc11c7be95ef44099215e4f5788 ]
+[ Upstream commit 45f589b7167f36290d29c79e3a442dc0b13c086a ]
 
-disable_irq_nosync_lockdep() disables interrupts with lockdep enabled to
-avoid false positive reports by lockdep that a certain lock has not been
-acquired with disabled interrupts. The user of this macros expects that
-a lock can be acquried without disabling interrupts because the IRQ line
-triggering the interrupt is disabled.
+for_each_possible_cpu() is currently used to initialize cpufreq.
+However, in cpu_dev_register_generic(), for_each_present_cpu()
+is used to register CPU devices which means the CPU devices are
+only registered for present CPUs and not all possible CPUs.
 
-This triggers a warning on PREEMPT_RT because after
-disable_irq_nosync_lockdep.*() the following spinlock_t now is acquired
-with disabled interrupts.
+With nosmp or maxcpus=0, only the boot CPU is present, lead
+to the cpufreq probe failure or defer probe due to no cpu device
+available for not present CPUs.
 
-On PREEMPT_RT there is no difference between spin_lock() and
-spin_lock_irq() so avoiding disabling interrupts in this case works for
-the two remaining callers as of today.
+Change for_each_possible_cpu() to for_each_present_cpu() in the
+above cpufreq drivers to ensure it only registers cpufreq for
+CPUs that are actually present.
 
-Don't disable interrupts on PREEMPT_RT in disable_irq_nosync_lockdep.*().
-
-Closes: https://lore.kernel.org/760e34f9-6034-40e0-82a5-ee9becd24438@roeck-us.net
-Fixes: e8106b941ceab ("[PATCH] lockdep: core, add enable/disable_irq_irqsave/irqrestore() APIs")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250212103619.2560503-2-bigeasy@linutronix.de
+Fixes: b0c69e1214bc ("drivers: base: Use present CPUs in GENERIC_CPU_DEVICES")
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cpufreq/armada-8k-cpufreq.c    | 2 +-
+ drivers/cpufreq/cpufreq-dt.c           | 2 +-
+ drivers/cpufreq/mediatek-cpufreq-hw.c  | 2 +-
+ drivers/cpufreq/mediatek-cpufreq.c     | 2 +-
+ drivers/cpufreq/mvebu-cpufreq.c        | 2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c      | 2 +-
+ drivers/cpufreq/qcom-cpufreq-nvmem.c   | 8 ++++----
+ drivers/cpufreq/scmi-cpufreq.c         | 2 +-
+ drivers/cpufreq/scpi-cpufreq.c         | 2 +-
+ drivers/cpufreq/sun50i-cpufreq-nvmem.c | 6 +++---
+ drivers/cpufreq/virtual-cpufreq.c      | 2 +-
+ 11 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 8cd9327e4e78d..a1b1be9bf73b2 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -448,7 +448,7 @@ irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
- static inline void disable_irq_nosync_lockdep(unsigned int irq)
+diff --git a/drivers/cpufreq/armada-8k-cpufreq.c b/drivers/cpufreq/armada-8k-cpufreq.c
+index 7a979db81f098..5a3545bd0d8d2 100644
+--- a/drivers/cpufreq/armada-8k-cpufreq.c
++++ b/drivers/cpufreq/armada-8k-cpufreq.c
+@@ -47,7 +47,7 @@ static void __init armada_8k_get_sharing_cpus(struct clk *cur_clk,
  {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_disable();
- #endif
- }
-@@ -456,7 +456,7 @@ static inline void disable_irq_nosync_lockdep(unsigned int irq)
- static inline void disable_irq_nosync_lockdep_irqsave(unsigned int irq, unsigned long *flags)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_save(*flags);
- #endif
- }
-@@ -471,7 +471,7 @@ static inline void disable_irq_lockdep(unsigned int irq)
+ 	int cpu;
  
- static inline void enable_irq_lockdep(unsigned int irq)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_enable();
- #endif
- 	enable_irq(irq);
-@@ -479,7 +479,7 @@ static inline void enable_irq_lockdep(unsigned int irq)
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct device *cpu_dev;
+ 		struct clk *clk;
  
- static inline void enable_irq_lockdep_irqrestore(unsigned int irq, unsigned long *flags)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_restore(*flags);
- #endif
- 	enable_irq(irq);
+diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
+index 3a7c3372bda75..f3913eea5e553 100644
+--- a/drivers/cpufreq/cpufreq-dt.c
++++ b/drivers/cpufreq/cpufreq-dt.c
+@@ -303,7 +303,7 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
+ 	int ret, cpu;
+ 
+ 	/* Request resources early so we can return in case of -EPROBE_DEFER */
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		ret = dt_cpufreq_early_init(&pdev->dev, cpu);
+ 		if (ret)
+ 			goto err;
+diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
+index 9252ebd60373f..478257523cc3c 100644
+--- a/drivers/cpufreq/mediatek-cpufreq-hw.c
++++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+@@ -304,7 +304,7 @@ static int mtk_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	struct regulator *cpu_reg;
+ 
+ 	/* Make sure that all CPU supplies are available before proceeding. */
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		cpu_dev = get_cpu_device(cpu);
+ 		if (!cpu_dev)
+ 			return dev_err_probe(&pdev->dev, -EPROBE_DEFER,
+diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+index 663f61565cf72..2e4f9ca0af350 100644
+--- a/drivers/cpufreq/mediatek-cpufreq.c
++++ b/drivers/cpufreq/mediatek-cpufreq.c
+@@ -632,7 +632,7 @@ static int mtk_cpufreq_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, -ENODEV,
+ 				     "failed to get mtk cpufreq platform data\n");
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		info = mtk_cpu_dvfs_info_lookup(cpu);
+ 		if (info)
+ 			continue;
+diff --git a/drivers/cpufreq/mvebu-cpufreq.c b/drivers/cpufreq/mvebu-cpufreq.c
+index 7f3cfe668f307..2aad4c04673cc 100644
+--- a/drivers/cpufreq/mvebu-cpufreq.c
++++ b/drivers/cpufreq/mvebu-cpufreq.c
+@@ -56,7 +56,7 @@ static int __init armada_xp_pmsu_cpufreq_init(void)
+ 	 * it), and registers the clock notifier that will take care
+ 	 * of doing the PMSU part of a frequency transition.
+ 	 */
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct device *cpu_dev;
+ 		struct clk *clk;
+ 		int ret;
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index b2e7e89feaac4..dce7cad1813fb 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -306,7 +306,7 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
+ 	struct of_phandle_args args;
+ 	int cpu, ret;
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		cpu_np = of_cpu_device_node_get(cpu);
+ 		if (!cpu_np)
+ 			continue;
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 3a8ed723a23e5..54f8117103c85 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -489,7 +489,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 		nvmem_cell_put(speedbin_nvmem);
+ 	}
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct dev_pm_opp_config config = {
+ 			.supported_hw = NULL,
+ 		};
+@@ -543,7 +543,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	dev_err(cpu_dev, "Failed to register platform device\n");
+ 
+ free_opp:
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+ 		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ 	}
+@@ -557,7 +557,7 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
+ 
+ 	platform_device_unregister(cpufreq_dt_pdev);
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+ 		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ 	}
+@@ -568,7 +568,7 @@ static int qcom_cpufreq_suspend(struct device *dev)
+ 	struct qcom_cpufreq_drv *drv = dev_get_drvdata(dev);
+ 	unsigned int cpu;
+ 
+-	for_each_possible_cpu(cpu)
++	for_each_present_cpu(cpu)
+ 		qcom_cpufreq_suspend_pd_devs(drv, cpu);
+ 
+ 	return 0;
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index 07d6f9a9b7c82..66e2d24e5fa17 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -101,7 +101,7 @@ scmi_get_sharing_cpus(struct device *cpu_dev, int domain,
+ 	int cpu, tdomain;
+ 	struct device *tcpu_dev;
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		if (cpu == cpu_dev->id)
+ 			continue;
+ 
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index 9e09565e41c09..1f97b949763fa 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -65,7 +65,7 @@ scpi_get_sharing_cpus(struct device *cpu_dev, struct cpumask *cpumask)
+ 	if (domain < 0)
+ 		return domain;
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		if (cpu == cpu_dev->id)
+ 			continue;
+ 
+diff --git a/drivers/cpufreq/sun50i-cpufreq-nvmem.c b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+index 17d6a149f580d..47d6840b34899 100644
+--- a/drivers/cpufreq/sun50i-cpufreq-nvmem.c
++++ b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+@@ -262,7 +262,7 @@ static int sun50i_cpufreq_nvmem_probe(struct platform_device *pdev)
+ 	snprintf(name, sizeof(name), "speed%d", speed);
+ 	config.prop_name = name;
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct device *cpu_dev = get_cpu_device(cpu);
+ 
+ 		if (!cpu_dev) {
+@@ -288,7 +288,7 @@ static int sun50i_cpufreq_nvmem_probe(struct platform_device *pdev)
+ 	pr_err("Failed to register platform device\n");
+ 
+ free_opp:
+-	for_each_possible_cpu(cpu)
++	for_each_present_cpu(cpu)
+ 		dev_pm_opp_clear_config(opp_tokens[cpu]);
+ 	kfree(opp_tokens);
+ 
+@@ -302,7 +302,7 @@ static void sun50i_cpufreq_nvmem_remove(struct platform_device *pdev)
+ 
+ 	platform_device_unregister(cpufreq_dt_pdev);
+ 
+-	for_each_possible_cpu(cpu)
++	for_each_present_cpu(cpu)
+ 		dev_pm_opp_clear_config(opp_tokens[cpu]);
+ 
+ 	kfree(opp_tokens);
+diff --git a/drivers/cpufreq/virtual-cpufreq.c b/drivers/cpufreq/virtual-cpufreq.c
+index a050b3a6737f0..272dc3c85106c 100644
+--- a/drivers/cpufreq/virtual-cpufreq.c
++++ b/drivers/cpufreq/virtual-cpufreq.c
+@@ -138,7 +138,7 @@ static int virt_cpufreq_get_sharing_cpus(struct cpufreq_policy *policy)
+ 	cur_perf_domain = readl_relaxed(base + policy->cpu *
+ 					PER_CPU_OFFSET + REG_PERF_DOMAIN_OFFSET);
+ 
+-	for_each_possible_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		cpu_dev = get_cpu_device(cpu);
+ 		if (!cpu_dev)
+ 			continue;
 -- 
 2.39.5
 
