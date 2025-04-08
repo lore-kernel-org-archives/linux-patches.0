@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717E72676DE;
-	Tue,  8 Apr 2025 11:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B77926658B;
+	Tue,  8 Apr 2025 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112002; cv=none; b=a9o7QiGATgH7h4BBeZtez3H28AzVOLcy6dEtIbuZN6OtoW/EgPIKWkD3JT7icm+HcGYU5PpHHthMoxlWOR0SlBOztg+HYofXl6jpOuW1G9XcuryP7s5hKUZ/3b/XTyggiIPfn5A5x/QfDS+uFh7pPHoo3ENBUeawFTqFmqq+aBY=
+	t=1744112005; cv=none; b=YjbRMUrcM2GewhfcMeUO9ejOze+aqIvciFE+i1cN0MTuGKbdCgBVFdg1Z2diM8Mqzp++u+BIzcdJs9xpkYvqH4AjWOHt/7qelzy97+vOiNSBmp/5QWz4jp4WEnz13uO//5+7YF+Rw+T0gQwfmwS7XV+foHhGzyBF6qQpGqkw96E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112002; c=relaxed/simple;
-	bh=HAl2OM5otpMttXpf/ssfQ4evuUF8TopqYNCUDEh2NPo=;
+	s=arc-20240116; t=1744112005; c=relaxed/simple;
+	bh=hRJ7WE9per4BhrkMe2NPFKEGH4WQkTDIhXKUcKH/PXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHI6l92DPdHakMI8RLatfjlF6Luqq7h8HxifjxOa85EE7KlOGcckDfeYR/y7rGHtwzgd9y/XtvtiLp1s37l/qbLpbjgU2ePWELFUEXARIeJPIdTRcs7n8EDcW0whX/XYb8+rWaXnhVfJKrx5GdGWds/diGE9zoA5SGoM1RvZsAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TKplZOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GoHf/gW6nOkEwxMkBwLLVX4XtuyWwLdoflM2tsBKWNct1e9BfnkIa2Xgi3X/R7osgSHAu/FIy7b249/pFzhru+9VuJ15qyT4HU8iPECms7o+GB2sGH8VT8D7rDbnebHzByGnm8jXeZ/H2u4oEKTLg48nHvMO1MpBNjmQhhM28c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCQ9oeKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TKplZOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2421C4CEE5;
-	Tue,  8 Apr 2025 11:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCQ9oeKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB059C4CEE5;
+	Tue,  8 Apr 2025 11:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112002;
-	bh=HAl2OM5otpMttXpf/ssfQ4evuUF8TopqYNCUDEh2NPo=;
+	s=korg; t=1744112005;
+	bh=hRJ7WE9per4BhrkMe2NPFKEGH4WQkTDIhXKUcKH/PXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TKplZOrHyNoTIaeVbjYDASGXv1oQdEvvIDpph9urL7vLF2dfBlg6I8Na5uZofGLe
-	 tu4qkmaCf6YmFRg6aH40dyBPzNNAuf3g9otachVUsjBjOEwkbXFCUmrQeJKbDxgo+0
-	 Kj+eVFWczpEbv4fIDJoEpD1KiKFGXeEyD1NWJufY=
+	b=rCQ9oeKqXtMFNmjuwenb7WXKRcMtOBLoLfP/8UuSZv4MC+yX2XnCGnwjvgKNSGyl8
+	 HxAb2WNZgzjk+QV/7/nmK0ey3HtepBPm8rStNKz7pZ2cVE8S8/dbHkR2f+3E2LwR+Q
+	 Wuon6MKYY2fQscZjkPoF+NNGZgFX/1eYFYthJWBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 600/731] ASoC: codecs: rt5665: Fix some error handling paths in rt5665_probe()
-Date: Tue,  8 Apr 2025 12:48:17 +0200
-Message-ID: <20250408104928.228876517@linuxfoundation.org>
+Subject: [PATCH 6.14 601/731] spi: cadence: Fix out-of-bounds array access in cdns_mrvl_xspi_setup_clock()
+Date: Tue,  8 Apr 2025 12:48:18 +0200
+Message-ID: <20250408104928.252201645@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,98 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 1ebd4944266e86a7ce274f197847f5a6399651e8 ]
+[ Upstream commit 7ba0847fa1c22e7801cebfe5f7b75aee4fae317e ]
 
-Should an error occur after a successful regulator_bulk_enable() call,
-regulator_bulk_disable() should be called, as already done in the remove
-function.
+If requested_clk > 128, cdns_mrvl_xspi_setup_clock() iterates over the
+entire cdns_mrvl_xspi_clk_div_list array without breaking out early,
+causing 'i' to go beyond the array bounds.
 
-Instead of adding an error handling path in the probe, switch from
-devm_regulator_bulk_get() to devm_regulator_bulk_get_enable() and
-simplify the remove function and some other places accordingly.
+Fix that by stopping the loop when it gets to the last entry, clamping
+the clock to the minimum 6.25 MHz.
 
-Finally, add a missing const when defining rt5665_supply_names to please
-checkpatch and constify a few bytes.
+Fixes the following warning with an UBSAN kernel:
 
-Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/e3c2aa1b2fdfa646752d94f4af968630c0d58248.1742629525.git.christophe.jaillet@wanadoo.fr
+  vmlinux.o: warning: objtool: cdns_mrvl_xspi_setup_clock: unexpected end of section .text.cdns_mrvl_xspi_setup_clock
+
+Fixes: 26d34fdc4971 ("spi: cadence: Add clock configuration for Marvell xSPI overlay")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202503282236.UhfRsF3B-lkp@intel.com/
+Link: https://lore.kernel.org/r/gs2ooxfkblnee6cc5yfcxh7nu4wvoqnuv4lrllkhccxgcac2jg@7snmwd73jkhs
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/h6bef6wof6zpjfp3jbhrkigqsnykdfy6j4qmmvb6gsabhianhj@k57a7hwpa3bj
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5665.c | 24 ++++--------------------
- 1 file changed, 4 insertions(+), 20 deletions(-)
+ drivers/spi/spi-cadence-xspi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
-index 47df14ba52784..4f0236b34a2d9 100644
---- a/sound/soc/codecs/rt5665.c
-+++ b/sound/soc/codecs/rt5665.c
-@@ -31,9 +31,7 @@
- #include "rl6231.h"
- #include "rt5665.h"
+diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
+index aed98ab143346..6dcba0e0ddaa3 100644
+--- a/drivers/spi/spi-cadence-xspi.c
++++ b/drivers/spi/spi-cadence-xspi.c
+@@ -432,7 +432,7 @@ static bool cdns_mrvl_xspi_setup_clock(struct cdns_xspi_dev *cdns_xspi,
+ 	u32 clk_reg;
+ 	bool update_clk = false;
  
--#define RT5665_NUM_SUPPLIES 3
--
--static const char *rt5665_supply_names[RT5665_NUM_SUPPLIES] = {
-+static const char * const rt5665_supply_names[] = {
- 	"AVDD",
- 	"MICVDD",
- 	"VBAT",
-@@ -46,7 +44,6 @@ struct rt5665_priv {
- 	struct gpio_desc *gpiod_ldo1_en;
- 	struct gpio_desc *gpiod_reset;
- 	struct snd_soc_jack *hs_jack;
--	struct regulator_bulk_data supplies[RT5665_NUM_SUPPLIES];
- 	struct delayed_work jack_detect_work;
- 	struct delayed_work calibrate_work;
- 	struct delayed_work jd_check_work;
-@@ -4471,8 +4468,6 @@ static void rt5665_remove(struct snd_soc_component *component)
- 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
- 
- 	regmap_write(rt5665->regmap, RT5665_RESET, 0);
--
--	regulator_bulk_disable(ARRAY_SIZE(rt5665->supplies), rt5665->supplies);
- }
- 
- #ifdef CONFIG_PM
-@@ -4758,7 +4753,7 @@ static int rt5665_i2c_probe(struct i2c_client *i2c)
- {
- 	struct rt5665_platform_data *pdata = dev_get_platdata(&i2c->dev);
- 	struct rt5665_priv *rt5665;
--	int i, ret;
-+	int ret;
- 	unsigned int val;
- 
- 	rt5665 = devm_kzalloc(&i2c->dev, sizeof(struct rt5665_priv),
-@@ -4774,24 +4769,13 @@ static int rt5665_i2c_probe(struct i2c_client *i2c)
- 	else
- 		rt5665_parse_dt(rt5665, &i2c->dev);
- 
--	for (i = 0; i < ARRAY_SIZE(rt5665->supplies); i++)
--		rt5665->supplies[i].supply = rt5665_supply_names[i];
--
--	ret = devm_regulator_bulk_get(&i2c->dev, ARRAY_SIZE(rt5665->supplies),
--				      rt5665->supplies);
-+	ret = devm_regulator_bulk_get_enable(&i2c->dev, ARRAY_SIZE(rt5665_supply_names),
-+					     rt5665_supply_names);
- 	if (ret != 0) {
- 		dev_err(&i2c->dev, "Failed to request supplies: %d\n", ret);
- 		return ret;
- 	}
- 
--	ret = regulator_bulk_enable(ARRAY_SIZE(rt5665->supplies),
--				    rt5665->supplies);
--	if (ret != 0) {
--		dev_err(&i2c->dev, "Failed to enable supplies: %d\n", ret);
--		return ret;
--	}
--
--
- 	rt5665->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev,
- 							"realtek,ldo1-en",
- 							GPIOD_OUT_HIGH);
+-	while (i < ARRAY_SIZE(cdns_mrvl_xspi_clk_div_list)) {
++	while (i < (ARRAY_SIZE(cdns_mrvl_xspi_clk_div_list) - 1)) {
+ 		clk_val = MRVL_XSPI_CLOCK_DIVIDED(
+ 				cdns_mrvl_xspi_clk_div_list[i]);
+ 		if (clk_val <= requested_clk)
 -- 
 2.39.5
 
