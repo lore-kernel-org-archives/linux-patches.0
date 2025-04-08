@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6B327C16B;
-	Tue,  8 Apr 2025 12:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CB826988C;
+	Tue,  8 Apr 2025 12:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117007; cv=none; b=hm7JMBG4BSWLJhWXcFzRgjVTTwvak1kV+/d/fJMZ05NmYsMCcIeHfl55t5kzADuvmiKwqJn+UD+kgQu7QIKeX7Cy2+bfju+kxUsJpTEW5bxhEzt5f5BRjmEHJmYH5iuw1qVEAdsNmFfuDNVoOLXMuKkXtPX0KmtsZdPKgHA3ZEI=
+	t=1744117010; cv=none; b=JBTst3bIC3F/X6ahajp1CmicDBhy2d2a/XMY/nwS0zZr3PvSpR1FkLSgVQnt5AZaUHoRzNrrhYAwNhG2IpekOZJ+oXZvmOONtir/Jik9lwJcjVmG+sFacf+fXVPVtSG8NgOdSUx8DBzxJ4M+ME68iW2C7EW6KNRMblNGUKaAYfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117007; c=relaxed/simple;
-	bh=6m1WUX+lB0bJ2E1N7ZVtdo5rXERUhizp8lwa0m5jzD0=;
+	s=arc-20240116; t=1744117010; c=relaxed/simple;
+	bh=J7tV5IcU9WIhE8Y3kl/xLkasIut5lCAfDtlj/WDuxTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uW6Q8izbJ1TtvA8c0tF4mnxHHiybevqax+yplMvLKiduhfog6m9S5//C8YwBS2nF1O8L8Io0tzniazDo5MC0MDql4AsJ+4/C0ucrRFXVKpKwE54/grnIqEJvtGikB7BkZEtg1ndXxbWDU3VoJGGeW3WHw6hAZIAu5Ymf21dhHMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d43EYcOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=swlXVcg05hanuG91TqlYYehBOEaeZtKMf3CnSkm+BJQFUgwYtBWXvQShGkSvr22tOUw9W8snQgMWzvjm+GKQHrZEypKIo41H8niyNh5+wpo9qCj4Kp6i2ONCF98rAuigrLo6e3ylDrkOEWtVb4yYmYrvWCrTL1sx++cMTphiq4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJafyjHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d43EYcOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C228C4CEE5;
-	Tue,  8 Apr 2025 12:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJafyjHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0D6C4CEE5;
+	Tue,  8 Apr 2025 12:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117007;
-	bh=6m1WUX+lB0bJ2E1N7ZVtdo5rXERUhizp8lwa0m5jzD0=;
+	s=korg; t=1744117010;
+	bh=J7tV5IcU9WIhE8Y3kl/xLkasIut5lCAfDtlj/WDuxTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d43EYcOlh5aX/UeleKp9DZZox0qeTzWGptL1rUZilq3vXI3HU60UVkGi679x/qWGf
-	 JBL2xk12tQ5syYrFQm554efoA0zhiWUrnB0mraDmwiDCTFwgASpvAXUBrZX9u1JmLO
-	 9lUgER9CouZB6qtsOZUIhu6828y703uRix1RqH7U=
+	b=sJafyjHJdmg+3uMcjDgnVHemZoE3BYGYncAl6eUCUhhHekhAjtFez+Bruy4Gw5cmU
+	 D3k07hUQIaX+FZNOOn1nxiRNWygD4ASCZ3SbVCcO9zrrtkU/USOdNlPwg6gnhA1ys1
+	 t5FwWWNHn4IiF+90oLDq28jgApOlDQe3+hamu/FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 310/423] RISC-V: errata: Use medany for relocatable builds
-Date: Tue,  8 Apr 2025 12:50:36 +0200
-Message-ID: <20250408104853.023065118@linuxfoundation.org>
+Subject: [PATCH 6.12 301/423] spufs: fix a leak on spufs_new_file() failure
+Date: Tue,  8 Apr 2025 12:50:27 +0200
+Message-ID: <20250408104852.804263041@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palmer Dabbelt <palmer@rivosinc.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit bb58e1579f431d42469b6aed0f03eff383ba6db5 ]
+[ Upstream commit d1ca8698ca1332625d83ea0d753747be66f9906d ]
 
-We're trying to mix non-PIC/PIE objects into the otherwise-PIE
-relocatable kernels, to avoid GOT/PLT references during early boot
-alternative resolution (which happens before the GOT/PLT are set up).
+It's called from spufs_fill_dir(), and caller of that will do
+spufs_rmdir() in case of failure.  That does remove everything
+we'd managed to create, but... the problem dentry is still
+negative.  IOW, it needs to be explicitly dropped.
 
-riscv64-unknown-linux-gnu-ld: arch/riscv/errata/sifive/errata.o: relocation R_RISCV_HI20 against `tlb_flush_all_threshold' can not be used when making a shared object; recompile with -fPIC
-riscv64-unknown-linux-gnu-ld: arch/riscv/errata/thead/errata.o: relocation R_RISCV_HI20 against `riscv_cbom_block_size' can not be used when making a shared object; recompile with -fPIC
-
-Fixes: 8dc2a7e8027f ("riscv: Fix relocatable kernels with early alternatives using -fno-pie")
-Link: https://lore.kernel.org/r/20250326224506.27165-2-palmer@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 3f51dd91c807 "[PATCH] spufs: fix spufs_fill_dir error path"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/errata/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/cell/spufs/inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/errata/Makefile b/arch/riscv/errata/Makefile
-index f0da9d7b39c37..bc6c77ba837d2 100644
---- a/arch/riscv/errata/Makefile
-+++ b/arch/riscv/errata/Makefile
-@@ -1,5 +1,9 @@
- ifdef CONFIG_RELOCATABLE
--KBUILD_CFLAGS += -fno-pie
-+# We can't use PIC/PIE when handling early-boot errata parsing, as the kernel
-+# doesn't have a GOT setup at that point.  So instead just use medany: it's
-+# usually position-independent, so it should be good enough for the errata
-+# handling.
-+KBUILD_CFLAGS += -fno-pie -mcmodel=medany
- endif
- 
- ifdef CONFIG_RISCV_ALTERNATIVE_EARLY
+diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
+index 70236d1df3d3e..793c005607cf0 100644
+--- a/arch/powerpc/platforms/cell/spufs/inode.c
++++ b/arch/powerpc/platforms/cell/spufs/inode.c
+@@ -192,8 +192,10 @@ static int spufs_fill_dir(struct dentry *dir,
+ 			return -ENOMEM;
+ 		ret = spufs_new_file(dir->d_sb, dentry, files->ops,
+ 					files->mode & mode, files->size, ctx);
+-		if (ret)
++		if (ret) {
++			dput(dentry);
+ 			return ret;
++		}
+ 		files++;
+ 	}
+ 	return 0;
 -- 
 2.39.5
 
