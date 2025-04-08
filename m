@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BEA26981A;
-	Tue,  8 Apr 2025 12:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69AF26988E;
+	Tue,  8 Apr 2025 12:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113775; cv=none; b=GIyxKhrgWifO1g4TwG9lh8A27YJiI+OpCNubhWcAnZcKGpFexc4IL7bF7VHp0aR2s5rBi1MOptkxGBmdtgi1iedAbJ7Q5QrvF9nsn7b+4swuS+15YVsOZbKYlCvlNH7EETew6RpbO/3nOcuVvgZ1ZZlPzDhEVfQ0vjDGZgVbnIU=
+	t=1744113777; cv=none; b=dr9BHaRf6C35OUvCUNOms0VWQnCx5kztBOz3R9itlvSakKDKA0B32n5dYODHt7QZWA9xBwGScFcMRv1yHaZumB8c6oJ9XRfF0uzZMKLiW7IvR4KQxFk3ewFwK/Ojvs4KIL8IUhjcVsd0AcGFam0Pa2ykEsyJ/+5hIKLQ8++ddKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113775; c=relaxed/simple;
-	bh=1KcQ/sOMlDTQ5X0usfbpSxi9bYBtzb4Rhn/Zgkgpw8Q=;
+	s=arc-20240116; t=1744113777; c=relaxed/simple;
+	bh=SE01+cPZhYGuWPGhY+3GgUqRzOaBktXhxcLT4J9evNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCMfB3yO/qQAiDyvm9QgXSP5yD8/gd6fKuvgsjzXlK4FxsYWrgYHxeHN+gktiBrRArlfvxQ4ySZdc+sIeAcpo2w0fn2lJLXJgt/gwP3UJZxjkjk0o7l0lrIkNkIobU4pR83AXMvG3SzXNCrACQXur0r0iQH81cmLADMwTHQlXFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Trgoi/X0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sc7xvFp4cOe59dD2QbhkuDigP5kItQAyFCwU3TG0QoOwH5PMnjI1u9Ssgpj1y3Kv3v8nK5X6wm9Ew/a0omON8EaT4Lhhoc/6GR4A2zLHx51PpEXOZRwXUgTWfio75UNnDpS9QZWI1lz5ftkCWrWIydT99yG85I1gq5HXqchQEdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgbYi0oi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Trgoi/X0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E265C4CEE5;
-	Tue,  8 Apr 2025 12:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgbYi0oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A21C4CEE5;
+	Tue,  8 Apr 2025 12:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113775;
-	bh=1KcQ/sOMlDTQ5X0usfbpSxi9bYBtzb4Rhn/Zgkgpw8Q=;
+	s=korg; t=1744113777;
+	bh=SE01+cPZhYGuWPGhY+3GgUqRzOaBktXhxcLT4J9evNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Trgoi/X0iNE7R7tYMCmAZQPnuDj2F6FR1AqnnqMnnXEuCPj6e9ydZWrjAsqBebTt9
-	 7JtWfpZH+QL/mClIppeaVkBnjP3SpmW1HK/8XzcAxeJTnIkdvXLfWwEE1naO9NT2Dx
-	 AyhIGSq0UbDfVD7biKxKIyGm7OJSzaECoXk1snic=
+	b=sgbYi0oiZPCJD8u4Qwg/I4JBpCy7u8Rl+PjU4aPk1t3EXmr6QFOUpNaCv8WOBXYT2
+	 ZKfSKa/kB/87aCcY7y+BgX/PeOLAA5eTPcl+C1+w+WBhP55WiPAHuhRz1cyJk28xI6
+	 gPS6LlsdK8nTphX4gteK2/qt6A7oBjtlnChiOwzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+83fed965338b573115f7@syzkaller.appspotmail.com,
-	Kohei Enju <enjuk@amazon.com>,
-	Florian Westphal <fw@strlen.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/154] netfilter: nf_conncount: Fully initialize struct nf_conncount_tuple in insert_tree()
-Date: Tue,  8 Apr 2025 12:49:17 +0200
-Message-ID: <20250408104815.804260413@linuxfoundation.org>
+Subject: [PATCH 5.4 017/154] ipvs: prevent integer overflow in do_ip_vs_get_ctl()
+Date: Tue,  8 Apr 2025 12:49:18 +0200
+Message-ID: <20250408104815.832330661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,126 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d653bfeb07ebb3499c403404c21ac58a16531607 ]
+[ Upstream commit 80b78c39eb86e6b55f56363b709eb817527da5aa ]
 
-Since commit b36e4523d4d5 ("netfilter: nf_conncount: fix garbage
-collection confirm race"), `cpu` and `jiffies32` were introduced to
-the struct nf_conncount_tuple.
+The get->num_services variable is an unsigned int which is controlled by
+the user.  The struct_size() function ensures that the size calculation
+does not overflow an unsigned long, however, we are saving the result to
+an int so the calculation can overflow.
 
-The commit made nf_conncount_add() initialize `conn->cpu` and
-`conn->jiffies32` when allocating the struct.
-In contrast, count_tree() was not changed to initialize them.
+Both "len" and "get->num_services" come from the user.  This check is
+just a sanity check to help the user and ensure they are using the API
+correctly.  An integer overflow here is not a big deal.  This has no
+security impact.
 
-By commit 34848d5c896e ("netfilter: nf_conncount: Split insert and
-traversal"), count_tree() was split and the relevant allocation
-code now resides in insert_tree().
-Initialize `conn->cpu` and `conn->jiffies32` in insert_tree().
+Save the result from struct_size() type size_t to fix this integer
+overflow bug.
 
-BUG: KMSAN: uninit-value in find_or_evict net/netfilter/nf_conncount.c:117 [inline]
-BUG: KMSAN: uninit-value in __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
- find_or_evict net/netfilter/nf_conncount.c:117 [inline]
- __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
- count_tree net/netfilter/nf_conncount.c:438 [inline]
- nf_conncount_count+0x82f/0x1e80 net/netfilter/nf_conncount.c:521
- connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
- __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
- nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
- expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
- nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
- nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
- nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
- NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
- ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
- ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
- __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
- __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
- __netif_receive_skb_list net/core/dev.c:6035 [inline]
- netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
- netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
- xdp_recv_frames net/bpf/test_run.c:280 [inline]
- xdp_test_run_batch net/bpf/test_run.c:361 [inline]
- bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
- bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
- bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
- __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
- __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
- __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
- ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
- do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4121 [inline]
- slab_alloc_node mm/slub.c:4164 [inline]
- kmem_cache_alloc_noprof+0x915/0xe10 mm/slub.c:4171
- insert_tree net/netfilter/nf_conncount.c:372 [inline]
- count_tree net/netfilter/nf_conncount.c:450 [inline]
- nf_conncount_count+0x1415/0x1e80 net/netfilter/nf_conncount.c:521
- connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
- __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
- nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
- expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
- nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
- nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
- nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
- NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
- ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
- ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
- __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
- __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
- __netif_receive_skb_list net/core/dev.c:6035 [inline]
- netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
- netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
- xdp_recv_frames net/bpf/test_run.c:280 [inline]
- xdp_test_run_batch net/bpf/test_run.c:361 [inline]
- bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
- bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
- bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
- __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
- __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
- __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
- ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
- do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-Reported-by: syzbot+83fed965338b573115f7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=83fed965338b573115f7
-Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/ipvs/ip_vs_ctl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 0ce12a33ffda4..a66a27fe7f458 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -366,6 +366,8 @@ insert_tree(struct net *net,
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 2bc82dabfe3b8..dcce6aaac970e 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -2809,12 +2809,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
+ 	case IP_VS_SO_GET_SERVICES:
+ 	{
+ 		struct ip_vs_get_services *get;
+-		int size;
++		size_t size;
  
- 	conn->tuple = *tuple;
- 	conn->zone = *zone;
-+	conn->cpu = raw_smp_processor_id();
-+	conn->jiffies32 = (u32)jiffies;
- 	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
+ 		get = (struct ip_vs_get_services *)arg;
+ 		size = struct_size(get, entrytable, get->num_services);
+ 		if (*len != size) {
+-			pr_err("length: %u != %u\n", *len, size);
++			pr_err("length: %u != %zu\n", *len, size);
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
+@@ -2850,12 +2850,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
+ 	case IP_VS_SO_GET_DESTS:
+ 	{
+ 		struct ip_vs_get_dests *get;
+-		int size;
++		size_t size;
  
- 	nf_conncount_list_init(&rbconn->list);
+ 		get = (struct ip_vs_get_dests *)arg;
+ 		size = struct_size(get, entrytable, get->num_dests);
+ 		if (*len != size) {
+-			pr_err("length: %u != %u\n", *len, size);
++			pr_err("length: %u != %zu\n", *len, size);
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
 -- 
 2.39.5
 
