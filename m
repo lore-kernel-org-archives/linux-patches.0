@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F15267B7F;
-	Tue,  8 Apr 2025 11:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60D26659C;
+	Tue,  8 Apr 2025 11:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110140; cv=none; b=YtpjmqP/XuGr2Y/27aIpkIx3B4B69E39diAXHY2zvp+qj+4cBwl0bZ9O7b35SGl0q4Mjx6H9/ppgwGIKSAcBorWGyjd5m7o605RvH+0ZiHBW9/p1eaVedqPQ6j+mbPfEXLSnUOGlo9HlKPnxRasS4Sf6joRKnuS8CTLP59RPN9U=
+	t=1744110142; cv=none; b=uEXlQJmv6CsvKVv4du3V0HZB0T6PD+d5CmNmidLqL/i3lDJzORjBJe+FJSMIr2284/sfU848TkKgFKW2SRHAVDLpYAyqnTQG81i+MGLiZ8ouVFe5ujwj0xTfoUOeTo4PKG/lIV2LKEe3Kgeiwn2u5P1q2BITMlaw4ichpUrYimo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110140; c=relaxed/simple;
-	bh=bpKYVpNIh4DkLI6b42QBpQi6f/xnP0Xy41jKcawWy84=;
+	s=arc-20240116; t=1744110142; c=relaxed/simple;
+	bh=0Heqv9WBCDjbFox2X+hF8w1BvsVLJghrwspv/TonC0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOZzIiS1cPqsqLD93R1KSFdPg++HbjbvvycoXPHsqX8O6ax2bii/Ks8aO9C3i0xiU+44VxWwL8xEcd26oRFdIcsANEURXmXZPo3u1UILT/k02aZVSnEw6yw9/EfR58kQO9KSyVNO7ia94ZxNDer3JPRFT9Dv2Z3UUdKQJSzHiVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3GT68XW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZEYmzk7xX5q2moirzICqz1drYI+QpD1lEzFZC8xt9/abd3Qde4cP1fAg/0WIlB4iH3m9fzS2FXqNmKmnvAUTv/ZppK1+sOoL31VRdHksBCGkMyE3rHIisgH99W631L2WTaS1EuaiVQ39Skcrsi1PFwADx/fWLzAM6kYkra79sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfRrbgdo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3GT68XW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FA0C4CEE5;
-	Tue,  8 Apr 2025 11:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfRrbgdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E61CC4CEE5;
+	Tue,  8 Apr 2025 11:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110139;
-	bh=bpKYVpNIh4DkLI6b42QBpQi6f/xnP0Xy41jKcawWy84=;
+	s=korg; t=1744110142;
+	bh=0Heqv9WBCDjbFox2X+hF8w1BvsVLJghrwspv/TonC0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3GT68XW0zdmNbBT70M85J5sCjgk389q3bU2J/rdwt1stWS+uMLBFiCGPs139n2vy
-	 zcjrBO98s45hm5gPSkbFqDOBZN/TkQPZG3PZKdaOZrZdqZGlVFkmKo9hw2i8Fw4O4E
-	 rnIHR2/H4wcZo3QmlY2uVKlx40By0rrkfTNbAEZU=
+	b=XfRrbgdoz+X4eF7rRiRLHwQfqjCe6H4mrKciq+lTIZPGGrSC1QKUs87E9E9JzU9tS
+	 EKYJk0nMRVgFZLWM27ayrH53OG4d+zSniVExW7gOAk4QMZNOskLOpLVsVVAs80+5qg
+	 +g+GEpHqSJBuCFtQPLUDTmW37OFawtOHkfVuSsVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Icenowy Zheng <uwu@icenowy.me>,
-	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 183/227] nvme-pci: clean up CMBMSC when registering CMB fails
-Date: Tue,  8 Apr 2025 12:49:21 +0200
-Message-ID: <20250408104825.798571989@linuxfoundation.org>
+Subject: [PATCH 5.10 184/227] nvme-pci: skip CMB blocks incompatible with PCI P2P DMA
+Date: Tue,  8 Apr 2025 12:49:22 +0200
+Message-ID: <20250408104825.828101601@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -54,34 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit 6a3572e10f740acd48e2713ef37e92186a3ce5e8 ]
+[ Upstream commit 56cf7ef0d490b28fad8f8629fc135c5ab7c9f54e ]
 
-CMB decoding should get disabled when the CMB block isn't successfully
-registered to P2P DMA subsystem.
+The PCI P2PDMA code will register the CMB block to the memory
+hot-plugging subsystem, which have an alignment requirement. Memory
+blocks that do not satisfy this alignment requirement (usually 2MB) will
+lead to a WARNING from memory hotplugging.
 
-Clean up the CMBMSC register in this error handling codepath to disable
-CMB decoding (and CMBLOC/CMBSZ registers).
+Verify the CMB block's address and size against the alignment and only
+try to send CMB blocks compatible with it to prevent this warning.
+
+Tested on Intel DC D4502 SSD, which has a 512K CMB block that is too
+small for memory hotplugging (thus PCI P2PDMA).
 
 Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index ae04bdce560a1..7993acdfd3185 100644
+index 7993acdfd3185..a56baaafe79df 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -1888,6 +1888,7 @@ static void nvme_map_cmb(struct nvme_dev *dev)
+@@ -1867,6 +1867,18 @@ static void nvme_map_cmb(struct nvme_dev *dev)
+ 	if (offset > bar_size)
+ 		return;
+ 
++	/*
++	 * Controllers may support a CMB size larger than their BAR, for
++	 * example, due to being behind a bridge. Reduce the CMB to the
++	 * reported size of the BAR
++	 */
++	size = min(size, bar_size - offset);
++
++	if (!IS_ALIGNED(size, memremap_compat_align()) ||
++	    !IS_ALIGNED(pci_resource_start(pdev, bar),
++			memremap_compat_align()))
++		return;
++
+ 	/*
+ 	 * Tell the controller about the host side address mapping the CMB,
+ 	 * and enable CMB decoding for the NVMe 1.4+ scheme:
+@@ -1877,14 +1889,6 @@ static void nvme_map_cmb(struct nvme_dev *dev)
+ 			     dev->bar + NVME_REG_CMBMSC);
+ 	}
+ 
+-	/*
+-	 * Controllers may support a CMB size larger than their BAR,
+-	 * for example, due to being behind a bridge. Reduce the CMB to
+-	 * the reported size of the BAR
+-	 */
+-	if (size > bar_size - offset)
+-		size = bar_size - offset;
+-
  	if (pci_p2pdma_add_resource(pdev, bar, size, offset)) {
  		dev_warn(dev->ctrl.device,
  			 "failed to register the CMB\n");
-+		hi_lo_writeq(0, dev->bar + NVME_REG_CMBMSC);
- 		return;
- 	}
- 
 -- 
 2.39.5
 
