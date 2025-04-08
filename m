@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE095224234;
-	Tue,  8 Apr 2025 11:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7730C224234;
+	Tue,  8 Apr 2025 11:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111708; cv=none; b=mmBrc4VNZLbnm7jfpYVjgDD9Joz5zPcfpZBNMGG7i9CLF+x8JDlhAl5X7/9wKdEEH0Ua1UlGXHXbPSPtWQcMWLFNgJhRPIoWZpWSEO0lDjxfEf8PDL8wpiAFPVAcxxxO1/A/80wQ2lZIh8POPLC/OHtHgnYIUWnBeqwA27CngUk=
+	t=1744111711; cv=none; b=k0X2WAPFVxF1cnqY9S1COQ0O1Jh+9N+JRmY4Sg75NeJc6UZznST3KKkhMYSx9yg10nm/nyrJXdrtsqIORO6mEe9s265QIPBgR0QXfaicWtojA9iwouk974ePvlXtJvkaRsm/SLIz1Hevt2aiHkORxKz7qJ/WuUJbE/KzAqnQGFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111708; c=relaxed/simple;
-	bh=8tnKVohkxmh3GUriLwZqUTjPpVLK/9SH5to918iVVQc=;
+	s=arc-20240116; t=1744111711; c=relaxed/simple;
+	bh=32HxJG92hOYpj2vCRJ8TSb+hQkK+R9GYQ/cAK4sRimk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UK+98BI76cGUHaGvNvkHp6TEyvrSdM4sSQCYANg/Uam2blU6yh3dMUkiWaXkCWZ5sfpZrsDaG8LlT6ZUvFuxw0kaE7Dxdf3IGJp9IKfN+OS1sJf/Ufvcp931onH6lYLRg2eZWkOh+IdEJbHlZPuKT+4/SQnlszp/s1B6nAB+fJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUfSjd98; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qu8+UiEX6lYBrZcOIaeOMlE36Z/eUWCI/DAURf+t2rtdoPr3DbOaj06c6jYBXybTbcWAmzsST7UnfNVkZXQrACKF3PjsZTV5qfe0AaO/JXX+soWW3leTN3wwD95DZ6sRfJ7VQaztGDTbXPn4jA60mHldHLAqTyh2lhuanQ0glsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1vboluu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUfSjd98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEFEC4CEE5;
-	Tue,  8 Apr 2025 11:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1vboluu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2991C4CEE5;
+	Tue,  8 Apr 2025 11:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111708;
-	bh=8tnKVohkxmh3GUriLwZqUTjPpVLK/9SH5to918iVVQc=;
+	s=korg; t=1744111711;
+	bh=32HxJG92hOYpj2vCRJ8TSb+hQkK+R9GYQ/cAK4sRimk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUfSjd984oQ77VZ+u04Q8brnhz3FqiddsllXR4mAzwKtA72JPF9q1oqbnR9nmPeXM
-	 CUq5yhswWwUz+WKYWDEGBTjKNkUSi3sNVIuO01C8gR2+ycZ3ZEMuNkASTB7ckNQkZ9
-	 rZhJX2SL8Lp2Yc8pGgsrpi2meECuuLN2eE2TWbZI=
+	b=s1vboluuFA+QrpGN+adKHvtDvr+GxgjvjJ2bgJL+tZ5EPGqprxZhgTrhSSltyg1E5
+	 YBmuSaCvhJFBMNMzk6WmXle4BmACJzKiwuqg4XL5gCj49MimemA7+EE40tBEbiK+M+
+	 WBPabHJyVoI+XgiWi+J/YU8ko1rVwHwwZ/nvePEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
+	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 530/731] perf dso: fix dso__is_kallsyms() check
-Date: Tue,  8 Apr 2025 12:47:07 +0200
-Message-ID: <20250408104926.602706735@linuxfoundation.org>
+Subject: [PATCH 6.14 531/731] perf: intel-tpebs: Fix incorrect usage of zfree()
+Date: Tue,  8 Apr 2025 12:47:08 +0200
+Message-ID: <20250408104926.626608400@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,61 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Brennan <stephen.s.brennan@oracle.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit ebf0b332732dcc64239119e554faa946562b0b93 ]
+[ Upstream commit 6d2dcd635204c023eb5328ad7d38b198a5558c9b ]
 
-Kernel modules for which we cannot find a file on-disk will have a
-dso->long_name that looks like "[module_name]". Prior to the commit
-listed in the fixes, the dso->kernel field would be zero (for user
-space), so dso__is_kallsyms() would return false. After the commit,
-kernel module DSOs are correctly labeled, but the result is that
-dso__is_kallsyms() erroneously returns true for those modules without a
-filesystem path.
+zfree() requires an address otherwise it frees what's in name, rather
+than name itself. Pass the address of name to fix it.
 
-Later, build_id_cache__add() consults this value of is_kallsyms, and
-when true, it copies /proc/kallsyms into the cache. Users with many
-kernel modules without a filesystem path (e.g. ksplice or possibly
-kernel live patch modules) have reported excessive disk space usage in
-the build ID cache directory due to this behavior.
+This was the only incorrect occurrence in Perf found using a search.
 
-To reproduce the issue, it's enough to build a trivial out-of-tree hello
-world kernel module, load it using insmod, and then use:
-
-   perf record -ag -- sleep 1
-
-In the build ID directory, there will be a directory for your module
-name containing a kallsyms file.
-
-Fix this up by changing dso__is_kallsyms() to consult the
-dso_binary_type enumeration, which is also symmetric to the above checks
-for dso__is_vmlinux() and dso__is_kcore(). With this change, kallsyms is
-not cached in the build-id cache for out-of-tree modules.
-
-Fixes: 02213cec64bbe ("perf maps: Mark module DSOs with kernel type")
-Signed-off-by: Stephen Brennan <stephen.s.brennan@oracle.com>
-Link: https://lore.kernel.org/r/20250318230012.2038790-1-stephen.s.brennan@oracle.com
+Fixes: 8db5cabcf1b6 ("perf stat: Fork and launch 'perf record' when 'perf stat' needs to get retire latency value for a metric.")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250319101614.190922-1-james.clark@linaro.org
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/intel-tpebs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
-index bb8e8f444054d..c0472a41147c3 100644
---- a/tools/perf/util/dso.h
-+++ b/tools/perf/util/dso.h
-@@ -808,7 +808,9 @@ static inline bool dso__is_kcore(const struct dso *dso)
- 
- static inline bool dso__is_kallsyms(const struct dso *dso)
- {
--	return RC_CHK_ACCESS(dso)->kernel && RC_CHK_ACCESS(dso)->long_name[0] != '/';
-+	enum dso_binary_type bt = dso__binary_type(dso);
-+
-+	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
- }
- 
- bool dso__is_object_file(const struct dso *dso);
+diff --git a/tools/perf/util/intel-tpebs.c b/tools/perf/util/intel-tpebs.c
+index 50a3c3e071606..2c421b475b3b8 100644
+--- a/tools/perf/util/intel-tpebs.c
++++ b/tools/perf/util/intel-tpebs.c
+@@ -254,7 +254,7 @@ int tpebs_start(struct evlist *evsel_list)
+ 		new = zalloc(sizeof(*new));
+ 		if (!new) {
+ 			ret = -1;
+-			zfree(name);
++			zfree(&name);
+ 			goto err;
+ 		}
+ 		new->name = name;
 -- 
 2.39.5
 
