@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8843D26A1B1;
-	Tue,  8 Apr 2025 12:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844FC26F453;
+	Tue,  8 Apr 2025 12:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115177; cv=none; b=YcunbWLWbWFcbvmoW1rPl6SMKV2JQrkFtSZ9icdKBNEir2q7Xox0OXftn69uN4jIJd1FwkyPNW4hrdKRD/+T+J8xs/2YAqJkHdzC2jZq5v39EuVrW6wETDJlkJqA8G2MMPQ4DHykUmy38z9xPc/iiPWsMR4nLTwE8Vlx8yGD4lg=
+	t=1744115180; cv=none; b=kGLzPKmKdwdtx+ZBOmmDc78yEu2EJ6eZ+fZvz75+pXdMbs3CEfS4ZDraTX0q+9MklIF+GwiFRSqCfjsOpo6nJYpNXMCN9g4zfiCWpgkpQFXY4CcPboO71ZsjkC3f4Wa9GL2zlXpgNFbiJau5CpxVr7wj5iUEuPFH5BE/Qq3xufI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115177; c=relaxed/simple;
-	bh=2gmhhuACRX1szOUT4+RpLbNPHYHl3PYWwT66Y63JCW8=;
+	s=arc-20240116; t=1744115180; c=relaxed/simple;
+	bh=HzV3oDwi1vk9KKIlMEb/LegV+pEaMJxETqlszwoxJvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rYASXktDJ/qzG5gR1zWIlCHsgRjFqgjle83UNCUUINOdRPRPJNMqwkl11wOhK8cmF9QW/vkoBPWrzQFifTha/RI4/wd734jWInQUgDhLwPPxgHOpadHUKsITRQGmaWYD3HgF+sLn8JETr8ZjuF3JMwHCD66POC6YgTbJ3xbdtuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER4qU9h8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJaVq/I8xCo5d2wz/ekzgt9NmeZC4xKw16OvtiYMbbY2uvAMd52FfJhrl/chx+asYN4KWvUf7VCn/2c2TyymRqS4IM0oo9ZJQQiaROY47itjeI5GuPxXMvLAAeKBAjfwagtsAaS8dhYWDszYuLx040Qm1FMnH5JFWijKqcYfvzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ua/r9fY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER4qU9h8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E85C4CEE5;
-	Tue,  8 Apr 2025 12:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ua/r9fY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B029EC4CEED;
+	Tue,  8 Apr 2025 12:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115177;
-	bh=2gmhhuACRX1szOUT4+RpLbNPHYHl3PYWwT66Y63JCW8=;
+	s=korg; t=1744115180;
+	bh=HzV3oDwi1vk9KKIlMEb/LegV+pEaMJxETqlszwoxJvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ER4qU9h8R3ha2FtK4iRPl9DfcuHqYZzLM24+92uQcPBzRTwV3D2LZb1Dv9Uq+OT5z
-	 fIFTlSCKJN7Qtq5TanhpmgpOK7+WT20eE+zDdeP7Zm6M6ULVV1HauSf9l0MIgFcAl5
-	 ORhVXA5epsPShxdrAlsFo7PWKn5FnmG6BBIANrNI=
+	b=Ua/r9fY6FNqxhAu9GCB6bertZI4c97c9W0IzVOzZdF/aXq0C2m6VIfxxUqR8wlGVK
+	 fwn4EoIWuPthTnlSAYHJdxy1YJP8dW0sI/Y5dCPXVdazMAweRCtRigr7QIILDYrTz6
+	 HN4zJupB35YTbprkj9+LjDe0FuVFfwRZ4WTvhkQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 376/499] riscv/purgatory: 4B align purgatory_start
-Date: Tue,  8 Apr 2025 12:49:48 +0200
-Message-ID: <20250408104900.607716625@linuxfoundation.org>
+Subject: [PATCH 6.13 377/499] nvme/ioctl: dont warn on vectorized uring_cmd with fixed buffer
+Date: Tue,  8 Apr 2025 12:49:49 +0200
+Message-ID: <20250408104900.635352321@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,65 +48,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 3f7023171df43641a8a8a1c9a12124501e589010 ]
+[ Upstream commit eada75467fca0b016b9b22212637c07216135c20 ]
 
-When a crashkernel is launched on RISC-V, the entry to purgatory is
-done by trapping via the stvec CSR. From riscv_kexec_norelocate():
+The vectorized io_uring NVMe passthru opcodes don't yet support fixed
+buffers. But since userspace can trigger this condition based on the
+io_uring SQE parameters, it shouldn't cause a kernel warning.
 
-  |  ...
-  |  /*
-  |   * Switch to physical addressing
-  |   * This will also trigger a jump to CSR_STVEC
-  |   * which in this case is the address of the new
-  |   * kernel.
-  |   */
-  |  csrw    CSR_STVEC, a2
-  |  csrw    CSR_SATP, zero
-
-stvec requires that the address is 4B aligned, which was not the case,
-e.g.:
-
-  | Loaded purgatory at 0xffffc000
-  | kexec_file: kexec_file_load: type:1, start:0xffffd232 head:0x4 flags:0x6
-
-The address 0xffffd232 not 4B aligned.
-
-Correct by adding proper function alignment.
-
-With this change, crashkernels loaded with kexec-file will be able to
-properly enter the purgatory.
-
-Fixes: 736e30af583fb ("RISC-V: Add purgatory")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250328085313.1193815-1-bjorn@kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 23fd22e55b76 ("nvme: wire up fixed buffer support for nvme passthrough")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/purgatory/entry.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/purgatory/entry.S b/arch/riscv/purgatory/entry.S
-index 0e6ca6d5ae4b4..c5db2f072c341 100644
---- a/arch/riscv/purgatory/entry.S
-+++ b/arch/riscv/purgatory/entry.S
-@@ -12,6 +12,7 @@
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index 24e2c702da7a2..fed6b29098ad3 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -141,7 +141,7 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 		struct iov_iter iter;
  
- .text
- 
-+.align	2
- SYM_CODE_START(purgatory_start)
- 
- 	lla	sp, .Lstack
+ 		/* fixedbufs is only for non-vectored io */
+-		if (WARN_ON_ONCE(flags & NVME_IOCTL_VEC)) {
++		if (flags & NVME_IOCTL_VEC) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
 -- 
 2.39.5
 
