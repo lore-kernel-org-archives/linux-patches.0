@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180E4264A76;
-	Tue,  8 Apr 2025 11:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB9C207E14;
+	Tue,  8 Apr 2025 11:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111451; cv=none; b=Ti1d3dUG6yFnKNn7e2zFi/zBeSzTyvP6R5IZuxfZ547WaOJ4VXuiS5zLcopsNSSFYes3Cw6Ds0lWdb6lOacZZifirh7JW+momtplyZu/AJD4hI3v4qHSmNmuBArDuDM3iNhAPic4NvUsIVLKP4atXWGiCdkihas5Y4H1zWBBAM4=
+	t=1744111453; cv=none; b=AMTLGTo46ZLApbXaVe4A/WyTNH8zKK79Fm3Jm94Nyy9HWIy4zqvaxk6z/n3XgHymwmAh+dZHQ0MIpFiRqBKGL9FbU4N0Q7gSn7QlsfZC96r9uw5YEEITWAiKDrLxSAH96hOx7FIKKf9JEf2O00ilJzCwH7+mQP15WCwR6W2LSMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111451; c=relaxed/simple;
-	bh=bK4bDKuCNLFbs91s9ET/yDBH1jyLt8EwMl8211J6phA=;
+	s=arc-20240116; t=1744111453; c=relaxed/simple;
+	bh=n+ceyoTN1H7Om8Z7fR86I7mygkOm9aPGPxrITuKkB/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJS/MFe2Bg5XffsbXUonFKR+YAiOPE15mLgMnE4hlJVhxmwaTsSQicMjRZ0Yy7//1WTgwpAx7l3UWYu6iAT48UlWNylkz8t5t3opKQPvVAOhLWaBMB+T7XsnSzLqEjgQkA3YVkO3TpFmhBaK7p6x/9/n39lgcWnn4/YOvmbBg9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVnJs67H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsU6OosKLlMo0oV9BLFh2s7QA9urCPuPjoFJk2pOf+YOnXhjW3peMjY8NtYFtCe1qSxYNvtTRZbosKttP0TxBbX78ePS3htaj2B2Y2LTKWKz7ciC+MsGHSYhUDHK0qxHPTQTyBm6gdK2KVVncp7l9K3WEUSNotMY4toZADO4HxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh9EI9iw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVnJs67H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0048C4CEE5;
-	Tue,  8 Apr 2025 11:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh9EI9iw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C89C4CEE5;
+	Tue,  8 Apr 2025 11:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111451;
-	bh=bK4bDKuCNLFbs91s9ET/yDBH1jyLt8EwMl8211J6phA=;
+	s=korg; t=1744111453;
+	bh=n+ceyoTN1H7Om8Z7fR86I7mygkOm9aPGPxrITuKkB/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVnJs67Hp/8UE/OPN+hULok8mK+A1b84p+hhPwEDzznt1qfeO7RzImW+kAWAx0gvZ
-	 pI4djXYyH5rE/ycmxt9D23fKz0xM1hDd45v23GVl4hzQFn5VCSM3mqx6zicQzfopGP
-	 xxzcl9I7er6Ij0EFO4E0QOuO3gXUWnGMKQF823Pg=
+	b=rh9EI9iwNl2yOxUMeoqi7Ul5Rl99afMa2m7lmuvFpr4qn8f+dMfL3VKiWyY2V7n+N
+	 cDvPWe35DxaU8CTIaFGgJJfAlyX+Z5yv1e+oNe/bEYAyT0iNy0AwX4+VJcUsnuEULl
+	 EnRltfN/4bREXXzthVx3odP5hb8l26nkyiqiSP04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Penkler <dpenkler@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 436/731] staging: gpib: Add missing interface entry point
-Date: Tue,  8 Apr 2025 12:45:33 +0200
-Message-ID: <20250408104924.415078874@linuxfoundation.org>
+Subject: [PATCH 6.14 437/731] staging: gpib: Fix pr_err format warning
+Date: Tue,  8 Apr 2025 12:45:34 +0200
+Message-ID: <20250408104924.437721048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 2f548210a5a5d4cb5f20af39b684a9f6de58cd0e ]
+[ Upstream commit 03ec050c437bb4e7c5d215bbeedaa93932f13b35 ]
 
-Declaring the driver entry points as static caused a warning
-that the serial_poll_status function of the agilent_82350b driver
-was unused.
+This patch fixes the following compile warning:
 
-Add the entry point to the corresponding interface structure
-initializations where it was missing.
+drivers/staging/gpib/hp_82341/hp_82341.c: In function 'hp_82341_attach':
+./include/linux/kern_levels.h:5:25: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'u32' {aka 'unsigned int'} [-Wformat=]
 
-Fixes: 09a4655ee1eb ("staging: gpib: Add HP/Agilent/Keysight 8235xx PCI GPIB driver")
+It was introduced in
+
+commit baf8855c9160 ("staging: gpib: fix address space mixup")
+
+but was not detected as the build of the driver depended on BROKEN.
+
+Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
 Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250122103859.25499-2-dpenkler@gmail.com
+Link: https://lore.kernel.org/r/20250124105900.27592-2-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/agilent_82350b/agilent_82350b.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/gpib/hp_82341/hp_82341.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/gpib/agilent_82350b/agilent_82350b.c b/drivers/staging/gpib/agilent_82350b/agilent_82350b.c
-index 3f4f95b7fe34a..c62407077d37f 100644
---- a/drivers/staging/gpib/agilent_82350b/agilent_82350b.c
-+++ b/drivers/staging/gpib/agilent_82350b/agilent_82350b.c
-@@ -848,6 +848,7 @@ static gpib_interface_t agilent_82350b_unaccel_interface = {
- 	.primary_address = agilent_82350b_primary_address,
- 	.secondary_address = agilent_82350b_secondary_address,
- 	.serial_poll_response = agilent_82350b_serial_poll_response,
-+	.serial_poll_status = agilent_82350b_serial_poll_status,
- 	.t1_delay = agilent_82350b_t1_delay,
- 	.return_to_local = agilent_82350b_return_to_local,
- };
-@@ -875,6 +876,7 @@ static gpib_interface_t agilent_82350b_interface = {
- 	.primary_address = agilent_82350b_primary_address,
- 	.secondary_address = agilent_82350b_secondary_address,
- 	.serial_poll_response = agilent_82350b_serial_poll_response,
-+	.serial_poll_status = agilent_82350b_serial_poll_status,
- 	.t1_delay = agilent_82350b_t1_delay,
- 	.return_to_local = agilent_82350b_return_to_local,
- };
+diff --git a/drivers/staging/gpib/hp_82341/hp_82341.c b/drivers/staging/gpib/hp_82341/hp_82341.c
+index 0ddae295912fa..589c4fee1d562 100644
+--- a/drivers/staging/gpib/hp_82341/hp_82341.c
++++ b/drivers/staging/gpib/hp_82341/hp_82341.c
+@@ -718,7 +718,7 @@ int hp_82341_attach(gpib_board_t *board, const gpib_board_config_t *config)
+ 	for (i = 0; i < hp_82341_num_io_regions; ++i) {
+ 		start_addr = iobase + i * hp_priv->io_region_offset;
+ 		if (!request_region(start_addr, hp_82341_region_iosize, "hp_82341")) {
+-			pr_err("hp_82341: failed to allocate io ports 0x%lx-0x%lx\n",
++			pr_err("hp_82341: failed to allocate io ports 0x%x-0x%x\n",
+ 			       start_addr,
+ 			       start_addr + hp_82341_region_iosize - 1);
+ 			return -EIO;
 -- 
 2.39.5
 
