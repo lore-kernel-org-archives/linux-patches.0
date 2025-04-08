@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE9E206F18;
-	Tue,  8 Apr 2025 12:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6A8206F18;
+	Tue,  8 Apr 2025 12:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114988; cv=none; b=o0ur8aW9WnDw+6BrniKCuCtlHrM4OGuJzaRHd+00S8cNWbWT6gr7UIKSLToJvMxk/AJicBTGIJPtt7m8ZFFq7+G+BRdDuSnq4oVJFGpw6vjFYVXBE6zD1jK3MtRaPL2umUNFgvWL3euVs9nZ3RnkWgZ3nEpkmyMqG+U1wyEsnUo=
+	t=1744114990; cv=none; b=Sab6pQZet9QrX1n8hODnXoOD3i+OXJqUZU6uYU7U/duoP8e672CCo1BLzANiiXeMpAEk4LMsj+OR3ThzxDrOJtcpVwrzA0v+iM8ANS/I4H8FASrn4Ai4fouIh87EJKI9H/ZPrWST6HVDtPO+1LVTa6NMsAulqoy19dx9f+TsFsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114988; c=relaxed/simple;
-	bh=IO667RrGmKCyI1kosO1UmLppa00+lTW4jwWskXuySag=;
+	s=arc-20240116; t=1744114990; c=relaxed/simple;
+	bh=dMydW9BeWyRGqTP2lXTRlUbVYkVUe4ioTbP1Fa7NxBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSagpnWm3Sl17sY0WCVE2vHX7YvlO1YvjH///YOoQ3Ys0FnUeO4NWvUZHCCPTxrtlWrh2+amFO/mF5CUEmtttAWIWUifjd/D0Dxsl7gcup/EVb/8tJa9PvfVok1a4pzHIoPWsEfxPHBKrR+p1ABo+tIWr54ywIonJLMAUaZNXhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2q94QQ7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nClnYQOO7rnlMpueR45JzcUJbIqui4uZwyiS7ksd44/bz0cGQzBUGbZeE0s9/UrX0SiXA9ib5HQIyK770dJY2fhpwoB86EkN9hfLFHIOV7Aj1Jsyp1iJnzOOLbKws0//aWebgbroDoliSxemMYh2icn/QnubBU00u09b2bx6erA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdL8ywvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2q94QQ7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9F7C4CEE5;
-	Tue,  8 Apr 2025 12:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdL8ywvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F30C4CEE5;
+	Tue,  8 Apr 2025 12:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114987;
-	bh=IO667RrGmKCyI1kosO1UmLppa00+lTW4jwWskXuySag=;
+	s=korg; t=1744114990;
+	bh=dMydW9BeWyRGqTP2lXTRlUbVYkVUe4ioTbP1Fa7NxBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2q94QQ7vSGvgPErrCpl0qVNxRi1EwVVBnwLeZBKOeiuMi1MUsQblW+Ai/l3jhmjfe
-	 7TGslUeJtSKlN2N6vOPyze/kCJRm3bxo8kPX5PWEaLNkw5knZHUGqd8E2hXq2hZMb+
-	 kknEa+D5WMkhDb+2f3HFs1jUQEAID0h49uri58R0=
+	b=WdL8ywvAQGbhz6/gNCmEnODwq+jjBKYgJsedBx1pNxYuW0JfTdLUZiT7myNIUuJ9p
+	 TSHlxUNu0b5p/uDLk2acByj2fy8P7FO64PlNrNwz+G1g2Kf/JzikfGCNYC+KXLiUA5
+	 ifvXomnYzPGfROGobp7x3gCvYzuOiJEqXGQdjX9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Tatham <anakin@pobox.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 309/499] affs: generate OFS sequence numbers starting at 1
-Date: Tue,  8 Apr 2025 12:48:41 +0200
-Message-ID: <20250408104858.923087790@linuxfoundation.org>
+Subject: [PATCH 6.13 310/499] affs: dont write overlarge OFS data block size fields
+Date: Tue,  8 Apr 2025 12:48:42 +0200
+Message-ID: <20250408104858.948532877@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,64 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit e4cf8ec4de4e13f156c1d61977d282d90c221085 ]
+[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
 
-If I write a file to an OFS floppy image, and try to read it back on
-an emulated Amiga running Workbench 1.3, the Amiga reports a disk
-error trying to read the file. (That is, it's unable to read it _at
-all_, even to copy it to the NIL: device. It isn't a matter of getting
-the wrong data and being unable to parse the file format.)
+If a data sector on an OFS floppy contains a value > 0x1e8 (the
+largest amount of data that fits in the sector after its header), then
+an Amiga reading the file can return corrupt data, by taking the
+overlarge size at its word and reading past the end of the buffer it
+read the disk sector into!
 
-This is because the 'sequence number' field in the OFS data block
-header is supposed to be based at 1, but affs writes it based at 0.
-All three locations changed by this patch were setting the sequence
-number to a variable 'bidx' which was previously obtained by dividing
-a file position by bsize, so bidx will naturally use 0 for the first
-block. Therefore all three should add 1 to that value before writing
-it into the sequence number field.
+The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
+the new size field for a data block was computed by adding the amount
+of data currently being written (into the block) to the existing value
+of the size field. This is correct if you're extending the file at the
+end, but if you seek backwards in the file and overwrite _existing_
+data, it can lead to the size field being larger than the maximum
+legal value.
 
-With this change, the Amiga successfully reads the file.
-
-For data block reference: https://wiki.osdev.org/FFS_(Amiga)
+This commit changes the calculation so that it sets the size field to
+the max of its previous size and the position within the block that we
+just wrote up to.
 
 Signed-off-by: Simon Tatham <anakin@pobox.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/file.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/affs/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/affs/file.c b/fs/affs/file.c
-index a5a861dd52230..226308f8627e7 100644
+index 226308f8627e7..7a71018e3f675 100644
 --- a/fs/affs/file.c
 +++ b/fs/affs/file.c
-@@ -596,7 +596,7 @@ affs_extent_file_ofs(struct inode *inode, u32 newsize)
- 		BUG_ON(tmp > bsize);
- 		AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 		AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
+@@ -724,7 +724,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		tmp = min(bsize - boff, to - from);
+ 		BUG_ON(boff + tmp > bsize || tmp > bsize);
+ 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
+-		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
++		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
++			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
  		affs_fix_checksum(sb, bh);
- 		bh->b_state &= ~(1UL << BH_New);
-@@ -746,7 +746,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		if (buffer_new(bh)) {
- 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(bsize);
- 			AFFS_DATA_HEAD(bh)->next = 0;
- 			bh->b_state &= ~(1UL << BH_New);
-@@ -780,7 +780,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		if (buffer_new(bh)) {
- 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
- 			AFFS_DATA_HEAD(bh)->next = 0;
- 			bh->b_state &= ~(1UL << BH_New);
+ 		mark_buffer_dirty_inode(bh, inode);
+ 		written += tmp;
 -- 
 2.39.5
 
