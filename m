@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17509206F18;
-	Tue,  8 Apr 2025 12:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC32206F18;
+	Tue,  8 Apr 2025 12:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114714; cv=none; b=Q/WQOD8zoZsYLMnoc83lTH2YVpljzgO7bcMRQzeu8rTK65SAzYIBRT3iOW2xkSCQiBr4sto73HL/hGr1YOwFrqdpQ8YqobRvPN92jCQo65EdKEwuAtYpwRifuCD46nrX8rWdvqj7o3KIjD7utrEpFcilYu+A5mVunki7wHkwKVk=
+	t=1744114716; cv=none; b=aSELIl2Tc0uRHtzoF512w/z3dG64GaZ+Iuwl5bjm84ZFMUG7s9CD9pdT/lNpjHpsbQsxYSECxNZIGBFbQqBiHsq91bzi9cTnI43hPoqhFzFRoE5glPZ2xxd+znUpLIwdjyGTBJ9rxOSgrJhmht02Jivq9E7FVkcOAr7JatpB/r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114714; c=relaxed/simple;
-	bh=mFBrPfngwpdLZRHaSeoPGFsa1JuzIApm9OQe+N936rk=;
+	s=arc-20240116; t=1744114716; c=relaxed/simple;
+	bh=2ea5SoyTtV1CyQGVJhqpX6SRGrd1g4VN8xvcR6/+p+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfZYYCFJkicaFIUhZvSqRbhX/4sJnLjt0N/AJeRDRvpt/CvSygHCXvcQbFMlhBq5LZyqdNE3QiExX65NJ354aQSWMUsTP+nSX4eBUZ6iBKwXB2VcgIJ48anC0adC5M+uNkcCKlnyOlFZaz8417SncOoHsQQIyWd2jo88E/4r7FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeLqBR9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhAzr/MYe4nJzwOJKvuKvfRQ86HZbHT5Vmx9WS68lIsf5ZHLd8cqcOeorWiSDXISHgB3R/clWvwbjbJTU4O7hJKZ9gYK/HFbklAqRyrnH3J3322bTRVPYsEYDSR/X0KFoluJcUoLRioKfidKswfHReZtRxmDquUJuBs0si7FhO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUKAXI+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeLqBR9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A1FC4CEE5;
-	Tue,  8 Apr 2025 12:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUKAXI+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C747C4CEE5;
+	Tue,  8 Apr 2025 12:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114713;
-	bh=mFBrPfngwpdLZRHaSeoPGFsa1JuzIApm9OQe+N936rk=;
+	s=korg; t=1744114716;
+	bh=2ea5SoyTtV1CyQGVJhqpX6SRGrd1g4VN8xvcR6/+p+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HeLqBR9eIOfQVIn+EzdSfgL/jZ8gQc1XJ3ifKBcA8ZYCSmx7iP9Dw9QXBehj9tMOl
-	 f/EO6KWhgVCizlCP0oL3dVW17RIexsdaYXzsIvp8YeLAiZwZxkxAvzyM12A1qur/eq
-	 WOOVMZzpnu/AAduff9vjTJi/xdVqTXTKke6Okq28=
+	b=oUKAXI+XD03Ex82wYYcl6brVvbXP9ppN6No/+ClRMxls5KKPMcCJEKGij7VSAXVif
+	 NH3smamA017moSrqC5WIuqHXYYZG+ugsdLFdQtCIHIMiSX1zgHe/8LTn+EN9LEl7S8
+	 rVEaS5be1e7p8tTbO83lsoxSRUlTtTraQvdle4Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	thomas.falcon@intel.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 206/499] phy: phy-rockchip-samsung-hdptx: Dont use dt aliases to determine phy-id
-Date: Tue,  8 Apr 2025 12:46:58 +0200
-Message-ID: <20250408104856.341767691@linuxfoundation.org>
+Subject: [PATCH 6.13 207/499] perf tools: Add skip check in tool_pmu__event_to_str()
+Date: Tue,  8 Apr 2025 12:46:59 +0200
+Message-ID: <20250408104856.368480023@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,136 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko.stuebner@cherry.de>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit f08d1c08563846f9be79a4859e912c8795d690fd ]
+[ Upstream commit ee8aef2d232142e5fdfed9c16132815969a0bf81 ]
 
-The phy needs to know its identity in the system (phy0 or phy1 on rk3588)
-for some actions and the driver currently contains code abusing of_alias
-for that.
+Some topdown related metrics may fail on hybrid machines.
 
-Devicetree aliases are always optional and should not be used for core
-device functionality, so instead keep a list of phys on a soc in the
-of_device_data and find the phy-id by comparing against the mapped
-register-base.
+ $ perf stat -M tma_frontend_bound
+ Cannot resolve IDs for tma_frontend_bound:
+ cpu_atom@TOPDOWN_FE_BOUND.ALL@ / (8 * cpu_atom@CPU_CLK_UNHALTED.CORE@)
 
-Fixes: c4b09c562086 ("phy: phy-rockchip-samsung-hdptx: Add clock provider support")
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20241206103401.1780416-3-heiko@sntech.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+In the find_tool_events(), the tool_pmu__event_to_str() is used to
+compare the tool_events. It only checks the event name, no PMU or arch.
+So the tool_events[TOOL_PMU__EVENT_SLOTS] is set to true, because the
+p-core Topdown metrics has "slots" event.
+The tool_events is shared. So when parsing the e-core metrics, the
+"slots" is automatically added.
+
+The "slots" event as a tool event should only be available on arm64. It
+has a different meaning on X86. The tool_pmu__skip_event() intends
+handle the case. Apply it for tool_pmu__event_to_str() as well.
+
+There is a lack of sanity check in the expr__get_id(). Add the check.
+
+Closes: https://lore.kernel.org/lkml/608077bc-4139-4a97-8dc4-7997177d95c4@linux.intel.com/
+Fixes: 069057239a67 ("perf tool_pmu: Move expr literals to tool_pmu")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: thomas.falcon@intel.com
+Link: https://lore.kernel.org/r/20250207152844.302167-1-kan.liang@linux.intel.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/rockchip/phy-rockchip-samsung-hdptx.c | 50 ++++++++++++++++---
- 1 file changed, 44 insertions(+), 6 deletions(-)
+ tools/perf/util/expr.c     | 2 ++
+ tools/perf/util/tool_pmu.c | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 0965b9d4f9cf1..2fb4f297fda3d 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -263,11 +263,22 @@ enum rk_hdptx_reset {
- 	RST_MAX
- };
+diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
+index c221dcce66660..6413537442aa8 100644
+--- a/tools/perf/util/expr.c
++++ b/tools/perf/util/expr.c
+@@ -215,6 +215,8 @@ int expr__add_ref(struct expr_parse_ctx *ctx, struct metric_ref *ref)
+ int expr__get_id(struct expr_parse_ctx *ctx, const char *id,
+ 		 struct expr_id_data **data)
+ {
++	if (!ctx || !id)
++		return -1;
+ 	return hashmap__find(ctx->ids, id, data) ? 0 : -1;
+ }
  
-+#define MAX_HDPTX_PHY_NUM	2
-+
-+struct rk_hdptx_phy_cfg {
-+	unsigned int num_phys;
-+	unsigned int phy_ids[MAX_HDPTX_PHY_NUM];
-+};
-+
- struct rk_hdptx_phy {
- 	struct device *dev;
- 	struct regmap *regmap;
- 	struct regmap *grf;
+diff --git a/tools/perf/util/tool_pmu.c b/tools/perf/util/tool_pmu.c
+index 4fb0975784794..3a68debe71437 100644
+--- a/tools/perf/util/tool_pmu.c
++++ b/tools/perf/util/tool_pmu.c
+@@ -62,7 +62,8 @@ int tool_pmu__num_skip_events(void)
  
-+	/* PHY const config */
-+	const struct rk_hdptx_phy_cfg *cfgs;
-+	int phy_id;
-+
- 	struct phy *phy;
- 	struct phy_config *phy_cfg;
- 	struct clk_bulk_data *clks;
-@@ -1007,15 +1018,14 @@ static int rk_hdptx_phy_clk_register(struct rk_hdptx_phy *hdptx)
- 	struct device *dev = hdptx->dev;
- 	const char *name, *pname;
- 	struct clk *refclk;
--	int ret, id;
-+	int ret;
+ const char *tool_pmu__event_to_str(enum tool_pmu_event ev)
+ {
+-	if (ev > TOOL_PMU__EVENT_NONE && ev < TOOL_PMU__EVENT_MAX)
++	if ((ev > TOOL_PMU__EVENT_NONE && ev < TOOL_PMU__EVENT_MAX) &&
++	    !tool_pmu__skip_event(tool_pmu__event_names[ev]))
+ 		return tool_pmu__event_names[ev];
  
- 	refclk = devm_clk_get(dev, "ref");
- 	if (IS_ERR(refclk))
- 		return dev_err_probe(dev, PTR_ERR(refclk),
- 				     "Failed to get ref clock\n");
- 
--	id = of_alias_get_id(dev->of_node, "hdptxphy");
--	name = id > 0 ? "clk_hdmiphy_pixel1" : "clk_hdmiphy_pixel0";
-+	name = hdptx->phy_id > 0 ? "clk_hdmiphy_pixel1" : "clk_hdmiphy_pixel0";
- 	pname = __clk_get_name(refclk);
- 
- 	hdptx->hw.init = CLK_HW_INIT(name, pname, &hdptx_phy_clk_ops,
-@@ -1058,8 +1068,9 @@ static int rk_hdptx_phy_probe(struct platform_device *pdev)
- 	struct phy_provider *phy_provider;
- 	struct device *dev = &pdev->dev;
- 	struct rk_hdptx_phy *hdptx;
-+	struct resource *res;
- 	void __iomem *regs;
--	int ret;
-+	int ret, id;
- 
- 	hdptx = devm_kzalloc(dev, sizeof(*hdptx), GFP_KERNEL);
- 	if (!hdptx)
-@@ -1067,11 +1078,27 @@ static int rk_hdptx_phy_probe(struct platform_device *pdev)
- 
- 	hdptx->dev = dev;
- 
--	regs = devm_platform_ioremap_resource(pdev, 0);
-+	regs = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(regs))
- 		return dev_err_probe(dev, PTR_ERR(regs),
- 				     "Failed to ioremap resource\n");
- 
-+	hdptx->cfgs = device_get_match_data(dev);
-+	if (!hdptx->cfgs)
-+		return dev_err_probe(dev, -EINVAL, "missing match data\n");
-+
-+	/* find the phy-id from the io address */
-+	hdptx->phy_id = -ENODEV;
-+	for (id = 0; id < hdptx->cfgs->num_phys; id++) {
-+		if (res->start == hdptx->cfgs->phy_ids[id]) {
-+			hdptx->phy_id = id;
-+			break;
-+		}
-+	}
-+
-+	if (hdptx->phy_id < 0)
-+		return dev_err_probe(dev, -ENODEV, "no matching device found\n");
-+
- 	ret = devm_clk_bulk_get_all(dev, &hdptx->clks);
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Failed to get clocks\n");
-@@ -1132,8 +1159,19 @@ static const struct dev_pm_ops rk_hdptx_phy_pm_ops = {
- 		       rk_hdptx_phy_runtime_resume, NULL)
- };
- 
-+static const struct rk_hdptx_phy_cfg rk3588_hdptx_phy_cfgs = {
-+	.num_phys = 2,
-+	.phy_ids = {
-+		0xfed60000,
-+		0xfed70000,
-+	},
-+};
-+
- static const struct of_device_id rk_hdptx_phy_of_match[] = {
--	{ .compatible = "rockchip,rk3588-hdptx-phy", },
-+	{
-+		.compatible = "rockchip,rk3588-hdptx-phy",
-+		.data = &rk3588_hdptx_phy_cfgs
-+	},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, rk_hdptx_phy_of_match);
+ 	return NULL;
 -- 
 2.39.5
 
