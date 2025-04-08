@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD70207E14;
-	Tue,  8 Apr 2025 11:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13EF207E14;
+	Tue,  8 Apr 2025 11:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111312; cv=none; b=jB7qxClTkKCgwrXbCdvKsczcwrMy/2HdG5oRRU23jmIs4Fu6UqTOdJt11VrkngXftduiIWjO1s+iuoivdD2GD2rcH4nbW2AFELlgBPB8OYyTaUtQCZMRATYqs1etJ7DmKDuWpsciEDBFU7GK1eO0kl1zchXYvZygU73SbsSkp3M=
+	t=1744111315; cv=none; b=PEEiHYu4Fji1DuxWWEUrD1CYMFZF/L1LWjwesiSr9CZNZt+Vtv7Hgf2JLCD35HLIdzlk+fSvvmp1/mhgjpJtKr5vHBsJyykEDHWTnUpTpiTDiz+yfRTYYt6UISNliJrdRexpBSOnvyH+3BNuHBecIbC7vegWoLo87t0ta1162/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111312; c=relaxed/simple;
-	bh=5TwQyz4C0nyJJsZ8yHBsAsXlv+Q7Wv2ZRsSCvcQm7Wo=;
+	s=arc-20240116; t=1744111315; c=relaxed/simple;
+	bh=uiIhj0cS/oaALzm5GAtKoYi+5PcGG4R8jSLD/gt33AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mk8zlRRoImNtiASePW7dw2uyH/EL/kLhtszBE3MmHwVjv+/zycUDdAphge4rKUDcAiES1BNAcJWgkibdZxovY5AQEG7bDxHL/ULdw7ozHYiZgwM+mpf4kULZt+D7mr5VXGdvhAmeRdutVmuuMRq6dJ6OqwuOyLErH+HU5UhLZGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz6NB1Lf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/AMJ/282QDW31TK6BLyznYpn//+ZrMfQF/jtWqRQxYmpRxg5rrXpQA0SBnZN9yvPtY1EtI5BGC3mVI10YKXBOkT8b/LA227W82Z01p/GyVmdm66qlGwnb8xjfiVZZK9SdGMMLrKEKnFQRtpN1gFenpFn/T3+j83l9LZPIQUSoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsTwpK7d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz6NB1Lf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D62C4CEE7;
-	Tue,  8 Apr 2025 11:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsTwpK7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74206C4CEE5;
+	Tue,  8 Apr 2025 11:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111312;
-	bh=5TwQyz4C0nyJJsZ8yHBsAsXlv+Q7Wv2ZRsSCvcQm7Wo=;
+	s=korg; t=1744111314;
+	bh=uiIhj0cS/oaALzm5GAtKoYi+5PcGG4R8jSLD/gt33AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tz6NB1LfkIUZwycCrQYkFMq/q3GqKfimUSSpiSMrbVU0fKFwC0W70yl7daiQ1QhP6
-	 El5l48Q8/LdxKV2WTsbgh2SvsIcPfEYii1fCSvClh2HVd1Ccs82jB54TqUIiCNdoAH
-	 knhCohLK3Q/9dFlwpqvSDxAKr8srH+uAQusUToZE=
+	b=qsTwpK7dx9cDF+8G3G55uKiCxEDFyH7YQj3gIhYkZJmqNdf4dMH1vavp2qScp0E0I
+	 MeYe91mIf1As8SP2Wfpus2j7/pvIohKtPxUtTbullNTajuxf5keqWrl3izkRSot35z
+	 ItgA6tOd/WSsRuuKSlPWNRx5U4UVCESAPZrWOfGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kees Bakker <kees@ijzerbout.nl>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 336/731] PCI: dwc: ep: Return -ENOMEM for allocation failures
-Date: Tue,  8 Apr 2025 12:43:53 +0200
-Message-ID: <20250408104922.091469704@linuxfoundation.org>
+Subject: [PATCH 6.14 380/731] RDMA/mana_ib: Ensure variable err is initialized
+Date: Tue,  8 Apr 2025 12:44:37 +0200
+Message-ID: <20250408104923.115155580@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -47,46 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kees Bakker <kees@ijzerbout.nl>
 
-[ Upstream commit 8189aa56dbed0bfb46b7b30d4d231f57ab17b3f4 ]
+[ Upstream commit be35a3127d60964b338da95c7bfaaf4a01b330d4 ]
 
-If the bitmap or memory allocations fail, then dw_pcie_ep_init_registers()
-will incorrectly return a success.
+In the function mana_ib_gd_create_dma_region if there are no dma blocks
+to process the variable `err` remains uninitialized.
 
-Return -ENOMEM instead.
-
-Fixes: 869bc5253406 ("PCI: dwc: ep: Fix DBI access failure for drivers requiring refclk from host")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Krzysztof Wilczyński <kw@linux.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/36dcb6fc-f292-4dd5-bd45-a8c6f9dc3df7@stanley.mountain
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Signed-off-by: Kees Bakker <kees@ijzerbout.nl>
+Link: https://patch.msgid.link/20250221195833.7516C16290A@bout3.ijzerbout.nl
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mana/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 8e07d432e74f2..e41479a9ca027 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -773,6 +773,7 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index 457cea6d99095..f6bf289041bfe 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -358,7 +358,7 @@ static int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem
+ 	unsigned int tail = 0;
+ 	u64 *page_addr_list;
+ 	void *request_buf;
+-	int err;
++	int err = 0;
  
-+	ret = -ENOMEM;
- 	if (!ep->ib_window_map) {
- 		ep->ib_window_map = devm_bitmap_zalloc(dev, pci->num_ib_windows,
- 						       GFP_KERNEL);
+ 	gc = mdev_to_gc(dev);
+ 	hwc = gc->hwc.driver_data;
 -- 
 2.39.5
 
