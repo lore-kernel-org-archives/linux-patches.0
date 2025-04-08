@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E43C2192F2;
-	Tue,  8 Apr 2025 11:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F072192F2;
+	Tue,  8 Apr 2025 11:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112145; cv=none; b=SL77/09gIuuUjE22M/GZEkKyH6ahQAtUnHXhAEi715sDGE2vZuoCU14Oq+Ukc5uEbm+YaxdhH6ZmBzpcl0DGsHgizAexWKC/oTnmNqsg1qyPJiH4ipGbHPvzsNlp2BjnHLUtZ3WU96e5Fa1XAOtkQ3hvdeuOIVemlZuo16758ew=
+	t=1744112147; cv=none; b=bpF+AomDT5d/YGPKIDNF6/aY/ojwyX3XnTXxxc8hVluAgKhutHGG9SpHTKVJWB8vCDEYf87Gu8oNiVonmxFwwywwRQK3OqilHqQLfwew4WQeYhoj1qlqvxelnZ72OkgP2Va9hKInb6apY0O2x1Ti9/Za+r+qX8r/aIpmAPJSCgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112145; c=relaxed/simple;
-	bh=nDmL6XNdbFdwHMF91uN1i31V71yqi+E8kHaqo71qJuQ=;
+	s=arc-20240116; t=1744112147; c=relaxed/simple;
+	bh=2XUHbKdoQxPmhn/S3Z2Zilmk0Whe7tNjGXWtoK+Azf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGSovXsM1jYgEP0Sd17m4G/UG+XbuAR9l+3Uk1Lztik/a4ByfNaWykQ5VV6k7i6O5Tt+42x7s066k+kkCwOTrQlX8vmjqIkER0HQMkAsJVzlGRXg1T70SxTat8Pm812xZKHWkv8Iku1ymhyG6egB0UWA43igCo5If/BFdAAIZdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBeNXEdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmfbNvCKCPSy9t+as+lcMzcPCQgAlmKp5mMQpDSTUuYes5DpNqrl51RmJCvlVOjI0WZrx+w45XB4/k/BsyBXZrzb6Zu8TN46NHbnIKZUpayLjBqvAlGeezQpNtNBTjOGsXYEQwxWFmT/TY4AQ07ArjHSKzTY93oDHIVAH2GMgIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/1nZXcg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBeNXEdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BA2C4CEE5;
-	Tue,  8 Apr 2025 11:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/1nZXcg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E23C4CEE5;
+	Tue,  8 Apr 2025 11:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112144;
-	bh=nDmL6XNdbFdwHMF91uN1i31V71yqi+E8kHaqo71qJuQ=;
+	s=korg; t=1744112147;
+	bh=2XUHbKdoQxPmhn/S3Z2Zilmk0Whe7tNjGXWtoK+Azf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBeNXEdFSPbA5BYKaC8NQimsvAHJR54DkUXz8whrefHcJ1KmHlEe38VktlGjVwfhT
-	 vM6Gz5eWf4NZ5lZnFOhjOCnP/jWZYQc/frCsiHI4ayyUclLId+FSA2YHPPFtbBiKI7
-	 njxBO/Owo39+X7xolVx1+DULSeD/NEf+i4bX/Lbw=
+	b=m/1nZXcgk6orffjBoI7KOVkQuanNoTGjtjVJn+/yABxjA7PxxmLxpGgROP+iOL1Tq
+	 /P7anbZBGHurKh3OH9CDH3gUEZeRXLRqXU2LNkwMhpTfELB8FdJsDbQtv9JlEh5AgB
+	 jW6fVhnu+nHulm09G/CJzfbH3HCnWPOQ2MCsZwlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 693/731] Remove unnecessary firmware version check for gc v9_4_2
-Date: Tue,  8 Apr 2025 12:49:50 +0200
-Message-ID: <20250408104930.387495808@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.14 694/731] mmc: omap: Fix memory leak in mmc_omap_new_slot
+Date: Tue,  8 Apr 2025 12:49:51 +0200
+Message-ID: <20250408104930.410129926@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,31 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 5b3c08ae9ed324743f5f7286940d45caeb656e6e upstream.
+commit 3834a759afb817e23a7a2f09c2c9911b0ce5c588 upstream.
 
-GC v9_4_2 uses a new versioning scheme for CP firmware, making
-the warning ("CP firmware version too old, please update!") irrelevant.
+Add err_free_host label to properly pair mmc_alloc_host() with
+mmc_free_host() in GPIO error paths. The allocated host memory was
+leaked when GPIO lookups failed.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: e519f0bb64ef ("ARM/mmc: Convert old mmci-omap to GPIO descriptors")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250318140226.19650-1-linmq006@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/omap.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1269,6 +1269,7 @@ static void gfx_v9_0_check_fw_write_wait
- 	adev->gfx.mec_fw_write_wait = false;
+--- a/drivers/mmc/host/omap.c
++++ b/drivers/mmc/host/omap.c
+@@ -1272,19 +1272,25 @@ static int mmc_omap_new_slot(struct mmc_
+ 	/* Check for some optional GPIO controls */
+ 	slot->vsd = devm_gpiod_get_index_optional(host->dev, "vsd",
+ 						  id, GPIOD_OUT_LOW);
+-	if (IS_ERR(slot->vsd))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->vsd),
++	if (IS_ERR(slot->vsd)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->vsd),
+ 				     "error looking up VSD GPIO\n");
++		goto err_free_host;
++	}
+ 	slot->vio = devm_gpiod_get_index_optional(host->dev, "vio",
+ 						  id, GPIOD_OUT_LOW);
+-	if (IS_ERR(slot->vio))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->vio),
++	if (IS_ERR(slot->vio)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->vio),
+ 				     "error looking up VIO GPIO\n");
++		goto err_free_host;
++	}
+ 	slot->cover = devm_gpiod_get_index_optional(host->dev, "cover",
+ 						    id, GPIOD_IN);
+-	if (IS_ERR(slot->cover))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->cover),
++	if (IS_ERR(slot->cover)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->cover),
+ 				     "error looking up cover switch GPIO\n");
++		goto err_free_host;
++	}
  
- 	if ((amdgpu_ip_version(adev, GC_HWIP, 0) != IP_VERSION(9, 4, 1)) &&
-+	    (amdgpu_ip_version(adev, GC_HWIP, 0) != IP_VERSION(9, 4, 2)) &&
- 	    ((adev->gfx.mec_fw_version < 0x000001a5) ||
- 	     (adev->gfx.mec_feature_version < 46) ||
- 	     (adev->gfx.pfp_fw_version < 0x000000b7) ||
+ 	host->slots[id] = slot;
+ 
+@@ -1344,6 +1350,7 @@ err_remove_slot_name:
+ 		device_remove_file(&mmc->class_dev, &dev_attr_slot_name);
+ err_remove_host:
+ 	mmc_remove_host(mmc);
++err_free_host:
+ 	mmc_free_host(mmc);
+ 	return r;
+ }
 
 
