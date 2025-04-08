@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7452686BC;
-	Tue,  8 Apr 2025 12:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88E826B2B0;
+	Tue,  8 Apr 2025 12:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115295; cv=none; b=KPq71HB6i+uVC23MBZwM6zuSH3X8RvkPI9OjPpYT25aysnHkCETIDtE0SwLLquOIEPuUJkpm005xe98lKYLGKC6Fn1S6dvescyn0PMfjMyvuQyuFpclQa+joU1+ulsXwr7Xb0IRDQn2RX6ZmfxQ+3YmpMpLq1kQ2hBFYVvEAnoU=
+	t=1744115298; cv=none; b=LyDJ5Pt5ee6UnWsl4lyTa/OiCb1BqsfKYPdaGsDLpYsUxJvDhMtu7KRSqi7IhLcs54fzSbCfCOnyHqof9zUcDO6IH4DItHMowvbXbrN1uwkxHd8P7lQ0Vgc85Y4NIiT1+nLyaQo/skbRUyS0qwt+wtgOACNP05kUPKhIQorQlME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115295; c=relaxed/simple;
-	bh=iBlf7nxA1bn3MLcMnWLhMRqW7Ylod0jAUMZG+n8kpNw=;
+	s=arc-20240116; t=1744115298; c=relaxed/simple;
+	bh=NpsTBmoVyj9eWiof1gFYmvEmJRCPMAK8f/DPf0Smoao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1ToMhBfMB8eiqd/juTMbjgnmy/3WWeQFxfuhRE7NBB/UrVNqEgigxdlmxlYSIZnbnfrrpQvQVkUb8DCZNr4UFIwQ4IQAgKi4/6judGgv8E3Yfcv5Ouz0ma7AM6iNowLGf+bemgiqe4AF0aMzD4vjuppUJQi4t3gWtrKlOmqp74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9gBNMl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k90XkmTWj37L+JKIYMqvk5SjCiznvcQ3HEHxHl7svvzIQ2SSoq99eYK1iVFp9VAaCjX6eMAzfkj5c56J75Pgi2o1ZavaGH1gVVhiiE2CPa1T3m4kpVPccPiV8TqOsKVcfE+VPjbw32utQ0U1pUuz9Uw3O1FiwKrUjkAx7+Z60qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmBQh5Wg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9gBNMl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2A9C4CEE7;
-	Tue,  8 Apr 2025 12:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmBQh5Wg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E176C4CEE5;
+	Tue,  8 Apr 2025 12:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115295;
-	bh=iBlf7nxA1bn3MLcMnWLhMRqW7Ylod0jAUMZG+n8kpNw=;
+	s=korg; t=1744115297;
+	bh=NpsTBmoVyj9eWiof1gFYmvEmJRCPMAK8f/DPf0Smoao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9gBNMl0MfbhCQ6Iic300A2PzjF6GyBemEcM0rj9nEl3k2HkIlxaNLjOa8/QUhG3b
-	 ojkaLszY5wP3V6AQuwpxDw5r6/l5+CZAoTIQLWIMPH5ZZa2UhXEwJeVABRl69jsli0
-	 wQJeiugHdUeZoSScv7UYGkcSPIINVvPT+0AHEQf4=
+	b=CmBQh5Wg9GImWVqdhbRQwDs/JaPt+gtEMrcm/eLfISryXpuP630cv4zpWw6HGIhDJ
+	 vebITywPj0SjZ848foPrZNLf1r3xE7nhWd0+dbahYdJaf7FBCPK89F4s5vzw6GL+Q0
+	 D+Sowqi/oSaWaVF8hN/FYVajlnDKNzqA4twge2Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nihar Chaithanya <niharchaithanya@gmail.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 419/499] staging: gpib: Modify gpib_register_driver() to return error if it fails
-Date: Tue,  8 Apr 2025 12:50:31 +0200
-Message-ID: <20250408104901.676857095@linuxfoundation.org>
+Subject: [PATCH 6.13 383/499] e1000e: change k1 configuration on MTP and later platforms
+Date: Tue,  8 Apr 2025 12:49:55 +0200
+Message-ID: <20250408104900.783757486@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,66 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nihar Chaithanya <niharchaithanya@gmail.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit e999bd2a897e7d70fa1fca6b80873529532322fe ]
+[ Upstream commit efaaf344bc2917cbfa5997633bc18a05d3aed27f ]
 
-The function gpib_register_driver() can fail if kmalloc() fails,
-but it doesn't return any error if that happens.
+Starting from Meteor Lake, the Kumeran interface between the integrated
+MAC and the I219 PHY works at a different frequency. This causes sporadic
+MDI errors when accessing the PHY, and in rare circumstances could lead
+to packet corruption.
 
-Modify the function to return error i.e int. Return the appropriate
-error code if it fails. Remove the pr_info() statement.
+To overcome this, introduce minor changes to the Kumeran idle
+state (K1) parameters during device initialization. Hardware reset
+reverts this configuration, therefore it needs to be applied in a few
+places.
 
-Signed-off-by: Nihar Chaithanya <niharchaithanya@gmail.com>
-Link: https://lore.kernel.org/r/20241230185633.175690-2-niharchaithanya@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: a239c6e91b66 ("staging: gpib: Fix Oops after disconnect in ni_usb")
+Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/common/gpib_os.c | 7 ++++---
- drivers/staging/gpib/include/gpibP.h  | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/e1000e/defines.h |  3 +
+ drivers/net/ethernet/intel/e1000e/ich8lan.c | 80 +++++++++++++++++++--
+ drivers/net/ethernet/intel/e1000e/ich8lan.h |  4 ++
+ 3 files changed, 82 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
-index 0962729d7dfef..982a2fe68cf2a 100644
---- a/drivers/staging/gpib/common/gpib_os.c
-+++ b/drivers/staging/gpib/common/gpib_os.c
-@@ -2044,18 +2044,19 @@ void init_gpib_descriptor(gpib_descriptor_t *desc)
- 	atomic_set(&desc->io_in_progress, 0);
- }
+diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
+index 5e2cfa73f8891..8294a7c4f122c 100644
+--- a/drivers/net/ethernet/intel/e1000e/defines.h
++++ b/drivers/net/ethernet/intel/e1000e/defines.h
+@@ -803,4 +803,7 @@
+ /* SerDes Control */
+ #define E1000_GEN_POLL_TIMEOUT          640
  
--void gpib_register_driver(gpib_interface_t *interface, struct module *provider_module)
-+int gpib_register_driver(gpib_interface_t *interface, struct module *provider_module)
- {
- 	struct gpib_interface_list_struct *entry;
- 
- 	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
- 	if (!entry)
--		return;
-+		return -ENOMEM;
- 
- 	entry->interface = interface;
- 	entry->module = provider_module;
- 	list_add(&entry->list, &registered_drivers);
--	pr_info("gpib: registered %s interface\n", interface->name);
++#define E1000_FEXTNVM12_PHYPD_CTRL_MASK	0x00C00000
++#define E1000_FEXTNVM12_PHYPD_CTRL_P1	0x00800000
 +
-+	return 0;
+ #endif /* _E1000_DEFINES_H_ */
+diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+index 2f9655cf5dd9e..364378133526a 100644
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -285,6 +285,45 @@ static void e1000_toggle_lanphypc_pch_lpt(struct e1000_hw *hw)
+ 	}
  }
- EXPORT_SYMBOL(gpib_register_driver);
  
-diff --git a/drivers/staging/gpib/include/gpibP.h b/drivers/staging/gpib/include/gpibP.h
-index b97da577ba332..d35fdd391f7e1 100644
---- a/drivers/staging/gpib/include/gpibP.h
-+++ b/drivers/staging/gpib/include/gpibP.h
-@@ -18,7 +18,7 @@
- #include <linux/interrupt.h>
- #include <linux/io.h>
++/**
++ * e1000_reconfigure_k1_exit_timeout - reconfigure K1 exit timeout to
++ * align to MTP and later platform requirements.
++ * @hw: pointer to the HW structure
++ *
++ * Context: PHY semaphore must be held by caller.
++ * Return: 0 on success, negative on failure
++ */
++static s32 e1000_reconfigure_k1_exit_timeout(struct e1000_hw *hw)
++{
++	u16 phy_timeout;
++	u32 fextnvm12;
++	s32 ret_val;
++
++	if (hw->mac.type < e1000_pch_mtp)
++		return 0;
++
++	/* Change Kumeran K1 power down state from P0s to P1 */
++	fextnvm12 = er32(FEXTNVM12);
++	fextnvm12 &= ~E1000_FEXTNVM12_PHYPD_CTRL_MASK;
++	fextnvm12 |= E1000_FEXTNVM12_PHYPD_CTRL_P1;
++	ew32(FEXTNVM12, fextnvm12);
++
++	/* Wait for the interface the settle */
++	usleep_range(1000, 1100);
++
++	/* Change K1 exit timeout */
++	ret_val = e1e_rphy_locked(hw, I217_PHY_TIMEOUTS_REG,
++				  &phy_timeout);
++	if (ret_val)
++		return ret_val;
++
++	phy_timeout &= ~I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK;
++	phy_timeout |= 0xF00;
++
++	return e1e_wphy_locked(hw, I217_PHY_TIMEOUTS_REG,
++				  phy_timeout);
++}
++
+ /**
+  *  e1000_init_phy_workarounds_pchlan - PHY initialization workarounds
+  *  @hw: pointer to the HW structure
+@@ -327,15 +366,22 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
+ 	 * LANPHYPC Value bit to force the interconnect to PCIe mode.
+ 	 */
+ 	switch (hw->mac.type) {
++	case e1000_pch_mtp:
++	case e1000_pch_lnp:
++	case e1000_pch_ptp:
++	case e1000_pch_nvp:
++		/* At this point the PHY might be inaccessible so don't
++		 * propagate the failure
++		 */
++		if (e1000_reconfigure_k1_exit_timeout(hw))
++			e_dbg("Failed to reconfigure K1 exit timeout\n");
++
++		fallthrough;
+ 	case e1000_pch_lpt:
+ 	case e1000_pch_spt:
+ 	case e1000_pch_cnp:
+ 	case e1000_pch_tgp:
+ 	case e1000_pch_adp:
+-	case e1000_pch_mtp:
+-	case e1000_pch_lnp:
+-	case e1000_pch_ptp:
+-	case e1000_pch_nvp:
+ 		if (e1000_phy_is_accessible_pchlan(hw))
+ 			break;
  
--void gpib_register_driver(gpib_interface_t *interface, struct module *mod);
-+int gpib_register_driver(gpib_interface_t *interface, struct module *mod);
- void gpib_unregister_driver(gpib_interface_t *interface);
- struct pci_dev *gpib_pci_get_device(const gpib_board_config_t *config, unsigned int vendor_id,
- 				    unsigned int device_id, struct pci_dev *from);
+@@ -419,8 +465,20 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
+ 		 *  the PHY is in.
+ 		 */
+ 		ret_val = hw->phy.ops.check_reset_block(hw);
+-		if (ret_val)
++		if (ret_val) {
+ 			e_err("ME blocked access to PHY after reset\n");
++			goto out;
++		}
++
++		if (hw->mac.type >= e1000_pch_mtp) {
++			ret_val = hw->phy.ops.acquire(hw);
++			if (ret_val) {
++				e_err("Failed to reconfigure K1 exit timeout\n");
++				goto out;
++			}
++			ret_val = e1000_reconfigure_k1_exit_timeout(hw);
++			hw->phy.ops.release(hw);
++		}
+ 	}
+ 
+ out:
+@@ -4888,6 +4946,18 @@ static s32 e1000_init_hw_ich8lan(struct e1000_hw *hw)
+ 	u16 i;
+ 
+ 	e1000_initialize_hw_bits_ich8lan(hw);
++	if (hw->mac.type >= e1000_pch_mtp) {
++		ret_val = hw->phy.ops.acquire(hw);
++		if (ret_val)
++			return ret_val;
++
++		ret_val = e1000_reconfigure_k1_exit_timeout(hw);
++		hw->phy.ops.release(hw);
++		if (ret_val) {
++			e_dbg("Error failed to reconfigure K1 exit timeout\n");
++			return ret_val;
++		}
++	}
+ 
+ 	/* Initialize identification LED */
+ 	ret_val = mac->ops.id_led_init(hw);
+diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.h b/drivers/net/ethernet/intel/e1000e/ich8lan.h
+index 2504b11c3169f..5feb589a9b5ff 100644
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.h
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.h
+@@ -219,6 +219,10 @@
+ #define I217_PLL_CLOCK_GATE_REG	PHY_REG(772, 28)
+ #define I217_PLL_CLOCK_GATE_MASK	0x07FF
+ 
++/* PHY Timeouts */
++#define I217_PHY_TIMEOUTS_REG                   PHY_REG(770, 21)
++#define I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK       0x0FC0
++
+ #define SW_FLAG_TIMEOUT		1000	/* SW Semaphore flag timeout in ms */
+ 
+ /* Inband Control */
 -- 
 2.39.5
 
