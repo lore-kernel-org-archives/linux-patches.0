@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A12627CCDF;
-	Tue,  8 Apr 2025 12:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514FA27CCE0;
+	Tue,  8 Apr 2025 12:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117141; cv=none; b=g4kgDkDbPy7IRjC+upj2q7jRRWEBFAKSOGdRjXbiptUTxLHoeQNXc+jDsw0dSWzpqgLw0xj1VRtezCi7PK35MVIfMvHItXLFVthMZCJnQakwu9lnS2QOuL+ab5/qBVTNOPXZRA4oD7I4/Qx/9tWOYVufyCWXCWHJZJvBaFyHeXQ=
+	t=1744117144; cv=none; b=BW7JUQuCAsXyb7T+Lhia+qtPJsTRmaImdzrwQgdkCXUqj97pPBxb7dgPQcXX9oH4Wd6SBwiPCHqRy87Skl7447QcE6uBQQClD182/fZNZNatfXZ3xvpBWjuWJGascp9XPGTCJTUayGbtPAgecCkmVn1VYP5GHfQRuQ/qfo62LTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117141; c=relaxed/simple;
-	bh=Z38ltkbMYi57KTOaIdo3PCxB8HLjyCZtG210zgNf/G8=;
+	s=arc-20240116; t=1744117144; c=relaxed/simple;
+	bh=wnT0a1+RquqUpMV1sBetizVt3/2fwrAF/+7IKr3MkqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBLEQp3UYwRFR3wxE/kkkW7ETYgbOMoVphz6UYjPbDxzcntcAWRGkb/g/q/vQuOmwNtGNlS9l21GzSIC90jBynx+BqcE3BSoRRcbGg+DRX1YP9VgTisMn9eyluQqBFOtG/UJ0CuJprGfGqLrfz/q/Whn5IoifxxTOBSlfUwPBGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feDUQLH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUrOzmmHIZQd/HTrU58Cu85qv/21feEkCE2VQo0jt4fopqR08fNRDR0b0FADLysikztYYptOUhXcCgTEilD5xIgjiutoHdWFzt2FTwBtEk4usu9mYhUeWlzEvOa5Qa2VhoRSlShsehIIFe5pReRI+kxSLyI8Pz+ZURJ2eg6w5Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQFb92Jm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feDUQLH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B20DC4CEE5;
-	Tue,  8 Apr 2025 12:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQFb92Jm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1EFC4CEE5;
+	Tue,  8 Apr 2025 12:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117141;
-	bh=Z38ltkbMYi57KTOaIdo3PCxB8HLjyCZtG210zgNf/G8=;
+	s=korg; t=1744117144;
+	bh=wnT0a1+RquqUpMV1sBetizVt3/2fwrAF/+7IKr3MkqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feDUQLH0S+Zd48pv+rN0pIbhv/F4BPK4sDdqkk01QutmMbmyMYXQsDXDzLAxglY7O
-	 9ogT6aRSlCMXWzszloztpnKEK2xq/Vm0t7q2aOdln2uLGJJwO3iYg3hphuYmEQRvui
-	 22rQEXoP/wtz8XNM0o4agR6um8jCOEIDzEb9L/MI=
+	b=bQFb92JmevSUaiPQSqhLIOFm43eu6+zPJkvvd/YiS+5wyLQq3tJaKLErJUIDgZEl/
+	 UbsYHaUL1Gj3448O6KYc9quuH5/UKVRUo6WbL8vFmRiVIsqUpUTY//LojENneYsfGG
+	 JdLCAfL5bpiZwcbK6O+ja/e2ZDqsot2jnojHbReU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.12 400/423] ksmbd: fix null pointer dereference in alloc_preauth_hash()
-Date: Tue,  8 Apr 2025 12:52:06 +0200
-Message-ID: <20250408104855.221674972@linuxfoundation.org>
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.12 401/423] exfat: fix random stack corruption after get_block
+Date: Tue,  8 Apr 2025 12:52:07 +0200
+Message-ID: <20250408104855.246797326@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,130 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Sungjong Seo <sj1557.seo@samsung.com>
 
-commit c8b5b7c5da7d0c31c9b7190b4a7bba5281fc4780 upstream.
+commit 1bb7ff4204b6d4927e982cd256286c09ed4fd8ca upstream.
 
-The Client send malformed smb2 negotiate request. ksmbd return error
-response. Subsequently, the client can send smb2 session setup even
-thought conn->preauth_info is not allocated.
-This patch add KSMBD_SESS_NEED_SETUP status of connection to ignore
-session setup request if smb2 negotiate phase is not complete.
+When get_block is called with a buffer_head allocated on the stack, such
+as do_mpage_readpage, stack corruption due to buffer_head UAF may occur in
+the following race condition situation.
 
+     <CPU 0>                      <CPU 1>
+mpage_read_folio
+  <<bh on stack>>
+  do_mpage_readpage
+    exfat_get_block
+      bh_read
+        __bh_read
+	  get_bh(bh)
+          submit_bh
+          wait_on_buffer
+                              ...
+                              end_buffer_read_sync
+                                __end_buffer_read_notouch
+                                   unlock_buffer
+          <<keep going>>
+        ...
+      ...
+    ...
+  ...
+<<bh is not valid out of mpage_read_folio>>
+   .
+   .
+another_function
+  <<variable A on stack>>
+                                   put_bh(bh)
+                                     atomic_dec(bh->b_count)
+  * stack corruption here *
+
+This patch returns -EAGAIN if a folio does not have buffers when bh_read
+needs to be called. By doing this, the caller can fallback to functions
+like block_read_full_folio(), create a buffer_head in the folio, and then
+call get_block again.
+
+Let's do not call bh_read() with on-stack buffer_head.
+
+Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
 Cc: stable@vger.kernel.org
-Tested-by: Steve French <stfrench@microsoft.com>
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-26505
+Tested-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.h        |   11 +++++++++++
- fs/smb/server/mgmt/user_session.c |    4 ++--
- fs/smb/server/smb2pdu.c           |   14 +++++++++++---
- 3 files changed, 24 insertions(+), 5 deletions(-)
+ fs/exfat/inode.c |   39 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -27,6 +27,7 @@ enum {
- 	KSMBD_SESS_EXITING,
- 	KSMBD_SESS_NEED_RECONNECT,
- 	KSMBD_SESS_NEED_NEGOTIATE,
-+	KSMBD_SESS_NEED_SETUP,
- 	KSMBD_SESS_RELEASING
- };
+--- a/fs/exfat/inode.c
++++ b/fs/exfat/inode.c
+@@ -344,7 +344,8 @@ static int exfat_get_block(struct inode
+ 			 * The block has been partially written,
+ 			 * zero the unwritten part and map the block.
+ 			 */
+-			loff_t size, off, pos;
++			loff_t size, pos;
++			void *addr;
  
-@@ -187,6 +188,11 @@ static inline bool ksmbd_conn_need_negot
- 	return READ_ONCE(conn->status) == KSMBD_SESS_NEED_NEGOTIATE;
- }
+ 			max_blocks = 1;
  
-+static inline bool ksmbd_conn_need_setup(struct ksmbd_conn *conn)
-+{
-+	return READ_ONCE(conn->status) == KSMBD_SESS_NEED_SETUP;
-+}
+@@ -355,17 +356,41 @@ static int exfat_get_block(struct inode
+ 			if (!bh_result->b_folio)
+ 				goto done;
+ 
++			/*
++			 * No buffer_head is allocated.
++			 * (1) bmap: It's enough to fill bh_result without I/O.
++			 * (2) read: The unwritten part should be filled with 0
++			 *           If a folio does not have any buffers,
++			 *           let's returns -EAGAIN to fallback to
++			 *           per-bh IO like block_read_full_folio().
++			 */
++			if (!folio_buffers(bh_result->b_folio)) {
++				err = -EAGAIN;
++				goto done;
++			}
 +
- static inline bool ksmbd_conn_need_reconnect(struct ksmbd_conn *conn)
- {
- 	return READ_ONCE(conn->status) == KSMBD_SESS_NEED_RECONNECT;
-@@ -217,6 +223,11 @@ static inline void ksmbd_conn_set_need_n
- 	WRITE_ONCE(conn->status, KSMBD_SESS_NEED_NEGOTIATE);
- }
+ 			pos = EXFAT_BLK_TO_B(iblock, sb);
+ 			size = ei->valid_size - pos;
+-			off = pos & (PAGE_SIZE - 1);
++			addr = folio_address(bh_result->b_folio) +
++			       offset_in_folio(bh_result->b_folio, pos);
  
-+static inline void ksmbd_conn_set_need_setup(struct ksmbd_conn *conn)
-+{
-+	WRITE_ONCE(conn->status, KSMBD_SESS_NEED_SETUP);
-+}
+-			folio_set_bh(bh_result, bh_result->b_folio, off);
++			/* Check if bh->b_data points to proper addr in folio */
++			if (bh_result->b_data != addr) {
++				exfat_fs_error_ratelimit(sb,
++					"b_data(%p) != folio_addr(%p)",
++					bh_result->b_data, addr);
++				err = -EINVAL;
++				goto done;
++			}
 +
- static inline void ksmbd_conn_set_need_reconnect(struct ksmbd_conn *conn)
- {
- 	WRITE_ONCE(conn->status, KSMBD_SESS_NEED_RECONNECT);
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -374,13 +374,13 @@ void destroy_previous_session(struct ksm
- 	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_RECONNECT);
- 	err = ksmbd_conn_wait_idle_sess_id(conn, id);
- 	if (err) {
--		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_NEGOTIATE);
-+		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
- 		goto out;
++			/* Read a block */
+ 			err = bh_read(bh_result, 0);
+ 			if (err < 0)
+-				goto unlock_ret;
++				goto done;
+ 
+-			folio_zero_segment(bh_result->b_folio, off + size,
+-					off + sb->s_blocksize);
++			/* Zero unwritten part of a block */
++			memset(bh_result->b_data + size, 0,
++			       bh_result->b_size - size);
+ 		} else {
+ 			/*
+ 			 * The range has not been written, clear the mapped flag
+@@ -376,6 +401,8 @@ static int exfat_get_block(struct inode
  	}
- 
- 	ksmbd_destroy_file_table(&prev_sess->file_table);
- 	prev_sess->state = SMB2_SESSION_EXPIRED;
--	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_NEGOTIATE);
-+	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
- 	ksmbd_launch_ksmbd_durable_scavenger();
- out:
- 	up_write(&conn->session_lock);
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1247,7 +1247,7 @@ int smb2_handle_negotiate(struct ksmbd_w
- 	}
- 
- 	conn->srv_sec_mode = le16_to_cpu(rsp->SecurityMode);
--	ksmbd_conn_set_need_negotiate(conn);
-+	ksmbd_conn_set_need_setup(conn);
- 
- err_out:
- 	if (rc)
-@@ -1268,6 +1268,9 @@ static int alloc_preauth_hash(struct ksm
- 	if (sess->Preauth_HashValue)
- 		return 0;
- 
-+	if (!conn->preauth_info)
-+		return -ENOMEM;
-+
- 	sess->Preauth_HashValue = kmemdup(conn->preauth_info->Preauth_HashValue,
- 					  PREAUTH_HASHVALUE_SIZE, GFP_KERNEL);
- 	if (!sess->Preauth_HashValue)
-@@ -1671,6 +1674,11 @@ int smb2_sess_setup(struct ksmbd_work *w
- 
- 	ksmbd_debug(SMB, "Received request for session setup\n");
- 
-+	if (!ksmbd_conn_need_setup(conn) && !ksmbd_conn_good(conn)) {
-+		work->send_no_response = 1;
-+		return rc;
-+	}
-+
- 	WORK_BUFFERS(work, req, rsp);
- 
- 	rsp->StructureSize = cpu_to_le16(9);
-@@ -1906,7 +1914,7 @@ out_err:
- 			if (try_delay) {
- 				ksmbd_conn_set_need_reconnect(conn);
- 				ssleep(5);
--				ksmbd_conn_set_need_negotiate(conn);
-+				ksmbd_conn_set_need_setup(conn);
- 			}
- 		}
- 		smb2_set_err_rsp(work);
-@@ -2238,7 +2246,7 @@ int smb2_session_logoff(struct ksmbd_wor
- 		ksmbd_free_user(sess->user);
- 		sess->user = NULL;
- 	}
--	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_NEGOTIATE);
-+	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
- 
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
+ done:
+ 	bh_result->b_size = EXFAT_BLK_TO_B(max_blocks, sb);
++	if (err < 0)
++		clear_buffer_mapped(bh_result);
+ unlock_ret:
+ 	mutex_unlock(&sbi->s_lock);
+ 	return err;
 
 
