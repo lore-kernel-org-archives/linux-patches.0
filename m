@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DA62638B8;
-	Tue,  8 Apr 2025 12:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EDFB663;
+	Tue,  8 Apr 2025 12:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116035; cv=none; b=Q9PS43wHL8YtwFMn2vb4AoBhPP/Oio6kZ3Wyc9spJ1tu4JITtQi9mXKHPyAYXEm+gtNlMaEdeZoCbue6iY581ZF6aBONcDCQRe+6E0EnP668DgQA8bfT//bQ+lSrBx9s4t/rNnIu7AJR1tH6VuMhPW2+g7qHC3+DsbJa3aJraH4=
+	t=1744116037; cv=none; b=SieTRBvXvMOjhjWR4PlcZEIvhtE5UULylcHHrGYPwYffihg+FFaoFN1VXxSxn6x6Y35OO1T35ripuzJMXpB6SZ0zHHKezO60QUlLNCG7d3bW0vYfc3RunxN7POcVMyTm2oy/kgNcXLKH0oZmy3JwR/drWgeSkB0aihBtRY71HEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116035; c=relaxed/simple;
-	bh=DsLNXGqzmRdZLhypfEm+WRXHSwkUm9teff5DHqTLhX4=;
+	s=arc-20240116; t=1744116037; c=relaxed/simple;
+	bh=4gSArOv19wn60FLztMWONSzXrWTwLKn+Eq/rKMjcW1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFW5SIVu/yIMLYZ7Pkh0oti2nFuz2KkQDU7Ll6exS6AQZlaB8DwWDBsnJOBe49RO0/V4MeGhsDWb/wsAVLLInq5IlrptWGZM7cek9p/kMCduPvoE6Si7+XNTGcg91v1DvhGv12IisNiUvrm0V3GOSdmUYpL0Dg+Krfa5IBdg+Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWqpRVHl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JzoGr1dNTcimKuhf87ysmJuyf4mKsIFMjKWIv21s6IxtRd0DdX4WqsjAXSGghhG+WdSw1Xf2bCMk4LYAvzCw8BCa7crUkIBsNFmdbkbRZJ7ce9RsFhCbhv7FgHXKWczux3YjXhjv7RslGptLtBPAKArocgMEJzXHDV+jCvJdvhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvFir6xs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWqpRVHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B631C4CEE7;
-	Tue,  8 Apr 2025 12:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvFir6xs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABBBC4CEE7;
+	Tue,  8 Apr 2025 12:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116034;
-	bh=DsLNXGqzmRdZLhypfEm+WRXHSwkUm9teff5DHqTLhX4=;
+	s=korg; t=1744116037;
+	bh=4gSArOv19wn60FLztMWONSzXrWTwLKn+Eq/rKMjcW1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWqpRVHlw7o9WJek9WJFEjtnDw1HQgDRC0pLu7vYlbs9kX15P/yuQu3UgVxPh4bJC
-	 lIvJlm62E3Yyaf7T5FO/02lHRPyvgV5QX60Rj+1ax4tsnswa5BQrrw3qs7s3J1rd0r
-	 Ng5BrHu8laN8hOIFma6vb7waUwiE9DFFjlbBZSak=
+	b=YvFir6xsfKCreYFD8hsc27HyTg+D8xw7oPunJ0EPL2coZDR8FSpfzq/bWWgDQPPhg
+	 tMJ9tc2We8wpSzoMe7KG0rIKSTx/PhpcloruAtSb3q7RoNaIASdcf/aV7gJNmWCmj5
+	 qDtqo1Loh6ijC79iFsOWcxbETK3TW9CwT/ANeztA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Douglas Raillard <douglas.raillard@arm.com>,
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 195/204] tracing: Fix synth event printk format for str fields
-Date: Tue,  8 Apr 2025 12:52:05 +0200
-Message-ID: <20250408104826.033584000@linuxfoundation.org>
+Subject: [PATCH 6.1 196/204] tracing/osnoise: Fix possible recursive locking for cpus_read_lock()
+Date: Tue,  8 Apr 2025 12:52:06 +0200
+Message-ID: <20250408104826.064288244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,41 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Raillard <douglas.raillard@arm.com>
+From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 
-commit 4d38328eb442dc06aec4350fd9594ffa6488af02 upstream.
+commit 7e6b3fcc9c5294aeafed0dbe1a09a1bc899bd0f2 upstream.
 
-The printk format for synth event uses "%.*s" to print string fields,
-but then only passes the pointer part as var arg.
+Lockdep reports this deadlock log:
 
-Replace %.*s with %s as the C string is guaranteed to be null-terminated.
+osnoise: could not start sampling thread
+============================================
+WARNING: possible recursive locking detected
+--------------------------------------------
+       CPU0
+       ----
+  lock(cpu_hotplug_lock);
+  lock(cpu_hotplug_lock);
 
-The output in print fmt should never have been updated as __get_str()
-handles the string limit because it can access the length of the string in
-the string meta data that is saved in the ring buffer.
+ Call Trace:
+  <TASK>
+  print_deadlock_bug+0x282/0x3c0
+  __lock_acquire+0x1610/0x29a0
+  lock_acquire+0xcb/0x2d0
+  cpus_read_lock+0x49/0x120
+  stop_per_cpu_kthreads+0x7/0x60
+  start_kthread+0x103/0x120
+  osnoise_hotplug_workfn+0x5e/0x90
+  process_one_work+0x44f/0xb30
+  worker_thread+0x33e/0x5e0
+  kthread+0x206/0x3b0
+  ret_from_fork+0x31/0x50
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+This is the deadlock scenario:
+osnoise_hotplug_workfn()
+  guard(cpus_read_lock)();      // first lock call
+  start_kthread(cpu)
+    if (IS_ERR(kthread)) {
+      stop_per_cpu_kthreads(); {
+        cpus_read_lock();      // second lock call. Cause the AA deadlock
+      }
+    }
+
+It is not necessary to call stop_per_cpu_kthreads() which stops osnoise
+kthread for every other CPUs in the system if a failure occurs during
+hotplug of a certain CPU.
+For start_per_cpu_kthreads(), if the start_kthread() call fails,
+this function calls stop_per_cpu_kthreads() to handle the error.
+Therefore, similarly, there is no need to call stop_per_cpu_kthreads()
+again within start_kthread().
+So just remove stop_per_cpu_kthreads() from start_kthread to solve this issue.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 8db4d6bfbbf92 ("tracing: Change synthetic event string format to limit printed length")
-Link: https://lore.kernel.org/20250325165202.541088-1-douglas.raillard@arm.com
-Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
+Link: https://lore.kernel.org/20250321095249.2739397-1-ranxiaokai627@163.com
+Fixes: c8895e271f79 ("trace/osnoise: Support hotplug operations")
+Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_osnoise.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -312,7 +312,7 @@ static const char *synth_field_fmt(char
- 	else if (strcmp(type, "gfp_t") == 0)
- 		fmt = "%x";
- 	else if (synth_field_is_string(type))
--		fmt = "%.*s";
-+		fmt = "%s";
- 	else if (synth_field_is_stack(type))
- 		fmt = "%s";
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -1756,7 +1756,6 @@ static int start_kthread(unsigned int cp
+ 
+ 	if (IS_ERR(kthread)) {
+ 		pr_err(BANNER "could not start sampling thread\n");
+-		stop_per_cpu_kthreads();
+ 		return -ENOMEM;
+ 	}
  
 
 
