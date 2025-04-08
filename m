@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5352206F18;
-	Tue,  8 Apr 2025 12:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811F206F18;
+	Tue,  8 Apr 2025 12:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114735; cv=none; b=K+hQiWLEQj/ePeYKvYC3mMBu98mTwvyIC+NZ23V8kK5jIM+9tzJCrCMdIIJh2NAGM8xtaaTKZU5dexQBssiW+uvNE7iPYhMyaggb96q2+G4oeGKWD3KB6OA7o2+VrdD0dJvgWS7EesRxiJ0VIT6UBtMZTaTndyjtmN84ipnBGJQ=
+	t=1744114738; cv=none; b=nyLUKtfp2EjTob1LdHhQhTuA//A72UWrd4jfmehTLBnZYq4tvQhMsVGY1Ykeh/2v8X2Veyqe06ByiYr7X3ml+FeI/SwQYXjyI9pmWpKq2hV/BzQkmV4fT1Bsb91xDIOf0PZQaOBEqVi9u6uGkyLTHjBU2lMDMTb7T5m5kHKyBr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114735; c=relaxed/simple;
-	bh=I1llT2oDtEOxrzhiIG46LdmlgMUuxHAWAPHfzQf/Eiw=;
+	s=arc-20240116; t=1744114738; c=relaxed/simple;
+	bh=NZw8VKq7/cGWtoPAWsCPqfvuSbkN63KOiNp8Bys2Y+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2mBA3xzYOXbEBcnZ+51mTBt/jMU9zAf3Dm0EdxIeqxJs1IanSaYViytZIGGvHcmijX75UB3aNHQSkwLzgZSG/4d9QvAkOPNg1ywcA6bWANhkpIPoDuo/bwTZUubYqeZL3ZI0NQ+DmaOM8K1wxpKfG9hkqjYjEvsJQAsHQOFmGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7MZCS2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwaRb7+yQmuP4Mlc4tOwf4VvOTHg3RgG64dj3x0lQbkdtuuv1cs/kV1jENuo4M99KbgdaL4jg7OSAhKVR4JbmVJnu6csOkzR4zuBc0FNCUNxOthy0lXhLfxtwbaOKCynFebiCJ3mdiAbAYu2QR8nkxJW6NoAO81o+gFA17uWdLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XO+CIYef; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7MZCS2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E91C4CEE5;
-	Tue,  8 Apr 2025 12:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XO+CIYef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E352DC4CEE5;
+	Tue,  8 Apr 2025 12:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114735;
-	bh=I1llT2oDtEOxrzhiIG46LdmlgMUuxHAWAPHfzQf/Eiw=;
+	s=korg; t=1744114738;
+	bh=NZw8VKq7/cGWtoPAWsCPqfvuSbkN63KOiNp8Bys2Y+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7MZCS2xjJ5BmFCaUv10hKVHXk4AWpsoG4bGWRyxvX18KFge5muk38h7pFf7LVHVg
-	 C6dIOvPb/1I+elvsuCprJW57z8Hefxau4veeUdUBpjfO6cnxBnzD7Vc9F1cTYxu76m
-	 2Orsbu8KASbWeeoKnQp/YKSC5+YjsxN4HuvDXh0U=
+	b=XO+CIYefSW1DF1bturc/9O6I/dHpw1f2XwMU8p0vmnxZTrCG5GwJdrYgDoySzKGSM
+	 nO7KRomyodm4/HFAyObfOVmAgYhJ7Z0Q2uS5Z6llwvHCv0we4oGoCCJjDLxNYQTwGL
+	 sg6gBhXyoAZf8JBGbAikAn7rDTKezduvC8J0QFpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 209/499] perf tests: Fix Tool PMU test segfault
-Date: Tue,  8 Apr 2025 12:47:01 +0200
-Message-ID: <20250408104856.419617768@linuxfoundation.org>
+Subject: [PATCH 6.13 218/499] tools/x86: Fix linux/unaligned.h include path in lib/insn.c
+Date: Tue,  8 Apr 2025 12:47:10 +0200
+Message-ID: <20250408104856.643829895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,56 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 615ec00b06f78912c370b372426190768402a5b9 ]
+[ Upstream commit fad07a5c0f07ad0884e1cb4362fe28c083b5b811 ]
 
-tool_pmu__event_to_str() now handles skipped events by returning NULL,
-so it's wrong to re-check for a skip on the resulting string. Calling
-tool_pmu__skip_event() with a NULL string results in a segfault so
-remove the unnecessary skip to fix it:
+tools/arch/x86/include/linux doesn't exist but building is working by
+virtue of a -I. Building using bazel this fails. Use angle brackets to
+include unaligned.h so there isn't an invalid relative include.
 
-  $ perf test -vv "parsing with PMU name"
-
-  12.2: Parsing with PMU name:
-  ...
-  ---- unexpected signal (11) ----
-  12.2: Parsing with PMU name         : FAILED!
-
-Fixes: ee8aef2d2321 ("perf tools: Add skip check in tool_pmu__event_to_str()")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reported-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Acked-by: Kan Liang <kan.liang@linux.intel.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250212163859.1489916-1-james.clark@linaro.org
+Fixes: 5f60d5f6bbc1 ("move asm/unaligned.h to linux/unaligned.h")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://lore.kernel.org/r/20250225193600.90037-1-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/tool_pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/arch/x86/lib/insn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/tool_pmu.c b/tools/perf/tests/tool_pmu.c
-index 187942b749b7c..1e900ef92e378 100644
---- a/tools/perf/tests/tool_pmu.c
-+++ b/tools/perf/tests/tool_pmu.c
-@@ -27,7 +27,7 @@ static int do_test(enum tool_pmu_event ev, bool with_pmu)
- 	parse_events_error__init(&err);
- 	ret = parse_events(evlist, str, &err);
- 	if (ret) {
--		if (tool_pmu__skip_event(tool_pmu__event_to_str(ev))) {
-+		if (!tool_pmu__event_to_str(ev)) {
- 			ret = TEST_OK;
- 			goto out;
- 		}
-@@ -59,7 +59,7 @@ static int do_test(enum tool_pmu_event ev, bool with_pmu)
- 		}
- 	}
+diff --git a/tools/arch/x86/lib/insn.c b/tools/arch/x86/lib/insn.c
+index ab5cdc3337dac..e91d4c4e1c162 100644
+--- a/tools/arch/x86/lib/insn.c
++++ b/tools/arch/x86/lib/insn.c
+@@ -13,7 +13,7 @@
+ #endif
+ #include "../include/asm/inat.h" /* __ignore_sync_check__ */
+ #include "../include/asm/insn.h" /* __ignore_sync_check__ */
+-#include "../include/linux/unaligned.h" /* __ignore_sync_check__ */
++#include <linux/unaligned.h> /* __ignore_sync_check__ */
  
--	if (!found && !tool_pmu__skip_event(tool_pmu__event_to_str(ev))) {
-+	if (!found && tool_pmu__event_to_str(ev)) {
- 		pr_debug("FAILED %s:%d Didn't find tool event '%s' in parsed evsels\n",
- 			 __FILE__, __LINE__, str);
- 		ret = TEST_FAIL;
+ #include <linux/errno.h>
+ #include <linux/kconfig.h>
 -- 
 2.39.5
 
