@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F287265626;
-	Tue,  8 Apr 2025 12:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD98265626;
+	Tue,  8 Apr 2025 12:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113914; cv=none; b=Ov2BXjRvVCY04gIajoiNOCIF8no9oX9I9ER+0MutWEQUwxucXxM6hfZeMv8Av1LgZytXLDq5cmxQ/l+Ll+uwuXIiW/WsKpf705wiIoDZhJ+xtBNnEns9IwUqMLjcsVQhuk8dg6qhdIlfZAF/+m6tljUCkay3n4ouiBKyM6PBrBQ=
+	t=1744113917; cv=none; b=pNlhu7roSWlKh5VRrPPUjNMMNGiJftfpfJWeBYlJyS33LUaNP8uOMWXpqMZFsJ2NO6qIWZxzHhup8LRjllWXLvYu/KwkQrXeFGu32KNNYkRCtxJ9SddQq8qV5opt7QBUPsF0Yj99jIo7GGrAXXvavfXIGtHETozpOEqDQqvfxfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113914; c=relaxed/simple;
-	bh=ew9FCrOgIrk1M3mBV78IIplXNfg9nGh0xRyN7cmEafU=;
+	s=arc-20240116; t=1744113917; c=relaxed/simple;
+	bh=NLWUNH7jFTHbAjnbehFVIik2FxEQkf0aVnxoPWySAVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nV23OZi02Ru92N8kUdF+zuZJdgmbjZWGZPeuogBlg/QrqxElmyvPU7dG8iBtogh3gQKa0Rkl5uFSxmTNy2cO1xNEE3G3Is6EmMdMo9ITSt+ajTaJ7c/Mdq9X/CtYa1mA5Re3iMbyp5qwpY0Q18JSHGnnq9lIdSf8Lr1COG/zJlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRhFKMFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F15XdJTXYKs5GfEfNvT5VrIJg5cY3vJxI9ijmmUUUDKr5P2cqjVFNDfDIVQc/+VOS/r0I+ApjIRCKwXe0D8r103vfcLzwhXTRWfi+IveFAGvecs4Ze4h+07s1zyk823773EQ3XBD+LslttXYjRsdREpYHqdlfCJhnG2uNUr9jN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJjOmE1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRhFKMFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD68C4CEE5;
-	Tue,  8 Apr 2025 12:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJjOmE1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202BDC4CEE5;
+	Tue,  8 Apr 2025 12:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113913;
-	bh=ew9FCrOgIrk1M3mBV78IIplXNfg9nGh0xRyN7cmEafU=;
+	s=korg; t=1744113916;
+	bh=NLWUNH7jFTHbAjnbehFVIik2FxEQkf0aVnxoPWySAVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRhFKMFbxD2UrAejrpXUQPIzlv6LRt9q99UBB1IhMsSi1v8ZzI1nxnY8ouZsttfrp
-	 BAPsOHVqWabL9gXijK3rW4W1hvSLG36JpQ7mNu+ThMLFuCtkAaoSTZbMSAAsByAFA0
-	 eWE7Rk5aMQHuf0RE3EaZOI+jtouBXtlbn716HNws=
+	b=vJjOmE1hxmXGj5aAxLVzAlmDqMqpJwiGFWsju3f3yibPEY9AUiP3nJu+V4nrfyKRV
+	 uLHo/csV/wVDEa3sqT6/dGXwnrlQ+syKpdntHma0YxCDvdim/uy+MqCp6UZjr0Mtd9
+	 CDGGNuv/fAS2vQTkYJwObCE4UfghMtbkhnD+Chvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/154] ASoC: rsnd: dont indicate warning on rsnd_kctrl_accept_runtime()
-Date: Tue,  8 Apr 2025 12:49:31 +0200
-Message-ID: <20250408104816.225694286@linuxfoundation.org>
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.4 066/154] ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
+Date: Tue,  8 Apr 2025 12:50:07 +0200
+Message-ID: <20250408104817.410986382@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,125 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Terry Junge <linuxhid@cosmicgizmosystems.com>
 
-[ Upstream commit c3fc002b206c6c83d1e3702b979733002ba6fb2c ]
+commit 486f6205c233da1baa309bde5f634eb1f8319a33 upstream.
 
-rsnd_kctrl_accept_runtime() (1) is used for runtime convert rate
-(= Synchronous SRC Mode). Now, rsnd driver has 2 kctrls for it
+Many Poly/Plantronics headset families name the feature, input,
+and/or output units in a such a way to produce control names
+that are not recognized by user space. As such, the volume and
+mute events do not get routed to the headset's audio controls.
 
-(A):	"SRC Out Rate Switch"
-(B):	"SRC Out Rate"		// it calls (1)
+As an example from a product family:
 
-(A): can be called anytime
-(B): can be called only runtime, and will indicate warning if it was used
-   at non-runtime.
+The microphone mute control is named
+Headset Microphone Capture Switch
+and the headset volume control is named
+Headset Earphone Playback Volume
 
-To use runtime convert rate (= Synchronous SRC Mode), user might uses
-command in below order.
+The quirk fixes these to become
+Headset Capture Switch
+Headset Playback Volume
 
-(X):	> amixer set "SRC Out Rate" on
-	> aplay xxx.wav &
-(Y):	> amixer set "SRC Out Rate" 48010 // convert rate to 48010Hz
-
-(Y): calls B
-(X): calls both A and B.
-
-In this case, when user calls (X), it calls both (A) and (B), but it is not
-yet start running. So, (B) will indicate warning.
-
-This warning was added by commit b5c088689847 ("ASoC: rsnd: add warning
-message to rsnd_kctrl_accept_runtime()"), but the message sounds like the
-operation was not correct. Let's update warning message.
-
-The message is very SRC specific, implement it in src.c
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/8734gt2qed.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sh/rcar/core.c | 14 --------------
- sound/soc/sh/rcar/rsnd.h |  1 -
- sound/soc/sh/rcar/src.c  | 18 +++++++++++++++++-
- 3 files changed, 17 insertions(+), 16 deletions(-)
+ sound/usb/mixer_quirks.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
-index df8d7b53b7600..1564809dff3c9 100644
---- a/sound/soc/sh/rcar/core.c
-+++ b/sound/soc/sh/rcar/core.c
-@@ -1612,20 +1612,6 @@ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io)
- 	return 1;
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -2531,6 +2531,52 @@ static void snd_dragonfly_quirk_db_scale
+ 	}
  }
  
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io)
--{
--	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
--	struct rsnd_priv *priv = rsnd_io_to_priv(io);
--	struct device *dev = rsnd_priv_to_dev(priv);
--
--	if (!runtime) {
--		dev_warn(dev, "Can't update kctrl when idle\n");
--		return 0;
--	}
--
--	return 1;
--}
--
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg)
- {
- 	cfg->cfg.val = cfg->val;
-diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
-index d47608ff5facc..ea7a9939981b5 100644
---- a/sound/soc/sh/rcar/rsnd.h
-+++ b/sound/soc/sh/rcar/rsnd.h
-@@ -737,7 +737,6 @@ struct rsnd_kctrl_cfg_s {
- #define rsnd_kctrl_vals(x)	((x).val)	/* = (x).cfg.val[0] */
- 
- int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io);
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_s(struct rsnd_kctrl_cfg_s *cfg);
- int rsnd_kctrl_new(struct rsnd_mod *mod,
-diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
-index fd52e26a3808b..577d50e2cf8c6 100644
---- a/sound/soc/sh/rcar/src.c
-+++ b/sound/soc/sh/rcar/src.c
-@@ -521,6 +521,22 @@ static irqreturn_t rsnd_src_interrupt(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static int rsnd_src_kctrl_accept_runtime(struct rsnd_dai_stream *io)
++/*
++ * Some Plantronics headsets have control names that don't meet ALSA naming
++ * standards. This function fixes nonstandard source names. By the time
++ * this function is called the control name should look like one of these:
++ * "source names Playback Volume"
++ * "source names Playback Switch"
++ * "source names Capture Volume"
++ * "source names Capture Switch"
++ * If any of the trigger words are found in the name then the name will
++ * be changed to:
++ * "Headset Playback Volume"
++ * "Headset Playback Switch"
++ * "Headset Capture Volume"
++ * "Headset Capture Switch"
++ * depending on the current suffix.
++ */
++static void snd_fix_plt_name(struct snd_usb_audio *chip,
++			     struct snd_ctl_elem_id *id)
 +{
-+	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
++	/* no variant of "Sidetone" should be added to this list */
++	static const char * const trigger[] = {
++		"Earphone", "Microphone", "Receive", "Transmit"
++	};
++	static const char * const suffix[] = {
++		" Playback Volume", " Playback Switch",
++		" Capture Volume", " Capture Switch"
++	};
++	int i;
 +
-+	if (!runtime) {
-+		struct rsnd_priv *priv = rsnd_io_to_priv(io);
-+		struct device *dev = rsnd_priv_to_dev(priv);
++	for (i = 0; i < ARRAY_SIZE(trigger); i++)
++		if (strstr(id->name, trigger[i]))
++			goto triggered;
++	usb_audio_dbg(chip, "no change in %s\n", id->name);
++	return;
 +
-+		dev_warn(dev, "\"SRC Out Rate\" can use during running\n");
-+
-+		return 0;
-+	}
-+
-+	return 1;
++triggered:
++	for (i = 0; i < ARRAY_SIZE(suffix); i++)
++		if (strstr(id->name, suffix[i])) {
++			usb_audio_dbg(chip, "fixing kctl name %s\n", id->name);
++			snprintf(id->name, sizeof(id->name), "Headset%s",
++				 suffix[i]);
++			return;
++		}
++	usb_audio_dbg(chip, "something wrong in kctl name %s\n", id->name);
 +}
 +
- static int rsnd_src_probe_(struct rsnd_mod *mod,
- 			   struct rsnd_dai_stream *io,
- 			   struct rsnd_priv *priv)
-@@ -584,7 +600,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
- 			       rsnd_io_is_play(io) ?
- 			       "SRC Out Rate" :
- 			       "SRC In Rate",
--			       rsnd_kctrl_accept_runtime,
-+			       rsnd_src_kctrl_accept_runtime,
- 			       rsnd_src_set_convert_rate,
- 			       &src->sync, 192000);
+ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
+ 				  struct usb_mixer_elem_info *cval, int unitid,
+ 				  struct snd_kcontrol *kctl)
+@@ -2548,5 +2594,10 @@ void snd_usb_mixer_fu_apply_quirk(struct
+ 			cval->min_mute = 1;
+ 		break;
+ 	}
++
++	/* ALSA-ify some Plantronics headset control names */
++	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
++	    (cval->control == UAC_FU_MUTE || cval->control == UAC_FU_VOLUME))
++		snd_fix_plt_name(mixer->chip, &kctl->id);
+ }
  
--- 
-2.39.5
-
 
 
