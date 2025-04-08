@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEDD20A5C3;
-	Tue,  8 Apr 2025 12:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF12265633;
+	Tue,  8 Apr 2025 12:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116704; cv=none; b=VslhtG7B0nZmRtRSWF25cqMLW9xRblPJUvEBbSPTKD1cMGHAs0WNdl2wur7/6VbLo8DKsWciX3U+IA8F2Mo25B9qDyM3k/OM46XQ6aKSYBPSzmqzlVfd/MCS4nGz+bcpKKidrTYLpWiRnXeb9bo2wHZXsAPLepCEdSJMRQXuy8o=
+	t=1744116707; cv=none; b=bCs6pXACzgWEIgw8z8nxT76Rv8LxtT5KUQ+QXiSRxuT0uW9SRisuxo07POAywNJo/1b7R5uFaBmT6DCFDXHhvWnpi9fcWgQIWu2gs60n1JQc+fJYg4a2pd5jC9NkSD6mfip3oNVEzMlL4BFqmUS3vsJtlG3IacLi/sdP0436oEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116704; c=relaxed/simple;
-	bh=1/HxVuoe1tLjMzLI/Wwj8NKUigYMSVzY+AghLZ1h+dM=;
+	s=arc-20240116; t=1744116707; c=relaxed/simple;
+	bh=70DxCgvHgFEWOw7GsR4fPONm/WbSjh40zkYMZVrK0Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kN3iAbNuZZMTWaKDXwNY/RoPYAgUrfqwDeD1Jj0hSKfEkRQ5Ph7UjmXVWs1LOWN/51bWY8hu1ONde/oMwoetYSnUOeRzFW2awuxNeLSsLgfO2RzPywkBjuzXKh91TQeUjFTx2EsSPCxQDY2AzF923sVLn/beecI352NXJtDBRoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JW+MZWOe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ltzr6Iw9+beV8RftDwepsggCBtbRZbfau0zaX6FCDgFfwzZgRhl1PFDX5eo0LBI2McH8QbaIDfUmx8dh/PU3I6Ma22wBUgB3quOTZDzSuv4C53IcZ0tSs9RjZcFBELNS4syz9GHTorhH5hlJjfr75W9J+Q0EJYL0LrUIXm7WNEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiWJbPWm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JW+MZWOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A60CC4CEE5;
-	Tue,  8 Apr 2025 12:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiWJbPWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D256FC4CEE5;
+	Tue,  8 Apr 2025 12:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116704;
-	bh=1/HxVuoe1tLjMzLI/Wwj8NKUigYMSVzY+AghLZ1h+dM=;
+	s=korg; t=1744116707;
+	bh=70DxCgvHgFEWOw7GsR4fPONm/WbSjh40zkYMZVrK0Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JW+MZWOegBY+82m/FL5yxwDGK3tsoTrBo0KdA//DBBYzATmYfF8wxs+12l4mQVOad
-	 nt8ZTSmbizzlhmDA5FzIjZVgqUFRlrggDNOtcNGKEnFFA93aQYPfcRIf0amvi04gME
-	 L1FBrncrY4G275rNfGgDm1pu2J+KP9m1OFWsS6Io=
+	b=SiWJbPWm1JlWEjdcggBBCx6qZpUJPGSDxIavvBzQRO7X/7ay3OIKR7wGMST6xPzmL
+	 /nOR5sGYKZvsPKvD1XA4fILmkUHbf7vIovDOzE7B4P2+H1UFnNkwKarZZPYHWDTwqo
+	 R9d62L5ynq/cUnSa8QqgG7uuWNCRCWi0rl5yaRtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/423] ring-buffer: Fix bytes_dropped calculation issue
-Date: Tue,  8 Apr 2025 12:49:24 +0200
-Message-ID: <20250408104851.269150826@linuxfoundation.org>
+Subject: [PATCH 6.12 239/423] objtool: Fix segfault in ignore_unreachable_insn()
+Date: Tue,  8 Apr 2025 12:49:25 +0200
+Message-ID: <20250408104851.293910943@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,39 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit c73f0b69648501978e8b3e8fa7eef7f4197d0481 ]
+[ Upstream commit 69d41d6dafff0967565b971d950bd10443e4076c ]
 
-The calculation of bytes-dropped and bytes_dropped_nested is reversed.
-Although it does not affect the final calculation of total_dropped,
-it should still be modified.
+Check 'prev_insn' before dereferencing it.
 
-Link: https://lore.kernel.org/20250223070106.6781-1-yangfeng59949@163.com
-Fixes: 6c43e554a2a5 ("ring-buffer: Add ring buffer startup selftest")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: bd841d6154f5 ("objtool: Fix CONFIG_UBSAN_TRAP unreachable warnings")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/5df4ff89c9e4b9e788b77b0531234ffa7ba03e9e.1743136205.git.jpoimboe@kernel.org
+
+Closes: https://lore.kernel.org/d86b4cc6-0b97-4095-8793-a7384410b8ab@app.fastmail.com
+Closes: https://lore.kernel.org/Z-V_rruKY0-36pqA@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/objtool/check.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index ea8ad5480e286..3e252ba16d5c6 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7442,9 +7442,9 @@ static __init int rb_write_something(struct rb_test_data *data, bool nested)
- 		/* Ignore dropped events before test starts. */
- 		if (started) {
- 			if (nested)
--				data->bytes_dropped += len;
--			else
- 				data->bytes_dropped_nested += len;
-+			else
-+				data->bytes_dropped += len;
- 		}
- 		return len;
- 	}
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 24a1adca30dbc..4030412637ad0 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -4153,7 +4153,7 @@ static bool ignore_unreachable_insn(struct objtool_file *file, struct instructio
+ 	 * It may also insert a UD2 after calling a __noreturn function.
+ 	 */
+ 	prev_insn = prev_insn_same_sec(file, insn);
+-	if (prev_insn->dead_end &&
++	if (prev_insn && prev_insn->dead_end &&
+ 	    (insn->type == INSN_BUG ||
+ 	     (insn->type == INSN_JUMP_UNCONDITIONAL &&
+ 	      insn->jump_dest && insn->jump_dest->type == INSN_BUG)))
 -- 
 2.39.5
 
