@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E6D26A1CD;
-	Tue,  8 Apr 2025 12:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D21F268FDE;
+	Tue,  8 Apr 2025 12:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113892; cv=none; b=WFrHDBrrO3k/IDMg482VHRIeL/dU/Oq9EalwsBbeGMrT8ccnjLgUFsuqmhxFFL49RgOnJUQAijWhk/StA4tX4SgCqNf/38uXBjV2WRL4wTukt0IeOP+Uo27jDBNupDkngO0Vqe8lO1SL/erz527SLXoZNVA+tW4yH7gLzEYsHUk=
+	t=1744113895; cv=none; b=tqfQ1yC+ke+KRKX6DQhogvMzkWrEfQVoYdBY8GxnJ7w6A/pWj9/51VuZeGMghL9mD/1weZk2UHNE9nHjEpJl1pUxFyKUd0yRlDEXd9debafz8eRqQDSmqLWtuLnbfczjWqW5/NKppZwFjvSjsiRG7HvxmQenryJvgnm75olTTLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113892; c=relaxed/simple;
-	bh=wKyaDaNa3z3FRxxCLX2rmSeBlYEu4innudLuhV6bqN4=;
+	s=arc-20240116; t=1744113895; c=relaxed/simple;
+	bh=vuqaQR+YQYsB1gN7dJg4ZA1pnGlqvAPBf5wmLEyfrdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4BmUzTDhU2pdVrRLGaRIDVnftnZY+eucahEsY3ij6cYy2dHWZbQMaByqeNFePy0Ts/owbhMehM+lvMPb+KGe4aldslIWbBQH+B02rGYXz1eJ2ifK8/wvl2ZeLZeR0SDuKmr1ogFfkzhWAoLdcHnlN+2Ibc8tP9Z948mzcxok6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnFXyIq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DH9WplOy/Jz1XDNHlvy4f2cIyTfDOdEO77UDpzHCBlZKqpa1niOwmEggESn5+C5viQEVCyLkOgHiN+qJo1kp6eCZS2gI4taGLirm5QPGo9dJ2aP8dOI/qfa1+VO95s4enHoelk5P9cXqwCszvkshI78S5VKEXFbmy/2nhRx0jTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAUCy3sb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnFXyIq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AE1C4CEE5;
-	Tue,  8 Apr 2025 12:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAUCy3sb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E137AC4CEE5;
+	Tue,  8 Apr 2025 12:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113892;
-	bh=wKyaDaNa3z3FRxxCLX2rmSeBlYEu4innudLuhV6bqN4=;
+	s=korg; t=1744113895;
+	bh=vuqaQR+YQYsB1gN7dJg4ZA1pnGlqvAPBf5wmLEyfrdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UnFXyIq7ntS8NjRc9WiojnYmF1I3gCnjUJgI+zJWLSdL27WG9jhLbzSw4ktJ9fFBK
-	 pKQ7hXRpZfeWNANy5BWbifqkEicoej8MLZGUlk2VNZ8rRxwDURxXYKJolIyjCf5HSf
-	 C7ZYwTEcyKEcscaW32LeiaP/Y2UH9KOwOxKO44R8=
+	b=qAUCy3sbOfNFR6xxGemSMyoP0Uq7ANHim1vK/Po6HVPfxAq3juesPrzJIkhJW0fyX
+	 cT07f7LVLv9ijbrQwAOQiqAA/JU3CMnQk1IswmIULqShwy5HyLingNK+ppiU3PgqYS
+	 t62kZZ/vQSTdjLRrOrBQQsZNVV8KzCk5oSr8w/pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 058/154] net: atm: fix use after free in lec_send()
-Date: Tue,  8 Apr 2025 12:49:59 +0200
-Message-ID: <20250408104817.145896075@linuxfoundation.org>
+Subject: [PATCH 5.4 059/154] net/neighbor: add missing policy for NDTPA_QUEUE_LENBYTES
+Date: Tue,  8 Apr 2025 12:50:00 +0200
+Message-ID: <20250408104817.176055804@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,44 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f3009d0d6ab78053117f8857b921a8237f4d17b3 ]
+[ Upstream commit 90a7138619a0c55e2aefaad27b12ffc2ddbeed78 ]
 
-The ->send() operation frees skb so save the length before calling
-->send() to avoid a use after free.
+Previous commit 8b5c171bb3dc ("neigh: new unresolved queue limits")
+introduces new netlink attribute NDTPA_QUEUE_LENBYTES to represent
+approximative value for deprecated QUEUE_LEN. However, it forgot to add
+the associated nla_policy in nl_ntbl_parm_policy array. Fix it with one
+simple NLA_U32 type policy.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/c751531d-4af4-42fe-affe-6104b34b791d@stanley.mountain
+Fixes: 8b5c171bb3dc ("neigh: new unresolved queue limits")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://patch.msgid.link/20250315165113.37600-1-linma@zju.edu.cn
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/lec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/neighbour.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 3625a04a6c701..07d4f256c38c1 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -181,6 +181,7 @@ static void
- lec_send(struct atm_vcc *vcc, struct sk_buff *skb)
- {
- 	struct net_device *dev = skb->dev;
-+	unsigned int len = skb->len;
- 
- 	ATM_SKB(skb)->vcc = vcc;
- 	atm_account_tx(vcc, skb);
-@@ -191,7 +192,7 @@ lec_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 	}
- 
- 	dev->stats.tx_packets++;
--	dev->stats.tx_bytes += skb->len;
-+	dev->stats.tx_bytes += len;
- }
- 
- static void lec_tx_timeout(struct net_device *dev)
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 7ef3630ea20d7..005cc630f74f3 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -2176,6 +2176,7 @@ static const struct nla_policy nl_neightbl_policy[NDTA_MAX+1] = {
+ static const struct nla_policy nl_ntbl_parm_policy[NDTPA_MAX+1] = {
+ 	[NDTPA_IFINDEX]			= { .type = NLA_U32 },
+ 	[NDTPA_QUEUE_LEN]		= { .type = NLA_U32 },
++	[NDTPA_QUEUE_LENBYTES]		= { .type = NLA_U32 },
+ 	[NDTPA_PROXY_QLEN]		= { .type = NLA_U32 },
+ 	[NDTPA_APP_PROBES]		= { .type = NLA_U32 },
+ 	[NDTPA_UCAST_PROBES]		= { .type = NLA_U32 },
 -- 
 2.39.5
 
