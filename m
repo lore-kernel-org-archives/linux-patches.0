@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7714A26B084;
-	Tue,  8 Apr 2025 12:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D75926B2AF;
+	Tue,  8 Apr 2025 12:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114940; cv=none; b=kqDPm2fMTFauiJJ6Cm9wx1jK8MSeMhLCWE9jHm48wOGcekXPk4wRQDEZulLE/bxbfFNfu1fkk7Sg8Sxl+p+NtCiARUaVs5QHLPzrcbNn6ecrtapfkI56K3S1lulu1qEef41X/p5ShHhWOxM2zjqGsMctd6RLuoUk6zTKUpjFh+g=
+	t=1744114944; cv=none; b=GK6BwINDGJKk4bR17St/w4UyGu1L3HzHs8O0tSEkQpAYSUpb72qgoBWWBa//rglhAGgQ0trSLzzokVUgprQ/r+P+OU/XHQvIAzwPP8oS9ni0XiGrSJllMYPkhdpW2KcmQip8a7UE4qNiJMLuYkC550X0QK1q3B7wpOwDeuM2HWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114940; c=relaxed/simple;
-	bh=a3P/JFW/ICBu2cGi9u4kSW1uBXOJ4r61LOaT2ZaIelM=;
+	s=arc-20240116; t=1744114944; c=relaxed/simple;
+	bh=h5GTD/fmQ9y99ZmJyJLDenLIbF6tys+4QQEZKO/ps4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+XjPMtHFbANXSI8Dt4NR1YAk51t8aVNR0S2arKUR3IniIqgdrddDX4P4zzPQDFoTUo+Ri81NjdoAiIfb1G1r1axyqsrQEEwtx/ur/kk7b5h2iV9lfmE+PAsNAR7D+a7GpgG8FBcyG/KxA+2ZviHMh0G9ccqpX6VvwbpMg2ZBpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C//yzXmh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL/Fim3a3dL5M107fmfjGzQhYCRlvbtKXqhhEEyjleMPKpdWCAdGVZu/y29doG/uHVd+mrIEtMqGd493W8cmYaYvIImBXrCQmmYx/yEpugdN0oq8/lD8md/f/xQYOT6mXmaTbWgrCkHyk9q9ioIGHkG6e1684Od3rRAcHueLFR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuMefpZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C//yzXmh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E82C4CEE7;
-	Tue,  8 Apr 2025 12:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuMefpZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C74C4CEE5;
+	Tue,  8 Apr 2025 12:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114940;
-	bh=a3P/JFW/ICBu2cGi9u4kSW1uBXOJ4r61LOaT2ZaIelM=;
+	s=korg; t=1744114943;
+	bh=h5GTD/fmQ9y99ZmJyJLDenLIbF6tys+4QQEZKO/ps4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C//yzXmhEgPaqpe9EQb8wjeNBZyhfJgxt2Jf8lrdzhH0UQsJvC6nZcQBGQ76XFXGU
-	 ohwylHEQr+HYLBMvTYpEwmsOIpbdjn9kHguQx7CTJhb7r1fbr4CRsgEsLe1Iyrwm8t
-	 9e6+DNm/1qQfJAZDRK5Wypl677WoV0ei6ZWvvHBM=
+	b=MuMefpZnnEQNS/Xaq6QKqyWmXRiSV3GvK7C1e/Aq/fIooXpTvxmqpqrVvr4xMThEv
+	 PqfYKfcgPRjYVMjhgvRKKQJs1Vt3GXSrhQTv37LlUvjz7xdaFOTNaDoCA68D8cGCSb
+	 t6IFuRuyyzBpd0Q+BEjm2UJFHB+RiTOgEuCsaej8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Gherdovich <ggherdovich@suse.cz>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanley Chu <yschu@nuvoton.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 290/499] ACPI: processor: idle: Return an error if both P_LVL{2,3} idle states are invalid
-Date: Tue,  8 Apr 2025 12:48:22 +0200
-Message-ID: <20250408104858.448424066@linuxfoundation.org>
+Subject: [PATCH 6.13 255/499] i3c: master: svc: Fix missing the IBI rules
+Date: Tue,  8 Apr 2025 12:47:47 +0200
+Message-ID: <20250408104857.572630709@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,55 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Gherdovich <ggherdovich@suse.cz>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit 9e9b893404d43894d69a18dd2fc8fcf1c36abb7e ]
+[ Upstream commit 9cecad134d84d14dc72a0eea7a107691c3e5a837 ]
 
-Prior to commit 496121c02127 ("ACPI: processor: idle: Allow probing on
-platforms with one ACPI C-state"), the acpi_idle driver wouldn't load on
-systems without a valid C-State at least as deep as C2.
+The code does not add IBI rules for devices with controller capability.
+However, the secondary controller has the controller capability and works
+at target mode when the device is probed. Therefore, add IBI rules for
+such devices.
 
-The behavior was desirable for guests on hypervisors such as VMWare
-ESXi, which by default don't have the _CST ACPI method, and set the C2
-and C3 latencies to 101 and 1001 microseconds respectively via the FADT,
-to signify they're unsupported.
-
-Since the above change though, these virtualized deployments end up
-loading acpi_idle, and thus entering the default C1 C-State set by
-acpi_processor_get_power_info_default(); this is undesirable for a
-system that's communicating to the OS it doesn't want C-States (missing
-_CST, and invalid C2/C3 in FADT).
-
-Make acpi_processor_get_power_info_fadt() return -ENODEV in that case,
-so that acpi_processor_get_cstate_info() exits early and doesn't set
-pr->flags.power = 1.
-
-Fixes: 496121c02127 ("ACPI: processor: idle: Allow probing on platforms with one ACPI C-state")
-Signed-off-by: Giovanni Gherdovich <ggherdovich@suse.cz>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20250328143040.9348-1-ggherdovich@suse.cz
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250318053606.3087121-2-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i3c/master/svc-i3c-master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 698897b29de24..2df1296ff44d5 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -268,6 +268,10 @@ static int acpi_processor_get_power_info_fadt(struct acpi_processor *pr)
- 			 ACPI_CX_DESC_LEN, "ACPI P_LVL3 IOPORT 0x%x",
- 			 pr->power.states[ACPI_STATE_C3].address);
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index d6057d8c7dec4..ecc07c17f4c79 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1037,7 +1037,7 @@ static int svc_i3c_update_ibirules(struct svc_i3c_master *master)
  
-+	if (!pr->power.states[ACPI_STATE_C2].address &&
-+	    !pr->power.states[ACPI_STATE_C3].address)
-+		return -ENODEV;
-+
- 	return 0;
- }
+ 	/* Create the IBIRULES register for both cases */
+ 	i3c_bus_for_each_i3cdev(&master->base.bus, dev) {
+-		if (I3C_BCR_DEVICE_ROLE(dev->info.bcr) == I3C_BCR_I3C_MASTER)
++		if (!(dev->info.bcr & I3C_BCR_IBI_REQ_CAP))
+ 			continue;
  
+ 		if (dev->info.bcr & I3C_BCR_IBI_PAYLOAD) {
 -- 
 2.39.5
 
