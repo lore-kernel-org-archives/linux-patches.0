@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B753926A0A2;
-	Tue,  8 Apr 2025 12:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757E2268C66;
+	Tue,  8 Apr 2025 12:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115198; cv=none; b=dcryKCW1OkZ1SUnYgQwGFRV6kr2zxpxNLoOfhK/8UciXHjrhxsF8vxFjyx0G9XEo0vb00XlSVu5WnApuk3ILdvxTV0VLt1xAwdGMnOFjjbLGDVREWVz3FIsmFXhxHfLVeT9WydnADXppxv/8B15mLbCWUTGG9q9Q7+P/F0zyyUg=
+	t=1744115201; cv=none; b=gKjmsxC/ADoesZYSPJbVpXweC7ShUC72A6MJDMQHllpL0TKq7SxHPIlMlQxDr0mc8ZPrHr5cZFkkTeodua4z65nS43g7hc6pyUJswIFuiIg/naWQaUD4yvDcEsacJdwruV/e3g+kH6Stz4pTb7iuKLg+cHDIyKD+OaAMBH+Cjko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115198; c=relaxed/simple;
-	bh=uf5rkHmYsKy/R29qfyuA3DG6t1YYX72S8tEAIInabWc=;
+	s=arc-20240116; t=1744115201; c=relaxed/simple;
+	bh=uiu0nbp35unrB0Rd/R+ZVEUVoDPzar/Qi6jqX830a58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQ4uGdpljZVVTDYHuH0AgAIejv/Sfg3OtYs6JePj4InGXamWcI+WuNNpaWwaNrHvmBKfC47HhFX9pD3sQbYDwkInn1abodzOwDjkoQOkPoGRncYBErQVCxxiOpSSon0NjXVxEqLqrerz6ZancdqmE5xpqOextWN7V9WhKEciChQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvSfJNuk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jR+sluxz/ovdEdJluGhWDV2KCJ7WWunkGvYQLoERR4D8Pz3OzK/rdf68ePAazw4vMcTBa8nuaDamQB4vLLMkJ0jJilTf8nmoJ7PUL2qdMUHazBgnGQ0YO3DLBr5BsoT8PPYF0ou4uLZP1mO1RkvR839ehd+Ppru5vpCqHaHisnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/BAjVmj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvSfJNuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D5EC4CEE5;
-	Tue,  8 Apr 2025 12:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/BAjVmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C73C4CEE5;
+	Tue,  8 Apr 2025 12:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115198;
-	bh=uf5rkHmYsKy/R29qfyuA3DG6t1YYX72S8tEAIInabWc=;
+	s=korg; t=1744115201;
+	bh=uiu0nbp35unrB0Rd/R+ZVEUVoDPzar/Qi6jqX830a58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvSfJNukbUm5Go5uRLgqVKR1GdjnGGeanPL5uryPx/IMteGcgjVCoW331c0zSaTg8
-	 RFZtr54qkMGxcQ0T73DrZvQY3Lgsvd1GfmHS0kvcYXPvQgHxbspwae7pELT/7j5+mn
-	 WmTeYzvY6YDW2y0EH7Ld/Xr96FyY/KYP02kwPA3M=
+	b=L/BAjVmjvf4ZDZlNt8DIORCKbJXaI7fUcQmvkcKhCylizil1kNpgvSWgJ3NYmsfOh
+	 /L2KU6QPw+MJvYOE45apOwG0UqUoUoPVFCqiC4y4RzWJHXPms3dTOkNpJNHab09kBG
+	 yNxKsDtnTY+XvX19pmjYxx5ZX4y/oogdnOTAN5Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com,
+	Nishanth Devarajan <ndev2021@gmail.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 379/499] ASoC: imx-card: Add NULL check in imx_card_probe()
-Date: Tue,  8 Apr 2025 12:49:51 +0200
-Message-ID: <20250408104900.684094393@linuxfoundation.org>
+Subject: [PATCH 6.13 388/499] net_sched: skbprio: Remove overly strict queue assertions
+Date: Tue,  8 Apr 2025 12:50:00 +0200
+Message-ID: <20250408104900.905441411@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,48 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 93d34608fd162f725172e780b1c60cc93a920719 ]
+[ Upstream commit ce8fe975fd99b49c29c42e50f2441ba53112b2e8 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-imx_card_probe() does not check for this case, which results in a NULL
-pointer dereference.
+In the current implementation, skbprio enqueue/dequeue contains an assertion
+that fails under certain conditions when SKBPRIO is used as a child qdisc under
+TBF with specific parameters. The failure occurs because TBF sometimes peeks at
+packets in the child qdisc without actually dequeuing them when tokens are
+unavailable.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+This peek operation creates a discrepancy between the parent and child qdisc
+queue length counters. When TBF later receives a high-priority packet,
+SKBPRIO's queue length may show a different value than what's reflected in its
+internal priority queue tracking, triggering the assertion.
 
-Fixes: aa736700f42f ("ASoC: imx-card: Add imx-card machine driver")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250401142510.29900-1-bsdhenrymartin@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The fix removes this overly strict assertions in SKBPRIO, they are not
+necessary at all.
+
+Reported-by: syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a3422a19b05ea96bee18
+Fixes: aea5f654e6b7 ("net/sched: add skbprio scheduler")
+Cc: Nishanth Devarajan <ndev2021@gmail.com>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250329222536.696204-2-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-card.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/sch_skbprio.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
-index 95a57fda02503..6684a4135b644 100644
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -767,6 +767,8 @@ static int imx_card_probe(struct platform_device *pdev)
- 				data->dapm_routes[i].sink =
- 					devm_kasprintf(&pdev->dev, GFP_KERNEL, "%d %s",
- 						       i + 1, "Playback");
-+				if (!data->dapm_routes[i].sink)
-+					return -ENOMEM;
- 				data->dapm_routes[i].source = "CPU-Playback";
- 			}
- 		}
-@@ -784,6 +786,8 @@ static int imx_card_probe(struct platform_device *pdev)
- 				data->dapm_routes[i].source =
- 					devm_kasprintf(&pdev->dev, GFP_KERNEL, "%d %s",
- 						       i + 1, "Capture");
-+				if (!data->dapm_routes[i].source)
-+					return -ENOMEM;
- 				data->dapm_routes[i].sink = "CPU-Capture";
- 			}
- 		}
+diff --git a/net/sched/sch_skbprio.c b/net/sched/sch_skbprio.c
+index 20ff7386b74bd..f485f62ab721a 100644
+--- a/net/sched/sch_skbprio.c
++++ b/net/sched/sch_skbprio.c
+@@ -123,8 +123,6 @@ static int skbprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	/* Check to update highest and lowest priorities. */
+ 	if (skb_queue_empty(lp_qdisc)) {
+ 		if (q->lowest_prio == q->highest_prio) {
+-			/* The incoming packet is the only packet in queue. */
+-			BUG_ON(sch->q.qlen != 1);
+ 			q->lowest_prio = prio;
+ 			q->highest_prio = prio;
+ 		} else {
+@@ -156,7 +154,6 @@ static struct sk_buff *skbprio_dequeue(struct Qdisc *sch)
+ 	/* Update highest priority field. */
+ 	if (skb_queue_empty(hpq)) {
+ 		if (q->lowest_prio == q->highest_prio) {
+-			BUG_ON(sch->q.qlen);
+ 			q->highest_prio = 0;
+ 			q->lowest_prio = SKBPRIO_MAX_PRIORITY - 1;
+ 		} else {
 -- 
 2.39.5
 
