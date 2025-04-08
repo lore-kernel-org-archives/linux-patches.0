@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6D826A0B3;
-	Tue,  8 Apr 2025 12:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B7E26A0B3;
+	Tue,  8 Apr 2025 12:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113980; cv=none; b=h7LBUE4LUu9lf0Kj6SiD71uHVL4ERbVULBnp3O6q0MBFDr7RTYB7CUtfuixCHgf/4phNOZp8DDq9shFQ7FMoaBbtxkJ5WQmsV6FMaVd1Ebe7MWlzI5Lb6hcnE7t/xli5FF6GHyfBT+K7+2QpWMRaybsX0WQk7RCBO0GtTCImwwc=
+	t=1744113983; cv=none; b=nZJKJ2Zj4en827SYOZDJmuNN6OUe1TQJEil8hwFm+WFcJE97e4EdLAMEPp3NkyIiTvAAvtA5mGlUxgg4pN/VqHRW3su9PkOLuIm0eBTIQFg+BGdOgOL406ibaJVgF1vCKjKXKpSBd+pm3pRcT1tgL0AkyicYexEl1g461Hu/xFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113980; c=relaxed/simple;
-	bh=Q+6q9soffcI2bjry5z74yPePfVMJaOBSHo3P1Z2WQxY=;
+	s=arc-20240116; t=1744113983; c=relaxed/simple;
+	bh=S4c/hpPMj8kPH1ciZMyQr+wI1dRZ+JzBg+YKsXmV0EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqbPe0Kw9hNLOp1NkZe8adyfPUWiRlZamBGzna74MkrEUGA4OXetCirgmD4q11iHrfVkEGk1Ax0m0DOzhmF/Detqjwm7dA7Z/IMM/JnabbC1so+TyhaRXkem9Lw819uZ9D3sIAU7pCoVtN4c+EmMgNTDHz9W0aONssWYunOGCqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnL4CuKT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3+55DFy+/Du3hKqWjqOvf37LkXofrUCkbhhRqtOYBGr7IaoI3W3YuWDW9cUOpFw/kUIW1B2cW6H+nv041LJz15iPA6V3qTAZ/A+yEFKGRvBlh4upiyRivlZcinmlqn1t9sKeRA17fY9qUbQGzShxfhOI/VHpua+upMER2O9Sr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4cVFmpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnL4CuKT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CEBC4CEE5;
-	Tue,  8 Apr 2025 12:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4cVFmpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DD0C4CEE5;
+	Tue,  8 Apr 2025 12:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113980;
-	bh=Q+6q9soffcI2bjry5z74yPePfVMJaOBSHo3P1Z2WQxY=;
+	s=korg; t=1744113982;
+	bh=S4c/hpPMj8kPH1ciZMyQr+wI1dRZ+JzBg+YKsXmV0EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnL4CuKTdmBe48tSfKHI6SMOXP2ZpGSgKckkxFJPVRqTB2XMQZ5J04b5kPb7cmnC2
-	 J/ozh7c1BmWkRX3sYPJYoA2I7JGYMMMjO8O0dilYAVGGOvdpPAB5qJvMSgxWJsCyDT
-	 rYjFB8MhiW/Tmob3Z34ECssCPtxpc21jfVrcxSu8=
+	b=Y4cVFmpY1Rzo3ovA2e5nc6gnCwXNjBs6/BPW0iwcnMQvyCgQ82h30WkeEd8MsVQZj
+	 e3aozDpSRyqGn3DGJ7aJ3bdhHGrTyo7YbnIQs6DBHI+kn/kEMzmk0toVHTWWCfZseL
+	 dwNIktKY0tZMOv9HbWRmUCAbXeTfuo5VkXo+F+Lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Oleg Gorobets <oleg.goro@gmail.com>
-Subject: [PATCH 5.4 092/154] ALSA: hda/realtek: Always honor no_shutup_pins
-Date: Tue,  8 Apr 2025 12:50:33 +0200
-Message-ID: <20250408104818.271815833@linuxfoundation.org>
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 093/154] drm/mediatek: mtk_hdmi: Fix typo for aud_sampe_size member
+Date: Tue,  8 Apr 2025 12:50:34 +0200
+Message-ID: <20250408104818.306600616@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,53 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 5a0c72c1da3cbc0cd4940a95d1be2830104c6edf ]
+[ Upstream commit 72fcb88e7bbc053ed4fc74cebb0315b98a0f20c3 ]
 
-The workaround for Dell machines to skip the pin-shutup for mic pins
-introduced alc_headset_mic_no_shutup() that is replaced from the
-generic snd_hda_shutup_pins() for certain codecs.  The problem is that
-the call is done unconditionally even if spec->no_shutup_pins is set.
-This seems causing problems on other platforms like Lenovo.
+Rename member aud_sampe_size of struct hdmi_audio_param to
+aud_sample_size to fix a typo and enhance readability.
 
-This patch corrects the behavior and the driver honors always
-spec->no_shutup_pins flag and skips alc_headset_mic_no_shutup() if
-it's set.
+This commit brings no functional changes.
 
-Fixes: dad3197da7a3 ("ALSA: hda/realtek - Fixup headphone noise via runtime suspend")
-Reported-and-tested-by: Oleg Gorobets <oleg.goro@gmail.com>
-Link: https://patch.msgid.link/20250315143020.27184-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8f83f26891e1 ("drm/mediatek: Add HDMI support")
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250217154836.108895-20-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 93bb7c5922e78..2e7b45f5f8b18 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -519,6 +519,9 @@ static void alc_shutup_pins(struct hda_codec *codec)
- {
- 	struct alc_spec *spec = codec->spec;
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 74a54a9e35339..afc0de27c976c 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -135,7 +135,7 @@ enum hdmi_aud_channel_swap_type {
  
-+	if (spec->no_shutup_pins)
-+		return;
-+
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
-@@ -534,8 +537,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 		alc_headset_mic_no_shutup(codec);
+ struct hdmi_audio_param {
+ 	enum hdmi_audio_coding_type aud_codec;
+-	enum hdmi_audio_sample_size aud_sampe_size;
++	enum hdmi_audio_sample_size aud_sample_size;
+ 	enum hdmi_aud_input_type aud_input_type;
+ 	enum hdmi_aud_i2s_fmt aud_i2s_fmt;
+ 	enum hdmi_aud_mclk aud_mclk;
+@@ -1085,7 +1085,7 @@ static int mtk_hdmi_output_init(struct mtk_hdmi *hdmi)
+ 
+ 	hdmi->csp = HDMI_COLORSPACE_RGB;
+ 	aud_param->aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-	aud_param->aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++	aud_param->aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 	aud_param->aud_input_type = HDMI_AUD_INPUT_I2S;
+ 	aud_param->aud_i2s_fmt = HDMI_I2S_MODE_I2S_24BIT;
+ 	aud_param->aud_mclk = HDMI_AUD_MCLK_128FS;
+@@ -1589,14 +1589,14 @@ static int mtk_hdmi_audio_hw_params(struct device *dev, void *data,
+ 	switch (daifmt->fmt) {
+ 	case HDMI_I2S:
+ 		hdmi_params.aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-		hdmi_params.aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++		hdmi_params.aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 		hdmi_params.aud_input_type = HDMI_AUD_INPUT_I2S;
+ 		hdmi_params.aud_i2s_fmt = HDMI_I2S_MODE_I2S_24BIT;
+ 		hdmi_params.aud_mclk = HDMI_AUD_MCLK_128FS;
+ 		break;
+ 	case HDMI_SPDIF:
+ 		hdmi_params.aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-		hdmi_params.aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++		hdmi_params.aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 		hdmi_params.aud_input_type = HDMI_AUD_INPUT_SPDIF;
  		break;
  	default:
--		if (!spec->no_shutup_pins)
--			snd_hda_shutup_pins(codec);
-+		snd_hda_shutup_pins(codec);
- 		break;
- 	}
- }
 -- 
 2.39.5
 
