@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636F3267F6D;
-	Tue,  8 Apr 2025 11:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F046263C71;
+	Tue,  8 Apr 2025 11:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110396; cv=none; b=nLPOCj4/Khp28I/RyxD9Fqcdsn/2HBjBrY7Ci9Hj/OaF1SmKmI/8PJGyJ/51WWGBi1kdI5KmG+fVQTdk4IzaDIoxiHasEYliVRytpCHklp3NQQhWOUjo9OQfnRAX6Uhu4WeonSJxuat+JuYuZpkgn/wb3g5X+Wf7owT3EF4fs18=
+	t=1744110399; cv=none; b=U4v75L57juSx4RoQPWzA1AaxRN1ddTNMdBOoL5C4DJNHQ2wTSJ/Wkhxo2mOFfIinzw25wad9pvTspZe2CUEVVg6Cie3uxGcVXZvDiFcj/5VeI2cC/XlKb/2uIMrP2N9k89bL70oOrJDJC6p0HlNy3+C4w4HsbIJXCA47xsj8Eig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110396; c=relaxed/simple;
-	bh=QgoHrLMPnn3N2IJZqxcn0+X5rMMf/f7lZGgkYf2g0k8=;
+	s=arc-20240116; t=1744110399; c=relaxed/simple;
+	bh=U2Az021s7iOCdyul8QhZzdvRRgM2rD2B9VDuFaDNP7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNO+sO/FlCVBWE/3WJf4hNviRr3Om1y7NW4osjKFo0seF4rRCNV3oUkUY2PEmgWuYBNDUMVWHrGnJn5WiXIQGWwbIE3K0Lv/xOu/jwlGQUIqE+TLTi0dYGxcUZnVhCBYVTycwAYr4FTZjACOQurG70/okx7jvtjt7gf1wl5OnVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeNNkSJk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7g/EC9IPhTn4VcMm0dvM//TCYOSyJB84LEES7KCsaBm2zTBjhrkGnftjEi37ODCyurzSIHj12lwJDisodm/p3WTgvOFuYqAyiGeKxPj2AAVUUz03bH735Mkzb4judOFzz1c10MHNNdqJsY5/Y/LZOd3JKiinubSG4bts3vLoY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTH/oMqH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeNNkSJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E603CC4CEE5;
-	Tue,  8 Apr 2025 11:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTH/oMqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD36C4CEE5;
+	Tue,  8 Apr 2025 11:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110396;
-	bh=QgoHrLMPnn3N2IJZqxcn0+X5rMMf/f7lZGgkYf2g0k8=;
+	s=korg; t=1744110399;
+	bh=U2Az021s7iOCdyul8QhZzdvRRgM2rD2B9VDuFaDNP7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeNNkSJkmgHTMdR3nNuSecZIR28uF1UbsFOfORH2PEzrjH1ectLZHOLMost5O/D+1
-	 wWZpNW/dmYONCg62cDc1RO/ec9MnU2x6nbeXdznZjDC+bvtqOOOJt0JgQ1LA6e/JC2
-	 Jtm4nKOwK05WTK1HG8f0TS1HAiMkixWoljMKbv4k=
+	b=kTH/oMqHKB+DTAUlYWicF0UauyNfjGs3uZXHWUvSFXVR+fYrIMeVxo+DBp1UrYH1E
+	 9RPcPlIuyMkgcZp4RJ7nuaxCswp2un/b4b86KjWE50Prwj6bKSL3ovusC4hdHCdhvC
+	 SaXiwvL9R3M38pOUvtVrKhkc4YRP2L4Y+p7PtzT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 049/731] sched/deadline: Ignore special tasks when rebuilding domains
-Date: Tue,  8 Apr 2025 12:39:06 +0200
-Message-ID: <20250408104915.417065902@linuxfoundation.org>
+Subject: [PATCH 6.14 050/731] sched/topology: Wrappers for sched_domains_mutex
+Date: Tue,  8 Apr 2025 12:39:07 +0200
+Message-ID: <20250408104915.439043865@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -57,13 +57,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit f6147af176eaa4027b692fdbb1a0a60dfaa1e9b6 ]
+[ Upstream commit 56209334dda1832c0a919e1d74768c6d0f3b2ca9 ]
 
-SCHED_DEADLINE special tasks get a fake bandwidth that is only used to
-make sure sleeping and priority inheritance 'work', but it is ignored
-for runtime enforcement and admission control.
-
-Be consistent with it also when rebuilding root domains.
+Create wrappers for sched_domains_mutex so that it can transparently be
+used on both CONFIG_SMP and !CONFIG_SMP, as some function will need to
+do.
 
 Fixes: 53916d5fd3c0 ("sched/deadline: Check bandwidth overflow earlier for hotplug")
 Reported-by: Jon Hunter <jonathanh@nvidia.com>
@@ -74,25 +72,128 @@ Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
 Tested-by: Waiman Long <longman@redhat.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Link: https://lore.kernel.org/r/20250313170011.357208-2-juri.lelli@redhat.com
+Link: https://lore.kernel.org/r/Z9MP5Oq9RB8jBs3y@jlelli-thinkpadt14gen4.remote.csb
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/sched.h   |  5 +++++
+ kernel/cgroup/cpuset.c  |  4 ++--
+ kernel/sched/core.c     |  4 ++--
+ kernel/sched/debug.c    |  8 ++++----
+ kernel/sched/topology.c | 12 ++++++++++--
+ 5 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index ff4df16b5186d..1a041c1fc0d1e 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2956,7 +2956,7 @@ void dl_add_task_root_domain(struct task_struct *p)
- 	struct dl_bw *dl_b;
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index b13c9545d5d67..6e5c38718ff56 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -383,6 +383,11 @@ enum uclamp_id {
+ #ifdef CONFIG_SMP
+ extern struct root_domain def_root_domain;
+ extern struct mutex sched_domains_mutex;
++extern void sched_domains_mutex_lock(void);
++extern void sched_domains_mutex_unlock(void);
++#else
++static inline void sched_domains_mutex_lock(void) { }
++static inline void sched_domains_mutex_unlock(void) { }
+ #endif
  
- 	raw_spin_lock_irqsave(&p->pi_lock, rf.flags);
--	if (!dl_task(p)) {
-+	if (!dl_task(p) || dl_entity_is_special(&p->dl)) {
- 		raw_spin_unlock_irqrestore(&p->pi_lock, rf.flags);
- 		return;
+ struct sched_param {
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 0f910c828973a..f87526edb2a46 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -994,10 +994,10 @@ static void
+ partition_and_rebuild_sched_domains(int ndoms_new, cpumask_var_t doms_new[],
+ 				    struct sched_domain_attr *dattr_new)
+ {
+-	mutex_lock(&sched_domains_mutex);
++	sched_domains_mutex_lock();
+ 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
+ 	dl_rebuild_rd_accounting();
+-	mutex_unlock(&sched_domains_mutex);
++	sched_domains_mutex_unlock();
+ }
+ 
+ /*
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 042351c7afce7..8adf495491179 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8424,9 +8424,9 @@ void __init sched_init_smp(void)
+ 	 * CPU masks are stable and all blatant races in the below code cannot
+ 	 * happen.
+ 	 */
+-	mutex_lock(&sched_domains_mutex);
++	sched_domains_mutex_lock();
+ 	sched_init_domains(cpu_active_mask);
+-	mutex_unlock(&sched_domains_mutex);
++	sched_domains_mutex_unlock();
+ 
+ 	/* Move init over to a non-isolated CPU */
+ 	if (set_cpus_allowed_ptr(current, housekeeping_cpumask(HK_TYPE_DOMAIN)) < 0)
+diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
+index ef047add7f9e6..a0893a483d35d 100644
+--- a/kernel/sched/debug.c
++++ b/kernel/sched/debug.c
+@@ -292,7 +292,7 @@ static ssize_t sched_verbose_write(struct file *filp, const char __user *ubuf,
+ 	bool orig;
+ 
+ 	cpus_read_lock();
+-	mutex_lock(&sched_domains_mutex);
++	sched_domains_mutex_lock();
+ 
+ 	orig = sched_debug_verbose;
+ 	result = debugfs_write_file_bool(filp, ubuf, cnt, ppos);
+@@ -304,7 +304,7 @@ static ssize_t sched_verbose_write(struct file *filp, const char __user *ubuf,
+ 		sd_dentry = NULL;
  	}
+ 
+-	mutex_unlock(&sched_domains_mutex);
++	sched_domains_mutex_unlock();
+ 	cpus_read_unlock();
+ 
+ 	return result;
+@@ -515,9 +515,9 @@ static __init int sched_init_debug(void)
+ 	debugfs_create_u32("migration_cost_ns", 0644, debugfs_sched, &sysctl_sched_migration_cost);
+ 	debugfs_create_u32("nr_migrate", 0644, debugfs_sched, &sysctl_sched_nr_migrate);
+ 
+-	mutex_lock(&sched_domains_mutex);
++	sched_domains_mutex_lock();
+ 	update_sched_domain_debugfs();
+-	mutex_unlock(&sched_domains_mutex);
++	sched_domains_mutex_unlock();
+ #endif
+ 
+ #ifdef CONFIG_NUMA_BALANCING
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index c49aea8c10254..296ff2acfd321 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -6,6 +6,14 @@
+ #include <linux/bsearch.h>
+ 
+ DEFINE_MUTEX(sched_domains_mutex);
++void sched_domains_mutex_lock(void)
++{
++	mutex_lock(&sched_domains_mutex);
++}
++void sched_domains_mutex_unlock(void)
++{
++	mutex_unlock(&sched_domains_mutex);
++}
+ 
+ /* Protected by sched_domains_mutex: */
+ static cpumask_var_t sched_domains_tmpmask;
+@@ -2791,7 +2799,7 @@ void partition_sched_domains_locked(int ndoms_new, cpumask_var_t doms_new[],
+ void partition_sched_domains(int ndoms_new, cpumask_var_t doms_new[],
+ 			     struct sched_domain_attr *dattr_new)
+ {
+-	mutex_lock(&sched_domains_mutex);
++	sched_domains_mutex_lock();
+ 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
+-	mutex_unlock(&sched_domains_mutex);
++	sched_domains_mutex_unlock();
+ }
 -- 
 2.39.5
 
