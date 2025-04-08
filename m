@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6112265630;
-	Tue,  8 Apr 2025 12:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F63226B2DB;
+	Tue,  8 Apr 2025 12:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116251; cv=none; b=J6Lvc0RVhos5jAftz7++I68YrsdKAnxkfPgeWu03G4TqotfRCfW9ApGN00V3/XbFuTCrH9RL3RGBmeZBBh8dgaOrrqQ5Cu+ay2CwhVT5iYTx1ZtYYj9cqrsCv0PVEooNCFiXfSaxrTzB7d1PBIBHvVRHMiTCY4WJVtRsenUsmVc=
+	t=1744116254; cv=none; b=KnPGKFrmljHv1C3Kr/W6ItYrTiPa6xJRiGp0s47YsL499CyUwU17bTujmWS2CH5dilQ7H4Kfg1OEOAWl2WYMYKeHXuJ31vyf+mmZuofPxCUMN0UItNmCi2L9cC85zk/83XOu/aHNjGv/bxSY780rt8doNa192LA0ygUcAV6hRGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116251; c=relaxed/simple;
-	bh=ok2dsSmslfALs5R5nKRXZu8Ay0NvAKhRDfoI5itWbzQ=;
+	s=arc-20240116; t=1744116254; c=relaxed/simple;
+	bh=4phjdJXAvHOloPlUCc9Y8Als5NDGG57ntRs11wUoe2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=is0rg13Nf4xaG8TN4pKVg8ZR1JTGEyM+X76fzL/G+af2QX2LfjtSIyxDYENxwvgzdT8wrFclbbszCZ7/pUi7cfdtYR/qJRxhsKtzzu0kYhWkm2NtHEN+At18thaELPpjQRaQuON+UiP9iGF7k36VueugRAb7ffeRDoQubpoUolQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELqalhSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JOvMLGJJZRHdGsuogMz9CE6746i231mSpOcbobMWMa5gB8g5ZTH3KJP/RFZ/LN2ABA54fiJJJqeA9ZpDMslYsIbqoU2n6Bgc9yx71CTK7nuXMomSXo4evE6pzxmUpcaKmp+PeNAynAQ/DOeT/8XmMr3SZ0TbKLfDdnznQxxsWIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wb+iwWcj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELqalhSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3886AC4CEE5;
-	Tue,  8 Apr 2025 12:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wb+iwWcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48DAC4CEE5;
+	Tue,  8 Apr 2025 12:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116251;
-	bh=ok2dsSmslfALs5R5nKRXZu8Ay0NvAKhRDfoI5itWbzQ=;
+	s=korg; t=1744116254;
+	bh=4phjdJXAvHOloPlUCc9Y8Als5NDGG57ntRs11wUoe2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELqalhSp1oV4Rpe9cnzqFYPnqswsDfj8+zqUkrg+qEo1swWNiL8SNhnRMDRq6LGME
-	 BHbsBquNHEQPtxQ8y8RhjvmxAY7mxGEjRbBLfTszsBEqLKImLmyyy1n1Jbdz3I+1T/
-	 H9xgusz2QQbCGeE0GvEt+n0uhr2QaPYnWMSVZx6s=
+	b=Wb+iwWcjP+uuTLUieUartwKoO7pn1xvJxNLZwyMl7uAeDaUJges3dw16GiTnKWyHt
+	 UaUxWL2vB2pDiwizdkH2SxtxVfzDy6YIvHrEPB7fnnRHXk92e67Lv+560UYg1AvcEi
+	 S29EvTD0Uru/VawVF/8ctbKaPEFppjcPgB4CWE+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Hans Zhang <hans.zhang@cixtech.com>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/423] PCI: cadence-ep: Fix the driver to send MSG TLP for INTx without data payload
-Date: Tue,  8 Apr 2025 12:46:37 +0200
-Message-ID: <20250408104847.401910125@linuxfoundation.org>
+Subject: [PATCH 6.12 072/423] PCI: brcmstb: Set generation limit before PCIe link up
+Date: Tue,  8 Apr 2025 12:46:38 +0200
+Message-ID: <20250408104847.423668227@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,61 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit 3ac47fbf4f6e8c3a7c3855fac68cc3246f90f850 ]
+[ Upstream commit 72d36589c6b7bef6b30eb99fcb7082f72faca37f ]
 
-Per the Cadence's "PCIe Controller IP for AX14" user guide, Version
-1.04, Section 9.1.7.1, "AXI Subordinate to PCIe Address Translation
-Registers", Table 9.4, the bit 16 of the AXI Subordinate Address
-(axi_s_awaddr) when set corresponds to MSG with data, and when not set,
-to MSG without data.
+When the user elects to limit the PCIe generation via the appropriate
+devicetree property, apply the settings before the PCIe link up, not
+after.
 
-However, the driver is currently doing the opposite and due to this,
-the INTx is never received on the host.
-
-So, fix the driver to reflect the documentation and also make INTx work.
-
-Fixes: 37dddf14f1ae ("PCI: cadence: Add EndPoint Controller driver for Cadence PCIe controller")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Hans Zhang <hans.zhang@cixtech.com>
+Fixes: c0452137034b ("PCI: brcmstb: Add Broadcom STB PCIe host controller driver")
+Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250214165724.184599-1-18255117159@163.com
+Link: https://lore.kernel.org/r/20250214173944.47506-2-james.quinlan@broadcom.com
 [kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-ep.c | 3 +--
- drivers/pci/controller/cadence/pcie-cadence.h    | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-index e0cc4560dfde7..0bf4cde34f517 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-@@ -352,8 +352,7 @@ static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
- 	spin_unlock_irqrestore(&ep->lock, flags);
+diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
+index 9321280f6edba..98e3531927298 100644
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -1276,6 +1276,10 @@ static int brcm_pcie_start_link(struct brcm_pcie *pcie)
+ 	bool ssc_good = false;
+ 	int ret, i;
  
- 	offset = CDNS_PCIE_NORMAL_MSG_ROUTING(MSG_ROUTING_LOCAL) |
--		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code) |
--		 CDNS_PCIE_MSG_NO_DATA;
-+		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code);
- 	writel(0, ep->irq_cpu_addr + offset);
- }
++	/* Limit the generation if specified */
++	if (pcie->gen)
++		brcm_pcie_set_gen(pcie, pcie->gen);
++
+ 	/* Unassert the fundamental reset */
+ 	ret = pcie->perst_set(pcie, 0);
+ 	if (ret)
+@@ -1302,9 +1306,6 @@ static int brcm_pcie_start_link(struct brcm_pcie *pcie)
  
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index f5eeff834ec19..39ee9945c903e 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -246,7 +246,7 @@ struct cdns_pcie_rp_ib_bar {
- #define CDNS_PCIE_NORMAL_MSG_CODE_MASK		GENMASK(15, 8)
- #define CDNS_PCIE_NORMAL_MSG_CODE(code) \
- 	(((code) << 8) & CDNS_PCIE_NORMAL_MSG_CODE_MASK)
--#define CDNS_PCIE_MSG_NO_DATA			BIT(16)
-+#define CDNS_PCIE_MSG_DATA			BIT(16)
+ 	brcm_config_clkreq(pcie);
  
- struct cdns_pcie;
- 
+-	if (pcie->gen)
+-		brcm_pcie_set_gen(pcie, pcie->gen);
+-
+ 	if (pcie->ssc) {
+ 		ret = brcm_pcie_set_ssc(pcie);
+ 		if (ret == 0)
 -- 
 2.39.5
 
