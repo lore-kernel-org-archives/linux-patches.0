@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26288269811;
-	Tue,  8 Apr 2025 12:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD69268FEB;
+	Tue,  8 Apr 2025 12:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113764; cv=none; b=m2ka97kbAquDHlEGGPax8vAnDXjIs/0BoKsY1R7r+CpaDYmGgCYIjEoaxDOcjJ9SRcuFqCb7oKbLmlvamng+pqFeX8ucaJBuf1HwxQHvwweIBoyiS1C4FytoC0dXEfcKvfL8JyIcShzdCr4FF/F34ofX9wkK9LsCHbnmOFqtiuw=
+	t=1744113767; cv=none; b=DLJlzNahmRqG5ucKh1nwZcqPv9ruuesJdNxSYw3kbZKef/gwPqvCgd33vFoF3sB9mvbHdZEHAxAUsSD1cOyEqjzKLlYU75TJQ3ey2iHEomcf+XLzd8SjxAqA24JpHR462+zRUu4cn+p43brfX7OhoCrv9e1HhyJelyFwmFh6HkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113764; c=relaxed/simple;
-	bh=eEM14DEzRLhJ1lVPgIEEpfuEi5ygaddBZ5fEZ2WMCyE=;
+	s=arc-20240116; t=1744113767; c=relaxed/simple;
+	bh=NQPlX+k1dtPZONU6ppqcHLdEIWURoqcmVIrNwtEfm4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryM83llV89wcXvx5kz64V/SWg/r8v7IJDw5pOMNAE4SX5hx5r5zENgNGHLNICKFU1QYa5fTRTzxPiydedfU+h2A/LDB2Llf3rZDpcUPQy44cdUQWA/kOfIWuSOhTPE5Ik3G+/dr0dyCWbFVQRNZIgNF2Blw48J1YA46ZfpCw0Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilFnnk2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTwN+5liT9Y+o8KTXX0xWups1Jwtpk03uSqMkLa+9rhOHE38tRfK4/IGA384ul5SwLbj9BzTVsSFgn48R6AR0Yk1hRP5R5LPoIlIaXmxP9neObcmiIHToGvDUiDWOrP5euqVjns0HC+cwgx88Lkrz/dTx6walha95qLxL+rLg/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNuIL5Ff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilFnnk2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD9C4CEEA;
-	Tue,  8 Apr 2025 12:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNuIL5Ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B5EC4CEE5;
+	Tue,  8 Apr 2025 12:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113764;
-	bh=eEM14DEzRLhJ1lVPgIEEpfuEi5ygaddBZ5fEZ2WMCyE=;
+	s=korg; t=1744113766;
+	bh=NQPlX+k1dtPZONU6ppqcHLdEIWURoqcmVIrNwtEfm4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilFnnk2TAaEvBvZwOdSr5KAtbpiJ07EH6PEINGcrEnVHx/IEe2WWROnOT9wXEzqvU
-	 pg86jAziTqSfXBUP4roNckfs/51Q4GaKNENTdFl5LpvZisE88wmUdTzvwEbjTc2Qkb
-	 YaIBR6qfD92sml5hsDQh3ySbEnNpBu9dfkUavp5s=
+	b=mNuIL5FfOzqVO4lpjw438q0gNXznSpF0sXN2pJz42RloNdHLgfgdLtcMeeFjk8MdD
+	 YvLLtjzWe1Frch65YKZjYAWtp+lTHzO5dXuPz5A65C9IRMt7LzzacLnyAshJ/eWiKo
+	 8Qk68nDPkaqpF/T87aSLQBfRWxzaBViQ1IKgnelU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 012/154] netpoll: netpoll_send_skb() returns transmit status
-Date: Tue,  8 Apr 2025 12:49:13 +0200
-Message-ID: <20250408104815.681236997@linuxfoundation.org>
+Subject: [PATCH 5.4 013/154] netpoll: hold rcu read lock in __netpoll_send_skb()
+Date: Tue,  8 Apr 2025 12:49:14 +0200
+Message-ID: <20250408104815.714634130@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,78 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 1ddabdfaf70c202b88925edd74c66f4707dbd92e ]
+[ Upstream commit 505ead7ab77f289f12d8a68ac83da068e4d4408b ]
 
-Some callers want to know if the packet has been sent or
-dropped, to inform upper stacks.
+The function __netpoll_send_skb() is being invoked without holding the
+RCU read lock. This oversight triggers a warning message when
+CONFIG_PROVE_RCU_LIST is enabled:
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 505ead7ab77f ("netpoll: hold rcu read lock in __netpoll_send_skb()")
+	net/core/netpoll.c:330 suspicious rcu_dereference_check() usage!
+
+	 netpoll_send_skb
+	 netpoll_send_udp
+	 write_ext_msg
+	 console_flush_all
+	 console_unlock
+	 vprintk_emit
+
+To prevent npinfo from disappearing unexpectedly, ensure that
+__netpoll_send_skb() is protected with the RCU read lock.
+
+Fixes: 2899656b494dcd1 ("netpoll: take rcu_read_lock_bh() in netpoll_send_skb_on_dev()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250306-netpoll_rcu_v2-v2-1-bc4f5c51742a@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netpoll.h |  2 +-
- net/core/netpoll.c      | 11 +++++++----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ net/core/netpoll.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index 2db513437d2c0..f8f5270a891d0 100644
---- a/include/linux/netpoll.h
-+++ b/include/linux/netpoll.h
-@@ -63,7 +63,7 @@ int netpoll_setup(struct netpoll *np);
- void __netpoll_cleanup(struct netpoll *np);
- void __netpoll_free(struct netpoll *np);
- void netpoll_cleanup(struct netpoll *np);
--void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb);
-+netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb);
- 
- #ifdef CONFIG_NETPOLL
- static inline void *netpoll_poll_lock(struct napi_struct *napi)
 diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 5eefbb2e145a4..408fc07007900 100644
+index 408fc07007900..940d371f5f3b5 100644
 --- a/net/core/netpoll.c
 +++ b/net/core/netpoll.c
-@@ -323,7 +323,7 @@ static int netpoll_owner_active(struct net_device *dev)
- }
- 
- /* call with IRQ disabled */
--static void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
-+static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+@@ -326,6 +326,7 @@ static int netpoll_owner_active(struct net_device *dev)
+ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
  {
  	netdev_tx_t status = NETDEV_TX_BUSY;
++	netdev_tx_t ret = NET_XMIT_DROP;
  	struct net_device *dev;
-@@ -338,7 +338,7 @@ static void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 	unsigned long tries;
+ 	/* It is up to the caller to keep npinfo alive. */
+@@ -334,11 +335,12 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 	lockdep_assert_irqs_disabled();
+ 
+ 	dev = np->dev;
++	rcu_read_lock();
+ 	npinfo = rcu_dereference_bh(dev->npinfo);
  
  	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
  		dev_kfree_skb_irq(skb);
--		return;
-+		return NET_XMIT_DROP;
+-		return NET_XMIT_DROP;
++		goto out;
  	}
  
  	/* don't get messages out of order, and no recursion */
-@@ -377,15 +377,18 @@ static void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+@@ -377,7 +379,10 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
  		skb_queue_tail(&npinfo->txq, skb);
  		schedule_delayed_work(&npinfo->tx_work,0);
  	}
-+	return NETDEV_TX_OK;
- }
- 
--void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
-+netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- {
- 	unsigned long flags;
-+	netdev_tx_t ret;
- 
- 	local_irq_save(flags);
--	__netpoll_send_skb(np, skb);
-+	ret = __netpoll_send_skb(np, skb);
- 	local_irq_restore(flags);
+-	return NETDEV_TX_OK;
++	ret = NETDEV_TX_OK;
++out:
++	rcu_read_unlock();
 +	return ret;
  }
- EXPORT_SYMBOL(netpoll_send_skb);
  
+ netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
 -- 
 2.39.5
 
