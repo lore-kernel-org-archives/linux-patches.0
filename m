@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E9822424C;
-	Tue,  8 Apr 2025 11:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E102C22424C;
+	Tue,  8 Apr 2025 11:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112431; cv=none; b=JAguEh4AdyuHi0qZr1Tz9LnvspDJAkKGjv9EV5sjPy5j5/CKziKH9ttsLyZ1LsUGffG5RYuPi4uL04ZPEvBPtwE/NuO+F9sWNztyWhwZEbiU7ZkuRPqi+TrBxp/r3LzmArHWFYp6TxCcbnq/RaUt97zZKQeS5T4bCuEc1N6snaY=
+	t=1744112434; cv=none; b=DI9RvQLc9zTj9jP5flr1sBZ7z4AdkiPHOkhUat14tHVwqnY+h4tUkuddZoDVU16sO1DHhm+dOwe80BSM1O0MPLamThPN/GbStDFdt7ZuK5K1DRPRfV6r/QnENGVhG5f14qLv2STgULcWJDJkwANRBejoTuinCyXQFXltfGVd6rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112431; c=relaxed/simple;
-	bh=D5JcXAeVNiQDMNUYSbsxecR+4riL/ByVXYwyYOFzkGc=;
+	s=arc-20240116; t=1744112434; c=relaxed/simple;
+	bh=EEueIMvJnGT75uzv7AiJsm5k0rK/v9P/JRIkgdXaUAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gd8rHLi25yfM4ojfeH4n6YAlFelNXz5DEohahucE194UoYjpx8NRXikt4YOuEnEVWswVEd98Bc6z6hugChKE0LqtupigX0fgb4f1i98FNa8d3gBp71kJHqWT4IAHFMHy/9X1z3AACUvxEeKeB2F87CXdjsHr9QBnT/1QVZngJIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgaF/tMl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6Gnv1MxeZ74b+1brR6+ASPTxfvqmT9KRdeqMUY3ueD/3q1E0fhOaVdsQuH29nNJYRuE7J1YGUFknqKP76QxQU/n/z5VSpWk0cCBEGQ7ltEoYnoUs0uUVjjapaZGnvt7nlu6FdnZAT21NMWMCO40ESnb4d3rXEMZ3B0r6lxKocU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqiXIZ3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgaF/tMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CFBC4CEE5;
-	Tue,  8 Apr 2025 11:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqiXIZ3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73624C4CEE5;
+	Tue,  8 Apr 2025 11:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112431;
-	bh=D5JcXAeVNiQDMNUYSbsxecR+4riL/ByVXYwyYOFzkGc=;
+	s=korg; t=1744112433;
+	bh=EEueIMvJnGT75uzv7AiJsm5k0rK/v9P/JRIkgdXaUAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgaF/tMlcnGYaBK06RIp8ocFdBZ9lG5deTiTIBCG0GCGOqdUyKQegUPQFDuEk0DSS
-	 Yu6GFoIOnEFTXvlGwwXPRZWkfRb1JVlCcbCrCmC4rtuaSmrcp0D8BHRKnOlKxTcAtH
-	 v11UeJs2kyXfktqxLyqdr3TnfRJ5r/I/7i/E12DI=
+	b=GqiXIZ3THQs0XE9wImmv/n6LTv949gTNrdDFVZ+UtWqy+aRrGaJ5uYYxiIi3JRGdM
+	 nmHIyrd4tGYAClT2Qclj4lUmBJPMuOZBrhrLapkJl//txpjfmA9IesJF280Y0m0xxW
+	 MhipiF71ZZwvqoioE43cHxzOUZK9RGp11Yzfhtek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/279] ASoC: ops: Consistently treat platform_max as control value
-Date: Tue,  8 Apr 2025 12:47:28 +0200
-Message-ID: <20250408104828.098063450@linuxfoundation.org>
+Subject: [PATCH 5.15 066/279] drm/gma500: Add NULL check for pci_gfx_root in mid_get_vbt_data()
+Date: Tue,  8 Apr 2025 12:47:29 +0200
+Message-ID: <20250408104828.122979018@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,104 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 0eba2a7e858907a746ba69cd002eb9eb4dbd7bf3 ]
+[ Upstream commit 9af152dcf1a06f589f44a74da4ad67e365d4db9a ]
 
-This reverts commit 9bdd10d57a88 ("ASoC: ops: Shift tested values in
-snd_soc_put_volsw() by +min"), and makes some additional related
-updates.
+Since pci_get_domain_bus_and_slot() can return NULL, add NULL check for
+pci_gfx_root in the mid_get_vbt_data().
 
-There are two ways the platform_max could be interpreted; the maximum
-register value, or the maximum value the control can be set to. The
-patch moved from treating the value as a control value to a register
-one. When the patch was applied it was technically correct as
-snd_soc_limit_volume() also used the register interpretation. However,
-even then most of the other usages treated platform_max as a
-control value, and snd_soc_limit_volume() has since been updated to
-also do so in commit fb9ad24485087 ("ASoC: ops: add correct range
-check for limiting volume"). That patch however, missed updating
-snd_soc_put_volsw() back to the control interpretation, and fixing
-snd_soc_info_volsw_range(). The control interpretation makes more
-sense as limiting is typically done from the machine driver, so it is
-appropriate to use the customer facing representation rather than the
-internal codec representation. Update all the code to consistently use
-this interpretation of platform_max.
+This change is similar to the checks implemented in mid_get_fuse_settings()
+and mid_get_pci_revID(), which were introduced by commit 0cecdd818cd7
+("gma500: Final enables for Oaktrail") as "additional minor
+bulletproofing".
 
-Finally, also add some comments to the soc_mixer_control struct to
-hopefully avoid further patches switching between the two approaches.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: fb9ad24485087 ("ASoC: ops: add correct range check for limiting volume")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250228151456.3703342-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f910b411053f ("gma500: Add the glue to the various BIOS and firmware interfaces")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250306112046.17144-1-i.abramov@mt-integration.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc.h |  5 ++++-
- sound/soc/soc-ops.c | 15 +++++++--------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/gma500/mid_bios.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index 3f0369aae2faf..42358dbc19b8c 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -1113,7 +1113,10 @@ void snd_soc_close_delayed_work(struct snd_soc_pcm_runtime *rtd);
+diff --git a/drivers/gpu/drm/gma500/mid_bios.c b/drivers/gpu/drm/gma500/mid_bios.c
+index 68e787924ed04..1ba33f9518da2 100644
+--- a/drivers/gpu/drm/gma500/mid_bios.c
++++ b/drivers/gpu/drm/gma500/mid_bios.c
+@@ -280,6 +280,11 @@ static void mid_get_vbt_data(struct drm_psb_private *dev_priv)
+ 					    0, PCI_DEVFN(2, 0));
+ 	int ret = -1;
  
- /* mixer control */
- struct soc_mixer_control {
--	int min, max, platform_max;
-+	/* Minimum and maximum specified as written to the hardware */
-+	int min, max;
-+	/* Limited maximum value specified as presented through the control */
-+	int platform_max;
- 	int reg, rreg;
- 	unsigned int shift, rshift;
- 	unsigned int sign_bit;
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 57caa91a4376e..d8d0a26a554de 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -317,7 +317,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
- 		mask = BIT(sign_bit + 1) - 1;
- 
- 	val = ucontrol->value.integer.value[0];
--	if (mc->platform_max && ((int)val + min) > mc->platform_max)
-+	if (mc->platform_max && val > mc->platform_max)
- 		return -EINVAL;
- 	if (val > max - min)
- 		return -EINVAL;
-@@ -330,7 +330,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
- 	val = val << shift;
- 	if (snd_soc_volsw_is_stereo(mc)) {
- 		val2 = ucontrol->value.integer.value[1];
--		if (mc->platform_max && ((int)val2 + min) > mc->platform_max)
-+		if (mc->platform_max && val2 > mc->platform_max)
- 			return -EINVAL;
- 		if (val2 > max - min)
- 			return -EINVAL;
-@@ -485,17 +485,16 @@ int snd_soc_info_volsw_range(struct snd_kcontrol *kcontrol,
- {
- 	struct soc_mixer_control *mc =
- 		(struct soc_mixer_control *)kcontrol->private_value;
--	int platform_max;
--	int min = mc->min;
-+	int max;
- 
--	if (!mc->platform_max)
--		mc->platform_max = mc->max;
--	platform_max = mc->platform_max;
-+	max = mc->max - mc->min;
-+	if (mc->platform_max && mc->platform_max < max)
-+		max = mc->platform_max;
- 
- 	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
- 	uinfo->count = snd_soc_volsw_is_stereo(mc) ? 2 : 1;
- 	uinfo->value.integer.min = 0;
--	uinfo->value.integer.max = platform_max - min;
-+	uinfo->value.integer.max = max;
- 
- 	return 0;
- }
++	if (pci_gfx_root == NULL) {
++		WARN_ON(1);
++		return;
++	}
++
+ 	/* Get the address of the platform config vbt */
+ 	pci_read_config_dword(pci_gfx_root, 0xFC, &addr);
+ 	pci_dev_put(pci_gfx_root);
 -- 
 2.39.5
 
