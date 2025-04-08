@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2077D207E14;
-	Tue,  8 Apr 2025 11:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF9B207E14;
+	Tue,  8 Apr 2025 11:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111304; cv=none; b=o8o7RujZs2KZs/XKrT5J+YuJR/6S7ZQ4mlzuQFpdtlQk3VndYqQacb+TeaFjmNTVk7hlpky/AVyvfwB6ZuhMLC0AjXJ9Cq/k7JZp6O4iHR0GDnn1RazW22EknXOik09nZzlwroWosQ3hb1pd3zE4kYUDQvqsONgdVI+mKdVr2d0=
+	t=1744111306; cv=none; b=PqoPrRt9D/3JHUWxFcrGGVXELioUBJdmjwYKFhlOVLBZLO54xuRkoC7FbZofNcDP3nBbfOkEvzPX9Bn787DIyeEeaCyLg3RRuYbHHClLvjkTx1kMXgTQdfH+TZpuBEyGc5SbvgZAZp1cjMtXgo16nO9wqvG/aPG7Qfs/uKBzCTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111304; c=relaxed/simple;
-	bh=UC4Mhx7eJOSmQQCuLiC/6d/5fkQ53VWRCECHE5J8Bog=;
+	s=arc-20240116; t=1744111306; c=relaxed/simple;
+	bh=OqJLNqBY+2vg8l4gGxbZVgzWSlN6p8Pf4tGUVJ9+Fr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkSy0mHXTaRCLhx1OXIEUUsnCdK2DixTe4DpdWRYi4dxrTczCfaOdDi91hmnPIC8/b5f8aa1rrajx+ev4cbE1xeFtlPuj7DP4smisgp4w6+6ygDyUrJq3BnJu/UEU6gh9ewnAjAUtoBrOhRFrugIxgKqt1vgm3fs2ZLiAssRFKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+ExtvAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7pLiUeZ1r9MjCF80Kr0QC9WGRr/gts2/zuLeDUHHxtv/7ewZgRA7UVky6C3ULlt0F03pBujQgoFBTxfI828X5BAKdkHjR0ADEzGqyJZSBIDI88If1kHymzhpgutgNB77TIj5Mqtrrb9KBNH76V+OsVac92MAF8NVurzZ8CXWtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WFhlhD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+ExtvAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C54C4CEE5;
-	Tue,  8 Apr 2025 11:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WFhlhD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E4FC4CEE5;
+	Tue,  8 Apr 2025 11:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111304;
-	bh=UC4Mhx7eJOSmQQCuLiC/6d/5fkQ53VWRCECHE5J8Bog=;
+	s=korg; t=1744111306;
+	bh=OqJLNqBY+2vg8l4gGxbZVgzWSlN6p8Pf4tGUVJ9+Fr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+ExtvAeTokjmgn0rG83pqjRK71bexo8M4o0q9rTpVag0CHgqBoDAZAcAaIwj5dRM
-	 MR42G233ypWSKRb97giu/GJyL3re6jt1N8Fnpdri5/dyJwIOP4wiWAXAE/GfDlDCEg
-	 UZOwm7uo6OIT7F0g2vOOXwEwxbERza8iYWnmbG6s=
+	b=1WFhlhD33MhlV+ZpD82y4OGmDZWB8D4CdhhHU3Yyi+vCPEoxsPH+xMWiyUBnE8xCe
+	 GVqcz0NyTyoG7OqPgF7mZnZSEcy1KVips0UCWxdoSM1lAwDatqTl0cQM3Rq7aG8g55
+	 ySKsGoUCBvvthqjziDpZnr7zGVVi7iNibplHZllU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Shay Drory <shayd@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 343/731] io_uring/net: only import send_zc buffer once
-Date: Tue,  8 Apr 2025 12:44:00 +0200
-Message-ID: <20250408104922.253858937@linuxfoundation.org>
+Subject: [PATCH 6.14 344/731] PCI: Fix NULL dereference in SR-IOV VF creation error path
+Date: Tue,  8 Apr 2025 12:44:01 +0200
+Message-ID: <20250408104922.276955980@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,58 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 8e3100fcc5cbba03518b8b5c059624aba5c29d50 ]
+[ Upstream commit 04d50d953ab46d96b0b32d5ad955fceaa28622db ]
 
-io_send_zc() guards its call to io_send_zc_import() with if (!done_io)
-in an attempt to avoid calling it redundantly on the same req. However,
-if the initial non-blocking issue returns -EAGAIN, done_io will stay 0.
-This causes the subsequent issue to unnecessarily re-import the buffer.
+Clean up when virtfn setup fails to prevent NULL pointer dereference
+during device removal. The kernel oops below occurred due to incorrect
+error handling flow when pci_setup_device() fails.
 
-Add an explicit flag "imported" to io_sr_msg to track if its buffer has
-already been imported. Clear the flag in io_send_zc_prep(). Call
-io_send_zc_import() and set the flag in io_send_zc() if it is unset.
+Add pci_iov_scan_device(), which handles virtfn allocation and setup and
+cleans up if pci_setup_device() fails, so pci_iov_add_virtfn() doesn't need
+to call pci_stop_and_remove_bus_device().  This prevents accessing
+partially initialized virtfn devices during removal.
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Fixes: 54cdcca05abd ("io_uring/net: switch io_send() and io_send_zc() to using io_async_msghdr")
-Link: https://lore.kernel.org/r/20250321184819.3847386-2-csander@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  BUG: kernel NULL pointer dereference, address: 00000000000000d0
+  RIP: 0010:device_del+0x3d/0x3d0
+  Call Trace:
+   pci_remove_bus_device+0x7c/0x100
+   pci_iov_add_virtfn+0xfa/0x200
+   sriov_enable+0x208/0x420
+   mlx5_core_sriov_configure+0x6a/0x160 [mlx5_core]
+   sriov_numvfs_store+0xae/0x1a0
+
+Link: https://lore.kernel.org/r/20250310084524.599225-1-shayd@nvidia.com
+Fixes: e3f30d563a38 ("PCI: Make pci_destroy_dev() concurrent safe")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+[bhelgaas: commit log, return ERR_PTR(-ENOMEM) directly]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/iov.c | 48 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index e9bea0235c130..16d54cd4d53f3 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -77,6 +77,7 @@ struct io_sr_msg {
- 	u16				buf_group;
- 	u16				buf_index;
- 	bool				retry;
-+	bool				imported; /* only for io_send_zc */
- 	void __user			*msg_control;
- 	/* used only for send zerocopy */
- 	struct io_kiocb 		*notif;
-@@ -1252,6 +1253,7 @@ int io_send_zc_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
+index 9e4770cdd4d5a..a964c66b42950 100644
+--- a/drivers/pci/iov.c
++++ b/drivers/pci/iov.c
+@@ -285,23 +285,16 @@ const struct attribute_group sriov_vf_dev_attr_group = {
+ 	.is_visible = sriov_vf_attrs_are_visible,
+ };
  
- 	zc->done_io = 0;
- 	zc->retry = false;
-+	zc->imported = false;
- 	req->flags |= REQ_F_POLL_NO_LAZY;
+-int pci_iov_add_virtfn(struct pci_dev *dev, int id)
++static struct pci_dev *pci_iov_scan_device(struct pci_dev *dev, int id,
++					   struct pci_bus *bus)
+ {
+-	int i;
+-	int rc = -ENOMEM;
+-	u64 size;
+-	struct pci_dev *virtfn;
+-	struct resource *res;
+ 	struct pci_sriov *iov = dev->sriov;
+-	struct pci_bus *bus;
+-
+-	bus = virtfn_add_bus(dev->bus, pci_iov_virtfn_bus(dev, id));
+-	if (!bus)
+-		goto failed;
++	struct pci_dev *virtfn;
++	int rc;
  
- 	if (unlikely(READ_ONCE(sqe->__pad2[0]) || READ_ONCE(sqe->addr3)))
-@@ -1414,7 +1416,8 @@ int io_send_zc(struct io_kiocb *req, unsigned int issue_flags)
- 	    (zc->flags & IORING_RECVSEND_POLL_FIRST))
- 		return -EAGAIN;
+ 	virtfn = pci_alloc_dev(bus);
+ 	if (!virtfn)
+-		goto failed0;
++		return ERR_PTR(-ENOMEM);
  
--	if (!zc->done_io) {
-+	if (!zc->imported) {
-+		zc->imported = true;
- 		ret = io_send_zc_import(req, issue_flags);
- 		if (unlikely(ret))
- 			return ret;
+ 	virtfn->devfn = pci_iov_virtfn_devfn(dev, id);
+ 	virtfn->vendor = dev->vendor;
+@@ -314,8 +307,35 @@ int pci_iov_add_virtfn(struct pci_dev *dev, int id)
+ 		pci_read_vf_config_common(virtfn);
+ 
+ 	rc = pci_setup_device(virtfn);
+-	if (rc)
+-		goto failed1;
++	if (rc) {
++		pci_dev_put(dev);
++		pci_bus_put(virtfn->bus);
++		kfree(virtfn);
++		return ERR_PTR(rc);
++	}
++
++	return virtfn;
++}
++
++int pci_iov_add_virtfn(struct pci_dev *dev, int id)
++{
++	struct pci_bus *bus;
++	struct pci_dev *virtfn;
++	struct resource *res;
++	int rc, i;
++	u64 size;
++
++	bus = virtfn_add_bus(dev->bus, pci_iov_virtfn_bus(dev, id));
++	if (!bus) {
++		rc = -ENOMEM;
++		goto failed;
++	}
++
++	virtfn = pci_iov_scan_device(dev, id, bus);
++	if (IS_ERR(virtfn)) {
++		rc = PTR_ERR(virtfn);
++		goto failed0;
++	}
+ 
+ 	virtfn->dev.parent = dev->dev.parent;
+ 	virtfn->multifunction = 0;
 -- 
 2.39.5
 
