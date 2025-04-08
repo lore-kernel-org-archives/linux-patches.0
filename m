@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325C426B09F;
-	Tue,  8 Apr 2025 12:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1139269D1B;
+	Tue,  8 Apr 2025 12:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114202; cv=none; b=o/7jKY/B3v4TnOBB2l257DJ1axEE9H4rNQQ7tnp5u7wa3HlQx6OA63nt8xJB1uH8JGNsib12Vw+HG1GVYVDBGzbRX4HAYqpi3S8MStTwldwIr+BCRAYdLQ39fHEKWVC7FlT3JCTfXrhDYvgv2LLDkESUpwDRLCodztZNSgxSJTE=
+	t=1744114204; cv=none; b=lVelpMYo3Mr5hYjWRosr/Z2tl42rVGq83vAEbFmh2veVGclaPppixmTzZleJEF1nIJeyiLiBiLG0CqFCKF2UKL6aAmA+etEz7H0p7lZOajpUHL0b4rUqBtgdZI2PJBNoJiKS26R7ggPwXPIM3GbDMXkmLCaEUEDZBxA3O4E8780=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114202; c=relaxed/simple;
-	bh=miTpQxUGFMZ1wqmVpFHy22Lt0M93iUszNG3euVMUKyE=;
+	s=arc-20240116; t=1744114204; c=relaxed/simple;
+	bh=AicrlRkubidpiwB+YdMPZa8yFbzgVccq7IQsGmkW+ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDd4sBijwGX3XO/tqp9CP4vbp+YEsjolmGJSIw6FCoYTtC9VqZM5xkgHtnAuNedqBkaxDyvDXEe/BmxCIOVjvjaLK4xjGFu9V9OcVgwqapi6c6ArdR8EOWew7FDhl3xFbsZjHNclw9nC/RIKwom5A/3FuHtXGZDKXfs5Lwe3mvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yqmLn7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P61bXWF53zrVZVG8FaouBf3JoGLNsXIUSLN/EYD5oTWzDPSkNPoJga4+11rr8U9rcTng11BAvhfeczrBJvfL16A3ND7ToQLcYY1hNnEJJ27OZrH6HFSx1IGVU4MOCBBIdzGHH4TR4yZaqwJE8iF1hLfl1au4HsFrQSoORyVNqCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFlw3QZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yqmLn7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B454FC4CEE5;
-	Tue,  8 Apr 2025 12:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFlw3QZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CA1C4CEE5;
+	Tue,  8 Apr 2025 12:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114202;
-	bh=miTpQxUGFMZ1wqmVpFHy22Lt0M93iUszNG3euVMUKyE=;
+	s=korg; t=1744114204;
+	bh=AicrlRkubidpiwB+YdMPZa8yFbzgVccq7IQsGmkW+ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yqmLn7L307l+MM8pKgEkETnGGXkuvoFcWi2xAmIpHs0S1Pz5EgZjzmod6P0vl6om
-	 bzLCMOKucAf0AKjsEHd5fOLK9lSmudaU9YW72/8SAwEMmzKfgpu5WmtAbPIfMaIE57
-	 Eso2olHenalEIrUR/DfKujW3rlr0PhBgagquKhks=
+	b=PFlw3QZmUo/NfQOi0e3DWxzidStwziOvI/oT0sPUghzeEy4xrouyq45gDCOBdsvml
+	 SRZwOvXD48zNzsBnWLkYLEM/gnHXUT0awlTtH+wesmMcLEZ1V7SHk0KkQ28qPZsmvj
+	 X3/5OrdJIY5OebD5VLqcc/zyUnB6DIjciF22fd2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 002/499] watch_queue: fix pipe accounting mismatch
-Date: Tue,  8 Apr 2025 12:43:34 +0200
-Message-ID: <20250408104851.318592464@linuxfoundation.org>
+Subject: [PATCH 6.13 020/499] cpufreq: tegra194: Allow building for Tegra234
+Date: Tue,  8 Apr 2025 12:43:52 +0200
+Message-ID: <20250408104851.754507203@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,53 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit f13abc1e8e1a3b7455511c4e122750127f6bc9b0 ]
+[ Upstream commit 4a1e3bf61fc78ad100018adb573355303915dca3 ]
 
-Currently, watch_queue_set_size() modifies the pipe buffers charged to
-user->pipe_bufs without updating the pipe->nr_accounted on the pipe
-itself, due to the if (!pipe_has_watch_queue()) test in
-pipe_resize_ring(). This means that when the pipe is ultimately freed,
-we decrement user->pipe_bufs by something other than what than we had
-charged to it, potentially leading to an underflow. This in turn can
-cause subsequent too_many_pipe_buffers_soft() tests to fail with -EPERM.
+Support was added for Tegra234 in the referenced commit, but the Kconfig
+was not updated to allow building for the arch.
 
-To remedy this, explicitly account for the pipe usage in
-watch_queue_set_size() to match the number set via account_pipe_buffers()
-
-(It's unclear why watch_queue_set_size() does not update nr_accounted;
-it may be due to intentional overprovisioning in watch_queue_set_size()?)
-
-Fixes: e95aada4cb93d ("pipe: wakeup wr_wait after setting max_usage")
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/206682a8-0604-49e5-8224-fdbe0c12b460@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 273bc890a2a8 ("cpufreq: tegra194: Add support for Tegra234")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watch_queue.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/cpufreq/Kconfig.arm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index 1895fbc32bcb9..6d1936fb8ff02 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -269,6 +269,15 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
- 	if (ret < 0)
- 		goto error;
+diff --git a/drivers/cpufreq/Kconfig.arm b/drivers/cpufreq/Kconfig.arm
+index 5f7e13e60c802..e67b2326671c9 100644
+--- a/drivers/cpufreq/Kconfig.arm
++++ b/drivers/cpufreq/Kconfig.arm
+@@ -245,7 +245,7 @@ config ARM_TEGRA186_CPUFREQ
  
-+	/*
-+	 * pipe_resize_ring() does not update nr_accounted for watch_queue
-+	 * pipes, because the above vastly overprovisions. Set nr_accounted on
-+	 * and max_usage this pipe to the number that was actually charged to
-+	 * the user above via account_pipe_buffers.
-+	 */
-+	pipe->max_usage = nr_pages;
-+	pipe->nr_accounted = nr_pages;
-+
- 	ret = -ENOMEM;
- 	pages = kcalloc(nr_pages, sizeof(struct page *), GFP_KERNEL);
- 	if (!pages)
+ config ARM_TEGRA194_CPUFREQ
+ 	tristate "Tegra194 CPUFreq support"
+-	depends on ARCH_TEGRA_194_SOC || (64BIT && COMPILE_TEST)
++	depends on ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC || (64BIT && COMPILE_TEST)
+ 	depends on TEGRA_BPMP
+ 	default y
+ 	help
 -- 
 2.39.5
 
