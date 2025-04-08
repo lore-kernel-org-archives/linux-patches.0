@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84485374C4;
-	Tue,  8 Apr 2025 11:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314C4264614;
+	Tue,  8 Apr 2025 11:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110841; cv=none; b=lBe4H7Epi/kB5GTL7bDUjuKwcDjh1FRXeEiC3NgK+IcaUxLSP5838FGQrcZSk2W3dIfgYJk4nhFs8O1UcOBzlVm3iaz/dzpzZHrG7WaKlOziO5jyfh94jDh8DxufhhBeoCR7S3AEec361juaSvkrru1Nm0YzLjBXqg9qEhULROQ=
+	t=1744110844; cv=none; b=arDhrpvDABvbt3qYf+TsRBihkTkEsx1AfUHZ1vXu5L/cGtMuhsbBn8E8cJltuJCnnkeQILWIS26Pz+Trng5f4IceLBtqiyKOQO71umTZ0H/QKzf81VT7NBj8BnptAHFpW637aaczS8d+s9I8N0GRObpI0DcKLKAoy9/SYstk88A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110841; c=relaxed/simple;
-	bh=oo71AWf98U+H/q76nOwaQemh/eYWRQHMZaDKLoINyvM=;
+	s=arc-20240116; t=1744110844; c=relaxed/simple;
+	bh=mEcSSldGQi4EZQslDYFX9Ee6DK8TqdSlWdnJWwmx8SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKpZ7g1TxGqgg1ka6FuaIp4NzuPLtmdGOAPumVKnAdiGu36/ZeRUHq1KG0pC/7cH2D3MvTxz7R50Uu02FbKictQW/gFSEDQMQohxMJDcDHEneUZwPQakFScJ4qof+BvFygu0wxXFceH8R59btHasiFt4yVZWqZxIC3Bmu/xtFcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK+GQTCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=or5OlRuWXz4gni/NfHE515hEAZRYwuK3vCzE+J49btuWkqCOBPL/CngAeZ9lX4QLBUpHOtIwRLoOZxIh6muI8JjEqLLD9T+U/CZz4ctfNdncmnP0DVh9pQ/LN+zvqinecltGSyRsD1NRJi0qqUyaKh9AGg/sDC2lUDqSBPov7KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B033pVOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK+GQTCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142BEC4CEE5;
-	Tue,  8 Apr 2025 11:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B033pVOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65B8C4CEE5;
+	Tue,  8 Apr 2025 11:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110841;
-	bh=oo71AWf98U+H/q76nOwaQemh/eYWRQHMZaDKLoINyvM=;
+	s=korg; t=1744110844;
+	bh=mEcSSldGQi4EZQslDYFX9Ee6DK8TqdSlWdnJWwmx8SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pK+GQTCquJo8/aScIDTmNFFjsfm3hz29ZkNxWGu2niK5796VRvgPhuip9NFeruUcQ
-	 NvYlAJ5JhvTpgCNHkPoWdspeeByLE/MkYdrS3lBNdpFoqnfVYWsYZunTonGdokx2nT
-	 AQoj/CE+WHfq8hdvQZjfirCigGY5X5CGJB3T8Doo=
+	b=B033pVOoCI/6UJPDA00atTr0Fkz2oX+Ac84FNUn86Jlm2NtAN0GgOgipR4zBUZx8w
+	 p+VN4Y5Naaij1qDJNoaERwrKkcUoxoUaZv+3uEtKCuPnuudBKQEyBNH/81iWJk0tkC
+	 CocRXO6X/ul+aRJEmud9rkyd/dy4uFFb80zqLs4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 175/731] wifi: mac80211: remove SSID from ML reconf
-Date: Tue,  8 Apr 2025 12:41:12 +0200
-Message-ID: <20250408104918.347218336@linuxfoundation.org>
+Subject: [PATCH 6.14 176/731] f2fs: fix to avoid running out of free segments
+Date: Tue,  8 Apr 2025 12:41:13 +0200
+Message-ID: <20250408104918.370588629@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,49 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 899da1830db112e6bd54ed4573ace753eae6ef22 ]
+[ Upstream commit f7f8932ca6bb22494ef6db671633ad3b4d982271 ]
 
-The ML reconfiguration frame shouldn't contain an SSID,
-remove it.
+If checkpoint is disabled, GC can not reclaim any segments, we need
+to detect such condition and bail out from fallocate() of a pinfile,
+rather than letting allocator running out of free segment, which may
+cause f2fs to be shutdown.
 
-Fixes: 36e05b0b8390 ("wifi: mac80211: Support dynamic link addition and removal")
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20250311121004.fdf08f90bc30.I07f88d3a6f592a0df65d48f55d65c46a4d261007@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+reproducer:
+mkfs.f2fs -f /dev/vda 16777216
+mount -o checkpoint=disable:10% /dev/vda /mnt/f2fs
+for ((i=0;i<4096;i++)) do { dd if=/dev/zero of=/mnt/f2fs/$i bs=1M count=1; } done
+sync
+for ((i=0;i<4096;i+=2)) do { rm /mnt/f2fs/$i; } done
+sync
+touch /mnt/f2fs/pinfile
+f2fs_io pinfile set /mnt/f2fs/pinfile
+f2fs_io fallocate 0 0 4201644032 /mnt/f2fs/pinfile
+
+cat /sys/kernel/debug/f2fs/status
+output:
+  - Free: 0 (0)
+
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/f2fs/file.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 36a9be9a66c8e..da2c2e6035be8 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -9946,8 +9946,8 @@ ieee80211_build_ml_reconf_req(struct ieee80211_sub_if_data *sdata,
- 		size += 2 + sizeof(struct ieee80211_mle_per_sta_profile) +
- 			ETH_ALEN;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 1bb70499ab598..44a658662462d 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1836,6 +1836,18 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
+ next_alloc:
+ 		f2fs_down_write(&sbi->pin_sem);
  
--		/* SSID element + WMM */
--		size += 2 + sdata->vif.cfg.ssid_len + 9;
-+		/* WMM */
-+		size += 9;
- 		size += ieee80211_link_common_elems_size(sdata, iftype, cbss,
- 							 elems_len);
- 	}
-@@ -10053,11 +10053,6 @@ ieee80211_build_ml_reconf_req(struct ieee80211_sub_if_data *sdata,
- 
- 			capab_pos = skb_put(skb, 2);
- 
--			skb_put_u8(skb, WLAN_EID_SSID);
--			skb_put_u8(skb, sdata->vif.cfg.ssid_len);
--			skb_put_data(skb, sdata->vif.cfg.ssid,
--				     sdata->vif.cfg.ssid_len);
--
- 			extra_used =
- 				ieee80211_add_link_elems(sdata, skb, &capab, NULL,
- 							 add_links_data->link[link_id].elems,
++		if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED))) {
++			if (has_not_enough_free_secs(sbi, 0, 0)) {
++				f2fs_up_write(&sbi->pin_sem);
++				err = -ENOSPC;
++				f2fs_warn_ratelimited(sbi,
++					"ino:%lu, start:%lu, end:%lu, need to trigger GC to "
++					"reclaim enough free segment when checkpoint is enabled",
++					inode->i_ino, pg_start, pg_end);
++				goto out_err;
++			}
++		}
++
+ 		if (has_not_enough_free_secs(sbi, 0, f2fs_sb_has_blkzoned(sbi) ?
+ 			ZONED_PIN_SEC_REQUIRED_COUNT :
+ 			GET_SEC_FROM_SEG(sbi, overprovision_segments(sbi)))) {
 -- 
 2.39.5
 
