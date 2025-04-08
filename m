@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE4C26983B;
-	Tue,  8 Apr 2025 12:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BEA26981A;
+	Tue,  8 Apr 2025 12:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113772; cv=none; b=Ow9MiHpzm0mWiC+kbl5++ZC/euJqZ5nJe2WW7xmM3FkeGX1eRVQSgnonFYHKcmRsZmK9X3e6ju/ZaJ3nLGjDozlXTWiQXVe+jWyJLvE0ZAljk7mXRFqtaBAr+0z+gliW0NwC7Xg9kvF0YTCF89SeRYadFrlYE4m5spHVwfj0ltE=
+	t=1744113775; cv=none; b=GIyxKhrgWifO1g4TwG9lh8A27YJiI+OpCNubhWcAnZcKGpFexc4IL7bF7VHp0aR2s5rBi1MOptkxGBmdtgi1iedAbJ7Q5QrvF9nsn7b+4swuS+15YVsOZbKYlCvlNH7EETew6RpbO/3nOcuVvgZ1ZZlPzDhEVfQ0vjDGZgVbnIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113772; c=relaxed/simple;
-	bh=GSaLo227wWTwUgzlnkxg1hGURfHYWckV0ZODqoK5dCY=;
+	s=arc-20240116; t=1744113775; c=relaxed/simple;
+	bh=1KcQ/sOMlDTQ5X0usfbpSxi9bYBtzb4Rhn/Zgkgpw8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cx75FQjrR5PBHAnrtZnVmGkJJvAFqoblRb+lc/AY42YA7ZyZ7WjssEGeNCGS4xJItaPMEJ+lvumBcw95l/6IL0wymP+DdjmcpzAQItva07ojERQ1dljTcc6iRf1xLKKn5tWOErZvY3LSD1JDU5Qr3pt/3CIxWsUjYuac3y1cdLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3dF55Yl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCMfB3yO/qQAiDyvm9QgXSP5yD8/gd6fKuvgsjzXlK4FxsYWrgYHxeHN+gktiBrRArlfvxQ4ySZdc+sIeAcpo2w0fn2lJLXJgt/gwP3UJZxjkjk0o7l0lrIkNkIobU4pR83AXMvG3SzXNCrACQXur0r0iQH81cmLADMwTHQlXFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Trgoi/X0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3dF55Yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF45EC4CEE5;
-	Tue,  8 Apr 2025 12:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Trgoi/X0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E265C4CEE5;
+	Tue,  8 Apr 2025 12:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113772;
-	bh=GSaLo227wWTwUgzlnkxg1hGURfHYWckV0ZODqoK5dCY=;
+	s=korg; t=1744113775;
+	bh=1KcQ/sOMlDTQ5X0usfbpSxi9bYBtzb4Rhn/Zgkgpw8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3dF55Yl7CveZzzl7BFCK/y8UFeU27FEwO82wKNjEGsZb8Pjg5OgO0shwWNX7E6GJ
-	 U6mAoDT2vJtnoE87d6tUiw1qbVb6yIPY41RJb+0lYurEl2Z0iqGIwvaK95N5L7eJ+C
-	 ehgZ231AUv2T9eWFV5VOy6+EF8khsz3xmAMuxddQ=
+	b=Trgoi/X0iNE7R7tYMCmAZQPnuDj2F6FR1AqnnqMnnXEuCPj6e9ydZWrjAsqBebTt9
+	 7JtWfpZH+QL/mClIppeaVkBnjP3SpmW1HK/8XzcAxeJTnIkdvXLfWwEE1naO9NT2Dx
+	 AyhIGSq0UbDfVD7biKxKIyGm7OJSzaECoXk1snic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	syzbot+83fed965338b573115f7@syzkaller.appspotmail.com,
+	Kohei Enju <enjuk@amazon.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/154] Drivers: hv: vmbus: Dont release fb_mmio resource in vmbus_free_mmio()
-Date: Tue,  8 Apr 2025 12:49:16 +0200
-Message-ID: <20250408104815.774086658@linuxfoundation.org>
+Subject: [PATCH 5.4 016/154] netfilter: nf_conncount: Fully initialize struct nf_conncount_tuple in insert_tree()
+Date: Tue,  8 Apr 2025 12:49:17 +0200
+Message-ID: <20250408104815.804260413@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -52,82 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit 73fe9073c0cc28056cb9de0c8a516dac070f1d1f ]
+[ Upstream commit d653bfeb07ebb3499c403404c21ac58a16531607 ]
 
-The VMBus driver manages the MMIO space it owns via the hyperv_mmio
-resource tree. Because the synthetic video framebuffer portion of the
-MMIO space is initially setup by the Hyper-V host for each guest, the
-VMBus driver does an early reserve of that portion of MMIO space in the
-hyperv_mmio resource tree. It saves a pointer to that resource in
-fb_mmio. When a VMBus driver requests MMIO space and passes "true"
-for the "fb_overlap_ok" argument, the reserved framebuffer space is
-used if possible. In that case it's not necessary to do another request
-against the "shadow" hyperv_mmio resource tree because that resource
-was already requested in the early reserve steps.
+Since commit b36e4523d4d5 ("netfilter: nf_conncount: fix garbage
+collection confirm race"), `cpu` and `jiffies32` were introduced to
+the struct nf_conncount_tuple.
 
-However, the vmbus_free_mmio() function currently does no special
-handling for the fb_mmio resource. When a framebuffer device is
-removed, or the driver is unbound, the current code for
-vmbus_free_mmio() releases the reserved resource, leaving fb_mmio
-pointing to memory that has been freed. If the same or another
-driver is subsequently bound to the device, vmbus_allocate_mmio()
-checks against fb_mmio, and potentially gets garbage. Furthermore
-a second unbind operation produces this "nonexistent resource" error
-because of the unbalanced behavior between vmbus_allocate_mmio() and
-vmbus_free_mmio():
+The commit made nf_conncount_add() initialize `conn->cpu` and
+`conn->jiffies32` when allocating the struct.
+In contrast, count_tree() was not changed to initialize them.
 
-[   55.499643] resource: Trying to free nonexistent
-			resource <0x00000000f0000000-0x00000000f07fffff>
+By commit 34848d5c896e ("netfilter: nf_conncount: Split insert and
+traversal"), count_tree() was split and the relevant allocation
+code now resides in insert_tree().
+Initialize `conn->cpu` and `conn->jiffies32` in insert_tree().
 
-Fix this by adding logic to vmbus_free_mmio() to recognize when
-MMIO space in the fb_mmio reserved area would be released, and don't
-release it. This filtering ensures the fb_mmio resource always exists,
-and makes vmbus_free_mmio() more parallel with vmbus_allocate_mmio().
+BUG: KMSAN: uninit-value in find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+BUG: KMSAN: uninit-value in __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+ __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ count_tree net/netfilter/nf_conncount.c:438 [inline]
+ nf_conncount_count+0x82f/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
 
-Fixes: be000f93e5d7 ("drivers:hv: Track allocations of children of hv_vmbus in private resource tree")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250310035208.275764-1-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250310035208.275764-1-mhklinux@outlook.com>
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4121 [inline]
+ slab_alloc_node mm/slub.c:4164 [inline]
+ kmem_cache_alloc_noprof+0x915/0xe10 mm/slub.c:4171
+ insert_tree net/netfilter/nf_conncount.c:372 [inline]
+ count_tree net/netfilter/nf_conncount.c:450 [inline]
+ nf_conncount_count+0x1415/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+
+Reported-by: syzbot+83fed965338b573115f7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=83fed965338b573115f7
+Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/netfilter/nf_conncount.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 488ea7810ad99..ecf79f3126b58 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2155,12 +2155,25 @@ void vmbus_free_mmio(resource_size_t start, resource_size_t size)
- 	struct resource *iter;
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 0ce12a33ffda4..a66a27fe7f458 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -366,6 +366,8 @@ insert_tree(struct net *net,
  
- 	mutex_lock(&hyperv_mmio_lock);
-+
-+	/*
-+	 * If all bytes of the MMIO range to be released are within the
-+	 * special case fb_mmio shadow region, skip releasing the shadow
-+	 * region since no corresponding __request_region() was done
-+	 * in vmbus_allocate_mmio().
-+	 */
-+	if (fb_mmio && start >= fb_mmio->start &&
-+	    (start + size - 1 <= fb_mmio->end))
-+		goto skip_shadow_release;
-+
- 	for (iter = hyperv_mmio; iter; iter = iter->sibling) {
- 		if ((iter->start >= start + size) || (iter->end <= start))
- 			continue;
+ 	conn->tuple = *tuple;
+ 	conn->zone = *zone;
++	conn->cpu = raw_smp_processor_id();
++	conn->jiffies32 = (u32)jiffies;
+ 	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
  
- 		__release_region(iter, start, size);
- 	}
-+
-+skip_shadow_release:
- 	release_mem_region(start, size);
- 	mutex_unlock(&hyperv_mmio_lock);
- 
+ 	nf_conncount_list_init(&rbconn->list);
 -- 
 2.39.5
 
