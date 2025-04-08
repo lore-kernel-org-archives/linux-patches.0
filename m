@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DAC26A0C2;
-	Tue,  8 Apr 2025 12:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6AD26B096;
+	Tue,  8 Apr 2025 12:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113828; cv=none; b=Ftx2rczyOOvxOTZmHAO8WF1Z4D5h/ZiyeBLeHwPwoO6f21e4sfoGm+xo6U4NTC/73Y9YAk8ryYVRKFrqqPC5xiyh9IaIapD/Zxz65BldKWEzhBvhpHpWEumMDdi8cL2zIvZo/OVOTUUCyIEr5lcXvYFVq1krt2nJJeNHeOriHhw=
+	t=1744113831; cv=none; b=XsnSs90yto3gbWOm1/QznI6w007RcF/+cTk3AMdxIWcaD7KzsDHXGHmpu7MAsLY5xXP99f6j1S+rHzlZ7yQDs40oNtTcAT5DkxGPkTsWFc7wd4qLLoSLoqZAvcv6ZW5GGeiEaVpasjngIFr5wS3OXDpv57/axZRvxGTTERVyuIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113828; c=relaxed/simple;
-	bh=K57vgOT/+l+QAkSq0PE/et7+2imTPPwxxIiKJppZkqs=;
+	s=arc-20240116; t=1744113831; c=relaxed/simple;
+	bh=OIkka/P4uTTcpnyjcdpMJG3aFXE2ojNbOKXfzW7bNZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY8mvuCeIPvr2NG90/de7HZOcloYSm9ks9xou2RXNq0OiQ5pqYQCe2y/zFmsu9yb7bZ6sK8yxQ3cs51yhEDkyD8XQwm/YO2bstDVKlbK3UZxOTqomtahaoRCvH8LxiW3wKnqJ8OQLKbCRHephO5WT9rDW0LHe6QLMc9dGXELS3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMND/Rqb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ew3Z4AkxOwGn0z+K9shKdZ5xgJoH1HmA2rgjE1Ffr5wq7wou40uNi35+jhDLCtyVY4tzc1wKIPvZ9ncil3WzcwpioF199B3U9sSymaLG0kjOBrYAahdi3PvNDTej4ynMUpCD0gTu+WlFRQMn7Yt/pPNqWKLrTpb1fkZ4DnG7k3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3u8QwEm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMND/Rqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5460CC4CEE5;
-	Tue,  8 Apr 2025 12:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3u8QwEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13D3C4CEE5;
+	Tue,  8 Apr 2025 12:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113828;
-	bh=K57vgOT/+l+QAkSq0PE/et7+2imTPPwxxIiKJppZkqs=;
+	s=korg; t=1744113831;
+	bh=OIkka/P4uTTcpnyjcdpMJG3aFXE2ojNbOKXfzW7bNZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMND/RqbGdGADOKDCr7vx+1V3vQecREIM28uoeO3ClKcqR0FTVoVyBX5M2W02b1qb
-	 5ASYhY5NXvyzimLL6EojFKaj02b4ZTNQNHea3t10dpAEJqDuG66xECXW+EuJkviFK2
-	 UdRVYlklGxgvtwwsNjSuIvK6vjp1xLRQwokTPq7o=
+	b=r3u8QwEmMV+Vnus2IQ+SgCQtv+6Mi4q54NXJZgUPOIzKrAgyStszad8J92YysoGmy
+	 qkRXUwnIpMin3F4MH/3oLYoLPRpmOM+feFgNWoSEpTHSzrFuiK18nkeJH+3a/fPCLs
+	 nWzb4cQD548rppB0g44xje117zy5BMngHmw3t9Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Lyude Paul <lyude@redhat.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 036/154] drm/nouveau: Do not override forced connector status
-Date: Tue,  8 Apr 2025 12:49:37 +0200
-Message-ID: <20250408104816.418410730@linuxfoundation.org>
+Subject: [PATCH 5.4 037/154] block: fix kmem_cache of name bio-108 already exists
+Date: Tue,  8 Apr 2025 12:49:38 +0200
+Message-ID: <20250408104816.450930625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,33 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 01f1d77a2630e774ce33233c4e6723bca3ae9daa ]
+[ Upstream commit b654f7a51ffb386131de42aa98ed831f8c126546 ]
 
-Keep user-forced connector status even if it cannot be programmed. Same
-behavior as for the rest of the drivers.
+Device mapper bioset often has big bio_slab size, which can be more than
+1000, then 8byte can't hold the slab name any more, cause the kmem_cache
+allocation warning of 'kmem_cache of name 'bio-108' already exists'.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250114100214.195386-1-tzimmermann@suse.de
+Fix the warning by extending bio_slab->name to 12 bytes, but fix output
+of /proc/slabinfo
+
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250228132656.2838008-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 1 -
- 1 file changed, 1 deletion(-)
+ block/bio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index c49303ba30c80..6f2bf5e9992f8 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -759,7 +759,6 @@ nouveau_connector_force(struct drm_connector *connector)
- 	if (!nv_encoder) {
- 		NV_ERROR(drm, "can't find encoder to force %s on!\n",
- 			 connector->name);
--		connector->status = connector_status_disconnected;
- 		return;
- 	}
- 
+diff --git a/block/bio.c b/block/bio.c
+index e3d3e75c97e03..239f6bd421a80 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -53,7 +53,7 @@ struct bio_slab {
+ 	struct kmem_cache *slab;
+ 	unsigned int slab_ref;
+ 	unsigned int slab_size;
+-	char name[8];
++	char name[12];
+ };
+ static DEFINE_MUTEX(bio_slab_lock);
+ static struct bio_slab *bio_slabs;
 -- 
 2.39.5
 
