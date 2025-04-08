@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFB3224F6;
-	Tue,  8 Apr 2025 11:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88F4214205;
+	Tue,  8 Apr 2025 11:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110619; cv=none; b=W3A1ngvyrsKC+0ZCWlEsr4CIwdOn7OyiHv4gpBw54SAmRUWzpKBgE5Mw3Ja695Rex1SGDCQxhSWTXOBFJLQP/hagdFsatlPogMDaEN6XMgMCQObdQsbLrJmfGozPWwuZv3MNprcslnDKRbW3tpEtK6mXF3LbQa6zc2MqEg0yWJw=
+	t=1744110621; cv=none; b=ehe7RoE6ChpZeU49yhMWftn+vitlCgy5VfUdUbJgC6olSPwB77fCrkZpfVz5gCIe2sc42E8yjTRfrMDFxjcJQv25G8dOMPj6Nc19rh/pDtillp0IORqxsxqGbG/+3v6AOCGlH3tgNFsSYP2L9UiBL76hfM/FB4LRJSD69pfKmDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110619; c=relaxed/simple;
-	bh=7qwIDPpdKr+/+asdDalQJ+Dvzsc00ZnZWe/hqaaLdLs=;
+	s=arc-20240116; t=1744110621; c=relaxed/simple;
+	bh=cT0stCHWdLoHDZCsTdClFE5V4ajnbV8vRCCxD6jWSSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOsBqlJqWMRbCzNHSPgawClJiA85pCPYF6rw503S/1BMsxbo5qa9HFjF5rl4y5rVKfLqB1JMu3S23DPPsMsHq5EB0F47fskBE7MLCvn2W5CWJuijG43SWOynp8jdDWP2cKvxZ7ayvH/otmsEV48v3SmhvXvy8knePGt9vdOxZtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRJxTM9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FY7n7nmGFh1qGZtxR3HUxPS/7SgMITuPW8WNgEn3RuYuGy0WmOfd/69qOxZl2mx1Rbc9A0hle4zifgZxcH6k06/skTLHegFL8nC+R7EvWDyg0yx5cTHGMbbOfd7t3UNXdsUNLBAA26qdPZ4leYffLO6Wwao2JW8S6jYum2OWpso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRTAdwNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRJxTM9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04A3C4CEE5;
-	Tue,  8 Apr 2025 11:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRTAdwNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E46C4CEE5;
+	Tue,  8 Apr 2025 11:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110619;
-	bh=7qwIDPpdKr+/+asdDalQJ+Dvzsc00ZnZWe/hqaaLdLs=;
+	s=korg; t=1744110621;
+	bh=cT0stCHWdLoHDZCsTdClFE5V4ajnbV8vRCCxD6jWSSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRJxTM9ECr+gPrnUb7CMEypAjJeCzLHWJf5xdMJz1S9TAYAHs0r9iBV9VDQQMhO2F
-	 gWQVR16xVsxmb6Iar5wLB0qlYoVPb+zuT1PdCBXB1qw7qqBcGW9XV4CpnYVa8So8H9
-	 YypKHifjcZPky4ozAbvNvF3N5J+F4fm/1JM/Izk0=
+	b=YRTAdwNSkPzi3pdndiblVTLniJKe6xpK+Fmf51ntAcsmjaj6UNLyDOdVxQ2PnCKiB
+	 2dGLMIgbsjpfSlwvUKDBm043eERW4O4BvAqkd2aJtnQFgzn81ZDAE9lks5MKsILskI
+	 6ArarU+4fAzS3II+ldHInF7oaqM93jpZyVPw4sJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 082/731] arm64: dts: mediatek: mt8173-elm: Drop pmics #address-cells and #size-cells
-Date: Tue,  8 Apr 2025 12:39:39 +0200
-Message-ID: <20250408104916.177909998@linuxfoundation.org>
+Subject: [PATCH 6.14 125/731] wifi: ath11k: Clear affinity hint before calling ath11k_pcic_free_irq() in error path
+Date: Tue,  8 Apr 2025 12:40:22 +0200
+Message-ID: <20250408104917.186966440@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,43 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit aaa0b40e157c65aaa5e0ad903675f245333381bb ]
+[ Upstream commit 68410c5bd381a81bcc92b808e7dc4e6b9ed25d11 ]
 
-The PMIC has child nodes for each of its functions. It is not an actual
-bus and no addressing is involved.
+If a shared IRQ is used by the driver due to platform limitation, then the
+IRQ affinity hint is set right after the allocation of IRQ vectors in
+ath11k_pci_alloc_msi(). This does no harm unless one of the functions
+requesting the IRQ fails and attempt to free the IRQ. This results in the
+below warning:
 
-Dropping the bogus properties fixes a DT validation error:
+WARNING: CPU: 7 PID: 349 at kernel/irq/manage.c:1929 free_irq+0x278/0x29c
+Call trace:
+ free_irq+0x278/0x29c
+ ath11k_pcic_free_irq+0x70/0x10c [ath11k]
+ ath11k_pci_probe+0x800/0x820 [ath11k_pci]
+ local_pci_probe+0x40/0xbc
 
-    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pmic: '#address-cells', '#size-cells' do not match any of the regexes: 'pinctrl-[0-9]+'
-            from schema $id: http://devicetree.org/schemas/mfd/mediatek,mt6397.yaml#
+The warning is due to not clearing the affinity hint before freeing the
+IRQs.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412212322.JTFpRD7X-lkp@intel.com/
-Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250108083424.2732375-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+So to fix this issue, clear the IRQ affinity hint before calling
+ath11k_pcic_free_irq() in the error path. The affinity will be cleared once
+again further down the error path due to code organization, but that does
+no harm.
+
+Tested-on: QCA6390 hw2.0 PCI WLAN.HST.1.0.1-05266-QCAHSTSWPLZ_V2_TO_X86-1
+
+Cc: Baochen Qiang <quic_bqiang@quicinc.com>
+Fixes: 39564b475ac5 ("wifi: ath11k: fix boot failure with one MSI vector")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250225053447.16824-2-manivannan.sadhasivam@linaro.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-index b5d4b5baf4785..0d995b342d463 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-@@ -925,8 +925,6 @@
- &pwrap {
- 	pmic: pmic {
- 		compatible = "mediatek,mt6397";
--		#address-cells = <1>;
--		#size-cells = <1>;
- 		interrupts-extended = <&pio 11 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index b93f04973ad79..eaac9eabcc70a 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -939,6 +939,8 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
+ 	return 0;
+ 
+ err_free_irq:
++	/* __free_irq() expects the caller to have cleared the affinity hint */
++	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
+ 	ath11k_pcic_free_irq(ab);
+ 
+ err_ce_free:
 -- 
 2.39.5
 
