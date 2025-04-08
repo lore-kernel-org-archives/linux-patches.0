@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD3D26A0FF;
-	Tue,  8 Apr 2025 12:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7908F26A0FF;
+	Tue,  8 Apr 2025 12:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113884; cv=none; b=TUoz/Fy0KvCFtOmVIz0HI2Z8slbqtvXgxf9nam1Od/nlZBH4qKZIk7rKgF7FecEbLlyOKBEGtz2vi3S73hiUTGVnCtmaoVYPIDRqqeZsdpLmBVh59yTQcClRNkM6K2ZC6ZGumxg6VpQq00jMaxVSUBF1FgN0t2SjqARgR8kxKvg=
+	t=1744113887; cv=none; b=qinjEEOQ3yki7JhA5cvtIIx64GzPKpFfsox9A3yrklioJEGNrZdtihxkud6V2HDN0HGfdqkXSVg9CF9t+gT7IdGULRdbftOxfS4jNW/qWR8YYmtRgKz+VaW5+C4n4MrvcXmrvfqGB+J+2wFv8WXw41FSn7ELks5qM+UzS2UNqVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113884; c=relaxed/simple;
-	bh=UDc4/kxTdKJQJcfO5fc1y/T+h2pLYgaDg+vrDYIMqhM=;
+	s=arc-20240116; t=1744113887; c=relaxed/simple;
+	bh=3CSXOQYEGeFf5oXWi0MO5NzJRN24G6NO4Fg+iIcoU0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2zm1ppfPKgyzJSsR8OjKZYuIfIGiod8KajULQNUoiN0hGo9j8B8dnsF+G4YJe9dt02QdImj8fB3QSFH+DHFSEtdZ+mF/Ytxd5OWoy+4wFkCa0qa2FOCASmNsj4vupzUdoAc9Vvs4GQpA/6Rz12mhXC5LllDLv6o9E5uPgpnAes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaaw7JHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyty7AkbmWkNbdU1kVWI0R2OYOY4vQaCpOfJjfZiem75kFQKXI8j39gIKLonfV0wPETQVwVZEcLpomvPcZhHapkQDAENVAvM2s7hSAJ0JdwfMV/kzbf6Fan0QwGyW5rI5FpT7NQp+jTDU5GxuOfhpqJ1Sl7DSYGViGPWhYbJGPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfFENzss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaaw7JHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB29C4CEE5;
-	Tue,  8 Apr 2025 12:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfFENzss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F68C4CEE5;
+	Tue,  8 Apr 2025 12:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113884;
-	bh=UDc4/kxTdKJQJcfO5fc1y/T+h2pLYgaDg+vrDYIMqhM=;
+	s=korg; t=1744113887;
+	bh=3CSXOQYEGeFf5oXWi0MO5NzJRN24G6NO4Fg+iIcoU0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uaaw7JHhqueqHWAtH6rnbZhc+KzBLawBtY2BU8RGsFkiVJ0YW9FhVsxfDqRMgpcPL
-	 WnJi5O5hx+j5PcEaGmfF2sQotgUgboONrOJRxd7pHcR4ozVBi8fMTGxN0AifzHgnZS
-	 JPGxXWlER0E536pIDfgI7WZioLYE+HSMQkvKZwSM=
+	b=vfFENzssyNb8voPGfhvk53WMpS/aaY5wPyFFd44uQ2fBW0lI3zK/Nn+khSQHYaqXn
+	 FpJw+6VxpiKrsaxD2NoPO4HrCD0HQqUMLmjxIqsbw+fC0+Ipl4Ugzri9WSaaMMUoEE
+	 AXQ8UsISr1AqVd8sQ8Jn2hXnGWb2wAV6N39CrOqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/154] s390/cio: Fix CHPID "configure" attribute caching
-Date: Tue,  8 Apr 2025 12:49:30 +0200
-Message-ID: <20250408104816.196304434@linuxfoundation.org>
+Subject: [PATCH 5.4 056/154] ipv6: Fix memleak of nhc_pcpu_rth_output in fib_check_nh_v6_gw().
+Date: Tue,  8 Apr 2025 12:49:57 +0200
+Message-ID: <20250408104817.079476649@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,58 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 32ae4a2992529e2c7934e422035fad1d9b0f1fb5 ]
+[ Upstream commit 9740890ee20e01f99ff1dde84c63dcf089fabb98 ]
 
-In some environments, the SCLP firmware interface used to query a
-CHPID's configured state is not supported. On these environments,
-rapidly reading the corresponding sysfs attribute produces inconsistent
-results:
+fib_check_nh_v6_gw() expects that fib6_nh_init() cleans up everything
+when it fails.
 
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-  $ cat /sys/devices/css0/chp0.00/configure
-  3
+Commit 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
+moved fib_nh_common_init() before alloc_percpu_gfp() within fib6_nh_init()
+but forgot to add cleanup for fib6_nh->nh_common.nhc_pcpu_rth_output in
+case it fails to allocate fib6_nh->rt6i_pcpu, resulting in memleak.
 
-This occurs for example when Linux is run as a KVM guest. The
-inconsistency is a result of CIO using cached results for generating
-the value of the "configure" attribute while failing to handle the
-situation where no data was returned by SCLP.
+Let's call fib_nh_common_release() and clear nhc_pcpu_rth_output in the
+error path.
 
-Fix this by not updating the cache-expiration timestamp when SCLP
-returns no data. With the fix applied, the system response is
-consistent:
+Note that we can remove the fib6_nh_release() call in nh_create_ipv6()
+later in net-next.git.
 
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Tested-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250312010333.56001-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/chp.c | 3 ++-
+ net/ipv6/route.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/cio/chp.c b/drivers/s390/cio/chp.c
-index 1fd982b4d64bd..18b2fc50463ba 100644
---- a/drivers/s390/cio/chp.c
-+++ b/drivers/s390/cio/chp.c
-@@ -646,7 +646,8 @@ static int info_update(void)
- 	if (time_after(jiffies, chp_info_expires)) {
- 		/* Data is too old, update. */
- 		rc = sclp_chp_read_info(&chp_info);
--		chp_info_expires = jiffies + CHP_INFO_UPDATE_INTERVAL ;
-+		if (!rc)
-+			chp_info_expires = jiffies + CHP_INFO_UPDATE_INTERVAL;
- 	}
- 	mutex_unlock(&info_lock);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 99908861246d3..d037979f6579f 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3549,7 +3549,8 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 		in6_dev_put(idev);
  
+ 	if (err) {
+-		lwtstate_put(fib6_nh->fib_nh_lws);
++		fib_nh_common_release(&fib6_nh->nh_common);
++		fib6_nh->nh_common.nhc_pcpu_rth_output = NULL;
+ 		fib6_nh->fib_nh_lws = NULL;
+ 		if (dev)
+ 			dev_put(dev);
 -- 
 2.39.5
 
