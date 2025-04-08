@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8F7206F18;
-	Tue,  8 Apr 2025 12:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8314A207E14;
+	Tue,  8 Apr 2025 12:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115523; cv=none; b=fv53K5OhFbeNC/a70BhfTa9fhsHxulDCAcEygf+JxEllm8bzjITdFMU2AGSsna5V5W+DL0WEOrDmTFE2EpZe1wtgMHS6CdoAseyyKeAYY1+kGqAefD2TLXySTdcYlkSLZgW36Uy/eqnCb/EXw0BE0DYGtX+twpfaQqslt23PtYs=
+	t=1744115525; cv=none; b=jkgNzM9+Tplqw87t54zLebdwluw9Jr2EJzTwnn+dLVwaTNciquREI6w7rfwtz53zdFHBT8fqROyxH8YMqfXaVAbna6BqwcsBnWS91OQAKzRl5wQHryTA9cTGrIFAFFbu6v558vwV1wncqg69rlXH0KD9sSayMrG5kR4cW/sYLp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115523; c=relaxed/simple;
-	bh=NhQmOC1qg30eleAs+FwP/Sm0cjyeZciDQKdfPB8RWIc=;
+	s=arc-20240116; t=1744115525; c=relaxed/simple;
+	bh=jSN5pRc5QsYMx+i11Jnew3OxyDsmrai+kUV6dEFl4PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFymc6qEA6n0343/6ten4O2eok18HkcFaHYFI7gqrIy9wPnoICCH4DlGMoh3bE9tRSCOmfAIjELu60kH39nCTHIuD+byHaGLuKHeOudWpJoqt/78pcObYNMyD1WqeSfmV6pGqgRsx7Bw4vR7iGQrz4FXvfdjm8deiWn97L5c1QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgUv4cqR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LZgC37WicT6zPJT1z3EVkxaKk13oJNvpVY/RZXjIn1Kt+l1hUtau8ScUArrtEOhsf4LAZkypsg0LP+NwvD17cPLNK8EG4nC1+E9W/mfmu8Qqz00CiTgmbMdFAzaSPAw37wTeiyixoaxUfsfG/IfSfJTu3iLx9vIGEfY3sd82dTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQmryfOJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgUv4cqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB3DC4CEE5;
-	Tue,  8 Apr 2025 12:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQmryfOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D17C4CEE5;
+	Tue,  8 Apr 2025 12:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115522;
-	bh=NhQmOC1qg30eleAs+FwP/Sm0cjyeZciDQKdfPB8RWIc=;
+	s=korg; t=1744115525;
+	bh=jSN5pRc5QsYMx+i11Jnew3OxyDsmrai+kUV6dEFl4PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgUv4cqRAHMW8tZs6IM1GXarNzvaFNpJvfv7/oVm7jhFvIZwdDxqno6mxUK4Fp8TS
-	 NB5Un4l8NiMh+Hg6G4Ajb0VCP8fDjCsOiFM+kRLaRqnIpulqf/LarkmofpVKnlaPJZ
-	 bMUWDhrzjhKC4H+VfcA+vL72R4vHdIEH+10fYvbA=
+	b=HQmryfOJL37gMx8VfTBcJTf8dtPATN7+NBg48sm3tF1Stb0eRM1Qb9K48jrVAiKx3
+	 Q3nrtL6T611t8IM1tJaVv5DVXWnOJjqL9Ha7eJVpaBFf5ZCiFvbzlR0pD5Y1Xy6Zsg
+	 bi9jO76D45c5qzKmmzTKfzEgduoMBfic1HajNX90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 471/499] ksmbd: validate zero num_subauth before sub_auth is accessed
-Date: Tue,  8 Apr 2025 12:51:23 +0200
-Message-ID: <20250408104903.099239042@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.13 462/499] mmc: omap: Fix memory leak in mmc_omap_new_slot
+Date: Tue,  8 Apr 2025 12:51:14 +0200
+Message-ID: <20250408104902.761885728@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,37 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit bf21e29d78cd2c2371023953d9c82dfef82ebb36 upstream.
+commit 3834a759afb817e23a7a2f09c2c9911b0ce5c588 upstream.
 
-Access psid->sub_auth[psid->num_subauth - 1] without checking
-if num_subauth is non-zero leads to an out-of-bounds read.
-This patch adds a validation step to ensure num_subauth != 0
-before sub_auth is accessed.
+Add err_free_host label to properly pair mmc_alloc_host() with
+mmc_free_host() in GPIO error paths. The allocated host memory was
+leaked when GPIO lookups failed.
 
+Fixes: e519f0bb64ef ("ARM/mmc: Convert old mmci-omap to GPIO descriptors")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/r/20250318140226.19650-1-linmq006@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/host/omap.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -270,6 +270,11 @@ static int sid_to_id(struct mnt_idmap *i
- 		return -EIO;
- 	}
- 
-+	if (psid->num_subauth == 0) {
-+		pr_err("%s: zero subauthorities!\n", __func__);
-+		return -EIO;
+--- a/drivers/mmc/host/omap.c
++++ b/drivers/mmc/host/omap.c
+@@ -1272,19 +1272,25 @@ static int mmc_omap_new_slot(struct mmc_
+ 	/* Check for some optional GPIO controls */
+ 	slot->vsd = devm_gpiod_get_index_optional(host->dev, "vsd",
+ 						  id, GPIOD_OUT_LOW);
+-	if (IS_ERR(slot->vsd))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->vsd),
++	if (IS_ERR(slot->vsd)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->vsd),
+ 				     "error looking up VSD GPIO\n");
++		goto err_free_host;
 +	}
-+
- 	if (sidtype == SIDOWNER) {
- 		kuid_t uid;
- 		uid_t id;
+ 	slot->vio = devm_gpiod_get_index_optional(host->dev, "vio",
+ 						  id, GPIOD_OUT_LOW);
+-	if (IS_ERR(slot->vio))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->vio),
++	if (IS_ERR(slot->vio)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->vio),
+ 				     "error looking up VIO GPIO\n");
++		goto err_free_host;
++	}
+ 	slot->cover = devm_gpiod_get_index_optional(host->dev, "cover",
+ 						    id, GPIOD_IN);
+-	if (IS_ERR(slot->cover))
+-		return dev_err_probe(host->dev, PTR_ERR(slot->cover),
++	if (IS_ERR(slot->cover)) {
++		r = dev_err_probe(host->dev, PTR_ERR(slot->cover),
+ 				     "error looking up cover switch GPIO\n");
++		goto err_free_host;
++	}
+ 
+ 	host->slots[id] = slot;
+ 
+@@ -1344,6 +1350,7 @@ err_remove_slot_name:
+ 		device_remove_file(&mmc->class_dev, &dev_attr_slot_name);
+ err_remove_host:
+ 	mmc_remove_host(mmc);
++err_free_host:
+ 	mmc_free_host(mmc);
+ 	return r;
+ }
 
 
