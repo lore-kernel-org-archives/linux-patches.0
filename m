@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14108374C4;
-	Tue,  8 Apr 2025 11:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF001265CC8;
+	Tue,  8 Apr 2025 11:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110469; cv=none; b=mCkv+fay0XY4IS8PmBZpCsQ2nF9onlK76KExoZWOKZes2HrsYG2krZU2bouPu6N6BW2TsgRLMGRnLSUSJb2vlS6SeTovyrwGTL5yL+nWraoRNlk2TBkojCddGYfpLjlRU04GSp8dlBIiR7ZGt50L5Qcj/lpvv5gh2Q+/eMh6FL8=
+	t=1744110471; cv=none; b=senYYr/5Q4Dq4AwD9u+INckPJ6Hs+rmL/sO/0xmeRrgiLAuTh1qFS6S31uVQMOjwEoDmaPmSxbPlNG+KHh87BY7LeX/mrYshkHhQysBEZQVQ6QphOs5E/yL0Zalk0Lplqjr7wuTB/qEvDHzGf9AtHk3smlIxWQvd9KAvRfZ37qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110469; c=relaxed/simple;
-	bh=iJ3c6VRvH25BrMklmR0s9QqMlWr4JhBSU7emTK1Eu1w=;
+	s=arc-20240116; t=1744110471; c=relaxed/simple;
+	bh=54ap4gN3G2IutxdqqZt8IxHRrFkPpSGLO016L1rTGQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhW/a2XAnI58aGMUQQBHst7WEvVovzRlaetK1SnhP4mpEaR5P9mm7q26x3WBuLE1rPWcPGDX+yTz/g6iED5Vs5m9J3JDZP0JReWcxOD57E/EyU1db4KXZkYRu1sXhGwvFRGFeIoBPlhzcWzTLaPJGvxybOykafHHnoT7UhLj7Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMDUM3pv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGv2Uc5J6uw6TMSsrBZi4qplcxqWE7oplnIQCbmFksTlw0ujzIr8mh9WKKIaGu5XTeUEwi3I7MN2kRAM12+TlCPF3C336BArt48mbTtUDF/U/C+0flQBNBlXBSURNF98OQR5QtI8dEPm0iYiCWoUhhYqWEzqBxuW1w3DuFmHadM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuIDna+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMDUM3pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D09C4CEE5;
-	Tue,  8 Apr 2025 11:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuIDna+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A464C4CEE5;
+	Tue,  8 Apr 2025 11:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110469;
-	bh=iJ3c6VRvH25BrMklmR0s9QqMlWr4JhBSU7emTK1Eu1w=;
+	s=korg; t=1744110471;
+	bh=54ap4gN3G2IutxdqqZt8IxHRrFkPpSGLO016L1rTGQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sMDUM3pvdzbIM+WDi0tDVnk4Ax7+qKVcCeC1E4MsukGmLuVwFT9sWfB3izYcRbaXU
-	 eddaorroT9cMzUSQ9BgzRIMw8jwdOJrnWntU0bVzMIijYeRga+yHVNkZsZx9l0tw4H
-	 DNp8X3ovRPol2Gn5etHubind0gaov3yISmPVY0z0=
+	b=OuIDna+NtG/LZPsy2GCpDUfT9FNNfo/TkIkqecZP2l1jzMNujft9t4IHtEHYzKRT8
+	 pRyTITI7jTMNEfw/Jxoo8effV3K/xY7lTJ8fcKCwo9kvK+6qUD7YXW3B+CRQE7krB5
+	 K71WoZrjZzWFfSMA6GmZmzR+C7sSjSRBR5zZse9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2b96f44164236dda0f3b@syzkaller.appspotmail.com,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 074/731] ALSA: timer: Dont take register_mutex with copy_from/to_user()
-Date: Tue,  8 Apr 2025 12:39:31 +0200
-Message-ID: <20250408104915.992273522@linuxfoundation.org>
+Subject: [PATCH 6.14 075/731] ALSA: hda/realtek: Fix built-in mic assignment on ASUS VivoBook X515UA
+Date: Tue,  8 Apr 2025 12:39:32 +0200
+Message-ID: <20250408104916.014517743@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,259 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3424c8f53bc63c87712a7fc22dc13d0cc85fb0d6 ]
+[ Upstream commit 829ee558f3527fd602c6e2e9f270959d1de09fe0 ]
 
-The infamous mmap_lock taken in copy_from/to_user() can be often
-problematic when it's called inside another mutex, as they might lead
-to deadlocks.
+ASUS VivoBook X515UA with PCI SSID 1043:106f had a default quirk
+pickup via pin table that applies ALC256_FIXUP_ASUS_MIC, but this adds
+a bogus built-in mic pin 0x13 enabled.  This was no big problem
+because the pin 0x13 was assigned as the secondary mic, but the recent
+fix made the entries sorted, hence this bogus pin appeared now as the
+primary input and it broke.
 
-In the case of ALSA timer code, the bad pattern is with
-guard(mutex)(&register_mutex) that covers copy_from/to_user() -- which
-was mistakenly introduced at converting to guard(), and it had been
-carefully worked around in the past.
+For fixing the bug, put the right quirk entry for this device pointing
+to ALC256_FIXUP_ASUS_MIC_NO_PRESENCE.
 
-This patch fixes those pieces simply by moving copy_from/to_user() out
-of the register mutex lock again.
-
-Fixes: 3923de04c817 ("ALSA: pcm: oss: Use guard() for setup")
-Reported-by: syzbot+2b96f44164236dda0f3b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/67dd86c8.050a0220.25ae54.0059.GAE@google.com
-Link: https://patch.msgid.link/20250321172653.14310-1-tiwai@suse.de
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219897
+Link: https://patch.msgid.link/20250324153233.21195-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/timer.c | 147 ++++++++++++++++++++++++---------------------
- 1 file changed, 77 insertions(+), 70 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/timer.c b/sound/core/timer.c
-index fbada79380f9e..d774b9b71ce23 100644
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1515,91 +1515,97 @@ static void snd_timer_user_copy_id(struct snd_timer_id *id, struct snd_timer *ti
- 	id->subdevice = timer->tmr_subdevice;
- }
- 
--static int snd_timer_user_next_device(struct snd_timer_id __user *_tid)
-+static void get_next_device(struct snd_timer_id *id)
- {
--	struct snd_timer_id id;
- 	struct snd_timer *timer;
- 	struct list_head *p;
- 
--	if (copy_from_user(&id, _tid, sizeof(id)))
--		return -EFAULT;
--	guard(mutex)(&register_mutex);
--	if (id.dev_class < 0) {		/* first item */
-+	if (id->dev_class < 0) {		/* first item */
- 		if (list_empty(&snd_timer_list))
--			snd_timer_user_zero_id(&id);
-+			snd_timer_user_zero_id(id);
- 		else {
- 			timer = list_entry(snd_timer_list.next,
- 					   struct snd_timer, device_list);
--			snd_timer_user_copy_id(&id, timer);
-+			snd_timer_user_copy_id(id, timer);
- 		}
- 	} else {
--		switch (id.dev_class) {
-+		switch (id->dev_class) {
- 		case SNDRV_TIMER_CLASS_GLOBAL:
--			id.device = id.device < 0 ? 0 : id.device + 1;
-+			id->device = id->device < 0 ? 0 : id->device + 1;
- 			list_for_each(p, &snd_timer_list) {
- 				timer = list_entry(p, struct snd_timer, device_list);
- 				if (timer->tmr_class > SNDRV_TIMER_CLASS_GLOBAL) {
--					snd_timer_user_copy_id(&id, timer);
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
--				if (timer->tmr_device >= id.device) {
--					snd_timer_user_copy_id(&id, timer);
-+				if (timer->tmr_device >= id->device) {
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
- 			}
- 			if (p == &snd_timer_list)
--				snd_timer_user_zero_id(&id);
-+				snd_timer_user_zero_id(id);
- 			break;
- 		case SNDRV_TIMER_CLASS_CARD:
- 		case SNDRV_TIMER_CLASS_PCM:
--			if (id.card < 0) {
--				id.card = 0;
-+			if (id->card < 0) {
-+				id->card = 0;
- 			} else {
--				if (id.device < 0) {
--					id.device = 0;
-+				if (id->device < 0) {
-+					id->device = 0;
- 				} else {
--					if (id.subdevice < 0)
--						id.subdevice = 0;
--					else if (id.subdevice < INT_MAX)
--						id.subdevice++;
-+					if (id->subdevice < 0)
-+						id->subdevice = 0;
-+					else if (id->subdevice < INT_MAX)
-+						id->subdevice++;
- 				}
- 			}
- 			list_for_each(p, &snd_timer_list) {
- 				timer = list_entry(p, struct snd_timer, device_list);
--				if (timer->tmr_class > id.dev_class) {
--					snd_timer_user_copy_id(&id, timer);
-+				if (timer->tmr_class > id->dev_class) {
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
--				if (timer->tmr_class < id.dev_class)
-+				if (timer->tmr_class < id->dev_class)
- 					continue;
--				if (timer->card->number > id.card) {
--					snd_timer_user_copy_id(&id, timer);
-+				if (timer->card->number > id->card) {
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
--				if (timer->card->number < id.card)
-+				if (timer->card->number < id->card)
- 					continue;
--				if (timer->tmr_device > id.device) {
--					snd_timer_user_copy_id(&id, timer);
-+				if (timer->tmr_device > id->device) {
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
--				if (timer->tmr_device < id.device)
-+				if (timer->tmr_device < id->device)
- 					continue;
--				if (timer->tmr_subdevice > id.subdevice) {
--					snd_timer_user_copy_id(&id, timer);
-+				if (timer->tmr_subdevice > id->subdevice) {
-+					snd_timer_user_copy_id(id, timer);
- 					break;
- 				}
--				if (timer->tmr_subdevice < id.subdevice)
-+				if (timer->tmr_subdevice < id->subdevice)
- 					continue;
--				snd_timer_user_copy_id(&id, timer);
-+				snd_timer_user_copy_id(id, timer);
- 				break;
- 			}
- 			if (p == &snd_timer_list)
--				snd_timer_user_zero_id(&id);
-+				snd_timer_user_zero_id(id);
- 			break;
- 		default:
--			snd_timer_user_zero_id(&id);
-+			snd_timer_user_zero_id(id);
- 		}
- 	}
-+}
-+
-+static int snd_timer_user_next_device(struct snd_timer_id __user *_tid)
-+{
-+	struct snd_timer_id id;
-+
-+	if (copy_from_user(&id, _tid, sizeof(id)))
-+		return -EFAULT;
-+	scoped_guard(mutex, &register_mutex)
-+		get_next_device(&id);
- 	if (copy_to_user(_tid, &id, sizeof(*_tid)))
- 		return -EFAULT;
- 	return 0;
-@@ -1620,23 +1626,24 @@ static int snd_timer_user_ginfo(struct file *file,
- 	tid = ginfo->tid;
- 	memset(ginfo, 0, sizeof(*ginfo));
- 	ginfo->tid = tid;
--	guard(mutex)(&register_mutex);
--	t = snd_timer_find(&tid);
--	if (!t)
--		return -ENODEV;
--	ginfo->card = t->card ? t->card->number : -1;
--	if (t->hw.flags & SNDRV_TIMER_HW_SLAVE)
--		ginfo->flags |= SNDRV_TIMER_FLG_SLAVE;
--	strscpy(ginfo->id, t->id, sizeof(ginfo->id));
--	strscpy(ginfo->name, t->name, sizeof(ginfo->name));
--	scoped_guard(spinlock_irq, &t->lock)
--		ginfo->resolution = snd_timer_hw_resolution(t);
--	if (t->hw.resolution_min > 0) {
--		ginfo->resolution_min = t->hw.resolution_min;
--		ginfo->resolution_max = t->hw.resolution_max;
--	}
--	list_for_each(p, &t->open_list_head) {
--		ginfo->clients++;
-+	scoped_guard(mutex, &register_mutex) {
-+		t = snd_timer_find(&tid);
-+		if (!t)
-+			return -ENODEV;
-+		ginfo->card = t->card ? t->card->number : -1;
-+		if (t->hw.flags & SNDRV_TIMER_HW_SLAVE)
-+			ginfo->flags |= SNDRV_TIMER_FLG_SLAVE;
-+		strscpy(ginfo->id, t->id, sizeof(ginfo->id));
-+		strscpy(ginfo->name, t->name, sizeof(ginfo->name));
-+		scoped_guard(spinlock_irq, &t->lock)
-+			ginfo->resolution = snd_timer_hw_resolution(t);
-+		if (t->hw.resolution_min > 0) {
-+			ginfo->resolution_min = t->hw.resolution_min;
-+			ginfo->resolution_max = t->hw.resolution_max;
-+		}
-+		list_for_each(p, &t->open_list_head) {
-+			ginfo->clients++;
-+		}
- 	}
- 	if (copy_to_user(_ginfo, ginfo, sizeof(*ginfo)))
- 		return -EFAULT;
-@@ -1674,31 +1681,31 @@ static int snd_timer_user_gstatus(struct file *file,
- 	struct snd_timer_gstatus gstatus;
- 	struct snd_timer_id tid;
- 	struct snd_timer *t;
--	int err = 0;
- 
- 	if (copy_from_user(&gstatus, _gstatus, sizeof(gstatus)))
- 		return -EFAULT;
- 	tid = gstatus.tid;
- 	memset(&gstatus, 0, sizeof(gstatus));
- 	gstatus.tid = tid;
--	guard(mutex)(&register_mutex);
--	t = snd_timer_find(&tid);
--	if (t != NULL) {
--		guard(spinlock_irq)(&t->lock);
--		gstatus.resolution = snd_timer_hw_resolution(t);
--		if (t->hw.precise_resolution) {
--			t->hw.precise_resolution(t, &gstatus.resolution_num,
--						 &gstatus.resolution_den);
-+	scoped_guard(mutex, &register_mutex) {
-+		t = snd_timer_find(&tid);
-+		if (t != NULL) {
-+			guard(spinlock_irq)(&t->lock);
-+			gstatus.resolution = snd_timer_hw_resolution(t);
-+			if (t->hw.precise_resolution) {
-+				t->hw.precise_resolution(t, &gstatus.resolution_num,
-+							 &gstatus.resolution_den);
-+			} else {
-+				gstatus.resolution_num = gstatus.resolution;
-+				gstatus.resolution_den = 1000000000uL;
-+			}
- 		} else {
--			gstatus.resolution_num = gstatus.resolution;
--			gstatus.resolution_den = 1000000000uL;
-+			return -ENODEV;
- 		}
--	} else {
--		err = -ENODEV;
- 	}
--	if (err >= 0 && copy_to_user(_gstatus, &gstatus, sizeof(gstatus)))
--		err = -EFAULT;
--	return err;
-+	if (copy_to_user(_gstatus, &gstatus, sizeof(gstatus)))
-+		return -EFAULT;
-+	return 0;
- }
- 
- static int snd_timer_user_tselect(struct file *file,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index abe269fb8ce00..d70c72bda90a5 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10702,6 +10702,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x1043, 0x106f, "ASUS VivoBook X515UA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.39.5
 
