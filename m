@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9B226A0EB;
-	Tue,  8 Apr 2025 12:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE811AAA32;
+	Tue,  8 Apr 2025 12:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116075; cv=none; b=WxkFE4yL2vPADhRn563IU5CqC1PpwOHk7MvARN1wkOwt9faOu9ctzIpijoXd9E1W1WKJ+ioOEcZ4vwa47OPKM8kAyy8g9Vhud0yadkZ+mRn2sSqSdhrrvQS9B4MBUAFzj50LEgx0lB6+odPH1T1hqgUpgvZmJk9fl/5vgpjlbD4=
+	t=1744116078; cv=none; b=ROl0zRr4sPlWRRYKfzq6/lO/rimA6LhAyhB5F+N8R0YeuaAES21dVtrnR/FQSGbPjCcwlBp3aF/SmO5vFMI5zVKvFQ7Gu9bZvjruGcZsk7K5Xkmfljx8+DOMk0DlslECyWElK/9tUQwc+I2Rz3N16HTBxdv81bsDWm00bde42jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116075; c=relaxed/simple;
-	bh=emIuhWo0JPBqAxFU2ktvjSuOfMJrWIDFc6I3BkVUq+M=;
+	s=arc-20240116; t=1744116078; c=relaxed/simple;
+	bh=PDDpIJOYb+ievQrx8gTeZemQm5nI+wyFb50vgO7ewcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeBfJDucbSSWvSW9IBZOS1OBAaziCh8dpdebHOMZ87Ykm4gSnc/EuNNI/ltrPA2Po4UJ7w76YItvAGeIzAI6FMyn10Hk564Dlk9W9yOwrkD+uWU2iB+hNIdQsQH06UMwUfvMm7fu0VsVrK1gmL5xnCoJ2nmDqbjtUHJkIBHmOo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TYwmS0F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Swz2juCLO8la8hqn+YEC3HXxX/0hKFzKB9uWOeIrPyvO22JQnro/vNsGKGXUD4Yok0Qkrf25T+35+UdOZQKei8oCPwHh526UeSrw+il10qgazzmwj/kRXjO6eFJMdEdlMwdvWac4FBPPvVJLPGIBhV5yxW2ocu0+C9jV3Ms2dyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igkJElnS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TYwmS0F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7A7C4CEE7;
-	Tue,  8 Apr 2025 12:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igkJElnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F62C4CEF6;
+	Tue,  8 Apr 2025 12:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116075;
-	bh=emIuhWo0JPBqAxFU2ktvjSuOfMJrWIDFc6I3BkVUq+M=;
+	s=korg; t=1744116078;
+	bh=PDDpIJOYb+ievQrx8gTeZemQm5nI+wyFb50vgO7ewcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TYwmS0FyPpQZOnynQgb1uVWX2VTnJACMAdGmAzvLRSziaqkrzyeF8DnKE/mHxsrz
-	 Rc0uEB+xAD0Uw4Tv5L+pOgjvEdTjlB0JVxuUaeH2HOP7YN0MMjd2gmnGgL8ZJJPN9/
-	 0TSm4oUOou/pXlSgRGvLHDilz5uaMB7ExOr3HN2w=
+	b=igkJElnSGN71KeLUxBwAnCrXnfnrjzfMUYGl23LXX/uoLYf6VRlx100s6T/WOaJkW
+	 wQ7WONadejVxoXvv2wafD0ZTt2UYzrQtWaXp8YvM6nsIS51WjdZp2txKHPDs01bOhf
+	 h7bfnU5LXjq25tLu6Beg+Fz0+DjhY5E7zbTQCFuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 204/204] NFSD: Skip sending CB_RECALL_ANY when the backchannel isnt up
-Date: Tue,  8 Apr 2025 12:52:14 +0200
-Message-ID: <20250408104826.312392909@linuxfoundation.org>
+	syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>
+Subject: [PATCH 6.1 200/204] jfs: fix slab-out-of-bounds read in ea_get()
+Date: Tue,  8 Apr 2025 12:52:10 +0200
+Message-ID: <20250408104826.188553058@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -50,60 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit 8a388c1fabeb6606e16467b23242416c0dbeffad upstream.
+commit fdf480da5837c23b146c4743c18de97202fcab37 upstream.
 
-NFSD sends CB_RECALL_ANY to clients when the server is low on
-memory or that client has a large number of delegations outstanding.
+During the "size_check" label in ea_get(), the code checks if the extended
+attribute list (xattr) size matches ea_size. If not, it logs
+"ea_get: invalid extended attribute" and calls print_hex_dump().
 
-We've seen cases where NFSD attempts to send CB_RECALL_ANY requests
-to disconnected clients, and gets confused. These calls never go
-anywhere if a backchannel transport to the target client isn't
-available. Before the server can send any backchannel operation, the
-client has to connect first and then do a BIND_CONN_TO_SESSION.
+Here, EALIST_SIZE(ea_buf->xattr) returns 4110417968, which exceeds
+INT_MAX (2,147,483,647). Then ea_size is clamped:
 
-This patch doesn't address the root cause of the confusion, but
-there's no need to queue up these optional operations if they can't
-go anywhere.
+	int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
 
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Although clamp_t aims to bound ea_size between 0 and 4110417968, the upper
+limit is treated as an int, causing an overflow above 2^31 - 1. This leads
+"size" to wrap around and become negative (-184549328).
+
+The "size" is then passed to print_hex_dump() (called "len" in
+print_hex_dump()), it is passed as type size_t (an unsigned
+type), this is then stored inside a variable called
+"int remaining", which is then assigned to "int linelen" which
+is then passed to hex_dump_to_buffer(). In print_hex_dump()
+the for loop, iterates through 0 to len-1, where len is
+18446744073525002176, calling hex_dump_to_buffer()
+on each iteration:
+
+	for (i = 0; i < len; i += rowsize) {
+		linelen = min(remaining, rowsize);
+		remaining -= rowsize;
+
+		hex_dump_to_buffer(ptr + i, linelen, rowsize, groupsize,
+				   linebuf, sizeof(linebuf), ascii);
+
+		...
+	}
+
+The expected stopping condition (i < len) is effectively broken
+since len is corrupted and very large. This eventually leads to
+the "ptr+i" being passed to hex_dump_to_buffer() to get closer
+to the end of the actual bounds of "ptr", eventually an out of
+bounds access is done in hex_dump_to_buffer() in the following
+for loop:
+
+	for (j = 0; j < len; j++) {
+			if (linebuflen < lx + 2)
+				goto overflow2;
+			ch = ptr[j];
+		...
+	}
+
+To fix this we should validate "EALIST_SIZE(ea_buf->xattr)"
+before it is utilised.
+
+Reported-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
+Tested-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=4e6e7e4279d046613bc5
+Fixes: d9f9d96136cb ("jfs: xattr: check invalid xattr size more strictly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ fs/jfs/xattr.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6247,14 +6247,19 @@ deleg_reaper(struct nfsd_net *nn)
- 	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
- 		clp = list_entry(pos, struct nfs4_client, cl_lru);
--		if (clp->cl_state != NFSD4_ACTIVE ||
--			list_empty(&clp->cl_delegations) ||
--			atomic_read(&clp->cl_delegs_in_recall) ||
--			test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags) ||
--			(ktime_get_boottime_seconds() -
--				clp->cl_ra_time < 5)) {
-+
-+		if (clp->cl_state != NFSD4_ACTIVE)
-+			continue;
-+		if (list_empty(&clp->cl_delegations))
-+			continue;
-+		if (atomic_read(&clp->cl_delegs_in_recall))
-+			continue;
-+		if (test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags))
-+			continue;
-+		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
-+			continue;
-+		if (clp->cl_cb_state != NFSD4_CB_UP)
- 			continue;
--		}
- 		list_add(&clp->cl_ra_cblist, &cblist);
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -559,11 +559,16 @@ static int ea_get(struct inode *inode, s
  
- 		/* release in nfsd4_cb_recall_any_release */
+       size_check:
+ 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
+-		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
++		if (unlikely(EALIST_SIZE(ea_buf->xattr) > INT_MAX)) {
++			printk(KERN_ERR "ea_get: extended attribute size too large: %u > INT_MAX\n",
++			       EALIST_SIZE(ea_buf->xattr));
++		} else {
++			int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
+ 
+-		printk(KERN_ERR "ea_get: invalid extended attribute\n");
+-		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+-				     ea_buf->xattr, size, 1);
++			printk(KERN_ERR "ea_get: invalid extended attribute\n");
++			print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
++				       ea_buf->xattr, size, 1);
++		}
+ 		ea_release(inode, ea_buf);
+ 		rc = -EIO;
+ 		goto clean_up;
 
 
