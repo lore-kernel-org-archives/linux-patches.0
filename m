@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77716374C4;
-	Tue,  8 Apr 2025 11:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BA0265CC8;
+	Tue,  8 Apr 2025 11:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110474; cv=none; b=QG9Ix+JvqjqFqtnS6TcQx0KC/627Bze71E3sNYJGtm4YDE6Sjo/vwE1qIyZkfssxZwrNTaeLhTSNX+sD2m81OtCSIDRk1G/CYDn4z4Dia1yczwCCU278B73Rr1YPo2QdKBubIxVs4hMyagM5Vlbmxk5Yx1vSRrtDxwtHPMvQAZo=
+	t=1744110477; cv=none; b=thiTyy7t4OhEmSFMPLBAwdhhtaK/incYtDbgnPBdNuhEQF9C2E6OB9nOhT7FtBAPLdTQFqHX22+2esg4I6obD1OlZ82wlWMNSBxqpEBiTTI5v4IxuIewOG2/BBklJpia2WM/if59aiNjgwsJsdK6ap3z5MeGaNvwK08ExCti3Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110474; c=relaxed/simple;
-	bh=uxT1ejDjCZ6YVOGkiSzsX8uCpZDnTOtBKJ6DrL5KjWw=;
+	s=arc-20240116; t=1744110477; c=relaxed/simple;
+	bh=bJArjkrQ3jiC/L8vM1jOAEi4u61iVuPETNUNIpo0kH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbacoOpoSvMLdNZkhYamwn/tgSMB+xLihl5nFoxMx2WeaVeeNlIGZLWheY1Ebg2tFTc2lKxA7KxXDXY/dW93ZeQm9vhQyoWRegHuSTsg/6np2onHXWzzCVxs0nlC9XljcvT/rqAzZNthxQpqXh/07waidExRFiTrUtS1f/AjycY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hk9XONq2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URKr7pwsP0QOR7K3Coj2SFKPaWfPEdc/YZKI2TImEMjJRu+Ue2Pwep1wHtuj+JJs1J1LdY63F2S9dtSWvjQrFgIRjJOJRml3KCtXo5TPI0XXiq2eIHscX7TIGibGrEInQor1WxYgpIZrzzppM7cle5qqnsNhtVEqpp7zuqSLzcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKQli8GN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hk9XONq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E85C4CEE5;
-	Tue,  8 Apr 2025 11:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKQli8GN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7664C4CEE5;
+	Tue,  8 Apr 2025 11:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110474;
-	bh=uxT1ejDjCZ6YVOGkiSzsX8uCpZDnTOtBKJ6DrL5KjWw=;
+	s=korg; t=1744110477;
+	bh=bJArjkrQ3jiC/L8vM1jOAEi4u61iVuPETNUNIpo0kH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hk9XONq2AVQ3b7XBQG1rLHHNd3ZwQ5mtokfgw8qd/p/fUgdlUvn/QX9fJNp2vYWeh
-	 f+4EaN6O7vx8qGmf5rJ8Zw0wRfcdT/ii9dk3zjVF+ik5wf/pxMF1OUJ214Mm08IpoO
-	 yzDOhec+obSDCOzlph6YHVMgiEY2f//5pwbgbgeE=
+	b=AKQli8GN+clG+oxUjPEja8y4CHpcKAw3zzD0yYSDobQKuSwDixxA0TLLCVI/m0jtS
+	 XOWz7h2h7/ZRRQMbHaemVUV3/ltwyU/mQpDwQOaVMx0Q1VuJfYkzZB0rvxE97JYoFR
+	 fA2fzuEnkf5Ybk0rRtvOYkga89iz5jqV/FXva3sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Jie <liangjie@lixiang.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 076/731] wifi: rtw89: Correct immediate cfg_len calculation for scan_offload_be
-Date: Tue,  8 Apr 2025 12:39:33 +0200
-Message-ID: <20250408104916.037458733@linuxfoundation.org>
+Subject: [PATCH 6.14 077/731] wifi: ath12k: fix skb_ext_desc leak in ath12k_dp_tx() error path
+Date: Tue,  8 Apr 2025 12:39:34 +0200
+Message-ID: <20250408104916.060745731@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,70 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Jie <liangjie@lixiang.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 361cb056e2468be534f47c1a6745f96581a721e3 ]
+[ Upstream commit 28a9972e0f0693cd4d08f431c992fa6be39c788c ]
 
-Ensures the correct calculation of `cfg_len` prior to the allocation of
-the skb in the `rtw89_fw_h2c_scan_offload_be` function, particularly when
-the `SCAN_OFFLOAD_BE_V0` firmware feature is enabled. It addresses an
-issue where an incorrect skb size might be allocated due to a delayed
-setting of `cfg_len`, potentially leading to memory inefficiencies.
+When vlan support was added, we missed that when
+ath12k_dp_prepare_htt_metadata() returns an error we also need to free
+the skb holding the metadata before going on with the cleanup process.
 
-By moving the conditional check and assignment of `cfg_len` before skb
-allocation, the patch guarantees that `len`, which depends on `cfg_len`,
-is accurately computed, ensuring proper skb size and preventing any
-unnecessary memory reservation for firmware operations not supporting
-beyond the `w8` member of the command data structure.
+Compile tested only.
 
-This correction helps to optimize memory usage and maintain consistent
-behavior across different firmware versions.
-
-Fixes: 6ca6b918f280 ("wifi: rtw89: 8922a: Add new fields for scan offload H2C command")
-Signed-off-by: Liang Jie <liangjie@lixiang.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250112105144.615474-1-buaajxlj@163.com
+Fixes: 26dd8ccdba4d ("wifi: ath12k: dynamic VLAN support")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250122160112.3234558-1-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index 5d4ad23cc3bd4..5cc9ab78c09f7 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -5311,6 +5311,7 @@ int rtw89_fw_h2c_scan_offload_be(struct rtw89_dev *rtwdev,
- 	u8 macc_role_size = sizeof(*macc_role) * option->num_macc_role;
- 	u8 opch_size = sizeof(*opch) * option->num_opch;
- 	u8 probe_id[NUM_NL80211_BANDS];
-+	u8 scan_offload_ver = U8_MAX;
- 	u8 cfg_len = sizeof(*h2c);
- 	unsigned int cond;
- 	u8 ver = U8_MAX;
-@@ -5321,6 +5322,11 @@ int rtw89_fw_h2c_scan_offload_be(struct rtw89_dev *rtwdev,
- 
- 	rtw89_scan_get_6g_disabled_chan(rtwdev, option);
- 
-+	if (RTW89_CHK_FW_FEATURE(SCAN_OFFLOAD_BE_V0, &rtwdev->fw)) {
-+		cfg_len = offsetofend(typeof(*h2c), w8);
-+		scan_offload_ver = 0;
-+	}
-+
- 	len = cfg_len + macc_role_size + opch_size;
- 	skb = rtw89_fw_h2c_alloc_skb_with_hdr(rtwdev, len);
- 	if (!skb) {
-@@ -5392,10 +5398,8 @@ int rtw89_fw_h2c_scan_offload_be(struct rtw89_dev *rtwdev,
- 					   RTW89_H2C_SCANOFLD_BE_W8_PROBE_RATE_6GHZ);
- 	}
- 
--	if (RTW89_CHK_FW_FEATURE(SCAN_OFFLOAD_BE_V0, &rtwdev->fw)) {
--		cfg_len = offsetofend(typeof(*h2c), w8);
-+	if (scan_offload_ver == 0)
- 		goto flex_member;
--	}
- 
- 	h2c->w9 = le32_encode_bits(sizeof(*h2c) / sizeof(h2c->w0),
- 				   RTW89_H2C_SCANOFLD_BE_W9_SIZE_CFG) |
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index a8d341a6df01e..e0b85f959cd4a 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -398,6 +398,7 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_link_vif *arvif,
+ 			if (ret < 0) {
+ 				ath12k_dbg(ab, ATH12K_DBG_DP_TX,
+ 					   "Failed to add HTT meta data, dropping packet\n");
++				kfree_skb(skb_ext_desc);
+ 				goto fail_unmap_dma;
+ 			}
+ 		}
 -- 
 2.39.5
 
