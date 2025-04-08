@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81C426B94B;
-	Tue,  8 Apr 2025 12:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0150826E142;
+	Tue,  8 Apr 2025 12:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114213; cv=none; b=MJvKD8NTMmRl2fjnTVWZX5KZv+DyGn+lrVE6jcM5IYiLXRWI6CK/Q1qHSd6qoiJBy2VI8+zpr4Gd7LtsHs6yeZO5zLTsdZyzH/hGJb55bc5A+/4sZfOj27FBCT7hkL0h9RDcZ1WE3sCDjnHOtO0HKv7UM5e9KQn1tiXEJkj4Npc=
+	t=1744114216; cv=none; b=n7ceuyq7q4PjwhixkxDJ9LjFGB1bN0AWNFsaRfrCHgkeVgXTzpeyQY6RmTakK4tTWzhWUExeN09h/RWt9845zrB9JYhF6y63chviyGyA4dyaJ81cEB7N0mPO6JHGvl8wy6Bho0bKoIOsXheMVvgE7hyF0NRRXvpSnMoiOxzeVGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114213; c=relaxed/simple;
-	bh=QM7sPYBpVcuXwR+KeLISXrBlISscAl7/hOqfvEy/ijA=;
+	s=arc-20240116; t=1744114216; c=relaxed/simple;
+	bh=OoGYmE3Lel7SpLh96brR6VwyffgDrQ4cwAGynTqjtHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pAvsAWJogaiAZ3GDdCicOtsa+mIlmpzaIQKAyXZTESdb5NXgtCj6OEUpQePGHfmbldbSmSnYhWGbDMg8SSZOlLISwULYHaE7pVNX8kUyiuU85U6r7ZRHeeEBNrZtPXBiJ/i7SY2wHlYJCO8lQs7BhlmLZ0ojm3goGRJgS34a81I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnTCLGYN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DyJ7fUUkIEJRRU0fzlz6pGu/ZFKdtpipENqCMdzMcLYYY9a1rrk5JkebqXi2QZ5ZGHgCziriwjgkw7Ej05aV4U+7uNyTdmPlMfG5+gIWunNzwwi+mdfek7AdqoIormdvRXpXz4ounCgf/FoyIC4j5Pi2aE0DCgMyFcXP/YuZ3cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOjBLxp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnTCLGYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C94C4CEE5;
-	Tue,  8 Apr 2025 12:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOjBLxp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86966C4CEE5;
+	Tue,  8 Apr 2025 12:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114213;
-	bh=QM7sPYBpVcuXwR+KeLISXrBlISscAl7/hOqfvEy/ijA=;
+	s=korg; t=1744114215;
+	bh=OoGYmE3Lel7SpLh96brR6VwyffgDrQ4cwAGynTqjtHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnTCLGYNvvJVcYNMiUmE89OoR2v7OX5onc+gMi59NOO6wM6QzzceNOlfp5T8m9U1r
-	 g6dhL484+RfOHFlRouTmyfJlNAf5+McPPT5+nx+tebQvL3p+hEncIdbXXyPlBkrXck
-	 xaLiJfceXj1P9UWy7AXKPiugsLaTTfKn9eViqZ9s=
+	b=vOjBLxp1xhOb4f+Sm8LoPIZmdBZlis1MdEEmP7GJkzUjJMb3qek7QQyEscgZptoZE
+	 8qq6mLT5NyeEOfd6IH+IxLeKaP7Jcc2ZUZFRbWNMVx3yAo9n2IHR3wDug8PqSSP34Q
+	 hRt0tyJaXeXL9s/kjGu61lK4CFZuKRkE1E2/hzsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
+	Maksim Davydov <davydov-max@yandex-team.ru>,
 	Ingo Molnar <mingo@kernel.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 023/499] watchdog/hardlockup/perf: Fix perf_event memory leak
-Date: Tue,  8 Apr 2025 12:43:55 +0200
-Message-ID: <20250408104851.824990115@linuxfoundation.org>
+Subject: [PATCH 6.13 024/499] x86/split_lock: Fix the delayed detection logic
+Date: Tue,  8 Apr 2025 12:43:56 +0200
+Message-ID: <20250408104851.848758872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,286 +55,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Maksim Davydov <davydov-max@yandex-team.ru>
 
-[ Upstream commit d6834d9c990333bfa433bc1816e2417f268eebbe ]
+[ Upstream commit c929d08df8bee855528b9d15b853c892c54e1eee ]
 
-During stress-testing, we found a kmemleak report for perf_event:
+If the warning mode with disabled mitigation mode is used, then on each
+CPU where the split lock occurred detection will be disabled in order to
+make progress and delayed work will be scheduled, which then will enable
+detection back.
 
-  unreferenced object 0xff110001410a33e0 (size 1328):
-    comm "kworker/4:11", pid 288, jiffies 4294916004
-    hex dump (first 32 bytes):
-      b8 be c2 3b 02 00 11 ff 22 01 00 00 00 00 ad de  ...;....".......
-      f0 33 0a 41 01 00 11 ff f0 33 0a 41 01 00 11 ff  .3.A.....3.A....
-    backtrace (crc 24eb7b3a):
-      [<00000000e211b653>] kmem_cache_alloc_node_noprof+0x269/0x2e0
-      [<000000009d0985fa>] perf_event_alloc+0x5f/0xcf0
-      [<00000000084ad4a2>] perf_event_create_kernel_counter+0x38/0x1b0
-      [<00000000fde96401>] hardlockup_detector_event_create+0x50/0xe0
-      [<0000000051183158>] watchdog_hardlockup_enable+0x17/0x70
-      [<00000000ac89727f>] softlockup_start_fn+0x15/0x40
-      ...
+Now it turns out that all CPUs use one global delayed work structure.
+This leads to the fact that if a split lock occurs on several CPUs
+at the same time (within 2 jiffies), only one CPU will schedule delayed
+work, but the rest will not.
 
-Our stress test includes CPU online and offline cycles, and updating the
-watchdog configuration.
+The return value of schedule_delayed_work_on() would have shown this,
+but it is not checked in the code.
 
-After reading the code, I found that there may be a race between cleaning up
-perf_event after updating watchdog and disabling event when the CPU goes offline:
+A diagram that can help to understand the bug reproduction:
 
-  CPU0                          CPU1                           CPU2
-  (update watchdog)                                            (hotplug offline CPU1)
+ - sld_update_msr() enables/disables SLD on both CPUs on the same core
 
-  ...                                                          _cpu_down(CPU1)
-  cpus_read_lock()                                             // waiting for cpu lock
-    softlockup_start_all
-      smp_call_on_cpu(CPU1)
-                                softlockup_start_fn
-                                ...
-                                  watchdog_hardlockup_enable(CPU1)
-                                    perf create E1
-                                    watchdog_ev[CPU1] = E1
-  cpus_read_unlock()
-                                                               cpus_write_lock()
-                                                               cpuhp_kick_ap_work(CPU1)
-                                cpuhp_thread_fun
-                                ...
-                                  watchdog_hardlockup_disable(CPU1)
-                                    watchdog_ev[CPU1] = NULL
-                                    dead_event[CPU1] = E1
-  __lockup_detector_cleanup
-    for each dead_events_mask
-      release each dead_event
-      /*
-       * CPU1 has not been added to
-       * dead_events_mask, then E1
-       * will not be released
-       */
-                                    CPU1 -> dead_events_mask
-    cpumask_clear(&dead_events_mask)
-    // dead_events_mask is cleared, E1 is leaked
+ - schedule_delayed_work_on() internally checks WORK_STRUCT_PENDING_BIT.
+   If a work has the 'pending' status, then schedule_delayed_work_on()
+   will return an error code and, most importantly, the work will not
+   be placed in the workqueue.
 
-In this case, the leaked perf_event E1 matches the perf_event leak
-reported by kmemleak. Due to the low probability of problem recurrence
-(only reported once), I added some hack delays in the code:
+Let's say we have a multicore system on which split_lock_mitigate=0 and
+a multithreaded application is running that calls splitlock in multiple
+threads. Due to the fact that sld_update_msr() affects the entire core
+(both CPUs), we will consider 2 CPUs from different cores. Let the 2
+threads of this application schedule to CPU0 (core 0) and to CPU 2
+(core 1), then:
 
-  static void __lockup_detector_reconfigure(void)
-  {
-    ...
-          watchdog_hardlockup_start();
-          cpus_read_unlock();
-  +       mdelay(100);
-          /*
-           * Must be called outside the cpus locked section to prevent
-           * recursive locking in the perf code.
-    ...
-  }
+|                                 ||                                   |
+|             CPU 0 (core 0)      ||          CPU 2 (core 1)           |
+|_________________________________||___________________________________|
+|                                 ||                                   |
+| 1) SPLIT LOCK occured           ||                                   |
+|                                 ||                                   |
+| 2) split_lock_warn()            ||                                   |
+|                                 ||                                   |
+| 3) sysctl_sld_mitigate == 0     ||                                   |
+|    (work = &sl_reenable)        ||                                   |
+|                                 ||                                   |
+| 4) schedule_delayed_work_on()   ||                                   |
+|    (reenable will be called     ||                                   |
+|     after 2 jiffies on CPU 0)   ||                                   |
+|                                 ||                                   |
+| 5) disable SLD for core 0       ||                                   |
+|                                 ||                                   |
+|    -------------------------    ||                                   |
+|                                 ||                                   |
+|                                 || 6) SPLIT LOCK occured             |
+|                                 ||                                   |
+|                                 || 7) split_lock_warn()              |
+|                                 ||                                   |
+|                                 || 8) sysctl_sld_mitigate == 0       |
+|                                 ||    (work = &sl_reenable,          |
+|                                 ||     the same address as in 3) )   |
+|                                 ||                                   |
+|            2 jiffies            || 9) schedule_delayed_work_on()     |
+|                                 ||    fials because the work is in   |
+|                                 ||    the pending state since 4).    |
+|                                 ||    The work wasn't placed to the  |
+|                                 ||    workqueue. reenable won't be   |
+|                                 ||    called on CPU 2                |
+|                                 ||                                   |
+|                                 || 10) disable SLD for core 0        |
+|                                 ||                                   |
+|                                 ||     From now on SLD will          |
+|                                 ||     never be reenabled on core 1  |
+|                                 ||                                   |
+|    -------------------------    ||                                   |
+|                                 ||                                   |
+|    11) enable SLD for core 0 by ||                                   |
+|        __split_lock_reenable    ||                                   |
+|                                 ||                                   |
 
-  void watchdog_hardlockup_disable(unsigned int cpu)
-  {
-    ...
-                  perf_event_disable(event);
-                  this_cpu_write(watchdog_ev, NULL);
-                  this_cpu_write(dead_event, event);
-  +               mdelay(100);
-                  cpumask_set_cpu(smp_processor_id(), &dead_events_mask);
-                  atomic_dec(&watchdog_cpus);
-    ...
-  }
+If the application threads can be scheduled to all processor cores,
+then over time there will be only one core left, on which SLD will be
+enabled and split lock will be able to be detected; and on all other
+cores SLD will be disabled all the time.
 
-  void hardlockup_detector_perf_cleanup(void)
-  {
-    ...
-                          perf_event_release_kernel(event);
-                  per_cpu(dead_event, cpu) = NULL;
-          }
-  +       mdelay(100);
-          cpumask_clear(&dead_events_mask);
-  }
+Most likely, this bug has not been noticed for so long because
+sysctl_sld_mitigate default value is 1, and in this case a semaphore
+is used that does not allow 2 different cores to have SLD disabled at
+the same time, that is, strictly only one work is placed in the
+workqueue.
 
-Then, simultaneously performing CPU on/off and switching watchdog, it is
-almost certain to reproduce this leak.
+In order to fix the warning mode with disabled mitigation mode,
+delayed work has to be per-CPU. Implement it.
 
-The problem here is that releasing perf_event is not within the CPU
-hotplug read-write lock. Commit:
-
-  941154bd6937 ("watchdog/hardlockup/perf: Prevent CPU hotplug deadlock")
-
-introduced deferred release to solve the deadlock caused by calling
-get_online_cpus() when releasing perf_event. Later, commit:
-
-  efe951d3de91 ("perf/x86: Fix perf,x86,cpuhp deadlock")
-
-removed the get_online_cpus() call on the perf_event release path to solve
-another deadlock problem.
-
-Therefore, it is now possible to move the release of perf_event back
-into the CPU hotplug read-write lock, and release the event immediately
-after disabling it.
-
-Fixes: 941154bd6937 ("watchdog/hardlockup/perf: Prevent CPU hotplug deadlock")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Fixes: 727209376f49 ("x86/split_lock: Add sysctl to control the misery mode")
+Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241021193004.308303-1-lihuafei1@huawei.com
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250115131704.132609-1-davydov-max@yandex-team.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nmi.h    |  4 ----
- kernel/cpu.c           |  5 -----
- kernel/watchdog.c      | 25 -------------------------
- kernel/watchdog_perf.c | 28 +---------------------------
- 4 files changed, 1 insertion(+), 61 deletions(-)
+ arch/x86/kernel/cpu/bus_lock.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/nmi.h b/include/linux/nmi.h
-index a8dfb38c9bb6f..e78fa535f61dd 100644
---- a/include/linux/nmi.h
-+++ b/include/linux/nmi.h
-@@ -17,7 +17,6 @@
- void lockup_detector_init(void);
- void lockup_detector_retry_init(void);
- void lockup_detector_soft_poweroff(void);
--void lockup_detector_cleanup(void);
- 
- extern int watchdog_user_enabled;
- extern int watchdog_thresh;
-@@ -37,7 +36,6 @@ extern int sysctl_hardlockup_all_cpu_backtrace;
- static inline void lockup_detector_init(void) { }
- static inline void lockup_detector_retry_init(void) { }
- static inline void lockup_detector_soft_poweroff(void) { }
--static inline void lockup_detector_cleanup(void) { }
- #endif /* !CONFIG_LOCKUP_DETECTOR */
- 
- #ifdef CONFIG_SOFTLOCKUP_DETECTOR
-@@ -104,12 +102,10 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs);
- #if defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
- extern void hardlockup_detector_perf_stop(void);
- extern void hardlockup_detector_perf_restart(void);
--extern void hardlockup_detector_perf_cleanup(void);
- extern void hardlockup_config_perf_event(const char *str);
- #else
- static inline void hardlockup_detector_perf_stop(void) { }
- static inline void hardlockup_detector_perf_restart(void) { }
--static inline void hardlockup_detector_perf_cleanup(void) { }
- static inline void hardlockup_config_perf_event(const char *str) { }
- #endif
- 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 0509a97337450..b1b5d9639303d 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1452,11 +1452,6 @@ static int __ref _cpu_down(unsigned int cpu, int tasks_frozen,
- 
- out:
- 	cpus_write_unlock();
--	/*
--	 * Do post unplug cleanup. This is still protected against
--	 * concurrent CPU hotplug via cpu_add_remove_lock.
--	 */
--	lockup_detector_cleanup();
- 	arch_smt_update();
- 	return ret;
+diff --git a/arch/x86/kernel/cpu/bus_lock.c b/arch/x86/kernel/cpu/bus_lock.c
+index 704e9241b9640..994eae8ad8609 100644
+--- a/arch/x86/kernel/cpu/bus_lock.c
++++ b/arch/x86/kernel/cpu/bus_lock.c
+@@ -192,7 +192,13 @@ static void __split_lock_reenable(struct work_struct *work)
+ {
+ 	sld_update_msr(true);
  }
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 41e0f7e9fa353..e1dba41164819 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -347,8 +347,6 @@ static int __init watchdog_thresh_setup(char *str)
- }
- __setup("watchdog_thresh=", watchdog_thresh_setup);
+-static DECLARE_DELAYED_WORK(sl_reenable, __split_lock_reenable);
++/*
++ * In order for each CPU to schedule its delayed work independently of the
++ * others, delayed work struct must be per-CPU. This is not required when
++ * sysctl_sld_mitigate is enabled because of the semaphore that limits
++ * the number of simultaneously scheduled delayed works to 1.
++ */
++static DEFINE_PER_CPU(struct delayed_work, sl_reenable);
  
--static void __lockup_detector_cleanup(void);
--
- #ifdef CONFIG_SOFTLOCKUP_DETECTOR_INTR_STORM
- enum stats_per_group {
- 	STATS_SYSTEM,
-@@ -886,11 +884,6 @@ static void __lockup_detector_reconfigure(void)
+ /*
+  * If a CPU goes offline with pending delayed work to re-enable split lock
+@@ -213,7 +219,7 @@ static int splitlock_cpu_offline(unsigned int cpu)
  
- 	watchdog_hardlockup_start();
- 	cpus_read_unlock();
--	/*
--	 * Must be called outside the cpus locked section to prevent
--	 * recursive locking in the perf code.
--	 */
--	__lockup_detector_cleanup();
- }
+ static void split_lock_warn(unsigned long ip)
+ {
+-	struct delayed_work *work;
++	struct delayed_work *work = NULL;
+ 	int cpu;
  
- void lockup_detector_reconfigure(void)
-@@ -940,24 +933,6 @@ static inline void lockup_detector_setup(void)
- }
- #endif /* !CONFIG_SOFTLOCKUP_DETECTOR */
- 
--static void __lockup_detector_cleanup(void)
--{
--	lockdep_assert_held(&watchdog_mutex);
--	hardlockup_detector_perf_cleanup();
--}
--
--/**
-- * lockup_detector_cleanup - Cleanup after cpu hotplug or sysctl changes
-- *
-- * Caller must not hold the cpu hotplug rwsem.
-- */
--void lockup_detector_cleanup(void)
--{
--	mutex_lock(&watchdog_mutex);
--	__lockup_detector_cleanup();
--	mutex_unlock(&watchdog_mutex);
--}
--
- /**
-  * lockup_detector_soft_poweroff - Interface to stop lockup detector(s)
-  *
-diff --git a/kernel/watchdog_perf.c b/kernel/watchdog_perf.c
-index 59c1d86a73a24..2fdb96eaf4933 100644
---- a/kernel/watchdog_perf.c
-+++ b/kernel/watchdog_perf.c
-@@ -21,8 +21,6 @@
- #include <linux/perf_event.h>
- 
- static DEFINE_PER_CPU(struct perf_event *, watchdog_ev);
--static DEFINE_PER_CPU(struct perf_event *, dead_event);
--static struct cpumask dead_events_mask;
- 
- static atomic_t watchdog_cpus = ATOMIC_INIT(0);
- 
-@@ -181,36 +179,12 @@ void watchdog_hardlockup_disable(unsigned int cpu)
- 
- 	if (event) {
- 		perf_event_disable(event);
-+		perf_event_release_kernel(event);
- 		this_cpu_write(watchdog_ev, NULL);
--		this_cpu_write(dead_event, event);
--		cpumask_set_cpu(smp_processor_id(), &dead_events_mask);
- 		atomic_dec(&watchdog_cpus);
+ 	if (!current->reported_split_lock)
+@@ -235,11 +241,17 @@ static void split_lock_warn(unsigned long ip)
+ 		if (down_interruptible(&buslock_sem) == -EINTR)
+ 			return;
+ 		work = &sl_reenable_unlock;
+-	} else {
+-		work = &sl_reenable;
  	}
- }
  
--/**
-- * hardlockup_detector_perf_cleanup - Cleanup disabled events and destroy them
-- *
-- * Called from lockup_detector_cleanup(). Serialized by the caller.
-- */
--void hardlockup_detector_perf_cleanup(void)
--{
--	int cpu;
--
--	for_each_cpu(cpu, &dead_events_mask) {
--		struct perf_event *event = per_cpu(dead_event, cpu);
--
--		/*
--		 * Required because for_each_cpu() reports  unconditionally
--		 * CPU0 as set on UP kernels. Sigh.
--		 */
--		if (event)
--			perf_event_release_kernel(event);
--		per_cpu(dead_event, cpu) = NULL;
--	}
--	cpumask_clear(&dead_events_mask);
--}
--
- /**
-  * hardlockup_detector_perf_stop - Globally stop watchdog events
-  *
+ 	cpu = get_cpu();
++
++	if (!work) {
++		work = this_cpu_ptr(&sl_reenable);
++		/* Deferred initialization of per-CPU struct */
++		if (!work->work.func)
++			INIT_DELAYED_WORK(work, __split_lock_reenable);
++	}
++
+ 	schedule_delayed_work_on(cpu, work, 2);
+ 
+ 	/* Disable split lock detection on this CPU to make progress */
 -- 
 2.39.5
 
