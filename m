@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0D92676E1;
-	Tue,  8 Apr 2025 12:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DD5207E14;
+	Tue,  8 Apr 2025 12:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114110; cv=none; b=fE9bQUy0NzsKQDAVG03ECBaFgSWS1uOb/iTkilZJuESo6UY62vI03rbFOUTsMlhiB4c1c5p+uFaVDsGEK/Y4wgB/OStwWm/EelUmszUQmaFzoBjwfZbOyMjLWIdU1PUMzxaruRxj8HApLq3ViEOIu0FWRugMKQtwWo5qt6sVUNs=
+	t=1744114113; cv=none; b=sRfpjldoXPBsHJ0lZmncZfwixVORQi5gl475+37C+dYSE9JMEeqMK/of3Ogz8AnCtRTysX7pZmY3EaaSS7Bt28JfQByQFyYtK+6FOyYuZyII+nrEi+R9jQ6CB3AeUfo+rCYWWXYtPa+G5+8dil4fDM/m55nKc9h3y8nGHxvpvwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114110; c=relaxed/simple;
-	bh=58iLvxGIqCaAJbLifLcrCSsWSJvCyOyZt027Z44dyhY=;
+	s=arc-20240116; t=1744114113; c=relaxed/simple;
+	bh=+L9+1ggGQKHCkIsdt8pmr5qIgcSxq7aCgfk5JQ+rvSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHmKF648U7A9Lwf9gzBwRPcKNPZvcpsAMJXd9VcuXDQ2ZO7vlwQTUA7zelKUE6gcJKS0zbzl7YGH9u+ZG4a1/tOg5H+qkENzDjqTjY0aN+DxgJzS8y1zTRkfqQXBxuoHtb7EDowkqOUk8Mnqq4fQ8GkStEkyPA6WNTQaKZ50LIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yms82//X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMjLEspO/SwLh3w6P31C8LPiabkyyUZ51osDPIZtLtaFxTa8Gr4tTrAEbGF3bWfHaKeYYA8xfU2EDrIIJ1/8dxfF/ejKMBkG0Ssdx353i9z4WjFKOwRnqP6qyvsYZPH4tz4bIXyLKoaMYrcuMuCqnqKCmC/qyigxeiBAuQYq5zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3MxHWAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yms82//X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2F4C4CEE5;
-	Tue,  8 Apr 2025 12:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3MxHWAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD960C4CEE5;
+	Tue,  8 Apr 2025 12:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114110;
-	bh=58iLvxGIqCaAJbLifLcrCSsWSJvCyOyZt027Z44dyhY=;
+	s=korg; t=1744114113;
+	bh=+L9+1ggGQKHCkIsdt8pmr5qIgcSxq7aCgfk5JQ+rvSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yms82//XlNKPwxjBe/uBU8AVVJ1cX9JDlNI8aukceLFjxjuBUgrLwgQY/Yo9Wqu/E
-	 IWTeQRWTA27Gx6MW+EzFdZ3t5woStWeJb2H+EiouIj1GAHqrDB+pFNiv8hpYiCaoe/
-	 bebL+zqT+7h8gWVEMs/m/DRXepzPHNpWKMvlLAmU=
+	b=X3MxHWAd7Y6kP+pPbLk/cl4S/dIgUKs4YtaTB8QhNZoPYViQDajZmVyGyK1g2jUrN
+	 FZrm3MWN8EIoOqvr1So2O/+k7sWUYBv88URfgBkPLNsq9xDzMda95A73o+O8X5hhqq
+	 tyHDRccfjFoCCVsXr6FFvoilYRz4fveCsT11qK54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Debin Zhu <mowenroot@163.com>,
-	Bitao Ouyang <1985755126@qq.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 140/154] netlabel: Fix NULL pointer exception caused by CALIPSO on IPv4 sockets
-Date: Tue,  8 Apr 2025 12:51:21 +0200
-Message-ID: <20250408104819.803265570@linuxfoundation.org>
+Subject: [PATCH 5.4 114/154] x86/dumpstack: Fix inaccurate unwinding from exception stacks due to misplaced assignment
+Date: Tue,  8 Apr 2025 12:50:55 +0200
+Message-ID: <20250408104818.984657908@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,84 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Debin Zhu <mowenroot@163.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 078aabd567de3d63d37d7673f714e309d369e6e2 ]
+[ Upstream commit 2c118f50d7fd4d9aefc4533a26f83338b2906b7a ]
 
-When calling netlbl_conn_setattr(), addr->sa_family is used
-to determine the function behavior. If sk is an IPv4 socket,
-but the connect function is called with an IPv6 address,
-the function calipso_sock_setattr() is triggered.
-Inside this function, the following code is executed:
+Commit:
 
-sk_fullsock(__sk) ? inet_sk(__sk)->pinet6 : NULL;
+  2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
 
-Since sk is an IPv4 socket, pinet6 is NULL, leading to a
-null pointer dereference.
+was intended to ensure alignment of the stack pointer; but it also moved
+the initialization of the "stack" variable down into the loop header.
 
-This patch fixes the issue by checking if inet6_sk(sk)
-returns a NULL pointer before accessing pinet6.
+This was likely intended as a no-op cleanup, since the commit
+message does not mention it; however, this caused a behavioral change
+because the value of "regs" is different between the two places.
 
-Signed-off-by: Debin Zhu <mowenroot@163.com>
-Signed-off-by: Bitao Ouyang <1985755126@qq.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Link: https://patch.msgid.link/20250401124018.4763-1-mowenroot@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Originally, get_stack_pointer() used the regs provided by the caller; after
+that commit, get_stack_pointer() instead uses the regs at the top of the
+stack frame the unwinder is looking at. Often, there are no such regs at
+all, and "regs" is NULL, causing get_stack_pointer() to fall back to the
+task's current stack pointer, which is not what we want here, but probably
+happens to mostly work. Other times, the original regs will point to
+another regs frame - in that case, the linear guess unwind logic in
+show_trace_log_lvl() will start unwinding too far up the stack, causing the
+first frame found by the proper unwinder to never be visited, resulting in
+a stack trace consisting purely of guess lines.
+
+Fix it by moving the "stack = " assignment back where it belongs.
+
+Fixes: 2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250325-2025-03-unwind-fixes-v1-2-acd774364768@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ arch/x86/kernel/dumpstack.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index 7426e33686d13..9bc612b3f8340 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1075,8 +1075,13 @@ static int calipso_sock_getattr(struct sock *sk,
- 	struct ipv6_opt_hdr *hop;
- 	int opt_len, len, ret_val = -ENOMSG, offset;
- 	unsigned char *opt;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
-+		return -EAFNOSUPPORT;
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 9b2bbb66d0c87..caf14c49539ba 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -171,6 +171,7 @@ void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	printk("%sCall Trace:\n", log_lvl);
  
-+	txopts = txopt_get(pinfo);
- 	if (!txopts || !txopts->hopopt)
- 		goto done;
+ 	unwind_start(&state, task, regs, stack);
++	stack = stack ?: get_stack_pointer(task, regs);
+ 	regs = unwind_get_entry_regs(&state, &partial);
  
-@@ -1128,8 +1133,13 @@ static int calipso_sock_setattr(struct sock *sk,
- {
- 	int ret_val;
- 	struct ipv6_opt_hdr *old, *new;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
-+		return -EAFNOSUPPORT;
+ 	/*
+@@ -189,9 +190,7 @@ void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	 * - hardirq stack
+ 	 * - entry stack
+ 	 */
+-	for (stack = stack ?: get_stack_pointer(task, regs);
+-	     stack;
+-	     stack = stack_info.next_sp) {
++	for (; stack; stack = stack_info.next_sp) {
+ 		const char *stack_name;
  
-+	txopts = txopt_get(pinfo);
- 	old = NULL;
- 	if (txopts)
- 		old = txopts->hopopt;
-@@ -1156,8 +1166,13 @@ static int calipso_sock_setattr(struct sock *sk,
- static void calipso_sock_delattr(struct sock *sk)
- {
- 	struct ipv6_opt_hdr *new_hop;
--	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
-+	struct ipv6_pinfo *pinfo = inet6_sk(sk);
-+	struct ipv6_txoptions *txopts;
-+
-+	if (!pinfo)
-+		return;
- 
-+	txopts = txopt_get(pinfo);
- 	if (!txopts || !txopts->hopopt)
- 		goto done;
- 
+ 		stack = PTR_ALIGN(stack, sizeof(long));
 -- 
 2.39.5
 
