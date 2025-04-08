@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20EA267391;
-	Tue,  8 Apr 2025 11:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE3B227BB6;
+	Tue,  8 Apr 2025 11:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112192; cv=none; b=Q3oG4oMZVTW5rU0PThAha2dzauK1SL3MOWX5D9i2GVFv0SlCR0TFv7sym+gVW73gagkRmQmB8mUlw85vI5J+mGnr6JCnfoQzArLvQbHnfRVGpaHs5fEwxyrgGOTJHuUk1pikFRLCJZGV/NYcd6z5e4o5OTYGO5qD+IJQ1ZTcULE=
+	t=1744112195; cv=none; b=SMT859cbqks1xQ8aZQ0nnYrCSi3zb4aiOCoVA1k62s89S6UNsriyHrBie+YQdf5Gech5mjban0iQTAmyYTJLOAOuAkuwB6x1D99V/HCN4LAGdP9RKx8IS/m+OUAwUCuNgb6CPitk8qqhoMD+zbvSjLmvvWLEK/WQRxehnY/c7Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112192; c=relaxed/simple;
-	bh=siKLQgIglk+h3m2ZTwqcntl1oCY4UhObFMlkr5Zd8Q0=;
+	s=arc-20240116; t=1744112195; c=relaxed/simple;
+	bh=cxFKnn+e59UwxhqvNAYeuSvNXYqdW6G6SuUpoV5Z9ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKoLUdNM0Sj7lC1bOZ79pKIuAt6PZmTJ5SdjWwgrWyke4B0Z4amUar5LX7LLPIw7jkLnCMrwlKfGzV39NEMVLIqIWIPvdONQNI4wHz5eU4q+4m3upZqZL7rtESC8ieLTQTT2oKEKKw2etVhhEgzqd0pMw8Wr/zvWWHLxFGTUKic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffiFDfKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EU9a5H6jG6pL2ArZ4k2jMutQdExgzYUCD5p9CEOBJp3+5+W04PQ+Su/5zk6ocCSTuAPYHSBo96xJvXxHNbdKYrhWj3bFXVIXyjXY3OppFwqNQ+cF+GxmTG2Y4tRzHLntyOYs0mYnInYXLUmtqslE9cGrpJ1MQdT56tuDhH++RSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5+V1KqW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffiFDfKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B62C4CEE5;
-	Tue,  8 Apr 2025 11:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5+V1KqW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B250C4CEE5;
+	Tue,  8 Apr 2025 11:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112191;
-	bh=siKLQgIglk+h3m2ZTwqcntl1oCY4UhObFMlkr5Zd8Q0=;
+	s=korg; t=1744112194;
+	bh=cxFKnn+e59UwxhqvNAYeuSvNXYqdW6G6SuUpoV5Z9ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffiFDfKEGcX1Qmv9/UfHT3TV+GOFY77YHQevOnh7MVjp4vgG687sSg80ksyZvcsO/
-	 QUO5IMCP4Z7aOe50QYFXbSi8J/tGqr5FZLxXerl/iiznEW7D84DoIqkFWZDJgs5day
-	 2O0F0m1mU9VKFi+k2DR54GB5ym0l6lK6t+0HyT9g=
+	b=r5+V1KqWB+zXy3bmF1uLsBtr/9FDuqrWo82bAnYkgDQzt1QeXsfIkPJKL+9rBD2dg
+	 bjfE2822yFHyrnXH8uw1Kh9DZI/mjjz1Z5wdMLQ0S8VKyN2vL07SSRR2B8h2YFm6UK
+	 WS36ygfTDA+k2tesReYLiS1ZHpBSWKDJdLikQXsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Douglas Raillard <douglas.raillard@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.14 708/731] tracing: Ensure module defining synth event cannot be unloaded while tracing
-Date: Tue,  8 Apr 2025 12:50:05 +0200
-Message-ID: <20250408104930.740570814@linuxfoundation.org>
+Subject: [PATCH 6.14 709/731] tracing: Fix synth event printk format for str fields
+Date: Tue,  8 Apr 2025 12:50:06 +0200
+Message-ID: <20250408104930.763477551@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,74 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Raillard <douglas.raillard@arm.com>
 
-commit 21581dd4e7ff6c07d0ab577e3c32b13a74b31522 upstream.
+commit 4d38328eb442dc06aec4350fd9594ffa6488af02 upstream.
 
-Currently, using synth_event_delete() will fail if the event is being
-used (tracing in progress), but that is normally done in the module exit
-function. At that stage, failing is problematic as returning a non-zero
-status means the module will become locked (impossible to unload or
-reload again).
+The printk format for synth event uses "%.*s" to print string fields,
+but then only passes the pointer part as var arg.
 
-Instead, ensure the module exit function does not get called in the
-first place by increasing the module refcnt when the event is enabled.
+Replace %.*s with %s as the C string is guaranteed to be null-terminated.
+
+The output in print fmt should never have been updated as __get_str()
+handles the string limit because it can access the length of the string in
+the string meta data that is saved in the ring buffer.
 
 Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 35ca5207c2d11 ("tracing: Add synthetic event command generation functions")
-Link: https://lore.kernel.org/20250318180906.226841-1-douglas.raillard@arm.com
+Fixes: 8db4d6bfbbf92 ("tracing: Change synthetic event string format to limit printed length")
+Link: https://lore.kernel.org/20250325165202.541088-1-douglas.raillard@arm.com
 Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |   30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_synth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/trace/trace_events_synth.c
 +++ b/kernel/trace/trace_events_synth.c
-@@ -852,6 +852,34 @@ static struct trace_event_fields synth_e
- 	{}
- };
+@@ -305,7 +305,7 @@ static const char *synth_field_fmt(char
+ 	else if (strcmp(type, "gfp_t") == 0)
+ 		fmt = "%x";
+ 	else if (synth_field_is_string(type))
+-		fmt = "%.*s";
++		fmt = "%s";
+ 	else if (synth_field_is_stack(type))
+ 		fmt = "%s";
  
-+static int synth_event_reg(struct trace_event_call *call,
-+		    enum trace_reg type, void *data)
-+{
-+	struct synth_event *event = container_of(call, struct synth_event, call);
-+
-+	switch (type) {
-+	case TRACE_REG_REGISTER:
-+	case TRACE_REG_PERF_REGISTER:
-+		if (!try_module_get(event->mod))
-+			return -EBUSY;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	int ret = trace_event_reg(call, type, data);
-+
-+	switch (type) {
-+	case TRACE_REG_UNREGISTER:
-+	case TRACE_REG_PERF_UNREGISTER:
-+		module_put(event->mod);
-+		break;
-+	default:
-+		break;
-+	}
-+	return ret;
-+}
-+
- static int register_synth_event(struct synth_event *event)
- {
- 	struct trace_event_call *call = &event->call;
-@@ -881,7 +909,7 @@ static int register_synth_event(struct s
- 		goto out;
- 	}
- 	call->flags = TRACE_EVENT_FL_TRACEPOINT;
--	call->class->reg = trace_event_reg;
-+	call->class->reg = synth_event_reg;
- 	call->class->probe = trace_event_raw_event_synth;
- 	call->data = event;
- 	call->tp = event->tp;
 
 
