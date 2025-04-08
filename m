@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60823224F6;
-	Tue,  8 Apr 2025 11:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCCA224F6;
+	Tue,  8 Apr 2025 11:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111254; cv=none; b=Lph8WMpVbqG8dQ9nmGqTuRy10M/vY7f5nUjjV7FGXQSQs45nt9Z12KLtWjfezmuAgxT2Y05Sj/QdsA7UbgYxNh47173tmBhlDqL9NLf+jxAXoBBtW4QBps7TinER+2Oe//iIX6z8H+zVbh8AcgLtir1Ufup1Wp/a8ez5+Yx7HQM=
+	t=1744111257; cv=none; b=h9vaP99126CF/eqXdErrW49v3VPBqCTf/9ROT3m3KDUiFBr8RxnSSrFR+226BnoDkw7xzP2TwTRMdgjKjTOSi6LL0MAsQGNL2M2D2/F/Bc9dPdWqQJZxYBg+GMqRxT1IdY5gTMboVmLSKq/iupmkisfw+zR25o8qwHvniNR3Y0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111254; c=relaxed/simple;
-	bh=GGon4WWpdV18zSnIuN682l04Y1Zc95DFonULJ7aJKjc=;
+	s=arc-20240116; t=1744111257; c=relaxed/simple;
+	bh=OUpLUgS5MchLGJphWnGDJU0TzJnWmdjo/5nXKV0Ymy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdD7T8Wk6MbO0aNh45xGY9dmZjubw0c/91tKIcmX7o2tyJH2ZGI/1c2CKVClvTzpofYecfboGb6F/YSKGIJ2awQzgok7X/qc6kpDxoL16obdD7gUtBoB9Hf7abHU72TI9+g4cj3Q1nUR92acvJXp1sTTXNYjN9YCOR/z4J5OxSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxCTosFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bH1SMHZBajt1m8cAXsd/zdl+f3zT4lq89ANVqPqOIo1sEqIrCexnVJBQTHAqQazXe+pJliPi6Qyk1rGmkaZjebSIotrKqvSu6qscsvKh8R881RuRzsRA0j4xinveZ+A5qz6pLg7qCo6hlabzvrS9apFu0YlV6Vmppx+GMtY98Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcgegerS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxCTosFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0283C4CEE5;
-	Tue,  8 Apr 2025 11:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcgegerS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4463CC4CEE5;
+	Tue,  8 Apr 2025 11:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111254;
-	bh=GGon4WWpdV18zSnIuN682l04Y1Zc95DFonULJ7aJKjc=;
+	s=korg; t=1744111257;
+	bh=OUpLUgS5MchLGJphWnGDJU0TzJnWmdjo/5nXKV0Ymy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxCTosFfVXw7pB1zDD1mndfvjgRDLc12TUaM0h1MBl/HJa7CiSCvRQdKzJfU1N+qG
-	 q9phHMMHa1s3giP6F4vaCg7w/593ebFdRj+Dxujgg9CZRpoNPQcGjJoEs+5+mBJ4yX
-	 abqa7/KofknVMotSqJ3Vxvy4B9+uMYiewDb2uwh4=
+	b=ZcgegerSoMR8GysEsLVB3dgDD6kxEtXYLPB8ZVooeIq98uw0EXkQ5MHApRiyOJPU4
+	 OkkhuCHwTLQ4j+zL82uDjvJNdcq+H4sgbrLBm0DwXE0EgTFrTUvqZA087rAqSwFki5
+	 nX5VdL976a40njHaVpwogGEQJdqOsqQiZczLeDIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	"Shaoyun.liu" <Shaoyun.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 365/731] of: property: Increase NR_FWNODE_REFERENCE_ARGS
-Date: Tue,  8 Apr 2025 12:44:22 +0200
-Message-ID: <20250408104922.766047781@linuxfoundation.org>
+Subject: [PATCH 6.14 339/731] drm/amdgpu/mes: optimize compute loop handling
+Date: Tue,  8 Apr 2025 12:43:56 +0200
+Message-ID: <20250408104922.161349932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,50 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit eb50844d728f11e87491f7c7af15a4a737f1159d ]
+[ Upstream commit 5608ddf6e94c41a673170b2a7e3aad485fd8b88a ]
 
-Currently, the following two macros have different values:
+Break when we get to the end of the supported pipes
+rather than continuing the loop.
 
-// The maximal argument count for firmware node reference
- #define NR_FWNODE_REFERENCE_ARGS	8
-// The maximal argument count for DT node reference
- #define MAX_PHANDLE_ARGS 16
-
-It may cause firmware node reference's argument count out of range if
-directly assign DT node reference's argument count to firmware's.
-
-drivers/of/property.c:of_fwnode_get_reference_args() is doing the direct
-assignment, so may cause firmware's argument count @args->nargs got out
-of range, namely, in [9, 16].
-
-Fix by increasing NR_FWNODE_REFERENCE_ARGS to 16 to meet DT requirement.
-Will align both macros later to avoid such inconsistency.
-
-Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250225-fix_arg_count-v4-1-13cdc519eb31@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Shaoyun.liu <Shaoyun.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a52077b6b6f7 ("drm/amdgpu/mes: enable compute pipes across all MEC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fwnode.h | 2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index 0731994b9d7c8..6fa0a268d5382 100644
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -91,7 +91,7 @@ struct fwnode_endpoint {
- #define SWNODE_GRAPH_PORT_NAME_FMT		"port@%u"
- #define SWNODE_GRAPH_ENDPOINT_NAME_FMT		"endpoint@%u"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+index 709c11cbeabd8..c16ad5f790d15 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -147,7 +147,7 @@ int amdgpu_mes_init(struct amdgpu_device *adev)
+ 	for (i = 0; i < AMDGPU_MES_MAX_COMPUTE_PIPES; i++) {
+ 		/* use only 1st MEC pipes */
+ 		if (i >= adev->gfx.mec.num_pipe_per_mec)
+-			continue;
++			break;
+ 		adev->mes.compute_hqd_mask[i] = 0xc;
+ 	}
  
--#define NR_FWNODE_REFERENCE_ARGS	8
-+#define NR_FWNODE_REFERENCE_ARGS	16
- 
- /**
-  * struct fwnode_reference_args - Fwnode reference with additional arguments
 -- 
 2.39.5
 
