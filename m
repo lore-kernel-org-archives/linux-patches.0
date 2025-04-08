@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6A4264A76;
-	Tue,  8 Apr 2025 11:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B011264A76;
+	Tue,  8 Apr 2025 11:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111224; cv=none; b=sNMfmE8BMQNkugyZyNA8JTHOimrvTwmfD6Ug1N3YU5AvBHA0bqL2VonSbsKgtuq1D/l8ZlLyo6/DBCoISqTDHe1hlQg41cJCxrni6kWbxP5Ka3Cu0keDWYoqe71C7rzmSnoWs7UYn0Mf142qIv+Ik3YPwbPBcDFNghJjfGtiDKM=
+	t=1744111227; cv=none; b=udBcJ+ONidUFJ9Onk0z8VdWZXvUWEvHvq9E3TlgwjF06B3VNPbHb1p0MpEU8d+qgzaZhOAO1XxgAL9c6hqlOn23pIYeClfWAvvHnycZ3RXBF3HRVxKn/ZKhUFW5Da8J6TvQ9OXO7aW7qm46TzLFfB24uwRzCzm+pbAw7TwyPcCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111224; c=relaxed/simple;
-	bh=Vnut/WU+GnQpvsDFZnAULrdQelnAsi8vYFPO5w1CXKI=;
+	s=arc-20240116; t=1744111227; c=relaxed/simple;
+	bh=rHxd7Qbj4cAA1Glt96uPuYbfXyyaX/k4z/OcMHNgqY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fbvq3lAbbX/PZB0eF3luknxtXE0ArA8ryGxJwICjHSjG/Et425vrB2GceTwYL2jPB8KoHJpF9HHP4KDkXPhBdwht2tfzeunRIhNW0HG3Q72wOpGeu4cbrHR5/D8ieqWZVOxHMlsYZwDLKupF2lRYFwRnisLoPnVjOljhyFH4gpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtU1awvk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WzoC9WXg9tZBdoMvAFxYvOyF2exrc28O6vwIgmlgGxuJByR1sLbAT4M63sGKzWLig6ns1bT0mRNtR5eY829/h9c/w2itdDqxVhEGy9MRaBuBtPUPNc23LV/qQF+t4CfhNn/gE9OhwZpG+dDpK0A+nlRR9TejPCZaYDJZjczJFn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQYIlfvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtU1awvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F4FC4CEE5;
-	Tue,  8 Apr 2025 11:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQYIlfvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9FEC4CEE5;
+	Tue,  8 Apr 2025 11:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111224;
-	bh=Vnut/WU+GnQpvsDFZnAULrdQelnAsi8vYFPO5w1CXKI=;
+	s=korg; t=1744111226;
+	bh=rHxd7Qbj4cAA1Glt96uPuYbfXyyaX/k4z/OcMHNgqY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtU1awvkoxqJzo/laKRRPkLFjaz6lYQ7P73mjkKjYIMwPvHVYesimq7axtiSopgMR
-	 3+dqH+Vy6mk3zyp41Lo69Vd6xQMs4WJZdQVw9iR++/xDfRcAthbbcpd/50SkJ6QMMn
-	 FKLan547B2uu/hmBz01LtssqNHRdphKkgKz7i8RU=
+	b=kQYIlfvOu+R5MI8TdEAHQ8BF9Fsw91IRV56yosSY0OHGlVv/tIPMRWQt0kcVDIyTa
+	 OARFxGnhJ5v//VgAHWdQ/87J4+nilVjFwqRVD/b4tBVtKIkZdJnQ/RcQAMX6fBq51Z
+	 aJXMPMlAokoI9/wAjDdNxjJUv8bTxSf7YqsKQLUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 355/731] crypto: tegra - check return value for hash do_one_req
-Date: Tue,  8 Apr 2025 12:44:12 +0200
-Message-ID: <20250408104922.529625447@linuxfoundation.org>
+Subject: [PATCH 6.14 338/731] PCI: Fix BAR resizing when VF BARs are assigned
+Date: Tue,  8 Apr 2025 12:43:55 +0200
+Message-ID: <20250408104922.137661204@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -47,90 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit dcf8b7e49b86738296c77fb58c123dd2d74a22a7 ]
+[ Upstream commit 9ec19bfa78bd788945e2445b09de7b4482dee432 ]
 
-Initialize and check the return value in hash *do_one_req() functions
-and exit the function if there is an error. This fixes the
-'uninitialized variable' warnings reported by testbots.
+__resource_resize_store() attempts to release all resources of the device
+before attempting the resize. The loop, however, only covers standard BARs
+(< PCI_STD_NUM_BARS). If a device has VF BARs that are assigned,
+pci_reassign_bridge_resources() finds the bridge window still has some
+assigned child resources and returns -NOENT which makes
+pci_resize_resource() to detect an error and abort the resize.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202412071747.flPux4oB-lkp@intel.com/
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: ff4b7df0b511 ("crypto: tegra - Fix HASH intermediate result handling")
+Change the release loop to cover all resources up to VF BARs which allows
+the resize operation to release the bridge windows and attempt to assigned
+them again with the different size.
+
+If SR-IOV is enabled, disallow resize as it requires releasing also IOV
+resources.
+
+Link: https://lore.kernel.org/r/20250320142837.8027-1-ilpo.jarvinen@linux.intel.com
+Fixes: 91fa127794ac ("PCI: Expose PCIe Resizable BAR support via sysfs")
+Reported-by: Michał Winiarski <michal.winiarski@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c  | 10 ++++++++--
- drivers/crypto/tegra/tegra-se-hash.c |  7 +++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/pci/pci-sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index c2b8891a905dc..dd147fa4af977 100644
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -1596,18 +1596,24 @@ static int tegra_cmac_do_one_req(struct crypto_engine *engine, void *areq)
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
- 	struct tegra_cmac_ctx *ctx = crypto_ahash_ctx(tfm);
- 	struct tegra_se *se = ctx->se;
--	int ret;
-+	int ret = 0;
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index b46ce1a2c5542..0e7eb2a42d88d 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1556,7 +1556,7 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
+ 		return -EINVAL;
  
- 	if (rctx->task & SHA_UPDATE) {
- 		ret = tegra_cmac_do_update(req);
-+		if (ret)
-+			goto out;
-+
- 		rctx->task &= ~SHA_UPDATE;
+ 	device_lock(dev);
+-	if (dev->driver) {
++	if (dev->driver || pci_num_vf(pdev)) {
+ 		ret = -EBUSY;
+ 		goto unlock;
  	}
+@@ -1578,7 +1578,7 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
  
- 	if (rctx->task & SHA_FINAL) {
- 		ret = tegra_cmac_do_final(req);
-+		if (ret)
-+			goto out;
-+
- 		rctx->task &= ~SHA_FINAL;
- 	}
--
-+out:
- 	crypto_finalize_hash_request(se->engine, req, ret);
+ 	pci_remove_resource_files(pdev);
  
- 	return 0;
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index b4a179a8febd5..0ae5ce67bdd04 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -437,14 +437,21 @@ static int tegra_sha_do_one_req(struct crypto_engine *engine, void *areq)
- 
- 	if (rctx->task & SHA_UPDATE) {
- 		ret = tegra_sha_do_update(req);
-+		if (ret)
-+			goto out;
-+
- 		rctx->task &= ~SHA_UPDATE;
- 	}
- 
- 	if (rctx->task & SHA_FINAL) {
- 		ret = tegra_sha_do_final(req);
-+		if (ret)
-+			goto out;
-+
- 		rctx->task &= ~SHA_FINAL;
- 	}
- 
-+out:
- 	crypto_finalize_hash_request(se->engine, req, ret);
- 
- 	return 0;
+-	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
++	for (i = 0; i < PCI_BRIDGE_RESOURCES; i++) {
+ 		if (pci_resource_len(pdev, i) &&
+ 		    pci_resource_flags(pdev, i) == flags)
+ 			pci_release_resource(pdev, i);
 -- 
 2.39.5
 
