@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CB426F47A;
-	Tue,  8 Apr 2025 12:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C384F26F47A;
+	Tue,  8 Apr 2025 12:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117092; cv=none; b=UuE5g/roVwPNQ8aw4HspwZebdG8wOl04shj7+EwB7wt1KCKXmV96rrhrcjWawCv/5Ui2iR72jWWeIw/gBAR1LO28ofSKOEQnJyIADrhqX/gQpcbNNfZB2EWICBhh1tPZWiXGEckvXWO0++hpHuQmZZrGzNUOVlgHGFv5FbuT7ZU=
+	t=1744117095; cv=none; b=SlgCwtLoVqGQ6nWYV+G2wQpfm51lJrM4bhrr581yN8Iq//Gb38om5vyz38ZsoDvgXOhp7CcWm7asv6GO66GutQxtHcAum8k7KDBRD8ghhYBWwTiUnDglS6SdnfpEDDz5bFW6YZxTu35gzMJWUNcu5+BffJxzouio8UFOTs4sXwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117092; c=relaxed/simple;
-	bh=BM02EWpfhS9UbruKs/5KKrWhVhAYpsccph48mqoM/Wg=;
+	s=arc-20240116; t=1744117095; c=relaxed/simple;
+	bh=SnpRDNiemkvEEF9rcAVKwDD19Q4RBYNrYquvlOSzjyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRVuQ0xEatSUSymvC9zzubPWHvcbF1CbGzkZln80aLTCNuWXURWtq6bxrHON2DE6kDWnoqngnoNwbVy7zC3lUiPGjiLj42Fo3A/ZIzosCr4Ob2eYa6CJ6Y4GAZp6+pVGNsSBxOmcHPYV+uJx0NSyrhEjyZI7qn3ej6kztaZjog0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxQMTT4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qlMvk8hiDm5lAzdUB0n7VoZ5pkGmpXAKWaAaHSTIDmV3d/ENpxVfBxMtFM3J8uvMCE4/BTx4wWuitBl3u7boH8XBpya+3gXSnepUOt8jRY7I2fLi4ybCHyEFreavwdohf/fNO59FBnWeIY2Vx/eiOIVDXdiB0GLvlXVlKEcyG3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uiu1KFxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxQMTT4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB0CC4CEEA;
-	Tue,  8 Apr 2025 12:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uiu1KFxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8721C4CEE5;
+	Tue,  8 Apr 2025 12:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117091;
-	bh=BM02EWpfhS9UbruKs/5KKrWhVhAYpsccph48mqoM/Wg=;
+	s=korg; t=1744117095;
+	bh=SnpRDNiemkvEEF9rcAVKwDD19Q4RBYNrYquvlOSzjyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxQMTT4tfFCWNXglZNIhunSuG7Dz0nYoxsenyp862C4BAdDDc0kTR8DJGYRucELGH
-	 XoekehXVMzi/IHuZfHJQA8SRiSRBhd2w2ipyWEbDADM3ripORBYd5ZF/MhbaB5J+Gm
-	 JQHVFj4kDkYuBZ7yUaYWDBNn9b43hH63SBS9qZfI=
+	b=Uiu1KFxgc2OmFHeS8g7rupRedNsivRb6EgPmmUFQnepF/RJseHjnnsgBBaX4xCE+1
+	 6OH0ZX/rDdqN33tWtWFNU1jzOT88N6jcwFbfjdl3P9EwTzZ7Wut9iUIyBURMoEGjHL
+	 RTUk7e/bSbNh666K02RQe1bdxWBqKcM/6bjoc3RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yifei Liu <yifei.l.liu@oracle.com>
-Subject: [PATCH 6.12 380/423] idpf: Dont hard code napi_struct size
-Date: Tue,  8 Apr 2025 12:51:46 +0200
-Message-ID: <20250408104854.729371665@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 381/423] x86/Kconfig: Add cmpxchg8b support back to Geode CPUs
+Date: Tue,  8 Apr 2025 12:51:47 +0200
+Message-ID: <20250408104854.754782237@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,37 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 49717ef01ce1b6dbe4cd12bee0fc25e086c555df upstream.
+commit 6ac43f2be982ea54b75206dccd33f4cf81bfdc39 upstream.
 
-The sizeof(struct napi_struct) can change. Don't hardcode the size to
-400 bytes and instead use "sizeof(struct napi_struct)".
+An older cleanup of mine inadvertently removed geode-gx1 and geode-lx
+from the list of CPUs that are known to support a working cmpxchg8b.
 
-Suggested-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Acked-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20241004105407.73585-1-jdamato@fastly.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Yifei: In Linux-6.12.y, it still hard code the size of napi_struct,
-adding a member will lead the entire build failed]
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
+Fixes: 88a2b4edda3d ("x86/Kconfig: Rework CONFIG_X86_PAE dependency")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250226213714.4040853-2-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig.cpu |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -438,7 +438,8 @@ struct idpf_q_vector {
- 	__cacheline_group_end_aligned(cold);
- };
- libeth_cacheline_set_assert(struct idpf_q_vector, 112,
--			    424 + 2 * sizeof(struct dim),
-+			    24 + sizeof(struct napi_struct) +
-+			    2 * sizeof(struct dim),
- 			    8 + sizeof(cpumask_var_t));
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -368,7 +368,7 @@ config X86_HAVE_PAE
  
- struct idpf_rx_queue_stats {
+ config X86_CMPXCHG64
+ 	def_bool y
+-	depends on X86_HAVE_PAE || M586TSC || M586MMX || MK6 || MK7
++	depends on X86_HAVE_PAE || M586TSC || M586MMX || MK6 || MK7 || MGEODEGX1 || MGEODE_LX
+ 
+ # this should be set for all -march=.. options where the compiler
+ # generates cmov.
 
 
