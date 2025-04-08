@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCBD264FB0;
-	Tue,  8 Apr 2025 12:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F42264FB0;
+	Tue,  8 Apr 2025 12:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113674; cv=none; b=fjwQoE0aIewlO218RXMV21TCngI76Z1dHBu2JUjS3jE9NUeEFbpf0Uh9YkV1PNLO786cjWJVWFSuw7mdtUoHUHYe1udF+Dh1NiibTnt6bgz8q5VAmffCNcdSoOXgyzsuEy74Zlneh8q0JvO30kfJUj9mnB7x9elsRT8B/HWGquI=
+	t=1744113677; cv=none; b=V5ahR8pQTklCrVhizL6GTtHf66HY8rKBM9NEAi2WKFCKroMQt2vegPT2iDA9wLVtNtXPx/jcz/U5p/DypU8T34HZ1czgyOuHpimJnOECiLRlaerYnu80YZyCZAsqi3s0DtYMQLrs9PSBFhGci1kfk1RdWUgYClcYMOqCr2IjtR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113674; c=relaxed/simple;
-	bh=2g9PrQ/WAo/hU2j2wf5claVW8X/NqcoW+YPjWYqTbKk=;
+	s=arc-20240116; t=1744113677; c=relaxed/simple;
+	bh=V1IwRE3n4Q6YIkQGpWES06NcONLL6rf0P8KtDlQHpKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHdkP/YV/8J7GUCdPIAf0Py1BThyXm/YermSWoTVj2K0+i4r4a6UaqVqxEk1NGIYRW3SK04XKpVhtkn0mfXmP6tFhkpVyXzr0u152T4rlh2+4wpHY6K252cn8M6fElSaGKMDewZLqEVP1ErBKdPQQq+FM7r4q/MoNudP6VZAmwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7Rdacds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Up+HKLtcJ3oI+ny6plghTmtGr+P1XxwNNCe8FQAScFAPbcTV0NE+P7TD+Z/jd+8CXsU3XPhvYbVgVollDnkmVmRlgo+rMI17f98G/K4mGYx6F102JrUp3vdO6mStRj36q+lIVdorYgsxkVIM00zEjkXYwLG2+pscqa65KApanc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfOxZ9Gh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7Rdacds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDA8C4CEE5;
-	Tue,  8 Apr 2025 12:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfOxZ9Gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6DCC4CEE5;
+	Tue,  8 Apr 2025 12:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113674;
-	bh=2g9PrQ/WAo/hU2j2wf5claVW8X/NqcoW+YPjWYqTbKk=;
+	s=korg; t=1744113677;
+	bh=V1IwRE3n4Q6YIkQGpWES06NcONLL6rf0P8KtDlQHpKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7Rdacds04gUGUKRE4BSgFIm2oPppqN8Ls0c13pzAdcgZmcveaZ6h1bhAOkPVBqcu
-	 AJC7f77ymUqgCWtgQxwFIL2wFtYhDnDWY7WbPIB5T8dgAvXHogqaW7u7bmpbCM3c/M
-	 4aNexFy5FfYH7cgAZ5mvcf4wTCphJiZrobfon7t0=
+	b=EfOxZ9GhTSgXsf5kZw2fiv0JzgdYXUrpMmEOzese74pkrZTBcsmgFCMRNjtwnIoRJ
+	 wfmZG8cr19pOAS8Sp6wLJ864IJ2V1ZdGLlJH1Fhmv5crovdD0ykk7aj8XVp3+kL589
+	 1WGCnpH0JC75YJLsfAQIMx3kKJF7gVYzc3yaKKao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Karel Balej <balejk@matfyz.cz>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 248/268] mmc: omap: Fix memory leak in mmc_omap_new_slot
-Date: Tue,  8 Apr 2025 12:50:59 +0200
-Message-ID: <20250408104835.277123864@linuxfoundation.org>
+Subject: [PATCH 6.6 249/268] mmc: sdhci-pxav3: set NEED_RSP_BUSY capability
+Date: Tue,  8 Apr 2025 12:51:00 +0200
+Message-ID: <20250408104835.304594652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -44,71 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Karel Balej <balejk@matfyz.cz>
 
-commit 3834a759afb817e23a7a2f09c2c9911b0ce5c588 upstream.
+commit a41fcca4b342811b473bbaa4b44f1d34d87fcce6 upstream.
 
-Add err_free_host label to properly pair mmc_alloc_host() with
-mmc_free_host() in GPIO error paths. The allocated host memory was
-leaked when GPIO lookups failed.
+Set the MMC_CAP_NEED_RSP_BUSY capability for the sdhci-pxav3 host to
+prevent conversion of R1B responses to R1. Without this, the eMMC card
+in the samsung,coreprimevelte smartphone using the Marvell PXA1908 SoC
+with this mmc host doesn't probe with the ETIMEDOUT error originating in
+__mmc_poll_for_busy.
 
-Fixes: e519f0bb64ef ("ARM/mmc: Convert old mmci-omap to GPIO descriptors")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Note that the other issues reported for this phone and host, namely
+floods of "Tuning failed, falling back to fixed sampling clock" dmesg
+messages for the eMMC and unstable SDIO are not mitigated by this
+change.
+
+Link: https://lore.kernel.org/r/20200310153340.5593-1-ulf.hansson@linaro.org/
+Link: https://lore.kernel.org/r/D7204PWIGQGI.1FRFQPPIEE2P9@matfyz.cz/
+Link: https://lore.kernel.org/r/20250115-pxa1908-lkml-v14-0-847d24f3665a@skole.hr/
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250318140226.19650-1-linmq006@gmail.com
+Signed-off-by: Karel Balej <balejk@matfyz.cz>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Link: https://lore.kernel.org/r/20250310140707.23459-1-balejk@matfyz.cz
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/omap.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/mmc/host/sdhci-pxav3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/omap.c
-+++ b/drivers/mmc/host/omap.c
-@@ -1276,19 +1276,25 @@ static int mmc_omap_new_slot(struct mmc_
- 	/* Check for some optional GPIO controls */
- 	slot->vsd = devm_gpiod_get_index_optional(host->dev, "vsd",
- 						  id, GPIOD_OUT_LOW);
--	if (IS_ERR(slot->vsd))
--		return dev_err_probe(host->dev, PTR_ERR(slot->vsd),
-+	if (IS_ERR(slot->vsd)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->vsd),
- 				     "error looking up VSD GPIO\n");
-+		goto err_free_host;
-+	}
- 	slot->vio = devm_gpiod_get_index_optional(host->dev, "vio",
- 						  id, GPIOD_OUT_LOW);
--	if (IS_ERR(slot->vio))
--		return dev_err_probe(host->dev, PTR_ERR(slot->vio),
-+	if (IS_ERR(slot->vio)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->vio),
- 				     "error looking up VIO GPIO\n");
-+		goto err_free_host;
-+	}
- 	slot->cover = devm_gpiod_get_index_optional(host->dev, "cover",
- 						    id, GPIOD_IN);
--	if (IS_ERR(slot->cover))
--		return dev_err_probe(host->dev, PTR_ERR(slot->cover),
-+	if (IS_ERR(slot->cover)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->cover),
- 				     "error looking up cover switch GPIO\n");
-+		goto err_free_host;
-+	}
+--- a/drivers/mmc/host/sdhci-pxav3.c
++++ b/drivers/mmc/host/sdhci-pxav3.c
+@@ -399,6 +399,7 @@ static int sdhci_pxav3_probe(struct plat
+ 	if (!IS_ERR(pxa->clk_core))
+ 		clk_prepare_enable(pxa->clk_core);
  
- 	host->slots[id] = slot;
++	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+ 	/* enable 1/8V DDR capable */
+ 	host->mmc->caps |= MMC_CAP_1_8V_DDR;
  
-@@ -1348,6 +1354,7 @@ err_remove_slot_name:
- 		device_remove_file(&mmc->class_dev, &dev_attr_slot_name);
- err_remove_host:
- 	mmc_remove_host(mmc);
-+err_free_host:
- 	mmc_free_host(mmc);
- 	return r;
- }
 
 
