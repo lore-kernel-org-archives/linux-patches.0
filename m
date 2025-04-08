@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FF620330;
-	Tue,  8 Apr 2025 12:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD3520330;
+	Tue,  8 Apr 2025 12:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115514; cv=none; b=cnuFmwYwcYvXfVVyIiXalYOxD8shjPMQYWfNuUCNkbD8iqfdOi9ibbq7J7T1tb2RelnbWAVdrD8bXx9gzqA5jKyuSCWNvJ2TStjy1FZYln3j/0CV5XnyYJ8AGt7FsbF68MItycwnEc2qipZxfg0eGCA/tex86BZrVnd4/qas2Zk=
+	t=1744115517; cv=none; b=AOHdyDMKM8kdmnouqO7EZ2cJl5UkFmZ+cNB8NSqEjns/d8/j/MbwrdB2xJB+APgUhoaxQd54FZWZOjlTiP38MpBUtF+NKtSjyEcfE/lMZMK6HuxfzAzUXEBF0VnoX2ObmjycgfzlWfxyTNrBcKV6CjPk6P6aWUaT8rbYh3hXowc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115514; c=relaxed/simple;
-	bh=aCGpLjgJrIaZWYIsj/D7OQvsYudIcJrrj19pEyjjZTo=;
+	s=arc-20240116; t=1744115517; c=relaxed/simple;
+	bh=2s4S4bQUDtoe1eV5cnjdAXjVk9wwHGacTNoksgy5Hto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+TPiCOm5fCRPzVq1FzAH0+IWUchLvycFSlpkA//gLkD5H4tUUZ1Om9W6b7jG0naRghDM0YNWY/ie3XpzfGvrUM/1tncfvp5OlXlK6/gTBVqzJuTbJC/mECY5/7HtiBtyfczc1QAogAeAUWqySaIO0LgXR+Fe2jQbCsC0HYgicU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3SXz0D5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnFamu3SJ4z57sBi3AHhtgJvxNzfBC7A2Wjze9xtaNxiUjVTUp9BOWsnytOMpYQw/xNYKuAcrVMpiAkSZkCKEtp/dnzd+X3gmi3ZxBx1fjKNolrsErfBe+HUJgevOfw4NuiKerJYhEiy6Q94zgAvmm2eM4QKE7ysGdqJtJ7oBTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRG+X1w+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3SXz0D5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F913C4CEE5;
-	Tue,  8 Apr 2025 12:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRG+X1w+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD040C4CEE5;
+	Tue,  8 Apr 2025 12:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115514;
-	bh=aCGpLjgJrIaZWYIsj/D7OQvsYudIcJrrj19pEyjjZTo=;
+	s=korg; t=1744115517;
+	bh=2s4S4bQUDtoe1eV5cnjdAXjVk9wwHGacTNoksgy5Hto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3SXz0D5KqKMQq7kkI5qK9hLauRI20Pr5TueHv/CjyNsfOdwWHMWvFOBKH0+KOM8q
-	 n3ed/3/Y4QW9OhAugLcL1mrvAof++jq4SqzyZ9/FfIw/lceiSB4aLUgf1nA22Qmn3a
-	 SBesk360Z2vwaJwbwEqMSPJ2aX4y3ACEDk6SBmuw=
+	b=oRG+X1w+bAxXsfND5b69vOiP3RbsSPy/QihQ96RldE7Nqs71UHbom+YN6bfTx5Naw
+	 rIAC9f+o5JQU7gS1ySkHbGygBkLinbVhuoFx0zBmjZM7LKktfAKVN/rMiF5g3eEv0S
+	 JOIOYvebdXkwXtIr4xzh9W+N8grdi2MsmZHCoCPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Sean Heelan <seanheelan@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 468/499] ksmbd: fix use-after-free in ksmbd_sessions_deregister()
-Date: Tue,  8 Apr 2025 12:51:20 +0200
-Message-ID: <20250408104902.912326694@linuxfoundation.org>
+Subject: [PATCH 6.13 469/499] ksmbd: fix session use-after-free in multichannel connection
+Date: Tue,  8 Apr 2025 12:51:21 +0200
+Message-ID: <20250408104902.939558946@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,34 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 15a9605f8d69dc85005b1a00c31a050b8625e1aa upstream.
+commit fa4cdb8cbca7d6cb6aa13e4d8d83d1103f6345db upstream.
 
-In multichannel mode, UAF issue can occur in session_deregister
-when the second channel sets up a session through the connection of
-the first channel. session that is freed through the global session
-table can be accessed again through ->sessions of connection.
+There is a race condition between session setup and
+ksmbd_sessions_deregister. The session can be freed before the connection
+is added to channel list of session.
+This patch check reference count of session before freeing it.
 
 Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
+Reported-by: Sean Heelan <seanheelan@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/auth.c              |    4 ++--
+ fs/smb/server/mgmt/user_session.c |   14 ++++++++------
+ fs/smb/server/smb2pdu.c           |    7 ++++---
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -1016,9 +1016,9 @@ static int ksmbd_get_encryption_key(stru
+ 
+ 	ses_enc_key = enc ? sess->smb3encryptionkey :
+ 		sess->smb3decryptionkey;
+-	if (enc)
+-		ksmbd_user_session_get(sess);
+ 	memcpy(key, ses_enc_key, SMB3_ENC_DEC_KEY_SIZE);
++	if (!enc)
++		ksmbd_user_session_put(sess);
+ 
+ 	return 0;
+ }
 --- a/fs/smb/server/mgmt/user_session.c
 +++ b/fs/smb/server/mgmt/user_session.c
-@@ -230,6 +230,9 @@ void ksmbd_sessions_deregister(struct ks
- 			if (!ksmbd_chann_del(conn, sess) &&
- 			    xa_empty(&sess->ksmbd_chann_list)) {
- 				hash_del(&sess->hlist);
-+				down_write(&conn->session_lock);
-+				xa_erase(&conn->sessions, sess->id);
-+				up_write(&conn->session_lock);
- 				ksmbd_session_destroy(sess);
+@@ -181,7 +181,7 @@ static void ksmbd_expire_session(struct
+ 	down_write(&sessions_table_lock);
+ 	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+-		if (atomic_read(&sess->refcnt) == 0 &&
++		if (atomic_read(&sess->refcnt) <= 1 &&
+ 		    (sess->state != SMB2_SESSION_VALID ||
+ 		     time_after(jiffies,
+ 			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
+@@ -233,7 +233,8 @@ void ksmbd_sessions_deregister(struct ks
+ 				down_write(&conn->session_lock);
+ 				xa_erase(&conn->sessions, sess->id);
+ 				up_write(&conn->session_lock);
+-				ksmbd_session_destroy(sess);
++				if (atomic_dec_and_test(&sess->refcnt))
++					ksmbd_session_destroy(sess);
  			}
  		}
+ 	}
+@@ -252,7 +253,8 @@ void ksmbd_sessions_deregister(struct ks
+ 		if (xa_empty(&sess->ksmbd_chann_list)) {
+ 			xa_erase(&conn->sessions, sess->id);
+ 			hash_del(&sess->hlist);
+-			ksmbd_session_destroy(sess);
++			if (atomic_dec_and_test(&sess->refcnt))
++				ksmbd_session_destroy(sess);
+ 		}
+ 	}
+ 	up_write(&conn->session_lock);
+@@ -328,8 +330,8 @@ void ksmbd_user_session_put(struct ksmbd
+ 
+ 	if (atomic_read(&sess->refcnt) <= 0)
+ 		WARN_ON(1);
+-	else
+-		atomic_dec(&sess->refcnt);
++	else if (atomic_dec_and_test(&sess->refcnt))
++		ksmbd_session_destroy(sess);
+ }
+ 
+ struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
+@@ -436,7 +438,7 @@ static struct ksmbd_session *__session_c
+ 	xa_init(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
+-	atomic_set(&sess->refcnt, 1);
++	atomic_set(&sess->refcnt, 2);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2234,13 +2234,14 @@ int smb2_session_logoff(struct ksmbd_wor
+ 		return -ENOENT;
+ 	}
+ 
+-	ksmbd_destroy_file_table(&sess->file_table);
+ 	down_write(&conn->session_lock);
+ 	sess->state = SMB2_SESSION_EXPIRED;
+ 	up_write(&conn->session_lock);
+ 
+-	ksmbd_free_user(sess->user);
+-	sess->user = NULL;
++	if (sess->user) {
++		ksmbd_free_user(sess->user);
++		sess->user = NULL;
++	}
+ 	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_NEGOTIATE);
+ 
+ 	rsp->StructureSize = cpu_to_le16(4);
 
 
