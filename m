@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9297A26A0AA;
-	Tue,  8 Apr 2025 12:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64F72676CF;
+	Tue,  8 Apr 2025 12:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114092; cv=none; b=mvXAcRdbTpyA1xgMFuBLAfxWc+QzGUMQNbFBpG8Czz1U85AvP+OfDzLtDMopfiStJMlvYN4LLEA40HFIXmOsV5ac7CLnnd+lLpKn05eHmHICSwDkHVp4AuctbNafJuFpybq5zZtSQXda4f0kwV+YZB+UnWlE3GFVgxoSrPZArgA=
+	t=1744114094; cv=none; b=owRRY5ri9jD4IkBbnY499gH3wKkFfodPdxbo8U5rvTV+YdHlgtToKYSu2X0MFIiCtBM3anrwa6tiNHhkF58KPQUlMZl/0XSspxnxkObo8luUVX0y0VRKicuGAkQAAznHRUyMG2IY+x1UqxaRQxYDIfdg9U5AOo+rEdwGsjQq8+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114092; c=relaxed/simple;
-	bh=tJEf/92J3OGlDO61TlzdmGREF8su5FtQgiwrB3mi4ZA=;
+	s=arc-20240116; t=1744114094; c=relaxed/simple;
+	bh=j44VFr7hSqHKuxLEKNLnsY1TLaZRpG5VsKntnExEr5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJhEBu8pPQpG4MlPmf+GbB8iwQjQh9J6zLPYOvZqDCj4XBCmS0rF4U8PmntnKhM9cw+dI9QX4kTvWr5OOzw2t4mj6uJKX389eHSwK0wHzyDHgRrbTHOCZOjEty3FSs6PNvMNZTlC/+ZB3mKkn4onSRcKDKBK8nhVorz4CWGUKRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyM2kSQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rEaPHhsC9x47p9uusuM/QYavNUkAVKM40dEU4HqhlOtv3NsYz7fk/u8w1nTzT3i8ayzP/mm0GQvWWjBy0pHApOGdWopujjJ0qcyeNgvm4EagQENiXut0Sd1PiZOF66bbnBgN0Eg5BTsq9T4LkGUQ4IuhHJm5SMEfW11zrnTSLkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0j2U9ms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyM2kSQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04F3C4CEE5;
-	Tue,  8 Apr 2025 12:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0j2U9ms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EFEC4CEE5;
+	Tue,  8 Apr 2025 12:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114092;
-	bh=tJEf/92J3OGlDO61TlzdmGREF8su5FtQgiwrB3mi4ZA=;
+	s=korg; t=1744114094;
+	bh=j44VFr7hSqHKuxLEKNLnsY1TLaZRpG5VsKntnExEr5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyM2kSQOLuEScl87KECuNJnUhCGvNvAqToQUWpyqhNTgThgdOWETOgdnvtwUCBZQJ
-	 p+DIFjEmPLTpB1Zy1o4BrCZWTNpbXf7Nob6Z65zzE6hJG+/tTmvwlvG6Mr7nGqwcz7
-	 SRZnIZirBqa1fcqJlZvLHaRKckMXEtC2asEA5iI0=
+	b=W0j2U9ms47JMYoamad1/BSlrG9/U+ecpWYLbBGjueGDU9rzSZ0cyAP6MFE42TGEKh
+	 4+CH5HLuPsDmCZV2a5R5bQQEpO+zMa/VTrpNeQz+GbaoAF03XvGHBd+C+fKF2R1+V8
+	 vb49P33E1LiwRuLwTot5C2JXkzfyJfQg7CoHNXis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yzbot+ed801a886dfdbfe7136d@syzkaller.appspotmail.com,
-	Waiman Long <longman@redhat.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	syzbot+78ce4489b812515d5e4d@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/154] locking/semaphore: Use wake_q to wake up processes outside lock critical section
-Date: Tue,  8 Apr 2025 12:51:14 +0200
-Message-ID: <20250408104819.575953135@linuxfoundation.org>
+Subject: [PATCH 5.4 134/154] can: statistics: use atomic access in hot path
+Date: Tue,  8 Apr 2025 12:51:15 +0200
+Message-ID: <20250408104819.608931366@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -54,147 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 85b2b9c16d053364e2004883140538e73b333cdb ]
+[ Upstream commit 80b5f90158d1364cbd80ad82852a757fc0692bf2 ]
 
-A circular lock dependency splat has been seen involving down_trylock():
+In can_send() and can_receive() CAN messages and CAN filter matches are
+counted to be visible in the CAN procfs files.
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  6.12.0-41.el10.s390x+debug
-  ------------------------------------------------------
-  dd/32479 is trying to acquire lock:
-  0015a20accd0d4f8 ((console_sem).lock){-.-.}-{2:2}, at: down_trylock+0x26/0x90
+KCSAN detected a data race within can_send() when two CAN frames have
+been generated by a timer event writing to the same CAN netdevice at the
+same time. Use atomic operations to access the statistics in the hot path
+to fix the KCSAN complaint.
 
-  but task is already holding lock:
-  000000017e461698 (&zone->lock){-.-.}-{2:2}, at: rmqueue_bulk+0xac/0x8f0
-
-  the existing dependency chain (in reverse order) is:
-  -> #4 (&zone->lock){-.-.}-{2:2}:
-  -> #3 (hrtimer_bases.lock){-.-.}-{2:2}:
-  -> #2 (&rq->__lock){-.-.}-{2:2}:
-  -> #1 (&p->pi_lock){-.-.}-{2:2}:
-  -> #0 ((console_sem).lock){-.-.}-{2:2}:
-
-The console_sem -> pi_lock dependency is due to calling try_to_wake_up()
-while holding the console_sem raw_spinlock. This dependency can be broken
-by using wake_q to do the wakeup instead of calling try_to_wake_up()
-under the console_sem lock. This will also make the semaphore's
-raw_spinlock become a terminal lock without taking any further locks
-underneath it.
-
-The hrtimer_bases.lock is a raw_spinlock while zone->lock is a
-spinlock. The hrtimer_bases.lock -> zone->lock dependency happens via
-the debug_objects_fill_pool() helper function in the debugobjects code.
-
-  -> #4 (&zone->lock){-.-.}-{2:2}:
-         __lock_acquire+0xe86/0x1cc0
-         lock_acquire.part.0+0x258/0x630
-         lock_acquire+0xb8/0xe0
-         _raw_spin_lock_irqsave+0xb4/0x120
-         rmqueue_bulk+0xac/0x8f0
-         __rmqueue_pcplist+0x580/0x830
-         rmqueue_pcplist+0xfc/0x470
-         rmqueue.isra.0+0xdec/0x11b0
-         get_page_from_freelist+0x2ee/0xeb0
-         __alloc_pages_noprof+0x2c2/0x520
-         alloc_pages_mpol_noprof+0x1fc/0x4d0
-         alloc_pages_noprof+0x8c/0xe0
-         allocate_slab+0x320/0x460
-         ___slab_alloc+0xa58/0x12b0
-         __slab_alloc.isra.0+0x42/0x60
-         kmem_cache_alloc_noprof+0x304/0x350
-         fill_pool+0xf6/0x450
-         debug_object_activate+0xfe/0x360
-         enqueue_hrtimer+0x34/0x190
-         __run_hrtimer+0x3c8/0x4c0
-         __hrtimer_run_queues+0x1b2/0x260
-         hrtimer_interrupt+0x316/0x760
-         do_IRQ+0x9a/0xe0
-         do_irq_async+0xf6/0x160
-
-Normally a raw_spinlock to spinlock dependency is not legitimate
-and will be warned if CONFIG_PROVE_RAW_LOCK_NESTING is enabled,
-but debug_objects_fill_pool() is an exception as it explicitly
-allows this dependency for non-PREEMPT_RT kernel without causing
-PROVE_RAW_LOCK_NESTING lockdep splat. As a result, this dependency is
-legitimate and not a bug.
-
-Anyway, semaphore is the only locking primitive left that is still
-using try_to_wake_up() to do wakeup inside critical section, all the
-other locking primitives had been migrated to use wake_q to do wakeup
-outside of the critical section. It is also possible that there are
-other circular locking dependencies involving printk/console_sem or
-other existing/new semaphores lurking somewhere which may show up in
-the future. Let just do the migration now to wake_q to avoid headache
-like this.
-
-Reported-by: yzbot+ed801a886dfdbfe7136d@syzkaller.appspotmail.com
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250307232717.1759087-3-boqun.feng@gmail.com
+Reported-by: syzbot+78ce4489b812515d5e4d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67cd717d.050a0220.e1a89.0006.GAE@google.com
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250310143353.3242-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/semaphore.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/can/af_can.c | 12 ++++++------
+ net/can/af_can.h | 12 ++++++------
+ net/can/proc.c   | 46 +++++++++++++++++++++++++++-------------------
+ 3 files changed, 39 insertions(+), 31 deletions(-)
 
-diff --git a/kernel/locking/semaphore.c b/kernel/locking/semaphore.c
-index d9dd94defc0a9..19389fdbfdfb1 100644
---- a/kernel/locking/semaphore.c
-+++ b/kernel/locking/semaphore.c
-@@ -29,6 +29,7 @@
- #include <linux/export.h>
- #include <linux/sched.h>
- #include <linux/sched/debug.h>
-+#include <linux/sched/wake_q.h>
- #include <linux/semaphore.h>
- #include <linux/spinlock.h>
- #include <linux/ftrace.h>
-@@ -37,7 +38,7 @@ static noinline void __down(struct semaphore *sem);
- static noinline int __down_interruptible(struct semaphore *sem);
- static noinline int __down_killable(struct semaphore *sem);
- static noinline int __down_timeout(struct semaphore *sem, long timeout);
--static noinline void __up(struct semaphore *sem);
-+static noinline void __up(struct semaphore *sem, struct wake_q_head *wake_q);
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index bc06016a4fe90..d2fd12da30c60 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -288,8 +288,8 @@ int can_send(struct sk_buff *skb, int loop)
+ 		netif_rx_ni(newskb);
  
- /**
-  * down - acquire the semaphore
-@@ -178,13 +179,16 @@ EXPORT_SYMBOL(down_timeout);
- void up(struct semaphore *sem)
- {
- 	unsigned long flags;
-+	DEFINE_WAKE_Q(wake_q);
+ 	/* update statistics */
+-	pkg_stats->tx_frames++;
+-	pkg_stats->tx_frames_delta++;
++	atomic_long_inc(&pkg_stats->tx_frames);
++	atomic_long_inc(&pkg_stats->tx_frames_delta);
  
- 	raw_spin_lock_irqsave(&sem->lock, flags);
- 	if (likely(list_empty(&sem->wait_list)))
- 		sem->count++;
- 	else
--		__up(sem);
-+		__up(sem, &wake_q);
- 	raw_spin_unlock_irqrestore(&sem->lock, flags);
-+	if (!wake_q_empty(&wake_q))
-+		wake_up_q(&wake_q);
- }
- EXPORT_SYMBOL(up);
+ 	return 0;
  
-@@ -252,11 +256,12 @@ static noinline int __sched __down_timeout(struct semaphore *sem, long timeout)
- 	return __down_common(sem, TASK_UNINTERRUPTIBLE, timeout);
+@@ -647,8 +647,8 @@ static void can_receive(struct sk_buff *skb, struct net_device *dev)
+ 	int matches;
+ 
+ 	/* update statistics */
+-	pkg_stats->rx_frames++;
+-	pkg_stats->rx_frames_delta++;
++	atomic_long_inc(&pkg_stats->rx_frames);
++	atomic_long_inc(&pkg_stats->rx_frames_delta);
+ 
+ 	/* create non-zero unique skb identifier together with *skb */
+ 	while (!(can_skb_prv(skb)->skbcnt))
+@@ -669,8 +669,8 @@ static void can_receive(struct sk_buff *skb, struct net_device *dev)
+ 	consume_skb(skb);
+ 
+ 	if (matches > 0) {
+-		pkg_stats->matches++;
+-		pkg_stats->matches_delta++;
++		atomic_long_inc(&pkg_stats->matches);
++		atomic_long_inc(&pkg_stats->matches_delta);
+ 	}
  }
  
--static noinline void __sched __up(struct semaphore *sem)
-+static noinline void __sched __up(struct semaphore *sem,
-+				  struct wake_q_head *wake_q)
- {
- 	struct semaphore_waiter *waiter = list_first_entry(&sem->wait_list,
- 						struct semaphore_waiter, list);
- 	list_del(&waiter->list);
- 	waiter->up = true;
--	wake_up_process(waiter->task);
-+	wake_q_add(wake_q, waiter->task);
- }
+diff --git a/net/can/af_can.h b/net/can/af_can.h
+index 7c2d9161e2245..22f3352c77fec 100644
+--- a/net/can/af_can.h
++++ b/net/can/af_can.h
+@@ -66,9 +66,9 @@ struct receiver {
+ struct can_pkg_stats {
+ 	unsigned long jiffies_init;
+ 
+-	unsigned long rx_frames;
+-	unsigned long tx_frames;
+-	unsigned long matches;
++	atomic_long_t rx_frames;
++	atomic_long_t tx_frames;
++	atomic_long_t matches;
+ 
+ 	unsigned long total_rx_rate;
+ 	unsigned long total_tx_rate;
+@@ -82,9 +82,9 @@ struct can_pkg_stats {
+ 	unsigned long max_tx_rate;
+ 	unsigned long max_rx_match_ratio;
+ 
+-	unsigned long rx_frames_delta;
+-	unsigned long tx_frames_delta;
+-	unsigned long matches_delta;
++	atomic_long_t rx_frames_delta;
++	atomic_long_t tx_frames_delta;
++	atomic_long_t matches_delta;
+ };
+ 
+ /* persistent statistics */
+diff --git a/net/can/proc.c b/net/can/proc.c
+index a5fc63c78370e..ea442ddd4fd9d 100644
+--- a/net/can/proc.c
++++ b/net/can/proc.c
+@@ -123,6 +123,13 @@ void can_stat_update(struct timer_list *t)
+ 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
+ 	unsigned long j = jiffies; /* snapshot */
+ 
++	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
++	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
++	long matches = atomic_long_read(&pkg_stats->matches);
++	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
++	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
++	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
++
+ 	/* restart counting in timer context on user request */
+ 	if (user_reset)
+ 		can_init_stats(net);
+@@ -132,35 +139,33 @@ void can_stat_update(struct timer_list *t)
+ 		can_init_stats(net);
+ 
+ 	/* prevent overflow in calc_rate() */
+-	if (pkg_stats->rx_frames > (ULONG_MAX / HZ))
++	if (rx_frames > (LONG_MAX / HZ))
+ 		can_init_stats(net);
+ 
+ 	/* prevent overflow in calc_rate() */
+-	if (pkg_stats->tx_frames > (ULONG_MAX / HZ))
++	if (tx_frames > (LONG_MAX / HZ))
+ 		can_init_stats(net);
+ 
+ 	/* matches overflow - very improbable */
+-	if (pkg_stats->matches > (ULONG_MAX / 100))
++	if (matches > (LONG_MAX / 100))
+ 		can_init_stats(net);
+ 
+ 	/* calc total values */
+-	if (pkg_stats->rx_frames)
+-		pkg_stats->total_rx_match_ratio = (pkg_stats->matches * 100) /
+-			pkg_stats->rx_frames;
++	if (rx_frames)
++		pkg_stats->total_rx_match_ratio = (matches * 100) / rx_frames;
+ 
+ 	pkg_stats->total_tx_rate = calc_rate(pkg_stats->jiffies_init, j,
+-					    pkg_stats->tx_frames);
++					    tx_frames);
+ 	pkg_stats->total_rx_rate = calc_rate(pkg_stats->jiffies_init, j,
+-					    pkg_stats->rx_frames);
++					    rx_frames);
+ 
+ 	/* calc current values */
+-	if (pkg_stats->rx_frames_delta)
++	if (rx_frames_delta)
+ 		pkg_stats->current_rx_match_ratio =
+-			(pkg_stats->matches_delta * 100) /
+-			pkg_stats->rx_frames_delta;
++			(matches_delta * 100) /	rx_frames_delta;
+ 
+-	pkg_stats->current_tx_rate = calc_rate(0, HZ, pkg_stats->tx_frames_delta);
+-	pkg_stats->current_rx_rate = calc_rate(0, HZ, pkg_stats->rx_frames_delta);
++	pkg_stats->current_tx_rate = calc_rate(0, HZ, tx_frames_delta);
++	pkg_stats->current_rx_rate = calc_rate(0, HZ, rx_frames_delta);
+ 
+ 	/* check / update maximum values */
+ 	if (pkg_stats->max_tx_rate < pkg_stats->current_tx_rate)
+@@ -173,9 +178,9 @@ void can_stat_update(struct timer_list *t)
+ 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
+ 
+ 	/* clear values for 'current rate' calculation */
+-	pkg_stats->tx_frames_delta = 0;
+-	pkg_stats->rx_frames_delta = 0;
+-	pkg_stats->matches_delta   = 0;
++	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
++	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
++	atomic_long_set(&pkg_stats->matches_delta, 0);
+ 
+ 	/* restart timer (one second) */
+ 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
+@@ -217,9 +222,12 @@ static int can_stats_proc_show(struct seq_file *m, void *v)
+ 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+ 
+ 	seq_putc(m, '\n');
+-	seq_printf(m, " %8ld transmitted frames (TXF)\n", pkg_stats->tx_frames);
+-	seq_printf(m, " %8ld received frames (RXF)\n", pkg_stats->rx_frames);
+-	seq_printf(m, " %8ld matched frames (RXMF)\n", pkg_stats->matches);
++	seq_printf(m, " %8ld transmitted frames (TXF)\n",
++		   atomic_long_read(&pkg_stats->tx_frames));
++	seq_printf(m, " %8ld received frames (RXF)\n",
++		   atomic_long_read(&pkg_stats->rx_frames));
++	seq_printf(m, " %8ld matched frames (RXMF)\n",
++		   atomic_long_read(&pkg_stats->matches));
+ 
+ 	seq_putc(m, '\n');
+ 
 -- 
 2.39.5
 
