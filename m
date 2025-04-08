@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101AB26B2D2;
-	Tue,  8 Apr 2025 12:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5352206F18;
+	Tue,  8 Apr 2025 12:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114733; cv=none; b=C36VGMwsZa8GVMrQu6c0yR94+V/Qc30V13RfJpPEo3ErEmtMR19zcgEVSRqhITywnHElckiFSdtQjmKq5ZMkEGW8O/5mrdgpf0azZkQN8uzKoMm1kchUHitCz0r5Q8b/6lemwqcciZD1EmF58rFxU4u7CUGn57wF9WRWHsWe4EA=
+	t=1744114735; cv=none; b=K+hQiWLEQj/ePeYKvYC3mMBu98mTwvyIC+NZ23V8kK5jIM+9tzJCrCMdIIJh2NAGM8xtaaTKZU5dexQBssiW+uvNE7iPYhMyaggb96q2+G4oeGKWD3KB6OA7o2+VrdD0dJvgWS7EesRxiJ0VIT6UBtMZTaTndyjtmN84ipnBGJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114733; c=relaxed/simple;
-	bh=4YS1wNDACdKNS9YZUR0lnzEDbs6Mb8kojZwXYb1xHhE=;
+	s=arc-20240116; t=1744114735; c=relaxed/simple;
+	bh=I1llT2oDtEOxrzhiIG46LdmlgMUuxHAWAPHfzQf/Eiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0Lf23UsgdXw2Hs3nluAq5JBRn0rZpqZsWAjfdiRmg8W8s/X9BoSW15+iQGodqVXilsKRzFK81yBmXwFwHy+zQEUWM08UuZNGLC0GWq9N+nl1Pw8q6mzpZXcZQw9n391ncpdR54jbk9bqlPxPpsSsEUbSGebwXP+F7pAIgMLL8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRyaM1IP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2mBA3xzYOXbEBcnZ+51mTBt/jMU9zAf3Dm0EdxIeqxJs1IanSaYViytZIGGvHcmijX75UB3aNHQSkwLzgZSG/4d9QvAkOPNg1ywcA6bWANhkpIPoDuo/bwTZUubYqeZL3ZI0NQ+DmaOM8K1wxpKfG9hkqjYjEvsJQAsHQOFmGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7MZCS2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRyaM1IP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9178FC4CEE5;
-	Tue,  8 Apr 2025 12:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7MZCS2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E91C4CEE5;
+	Tue,  8 Apr 2025 12:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114732;
-	bh=4YS1wNDACdKNS9YZUR0lnzEDbs6Mb8kojZwXYb1xHhE=;
+	s=korg; t=1744114735;
+	bh=I1llT2oDtEOxrzhiIG46LdmlgMUuxHAWAPHfzQf/Eiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tRyaM1IPuZU9lPtiJ0H5IwDNEzRk3wov8zvoRtOZwHaleOdGkFunBBYbQO688CYou
-	 6u0OZ/DOaghfzHLhUIyNWCWihtRRQ6Ocw+4qdVH12iQKdNyV5VyzXYR8zqCn3lEzzP
-	 3MVAeKCzBHf+cAvxDmii9toaj+rKDAI9bG5r/mDk=
+	b=Q7MZCS2xjJ5BmFCaUv10hKVHXk4AWpsoG4bGWRyxvX18KFge5muk38h7pFf7LVHVg
+	 C6dIOvPb/1I+elvsuCprJW57z8Hefxau4veeUdUBpjfO6cnxBnzD7Vc9F1cTYxu76m
+	 2Orsbu8KASbWeeoKnQp/YKSC5+YjsxN4HuvDXh0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	James Clark <james.clark@linaro.org>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 166/499] power: supply: bq27xxx_battery: do not update cached flags prematurely
-Date: Tue,  8 Apr 2025 12:46:18 +0200
-Message-ID: <20250408104855.322374950@linuxfoundation.org>
+Subject: [PATCH 6.13 209/499] perf tests: Fix Tool PMU test segfault
+Date: Tue,  8 Apr 2025 12:47:01 +0200
+Message-ID: <20250408104856.419617768@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,37 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicelo A. Mhlongo <absicsz@gmail.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 45291874a762dbb12a619dc2efaf84598859007a ]
+[ Upstream commit 615ec00b06f78912c370b372426190768402a5b9 ]
 
-Commit 243f8ffc883a1 ("power: supply: bq27xxx_battery: Notify also about
-status changes") intended to notify userspace when the status changes,
-based on the flags register. However, the cached state is updated too
-early, before the flags are tested for any changes. Remove the premature
-update.
+tool_pmu__event_to_str() now handles skipped events by returning NULL,
+so it's wrong to re-check for a skip on the resulting string. Calling
+tool_pmu__skip_event() with a NULL string results in a segfault so
+remove the unnecessary skip to fix it:
 
-Fixes: 243f8ffc883a1 ("power: supply: bq27xxx_battery: Notify also about status changes")
-Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
-Link: https://lore.kernel.org/r/20241125152945.47937-1-absicsz@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+  $ perf test -vv "parsing with PMU name"
+
+  12.2: Parsing with PMU name:
+  ...
+  ---- unexpected signal (11) ----
+  12.2: Parsing with PMU name         : FAILED!
+
+Fixes: ee8aef2d2321 ("perf tools: Add skip check in tool_pmu__event_to_str()")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reported-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Acked-by: Kan Liang <kan.liang@linux.intel.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250212163859.1489916-1-james.clark@linaro.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/tests/tool_pmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 40c5ac7a11188..b2c65fe43d5cb 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1913,7 +1913,6 @@ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
- 		cache.flags = -1; /* read error */
- 	if (cache.flags >= 0) {
- 		cache.capacity = bq27xxx_battery_read_soc(di);
--		di->cache.flags = cache.flags;
+diff --git a/tools/perf/tests/tool_pmu.c b/tools/perf/tests/tool_pmu.c
+index 187942b749b7c..1e900ef92e378 100644
+--- a/tools/perf/tests/tool_pmu.c
++++ b/tools/perf/tests/tool_pmu.c
+@@ -27,7 +27,7 @@ static int do_test(enum tool_pmu_event ev, bool with_pmu)
+ 	parse_events_error__init(&err);
+ 	ret = parse_events(evlist, str, &err);
+ 	if (ret) {
+-		if (tool_pmu__skip_event(tool_pmu__event_to_str(ev))) {
++		if (!tool_pmu__event_to_str(ev)) {
+ 			ret = TEST_OK;
+ 			goto out;
+ 		}
+@@ -59,7 +59,7 @@ static int do_test(enum tool_pmu_event ev, bool with_pmu)
+ 		}
+ 	}
  
- 		/*
- 		 * On gauges with signed current reporting the current must be
+-	if (!found && !tool_pmu__skip_event(tool_pmu__event_to_str(ev))) {
++	if (!found && tool_pmu__event_to_str(ev)) {
+ 		pr_debug("FAILED %s:%d Didn't find tool event '%s' in parsed evsels\n",
+ 			 __FILE__, __LINE__, str);
+ 		ret = TEST_FAIL;
 -- 
 2.39.5
 
