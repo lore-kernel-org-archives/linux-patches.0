@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937D7263899;
-	Tue,  8 Apr 2025 11:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E74267B10;
+	Tue,  8 Apr 2025 11:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111889; cv=none; b=VTLamwPVu4yR/Nx6rFK+KhSckhmDDM2XbJTB5USt++OxABPXidovJnmgwQ+H4rIILwwgeW+ti5LWhK1BVlPZHzcXC/5z9B4XegP91+HvS+jUd0KAwULkQukhvWuDOoi8Dd6jSeMb/qQVDPZzp2OmEssvbxJoPXHheYguZVHR/ys=
+	t=1744111892; cv=none; b=E5D+lE8yZDk5v+6SdGWHkMrkziDsjMcozvBeSrpAG28oxH6RU6ZsPPY/GpYTkxB+9CMu+bVcEPv7di7QtAh4vDJOqRYYfCTJH5r99tfbnmSGhPmqOd5lMZgElJ1YjJTBcNrJipqed6k/FT4UYFuo+q6CY+XiWCRzUR1w8amUV4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111889; c=relaxed/simple;
-	bh=J9z8d1eu7g55tSgYHNRT2/me1e/fjVM7UDhTgwvTFqk=;
+	s=arc-20240116; t=1744111892; c=relaxed/simple;
+	bh=R7B2F/LqkoDf6ALW/+e98NhQEgumlnel5REb5LS7Vt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDt5QMSoOgCEZJT1saX8S4TNrJvIlTznbizEgKRsZlwATy3hQ0klR7RStAepTBEI+dLr2ckH9Nk6ai31/UAYOqsW/Ut7HHhGM+l+LL/iK/zccQgtspPBqv+aadgFgQV0pRQ5JllM/EKV1zq9+g5hssZFHhvbYONfWQxv+ceTGG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqncQGKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqkXtEcWnsbwsDxNAffyytEtdSzNz9QKzTus2G/mf/kAa073y4gh4fwMF+BcqmNuu4SzbU55rKEeMiucm3qZQckS363wlaN3XHZNtPnVTWGJqMMNT5J75Bd0MXDR99o1ZOb4gObiXaUiI3jdMCzyK3wkmixF83u8i+VzX84CRUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJOv3bP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqncQGKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FC9C4CEE7;
-	Tue,  8 Apr 2025 11:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJOv3bP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79F2C4CEE5;
+	Tue,  8 Apr 2025 11:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111889;
-	bh=J9z8d1eu7g55tSgYHNRT2/me1e/fjVM7UDhTgwvTFqk=;
+	s=korg; t=1744111892;
+	bh=R7B2F/LqkoDf6ALW/+e98NhQEgumlnel5REb5LS7Vt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqncQGKL6E+5+dxteyPEaKDceLRroc4EJqwj8/OvQsKcSrlhGRvixRfyk0ZH0d/Fr
-	 g4iWsqjhpd/q8mlAeJkTRf9QifdA5sjtVv2wbSOTgmq2+e1iwnd96e+rE/H0leL/NA
-	 PRtSZYH/G+6ZlizRF2sZJGkhRio1tOwRdq3w6y7o=
+	b=kJOv3bP2EtfxB1MMioBcjWUIs7G9bzdoZbWF+ydnPKfhQKqeliYws0M/3e+EQhdYA
+	 biYcQP77LUzFxcEAYaqv1qoHaTYiczNub57wuqa59qmjvMjeDH2g3xS5/lhcPZ/OHe
+	 +r3oLQaEcWAebs07kWiFNDD03UgfPqj/oOxpO/qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Sean Heelan <seanheelan@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 557/731] ksmbd: use aead_request_free to match aead_request_alloc
-Date: Tue,  8 Apr 2025 12:47:34 +0200
-Message-ID: <20250408104927.232232649@linuxfoundation.org>
+Subject: [PATCH 6.14 558/731] ksmbd: fix multichannel connection failure
+Date: Tue,  8 Apr 2025 12:47:35 +0200
+Message-ID: <20250408104927.254676421@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,36 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6171063e9d046ffa46f51579b2ca4a43caef581a ]
+[ Upstream commit c1883049aa9b2b7dffd3a68c5fc67fa92c174bd9 ]
 
-Use aead_request_free() instead of kfree() to properly free memory
-allocated by aead_request_alloc(). This ensures sensitive crypto data
-is zeroed before being freed.
+ksmbd check that the session of second channel is in the session list of
+first connection. If it is in session list, multichannel connection
+should not be allowed.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: b95629435b84 ("ksmbd: fix racy issue from session lookup and expire")
+Reported-by: Sean Heelan <seanheelan@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c | 16 ++++++++++++++++
+ fs/smb/server/mgmt/user_session.h |  2 ++
+ fs/smb/server/smb2pdu.c           | 12 ++++--------
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index 2a5b4a96bf993..00b31cf864627 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -1218,7 +1218,7 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
- free_sg:
- 	kfree(sg);
- free_req:
--	kfree(req);
-+	aead_request_free(req);
- free_ctx:
- 	ksmbd_release_crypto_ctx(ctx);
- 	return rc;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 71c6939dfbf13..e5c835c8822ca 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -256,6 +256,22 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+ 	up_write(&sessions_table_lock);
+ }
+ 
++bool is_ksmbd_session_in_connection(struct ksmbd_conn *conn,
++				   unsigned long long id)
++{
++	struct ksmbd_session *sess;
++
++	down_read(&conn->session_lock);
++	sess = xa_load(&conn->sessions, id);
++	if (sess) {
++		up_read(&conn->session_lock);
++		return true;
++	}
++	up_read(&conn->session_lock);
++
++	return false;
++}
++
+ struct ksmbd_session *ksmbd_session_lookup(struct ksmbd_conn *conn,
+ 					   unsigned long long id)
+ {
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index c1c4b20bd5c6c..f21348381d598 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -87,6 +87,8 @@ void ksmbd_session_destroy(struct ksmbd_session *sess);
+ struct ksmbd_session *ksmbd_session_lookup_slowpath(unsigned long long id);
+ struct ksmbd_session *ksmbd_session_lookup(struct ksmbd_conn *conn,
+ 					   unsigned long long id);
++bool is_ksmbd_session_in_connection(struct ksmbd_conn *conn,
++				     unsigned long long id);
+ int ksmbd_session_register(struct ksmbd_conn *conn,
+ 			   struct ksmbd_session *sess);
+ void ksmbd_sessions_deregister(struct ksmbd_conn *conn);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index c53121538990e..ad4754339fa03 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1707,44 +1707,38 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 
+ 		if (conn->dialect != sess->dialect) {
+ 			rc = -EINVAL;
+-			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
+ 			rc = -EINVAL;
+-			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (strncmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
+-			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_IN_PROGRESS) {
+ 			rc = -EACCES;
+-			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_EXPIRED) {
+ 			rc = -EFAULT;
+-			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+-		ksmbd_user_session_put(sess);
+ 
+ 		if (ksmbd_conn_need_reconnect(conn)) {
+ 			rc = -EFAULT;
++			ksmbd_user_session_put(sess);
+ 			sess = NULL;
+ 			goto out_err;
+ 		}
+ 
+-		sess = ksmbd_session_lookup(conn, sess_id);
+-		if (!sess) {
++		if (is_ksmbd_session_in_connection(conn, sess_id)) {
+ 			rc = -EACCES;
+ 			goto out_err;
+ 		}
+@@ -1910,6 +1904,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 
+ 			sess->last_active = jiffies;
+ 			sess->state = SMB2_SESSION_EXPIRED;
++			ksmbd_user_session_put(sess);
++			work->sess = NULL;
+ 			if (try_delay) {
+ 				ksmbd_conn_set_need_reconnect(conn);
+ 				ssleep(5);
 -- 
 2.39.5
 
