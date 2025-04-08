@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C826926AA89;
-	Tue,  8 Apr 2025 12:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBFF26AA9E;
+	Tue,  8 Apr 2025 12:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113718; cv=none; b=tmTsO9VMx+7sU19eiNlICMe3q07B7QLbXkMuj7vJBtM1MD2WlViG9QjC3dLPS6j1KHInrRa5hcupRGchuvvdAuxsQILgNMZ0RWFvUiT/FjVg6hu+vNgX6iBc7gvXgfgk6gcXiX4W8GfHbCkywVzXgL5/jJ4jEM+AU0H0VHsYFxE=
+	t=1744113721; cv=none; b=Z4UK4I6Xrvsz4fmOmKSMrM115xwH9omYt5SwdoqCUi5QoA/hdfziGdPD9V3GsXQkhfyvgnswhxvhCVQZ3LJXrXp1yWCmGw4Xfmbti9GzMpP86f9bZP8u/GRYOECxLYiUiohKxj0kAzNiTwfP4n+Lmx+1c1gxUTNIWPXxYq46JL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113718; c=relaxed/simple;
-	bh=NLgMSnytSY0FxD4LaD4rpPhBwHw6+veAztXv/bMkcwI=;
+	s=arc-20240116; t=1744113721; c=relaxed/simple;
+	bh=gsGivlZ8ToAElQDYtD1fUXR2NrofFh3UITId27dSyLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QSHxuS5oGYL0dorSsJjh1t3Q08AcewoviwMW1XtueDZjPsNzRfGNmXX8wi7KJ+W8KRKmdrgxNbd2JHs8Tp8g5eHzcjtmW1wdRSrzgoXfbNKe+4Sc+vnnaOo5gfC67nJEzLbP+OTjQeB51wktcJ9r9CGj2mkObZq5HUJBR/TUXsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G284HUEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTsgMaYcoe8KuwHVUmwhKs6e7A7Hl7u91fMwjN8fxH5FD3kPKvPGJIwc7GR5aC+z7t+7FAAkwP0kfHOz8bgkPIAR/dWeKkj95fmJH/K4/oQbMgrpZZSQr2X87e7CU4UUOUi2SmQroI9e/nDXVCtpu27/at8dNpghI1hIyPxTpPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzLRy6GW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G284HUEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5054DC4CEE5;
-	Tue,  8 Apr 2025 12:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzLRy6GW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC30C4CEE5;
+	Tue,  8 Apr 2025 12:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113718;
-	bh=NLgMSnytSY0FxD4LaD4rpPhBwHw6+veAztXv/bMkcwI=;
+	s=korg; t=1744113721;
+	bh=gsGivlZ8ToAElQDYtD1fUXR2NrofFh3UITId27dSyLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G284HUEhSFJjvpbjy/DsK7/zEhK8qbVgy14tsv0K6SwMB/tGk5XdE3VWE5XeRCDNP
-	 DOOdRbfvRxCDQi3GrrtwclSx3c0ylI9Yq9BL8+ugkthhvNMgFfbA4AhPhMnefRsOl7
-	 QmpwsYVKdbK6frzz3g2ECDdKCZA4YTC0y+/Le5Rc=
+	b=vzLRy6GWEdJx3PclEEH3L9Qt/YM/tAfQlTPDgJTNSVl1QUWZZIlEfeDbaYsfXbu1x
+	 xB+AMI5U+V3610w+Pok7nepLdV9WwEFxATKmtdIGmrmeSX12BarSoL1jpfMmbIyS+4
+	 P+YnFULF4hp4nI63ip4fpLndCwwGJ0EHlBBekr28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 6.6 263/268] jfs: fix slab-out-of-bounds read in ea_get()
-Date: Tue,  8 Apr 2025 12:51:14 +0200
-Message-ID: <20250408104835.672322325@linuxfoundation.org>
+	Agoston Lorincz <pipacsba@gmail.com>,
+	All applicable <stable@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 237/268] ACPI: x86: Extend Lenovo Yoga Tab 3 quirk with skip GPIO event-handlers
+Date: Tue,  8 Apr 2025 12:50:48 +0200
+Message-ID: <20250408104834.980380370@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,93 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit fdf480da5837c23b146c4743c18de97202fcab37 upstream.
+commit 2fa87c71d2adb4b82c105f9191e6120340feff00 upstream.
 
-During the "size_check" label in ea_get(), the code checks if the extended
-attribute list (xattr) size matches ea_size. If not, it logs
-"ea_get: invalid extended attribute" and calls print_hex_dump().
+Depending on the secureboot signature on EFI\BOOT\BOOTX86.EFI the
+Lenovo Yoga Tab 3 UEFI will switch its OSID ACPI variable between
+1 (Windows) and 4 (Android(GMIN)).
 
-Here, EALIST_SIZE(ea_buf->xattr) returns 4110417968, which exceeds
-INT_MAX (2,147,483,647). Then ea_size is clamped:
+In Windows mode a GPIO event handler gets installed for GPO1 pin 5,
+causing Linux' x86-android-tables code which deals with the general
+brokenness of this device's ACPI tables to fail to probe with:
 
-	int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
+[   17.853705] x86_android_tablets: error -16 getting GPIO INT33FF:01 5
+[   17.859623] x86_android_tablets x86_android_tablets: probe with driver
 
-Although clamp_t aims to bound ea_size between 0 and 4110417968, the upper
-limit is treated as an int, causing an overflow above 2^31 - 1. This leads
-"size" to wrap around and become negative (-184549328).
+which renders sound, the touchscreen, charging-management,
+battery-monitoring and more non functional.
 
-The "size" is then passed to print_hex_dump() (called "len" in
-print_hex_dump()), it is passed as type size_t (an unsigned
-type), this is then stored inside a variable called
-"int remaining", which is then assigned to "int linelen" which
-is then passed to hex_dump_to_buffer(). In print_hex_dump()
-the for loop, iterates through 0 to len-1, where len is
-18446744073525002176, calling hex_dump_to_buffer()
-on each iteration:
+Add ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS to the existing quirks for this
+device to fix this.
 
-	for (i = 0; i < len; i += rowsize) {
-		linelen = min(remaining, rowsize);
-		remaining -= rowsize;
-
-		hex_dump_to_buffer(ptr + i, linelen, rowsize, groupsize,
-				   linebuf, sizeof(linebuf), ascii);
-
-		...
-	}
-
-The expected stopping condition (i < len) is effectively broken
-since len is corrupted and very large. This eventually leads to
-the "ptr+i" being passed to hex_dump_to_buffer() to get closer
-to the end of the actual bounds of "ptr", eventually an out of
-bounds access is done in hex_dump_to_buffer() in the following
-for loop:
-
-	for (j = 0; j < len; j++) {
-			if (linebuflen < lx + 2)
-				goto overflow2;
-			ch = ptr[j];
-		...
-	}
-
-To fix this we should validate "EALIST_SIZE(ea_buf->xattr)"
-before it is utilised.
-
-Reported-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
-Tested-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=4e6e7e4279d046613bc5
-Fixes: d9f9d96136cb ("jfs: xattr: check invalid xattr size more strictly")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reported-by: Agoston Lorincz <pipacsba@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/CAMEzqD+DNXrAvUOHviB2O2bjtcbmo3xH=kunKr4nubuMLbb_0A@mail.gmail.com/
+Cc: All applicable <stable@kernel.org>
+Fixes: fe820db35275 ("ACPI: x86: Add skip i2c clients quirk for Lenovo Yoga Tab 3 Pro (YT3-X90F)")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20250325210450.358506-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/acpi/x86/utils.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -559,11 +559,16 @@ static int ea_get(struct inode *inode, s
- 
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
--		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
-+		if (unlikely(EALIST_SIZE(ea_buf->xattr) > INT_MAX)) {
-+			printk(KERN_ERR "ea_get: extended attribute size too large: %u > INT_MAX\n",
-+			       EALIST_SIZE(ea_buf->xattr));
-+		} else {
-+			int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
- 
--		printk(KERN_ERR "ea_get: invalid extended attribute\n");
--		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
--				     ea_buf->xattr, size, 1);
-+			printk(KERN_ERR "ea_get: invalid extended attribute\n");
-+			print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
-+				       ea_buf->xattr, size, 1);
-+		}
- 		ea_release(inode, ea_buf);
- 		rc = -EIO;
- 		goto clean_up;
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -367,7 +367,8 @@ static const struct dmi_system_id acpi_q
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
+ 		},
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+-					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
++					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
+ 	},
+ 	{
+ 		/* Medion Lifetab S10346 */
 
 
