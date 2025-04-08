@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDBB269885;
-	Tue,  8 Apr 2025 11:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB11E20CCD8;
+	Tue,  8 Apr 2025 11:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113465; cv=none; b=TAyU+8lckwmNGG3bOaLfTy/l7CmehhUO8kGcDHRWRPEZizCJA0q0xSO/7TwhcqBj6RZhS7wx/OCT/CcT50n2cSaw3j7m2sbYeO71cE9DEKBdubnnyTVtyi141coj/Ue1SlBUXA/SgzrCMLz3Siil3qLcxnHmYpIPs8lLClAJf2g=
+	t=1744113468; cv=none; b=GQLpeIMmqKiKwjfCl3NyR5ZqqcBYTVPEvsdGmMy9BecHwxZHttueAT+QWv6BMJGkDX8PyxhSv4IrPnqtNjrctSo12F1yk2Yy2DmZ18YuL8X4p1BlnY/qGCAqYpLpMecCEx/IJeYWY5cOsYW8ruH0AC2AMX9PzyEYUIXb0N0AZAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113465; c=relaxed/simple;
-	bh=L1Dyfz1Qm2UDpH5avrfAe/6WxUzmp3Yg7Mjgc/+bhTo=;
+	s=arc-20240116; t=1744113468; c=relaxed/simple;
+	bh=hQD5J2epS8Pp48oPY0ubJ41ZJkGReYem+i4QjiZKh1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ij7KGOkc7HIZqWOdxCwcKe+k8GSQUhoW/+nZfiHyn9JcAvWfN+JZDP0k4nNAlVjhaTC6D6dhuFSopqRhcriKOBR69IoS6q7MXVKbjrWBQP48GvsmKcMrgpfxcEHlkdnE7UkdRGTp7COeGiSjCOKUWvYhOC+uu6fIyclhWmGNbV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMq6PfmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhAxGKvWuSNul6Q5uZATJe1J41F2q4FWTdmmI51yM3FqEUuuF/43XH39up5eMZ/cdxIBYy6wCHlppyYNj5AAimv4/RKrsO/8K/vYvQ9NpEV67/7sn8k5EBrCWLKbYlnJXDfsqoMbHLzRmMbhfdqcnE3RrahsBuASnxBre+Du46Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW09kevV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMq6PfmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16BC4CEE5;
-	Tue,  8 Apr 2025 11:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW09kevV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79378C4CEEA;
+	Tue,  8 Apr 2025 11:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113465;
-	bh=L1Dyfz1Qm2UDpH5avrfAe/6WxUzmp3Yg7Mjgc/+bhTo=;
+	s=korg; t=1744113467;
+	bh=hQD5J2epS8Pp48oPY0ubJ41ZJkGReYem+i4QjiZKh1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMq6PfmY4ZHhJZngOL3B6OZyTHZkRIZ1KOHySfNXohiDRzWE7zn+vmgRu2AIAOe4k
-	 XQtdm9MG8TJYSHNtp3HuvJkPs4tqoIdqsQF/BoakydP79HA0bdVQ7kaoCOkC0d9v4q
-	 ifqD/4jXtRCqONoRA86ckHymNDn2aS6Z22rMizJI=
+	b=xW09kevV2zqlbwZ6vAI+OHOYS4Vj1rdoL+lbVhTePDG/X4kWXYFx/bSNdClr/UvMz
+	 x7vXEbKu5UYh0Qt6jiU7M19MYiCksv3xiTbc6BEb+xn2G3vRfBlKkxvV1vBbmuMaMI
+	 5JmaD+Uys5qllv0lALt5X/EVpM8GvGxpXyWEBEm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Tatham <anakin@pobox.com>,
-	David Sterba <dsterba@suse.com>,
+	Kyle Gospodnetich <me@kylegospodneti.ch>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/268] affs: dont write overlarge OFS data block size fields
-Date: Tue,  8 Apr 2025 12:49:40 +0200
-Message-ID: <20250408104833.107555670@linuxfoundation.org>
+Subject: [PATCH 6.6 170/268] ALSA: hda/realtek: Fix Asus Z13 2025 audio
+Date: Tue,  8 Apr 2025 12:49:41 +0200
+Message-ID: <20250408104833.133854290@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,49 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Tatham <anakin@pobox.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
+[ Upstream commit 12784ca33b62fd327631749e6a0cd2a10110a56c ]
 
-If a data sector on an OFS floppy contains a value > 0x1e8 (the
-largest amount of data that fits in the sector after its header), then
-an Amiga reading the file can return corrupt data, by taking the
-overlarge size at its word and reading past the end of the buffer it
-read the disk sector into!
+Use the basic quirk for this type of amplifier. Sound works in speakers,
+headphones, and microphone. Whereas none worked before.
 
-The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
-the new size field for a data block was computed by adding the amount
-of data currently being written (into the block) to the existing value
-of the size field. This is correct if you're extending the file at the
-end, but if you seek backwards in the file and overwrite _existing_
-data, it can lead to the size field being larger than the maximum
-legal value.
-
-This commit changes the calculation so that it sets the size field to
-the max of its previous size and the position within the block that we
-just wrote up to.
-
-Signed-off-by: Simon Tatham <anakin@pobox.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Tested-by: Kyle Gospodnetich <me@kylegospodneti.ch>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20250227175107.33432-3-lkml@antheas.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/affs/file.c b/fs/affs/file.c
-index 8fd1a7c5958a8..93b319917c9a9 100644
---- a/fs/affs/file.c
-+++ b/fs/affs/file.c
-@@ -726,7 +726,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		tmp = min(bsize - boff, to - from);
- 		BUG_ON(boff + tmp > bsize || tmp > bsize);
- 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
--		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
-+		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
-+			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
- 		affs_fix_checksum(sb, bh);
- 		mark_buffer_dirty_inode(bh, inode);
- 		written += tmp;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 81ebf59898a10..7a40f66f8fd88 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10236,6 +10236,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1f12, "ASUS UM5302", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1f62, "ASUS UX7602ZM", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1f92, "ASUS ROG Flow X16", ALC289_FIXUP_ASUS_GA401),
++	SND_PCI_QUIRK(0x1043, 0x1fb3, "ASUS ROG Flow Z13 GZ302EA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
+ 	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC245_FIXUP_CS35L41_SPI_2),
 -- 
 2.39.5
 
