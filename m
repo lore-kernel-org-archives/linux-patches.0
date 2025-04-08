@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC32206F18;
-	Tue,  8 Apr 2025 12:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE48268FDE;
+	Tue,  8 Apr 2025 12:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114716; cv=none; b=aSELIl2Tc0uRHtzoF512w/z3dG64GaZ+Iuwl5bjm84ZFMUG7s9CD9pdT/lNpjHpsbQsxYSECxNZIGBFbQqBiHsq91bzi9cTnI43hPoqhFzFRoE5glPZ2xxd+znUpLIwdjyGTBJ9rxOSgrJhmht02Jivq9E7FVkcOAr7JatpB/r0=
+	t=1744114719; cv=none; b=t/NqC78ixK5bb8fOr9UemU/IxT3rMh+Tzk6Q627lPpyi1IddnLv7oaVf6wvNKLeeooDmBKK7phSo7YAfzxi33yt780pIn0U8q9XD94zi4c2CszXAAjlVWlLoe+qWJd5i+ZsK3ka/XVsgnrM9GYTXUWrJg0pqYpidar1uaBcG2ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114716; c=relaxed/simple;
-	bh=2ea5SoyTtV1CyQGVJhqpX6SRGrd1g4VN8xvcR6/+p+Q=;
+	s=arc-20240116; t=1744114719; c=relaxed/simple;
+	bh=URWJhpdbCl4FWa74wW0SIMDVpRuJ/ikpXdGN44G3Kg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhAzr/MYe4nJzwOJKvuKvfRQ86HZbHT5Vmx9WS68lIsf5ZHLd8cqcOeorWiSDXISHgB3R/clWvwbjbJTU4O7hJKZ9gYK/HFbklAqRyrnH3J3322bTRVPYsEYDSR/X0KFoluJcUoLRioKfidKswfHReZtRxmDquUJuBs0si7FhO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUKAXI+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCPbrZU/vVi4eZquAWK2K0giUQEiY4IrPMALxxD5uv5iro32g48fBbJsVNN8hrPOxm3Wzfppy3/++X+fYLlq1Q/uEyUBSdY2tzNy+hQBR43rceSQ15i07ewG9K3t+cK37uSNSBOk2YKSEjQgNA1s6MSgtJmBvu+xxeuxv69K10w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GBa7jYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUKAXI+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C747C4CEE5;
-	Tue,  8 Apr 2025 12:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GBa7jYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF1FC4CEE5;
+	Tue,  8 Apr 2025 12:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114716;
-	bh=2ea5SoyTtV1CyQGVJhqpX6SRGrd1g4VN8xvcR6/+p+Q=;
+	s=korg; t=1744114719;
+	bh=URWJhpdbCl4FWa74wW0SIMDVpRuJ/ikpXdGN44G3Kg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUKAXI+XD03Ex82wYYcl6brVvbXP9ppN6No/+ClRMxls5KKPMcCJEKGij7VSAXVif
-	 NH3smamA017moSrqC5WIuqHXYYZG+ugsdLFdQtCIHIMiSX1zgHe/8LTn+EN9LEl7S8
-	 rVEaS5be1e7p8tTbO83lsoxSRUlTtTraQvdle4Rw=
+	b=1GBa7jYp3kGwYSQVJIz3JQ9/t4SNdsNPQI7HFLOz8tJ5la1jPScbjZYLwWt6dqain
+	 ZvkZ+Wf4nOdZz+oHCMWQEPeaU1V9fOUkX4YVsAtPvkvlVAAlfrfWHz9notd/jJ55XD
+	 JVjEFxjPlqXmGxIzx5pzokbMf5r1BO3irBD8Qt3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	thomas.falcon@intel.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 207/499] perf tools: Add skip check in tool_pmu__event_to_str()
-Date: Tue,  8 Apr 2025 12:46:59 +0200
-Message-ID: <20250408104856.368480023@linuxfoundation.org>
+Subject: [PATCH 6.13 171/499] clk: amlogic: gxbb: drop non existing 32k clock parent
+Date: Tue,  8 Apr 2025 12:46:23 +0200
+Message-ID: <20250408104855.440801965@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,69 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit ee8aef2d232142e5fdfed9c16132815969a0bf81 ]
+[ Upstream commit 7915d7d5407c026fa9343befb4d3343f7a345f97 ]
 
-Some topdown related metrics may fail on hybrid machines.
+The 32k clock reference a parent 'cts_slow_oscin' with a fixme note saying
+that this clock should be provided by AO controller.
 
- $ perf stat -M tma_frontend_bound
- Cannot resolve IDs for tma_frontend_bound:
- cpu_atom@TOPDOWN_FE_BOUND.ALL@ / (8 * cpu_atom@CPU_CLK_UNHALTED.CORE@)
+The HW probably has this clock but it does not exist at the moment in
+any controller implementation. Furthermore, referencing clock by the global
+name should be avoided whenever possible.
 
-In the find_tool_events(), the tool_pmu__event_to_str() is used to
-compare the tool_events. It only checks the event name, no PMU or arch.
-So the tool_events[TOOL_PMU__EVENT_SLOTS] is set to true, because the
-p-core Topdown metrics has "slots" event.
-The tool_events is shared. So when parsing the e-core metrics, the
-"slots" is automatically added.
+There is no reason to keep this hack around, at least for now.
 
-The "slots" event as a tool event should only be available on arm64. It
-has a different meaning on X86. The tool_pmu__skip_event() intends
-handle the case. Apply it for tool_pmu__event_to_str() as well.
-
-There is a lack of sanity check in the expr__get_id(). Add the check.
-
-Closes: https://lore.kernel.org/lkml/608077bc-4139-4a97-8dc4-7997177d95c4@linux.intel.com/
-Fixes: 069057239a67 ("perf tool_pmu: Move expr literals to tool_pmu")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: thomas.falcon@intel.com
-Link: https://lore.kernel.org/r/20250207152844.302167-1-kan.liang@linux.intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-2-baca56ecf2db@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/expr.c     | 2 ++
- tools/perf/util/tool_pmu.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/meson/gxbb.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
-index c221dcce66660..6413537442aa8 100644
---- a/tools/perf/util/expr.c
-+++ b/tools/perf/util/expr.c
-@@ -215,6 +215,8 @@ int expr__add_ref(struct expr_parse_ctx *ctx, struct metric_ref *ref)
- int expr__get_id(struct expr_parse_ctx *ctx, const char *id,
- 		 struct expr_id_data **data)
- {
-+	if (!ctx || !id)
-+		return -1;
- 	return hashmap__find(ctx->ids, id, data) ? 0 : -1;
- }
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index df9250de51dc8..3abb44a2532b9 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -1266,14 +1266,13 @@ static struct clk_regmap gxbb_cts_i958 = {
+ 	},
+ };
  
-diff --git a/tools/perf/util/tool_pmu.c b/tools/perf/util/tool_pmu.c
-index 4fb0975784794..3a68debe71437 100644
---- a/tools/perf/util/tool_pmu.c
-+++ b/tools/perf/util/tool_pmu.c
-@@ -62,7 +62,8 @@ int tool_pmu__num_skip_events(void)
- 
- const char *tool_pmu__event_to_str(enum tool_pmu_event ev)
- {
--	if (ev > TOOL_PMU__EVENT_NONE && ev < TOOL_PMU__EVENT_MAX)
-+	if ((ev > TOOL_PMU__EVENT_NONE && ev < TOOL_PMU__EVENT_MAX) &&
-+	    !tool_pmu__skip_event(tool_pmu__event_names[ev]))
- 		return tool_pmu__event_names[ev];
- 
- 	return NULL;
++/*
++ * This table skips a clock named 'cts_slow_oscin' in the documentation
++ * This clock does not exist yet in this controller or the AO one
++ */
++static u32 gxbb_32k_clk_parents_val_table[] = { 0, 2, 3 };
+ static const struct clk_parent_data gxbb_32k_clk_parent_data[] = {
+ 	{ .fw_name = "xtal", },
+-	/*
+-	 * FIXME: This clock is provided by the ao clock controller but the
+-	 * clock is not yet part of the binding of this controller, so string
+-	 * name must be use to set this parent.
+-	 */
+-	{ .name = "cts_slow_oscin", .index = -1 },
+ 	{ .hw = &gxbb_fclk_div3.hw },
+ 	{ .hw = &gxbb_fclk_div5.hw },
+ };
+@@ -1283,6 +1282,7 @@ static struct clk_regmap gxbb_32k_clk_sel = {
+ 		.offset = HHI_32K_CLK_CNTL,
+ 		.mask = 0x3,
+ 		.shift = 16,
++		.table = gxbb_32k_clk_parents_val_table,
+ 		},
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "32k_clk_sel",
 -- 
 2.39.5
 
