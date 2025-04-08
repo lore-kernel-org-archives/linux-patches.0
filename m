@@ -1,142 +1,138 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D609264F87
-	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 09:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1264265626;
+	Tue,  8 Apr 2025 10:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744104881; cv=none; b=CO5x6lpbofZIIjekcF/dzgvEgMp/rkVyhuXbpnxFJoD1RKduBZ/PJSdw8E1h+LJTROxKrs9dG6lXSBLrIxzguv08YvPMbgnPFgY361cobgAhCEF+BKsIyE0bHgVzNdjY2SqEwK+7Zs7XZnBBJR2tMGgZHLoC1PxY4mO/mWOMjAI=
+	t=1744109666; cv=none; b=rAZ3q8guNc2TgImMqYVS4BVIf+t6vVXAQrVF0MyvRGtrTNS6dv2cS8E9onQbEPcNgHHHFuxtGrYHjFu2mdV0l3VE+bxLZUu7wJ49RdV4kiivHohj8oPLi+YG0LD5akwe3FjaIw70SVV4OLctGRN6unX4tlEyVofbyEK4rsBmJUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744104881; c=relaxed/simple;
-	bh=Mw9BipaX03ecmtlnzgP3qZmLo1pRUnsgk//oLUm+1HQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iajI3Q3Bae4/2bdappcILWCYXYDCMiDSOfQ6pTE37fGpXbTdHSm90G7uEjHhtw2bh9bWYn5OWokMEL/aXPUABLE1xkfssgsCxzYkr6pXpz6yRemP/fpeGlW2iIL0qh2wboJGuoexJ5TAjjks/DneJfPj1AnfyBdgazDBOteqgwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=BBQMny3Z; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1744109666; c=relaxed/simple;
+	bh=66vhCjF3+STFmJUUHXsFtUYsLbGopm9yeWUPsZ++7pk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oyK+9AcLIoNN7ignZ2SN0eBYv2pHAW5QtyD1S1ToBYWxLKe3PVTF7rPYXgQNGLUjBvm4pLNbVVmrugd3kPuqnpkr/JrfUtAWlxeK25r49/XGGWQ/iZRWohkd0/aX7ea2YEraCpnLk284z0mMWIrdswDIzl0hn8kpVIQo7sNrVoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTscm22v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="BBQMny3Z"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cf05f0c3eso34079065e9.0
-        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 02:34:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1744104877; x=1744709677; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AtwwP4HqDMoVhJV9AOJlIF1w0v00JywAQfC5Yv29UZk=;
-        b=BBQMny3Z0iCA0+ttoIaSk7ekgJ2gXtRoBDr6u2oPxgFytXMqHDWpo4piGCo8YSt2Ql
-         xOm64hs3pgZDJu6xVusckzy/u6f7vLDyjcApXVMP/auLJc42Tp8++PDwJdbrDUqX1p8v
-         g8s90yiau5LsNvT9imnlkhBDhMxsnoKRHhV8/+no7BG0M8dsF5AXqJBUxajaZhZeJ0UZ
-         fvnMom2Z+cTTI6HyivnaCrvz4KR01mPtguKWgJwJlnaHFfqpthykIw01T8niaWECQA3w
-         7tHJjALlq/GnqYP+vAd+oyVUElNry6bci5BpqhkL9YqQW+jUjhdzmj4boZ53baJ7cQpI
-         m3Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744104877; x=1744709677;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AtwwP4HqDMoVhJV9AOJlIF1w0v00JywAQfC5Yv29UZk=;
-        b=CrSVeSZD/L4OnWXCui5cZJC6qCF3LTJZNgH7rnlEi+le3ZIqS/SUxQJ5UiovHykWKh
-         5DyZBlngrinN9Tn57uT0tLrettjr5K9GvIZXV6TI8/wreuowG3SLPau4FrYKSmeZNUNL
-         qMus60N8Wt4UqFXJ3oiBHpgkPAZfkPPXiKB9U7z0SQ51z60MVw0dZV1qTt3xRhasSyDW
-         71MpI8RbPJAa3AFavebepGS9e7SzqdFPasuoRjmvKCkdDWPhDnPSPpL5YxOZIZ+8VPBU
-         wJahE6KrVms/cGtBa0DN4mDY7yvke6VXPtZHOPkuJPmibhf3XQVaMNDQKDw9Sn3SLMTV
-         yedg==
-X-Forwarded-Encrypted: i=1; AJvYcCUCVH1Aqio6TticVXReCLSTdci5uhnI2AmhkEbLSy51UoraoA1+tpQKX9rZT8CVifRlUj91qYuy@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw0RTCY9UuAolrEM5oAnP70MwtDjV89wzI61FDIavipjSSNJLtw
-	uSAAWaeu6/l8pmP9omcLSc08RDKUUlYq2BgjsG0Ik90G/uCX9t/RLUK7w41G3Uk=
-X-Gm-Gg: ASbGnct+pRzH0ArMAKmZUEHfchlMEyS0xBR+rxfafPkT8xvPbTPAfa6u3x0c3ZNC2DM
-	F4BSFjNkVss937Bf0uRjvUoNPBU6K4thZ72fQhTqnvIhQGKBz/Y90ughvPN8z9wJZNRfagUkgI3
-	bzVELH5eLytkUNu47ZSrYBO0C0QTux6MacIn+rsV49h0IUTv45lV+O/jnoKfvAhv6rwZ9pXSgd6
-	EKq6YOvkT/jsKpRjBoHipjrIWRMG21E1S2j/lC2h3SOuIaac5Of8c1iwuB3liG+gxUm1UAEavje
-	yD/sS7hUOScr46yw1piqn8YWdh3J8bG87ttIf9tjjidUWnB+osX97zw=
-X-Google-Smtp-Source: AGHT+IEjRZm4TK0RyiZ3PAjlRVU6L5oyxaErbz97TRvApb6+B+nBpIqS5LQTTXTNW8eDHsr7ZSAprw==
-X-Received: by 2002:a05:600c:3b13:b0:43c:f050:fed3 with SMTP id 5b1f17b1804b1-43ed0bde8a8mr144207385e9.11.1744104876909;
-        Tue, 08 Apr 2025 02:34:36 -0700 (PDT)
-Received: from localhost (109-81-82-69.rct.o2.cz. [109.81.82.69])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-43ec364d07csm154393655e9.28.2025.04.08.02.34.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 02:34:36 -0700 (PDT)
-Date: Tue, 8 Apr 2025 11:34:35 +0200
-From: Michal Hocko <mhocko@suse.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Brendan Jackman <jackmanb@google.com>
-Subject: Re: [RFC PATCH 2/2] MAINTAINERS: add MM subsection for the page
- allocator
-Message-ID: <Z_Ttq-uBXdqlewEa@tiehlicka>
-References: <20250407200508.121357-3-vbabka@suse.cz>
- <20250407200508.121357-4-vbabka@suse.cz>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTscm22v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59C6C4CEE5;
+	Tue,  8 Apr 2025 10:54:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1744109666;
+	bh=66vhCjF3+STFmJUUHXsFtUYsLbGopm9yeWUPsZ++7pk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=sTscm22vtq88yh3Eqo6UO0b9H20wSLjuyp9wmsYUXyq7eRkMds8AVsCwAM/kOdFUl
+	 46pJHeXQoPTQGa3Z9/2fFFQSJlFH2E8HSFe6tVt/wISKw/u8Odof08kBl34I6zWfNc
+	 hp3CI5JNM2QHtBSxOS2jPpwqkE1PoS4BdKH+ryEg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 001/227] vlan: fix memory leak in vlan_newlink()
+Date: Tue,  8 Apr 2025 12:46:19 +0200
+Message-ID: <20250408104820.401818056@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
+References: <20250408104820.353768086@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250407200508.121357-4-vbabka@suse.cz>
+Content-Transfer-Encoding: 8bit
 
-On Mon 07-04-25 22:05:10, Vlastimil Babka wrote:
-> Add a subsection for the page allocator, including compaction as it's
-> crucial for high-order allocations and works together with the
-> anti-fragmentation features. Volunteer myself as a reviewer.
-> 
-> Cc: David Hildenbrand <david@redhat.com>
-> Cc: Zi Yan <ziy@nvidia.com>
-> Cc: Johannes Weiner <hannes@cmpxchg.org>
-> Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-> Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-> Cc: Mel Gorman <mgorman@techsingularity.net>
-> Cc: Suren Baghdasaryan <surenb@google.com>
-> Cc: Brendan Jackman <jackmanb@google.com>
-> Cc: Michal Hocko <mhocko@kernel.org>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Acked-by: Michal Hocko <mhocko@suse.com>
+------------------
 
-Feel free to add
-R: Michal Hocko <mhocko@suse.com>
-Thanks
+From: Eric Dumazet <edumazet@google.com>
 
-> ---
-> Extra reviewers would be welcome, including/not limited the people I
-> Cc'd based on my recollection and get_maintainers --git
-> Also if I missed any related file please lmk. Thanks.
-> 
->  MAINTAINERS | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4fe7cf5fc4ea..610636f622b1 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -15511,6 +15511,16 @@ F:	mm/numa.c
->  F:	mm/numa_emulation.c
->  F:	mm/numa_memblks.c
->  
-> +MEMORY MANAGEMENT - PAGE ALLOCATOR
-> +M:	Andrew Morton <akpm@linux-foundation.org>
-> +R:	Vlastimil Babka <vbabka@suse.cz>
-> +L:	linux-mm@kvack.org
-> +S:	Maintained
-> +F:	mm/compaction.c
-> +F:	mm/page_alloc.c
-> +F:	include/linux/gfp.h
-> +F:	include/linux/compaction.h
-> +
->  MEMORY MANAGEMENT - SECRETMEM
->  M:	Andrew Morton <akpm@linux-foundation.org>
->  M:	Mike Rapoport <rppt@kernel.org>
-> -- 
-> 2.49.0
+commit 72a0b329114b1caa8e69dfa7cdad1dd3c69b8602 upstream.
 
--- 
-Michal Hocko
-SUSE Labs
+Blamed commit added back a bug I fixed in commit 9bbd917e0bec
+("vlan: fix memory leak in vlan_dev_set_egress_priority")
+
+If a memory allocation fails in vlan_changelink() after other allocations
+succeeded, we need to call vlan_dev_free_egress_priority()
+to free all allocated memory because after a failed ->newlink()
+we do not call any methods like ndo_uninit() or dev->priv_destructor().
+
+In following example, if the allocation for last element 2000:2001 fails,
+we need to free eight prior allocations:
+
+ip link add link dummy0 dummy0.100 type vlan id 100 \
+	egress-qos-map 1:2 2:3 3:4 4:5 5:6 6:7 7:8 8:9 2000:2001
+
+syzbot report was:
+
+BUG: memory leak
+unreferenced object 0xffff888117bd1060 (size 32):
+comm "syz-executor408", pid 3759, jiffies 4294956555 (age 34.090s)
+hex dump (first 32 bytes):
+09 00 00 00 00 a0 00 00 00 00 00 00 00 00 00 00 ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+backtrace:
+[<ffffffff83fc60ad>] kmalloc include/linux/slab.h:600 [inline]
+[<ffffffff83fc60ad>] vlan_dev_set_egress_priority+0xed/0x170 net/8021q/vlan_dev.c:193
+[<ffffffff83fc6628>] vlan_changelink+0x178/0x1d0 net/8021q/vlan_netlink.c:128
+[<ffffffff83fc67c8>] vlan_newlink+0x148/0x260 net/8021q/vlan_netlink.c:185
+[<ffffffff838b1278>] rtnl_newlink_create net/core/rtnetlink.c:3363 [inline]
+[<ffffffff838b1278>] __rtnl_newlink+0xa58/0xdc0 net/core/rtnetlink.c:3580
+[<ffffffff838b1629>] rtnl_newlink+0x49/0x70 net/core/rtnetlink.c:3593
+[<ffffffff838ac66c>] rtnetlink_rcv_msg+0x21c/0x5c0 net/core/rtnetlink.c:6089
+[<ffffffff839f9c37>] netlink_rcv_skb+0x87/0x1d0 net/netlink/af_netlink.c:2501
+[<ffffffff839f8da7>] netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+[<ffffffff839f8da7>] netlink_unicast+0x397/0x4c0 net/netlink/af_netlink.c:1345
+[<ffffffff839f9266>] netlink_sendmsg+0x396/0x710 net/netlink/af_netlink.c:1921
+[<ffffffff8384dbf6>] sock_sendmsg_nosec net/socket.c:714 [inline]
+[<ffffffff8384dbf6>] sock_sendmsg+0x56/0x80 net/socket.c:734
+[<ffffffff8384e15c>] ____sys_sendmsg+0x36c/0x390 net/socket.c:2488
+[<ffffffff838523cb>] ___sys_sendmsg+0x8b/0xd0 net/socket.c:2542
+[<ffffffff838525b8>] __sys_sendmsg net/socket.c:2571 [inline]
+[<ffffffff838525b8>] __do_sys_sendmsg net/socket.c:2580 [inline]
+[<ffffffff838525b8>] __se_sys_sendmsg net/socket.c:2578 [inline]
+[<ffffffff838525b8>] __x64_sys_sendmsg+0x78/0xf0 net/socket.c:2578
+[<ffffffff845ad8d5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+[<ffffffff845ad8d5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+[<ffffffff8460006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: 37aa50c539bc ("vlan: introduce vlan_dev_free_egress_priority")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/8021q/vlan_netlink.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+--- a/net/8021q/vlan_netlink.c
++++ b/net/8021q/vlan_netlink.c
+@@ -186,10 +186,14 @@ static int vlan_newlink(struct net *src_
+ 	else if (dev->mtu > max_mtu)
+ 		return -EINVAL;
+ 
++	/* Note: If this initial vlan_changelink() fails, we need
++	 * to call vlan_dev_free_egress_priority() to free memory.
++	 */
+ 	err = vlan_changelink(dev, tb, data, extack);
+-	if (err)
+-		return err;
+-	err = register_vlan_dev(dev, extack);
++
++	if (!err)
++		err = register_vlan_dev(dev, extack);
++
+ 	if (err)
+ 		vlan_dev_free_egress_priority(dev);
+ 	return err;
+
+
