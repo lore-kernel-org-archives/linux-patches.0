@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F07326B2B3;
-	Tue,  8 Apr 2025 12:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDCF269839;
+	Tue,  8 Apr 2025 12:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116201; cv=none; b=CbIx+fY2L/jCP4tJxxp1O6aNt/m3TTjOToMtS6QrtauGLsF/bWouD8YDnNaSZx3Fv7Hx5f2EJ64GzWR+FsBnVOUOIJG1bQYaXPjFSPMGdldTd3npEW+5U70oBHhIih/u3hQR4gjS1EiYWupx1G4tty3Bz9QmfvbjvIwtD7y9dHw=
+	t=1744116203; cv=none; b=MG+tFxr10vBJrVYJKhu1FsMANI3QlLXxFUNRCSKcIPlP0mz5BpkeGpsD8UZAFid6Fg6ZMGd2iUfotSIJB+RuYJYy4lcidc91xd1iUBHspycesgBAH35Hgl8x+NcRDl8paDBixhaV1lk2NysM4tFwZNOozIVdiw7NW+D3Ui9rnVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116201; c=relaxed/simple;
-	bh=sZYZEA0IwAl/j9SeMD4WpaqXe3jb/eJ2m7f/GROCPdA=;
+	s=arc-20240116; t=1744116203; c=relaxed/simple;
+	bh=TbMD1O2bNwuA0GuAdVKTOM4zy9X+GYomprMBwXglD2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4BZutSOKdRjPQiB3PsiYh3bCosWeXv309RUoGnOuXianRCd8V8BlUzMg/PuPkjfHyoQIs7p1gs2f2RAd55Qk5DRotFzTibSe65kabxjU34P9e4+cr9rI2o2BmVBv0BeoxmBak/HRH9Kj9vhW7x/7mFbxbFt0XB2nQWzlY1s4bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6u2LfUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WfaQxQ3HcSWPWjSSeabMT4t7qa3x13LIp8ov2OPEF34hrHMApHP4AB52+kkepElwB56bKr+TYpRy1QEPXqvyGJV3AkuNAGITZdFJUv1fPEI+wkocUlNPPfokw4j8x09dXBmV6hCaNjNDYybkK3UwY1bPXephQNyQFupE7Zb6O78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URFrSC92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6u2LfUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF656C4CEE5;
-	Tue,  8 Apr 2025 12:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URFrSC92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3D3C4CEE5;
+	Tue,  8 Apr 2025 12:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116201;
-	bh=sZYZEA0IwAl/j9SeMD4WpaqXe3jb/eJ2m7f/GROCPdA=;
+	s=korg; t=1744116203;
+	bh=TbMD1O2bNwuA0GuAdVKTOM4zy9X+GYomprMBwXglD2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6u2LfUor7mUoZni1SHfVjBZPe4XmHVKc9zsiLnoTKKF4BChdB3c5/cTyTWEHrT72
-	 JaaWwB8hFskRRzumuu1oC3pRy0vL9saT68/4mZ0r3t+Cs0jPbMiqxWxEBDxTXRd/2Q
-	 +q3hTODoPxQmcu8P0u/eKp724fDck/ER0RKKRou0=
+	b=URFrSC92ZMa6YKY4y4xNTg0g2sLz5dSg56t7pFnxVFMfOvRD31FJt0dHjzaAN8mL8
+	 ox9nLQuQIhQzUooaza2VXlAzkBuKfTILrrnkAYBS7A+2FeDiFB5RJlXI1fBDRIKwGX
+	 A6mGYhLnh5ayfsp3dDZnckIZioXeiNXO+DFFy15o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	zuoqian <zuoqian113@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/423] x86/platform: Only allow CONFIG_EISA for 32-bit
-Date: Tue,  8 Apr 2025 12:45:38 +0200
-Message-ID: <20250408104846.010239266@linuxfoundation.org>
+Subject: [PATCH 6.12 003/423] cpufreq: scpi: compare kHz instead of Hz
+Date: Tue,  8 Apr 2025 12:45:29 +0200
+Message-ID: <20250408104845.769701489@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: zuoqian <zuoqian113@gmail.com>
 
-[ Upstream commit 976ba8da2f3c2f1e997f4f620da83ae65c0e3728 ]
+[ Upstream commit 4742da9774a416908ef8e3916164192c15c0e2d1 ]
 
-The CONFIG_EISA menu was cleaned up in 2018, but this inadvertently
-brought the option back on 64-bit machines: ISA remains guarded by
-a CONFIG_X86_32 check, but EISA no longer depends on ISA.
+The CPU rate from clk_get_rate() may not be divisible by 1000
+(e.g., 133333333). But the rate calculated from frequency(kHz) is
+always divisible by 1000 (e.g., 133333000).
+Comparing the rate causes a warning during CPU scaling:
+"cpufreq: __target_index: Failed to change cpu frequency: -5".
+When we choose to compare kHz here, the issue does not occur.
 
-The last Intel machines ith EISA support used a 82375EB PCI/EISA bridge
-from 1993 that could be paired with the 440FX chipset on early Pentium-II
-CPUs, long before the first x86-64 products.
-
-Fixes: 6630a8e50105 ("eisa: consolidate EISA Kconfig entry in drivers/eisa")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250226213714.4040853-11-arnd@kernel.org
+Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
+Signed-off-by: zuoqian <zuoqian113@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/scpi-cpufreq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 6f8e9af827e0c..c915097d3b732 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -226,7 +226,7 @@ config X86
- 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI	if X86_64
- 	select HAVE_EBPF_JIT
- 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
--	select HAVE_EISA
-+	select HAVE_EISA			if X86_32
- 	select HAVE_EXIT_THREAD
- 	select HAVE_GUP_FAST
- 	select HAVE_FENTRY			if X86_64 || DYNAMIC_FTRACE
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index 8d73e6e8be2a5..f2d913a91be9e 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -39,8 +39,9 @@ static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
+ static int
+ scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
+ {
+-	u64 rate = policy->freq_table[index].frequency * 1000;
++	unsigned long freq_khz = policy->freq_table[index].frequency;
+ 	struct scpi_data *priv = policy->driver_data;
++	unsigned long rate = freq_khz * 1000;
+ 	int ret;
+ 
+ 	ret = clk_set_rate(priv->clk, rate);
+@@ -48,7 +49,7 @@ scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (clk_get_rate(priv->clk) != rate)
++	if (clk_get_rate(priv->clk) / 1000 != freq_khz)
+ 		return -EIO;
+ 
+ 	return 0;
 -- 
 2.39.5
 
