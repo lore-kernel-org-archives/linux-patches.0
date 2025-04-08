@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA7C26A0BD;
-	Tue,  8 Apr 2025 10:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BAD26A0BD;
+	Tue,  8 Apr 2025 10:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109985; cv=none; b=HNfisNbT77numuzeyRqM8Rtl4kwe1RcOoi3wtA8OorfW/Ro8oKAEpGE0cjdFH/B8UlRhVHZukCE3Qn7ed5vo8/j6oxFXKFic4fMhyWdxLgpfuWmq6BJNN8iCSbvwEa9u7vfiWzIoaF2H6o5hekfv+pGaJGLkwO9Sz8um39bSeWg=
+	t=1744109988; cv=none; b=Pez22hUb+c4z9TqjMzdG3jByQClAwwQ3QEDXoDJ5pHsoLt8Ck4tdupsC8IcHEsuLM7RtqB5zBQLlmOGcjhPXZ0BCqSstuDrHL12EOoO1OSuLaos+3zPLLdLUnQive/J1SxjtTNDKurD7zfuKGEIQsz/5xMLdyHd5qWr0056+BzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109985; c=relaxed/simple;
-	bh=ws+esh+ZQncNE8NKuDCVgipMYaxPvnqB8+Tan/SYWfk=;
+	s=arc-20240116; t=1744109988; c=relaxed/simple;
+	bh=/y70B390EbCbJIt1Ro/3jecALTHGOJrR/8lhVFuTLNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtcEofIb7i9FY1wTK0HDcF+z4lNzRfIY4JRqrprPOdjfFY+nDvlMrEuUI/BRCYaMiD5S23PRhe/t7VyaB/BMGCWCWTL200E7tRcx0p+tH42lVPv8dj9HOJx+nU8TLzmiZjFDvn3lSlCXQSFk1XRUS4905knJarBYa8WJ1WPin0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r38lwapn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZY6KteoL4rPBE9LNfp3baCUNsyH592T9OyETfHvsjRyTp+yIxTC74Imbv9okPpCSUhUdjvbSZB7dtGiFw+JyWZxmt4vCd+AhUQOM6RCdt8RSCTPtyKJHcDB0fuqXT2N6rb3riLktMaPnZhIe8G3AiV1z2uNqtvgbKBs5dahcrTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01BGXSTu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r38lwapn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABA2C4CEE5;
-	Tue,  8 Apr 2025 10:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01BGXSTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67BFC4CEE5;
+	Tue,  8 Apr 2025 10:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109985;
-	bh=ws+esh+ZQncNE8NKuDCVgipMYaxPvnqB8+Tan/SYWfk=;
+	s=korg; t=1744109988;
+	bh=/y70B390EbCbJIt1Ro/3jecALTHGOJrR/8lhVFuTLNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r38lwapn2XQl2hpNUtlwX/F6RU078H3kbzDvKcQtWvw858sFsGrxFvDIIi/e4qbSs
-	 FYdws5lKr/t4txm5+LfGU1PGusjmf4df0EBV8GCNoX8MVbG3o/pUihXpO8EoYbNTx2
-	 FwE8S78D6VNp+tJwv10GZGlZBUFRS85IDatjLlFE=
+	b=01BGXSTuzwulihLwG3qA3ysitgVfKda6Vb0tl0Gte82ZHdzu8fKhOSyni87JZbQEA
+	 aYi4/yluo41Vz5rZTQaM16YXXoLKB9KKL0dE4SWX8/QNgWr5ejodAj0RaSZZNOgi0j
+	 Nig6v/YZVN+lXnfSSNd6V+Q3PQ37dMMrKaT9Bcjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrik Jakobsson <pjakobsson@suse.de>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kiran K <kiran.k@intel.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 087/227] drm/amdgpu: Fix even more out of bound writes from debugfs
-Date: Tue,  8 Apr 2025 12:47:45 +0200
-Message-ID: <20250408104822.986184553@linuxfoundation.org>
+Subject: [PATCH 5.10 088/227] Bluetooth: hci_event: Align BR/EDR JUST_WORKS paring with LE
+Date: Tue,  8 Apr 2025 12:47:46 +0200
+Message-ID: <20250408104823.013270172@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,105 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 3f4e54bd312d3dafb59daf2b97ffa08abebe60f5 upstream.
+commit b25e11f978b63cb7857890edb3a698599cddb10e upstream.
 
-CVE-2021-42327 was fixed by:
+This aligned BR/EDR JUST_WORKS method with LE which since 92516cd97fd4
+("Bluetooth: Always request for user confirmation for Just Works")
+always request user confirmation with confirm_hint set since the
+likes of bluetoothd have dedicated policy around JUST_WORKS method
+(e.g. main.conf:JustWorksRepairing).
 
-commit f23750b5b3d98653b31d4469592935ef6364ad67
-Author: Thelford Williams <tdwilliamsiv@gmail.com>
-Date:   Wed Oct 13 16:04:13 2021 -0400
-
-    drm/amdgpu: fix out of bounds write
-
-but amdgpu_dm_debugfs.c contains more of the same issue so fix the
-remaining ones.
-
-v2:
-	* Add missing fix in dp_max_bpc_write (Harry Wentland)
-
-Fixes: 918698d5c2b5 ("drm/amd/display: Return the number of bytes parsed than allocated")
-Signed-off-by: Patrik Jakobsson <pjakobsson@suse.de>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+CVE: CVE-2024-8805
 Cc: stable@vger.kernel.org
-[ Cherry-pick the fix and drop the following functions which were introduced
-  since 5.13 or later: dp_max_bpc_write() was introduced in commit cca912e0a6b4
-  ("drm/amd/display: Add max bpc debugfs") dp_dsc_passthrough_set() was
-  introduced in commit fcd1e484c8ae ("drm/amd/display: Add debugfs entry for
-  dsc passthrough"). ]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Fixes: ba15a58b179e ("Bluetooth: Fix SSP acceptor just-works confirmation without MITM")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/bluetooth/hci_event.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -424,7 +424,7 @@ static ssize_t dp_phy_settings_write(str
- 	if (!wr_buf)
- 		return -ENOSPC;
- 
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					   (long *)param, buf,
- 					   max_param_num,
- 					   &param_nums)) {
-@@ -576,7 +576,7 @@ static ssize_t dp_phy_test_pattern_debug
- 	if (!wr_buf)
- 		return -ENOSPC;
- 
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					   (long *)param, buf,
- 					   max_param_num,
- 					   &param_nums)) {
-@@ -1091,7 +1091,7 @@ static ssize_t dp_trigger_hotplug(struct
- 		return -ENOSPC;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4751,19 +4751,16 @@ static void hci_user_confirm_request_evt
+ 		goto unlock;
  	}
  
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 						(long *)param, buf,
- 						max_param_num,
- 						&param_nums)) {
-@@ -1272,7 +1272,7 @@ static ssize_t dp_dsc_clock_en_write(str
- 		return -ENOSPC;
- 	}
+-	/* If no side requires MITM protection; auto-accept */
++	/* If no side requires MITM protection; use JUST_CFM method */
+ 	if ((!loc_mitm || conn->remote_cap == HCI_IO_NO_INPUT_OUTPUT) &&
+ 	    (!rem_mitm || conn->io_capability == HCI_IO_NO_INPUT_OUTPUT)) {
  
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					    (long *)param, buf,
- 					    max_param_num,
- 					    &param_nums)) {
-@@ -1426,7 +1426,7 @@ static ssize_t dp_dsc_slice_width_write(
- 		return -ENOSPC;
- 	}
- 
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					    (long *)param, buf,
- 					    max_param_num,
- 					    &param_nums)) {
-@@ -1580,7 +1580,7 @@ static ssize_t dp_dsc_slice_height_write
- 		return -ENOSPC;
- 	}
- 
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					    (long *)param, buf,
- 					    max_param_num,
- 					    &param_nums)) {
-@@ -1727,7 +1727,7 @@ static ssize_t dp_dsc_bits_per_pixel_wri
- 		return -ENOSPC;
- 	}
- 
--	if (parse_write_buffer_into_params(wr_buf, size,
-+	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
- 					    (long *)param, buf,
- 					    max_param_num,
- 					    &param_nums)) {
+-		/* If we're not the initiators request authorization to
+-		 * proceed from user space (mgmt_user_confirm with
+-		 * confirm_hint set to 1). The exception is if neither
+-		 * side had MITM or if the local IO capability is
+-		 * NoInputNoOutput, in which case we do auto-accept
++		/* If we're not the initiator of request authorization and the
++		 * local IO capability is not NoInputNoOutput, use JUST_WORKS
++		 * method (mgmt_user_confirm with confirm_hint set to 1).
+ 		 */
+ 		if (!test_bit(HCI_CONN_AUTH_PEND, &conn->flags) &&
+-		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT &&
+-		    (loc_mitm || rem_mitm)) {
++		    conn->io_capability != HCI_IO_NO_INPUT_OUTPUT) {
+ 			BT_DBG("Confirming auto-accept as acceptor");
+ 			confirm_hint = 1;
+ 			goto confirm;
 
 
