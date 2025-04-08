@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7DA26A1A7;
-	Tue,  8 Apr 2025 12:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC1C26A1A7;
+	Tue,  8 Apr 2025 12:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116891; cv=none; b=M/DiAZJv6crbX+4l9ZKzh6BYWzdBK0j8HD5XEFIbl4xp/Dwfu415zmgZKpQU5ecYQbcVGeTC31U8mXFNq55XIocdomb/jDYFkuwIKFE6WAS+d39LbI4kg0wK1c7fx0RF3y3nc29PjOnfdBIQibb+2mjsV00LboxF3ebKg8pjh1M=
+	t=1744116894; cv=none; b=EBj1FSqV1NYVgEKOEuH4MVTQZpRqIDFE2Ms470yDwUPW2tprPr+Coq5hgfKaoQRZKAV1enVTZANGNZIQvMf86pWWafDVYMgj3Hv1LGvJRP2Fcn2NR3i287VbYbd/VVw67Xwc03sWlccY29iklLf1585904Awh9cCBCiyl9kNhCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116891; c=relaxed/simple;
-	bh=atHY5jlwUd64cVBrkA4z5dUbAL3LqtIoa8cYEuBeKk4=;
+	s=arc-20240116; t=1744116894; c=relaxed/simple;
+	bh=3UHvLcCWImW5DOlQU1lql1gTwZKTxVQoxS4UtahUO/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVdpjUWoxa1EIGWKH8oht3yN1vvv9ueOysQYL8gTE5eLTJbBbLkEcC136wkU2cyMYCVjC0iN6pXAFE7/O/Ni9VSjGPwhUTq60Wd200uVJ55gvfU45K2TXIlHyxcnzbaCa+BVMwHhya/FiN8ybeKhhlVlchoPH/cvTR9cLPYd5Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7vFRLys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cz0qHp4PW6wKNt2230Sb7CM74KXNOIwDPrfyrm9OfCeToa20+gu13oAT6aanP5RT6I5uzD/g93dX9kLLqhvjKTpQUPMV8T4I6tcfLjFB/ci9KuO0SA4fiRdBZ7Wc5a0ac78IB+lNau/8K4YcgfANtnziJemb2iCXQkQZ8h4X/LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHNAk/9m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7vFRLys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5232FC4CEE5;
-	Tue,  8 Apr 2025 12:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHNAk/9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F30C4CEE5;
+	Tue,  8 Apr 2025 12:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116891;
-	bh=atHY5jlwUd64cVBrkA4z5dUbAL3LqtIoa8cYEuBeKk4=;
+	s=korg; t=1744116894;
+	bh=3UHvLcCWImW5DOlQU1lql1gTwZKTxVQoxS4UtahUO/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7vFRLysVlcmi1B6yzh7m6NB4EY7WPzZ7Dh2eYhALvEtIhBlBdFdV5dbnmeQ4KYD7
-	 Tt/J14th2svDrtVLgc6L5hk6CU8xciRyaYBb0i38GLqN3/ttp+JHjxqX/s45GyceQd
-	 pl+EmBhUS20jMov8MW2RjJ4k/Iab2cIU6jyKTqC8=
+	b=OHNAk/9mskz7QmNrrpt6vpzBiqd5DaR/yI7ecBUzDZG71f6Bs+uyw0ORKs2f0U02Q
+	 E4ZDcDqxdkj0zOSDPx6LSpVeINkszSWg2H/YHjS5fGSUIeiuTyZLpYdYCUN8QS86VW
+	 A0ZNthQ8rRkrytT6+U7a3igLnF84YfNErRYMFenU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 268/423] cifs: fix incorrect validation for num_aces field of smb_acl
-Date: Tue,  8 Apr 2025 12:49:54 +0200
-Message-ID: <20250408104851.997702782@linuxfoundation.org>
+Subject: [PATCH 6.12 259/423] nvme-pci: clean up CMBMSC when registering CMB fails
+Date: Tue,  8 Apr 2025 12:49:45 +0200
+Message-ID: <20250408104851.777688883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,52 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit aa2a739a75ab6f24ef72fb3fdb9192c081eacf06 ]
+[ Upstream commit 6a3572e10f740acd48e2713ef37e92186a3ce5e8 ]
 
-parse_dcal() validate num_aces to allocate ace array.
+CMB decoding should get disabled when the CMB block isn't successfully
+registered to P2P DMA subsystem.
 
-f (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
+Clean up the CMBMSC register in this error handling codepath to disable
+CMB decoding (and CMBLOC/CMBSZ registers).
 
-It is an incorrect validation that we can create an array of size ULONG_MAX.
-smb_acl has ->size field to calculate actual number of aces in response buffer
-size. Use this to check invalid num_aces.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index 1f036169fb582..e36f0e2d7d21e 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -778,7 +778,8 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 	}
- 
- 	/* validate that we do not go past end of acl */
--	if (end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
-+	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
-+	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
- 		cifs_dbg(VFS, "ACL too small to parse DACL\n");
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 1d3205f08af84..84c0611697a9b 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2005,6 +2005,7 @@ static void nvme_map_cmb(struct nvme_dev *dev)
+ 	if (pci_p2pdma_add_resource(pdev, bar, size, offset)) {
+ 		dev_warn(dev->ctrl.device,
+ 			 "failed to register the CMB\n");
++		hi_lo_writeq(0, dev->bar + NVME_REG_CMBMSC);
  		return;
  	}
-@@ -799,8 +800,11 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 	if (num_aces > 0) {
- 		umode_t denied_mode = 0;
  
--		if (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
-+		if (num_aces > (le16_to_cpu(pdacl->size) - sizeof(struct smb_acl)) /
-+				(offsetof(struct smb_ace, sid) +
-+				 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
- 			return;
-+
- 		ppace = kmalloc_array(num_aces, sizeof(struct smb_ace *),
- 				      GFP_KERNEL);
- 		if (!ppace)
 -- 
 2.39.5
 
