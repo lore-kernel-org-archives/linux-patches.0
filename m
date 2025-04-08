@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6386325FA13;
-	Tue,  8 Apr 2025 11:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D0425FA13;
+	Tue,  8 Apr 2025 11:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112602; cv=none; b=uu8kQTNOke9SDbyWAShwhTvQmWfVW+/LRPTyJxxoddDH5eelwFz+1yvKFJhlx1MLOBPKC5I0+Z1Bb+OjiFQ/PJrLHUN6Qh9I0h/MtNFxFbt7Lp5/9KuROcPTI0IBvUhgme/Q+rEgYKRb48MbLrgm2ICe3ou8prdRH02j200Dql0=
+	t=1744112605; cv=none; b=tNSXuN6MjTeieYnfXGP1VECup4+yV74sj81UBWyqn/Fh0hQKZ6zK1Bxpag69RJYnkWGbs6/6hzBoRzW8GFHjNzz5L/98W1O7GYGqvBx6wFcG7V87/bLCaNqOHYgUHX2WgS5JYM/u9tLAhXZG7opRZZUUr11JEbAMkBdZIEGvkdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112602; c=relaxed/simple;
-	bh=kgZqzbBY05d7ztVooAdmkkeei0L3JIVmJuXifYY2W5o=;
+	s=arc-20240116; t=1744112605; c=relaxed/simple;
+	bh=EUn3Q+LcK6Q/mDg2n2gqoog/YCRav3sTYV4/THZjMrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwho7wzwOzoAQsCGGaYcFUhfXO2uZb9tywjUDHqMO95PwLy527PiRG9ykKpUBWC2H7EBf9LDO+cPAFBbARF+6I9Fplbb6nnim8V84Zq5BAf8hVnJPnt4JyQjWOeABU4J3MUKFjeC0EVLiNeBaCxXyCuwNG3IgIjGdeNTEEOyTBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4SOax1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hAY28umsTL15zJYmDhWig6372tp+0aK/YAAaeuTbM9xlCXZxrnc+2GCbbyeOsKOHZSd+GDrEPPLLYITKb78QSlOIdrDzvZby12IPx4XKtZxYwQwmJvqHTMzdegsu2fRgz/BemBZh0r0mZxTfP9DM3G7AyqLxa5Rme35O9tdvnhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5iSfF4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4SOax1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CE9C4CEE5;
-	Tue,  8 Apr 2025 11:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5iSfF4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99276C4CEE5;
+	Tue,  8 Apr 2025 11:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112602;
-	bh=kgZqzbBY05d7ztVooAdmkkeei0L3JIVmJuXifYY2W5o=;
+	s=korg; t=1744112605;
+	bh=EUn3Q+LcK6Q/mDg2n2gqoog/YCRav3sTYV4/THZjMrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4SOax1uHaom84fNPvyyZ0fJ8Anw+8qf+G6hakPLlSXYcqwxwEvH6iGHxvOsPjwUN
-	 s7cHLEld0fjLuzOKtTuQaHzjKBf/4h8VqbLr5moi/XYBySWNeFnvS4fzxlO0GKPuWC
-	 2Co/uX5rI1dbh1bkfi8+IC/lvEquw/hC1U/Enu3w=
+	b=w5iSfF4NE5CBGgsst9VOJX+dUPa8t1Rt0pqbZOk8n5EZE3mWQVRQ+UqBm1T+QU4Pv
+	 Io/AbVMBdH0cuUXZZJdwBYavFpoO3R56bluT6D5lM6SyN4WkH9iku2WheFeDtjsQGX
+	 X78S/luXGe01OqPVBgz/A87v+QyaorZtrAHBkD0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 122/279] net: usb: qmi_wwan: add Telit Cinterion FN990B composition
-Date: Tue,  8 Apr 2025 12:48:25 +0200
-Message-ID: <20250408104829.641228561@linuxfoundation.org>
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 131/279] cpufreq: governor: Fix negative idle_time handling in dbs_update()
+Date: Tue,  8 Apr 2025 12:48:34 +0200
+Message-ID: <20250408104829.877316590@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,70 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Jie Zhan <zhanjie9@hisilicon.com>
 
-commit 9dba9a45f8ca64a7df32aada14c20a3153af1ac8 upstream.
+[ Upstream commit 3698dd6b139dc37b35a9ad83d9330c1f99666c02 ]
 
-Add the following Telit Cinterion FN990B composition:
+We observed an issue that the CPU frequency can't raise up with a 100% CPU
+load when NOHZ is off and the 'conservative' governor is selected.
 
-0x10d0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
-        tty (diag) + DPL + QDSS (Qualcomm Debug SubSystem) + adb
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10d0 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN990
-S:  SerialNumber=43b38f19
-C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+'idle_time' can be negative if it's obtained from get_cpu_idle_time_jiffy()
+when NOHZ is off.  This was found and explained in commit 9485e4ca0b48
+("cpufreq: governor: Fix handling of special cases in dbs_update()").
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Link: https://patch.msgid.link/20250205171649.618162-3-fabio.porcedda@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, commit 7592019634f8 ("cpufreq: governors: Fix long idle detection
+logic in load calculation") introduced a comparison between 'idle_time' and
+'samling_rate' to detect a long idle interval.  While 'idle_time' is
+converted to int before comparison, it's actually promoted to unsigned
+again when compared with an unsigned 'sampling_rate'.  Hence, this leads to
+wrong idle interval detection when it's in fact 100% busy and sets
+policy_dbs->idle_periods to a very large value.  'conservative' adjusts the
+frequency to minimum because of the large 'idle_periods', such that the
+frequency can't raise up.  'Ondemand' doesn't use policy_dbs->idle_periods
+so it fortunately avoids the issue.
+
+Correct negative 'idle_time' to 0 before any use of it in dbs_update().
+
+Fixes: 7592019634f8 ("cpufreq: governors: Fix long idle detection logic in load calculation")
+Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://patch.msgid.link/20250213035510.2402076-1-zhanjie9@hisilicon.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/cpufreq_governor.c | 45 +++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1370,6 +1370,7 @@ static const struct usb_device_id produc
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10d0, 0)}, /* Telit FN990B */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
+index 55c80319d2684..5981e3ef9ce0e 100644
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -145,7 +145,23 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 		time_elapsed = update_time - j_cdbs->prev_update_time;
+ 		j_cdbs->prev_update_time = update_time;
+ 
+-		idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
++		/*
++		 * cur_idle_time could be smaller than j_cdbs->prev_cpu_idle if
++		 * it's obtained from get_cpu_idle_time_jiffy() when NOHZ is
++		 * off, where idle_time is calculated by the difference between
++		 * time elapsed in jiffies and "busy time" obtained from CPU
++		 * statistics.  If a CPU is 100% busy, the time elapsed and busy
++		 * time should grow with the same amount in two consecutive
++		 * samples, but in practice there could be a tiny difference,
++		 * making the accumulated idle time decrease sometimes.  Hence,
++		 * in this case, idle_time should be regarded as 0 in order to
++		 * make the further process correct.
++		 */
++		if (cur_idle_time > j_cdbs->prev_cpu_idle)
++			idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
++		else
++			idle_time = 0;
++
+ 		j_cdbs->prev_cpu_idle = cur_idle_time;
+ 
+ 		if (ignore_nice) {
+@@ -162,7 +178,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			 * calls, so the previous load value can be used then.
+ 			 */
+ 			load = j_cdbs->prev_load;
+-		} else if (unlikely((int)idle_time > 2 * sampling_rate &&
++		} else if (unlikely(idle_time > 2 * sampling_rate &&
+ 				    j_cdbs->prev_load)) {
+ 			/*
+ 			 * If the CPU had gone completely idle and a task has
+@@ -189,30 +205,15 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			load = j_cdbs->prev_load;
+ 			j_cdbs->prev_load = 0;
+ 		} else {
+-			if (time_elapsed >= idle_time) {
++			if (time_elapsed > idle_time)
+ 				load = 100 * (time_elapsed - idle_time) / time_elapsed;
+-			} else {
+-				/*
+-				 * That can happen if idle_time is returned by
+-				 * get_cpu_idle_time_jiffy().  In that case
+-				 * idle_time is roughly equal to the difference
+-				 * between time_elapsed and "busy time" obtained
+-				 * from CPU statistics.  Then, the "busy time"
+-				 * can end up being greater than time_elapsed
+-				 * (for example, if jiffies_64 and the CPU
+-				 * statistics are updated by different CPUs),
+-				 * so idle_time may in fact be negative.  That
+-				 * means, though, that the CPU was busy all
+-				 * the time (on the rough average) during the
+-				 * last sampling interval and 100 can be
+-				 * returned as the load.
+-				 */
+-				load = (int)idle_time < 0 ? 100 : 0;
+-			}
++			else
++				load = 0;
++
+ 			j_cdbs->prev_load = load;
+ 		}
+ 
+-		if (unlikely((int)idle_time > 2 * sampling_rate)) {
++		if (unlikely(idle_time > 2 * sampling_rate)) {
+ 			unsigned int periods = idle_time / sampling_rate;
+ 
+ 			if (periods < idle_periods)
+-- 
+2.39.5
+
 
 
