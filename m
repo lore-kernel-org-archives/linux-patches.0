@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058DC1FBCB2;
-	Tue,  8 Apr 2025 11:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6186268FCC;
+	Tue,  8 Apr 2025 11:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110319; cv=none; b=s0z1rBodp5hi7b0qBf44Ukj9AFjzWZGUUed1w/HiQCbTrPFTy/zyYMlBrwnrsjPNmPX4z0gP3hhi+zNdGLGoRkpfBIwURXxZ/CJVH7F7Y1rOuCFrlZqSd3WjgouBOw9KXdUnRZqB+gIWcopTZbjUXav9tFWuxd8Z/e9IAs0Dsak=
+	t=1744110321; cv=none; b=OZoKiJbz74JUnF6kOPpp7ThrC50BYGzQem32zGZ2eYJWsF1KTbiZRZJ/nIlnMQ5wviNt8xFXf8oyx+5lC3c6mDTPNCf88tIU7idbVcA+gNSlWYnyPx2wfXNcOvrOFoRHjlkoou9h8P7ymfwQywrYmeiaozEoRavBFHgrvPkmOeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110319; c=relaxed/simple;
-	bh=Q3M+z7G1RC06ZbNuPrGbHJQJMKPStv4Ql4+mgKvpazY=;
+	s=arc-20240116; t=1744110321; c=relaxed/simple;
+	bh=dD+lnyFgyjPWCOe5F8Dz7vGyEf4xKD7LfuT1yIm7MY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHB0eBswOh6JqeEQofeODX2CEV5aLlFVGXLT5p3zeM/vfOwe2uLc1HJxRRf+XLF9XfEL4Zn/Qom8dvzt1+1KQFpyDLUPqWu9bclQcgkb3gJFUi1rZC7GKS33eamrTvDNAtcVnF44tmbVZ/4h9ZlQWn327DIeHaXig7diNJixdgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGuB9Ynp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j0hnOPEOWvYS0cfxqYj2hrIAeC6HhhIt0nt/4M1gzDvw58hHMwtmE8hZyhFD+yngrZoooOOyPwnA+rTqi5gnt7J5EzRJZicrNf0klEpehgDPw7SYmoWKcLYnqJ+BwIi1gFVTbZU1pEe824it09BCITGx7HEN9ojGuNCALcnh0/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZSrmqMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGuB9Ynp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88025C4CEE5;
-	Tue,  8 Apr 2025 11:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZSrmqMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF37C4CEE5;
+	Tue,  8 Apr 2025 11:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110318;
-	bh=Q3M+z7G1RC06ZbNuPrGbHJQJMKPStv4Ql4+mgKvpazY=;
+	s=korg; t=1744110321;
+	bh=dD+lnyFgyjPWCOe5F8Dz7vGyEf4xKD7LfuT1yIm7MY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGuB9YnpfgXUBwDYNOZK75sZyB9xKTLp0+GG5OtebE3FpcFSnbQ+GRW/6mX8w3P9h
-	 Y4TxhHpsYakrN16aygY5ZA2qdHe08GwkFBiq4bopLf+KiSmNHI1kru13PIE65iK4eE
-	 +msOp312eBtVQVLTc6VQJjGUfhwy6hzByr3fjvtI=
+	b=1ZSrmqMvZlKgVzpb4MKwAKTe11p4cva00h84Jw2ii0/QvuFY/OHvTKmkQYg7n0DNm
+	 RhdEO6rgdyS6zON6+e0JP5iaKqSXa/CIDqT9LIZKaL4WRWNTT0r+DLa9RXGSKjXeZQ
+	 z8E69/yHRG5CVeRH1jDxumXMK8iQ9uYNIOOYNzAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <dhananjay.ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 020/731] cpufreq/amd-pstate: Add missing NULL ptr check in amd_pstate_update
-Date: Tue,  8 Apr 2025 12:38:37 +0200
-Message-ID: <20250408104914.735342054@linuxfoundation.org>
+Subject: [PATCH 6.14 021/731] x86/fpu: Avoid copying dynamic FP state from init_task in arch_dup_task_struct()
+Date: Tue,  8 Apr 2025 12:38:38 +0200
+Message-ID: <20250408104914.759412814@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,37 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhananjay Ugwekar <dhananjay.ugwekar@amd.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 426db24d4db2e4f0d6720aeb7795eafcb9e82640 ]
+[ Upstream commit 5d3b81d4d8520efe888536b6906dc10fd1a228a8 ]
 
-Check if policy is NULL before dereferencing it in amd_pstate_update.
+The init_task instance of struct task_struct is statically allocated and
+may not contain the full FP state for userspace. As such, limit the copy
+to the valid area of both init_task and 'dst' and ensure all memory is
+initialized.
 
-Fixes: e8f555daacd3 ("cpufreq/amd-pstate: fix setting policy current frequency value")
-Signed-off-by: Dhananjay Ugwekar <dhananjay.ugwekar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://lore.kernel.org/r/20250205112523.201101-11-dhananjay.ugwekar@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Note that the FP state is only needed for userspace, and as such it is
+entirely reasonable for init_task to not contain parts of it.
+
+Fixes: 5aaeb5c01c5b ("x86/fpu, sched: Introduce CONFIG_ARCH_WANTS_DYNAMIC_TASK_STRUCT and use it on x86")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250226133136.816901-1-benjamin@sipsolutions.net
+----
+
+v2:
+- Fix code if arch_task_struct_size < sizeof(init_task) by using
+  memcpy_and_pad.
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/process.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 32f1b659904bc..bd63837eabb4e 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -538,6 +538,9 @@ static void amd_pstate_update(struct amd_cpudata *cpudata, u8 min_perf,
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpudata->cpu);
- 	u8 nominal_perf = READ_ONCE(cpudata->nominal_perf);
- 
-+	if (!policy)
-+		return;
+diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+index 6da6769d7254a..7cb52f84cb0c2 100644
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -93,7 +93,12 @@ EXPORT_PER_CPU_SYMBOL_GPL(__tss_limit_invalid);
+  */
+ int arch_dup_task_struct(struct task_struct *dst, struct task_struct *src)
+ {
+-	memcpy(dst, src, arch_task_struct_size);
++	/* init_task is not dynamically sized (incomplete FPU state) */
++	if (unlikely(src == &init_task))
++		memcpy_and_pad(dst, arch_task_struct_size, src, sizeof(init_task), 0);
++	else
++		memcpy(dst, src, arch_task_struct_size);
 +
- 	des_perf = clamp_t(u8, des_perf, min_perf, max_perf);
- 
- 	max_freq = READ_ONCE(cpudata->max_limit_freq);
+ #ifdef CONFIG_VM86
+ 	dst->thread.vm86 = NULL;
+ #endif
 -- 
 2.39.5
 
