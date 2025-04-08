@@ -1,39 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1255C267F57;
-	Tue,  8 Apr 2025 12:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CCE26A0A2;
+	Tue,  8 Apr 2025 12:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114832; cv=none; b=fOW4Spgmj0jQ0/aNAMg5evBZwjLXt1WSobtzMhuCutVujTc1sXVTAE/UfIoJibYllaBUgUgrTwPzpIaGAYNddvC5KhSO2a2CmSFPeX9DGhhx0VXxLnzBjHqzFbh8Fgd9dL/xiY+SVW2HUH0lwkUPuiQA7K8xY6SzBbVMtJu83Wo=
+	t=1744114834; cv=none; b=g0ATYBWIZvdMvSYKJA/k2dGATYdd9Fsq/B7rPAdAhohc1E4ijBq5QVPM1cPkiBnifKIjVJM1Y34HIzDnpYvhEMOm6cV7LTwDxsxH7ieFkv3qQIPOaoZH6+KaxrPVTVp9+nWLqphcGauYJrSHpw2j8SMIGP+RoReBaPj7oP11O6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114832; c=relaxed/simple;
-	bh=mVRiIu7rATxF2RmHwJ8fSHPxCt0VP0raxLgmIGjw708=;
+	s=arc-20240116; t=1744114834; c=relaxed/simple;
+	bh=KpdBIAO/8ajaWeVRNAlW3sMw6rrJwQwHNzrEYPXsiEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jryj5FLiCffy3s+yoBtOQs+RNnR2kDzvNZL8ocYFGuX7m3SUC9LRGSEW9eQutNO2j3oNIKfc/j5URiKngoDtKHD+urbblaqSY+eIuQsInzuPmxlcBgusRTJg006PMtUAqM39PFgsXfOYLKRYaAX0js8dR4ucIM1X6GbmoYCt+8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPttrLXt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L9UivnoB2Qe9gywagYCtfHcxud70oQgFXW0Ior9J2dZqrcgIbXKrBX3X+k5sr166YsY6WDIzR2NkK5WjYeMaUmBj2+kUtZigORaHCXi/BdpNxzxitgb45CwomT5lsSzFtAdDpa4fhcNt9IF+d+ebFqT7q9Ua3lBP2uAFTqXmx6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUVipLzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPttrLXt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BB6C4CEE5;
-	Tue,  8 Apr 2025 12:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUVipLzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A7EC4CEE5;
+	Tue,  8 Apr 2025 12:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114831;
-	bh=mVRiIu7rATxF2RmHwJ8fSHPxCt0VP0raxLgmIGjw708=;
+	s=korg; t=1744114834;
+	bh=KpdBIAO/8ajaWeVRNAlW3sMw6rrJwQwHNzrEYPXsiEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPttrLXtUiyy9g2uwcvWyRu1HDako/1/FafBBPnvcszQTICbOV4F2fMTObH9OnDw0
-	 H6incGHEB+MS7KVxvRlzG/64GdcXr+NxQv3XFAIodW0VezS7hJst3r7fgwt+t7jzPv
-	 Fbyt8Nm9/ZNmjAseErBwS+CYi/P7G8kOaQ4x5xeo=
+	b=WUVipLzhXU4Gh0PH7HJjQomzetya9uIgxcenSBu6Vo5BQSc0hcldHIGq3Z89lMyu8
+	 LmSD6nkxCFyzmKJuz18Y+Rr2kzfm68aITy3GTwouVVbm6wsXwzm5ELj/7yQWH4WvO8
+	 Xo7c8BUvh0uoKY5Bl/MJ1d5BqgEJPaHzA6MGs7/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.com>,
-	NeilBrown <neilb@suse.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Asahi Lina <lina@asahilina.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	linmiaohe <linmiaohe@huawei.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	=?UTF-8?q?Michael=20 Camp=20Drill=20Sergeant =20Ellerman?= <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ted Tso <tytso@mit.edu>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 249/499] NFS: fix open_owner_id_maxsz and related fields.
-Date: Tue,  8 Apr 2025 12:47:41 +0200
-Message-ID: <20250408104857.424606435@linuxfoundation.org>
+Subject: [PATCH 6.13 250/499] fuse: fix dax truncate/punch_hole fault path
+Date: Tue,  8 Apr 2025 12:47:42 +0200
+Message-ID: <20250408104857.450449244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,98 +87,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Alistair Popple <apopple@nvidia.com>
 
-[ Upstream commit 43502f6e8d1e767d6736ea0676cc784025cf6eeb ]
+[ Upstream commit 7851bf649d423edd7286b292739f2eefded3d35c ]
 
-A recent change increased the size of an NFSv4 open owner, but didn't
-increase the corresponding max_sz defines.  This is not know to have
-caused failure, but should be fixed.
+Patch series "fs/dax: Fix ZONE_DEVICE page reference counts", v9.
 
-This patch also fixes some relates _maxsz fields that are wrong.
+Device and FS DAX pages have always maintained their own page reference
+counts without following the normal rules for page reference counting.  In
+particular pages are considered free when the refcount hits one rather
+than zero and refcounts are not added when mapping the page.
 
-Note that the XXX_owner_id_maxsz values now are only the size of the id
-and do NOT include the len field that will always preceed the id in xdr
-encoding.  I think this is clearer.
+Tracking this requires special PTE bits (PTE_DEVMAP) and a secondary
+mechanism for allowing GUP to hold references on the page (see
+get_dev_pagemap).  However there doesn't seem to be any reason why FS DAX
+pages need their own reference counting scheme.
 
-Reported-by: David Disseldorp <ddiss@suse.com>
-Fixes: d98f72272500 ("nfs: simplify and guarantee owner uniqueness.")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+By treating the refcounts on these pages the same way as normal pages we
+can remove a lot of special checks.  In particular pXd_trans_huge()
+becomes the same as pXd_leaf(), although I haven't made that change here.
+It also frees up a valuable SW define PTE bit on architectures that have
+devmap PTE bits defined.
+
+It also almost certainly allows further clean-up of the devmap managed
+functions, but I have left that as a future improvment.  It also enables
+support for compound ZONE_DEVICE pages which is one of my primary
+motivators for doing this work.
+
+This patch (of 20):
+
+FS DAX requires file systems to call into the DAX layout prior to
+unlinking inodes to ensure there is no ongoing DMA or other remote access
+to the direct mapped page.  The fuse file system implements
+fuse_dax_break_layouts() to do this which includes a comment indicating
+that passing dmap_end == 0 leads to unmapping of the whole file.
+
+However this is not true - passing dmap_end == 0 will not unmap anything
+before dmap_start, and further more dax_layout_busy_page_range() will not
+scan any of the range to see if there maybe ongoing DMA access to the
+range.  Fix this by passing -1 for dmap_end to fuse_dax_break_layouts()
+which will invalidate the entire file range to
+dax_layout_busy_page_range().
+
+Link: https://lkml.kernel.org/r/cover.8068ad144a7eea4a813670301f4d2a86a8e68ec4.1740713401.git-series.apopple@nvidia.com
+Link: https://lkml.kernel.org/r/f09a34b6c40032022e4ddee6fadb7cc676f08867.1740713401.git-series.apopple@nvidia.com
+Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Co-developed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Asahi Lina <lina@asahilina.net>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: linmiaohe <linmiaohe@huawei.com>
+Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Michael "Camp Drill Sergeant" Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/fuse/dax.c  | 1 -
+ fs/fuse/dir.c  | 2 +-
+ fs/fuse/file.c | 4 ++--
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index e8ac3f615f932..71f45cc0ca74d 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -82,9 +82,8 @@ static int decode_layoutget(struct xdr_stream *xdr, struct rpc_rqst *req,
-  * we currently use size 2 (u64) out of (NFS4_OPAQUE_LIMIT  >> 2)
-  */
- #define pagepad_maxsz		(1)
--#define open_owner_id_maxsz	(1 + 2 + 1 + 1 + 2)
--#define lock_owner_id_maxsz	(1 + 1 + 4)
--#define decode_lockowner_maxsz	(1 + XDR_QUADLEN(IDMAP_NAMESZ))
-+#define open_owner_id_maxsz	(2 + 1 + 2 + 2)
-+#define lock_owner_id_maxsz	(2 + 1 + 2)
- #define compound_encode_hdr_maxsz	(3 + (NFS4_MAXTAGLEN >> 2))
- #define compound_decode_hdr_maxsz	(3 + (NFS4_MAXTAGLEN >> 2))
- #define op_encode_hdr_maxsz	(1)
-@@ -185,7 +184,7 @@ static int decode_layoutget(struct xdr_stream *xdr, struct rpc_rqst *req,
- #define encode_claim_null_maxsz	(1 + nfs4_name_maxsz)
- #define encode_open_maxsz	(op_encode_hdr_maxsz + \
- 				2 + encode_share_access_maxsz + 2 + \
--				open_owner_id_maxsz + \
-+				1 + open_owner_id_maxsz + \
- 				encode_opentype_maxsz + \
- 				encode_claim_null_maxsz)
- #define decode_space_limit_maxsz	(3)
-@@ -255,13 +254,14 @@ static int decode_layoutget(struct xdr_stream *xdr, struct rpc_rqst *req,
- #define encode_link_maxsz	(op_encode_hdr_maxsz + \
- 				nfs4_name_maxsz)
- #define decode_link_maxsz	(op_decode_hdr_maxsz + decode_change_info_maxsz)
--#define encode_lockowner_maxsz	(7)
-+#define encode_lockowner_maxsz	(2 + 1 + lock_owner_id_maxsz)
-+
- #define encode_lock_maxsz	(op_encode_hdr_maxsz + \
- 				 7 + \
- 				 1 + encode_stateid_maxsz + 1 + \
- 				 encode_lockowner_maxsz)
- #define decode_lock_denied_maxsz \
--				(8 + decode_lockowner_maxsz)
-+				(2 + 2 + 1 + 2 + 1 + lock_owner_id_maxsz)
- #define decode_lock_maxsz	(op_decode_hdr_maxsz + \
- 				 decode_lock_denied_maxsz)
- #define encode_lockt_maxsz	(op_encode_hdr_maxsz + 5 + \
-@@ -617,7 +617,7 @@ static int decode_layoutget(struct xdr_stream *xdr, struct rpc_rqst *req,
- 				 encode_lockowner_maxsz)
- #define NFS4_dec_release_lockowner_sz \
- 				(compound_decode_hdr_maxsz + \
--				 decode_lockowner_maxsz)
-+				 decode_release_lockowner_maxsz)
- #define NFS4_enc_access_sz	(compound_encode_hdr_maxsz + \
- 				encode_sequence_maxsz + \
- 				encode_putfh_maxsz + \
-@@ -1412,7 +1412,7 @@ static inline void encode_openhdr(struct xdr_stream *xdr, const struct nfs_opena
- 	__be32 *p;
-  /*
-  * opcode 4, seqid 4, share_access 4, share_deny 4, clientid 8, ownerlen 4,
-- * owner 4 = 32
-+ * owner 28
-  */
- 	encode_nfs4_seqid(xdr, arg->seqid);
- 	encode_share_access(xdr, arg->share_access);
-@@ -5077,7 +5077,7 @@ static int decode_link(struct xdr_stream *xdr, struct nfs4_change_info *cinfo)
- /*
-  * We create the owner, so we know a proper owner.id length is 4.
-  */
--static int decode_lock_denied (struct xdr_stream *xdr, struct file_lock *fl)
-+static int decode_lock_denied(struct xdr_stream *xdr, struct file_lock *fl)
+diff --git a/fs/fuse/dax.c b/fs/fuse/dax.c
+index 9abbc2f2894f9..455c4a16080bc 100644
+--- a/fs/fuse/dax.c
++++ b/fs/fuse/dax.c
+@@ -681,7 +681,6 @@ static int __fuse_dax_break_layouts(struct inode *inode, bool *retry,
+ 			0, 0, fuse_wait_dax_page(inode));
+ }
+ 
+-/* dmap_end == 0 leads to unmapping of whole file */
+ int fuse_dax_break_layouts(struct inode *inode, u64 dmap_start,
+ 				  u64 dmap_end)
  {
- 	uint64_t offset, length, clientid;
- 	__be32 *p;
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index b7944d8bfb171..faa182a5f4f67 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1937,7 +1937,7 @@ int fuse_do_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	if (FUSE_IS_DAX(inode) && is_truncate) {
+ 		filemap_invalidate_lock(mapping);
+ 		fault_blocked = true;
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err) {
+ 			filemap_invalidate_unlock(mapping);
+ 			return err;
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index d63e56fd3dd20..754378dd9f715 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -253,7 +253,7 @@ static int fuse_open(struct inode *inode, struct file *file)
+ 
+ 	if (dax_truncate) {
+ 		filemap_invalidate_lock(inode->i_mapping);
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err)
+ 			goto out_inode_unlock;
+ 	}
+@@ -3205,7 +3205,7 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
+ 	inode_lock(inode);
+ 	if (block_faults) {
+ 		filemap_invalidate_lock(inode->i_mapping);
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err)
+ 			goto out;
+ 	}
 -- 
 2.39.5
 
