@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5ED2A94A;
-	Tue,  8 Apr 2025 11:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCB72690DB;
+	Tue,  8 Apr 2025 11:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113121; cv=none; b=GWZhdOX13Qc8LcgroiyazekZAu3Y0LgQ6nXBuUujvp+5fxh2VT2Z9dGCbRUzuu6AdndkTv2sPU6m0oxjs3MwAZVlNaLGgm62SzlPLEnLdyoRmUooveIuHc+qKNdKltSRqNsY4ioGsKek6UD+IBohQBjMfKaaFyJF2bdA69lTbuk=
+	t=1744113124; cv=none; b=gEQDbkTVXJEu86L6uUkw0Ds7Ro9Fa5XbeKHEN0e6BMbFn+iJxwxFMfrxUL/jOEo0mHtnql5TmV8g2RemZAEVaSp6WPzd+gUw7jh3Mlh9RfWquMWMdj+qSdkAzP8Fkns9ulQgcIlKAxVXngUg9MiN3umAT2Kqd8ATVq5pwPcOUBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113121; c=relaxed/simple;
-	bh=zNM2MYYF86yrlPO02v4HuWdh0f+06DlMVOY2e/aXwSI=;
+	s=arc-20240116; t=1744113124; c=relaxed/simple;
+	bh=xn6NZmAjeh8dnIKS9Cz9YLAJ9J+XT7FaW7dB2Tuce+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwo+boPSyyDf2Pdl7n3p0ertVCKOpKlqP6n+RF1FzY/UH5W953IwDZoRUYOnIPg8ZGO+1vFS+2t4Er0MUG3NNfStXZQriTxcQMV1JvyMSbEI7tVJXQZtgq4aUNkhBJ63izoYULEg0+4SkDbTk9oTmn36K+/JbPh2L2IVQBYi9+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDehPF8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSRXx1+JZSzMun80zaWA72PiMgMykHNJ3ZO9hOVLLlgjVAewLHANKXuj4RsCTMeRZxX/G48jiVl69nJlNQdebyVsP/Zql4YdfeLg6B03YUQgwhGjAsu5dco6XCv4x7vRnP1JvIRcgs1ZxO/ljjrh80HhlJItHEBts4Xwxhcnrf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIm4Exgs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDehPF8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7643BC4CEE5;
-	Tue,  8 Apr 2025 11:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIm4Exgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CC4C4CEE7;
+	Tue,  8 Apr 2025 11:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113120;
-	bh=zNM2MYYF86yrlPO02v4HuWdh0f+06DlMVOY2e/aXwSI=;
+	s=korg; t=1744113123;
+	bh=xn6NZmAjeh8dnIKS9Cz9YLAJ9J+XT7FaW7dB2Tuce+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDehPF8pEAFFJ4Qx/loz6P4rySXRDgjiDZdv4gqcoE3IC/VVDsooLBLm2qkSY/zBa
-	 V7tQkh2AFrLLvI56CIoY+Y3bkAToOJZ1qRC9Lbs71wtQaMaJeAWk8olCLvXLZ5F2nB
-	 VpEqZSdZ/T8WI5jnJbTxyhz3GHxMZXFC/V8nTmM8=
+	b=JIm4ExgspxwDxqXXyq/A2joEgRXNVt6OMaWSkUiZiei4dw+3dXmP0Q/wiLcKa56Ck
+	 ilu/5aVNWLi91PtQfdn7OyObgsYGphoTXZEzr3hWh7gWQkpbpu+3x0u9xwJHbpypHh
+	 M6KDvA+leekVdaAk+mD/WcPaeJcPaLdmhwoou9tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/268] media: verisilicon: HEVC: Initialize start_bit field
-Date: Tue,  8 Apr 2025 12:47:15 +0200
-Message-ID: <20250408104829.160227846@linuxfoundation.org>
+Subject: [PATCH 6.6 042/268] drm/msm/dsi: Use existing per-interface slice count in DSC timing
+Date: Tue,  8 Apr 2025 12:47:33 +0200
+Message-ID: <20250408104829.639657788@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -53,38 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 7fcb42b3835e90ef18d68555934cf72adaf58402 ]
+[ Upstream commit 14ad809ceb66d0874cbe4bd5ca9edf0de8d9ad96 ]
 
-The HEVC driver needs to set the start_bit field explicitly to avoid
-causing corrupted frames when the VP9 decoder is used in parallel. The
-reason for this problem is that the VP9 and the HEVC decoder share this
-register.
+When configuring the timing of DSI hosts (interfaces) in
+dsi_timing_setup() all values written to registers are taking
+bonded-mode into account by dividing the original mode width by 2
+(half the data is sent over each of the two DSI hosts), but the full
+width instead of the interface width is passed as hdisplay parameter to
+dsi_update_dsc_timing().
 
-Fixes: cb5dd5a0fa51 ("media: hantro: Introduce G2/HEVC decoder")
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Currently only msm_dsc_get_slices_per_intf() is called within
+dsi_update_dsc_timing() with the `hdisplay` argument which clearly
+documents that it wants the width of a single interface (which, again,
+in bonded DSI mode is half the total width of the mode) resulting in all
+subsequent values to be completely off.
+
+However, as soon as we start to pass the halved hdisplay
+into dsi_update_dsc_timing() we might as well discard
+msm_dsc_get_slices_per_intf() since the value it calculates is already
+available in dsc->slice_count which is per-interface by the current
+design of MSM DPU/DSI implementations and their use of the DRM DSC
+helpers.
+
+Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/637648/
+Link: https://lore.kernel.org/r/20250217-drm-msm-initial-dualpipe-dsc-fixes-v3-1-913100d6103f@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c   |  8 ++++----
+ drivers/gpu/drm/msm/msm_dsc_helper.h | 11 -----------
+ 2 files changed, 4 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-index a9d4ac84a8d8d..d1971af5f7fa6 100644
---- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-@@ -517,6 +517,7 @@ static void set_buffers(struct hantro_ctx *ctx)
- 	hantro_reg_write(vpu, &g2_stream_len, src_len);
- 	hantro_reg_write(vpu, &g2_strm_buffer_len, src_buf_len);
- 	hantro_reg_write(vpu, &g2_strm_start_offset, 0);
-+	hantro_reg_write(vpu, &g2_start_bit, 0);
- 	hantro_reg_write(vpu, &g2_write_mvs_e, 1);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index f920329fe2e09..f90ccdfbb2fc7 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -825,7 +825,7 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+ 		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+ }
  
- 	hantro_write_addr(vpu, G2_TILE_SIZES_ADDR, ctx->hevc_dec.tile_sizes.dma);
+-static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
++static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode)
+ {
+ 	struct drm_dsc_config *dsc = msm_host->dsc;
+ 	u32 reg, reg_ctrl, reg_ctrl2;
+@@ -837,7 +837,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	/* first calculate dsc parameters and then program
+ 	 * compress mode registers
+ 	 */
+-	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
++	slice_per_intf = dsc->slice_count;
+ 
+ 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+ 	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
+@@ -948,7 +948,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ 	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+ 		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
++			dsi_update_dsc_timing(msm_host, false);
+ 
+ 		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+ 			DSI_ACTIVE_H_START(ha_start) |
+@@ -969,7 +969,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+ 	} else {		/* command mode */
+ 		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
++			dsi_update_dsc_timing(msm_host, true);
+ 
+ 		/* image data and 1 byte write_memory_start cmd */
+ 		if (!msm_host->dsc)
+diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+index b9049fe1e2790..63f95523b2cbb 100644
+--- a/drivers/gpu/drm/msm/msm_dsc_helper.h
++++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+@@ -12,17 +12,6 @@
+ #include <linux/math.h>
+ #include <drm/display/drm_dsc_helper.h>
+ 
+-/**
+- * msm_dsc_get_slices_per_intf() - calculate number of slices per interface
+- * @dsc: Pointer to drm dsc config struct
+- * @intf_width: interface width in pixels
+- * Returns: Integer representing the number of slices for the given interface
+- */
+-static inline u32 msm_dsc_get_slices_per_intf(const struct drm_dsc_config *dsc, u32 intf_width)
+-{
+-	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+-}
+-
+ /**
+  * msm_dsc_get_bytes_per_line() - calculate bytes per line
+  * @dsc: Pointer to drm dsc config struct
 -- 
 2.39.5
 
