@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60D26659C;
-	Tue,  8 Apr 2025 11:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B212C26659C;
+	Tue,  8 Apr 2025 11:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110142; cv=none; b=uEXlQJmv6CsvKVv4du3V0HZB0T6PD+d5CmNmidLqL/i3lDJzORjBJe+FJSMIr2284/sfU848TkKgFKW2SRHAVDLpYAyqnTQG81i+MGLiZ8ouVFe5ujwj0xTfoUOeTo4PKG/lIV2LKEe3Kgeiwn2u5P1q2BITMlaw4ichpUrYimo=
+	t=1744110145; cv=none; b=gH8+kAFAoDmSlIXLR1sqA+QyGOGPSuVyWYLnoAXwQCrAaC6vDdWC1YkV9NLGVsfpjeLx4Vgloc4sJ4RrP/1TXoFWfQOm3gER3lmL89R/o9El6UcuPAIGbzNkdQTSnG2l317Tq2ab0pyu8OJCwBTLY0aaprmrnZ0tTCKvjnjbebs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110142; c=relaxed/simple;
-	bh=0Heqv9WBCDjbFox2X+hF8w1BvsVLJghrwspv/TonC0w=;
+	s=arc-20240116; t=1744110145; c=relaxed/simple;
+	bh=JGz/HXFYDrSjfrtuWSpmb0ibhpKVogrT9TSeIanFqxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZEYmzk7xX5q2moirzICqz1drYI+QpD1lEzFZC8xt9/abd3Qde4cP1fAg/0WIlB4iH3m9fzS2FXqNmKmnvAUTv/ZppK1+sOoL31VRdHksBCGkMyE3rHIisgH99W631L2WTaS1EuaiVQ39Skcrsi1PFwADx/fWLzAM6kYkra79sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfRrbgdo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUsbRx/oL6Uouertd3EnqO5qU7zPrnIHQjC3tKM5Dg9xPIGQKYu6kBTed7tV7qPIVzHkztf3kMP2S7cBrHhYlc2qNVlw6/6rikxUS/FB7Nmh5r5LvBWVAosGJKDjsG20zSgyUoyJzCRP/Tova4/eR/AGYuGpb3nzPOLtnzGjKPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUCJgP7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfRrbgdo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E61CC4CEE5;
-	Tue,  8 Apr 2025 11:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUCJgP7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64B6C4CEE5;
+	Tue,  8 Apr 2025 11:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110142;
-	bh=0Heqv9WBCDjbFox2X+hF8w1BvsVLJghrwspv/TonC0w=;
+	s=korg; t=1744110145;
+	bh=JGz/HXFYDrSjfrtuWSpmb0ibhpKVogrT9TSeIanFqxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfRrbgdoz+X4eF7rRiRLHwQfqjCe6H4mrKciq+lTIZPGGrSC1QKUs87E9E9JzU9tS
-	 EKYJk0nMRVgFZLWM27ayrH53OG4d+zSniVExW7gOAk4QMZNOskLOpLVsVVAs80+5qg
-	 +g+GEpHqSJBuCFtQPLUDTmW37OFawtOHkfVuSsVI=
+	b=oUCJgP7YD2rtHpxlo3kx2a7QpDbH/N1GV7mOBIfHcYNN98TypCjvkGxhUe58TeY48
+	 4v6i62XV0H+i8EL5d+qFF8SbvGIA/9Q/tIlevBU6IElOP/AjRVfJGKX9cB4uxDFM0B
+	 bRuo0aS1HlxZRxvALN56n1W/B3iUJE4FvHU9EreQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Simon Tatham <anakin@pobox.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/227] nvme-pci: skip CMB blocks incompatible with PCI P2P DMA
-Date: Tue,  8 Apr 2025 12:49:22 +0200
-Message-ID: <20250408104825.828101601@linuxfoundation.org>
+Subject: [PATCH 5.10 185/227] affs: generate OFS sequence numbers starting at 1
+Date: Tue,  8 Apr 2025 12:49:23 +0200
+Message-ID: <20250408104825.856015276@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,66 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit 56cf7ef0d490b28fad8f8629fc135c5ab7c9f54e ]
+[ Upstream commit e4cf8ec4de4e13f156c1d61977d282d90c221085 ]
 
-The PCI P2PDMA code will register the CMB block to the memory
-hot-plugging subsystem, which have an alignment requirement. Memory
-blocks that do not satisfy this alignment requirement (usually 2MB) will
-lead to a WARNING from memory hotplugging.
+If I write a file to an OFS floppy image, and try to read it back on
+an emulated Amiga running Workbench 1.3, the Amiga reports a disk
+error trying to read the file. (That is, it's unable to read it _at
+all_, even to copy it to the NIL: device. It isn't a matter of getting
+the wrong data and being unable to parse the file format.)
 
-Verify the CMB block's address and size against the alignment and only
-try to send CMB blocks compatible with it to prevent this warning.
+This is because the 'sequence number' field in the OFS data block
+header is supposed to be based at 1, but affs writes it based at 0.
+All three locations changed by this patch were setting the sequence
+number to a variable 'bidx' which was previously obtained by dividing
+a file position by bsize, so bidx will naturally use 0 for the first
+block. Therefore all three should add 1 to that value before writing
+it into the sequence number field.
 
-Tested on Intel DC D4502 SSD, which has a 512K CMB block that is too
-small for memory hotplugging (thus PCI P2PDMA).
+With this change, the Amiga successfully reads the file.
 
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+For data block reference: https://wiki.osdev.org/FFS_(Amiga)
+
+Signed-off-by: Simon Tatham <anakin@pobox.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ fs/affs/file.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7993acdfd3185..a56baaafe79df 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1867,6 +1867,18 @@ static void nvme_map_cmb(struct nvme_dev *dev)
- 	if (offset > bar_size)
- 		return;
- 
-+	/*
-+	 * Controllers may support a CMB size larger than their BAR, for
-+	 * example, due to being behind a bridge. Reduce the CMB to the
-+	 * reported size of the BAR
-+	 */
-+	size = min(size, bar_size - offset);
-+
-+	if (!IS_ALIGNED(size, memremap_compat_align()) ||
-+	    !IS_ALIGNED(pci_resource_start(pdev, bar),
-+			memremap_compat_align()))
-+		return;
-+
- 	/*
- 	 * Tell the controller about the host side address mapping the CMB,
- 	 * and enable CMB decoding for the NVMe 1.4+ scheme:
-@@ -1877,14 +1889,6 @@ static void nvme_map_cmb(struct nvme_dev *dev)
- 			     dev->bar + NVME_REG_CMBMSC);
- 	}
- 
--	/*
--	 * Controllers may support a CMB size larger than their BAR,
--	 * for example, due to being behind a bridge. Reduce the CMB to
--	 * the reported size of the BAR
--	 */
--	if (size > bar_size - offset)
--		size = bar_size - offset;
--
- 	if (pci_p2pdma_add_resource(pdev, bar, size, offset)) {
- 		dev_warn(dev->ctrl.device,
- 			 "failed to register the CMB\n");
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index c3d89fa1bab77..7738fafcccfc1 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -597,7 +597,7 @@ affs_extent_file_ofs(struct inode *inode, u32 newsize)
+ 		BUG_ON(tmp > bsize);
+ 		AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 		AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
+ 		affs_fix_checksum(sb, bh);
+ 		bh->b_state &= ~(1UL << BH_New);
+@@ -747,7 +747,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		if (buffer_new(bh)) {
+ 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(bsize);
+ 			AFFS_DATA_HEAD(bh)->next = 0;
+ 			bh->b_state &= ~(1UL << BH_New);
+@@ -781,7 +781,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		if (buffer_new(bh)) {
+ 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
+ 			AFFS_DATA_HEAD(bh)->next = 0;
+ 			bh->b_state &= ~(1UL << BH_New);
 -- 
 2.39.5
 
