@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF89265630;
-	Tue,  8 Apr 2025 11:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616032690D5;
+	Tue,  8 Apr 2025 11:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110527; cv=none; b=cdlcKA8G4n0Yc5aBG0lIjUaK+XSkHc6SuEstsVOvvH73h7Gtr+QREpsGnZIjZgVVhBtFjxpmqCmM9imdaJp3pg+Rb24FRODvxAuf4NUZUodww+/u4mlTrf1PCyaRAKzeC9WCSKgJ5+mg02F3XEFJxImiQbavXKiaTzUiwzpAazI=
+	t=1744110530; cv=none; b=c6KGqOp2z1fJW/uyzwuQg5t1eheOtjDfViMe2gtMA3IVqvmOtlnXRbje0rs7z3366Va3nu7GsjSp6V5gYfUewc8GRYDSjyPfQScCua2jUyODBhrEzbmTixR3ae+pFOAjIjocQxEUQg0DIXcCei1FuC3gQLvr4sTJMnO326D9A+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110527; c=relaxed/simple;
-	bh=zypb4TLNtSBOwKK3aDnIvqKOj0jUfdLocz3lKlW55xs=;
+	s=arc-20240116; t=1744110530; c=relaxed/simple;
+	bh=S+OdsDACiLO4a9kq9TlDHcWF6dFhNKP4wI9nfmyCspU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BH5Ub8hcjvj2usDjA6meqOsJ96fg814G2eoxQFuAdqJvV8F1ObdPNE4AKBQbdIhj9zJi0a0iNV3qqvno/yJLsRDQGB6AkDSznKiTAJAE9r/WyFrbrhe0sYAMx4XSMe90P82RzzuBPtWe1c4aYeiZIYjC3UgW43nh0nGT2AIyaXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbJ2/o2B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQRLkZC6DO3TrHfDsgVIbV4wZbvqBQ/6urONMAQQFBXfat2n5CJAfQv3LvZRvS1t0sNiwwdgSSYgafNTKtf/Yz7s1FEGb1hvaJWYxiffeKlbIrrjzsYpX4+Y01Um51aFM1YDuToScGOenKSooafriNXuGHW8MTvLqx73kqtRgWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHJOVfOF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbJ2/o2B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6DEC4CEE7;
-	Tue,  8 Apr 2025 11:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHJOVfOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E67C4CEEA;
+	Tue,  8 Apr 2025 11:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110527;
-	bh=zypb4TLNtSBOwKK3aDnIvqKOj0jUfdLocz3lKlW55xs=;
+	s=korg; t=1744110530;
+	bh=S+OdsDACiLO4a9kq9TlDHcWF6dFhNKP4wI9nfmyCspU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbJ2/o2B7fyJeU+hT9RXxPcSIGk5fDKZlQk7A+QdJtbsPho1oDHyGogKLZBEJUWc9
-	 sbmxE9n3Dbh+6kZxgO008WrvuGP83rCmtmJgfw9MffELYNeAeVNNCUu3cEGTXZ5onx
-	 S4vvv1AjZ0DkFPPRG3jwcYo0y90t8RD0t7ssJyEk=
+	b=FHJOVfOFjw8F1rzrT2c6aYTzRJckKmXyMlioY9NYBCRSgHbUTDsZTmkxEm8dInWfc
+	 bpdXLBO6FMlKZX4+nt50zFvZtYxLmPvNqUlfO1LppqZ1bye5Cs2dQePsiyZA0nwhFD
+	 o7fWMV8hcD5l2pgDbclkDR47D1rgMLAfcqSAUCxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavel Begunkov <asml.silence@gmail.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 098/731] io_uring/io-wq: do not use bogus hash value
-Date: Tue,  8 Apr 2025 12:39:55 +0200
-Message-ID: <20250408104916.548890143@linuxfoundation.org>
+Subject: [PATCH 6.14 099/731] io_uring: check for iowq alloc_workqueue failure
+Date: Tue,  8 Apr 2025 12:39:56 +0200
+Message-ID: <20250408104916.571483495@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,54 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 486ba4d84d62e92716cd395c4b1612b8ce70a257 ]
+[ Upstream commit 7215469659cb9751a9bf80e43b24a48749004d26 ]
 
-Previously, the `hash` variable was initialized with `-1` and only
-updated by io_get_next_work() if the current work was hashed.  Commit
-60cf46ae6054 ("io-wq: hash dependent work") changed this to always
-call io_get_work_hash() even if the work was not hashed.  This caused
-the `hash != -1U` check to always be true, adding some overhead for
-the `hash->wait` code.
+alloc_workqueue() can fail even during init in io_uring_init(), check
+the result and panic if anything went wrong.
 
-This patch fixes the regression by checking the `IO_WQ_WORK_HASHED`
-flag.
-
-Perf diff for a flood of `IORING_OP_NOP` with `IOSQE_ASYNC`:
-
-    38.55%     -1.57%  [kernel.kallsyms]  [k] queued_spin_lock_slowpath
-     6.86%     -0.72%  [kernel.kallsyms]  [k] io_worker_handle_work
-     0.10%     +0.67%  [kernel.kallsyms]  [k] put_prev_entity
-     1.96%     +0.59%  [kernel.kallsyms]  [k] io_nop_prep
-     3.31%     -0.51%  [kernel.kallsyms]  [k] try_to_wake_up
-     7.18%     -0.47%  [kernel.kallsyms]  [k] io_wq_free_work
-
-Fixes: 60cf46ae6054 ("io-wq: hash dependent work")
-Cc: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Link: https://lore.kernel.org/r/20250128133927.3989681-6-max.kellermann@ionos.com
+Fixes: 73eaa2b583493 ("io_uring: use private workqueue for exit work")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/3a046063902f888f66151f89fa42f84063b9727b.1738343083.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index d1eaa3e39cd5f..24f06fba43096 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -599,7 +599,9 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
- 		do {
- 			struct io_wq_work *next_hashed, *linked;
- 			unsigned int work_flags = atomic_read(&work->flags);
--			unsigned int hash = __io_get_work_hash(work_flags);
-+			unsigned int hash = __io_wq_is_hashed(work_flags)
-+				? __io_get_work_hash(work_flags)
-+				: -1U;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index f7acae5f7e1d0..573b3f542b82a 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3922,6 +3922,7 @@ static int __init io_uring_init(void)
+ 					  SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT);
  
- 			next_hashed = wq_next_work(work);
+ 	iou_wq = alloc_workqueue("iou_exit", WQ_UNBOUND, 64);
++	BUG_ON(!iou_wq);
  
+ #ifdef CONFIG_SYSCTL
+ 	register_sysctl_init("kernel", kernel_io_uring_disabled_table);
 -- 
 2.39.5
 
