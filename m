@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F63226B2DB;
-	Tue,  8 Apr 2025 12:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009F4265630;
+	Tue,  8 Apr 2025 12:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116254; cv=none; b=KnPGKFrmljHv1C3Kr/W6ItYrTiPa6xJRiGp0s47YsL499CyUwU17bTujmWS2CH5dilQ7H4Kfg1OEOAWl2WYMYKeHXuJ31vyf+mmZuofPxCUMN0UItNmCi2L9cC85zk/83XOu/aHNjGv/bxSY780rt8doNa192LA0ygUcAV6hRGw=
+	t=1744116257; cv=none; b=Uk9rbsEqxJhUCDGHSYOS5ishAp4PSMWeuq2XdTRd86veUdraNmYj5LzT+3FaI/r5HHhVVYgwAmWPxwPj1r6aXwSKX7RddT6a7Ab/c1SAQOs9lAjFVvC8TUfzVw3OBVRSZfG0XpYK8UIByWrgcWXptoYSlhkXy5KtOM/RxAN0zIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116254; c=relaxed/simple;
-	bh=4phjdJXAvHOloPlUCc9Y8Als5NDGG57ntRs11wUoe2M=;
+	s=arc-20240116; t=1744116257; c=relaxed/simple;
+	bh=cMllDRPp8HeAWlGC6WU+/qHVmOiyHpXuM/Gj8BNVNkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JOvMLGJJZRHdGsuogMz9CE6746i231mSpOcbobMWMa5gB8g5ZTH3KJP/RFZ/LN2ABA54fiJJJqeA9ZpDMslYsIbqoU2n6Bgc9yx71CTK7nuXMomSXo4evE6pzxmUpcaKmp+PeNAynAQ/DOeT/8XmMr3SZ0TbKLfDdnznQxxsWIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wb+iwWcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DCPxZSQRXUHGbHEoLswxeJ+swdw95yBdZn7XcduKsvUoSXfwebnWYntkjplNpzFwNz3HIax/bhDWjsuwJBYzqVk8Z22udYNeasf0VtW1PRmDZCv+I7h50lrl0zTurCsompc0cyik7Ujsd4vwZkmR3VP3IaZxKSIJusRbQum+ifE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezvDzTF+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wb+iwWcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48DAC4CEE5;
-	Tue,  8 Apr 2025 12:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezvDzTF+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B8EC4CEE5;
+	Tue,  8 Apr 2025 12:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116254;
-	bh=4phjdJXAvHOloPlUCc9Y8Als5NDGG57ntRs11wUoe2M=;
+	s=korg; t=1744116256;
+	bh=cMllDRPp8HeAWlGC6WU+/qHVmOiyHpXuM/Gj8BNVNkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wb+iwWcjP+uuTLUieUartwKoO7pn1xvJxNLZwyMl7uAeDaUJges3dw16GiTnKWyHt
-	 UaUxWL2vB2pDiwizdkH2SxtxVfzDy6YIvHrEPB7fnnRHXk92e67Lv+560UYg1AvcEi
-	 S29EvTD0Uru/VawVF/8ctbKaPEFppjcPgB4CWE+M=
+	b=ezvDzTF+9LhhaJ06d6nGpReP/L3H5jKUvUw828YNCagZE/sb/tsF0XpXHUPb306Ck
+	 z/8j6ruL4KPiwU/yYausJiDx6TufXr5kAVvqiUeeJShYtRpaogp+B21Dgvyv/0xuR+
+	 FA+Yf2cFdvDTNc+6qe/URZQNf1dmZogHDxVlMMGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/423] PCI: brcmstb: Set generation limit before PCIe link up
-Date: Tue,  8 Apr 2025 12:46:38 +0200
-Message-ID: <20250408104847.423668227@linuxfoundation.org>
+Subject: [PATCH 6.12 073/423] PCI: brcmstb: Use internal register to change link capability
+Date: Tue,  8 Apr 2025 12:46:39 +0200
+Message-ID: <20250408104847.447345063@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -56,49 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit 72d36589c6b7bef6b30eb99fcb7082f72faca37f ]
+[ Upstream commit 0c97321e11e0e9e18546f828492758f6aaecec59 ]
 
-When the user elects to limit the PCIe generation via the appropriate
-devicetree property, apply the settings before the PCIe link up, not
-after.
+The driver has been mistakenly writing to a read-only (RO)
+configuration space register (PCI_EXP_LNKCAP) to change the
+PCIe link capability.
+
+Although harmless in this case, the proper write destination
+is an internal register that is reflected by PCI_EXP_LNKCAP.
+
+Thus, fix the brcm_pcie_set_gen() function to correctly update
+the link capability.
 
 Fixes: c0452137034b ("PCI: brcmstb: Add Broadcom STB PCIe host controller driver")
 Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250214173944.47506-2-james.quinlan@broadcom.com
+Link: https://lore.kernel.org/r/20250214173944.47506-3-james.quinlan@broadcom.com
 [kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index 9321280f6edba..98e3531927298 100644
+index 98e3531927298..3bb35f096b45b 100644
 --- a/drivers/pci/controller/pcie-brcmstb.c
 +++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1276,6 +1276,10 @@ static int brcm_pcie_start_link(struct brcm_pcie *pcie)
- 	bool ssc_good = false;
- 	int ret, i;
+@@ -403,10 +403,10 @@ static int brcm_pcie_set_ssc(struct brcm_pcie *pcie)
+ static void brcm_pcie_set_gen(struct brcm_pcie *pcie, int gen)
+ {
+ 	u16 lnkctl2 = readw(pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCTL2);
+-	u32 lnkcap = readl(pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCAP);
++	u32 lnkcap = readl(pcie->base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
  
-+	/* Limit the generation if specified */
-+	if (pcie->gen)
-+		brcm_pcie_set_gen(pcie, pcie->gen);
-+
- 	/* Unassert the fundamental reset */
- 	ret = pcie->perst_set(pcie, 0);
- 	if (ret)
-@@ -1302,9 +1306,6 @@ static int brcm_pcie_start_link(struct brcm_pcie *pcie)
+ 	lnkcap = (lnkcap & ~PCI_EXP_LNKCAP_SLS) | gen;
+-	writel(lnkcap, pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCAP);
++	writel(lnkcap, pcie->base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
  
- 	brcm_config_clkreq(pcie);
- 
--	if (pcie->gen)
--		brcm_pcie_set_gen(pcie, pcie->gen);
--
- 	if (pcie->ssc) {
- 		ret = brcm_pcie_set_ssc(pcie);
- 		if (ret == 0)
+ 	lnkctl2 = (lnkctl2 & ~0xf) | gen;
+ 	writew(lnkctl2, pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCTL2);
 -- 
 2.39.5
 
