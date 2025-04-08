@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01764263C90;
-	Tue,  8 Apr 2025 11:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1785263C90;
+	Tue,  8 Apr 2025 11:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112370; cv=none; b=STwUh4GpcXqKtn2ppLCVd279JzrQqsAat0nO8a4oGO405YTYyoOCRLVR/TYAOX8vXd/yPwdX/VRKwvdAqY++RMDxPMR1KkJ/UbIvA5Ssc7MDN0jqL9kBS09PdBk5C4gXQ/mA28EQ4LSMmYN4dQP9cp8V2yU3WvSyPRwPXcYlbPg=
+	t=1744112372; cv=none; b=mFJMHYVq3hEcdEZOLbB218cVMmR3IENkh4y49xcFd8nDxb+zr568MZRSmUpG4oeBAoHhNM1xnBkGJKpKQDU3vn08UBCJDWup2+wfE1fdm0tMFcqsDv/h5kpaMQ+85XBWXgdNNq50y5LywxR1qvAIstiloa5NjYhcpwbghqtS3R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112370; c=relaxed/simple;
-	bh=HdQYK4PlNBSzlmxtHsU9QwRzmVH8puVh6zojT/LSwrg=;
+	s=arc-20240116; t=1744112372; c=relaxed/simple;
+	bh=UlnIQwW2S9684xdzxB8CkwDJCcVVngZ3qXm287ONmR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYL4KDpmE+qvVlmGa2AkcC3CQ5qL/OyWQvPEMbGIvMpwefLFkta8GhZ0hqDFH0/32zJio8Ooq1IOg6WA5Ia3VtEtAbkA0BMnHcsC+2SD7YGQviODPGa4GzpPd7swZrcq1Xk9D9j90t/n9iaia4ZcV8oE6OPkwf5BC3px9VvuO6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UDajh0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LjlTwLSz/N1a4rvKC+tvQzoR9DOfPXMWWIM2DX82AY0I4ZVRivSoOEOL2tstq+F2shVzYuGCynOmTTWSwa/EP7WdPvRLzQ4ZUPdicX+lU+RZixYmDn3gtylLtPtuVA1TCTEryxckP2P4Hv3okB0NvNOh5iJBRLNbE3drCinsFe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOM6pbzB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UDajh0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E05C4CEE5;
-	Tue,  8 Apr 2025 11:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOM6pbzB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F02C4CEE5;
+	Tue,  8 Apr 2025 11:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112369;
-	bh=HdQYK4PlNBSzlmxtHsU9QwRzmVH8puVh6zojT/LSwrg=;
+	s=korg; t=1744112372;
+	bh=UlnIQwW2S9684xdzxB8CkwDJCcVVngZ3qXm287ONmR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UDajh0be7/1i5rgKQNtPQycg4g7YUa0caE8PA4BFphvs5DTeqn/MAssjLQ4LsWmb
-	 Wmsfhj6TbxIUvZESk22Q9lHRr+rdeu0dn/nNuoOy+TMiMTSCmkxV1wqoUcoCfwI7nY
-	 G+VKgDU4YiyfRCxaYizEUNQkFqylkv5uMfuEbOts=
+	b=nOM6pbzBUutYBpCii0mqRcvKSESv2mXX24mCIvByJrKecTRopfda6Do4oRqizVZxw
+	 YROyMCnTpCBwTjFD2gWcmNsbSTRJI85746VESEguSUmK1BqKnlxsvNxBFqYtgEy9xx
+	 bz3Z1CV+0sx4lOEe87aDIY+WyVBkoQm1ub9CBDOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Hector Martin <marcan@marcan.st>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/279] s390/cio: Fix CHPID "configure" attribute caching
-Date: Tue,  8 Apr 2025 12:46:59 +0200
-Message-ID: <20250408104827.355361556@linuxfoundation.org>
+Subject: [PATCH 5.15 045/279] ASoC: tas2770: Fix volume scale
+Date: Tue,  8 Apr 2025 12:47:08 +0200
+Message-ID: <20250408104827.595121701@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,58 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 32ae4a2992529e2c7934e422035fad1d9b0f1fb5 ]
+[ Upstream commit 579cd64b9df8a60284ec3422be919c362de40e41 ]
 
-In some environments, the SCLP firmware interface used to query a
-CHPID's configured state is not supported. On these environments,
-rapidly reading the corresponding sysfs attribute produces inconsistent
-results:
+The scale starts at -100dB, not -128dB.
 
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-  $ cat /sys/devices/css0/chp0.00/configure
-  3
-
-This occurs for example when Linux is run as a KVM guest. The
-inconsistency is a result of CIO using cached results for generating
-the value of the "configure" attribute while failing to handle the
-situation where no data was returned by SCLP.
-
-Fix this by not updating the cache-expiration timestamp when SCLP
-returns no data. With the fix applied, the system response is
-consistent:
-
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-  $ cat /sys/devices/css0/chp0.00/configure
-  cat: /sys/devices/css0/chp0.00/configure: Operation not supported
-
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Tested-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-tas2770-v1-1-cf50ff1d59a3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/chp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2770.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/cio/chp.c b/drivers/s390/cio/chp.c
-index 1097e76982a5d..6b0f1b8bf2790 100644
---- a/drivers/s390/cio/chp.c
-+++ b/drivers/s390/cio/chp.c
-@@ -661,7 +661,8 @@ static int info_update(void)
- 	if (time_after(jiffies, chp_info_expires)) {
- 		/* Data is too old, update. */
- 		rc = sclp_chp_read_info(&chp_info);
--		chp_info_expires = jiffies + CHP_INFO_UPDATE_INTERVAL ;
-+		if (!rc)
-+			chp_info_expires = jiffies + CHP_INFO_UPDATE_INTERVAL;
- 	}
- 	mutex_unlock(&info_lock);
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index ec0df3b1ef615..4e71dc1cf588f 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -508,7 +508,7 @@ static int tas2770_codec_probe(struct snd_soc_component *component)
+ }
  
+ static DECLARE_TLV_DB_SCALE(tas2770_digital_tlv, 1100, 50, 0);
+-static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -12750, 50, 0);
++static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -10050, 50, 0);
+ 
+ static const struct snd_kcontrol_new tas2770_snd_controls[] = {
+ 	SOC_SINGLE_TLV("Speaker Playback Volume", TAS2770_PLAY_CFG_REG2,
 -- 
 2.39.5
 
