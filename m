@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B87268FD9;
-	Tue,  8 Apr 2025 11:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CAB20CCD8;
+	Tue,  8 Apr 2025 11:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113444; cv=none; b=X9fac4h8iOiM80EDAefvxL33NDX+ZalitpjlV8YN7RyJHKOOvZynpwPjYz1HgNCWCBeUQ5mmHpiHuL38mhDVh2kK76Vb0Y8V2BXS0SMyq7VQj4uthsRJkvGdzxxoIzUXE7snq/B3vy02Swv+n0i+pxkz6XdQqHQfIaqrXgAknfs=
+	t=1744113446; cv=none; b=GFJDFYBtTCPtL9qee0uQ55RcNYYjtPO7Beu3DeU2hZ3lNSxZaeaHScjwLwZhCR1Z5s/1AUyRcbNtQRw1JioCA9j19NqsZsY7m+TNsFIDV7iK+C9NXBRDB54/ppKEpoAGk7efn3ueNOtCSvLyk7E3OeOUAL4TXtYR7h3y9niDnhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113444; c=relaxed/simple;
-	bh=x8TV/FvoEa7W7lej6M1Au1fir9XHdz3/CCs6MrzbTZM=;
+	s=arc-20240116; t=1744113446; c=relaxed/simple;
+	bh=28kz5tWN5w+Cf2t3Nro1yMdNwqVkImSKLBC3Q1EtdoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tf771CNgQYaDqgLOBkL74Y7H7/UQiDJnc7Ioh43amw0DYd4oZ6i8WNQxBgljPggPrNlt9Cpnu/ifcTyrwI4yEZIEthJ2oSDBU5Tiua80y9suuRyWgwBze4VeyyeQajN3rGMEbfDeLh3a48fBiHskpNkwkqzsaMt7W7p9wCRA+6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqZ4935i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dx2Qj9wnQ9DOee5ZQju75tOkLagGG/N/wns02Sw724N1Qj86ZK1/W7sE7JUDoL2eoiA2Amryd7cgowLO4+lS3r0HgXIN10Vd2mzZbo0cQ8cY2hG9HjMz1Jv1PaRWZ9638QB73Opif0at8/DzMx0ndcUi1vBwuxxXtUzN9b8ERjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/VBJnVN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqZ4935i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8616FC4CEEB;
-	Tue,  8 Apr 2025 11:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/VBJnVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F64C4CEE7;
+	Tue,  8 Apr 2025 11:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113443;
-	bh=x8TV/FvoEa7W7lej6M1Au1fir9XHdz3/CCs6MrzbTZM=;
+	s=korg; t=1744113446;
+	bh=28kz5tWN5w+Cf2t3Nro1yMdNwqVkImSKLBC3Q1EtdoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqZ4935iN0Btt3FdW61xLc7S7pBhHNR/V/9M1V7xtijvTlbyFNE+p8wV0j/Jult/D
-	 hCCv/YFm6YyzecenOHdyBMkxZrZy4AFl6yDJgAs5ZH+zBdRZBRjmfMioA0CjOuNcOO
-	 LGy0PPCc+vTH1pchZ+rZiYeXjB/g8melPeBUxHII=
+	b=c/VBJnVNxnh4Af00mVLK8VhXt/2NUmyK0xX7HAgNZ3ImEd39VknJH+yQIOHcs1kPd
+	 gaLODl9cSsyT/UiQxbNrDyllhYGwTDFtz9RklaAGBdaZZ5lSmTWCMGMFUtvbzYwwTQ
+	 3p1hKZnVdg8eLcYJuiqgQkKw3N2CdqNDo0rtNrBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/268] wifi: iwlwifi: fw: allocate chained SG tables for dump
-Date: Tue,  8 Apr 2025 12:49:33 +0200
-Message-ID: <20250408104832.916939327@linuxfoundation.org>
+Subject: [PATCH 6.6 163/268] wifi: iwlwifi: mvm: use the right version of the rate API
+Date: Tue,  8 Apr 2025 12:49:34 +0200
+Message-ID: <20250408104832.948576033@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,138 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 7774e3920029398ad49dc848b23840593f14d515 ]
+[ Upstream commit a03e2082e678ea10d0d8bdf3ed933eb05a8ddbb0 ]
 
-The firmware dumps can be pretty big, and since we use single
-pages for each SG table entry, even the table itself may end
-up being an order-5 allocation. Build chained tables so that
-we need not allocate a higher-order table here.
+The firmware uses the newer version of the API in recent devices. For
+older devices, we translate the rate to the new format.
+Don't parse the rate with old parsing macros.
 
-This could be improved and cleaned up, e.g. by using the SG
-pool code or simply kvmalloc(), but all of that would require
-also updating the devcoredump first since that frees it all,
-so we need to be more careful. SG pool might also run against
-the CONFIG_ARCH_NO_SG_CHAIN limitation, which is irrelevant
-here.
-
-Also use _devcd_free_sgtable() for the error paths now, much
-simpler especially since it's in two places now.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.697c7a465ac9.Iea982df46b5c075bfb77ade36f187d99a70c63db@changeid
+Link: https://patch.msgid.link/20250209143303.13d70cdcbb4e.Ic92193bce4013b70a823cfef250ee79c16cf7c17@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 86 ++++++++++++++-------
- 1 file changed, 58 insertions(+), 28 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index 2a408e1ce06ec..0a1f302ad6d3f 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -559,41 +559,71 @@ static void iwl_dump_prph(struct iwl_fw_runtime *fwrt,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index 8cff24d5f5f40..e4efd3349bc1b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -1275,7 +1275,7 @@ iwl_mvm_decode_he_phy_ru_alloc(struct iwl_mvm_rx_phy_data *phy_data,
+ 	 */
+ 	u8 ru = le32_get_bits(phy_data->d1, IWL_RX_PHY_DATA1_HE_RU_ALLOC_MASK);
+ 	u32 rate_n_flags = phy_data->rate_n_flags;
+-	u32 he_type = rate_n_flags & RATE_MCS_HE_TYPE_MSK_V1;
++	u32 he_type = rate_n_flags & RATE_MCS_HE_TYPE_MSK;
+ 	u8 offs = 0;
+ 
+ 	rx_status->bw = RATE_INFO_BW_HE_RU;
+@@ -1330,13 +1330,13 @@ iwl_mvm_decode_he_phy_ru_alloc(struct iwl_mvm_rx_phy_data *phy_data,
+ 
+ 	if (he_mu)
+ 		he_mu->flags2 |=
+-			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK_V1,
++			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK,
+ 						   rate_n_flags),
+ 					 IEEE80211_RADIOTAP_HE_MU_FLAGS2_BW_FROM_SIG_A_BW);
+-	else if (he_type == RATE_MCS_HE_TYPE_TRIG_V1)
++	else if (he_type == RATE_MCS_HE_TYPE_TRIG)
+ 		he->data6 |=
+ 			cpu_to_le16(IEEE80211_RADIOTAP_HE_DATA6_TB_PPDU_BW_KNOWN) |
+-			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK_V1,
++			le16_encode_bits(FIELD_GET(RATE_MCS_CHAN_WIDTH_MSK,
+ 						   rate_n_flags),
+ 					 IEEE80211_RADIOTAP_HE_DATA6_TB_PPDU_BW);
  }
- 
- /*
-- * alloc_sgtable - allocates scallerlist table in the given size,
-- * fills it with pages and returns it
-+ * alloc_sgtable - allocates (chained) scatterlist in the given size,
-+ *	fills it with pages and returns it
-  * @size: the size (in bytes) of the table
--*/
--static struct scatterlist *alloc_sgtable(int size)
-+ */
-+static struct scatterlist *alloc_sgtable(ssize_t size)
- {
--	int alloc_size, nents, i;
--	struct page *new_page;
--	struct scatterlist *iter;
--	struct scatterlist *table;
-+	struct scatterlist *result = NULL, *prev;
-+	int nents, i, n_prev;
- 
- 	nents = DIV_ROUND_UP(size, PAGE_SIZE);
--	table = kcalloc(nents, sizeof(*table), GFP_KERNEL);
--	if (!table)
--		return NULL;
--	sg_init_table(table, nents);
--	iter = table;
--	for_each_sg(table, iter, sg_nents(table), i) {
--		new_page = alloc_page(GFP_KERNEL);
--		if (!new_page) {
--			/* release all previous allocated pages in the table */
--			iter = table;
--			for_each_sg(table, iter, sg_nents(table), i) {
--				new_page = sg_page(iter);
--				if (new_page)
--					__free_page(new_page);
--			}
--			kfree(table);
-+
-+#define N_ENTRIES_PER_PAGE (PAGE_SIZE / sizeof(*result))
-+	/*
-+	 * We need an additional entry for table chaining,
-+	 * this ensures the loop can finish i.e. we can
-+	 * fit at least two entries per page (obviously,
-+	 * many more really fit.)
-+	 */
-+	BUILD_BUG_ON(N_ENTRIES_PER_PAGE < 2);
-+
-+	while (nents > 0) {
-+		struct scatterlist *new, *iter;
-+		int n_fill, n_alloc;
-+
-+		if (nents <= N_ENTRIES_PER_PAGE) {
-+			/* last needed table */
-+			n_fill = nents;
-+			n_alloc = nents;
-+			nents = 0;
-+		} else {
-+			/* fill a page with entries */
-+			n_alloc = N_ENTRIES_PER_PAGE;
-+			/* reserve one for chaining */
-+			n_fill = n_alloc - 1;
-+			nents -= n_fill;
-+		}
-+
-+		new = kcalloc(n_alloc, sizeof(*new), GFP_KERNEL);
-+		if (!new) {
-+			if (result)
-+				_devcd_free_sgtable(result);
- 			return NULL;
- 		}
--		alloc_size = min_t(int, size, PAGE_SIZE);
--		size -= PAGE_SIZE;
--		sg_set_page(iter, new_page, alloc_size, 0);
-+		sg_init_table(new, n_alloc);
-+
-+		if (!result)
-+			result = new;
-+		else
-+			sg_chain(prev, n_prev, new);
-+		prev = new;
-+		n_prev = n_alloc;
-+
-+		for_each_sg(new, iter, n_fill, i) {
-+			struct page *new_page = alloc_page(GFP_KERNEL);
-+
-+			if (!new_page) {
-+				_devcd_free_sgtable(result);
-+				return NULL;
-+			}
-+
-+			sg_set_page(iter, new_page, PAGE_SIZE, 0);
-+		}
- 	}
--	return table;
-+
-+	return result;
- }
- 
- static void iwl_fw_get_prph_len(struct iwl_fw_runtime *fwrt,
 -- 
 2.39.5
 
