@@ -1,456 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861872690D7;
-	Tue,  8 Apr 2025 12:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6E7268684
+	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 12:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115421; cv=none; b=bT9KsZeK8d12LXjaaZ+gZYceczc7EbLg/V3b1P5XFP9Srqu8HA8oOxtlGMfvVt2zpw/imVglJRAWo6SyNhJiyzQJLcVaHn4qR4BBjLrlsBvaN8ZqMDdz9LzkYPsKBDij/yyMOLctdVY9aUsRsamGZ7ovNskN2Og9ViSPgYmHWqc=
+	t=1744115421; cv=none; b=RH9yt3V9CYAXllpBqYsMflFIZ5SMXIab6ax915MNibQiYwI9N01igXEVJHNdn5mjB3RQyT12qkKmOD1RE9h4Ll1e4H7XA8pwIsYICyuTlCDh6T4ObrS5Vqff/6GEG507hOdqpkfno6RiKFTAthXQmDEF9H/1lQAxjTXbQDxk3Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744115421; c=relaxed/simple;
-	bh=XirIIPGpS+XwqdWArp1jqK1XjxtmZIq8i8vU9UilJ4Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAoUfN2HbCL/TRIFQBsQlMbjRS+9kTerD7bAsrVQP1vbvKlBhK4g+lPJUyJDF8fMAvra29nS4yGO1k068pnk4ahNpw7D93WH4KW3IcceqqJ/2a3PwTWGvnYJNrTCncf27I4mPNOSoJEH+ey9xfugQ9WlARmbFoDiPep+s/14pNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQBLw8UN; arc=none smtp.client-ip=10.30.226.201
+	bh=A6GH0730N9005FvryT+2f/BKLA9sdTWfH/OfPZwZa2A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cIps40Vjh0db7B539ptA34dTn/e6hdvv6zB1vCjBJnu0wNpV1WJwfgWF/QezoXyd0RZI321uNGJaMhzrtierMXKaxzkt+xgL6fHId677MKDqLZRAS2moVXCZjf/6HCiVYxwRQTdd5FRJhg/axCGTbJvSWzoo/tnadbr/Ii0o7zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=zPT/MDja; arc=none smtp.client-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQBLw8UN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12FEC4CEE5;
-	Tue,  8 Apr 2025 12:30:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115421;
-	bh=XirIIPGpS+XwqdWArp1jqK1XjxtmZIq8i8vU9UilJ4Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQBLw8UNBUivYh23JV6juRg5f3NaAsHE/WqodljhrOsE8PB8uWRogdKjr3Sd1LCBe
-	 Fo08lPjAq+jbM8E21OEiMS2rSh9/FBbBogvAd4kJGcS4Gel+zhNWNRg8mLd0UhcqIz
-	 FvxrOXzvxkO9z9Nh5xf7c84wv5J1s9OfjhrjCpQo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 429/499] tty: serial: fsl_lpuart: Use u32 and u8 for register variables
-Date: Tue,  8 Apr 2025 12:50:41 +0200
-Message-ID: <20250408104901.928610271@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
-References: <20250408104851.256868745@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="zPT/MDja"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1744115412; x=1744720212; i=christian@heusel.eu;
+	bh=u+/mqDgKSZDwMA/1OefEMZrRqMdUu66MZ8QDf1kcPGk=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=zPT/MDjaF0X9V4jQHb1LIrjvIAYJLwhL5w95sOvt74AxLQt5r1YWWeuFXkAoqxWg
+	 dDrqlNBCj4+hjDmZY3f7SJOICIhJbfzvdOO6ZqzJFAEofI/vHfLj74VePpLju+OvO
+	 YuCsCgFfNYT4ael1hdNz8OFDbPaaG5GwWw1+cF182ZpkBXF9A1N3dJYFACID2SV24
+	 WFmaxys4NGP2iX37wPQzMTculMAWNEMNOl5s9ti/iY2WfR+XZLnvJQxp2JaPjK+21
+	 KUoBY1L0zGLtzp44l0QZlaHR/M4RN9H8Uvgoa2myMFVDbcYfq0iYmRTUAD1XdAs1D
+	 aVAoe4FTdI/mybWM2A==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([89.244.90.49]) by mrelayeu.kundenserver.de
+ (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1Mlf8e-1tKr632Xbu-00g04s; Tue, 08 Apr 2025 14:23:53 +0200
+Date: Tue, 8 Apr 2025 14:23:51 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.14 000/731] 6.14.2-rc1 review
+Message-ID: <fc727793-7b2d-4cd8-aca4-78824cdf477d@heusel.eu>
+References: <20250408104914.247897328@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-6.13-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Sherry Sun <sherry.sun@nxp.com>
-
-[ Upstream commit b6a8f6ab2c53e5ea3c7f2a3978db378a89bb7595 ]
-
-Use u32 and u8 rather than unsigned long or unsigned char for register
-variables for clarity and consistency.
-
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20250312023904.1343351-2-sherry.sun@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e98ab45ec518 ("tty: serial: lpuart: only disable CTS instead of overwriting the whole UARTMODIR register")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/tty/serial/fsl_lpuart.c | 93 ++++++++++++++++-----------------
- 1 file changed, 46 insertions(+), 47 deletions(-)
-
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 433cf2267e162..1afcfc40079d5 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -441,7 +441,7 @@ static unsigned int lpuart_get_baud_clk_rate(struct lpuart_port *sport)
- 
- static void lpuart_stop_tx(struct uart_port *port)
- {
--	unsigned char temp;
-+	u8 temp;
- 
- 	temp = readb(port->membase + UARTCR2);
- 	temp &= ~(UARTCR2_TIE | UARTCR2_TCIE);
-@@ -450,7 +450,7 @@ static void lpuart_stop_tx(struct uart_port *port)
- 
- static void lpuart32_stop_tx(struct uart_port *port)
- {
--	unsigned long temp;
-+	u32 temp;
- 
- 	temp = lpuart32_read(port, UARTCTRL);
- 	temp &= ~(UARTCTRL_TIE | UARTCTRL_TCIE);
-@@ -459,7 +459,7 @@ static void lpuart32_stop_tx(struct uart_port *port)
- 
- static void lpuart_stop_rx(struct uart_port *port)
- {
--	unsigned char temp;
-+	u8 temp;
- 
- 	temp = readb(port->membase + UARTCR2);
- 	writeb(temp & ~UARTCR2_RE, port->membase + UARTCR2);
-@@ -467,7 +467,7 @@ static void lpuart_stop_rx(struct uart_port *port)
- 
- static void lpuart32_stop_rx(struct uart_port *port)
- {
--	unsigned long temp;
-+	u32 temp;
- 
- 	temp = lpuart32_read(port, UARTCTRL);
- 	lpuart32_write(port, temp & ~UARTCTRL_RE, UARTCTRL);
-@@ -642,7 +642,7 @@ static int lpuart_poll_init(struct uart_port *port)
- 	struct lpuart_port *sport = container_of(port,
- 					struct lpuart_port, port);
- 	unsigned long flags;
--	unsigned char temp;
-+	u8 temp;
- 
- 	sport->port.fifosize = 0;
- 
-@@ -752,7 +752,7 @@ static inline void lpuart_transmit_buffer(struct lpuart_port *sport)
- static inline void lpuart32_transmit_buffer(struct lpuart_port *sport)
- {
- 	struct tty_port *tport = &sport->port.state->port;
--	unsigned long txcnt;
-+	u32 txcnt;
- 	unsigned char c;
- 
- 	if (sport->port.x_char) {
-@@ -789,7 +789,7 @@ static void lpuart_start_tx(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port,
- 			struct lpuart_port, port);
--	unsigned char temp;
-+	u8 temp;
- 
- 	temp = readb(port->membase + UARTCR2);
- 	writeb(temp | UARTCR2_TIE, port->membase + UARTCR2);
-@@ -806,7 +806,7 @@ static void lpuart_start_tx(struct uart_port *port)
- static void lpuart32_start_tx(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
--	unsigned long temp;
-+	u32 temp;
- 
- 	if (sport->lpuart_dma_tx_use) {
- 		if (!lpuart_stopped_or_empty(port))
-@@ -839,8 +839,8 @@ static unsigned int lpuart_tx_empty(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port,
- 			struct lpuart_port, port);
--	unsigned char sr1 = readb(port->membase + UARTSR1);
--	unsigned char sfifo = readb(port->membase + UARTSFIFO);
-+	u8 sr1 = readb(port->membase + UARTSR1);
-+	u8 sfifo = readb(port->membase + UARTSFIFO);
- 
- 	if (sport->dma_tx_in_progress)
- 		return 0;
-@@ -855,9 +855,9 @@ static unsigned int lpuart32_tx_empty(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port,
- 			struct lpuart_port, port);
--	unsigned long stat = lpuart32_read(port, UARTSTAT);
--	unsigned long sfifo = lpuart32_read(port, UARTFIFO);
--	unsigned long ctrl = lpuart32_read(port, UARTCTRL);
-+	u32 stat = lpuart32_read(port, UARTSTAT);
-+	u32 sfifo = lpuart32_read(port, UARTFIFO);
-+	u32 ctrl = lpuart32_read(port, UARTCTRL);
- 
- 	if (sport->dma_tx_in_progress)
- 		return 0;
-@@ -884,7 +884,7 @@ static void lpuart_rxint(struct lpuart_port *sport)
- {
- 	unsigned int flg, ignored = 0, overrun = 0;
- 	struct tty_port *port = &sport->port.state->port;
--	unsigned char rx, sr;
-+	u8 rx, sr;
- 
- 	uart_port_lock(&sport->port);
- 
-@@ -961,7 +961,7 @@ static void lpuart32_rxint(struct lpuart_port *sport)
- {
- 	unsigned int flg, ignored = 0;
- 	struct tty_port *port = &sport->port.state->port;
--	unsigned long rx, sr;
-+	u32 rx, sr;
- 	bool is_break;
- 
- 	uart_port_lock(&sport->port);
-@@ -1039,7 +1039,7 @@ static void lpuart32_rxint(struct lpuart_port *sport)
- static irqreturn_t lpuart_int(int irq, void *dev_id)
- {
- 	struct lpuart_port *sport = dev_id;
--	unsigned char sts;
-+	u8 sts;
- 
- 	sts = readb(sport->port.membase + UARTSR1);
- 
-@@ -1113,7 +1113,7 @@ static void lpuart_copy_rx_to_tty(struct lpuart_port *sport)
- 	int count, copied;
- 
- 	if (lpuart_is_32(sport)) {
--		unsigned long sr = lpuart32_read(&sport->port, UARTSTAT);
-+		u32 sr = lpuart32_read(&sport->port, UARTSTAT);
- 
- 		if (sr & (UARTSTAT_PE | UARTSTAT_FE)) {
- 			/* Clear the error flags */
-@@ -1125,10 +1125,10 @@ static void lpuart_copy_rx_to_tty(struct lpuart_port *sport)
- 				sport->port.icount.frame++;
- 		}
- 	} else {
--		unsigned char sr = readb(sport->port.membase + UARTSR1);
-+		u8 sr = readb(sport->port.membase + UARTSR1);
- 
- 		if (sr & (UARTSR1_PE | UARTSR1_FE)) {
--			unsigned char cr2;
-+			u8 cr2;
- 
- 			/* Disable receiver during this operation... */
- 			cr2 = readb(sport->port.membase + UARTCR2);
-@@ -1279,7 +1279,7 @@ static void lpuart32_dma_idleint(struct lpuart_port *sport)
- static irqreturn_t lpuart32_int(int irq, void *dev_id)
- {
- 	struct lpuart_port *sport = dev_id;
--	unsigned long sts, rxcount;
-+	u32 sts, rxcount;
- 
- 	sts = lpuart32_read(&sport->port, UARTSTAT);
- 	rxcount = lpuart32_read(&sport->port, UARTWATER);
-@@ -1411,12 +1411,12 @@ static inline int lpuart_start_rx_dma(struct lpuart_port *sport)
- 	dma_async_issue_pending(chan);
- 
- 	if (lpuart_is_32(sport)) {
--		unsigned long temp = lpuart32_read(&sport->port, UARTBAUD);
-+		u32 temp = lpuart32_read(&sport->port, UARTBAUD);
- 
- 		lpuart32_write(&sport->port, temp | UARTBAUD_RDMAE, UARTBAUD);
- 
- 		if (sport->dma_idle_int) {
--			unsigned long ctrl = lpuart32_read(&sport->port, UARTCTRL);
-+			u32 ctrl = lpuart32_read(&sport->port, UARTCTRL);
- 
- 			lpuart32_write(&sport->port, ctrl | UARTCTRL_ILIE, UARTCTRL);
- 		}
-@@ -1482,7 +1482,7 @@ static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termio
- 	struct lpuart_port *sport = container_of(port,
- 			struct lpuart_port, port);
- 
--	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
-+	u32 modem = lpuart32_read(&sport->port, UARTMODIR)
- 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
- 	u32 ctrl;
- 
-@@ -1577,7 +1577,7 @@ static void lpuart32_set_mctrl(struct uart_port *port, unsigned int mctrl)
- 
- static void lpuart_break_ctl(struct uart_port *port, int break_state)
- {
--	unsigned char temp;
-+	u8 temp;
- 
- 	temp = readb(port->membase + UARTCR2) & ~UARTCR2_SBK;
- 
-@@ -1589,7 +1589,7 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
- 
- static void lpuart32_break_ctl(struct uart_port *port, int break_state)
- {
--	unsigned long temp;
-+	u32 temp;
- 
- 	temp = lpuart32_read(port, UARTCTRL);
- 
-@@ -1623,8 +1623,7 @@ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
- 
- static void lpuart_setup_watermark(struct lpuart_port *sport)
- {
--	unsigned char val, cr2;
--	unsigned char cr2_saved;
-+	u8 val, cr2, cr2_saved;
- 
- 	cr2 = readb(sport->port.membase + UARTCR2);
- 	cr2_saved = cr2;
-@@ -1657,7 +1656,7 @@ static void lpuart_setup_watermark(struct lpuart_port *sport)
- 
- static void lpuart_setup_watermark_enable(struct lpuart_port *sport)
- {
--	unsigned char cr2;
-+	u8 cr2;
- 
- 	lpuart_setup_watermark(sport);
- 
-@@ -1668,8 +1667,7 @@ static void lpuart_setup_watermark_enable(struct lpuart_port *sport)
- 
- static void lpuart32_setup_watermark(struct lpuart_port *sport)
- {
--	unsigned long val, ctrl;
--	unsigned long ctrl_saved;
-+	u32 val, ctrl, ctrl_saved;
- 
- 	ctrl = lpuart32_read(&sport->port, UARTCTRL);
- 	ctrl_saved = ctrl;
-@@ -1778,7 +1776,7 @@ static void lpuart_tx_dma_startup(struct lpuart_port *sport)
- static void lpuart_rx_dma_startup(struct lpuart_port *sport)
- {
- 	int ret;
--	unsigned char cr3;
-+	u8 cr3;
- 
- 	if (uart_console(&sport->port))
- 		goto err;
-@@ -1828,7 +1826,7 @@ static void lpuart_hw_setup(struct lpuart_port *sport)
- static int lpuart_startup(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
--	unsigned char temp;
-+	u8 temp;
- 
- 	/* determine FIFO size and enable FIFO mode */
- 	temp = readb(sport->port.membase + UARTPFIFO);
-@@ -1848,7 +1846,7 @@ static int lpuart_startup(struct uart_port *port)
- 
- static void lpuart32_hw_disable(struct lpuart_port *sport)
- {
--	unsigned long temp;
-+	u32 temp;
- 
- 	temp = lpuart32_read(&sport->port, UARTCTRL);
- 	temp &= ~(UARTCTRL_RIE | UARTCTRL_ILIE | UARTCTRL_RE |
-@@ -1858,7 +1856,7 @@ static void lpuart32_hw_disable(struct lpuart_port *sport)
- 
- static void lpuart32_configure(struct lpuart_port *sport)
- {
--	unsigned long temp;
-+	u32 temp;
- 
- 	temp = lpuart32_read(&sport->port, UARTCTRL);
- 	if (!sport->lpuart_dma_rx_use)
-@@ -1888,7 +1886,7 @@ static void lpuart32_hw_setup(struct lpuart_port *sport)
- static int lpuart32_startup(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
--	unsigned long temp;
-+	u32 temp;
- 
- 	/* determine FIFO size */
- 	temp = lpuart32_read(&sport->port, UARTFIFO);
-@@ -1942,7 +1940,7 @@ static void lpuart_dma_shutdown(struct lpuart_port *sport)
- static void lpuart_shutdown(struct uart_port *port)
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
--	unsigned char temp;
-+	u8 temp;
- 	unsigned long flags;
- 
- 	uart_port_lock_irqsave(port, &flags);
-@@ -1962,7 +1960,7 @@ static void lpuart32_shutdown(struct uart_port *port)
- {
- 	struct lpuart_port *sport =
- 		container_of(port, struct lpuart_port, port);
--	unsigned long temp;
-+	u32 temp;
- 	unsigned long flags;
- 
- 	uart_port_lock_irqsave(port, &flags);
-@@ -1993,7 +1991,7 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
- 	unsigned long flags;
--	unsigned char cr1, old_cr1, old_cr2, cr3, cr4, bdh, modem;
-+	u8 cr1, old_cr1, old_cr2, cr3, cr4, bdh, modem;
- 	unsigned int  baud;
- 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
- 	unsigned int sbr, brfa;
-@@ -2231,7 +2229,7 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- {
- 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
- 	unsigned long flags;
--	unsigned long ctrl, old_ctrl, bd, modem;
-+	u32 ctrl, old_ctrl, bd, modem;
- 	unsigned int  baud;
- 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
- 
-@@ -2498,7 +2496,7 @@ static void
- lpuart_console_write(struct console *co, const char *s, unsigned int count)
- {
- 	struct lpuart_port *sport = lpuart_ports[co->index];
--	unsigned char  old_cr2, cr2;
-+	u8  old_cr2, cr2;
- 	unsigned long flags;
- 	int locked = 1;
- 
-@@ -2528,7 +2526,7 @@ static void
- lpuart32_console_write(struct console *co, const char *s, unsigned int count)
- {
- 	struct lpuart_port *sport = lpuart_ports[co->index];
--	unsigned long  old_cr, cr;
-+	u32 old_cr, cr;
- 	unsigned long flags;
- 	int locked = 1;
- 
-@@ -2562,7 +2560,7 @@ static void __init
- lpuart_console_get_options(struct lpuart_port *sport, int *baud,
- 			   int *parity, int *bits)
- {
--	unsigned char cr, bdh, bdl, brfa;
-+	u8 cr, bdh, bdl, brfa;
- 	unsigned int sbr, uartclk, baud_raw;
- 
- 	cr = readb(sport->port.membase + UARTCR2);
-@@ -2611,7 +2609,7 @@ static void __init
- lpuart32_console_get_options(struct lpuart_port *sport, int *baud,
- 			   int *parity, int *bits)
- {
--	unsigned long cr, bd;
-+	u32 cr, bd;
- 	unsigned int sbr, uartclk, baud_raw;
- 
- 	cr = lpuart32_read(&sport->port, UARTCTRL);
-@@ -2817,7 +2815,7 @@ static int lpuart_global_reset(struct lpuart_port *sport)
- {
- 	struct uart_port *port = &sport->port;
- 	void __iomem *global_addr;
--	unsigned long ctrl, bd;
-+	u32 ctrl, bd;
- 	unsigned int val = 0;
- 	int ret;
- 
-@@ -3023,7 +3021,7 @@ static int lpuart_runtime_resume(struct device *dev)
- 
- static void serial_lpuart_enable_wakeup(struct lpuart_port *sport, bool on)
- {
--	unsigned int val, baud;
-+	u32 val, baud;
- 
- 	if (lpuart_is_32(sport)) {
- 		val = lpuart32_read(&sport->port, UARTCTRL);
-@@ -3088,7 +3086,7 @@ static int lpuart_suspend_noirq(struct device *dev)
- static int lpuart_resume_noirq(struct device *dev)
- {
- 	struct lpuart_port *sport = dev_get_drvdata(dev);
--	unsigned int val;
-+	u32 val;
- 
- 	pinctrl_pm_select_default_state(dev);
- 
-@@ -3108,7 +3106,8 @@ static int lpuart_resume_noirq(struct device *dev)
- static int lpuart_suspend(struct device *dev)
- {
- 	struct lpuart_port *sport = dev_get_drvdata(dev);
--	unsigned long temp, flags;
-+	u32 temp;
-+	unsigned long flags;
- 
- 	uart_suspend_port(&lpuart_reg, &sport->port);
- 
--- 
-2.39.5
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="lygmlimbjvuadv2e"
+Content-Disposition: inline
+In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
+X-Provags-ID: V03:K1:xJLObfOIsGYs3G9tzv2KxMMPmxROXgzsfdd5jG9ok1TZhiuAdR8
+ 9BsmlSVv0FfEC93stkg8tdEDL1NEmeE4kLG1HoH6tG1f4FRRTvBxr4lQovuGOoGi/uTXWaN
+ vkjbFl2dbS6czVvPg97OqYyP42+vA3HzfNIzpqTX3qh90h+gzBfU0YKxHFEEM7i0qGBAN+4
+ 96Ccy6FG110v68Lr2cDqA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:qmYPEFNcSZg=;4UanF72B11xaAS2i0XEyguF/YLk
+ d+SglPUIE89fDgidXDfAdfviSnaVxJfcw8XZftcRmrcbt6LZESs25xPdIDYwFVE9CPguKvenK
+ gcmvm3qTS0QhM+0QEaGKSX+3FYHUmEqjJoB3So/i0WJKxLvfXzhIErtRFDP9PPXH2OEd2W5/+
+ MZxPngP+Fn79Edh0u2h+47aLhTLEo2tjGK/vsIcXXOu2q/WOd1rYOYf0Y6oIhUOKmSQmvFIJl
+ rxP73Ctg4DHftwk9R/e0FcerahclZG0+0RBpKg9BjRk7xogJKO6UGXR4Od9LtPoG0kdQsUi9U
+ lVNmIKlTHFEQAtB7N2LMB3IdKpJOI0Erdj7djT4bGW6NljTRnryzv9lw03hye6KeDyvadywUE
+ SHEN04ZJqE8EJt0frVUoCs2WFaKu8vkzqDXEFMjn6GG0U0L7JHuEwHf5pdXq/jWtNeryaLBBp
+ eEAwH3WQMwz8NLxfU5sZ+eJqxOZ91UiYubJcogDh4D8VjD8qP3wKELcmztlZxr6q/7bX35J76
+ 6zAOrlBH0aHCKDZKEx2TU9kGVli1TWh1gJvGZHuyBhoJmwlDHtpO5gBLCiJEe0c2P4H5x7SFw
+ dn6dQZTQtiCFfX534TZfXn2vlHFfWDe7wEaMXNPlWsiE7PN9iLwCtsMxZN5HVSR6xuor44QL9
+ Rwl5+LYoEncPYB2/eGdwO2gEuvDu2S66vQ2e9Xd0Juuk9vzuNuwG8rhwUpPFhE8jJPNpkRry5
+ ACMsA/QY5WULQddsLMXtVAfqp6QTfrFolWZQsRM8fPgODaeB0wX0ckTe8Mc6lf6xCIhMD6+tY
+ vI1rHOPoQgAYdolIkwarqGOaBz976lEdlZpqC2RcbIzUmeQpnEb4E2K3VQ40CP/lHqS1fDwM7
+ 42NY+dmjfPTbMrLfheBUNY41LrfsMAwkH8yvIvPpr/uQz8Z1ZYDm8k0V04FkoTQvUrwqYC3JN
+ S+elC0eJQz+Q/r1LAmHC3WCwL2w9WyQhqCYf31b9KbgzQqZ7yDDCrzBdX/CpMVcdpnuGYq/u8
+ Vw7RP4E6fnAIKMsheCQnlqPrv1kNLi7/fwfW7K2pa35hftGVqSXJnXMKMQ1UraiJc3wjX0yce
+ ENHL5Wz9nl5x/RrbbDudZga4PewYXZnFJD1qmh9vmAlhL/ZpohGMoAcV25j6eb/r1tbDKgBSS
+ KMfn3Av5/qc56xOYkMvch0Y8859FLUgp1OugdMx3znzCGMKlWK0BE3o8Zh4I2o7R8daL47AGJ
+ 29oDaGh66ET6MZBc5mLK3y7CN7k0oMmxOaNIe2BNdLvxgLtT2S7/dG26UEWEBCJ8NjinFnJNU
+ BTvPpFE3k8CvhkwSF4DfG1mx2XsZ6sXhOYk7dQHjow+P7sJbPOtDbICRAOT0vQKJLLkVJhNrS
+ ibIfDbde+lpfUX5R2u2rQSmZtD8RQeFgxTlFk=
 
 
+--lygmlimbjvuadv2e
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 6.14 000/731] 6.14.2-rc1 review
+MIME-Version: 1.0
 
+On 25/04/08 12:38PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.2 release.
+> There are 731 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 10 Apr 2025 10:47:53 +0000.
+> Anything received after that time might be too late.
+
+Tested-by: Christian Heusel <christian@heusel.eu>
+
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and on the
+Steam Deck (LCD variant) aswell as a Framework Desktop.
+
+--lygmlimbjvuadv2e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmf1FVcACgkQwEfU8yi1
+JYVj0Q/+JQVAUATBuO7W53RKR8zORwFzOoxqEgviNSJtEnpew2jG+G4ZmVZvO+fW
+9tF2nc/WpxAXUZzZ1wLAi0jZzvoVWM5ays5d9a5Jj3D6n4kPDNMPfwowt81xOo9P
+drgrB/Vl0jGc1kkCE04YOtYB+fCuZIpP1K+WS/uBvaqh4J6+CaOyZOXjEUYzfE2T
+HsoucAsHxkuPN/NRJjKQJysUdNTDYY7NDOBKDDdIGhXjDj3Myhr8dYLHGBND2Fmg
+EqH7sRiEvEjAH6pK3JJ9xV0K4yASct7vBK/I0KnnrCvnNltKRjC5XYqkeuSi78Nc
+3RYstQu2mCaWCVuT/X5XwLCkGt+x/V7v/QJ6SOIlKiIX5RlDaBqxXfuSF6pVvcL3
+w04fJKP/XKY01clO5tjFwJGFgKKPjNmHyrpL4r2rtTuMeQ/qjnW1in4VHVqEVPEq
+1S6elZ2U+JM1QiC7mTJa/+LzD4C/9KxvurmhhdODyQDo6ElY8KdDX2cGd0VUs/Kn
+RE+Eqrimctxh1wgQopppsuc797ApdhlB4q6oP6SdhIBhx3n5gfqtboYnggNr0bqE
+agtXY8qN7rJ8Di9TLPkqjaxPHsaERs7+lkUg6YrDrh8W2o5HVVN8nZX6uLoPCFJO
+Vml/77goY40D7GXJ3iinV20KKLABQGLkmQjnXrlt8C0P8BEY9pw=
+=EA18
+-----END PGP SIGNATURE-----
+
+--lygmlimbjvuadv2e--
