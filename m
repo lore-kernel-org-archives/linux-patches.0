@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53F263F3B;
-	Tue,  8 Apr 2025 12:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DB5267B91;
+	Tue,  8 Apr 2025 12:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114660; cv=none; b=F+J9hGNy/WPpJVC7EeBnZjyjL1/RudICmHfeLLXmpu6nDrj3vHoiAks/2aYdoa8vggcbyqFzdlV2pfRlCrMpRQn3nu8LZwQP1fJSQZwibvVsL+nLAigFiWLoXjDRdowIDPS+c8HMGUurOEQy2C/K/cYWC90++kad/MtiUimpss0=
+	t=1744114662; cv=none; b=fIH4mIEbSjcrXeGBktshngcTu8XTtGTItIG2TGq3J0wPJ/PhYuyHXAr8dt68Jqd7K9e3vMmrYb9dbc6vWDlhxoq/+3dSRiMRDlHxkS893DNYFjgrrG1cr3NFLZaSGA50Gl26TVnhFI4DNv5QeouNAJ5OU8T4SRykUTKVranrmCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114660; c=relaxed/simple;
-	bh=NOOkuvI6QmHwgPcnNwuckBWmuc4G/AYSabGsqCGyUUw=;
+	s=arc-20240116; t=1744114662; c=relaxed/simple;
+	bh=aQAAwMrdqSB+ML6DNrYwntTA/sJxkLA1+HkOERQYox8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPCwkjJSxHHqIMKxuBCSupEFA5VB7JD+i4nebE/SwTZscZDrsMjKqaXNLTsHxrn5hiU8dCLocI6ESH3zzxdeYACWDoM/FiMTx4ibQ2xit6SPUvD3FH19ZHHDDEqZ8VJe2TzIyiSz57PzY2XpWM8iaQvsv4vfmX4otnNN89OwMkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPTXkSk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gwxLlxlYrne43dKH20R+Eyq4yVEywS0R3hyqyHGwO4eVMYBvbT3SnGido3JOzaJLndSLPRy1VtNtXI9yccrcQge4W5UVvsPcuDDj+JGTjftZP5wlKWMY9+LzmXL8JPTQqoL/EKJ272Nie6ms9w2zEfvu6OZR8OwJym9Ti6o2MvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjiTGAg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPTXkSk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AD2C4CEE5;
-	Tue,  8 Apr 2025 12:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjiTGAg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F48C4CEE5;
+	Tue,  8 Apr 2025 12:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114659;
-	bh=NOOkuvI6QmHwgPcnNwuckBWmuc4G/AYSabGsqCGyUUw=;
+	s=korg; t=1744114662;
+	bh=aQAAwMrdqSB+ML6DNrYwntTA/sJxkLA1+HkOERQYox8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPTXkSk5UqWqDkB/UDgbDnZeie1HjJ/DLjREuNanv1WnJJRaix2rhcxqAKDXae1s8
-	 buBIxqQFegvt+pj4gE2tH4oJcCQg1nczMIiUArVgYJzDEA9Rugn4/J+0KC/Phn/ANE
-	 ydfllQo1PpPI7t6ERuTqpncARygr1+9WZQxnBeR4=
+	b=jjiTGAg05anohV1WkVDi/GEehN19MPNhIghFDAFfIYic90SAHEzRe67syZleSTyu9
+	 aD7S8rcy47BCx4WjUtsU4jmnXuZKNBevrf46nrOm8IKRegnJ950Y/SHROqCJB4k6At
+	 Y3bpasNMblBcxohdfrdsSrOuQd+a/kSO9RkxiLkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 188/499] pinctrl: renesas: rzv2m: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:46:40 +0200
-Message-ID: <20250408104855.864534720@linuxfoundation.org>
+Subject: [PATCH 6.13 189/499] clk: qcom: ipq5424: fix software and hardware flow control error of UART
+Date: Tue,  8 Apr 2025 12:46:41 +0200
+Message-ID: <20250408104855.892993563@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,46 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-[ Upstream commit 5a550b00704d3a2cd9d766a9427b0f8166da37df ]
+[ Upstream commit 4b28beb882a0a1af0ce47a8a87e7877a3ae6ad36 ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+The UART’s software and hardware flow control are currently not
+functioning correctly.
 
-Call into of_node_put() to rectify that.
+For software flow control, the following error is encountered:
+qcom_geni_serial 1a80000.serial: Couldn't find suitable
+clock rate for 56000000, 3500000, 2500000, 1152000, 921600, 19200
 
-Fixes: 92a9b8252576 ("pinctrl: renesas: Add RZ/V2M pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-4-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+During hardware flow control testing, a “Retry 0: Got ZCAN error” is
+observed.
+
+To address these issues, update the UART frequency table to include all
+supported frequencies according to the frequency plan.
+
+Fixes: 21b5d5a4a311 ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5424 SoC")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Link: https://lore.kernel.org/r/20250124060914.1564681-1-quic_mmanikan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-ipq5424.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index 4062c56619f59..8c7169db4fcce 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -940,6 +940,8 @@ static int rzv2m_gpio_register(struct rzv2m_pinctrl *pctrl)
- 		return ret;
- 	}
+diff --git a/drivers/clk/qcom/gcc-ipq5424.c b/drivers/clk/qcom/gcc-ipq5424.c
+index 6b76d909597ec..0fec8188f3b06 100644
+--- a/drivers/clk/qcom/gcc-ipq5424.c
++++ b/drivers/clk/qcom/gcc-ipq5424.c
+@@ -572,13 +572,19 @@ static struct clk_rcg2 gcc_qupv3_spi1_clk_src = {
+ };
  
-+	of_node_put(of_args.np);
-+
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins) {
- 		dev_err(pctrl->dev, "gpio-ranges does not match selected SOC\n");
+ static const struct freq_tbl ftbl_gcc_qupv3_uart0_clk_src[] = {
+-	F(960000, P_XO, 10, 2, 5),
+-	F(4800000, P_XO, 5, 0, 0),
+-	F(9600000, P_XO, 2, 4, 5),
+-	F(16000000, P_GPLL0_OUT_MAIN, 10, 1, 5),
++	F(3686400,  P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 144, 15625),
++	F(7372800,  P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 288, 15625),
++	F(14745600, P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 576, 15625),
+ 	F(24000000, P_XO, 1, 0, 0),
+ 	F(25000000, P_GPLL0_OUT_MAIN, 16, 1, 2),
+-	F(50000000, P_GPLL0_OUT_MAIN, 16, 0, 0),
++	F(32000000, P_GPLL0_OUT_MAIN, 1, 1, 25),
++	F(40000000, P_GPLL0_OUT_MAIN, 1, 1, 20),
++	F(46400000, P_GPLL0_OUT_MAIN, 1, 29, 500),
++	F(48000000, P_GPLL0_OUT_MAIN, 1, 3, 50),
++	F(51200000, P_GPLL0_OUT_MAIN, 1, 8, 125),
++	F(56000000, P_GPLL0_OUT_MAIN, 1, 7, 100),
++	F(58982400, P_GPLL0_OUT_MAIN, 1, 1152, 15625),
++	F(60000000, P_GPLL0_OUT_MAIN, 1, 3, 40),
+ 	F(64000000, P_GPLL0_OUT_MAIN, 12.5, 0, 0),
+ 	{ }
+ };
 -- 
 2.39.5
 
