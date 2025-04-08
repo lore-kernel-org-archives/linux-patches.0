@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873D0224F6;
-	Tue,  8 Apr 2025 11:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B6D224F6;
+	Tue,  8 Apr 2025 11:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111055; cv=none; b=RHlS4fszNHihSLHpwIBQ9gonPq5A1RVADe6CBWu0rpLfb61s6GRFbsh/bQxSKXo3aC3HPizNnGZeHnUiDR8M6woVvLC8DmauB6JYPZgyuipiP/JOjXX6tBmb8RszWfUCnaU+YKNFUO9Pw7MuC0HA5+MRYhaaPVRF8pjAYV9vQ0g=
+	t=1744111058; cv=none; b=o7WfNfh1VX8JnEnWamOrvD8UEZJsk7GzLTBNy5y5Nb0DK842abETrFmUyy9dJB0fk9uppyFWq96p6/comEtuRD2N5ntHLy6WnHDTGdaAe1A16fLB14KBX52a4SOUaX/sirckZLfh5VHOgc7DNXGnTyy6t3HGedy0mqjt2hnpvAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111055; c=relaxed/simple;
-	bh=RCLNQl9CUKfB/R2j6TQOV78azOtrlscMeWdnDQdYehE=;
+	s=arc-20240116; t=1744111058; c=relaxed/simple;
+	bh=6ottKCBeH13XJWHasEwHSrsFN7cl+YiaB/f2sPdcFIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4PjRbKqCcSgKNgp/62Sx6zppG1J/4vNBMPgDnfe2hjibJZaHYeq/CNUax1ycLaKnBTmUyPzXtSupdDJMbdKWF1s6LsGNaFF1jXPvwqJzmNPXu9O2BFXjaMxc5lmJNIj8JT2UTX9r6JvIBvMSrmED2av1q34otoi6nhq5UPg16U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPBvMc18; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UqxKQAnozTt77KoIKvND9mproAvm5FAcSp0X8e+5TMSmuNCe0pCHdThJZ7NHueql+609GO4OOJF/s2srK/ftalndJ0f5g/u0poAV8DmtPwiy27KGF3ekbuDFH87zlKXOd8LNgHTdV+faPbsrBl0YPy1mu+5ePadUr9MnIl4SukM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z16yII+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPBvMc18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F86C4CEE5;
-	Tue,  8 Apr 2025 11:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z16yII+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8857C4CEE5;
+	Tue,  8 Apr 2025 11:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111055;
-	bh=RCLNQl9CUKfB/R2j6TQOV78azOtrlscMeWdnDQdYehE=;
+	s=korg; t=1744111058;
+	bh=6ottKCBeH13XJWHasEwHSrsFN7cl+YiaB/f2sPdcFIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPBvMc18ULizoMibed9jKtFe88hUQnpZOrJHMtVYTY19F9/JjGlgjRg7bSJNZOktD
-	 S+d4wc95Almi3yA5H1AkKPsKyBEpZGkVLUlJPZ7o7cSCEOYN5lAr8q/YhkMFzY/FC0
-	 Xyj8BRXjoq2cKJZLON2sHN+EZbkiJZNAn34tq0h0=
+	b=Z16yII+f04NDC/T06sVJu64DQcoJf2FEX91frIKJtD7iq3H0uTRjx1KQeCIVjKoBm
+	 eYXcG56Ixybpom22kdsw9C8PgRnTAF1M9DL1NYC64YszzUhCSXyq6Gub+d6jHV09n+
+	 TtOtRpnB44766/Hhlq7mzVBU1isPZMH7q3PND5xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Pauli Virtanen <pav@iki.fi>,
+	Daniel Stodden <dns@arista.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 256/731] Bluetooth: hci_core: Enable buffer flow control for SCO/eSCO
-Date: Tue,  8 Apr 2025 12:42:33 +0200
-Message-ID: <20250408104920.237623939@linuxfoundation.org>
+Subject: [PATCH 6.14 292/731] PCI/ASPM: Fix link state exit during switch upstream function removal
+Date: Tue,  8 Apr 2025 12:43:09 +0200
+Message-ID: <20250408104921.070300588@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,283 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Daniel Stodden <daniel.stodden@gmail.com>
 
-[ Upstream commit 13218453521d75916dfed55efb8e809bfc03cb4b ]
+[ Upstream commit cbf937dcadfd571a434f8074d057b32cd14fbea5 ]
 
-This enables buffer flow control for SCO/eSCO
-(see: Bluetooth Core 6.0 spec: 6.22. Synchronous Flow Control Enable),
-recently this has caused the following problem and is actually a nice
-addition for the likes of Socket TX complete:
+Before 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to
+avoid use-after-free"), we would free the ASPM link only after the last
+function on the bus pertaining to the given link was removed.
 
-< HCI Command: Read Buffer Size (0x04|0x0005) plen 0
-> HCI Event: Command Complete (0x0e) plen 11
-      Read Buffer Size (0x04|0x0005) ncmd 1
-        Status: Success (0x00)
-        ACL MTU: 1021 ACL max packet: 5
-        SCO MTU: 240  SCO max packet: 8
-...
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-< SCO Data TX: Handle 257 flags 0x00 dlen 120
-> HCI Event: Hardware Error (0x10) plen 1
-        Code: 0x0a
+That was too late. If function 0 is removed before sibling function,
+link->downstream would point to free'd memory after.
 
-To fix the code will now attempt to enable buffer flow control when
-HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED is set by the driver:
+After above change, we freed the ASPM parent link state upon any function
+removal on the bus pertaining to a given link.
 
-< HCI Command: Write Sync Fl.. (0x03|0x002f) plen 1
-        Flow control: Enabled (0x01)
-> HCI Event: Command Complete (0x0e) plen 4
-      Write Sync Flow Control Enable (0x03|0x002f) ncmd 1
-        Status: Success (0x00)
+That is too early. If the link is to a PCIe switch with MFD on the upstream
+port, then removing functions other than 0 first would free a link which
+still remains parent_link to the remaining downstream ports.
 
-On success then HCI_SCO_FLOWCTL would be set which indicates sco_cnt
-shall be used for flow contro.
+The resulting GPFs are especially frequent during hot-unplug, because
+pciehp removes devices on the link bus in reverse order.
 
-Fixes: 7fedd3bb6b77 ("Bluetooth: Prioritize SCO traffic")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Pauli Virtanen <pav@iki.fi>
+On that switch, function 0 is the virtual P2P bridge to the internal bus.
+Free exactly when function 0 is removed -- before the parent link is
+obsolete, but after all subordinate links are gone.
+
+Link: https://lore.kernel.org/r/e12898835f25234561c9d7de4435590d957b85d9.1734924854.git.dns@arista.com
+Fixes: 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free")
+Signed-off-by: Daniel Stodden <dns@arista.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h      | 13 +++++++
- include/net/bluetooth/hci_core.h |  1 +
- net/bluetooth/hci_core.c         | 62 +++++++++++++++-----------------
- net/bluetooth/hci_event.c        |  2 ++
- net/bluetooth/hci_sync.c         | 24 +++++++++++++
- 5 files changed, 68 insertions(+), 34 deletions(-)
+ drivers/pci/pcie/aspm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index aa684d2b079fa..6da61c185c949 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -208,6 +208,13 @@ enum {
- 	 */
- 	HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED,
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index da3e7edcf49d9..29fcb0689a918 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1270,16 +1270,16 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
+ 	parent_link = link->parent;
  
-+	/* When this quirk is set consider Sync Flow Control as supported by
-+	 * the driver.
-+	 *
-+	 * This quirk must be set before hci_register_dev is called.
-+	 */
-+	HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED,
-+
- 	/* When this quirk is set, the LE states reported through the
- 	 * HCI_LE_READ_SUPPORTED_STATES are invalid/broken.
+ 	/*
+-	 * link->downstream is a pointer to the pci_dev of function 0.  If
+-	 * we remove that function, the pci_dev is about to be deallocated,
+-	 * so we can't use link->downstream again.  Free the link state to
+-	 * avoid this.
++	 * Free the parent link state, no later than function 0 (i.e.
++	 * link->downstream) being removed.
  	 *
-@@ -448,6 +455,7 @@ enum {
- 	HCI_WIDEBAND_SPEECH_ENABLED,
- 	HCI_EVENT_FILTER_CONFIGURED,
- 	HCI_PA_SYNC,
-+	HCI_SCO_FLOWCTL,
- 
- 	HCI_DUT_MODE,
- 	HCI_VENDOR_DIAG,
-@@ -1544,6 +1552,11 @@ struct hci_rp_read_tx_power {
- 	__s8     tx_power;
- } __packed;
- 
-+#define HCI_OP_WRITE_SYNC_FLOWCTL	0x0c2f
-+struct hci_cp_write_sync_flowctl {
-+	__u8     enable;
-+} __packed;
+-	 * If we're removing a non-0 function, it's possible we could
+-	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
+-	 * programming the same ASPM Control value for all functions of
+-	 * multi-function devices, so disable ASPM for all of them.
++	 * Do not free the link state any earlier. If function 0 is a
++	 * switch upstream port, this link state is parent_link to all
++	 * subordinate ones.
+ 	 */
++	if (pdev != link->downstream)
++		goto out;
 +
- #define HCI_OP_READ_PAGE_SCAN_TYPE	0x0c46
- struct hci_rp_read_page_scan_type {
- 	__u8     status;
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 8649ad17408bb..f0b49aad519eb 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1858,6 +1858,7 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- #define lmp_hold_capable(dev)      ((dev)->features[0][0] & LMP_HOLD)
- #define lmp_sniff_capable(dev)     ((dev)->features[0][0] & LMP_SNIFF)
- #define lmp_park_capable(dev)      ((dev)->features[0][1] & LMP_PARK)
-+#define lmp_sco_capable(dev)       ((dev)->features[0][1] & LMP_SCO)
- #define lmp_inq_rssi_capable(dev)  ((dev)->features[0][3] & LMP_RSSI_INQ)
- #define lmp_esco_capable(dev)      ((dev)->features[0][3] & LMP_ESCO)
- #define lmp_bredr_capable(dev)     (!((dev)->features[0][4] & LMP_NO_BREDR))
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 012fc107901a6..94d9147612daf 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3552,42 +3552,27 @@ static void __check_timeout(struct hci_dev *hdev, unsigned int cnt, u8 type)
- }
- 
- /* Schedule SCO */
--static void hci_sched_sco(struct hci_dev *hdev)
-+static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
- {
- 	struct hci_conn *conn;
- 	struct sk_buff *skb;
--	int quote;
-+	int quote, *cnt;
-+	unsigned int pkts = hdev->sco_pkts;
- 
--	BT_DBG("%s", hdev->name);
-+	bt_dev_dbg(hdev, "type %u", type);
- 
--	if (!hci_conn_num(hdev, SCO_LINK))
-+	if (!hci_conn_num(hdev, type) || !pkts)
- 		return;
- 
--	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, SCO_LINK, &quote))) {
--		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
--			BT_DBG("skb %p len %d", skb, skb->len);
--			hci_send_frame(hdev, skb);
--
--			conn->sent++;
--			if (conn->sent == ~0)
--				conn->sent = 0;
--		}
--	}
--}
--
--static void hci_sched_esco(struct hci_dev *hdev)
--{
--	struct hci_conn *conn;
--	struct sk_buff *skb;
--	int quote;
--
--	BT_DBG("%s", hdev->name);
--
--	if (!hci_conn_num(hdev, ESCO_LINK))
--		return;
-+	/* Use sco_pkts if flow control has not been enabled which will limit
-+	 * the amount of buffer sent in a row.
-+	 */
-+	if (!hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
-+		cnt = &pkts;
-+	else
-+		cnt = &hdev->sco_cnt;
- 
--	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, ESCO_LINK,
--						     &quote))) {
-+	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
- 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
- 			BT_DBG("skb %p len %d", skb, skb->len);
- 			hci_send_frame(hdev, skb);
-@@ -3595,8 +3580,17 @@ static void hci_sched_esco(struct hci_dev *hdev)
- 			conn->sent++;
- 			if (conn->sent == ~0)
- 				conn->sent = 0;
-+			(*cnt)--;
- 		}
- 	}
-+
-+	/* Rescheduled if all packets were sent and flow control is not enabled
-+	 * as there could be more packets queued that could not be sent and
-+	 * since no HCI_EV_NUM_COMP_PKTS event will be generated the reschedule
-+	 * needs to be forced.
-+	 */
-+	if (!pkts && !hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
-+		queue_work(hdev->workqueue, &hdev->tx_work);
- }
- 
- static void hci_sched_acl_pkt(struct hci_dev *hdev)
-@@ -3632,8 +3626,8 @@ static void hci_sched_acl_pkt(struct hci_dev *hdev)
- 			chan->conn->sent++;
- 
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev);
--			hci_sched_esco(hdev);
-+			hci_sched_sco(hdev, SCO_LINK);
-+			hci_sched_sco(hdev, ESCO_LINK);
- 		}
+ 	pcie_config_aspm_link(link, 0);
+ 	list_del(&link->sibling);
+ 	free_link_state(link);
+@@ -1290,6 +1290,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
+ 		pcie_config_aspm_path(parent_link);
  	}
  
-@@ -3688,8 +3682,8 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			chan->conn->sent++;
- 
- 			/* Send pending SCO packets right away */
--			hci_sched_sco(hdev);
--			hci_sched_esco(hdev);
-+			hci_sched_sco(hdev, SCO_LINK);
-+			hci_sched_sco(hdev, ESCO_LINK);
- 		}
- 	}
- 
-@@ -3734,8 +3728,8 @@ static void hci_tx_work(struct work_struct *work)
- 
- 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
- 		/* Schedule queues and send stuff to HCI driver */
--		hci_sched_sco(hdev);
--		hci_sched_esco(hdev);
-+		hci_sched_sco(hdev, SCO_LINK);
-+		hci_sched_sco(hdev, ESCO_LINK);
- 		hci_sched_iso(hdev);
- 		hci_sched_acl(hdev);
- 		hci_sched_le(hdev);
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 903b0b52692aa..ab95e49f042ea 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4442,9 +4442,11 @@ static void hci_num_comp_pkts_evt(struct hci_dev *hdev, void *data,
- 			break;
- 
- 		case SCO_LINK:
-+		case ESCO_LINK:
- 			hdev->sco_cnt += count;
- 			if (hdev->sco_cnt > hdev->sco_pkts)
- 				hdev->sco_cnt = hdev->sco_pkts;
-+
- 			break;
- 
- 		case ISO_LINK:
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index cf60a8da943a5..14c3ee5c6a1e8 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3769,6 +3769,28 @@ static int hci_write_ca_timeout_sync(struct hci_dev *hdev)
- 				     sizeof(param), &param, HCI_CMD_TIMEOUT);
++ out:
+ 	mutex_unlock(&aspm_lock);
+ 	up_read(&pci_bus_sem);
  }
- 
-+/* Enable SCO flow control if supported */
-+static int hci_write_sync_flowctl_sync(struct hci_dev *hdev)
-+{
-+	struct hci_cp_write_sync_flowctl cp;
-+	int err;
-+
-+	/* Check if the controller supports SCO and HCI_OP_WRITE_SYNC_FLOWCTL */
-+	if (!lmp_sco_capable(hdev) || !(hdev->commands[10] & BIT(4)) ||
-+	    !test_bit(HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED, &hdev->quirks))
-+		return 0;
-+
-+	memset(&cp, 0, sizeof(cp));
-+	cp.enable = 0x01;
-+
-+	err = __hci_cmd_sync_status(hdev, HCI_OP_WRITE_SYNC_FLOWCTL,
-+				    sizeof(cp), &cp, HCI_CMD_TIMEOUT);
-+	if (!err)
-+		hci_dev_set_flag(hdev, HCI_SCO_FLOWCTL);
-+
-+	return err;
-+}
-+
- /* BR Controller init stage 2 command sequence */
- static const struct hci_init_stage br_init2[] = {
- 	/* HCI_OP_READ_BUFFER_SIZE */
-@@ -3787,6 +3809,8 @@ static const struct hci_init_stage br_init2[] = {
- 	HCI_INIT(hci_clear_event_filter_sync),
- 	/* HCI_OP_WRITE_CA_TIMEOUT */
- 	HCI_INIT(hci_write_ca_timeout_sync),
-+	/* HCI_OP_WRITE_SYNC_FLOWCTL */
-+	HCI_INIT(hci_write_sync_flowctl_sync),
- 	{}
- };
- 
 -- 
 2.39.5
 
