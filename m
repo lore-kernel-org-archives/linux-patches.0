@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07580268683;
-	Tue,  8 Apr 2025 11:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A695A2686A8;
+	Tue,  8 Apr 2025 11:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110592; cv=none; b=Zo4KFrv0D/Rup9byVhgsaifC+v+cRcLOOcakI4qCo9RskyTDc8sGyojogguirHYNa6658qyZHaL5V2Hw27Tj15bNcasX0pbxJRxBR6UtUfXYii2/VP3st1796S7NBXAC77+kfNjgtPOJYm0vB+Mbx4AfzMk90ji/Bfh0xZii8vU=
+	t=1744110594; cv=none; b=AH3OrkvkIYCOPdo2ur3WTKTzSO5ZkO/4JlMq++zqtUU8PqVorqK/dqEYqSN8tT29UQhOJPfoRI7IFv1DozBpb4Qe4Jrjytc7/3K8WSu8jU1bEeqd8RBVrvxB302pQW5HqC+9ped7x6ecqIUmc12e0RvrHGw8BW4wGz6W26lapEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110592; c=relaxed/simple;
-	bh=1cSH32IrmCWzHIhpd76EFJH6QQBvWZMGodAiv72Rqiw=;
+	s=arc-20240116; t=1744110594; c=relaxed/simple;
+	bh=GUA2FAeCot4+ucdIzbjDnUIEPseCB2K9vKlm0eREl0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5SU+hsUt8lZlyM8NXoErz4lmF90iiyHe5axBBoGGa0HNwtKolqo/Oj866861yGK9+XA0zHlAmkpv/7ysex1E0yvb9cDGBA/fscfzELQB3pkiUr/Mw6pn/Itcf8XIkO9KSCcq0fISixolZH9PPp4vayDj9FObHngVwDyekEUANY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYpxTCYT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQoM8onwLA6xYDDz0+MbG2UMuLr+aH7rL7FRoJ0mYnbkdDpbB+GGiP5JXYtgjVkW+IA+y8SGv7+fLrM2lMrVcG8LNishW6o5KRpQPqwSpVsdiGdV+Cl4Xs25gbrWr4bpOo8k0uUTl0IF1tLR7IL2hKu9fpeGv6gNb1Dzp5x/IFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9Ud283D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYpxTCYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C07FC4CEE5;
-	Tue,  8 Apr 2025 11:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9Ud283D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D5CC4CEE5;
+	Tue,  8 Apr 2025 11:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110591;
-	bh=1cSH32IrmCWzHIhpd76EFJH6QQBvWZMGodAiv72Rqiw=;
+	s=korg; t=1744110594;
+	bh=GUA2FAeCot4+ucdIzbjDnUIEPseCB2K9vKlm0eREl0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYpxTCYTUUMmzwrYw8BZxJLE0SlAaO8TMritEChLLKKcS3+ld12js5HoLctBVnDg2
-	 iAo7erno2O1etI/8u9R5aNgZqZ5zftOtibWjfFGoC1MR69l0Fm6s8qpWXx+yO+K/6c
-	 GthrRENua3VgcJ4D0eGtylbYdKH9xR2nOALpOcg0=
+	b=e9Ud283DNZnLg91nol9pOnUMW71cef6/bYg90LmmD2nE0S4eAFmCxGBFSLdJrWRnR
+	 2sqJh3uAtwqY/0D8xYAsNP4awf3DyOnQBGiADxMteFm8ZxFil2/bpx199FVs6NHbS8
+	 NmMBAQqeERIlDR92R6UdWoLKOXij/JVh/9CMgJT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 120/731] wifi: ath12k: use link specific bss_conf as well in ath12k_mac_vif_cache_flush()
-Date: Tue,  8 Apr 2025 12:40:17 +0200
-Message-ID: <20250408104917.068639552@linuxfoundation.org>
+Subject: [PATCH 6.14 121/731] arm64: dts: imx8mp-skov: correct PMIC board limits
+Date: Tue,  8 Apr 2025 12:40:18 +0200
+Message-ID: <20250408104917.091253974@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,57 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 11d963d44c77261d6a948f3745bbd678eef4b83b ]
+[ Upstream commit d19a6f79961df1c29d8b2ac93b01b96788f209fa ]
 
-Commit 3952657848c0 ("wifi: ath12k: Use mac80211 vif's link_conf instead of
-bss_conf") aims at, where applicable, replacing all usage of vif's bss_conf
-with link specific bss_conff, but missed one instance in
-ath12k_mac_vif_cache_flush(). This results in wrong configurations passed
-to ath12k_mac_bss_info_changed() when the link in question is not the default
-link.
+The PMIC voltage constraints in the device tree currently describe the
+permissible range of the PMIC. This is unnecessary as this information
+already exists in the driver and wrong as it doesn't account for
+board-specific constraints, e.g. a 2.1V on VDD_SOC would fry the SoC and
+a maximum voltage of 3.4V on the VDD_3V3 rail may be unexpected across
+the board.
 
-Change to use the link specific bss_conf to fix this issue.
+Fix this by adjusting constraints to reflect the board limits.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
-
-Fixes: 3952657848c0 ("wifi: ath12k: Use mac80211 vif's link_conf instead of bss_conf")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20241209024146.3282-1-quic_bqiang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6d382d51d979 ("arm64: dts: freescale: Add SKOV IMX8MP CPU revB board")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ .../boot/dts/freescale/imx8mp-skov-reva.dtsi  | 24 +++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 2d062b5904a8e..9c3e66dbe0c3b 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -8066,6 +8066,7 @@ static void ath12k_mac_vif_cache_flush(struct ath12k *ar, struct ath12k_link_vif
- 	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(ahvif);
- 	struct ath12k_vif_cache *cache = ahvif->cache[arvif->link_id];
- 	struct ath12k_base *ab = ar->ab;
-+	struct ieee80211_bss_conf *link_conf;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-skov-reva.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-skov-reva.dtsi
+index 59813ef8e2bb3..ae82166b5c266 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-skov-reva.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-skov-reva.dtsi
+@@ -247,8 +247,8 @@
  
- 	int ret;
+ 			reg_vdd_arm: BUCK2 {
+ 				regulator-name = "VDD_ARM";
+-				regulator-min-microvolt = <600000>;
+-				regulator-max-microvolt = <2187500>;
++				regulator-min-microvolt = <850000>;
++				regulator-max-microvolt = <1000000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -259,8 +259,8 @@
  
-@@ -8084,7 +8085,13 @@ static void ath12k_mac_vif_cache_flush(struct ath12k *ar, struct ath12k_link_vif
- 	}
+ 			reg_vdd_3v3: BUCK4 {
+ 				regulator-name = "VDD_3V3";
+-				regulator-min-microvolt = <600000>;
+-				regulator-max-microvolt = <3400000>;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -268,8 +268,8 @@
  
- 	if (cache->bss_conf_changed) {
--		ath12k_mac_bss_info_changed(ar, arvif, &vif->bss_conf,
-+		link_conf = ath12k_mac_get_link_bss_conf(arvif);
-+		if (!link_conf) {
-+			ath12k_warn(ar->ab, "unable to access bss link conf in cache flush for vif %pM link %u\n",
-+				    vif->addr, arvif->link_id);
-+			return;
-+		}
-+		ath12k_mac_bss_info_changed(ar, arvif, link_conf,
- 					    cache->bss_conf_changed);
- 	}
+ 			reg_vdd_1v8: BUCK5 {
+ 				regulator-name = "VDD_1V8";
+-				regulator-min-microvolt = <600000>;
+-				regulator-max-microvolt = <3400000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -277,8 +277,8 @@
  
+ 			reg_nvcc_dram_1v1: BUCK6 {
+ 				regulator-name = "NVCC_DRAM_1V1";
+-				regulator-min-microvolt = <600000>;
+-				regulator-max-microvolt = <3400000>;
++				regulator-min-microvolt = <1100000>;
++				regulator-max-microvolt = <1100000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -286,8 +286,8 @@
+ 
+ 			reg_nvcc_snvs_1v8: LDO1 {
+ 				regulator-name = "NVCC_SNVS_1V8";
+-				regulator-min-microvolt = <1600000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -295,8 +295,8 @@
+ 
+ 			reg_vdda_1v8: LDO3 {
+ 				regulator-name = "VDDA_1V8";
+-				regulator-min-microvolt = <800000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
+ 				vin-supply = <&reg_5v_p>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
 -- 
 2.39.5
 
