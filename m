@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B95F264FA0;
-	Tue,  8 Apr 2025 11:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F1A264FA0;
+	Tue,  8 Apr 2025 11:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110546; cv=none; b=TkFmiTNz0urvNHF5qcX/EfRVFZ/+HKichBmcRDkkIL5Victpawv7Fn66V72RLfdwfB3hbLTh7MYGAlmxdYZoQU7UjMFcLVrD82ixCil/fdDKsglD5KTyCZN9YaLmSRKfjahPEGds0rZ5ivXta17xv9BQabB3PvTgda01gJpSDJs=
+	t=1744110549; cv=none; b=V2hVi+0lfj/fESrjiyJlgfY7Nlb9W1AM8V033y2xRDndaiYcPGIWvULsiROoSLFm5X9C6GCmo0DyubWiivF3Eq6i/Qi2kwywXQ7KSOhxSNmABcA8y+vZ5pZKjT9ubiwY6FQbASHQsSmIsI10Od4kTXSLbhWRSrkcVHJixjwnqGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110546; c=relaxed/simple;
-	bh=ZQvfR2waPJA5OscUDvMwU1giLZWUehfUMJUhPOBbQi0=;
+	s=arc-20240116; t=1744110549; c=relaxed/simple;
+	bh=Xl+HE41PBjLOPROjyYGgaustBo/0+nbOSRQFbZsuRC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpY+D93hNiiKc+ms6i+NDrYlt/M0JQuIiQ7XBSnCrC1sHoffJp0rdVsqN0NKSANavJW9bw3QnhiwSqgQEq+DQCnxgq3qQBr1NxwMzeBMRZmR6ypY6LXdr1Y7TlcGTk8wFFCvLi+bsW0GxhXjBqwkdVfL7xeWW/1k5aPfLC0rPEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jH7N7Ghb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZBergttxKJUUy8FKluz1e1J9W/lhn4MlEC1SqYzrjd01E3mRxz3u4GKjMInO5qFyQZ9mE+G4A4/zMAxtZImrsLYOpxJZidD5JqV5G7cCFIYGKHYjS1IaTqnnuFuJllblonxlWHIhpLK5YKqjhFv5ZZ7Ka41CCGEQkARJmWiRr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqcsrNIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jH7N7Ghb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC68BC4CEE5;
-	Tue,  8 Apr 2025 11:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqcsrNIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D30C4CEE5;
+	Tue,  8 Apr 2025 11:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110546;
-	bh=ZQvfR2waPJA5OscUDvMwU1giLZWUehfUMJUhPOBbQi0=;
+	s=korg; t=1744110549;
+	bh=Xl+HE41PBjLOPROjyYGgaustBo/0+nbOSRQFbZsuRC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jH7N7GhbB8MaFhrqvas+Xvx/MoOc4JEF0usk+fyjgZOqL23E4gd3JP4etO5XckMiS
-	 1Grq1wT04s242WR37MgtaoEVbFzg4IYKeK2aB7uXsL7UVq31amBso2bmvYK8FWKwwZ
-	 bXaf5GVEDXjW5JyY+VHfx5pz5rMqsUZDlVHjfnVY=
+	b=qqcsrNIjk9xr+KiK7YXO7a8TTFMTe/6FNVMbd7XvDH2hRNUgeQ6+rjCiroYPuY9fN
+	 W4Wkm8RsRb+ctpj7gT1aPQJRErlqqRAMhq0Pog43boKvk5k+4fw9uXA7IxOjfUPdMY
+	 yeMHvyr4uAUyYNHimwP7OQSjSNiQJ3ZTtqRgJi2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 104/731] scsi: mpi3mr: Fix locking in an error path
-Date: Tue,  8 Apr 2025 12:40:01 +0200
-Message-ID: <20250408104916.693064619@linuxfoundation.org>
+Subject: [PATCH 6.14 105/731] scsi: mpt3sas: Fix a locking bug in an error path
+Date: Tue,  8 Apr 2025 12:40:02 +0200
+Message-ID: <20250408104916.717006178@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,44 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit c733741ae1c3a5927f72664b0d760d5f4c14f96b ]
+[ Upstream commit 38afcf0660f5c408ba6c2f0ba3a9729e0102fe2e ]
 
-Make all error paths unlock rioc->bsg_cmds.mutex.
+Call mutex_unlock(&ioc->hostdiag_unlock_mutex) once from error paths
+instead of twice.
 
 This patch fixes the following Clang -Wthread-safety errors:
 
-drivers/scsi/mpi3mr/mpi3mr_app.c:2835:1: error: mutex 'mrioc->bsg_cmds.mutex' is not held on every path through here [-Werror,-Wthread-safety-analysis]
- 2835 | }
-      | ^
-drivers/scsi/mpi3mr/mpi3mr_app.c:2332:6: note: mutex acquired here
- 2332 |         if (mutex_lock_interruptible(&mrioc->bsg_cmds.mutex))
-      |             ^
-./include/linux/mutex.h:172:40: note: expanded from macro 'mutex_lock_interruptible'
-  172 | #define mutex_lock_interruptible(lock) mutex_lock_interruptible_nested(lock, 0)
-      |                                        ^
+drivers/scsi/mpt3sas/mpt3sas_base.c:8085:2: error: mutex 'ioc->hostdiag_unlock_mutex' is not held on every path through here [-Werror,-Wthread-safety-analysis]
+ 8085 |         pci_cfg_access_unlock(ioc->pdev);
+      |         ^
+drivers/scsi/mpt3sas/mpt3sas_base.c:8019:2: note: mutex acquired here
+ 8019 |         mutex_lock(&ioc->hostdiag_unlock_mutex);
+      |         ^
+./include/linux/mutex.h:171:26: note: expanded from macro 'mutex_lock'
+  171 | #define mutex_lock(lock) mutex_lock_nested(lock, 0)
+      |                          ^
+drivers/scsi/mpt3sas/mpt3sas_base.c:8085:2: error: mutex 'ioc->hostdiag_unlock_mutex' is not held on every path through here [-Werror,-Wthread-safety-analysis]
+ 8085 |         pci_cfg_access_unlock(ioc->pdev);
+      |         ^
+drivers/scsi/mpt3sas/mpt3sas_base.c:8019:2: note: mutex acquired here
+ 8019 |         mutex_lock(&ioc->hostdiag_unlock_mutex);
+      |         ^
+./include/linux/mutex.h:171:26: note: expanded from macro 'mutex_lock'
+  171 | #define mutex_lock(lock) mutex_lock_nested(lock, 0)
+      |                          ^
+drivers/scsi/mpt3sas/mpt3sas_base.c:8087:2: error: releasing mutex 'ioc->hostdiag_unlock_mutex' that was not held [-Werror,-Wthread-safety-analysis]
+ 8087 |         mutex_unlock(&ioc->hostdiag_unlock_mutex);
+      |         ^
 
-Cc: Sathya Prakash <sathya.prakash@broadcom.com>
-Fixes: fb231d7deffb ("scsi: mpi3mr: Support for preallocation of SGL BSG data buffers part-2")
+Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Fixes: c0767560b012 ("scsi: mpt3sas: Reload SBR without rebooting HBA")
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250210203936.2946494-2-bvanassche@acm.org
+Link: https://lore.kernel.org/r/20250210203936.2946494-3-bvanassche@acm.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 7589f48aebc80..f4b5813e6fc4c 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -2339,6 +2339,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job)
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index dc43cfa83088b..212e3b86bb817 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -8018,7 +8018,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
+ 
+ 	mutex_lock(&ioc->hostdiag_unlock_mutex);
+ 	if (mpt3sas_base_unlock_and_get_host_diagnostic(ioc, &host_diagnostic))
+-		goto out;
++		goto unlock;
+ 
+ 	hcb_size = ioc->base_readl(&ioc->chip->HCBSize);
+ 	drsprintk(ioc, ioc_info(ioc, "diag reset: issued\n"));
+@@ -8038,7 +8038,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
+ 			ioc_info(ioc,
+ 			    "Invalid host diagnostic register value\n");
+ 			_base_dump_reg_set(ioc);
+-			goto out;
++			goto unlock;
+ 		}
+ 		if (!(host_diagnostic & MPI2_DIAG_RESET_ADAPTER))
+ 			break;
+@@ -8074,17 +8074,19 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
+ 		ioc_err(ioc, "%s: failed going to ready state (ioc_state=0x%x)\n",
+ 			__func__, ioc_state);
+ 		_base_dump_reg_set(ioc);
+-		goto out;
++		goto fail;
  	}
  
- 	if (!mrioc->ioctl_sges_allocated) {
-+		mutex_unlock(&mrioc->bsg_cmds.mutex);
- 		dprint_bsg_err(mrioc, "%s: DMA memory was not allocated\n",
- 			       __func__);
- 		return -ENOMEM;
+ 	pci_cfg_access_unlock(ioc->pdev);
+ 	ioc_info(ioc, "diag reset: SUCCESS\n");
+ 	return 0;
+ 
+- out:
++unlock:
++	mutex_unlock(&ioc->hostdiag_unlock_mutex);
++
++fail:
+ 	pci_cfg_access_unlock(ioc->pdev);
+ 	ioc_err(ioc, "diag reset: FAILED\n");
+-	mutex_unlock(&ioc->hostdiag_unlock_mutex);
+ 	return -EFAULT;
+ }
+ 
 -- 
 2.39.5
 
