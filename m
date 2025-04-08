@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3DC2288CB;
-	Tue,  8 Apr 2025 11:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC52D2690D6;
+	Tue,  8 Apr 2025 11:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111989; cv=none; b=AWDHbWQTu0ZyekTnGbCLSnsiz/IvfFP4gi/iQH4pufRXD46azbM9+tgRev6Yodk2TG5pYtapYbobd++NCIgjo/IYbCRbu1ZRaoRf8cUKL5FTxclHVzhYNgjNCeoFP2o/srFQgzGn9GA93V8qcbDMfBbQHa8NU2Dw4JlTUQwicWE=
+	t=1744111991; cv=none; b=l0iA9B1a+0gClMZ1nH6YyjYd/WT8aV5KlnllMd4/meyv1+HOEcjVY4pmf0rPzmwOlV815WwS9VwiqEZIPbIGciQ2Eb57YGw3RK1TkM7+7l1unNJUgRmuKEr0cjjuJ9wnK85APd8UjLtShoO0EirQ+yET4CNlXh8ZeqwaosBmnnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111989; c=relaxed/simple;
-	bh=XNycCctnRWzJN822FYI8t9TO5AcouvVxr5JRjh4YW2A=;
+	s=arc-20240116; t=1744111991; c=relaxed/simple;
+	bh=Ko/TdnU+5EUaSJc5GVK+c22ZYAj4c03dFjPO2v3WUeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xi5byslV6V7MZbiPIsaOrPF8s59h18pTBqzvE1F5AkrkFmC2DpZ5s/c43K5UtjTc93qdKKJQo73Uhhn+PmsUnf5L5+wjkH2y/IpGpVcpcsgOkk1/l8Hs2CpQTEg6Sbysa97AfOzAsvPdVetA5DmwasRUPdGjIbKaPAYQPewV1q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URagHLid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oS5XsFwOwD0zduIe6FiS4NmKjZeMPQylrQh9kIUkwf82iFB5oud7FPgl2yxFmVom5WfxKoZFsHsNv+rRY/XeQ/v08y6aQ2lfIiiJyForckvZGTc5F3AZH8OrPvKTY3zUpd7UGvP5Qdsx/lLYOVmLc1JPGvLLBYJxCrB6sZYF1jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpppRPKD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URagHLid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E17C4CEE5;
-	Tue,  8 Apr 2025 11:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpppRPKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E61FC4CEE5;
+	Tue,  8 Apr 2025 11:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111989;
-	bh=XNycCctnRWzJN822FYI8t9TO5AcouvVxr5JRjh4YW2A=;
+	s=korg; t=1744111991;
+	bh=Ko/TdnU+5EUaSJc5GVK+c22ZYAj4c03dFjPO2v3WUeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URagHLidnnPeCUWZ1k0gs8sYfXOMcfO4RQiYVnit+Om9/V8UiDNyVNKggXmlXoQPS
-	 n/QTxCxqpoZ9yiup3B0zslEfUeZlo8OiL29Ty4MN8h9i6JF9L14YEFSDhdk/FdeZ7A
-	 kA+rFhFBaEN7od0VrG3VFn06BbgN7n4wsLa95FcM=
+	b=PpppRPKD5Mz6KRmtJax2pz+DeSuBhxW65Ds5M3PfapVyIZpR7rSmbrTH5XgyyCEry
+	 kNhMij+qKKPxzm55DzX+NjRSZgth2rUmmaO6goSZV4/GBprdWWduF6kmYp92dP0qtq
+	 Pf5O1eYrM7CNLl/OavaaOG/XbT5/rnq+eXSIkd34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 632/731] net: decrease cached dst counters in dst_release
-Date: Tue,  8 Apr 2025 12:48:49 +0200
-Message-ID: <20250408104928.972759075@linuxfoundation.org>
+Subject: [PATCH 6.14 633/731] netfilter: nft_tunnel: fix geneve_opt type confusion addition
+Date: Tue,  8 Apr 2025 12:48:50 +0200
+Message-ID: <20250408104928.995754117@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,59 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 3a0a3ff6593d670af2451ec363ccb7b18aec0c0a ]
+[ Upstream commit 1b755d8eb1ace3870789d48fbd94f386ad6e30be ]
 
-Upstream fix ac888d58869b ("net: do not delay dst_entries_add() in
-dst_release()") moved decrementing the dst count from dst_destroy to
-dst_release to avoid accessing already freed data in case of netns
-dismantle. However in case CONFIG_DST_CACHE is enabled and OvS+tunnels
-are used, this fix is incomplete as the same issue will be seen for
-cached dsts:
+When handling multiple NFTA_TUNNEL_KEY_OPTS_GENEVE attributes, the
+parsing logic should place every geneve_opt structure one by one
+compactly. Hence, when deciding the next geneve_opt position, the
+pointer addition should be in units of char *.
 
-  Unable to handle kernel paging request at virtual address ffff5aabf6b5c000
-  Call trace:
-   percpu_counter_add_batch+0x3c/0x160 (P)
-   dst_release+0xec/0x108
-   dst_cache_destroy+0x68/0xd8
-   dst_destroy+0x13c/0x168
-   dst_destroy_rcu+0x1c/0xb0
-   rcu_do_batch+0x18c/0x7d0
-   rcu_core+0x174/0x378
-   rcu_core_si+0x18/0x30
+However, the current implementation erroneously does type conversion
+before the addition, which will lead to heap out-of-bounds write.
 
-Fix this by invalidating the cache, and thus decrementing cached dst
-counters, in dst_release too.
+[    6.989857] ==================================================================
+[    6.990293] BUG: KASAN: slab-out-of-bounds in nft_tunnel_obj_init+0x977/0xa70
+[    6.990725] Write of size 124 at addr ffff888005f18974 by task poc/178
+[    6.991162]
+[    6.991259] CPU: 0 PID: 178 Comm: poc-oob-write Not tainted 6.1.132 #1
+[    6.991655] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[    6.992281] Call Trace:
+[    6.992423]  <TASK>
+[    6.992586]  dump_stack_lvl+0x44/0x5c
+[    6.992801]  print_report+0x184/0x4be
+[    6.993790]  kasan_report+0xc5/0x100
+[    6.994252]  kasan_check_range+0xf3/0x1a0
+[    6.994486]  memcpy+0x38/0x60
+[    6.994692]  nft_tunnel_obj_init+0x977/0xa70
+[    6.995677]  nft_obj_init+0x10c/0x1b0
+[    6.995891]  nf_tables_newobj+0x585/0x950
+[    6.996922]  nfnetlink_rcv_batch+0xdf9/0x1020
+[    6.998997]  nfnetlink_rcv+0x1df/0x220
+[    6.999537]  netlink_unicast+0x395/0x530
+[    7.000771]  netlink_sendmsg+0x3d0/0x6d0
+[    7.001462]  __sock_sendmsg+0x99/0xa0
+[    7.001707]  ____sys_sendmsg+0x409/0x450
+[    7.002391]  ___sys_sendmsg+0xfd/0x170
+[    7.003145]  __sys_sendmsg+0xea/0x170
+[    7.004359]  do_syscall_64+0x5e/0x90
+[    7.005817]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[    7.006127] RIP: 0033:0x7ec756d4e407
+[    7.006339] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
+[    7.007364] RSP: 002b:00007ffed5d46760 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+[    7.007827] RAX: ffffffffffffffda RBX: 00007ec756cc4740 RCX: 00007ec756d4e407
+[    7.008223] RDX: 0000000000000000 RSI: 00007ffed5d467f0 RDI: 0000000000000003
+[    7.008620] RBP: 00007ffed5d468a0 R08: 0000000000000000 R09: 0000000000000000
+[    7.009039] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+[    7.009429] R13: 00007ffed5d478b0 R14: 00007ec756ee5000 R15: 00005cbd4e655cb8
 
-Fixes: d71785ffc7e7 ("net: add dst_cache to ovs vxlan lwtunnel")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20250326173634.31096-1-atenart@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this bug with correct pointer addition and conversion in parse
+and dump code.
+
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dst.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/netfilter/nft_tunnel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dst.c b/net/core/dst.c
-index 9552a90d4772d..6d76b799ce645 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -165,6 +165,14 @@ static void dst_count_dec(struct dst_entry *dst)
- void dst_release(struct dst_entry *dst)
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index 681301b46aa40..2e40f575aed9f 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -341,7 +341,7 @@ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GEN
+ static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
+ 				      struct nft_tunnel_opts *opts)
  {
- 	if (dst && rcuref_put(&dst->__rcuref)) {
-+#ifdef CONFIG_DST_CACHE
-+		if (dst->flags & DST_METADATA) {
-+			struct metadata_dst *md_dst = (struct metadata_dst *)dst;
-+
-+			if (md_dst->type == METADATA_IP_TUNNEL)
-+				dst_cache_reset_now(&md_dst->u.tun_info.dst_cache);
-+		}
-+#endif
- 		dst_count_dec(dst);
- 		call_rcu_hurry(&dst->rcu_head, dst_destroy_rcu);
- 	}
+-	struct geneve_opt *opt = (struct geneve_opt *)opts->u.data + opts->len;
++	struct geneve_opt *opt = (struct geneve_opt *)(opts->u.data + opts->len);
+ 	struct nlattr *tb[NFTA_TUNNEL_KEY_GENEVE_MAX + 1];
+ 	int err, data_len;
+ 
+@@ -625,7 +625,7 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 		if (!inner)
+ 			goto failure;
+ 		while (opts->len > offset) {
+-			opt = (struct geneve_opt *)opts->u.data + offset;
++			opt = (struct geneve_opt *)(opts->u.data + offset);
+ 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
+ 					 opt->opt_class) ||
+ 			    nla_put_u8(skb, NFTA_TUNNEL_KEY_GENEVE_TYPE,
 -- 
 2.39.5
 
