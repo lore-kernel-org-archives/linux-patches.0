@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6748126A1A3;
-	Tue,  8 Apr 2025 11:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8528926AA8F;
+	Tue,  8 Apr 2025 11:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110002; cv=none; b=Sd+A7XOdWjeZjZY20+9ucsBtySRgjNGQcID+UiM5ljE5aPbGUWUshrqV/QCci1YQwnyz9d6dS41rmpLvEhffrz8zjcBHpT/mTjx2dpNVfSasM/LnuJXcEw2IMIoJoCIzo+IQWsNSyJF0bYnrsYzTVW7HHDwzzSo7bUrCcVyyTRw=
+	t=1744110004; cv=none; b=q7UUXk3fOFipVii2AiEiW7xAup1wQ2W0ips//Q3G81Zq6sxUqsEOkE2dtoQz93n9EGjw+1ico3lFpUhDDeh0kjqy4ro6XdQ/36clPSHKEKySB+/ZIFOgJPRSr4F92pF2es96rzyn13qs8CLfMJYV0zJhL3LCxsMumfIVfwfcbJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110002; c=relaxed/simple;
-	bh=Gqk+Mm6Y7YXcZF0Vh0PIqmfzQqnQMRjFCDkCJBUIdW0=;
+	s=arc-20240116; t=1744110004; c=relaxed/simple;
+	bh=VgrjrcNSofOiZlc6Iw0unphutOGlatRzTGK54KoSydU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWPdzaqr20VgYuR5jE2qIh7lAYi+zmCE5L5w1WXQNe8D/6IzhUB0I4Nctwq1i/k+TaxH8RqIdwH6QhZTTsXwKuUZiCR98P9nRT3n8Bc+NTYH1JNuj+ZovOJ9uUsAa+58vNJR/D/HKlYFolenFU7DTWWT4jENJsZtY6Uqt5895g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiWnvbDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LOZFbt3255/yNyI7fYNSPtrESqd4XSugEm2wDmsfiIw5iYMYIT+vC0S6SBaUWKgJEUmk/uslOhQOHnKFkKVRRupG/fwNcijrTJKpImcNbptZIHScylN2R3hcL8G/K1qrWfXeGcEBbxZW6m+pXhmjREBfrmf1ZUaPFlU7mPASegg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA9dsPVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiWnvbDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428C6C4CEEC;
-	Tue,  8 Apr 2025 11:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA9dsPVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15729C4CEEB;
+	Tue,  8 Apr 2025 11:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110001;
-	bh=Gqk+Mm6Y7YXcZF0Vh0PIqmfzQqnQMRjFCDkCJBUIdW0=;
+	s=korg; t=1744110004;
+	bh=VgrjrcNSofOiZlc6Iw0unphutOGlatRzTGK54KoSydU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiWnvbDbn2kPkhVuUe99NkDDynv3Sj5Zgs498i2Dr01H0r8YtCGD54F2J+rezBYbB
-	 zS+4pNKvTdls3R9kP1b+/lDvsebMZ+Ti5oQN/73xUYwaJOkTc5udAOP7mGJz4sCNow
-	 EoBrVxnQMJPRAjNSNTENdxRY4NoyRKeLg9Jrmi/o=
+	b=lA9dsPVtVe9WFTPqQ60VZJj/jGRB6bjfLbAr7QmHmCjZXGztNrY4yjgH0umI7VeHW
+	 buS5+aUE/lOYRDyh/ovmViYNEvW8bq23KGV/7EUK5W5wX6L/6l0CZ//5NH6zPdVnvd
+	 1q+hScwpyIZK4kyLOn03XBqTPABnOVKaKUU9A6rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/227] perf/ring_buffer: Allow the EPOLLRDNORM flag for poll
-Date: Tue,  8 Apr 2025 12:48:23 +0200
-Message-ID: <20250408104824.082279898@linuxfoundation.org>
+Subject: [PATCH 5.10 134/227] PCI: brcmstb: Use internal register to change link capability
+Date: Tue,  8 Apr 2025 12:48:32 +0200
+Message-ID: <20250408104824.339157742@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -49,47 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit c96fff391c095c11dc87dab35be72dee7d217cde ]
+[ Upstream commit 0c97321e11e0e9e18546f828492758f6aaecec59 ]
 
-The poll man page says POLLRDNORM is equivalent to POLLIN. For poll(),
-it seems that if user sets pollfd with POLLRDNORM in userspace, perf_poll
-will not return until timeout even if perf_output_wakeup called,
-whereas POLLIN returns.
+The driver has been mistakenly writing to a read-only (RO)
+configuration space register (PCI_EXP_LNKCAP) to change the
+PCIe link capability.
 
-Fixes: 76369139ceb9 ("perf: Split up buffer handling from core code")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250314030036.2543180-1-chen.dylane@linux.dev
+Although harmless in this case, the proper write destination
+is an internal register that is reflected by PCI_EXP_LNKCAP.
+
+Thus, fix the brcm_pcie_set_gen() function to correctly update
+the link capability.
+
+Fixes: c0452137034b ("PCI: brcmstb: Add Broadcom STB PCIe host controller driver")
+Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250214173944.47506-3-james.quinlan@broadcom.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pcie-brcmstb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index ffca72b8c4c6d..74802ec5ab148 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -19,7 +19,7 @@
- 
- static void perf_output_wakeup(struct perf_output_handle *handle)
+diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
+index 9c3d2982248d3..be6af5585dd6b 100644
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -402,10 +402,10 @@ static int brcm_pcie_set_ssc(struct brcm_pcie *pcie)
+ static void brcm_pcie_set_gen(struct brcm_pcie *pcie, int gen)
  {
--	atomic_set(&handle->rb->poll, EPOLLIN);
-+	atomic_set(&handle->rb->poll, EPOLLIN | EPOLLRDNORM);
+ 	u16 lnkctl2 = readw(pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCTL2);
+-	u32 lnkcap = readl(pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCAP);
++	u32 lnkcap = readl(pcie->base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
  
- 	handle->event->pending_wakeup = 1;
- 	irq_work_queue(&handle->event->pending);
+ 	lnkcap = (lnkcap & ~PCI_EXP_LNKCAP_SLS) | gen;
+-	writel(lnkcap, pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCAP);
++	writel(lnkcap, pcie->base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
+ 
+ 	lnkctl2 = (lnkctl2 & ~0xf) | gen;
+ 	writew(lnkctl2, pcie->base + BRCM_PCIE_CAP_REGS + PCI_EXP_LNKCTL2);
 -- 
 2.39.5
 
