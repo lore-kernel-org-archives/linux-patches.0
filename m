@@ -1,289 +1,95 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2078.outbound.protection.outlook.com [40.107.244.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202AD22D4FF;
-	Tue,  8 Apr 2025 17:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.78
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744134000; cv=fail; b=cENGvso5EUZnBBJndc53/6JEM1I7WMuWxpV4TfyIeO/1cA5k+yIk2fJxX442VzRlMGi+MwAtuYEzYUdGaZMgR8YCX2H579RSJXgCOkvOXiYGK9Q7BlfuE+/0xwc7WRjJbaUaWHuOI7hdDSAuhA0ujh+EMJHNbnFWFqdlZ1RC5XQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744134000; c=relaxed/simple;
-	bh=c7FBrr6tRJPjEgmNrRlM+GelfsvTx3ddvWWt4c826Jc=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=dsLJGpohEhHvXtSgHL/+qdWdWk8f9Lp1ipnm7zC23DDEgNZtLAWWZznNVxChiqql9TkBAKTYoXMCFT9ez2vAZ3dtFNLRmSdd3hAPGPqafWqFtuJGCilH1evacnoVXVTPsMmfD5q/SYGy/QOmEb8AQbfnUOT9NzZjurzEPhtgtzY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DvaE8+zZ; arc=fail smtp.client-ip=40.107.244.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2446422ACDC
+	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 18:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744137011; cv=none; b=AJWK/r6NlCxXhObknckF0t+KjgaoKTyYQFndJXfqQA2nKW05GTJ0xLlReYYHjZREuHbCzt7FuVRthNA6jUxvwZYYxFf/CyIMq/zgpN+LSEqbfGeHqWUmGkiaoBmsBv2dMUYVW3D+P4eKHCMSeu2eTSuNF33heH3SuRxRduTJmvQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744137011; c=relaxed/simple;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BfZzQGWF2hymETAD90u6O1B4D9Ug5ZnAz7l7F8a7peCBNo//KRVeoMDDR0M2DtBedcLy0dJWCdJdQB+++6Ka05V/EpUeXWKZqbe7+EqLj6yJ5u7Wpb/U71j94tMDwcUhyV7QLsQCg9tVQj9Ghu7qzVz3oD+ZVlo55XFZDwLNYO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=inUK64hQ; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DvaE8+zZ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gFJ2/9eu3iOTTjJGS06kTxYz20n7yedoJbvEqfNQNmWS95al/kpLGCQAtC3E1vr2puzy/2Xt+t39Bp61+5TIwkpVe8uPdZjLV8MquQ3uMJD4U9t51JYbp+D1uBTuIJDAd7XsLBuyQYj799rFVom4AQY8G4HiUSN72lvdRXmCgVeYBH5qynJJC5l4Vm8325ZXu5n7Hm3E8GKFUId2nlEiGddItw7bDSYHkUwMGVMSP67TqAXQZJp5PCqGPmmLooJur3Nl7e7DGwMyJrlxVK/L9i4WYnDFuwAW5VSZMPfsgXKGxCWDljgkR6S4P6KqIDX3wqgWdYBdoZbV6THlXJ1BUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qeto7JpwEfgNdhwIGSEFwtOCpY34nqf9PbPp49AWhXc=;
- b=CJLaDb+saYhSetGghdp8Sy41r7wuyXCB+IipEaKD4vyVIfpgm0JNswIY7YIoOQIZpS236vMO4hXWlzBf5JdoGXKe+aKcJppxFmsEi8e23r8qoH47rzbcjcGWgLVlZGRoNp+piZ9q0eL2tiqZMHgm+UMod1J399uQeQ7vNfbNcdFo/s2B7N6WDqPQtyxlXLGy8SF44cmaH+wqS1QINi7JexKSPrXkn17B06tPne9JSFXVWMqxzydRG6qp4vKG1cBy0JHFjFl30rVGQlSSDrf4C5Z5VA3bLoSthMRnwdo9mtMuX+cq/NhDowmX5MsFZ+lXovzA00maceNgvru9KSN36Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qeto7JpwEfgNdhwIGSEFwtOCpY34nqf9PbPp49AWhXc=;
- b=DvaE8+zZ9IauA+Thv8C9O50t3h9AXajwMEvRTC/gCYQmRQvMkbuE/R6S2Fk610ksIFqNy0h2FFrylm2ZVrsapCmz1ho1oYMfx7PNy9weNFNeQyH11WeT7biHxPqARiCYYWdXWFeNqSUrurKBq8K8ntVf09nMBA+OFhBFLd3hQ9a3OUWYc5DCMznfpnc6P/wdk8zcDQ4SSME30ILc21nauJr0mUxMNLzYSKAqr/XO0IrP8VPWFL8HPXqWwGRwLIWoc+5s1aJT8zhGCY8ttvbSKHari5M3GVH3hRosZ4JIy7WxcVy5oOCAV9KZcWcU9V5uEPtamkVThuVTXAjGjgx7mw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by MW4PR12MB6803.namprd12.prod.outlook.com (2603:10b6:303:20e::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.31; Tue, 8 Apr
- 2025 17:39:53 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8606.028; Tue, 8 Apr 2025
- 17:39:53 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
-Subject: [PATCH] vfio/type1: Remove Fine Grained Superpages detection
-Date: Tue,  8 Apr 2025 14:39:52 -0300
-Message-ID: <0-v1-0eed68063e59+93d-vfio_fgsp_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BLAPR05CA0018.namprd05.prod.outlook.com
- (2603:10b6:208:36e::13) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="inUK64hQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1744136977; x=1744741777; i=rwarsow@gmx.de;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=inUK64hQV6HkN/kDU3G5FxtNbI7gp1MMDMhvgzq7ygGe8RxMbJJC9gTwsx357JVI
+	 vYfsHMtRO8UPclzQ2UNkK+MQKvl0MFkrQNJ39qlMV8FJrmgnlo3iEss8vIh0r36XZ
+	 Y1lci5keNcXty421+tipGcm7J+DYHU9Wjh1YciIuNuZBzp4ZJLkQzVz1lhPeuzKLz
+	 5H/Nq6FwCwo4hqeSNE8usFrHznBm2HnTQyklLeM1l0jGC0dR+ytQo8nkJOH0MlfVF
+	 fPtnk1NurEIrjtCP+p+DLxvqecqB6KCymyfV7n7XJ5ue8bEoJn+FVCAT+zUApsndS
+	 IhvCVZb1jCMmBMaOUQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.33.88]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MK3Rs-1tmCDv1OCE-00RrTC; Tue, 08
+ Apr 2025 20:29:37 +0200
+Message-ID: <985aa948-5f3c-4c06-8c96-5f382578f409@gmx.de>
+Date: Tue, 8 Apr 2025 20:29:35 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MW4PR12MB6803:EE_
-X-MS-Office365-Filtering-Correlation-Id: f04b4605-487b-4fa3-012a-08dd76c45ee9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?zT2TyPiMtUSlM3Tzvwj096hIVXOuKUKsxP78HAzvfI0ubhr0ni5Mn2JXNGI3?=
- =?us-ascii?Q?2qcsE7dePAHxrmR17RhEpnyNTtVhcMRs04KkIpv3iowed8P7ghC6wO25mnXN?=
- =?us-ascii?Q?a0tVM+bmassA6Yv52kBNEqwSoHQXntKp4fnP9vRjsNVm4Rs0Qiu2Go80fvlF?=
- =?us-ascii?Q?DLeEpAyiNTYWJCvQ65w1jGcigwkg+WoeWAZSLBqgcMn4L88r4ohx50T5+CVS?=
- =?us-ascii?Q?Q4I5YCUanvjGa77HZgWp2tbtlhkz2wuLVYmQUqd55tt23p+LTBAydfYBPpK9?=
- =?us-ascii?Q?s2DBXAziGejvAjiDU5+eqQGx60RZC6flW1Ya1anJgS+XhRTqS5Pp2AmiUBpc?=
- =?us-ascii?Q?UGFXW4zK4Cb1jstwlsb+e4kPhPyts6+v8jY2WZcWdZ1xYsQv481cZjL04/Zi?=
- =?us-ascii?Q?XWoVsAy6AmjOlZwh9HwgurnZpm2mkjKPeHaLQdkiIlZLCwCKm8wk7pCCRBSV?=
- =?us-ascii?Q?JiRLyXlYLQygIge9ifyvoFTIuA5bHKY0UVkM96RRIjF+xIjCEhQhV9c3q9zc?=
- =?us-ascii?Q?fJcxZ5uMsIN1HgN2A1RbnvS2j3PtSBI8K+gJhgOH7encwgC0dRWjF98dglk7?=
- =?us-ascii?Q?sjVrIWB53kr2C9eGKlQTgOwQL+AkfasjEGcRA7z1Wpyr4IGZJ4uPKrqnmshC?=
- =?us-ascii?Q?AnUbmDg70bX6n50bYnLiaTlQrPqm2edsEN+ydzUQqQOq7QXS7axa9OTdbw0m?=
- =?us-ascii?Q?hmYXpMmuI66+6hsplEA22qSFouisGoiUzAH1xCxJw1riby/nZkjYx1qjOzvf?=
- =?us-ascii?Q?ss/or7UlAtKzPkJi2zA6ftwwmf3T5jQWK+wi22B+wUlXB+ezQMY8jQisIIR7?=
- =?us-ascii?Q?kIJBFVzPgE6R/fRiNYkTgd/rCFFwVdN7b/bdyErzwppWkFmeMnOG9FrfxOUi?=
- =?us-ascii?Q?ZCgURKEJ23sbdZe9WoyQNyPq8Vtjvi5VIRDwq6nrGSfDINvSQwQIWnxHw8AT?=
- =?us-ascii?Q?I1nLoK+6/Fz7lUhVsoVmwYvv0yQAcaAppv5rTL6hxcWCeQhdnv4YorSFKaNM?=
- =?us-ascii?Q?p0QAAMbDus8OYNcqUV1RCjeD7HRu6PQIqE0qgPqgylg8CHV4rbgz1eoFrcSW?=
- =?us-ascii?Q?eTTrkdDxC1UVs7XzeYskU56WJSIaw1ATSYoo1RH74td9h4OFmf6akh2A8N8t?=
- =?us-ascii?Q?fmv33TYkZKzFyCqUeLn/r6x2NC941JPqysHuiaI7W4XTyrRtYyIOsrp43+9L?=
- =?us-ascii?Q?l5xMmwcocMt/ZQGGgO6K5BJgG0Z3SIpVkmp6mIpCEOnF0ORth+09r00r36My?=
- =?us-ascii?Q?M7hmu3tgYjT+B3ClOAv6ipe8AnV5qkUKhG5IUvLPYQy+h1d3dHThVwUbYQ9G?=
- =?us-ascii?Q?JEp6/mZqMNgESPHJcEk4q07nO7wUT/mXQC3yWQQav6iANqDwnG5tFjXp8ato?=
- =?us-ascii?Q?YwUv9/++PBzLWW/CRPwlA1nht0CS?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mSYkisQxZ9i/L5K1cdk3xPS8XjQEvvh2pdNluyjJAyHBBJM6qadlEgZlWPob?=
- =?us-ascii?Q?Zhs92U1w3XB5/jB78iI8JEeU+laoGyxkTexE4P5ivB2Ft4QMPec8I59EAyVe?=
- =?us-ascii?Q?ZI9KEYgWelw2BMA/oLCnoLY8abkgxb666i5XMHBP0XTe+VB/nI8sN7tlwes6?=
- =?us-ascii?Q?mTSZvQkOvg7i2s0nwjKXchjUQA/jzutyWdbtUWNx1ffLVMWzd7VCM5gvKsyQ?=
- =?us-ascii?Q?frFIZmPRVDYGlZm2FHEu6+28yhA6FjRpCWx+14U+CaZFPhtzDDmLxueflU84?=
- =?us-ascii?Q?q8XQf8x5zHY+bV0cAAjnA8jHttwunpzf5WsYCVmTDcXFE3jsrEWsmLbLevW4?=
- =?us-ascii?Q?6GCbUBuP5wi2Jw+HVlHDwNRKHnI8GzeSPhJ3MiEtDPJ/Jj+bqinBUUHNJ3cH?=
- =?us-ascii?Q?C6d/+tIitsAHCmLham57rl1vnsxFhZEVs8utNjX3c7A2OMLVD32xBzWP62nl?=
- =?us-ascii?Q?kIhBwLdtI6u7LQW8dbXbYnq1lMf3oZqwTq+DiKbvXtRi9IJgVWMi25Wzxi7w?=
- =?us-ascii?Q?Y5SKTf70tLvnmXbhfbb98PYaL+nbYNK6Ved9QUXEjI/PU+hQljlj2Ul+0dzp?=
- =?us-ascii?Q?6HwQKcsgFwUR5yq46+5cdE8e9gqklF8Cw2mKEqKt0sngD3Huqnu0A2v1uh7Q?=
- =?us-ascii?Q?ei1hJ42Yz0Hxdoq/om/jyGjYVbI6nIMzvd2FgiWcI/8GZsnI1R4XltyM6ibi?=
- =?us-ascii?Q?pOVF9/BM7mAFmMtSsU2Q/ZeyIGiXgsF5Zs6dBSuEJ5pjqWBrV7ryxyQM4k4L?=
- =?us-ascii?Q?mRTnHs8WUdwsONZS8pkOr9SMfsDAa4pUuVGX4msqNsezLdgywdOHqY5IK82c?=
- =?us-ascii?Q?54EiAvCYZfFfdKDSlUOmy7ogZQ7skHHIQhdZlUvfRD3ZP8TKPrDbwmBy5MNE?=
- =?us-ascii?Q?z/MjBpuTw9KpeB5vSs6TaTIFKjUQw6onUwHJ4SNJTkeeARB2USC4EH8lE6yk?=
- =?us-ascii?Q?GGZAWi3bCLrQboLd8JycJAmfeUgLppLsnka46zKd9cc5pEvOKZwIvZhsP0dR?=
- =?us-ascii?Q?wCmigqL+5uNHt0E8aVmBBiZPtTPrmuL7BHEiW+KmojYGkNVGGYD+Fc/aNxs+?=
- =?us-ascii?Q?qtj7eba51IsFBANL0PilMGrrb8toP+O2IJawvLuyVSj7w1owkdlttO7l0TUJ?=
- =?us-ascii?Q?ezD0hrKPxZSPCJB3GtS/RmR07cTFJ7T9rRyLcVX8B+8x7OqItRtaADIuazPj?=
- =?us-ascii?Q?u4MHreFY8cHoEDNvFu+OUFJaUHyNzJbXwNnMYuQLrYa85nxlaLsOQGgpY31B?=
- =?us-ascii?Q?IqjgkILxMdZPoN15RJH3nRKVGPnSXCByLrVuR3yQ6i9D43KG/FiOwvqPo/wS?=
- =?us-ascii?Q?qlROQZ2ubOt47XVhQ/XYzG/4u3lpe0yy+UItoayG4ugIc8topObruzfSm6qJ?=
- =?us-ascii?Q?6EuFd7Cczm8lvSeUVs6XaD+F+rPtHh8rXbyaMRPhgDbk5QczO30CPxojhHqO?=
- =?us-ascii?Q?F6LMMNx+HhqxxoclwQ5BYPYQM4iIZGZvNTk98bqAj4Ggi5imA19u2er1c/xv?=
- =?us-ascii?Q?n5fIN6xmSgRsPtCQa0h17uIjU9fuKi+VPWm+9Edg+kD4Lr1LuV8KSC8aykb7?=
- =?us-ascii?Q?o72JQ8p0odCqmdR6Pg1LXPiHzw675/QjCS5pDrkW?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f04b4605-487b-4fa3-012a-08dd76c45ee9
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Apr 2025 17:39:53.6390
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: neNXmNWzxcUTEQE9CqjPRem08PpzLPf+zASuArKBdKZf2nDEpVM3KwIHAKq0AsOS
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6803
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.14 000/731] 6.14.2-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250408154144.815882523@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20250408154144.815882523@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:ktH0YbfbJENydWsqHGG74iFQU3+HEAd9iZoNxVC+4mYQsWVjaau
+ WJmWxkr+TKuZnp0V+IgjqCUmow+3fYmmgzCXBcd4/Yn5i9akzIYxFRlJy5Evtd7mx3IwY+T
+ ANWilG2pJU+2/h3TwFxw8XjofWhhSOVSmAO8wU99J8TAUJd68Ya5kAAX7fYtGPPMy5nX5rD
+ uI1Db0LoXAGD7UojFSUzg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/t7vKCRv9tA=;S7haPercSpKNHEyHGYNrtXNozci
+ cGY7sTkynyNVEHBySODjRJXd+vWPqYB5b8iKcn9F6i7x3uyQgmI3ZQEuC6z4S1SSNjodTdGZK
+ a8EuX8YDvb08TFdT2OufaMh7ErrOU+j5UQqXb6lfSAc0MzyPruA9GjDOOC06y41PUd3yOYjxI
+ N/lKS21iYgF41VV0uvV9IpXUXUtLmEoMppUl/9EGlfID4NOBGtez45AlOWjMcehvc9Rj88Ock
+ Mc6g3GGiVjXDulARkMx3QavizpkRWZJW4edgGz9ZtDV+YaoHbbuKdX6RsO4vZblAbfQH0Ulwj
+ bbfTpy6t4XgQrQJQOKuqubMw9GVccn/men5/dXfrza7OtfnrkM6Tc4wjXA7BERjFP87Kn8st+
+ AgAkYo0kM1V5YtKBI+MkFvqwJjhqekw8+S3gWubl2eEa2YsGemRWZluCN+H+ZolCWg2qshjU1
+ eqXgE4tKhYDkR30FXanaeWy5y3WZwOHBEiQxZ+asDvnBXf2TWj1OVVO/DQy6HppUlCfGRxq17
+ Zq94a7e/oXEY5u392PRb20Trh+IR49Zg5hGLFslQ9cbsiML7OWpw6KjPiQxSu0ykj1lqN6e2C
+ mwADuOwixm+j2xSC7izGlvu0WkzaJBlpxF4/qtNnKgElEHN6Yf7v9V8kSpFWf9l4fyEyAR/4l
+ lNaKBSCHi9tEgQIiZas7+psZzqRp8Mo9k8mQDVFH2UVOHj5ztW8DnY4vvXYJJCLePN5YIXoV5
+ iP/zV5CbFAe/3KX5AKlQjwGIw8VAqJYeZ68z0W3uZ2XVwmk/+gFyyuEf40lnVk84zrc3X18sz
+ nklQ33SoL75qKwvPN1AvGokRCLVVAUjeQlxzImSG673T5KSpbp8QUm3cRcPUMOsxpmm0jX49G
+ KFKZstHmYMUaX/ZpxfEATvxANlkonJq7UEzgYCREdliSLp0p+4F7dk9KDrGjzHT6nc6nrbpVT
+ BJLu8HLah14jOUE5e+Dy0/Vu/p2kq6nJqh33QWQR5HI3YlkmVlrwWt5bO9J4H0l99MI3C8vze
+ 552I8kmbm1Bjxb/Py1y+VkOGsQXxwqAicx6dBHKpZezBinPMK7eEgYGJLCs+IHbRQkcmmbRFw
+ giSvbtBFDWIz5bgYW/3IUKSgKwced4TvGjXOKZ5oCNOMdib8QHakoQkCIVssgPmA9Dx8mlRCg
+ 0N8Fmr1a2S7V0n8uhJtL+08Qcc8X8h0/RG80W8ptVTTyMU05wBUhe/+BdAeyRfmcaAfg9DuFK
+ ETKRCgoLuHbuR4zdJQA+p1zx+ua2U+Nr+n+PUS1qTu8Y6l34cgYdGNYPOQqiikaQyU80BVU02
+ lKTEmQ3YYMt4JIUpH4yI3GrKGvU1CIY3GILzyJhULFB1xXxxYwvMAVYgbqGu2MGtZsbH6ZUO/
+ 5TPwkkX7Up9hpHZAsLoc58NNGYVpSRnXUMCDLL17Q83itTjA3dFfbkKVv9eMBNsCWsQy1iG4T
+ WWTmF4qcR1ETy38HgdcFl1q3EEt4=
 
-VFIO is looking to enable an optimization where it can rely on the
-unmap operation not splitting and returning the size of a larger IOPTE.
+Hi Greg
 
-However since commits:
-  d50651636fb ("iommu/io-pgtable-arm-v7s: Remove split on unmap behavior")
-  33729a5fc0ca ("iommu/io-pgtable-arm: Remove split on unmap behavior")
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-There are no iommu drivers that do split on unmap anymore. Instead all
-iommu drivers are expected to unmap the whole contiguous page and return
-its size.
+Thanks
 
-Thus, there is no purpose in vfio_test_domain_fgsp() as it is only
-checking if the iommu supports 2*PAGE_SIZE as a contiguous page or not.
-
-Currently only AMD v1 supports such a page size so all this logic only
-activates on AMD v1.
-
-Remove vfio_test_domain_fgsp() and just rely on a direct 2*PAGE_SIZE check
-instead so there is no behavior change.
-
-Maybe it should always activate the iommu_iova_to_phys(), it shouldn't
-have a performance downside since split is gone.
-
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/vfio/vfio_iommu_type1.c | 71 +++++++++------------------------
- 1 file changed, 19 insertions(+), 52 deletions(-)
-
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 0ac56072af9f23..529561bbbef98a 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -80,7 +80,6 @@ struct vfio_domain {
- 	struct iommu_domain	*domain;
- 	struct list_head	next;
- 	struct list_head	group_list;
--	bool			fgsp : 1;	/* Fine-grained super pages */
- 	bool			enforce_cache_coherency : 1;
- };
- 
-@@ -1056,6 +1055,7 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
- 	LIST_HEAD(unmapped_region_list);
- 	struct iommu_iotlb_gather iotlb_gather;
- 	int unmapped_region_cnt = 0;
-+	bool scan_for_contig;
- 	long unlocked = 0;
- 
- 	if (!dma->size)
-@@ -1079,9 +1079,15 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
- 		cond_resched();
- 	}
- 
-+	/*
-+	 * For historical reasons this has only triggered on AMDv1 page tables,
-+	 * though these days it should work everywhere.
-+	 */
-+	scan_for_contig = !(domain->domain->pgsize_bitmap & (2 * PAGE_SIZE));
- 	iommu_iotlb_gather_init(&iotlb_gather);
- 	while (iova < end) {
--		size_t unmapped, len;
-+		size_t len = PAGE_SIZE;
-+		size_t unmapped;
- 		phys_addr_t phys, next;
- 
- 		phys = iommu_iova_to_phys(domain->domain, iova);
-@@ -1094,12 +1100,18 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
- 		 * To optimize for fewer iommu_unmap() calls, each of which
- 		 * may require hardware cache flushing, try to find the
- 		 * largest contiguous physical memory chunk to unmap.
-+		 *
-+		 * If the iova is part of a contiguous page > PAGE_SIZE then
-+		 * unmap will unmap the whole contiguous page and return its
-+		 * size.
- 		 */
--		for (len = PAGE_SIZE;
--		     !domain->fgsp && iova + len < end; len += PAGE_SIZE) {
--			next = iommu_iova_to_phys(domain->domain, iova + len);
--			if (next != phys + len)
--				break;
-+		if (scan_for_contig) {
-+			for (; iova + len < end; len += PAGE_SIZE) {
-+				next = iommu_iova_to_phys(domain->domain,
-+							  iova + len);
-+				if (next != phys + len)
-+					break;
-+			}
- 		}
- 
- 		/*
-@@ -1833,49 +1845,6 @@ static int vfio_iommu_replay(struct vfio_iommu *iommu,
- 	return ret;
- }
- 
--/*
-- * We change our unmap behavior slightly depending on whether the IOMMU
-- * supports fine-grained superpages.  IOMMUs like AMD-Vi will use a superpage
-- * for practically any contiguous power-of-two mapping we give it.  This means
-- * we don't need to look for contiguous chunks ourselves to make unmapping
-- * more efficient.  On IOMMUs with coarse-grained super pages, like Intel VT-d
-- * with discrete 2M/1G/512G/1T superpages, identifying contiguous chunks
-- * significantly boosts non-hugetlbfs mappings and doesn't seem to hurt when
-- * hugetlbfs is in use.
-- */
--static void vfio_test_domain_fgsp(struct vfio_domain *domain, struct list_head *regions)
--{
--	int ret, order = get_order(PAGE_SIZE * 2);
--	struct vfio_iova *region;
--	struct page *pages;
--	dma_addr_t start;
--
--	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, order);
--	if (!pages)
--		return;
--
--	list_for_each_entry(region, regions, list) {
--		start = ALIGN(region->start, PAGE_SIZE * 2);
--		if (start >= region->end || (region->end - start < PAGE_SIZE * 2))
--			continue;
--
--		ret = iommu_map(domain->domain, start, page_to_phys(pages), PAGE_SIZE * 2,
--				IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE,
--				GFP_KERNEL_ACCOUNT);
--		if (!ret) {
--			size_t unmapped = iommu_unmap(domain->domain, start, PAGE_SIZE);
--
--			if (unmapped == PAGE_SIZE)
--				iommu_unmap(domain->domain, start + PAGE_SIZE, PAGE_SIZE);
--			else
--				domain->fgsp = true;
--		}
--		break;
--	}
--
--	__free_pages(pages, order);
--}
--
- static struct vfio_iommu_group *find_iommu_group(struct vfio_domain *domain,
- 						 struct iommu_group *iommu_group)
- {
-@@ -2314,8 +2283,6 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
- 		}
- 	}
- 
--	vfio_test_domain_fgsp(domain, &iova_copy);
--
- 	/* replay mappings on new domains */
- 	ret = vfio_iommu_replay(iommu, domain);
- 	if (ret)
-
-base-commit: 5a7ff05a5717e2ac4f4f83bcdd9033f246e9946b
--- 
-2.43.0
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
 
