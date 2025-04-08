@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5AC26B951;
-	Tue,  8 Apr 2025 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5558F26B950;
+	Tue,  8 Apr 2025 12:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116477; cv=none; b=LqOen64gAWL+UWgiJ8E5tNPymN4qQny+Aht2lFLQ+8RM6l6jhD3DDvtkUgbzzNuMyzZV8pY89vVWWaQpCPilu0P8pmFaj/NtgCQ0zgP5EyFhlW10zk9idKq6YDu+3Tk7hAx9jYr3pBWngXl/bdFQSLiOwgig3JcYHWLk4bKdVpE=
+	t=1744116481; cv=none; b=jzDw9c/17MoIK4ywAFtXJ13OZD7kmCDEXY/bwg9bU9vg0R3JemMKG8StQbnQGjKlhGqwWDctUzIOGYll0vQTeBERncyYREUBJSBexN95Y66PH3aKiKZGF6mHDoCEx4uXxAOXsn+AC/g+sZ9eDAspmyWULbuWenIZuJ0SBkMuCBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116477; c=relaxed/simple;
-	bh=83xSSv4DhIP559pKo/5xwSrfKGfbAQWZ1KYiEybk/Fw=;
+	s=arc-20240116; t=1744116481; c=relaxed/simple;
+	bh=On2IIUIU6TK5Ys5ealtJaDyoA0d906hjZu+FKgwJaxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fK1xVr/Zy2eyb/D8Z5KnSlAcBvAJK6C2pJBBi7a/jcUPgH1W4whQ6IYA38iJbBHj22R8ed/2fc2KJBtpKwchN4T2kV3LiX8vUTxtqiSIib3Zy5+W9khZ4j/RoazXxcv8aZ9UxAA5BIk7p6OmEM/FX/mI3lSX05KcXDYnshMiEgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6dKKE5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adAfuhlXCxqJ8o7PdRJvu7qyikBQlhccx+Dip1j0BtHwBfTheaazGQs6dcTV7KjotozoALneVQAydgFEmuabJ1TzOW+dTy1Ckoj0mqMcy0x1UrRnlW5AfTajXE//sp4BBa/YzEfMC/jjmfM0x4y/jPmnTcA+AUkN4lTZNSGL+OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGqxhKzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6dKKE5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D895EC4CEE5;
-	Tue,  8 Apr 2025 12:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGqxhKzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9FEC4CEEF;
+	Tue,  8 Apr 2025 12:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116477;
-	bh=83xSSv4DhIP559pKo/5xwSrfKGfbAQWZ1KYiEybk/Fw=;
+	s=korg; t=1744116481;
+	bh=On2IIUIU6TK5Ys5ealtJaDyoA0d906hjZu+FKgwJaxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6dKKE5uo17t/Nju7TKDrGh6JR+c5odUcfPOqeIj4ZabQbdmsACLer7MT4UNQzVP2
-	 xjP/5IcAsn7ujpi9mW2iA5QwhPniB8+EvDKVnDuNEmRnDP2I8EjY+L2EtQevvO2uSR
-	 R+chi9rpWCt63zEAmY0As+She7qjPLn/LGOmpYFs=
+	b=BGqxhKzzyQT/iJ0VxhztzxZAO9ifyjZM0pgaGvxoZWbTJH3IueUXJW3L0JLQImCNs
+	 1KyePPGz5DvrIRU8eLxzjGCwwNiKENouJwil517Y3f651giknCynBVgMBV7zObvr5X
+	 SzspqNodjch853sQWV05tgHjbeoA/k1NndUPA7DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/423] pinctrl: renesas: rzv2m: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:48:00 +0200
-Message-ID: <20250408104849.324701082@linuxfoundation.org>
+Subject: [PATCH 6.12 155/423] mfd: sm501: Switch to BIT() to mitigate integer overflows
+Date: Tue,  8 Apr 2025 12:48:01 +0200
+Message-ID: <20250408104849.348968800@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,40 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 5a550b00704d3a2cd9d766a9427b0f8166da37df ]
+[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+If offset end up being high enough, right hand expression in functions
+like sm501_gpio_set() shifted left for that number of bits, may
+not fit in int type.
 
-Call into of_node_put() to rectify that.
+Just in case, fix that by using BIT() both as an option safe from
+overflow issues and to make this step look similar to other gpio
+drivers.
 
-Fixes: 92a9b8252576 ("pinctrl: renesas: Add RZ/V2M pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-4-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: f61be273d369 ("sm501: add gpiolib support")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mfd/sm501.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index 4062c56619f59..8c7169db4fcce 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -940,6 +940,8 @@ static int rzv2m_gpio_register(struct rzv2m_pinctrl *pctrl)
- 		return ret;
- 	}
+diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
+index b3592982a83b5..5b6dc1cb9bfc3 100644
+--- a/drivers/mfd/sm501.c
++++ b/drivers/mfd/sm501.c
+@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
+ {
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
+@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+ 	void __iomem *regs = smchip->regbase;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	unsigned long save;
+ 	unsigned long ddr;
  
-+	of_node_put(of_args.np);
-+
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins) {
- 		dev_err(pctrl->dev, "gpio-ranges does not match selected SOC\n");
+@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
+ {
+ 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
+ 	struct sm501_gpio *smgpio = smchip->ourgpio;
+-	unsigned long bit = 1 << offset;
++	unsigned long bit = BIT(offset);
+ 	void __iomem *regs = smchip->regbase;
+ 	unsigned long save;
+ 	unsigned long val;
 -- 
 2.39.5
 
