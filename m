@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC17374C4;
-	Tue,  8 Apr 2025 11:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83400374C4;
+	Tue,  8 Apr 2025 11:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110272; cv=none; b=UV27qcH19xDacX97qmmVXSjF9LlWCayucHP8888H2dAheVHIjBcJjNPf7c/vEZ/wXYx+wxBLJnlRyDTM+Qy4GxCMZxKWS24TG9DmO7rZIof7T+//xAWWfRMIr3x8f7IhVdo8Gy/sfiT70ZcwMD/3JMtNpVTwDJENrDnsk3kUfHU=
+	t=1744110275; cv=none; b=EEV0rcqqlzH7bspqOcVCXnwgHvwpqYskOLA5QwnF6mpDgeh4q89YILtdJcbh7SY0s8yutuM6XO5ctWjOHfmnf6u7Q2W1Kc0AJJJX9BOvYW4MnOd+nL8fDwRiw149Eo3AnrjzX4mqQlymwI9CXyCcR0Q1fSSbAvfAmtDIjxlDhss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110272; c=relaxed/simple;
-	bh=aTmKWIL2XqxtIllMLgQr6VTkFuMJRBON0ihuhZrrCXw=;
+	s=arc-20240116; t=1744110275; c=relaxed/simple;
+	bh=ifj8bTnv15hLf4ePdCNOsb8GZgzyqRt/hqVd8HD0q0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m6aIqd077TfgD3jCdcvxSeH8OX6EchPfyfgYpqZapUoURW7focB2t5rbJTT7HN8Wc4XH50RKWEhM8N78h77+v7EPtCdv982KZtp1xiTnxpvueJp0L6f0WAhirLSI8jUJXCve4IS7CecdTgOUZL53FUvxkhBPvS1UKUub9dXUUVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHcrWUCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JjwREEKtOkTCioo6KrtTMoGVBsM6sturu5ZRgD0fMUaDIxaYPpkL82ldmJ+F81V0psfzCx4H3Z+tDrNU2n6h1K9fdck6kTwyVfPQe1cZzS7Uwc2bHrtVpebOwnEx8UCl0m+QKtgng/xKZjlm1CYPjuZzAWEvnzN+iSEbz3hRs6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpxYGUaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHcrWUCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB69C4CEE5;
-	Tue,  8 Apr 2025 11:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpxYGUaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1256DC4CEE5;
+	Tue,  8 Apr 2025 11:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110272;
-	bh=aTmKWIL2XqxtIllMLgQr6VTkFuMJRBON0ihuhZrrCXw=;
+	s=korg; t=1744110275;
+	bh=ifj8bTnv15hLf4ePdCNOsb8GZgzyqRt/hqVd8HD0q0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHcrWUCQe+PXanb5AWujFBnXbkRkP35304rumu67J0mqM/3qpysu0/GvUU3ap3eUy
-	 3syWgUj/5AnbjgCJhWt+mNjSNtcllJ6kLFGassZezInAFgOJyq4hxztXeubdN/2uK1
-	 w/K8BKnbqKBC7ftg008+SywC757Z6Rkshx9xjTvE=
+	b=EpxYGUaRTWFipvBjWyOqfavEBT20nzSIqjXDNhcPqjU+CXHyelSndpL87uv5ixSEU
+	 UVwWYJ0k6gfHKUebLl0eyJGyfqzIWMhtNl/ArfMjTGNRxNfS7V9qNBTAi9DbI7aS4Z
+	 dMRdqxDdAlGFTjspM7LW5enqQPcL3a90QUm9l0wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Anton Shyndin <mrcold.il@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 216/227] ACPI: resource: Skip IRQ override on ASUS Vivobook 14 X1404VAP
-Date: Tue,  8 Apr 2025 12:49:54 +0200
-Message-ID: <20250408104826.788972510@linuxfoundation.org>
+	Karel Balej <balejk@matfyz.cz>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 217/227] mmc: sdhci-pxav3: set NEED_RSP_BUSY capability
+Date: Tue,  8 Apr 2025 12:49:55 +0200
+Message-ID: <20250408104826.816063880@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,54 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Karel Balej <balejk@matfyz.cz>
 
-commit 2da31ea2a085cd189857f2db0f7b78d0162db87a upstream.
+commit a41fcca4b342811b473bbaa4b44f1d34d87fcce6 upstream.
 
-Like the ASUS Vivobook X1504VAP and Vivobook X1704VAP, the ASUS Vivobook 14
-X1404VAP has its keyboard IRQ (1) described as ActiveLow in the DSDT, which
-the kernel overrides to EdgeHigh breaking the keyboard.
+Set the MMC_CAP_NEED_RSP_BUSY capability for the sdhci-pxav3 host to
+prevent conversion of R1B responses to R1. Without this, the eMMC card
+in the samsung,coreprimevelte smartphone using the Marvell PXA1908 SoC
+with this mmc host doesn't probe with the ETIMEDOUT error originating in
+__mmc_poll_for_busy.
 
-    $ sudo dmidecode
-    […]
-    System Information
-            Manufacturer: ASUSTeK COMPUTER INC.
-            Product Name: ASUS Vivobook 14 X1404VAP_X1404VA
-    […]
-    $ grep -A 30 PS2K dsdt.dsl | grep IRQ -A 1
-                 IRQ (Level, ActiveLow, Exclusive, )
-                     {1}
+Note that the other issues reported for this phone and host, namely
+floods of "Tuning failed, falling back to fixed sampling clock" dmesg
+messages for the eMMC and unstable SDIO are not mitigated by this
+change.
 
-Add the X1404VAP to the irq1_level_low_skip_override[] quirk table to fix
-this.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219224
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Anton Shyndin <mrcold.il@gmail.com>
-Link: https://patch.msgid.link/20250318160903.77107-1-pmenzel@molgen.mpg.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20200310153340.5593-1-ulf.hansson@linaro.org/
+Link: https://lore.kernel.org/r/D7204PWIGQGI.1FRFQPPIEE2P9@matfyz.cz/
+Link: https://lore.kernel.org/r/20250115-pxa1908-lkml-v14-0-847d24f3665a@skole.hr/
+Cc: stable@vger.kernel.org
+Signed-off-by: Karel Balej <balejk@matfyz.cz>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Link: https://lore.kernel.org/r/20250310140707.23459-1-balejk@matfyz.cz
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/host/sdhci-pxav3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -443,6 +443,13 @@ static const struct dmi_system_id asus_l
- 		},
- 	},
- 	{
-+		/* Asus Vivobook X1404VAP */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "X1404VAP"),
-+		},
-+	},
-+	{
- 		/* Asus Vivobook X1504VAP */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+--- a/drivers/mmc/host/sdhci-pxav3.c
++++ b/drivers/mmc/host/sdhci-pxav3.c
+@@ -401,6 +401,7 @@ static int sdhci_pxav3_probe(struct plat
+ 	if (!IS_ERR(pxa->clk_core))
+ 		clk_prepare_enable(pxa->clk_core);
+ 
++	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+ 	/* enable 1/8V DDR capable */
+ 	host->mmc->caps |= MMC_CAP_1_8V_DDR;
+ 
 
 
