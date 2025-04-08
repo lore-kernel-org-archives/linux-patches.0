@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0442641CC;
-	Tue,  8 Apr 2025 11:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0271D1AAA0F;
+	Tue,  8 Apr 2025 11:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112814; cv=none; b=q0tvLd4Xr0wTicCSpEYFvsaLKv2wFHp8byZuAfizjSUifQm/UwChj/R3qPK2pUcG85kT2ko50GIAX3UGkfNqqSmxHOxFIdnL6i+fGBZl7Q7N6uR3PccTDsrwRC/adCPXKtTPRkbZqOXg+I5V9B7kt0rDadqgDzNchT8opu3iCs4=
+	t=1744112817; cv=none; b=Q6NxvZ9+YbWTPh6mtmth/FQyJsdQ4ELYbRpECYkqaCIvW2Jm4rt1tQU9trFwkxdk7h3RZ+FknoDfhO7wNFcw2YSBI7KcdcEQ+uwra/EXXyEq084H+Xdyq26516DLgQX0WpU0sgo1wtVZayTYun/lN+7Ykso9KSBKmrhxOjFsdcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112814; c=relaxed/simple;
-	bh=xcMPnH3/gLwHgaKIMrGugoKEK5Omm0p9Be7eFugIPbQ=;
+	s=arc-20240116; t=1744112817; c=relaxed/simple;
+	bh=B9EhJMGi7aeRP8HE/DoWl1gF4/kocOzcRqW72cJcKJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLaAt47YCYUdbHePTxczk1w4v2lMaTEDhcdgSPu4/WIh5OvtHKilFzcO3GvHXH/pjCJqxjEoJD7zU4UQcx8D9PKTid6zKz4t/V7vEE25YaCijkOqzHyq35DH5xhsgx4a53YK91oBiPU+tvnA8qSYQBuSIUEK848CvzYdtUqXLFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyT85Ibj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3G85zfjwC3ts/Xgi14mP9TRiF638S7ldlXPbomxvf7J1XokbGj2QeLUgC5swfDNlW1w9fcRp11hKAd4DJCvBKFqNQ8RSsC/Z7sa/jQ3xZkIM6k6h87v/OjkwXJgdNT78tM/lHDqwgImFygC7ODS8gjfrxh3vgtIWSpc6wpfO9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9xYAlrA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyT85Ibj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6A3C4CEE5;
-	Tue,  8 Apr 2025 11:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9xYAlrA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878FEC4CEE5;
+	Tue,  8 Apr 2025 11:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112814;
-	bh=xcMPnH3/gLwHgaKIMrGugoKEK5Omm0p9Be7eFugIPbQ=;
+	s=korg; t=1744112816;
+	bh=B9EhJMGi7aeRP8HE/DoWl1gF4/kocOzcRqW72cJcKJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyT85IbjcvJVyKGfI0w54fmXoZiUhk8I0HgDFBPdSErZSaC6XdgdLefDq4RPHwnSA
-	 Z39q7+9WXR5Z/BtjKWQwBABtQVFoGofQuPM+RTX3+3PfwIe5aUyFCy0LjKAD98/utA
-	 95oyMF7/uUxSTvzuLh51Vjs+/rPO6HoRshh3xPZE=
+	b=b9xYAlrAAo1vcwSxUkLWusUXOzPYQXOlPNfjikhIJVqPklFxT+bwxI7Iu72lchpiy
+	 kzlZZHWULTqdkU8+rrogKjJgw2eeLs7G1JiGuPL2z2Z8XjOcW2qoerm+Ji7MX0wHC9
+	 GP8+0gzcMnrwsHeS6/4rmP7o7TOEIqzjGhpVYzBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 205/279] i3c: master: svc: Fix missing the IBI rules
-Date: Tue,  8 Apr 2025 12:49:48 +0200
-Message-ID: <20250408104831.874224394@linuxfoundation.org>
+Subject: [PATCH 5.15 168/279] remoteproc: core: Clear table_sz when rproc_shutdown
+Date: Tue,  8 Apr 2025 12:49:11 +0200
+Message-ID: <20250408104830.864935959@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,38 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 9cecad134d84d14dc72a0eea7a107691c3e5a837 ]
+[ Upstream commit efdde3d73ab25cef4ff2d06783b0aad8b093c0e4 ]
 
-The code does not add IBI rules for devices with controller capability.
-However, the secondary controller has the controller capability and works
-at target mode when the device is probed. Therefore, add IBI rules for
-such devices.
+There is case as below could trigger kernel dump:
+Use U-Boot to start remote processor(rproc) with resource table
+published to a fixed address by rproc. After Kernel boots up,
+stop the rproc, load a new firmware which doesn't have resource table
+,and start rproc.
 
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250318053606.3087121-2-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+When starting rproc with a firmware not have resource table,
+`memcpy(loaded_table, rproc->cached_table, rproc->table_sz)` will
+trigger dump, because rproc->cache_table is set to NULL during the last
+stop operation, but rproc->table_sz is still valid.
+
+This issue is found on i.MX8MP and i.MX9.
+
+Dump as below:
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Mem abort info:
+  ESR = 0x0000000096000004
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x04: level 0 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=000000010af63000
+[0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 2 UID: 0 PID: 1060 Comm: sh Not tainted 6.14.0-rc7-next-20250317-dirty #38
+Hardware name: NXP i.MX8MPlus EVK board (DT)
+pstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __pi_memcpy_generic+0x110/0x22c
+lr : rproc_start+0x88/0x1e0
+Call trace:
+ __pi_memcpy_generic+0x110/0x22c (P)
+ rproc_boot+0x198/0x57c
+ state_store+0x40/0x104
+ dev_attr_store+0x18/0x2c
+ sysfs_kf_write+0x7c/0x94
+ kernfs_fop_write_iter+0x120/0x1cc
+ vfs_write+0x240/0x378
+ ksys_write+0x70/0x108
+ __arm64_sys_write+0x1c/0x28
+ invoke_syscall+0x48/0x10c
+ el0_svc_common.constprop.0+0xc0/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x30/0xcc
+ el0t_64_sync_handler+0x10c/0x138
+ el0t_64_sync+0x198/0x19c
+
+Clear rproc->table_sz to address the issue.
+
+Fixes: 9dc9507f1880 ("remoteproc: Properly deal with the resource table when detaching")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20250319100106.3622619-1-peng.fan@oss.nxp.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 7fc82b003b961..29440a1266b8a 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -807,7 +807,7 @@ static int svc_i3c_update_ibirules(struct svc_i3c_master *master)
- 
- 	/* Create the IBIRULES register for both cases */
- 	i3c_bus_for_each_i3cdev(&master->base.bus, dev) {
--		if (I3C_BCR_DEVICE_ROLE(dev->info.bcr) == I3C_BCR_I3C_MASTER)
-+		if (!(dev->info.bcr & I3C_BCR_IBI_REQ_CAP))
- 			continue;
- 
- 		if (dev->info.bcr & I3C_BCR_IBI_PAYLOAD) {
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 97e59f7461261..9e6d0dda64a99 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -2102,6 +2102,7 @@ void rproc_shutdown(struct rproc *rproc)
+ 	kfree(rproc->cached_table);
+ 	rproc->cached_table = NULL;
+ 	rproc->table_ptr = NULL;
++	rproc->table_sz = 0;
+ out:
+ 	mutex_unlock(&rproc->lock);
+ }
 -- 
 2.39.5
 
