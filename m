@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA58269CF6;
-	Tue,  8 Apr 2025 11:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778C1269839;
+	Tue,  8 Apr 2025 11:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113577; cv=none; b=HASv5/4cYuwlAHaT4ebCWe1AoiNzSPlQ/qFuxu8klhkRd0Vu8tzEmc8qAFXqKr3zIfGzKcHmdjEGLYRKJJ04HFBahc38vUMICH3KYChWxB5KYzrTNvkkKuaeeqm9uNGTCIE9AwIv+sH1c3+mEkO7ZltNsagoaSIIgI3bZOxJM4U=
+	t=1744113580; cv=none; b=GUfOhXsvGD0DAyqZJvpk0O5G6MSdby8eIN7oyroItGqYZDKQwA/UsS5Le/6f22CS1fNpFY5cnbTWKdVfKbT0RZ+ct2Lob/RzEwmTINAXoo8T+rIq+jVaAZRkCTLC5WAuWyAgsAbIN3LuA2we/7716DjzOcRWscmHsmNOWzgIBm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113577; c=relaxed/simple;
-	bh=lURI0yJ9oliLnOL/S9A1Kq+SBegWKhFeBqjs/ni+oqY=;
+	s=arc-20240116; t=1744113580; c=relaxed/simple;
+	bh=qXh3JprL7h8PJtYwZfWOeUorLTUT0X4Ayreajg5Mbls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5WJEft6YT2fwLdElSOYDemqWrdxDU+yGkCgsX1PhctL69399r7j9EUoBzZDzFNU6JoHx+/CaLxATWERPChaUTkjDSyoKDPD7uKDT+I8lf+XFhcWxcFnYmKjATM6edOAJ8sH34clAd7F4pNSUbFAkV56HeJROUFG8SxGznBf9FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O846jMQe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ep3b6/TnwZIWJyLixVm+4oo/rre4dhGDlWG4EoPD46LynVe12Bfxd37nQGSK4RnnuswGV746sxG/tN90fbpHjxFJKPOYu0axg2LlmwbCKPLYW2rGU+F7dLvhmV2QcA3gSG93NL0pn/Csh5HzJygLkn77181At2LMMqm7j1dUzO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHiyBHC/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O846jMQe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52532C4CEE5;
-	Tue,  8 Apr 2025 11:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHiyBHC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081A5C4CEE5;
+	Tue,  8 Apr 2025 11:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113577;
-	bh=lURI0yJ9oliLnOL/S9A1Kq+SBegWKhFeBqjs/ni+oqY=;
+	s=korg; t=1744113580;
+	bh=qXh3JprL7h8PJtYwZfWOeUorLTUT0X4Ayreajg5Mbls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O846jMQeiH6RfkhZbOeCfk0duA6ghn4JeEuu8hgv2uxaY/keEV5L1NnKIXhWwrFB5
-	 h8Mo4NTHEhIQhW8ZSHN+SCltQlW8FtvDB1rK2700Zzog+JyMPly41iaJTLQ7GFt0Er
-	 7Aud+vGAfLXCUkE+leWFKdZkdekIrR5AHD1oHWuk=
+	b=UHiyBHC/K2zOG8Niz7YIPwpEiIj6k9ryClNxB+U4qCJ931t1+8d9GN7qqdYl5p37Q
+	 ZEnuNM1bxWV7cDw969hL7bDBh4DlDD5BEBZ3X85ZHvNwAbGAa0JBlqhNA0dtgvSBkE
+	 /oW509dlN2Gmzx5SRQTogdY5pmTDbTVEUn5kNqTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juhan Jin <juhan.jin@foxmail.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/268] riscv: ftrace: Add parentheses in macro definitions of make_call_t0 and make_call_ra
-Date: Tue,  8 Apr 2025 12:50:05 +0200
-Message-ID: <20250408104833.791202629@linuxfoundation.org>
+Subject: [PATCH 6.6 212/268] tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().
+Date: Tue,  8 Apr 2025 12:50:23 +0200
+Message-ID: <20250408104834.299760083@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,60 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juhan Jin <juhan.jin@foxmail.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 5f1a58ed91a040d4625d854f9bb3dd4995919202 ]
+[ Upstream commit 8930424777e43257f5bf6f0f0f53defd0d30415c ]
 
-This patch adds parentheses to parameters caller and callee of macros
-make_call_t0 and make_call_ra. Every existing invocation of these two
-macros uses a single variable for each argument, so the absence of the
-parentheses seems okay. However, future invocations might use more
-complex expressions as arguments. For example, a future invocation might
-look like this: make_call_t0(a - b, c, call). Without parentheses in the
-macro definition, the macro invocation expands to:
+Because skb_tunnel_check_pmtu() doesn't handle PACKET_HOST packets,
+commit 30a92c9e3d6b ("openvswitch: Set the skbuff pkt_type for proper
+pmtud support.") forced skb->pkt_type to PACKET_OUTGOING for
+openvswitch packets that are sent using the OVS_ACTION_ATTR_OUTPUT
+action. This allowed such packets to invoke the
+iptunnel_pmtud_check_icmp() or iptunnel_pmtud_check_icmpv6() helpers
+and thus trigger PMTU update on the input device.
 
-...
-unsigned int offset = (unsigned long) c - (unsigned long) a - b;
-...
+However, this also broke other parts of PMTU discovery. Since these
+packets don't have the PACKET_HOST type anymore, they won't trigger the
+sending of ICMP Fragmentation Needed or Packet Too Big messages to
+remote hosts when oversized (see the skb_in->pkt_type condition in
+__icmp_send() for example).
 
-which is clearly wrong.
+These two skb->pkt_type checks are therefore incompatible as one
+requires skb->pkt_type to be PACKET_HOST, while the other requires it
+to be anything but PACKET_HOST.
 
-The use of parentheses ensures arguments are correctly evaluated and
-potentially saves future users of make_call_t0 and make_call_ra debugging
-trouble.
+It makes sense to not trigger ICMP messages for non-PACKET_HOST packets
+as these messages should be generated only for incoming l2-unicast
+packets. However there doesn't seem to be any reason for
+skb_tunnel_check_pmtu() to ignore PACKET_HOST packets.
 
-Fixes: 6724a76cff85 ("riscv: ftrace: Reduce the detour code size to half")
-Signed-off-by: Juhan Jin <juhan.jin@foxmail.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/tencent_AE90AA59903A628E87E9F80E563DA5BA5508@qq.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Allow both cases to work by allowing skb_tunnel_check_pmtu() to work on
+PACKET_HOST packets and not overriding skb->pkt_type in openvswitch
+anymore.
+
+Fixes: 30a92c9e3d6b ("openvswitch: Set the skbuff pkt_type for proper pmtud support.")
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Tested-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/eac941652b86fddf8909df9b3bf0d97bc9444793.1743208264.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/ftrace.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 2 +-
+ net/openvswitch/actions.c | 6 ------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/arch/riscv/include/asm/ftrace.h b/arch/riscv/include/asm/ftrace.h
-index 42777f91a9c58..9004dfec8c855 100644
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -103,7 +103,7 @@ struct dyn_arch_ftrace {
- #define make_call_t0(caller, callee, call)				\
- do {									\
- 	unsigned int offset =						\
--		(unsigned long) callee - (unsigned long) caller;	\
-+		(unsigned long) (callee) - (unsigned long) (caller);	\
- 	call[0] = to_auipc_t0(offset);					\
- 	call[1] = to_jalr_t0(offset);					\
- } while (0)
-@@ -119,7 +119,7 @@ do {									\
- #define make_call_ra(caller, callee, call)				\
- do {									\
- 	unsigned int offset =						\
--		(unsigned long) callee - (unsigned long) caller;	\
-+		(unsigned long) (callee) - (unsigned long) (caller);	\
- 	call[0] = to_auipc_ra(offset);					\
- 	call[1] = to_jalr_ra(offset);					\
- } while (0)
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 80ccd6661aa32..fda08e2c72899 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -415,7 +415,7 @@ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 
+ 	skb_dst_update_pmtu_no_confirm(skb, mtu);
+ 
+-	if (!reply || skb->pkt_type == PACKET_HOST)
++	if (!reply)
+ 		return 0;
+ 
+ 	if (skb->protocol == htons(ETH_P_IP))
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 9445ca97163b4..6c5afb4ad67bb 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -931,12 +931,6 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
+ 				pskb_trim(skb, ovs_mac_header_len(key));
+ 		}
+ 
+-		/* Need to set the pkt_type to involve the routing layer.  The
+-		 * packet movement through the OVS datapath doesn't generally
+-		 * use routing, but this is needed for tunnel cases.
+-		 */
+-		skb->pkt_type = PACKET_OUTGOING;
+-
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+ 			ovs_vport_send(vport, skb, ovs_key_mac_proto(key));
 -- 
 2.39.5
 
