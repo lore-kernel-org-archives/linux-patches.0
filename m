@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA1526FD93;
-	Tue,  8 Apr 2025 12:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF12B269831;
+	Tue,  8 Apr 2025 12:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116275; cv=none; b=UjmniKz6sUgXR8sCs9FUZTMukfnntlL5ZvC7Qi5I2NvD2bVREA5sYWhvW18peSNi6/r2hV8/GFJEF+xnWGNFiyG2HRXVVH2fBk4uUypCYwc/pk2/diPIWyFLFcVTwxrv6FsllAyIMPYUbI4Q8sVAEmlYwb1Rbi3azVm+ECKOZWU=
+	t=1744116279; cv=none; b=ONdQ88SG/51f5WXW1lA9//zbnNWrcRtUH6Lphc7q9bMYB1uzPyfoiWd4lekMUIpCYUOv6Ksn8liGbXwMIkxJ+7x0R2s8P8fJ2ZLlcMJpSMtuD0G2VoxtZ75AIiGZLCdllWH9ZUaLDnq6V4CD3tMqY4QycJ9SJPQTYC3JGC0sV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116275; c=relaxed/simple;
-	bh=MPbFxm/9H/vHNBkveRGtMXx7pTWWInzqyX/h0LmUehw=;
+	s=arc-20240116; t=1744116279; c=relaxed/simple;
+	bh=S51EXWuRNsXkPebjfZ4/J7K9XN+qAq5oCOKFBtWgW/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sd8f6GKAj4dnzwD0zq7BduPVffSFw1uE+nTU9U+8/Scx/0iyZ/Xk4AiB2DWHFHEuLaddXbaiVLbJbVOImmnghNWiO3I7ntZy7F4dRa8+tSaCxFfJ7A/koElwVgYeTmb0wTRMMyelWJaCT6eHkYqgXp8GrM8HhA1UQ5mpBKY3hwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrfseI8s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LwLp53Qm2LA2k9stBue5qeWf1Yasx7OVxdmBNrygM2C5r/vjNl1THkd66cmCZ/tBRaiZmJPJjQFRod6CCDnUOpTlHqzMwzI4q01+p5aZeApdeAYVOee9H0+0ZlUzGYs/CYorfIZq+810CWs4eO4sWGBx6UmIt25kHbQ+hf+FyyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELnP8DwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrfseI8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3484DC4CEE5;
-	Tue,  8 Apr 2025 12:44:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELnP8DwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16173C4CEE5;
+	Tue,  8 Apr 2025 12:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116275;
-	bh=MPbFxm/9H/vHNBkveRGtMXx7pTWWInzqyX/h0LmUehw=;
+	s=korg; t=1744116278;
+	bh=S51EXWuRNsXkPebjfZ4/J7K9XN+qAq5oCOKFBtWgW/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrfseI8s8wLa51EwbUN+TDhXOqgypga2/lNJRIEIJX7YgLIOBkINyt26Npg9juBsW
-	 72+uUBznZOcImP1HCr9+8u0u2g94PDm8uNAp+RIfFTmxve7SotyV/zoKtE6fMqFLgh
-	 +lGRzkix+Boo8UZaIEsAc5QGn4Rcy+89NPiYp3Z4=
+	b=ELnP8DwOYVNa72dCNpeqDZ+wlvLePhEAt/KKxDjSLXJbX0i8eWue9DbxBQ3itewY5
+	 CorpNLr7ZMPtwqaRDvPqToh9WtQBM3E4v97UjObmbIX2CYlp54F54mPHRPb1KMyl4o
+	 zR8QqL1SxMEPlcWfvDPdxf1S+iOF8WCmcwy386Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/423] drm/amd/display: fix type mismatch in CalculateDynamicMetadataParameters()
-Date: Tue,  8 Apr 2025 12:46:45 +0200
-Message-ID: <20250408104847.586466043@linuxfoundation.org>
+Subject: [PATCH 6.12 080/423] drm/msm/a6xx: Fix a6xx indexed-regs in devcoreduump
+Date: Tue,  8 Apr 2025 12:46:46 +0200
+Message-ID: <20250408104847.608029843@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,61 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit c3c584c18c90a024a54716229809ba36424f9660 ]
+[ Upstream commit 06dd5d86c6aef1c7609ca3a5ffa4097e475e2213 ]
 
-There is a type mismatch between what CalculateDynamicMetadataParameters()
-takes and what is passed to it. Currently this function accepts several
-args as signed long but it's called with unsigned integers and integer. On
-some systems where long is 32 bits and one of these unsigned int params is
-greater than INT_MAX it may cause passing input params as negative values.
+Somehow, possibly as a result of rebase gone badly, setting
+nr_indexed_regs for pre-a650 a6xx devices lost the setting of
+nr_indexed_regs, resulting in values getting snapshot, but omitted
+from the devcoredump.
 
-Fix this by changing these argument types from long to unsigned int and to
-int respectively. Also this will align the function's definition with
-similar functions in other dcn* drivers.
-
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-Fixes: 6725a88f88a7 ("drm/amd/display: Add DCN3 DML")
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: e997ae5f45ca ("drm/msm/a6xx: Mostly implement A7xx gpu_state")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/640289/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-index 1c10ba4dcddea..abe51cf3aab29 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-@@ -281,10 +281,10 @@ static void CalculateDynamicMetadataParameters(
- 		double DISPCLK,
- 		double DCFClkDeepSleep,
- 		double PixelClock,
--		long HTotal,
--		long VBlank,
--		long DynamicMetadataTransmittedBytes,
--		long DynamicMetadataLinesBeforeActiveRequired,
-+		unsigned int HTotal,
-+		unsigned int VBlank,
-+		unsigned int DynamicMetadataTransmittedBytes,
-+		int DynamicMetadataLinesBeforeActiveRequired,
- 		int InterlaceEnable,
- 		bool ProgressiveToInterlaceUnitInOPP,
- 		double *Tsetup,
-@@ -3277,8 +3277,8 @@ static double CalculateWriteBackDelay(
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 0fcae53c0b140..159665cb6b14f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -1507,6 +1507,8 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
  
+ 	/* Restore the size in the hardware */
+ 	gpu_write(gpu, REG_A6XX_CP_MEM_POOL_SIZE, mempool_size);
++
++	a6xx_state->nr_indexed_regs = count;
+ }
  
- static void CalculateDynamicMetadataParameters(int MaxInterDCNTileRepeaters, double DPPCLK, double DISPCLK,
--		double DCFClkDeepSleep, double PixelClock, long HTotal, long VBlank, long DynamicMetadataTransmittedBytes,
--		long DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
-+		double DCFClkDeepSleep, double PixelClock, unsigned int HTotal, unsigned int VBlank, unsigned int DynamicMetadataTransmittedBytes,
-+		int DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
- 		double *Tsetup, double *Tdmbf, double *Tdmec, double *Tdmsks)
- {
- 	double TotalRepeaterDelayTime = 0;
+ static void a7xx_get_indexed_registers(struct msm_gpu *gpu,
 -- 
 2.39.5
 
