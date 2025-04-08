@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF49269D15;
-	Tue,  8 Apr 2025 11:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352A269CFD;
+	Tue,  8 Apr 2025 11:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111850; cv=none; b=bvHSAi6ct3vmXG4FZ1h3U3xs1Em/6UVKrno/ptJXc3UNJ93oMXQcwJkuSJ3waFjikc5F+9agLhhlqgK9EY3LyYMv1/Rcz7Z4wgSQ21mHyrP63rTgmbSgW/96aBSyLjC/0K9MNsAwEdIDvkgB84nm1YKXAZWK9CtFNHe4z37leak=
+	t=1744111853; cv=none; b=A76nTgA40idrujY5uJ9xqRS71Jfk2eI6SMxkTFwYGXGqf5CPox40AUSq7MSWjefz72bO0zqAsQW9zgNi7dqaqV4JH9B8OTtzfCukakwyrQ1OplTv5JJ4iAKnmHi9VP13BF5rqSiNljTTafhpgB9cj9nWDONEHbbBmnoiqDp2ijM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111850; c=relaxed/simple;
-	bh=mF2tdVmZl8PNgzhoz8TWTcTi4PKC2lykLTlScxD/eyo=;
+	s=arc-20240116; t=1744111853; c=relaxed/simple;
+	bh=GjOgOGb5ohY8X0O8eKDg9ZQiF3551C20ZU8wIPKNtko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGipTes7lkQL8mO7mIW0+zP0uxxd/Xxoi2Qxbg8/XZU5n3CeCtGBC3FHfnHfy9Ab13zHoYNOH1tP2C9Lnrq/VvpQQGE5rts1hrmxdA+cNJzB4JDzGTSY8UW96s0j85FdXCEEUKaPIkGFleslU/aC48gFBbfL8j9VG1tIHzIbNTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tixh4ZAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5GtHuZ5Vnr0tiqg/K51PRYVPI4VRso2GYY2xqAYCzeTsdwjU+iwDDnTxt0ZtHR2nvYoQeCVNoWd/OkHKjmTkp/dBSvJFn0znb8SqBETOo6G56p3P1XJMPpFiGpeKOSBroqJDa1mUPwwomVCW5CYjTP/k0qwfrhN9Y6lyRxYDbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiSgwYFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tixh4ZAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA58C4CEE7;
-	Tue,  8 Apr 2025 11:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiSgwYFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2A1C4CEE5;
+	Tue,  8 Apr 2025 11:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111850;
-	bh=mF2tdVmZl8PNgzhoz8TWTcTi4PKC2lykLTlScxD/eyo=;
+	s=korg; t=1744111852;
+	bh=GjOgOGb5ohY8X0O8eKDg9ZQiF3551C20ZU8wIPKNtko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tixh4ZAamA9TFZFfLqaLkZZSJeBVAIEn43jWtJGsthvgTzS+9hzzJYW/1562qW3iG
-	 oQ6w21HXXx0qu7orajrgeuQbB1L9wKU6/g73tPM9jRUqsJclo2NyXGopdQnLXhzMPz
-	 igChFcBxEP0LqkSOj2IDVosRjLVZYTpRn/ygWbxc=
+	b=HiSgwYFQSegVvgP5bF0ul2N1+4U/lyf20cEDZUCIP3ApZnTSlv1Vp2jXT69kYp8tl
+	 U7ulH/SjYiPsGU/4OyDXWwPDNpulIR21j9vEtsjK3mg+ktpn25bBHXswYsmzCj0lhh
+	 p/qMy/Sev5DVUvsDlAiXukXf5UPmXmiFJn+9vPWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Tingbo Liao <tingbo.liao@starfivetech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 582/731] riscv: Fix the __riscv_copy_vec_words_unaligned implementation
-Date: Tue,  8 Apr 2025 12:47:59 +0200
-Message-ID: <20250408104927.810951274@linuxfoundation.org>
+Subject: [PATCH 6.14 583/731] riscv: Fix missing __free_pages() in check_vector_unaligned_access()
+Date: Tue,  8 Apr 2025 12:48:00 +0200
+Message-ID: <20250408104927.833752515@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,36 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingbo Liao <tingbo.liao@starfivetech.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 475afa39b123699e910c61ad9a51cedce4a0d310 ]
+[ Upstream commit 33981b1c4e499021421686dcfa7b3d23a430d00e ]
 
-Correct the VEC_S macro definition to fix the implementation
-of vector words copy in the case of unalignment in RISC-V.
+The locally allocated pages are never freed up, so add the corresponding
+__free_pages().
 
 Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Tingbo Liao <tingbo.liao@starfivetech.com>
-Link: https://lore.kernel.org/r/20250228090801.8334-1-tingbo.liao@starfivetech.com
+Link: https://lore.kernel.org/r/20250228090613.345309-1-alexghiti@rivosinc.com
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vec-copy-unaligned.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/unaligned_access_speed.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/vec-copy-unaligned.S b/arch/riscv/kernel/vec-copy-unaligned.S
-index d16f19f1b3b65..7ce4de6f6e694 100644
---- a/arch/riscv/kernel/vec-copy-unaligned.S
-+++ b/arch/riscv/kernel/vec-copy-unaligned.S
-@@ -11,7 +11,7 @@
+diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
+index 91f189cf16113..074ac4abd023e 100644
+--- a/arch/riscv/kernel/unaligned_access_speed.c
++++ b/arch/riscv/kernel/unaligned_access_speed.c
+@@ -349,7 +349,7 @@ static void check_vector_unaligned_access(struct work_struct *work __always_unus
+ 		pr_warn("cpu%d: rdtime lacks granularity needed to measure unaligned vector access speed\n",
+ 			cpu);
  
- #define WORD_SEW CONCATENATE(e, WORD_EEW)
- #define VEC_L CONCATENATE(vle, WORD_EEW).v
--#define VEC_S CONCATENATE(vle, WORD_EEW).v
-+#define VEC_S CONCATENATE(vse, WORD_EEW).v
+-		return;
++		goto free;
+ 	}
  
- /* void __riscv_copy_vec_words_unaligned(void *, const void *, size_t) */
- /* Performs a memcpy without aligning buffers, using word loads and stores. */
+ 	if (word_cycles < byte_cycles)
+@@ -363,6 +363,9 @@ static void check_vector_unaligned_access(struct work_struct *work __always_unus
+ 		(speed ==  RISCV_HWPROBE_MISALIGNED_VECTOR_FAST) ? "fast" : "slow");
+ 
+ 	per_cpu(vector_misaligned_access, cpu) = speed;
++
++free:
++	__free_pages(page, MISALIGNED_BUFFER_ORDER);
+ }
+ 
+ static int riscv_online_cpu_vec(unsigned int cpu)
 -- 
 2.39.5
 
