@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A01267F57;
-	Tue,  8 Apr 2025 11:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88490265602;
+	Tue,  8 Apr 2025 11:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112742; cv=none; b=N9WsrkX2mTXNV953kyhzjhdva0J0s3SdyxGmED87HCeT0InqvogykiNixY9BMoOrWewsjUMmjAzmlylCp44YKSQXrZ7GsdRy+vuJ9QB1T9tcdj28Ekt9R2TVkuBJzeP78Y8Zi6iiC2Ng7AtWGXOAjevsBXTK2eaEEB9CphAlW0s=
+	t=1744112745; cv=none; b=S9aWC51wpyCukQZaXdNWGfMLQcu4pMYWK2JF2jUNp/qUZlPhJ+gfq61w1/SlaaBu6w8Ga+nq7wKC5cim/MP37KnJ+C/pczaHSUb94j/oz15gDAwSbcHdUStskCXHLvWvAvIKRhSJ+khp0SVP520jhfgVCVh6teJ1ratdCEWNo8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112742; c=relaxed/simple;
-	bh=P/774CA9MWKHiiG9sW8lrqZTJQJQkfQPix603C98YEM=;
+	s=arc-20240116; t=1744112745; c=relaxed/simple;
+	bh=e9L3E/WEFv+Mr4m/a381G70ZQjFHkaSC5w9tHbNAm7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8sRIaApvguYI4igkJF5RxjDz3OYH8IAZIuyc4s+UxMnkhYmlqbRDkqWL8vi1PIyPp3pE6jbL9i5RMJnX4oEXAYuBuXZI4UWWv1uxHSFGO9z2mOYPA99DOcI31ivmlqE43ZiKNeTsNVPwCrLrUiyjvQeaRkDXf7g5fone6fK0A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YF8wsnfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQ6GwkUFL9EHqk1eZfg83tsGQHxGtBp0YQJE+ZbboB2i495VF4VZBFA2pjKwvl2lTxBxo2egNQR9F5NXdRbfz+aSOq1ERC8gYMf5Zwb9wsVE6x9o5zLO2E68JAzACTrr15xReu2zR2AiHm1WXiD+s0r6xq78OcbfOgFOtasGmxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoO8QNtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YF8wsnfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66671C4CEE5;
-	Tue,  8 Apr 2025 11:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoO8QNtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17977C4CEE5;
+	Tue,  8 Apr 2025 11:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112742;
-	bh=P/774CA9MWKHiiG9sW8lrqZTJQJQkfQPix603C98YEM=;
+	s=korg; t=1744112745;
+	bh=e9L3E/WEFv+Mr4m/a381G70ZQjFHkaSC5w9tHbNAm7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YF8wsnfEhClQlCNhAqkhK/VDORjMjW8rwyVzn+dVMxl963jjkidgWEevS8VsgRaiR
-	 +ER2tbQBqytLVOEvHAFvPMLNED20zYApqbiV5gUleCAxX5mq/REwWQ+hcdv8q5abl7
-	 ISWihwPXcX8YyS/ys2ZBN8jVp/SBjQcxhVrjI11U=
+	b=QoO8QNtv3S8ZNJbWYn78MaqysbPD+8RzEpbH6Y2WBGZCL02n8ljSvsn8o/d8SzrlT
+	 onnVx3hlZ8eIcXuonY0YLCj84XTr6vqmZU5rcvCVOWc7lY34dWnU02Dxn9Pf9nhfQB
+	 OWxD43T86YT2LMxODnmjCy8zciAeMgRDEpJV/FsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/279] pinctrl: tegra: Set SFIO mode to Mux Register
-Date: Tue,  8 Apr 2025 12:49:25 +0200
-Message-ID: <20250408104831.243816044@linuxfoundation.org>
+Subject: [PATCH 5.15 165/279] fbdev: sm501fb: Add some geometry checks.
+Date: Tue,  8 Apr 2025 12:49:08 +0200
+Message-ID: <20250408104830.788105806@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,47 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 17013f0acb322e5052ff9b9d0fab0ab5a4bfd828 ]
+[ Upstream commit aee50bd88ea5fde1ff4cc021385598f81a65830c ]
 
-Tegra devices have an 'sfsel' bit field that determines whether a pin
-operates in SFIO (Special Function I/O) or GPIO mode. Currently,
-tegra_pinctrl_gpio_disable_free() sets this bit when releasing a GPIO.
+Added checks for xoffset, yoffset settings.
+Incorrect settings of these parameters can lead to errors
+in sm501fb_pan_ functions.
 
-However, tegra_pinctrl_set_mux() can be called independently in certain
-code paths where gpio_disable_free() is not invoked. In such cases, failing
-to set the SFIO mode could lead to incorrect pin configurations, resulting
-in functional issues for peripherals relying on SFIO.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This patch ensures that whenever set_mux() is called, the SFIO mode is
-correctly set in the Mux Register if the 'sfsel' bit is present. This
-prevents situations where the pin remains in GPIO mode despite being
-configured for SFIO use.
-
-Fixes: 971dac7123c7 ("pinctrl: add a driver for NVIDIA Tegra")
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Link: https://lore.kernel.org/20250306050542.16335-1-pshete@nvidia.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 5fc404e47bdf ("[PATCH] fb: SM501 framebuffer driver")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/tegra/pinctrl-tegra.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/sm501fb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 195cfe557511b..90de78e4175c9 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra.c
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
-@@ -270,6 +270,9 @@ static int tegra_pinctrl_set_mux(struct pinctrl_dev *pctldev,
- 	val = pmx_readl(pmx, g->mux_bank, g->mux_reg);
- 	val &= ~(0x3 << g->mux_bit);
- 	val |= i << g->mux_bit;
-+	/* Set the SFIO/GPIO selection to SFIO when under pinmux control*/
-+	if (pmx->soc->sfsel_in_mux)
-+		val |= (1 << g->sfsel_bit);
- 	pmx_writel(pmx, val, g->mux_bank, g->mux_reg);
+diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
+index 6a52eba645596..3c46838651b06 100644
+--- a/drivers/video/fbdev/sm501fb.c
++++ b/drivers/video/fbdev/sm501fb.c
+@@ -326,6 +326,13 @@ static int sm501fb_check_var(struct fb_var_screeninfo *var,
+ 	if (var->xres_virtual > 4096 || var->yres_virtual > 2048)
+ 		return -EINVAL;
  
- 	return 0;
++	/* geometry sanity checks */
++	if (var->xres + var->xoffset > var->xres_virtual)
++		return -EINVAL;
++
++	if (var->yres + var->yoffset > var->yres_virtual)
++		return -EINVAL;
++
+ 	/* can cope with 8,16 or 32bpp */
+ 
+ 	if (var->bits_per_pixel <= 8)
 -- 
 2.39.5
 
