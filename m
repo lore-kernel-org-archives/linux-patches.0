@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61052267B10;
-	Tue,  8 Apr 2025 11:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6A6268FD5;
+	Tue,  8 Apr 2025 11:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112248; cv=none; b=F/QTbqa6lXZ7XTXqkVHMnN8XBCwjRFWmsBv4L8WG26HDhH6aqCgv2MagNytVNkCwucxwUC2QcUpcQr1QBxmRZx7Ssx3LPawSVAAHWVPaltARHcL3O94H3covQMlImLG9iQYibGxoge9Vn/xDBKuA2oAjWOSvpMmlfMooQZNByXM=
+	t=1744112251; cv=none; b=UaXGJWQWtntMtUBmU9MGlvNiQD0/LrDGhc7Ek1/0AzlYoFthF8O2cp2n6Kd+z2uRI0FY7/qeunv6NmE7eaK3nlUhNRNYIiseGBTzdAKsq1yxhsxlPKnyobg4ciINLEGPuaXc8DU3lAHeBSXi/O4syLkJfBib7/4Wm+1Pq23JCbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112248; c=relaxed/simple;
-	bh=RJKC2nLbCjTuoVjvlsxy686+8Rw0gdAvfoNuuKCa0kU=;
+	s=arc-20240116; t=1744112251; c=relaxed/simple;
+	bh=/eqPrk0l1/q6z+QHMfleydlp+sTRFl6TohciS+cEWqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pE7+yE1rJvRIW2Y7LQmSU+SwE4iAJIM41t86vnXZ5TATgRc9tVtGKu7gCNe7/Cr9j53Fth5THUGzNgGNXea6znn0joJ7btnutE/lQRt/c0yvLJTyzlaRcGsPmgvZVZoXcsXWU7Gj1lEgcpanQhwMkWgfPPjUPBUtA2U/tC7F9LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7zJQPfv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmtqS98Eo9a7NmWVFzBjXfjKo8Hos5PD91yLM/Cas/K5TyDMHVe+SKo0q5NvEwwtekzR/zjXqqVq8yMetNkdEySPOAZt96OZPeZ4cQPAROrekeAaoEgn6nAEa5XnjULq4WKbMMr6f8hVccT11oSg0JKb0wiSX8F4omfhZo8puD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yML4odwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7zJQPfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61E3C4CEE5;
-	Tue,  8 Apr 2025 11:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yML4odwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90141C4CEE7;
+	Tue,  8 Apr 2025 11:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112248;
-	bh=RJKC2nLbCjTuoVjvlsxy686+8Rw0gdAvfoNuuKCa0kU=;
+	s=korg; t=1744112250;
+	bh=/eqPrk0l1/q6z+QHMfleydlp+sTRFl6TohciS+cEWqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7zJQPfv/CdTsrvyNNmQMN7+1qQJTZT7wuVm3AwxLPdSo3B9xGLoOpWgepbLYzn6c
-	 8Jrn2gr20cX6I3xKZLzaRoUMlyUAQdZGx9MUrT+//4CSB+JJrg9dXuitRdvthQA2Q/
-	 IzYdBxwRzKmyU1AMIoKkPAlpyd7L+9CpkkdPs6M4=
+	b=yML4odwU6IrLl8OywgERHJGViaF5sE9AyMUh7DFDndKGMtdAN8d0UwISRQnHn9KqW
+	 dysMX/ElraCW4QdF7670kbkvMY7Wd0k8XqbDRyuvkS9ILYOD5+ef5RRGHdZj22nJqY
+	 WR0vr35PUq/OV+e8thUTtfJcOIWke8d5lSJZr2WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.14 731/731] NFSD: Skip sending CB_RECALL_ANY when the backchannel isnt up
-Date: Tue,  8 Apr 2025 12:50:28 +0200
-Message-ID: <20250408104931.276848972@linuxfoundation.org>
+	syzbot+1c486d0b62032c82a968@syzkaller.appspotmail.com,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.14 721/731] exec: fix the racy usage of fs_struct->in_exec
+Date: Tue,  8 Apr 2025 12:50:18 +0200
+Message-ID: <20250408104931.045028901@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,60 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit 8a388c1fabeb6606e16467b23242416c0dbeffad upstream.
+commit af7bb0d2ca459f15cb5ca604dab5d9af103643f0 upstream.
 
-NFSD sends CB_RECALL_ANY to clients when the server is low on
-memory or that client has a large number of delegations outstanding.
+check_unsafe_exec() sets fs->in_exec under cred_guard_mutex, then execve()
+paths clear fs->in_exec lockless. This is fine if exec succeeds, but if it
+fails we have the following race:
 
-We've seen cases where NFSD attempts to send CB_RECALL_ANY requests
-to disconnected clients, and gets confused. These calls never go
-anywhere if a backchannel transport to the target client isn't
-available. Before the server can send any backchannel operation, the
-client has to connect first and then do a BIND_CONN_TO_SESSION.
+	T1 sets fs->in_exec = 1, fails, drops cred_guard_mutex
 
-This patch doesn't address the root cause of the confusion, but
-there's no need to queue up these optional operations if they can't
-go anywhere.
+	T2 sets fs->in_exec = 1
 
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+	T1 clears fs->in_exec
+
+	T2 continues with fs->in_exec == 0
+
+Change fs/exec.c to clear fs->in_exec with cred_guard_mutex held.
+
+Reported-by: syzbot+1c486d0b62032c82a968@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67dc67f0.050a0220.25ae54.001f.GAE@google.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250324160003.GA8878@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ fs/exec.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6882,14 +6882,19 @@ deleg_reaper(struct nfsd_net *nn)
- 	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
- 		clp = list_entry(pos, struct nfs4_client, cl_lru);
--		if (clp->cl_state != NFSD4_ACTIVE ||
--			list_empty(&clp->cl_delegations) ||
--			atomic_read(&clp->cl_delegs_in_recall) ||
--			test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags) ||
--			(ktime_get_boottime_seconds() -
--				clp->cl_ra_time < 5)) {
-+
-+		if (clp->cl_state != NFSD4_ACTIVE)
-+			continue;
-+		if (list_empty(&clp->cl_delegations))
-+			continue;
-+		if (atomic_read(&clp->cl_delegs_in_recall))
-+			continue;
-+		if (test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags))
-+			continue;
-+		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
-+			continue;
-+		if (clp->cl_cb_state != NFSD4_CB_UP)
- 			continue;
--		}
- 		list_add(&clp->cl_ra_cblist, &cblist);
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1229,13 +1229,12 @@ int begin_new_exec(struct linux_binprm *
+ 	 */
+ 	bprm->point_of_no_return = true;
  
- 		/* release in nfsd4_cb_recall_any_release */
+-	/*
+-	 * Make this the only thread in the thread group.
+-	 */
++	/* Make this the only thread in the thread group */
+ 	retval = de_thread(me);
+ 	if (retval)
+ 		goto out;
+-
++	/* see the comment in check_unsafe_exec() */
++	current->fs->in_exec = 0;
+ 	/*
+ 	 * Cancel any io_uring activity across execve
+ 	 */
+@@ -1497,6 +1496,8 @@ static void free_bprm(struct linux_binpr
+ 	}
+ 	free_arg_pages(bprm);
+ 	if (bprm->cred) {
++		/* in case exec fails before de_thread() succeeds */
++		current->fs->in_exec = 0;
+ 		mutex_unlock(&current->signal->cred_guard_mutex);
+ 		abort_creds(bprm->cred);
+ 	}
+@@ -1618,6 +1619,10 @@ static void check_unsafe_exec(struct lin
+ 	 * suid exec because the differently privileged task
+ 	 * will be able to manipulate the current directory, etc.
+ 	 * It would be nice to force an unshare instead...
++	 *
++	 * Otherwise we set fs->in_exec = 1 to deny clone(CLONE_FS)
++	 * from another sub-thread until de_thread() succeeds, this
++	 * state is protected by cred_guard_mutex we hold.
+ 	 */
+ 	n_fs = 1;
+ 	spin_lock(&p->fs->lock);
+@@ -1862,7 +1867,6 @@ static int bprm_execve(struct linux_binp
+ 
+ 	sched_mm_cid_after_execve(current);
+ 	/* execve succeeded */
+-	current->fs->in_exec = 0;
+ 	current->in_execve = 0;
+ 	rseq_execve(current);
+ 	user_events_execve(current);
+@@ -1881,7 +1885,6 @@ out:
+ 		force_fatal_sig(SIGSEGV);
+ 
+ 	sched_mm_cid_after_execve(current);
+-	current->fs->in_exec = 0;
+ 	current->in_execve = 0;
+ 
+ 	return retval;
 
 
