@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F8926982F;
-	Tue,  8 Apr 2025 12:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC742224239;
+	Tue,  8 Apr 2025 12:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115573; cv=none; b=NhO01Og5oGOIZGK9xv2vvM5p7FuEu0rRygDTcdQ0WD5yeu/PUIKcenPXHSBITeRy/m5LVBk5tytHI3yHUnT6FolI5XBM6MZukWlCVCB3PAK2MztzFAf2FzAK4hjCGyxxabufuEMfINMj6hRuyRu8VLNufevzmP9QAc/XbqaChqY=
+	t=1744115575; cv=none; b=nbVJpJMppNuHdSwqty4esxujopeyx8/y+8TWYC+Dtw//zKk2CVKXSchI7ydC3MuilCAiUjFSceOdYfp+mlPVVvINJ8EJQKn4dAA7hEUVejPd17eMhJbI/+Rl7/1iiRrk3dmT35T/7j919fg+J8xYSk0VDmPNronB75XjvQxRmPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115573; c=relaxed/simple;
-	bh=TkcjwGXEcRgfdXgM30AfKfeYZEwi0jjdRmzg4pqMk+g=;
+	s=arc-20240116; t=1744115575; c=relaxed/simple;
+	bh=1tao1UnZGwzifB5rOqsY/Y9mHbk6HLLpLaDFZRiwUlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCn/if8R52yDYcj8Bm1OSuqlP7+hZ/xu0MXJeCtamw5tad6nx5ZCQ0tdUm8ee4L4igJOeiKS2qQXN4wp4mLzwA+0CwiktgafYlnrA87ryc+/4JxbkKaOAbiEqMkU6NxjfpucB/ApSLT3khMfxk1HD9QA810CWG7fQk8f0YzRK30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7UQhcvs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGROuxt7cqNAcQXyLZkPdorHrTnAQ9HG+gQZpKARHd7CBKsUss6cMo8cVAGIyjpG7rd2/4p/Vic3hGjsiWMZNdhTVgi3JirBDzAxzyzGspSMXq/Yif005tZEDXf9BW9j8ZomFaz4b39YALo7sz0iIAG874FckXpIT/IFPueARGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkt3HgWH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7UQhcvs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC91C4CEE5;
-	Tue,  8 Apr 2025 12:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkt3HgWH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AA3C4CEE5;
+	Tue,  8 Apr 2025 12:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115573;
-	bh=TkcjwGXEcRgfdXgM30AfKfeYZEwi0jjdRmzg4pqMk+g=;
+	s=korg; t=1744115575;
+	bh=1tao1UnZGwzifB5rOqsY/Y9mHbk6HLLpLaDFZRiwUlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7UQhcvsoB+mfuFveuj5u0k6u7xzVqvOMHe8rBy/PofaYd6Th0W3eZYWiDGkYNwE2
-	 QWp+rf17oxYUW7nXxx0C79fZEimauyIGnv1zvIxs9VzTTI7ZP3jCpx3rhTB4pEwIS8
-	 N9sy3rq8NoIEEMEq9+4BfUiBr5X5vdJaMFmeePLw=
+	b=qkt3HgWHO7FBnz/uqHhNivXubdNmUhB5ieNmoFVe7ihEPRElIYmMI1dgp81TYMUGK
+	 HVpbJPzkXpZR8rdZcR9XMCtxhtRC7CSZzqJCUULjqrm58PzksyAiqmYdjkSWstnMVe
+	 W2f7ivGdETyd1AIP6AMfjvc/029uX5V5QruoXEsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/204] HID: remove superfluous (and wrong) Makefile entry for CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-Date: Tue,  8 Apr 2025 12:49:14 +0200
-Message-ID: <20250408104821.030625788@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Oleg Gorobets <oleg.goro@gmail.com>
+Subject: [PATCH 6.1 025/204] ALSA: hda/realtek: Always honor no_shutup_pins
+Date: Tue,  8 Apr 2025 12:49:15 +0200
+Message-ID: <20250408104821.061002352@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,41 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fe0fb58325e519008e2606a5aa2cff7ad23e212d ]
+[ Upstream commit 5a0c72c1da3cbc0cd4940a95d1be2830104c6edf ]
 
-The line
+The workaround for Dell machines to skip the pin-shutup for mic pins
+introduced alc_headset_mic_no_shutup() that is replaced from the
+generic snd_hda_shutup_pins() for certain codecs.  The problem is that
+the call is done unconditionally even if spec->no_shutup_pins is set.
+This seems causing problems on other platforms like Lenovo.
 
-	obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)   += intel-ish-hid/
+This patch corrects the behavior and the driver honors always
+spec->no_shutup_pins flag and skips alc_headset_mic_no_shutup() if
+it's set.
 
-in top-level HID Makefile is both superfluous (as CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-depends on CONFIG_INTEL_ISH_HID, which contains intel-ish-hid/ already) and wrong (as it's
-missing the CONFIG_ prefix).
-
-Just remove it.
-
-Fixes: 91b228107da3e ("HID: intel-ish-hid: ISH firmware loader client driver")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: dad3197da7a3 ("ALSA: hda/realtek - Fixup headphone noise via runtime suspend")
+Reported-and-tested-by: Oleg Gorobets <oleg.goro@gmail.com>
+Link: https://patch.msgid.link/20250315143020.27184-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
-index e8014c1a2f8b6..86195e9c59c4b 100644
---- a/drivers/hid/Makefile
-+++ b/drivers/hid/Makefile
-@@ -159,7 +159,6 @@ obj-$(CONFIG_USB_KBD)		+= usbhid/
- obj-$(CONFIG_I2C_HID_CORE)	+= i2c-hid/
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index a562e574fe403..86a4e8c7d3f91 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -582,6 +582,9 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ {
+ 	struct alc_spec *spec = codec->spec;
  
- obj-$(CONFIG_INTEL_ISH_HID)	+= intel-ish-hid/
--obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)	+= intel-ish-hid/
- 
- obj-$(CONFIG_AMD_SFH_HID)       += amd-sfh-hid/
- 
++	if (spec->no_shutup_pins)
++		return;
++
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+@@ -597,8 +600,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 		alc_headset_mic_no_shutup(codec);
+ 		break;
+ 	default:
+-		if (!spec->no_shutup_pins)
+-			snd_hda_shutup_pins(codec);
++		snd_hda_shutup_pins(codec);
+ 		break;
+ 	}
+ }
 -- 
 2.39.5
 
