@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4B6269894;
-	Tue,  8 Apr 2025 12:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E862B269D17;
+	Tue,  8 Apr 2025 12:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114186; cv=none; b=ZcQa/PWNLUzNUFrbvGqKHhNq4hWQcFfzguMIYF9zCy3qVOqoP6BM9y25QSRwe9iyv5UnEfXfz55yrL6dUhzcbtBcPWzZl2oNzcnIvZu3MrWLIS+ZjR2c0KqMvDktmvhhxMdkr7ySs6iCInCMBNdgXYqeNYLUJvQeEDWlmydzJfI=
+	t=1744114189; cv=none; b=SWFRXRYuyIsnnUe5fO/jNfj2JyEFA8S2zpY6b/0DpaFPyr9LffZpltgTsleZai+Uun1bkx+ZWv+UrIZsCsmCea1ZZdBz3rv3HWGlhyrCoGqWKut0XiDpLJdvZu+I/HTxLxaddYYVL+qkT+q9wziRHU6mGZ1rAu+ED+rrILw39pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114186; c=relaxed/simple;
-	bh=kuWe9d25cqj4ZR+ehcmUHvkzw3l6Q7hszVo5kV8akD8=;
+	s=arc-20240116; t=1744114189; c=relaxed/simple;
+	bh=mgUnHww7ZvLznn9MjZLmvMra9RwefFoDAvKxJLc08/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkTjiYOChWIOW1wIWnShoAflGWWRzzkJ6lLxJxL8T2bH5FBmjuzN5C7bVe3zM+siF1jhlQgNzUIEzE1JLI+z4oXAl2h7sAwd1jbkQ20Tezk2bxOi/8c43YOPGzOAKLKRPY+5/b/sJKWRWQNt8bWdhocQx1nTOo+RR4is0NfvyX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CO/pKiv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c21r2zB48+mV+ribjx6R/lu24tnrsizf3BoV3/XSNV6/wlKgKbh5MudfyTk/GUrjoMbpLAkLhn4gTi3CXqH79Uxmivn2RdYM2LRZv0vE8Iqy7EdndXxHyFAcV9Q82kYdBTHIeh5Sk04BytV5Vcxs4nbX4TEFEF2vEP/f41iOuxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/tFGZeK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO/pKiv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E0C4CEE5;
-	Tue,  8 Apr 2025 12:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/tFGZeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE97C4CEE7;
+	Tue,  8 Apr 2025 12:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114186;
-	bh=kuWe9d25cqj4ZR+ehcmUHvkzw3l6Q7hszVo5kV8akD8=;
+	s=korg; t=1744114188;
+	bh=mgUnHww7ZvLznn9MjZLmvMra9RwefFoDAvKxJLc08/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CO/pKiv2mc17mdBeGprRhV26m7j577pl0j4Aa9HtiPu/bwdGp9cpeoZrLzoCtGr2o
-	 Nq3DpRAZlsz1fn0LggeGlldf/NwXhszhsMVn7dlFOhS5UPcNouxxPl/aoKPn7weZUg
-	 vZhqcNT2ifJ+3PP4pL3zvRKg16/i4JWe2dlzwirA=
+	b=w/tFGZeKTuJ7jHAHg/GGlYX5itQ7KZgxB9vcwzRPglom7oY0SjVqV4z4BVyHoI/YW
+	 /jIYJi57nHnELGp3/62f++DeDt7JG5m28idvV9kjkzZ87iu3j6j71QmnK6RU3ANZ5g
+	 gKv4TePTis0lquYwf20w+hhI8+v3SEUsK/rHYhTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Spassov <stanspas@amazon.de>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 014/499] x86/fpu: Fix guest FPU state buffer allocation size
-Date: Tue,  8 Apr 2025 12:43:46 +0200
-Message-ID: <20250408104851.607735277@linuxfoundation.org>
+Subject: [PATCH 6.13 015/499] x86/fpu: Avoid copying dynamic FP state from init_task in arch_dup_task_struct()
+Date: Tue,  8 Apr 2025 12:43:47 +0200
+Message-ID: <20250408104851.632844837@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,47 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Spassov <stanspas@amazon.de>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 1937e18cc3cf27e2b3ef70e8c161437051ab7608 ]
+[ Upstream commit 5d3b81d4d8520efe888536b6906dc10fd1a228a8 ]
 
-Ongoing work on an optimization to batch-preallocate vCPU state buffers
-for KVM revealed a mismatch between the allocation sizes used in
-fpu_alloc_guest_fpstate() and fpstate_realloc(). While the former
-allocates a buffer sized to fit the default set of XSAVE features
-in UABI form (as per fpu_user_cfg), the latter uses its ksize argument
-derived (for the requested set of features) in the same way as the sizes
-found in fpu_kernel_cfg, i.e. using the compacted in-kernel
-representation.
+The init_task instance of struct task_struct is statically allocated and
+may not contain the full FP state for userspace. As such, limit the copy
+to the valid area of both init_task and 'dst' and ensure all memory is
+initialized.
 
-The correct size to use for guest FPU state should indeed be the
-kernel one as seen in fpstate_realloc(). The original issue likely
-went unnoticed through a combination of UABI size typically being
-larger than or equal to kernel size, and/or both amounting to the
-same number of allocated 4K pages.
+Note that the FP state is only needed for userspace, and as such it is
+entirely reasonable for init_task to not contain parts of it.
 
-Fixes: 69f6ed1d14c6 ("x86/fpu: Provide infrastructure for KVM FPU cleanup")
-Signed-off-by: Stanislav Spassov <stanspas@amazon.de>
+Fixes: 5aaeb5c01c5b ("x86/fpu, sched: Introduce CONFIG_ARCH_WANTS_DYNAMIC_TASK_STRUCT and use it on x86")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250218141045.85201-1-stanspas@amazon.de
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250226133136.816901-1-benjamin@sipsolutions.net
+----
+
+v2:
+- Fix code if arch_task_struct_size < sizeof(init_task) by using
+  memcpy_and_pad.
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/process.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index 1209c7aebb211..36df548acc403 100644
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -220,7 +220,7 @@ bool fpu_alloc_guest_fpstate(struct fpu_guest *gfpu)
- 	struct fpstate *fpstate;
- 	unsigned int size;
- 
--	size = fpu_user_cfg.default_size + ALIGN(offsetof(struct fpstate, regs), 64);
-+	size = fpu_kernel_cfg.default_size + ALIGN(offsetof(struct fpstate, regs), 64);
- 	fpstate = vzalloc(size);
- 	if (!fpstate)
- 		return false;
+diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+index 15507e739c255..e42db0de02920 100644
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -92,7 +92,12 @@ EXPORT_PER_CPU_SYMBOL_GPL(__tss_limit_invalid);
+  */
+ int arch_dup_task_struct(struct task_struct *dst, struct task_struct *src)
+ {
+-	memcpy(dst, src, arch_task_struct_size);
++	/* init_task is not dynamically sized (incomplete FPU state) */
++	if (unlikely(src == &init_task))
++		memcpy_and_pad(dst, arch_task_struct_size, src, sizeof(init_task), 0);
++	else
++		memcpy(dst, src, arch_task_struct_size);
++
+ #ifdef CONFIG_VM86
+ 	dst->thread.vm86 = NULL;
+ #endif
 -- 
 2.39.5
 
