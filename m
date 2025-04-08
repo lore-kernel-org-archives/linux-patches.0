@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DAD19AD5C;
-	Tue,  8 Apr 2025 11:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA2A19AD5C;
+	Tue,  8 Apr 2025 11:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112423; cv=none; b=T1aSvPIuGlQj+PQRFbIHFUylCIDllJ0BVvfhnDYjVz6C2DWsITA2zkWe1uDxOKKpBcLGEWy1YVbv1pXdywVbz/eBVeIFwpME81Tqte53SodC606UiXSdlYfso2gyfy0mhwZXGPsRMs0uC5ycQhO0xuN2d5iGmVznGh8Ln/HUPsg=
+	t=1744112426; cv=none; b=odQXRT8nKKUldajaSRHHQCrcyWYz+/s4Dm6wBfGg2yQdEMZ3D6h6bo7H2/vZYDqOlcGSa35qVXzIT6dJHa5uvirnBq7Q6L9ErVTnbZ/Akl0gXn7WMBT97i5PQRuKfzMVMr1dg0Pd5I8yUY8mA60/XjlmYG90lruhMsZVC98TawM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112423; c=relaxed/simple;
-	bh=vwxPOaxjcZkrEQEDS0rGYVI4TjY7atPH3P6Iq3TaUL8=;
+	s=arc-20240116; t=1744112426; c=relaxed/simple;
+	bh=lR63EVLo9gXJjLM3dyuJUMyG8OHkXzvPFPws0LaB/Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERcL/rjsO12ydkJ9HhUsVLVnfDOobjLgm6eLaQDEq/4EfrSbLAMCwS2g7l/iWXuTYOCAf1CnawxAUlh+IgmCaFDfucRouCUWtN5nmB2LWGmLEV9D0jQTCkb8d1PjLZO8dRM1EnTC4bTipjz+l1xUx7XoFbkvr8tEGksJWzOtC00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okeqMIhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfyJZt025xX1o5tQI3Zcbt8GzskjHWB8faHTP68slhBLOu3ks6B6983VaI2JVBwX/7gCbctOseoXkDLHq6dT1cso5RgDqBA79IOnsLQAVKw41C2w0/aZF/8sfaoH6kDbKEj8jmd3sVr7mkXRDHNoFVNLcytfX3Qqi92Sz3FIm84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yquhnb9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okeqMIhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8783C4CEE5;
-	Tue,  8 Apr 2025 11:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yquhnb9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF81C4CEE5;
+	Tue,  8 Apr 2025 11:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112423;
-	bh=vwxPOaxjcZkrEQEDS0rGYVI4TjY7atPH3P6Iq3TaUL8=;
+	s=korg; t=1744112425;
+	bh=lR63EVLo9gXJjLM3dyuJUMyG8OHkXzvPFPws0LaB/Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okeqMIhK6Rlpo3r2RmHNWQzhkJFutxABxSlKCdub98j7SxTJfHS0VTxLNf0cD6XVp
-	 iymPvQ1CBJY/vdEh/oJwbAemAL+SwTP81ZtrmwSqkijGS5DSpEQhOjHYQABKHRclnt
-	 TDB3AhN6u7hgsfNTPDq5+vw+Uw53DjBgzHUBTD3c=
+	b=yquhnb9O8COmVbbOcQFIRxMbvuayWz6v7MaJEkNPrbBko1zBijl8NNaY3bTU4abUm
+	 u6ak+qRaXTqe8aoylLguZF43QJG7uvODaOk8NdoM9VL/0RfvdY9lb+m4/O2Sq2w7V/
+	 gFYdgSIMHGNqJ4eGkHvn3I5YiteNz2SAcLbvjgxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Lai <yi1.lai@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Chen Linxuan <chenlinxuan@deepin.org>
-Subject: [PATCH 5.15 063/279] lib/buildid: Handle memfd_secret() files in build_id_parse()
-Date: Tue,  8 Apr 2025 12:47:26 +0200
-Message-ID: <20250408104828.046711846@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Youngmin Nam <youngmin.nam@samsung.com>
+Subject: [PATCH 5.15 064/279] tcp: fix races in tcp_abort()
+Date: Tue,  8 Apr 2025 12:47:27 +0200
+Message-ID: <20250408104828.071772244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,62 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5ac9b4e935dfc6af41eee2ddc21deb5c36507a9f upstream.
+commit 5ce4645c23cf5f048eb8e9ce49e514bababdee85 upstream.
 
->From memfd_secret(2) manpage:
+tcp_abort() has the same issue than the one fixed in the prior patch
+in tcp_write_err().
 
-  The memory areas backing the file created with memfd_secret(2) are
-  visible only to the processes that have access to the file descriptor.
-  The memory region is removed from the kernel page tables and only the
-  page tables of the processes holding the file descriptor map the
-  corresponding physical memory. (Thus, the pages in the region can't be
-  accessed by the kernel itself, so that, for example, pointers to the
-  region can't be passed to system calls.)
+In order to get consistent results from tcp_poll(), we must call
+sk_error_report() after tcp_done().
 
-We need to handle this special case gracefully in build ID fetching
-code. Return -EFAULT whenever secretmem file is passed to build_id_parse()
-family of APIs. Original report and repro can be found in [0].
+We can use tcp_done_with_error() to centralize this logic.
 
-  [0] https://lore.kernel.org/bpf/ZwyG8Uro%2FSyTXAni@ly-workstation/
-
-Fixes: de3ec364c3c3 ("lib/buildid: add single folio-based file reader abstraction")
-Reported-by: Yi Lai <yi1.lai@intel.com>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://lore.kernel.org/bpf/20241017175431.6183-A-hca@linux.ibm.com
-Link: https://lore.kernel.org/bpf/20241017174713.2157873-1-andrii@kernel.org
-[ Chen Linxuan: backport same logic without folio-based changes ]
-Fixes: 88a16a130933 ("perf: Add build id data in mmap2 event")
-Signed-off-by: Chen Linxuan <chenlinxuan@deepin.org>
+Fixes: c1e64e298b8c ("net: diag: Support destroying TCP sockets.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240528125253.1966136-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[youngmin: Resolved minor conflict in net/ipv4/tcp.c]
+Signed-off-by: Youngmin Nam <youngmin.nam@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/buildid.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/tcp.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -5,6 +5,7 @@
- #include <linux/elf.h>
- #include <linux/kernel.h>
- #include <linux/pagemap.h>
-+#include <linux/secretmem.h>
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4514,13 +4514,9 @@ int tcp_abort(struct sock *sk, int err)
+ 	bh_lock_sock(sk);
  
- #define BUILD_ID 3
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+-		WRITE_ONCE(sk->sk_err, err);
+-		/* This barrier is coupled with smp_rmb() in tcp_poll() */
+-		smp_wmb();
+-		sk_error_report(sk);
+ 		if (tcp_need_reset(sk->sk_state))
+ 			tcp_send_active_reset(sk, GFP_ATOMIC);
+-		tcp_done(sk);
++		tcp_done_with_error(sk, err);
+ 	}
  
-@@ -157,6 +158,10 @@ int build_id_parse(struct vm_area_struct
- 	if (!vma->vm_file)
- 		return -EINVAL;
- 
-+	/* reject secretmem folios created with memfd_secret() */
-+	if (vma_is_secretmem(vma))
-+		return -EFAULT;
-+
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
+ 	bh_unlock_sock(sk);
 
 
