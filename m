@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F7B267B7F;
-	Tue,  8 Apr 2025 11:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922E0224F6;
+	Tue,  8 Apr 2025 11:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111238; cv=none; b=nQcJ7BlGvQCeP2LkE9uMqJuYv3U57C3+vU++fOy3un6gAnCVPwJHKrUfpuDIjww4KG9+lMeePYY+3tUsqhYkphCIGH5p+/2CymbzJJsCopcLDMFwuKFUwVGNuIe1LF9+gS/Ql+dgakmkJo/lnVD6FL1nNGBbuxaGPLqZdXm/F/U=
+	t=1744111240; cv=none; b=gbsnmvIcJnEEsz40vHHPi/H3lBDe6PtJRtkDfIwYR9X5zFHA03Gy8qOGhLAl4/2qxsGEJF4ysXOTn0qfXjnn0diJ52uMZY86QpZkHdUkTHrnLydarYqJaVnT/r4boN0FWi4CWIOKwq2lzd5GztQYIw286cF684hKEqgJeVJQsDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111238; c=relaxed/simple;
-	bh=AdDONNAPUeDd7ueiBc6DSdomyniH6b7Q0949TLCOpaY=;
+	s=arc-20240116; t=1744111240; c=relaxed/simple;
+	bh=wfx/4TeLqIlB9eMYYi/0jDh+crIjD1BMLR2vDUFzlaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipZsPRCrr2Y9mHOtS9M858QGxvbOJdqR6MI5ILtWK39DthBSh55T0Kd38vySrwWjlMWTvk/X9Xv6ej/DyUYPqVvPpTT4WnsRfqPkL28CGwj1tvTAOd30Am1d4P1XMuhlziAMsiMpiW+ncnM1OKOJPYlsMyexoCekA6ttLOCSlM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi1nDtoR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDM4ESfOiRv/4NMMMhlYAfrlT4zKZZnrO95stOSxuqIIizrbdtJGjNPo+sAJ0kg3PcA/hCRSaW1boHVStERgNszs7RB4V1IhPJw0irBO6NXQYtWnWOCsoUAkAzG9Un3NxxFoyCXDawITlQUKDr1VvFqmc6HVfZXz8EaCofrAHnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0TP6GEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi1nDtoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5A7C4CEE5;
-	Tue,  8 Apr 2025 11:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0TP6GEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D10C4CEE5;
+	Tue,  8 Apr 2025 11:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111237;
-	bh=AdDONNAPUeDd7ueiBc6DSdomyniH6b7Q0949TLCOpaY=;
+	s=korg; t=1744111240;
+	bh=wfx/4TeLqIlB9eMYYi/0jDh+crIjD1BMLR2vDUFzlaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wi1nDtoRmQtLKXTIR1hHCV8I7r9jxlELCXbCaqFXpFK+yhkw4zPmW4dBBCxhjdgkP
-	 Ni7Bqeh+sWmCbxfu/kPn80bm+kWu7atZzSV3VdXN1B1IYTlfPpC9jYz8yuiiamkqGx
-	 HMfOHRhrtQx4rqny+mG6Zzof0B4qrEqaAOIM8+m0=
+	b=m0TP6GEhhsxXHy/gBuBeD2A7f8CwMIY52VUZJxm5MCWUIJq6a2SSaSj81avGxSWAP
+	 0i8RATBRhZdDi9yvNuKp88GSeiDzabqzxZAX0yblKp07WE1/0FqYro9VSV6x46NSEg
+	 6Y/v0hZEsOzn0E4zJpBygRmeyLUdc8dlWnD6G1CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 359/731] crypto: tegra - Use HMAC fallback when keyslots are full
-Date: Tue,  8 Apr 2025 12:44:16 +0200
-Message-ID: <20250408104922.623504992@linuxfoundation.org>
+Subject: [PATCH 6.14 360/731] clk: amlogic: gxbb: drop incorrect flag on 32k clock
+Date: Tue,  8 Apr 2025 12:44:17 +0200
+Message-ID: <20250408104922.646416978@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit f80a2e2e77bedd0aa645a60f89b4f581c70accda ]
+[ Upstream commit f38f7fe4830c5cb4eac138249225f119e7939965 ]
 
-The intermediate results for HMAC is stored in the allocated keyslot by
-the hardware. Dynamic allocation of keyslot during an operation is hence
-not possible. As the number of keyslots are limited in the hardware,
-fallback to the HMAC software implementation if keyslots are not available
+gxbb_32k_clk_div sets CLK_DIVIDER_ROUND_CLOSEST in the init_data flag which
+is incorrect. This is field is not where the divider flags belong.
 
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Thankfully, CLK_DIVIDER_ROUND_CLOSEST maps to bit 4 which is an unused
+clock flag, so there is no unintended consequence to this error.
+
+Effectively, the clock has been used without CLK_DIVIDER_ROUND_CLOSEST
+so far, so just drop it.
+
+Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-1-baca56ecf2db@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-hash.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/clk/meson/gxbb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index 8bed13552ab9e..65a50f29bd7e6 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -632,13 +632,18 @@ static int tegra_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
- 			     unsigned int keylen)
- {
- 	struct tegra_sha_ctx *ctx = crypto_ahash_ctx(tfm);
-+	int ret;
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index 8575b84853859..df9250de51dc8 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -1306,7 +1306,7 @@ static struct clk_regmap gxbb_32k_clk_div = {
+ 			&gxbb_32k_clk_sel.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT | CLK_DIVIDER_ROUND_CLOSEST,
++		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
- 	if (aes_check_keylen(keylen))
- 		return tegra_hmac_fallback_setkey(ctx, key, keylen);
- 
-+	ret = tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
-+	if (ret)
-+		return tegra_hmac_fallback_setkey(ctx, key, keylen);
-+
- 	ctx->fallback = false;
- 
--	return tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
-+	return 0;
- }
- 
- static int tegra_sha_init(struct ahash_request *req)
 -- 
 2.39.5
 
