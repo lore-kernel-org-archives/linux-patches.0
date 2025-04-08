@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB0A269AE4;
-	Tue,  8 Apr 2025 12:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EA6269839;
+	Tue,  8 Apr 2025 12:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116209; cv=none; b=d9nL0G2e+F6jP+NvUtUPu0rDYK8HTmXN2Ck2t+gmP9aQB2i+dAZnGkNyNXvKRTi3/vrH4O5Q+hSUSfzXaiuMCFBFQ+vTH2GN7U/ysnKFHxbzrNxrwmYBiiE2j66zYRH5qCUwF99Ajl9saXtUzQYYgzTjXTnesvD7F3/XxVEwBKs=
+	t=1744116211; cv=none; b=scp/MbCcVkdd7yPxwBpgeFRZWNDH8CdPTp4UkmAME7PG8i/Ftd/IHjzSs/8jnrAiPizHugHapL9bDj9cB/MXQgQCrY51aVsSqojsiaZpaiIj5hY+cQp9tmQT8ACgnB6hr7sJf26sfaInpoLkj5HOp7kLvVzHmUCP7uyMusr70cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116209; c=relaxed/simple;
-	bh=oBKMAXT7gfcsAgJwOyRUZgDW3NH+I3Cor0BwWYqsv+o=;
+	s=arc-20240116; t=1744116211; c=relaxed/simple;
+	bh=tRvWhDehmHDb+k8pOLRx0GYLVn5jPwTV+yM0rw6k3wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsU7KgXJgjL/kEV2Fl01flHye8s2ws7oxZw7sMppph8R2GVhV9pvKxqgl0Ajitzw9X1G08MiimLoM5xh/8AMRSx+3APs6Trl0Ox1bC/nT7cjypwcXC4mjaYjWqeNYAqIZ+ftYtPhghcB5+N9XF0mka+uLyQgUOC1q1ctgPsnP18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVv+H/kj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBDBfuCMQHQO4gGEwQ2N0SoaCOkro+2FquC69fw6l0vPStKu9t00zPhmAIhGpi+sG5T5KUONMykaC3QW89cEqb7XayxZPhzspALz5bqe8kVBvUwQs3FzjhSrXmBXo+bojc+Ikv/BiCdreNYotuF+ftAmVb+y0NWX47wnbEmKzKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJXEXtmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVv+H/kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A040DC4CEEA;
-	Tue,  8 Apr 2025 12:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJXEXtmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4571DC4CEE5;
+	Tue,  8 Apr 2025 12:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116209;
-	bh=oBKMAXT7gfcsAgJwOyRUZgDW3NH+I3Cor0BwWYqsv+o=;
+	s=korg; t=1744116211;
+	bh=tRvWhDehmHDb+k8pOLRx0GYLVn5jPwTV+yM0rw6k3wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVv+H/kjGl6j3qj7QljuO+zbDYHV8+ujh7ChTNMYYQ9MjbtIbkOQHMNOb4Ma2g9/7
-	 Nyi0u/TO2Jvo1zDki/SaI4xjG8KTUvnRDsOqU2fUOFXAuGKVnqZFMpaS/MBTeSoixz
-	 Lp0UnmbVwdz5Gy5rpLVnIVfyQZHfl49WvKXMt27k=
+	b=EJXEXtmpYzal3jkHei2n7ki9LaP1bgaBovxBzAR9eCj8rILfdTeMXLcxO2O6hOqPt
+	 tDASUHQH89yl23aa6mCOsuFRLvnJA8g0MRkfdL7F5MXEz1t6MzIjMTr3xt3Hdx0ZwN
+	 oK0QEKIMm+nNDmQhtcRBTn/zHYWmsZfPgyCdtoBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Lang Yu <Lang.Yu@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/423] drm/amdgpu: refine smu send msg debug log format
-Date: Tue,  8 Apr 2025 12:46:22 +0200
-Message-ID: <20250408104847.055436193@linuxfoundation.org>
+Subject: [PATCH 6.12 057/423] drm/amdgpu/umsch: fix ucode check
+Date: Tue,  8 Apr 2025 12:46:23 +0200
+Message-ID: <20250408104847.077130737@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,37 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8c6631234557515a7567c6251505a98e9793c8a6 ]
+[ Upstream commit c917e39cbdcd9fff421184db6cc461cc58d52c17 ]
 
-remove unnecessary line breaks.
+Return an error if the IP version doesn't match otherwise
+we end up passing a NULL string to amdgpu_ucode_request.
+We should never hit this in practice today since we only
+enable the umsch code on the supported IP versions, but
+add a check to be safe.
 
-[   51.280860] amdgpu 0000:24:00.0: amdgpu: smu send message: GetEnabledSmuFeaturesHigh(13) param: 0x00000000, resp: 0x00000001,                        readval: 0x00003763
-
-Fixes: 0cd2bc06de72 ("drm/amd/pm: enable amdgpu smu send message log")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502130406.iWQ0eBug-lkp@intel.com/
+Fixes: 020620424b27 ("drm/amd: Use a constant format string for amdgpu_ucode_request")
+Reviewed-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Lang Yu <Lang.Yu@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-index 0d71db7be325d..0ce1766c859f5 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -459,8 +459,7 @@ int smu_cmn_send_smc_msg_with_param(struct smu_context *smu,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
+index 6162582d0aa27..d5125523bfa7b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
+@@ -584,7 +584,7 @@ int amdgpu_umsch_mm_init_microcode(struct amdgpu_umsch_mm *umsch)
+ 		fw_name = "amdgpu/umsch_mm_4_0_0.bin";
+ 		break;
+ 	default:
+-		break;
++		return -EINVAL;
  	}
- 	if (read_arg) {
- 		smu_cmn_read_arg(smu, read_arg);
--		dev_dbg(adev->dev, "smu send message: %s(%d) param: 0x%08x, resp: 0x%08x,\
--			readval: 0x%08x\n",
-+		dev_dbg(adev->dev, "smu send message: %s(%d) param: 0x%08x, resp: 0x%08x, readval: 0x%08x\n",
- 			smu_get_message_name(smu, msg), index, param, reg, *read_arg);
- 	} else {
- 		dev_dbg(adev->dev, "smu send message: %s(%d) param: 0x%08x, resp: 0x%08x\n",
+ 
+ 	r = amdgpu_ucode_request(adev, &adev->umsch_mm.fw, "%s", fw_name);
 -- 
 2.39.5
 
