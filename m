@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEC4269B0E;
-	Tue,  8 Apr 2025 12:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB49268C72;
+	Tue,  8 Apr 2025 12:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114140; cv=none; b=WvIAgqloSQRiqzE+Qi4DPYfAMrmWJYqQ/7/nNZ5GaFrFV8hArk39mdoEqm2OY+XEqpv+GIqZZ8HTU0PtZefF7dDYun+MnWDWvtT0fDm2PoIY5krxVuhyNCk+J5sB/TcZwLeKcKFq7dOeZEtc9gST7kO8wIXCq50hAkpk0kbqWlM=
+	t=1744114143; cv=none; b=SZIGXF1bCMPfX+16Cht8uaHv34QE+0GoV9c1EGolpLJnNepTfOYfEYrudRZIyGCmeUChAH7QNbWrUo9MLNNeJzsHKEaeJSQ9mDsxrqUom8kvHjvEK+JfJhe+XM/8jnbAb8Zhtja1yNi0QrPe/dKNaz5xwXCQUGu8qWCiuRldJRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114140; c=relaxed/simple;
-	bh=wbw7JGLIgXugmeVmRUAStXZ8JKhYKpKRs+Mm277KEjg=;
+	s=arc-20240116; t=1744114143; c=relaxed/simple;
+	bh=ngx/V0lfXn+gQrWXrde4bxafh76zTlMt4tsOOjX8l5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NfsAbqpX5L61XRe/OUOHWbRVsedIQ/TWilqz4ljfkSonZYQyJawhzFjqDdsi3+PlobuZsQqW5/w0STiBDve5BJf+bd89lKhrpKa/X3l/dLtHVNHA+n5s2+lKQgWHmfkFkGc/11zxrWtxqCon7KDuoD2L0r094/HghBDP+ef2Hv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmfeU99p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSmnezd9fydoZwsAVAHiCBaT5tboCl552vBArAze3aNekG3DG92FSCW6uS1i4grHFlhLSQPTDKWSWuQUeZO55Z3+5tQQyGk0FmJ3ShYNVTRMIxGPB+5fawPURL0C3LXWLYunxMx6k585XqZAHI/0cPHogQN7Q4fd6zAovGy1EFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0DZmJ9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmfeU99p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BC6C4CEE5;
-	Tue,  8 Apr 2025 12:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0DZmJ9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC2CC4CEE5;
+	Tue,  8 Apr 2025 12:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114140;
-	bh=wbw7JGLIgXugmeVmRUAStXZ8JKhYKpKRs+Mm277KEjg=;
+	s=korg; t=1744114142;
+	bh=ngx/V0lfXn+gQrWXrde4bxafh76zTlMt4tsOOjX8l5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmfeU99pw34ZvnEo/z1YewWOVsOH0pKDoOzbJaiXWnSIzcLljOwqUk77NXRkzjRM6
-	 YAa/yTMsuPL6E9sS6H/2dMJjxe4RIX63kwr+0PA759KTRJ3NozaV/F+ywbzDcimtoZ
-	 VmVRgHCyon7GJDea4qzCPMVHOqX6ZrLPkal2jvLw=
+	b=a0DZmJ9Bct953zCEpxZbN4CVar1vvK5YP5AQ0GQa15SaLOXnGUo20c8PRle9CM68V
+	 DmahPKHLrWGWvDeU97FHs0JsP6/tpuh6mfRSdaZXR+CNPPxKDX0XO4Uh0idvlxbcv4
+	 RCxhVtOPkvi7qjw6IogJZTTWbLbbfzoS7iH1RK38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Anton Shyndin <mrcold.il@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 150/154] ACPI: resource: Skip IRQ override on ASUS Vivobook 14 X1404VAP
-Date: Tue,  8 Apr 2025 12:51:31 +0200
-Message-ID: <20250408104820.103200062@linuxfoundation.org>
+	syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 115/154] isofs: fix KMSAN uninit-value bug in do_isofs_readdir()
+Date: Tue,  8 Apr 2025 12:50:56 +0200
+Message-ID: <20250408104819.014602415@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -46,61 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit 2da31ea2a085cd189857f2db0f7b78d0162db87a upstream.
+[ Upstream commit 81a82e8f33880793029cd6f8a766fb13b737e6a7 ]
 
-Like the ASUS Vivobook X1504VAP and Vivobook X1704VAP, the ASUS Vivobook 14
-X1404VAP has its keyboard IRQ (1) described as ActiveLow in the DSDT, which
-the kernel overrides to EdgeHigh breaking the keyboard.
+In do_isofs_readdir() when assigning the variable
+"struct iso_directory_record *de" the b_data field of the buffer_head
+is accessed and an offset is added to it, the size of b_data is 2048
+and the offset size is 2047, meaning
+"de = (struct iso_directory_record *) (bh->b_data + offset);"
+yields the final byte of the 2048 sized b_data block.
 
-    $ sudo dmidecode
-    […]
-    System Information
-            Manufacturer: ASUSTeK COMPUTER INC.
-            Product Name: ASUS Vivobook 14 X1404VAP_X1404VA
-    […]
-    $ grep -A 30 PS2K dsdt.dsl | grep IRQ -A 1
-                 IRQ (Level, ActiveLow, Exclusive, )
-                     {1}
+The first byte of the directory record (de_len) is then read and
+found to be 31, meaning the directory record size is 31 bytes long.
+The directory record is defined by the structure:
 
-Add the X1404VAP to the irq1_level_low_skip_override[] quirk table to fix
-this.
+	struct iso_directory_record {
+		__u8 length;                     // 1 byte
+		__u8 ext_attr_length;            // 1 byte
+		__u8 extent[8];                  // 8 bytes
+		__u8 size[8];                    // 8 bytes
+		__u8 date[7];                    // 7 bytes
+		__u8 flags;                      // 1 byte
+		__u8 file_unit_size;             // 1 byte
+		__u8 interleave;                 // 1 byte
+		__u8 volume_sequence_number[4];  // 4 bytes
+		__u8 name_len;                   // 1 byte
+		char name[];                     // variable size
+	} __attribute__((packed));
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219224
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Anton Shyndin <mrcold.il@gmail.com>
-Link: https://patch.msgid.link/20250318160903.77107-1-pmenzel@molgen.mpg.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The fixed portion of this structure occupies 33 bytes. Therefore, a
+valid directory record must be at least 33 bytes long
+(even without considering the variable-length name field).
+Since de_len is only 31, it is insufficient to contain
+the complete fixed header.
+
+The code later hits the following sanity check that
+compares de_len against the sum of de->name_len and
+sizeof(struct iso_directory_record):
+
+	if (de_len < de->name_len[0] + sizeof(struct iso_directory_record)) {
+		...
+	}
+
+Since the fixed portion of the structure is
+33 bytes (up to and including name_len member),
+a valid record should have de_len of at least 33 bytes;
+here, however, de_len is too short, and the field de->name_len
+(located at offset 32) is accessed even though it lies beyond
+the available 31 bytes.
+
+This access on the corrupted isofs data triggers a KASAN uninitialized
+memory warning. The fix would be to first verify that de_len is at least
+sizeof(struct iso_directory_record) before accessing any
+fields like de->name_len.
+
+Reported-by: syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>
+Tested-by: syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=812641c6c3d7586a1613
+Fixes: 2deb1acc653c ("isofs: fix access to unallocated memory when reading corrupted filesystem")
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250211195900.42406-1-qasdev00@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/isofs/dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -443,6 +443,13 @@ static const struct dmi_system_id asus_l
- 		},
- 	},
- 	{
-+		/* Asus Vivobook X1404VAP */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "X1404VAP"),
-+		},
-+	},
-+	{
- 		/* Asus Vivobook X1504VAP */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
+index b9e6a7ec78be4..23c73bb56d821 100644
+--- a/fs/isofs/dir.c
++++ b/fs/isofs/dir.c
+@@ -147,7 +147,8 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
+ 			de = tmpde;
+ 		}
+ 		/* Basic sanity check, whether name doesn't exceed dir entry */
+-		if (de_len < de->name_len[0] +
++		if (de_len < sizeof(struct iso_directory_record) ||
++		    de_len < de->name_len[0] +
+ 					sizeof(struct iso_directory_record)) {
+ 			printk(KERN_NOTICE "iso9660: Corrupted directory entry"
+ 			       " in block %lu of inode %lu\n", block,
+-- 
+2.39.5
+
 
 
