@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3FB2698A0;
-	Tue,  8 Apr 2025 12:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB07D26869D;
+	Tue,  8 Apr 2025 12:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113785; cv=none; b=N3nmhMO8Qc3YQnq4Fs8cHFkSdZOVjjDdKXCsB4LhzF+nrAW9LdVd+5XhYqzpxblqWKHFG03CtliQ1jpicmkhbw5xvfbthshnGsfwhbY3g4BBWEjCKiDFwMhdv++60Y1bN9/j697r6rrc5o/MkqxF84zqmIkWzVydI5iHpkD8wmY=
+	t=1744113789; cv=none; b=nfIcdOMNMo09ECoywxsTv1BKWEX0BlD/N9bdSOL88puPZjIUFfKXa8JRfcg84M0hpozvUsN/uzZwg325WRbfRME+A3YTdKtR2WLI9/QDu6Bd5FJMzwEMR4RvMoSbzb+csIAmWvbTjFvLQlI/3pZ6Eg9V/HFPe4JnTiTzVU+voyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113785; c=relaxed/simple;
-	bh=pIFA8qeLvjeIUZJACk4uFvVVKDzULxTbv4eVAqXOwIg=;
+	s=arc-20240116; t=1744113789; c=relaxed/simple;
+	bh=osjh9dP5KOwweiy4LbM0uqsDQ2BUwHCk9RD8oD6toVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJt9MNeknVHa7gsOLiJNGwqNFBBjhQ7syOZkaVCc3D7fdf6TCaC5zfUtbuI++jtH5CE5DrGQITAgmGxqkFb5GDCmNrUU5X+fEQVtyzj3C+YK/+43YEYGjM9GMV3M3FCbZ8o9ShpJNdySDBmFhonclsjMrHHsWrtYxTALFJ2NPGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJTRNN4J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qmd3ByM7Pf4zkbfzzfLPAlqaTtmIBGvBFhtDlY7TsoqBhhwsLb3CVERT5QeZzYmWtbofASmBKNDuqVyJp4E5goU9Lw3vGM/pdfVlHNUwhk99zpPFvayBNLpTEb292WNHkSMMF4oWH8yX7ihGaDZ95+6dCsib+rNE76CCmDydhOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4z5k9Ym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJTRNN4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50181C4CEE5;
-	Tue,  8 Apr 2025 12:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4z5k9Ym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF55C4CEE5;
+	Tue,  8 Apr 2025 12:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113785;
-	bh=pIFA8qeLvjeIUZJACk4uFvVVKDzULxTbv4eVAqXOwIg=;
+	s=korg; t=1744113788;
+	bh=osjh9dP5KOwweiy4LbM0uqsDQ2BUwHCk9RD8oD6toVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJTRNN4JVKWMAsiWDH/TQ0zIBhjEROaA8ebjSSzt89sTROcit4RF/foEum3OhZHrz
-	 hMDPJfemt2BUWk2ODn9ybv6qVcucu1kZweJS9WqhM7gKMjKC5HfwMeVVx4NJdI3ZVi
-	 pAJHoMfor7nbN2yQTT1xFLZB8wCy+rBAl42oE9RA=
+	b=w4z5k9YmdpKSBMJjhNufI/cTe/RTPlAByty4gXmz1f0qO581IYtShsogax5LCMPQU
+	 jEfTwnz4E14nkoHBnoiG+FzY2nyypYAr7l1k0MXHdbV7fSK+2TcQLp47KvFi8e/K9G
+	 uDb0K7Psq5pMcI2afb8h54kIn5WnipaUxEfIg7jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Li RongQing <lirongqing@baidu.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Kelley <mhkelley@outlook.com>
-Subject: [PATCH 5.4 002/154] clockevents/drivers/i8253: Fix stop sequence for timer 0
-Date: Tue,  8 Apr 2025 12:49:03 +0200
-Message-ID: <20250408104815.374879543@linuxfoundation.org>
+	Carolina Jubran <cjubran@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 020/154] net/mlx5e: Prevent bridge link show failure for non-eswitch-allowed devices
+Date: Tue,  8 Apr 2025 12:49:21 +0200
+Message-ID: <20250408104815.927878850@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,237 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-commit 531b2ca0a940ac9db03f246c8b77c4201de72b00 upstream.
+[ Upstream commit e92df790d07a8eea873efcb84776e7b71f81c7d5 ]
 
-According to the data sheet, writing the MODE register should stop the
-counter (and thus the interrupts). This appears to work on real hardware,
-at least modern Intel and AMD systems. It should also work on Hyper-V.
+mlx5_eswitch_get_vepa returns -EPERM if the device lacks
+eswitch_manager capability, blocking mlx5e_bridge_getlink from
+retrieving VEPA mode. Since mlx5e_bridge_getlink implements
+ndo_bridge_getlink, returning -EPERM causes bridge link show to fail
+instead of skipping devices without this capability.
 
-However, on some buggy virtual machines the mode change doesn't have any
-effect until the counter is subsequently loaded (or perhaps when the IRQ
-next fires).
+To avoid this, return -EOPNOTSUPP from mlx5e_bridge_getlink when
+mlx5_eswitch_get_vepa fails, ensuring the command continues processing
+other devices while ignoring those without the necessary capability.
 
-So, set MODE 0 and then load the counter, to ensure that those buggy VMs
-do the right thing and the interrupts stop. And then write MODE 0 *again*
-to stop the counter on compliant implementations too.
-
-Apparently, Hyper-V keeps firing the IRQ *repeatedly* even in mode zero
-when it should only happen once, but the second MODE write stops that too.
-
-Userspace test program (mostly written by tglx):
-=====
- #include <stdio.h>
- #include <unistd.h>
- #include <stdlib.h>
- #include <stdint.h>
- #include <sys/io.h>
-
-static __always_inline void __out##bwl(type value, uint16_t port)	\
-{									\
-	asm volatile("out" #bwl " %" #bw "0, %w1"			\
-		     : : "a"(value), "Nd"(port));			\
-}									\
-									\
-static __always_inline type __in##bwl(uint16_t port)			\
-{									\
-	type value;							\
-	asm volatile("in" #bwl " %w1, %" #bw "0"			\
-		     : "=a"(value) : "Nd"(port));			\
-	return value;							\
-}
-
-BUILDIO(b, b, uint8_t)
-
- #define inb __inb
- #define outb __outb
-
- #define PIT_MODE	0x43
- #define PIT_CH0	0x40
- #define PIT_CH2	0x42
-
-static int is8254;
-
-static void dump_pit(void)
-{
-	if (is8254) {
-		// Latch and output counter and status
-		outb(0xC2, PIT_MODE);
-		printf("%02x %02x %02x\n", inb(PIT_CH0), inb(PIT_CH0), inb(PIT_CH0));
-	} else {
-		// Latch and output counter
-		outb(0x0, PIT_MODE);
-		printf("%02x %02x\n", inb(PIT_CH0), inb(PIT_CH0));
-	}
-}
-
-int main(int argc, char* argv[])
-{
-	int nr_counts = 2;
-
-	if (argc > 1)
-		nr_counts = atoi(argv[1]);
-
-	if (argc > 2)
-		is8254 = 1;
-
-	if (ioperm(0x40, 4, 1) != 0)
-		return 1;
-
-	dump_pit();
-
-	printf("Set oneshot\n");
-	outb(0x38, PIT_MODE);
-	outb(0x00, PIT_CH0);
-	outb(0x0F, PIT_CH0);
-
-	dump_pit();
-	usleep(1000);
-	dump_pit();
-
-	printf("Set periodic\n");
-	outb(0x34, PIT_MODE);
-	outb(0x00, PIT_CH0);
-	outb(0x0F, PIT_CH0);
-
-	dump_pit();
-	usleep(1000);
-	dump_pit();
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-
-	printf("Set stop (%d counter writes)\n", nr_counts);
-	outb(0x30, PIT_MODE);
-	while (nr_counts--)
-		outb(0xFF, PIT_CH0);
-
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-
-	printf("Set MODE 0\n");
-	outb(0x30, PIT_MODE);
-
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-	usleep(100000);
-	dump_pit();
-
-	return 0;
-}
-=====
-
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Co-developed-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Michael Kelley <mhkelley@outlook.com>
-Link: https://lore.kernel.org/all/20240802135555.564941-2-dwmw2@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4b89251de024 ("net/mlx5: Support ndo bridge_setlink and getlink")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/1741644104-97767-7-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mshyperv.c |   11 -----------
- drivers/clocksource/i8253.c    |   36 +++++++++++++++++++++++++-----------
- include/linux/i8253.h          |    1 -
- 3 files changed, 25 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -16,7 +16,6 @@
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/kexec.h>
--#include <linux/i8253.h>
- #include <linux/random.h>
- #include <asm/processor.h>
- #include <asm/hypervisor.h>
-@@ -310,16 +309,6 @@ static void __init ms_hyperv_init_platfo
- 	if (efi_enabled(EFI_BOOT))
- 		x86_platform.get_nmi_reason = hv_get_nmi_reason;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 363c4ab059909..b3ba996004f1d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4684,11 +4684,9 @@ static int mlx5e_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u8 mode, setting;
+-	int err;
  
--	/*
--	 * Hyper-V VMs have a PIT emulation quirk such that zeroing the
--	 * counter register during PIT shutdown restarts the PIT. So it
--	 * continues to interrupt @18.2 HZ. Setting i8253_clear_counter
--	 * to false tells pit_shutdown() not to zero the counter so that
--	 * the PIT really is shutdown. Generation 2 VMs don't have a PIT,
--	 * and setting this value has no effect.
--	 */
--	i8253_clear_counter_on_shutdown = false;
--
- #if IS_ENABLED(CONFIG_HYPERV)
- 	/*
- 	 * Setup the hook to get control post apic initialization.
---- a/drivers/clocksource/i8253.c
-+++ b/drivers/clocksource/i8253.c
-@@ -20,13 +20,6 @@
- DEFINE_RAW_SPINLOCK(i8253_lock);
- EXPORT_SYMBOL(i8253_lock);
- 
--/*
-- * Handle PIT quirk in pit_shutdown() where zeroing the counter register
-- * restarts the PIT, negating the shutdown. On platforms with the quirk,
-- * platform specific code can set this to false.
-- */
--bool i8253_clear_counter_on_shutdown __ro_after_init = true;
--
- #ifdef CONFIG_CLKSRC_I8253
- /*
-  * Since the PIT overflows every tick, its not very useful
-@@ -112,12 +105,33 @@ void clockevent_i8253_disable(void)
- {
- 	raw_spin_lock(&i8253_lock);
- 
-+	/*
-+	 * Writing the MODE register should stop the counter, according to
-+	 * the datasheet. This appears to work on real hardware (well, on
-+	 * modern Intel and AMD boxes; I didn't dig the Pegasos out of the
-+	 * shed).
-+	 *
-+	 * However, some virtual implementations differ, and the MODE change
-+	 * doesn't have any effect until either the counter is written (KVM
-+	 * in-kernel PIT) or the next interrupt (QEMU). And in those cases,
-+	 * it may not stop the *count*, only the interrupts. Although in
-+	 * the virt case, that probably doesn't matter, as the value of the
-+	 * counter will only be calculated on demand if the guest reads it;
-+	 * it's the interrupts which cause steal time.
-+	 *
-+	 * Hyper-V apparently has a bug where even in mode 0, the IRQ keeps
-+	 * firing repeatedly if the counter is running. But it *does* do the
-+	 * right thing when the MODE register is written.
-+	 *
-+	 * So: write the MODE and then load the counter, which ensures that
-+	 * the IRQ is stopped on those buggy virt implementations. And then
-+	 * write the MODE again, which is the right way to stop it.
-+	 */
- 	outb_p(0x30, PIT_MODE);
-+	outb_p(0, PIT_CH0);
-+	outb_p(0, PIT_CH0);
- 
--	if (i8253_clear_counter_on_shutdown) {
--		outb_p(0, PIT_CH0);
--		outb_p(0, PIT_CH0);
--	}
-+	outb_p(0x30, PIT_MODE);
- 
- 	raw_spin_unlock(&i8253_lock);
- }
---- a/include/linux/i8253.h
-+++ b/include/linux/i8253.h
-@@ -21,7 +21,6 @@
- #define PIT_LATCH	((PIT_TICK_RATE + HZ/2) / HZ)
- 
- extern raw_spinlock_t i8253_lock;
--extern bool i8253_clear_counter_on_shutdown;
- extern struct clock_event_device i8253_clockevent;
- extern void clockevent_i8253_init(bool oneshot);
- extern void clockevent_i8253_disable(void);
+-	err = mlx5_eswitch_get_vepa(mdev->priv.eswitch, &setting);
+-	if (err)
+-		return err;
++	if (mlx5_eswitch_get_vepa(mdev->priv.eswitch, &setting))
++		return -EOPNOTSUPP;
+ 	mode = setting ? BRIDGE_MODE_VEPA : BRIDGE_MODE_VEB;
+ 	return ndo_dflt_bridge_getlink(skb, pid, seq, dev,
+ 				       mode,
+-- 
+2.39.5
+
 
 
