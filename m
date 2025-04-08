@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3942D268FF0;
-	Tue,  8 Apr 2025 11:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3DC2288CB;
+	Tue,  8 Apr 2025 11:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111986; cv=none; b=F65Rs/kNXq2M0jOGJybMLDtVmyGNDr3q2NZ5Wx24Mxj9druAXj65Pn7k+2+aNliwzjWOaAfdt+XCMciIWxKrvixS7JsFv9Pjxpx2kl+R0cyNsdXum/OFNJkEKIzkiydj87q1jQjO3GsVMBD3mWSiEDqsI4w2+bAHf44xuxkC2ds=
+	t=1744111989; cv=none; b=AWDHbWQTu0ZyekTnGbCLSnsiz/IvfFP4gi/iQH4pufRXD46azbM9+tgRev6Yodk2TG5pYtapYbobd++NCIgjo/IYbCRbu1ZRaoRf8cUKL5FTxclHVzhYNgjNCeoFP2o/srFQgzGn9GA93V8qcbDMfBbQHa8NU2Dw4JlTUQwicWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111986; c=relaxed/simple;
-	bh=d5SQq++tLhUubOTaVu6S0ubOUbUnSDiC81IPRej3z+Y=;
+	s=arc-20240116; t=1744111989; c=relaxed/simple;
+	bh=XNycCctnRWzJN822FYI8t9TO5AcouvVxr5JRjh4YW2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNS+jw49UXdut5MyKOuzxmtTtrRDwuaAVoKRyXguoPgrVznc0i55dNXKque+Mcs8HlqfeKVdTb6KEMW558tq0uDLgMkHrMaD0es/m6Y1ozegcwSzQmnk18wi/pDg5q65UifSjb7eJG/A3d4KtfxdlisMvg1Kd40zqNlmVfgXZCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skF+Riyr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xi5byslV6V7MZbiPIsaOrPF8s59h18pTBqzvE1F5AkrkFmC2DpZ5s/c43K5UtjTc93qdKKJQo73Uhhn+PmsUnf5L5+wjkH2y/IpGpVcpcsgOkk1/l8Hs2CpQTEg6Sbysa97AfOzAsvPdVetA5DmwasRUPdGjIbKaPAYQPewV1q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URagHLid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skF+Riyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAA7C4CEE5;
-	Tue,  8 Apr 2025 11:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URagHLid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E17C4CEE5;
+	Tue,  8 Apr 2025 11:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111986;
-	bh=d5SQq++tLhUubOTaVu6S0ubOUbUnSDiC81IPRej3z+Y=;
+	s=korg; t=1744111989;
+	bh=XNycCctnRWzJN822FYI8t9TO5AcouvVxr5JRjh4YW2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skF+RiyrtbW5ZOUQRTywdVYWGqbgGOPqeFe+dY6UQXEKH6V9GhIDEcF9yM/g7Y79M
-	 QPIXN2F/kyXmMuseLYqZD80NUTwuVHZuDB+ZjX+5Wc3SDztefsN5ne8BBCNPp/zi9/
-	 +5wvbEpPKXddOawz9p3DrZIcNvouoPAhkevtE55I=
+	b=URagHLidnnPeCUWZ1k0gs8sYfXOMcfO4RQiYVnit+Om9/V8UiDNyVNKggXmlXoQPS
+	 n/QTxCxqpoZ9yiup3B0zslEfUeZlo8OiL29Ty4MN8h9i6JF9L14YEFSDhdk/FdeZ7A
+	 kA+rFhFBaEN7od0VrG3VFn06BbgN7n4wsLa95FcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 596/731] RISC-V: errata: Use medany for relocatable builds
-Date: Tue,  8 Apr 2025 12:48:13 +0200
-Message-ID: <20250408104928.137361246@linuxfoundation.org>
+Subject: [PATCH 6.14 632/731] net: decrease cached dst counters in dst_release
+Date: Tue,  8 Apr 2025 12:48:49 +0200
+Message-ID: <20250408104928.972759075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,40 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palmer Dabbelt <palmer@rivosinc.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit bb58e1579f431d42469b6aed0f03eff383ba6db5 ]
+[ Upstream commit 3a0a3ff6593d670af2451ec363ccb7b18aec0c0a ]
 
-We're trying to mix non-PIC/PIE objects into the otherwise-PIE
-relocatable kernels, to avoid GOT/PLT references during early boot
-alternative resolution (which happens before the GOT/PLT are set up).
+Upstream fix ac888d58869b ("net: do not delay dst_entries_add() in
+dst_release()") moved decrementing the dst count from dst_destroy to
+dst_release to avoid accessing already freed data in case of netns
+dismantle. However in case CONFIG_DST_CACHE is enabled and OvS+tunnels
+are used, this fix is incomplete as the same issue will be seen for
+cached dsts:
 
-riscv64-unknown-linux-gnu-ld: arch/riscv/errata/sifive/errata.o: relocation R_RISCV_HI20 against `tlb_flush_all_threshold' can not be used when making a shared object; recompile with -fPIC
-riscv64-unknown-linux-gnu-ld: arch/riscv/errata/thead/errata.o: relocation R_RISCV_HI20 against `riscv_cbom_block_size' can not be used when making a shared object; recompile with -fPIC
+  Unable to handle kernel paging request at virtual address ffff5aabf6b5c000
+  Call trace:
+   percpu_counter_add_batch+0x3c/0x160 (P)
+   dst_release+0xec/0x108
+   dst_cache_destroy+0x68/0xd8
+   dst_destroy+0x13c/0x168
+   dst_destroy_rcu+0x1c/0xb0
+   rcu_do_batch+0x18c/0x7d0
+   rcu_core+0x174/0x378
+   rcu_core_si+0x18/0x30
 
-Fixes: 8dc2a7e8027f ("riscv: Fix relocatable kernels with early alternatives using -fno-pie")
-Link: https://lore.kernel.org/r/20250326224506.27165-2-palmer@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fix this by invalidating the cache, and thus decrementing cached dst
+counters, in dst_release too.
+
+Fixes: d71785ffc7e7 ("net: add dst_cache to ovs vxlan lwtunnel")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20250326173634.31096-1-atenart@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/errata/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/core/dst.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/riscv/errata/Makefile b/arch/riscv/errata/Makefile
-index f0da9d7b39c37..bc6c77ba837d2 100644
---- a/arch/riscv/errata/Makefile
-+++ b/arch/riscv/errata/Makefile
-@@ -1,5 +1,9 @@
- ifdef CONFIG_RELOCATABLE
--KBUILD_CFLAGS += -fno-pie
-+# We can't use PIC/PIE when handling early-boot errata parsing, as the kernel
-+# doesn't have a GOT setup at that point.  So instead just use medany: it's
-+# usually position-independent, so it should be good enough for the errata
-+# handling.
-+KBUILD_CFLAGS += -fno-pie -mcmodel=medany
- endif
- 
- ifdef CONFIG_RISCV_ALTERNATIVE_EARLY
+diff --git a/net/core/dst.c b/net/core/dst.c
+index 9552a90d4772d..6d76b799ce645 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -165,6 +165,14 @@ static void dst_count_dec(struct dst_entry *dst)
+ void dst_release(struct dst_entry *dst)
+ {
+ 	if (dst && rcuref_put(&dst->__rcuref)) {
++#ifdef CONFIG_DST_CACHE
++		if (dst->flags & DST_METADATA) {
++			struct metadata_dst *md_dst = (struct metadata_dst *)dst;
++
++			if (md_dst->type == METADATA_IP_TUNNEL)
++				dst_cache_reset_now(&md_dst->u.tun_info.dst_cache);
++		}
++#endif
+ 		dst_count_dec(dst);
+ 		call_rcu_hurry(&dst->rcu_head, dst_destroy_rcu);
+ 	}
 -- 
 2.39.5
 
