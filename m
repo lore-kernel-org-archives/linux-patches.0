@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCE335973;
-	Tue,  8 Apr 2025 11:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ED935973;
+	Tue,  8 Apr 2025 11:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112278; cv=none; b=msAjdzkFuKwCEJI/3uJ6s9+OgJyyg+cmOfF8uUn5lXuJ2l6vpe6VIlLoBeNt42Z0h6OtZC4BhSnYKJ3CU5PuqlU2yFmY1vqgStznFLX1ekF3ZvRTjMTSZ82mQyv4Cknp6e6XaHUMDgg3+Pzrt1oUkL53/JZL+ep+xOHR8Dkr3lQ=
+	t=1744112281; cv=none; b=FScTCQMMf5VjYGSW3Mtl4vBFRE0u0dU9EOwcfgT7cfTZ3A2rkynuc2NENrjltagmL4V5884tXE9+iI2c6dCuXu5jbcHbmgG9SGXB1Z1DlLGWYX8PCmotJZtYg4JwMRzWwNh23BrrvdcdoW1rorc3s5Za6JorJ0ilumlBmJ9/DZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112278; c=relaxed/simple;
-	bh=MzZ+5RR+pQAd8oBuIttK5bl/t5ZWGZp3kj78e4hIDcw=;
+	s=arc-20240116; t=1744112281; c=relaxed/simple;
+	bh=BJpzyCGI1NGVkMGAooCxiHBbQBND1Qkk+65h/9Q7Dgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZSNWyjXzqeMP7YGmmj70nNKtE4LMD20DK48JolGxdZC+FoR7+7HR0vy1tSLfYUljvdS4PML07TrfaW/BODa4mx6nTNNVPrs8zuE4fP8Qq8cu0YGPpkfoXfhN6Po1iXlNvdvBj67bi+vr5Bw7AyeeELTL5tnq3ZGDM0vleJubi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjDC85Q8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwbqnaXCQ44pcJS5JM0AD8LD/qObaeTPQEL4o5Cl+OIufEih9nozu6vubDLeYp+i5/TyjSwz20ou54id06Blm5k0sde6yYAPWGYcqnwplNDxOSEJ8iAhoVxFr8rEcldh9f7bzL9qLd6+lHuFIylysy66HpzjBWM6cnMi3yCfHGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNqUtqgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjDC85Q8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2AEC4CEE5;
-	Tue,  8 Apr 2025 11:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNqUtqgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26777C4CEE5;
+	Tue,  8 Apr 2025 11:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112277;
-	bh=MzZ+5RR+pQAd8oBuIttK5bl/t5ZWGZp3kj78e4hIDcw=;
+	s=korg; t=1744112280;
+	bh=BJpzyCGI1NGVkMGAooCxiHBbQBND1Qkk+65h/9Q7Dgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjDC85Q8qAak/d4OQHU/od1LY/qkEncDs8jc8dC8JfO2sqy7/cDF7FJAtlSuG5B5H
-	 mIpWoNvArA8vbMmVdDBjIsctQeNxIkVag0YUtyRuazYX9i3v56R0GGEHCKNXZUcHiw
-	 hFxvh4d9AhhzI6zwLvFu0v105VwXU+OpVTIiqSNs=
+	b=lNqUtqgfzsirZWWPYo70y1K6nTSZFvVI61V96CkX6ucN4qMSQuzaAck5C0wSUsYGF
+	 kq/4VyT4TW21qsr+PljpFQIGPQDfyfBFtEQf/jdnDro7RmJfmUK0cUTFy9fle3OHVc
+	 U7h+SWJgK7Pl7kv2OeuyD+LAdbDwerF6VpShRajs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/279] netpoll: hold rcu read lock in __netpoll_send_skb()
-Date: Tue,  8 Apr 2025 12:46:33 +0200
-Message-ID: <20250408104826.650704382@linuxfoundation.org>
+Subject: [PATCH 5.15 011/279] Drivers: hv: vmbus: Dont release fb_mmio resource in vmbus_free_mmio()
+Date: Tue,  8 Apr 2025 12:46:34 +0200
+Message-ID: <20250408104826.681026663@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,74 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 505ead7ab77f289f12d8a68ac83da068e4d4408b ]
+[ Upstream commit 73fe9073c0cc28056cb9de0c8a516dac070f1d1f ]
 
-The function __netpoll_send_skb() is being invoked without holding the
-RCU read lock. This oversight triggers a warning message when
-CONFIG_PROVE_RCU_LIST is enabled:
+The VMBus driver manages the MMIO space it owns via the hyperv_mmio
+resource tree. Because the synthetic video framebuffer portion of the
+MMIO space is initially setup by the Hyper-V host for each guest, the
+VMBus driver does an early reserve of that portion of MMIO space in the
+hyperv_mmio resource tree. It saves a pointer to that resource in
+fb_mmio. When a VMBus driver requests MMIO space and passes "true"
+for the "fb_overlap_ok" argument, the reserved framebuffer space is
+used if possible. In that case it's not necessary to do another request
+against the "shadow" hyperv_mmio resource tree because that resource
+was already requested in the early reserve steps.
 
-	net/core/netpoll.c:330 suspicious rcu_dereference_check() usage!
+However, the vmbus_free_mmio() function currently does no special
+handling for the fb_mmio resource. When a framebuffer device is
+removed, or the driver is unbound, the current code for
+vmbus_free_mmio() releases the reserved resource, leaving fb_mmio
+pointing to memory that has been freed. If the same or another
+driver is subsequently bound to the device, vmbus_allocate_mmio()
+checks against fb_mmio, and potentially gets garbage. Furthermore
+a second unbind operation produces this "nonexistent resource" error
+because of the unbalanced behavior between vmbus_allocate_mmio() and
+vmbus_free_mmio():
 
-	 netpoll_send_skb
-	 netpoll_send_udp
-	 write_ext_msg
-	 console_flush_all
-	 console_unlock
-	 vprintk_emit
+[   55.499643] resource: Trying to free nonexistent
+			resource <0x00000000f0000000-0x00000000f07fffff>
 
-To prevent npinfo from disappearing unexpectedly, ensure that
-__netpoll_send_skb() is protected with the RCU read lock.
+Fix this by adding logic to vmbus_free_mmio() to recognize when
+MMIO space in the fb_mmio reserved area would be released, and don't
+release it. This filtering ensures the fb_mmio resource always exists,
+and makes vmbus_free_mmio() more parallel with vmbus_allocate_mmio().
 
-Fixes: 2899656b494dcd1 ("netpoll: take rcu_read_lock_bh() in netpoll_send_skb_on_dev()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250306-netpoll_rcu_v2-v2-1-bc4f5c51742a@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: be000f93e5d7 ("drivers:hv: Track allocations of children of hv_vmbus in private resource tree")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250310035208.275764-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250310035208.275764-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hv/vmbus_drv.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 597e83e2bce86..87f5a837410c1 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -326,6 +326,7 @@ static int netpoll_owner_active(struct net_device *dev)
- static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- {
- 	netdev_tx_t status = NETDEV_TX_BUSY;
-+	netdev_tx_t ret = NET_XMIT_DROP;
- 	struct net_device *dev;
- 	unsigned long tries;
- 	/* It is up to the caller to keep npinfo alive. */
-@@ -334,11 +335,12 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- 	lockdep_assert_irqs_disabled();
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 02aeb192e3671..cb3a5b13c3ec2 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2419,12 +2419,25 @@ void vmbus_free_mmio(resource_size_t start, resource_size_t size)
+ 	struct resource *iter;
  
- 	dev = np->dev;
-+	rcu_read_lock();
- 	npinfo = rcu_dereference_bh(dev->npinfo);
+ 	mutex_lock(&hyperv_mmio_lock);
++
++	/*
++	 * If all bytes of the MMIO range to be released are within the
++	 * special case fb_mmio shadow region, skip releasing the shadow
++	 * region since no corresponding __request_region() was done
++	 * in vmbus_allocate_mmio().
++	 */
++	if (fb_mmio && start >= fb_mmio->start &&
++	    (start + size - 1 <= fb_mmio->end))
++		goto skip_shadow_release;
++
+ 	for (iter = hyperv_mmio; iter; iter = iter->sibling) {
+ 		if ((iter->start >= start + size) || (iter->end <= start))
+ 			continue;
  
- 	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
- 		dev_kfree_skb_irq(skb);
--		return NET_XMIT_DROP;
-+		goto out;
+ 		__release_region(iter, start, size);
  	}
++
++skip_shadow_release:
+ 	release_mem_region(start, size);
+ 	mutex_unlock(&hyperv_mmio_lock);
  
- 	/* don't get messages out of order, and no recursion */
-@@ -377,7 +379,10 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- 		skb_queue_tail(&npinfo->txq, skb);
- 		schedule_delayed_work(&npinfo->tx_work,0);
- 	}
--	return NETDEV_TX_OK;
-+	ret = NETDEV_TX_OK;
-+out:
-+	rcu_read_unlock();
-+	return ret;
- }
- 
- netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
 -- 
 2.39.5
 
