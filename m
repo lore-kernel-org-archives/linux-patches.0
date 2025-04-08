@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558FC2641CC;
-	Tue,  8 Apr 2025 11:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE14BA94A;
+	Tue,  8 Apr 2025 11:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113129; cv=none; b=m5O4UBUVfYUj0PTGWfBXQpcJT47gJ8iUpJbQQgvgddC3XekI+Lq0AyzFVchnWeBdZce460U3br8hyqjWIHKbsUpB/bsIQmGDx2Yj0AHEFrvsd3qg0HUXLOZ8f8ZxkT9UTt7JQT8WZLnmTjMe51KbJLzl+ULO5pHZ4QSEacW50JQ=
+	t=1744113132; cv=none; b=mLPhnPLiPtky3fWa/919nXObhP1+fz0d/ESbLEa/yYrl/oSY/ZYUTEmqdKMvOIg63f2voa42JxhT1gJao9Qp6Ya9rCanoc4VBl/C1gnjtjj675hqWcWGGfSonNOQwETuRxk9nr1JeaguLHTwgQ7QLIc7s+18v56T3YyfirV4NIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113129; c=relaxed/simple;
-	bh=zEHS+O7kF2ey2dTKeny1DBstYkkRsq1C5/CBGXeCxYc=;
+	s=arc-20240116; t=1744113132; c=relaxed/simple;
+	bh=3W1Qhf7n6OAbjv2Qi4ns49ZBnlN7TiRq01NLBE+Z9QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eJ97XCPsfs5o5qR2ylT3tnxfO6IpXgj59/ArX4kYLNIT2IDwHPdiZ8Yr8PZkTRQTOuvDYKEQcec//tFZbQGfHFsxsnsHadk77JWf16lwsadnZki4K78rzmWJhDcZh3HQOg5Xv4m+BmaqWw2ToKNgvED/FRD3Y1Rusyyr1DrFYBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wFIx26v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BUifOCoWa6aCapUhKMqyofZbIkMJxcMqz9jBwgaHc3SE0mcPNkRHr9iCzgDIuKHJZTsGWVkTQIlz1ggxB2W3qH5PD0iqls8T3anYkVmQnFE4pvq+eBwOHUPBtOJ9nd6hjfxg+jSfqgwJtc+C56j1WtWiCT3dUxm7yMATdW3vIEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxUfZrhf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wFIx26v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471BFC4CEE5;
-	Tue,  8 Apr 2025 11:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxUfZrhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27291C4CEE5;
+	Tue,  8 Apr 2025 11:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113128;
-	bh=zEHS+O7kF2ey2dTKeny1DBstYkkRsq1C5/CBGXeCxYc=;
+	s=korg; t=1744113131;
+	bh=3W1Qhf7n6OAbjv2Qi4ns49ZBnlN7TiRq01NLBE+Z9QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wFIx26vHuhT5fh9+ppR4Gtxb2qqxecXAGIO7baLM6A7ciCIsvxEkp8Vp2iJigNf8
-	 f1WdWBNf5xOOyhKLv88re8Vx2othhnevRR05M6pKgoNQgS+f7GeGss45CFlH9kf+xE
-	 fMdJQ7uut9KEORH/JqUNFIovGZPUYd/dclqY5tYE=
+	b=SxUfZrhfFpG3SjvG1hKljsnuDHTx9jsHHk7fk4IVECAzh2qk/fk5qyEJoBllef8e+
+	 G5wtQRzdpzp5Eq5GpcS7gbteRYjhYnk4NuTDZP+nI/s2ffoUYKW3Cr4vgQdzf2vpeP
+	 u1vMaD1YAz4XiL7FB9ec3VOmo1nWbluh7RxzW3CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Alex Sierra <alex.sierra@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Hans Zhang <18255117159@163.com>,
+	Hans Zhang <hans.zhang@cixtech.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/268] drm/amdkfd: Fix Circular Locking Dependency in svm_range_cpu_invalidate_pagetables
-Date: Tue,  8 Apr 2025 12:47:35 +0200
-Message-ID: <20250408104829.690736062@linuxfoundation.org>
+Subject: [PATCH 6.6 045/268] PCI: cadence-ep: Fix the driver to send MSG TLP for INTx without data payload
+Date: Tue,  8 Apr 2025 12:47:36 +0200
+Message-ID: <20250408104829.716679028@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -59,273 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit fddc45026311c05a5355fd34b9dc0a1d7eaef4a2 ]
+[ Upstream commit 3ac47fbf4f6e8c3a7c3855fac68cc3246f90f850 ]
 
-This commit addresses a circular locking dependency in the
-svm_range_cpu_invalidate_pagetables function. The function previously
-held a lock while determining whether to perform an unmap or eviction
-operation, which could lead to deadlocks.
+Per the Cadence's "PCIe Controller IP for AX14" user guide, Version
+1.04, Section 9.1.7.1, "AXI Subordinate to PCIe Address Translation
+Registers", Table 9.4, the bit 16 of the AXI Subordinate Address
+(axi_s_awaddr) when set corresponds to MSG with data, and when not set,
+to MSG without data.
 
-Fixes the below:
+However, the driver is currently doing the opposite and due to this,
+the INTx is never received on the host.
 
-[  223.418794] ======================================================
-[  223.418820] WARNING: possible circular locking dependency detected
-[  223.418845] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
-[  223.418869] ------------------------------------------------------
-[  223.418889] kfdtest/3939 is trying to acquire lock:
-[  223.418906] ffff8957552eae38 (&dqm->lock_hidden){+.+.}-{3:3}, at: evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.419302]
-               but task is already holding lock:
-[  223.419303] ffff8957556b83b0 (&prange->lock){+.+.}-{3:3}, at: svm_range_cpu_invalidate_pagetables+0x9d/0x850 [amdgpu]
-[  223.419447] Console: switching to colour dummy device 80x25
-[  223.419477] [IGT] amd_basic: executing
-[  223.419599]
-               which lock already depends on the new lock.
+So, fix the driver to reflect the documentation and also make INTx work.
 
-[  223.419611]
-               the existing dependency chain (in reverse order) is:
-[  223.419621]
-               -> #2 (&prange->lock){+.+.}-{3:3}:
-[  223.419636]        __mutex_lock+0x85/0xe20
-[  223.419647]        mutex_lock_nested+0x1b/0x30
-[  223.419656]        svm_range_validate_and_map+0x2f1/0x15b0 [amdgpu]
-[  223.419954]        svm_range_set_attr+0xe8c/0x1710 [amdgpu]
-[  223.420236]        svm_ioctl+0x46/0x50 [amdgpu]
-[  223.420503]        kfd_ioctl_svm+0x50/0x90 [amdgpu]
-[  223.420763]        kfd_ioctl+0x409/0x6d0 [amdgpu]
-[  223.421024]        __x64_sys_ioctl+0x95/0xd0
-[  223.421036]        x64_sys_call+0x1205/0x20d0
-[  223.421047]        do_syscall_64+0x87/0x140
-[  223.421056]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  223.421068]
-               -> #1 (reservation_ww_class_mutex){+.+.}-{3:3}:
-[  223.421084]        __ww_mutex_lock.constprop.0+0xab/0x1560
-[  223.421095]        ww_mutex_lock+0x2b/0x90
-[  223.421103]        amdgpu_amdkfd_alloc_gtt_mem+0xcc/0x2b0 [amdgpu]
-[  223.421361]        add_queue_mes+0x3bc/0x440 [amdgpu]
-[  223.421623]        unhalt_cpsch+0x1ae/0x240 [amdgpu]
-[  223.421888]        kgd2kfd_start_sched+0x5e/0xd0 [amdgpu]
-[  223.422148]        amdgpu_amdkfd_start_sched+0x3d/0x50 [amdgpu]
-[  223.422414]        amdgpu_gfx_enforce_isolation_handler+0x132/0x270 [amdgpu]
-[  223.422662]        process_one_work+0x21e/0x680
-[  223.422673]        worker_thread+0x190/0x330
-[  223.422682]        kthread+0xe7/0x120
-[  223.422690]        ret_from_fork+0x3c/0x60
-[  223.422699]        ret_from_fork_asm+0x1a/0x30
-[  223.422708]
-               -> #0 (&dqm->lock_hidden){+.+.}-{3:3}:
-[  223.422723]        __lock_acquire+0x16f4/0x2810
-[  223.422734]        lock_acquire+0xd1/0x300
-[  223.422742]        __mutex_lock+0x85/0xe20
-[  223.422751]        mutex_lock_nested+0x1b/0x30
-[  223.422760]        evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.423025]        kfd_process_evict_queues+0x8a/0x1d0 [amdgpu]
-[  223.423285]        kgd2kfd_quiesce_mm+0x43/0x90 [amdgpu]
-[  223.423540]        svm_range_cpu_invalidate_pagetables+0x4a7/0x850 [amdgpu]
-[  223.423807]        __mmu_notifier_invalidate_range_start+0x1f5/0x250
-[  223.423819]        copy_page_range+0x1e94/0x1ea0
-[  223.423829]        copy_process+0x172f/0x2ad0
-[  223.423839]        kernel_clone+0x9c/0x3f0
-[  223.423847]        __do_sys_clone+0x66/0x90
-[  223.423856]        __x64_sys_clone+0x25/0x30
-[  223.423864]        x64_sys_call+0x1d7c/0x20d0
-[  223.423872]        do_syscall_64+0x87/0x140
-[  223.423880]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  223.423891]
-               other info that might help us debug this:
-
-[  223.423903] Chain exists of:
-                 &dqm->lock_hidden --> reservation_ww_class_mutex --> &prange->lock
-
-[  223.423926]  Possible unsafe locking scenario:
-
-[  223.423935]        CPU0                    CPU1
-[  223.423942]        ----                    ----
-[  223.423949]   lock(&prange->lock);
-[  223.423958]                                lock(reservation_ww_class_mutex);
-[  223.423970]                                lock(&prange->lock);
-[  223.423981]   lock(&dqm->lock_hidden);
-[  223.423990]
-                *** DEADLOCK ***
-
-[  223.423999] 5 locks held by kfdtest/3939:
-[  223.424006]  #0: ffffffffb82b4fc0 (dup_mmap_sem){.+.+}-{0:0}, at: copy_process+0x1387/0x2ad0
-[  223.424026]  #1: ffff89575eda81b0 (&mm->mmap_lock){++++}-{3:3}, at: copy_process+0x13a8/0x2ad0
-[  223.424046]  #2: ffff89575edaf3b0 (&mm->mmap_lock/1){+.+.}-{3:3}, at: copy_process+0x13e4/0x2ad0
-[  223.424066]  #3: ffffffffb82e76e0 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}, at: copy_page_range+0x1cea/0x1ea0
-[  223.424088]  #4: ffff8957556b83b0 (&prange->lock){+.+.}-{3:3}, at: svm_range_cpu_invalidate_pagetables+0x9d/0x850 [amdgpu]
-[  223.424365]
-               stack backtrace:
-[  223.424374] CPU: 0 UID: 0 PID: 3939 Comm: kfdtest Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
-[  223.424392] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  223.424401] Hardware name: Gigabyte Technology Co., Ltd. X570 AORUS PRO WIFI/X570 AORUS PRO WIFI, BIOS F36a 02/16/2022
-[  223.424416] Call Trace:
-[  223.424423]  <TASK>
-[  223.424430]  dump_stack_lvl+0x9b/0xf0
-[  223.424441]  dump_stack+0x10/0x20
-[  223.424449]  print_circular_bug+0x275/0x350
-[  223.424460]  check_noncircular+0x157/0x170
-[  223.424469]  ? __bfs+0xfd/0x2c0
-[  223.424481]  __lock_acquire+0x16f4/0x2810
-[  223.424490]  ? srso_return_thunk+0x5/0x5f
-[  223.424505]  lock_acquire+0xd1/0x300
-[  223.424514]  ? evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.424783]  __mutex_lock+0x85/0xe20
-[  223.424792]  ? evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.425058]  ? srso_return_thunk+0x5/0x5f
-[  223.425067]  ? mark_held_locks+0x54/0x90
-[  223.425076]  ? evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.425339]  ? srso_return_thunk+0x5/0x5f
-[  223.425350]  mutex_lock_nested+0x1b/0x30
-[  223.425358]  ? mutex_lock_nested+0x1b/0x30
-[  223.425367]  evict_process_queues_cpsch+0x43/0x210 [amdgpu]
-[  223.425631]  kfd_process_evict_queues+0x8a/0x1d0 [amdgpu]
-[  223.425893]  kgd2kfd_quiesce_mm+0x43/0x90 [amdgpu]
-[  223.426156]  svm_range_cpu_invalidate_pagetables+0x4a7/0x850 [amdgpu]
-[  223.426423]  ? srso_return_thunk+0x5/0x5f
-[  223.426436]  __mmu_notifier_invalidate_range_start+0x1f5/0x250
-[  223.426450]  copy_page_range+0x1e94/0x1ea0
-[  223.426461]  ? srso_return_thunk+0x5/0x5f
-[  223.426474]  ? srso_return_thunk+0x5/0x5f
-[  223.426484]  ? lock_acquire+0xd1/0x300
-[  223.426494]  ? copy_process+0x1718/0x2ad0
-[  223.426502]  ? srso_return_thunk+0x5/0x5f
-[  223.426510]  ? sched_clock_noinstr+0x9/0x10
-[  223.426519]  ? local_clock_noinstr+0xe/0xc0
-[  223.426528]  ? copy_process+0x1718/0x2ad0
-[  223.426537]  ? srso_return_thunk+0x5/0x5f
-[  223.426550]  copy_process+0x172f/0x2ad0
-[  223.426569]  kernel_clone+0x9c/0x3f0
-[  223.426577]  ? __schedule+0x4c9/0x1b00
-[  223.426586]  ? srso_return_thunk+0x5/0x5f
-[  223.426594]  ? sched_clock_noinstr+0x9/0x10
-[  223.426602]  ? srso_return_thunk+0x5/0x5f
-[  223.426610]  ? local_clock_noinstr+0xe/0xc0
-[  223.426619]  ? schedule+0x107/0x1a0
-[  223.426629]  __do_sys_clone+0x66/0x90
-[  223.426643]  __x64_sys_clone+0x25/0x30
-[  223.426652]  x64_sys_call+0x1d7c/0x20d0
-[  223.426661]  do_syscall_64+0x87/0x140
-[  223.426671]  ? srso_return_thunk+0x5/0x5f
-[  223.426679]  ? common_nsleep+0x44/0x50
-[  223.426690]  ? srso_return_thunk+0x5/0x5f
-[  223.426698]  ? trace_hardirqs_off+0x52/0xd0
-[  223.426709]  ? srso_return_thunk+0x5/0x5f
-[  223.426717]  ? syscall_exit_to_user_mode+0xcc/0x200
-[  223.426727]  ? srso_return_thunk+0x5/0x5f
-[  223.426736]  ? do_syscall_64+0x93/0x140
-[  223.426748]  ? srso_return_thunk+0x5/0x5f
-[  223.426756]  ? up_write+0x1c/0x1e0
-[  223.426765]  ? srso_return_thunk+0x5/0x5f
-[  223.426775]  ? srso_return_thunk+0x5/0x5f
-[  223.426783]  ? trace_hardirqs_off+0x52/0xd0
-[  223.426792]  ? srso_return_thunk+0x5/0x5f
-[  223.426800]  ? syscall_exit_to_user_mode+0xcc/0x200
-[  223.426810]  ? srso_return_thunk+0x5/0x5f
-[  223.426818]  ? do_syscall_64+0x93/0x140
-[  223.426826]  ? syscall_exit_to_user_mode+0xcc/0x200
-[  223.426836]  ? srso_return_thunk+0x5/0x5f
-[  223.426844]  ? do_syscall_64+0x93/0x140
-[  223.426853]  ? srso_return_thunk+0x5/0x5f
-[  223.426861]  ? irqentry_exit+0x6b/0x90
-[  223.426869]  ? srso_return_thunk+0x5/0x5f
-[  223.426877]  ? exc_page_fault+0xa7/0x2c0
-[  223.426888]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  223.426898] RIP: 0033:0x7f46758eab57
-[  223.426906] Code: ba 04 00 f3 0f 1e fa 64 48 8b 04 25 10 00 00 00 45 31 c0 31 d2 31 f6 bf 11 00 20 01 4c 8d 90 d0 02 00 00 b8 38 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 41 41 89 c0 85 c0 75 2c 64 48 8b 04 25 10 00
-[  223.426930] RSP: 002b:00007fff5c3e5188 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
-[  223.426943] RAX: ffffffffffffffda RBX: 00007f4675f8c040 RCX: 00007f46758eab57
-[  223.426954] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
-[  223.426965] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[  223.426975] R10: 00007f4675e81a50 R11: 0000000000000246 R12: 0000000000000001
-[  223.426986] R13: 00007fff5c3e5470 R14: 00007fff5c3e53e0 R15: 00007fff5c3e5410
-[  223.427004]  </TASK>
-
-v2: To resolve this issue, the allocation of the process context buffer
-(`proc_ctx_bo`) has been moved from the `add_queue_mes` function to the
-`pqm_create_queue` function. This change ensures that the buffer is
-allocated only when the first queue for a process is created and only if
-the Micro Engine Scheduler (MES) is enabled. (Felix)
-
-v3: Fix typo s/Memory Execution Scheduler (MES)/Micro Engine Scheduler
-in commit message. (Lijo)
-
-Fixes: 438b39ac74e2 ("drm/amdkfd: pause autosuspend when creating pdd")
-Cc: Jesse Zhang <jesse.zhang@amd.com>
-Cc: Yunxiang Li <Yunxiang.Li@amd.com>
-Cc: Philip Yang <Philip.Yang@amd.com>
-Cc: Alex Sierra <alex.sierra@amd.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 37dddf14f1ae ("PCI: cadence: Add EndPoint Controller driver for Cadence PCIe controller")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Hans Zhang <hans.zhang@cixtech.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250214165724.184599-1-18255117159@163.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/amdkfd/kfd_device_queue_manager.c    | 15 ---------------
- .../drm/amd/amdkfd/kfd_process_queue_manager.c   | 16 ++++++++++++++++
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c | 3 +--
+ drivers/pci/controller/cadence/pcie-cadence.h    | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 43fa260ddbcea..4d9a406925e18 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -197,21 +197,6 @@ static int add_queue_mes(struct device_queue_manager *dqm, struct queue *q,
- 	if (dqm->is_hws_hang)
- 		return -EIO;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+index b8b655d4047ec..a87dab9abba26 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -354,8 +354,7 @@ static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
+ 	spin_unlock_irqrestore(&ep->lock, flags);
  
--	if (!pdd->proc_ctx_cpu_ptr) {
--		r = amdgpu_amdkfd_alloc_gtt_mem(adev,
--				AMDGPU_MES_PROC_CTX_SIZE,
--				&pdd->proc_ctx_bo,
--				&pdd->proc_ctx_gpu_addr,
--				&pdd->proc_ctx_cpu_ptr,
--				false);
--		if (r) {
--			dev_err(adev->dev,
--				"failed to allocate process context bo\n");
--			return r;
--		}
--		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
--	}
--
- 	memset(&queue_input, 0x0, sizeof(struct mes_add_queue_input));
- 	queue_input.process_id = qpd->pqm->process->pasid;
- 	queue_input.page_table_base_addr =  qpd->page_table_base;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index a02777694d995..e057c2bc7be42 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -329,10 +329,26 @@ int pqm_create_queue(struct process_queue_manager *pqm,
- 	if (retval != 0)
- 		return retval;
+ 	offset = CDNS_PCIE_NORMAL_MSG_ROUTING(MSG_ROUTING_LOCAL) |
+-		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code) |
+-		 CDNS_PCIE_MSG_NO_DATA;
++		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code);
+ 	writel(0, ep->irq_cpu_addr + offset);
+ }
  
-+	/* Register process if this is the first queue */
- 	if (list_empty(&pdd->qpd.queues_list) &&
- 	    list_empty(&pdd->qpd.priv_queue_list))
- 		dev->dqm->ops.register_process(dev->dqm, &pdd->qpd);
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index d55dfd173f228..9efb71cbe6996 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -240,7 +240,7 @@ struct cdns_pcie_rp_ib_bar {
+ #define CDNS_PCIE_NORMAL_MSG_CODE_MASK		GENMASK(15, 8)
+ #define CDNS_PCIE_NORMAL_MSG_CODE(code) \
+ 	(((code) << 8) & CDNS_PCIE_NORMAL_MSG_CODE_MASK)
+-#define CDNS_PCIE_MSG_NO_DATA			BIT(16)
++#define CDNS_PCIE_MSG_DATA			BIT(16)
  
-+	/* Allocate proc_ctx_bo only if MES is enabled and this is the first queue */
-+	if (!pdd->proc_ctx_cpu_ptr && dev->kfd->shared_resources.enable_mes) {
-+		retval = amdgpu_amdkfd_alloc_gtt_mem(dev->adev,
-+						     AMDGPU_MES_PROC_CTX_SIZE,
-+						     &pdd->proc_ctx_bo,
-+						     &pdd->proc_ctx_gpu_addr,
-+						     &pdd->proc_ctx_cpu_ptr,
-+						     false);
-+		if (retval) {
-+			dev_err(dev->adev->dev, "failed to allocate process context bo\n");
-+			return retval;
-+		}
-+		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
-+	}
-+
- 	pqn = kzalloc(sizeof(*pqn), GFP_KERNEL);
- 	if (!pqn) {
- 		retval = -ENOMEM;
+ struct cdns_pcie;
+ 
 -- 
 2.39.5
 
