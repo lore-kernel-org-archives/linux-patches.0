@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337CF2063FD;
-	Tue,  8 Apr 2025 12:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7F1207E14;
+	Tue,  8 Apr 2025 12:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115159; cv=none; b=JfCDnA8ib8IoiRduupPAcEh0VsRpOfWjDhqxSSR54KxPmuVRHxkISn+P2N2IN23WivFu3s4JUcDUYZaby9uDlENVroLAPgL6W+SKuzlA6aq5KAH0kmoz+pBwcbVTvlt8Gvi8MFlTjp7+lOitflANd7kVk/IXcD22mQziaxP8Q5Q=
+	t=1744115161; cv=none; b=H1OjI7jXyjW9793LHOxNTECoBFryx+jc6Xv2535otywTcxtjgJ44LmwbGoXcAwM8dDQrYRQL1SQtAZn/HvXhL9LPb+cz2h2Eoh7+MIHi1Sdjosopo7qhDkb2yufcHoje3QfuO1Q1Sb5uCbicN4ganpgfWAXDZJyTcNWFz66Pi74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115159; c=relaxed/simple;
-	bh=0uy79wHUvskig8vb4prYolfYXVVT3GechvsQWQ+nefI=;
+	s=arc-20240116; t=1744115161; c=relaxed/simple;
+	bh=IiUDAgAMwKQZdwDugKPFrL0/qPYPsN8E9PHJIf2mOK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KM+5nTQXQKodsR2JW3vdhzyambxAvBeYCVW1DynROVnqWnV1qzIs6JPgJIhUk15ezx17lU0nfZxgEhDFqj8bC9nmuzYvce0j8ups4cwTrxDpsFFdvBCpm0oBYezuifaH3m5T7glvJ/SWkp/wJq7sB6fSMgsSw+9455IKtLg/Zwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8BRsQnA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1wc/RRZ8GeGr6uDB1rMOGpf2L4vyu7sWbyLlYt1LbBBBLmScLwploY/nOejoSW61+S8WhxHMiaz5J5/K+PlCQuImYdOELmGkmiH98CPTIH8xapWkZN6H7MS2kG12KDHPURh9JvUvk/tRHS4yd0cUA0vtlk4Ft1ct6bupfFikUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtukVkQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8BRsQnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C626C4CEE5;
-	Tue,  8 Apr 2025 12:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtukVkQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1DEC4CEE5;
+	Tue,  8 Apr 2025 12:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115158;
-	bh=0uy79wHUvskig8vb4prYolfYXVVT3GechvsQWQ+nefI=;
+	s=korg; t=1744115161;
+	bh=IiUDAgAMwKQZdwDugKPFrL0/qPYPsN8E9PHJIf2mOK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8BRsQnAFhz/+6TR97yax86pkdkYkaEW7f+UNWgWwwCw41uA3pAAM9p+CtHc+dHov
-	 KuZK4tFoRkHj353sPMH337pVBnwtYpxwy83u7zibkxyrLGxY+yDf+qHpGDvJxElH4b
-	 SZYbqBOBZyq797CxuF2yLut+gHLbDVhpVVEHVM8w=
+	b=RtukVkQMyfQWCi3WFfp/TnbGuN92YLrzBQqvkZs4LzWraAgnonM1t4lelIRD1F5Gp
+	 EyN50jQTd2qJGWSmVoh/tRToXWegrIveRrin/8xzYQ6wzYEjRYmjk+byQgoK4QdLJ+
+	 aKyBUiX76AlfsXS6zm40sxJMjZoHUTgjhZ2hF4eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 370/499] ublk: make sure ubq->canceling is set when queue is frozen
-Date: Tue,  8 Apr 2025 12:49:42 +0200
-Message-ID: <20250408104900.456711837@linuxfoundation.org>
+Subject: [PATCH 6.13 371/499] s390/entry: Fix setting _CIF_MCCK_GUEST with lowcore relocation
+Date: Tue,  8 Apr 2025 12:49:43 +0200
+Message-ID: <20250408104900.483092350@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,95 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 8741d0737921ec1c03cf59aebf4d01400c2b461a ]
+[ Upstream commit 121df45b37a1016ee6828c2ca3ba825f3e18a8c1 ]
 
-Now ublk driver depends on `ubq->canceling` for deciding if the request
-can be dispatched via uring_cmd & io_uring_cmd_complete_in_task().
+When lowcore relocation is enabled, the machine check handler doesn't
+use the lowcore address when setting _CIF_MCCK_GUEST. Fix this by
+adding the missing base register.
 
-Once ubq->canceling is set, the uring_cmd can be done via ublk_cancel_cmd()
-and io_uring_cmd_done().
-
-So set ubq->canceling when queue is frozen, this way makes sure that the
-flag can be observed from ublk_queue_rq() reliably, and avoids
-use-after-free on uring_cmd.
-
-Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250327095123.179113-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0001b7bbc53a ("s390/entry: Make mchk_int_handler() ready for lowcore relocation")
+Reported-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ arch/s390/kernel/entry.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index d9e8bf9f5e5a8..65badf9ebecf8 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1452,17 +1452,27 @@ static void ublk_abort_queue(struct ublk_device *ub, struct ublk_queue *ubq)
- 	}
- }
- 
-+/* Must be called when queue is frozen */
-+static bool ublk_mark_queue_canceling(struct ublk_queue *ubq)
-+{
-+	bool canceled;
-+
-+	spin_lock(&ubq->cancel_lock);
-+	canceled = ubq->canceling;
-+	if (!canceled)
-+		ubq->canceling = true;
-+	spin_unlock(&ubq->cancel_lock);
-+
-+	return canceled;
-+}
-+
- static bool ublk_abort_requests(struct ublk_device *ub, struct ublk_queue *ubq)
- {
-+	bool was_canceled = ubq->canceling;
- 	struct gendisk *disk;
- 
--	spin_lock(&ubq->cancel_lock);
--	if (ubq->canceling) {
--		spin_unlock(&ubq->cancel_lock);
-+	if (was_canceled)
- 		return false;
--	}
--	ubq->canceling = true;
--	spin_unlock(&ubq->cancel_lock);
- 
- 	spin_lock(&ub->lock);
- 	disk = ub->ub_disk;
-@@ -1474,14 +1484,23 @@ static bool ublk_abort_requests(struct ublk_device *ub, struct ublk_queue *ubq)
- 	if (!disk)
- 		return false;
- 
--	/* Now we are serialized with ublk_queue_rq() */
-+	/*
-+	 * Now we are serialized with ublk_queue_rq()
-+	 *
-+	 * Make sure that ubq->canceling is set when queue is frozen,
-+	 * because ublk_queue_rq() has to rely on this flag for avoiding to
-+	 * touch completed uring_cmd
-+	 */
- 	blk_mq_quiesce_queue(disk->queue);
--	/* abort queue is for making forward progress */
--	ublk_abort_queue(ub, ubq);
-+	was_canceled = ublk_mark_queue_canceling(ubq);
-+	if (!was_canceled) {
-+		/* abort queue is for making forward progress */
-+		ublk_abort_queue(ub, ubq);
-+	}
- 	blk_mq_unquiesce_queue(disk->queue);
- 	put_device(disk_to_dev(disk));
- 
--	return true;
-+	return !was_canceled;
- }
- 
- static void ublk_cancel_cmd(struct ublk_queue *ubq, struct ublk_io *io,
+diff --git a/arch/s390/kernel/entry.S b/arch/s390/kernel/entry.S
+index 960c08700cf69..6df182bb955a4 100644
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -481,7 +481,7 @@ SYM_CODE_START(mcck_int_handler)
+ 	clgrjl	%r9,%r14, 4f
+ 	larl	%r14,.Lsie_leave
+ 	clgrjhe	%r9,%r14, 4f
+-	lg	%r10,__LC_PCPU
++	lg	%r10,__LC_PCPU(%r13)
+ 	oi	__PCPU_FLAGS+7(%r10), _CIF_MCCK_GUEST
+ 4:	BPENTER	__SF_SIE_FLAGS(%r15),_TIF_ISOLATE_BP_GUEST
+ 	SIEEXIT __SF_SIE_CONTROL(%r15),%r13
 -- 
 2.39.5
 
