@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D8207E14;
-	Tue,  8 Apr 2025 12:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47AF227BA4;
+	Tue,  8 Apr 2025 12:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114116; cv=none; b=qEgu3j54bwtJGMzT7w8COsK1xv1SEJxtvNrzqqG7P+jCMRhL28PxMh2nVl6zbd6dNMz+VEqGzl7OTYjPspGAtq1Rw87OmfZ1JfFTcyt1FUrUzEVElhPN8zCS1T9Sp1lmjqgEJqNwsikvVszy+LYc+2YQwLQE3CbeLFHrJuONz/0=
+	t=1744114119; cv=none; b=VIXkDtX9PLReribQMxBGFCeKKCqB/3yWIJi+X762p5wkQXyIo4bsihbiMAwzxab2RvRfjMNpaNxTlCO38JV7uQJqf1LyzWXh/wkLQl06Ni6exJWPS3eH3eLl/3iD+FZ15kabU9MgMKtrqXZcDU6+ByXsXBYyMhs/zNd9FQTrfGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114116; c=relaxed/simple;
-	bh=0y4Xn4xlp+wIvlu6iEMd0lAiR3K11U8rBlDxCBkpAAo=;
+	s=arc-20240116; t=1744114119; c=relaxed/simple;
+	bh=1HzEKMxLyJj1MXfo8p6W778mH3arsg4V2RKX4xXIl8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyldXRRf97lM5g2KxjHo6TEZ7yJ1UHUj8CJqXwN6EnIiVvpEo5T/Mn7Y9C+B5NhcOhGEaUSjFvovtFMhFBqTibudZmdhl7w0o33Zjfz23EW/NgPp6h5pOIvHR2nJfSjk9Yf9iy7KvH3etNiSrGBGZLkq6cAYDpO8J40yMIGDAXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRhBHkLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxUth3bdJvXMqvWlHiZ+MrT+bH5POntrdOVhGCqOFdRYFmeC+8ax41wu7alFNZNTp8I4Hj6rGxoYVwVsE7sosoYKG0uKOiUFtLorQ0BfWA6PV/mU655XljMDKwE44zNYw126sua6olGJTW4HoOBdIJsBXC1O4uyfYg8Ya/y7ixs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loqssiTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRhBHkLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27AAC4CEE7;
-	Tue,  8 Apr 2025 12:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loqssiTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7301DC4CEE5;
+	Tue,  8 Apr 2025 12:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114116;
-	bh=0y4Xn4xlp+wIvlu6iEMd0lAiR3K11U8rBlDxCBkpAAo=;
+	s=korg; t=1744114118;
+	bh=1HzEKMxLyJj1MXfo8p6W778mH3arsg4V2RKX4xXIl8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRhBHkLA9iyrBs1KGGAJL5UYp5TybbhGN+rx0n8gTfVkbULUCcUXGkizNtgH2NyLs
-	 3KpNyDQuv+pQsgWe+pKdiy8W5p/g8zF0uIRUG0AvvFK4RYAVWVGNvA98JD5zFMlwl6
-	 y3Jts+JRVVxts7nIfdAe72OnGQkKxwXmBANJniqE=
+	b=loqssiTp8QTqbNkl5E0sdJEBPtbZvqZ1IHhtBdeSpkVtOyKbtlqkcEWi5oFfSy/6a
+	 96aNuA2is9/v/K4Gl8dSKRNk4M78QGr4wfbCyWPMBHv120IiUwiSCvHZ7HA7dAkswk
+	 eYz0/LLAlRgqbtLuIFu+ugfSDYQIcAbME8i21WD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com,
-	Nishanth Devarajan <ndev2021@gmail.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/154] net_sched: skbprio: Remove overly strict queue assertions
-Date: Tue,  8 Apr 2025 12:51:22 +0200
-Message-ID: <20250408104819.834175289@linuxfoundation.org>
+Subject: [PATCH 5.4 142/154] vsock: avoid timeout during connect() if the socket is closing
+Date: Tue,  8 Apr 2025 12:51:23 +0200
+Message-ID: <20250408104819.863587602@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -54,58 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit ce8fe975fd99b49c29c42e50f2441ba53112b2e8 ]
+[ Upstream commit fccd2b711d9628c7ce0111d5e4938652101ee30a ]
 
-In the current implementation, skbprio enqueue/dequeue contains an assertion
-that fails under certain conditions when SKBPRIO is used as a child qdisc under
-TBF with specific parameters. The failure occurs because TBF sometimes peeks at
-packets in the child qdisc without actually dequeuing them when tokens are
-unavailable.
+When a peer attempts to establish a connection, vsock_connect() contains
+a loop that waits for the state to be TCP_ESTABLISHED. However, the
+other peer can be fast enough to accept the connection and close it
+immediately, thus moving the state to TCP_CLOSING.
 
-This peek operation creates a discrepancy between the parent and child qdisc
-queue length counters. When TBF later receives a high-priority packet,
-SKBPRIO's queue length may show a different value than what's reflected in its
-internal priority queue tracking, triggering the assertion.
+When this happens, the peer in the vsock_connect() is properly woken up,
+but since the state is not TCP_ESTABLISHED, it goes back to sleep
+until the timeout expires, returning -ETIMEDOUT.
 
-The fix removes this overly strict assertions in SKBPRIO, they are not
-necessary at all.
+If the socket state is TCP_CLOSING, waiting for the timeout is pointless.
+vsock_connect() can return immediately without errors or delay since the
+connection actually happened. The socket will be in a closing state,
+but this is not an issue, and subsequent calls will fail as expected.
 
-Reported-by: syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a3422a19b05ea96bee18
-Fixes: aea5f654e6b7 ("net/sched: add skbprio scheduler")
-Cc: Nishanth Devarajan <ndev2021@gmail.com>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+We discovered this issue while developing a test that accepts and
+immediately closes connections to stress the transport switch between
+two connect() calls, where the first one was interrupted by a signal
+(see Closes link).
+
+Reported-by: Luigi Leonardi <leonardi@redhat.com>
+Closes: https://lore.kernel.org/virtualization/bq6hxrolno2vmtqwcvb5bljfpb7mvwb3kohrvaed6auz5vxrfv@ijmd2f3grobn/
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250329222536.696204-2-xiyou.wangcong@gmail.com
+Tested-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20250328141528.420719-1-sgarzare@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_skbprio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/vmw_vsock/af_vsock.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_skbprio.c b/net/sched/sch_skbprio.c
-index 7a5e4c4547156..7dca66026ca4d 100644
---- a/net/sched/sch_skbprio.c
-+++ b/net/sched/sch_skbprio.c
-@@ -121,8 +121,6 @@ static int skbprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	/* Check to update highest and lowest priorities. */
- 	if (skb_queue_empty(lp_qdisc)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			/* The incoming packet is the only packet in queue. */
--			BUG_ON(sch->q.qlen != 1);
- 			q->lowest_prio = prio;
- 			q->highest_prio = prio;
- 		} else {
-@@ -154,7 +152,6 @@ static struct sk_buff *skbprio_dequeue(struct Qdisc *sch)
- 	/* Update highest priority field. */
- 	if (skb_queue_empty(hpq)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			BUG_ON(sch->q.qlen);
- 			q->highest_prio = 0;
- 			q->lowest_prio = SKBPRIO_MAX_PRIORITY - 1;
- 		} else {
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 5d490633a7f11..7877515a6962e 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1204,7 +1204,11 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 	timeout = vsk->connect_timeout;
+ 	prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+ 
+-	while (sk->sk_state != TCP_ESTABLISHED && sk->sk_err == 0) {
++	/* If the socket is already closing or it is in an error state, there
++	 * is no point in waiting.
++	 */
++	while (sk->sk_state != TCP_ESTABLISHED &&
++	       sk->sk_state != TCP_CLOSING && sk->sk_err == 0) {
+ 		if (flags & O_NONBLOCK) {
+ 			/* If we're not going to block, we schedule a timeout
+ 			 * function to generate a timeout on the connection
 -- 
 2.39.5
 
