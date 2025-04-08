@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BE420330;
-	Tue,  8 Apr 2025 12:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509F220330;
+	Tue,  8 Apr 2025 12:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116010; cv=none; b=YXM9LjG9TEp/Zwl/3fI7zL496d+3gy+RrCpL9348d/vkt731BaYApwdgBzLOmRnaZcJywZc0gFVbNbOTrj7e4fkZBIdSvMCIC+ILYmEXW/bIczLOulMh1uS/oMxabql6XAmn6boYuAVnVNVAqWLufbOxIwbCth3joz/KBcG3nLA=
+	t=1744116013; cv=none; b=H03Ypd+Uc6X8vuJJT7m1cSomXs+5oDxc3vMU5dtgOTW73+YYfDGEEeoM9jgptI2SaUf6CMhxItp5XOqOJdITiCZJHyyvMLeE1IFHxmXEcsTylf1pX3rt75R9i1zVcajWIjMvCeGyxsrFuq1XDbBxum/EYdzFPeMDXjYgzFHkeSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116010; c=relaxed/simple;
-	bh=0rAPA7yuJMQd3P1kpH5BqAHSx9g1pI5wxmR0G/n4UPo=;
+	s=arc-20240116; t=1744116013; c=relaxed/simple;
+	bh=0/HBrhZwLftGTcWtgUdoO3YC/hGVGz5KNwwnFdNRDQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWSPn2a2v67Ey7DhirRiG+b5yCG7Oxup/Qm3RI1wwFG9DAX6LFU/34YDwlABoxKztQPYh0hPOCHjRIQewCSSc7RQs2vZ3JQwa0TkoidtfDrZsXVjd4MfXi7Jtcz0IxoWsnqfEDdjlG9whsM9vO9RQI+Sox6l5sND0IgAtw0N8Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qE9UKwBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O78dxSfU2hcK7ABMnJnJjdywc6pxNblZkfx4OJUrTrGrzlk7w+oa2UaA4juD9wVcNSiCvmBuIHMcGAd4axPVsZX6y8BntJMZ3CCPj6m+JDzkJLMZ+O5vQ0T79mTLvf6zptGRYfxutycj3wRx1EwQnSoY0RkqBnh81pzNALsLOSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT3TJDXw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qE9UKwBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F428C4CEE5;
-	Tue,  8 Apr 2025 12:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT3TJDXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2AFC4CEE5;
+	Tue,  8 Apr 2025 12:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116010;
-	bh=0rAPA7yuJMQd3P1kpH5BqAHSx9g1pI5wxmR0G/n4UPo=;
+	s=korg; t=1744116013;
+	bh=0/HBrhZwLftGTcWtgUdoO3YC/hGVGz5KNwwnFdNRDQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qE9UKwBdhNaf5PSYecvvl4wyrLMeRFzy96sPJP6CZcuRLBj7qaQ37ILssMqXYaKEk
-	 p3l9+QyIqDBE89z2bf37vOe/STN8qI6Gudon6GklpsVGl2wMmZdThG04md/uugjfv4
-	 05gY8jigUA3STObTZyGzCbW2+qAooqNXxAkpP8JU=
+	b=wT3TJDXwbimBSb0Wkan/8QXz84qJcDPyj3O4DHP7I/rXcWvHTItTlOhRvsaR2JY/j
+	 S359GFz7HNA6fzbqkgJ4uSyy4Y6g1jCDh28/sDKi4kiUnMHXJov7WKGPXrXzqLAYFH
+	 F9AuPsVpdiwZRGNRo2AhrBXhinVzzcoBkfazMViM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/204] vsock: avoid timeout during connect() if the socket is closing
-Date: Tue,  8 Apr 2025 12:51:30 +0200
-Message-ID: <20250408104825.010612347@linuxfoundation.org>
+	Karel Balej <balejk@matfyz.cz>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 187/204] mmc: sdhci-pxav3: set NEED_RSP_BUSY capability
+Date: Tue,  8 Apr 2025 12:51:57 +0200
+Message-ID: <20250408104825.802024615@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -47,68 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Karel Balej <balejk@matfyz.cz>
 
-[ Upstream commit fccd2b711d9628c7ce0111d5e4938652101ee30a ]
+commit a41fcca4b342811b473bbaa4b44f1d34d87fcce6 upstream.
 
-When a peer attempts to establish a connection, vsock_connect() contains
-a loop that waits for the state to be TCP_ESTABLISHED. However, the
-other peer can be fast enough to accept the connection and close it
-immediately, thus moving the state to TCP_CLOSING.
+Set the MMC_CAP_NEED_RSP_BUSY capability for the sdhci-pxav3 host to
+prevent conversion of R1B responses to R1. Without this, the eMMC card
+in the samsung,coreprimevelte smartphone using the Marvell PXA1908 SoC
+with this mmc host doesn't probe with the ETIMEDOUT error originating in
+__mmc_poll_for_busy.
 
-When this happens, the peer in the vsock_connect() is properly woken up,
-but since the state is not TCP_ESTABLISHED, it goes back to sleep
-until the timeout expires, returning -ETIMEDOUT.
+Note that the other issues reported for this phone and host, namely
+floods of "Tuning failed, falling back to fixed sampling clock" dmesg
+messages for the eMMC and unstable SDIO are not mitigated by this
+change.
 
-If the socket state is TCP_CLOSING, waiting for the timeout is pointless.
-vsock_connect() can return immediately without errors or delay since the
-connection actually happened. The socket will be in a closing state,
-but this is not an issue, and subsequent calls will fail as expected.
-
-We discovered this issue while developing a test that accepts and
-immediately closes connections to stress the transport switch between
-two connect() calls, where the first one was interrupted by a signal
-(see Closes link).
-
-Reported-by: Luigi Leonardi <leonardi@redhat.com>
-Closes: https://lore.kernel.org/virtualization/bq6hxrolno2vmtqwcvb5bljfpb7mvwb3kohrvaed6auz5vxrfv@ijmd2f3grobn/
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20250328141528.420719-1-sgarzare@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20200310153340.5593-1-ulf.hansson@linaro.org/
+Link: https://lore.kernel.org/r/D7204PWIGQGI.1FRFQPPIEE2P9@matfyz.cz/
+Link: https://lore.kernel.org/r/20250115-pxa1908-lkml-v14-0-847d24f3665a@skole.hr/
+Cc: stable@vger.kernel.org
+Signed-off-by: Karel Balej <balejk@matfyz.cz>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Link: https://lore.kernel.org/r/20250310140707.23459-1-balejk@matfyz.cz
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pxav3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index e78c9209e0b45..a2271da346d34 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1437,7 +1437,11 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
- 	timeout = vsk->connect_timeout;
- 	prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+--- a/drivers/mmc/host/sdhci-pxav3.c
++++ b/drivers/mmc/host/sdhci-pxav3.c
+@@ -401,6 +401,7 @@ static int sdhci_pxav3_probe(struct plat
+ 	if (!IS_ERR(pxa->clk_core))
+ 		clk_prepare_enable(pxa->clk_core);
  
--	while (sk->sk_state != TCP_ESTABLISHED && sk->sk_err == 0) {
-+	/* If the socket is already closing or it is in an error state, there
-+	 * is no point in waiting.
-+	 */
-+	while (sk->sk_state != TCP_ESTABLISHED &&
-+	       sk->sk_state != TCP_CLOSING && sk->sk_err == 0) {
- 		if (flags & O_NONBLOCK) {
- 			/* If we're not going to block, we schedule a timeout
- 			 * function to generate a timeout on the connection
--- 
-2.39.5
-
++	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+ 	/* enable 1/8V DDR capable */
+ 	host->mmc->caps |= MMC_CAP_1_8V_DDR;
+ 
 
 
