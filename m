@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9941DDA0C;
-	Tue,  8 Apr 2025 10:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E721DDA0C;
+	Tue,  8 Apr 2025 10:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109951; cv=none; b=ah3ik71cLhqHPsnUdB4DQQ7LUJYv08mBJYCufHVrnC03PWqVQ2HFFMf052NKQfJIWTtUS+KDEDwsyLK4tw0HdgLrgS9gunruIvld+cIj3c9ZDtbO1w2go1OC/+xuKZFZmpy4wOvhgDThSgDMEP02Xb4A+1z19jaiMPmiQBEaEDA=
+	t=1744109953; cv=none; b=GfQ5JIY8KcVMQZjv3Fkk9Jj20kzINg/inBQFt6QSqNlLwVNrXaRoRROY+qPy/B/sGkvOslJCkWYaChTsBUzf3zZ1JJzEh2mhIO7uTrABhABvBPMM0DOvOkS0j3CY+qsUe//4dRjA187xl/zWPUFLmC/v5XcvfrnrPW/gCQ6xwW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109951; c=relaxed/simple;
-	bh=qncx81VHWz2I++RThpwNIhRr3rSoDho4/oadcDb6ySM=;
+	s=arc-20240116; t=1744109953; c=relaxed/simple;
+	bh=Y4yEZmkQagMz0rq+mZrsGxmXv4Nv7zZPzgeldQbDBMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqL4XNcw9cGJSMdvSBgHVnR6sFc6klz8B88xRnEeQ8GUvhXjRSc6KNtuSDNnIl+j19mu4KomROw68UwMHjqH94xh1bWTuBvUDnpyUtNLTvi2Z16y6WDrij5Yqwi84EiKXVL+6P5+wPIMVpaJOBj7L2XMJ6YpvkbLjbzGMRoAeyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aScM3jfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjC8e6Hgs4M45i7wkEii8YqgS3icXQCEoubOujOGZWKWbv659m7clhKOK1f0fXhZndLOF8BE1AKF+xEXAXzWfnWloeN+SvI/98rgBPzEr1zjbFUJJT3aEDSusfnkhCFf32drhph416Ti4MZVa4AOKLu8f+Z7J9vfFQp5nUikuUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cnJ2MjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aScM3jfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C28CC4CEE5;
-	Tue,  8 Apr 2025 10:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cnJ2MjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272C3C4CEE5;
+	Tue,  8 Apr 2025 10:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109950;
-	bh=qncx81VHWz2I++RThpwNIhRr3rSoDho4/oadcDb6ySM=;
+	s=korg; t=1744109953;
+	bh=Y4yEZmkQagMz0rq+mZrsGxmXv4Nv7zZPzgeldQbDBMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aScM3jfE5fGy3jJ5ZoPfYZmoqPbwvVJfATLAm1/B77z7RvKefQ8w3W7u8HmMH7o2y
-	 WEfj5IjDVxKBy4yxSJqERsvwPohWfim48EuQ8mNfws6THhnrGMzybotdi6yb0tgFZk
-	 dQcz2O+yg6CbdPwoixy7bkB6j7Y7/4Tv/z09hWBQ=
+	b=2cnJ2MjVwNjMl6sDI+/tH01BVqBTeKOjx0qXPmJGoOie06W1FLIH8vksCWA1qXWW7
+	 gkfmgz2sTZATsWW7CsSGF3wbb59rtlBv+rYA9PfACDmga5z5+n9cgWoPiQjuXYW1Up
+	 ofYkzqg7ImVLKHqe0B9wjNU0ctlZHtKwoA/Uo/68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	zuoqian <zuoqian113@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/227] x86/mm/pat: cpa-test: fix length for CPA_ARRAY test
-Date: Tue,  8 Apr 2025 12:48:10 +0200
-Message-ID: <20250408104823.709698474@linuxfoundation.org>
+Subject: [PATCH 5.10 113/227] cpufreq: scpi: compare kHz instead of Hz
+Date: Tue,  8 Apr 2025 12:48:11 +0200
+Message-ID: <20250408104823.736290842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,38 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: zuoqian <zuoqian113@gmail.com>
 
-[ Upstream commit 33ea120582a638b2f2e380a50686c2b1d7cce795 ]
+[ Upstream commit 4742da9774a416908ef8e3916164192c15c0e2d1 ]
 
-The CPA_ARRAY test always uses len[1] as numpages argument to
-change_page_attr_set() although the addresses array is different each
-iteration of the test loop.
+The CPU rate from clk_get_rate() may not be divisible by 1000
+(e.g., 133333333). But the rate calculated from frequency(kHz) is
+always divisible by 1000 (e.g., 133333000).
+Comparing the rate causes a warning during CPU scaling:
+"cpufreq: __target_index: Failed to change cpu frequency: -5".
+When we choose to compare kHz here, the issue does not occur.
 
-Replace len[1] with len[i] to have numpages matching the addresses array.
-
-Fixes: ecc729f1f471 ("x86/mm/cpa: Add ARRAY and PAGES_ARRAY selftests")
-Signed-off-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250126074733.1384926-2-rppt@kernel.org
+Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
+Signed-off-by: zuoqian <zuoqian113@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/cpa-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/scpi-cpufreq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/mm/pat/cpa-test.c b/arch/x86/mm/pat/cpa-test.c
-index 0612a73638a81..7641cff719bd0 100644
---- a/arch/x86/mm/pat/cpa-test.c
-+++ b/arch/x86/mm/pat/cpa-test.c
-@@ -183,7 +183,7 @@ static int pageattr_test(void)
- 			break;
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index e5140ad63db83..c79cdf1be7803 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -47,8 +47,9 @@ static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
+ static int
+ scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
+ {
+-	u64 rate = policy->freq_table[index].frequency * 1000;
++	unsigned long freq_khz = policy->freq_table[index].frequency;
+ 	struct scpi_data *priv = policy->driver_data;
++	unsigned long rate = freq_khz * 1000;
+ 	int ret;
  
- 		case 1:
--			err = change_page_attr_set(addrs, len[1], PAGE_CPA_TEST, 1);
-+			err = change_page_attr_set(addrs, len[i], PAGE_CPA_TEST, 1);
- 			break;
+ 	ret = clk_set_rate(priv->clk, rate);
+@@ -56,7 +57,7 @@ scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
+ 	if (ret)
+ 		return ret;
  
- 		case 2:
+-	if (clk_get_rate(priv->clk) != rate)
++	if (clk_get_rate(priv->clk) / 1000 != freq_khz)
+ 		return -EIO;
+ 
+ 	return 0;
 -- 
 2.39.5
 
