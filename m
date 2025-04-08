@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D90263C6D;
-	Tue,  8 Apr 2025 11:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BF321ADAE;
+	Tue,  8 Apr 2025 11:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110298; cv=none; b=fcDNfVH6Rs8iwtEuMypfELaHcutzGEjCAWwxjtgDaTNiol5xVaJbJ/3RPqmZ+r54AlZGZrcCfqj5Z3uD/D7nUkUlYHgJpDamhCdiAc4uGORlfeoYAC1FJzuqaIk+4JtRRs58msQG0f/9G8VzW0bTBUWJRubZ2D1xUFHCAPETgvA=
+	t=1744110300; cv=none; b=XOLz8Z/yxtTA/AmBJdYqT3a2AyetlfbAklGjsMNbwNml0OZn+Q9RKwXYJdKfggVyC3nwHI+dSMhp7OC9a6WQeJeAsonp4P9NVStJQICpgYXpJH7Qh0jWNayeKgMOWFqSlhf8K5G+gNFIdrBkDn2KATjcltjkxPgZVmRF8mlDFZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110298; c=relaxed/simple;
-	bh=WF78N2roc82uDwPFLIAA+IvBSNV5oLzb28bFZkX8Sfg=;
+	s=arc-20240116; t=1744110300; c=relaxed/simple;
+	bh=AumirgqIG/ZQZ0UkSjVqZaByb5+2NkCggtGVciigX5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9CBzyzZsklTkCtb7lP+qUU6mFceiQeHM4hsmccuT+dQaIH1MZbXaaV/4T8di0fezstloOy1yY4eLa/HhneXvNT8uZAa6snax7rRBJya2iMLb4gho8bgB/j8hzpVlhwVuiuZZr1n/Rc40HYr1VeJuMC9jvQzW9az+OIAHSbKp5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLXH126e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebPWTFCWLYEp/kX9IlV1zr5U/BEqTWctBya6QAGHzfNAUfOWC9u70xkWwurTugGHjZNUwSeCsO/zj4uh1F9bu8KrW7LMAdAK3uoicE8WwE9Fnbi70N546wa+vtFHGS/mXlrkIQf2Yzr2gm+Ah1onFgrTJNRW+FZsUNxoJd457bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaL5qNM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLXH126e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15293C4CEE5;
-	Tue,  8 Apr 2025 11:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaL5qNM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D7DC4CEE5;
+	Tue,  8 Apr 2025 11:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110297;
-	bh=WF78N2roc82uDwPFLIAA+IvBSNV5oLzb28bFZkX8Sfg=;
+	s=korg; t=1744110300;
+	bh=AumirgqIG/ZQZ0UkSjVqZaByb5+2NkCggtGVciigX5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLXH126e8nTLZeWIrps3o98xBdncI2tP7/1oXUnZyvmxP9n3PDDmfP5JJx5+yBKrW
-	 M4BNBlQR9uTOZjsRuL0XefAAnA+MR5GuyVOOM2cDxN6m5FQ9JyycJKDDKrfZxwOPId
-	 5FXaFShgME0melMEgxudHwq/JWvcOKbRvn4W5vf8=
+	b=UaL5qNM0AVrJhZoyGsFr7EB1dJ10XeRcLjMU9Wzo5uZn5yIOiP8BpOY9KzfUKc5y5
+	 gEOFhsSLPdjwGm8LKqRIbXwWmkAnoYc4ONqkf6ElDGQR+SYuU+tUHl7u7Qu5h+zrcu
+	 o1pbmsI80mYwPedKh6RibGKjjLb2OMbKJsBYrcHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramses <ramses@well-founded.dev>,
-	John <therealgraysky@proton.me>,
+	Kevin Chang <kevin1.chang@intel.com>,
+	Thomas Chen <Thomas.Chen@intel.com>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 013/731] EDAC/igen6: Fix the flood of invalid error reports
-Date: Tue,  8 Apr 2025 12:38:30 +0200
-Message-ID: <20250408104914.568454853@linuxfoundation.org>
+Subject: [PATCH 6.14 014/731] EDAC/{skx_common,i10nm}: Fix some missing error reports on Emerald Rapids
+Date: Tue,  8 Apr 2025 12:38:31 +0200
+Message-ID: <20250408104914.592768277@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,62 +55,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 267e5b1d267539d9a927dc04aab6f15aca57da92 ]
+[ Upstream commit d9207cf7760f5f5599e9ff7eb0fedf56821a1d59 ]
 
-The ECC_ERROR_LOG register of certain SoCs may contain the invalid value
-~0, which results in a flood of invalid error reports in polling mode.
+When doing error injection to some memory DIMMs on certain Intel Emerald
+Rapids servers, the i10nm_edac missed error reports for some memory DIMMs.
 
-Fix the flood of invalid error reports by skipping the invalid ECC error
-log value ~0.
+Certain BIOS configurations may hide some memory controllers, and the
+i10nm_edac doesn't enumerate these hidden memory controllers. However, the
+ADXL decodes memory errors using memory controller physical indices even
+if there are hidden memory controllers. Therefore, the memory controller
+physical indices reported by the ADXL may mismatch the logical indices
+enumerated by the i10nm_edac, resulting in missed error reports for some
+memory DIMMs.
 
-Fixes: e14232afa944 ("EDAC/igen6: Add polling support")
-Reported-by: Ramses <ramses@well-founded.dev>
-Closes: https://lore.kernel.org/all/OISL8Rv--F-9@well-founded.dev/
-Tested-by: Ramses <ramses@well-founded.dev>
-Reported-by: John <therealgraysky@proton.me>
-Closes: https://lore.kernel.org/all/p5YcxOE6M3Ncxpn2-Ia_wCt61EM4LwIiN3LroQvT_-G2jMrFDSOW5k2A9D8UUzD2toGpQBN1eI0sL5dSKnkO8iteZegLoQEj-DwQaMhGx4A=@proton.me/
-Tested-by: John <therealgraysky@proton.me>
+Fix this issue by creating a mapping table from memory controller physical
+indices (used by the ADXL) to logical indices (used by the i10nm_edac) and
+using it to convert the physical indices to the logical indices during the
+error handling process.
+
+Fixes: c545f5e41225 ("EDAC/i10nm: Skip the absent memory controllers")
+Reported-by: Kevin Chang <kevin1.chang@intel.com>
+Tested-by: Kevin Chang <kevin1.chang@intel.com>
+Reported-by: Thomas Chen <Thomas.Chen@intel.com>
+Tested-by: Thomas Chen <Thomas.Chen@intel.com>
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20250212083354.31919-1-qiuxu.zhuo@intel.com
+Link: https://lore.kernel.org/r/20250214002728.6287-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/edac/i10nm_base.c |  2 ++
+ drivers/edac/skx_common.c | 33 +++++++++++++++++++++++++++++++++
+ drivers/edac/skx_common.h | 11 +++++++++++
+ 3 files changed, 46 insertions(+)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index fdf3a84fe6988..595908af9e5c9 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -785,13 +785,22 @@ static u64 ecclog_read_and_clear(struct igen6_imc *imc)
- {
- 	u64 ecclog = readq(imc->window + ECC_ERROR_LOG_OFFSET);
- 
--	if (ecclog & (ECC_ERROR_LOG_CE | ECC_ERROR_LOG_UE)) {
--		/* Clear CE/UE bits by writing 1s */
--		writeq(ecclog, imc->window + ECC_ERROR_LOG_OFFSET);
--		return ecclog;
--	}
-+	/*
-+	 * Quirk: The ECC_ERROR_LOG register of certain SoCs may contain
-+	 *        the invalid value ~0. This will result in a flood of invalid
-+	 *        error reports in polling mode. Skip it.
-+	 */
-+	if (ecclog == ~0)
-+		return 0;
- 
--	return 0;
-+	/* Neither a CE nor a UE. Skip it.*/
-+	if (!(ecclog & (ECC_ERROR_LOG_CE | ECC_ERROR_LOG_UE)))
-+		return 0;
-+
-+	/* Clear CE/UE bits by writing 1s */
-+	writeq(ecclog, imc->window + ECC_ERROR_LOG_OFFSET);
-+
-+	return ecclog;
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index f45d849d3f150..355a977019e94 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -751,6 +751,8 @@ static int i10nm_get_ddr_munits(void)
+ 				continue;
+ 			} else {
+ 				d->imc[lmc].mdev = mdev;
++				if (res_cfg->type == SPR)
++					skx_set_mc_mapping(d, i, lmc);
+ 				lmc++;
+ 			}
+ 		}
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index f7bd930e058fe..fa5b442b18449 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -121,6 +121,35 @@ void skx_adxl_put(void)
  }
+ EXPORT_SYMBOL_GPL(skx_adxl_put);
  
- static void errsts_clear(struct igen6_imc *imc)
++static void skx_init_mc_mapping(struct skx_dev *d)
++{
++	/*
++	 * By default, the BIOS presents all memory controllers within each
++	 * socket to the EDAC driver. The physical indices are the same as
++	 * the logical indices of the memory controllers enumerated by the
++	 * EDAC driver.
++	 */
++	for (int i = 0; i < NUM_IMC; i++)
++		d->mc_mapping[i] = i;
++}
++
++void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc)
++{
++	edac_dbg(0, "Set the mapping of mc phy idx to logical idx: %02d -> %02d\n",
++		 pmc, lmc);
++
++	d->mc_mapping[pmc] = lmc;
++}
++EXPORT_SYMBOL_GPL(skx_set_mc_mapping);
++
++static u8 skx_get_mc_mapping(struct skx_dev *d, u8 pmc)
++{
++	edac_dbg(0, "Get the mapping of mc phy idx to logical idx: %02d -> %02d\n",
++		 pmc, d->mc_mapping[pmc]);
++
++	return d->mc_mapping[pmc];
++}
++
+ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ {
+ 	struct skx_dev *d;
+@@ -188,6 +217,8 @@ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ 		return false;
+ 	}
+ 
++	res->imc = skx_get_mc_mapping(d, res->imc);
++
+ 	for (i = 0; i < adxl_component_count; i++) {
+ 		if (adxl_values[i] == ~0x0ull)
+ 			continue;
+@@ -326,6 +357,8 @@ int skx_get_all_bus_mappings(struct res_config *cfg, struct list_head **list)
+ 			 d->bus[0], d->bus[1], d->bus[2], d->bus[3]);
+ 		list_add_tail(&d->list, &dev_edac_list);
+ 		prev = pdev;
++
++		skx_init_mc_mapping(d);
+ 	}
+ 
+ 	if (list)
+diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
+index b0845bdd45164..ca5408803f878 100644
+--- a/drivers/edac/skx_common.h
++++ b/drivers/edac/skx_common.h
+@@ -93,6 +93,16 @@ struct skx_dev {
+ 	struct pci_dev *uracu; /* for i10nm CPU */
+ 	struct pci_dev *pcu_cr3; /* for HBM memory detection */
+ 	u32 mcroute;
++	/*
++	 * Some server BIOS may hide certain memory controllers, and the
++	 * EDAC driver skips those hidden memory controllers. However, the
++	 * ADXL still decodes memory error address using physical memory
++	 * controller indices. The mapping table is used to convert the
++	 * physical indices (reported by ADXL) to the logical indices
++	 * (used the EDAC driver) of present memory controllers during the
++	 * error handling process.
++	 */
++	u8 mc_mapping[NUM_IMC];
+ 	struct skx_imc {
+ 		struct mem_ctl_info *mci;
+ 		struct pci_dev *mdev; /* for i10nm CPU */
+@@ -242,6 +252,7 @@ void skx_adxl_put(void);
+ void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log);
+ void skx_set_mem_cfg(bool mem_cfg_2lm);
+ void skx_set_res_cfg(struct res_config *cfg);
++void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc);
+ 
+ int skx_get_src_id(struct skx_dev *d, int off, u8 *id);
+ 
 -- 
 2.39.5
 
