@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2C32192F2;
-	Tue,  8 Apr 2025 11:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C6E267AF2;
+	Tue,  8 Apr 2025 11:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112483; cv=none; b=reNRt2+CETRb+AN44UgDotodetR8W22lQYQxmyLc2vtWtECH3F8i1MBy6QIAAnoXyTs+XJTwtGQkxjGBYrH1cEkP0++03aVGM2rTmSA1hysqL3qDbGP2XhGeIczvXHb7hemvLjJehAFQt8IYhRElqMqcB/sTeQC00+4atoBFiwo=
+	t=1744112486; cv=none; b=kncBkmle7bIBPfGzoUXywoZBMhnFmpCBb2B0XsVAFbI4Re8260EQBXGAgPb5PuVxsHZ2CQySuzt0ZDVyiwRVDFtEqfH0pmzvvbBFZZZ6p3d/0Ue7BIG1KJfN+yPALv51rC+z2SMX6WmCcswvken1N4CPERSUpst0SWLoL8e6GP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112483; c=relaxed/simple;
-	bh=pMMe9b2y7/yXZu2T9WO2ACP86Vbs7Bfbos+pQOpxz+E=;
+	s=arc-20240116; t=1744112486; c=relaxed/simple;
+	bh=M6NRKdE2dqTP5mnqkXS//O2iUGb8amp+7UCn7cGUWws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=heytFPEOsJnxDA2iF3eSAPp3fpiJLojVkul1B215gXLzHfX5nM+LQNefwN1LH3f6XvP1w9eegXXDtyo06hne8rM4XFBWoIgIUja0PoAjGZpiRCTyCkQEQuxg/ycwreLAUqXUOxKwk6UIUFuwBBlWWZH1ppkj1i8OC9kIrioxLqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUzdo8ME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snSBK9zh9JNDvs0mrEfcpjd8jf57LvpUa0tlK1agLmWyil8gT+hoOVmNrOoknbjHRJ2CZaOeCMinIFTYXixUfb6q/3YAjsXJsRCNifeIsQ9WN1D9WJw7MZpwqWp4jSawYq5E1BTjLATm9Ytbk4iyQRw7y9XWqOZ7vtJ/37XJNVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ft3kzF/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUzdo8ME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44286C4CEE5;
-	Tue,  8 Apr 2025 11:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ft3kzF/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F62C4CEE5;
+	Tue,  8 Apr 2025 11:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112482;
-	bh=pMMe9b2y7/yXZu2T9WO2ACP86Vbs7Bfbos+pQOpxz+E=;
+	s=korg; t=1744112486;
+	bh=M6NRKdE2dqTP5mnqkXS//O2iUGb8amp+7UCn7cGUWws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUzdo8MEIlfk1g0ybbl9oDXr5bXJBaXEZgvKmok7FMEmLwLJvax+c9wUrGPN6OMIW
-	 ME3eIIgdiHUoHklhYf+HZXpbJSY+sKMithmewjZpVYmJexLiaM3/KKeZfwtov2wcXz
-	 UxfrVLMpcSk1D1mOMUIxRDrYjhzlvUoB857dGPQE=
+	b=ft3kzF/Pw9woF4Joe1D3bSbO+aOOaw/lAfbjKhX11q6nLdgYc9lGPBND9USqvBDG1
+	 txwXrHR5eBbzHRvPCCRnLKwPfrvCPF4dFBmY/MZkwcpjpXcTVEsgHQpWc18Aqbe/PI
+	 4XpegXFVVEGWVyejF8yJcwhSJghvPBBkE/J5FeCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/279] sched: Clarify wake_up_q()s write to task->wake_q.next
-Date: Tue,  8 Apr 2025 12:46:58 +0200
-Message-ID: <20250408104827.329163293@linuxfoundation.org>
+Subject: [PATCH 5.15 079/279] firmware: imx-scu: fix OF node leak in .probe()
+Date: Tue,  8 Apr 2025 12:47:42 +0200
+Message-ID: <20250408104828.476962791@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit bcc6244e13b4d4903511a1ea84368abf925031c0 ]
+[ Upstream commit fbf10b86f6057cf79300720da4ea4b77e6708b0d ]
 
-Clarify that wake_up_q() does an atomic write to task->wake_q.next, after
-which a concurrent __wake_q_add() can immediately overwrite
-task->wake_q.next again.
+imx_scu_probe() calls of_parse_phandle_with_args(), but does not
+release the OF node reference obtained by it. Add a of_node_put() call
+after done with the node.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250129-sched-wakeup-prettier-v1-1-2f51f5f663fa@google.com
+Fixes: f25a066d1a07 ("firmware: imx-scu: Support one TX and one RX")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/imx/imx-scu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 70a7cf563f01e..380938831b130 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -941,9 +941,10 @@ void wake_up_q(struct wake_q_head *head)
- 		struct task_struct *task;
+diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
+index dca79caccd01c..fa25c082109ac 100644
+--- a/drivers/firmware/imx/imx-scu.c
++++ b/drivers/firmware/imx/imx-scu.c
+@@ -279,6 +279,7 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 		return ret;
  
- 		task = container_of(node, struct task_struct, wake_q);
--		/* Task can safely be re-inserted now: */
- 		node = node->next;
--		task->wake_q.next = NULL;
-+		/* pairs with cmpxchg_relaxed() in __wake_q_add() */
-+		WRITE_ONCE(task->wake_q.next, NULL);
-+		/* Task can safely be re-inserted now. */
+ 	sc_ipc->fast_ipc = of_device_is_compatible(args.np, "fsl,imx8-mu-scu");
++	of_node_put(args.np);
  
- 		/*
- 		 * wake_up_process() executes a full barrier, which pairs with
+ 	num_channel = sc_ipc->fast_ipc ? 2 : SCU_MU_CHAN_NUM;
+ 	for (i = 0; i < num_channel; i++) {
 -- 
 2.39.5
 
