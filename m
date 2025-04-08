@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA12C2673B7;
-	Tue,  8 Apr 2025 11:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7412267F6C;
+	Tue,  8 Apr 2025 11:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110679; cv=none; b=YesMQsR3NhDmbjjg5cpM7fOV3MoJzE7tH6qGUthlgIWHqNXw50GaBoRSkMOXNP4tpnzvOqBc/pn/GdO8o+bAHTjmCPAgiVMIsFJX4OkzviaGBNu6F2yx/0iOAUHds77NiiBDPri3kjAp/K9+x0uCX4EVkDdE+uQuXSlo5N9nTec=
+	t=1744110682; cv=none; b=tSYs3Vmg0LdalCeXqQ/22N+vOOb9raSJzyFzfjIp3gL6Ewdfruj+HHN3t6kUym8iJuknidMeT3hfXYXM07jhg9Zr2m/fcmbEGBDrRTUt+jWN7zAkTek2qjXFnyBLQhZ5PKVHmHY1m3uSK/OTkoV8NUJF616ta/qo/+B5SDJpnRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110679; c=relaxed/simple;
-	bh=q7YBVi48GSpzE0uG1DjQ4FAesL/ApjjLufCKXXA4/BE=;
+	s=arc-20240116; t=1744110682; c=relaxed/simple;
+	bh=Q+qxuiFV6aqvWEuL33zTh6Jkz3/H/3twnTNEFnJOw5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=npgsWgoTbJ3CfWmgUL25e9udlLbAMsyBmyV7+CB+smGl2FW++PZvFJ7+bDX8uJLdQvho3rMICDdUn0Gos9lYbmJ9qr3nGETE2YIiv0kRtXLY6xCrDn6pCZ4aUs8n63YJBHd3iejtdKi9HJYTi6SRdeiFlaaMUR5Vz4HBPMGYyZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms9zS/WN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIYt1vVNrU8JFp7dvMNgLjiQ3E+prW3KO92HTmWKDE6lDwJALJdU5njSUAFDm9CPOeCn3Atv3ZZ+1K1uv1uD5Z5W52Xw28cJKyZYwy6y+RunLJqDTU/MRfHM95S3nnX1bFkAgwBEDeRAAAv/ksXZ9omrzqtZ1lMxmreaYLOIdro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddNiKv9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms9zS/WN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0EBC4CEE7;
-	Tue,  8 Apr 2025 11:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddNiKv9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8AEC4CEE5;
+	Tue,  8 Apr 2025 11:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110679;
-	bh=q7YBVi48GSpzE0uG1DjQ4FAesL/ApjjLufCKXXA4/BE=;
+	s=korg; t=1744110682;
+	bh=Q+qxuiFV6aqvWEuL33zTh6Jkz3/H/3twnTNEFnJOw5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ms9zS/WNEGsW6VHL7fJn0cOuefylFtB0ggw5raVNhQ9KWFIsi90mWoldo6eYCf2Gy
-	 FQW6ZC4Mu/r1kbbb2GYZBlXtxtuCFKsTXzt5MNl0Yq8LcXVtOASgapHAkB48MQ3omp
-	 6nGz2jDsL3wFNWQ0fh1WHLL9s3LrTh7DvrFnmqr8=
+	b=ddNiKv9p84lLk9qkxKLlI0rds8gsz98/Qca77HkaPb5klfVzs6auTSWuX3ra1QrK3
+	 /KGAejo42BfU/O5plKggdMqRcbPkHZH0xFNa+QEPoJ224b1X3pc4fEDZffntZbqwbe
+	 TsUasdBF0QaEjIl4qWVhQwW3piYD9u9J0ezGTDu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Coly Li <colyli@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Daeho Jeong <daehojeong@google.com>,
+	Yohan Joung <yohan.joung@sk.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 153/731] badblocks: return error if any badblock set fails
-Date: Tue,  8 Apr 2025 12:40:50 +0200
-Message-ID: <20250408104917.835340784@linuxfoundation.org>
+Subject: [PATCH 6.14 127/731] f2fs: fix to set .discard_granularity correctly
+Date: Tue,  8 Apr 2025 12:40:24 +0200
+Message-ID: <20250408104917.234032613@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -47,106 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 7f500f0a59b1d7345a05ec4ae703babf34b7e470 ]
+[ Upstream commit 1b60b23975d6d81703826e3797738e471c3009c6 ]
 
-_badblocks_set() returns success if at least one badblock is set
-successfully, even if others fail. This can lead to data inconsistencies
-in raid, where a failed badblock set should trigger the disk to be kicked
-out to prevent future reads from failed write areas.
+commit 4f993264fe29 ("f2fs: introduce discard_unit mount option") introduced
+a bug, when we enable discard_unit=section option, it will set
+.discard_granularity to BLKS_PER_SEC(), however discard granularity only
+supports [1, 512], once section size is not equal to segment size, it will
+cause issue_discard_thread() in DPOLICY_BG mode will not select discard entry
+w/ any granularity to issue.
 
-_badblocks_set() should return error if any badblock set fails. Instead
-of relying on 'rv', directly returning 'sectors' for clearer logic. If all
-badblocks are successfully set, 'sectors' will be 0, otherwise it
-indicates the number of badblocks that have not been set yet, thus
-signaling failure.
-
-By the way, it can also fix an issue: when a newly set unack badblock is
-included in an existing ack badblock, the setting will return an error.
-···
-  echo "0 100" /sys/block/md0/md/dev-loop1/bad_blocks
-  echo "0 100" /sys/block/md0/md/dev-loop1/unacknowledged_bad_blocks
-  -bash: echo: write error: No space left on device
-```
-After fix, it will return success.
-
-Fixes: aa511ff8218b ("badblocks: switch to the improved badblock handling code")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Coly Li <colyli@kernel.org>
-Link: https://lore.kernel.org/r/20250227075507.151331-6-zhengqixing@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4f993264fe29 ("f2fs: introduce discard_unit mount option")
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Yohan Joung <yohan.joung@sk.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/badblocks.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/f2fs/segment.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/block/badblocks.c b/block/badblocks.c
-index 1c8b8f65f6df4..88f27d4f38563 100644
---- a/block/badblocks.c
-+++ b/block/badblocks.c
-@@ -843,7 +843,6 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
- 	struct badblocks_context bad;
- 	int prev = -1, hint = -1;
- 	unsigned long flags;
--	int rv = 0;
- 	u64 *p;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 6ebe25eafafa5..2b415926641f0 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2320,10 +2320,9 @@ static int create_discard_cmd_control(struct f2fs_sb_info *sbi)
+ 	dcc->discard_granularity = DEFAULT_DISCARD_GRANULARITY;
+ 	dcc->max_ordered_discard = DEFAULT_MAX_ORDERED_DISCARD_GRANULARITY;
+ 	dcc->discard_io_aware = DPOLICY_IO_AWARE_ENABLE;
+-	if (F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_SEGMENT)
++	if (F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_SEGMENT ||
++		F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_SECTION)
+ 		dcc->discard_granularity = BLKS_PER_SEG(sbi);
+-	else if (F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_SECTION)
+-		dcc->discard_granularity = BLKS_PER_SEC(sbi);
  
- 	if (bb->shift < 0)
-@@ -873,10 +872,8 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
- 	bad.len = sectors;
- 	len = 0;
- 
--	if (badblocks_full(bb)) {
--		rv = 1;
-+	if (badblocks_full(bb))
- 		goto out;
--	}
- 
- 	if (badblocks_empty(bb)) {
- 		len = insert_at(bb, 0, &bad);
-@@ -916,10 +913,8 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
- 			int extra = 0;
- 
- 			if (!can_front_overwrite(bb, prev, &bad, &extra)) {
--				if (extra > 0) {
--					rv = 1;
-+				if (extra > 0)
- 					goto out;
--				}
- 
- 				len = min_t(sector_t,
- 					    BB_END(p[prev]) - s, sectors);
-@@ -986,10 +981,7 @@ static int _badblocks_set(struct badblocks *bb, sector_t s, int sectors,
- 
- 	write_sequnlock_irqrestore(&bb->lock, flags);
- 
--	if (!added)
--		rv = 1;
--
--	return rv;
-+	return sectors;
- }
- 
- /*
-@@ -1353,7 +1345,8 @@ EXPORT_SYMBOL_GPL(badblocks_check);
-  *
-  * Return:
-  *  0: success
-- *  1: failed to set badblocks (out of space)
-+ *  other: failed to set badblocks (out of space). Parital setting will be
-+ *  treated as failure.
-  */
- int badblocks_set(struct badblocks *bb, sector_t s, int sectors,
- 			int acknowledged)
+ 	INIT_LIST_HEAD(&dcc->entry_list);
+ 	for (i = 0; i < MAX_PLIST_NUM; i++)
 -- 
 2.39.5
 
