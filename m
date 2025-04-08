@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AA2269839;
-	Tue,  8 Apr 2025 10:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22732673BB;
+	Tue,  8 Apr 2025 10:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109808; cv=none; b=hx3ocwaBs3xrEYvILmPHT7Gw7D54oyaX6Ap5lJXgrMNN4A7Vd3a+gpFD6sevDsVkSSSpzd3S2Sh7WZZsbRR3NoJK7UaN25ZZgrSIM41Sm8pkPAPP5OL+UDo4MbnRjXJ9cvkeIfl7YU9FYibN42gfW/efWnvM62z+7SJ3DcyDIuw=
+	t=1744109810; cv=none; b=qZ89WhKtViX4kUCHjgf0CURVQnWHbBM+gWuxLLsaTHIJwitQu0pnxdGRXEqrFE3Bcr1pJyWtdFzmk/kLTZVFE/srI1niaCvykqsCN7YfRwcky659kIvQ72ynBfIO5s/Xiv5ksIWgTl0698vGJt57aykmd+smt/gDng7za2MJWR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109808; c=relaxed/simple;
-	bh=NZIhC/6fMcwXemsRn0/sLNImuCfzZxicQJFgjsi89mg=;
+	s=arc-20240116; t=1744109810; c=relaxed/simple;
+	bh=6+Me7MmEbD1fgx72XOq8e0MRoHiONLNh40Bl4qwXcrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=naB0IvFRWZurQvRkeFQidsHKh56F93MZZVEMBq4DLNfF5mCks+oqZUA8JDs7SLYmRxjcjJvq2jTo2UgVjLB0dCP42Ak6tXCS4JdehWlJRUzIu8sldhpYBn6ArH1t5y5RDSaNj1SkJUkQT+FUWeUeKRqclQ48vmW6ZVyOVUjuZvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU/qcB/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+tAOjPv3sjpZ4nWaCMPxeFFUhKfAjjuPrg6c68sjpel2zmvsEaAqtHePAHWmp2lkjdITnI3OFINbjsEk2s7WmZZQGN49KLR4kX9ah+L5XpHNApawGozh7e/Dy8lvm324cmkf5Sl3AHoxTqT6IUHgLK8duUlStZdfERFPnzWST0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kviX/HD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU/qcB/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B1AC4CEE5;
-	Tue,  8 Apr 2025 10:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kviX/HD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4373AC4CEE5;
+	Tue,  8 Apr 2025 10:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109807;
-	bh=NZIhC/6fMcwXemsRn0/sLNImuCfzZxicQJFgjsi89mg=;
+	s=korg; t=1744109810;
+	bh=6+Me7MmEbD1fgx72XOq8e0MRoHiONLNh40Bl4qwXcrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SU/qcB/2SyCNyYXtD7T2pEEf2xR1KyazCCaYw433hqCOra3n2iIxVfZy4o1HGOsTW
-	 d/ue9hIt7qUpPk7V8yYHGayQv88ia9mIWHJEr9bEWeCwIenoftr5ShFleRrC/+hhGZ
-	 nkg8EvxRgl4WGoD1XHTVRJ1Nc8h2KvcZp0+Qq/o8=
+	b=kviX/HD8EnWh0VVh9m1c6HBhKtvJe/415zqjO09S+a47ok1ogAJuXg3cN238GxerY
+	 YL0N8ZklPPgvfhRDzCoJtFUTURLHpM9RcQ9hQRa3LZxJ/0VuMyqrJCKhMSlR/SxJyh
+	 czalO/oNdOoz6gAQvyScpfyUnlkerVwQeo87K1zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Mario Kleiner <mario.kleiner.de@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/227] i2c: sis630: Fix an error handling path in sis630_probe()
-Date: Tue,  8 Apr 2025 12:47:18 +0200
-Message-ID: <20250408104822.205801046@linuxfoundation.org>
+Subject: [PATCH 5.10 061/227] drm/amd/display: Check plane scaling against format specific hw plane caps.
+Date: Tue,  8 Apr 2025 12:47:19 +0200
+Message-ID: <20250408104822.235966115@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,53 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Mario Kleiner <mario.kleiner.de@gmail.com>
 
-[ Upstream commit 2b22459792fcb4def9f0936d64575ac11a95a58d ]
+[ Upstream commit 6300b3bd9d0d7afaf085dd086ce6258511c3f057 ]
 
-If i2c_add_adapter() fails, the request_region() call in sis630_setup()
-must be undone by a corresponding release_region() call, as done in the
-remove function.
+This takes hw constraints specific to pixel formats into account,
+e.g., the inability of older hw to scale fp16 format framebuffers.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/3d607601f2c38e896b10207963c6ab499ca5c307.1741033587.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+It should now allow safely to enable fp16 formats also on DCE-8,
+DCE-10, DCE-11.0
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 374c9faac5a7 ("drm/amd/display: Fix null check for pipe_ctx->plane_state in resource_build_scaling_params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-sis630.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 81 +++++++++++++++++--
+ 1 file changed, 73 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-sis630.c b/drivers/i2c/busses/i2c-sis630.c
-index cfb8e04a2a831..6befa6ff83f26 100644
---- a/drivers/i2c/busses/i2c-sis630.c
-+++ b/drivers/i2c/busses/i2c-sis630.c
-@@ -509,6 +509,8 @@ MODULE_DEVICE_TABLE(pci, sis630_ids);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 50921b340b886..4b4de1751c53f 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3719,10 +3719,53 @@ static const struct drm_encoder_funcs amdgpu_dm_encoder_funcs = {
+ };
  
- static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 
++static void get_min_max_dc_plane_scaling(struct drm_device *dev,
++					 struct drm_framebuffer *fb,
++					 int *min_downscale, int *max_upscale)
++{
++	struct amdgpu_device *adev = drm_to_adev(dev);
++	struct dc *dc = adev->dm.dc;
++	/* Caps for all supported planes are the same on DCE and DCN 1 - 3 */
++	struct dc_plane_cap *plane_cap = &dc->caps.planes[0];
++
++	switch (fb->format->format) {
++	case DRM_FORMAT_P010:
++	case DRM_FORMAT_NV12:
++	case DRM_FORMAT_NV21:
++		*max_upscale = plane_cap->max_upscale_factor.nv12;
++		*min_downscale = plane_cap->max_downscale_factor.nv12;
++		break;
++
++	case DRM_FORMAT_XRGB16161616F:
++	case DRM_FORMAT_ARGB16161616F:
++	case DRM_FORMAT_XBGR16161616F:
++	case DRM_FORMAT_ABGR16161616F:
++		*max_upscale = plane_cap->max_upscale_factor.fp16;
++		*min_downscale = plane_cap->max_downscale_factor.fp16;
++		break;
++
++	default:
++		*max_upscale = plane_cap->max_upscale_factor.argb8888;
++		*min_downscale = plane_cap->max_downscale_factor.argb8888;
++		break;
++	}
++
++	/*
++	 * A factor of 1 in the plane_cap means to not allow scaling, ie. use a
++	 * scaling factor of 1.0 == 1000 units.
++	 */
++	if (*max_upscale == 1)
++		*max_upscale = 1000;
++
++	if (*min_downscale == 1)
++		*min_downscale = 1000;
++}
++
++
+ static int fill_dc_scaling_info(const struct drm_plane_state *state,
+ 				struct dc_scaling_info *scaling_info)
  {
-+	int ret;
-+
- 	if (sis630_setup(dev)) {
- 		dev_err(&dev->dev,
- 			"SIS630 compatible bus not detected, "
-@@ -522,7 +524,15 @@ static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	snprintf(sis630_adapter.name, sizeof(sis630_adapter.name),
- 		 "SMBus SIS630 adapter at %04x", smbus_base + SMB_STS);
+-	int scale_w, scale_h;
++	int scale_w, scale_h, min_downscale, max_upscale;
  
--	return i2c_add_adapter(&sis630_adapter);
-+	ret = i2c_add_adapter(&sis630_adapter);
-+	if (ret)
-+		goto release_region;
+ 	memset(scaling_info, 0, sizeof(*scaling_info));
+ 
+@@ -3788,17 +3831,25 @@ static int fill_dc_scaling_info(const struct drm_plane_state *state,
+ 	/* DRM doesn't specify clipping on destination output. */
+ 	scaling_info->clip_rect = scaling_info->dst_rect;
+ 
+-	/* TODO: Validate scaling per-format with DC plane caps */
++	/* Validate scaling per-format with DC plane caps */
++	if (state->plane && state->plane->dev && state->fb) {
++		get_min_max_dc_plane_scaling(state->plane->dev, state->fb,
++					     &min_downscale, &max_upscale);
++	} else {
++		min_downscale = 250;
++		max_upscale = 16000;
++	}
 +
-+	return 0;
+ 	scale_w = scaling_info->dst_rect.width * 1000 /
+ 		  scaling_info->src_rect.width;
+ 
+-	if (scale_w < 250 || scale_w > 16000)
++	if (scale_w < min_downscale || scale_w > max_upscale)
+ 		return -EINVAL;
+ 
+ 	scale_h = scaling_info->dst_rect.height * 1000 /
+ 		  scaling_info->src_rect.height;
+ 
+-	if (scale_h < 250 || scale_h > 16000)
++	if (scale_h < min_downscale || scale_h > max_upscale)
+ 		return -EINVAL;
+ 
+ 	/*
+@@ -6010,12 +6061,26 @@ static void dm_plane_helper_cleanup_fb(struct drm_plane *plane,
+ static int dm_plane_helper_check_state(struct drm_plane_state *state,
+ 				       struct drm_crtc_state *new_crtc_state)
+ {
+-	int max_downscale = 0;
+-	int max_upscale = INT_MAX;
++	struct drm_framebuffer *fb = state->fb;
++	int min_downscale, max_upscale;
++	int min_scale = 0;
++	int max_scale = INT_MAX;
 +
-+release_region:
-+	release_region(smbus_base + SMB_STS, SIS630_SMB_IOREGION);
-+	return ret;
++	/* Plane enabled? Get min/max allowed scaling factors from plane caps. */
++	if (fb && state->crtc) {
++		get_min_max_dc_plane_scaling(state->crtc->dev, fb,
++					     &min_downscale, &max_upscale);
++		/*
++		 * Convert to drm convention: 16.16 fixed point, instead of dc's
++		 * 1.0 == 1000. Also drm scaling is src/dst instead of dc's
++		 * dst/src, so min_scale = 1.0 / max_upscale, etc.
++		 */
++		min_scale = (1000 << 16) / max_upscale;
++		max_scale = (1000 << 16) / min_downscale;
++	}
+ 
+-	/* TODO: These should be checked against DC plane caps */
+ 	return drm_atomic_helper_check_plane_state(
+-		state, new_crtc_state, max_downscale, max_upscale, true, true);
++		state, new_crtc_state, min_scale, max_scale, true, true);
  }
  
- static void sis630_remove(struct pci_dev *dev)
+ static int dm_plane_atomic_check(struct drm_plane *plane,
 -- 
 2.39.5
 
