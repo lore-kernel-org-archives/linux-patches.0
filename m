@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17BC266EFC;
-	Tue,  8 Apr 2025 11:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E77265CAF;
+	Tue,  8 Apr 2025 11:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111317; cv=none; b=KNoeN7o8nrg4TfITx4I6l9U2XSSznjR2wXZY3XDFBktsdJYjiYgWE2k00LmUqke+pyzk9tvU/rXj+zcR+jX3+F54fnNny6rTWm+Nlr8Xv/LzRSmMA4j1e50nLePgwscMTVACceahHQferj1kLeklaOn4f+EMKXy+wLYFeSN2eaY=
+	t=1744111320; cv=none; b=lsiVYoepDtfRnqMSBd7o9rXrpwo7SqwVcykSSbGKePylbtkhqYguhC/IczDvfTlyrl6UYiE6ORIoZ8OAoaf0cSkEJEE9aEeA2TyOK7rDmok4ZMh/IUL+t1vzEPPABPBNsLiczWYFlCC61xyH0qsM1dsvLnzslgsyShZ2z6n4I5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111317; c=relaxed/simple;
-	bh=NvDu2CnUQOUPRaiTzJm7h7P36s1+nXElPQDLzl6YPmw=;
+	s=arc-20240116; t=1744111320; c=relaxed/simple;
+	bh=8Ch0G5nniZv/jNgH5WAciNKNDBrzuxnEw3to1Dz22Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4XZ3upEpALO+Sj/uf74nTKQJTwmMpmWcMBPR4Z2yNtnCFSh35ml2vr8dgLJFyE7Q3XjxOydb3cK9t/IIYNwCQqhjNK7mcs7J37K6PKzS8vnYC1RzWrqn6sHytC3ZFwie7NhKW47vxKwi35+C6t7PV0YwpMFZrdp8A5ceVFncbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8n862LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEM94smsUhMN1hEETDXjbkJqqF2h7xHPfkOKci6Kg/YtuzNWGOj2rTsfy8Adi3pu21UyaQlmyYzM3VOYMCNIGIVffzAdhclnmWF5AX1GDGJ13aJY8agVyrx183VE0R9UkJhjDLWSIPh+EmtA47RPhYwvqWu7dneO0Uq2BJBKNyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc/hkNLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8n862LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BFFC4CEE5;
-	Tue,  8 Apr 2025 11:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc/hkNLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB5AC4CEE5;
+	Tue,  8 Apr 2025 11:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111317;
-	bh=NvDu2CnUQOUPRaiTzJm7h7P36s1+nXElPQDLzl6YPmw=;
+	s=korg; t=1744111320;
+	bh=8Ch0G5nniZv/jNgH5WAciNKNDBrzuxnEw3to1Dz22Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8n862LErqHHr7wkPZD2IDLLGWAz14m0FvWk6BBsNisW1MsNi9sRUg1QXZ9VFFfQv
-	 Dhn6Br0sqFodf25ahNFSOxW6VC6r8V/L8/oErupLoIc9AxGt1Gfq5vTzmgU4Fuki19
-	 0Wg4Wel45gftnlmpnh3s07jwm9TxlGtpi6TAxJRk=
+	b=vc/hkNLTcD0kr/P0dfykDho62vWdXh5FdaUCNoy9o8wokSSJglnnpNhw2m698UQ7x
+	 sMF1k5A60c9r0LqVMcvGzNbButE5eAFZ+7j/Z62nPw0z2xFMNimyy3KvwDVqfHbusK
+	 WhPJFNpE1ehJAePSAwZL1rzmJUQ610qEN2tMCUgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 389/731] pinctrl: renesas: rzg2l: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:44:46 +0200
-Message-ID: <20250408104923.324749234@linuxfoundation.org>
+Subject: [PATCH 6.14 390/731] RDMA/mlx5: Fix MR cache initialization error flow
+Date: Tue,  8 Apr 2025 12:44:47 +0200
+Message-ID: <20250408104923.348093047@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,40 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit a5779e625e2b377f16a6675c432aaf299ce5028c ]
+[ Upstream commit a0130ef84b00c68ba0b79ee974a0f01459741421 ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+Destroy all previously created cache entries and work queue when rolling
+back the MR cache initialization upon an error.
 
-Call into of_node_put() to rectify that.
-
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-3-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 73d09b2fe833 ("RDMA/mlx5: Introduce mlx5r_cache_rb_key")
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/c41d525fb3c72e28dd38511bf3aaccb5d584063e.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx5/mr.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 5f006a059d9c2..d1da7f53fc600 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -2756,6 +2756,8 @@ static int rzg2l_gpio_register(struct rzg2l_pinctrl *pctrl)
- 	if (ret)
- 		return dev_err_probe(pctrl->dev, ret, "Unable to parse gpio-ranges\n");
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index eeb94d1ae60d9..068eac3bdb50b 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -919,6 +919,25 @@ mlx5r_cache_create_ent_locked(struct mlx5_ib_dev *dev,
+ 	return ERR_PTR(ret);
+ }
  
-+	of_node_put(of_args.np);
++static void mlx5r_destroy_cache_entries(struct mlx5_ib_dev *dev)
++{
++	struct rb_root *root = &dev->cache.rb_root;
++	struct mlx5_cache_ent *ent;
++	struct rb_node *node;
 +
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins)
- 		return dev_err_probe(pctrl->dev, -EINVAL,
++	mutex_lock(&dev->cache.rb_lock);
++	node = rb_first(root);
++	while (node) {
++		ent = rb_entry(node, struct mlx5_cache_ent, node);
++		node = rb_next(node);
++		clean_keys(dev, ent);
++		rb_erase(&ent->node, root);
++		mlx5r_mkeys_uninit(ent);
++		kfree(ent);
++	}
++	mutex_unlock(&dev->cache.rb_lock);
++}
++
+ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ {
+ 	struct mlx5_mkey_cache *cache = &dev->cache;
+@@ -970,6 +989,8 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ err:
+ 	mutex_unlock(&cache->rb_lock);
+ 	mlx5_mkey_cache_debugfs_cleanup(dev);
++	mlx5r_destroy_cache_entries(dev);
++	destroy_workqueue(cache->wq);
+ 	mlx5_ib_warn(dev, "failed to create mkey cache entry\n");
+ 	return ret;
+ }
+@@ -1003,17 +1024,7 @@ void mlx5_mkey_cache_cleanup(struct mlx5_ib_dev *dev)
+ 	mlx5_cmd_cleanup_async_ctx(&dev->async_ctx);
+ 
+ 	/* At this point all entries are disabled and have no concurrent work. */
+-	mutex_lock(&dev->cache.rb_lock);
+-	node = rb_first(root);
+-	while (node) {
+-		ent = rb_entry(node, struct mlx5_cache_ent, node);
+-		node = rb_next(node);
+-		clean_keys(dev, ent);
+-		rb_erase(&ent->node, root);
+-		mlx5r_mkeys_uninit(ent);
+-		kfree(ent);
+-	}
+-	mutex_unlock(&dev->cache.rb_lock);
++	mlx5r_destroy_cache_entries(dev);
+ 
+ 	destroy_workqueue(dev->cache.wq);
+ 	del_timer_sync(&dev->delay_timer);
 -- 
 2.39.5
 
