@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70DC268C60;
-	Tue,  8 Apr 2025 11:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631B269831;
+	Tue,  8 Apr 2025 11:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111546; cv=none; b=UEDPQRN67MRuqz8Qv/GiikYmGrkBfz/C6G/h13axeoarcPMCqY+D9q6VW9UvmtkJ4TcJtUQfbFLcIYQGA3hNMzczPYstWaFEBNlpv/YTfvajX/qnAZA/8vWZa6kxGxaQFqJRHnCkGR4xcQ8pyE5Xy23v+Y2dzjvt6dhjvIg4EvY=
+	t=1744111549; cv=none; b=G4sfl8fFyfKC/e44tvcvzLOBHCKzyLE93eKR7gfDxorBKWmEa6fhgTo2CJF9ZNxgrgHZ3apMstNB4htXBOBBAZk9/1NtIW4yBYNDTjsLAeHfPqZk+x9iH9pdlpqXH7hvdRUGdQvMtKB+DNoaq1UULyrhkm6/xoQX2tP7v0c7yMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111546; c=relaxed/simple;
-	bh=miDw0F7kh8TgHM/CJm6HGdM0rEIHwPmNw4RT7MpS0xA=;
+	s=arc-20240116; t=1744111549; c=relaxed/simple;
+	bh=j4inIDGWVbT1L7V73nrhykQ12JjR7TYi7BH9SKlrGhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o/pKGqkypyP5xJbsrEhz9yevtiTkSN1P30XHtJrMPqZeWPKbcOeJ+pbvo6leCqxaPB1HYSzWldWQHQcu/LBo9Ky1QacItpygc1L3ox0IhGqHLUAo2RxFSPd57mQiP+lEBTDmPQIVThr/dIcrTAnfUdB3ntL9oib8X++iFtsz7gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCSH9aAG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbfQ5u+boHafJqd/ijbHtfdcYK5nJhbPXrKd4xV4tYVjESvvPkAr4QI6nnx/5xeF3iIVjCqJzJeGsLJxot6sHZ0fOjXvOMg6fn4sjcJH0cGqA2Ev2lh04GHZbGoVzYFRl/zFwA1FzNYUSy/9fPkVwjcBmc0/aPD8lT3sQCrTk9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U32Y48pC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCSH9aAG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1163EC4CEE5;
-	Tue,  8 Apr 2025 11:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U32Y48pC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94EAC4CEE7;
+	Tue,  8 Apr 2025 11:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111546;
-	bh=miDw0F7kh8TgHM/CJm6HGdM0rEIHwPmNw4RT7MpS0xA=;
+	s=korg; t=1744111549;
+	bh=j4inIDGWVbT1L7V73nrhykQ12JjR7TYi7BH9SKlrGhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCSH9aAG8o9Q7uPZM2r4q1bsdtbs5KJV3JrFkFQHPfzthck3Nkj3DIeKAX3rxOnqS
-	 /NqUZpgWoDcESe7OPBxHNfwmwgvUEUloJnBjYD2DJ+ngaW4t+yOieWApTIg8c5hpz3
-	 Gl4oVWccPznZosX8LkZxXlBjyMv/13BjvlJmCAHc=
+	b=U32Y48pC+zh+faWFp/FNAS2jZ1y8Jyy1au95dxSGhDmO96SFgCFAN/HbJkuqg9S0z
+	 9AUPxuR5iXEnbHjNxga2Mup5beln6k94qQ/GEc72GLWYpNos9VPRIuFeEZyW7MtXa1
+	 t4/6PDl7D5w6IMP7iu3KUNvg86hXPsw9LAvRsmNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 431/731] clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
-Date: Tue,  8 Apr 2025 12:45:28 +0200
-Message-ID: <20250408104924.299804445@linuxfoundation.org>
+Subject: [PATCH 6.14 422/731] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
+Date: Tue,  8 Apr 2025 12:45:19 +0200
+Message-ID: <20250408104924.089738379@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,44 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 000cbe3896c56bf5c625e286ff096533a6b27657 ]
+[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
 
-This clock can't be enable with VENUS_CORE0 GDSC turned off. But that
-GDSC is under HW control so it can be turned off at any moment.
-Instead of checking the dependent clock we can just vote for it to
-enable later when GDSC gets turned on.
+When cur_qp isn't NULL, in order to avoid fetching the QP from
+the radix tree again we check if the next cqe QP is identical to
+the one we already have.
 
-Fixes: 5db3ae8b33de6 ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Link: https://lore.kernel.org/r/20250315-clock-fix-v1-1-2efdc4920dda@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The bug however is that we are checking if the QP is identical by
+checking the QP number inside the CQE against the QP number inside the
+mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
+FW so it should be matched against mlx5_core_qp which is our FW QP
+number.
+
+Otherwise we could use the wrong QP when handling a CQE which could
+cause the kernel trace below.
+
+This issue is mainly noticeable over QPs 0 & 1, since for now they are
+the only QPs in our driver whereas the QP number inside mlx5_ib_qp
+doesn't match the QP number inside mlx5_core_qp.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP
+ CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+ Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
+ RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
+ RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
+ RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
+ R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
+ FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x60
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+  __ib_process_cq+0x5a/0x150 [ib_core]
+  ib_cq_poll_work+0x31/0x90 [ib_core]
+  process_one_work+0x169/0x320
+  worker_thread+0x288/0x3a0
+  ? work_busy+0xb0/0xb0
+  kthread+0xd7/0x1f0
+  ? kthreads_online_cpu+0x130/0x130
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork+0x2d/0x50
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-sdm660.c | 2 +-
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
-index 98ba5b4518fb3..b9f02d91004e8 100644
---- a/drivers/clk/qcom/mmcc-sdm660.c
-+++ b/drivers/clk/qcom/mmcc-sdm660.c
-@@ -2544,7 +2544,7 @@ static struct clk_branch video_core_clk = {
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 4c54dc5780690..1aa5311b03e9f 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -490,7 +490,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
+ 	}
  
- static struct clk_branch video_subcore0_clk = {
- 	.halt_reg = 0x1048,
--	.halt_check = BRANCH_HALT,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x1048,
- 		.enable_mask = BIT(0),
+ 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
+-	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
++	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
+ 		/* We do not have to take the QP table lock here,
+ 		 * because CQs will be locked while QPs are removed
+ 		 * from the table.
 -- 
 2.39.5
 
