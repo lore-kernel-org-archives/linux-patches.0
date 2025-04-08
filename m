@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F039C2288CB;
-	Tue,  8 Apr 2025 11:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DCE219301;
+	Tue,  8 Apr 2025 11:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112640; cv=none; b=KOU6KPLFuktJL5jpdDLm/pqcasbXrNaaKiPudOaSdjqdwqFhGevWCoLTWY8fQ0LtJLlfF+scKGNyDZyurMTW4zl/+Jz3yuZMGKrExIA/n6MLdcEecJPPDgLPXqilzEB38tLLNPPg3hCdaMkIj7mbmWYI40UBjHKC++9A8EvQ/RI=
+	t=1744112643; cv=none; b=BE/SaQDVd1nGLpyLHg/9K6VBzJaQTQbbHuV5kRvZMZ40vY0aPYgr2RA5SwzjIHxWunrbtpis9fNgRgqA9oEDkflBAzqQy0THOHm3e4qGajQxjT1Go23KytwHZpxY4nmcHzSf4IFDH1KZBEJoxlyVWyVfGhd648QWjfx3Dve+wUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112640; c=relaxed/simple;
-	bh=ySeDzHixvBZXbKyRHKqYOvaKq0wjSYmXSngA/GiBxZc=;
+	s=arc-20240116; t=1744112643; c=relaxed/simple;
+	bh=TGv6RFF+BcPfzW2k3P2LAHFvBRPlBmuMRZhGq53Sseo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQdxpBEKI6Af77ERhq/GaphSH805ofCE1xFIOZLq+sTK7URSlJLaWzIqX+Qv7jJqE9I8pK9YJx4fSlk6fHrm0ZMgmKQFwVPiz2ObHOamADbX8+eLQAYphL4l1VjiT0tB+Irmu1LOpgfuBrKlOknUjaXB9gM7zSypedWIMiytPAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IazpNWoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwZahNFtUm3hU1rJlglqR6fPa4BozssoR6A8m2c9l0OwHX/uBI3eAq+yhGRn9kSb02NVyMvkb85bVfqgbj5c6kso0APFDg+L/gyOseJJ89ulP/j36Gvo1mzuIguiZsGdAraWxXa5Z1BbVuN7b8DqIIL47Ihf+w/EYIQt7Hvhrnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0LgUgwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IazpNWoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815FAC4CEE5;
-	Tue,  8 Apr 2025 11:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0LgUgwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFF7C4CEE5;
+	Tue,  8 Apr 2025 11:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112639;
-	bh=ySeDzHixvBZXbKyRHKqYOvaKq0wjSYmXSngA/GiBxZc=;
+	s=korg; t=1744112642;
+	bh=TGv6RFF+BcPfzW2k3P2LAHFvBRPlBmuMRZhGq53Sseo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IazpNWoZ7IMU+1XHROFTwR0UE6TzshtTrcJleWqzNRZM66OJ82JUKIL84csutV680
-	 ONt/3OFXZsJJrCnuWU54gmaeBxBjl0LLFkCO436EMpgcLCv76z4tEEVXjXHYrqnlS+
-	 YbBfj+6bZIMvpVgJqWW3yCMNCvVPdeLQ7C61Q7A4=
+	b=X0LgUgwu1xgNq5imVgj22qx7eVjolzlygDBFEPHIaJvqhFbQemBe2cIc1ymZiWA6O
+	 CKWs98ozv8AfXPwWDCeAC9y9KnPHeLj7xWIcmZgtJW7sxBxzGsGJLJAI3cZRDnpODu
+	 JbfY1mnDmanbkBgaBBSN6Sym22XhGqIAAQxXDHJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/279] media: platform: allgro-dvt: unregister v4l2_device on the error path
-Date: Tue,  8 Apr 2025 12:48:46 +0200
-Message-ID: <20250408104830.200953425@linuxfoundation.org>
+Subject: [PATCH 5.15 144/279] HID: remove superfluous (and wrong) Makefile entry for CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
+Date: Tue,  8 Apr 2025 12:48:47 +0200
+Message-ID: <20250408104830.227434725@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,35 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit c2b96a6818159fba8a3bcc38262da9e77f9b3ec7 ]
+[ Upstream commit fe0fb58325e519008e2606a5aa2cff7ad23e212d ]
 
-In allegro_probe(), the v4l2 device is not unregistered in the error
-path, which results in a memory leak. Fix it by calling
-v4l2_device_unregister() before returning error.
+The line
 
-Fixes: d74d4e2359ec ("media: allegro: move driver out of staging")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+	obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)   += intel-ish-hid/
+
+in top-level HID Makefile is both superfluous (as CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
+depends on CONFIG_INTEL_ISH_HID, which contains intel-ish-hid/ already) and wrong (as it's
+missing the CONFIG_ prefix).
+
+Just remove it.
+
+Fixes: 91b228107da3e ("HID: intel-ish-hid: ISH firmware loader client driver")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/allegro-dvt/allegro-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
-index 881c5bbf61568..f472eb19cd92f 100644
---- a/drivers/media/platform/allegro-dvt/allegro-core.c
-+++ b/drivers/media/platform/allegro-dvt/allegro-core.c
-@@ -3740,6 +3740,7 @@ static int allegro_probe(struct platform_device *pdev)
- 	if (ret < 0) {
- 		v4l2_err(&dev->v4l2_dev,
- 			 "failed to request firmware: %d\n", ret);
-+		v4l2_device_unregister(&dev->v4l2_dev);
- 		return ret;
- 	}
+diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
+index e29efcb1c0402..9fc46db0a3da6 100644
+--- a/drivers/hid/Makefile
++++ b/drivers/hid/Makefile
+@@ -144,7 +144,6 @@ obj-$(CONFIG_USB_KBD)		+= usbhid/
+ obj-$(CONFIG_I2C_HID_CORE)	+= i2c-hid/
+ 
+ obj-$(CONFIG_INTEL_ISH_HID)	+= intel-ish-hid/
+-obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)	+= intel-ish-hid/
+ 
+ obj-$(CONFIG_AMD_SFH_HID)       += amd-sfh-hid/
  
 -- 
 2.39.5
