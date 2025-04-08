@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214C0268FDD;
-	Tue,  8 Apr 2025 11:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B729E267B8C;
+	Tue,  8 Apr 2025 11:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111802; cv=none; b=sVT2aXdOx/UNK20dGLj26P9eXg0/kfUcVNxaCDaF1hVLayaPUnOUbyLnDsryVbGfMVgmVn0ZUCxUBukukbt/1wf8GTtqrM0tJ02gnc3OFpHq6aRsZR9JtGs3XLeYr7ISB+9F6Y5RdU+oKAdX/xPFCxUzf6r63fu1zO2KOPJuW8M=
+	t=1744111804; cv=none; b=QeVhWyxHqPcYStDu8zrNct3RU+HrF8DTr7TUHp92nsHIuMYo7LjCtyMShwAC+ZBc8FHZmZvZJoHNmSvn+N5YktskQ3EKT/+BN/Mv79JC0901+5BQaIJnnqKxCvOleKeM07rpoNgaqlqrAYsPfGIAvMSJ1c7r6BmUSL7hMxbJeF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111802; c=relaxed/simple;
-	bh=YiDHeRNsgueMiLU7cp67Cn8tabVDnnGh65qpVMX8YvM=;
+	s=arc-20240116; t=1744111804; c=relaxed/simple;
+	bh=M+TZ2re8DRjUxs4I9oDALGUFg28cKjHDDEi4E3IArhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOmW5yBhqLbdzAJsdqxot7Y0khryt8+Bi6jThkc6+HkJhy/BD4M6p+W9QX3uN4D1AoEG+7bbH+fCOxWkacXQh+CbPQdFi+x+Z9NZD98F6fxCQgARq0rJ+xzfiwOJFp63jJJ7HyBQ2wc3f6QzAx3N5+dXfHJ/fkSL/JSGK1dm76g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUaHrfKn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rgu63KPe1D9Fbu5aJOTuhaI8u+gBXP8VUOLp98n3Z/OOgGyljB8BAUE0l0PTpj8ll6Y7WgLyFi3gwGijBFf0rzTZZrED3bDvx+NmIEwPMnDjSvR12KQYdvxHP6HwuR1w5yOUbwbNGtmAwg/tmzu3aM1Synvpft7kEUFGrigkbUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0wfvAiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUaHrfKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A445AC4CEE5;
-	Tue,  8 Apr 2025 11:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0wfvAiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A29C4CEE5;
+	Tue,  8 Apr 2025 11:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111802;
-	bh=YiDHeRNsgueMiLU7cp67Cn8tabVDnnGh65qpVMX8YvM=;
+	s=korg; t=1744111804;
+	bh=M+TZ2re8DRjUxs4I9oDALGUFg28cKjHDDEi4E3IArhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUaHrfKn8d20u644iYt1GGyNG3BWICqS2EvSd6g46LbnX02BX51mB8/e96veZPNJW
-	 BxQoSx7HE2ECvCdF+Ftd6RaFyMYpo1vVSNMV4V5aNbJHFbHspgxmqiTHxbUYJkksaE
-	 WgmYoL4KtpM3Gtb85vQItD4TzWENy5E063xfaQPs=
+	b=A0wfvAiPjGY+wEI3ut8SKXBa4eQvOmiJWwnUfVJWX7pCyqJKW/hOHClNIq0GwA3fm
+	 qJ/EtQFYh7PeJ1sRyD3+0BBhHFkfSBTa/RA3h1y4mAKhgN9O0TOaifaBcI+ISfH+IE
+	 oTV2yaKwkIvhKmMcY0hhUIUQNwEnAR2JecT0nEfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Gherdovich <ggherdovich@suse.cz>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jim Liu <jim.t90615@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 566/731] ACPI: processor: idle: Return an error if both P_LVL{2,3} idle states are invalid
-Date: Tue,  8 Apr 2025 12:47:43 +0200
-Message-ID: <20250408104927.439953176@linuxfoundation.org>
+Subject: [PATCH 6.14 567/731] net: phy: broadcom: Correct BCM5221 PHY model detection
+Date: Tue,  8 Apr 2025 12:47:44 +0200
+Message-ID: <20250408104927.463215647@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,55 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Gherdovich <ggherdovich@suse.cz>
+From: Jim Liu <jim.t90615@gmail.com>
 
-[ Upstream commit 9e9b893404d43894d69a18dd2fc8fcf1c36abb7e ]
+[ Upstream commit 4f1eaabb4b66a1f7473f584e14e15b2ac19dfaf3 ]
 
-Prior to commit 496121c02127 ("ACPI: processor: idle: Allow probing on
-platforms with one ACPI C-state"), the acpi_idle driver wouldn't load on
-systems without a valid C-State at least as deep as C2.
+Correct detect condition is applied to the entire 5221 family of PHYs.
 
-The behavior was desirable for guests on hypervisors such as VMWare
-ESXi, which by default don't have the _CST ACPI method, and set the C2
-and C3 latencies to 101 and 1001 microseconds respectively via the FADT,
-to signify they're unsupported.
-
-Since the above change though, these virtualized deployments end up
-loading acpi_idle, and thus entering the default C1 C-State set by
-acpi_processor_get_power_info_default(); this is undesirable for a
-system that's communicating to the OS it doesn't want C-States (missing
-_CST, and invalid C2/C3 in FADT).
-
-Make acpi_processor_get_power_info_fadt() return -ENODEV in that case,
-so that acpi_processor_get_cstate_info() exits early and doesn't set
-pr->flags.power = 1.
-
-Fixes: 496121c02127 ("ACPI: processor: idle: Allow probing on platforms with one ACPI C-state")
-Signed-off-by: Giovanni Gherdovich <ggherdovich@suse.cz>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20250328143040.9348-1-ggherdovich@suse.cz
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3abbd0699b67 ("net: phy: broadcom: add support for BCM5221 phy")
+Signed-off-by: Jim Liu <jim.t90615@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/phy/broadcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 698897b29de24..2df1296ff44d5 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -268,6 +268,10 @@ static int acpi_processor_get_power_info_fadt(struct acpi_processor *pr)
- 			 ACPI_CX_DESC_LEN, "ACPI P_LVL3 IOPORT 0x%x",
- 			 pr->power.states[ACPI_STATE_C3].address);
+diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+index 22edb7e4c1a1f..5a963b2b7ea78 100644
+--- a/drivers/net/phy/broadcom.c
++++ b/drivers/net/phy/broadcom.c
+@@ -859,7 +859,7 @@ static int brcm_fet_config_init(struct phy_device *phydev)
+ 		return reg;
  
-+	if (!pr->power.states[ACPI_STATE_C2].address &&
-+	    !pr->power.states[ACPI_STATE_C3].address)
-+		return -ENODEV;
-+
- 	return 0;
- }
+ 	/* Unmask events we are interested in and mask interrupts globally. */
+-	if (phydev->phy_id == PHY_ID_BCM5221)
++	if (phydev->drv->phy_id == PHY_ID_BCM5221)
+ 		reg = MII_BRCM_FET_IR_ENABLE |
+ 		      MII_BRCM_FET_IR_MASK;
+ 	else
+@@ -888,7 +888,7 @@ static int brcm_fet_config_init(struct phy_device *phydev)
+ 		return err;
+ 	}
  
+-	if (phydev->phy_id != PHY_ID_BCM5221) {
++	if (phydev->drv->phy_id != PHY_ID_BCM5221) {
+ 		/* Set the LED mode */
+ 		reg = __phy_read(phydev, MII_BRCM_FET_SHDW_AUXMODE4);
+ 		if (reg < 0) {
+@@ -1009,7 +1009,7 @@ static int brcm_fet_suspend(struct phy_device *phydev)
+ 		return err;
+ 	}
+ 
+-	if (phydev->phy_id == PHY_ID_BCM5221)
++	if (phydev->drv->phy_id == PHY_ID_BCM5221)
+ 		/* Force Low Power Mode with clock enabled */
+ 		reg = BCM5221_SHDW_AM4_EN_CLK_LPM | BCM5221_SHDW_AM4_FORCE_LPM;
+ 	else
 -- 
 2.39.5
 
