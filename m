@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184E2676E1;
-	Tue,  8 Apr 2025 12:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820D126A0EA;
+	Tue,  8 Apr 2025 12:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113688; cv=none; b=HC2U2KZXDBF8lMFwJ1E/Jiaj5PfM0JTo13R6q5uGZKTlM7ZqnshEL/S3E3XrU0kENzKTDx1TvscR5suJnNBisSQJF5WKQDoZxajgO/algAC0WZsltEDFLG8G3XPbSE9XPMruESvs5ItZMzwcDNBjsuxNRce032eAaRj6K9Ew6t4=
+	t=1744113690; cv=none; b=mM6yLsSw0JJFCWJqejAuKL4mdcL2FAfKXpf5bSuuW7CME3VdmjVUQ/d1XGacfgkfMlf/uUOBpIWZ+sn89lEd6ZDhY6y039MpMlIGMm7hoSnFPCoAQBr5VVUIh87DLuVsOCLhJOjIBxf/KQLgIsqxkHJp/qhvzHBQQTZ6MrDyzlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113688; c=relaxed/simple;
-	bh=9AAdLibJJ/hs88YGCFYrGPkWWP59rR9v+p70a8iWGGQ=;
+	s=arc-20240116; t=1744113690; c=relaxed/simple;
+	bh=TACpO9qeZTnGK2Oe8POEFrFi7e4ftCWCKR2iRfysiLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3zjC71KWkbFt/7s9PvNqdBwluW1cIaTuwaVdLNLgydvza/G9aD7DKi+3Qf7U30TZKCXmSMrbORXify60JKTs4MZy/L0H9RBO926kJ95O0/cNhEeIKgPrh1Zshx6RpcpOjexORPQvUnatnrYNSq9PzHHe9J4ivnP/Eh55gDPS0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgG7F0tw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mI+/X/pemn9MPCeVLSC+c9SExu4CDNxb6mRQPY+dgvs4acXrTiibMLnxCKDYrFTfAL4tyFEE+uQJsq0fOC5JG7qvZUBiO7P1BxmSe+ZCYhAmBMNQ+85bv7zwQXu8+at+2JCtOpGs2c9G3LpTXPnL/127FmM4M9IfYInJ7glRE2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ok6wLYUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgG7F0tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72881C4CEE5;
-	Tue,  8 Apr 2025 12:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ok6wLYUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A91C4CEE5;
+	Tue,  8 Apr 2025 12:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113687;
-	bh=9AAdLibJJ/hs88YGCFYrGPkWWP59rR9v+p70a8iWGGQ=;
+	s=korg; t=1744113690;
+	bh=TACpO9qeZTnGK2Oe8POEFrFi7e4ftCWCKR2iRfysiLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgG7F0twTuKNg/vN93IpR5X2BBu8OgMjv3758Xp4TiZhoDyt4GX+P4d76I2A7Jtzk
-	 JvJoBYI+nzGP8+Oh0mcONlotuMujBcyQoQA4WsfPwte9sTYFADtxa52bN07EbCK9FO
-	 CGHadow92X0ECIJMTRghurVgzF3gQcr9yEfLT/Pk=
+	b=ok6wLYUA9wxe0XfcEL5RFp3J1dkQEBMuDC4gQrwtTXHkaQT3avn3wT3wslJ4QSz1p
+	 3y9sXwVnDWG4RNU3PalLL1n8uajWuAHR7/zu5zZDwjysigoCfoL/4cf+jCiGmiuPl4
+	 OmtcP2K1PwEJ4goJ3osBimYaZXvgZumSeCLbnXdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 253/268] ksmbd: fix use-after-free in ksmbd_sessions_deregister()
-Date: Tue,  8 Apr 2025 12:51:04 +0200
-Message-ID: <20250408104835.407908391@linuxfoundation.org>
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 236/268] x86/microcode/AMD: Fix __apply_microcode_amd()s return value
+Date: Tue,  8 Apr 2025 12:50:47 +0200
+Message-ID: <20250408104834.953239608@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,36 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Boris Ostrovsky <boris.ostrovsky@oracle.com>
 
-commit 15a9605f8d69dc85005b1a00c31a050b8625e1aa upstream.
+commit 31ab12df723543047c3fc19cb8f8c4498ec6267f upstream.
 
-In multichannel mode, UAF issue can occur in session_deregister
-when the second channel sets up a session through the connection of
-the first channel. session that is freed through the global session
-table can be accessed again through ->sessions of connection.
+When verify_sha256_digest() fails, __apply_microcode_amd() should propagate
+the failure by returning false (and not -1 which is promoted to true).
 
+Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
+Signed-off-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/r/20250327230503.1850368-2-boris.ostrovsky@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -229,6 +229,9 @@ void ksmbd_sessions_deregister(struct ks
- 			if (!ksmbd_chann_del(conn, sess) &&
- 			    xa_empty(&sess->ksmbd_chann_list)) {
- 				hash_del(&sess->hlist);
-+				down_write(&conn->session_lock);
-+				xa_erase(&conn->sessions, sess->id);
-+				up_write(&conn->session_lock);
- 				ksmbd_session_destroy(sess);
- 			}
- 		}
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -603,7 +603,7 @@ static bool __apply_microcode_amd(struct
+ 	unsigned long p_addr = (unsigned long)&mc->hdr.data_code;
+ 
+ 	if (!verify_sha256_digest(mc->hdr.patch_id, *cur_rev, (const u8 *)p_addr, psize))
+-		return -1;
++		return false;
+ 
+ 	native_wrmsrl(MSR_AMD64_PATCH_LOADER, p_addr);
+ 
 
 
