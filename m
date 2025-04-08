@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E153119AD5C;
-	Tue,  8 Apr 2025 11:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83251219301;
+	Tue,  8 Apr 2025 11:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112418; cv=none; b=bl0O4PigYPb4Hmbw1AgRV2zsY7p+GeaYvCUDkbxyToer0OBRJBdB+OE9qpy+PdYn1EaRhx7Fpj9joCOSwRwuX/ePjNRnfg3pDsjFCfD5sPhXoEdifQBeoPm+wFXJYFV7JQi7CjozZ4LlqDYL5EI/TLvGypqOo8vDwQQMAqaE4w4=
+	t=1744112420; cv=none; b=fDdDcKSguWd19CzGUJJk9MCywFoHt3qLOxYaGXmAixCl6D1BhoWbgfuoM5B20HzGpXhRLq6aqJRcQgX1FdOEgvKFpUzes4ApFaLj6u4jRX61ginYx9xjXUTzt6GsmnMXu0hfz7RqgoFS3K1XKKkRdC4rD0aMtV/fHSTm0ey/a10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112418; c=relaxed/simple;
-	bh=Jy0VYueuJrzbE41CDE3E16x2lrIaJ1G09NLqjNI1JhY=;
+	s=arc-20240116; t=1744112420; c=relaxed/simple;
+	bh=59xlMi2BIInT51bWNMoVy1ZVkPrxjUNtFrPLOxVCqmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcDewg8pyJR0EUYeyfYT83Czc8ywGlJ/hLSjkQFmvoi6hojiqKJfTm6FwqmaftDnwY1grVWIMqkTIh3hfLbUWEICLd9ga/P62dzkTeqNxDnA99qscFY3TIfEGFED9Cho8onDEqkUytmPBxpi6JZdlEvbo3AvlscmX7vbo1HH7J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZsOZbyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1iqFXztRzda+2o/LWuDtSW7nAavG4Tl0NYVyIXTbiNFcxb8i0BIKgTA6+9virBKwuCiwfvO8PsmCQ+gzBMLTiCd2h2P/sCPDtk7Vvm9YHDvPpTrIS9Wk2Y+5mNGtVob7AY1O9aTS5NW4lRqUduXrUZrEjgF2tNQn4qo5WB9ME4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZHW4Pqz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZsOZbyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7395FC4CEE5;
-	Tue,  8 Apr 2025 11:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZHW4Pqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D4DC4CEE5;
+	Tue,  8 Apr 2025 11:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112417;
-	bh=Jy0VYueuJrzbE41CDE3E16x2lrIaJ1G09NLqjNI1JhY=;
+	s=korg; t=1744112420;
+	bh=59xlMi2BIInT51bWNMoVy1ZVkPrxjUNtFrPLOxVCqmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZsOZbydZ8zV5r4DvTorjislnY490MPWXOKweShrsbMazWrHha+dz76sSwzGe46uy
-	 h+P02/wC38fDizaRFGmKEegKvedi/b/a8+4VqIQND0ZlXv7b528P70eOy50cp1xNf5
-	 2d/0NvkM1qqHO0EjRIV4P+dWeYvCp4a3Qimv2doE=
+	b=aZHW4PqztdbsPgqXNzkhQ6ZRPP65tsnVSpZrTTLyXIYp4eDfR6/jhqR7voTcgM7H5
+	 EsiZwb3uhsx5A6u3wObKWfSYKnYSfpFl/OLnKPoVZInUSlgsH1Dk86vzr/K3CW39u/
+	 QtQXPeLSbXwB+Wuk7q3AngoSqMKWyGfHiDfnK3k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 5.15 061/279] drm/amd/display: Fix slab-use-after-free on hdcp_work
-Date: Tue,  8 Apr 2025 12:47:24 +0200
-Message-ID: <20250408104827.996242790@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 062/279] qlcnic: fix memory leak issues in qlcnic_sriov_common.c
+Date: Tue,  8 Apr 2025 12:47:25 +0200
+Message-ID: <20250408104828.022024154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,41 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit e65e7bea220c3ce8c4c793b4ba35557f4994ab2b upstream.
+commit d2b9d97e89c79c95f8b517e4fa43fd100f936acc upstream.
 
-[Why]
-A slab-use-after-free is reported when HDCP is destroyed but the
-property_validate_dwork queue is still running.
+Add qlcnic_sriov_free_vlans() in qlcnic_sriov_alloc_vlans() if
+any sriov_vlans fails to be allocated.
+Add qlcnic_sriov_free_vlans() to free the memory allocated by
+qlcnic_sriov_alloc_vlans() if "sriov->allowed_vlans" fails to
+be allocated.
 
-[How]
-Cancel the delayed work when destroying workqueue.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4006
-Fixes: da3fd7ac0bcf ("drm/amd/display: Update CP property based on HW query")
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 725a04ba5a95e89c89633d4322430cfbca7ce128)
+Fixes: 91b7282b613d ("qlcnic: Support VLAN id config.")
 Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250307094952.14874-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-@@ -396,6 +396,7 @@ void hdcp_destroy(struct kobject *kobj,
- 	for (i = 0; i < hdcp_work->max_link; i++) {
- 		cancel_delayed_work_sync(&hdcp_work[i].callback_dwork);
- 		cancel_delayed_work_sync(&hdcp_work[i].watchdog_timer_dwork);
-+		cancel_delayed_work_sync(&hdcp_work[i].property_validate_dwork);
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -454,8 +454,10 @@ static int qlcnic_sriov_set_guest_vlan_m
+ 
+ 	num_vlans = sriov->num_allowed_vlans;
+ 	sriov->allowed_vlans = kcalloc(num_vlans, sizeof(u16), GFP_KERNEL);
+-	if (!sriov->allowed_vlans)
++	if (!sriov->allowed_vlans) {
++		qlcnic_sriov_free_vlans(adapter);
+ 		return -ENOMEM;
++	}
+ 
+ 	vlans = (u16 *)&cmd->rsp.arg[3];
+ 	for (i = 0; i < num_vlans; i++)
+@@ -2168,8 +2170,10 @@ int qlcnic_sriov_alloc_vlans(struct qlcn
+ 		vf = &sriov->vf_info[i];
+ 		vf->sriov_vlans = kcalloc(sriov->num_allowed_vlans,
+ 					  sizeof(*vf->sriov_vlans), GFP_KERNEL);
+-		if (!vf->sriov_vlans)
++		if (!vf->sriov_vlans) {
++			qlcnic_sriov_free_vlans(adapter);
+ 			return -ENOMEM;
++		}
  	}
  
- 	sysfs_remove_bin_file(kobj, &hdcp_work[0].attr);
+ 	return 0;
 
 
