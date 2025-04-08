@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83251219301;
-	Tue,  8 Apr 2025 11:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DAD19AD5C;
+	Tue,  8 Apr 2025 11:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112420; cv=none; b=fDdDcKSguWd19CzGUJJk9MCywFoHt3qLOxYaGXmAixCl6D1BhoWbgfuoM5B20HzGpXhRLq6aqJRcQgX1FdOEgvKFpUzes4ApFaLj6u4jRX61ginYx9xjXUTzt6GsmnMXu0hfz7RqgoFS3K1XKKkRdC4rD0aMtV/fHSTm0ey/a10=
+	t=1744112423; cv=none; b=T1aSvPIuGlQj+PQRFbIHFUylCIDllJ0BVvfhnDYjVz6C2DWsITA2zkWe1uDxOKKpBcLGEWy1YVbv1pXdywVbz/eBVeIFwpME81Tqte53SodC606UiXSdlYfso2gyfy0mhwZXGPsRMs0uC5ycQhO0xuN2d5iGmVznGh8Ln/HUPsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112420; c=relaxed/simple;
-	bh=59xlMi2BIInT51bWNMoVy1ZVkPrxjUNtFrPLOxVCqmU=;
+	s=arc-20240116; t=1744112423; c=relaxed/simple;
+	bh=vwxPOaxjcZkrEQEDS0rGYVI4TjY7atPH3P6Iq3TaUL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1iqFXztRzda+2o/LWuDtSW7nAavG4Tl0NYVyIXTbiNFcxb8i0BIKgTA6+9virBKwuCiwfvO8PsmCQ+gzBMLTiCd2h2P/sCPDtk7Vvm9YHDvPpTrIS9Wk2Y+5mNGtVob7AY1O9aTS5NW4lRqUduXrUZrEjgF2tNQn4qo5WB9ME4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZHW4Pqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERcL/rjsO12ydkJ9HhUsVLVnfDOobjLgm6eLaQDEq/4EfrSbLAMCwS2g7l/iWXuTYOCAf1CnawxAUlh+IgmCaFDfucRouCUWtN5nmB2LWGmLEV9D0jQTCkb8d1PjLZO8dRM1EnTC4bTipjz+l1xUx7XoFbkvr8tEGksJWzOtC00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okeqMIhK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZHW4Pqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D4DC4CEE5;
-	Tue,  8 Apr 2025 11:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okeqMIhK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8783C4CEE5;
+	Tue,  8 Apr 2025 11:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112420;
-	bh=59xlMi2BIInT51bWNMoVy1ZVkPrxjUNtFrPLOxVCqmU=;
+	s=korg; t=1744112423;
+	bh=vwxPOaxjcZkrEQEDS0rGYVI4TjY7atPH3P6Iq3TaUL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZHW4PqztdbsPgqXNzkhQ6ZRPP65tsnVSpZrTTLyXIYp4eDfR6/jhqR7voTcgM7H5
-	 EsiZwb3uhsx5A6u3wObKWfSYKnYSfpFl/OLnKPoVZInUSlgsH1Dk86vzr/K3CW39u/
-	 QtQXPeLSbXwB+Wuk7q3AngoSqMKWyGfHiDfnK3k0=
+	b=okeqMIhK6Rlpo3r2RmHNWQzhkJFutxABxSlKCdub98j7SxTJfHS0VTxLNf0cD6XVp
+	 iymPvQ1CBJY/vdEh/oJwbAemAL+SwTP81ZtrmwSqkijGS5DSpEQhOjHYQABKHRclnt
+	 TDB3AhN6u7hgsfNTPDq5+vw+Uw53DjBgzHUBTD3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 062/279] qlcnic: fix memory leak issues in qlcnic_sriov_common.c
-Date: Tue,  8 Apr 2025 12:47:25 +0200
-Message-ID: <20250408104828.022024154@linuxfoundation.org>
+	Yi Lai <yi1.lai@intel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Chen Linxuan <chenlinxuan@deepin.org>
+Subject: [PATCH 5.15 063/279] lib/buildid: Handle memfd_secret() files in build_id_parse()
+Date: Tue,  8 Apr 2025 12:47:26 +0200
+Message-ID: <20250408104828.046711846@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,51 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit d2b9d97e89c79c95f8b517e4fa43fd100f936acc upstream.
+commit 5ac9b4e935dfc6af41eee2ddc21deb5c36507a9f upstream.
 
-Add qlcnic_sriov_free_vlans() in qlcnic_sriov_alloc_vlans() if
-any sriov_vlans fails to be allocated.
-Add qlcnic_sriov_free_vlans() to free the memory allocated by
-qlcnic_sriov_alloc_vlans() if "sriov->allowed_vlans" fails to
-be allocated.
+>From memfd_secret(2) manpage:
 
-Fixes: 91b7282b613d ("qlcnic: Support VLAN id config.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20250307094952.14874-1-haoxiang_li2024@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  The memory areas backing the file created with memfd_secret(2) are
+  visible only to the processes that have access to the file descriptor.
+  The memory region is removed from the kernel page tables and only the
+  page tables of the processes holding the file descriptor map the
+  corresponding physical memory. (Thus, the pages in the region can't be
+  accessed by the kernel itself, so that, for example, pointers to the
+  region can't be passed to system calls.)
+
+We need to handle this special case gracefully in build ID fetching
+code. Return -EFAULT whenever secretmem file is passed to build_id_parse()
+family of APIs. Original report and repro can be found in [0].
+
+  [0] https://lore.kernel.org/bpf/ZwyG8Uro%2FSyTXAni@ly-workstation/
+
+Fixes: de3ec364c3c3 ("lib/buildid: add single folio-based file reader abstraction")
+Reported-by: Yi Lai <yi1.lai@intel.com>
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://lore.kernel.org/bpf/20241017175431.6183-A-hca@linux.ibm.com
+Link: https://lore.kernel.org/bpf/20241017174713.2157873-1-andrii@kernel.org
+[ Chen Linxuan: backport same logic without folio-based changes ]
+Fixes: 88a16a130933 ("perf: Add build id data in mmap2 event")
+Signed-off-by: Chen Linxuan <chenlinxuan@deepin.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ lib/buildid.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -454,8 +454,10 @@ static int qlcnic_sriov_set_guest_vlan_m
+--- a/lib/buildid.c
++++ b/lib/buildid.c
+@@ -5,6 +5,7 @@
+ #include <linux/elf.h>
+ #include <linux/kernel.h>
+ #include <linux/pagemap.h>
++#include <linux/secretmem.h>
  
- 	num_vlans = sriov->num_allowed_vlans;
- 	sriov->allowed_vlans = kcalloc(num_vlans, sizeof(u16), GFP_KERNEL);
--	if (!sriov->allowed_vlans)
-+	if (!sriov->allowed_vlans) {
-+		qlcnic_sriov_free_vlans(adapter);
- 		return -ENOMEM;
-+	}
+ #define BUILD_ID 3
  
- 	vlans = (u16 *)&cmd->rsp.arg[3];
- 	for (i = 0; i < num_vlans; i++)
-@@ -2168,8 +2170,10 @@ int qlcnic_sriov_alloc_vlans(struct qlcn
- 		vf = &sriov->vf_info[i];
- 		vf->sriov_vlans = kcalloc(sriov->num_allowed_vlans,
- 					  sizeof(*vf->sriov_vlans), GFP_KERNEL);
--		if (!vf->sriov_vlans)
-+		if (!vf->sriov_vlans) {
-+			qlcnic_sriov_free_vlans(adapter);
- 			return -ENOMEM;
-+		}
- 	}
+@@ -157,6 +158,10 @@ int build_id_parse(struct vm_area_struct
+ 	if (!vma->vm_file)
+ 		return -EINVAL;
  
- 	return 0;
++	/* reject secretmem folios created with memfd_secret() */
++	if (vma_is_secretmem(vma))
++		return -EFAULT;
++
+ 	page = find_get_page(vma->vm_file->f_mapping, 0);
+ 	if (!page)
+ 		return -EFAULT;	/* page not mapped */
 
 
