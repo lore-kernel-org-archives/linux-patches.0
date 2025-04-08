@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C11C267B65;
-	Tue,  8 Apr 2025 10:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D74269885;
+	Tue,  8 Apr 2025 10:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109792; cv=none; b=achq9HHIYV6IEbM7RFy/8Rvc5ivUFk8BjpYcxDDoPxPsNKdm8kQX1zxDX4lmYY9EiJKBIuUU4w/L8S6VlLZlxdHmi13mAC/l4KiMw450dT9cXqhS0cQCCTrM76TxTKCxYWdLnkm6uQjZiBWv6PBmO1MUDpXvICIAm87PKoWuKys=
+	t=1744109794; cv=none; b=YorF0n4etG2wngW7Q+IpcSoiYLiw7U12gYTIhXFv1cmYb9HKD3Ln/TUGWAWQ04SnjQQdZ1r/fPrrXEW5E357FzSxLCkt6Fdlwk3nquTEtvwOf/VNmWZB7jZCPfRZT30h/ByhdneDZFtRV5ekjh56I71+TQ4088m0GIPb5ayazxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109792; c=relaxed/simple;
-	bh=9db7fO95SEh3uSRtuyNF3MOIt0acmXRSKspCCWI3gzo=;
+	s=arc-20240116; t=1744109794; c=relaxed/simple;
+	bh=6Fwk28RjB/yU0mBGufh/h30w1A6owN4T/0ki/OEq/gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWB9EelJFwEze139w3wrwt3KOlNWmTTADnMD5oz8KJprrzIJw1DFWlhgvQVPbcNPFI/Yl7YruHzdC2fhLLbE2ZM+WdLrMf7UHroxQgU8Z+GYuwcibewGlMfkFlvlFoW0QCgvVe3Mq3xeTkSaejPoCu64Sd3piogUY692MexX1jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSOFcZfD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kj+yUTz+HmfHafMvjQdqwdQRYVQ6+oDNCE+0s8KdpsOAUbeNlu8dcYEdhWTqbW1uVqQcgsTHPgL7cqxzCX0no2cOS48EHx7UjoPSvKB1K5vLpkqdJZ/DsQD/28OjJNizt4ZZVZaGPxiKWDw9c7bnK7a2aB3yUV6I8LsmGhTQY3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcA2A8ZD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSOFcZfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD592C4CEE5;
-	Tue,  8 Apr 2025 10:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcA2A8ZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B57FC4CEEB;
+	Tue,  8 Apr 2025 10:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109792;
-	bh=9db7fO95SEh3uSRtuyNF3MOIt0acmXRSKspCCWI3gzo=;
+	s=korg; t=1744109794;
+	bh=6Fwk28RjB/yU0mBGufh/h30w1A6owN4T/0ki/OEq/gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSOFcZfD3eP0pK44g1QmDb3XiAcRdrqw/+41y1kCnZ53Eksxeq6Iji4fueS98U8mZ
-	 20wIa7+I9LVtKKkfEvsKaZZHnKQ+kuS/y7CRfCwitCcSXRM+v64ba6n1nNlvdS4Z7/
-	 rok0aulRMfM4i0F83QtzFU/xMGfLCPkD28hKtjek=
+	b=CcA2A8ZD4CV0JRMmxB2lbKhUvEqdMBkJQ1TUsgnc+UB2toAThkSPN1G1nqmgOSoo2
+	 CZnxF4cEapvrKBdF3g3mZHx/d+Da7wmBkNyupv8gVJ79Un4oLHpUooepOWKXs+zflg
+	 J2O4yMUtPFKmasOTHmDr0xqa7jOOMU9al3+179Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 055/227] qlcnic: fix memory leak issues in qlcnic_sriov_common.c
-Date: Tue,  8 Apr 2025 12:47:13 +0200
-Message-ID: <20250408104822.051137978@linuxfoundation.org>
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 056/227] drm/gma500: Add NULL check for pci_gfx_root in mid_get_vbt_data()
+Date: Tue,  8 Apr 2025 12:47:14 +0200
+Message-ID: <20250408104822.079697760@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -50,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-commit d2b9d97e89c79c95f8b517e4fa43fd100f936acc upstream.
+[ Upstream commit 9af152dcf1a06f589f44a74da4ad67e365d4db9a ]
 
-Add qlcnic_sriov_free_vlans() in qlcnic_sriov_alloc_vlans() if
-any sriov_vlans fails to be allocated.
-Add qlcnic_sriov_free_vlans() to free the memory allocated by
-qlcnic_sriov_alloc_vlans() if "sriov->allowed_vlans" fails to
-be allocated.
+Since pci_get_domain_bus_and_slot() can return NULL, add NULL check for
+pci_gfx_root in the mid_get_vbt_data().
 
-Fixes: 91b7282b613d ("qlcnic: Support VLAN id config.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20250307094952.14874-1-haoxiang_li2024@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This change is similar to the checks implemented in mid_get_fuse_settings()
+and mid_get_pci_revID(), which were introduced by commit 0cecdd818cd7
+("gma500: Final enables for Oaktrail") as "additional minor
+bulletproofing".
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: f910b411053f ("gma500: Add the glue to the various BIOS and firmware interfaces")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250306112046.17144-1-i.abramov@mt-integration.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/gma500/mid_bios.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -454,8 +454,10 @@ static int qlcnic_sriov_set_guest_vlan_m
+diff --git a/drivers/gpu/drm/gma500/mid_bios.c b/drivers/gpu/drm/gma500/mid_bios.c
+index 8ab44fec4bfa4..b76b86278e0e3 100644
+--- a/drivers/gpu/drm/gma500/mid_bios.c
++++ b/drivers/gpu/drm/gma500/mid_bios.c
+@@ -277,6 +277,11 @@ static void mid_get_vbt_data(struct drm_psb_private *dev_priv)
+ 					    0, PCI_DEVFN(2, 0));
+ 	int ret = -1;
  
- 	num_vlans = sriov->num_allowed_vlans;
- 	sriov->allowed_vlans = kcalloc(num_vlans, sizeof(u16), GFP_KERNEL);
--	if (!sriov->allowed_vlans)
-+	if (!sriov->allowed_vlans) {
-+		qlcnic_sriov_free_vlans(adapter);
- 		return -ENOMEM;
++	if (pci_gfx_root == NULL) {
++		WARN_ON(1);
++		return;
 +	}
- 
- 	vlans = (u16 *)&cmd->rsp.arg[3];
- 	for (i = 0; i < num_vlans; i++)
-@@ -2173,8 +2175,10 @@ int qlcnic_sriov_alloc_vlans(struct qlcn
- 		vf = &sriov->vf_info[i];
- 		vf->sriov_vlans = kcalloc(sriov->num_allowed_vlans,
- 					  sizeof(*vf->sriov_vlans), GFP_KERNEL);
--		if (!vf->sriov_vlans)
-+		if (!vf->sriov_vlans) {
-+			qlcnic_sriov_free_vlans(adapter);
- 			return -ENOMEM;
-+		}
- 	}
- 
- 	return 0;
++
+ 	/* Get the address of the platform config vbt */
+ 	pci_read_config_dword(pci_gfx_root, 0xFC, &addr);
+ 	pci_dev_put(pci_gfx_root);
+-- 
+2.39.5
+
 
 
