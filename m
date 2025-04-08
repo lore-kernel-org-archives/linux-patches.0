@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB1439ACF;
-	Tue,  8 Apr 2025 15:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B2C1ADC8D;
+	Tue,  8 Apr 2025 15:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744125440; cv=none; b=owWZVF8e5Fbt3ZzFAhrvMZNO8uVUWhmyEwCpluKT1dnsJOCVOuw6aDQll58M3gzW2XSuJZcEok2rj45udUvoqoR6+9050upEvz2y2ovhJTT0komMEFxOCxFww3tlEfiiHK2+YX5CgdFE8HvkenIrhcFQxWIWDq7WywH43VnBpxc=
+	t=1744125540; cv=none; b=PQ4mJRuZaVAqO9Uqv/li2rH0h4ClM03J7h82nJuBJ1KUzAPYbfh5D9ERCR1JrdpPOl2eHY+mr10D/xnk5Fh4jrQXEU3/XnZ9yzBOH+SoNnXlTQdB7EAqG2ACr5SZjjd2XfKou3IIwcI73DrRDE5btSL1q8RG2MJN67eob4LDGRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744125440; c=relaxed/simple;
-	bh=Cbk8yQdeNcynyL1Yih8/JtDEVER4O9CgHZ+Aj2VIEU4=;
+	s=arc-20240116; t=1744125540; c=relaxed/simple;
+	bh=5UoJUCBT3LAaHEfHe9iTZOH67O24WbB9WsSvXP1s2hA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dmihpJD/tcjl8ecmWJR0+Ve7tigPpVaB0rVI+usoR88M37E2ffnBl8P6LgN3lf4Kpw2PxPD1xbdHTJcgzk4lVUGwbnSqTw8kRd+tZKivNmPnEzjHGaw41G+YWIe0QmeABjk/mQJT23NdkG66cFxeTOrfvp4uLZkqXxYgOsKjIPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1bHWR3x; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=b71Gw2h+vF7MjnUz0SDzbBRzyQ/UKkvqop66dy6RTyNPjLtozURFZTB8JBgvKTZ3IZcZ4yoSPcwAlrC0VAIEprydfwXDJzxsWoSFM2o7FyZdmmxl09bAh8q3U4MmjezEfPlbikEdsY5xzCsKl2SEDIBCn6ep5j58Jd/1IvhkFXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fr4PbX8H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1bHWR3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7276C4CEE5;
-	Tue,  8 Apr 2025 15:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fr4PbX8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C62DC4CEE5;
+	Tue,  8 Apr 2025 15:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744125440;
-	bh=Cbk8yQdeNcynyL1Yih8/JtDEVER4O9CgHZ+Aj2VIEU4=;
+	s=korg; t=1744125540;
+	bh=5UoJUCBT3LAaHEfHe9iTZOH67O24WbB9WsSvXP1s2hA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l1bHWR3xAIwyGf3raCvN0tmvYmNi5ywmxe/ZCzEYA/3Q8MmIQMMxf/D7mnTZkRh/3
-	 d3+aoZVup34v7F1MgPIwkzEWlB3ox5UJndB35BjMQPA9PUzh6jnCr4J24k3k8rODUh
-	 rkpZDjmSluty2s59jYyppNPyj2iY6KR0cFQlmC54=
-Date: Tue, 8 Apr 2025 17:15:46 +0200
+	b=Fr4PbX8HNhnunVIWXCWIz4V6g1mV9B0LLvyZ+/RYDaHReGUVB5dEfDb9gsAWyVOG+
+	 TZ05f5iSPywTAG/U5ex7OOG+B3xdVJ6pu+896gN/UY8a1Sx7M9aEagkfg85jFDmmcK
+	 ISYlZuxvNSN5w11FR2z0ONClaTack/zG0f7BIaug=
+Date: Tue, 8 Apr 2025 17:17:26 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vishal Annapurve <vannapurve@google.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ryan Afranji <afranji@google.com>,
-	Andy Lutomirski <luto@kernel.org>, Brian Gerst <brgerst@gmail.com>,
-	Juergen Gross <jgross@suse.com>, "H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: Re: [PATCH 6.13 444/499] x86/tdx: Fix arch_safe_halt() execution for
- TDX VMs
-Message-ID: <2025040829-surgical-saddlebag-56fa@gregkh>
+To: Ian Rogers <irogers@google.com>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Justin Forbes <jforbes@fedoraproject.org>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: Re: [PATCH 6.13 000/499] 6.13.11-rc1 review
+Message-ID: <2025040818-iodine-theater-7e1f@gregkh>
 References: <20250408104851.256868745@linuxfoundation.org>
- <20250408104902.301772019@linuxfoundation.org>
- <CAGtprH_Sm7ycECq_p+Qz3tMK0y10qenJ=DFiw-kKNn3d9YwPaQ@mail.gmail.com>
+ <7d11f01f-9adc-467c-95bc-c9ff4bbf6a0f@leemhuis.info>
+ <CAP-5=fVCADCyXeeLZT4EpU1OtOxMKB8omf5FFpDHmKgOWetW2A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,82 +50,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGtprH_Sm7ycECq_p+Qz3tMK0y10qenJ=DFiw-kKNn3d9YwPaQ@mail.gmail.com>
+In-Reply-To: <CAP-5=fVCADCyXeeLZT4EpU1OtOxMKB8omf5FFpDHmKgOWetW2A@mail.gmail.com>
 
-On Tue, Apr 08, 2025 at 05:55:57AM -0700, Vishal Annapurve wrote:
-> On Tue, Apr 8, 2025 at 5:29 AM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+On Tue, Apr 08, 2025 at 08:07:09AM -0700, Ian Rogers wrote:
+> On Tue, Apr 8, 2025 at 6:09 AM Thorsten Leemhuis <linux@leemhuis.info> wrote:
 > >
-> > 6.13-stable review patch.  If anyone has any objections, please let me know.
+> > On 08.04.25 12:43, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.13.11 release.
+> > > There are 499 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
 > >
-> > ------------------
+> > Compiling for Fedora failed:
 > >
-> > From: Vishal Annapurve <vannapurve@google.com>
+> > util/stat.c: In function ‘evsel__is_alias’:
+> > util/stat.c:565:16: error: implicit declaration of function ‘perf_pmu__name_no_suffix_match’ [-Wimplicit-function-declaration]
+> >   565 |         return perf_pmu__name_no_suffix_match(evsel_a->pmu, evsel_b->pmu->name);
+> >       |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > >
-> > commit 9f98a4f4e7216dbe366010b4cdcab6b220f229c4 upstream.
+> > From a *very very* quick look I wonder if it might be due to this change,
+> > as it seems to depend on 63e287131cf0c5 ("perf pmu: Rename name matching
+> > for no suffix or wildcard variants") [v6.15-rc1]:
 > >
-> > Direct HLT instruction execution causes #VEs for TDX VMs which is routed
-> > to hypervisor via TDCALL. If HLT is executed in STI-shadow, resulting #VE
-> > handler will enable interrupts before TDCALL is routed to hypervisor
-> > leading to missed wakeup events, as current TDX spec doesn't expose
-> > interruptibility state information to allow #VE handler to selectively
-> > enable interrupts.
+> > > Ian Rogers <irogers@google.com>
+> > >     perf stat: Don't merge counters purely on name
 > >
-> > Commit bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-> > prevented the idle routines from executing HLT instruction in STI-shadow.
-> > But it missed the paravirt routine which can be reached via this path
-> > as an example:
-> >
-> >         kvm_wait()       =>
-> >         safe_halt()      =>
-> >         raw_safe_halt()  =>
-> >         arch_safe_halt() =>
-> >         irq.safe_halt()  =>
-> >         pv_native_safe_halt()
-> >
-> > To reliably handle arch_safe_halt() for TDX VMs, introduce explicit
-> > dependency on CONFIG_PARAVIRT and override paravirt halt()/safe_halt()
-> > routines with TDX-safe versions that execute direct TDCALL and needed
-> > interrupt flag updates. Executing direct TDCALL brings in additional
-> > benefit of avoiding HLT related #VEs altogether.
-> >
-> > As tested by Ryan Afranji:
-> >
-> >   "Tested with the specjbb2015 benchmark. It has heavy lock contention which leads
-> >    to many halt calls. TDX VMs suffered a poor score before this patchset.
-> >
-> >    Verified the major performance improvement with this patchset applied."
-> >
-> > Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-> > Signed-off-by: Vishal Annapurve <vannapurve@google.com>
-> > Signed-off-by: Ingo Molnar <mingo@kernel.org>
-> > Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-> > Tested-by: Ryan Afranji <afranji@google.com>
-> > Cc: Andy Lutomirski <luto@kernel.org>
-> > Cc: Brian Gerst <brgerst@gmail.com>
-> > Cc: Juergen Gross <jgross@suse.com>
-> > Cc: H. Peter Anvin <hpa@zytor.com>
-> > Cc: Linus Torvalds <torvalds@linux-foundation.org>
-> > Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-> > Cc: stable@vger.kernel.org
-> > Link: https://lore.kernel.org/r/20250228014416.3925664-3-vannapurve@google.com
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  arch/x86/Kconfig           |    1 +
-> >  arch/x86/coco/tdx/tdx.c    |   26 +++++++++++++++++++++++++-
-> >  arch/x86/include/asm/tdx.h |    4 ++--
-> >  arch/x86/kernel/process.c  |    2 +-
-> >  4 files changed, 29 insertions(+), 4 deletions(-)
-> >
+> > But as I said, it was just a very very quick look, so I might be totally
+> > off track there.
 > 
-> Hi Greg,
+> Thanks Thorsten, I repeated the failure and reverting that patch fixes
+> the build. Alternatively, cherry-picking:
 > 
-> This patch depends on commit 22cc5ca5de52 ("x86/paravirt: Move halt
-> paravirt calls under CONFIG_PARAVIRT"). I will respond to the other
-> thread with a patch for commit 22cc5ca5de52 after resolving conflicts.
+> ```
+> commit 63e287131cf0c59b026053d6d63fe271604ffa7e
+> Author: Ian Rogers <irogers@google.com>
+> Date:   Fri Jan 31 23:43:18 2025 -0800
+> 
+>    perf pmu: Rename name matching for no suffix or wildcard variants
+> 
+>    Wildcard PMU naming will match a name like pmu_1 to a PMU name like
+>    pmu_10 but not to a PMU name like pmu_2 as the suffix forms part of
+>    the match. No suffix matching will match pmu_10 to either pmu_1 or
+>    pmu_2. Add or rename matching functions on PMU to make it clearer what
+>    kind of matching is being performed.
+> 
+>    Signed-off-by: Ian Rogers <irogers@google.com>
+>    Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+>    Link: https://lore.kernel.org/r/20250201074320.746259-4-irogers@google.com
+>    Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+> ```
+> 
+> Also fixes the build.
 
-That commit is already in this series, do I need to add it again? :)
-
-thanks,
+Now added to both queues, thanks.
 
 greg k-h
