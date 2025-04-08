@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6D126656B;
-	Tue,  8 Apr 2025 12:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DB2265630;
+	Tue,  8 Apr 2025 12:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116262; cv=none; b=lkjnU60nlpGVKyZLBGeRKM5L0Eq5z3Xi8+l1/0jIxY0iVyruTigfvb+56rEpNyNoH5C5JM/YQa+Ny7Wfk+zKPWaHqicuRob9DS3FemhEXfMTgYc3A8dN6dw+689JUhNpcvaosCSrKoKsReFCqpH2HGeMLYxcGcRv2fyApZVMUuY=
+	t=1744116265; cv=none; b=DPTgRJ0lWW2Sk1qBg4AuHNIWXx5AM03FZ/jKrkQqrmfzInejmfT22i5swd9Wuvgeb/q9Mr9a4Xf3g/UaWJ3ciwooWXYxZBjYAyl5MMpZGakE8V60j4KB9oC27znjwC2FILus3++++eFPd2nwUFzeR7kucH2lDi7jFUQY18pyO/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116262; c=relaxed/simple;
-	bh=aFRWLCLj6OUs0W48nutSVSfbaqNP6WjX+deLg3mnbJU=;
+	s=arc-20240116; t=1744116265; c=relaxed/simple;
+	bh=SmZQmjMj5qzuspmHboY6KWYXfkfDTrfpC+gzim+/6hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kNYCPhActyalgA8cDqEktBK4ZqFLWfAdYssl4LPDAgjpsQaRTZZzUshM7bUYkev2D5FCw/7ViYt9JvazuCe8G6T3TN+qiCDelF8o+z0er6geQtZcNQuigryo7YyGB2l296Y+sJtVhZPOWM3ZEL/rf51i7lLN3WqyDiSY2d0y9Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3oJJ1mU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fdkNCE8ax75IQ27Y+y7yZQCh6PstJ3X0oy5eOSTNij8E63kQ1NgwNWgkBfs3IQg3nF6zfHpeEVRuG1ZQF+WduDSm7oRrRgxGGF3paJW4wk3tI3DO4KMDuCUPt/avsaoJmXhdTQFFnFJvYYn3cUuYvZYL9GzFu4I8Xtlc21KPx/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZP0w5OYj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3oJJ1mU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F37C4CEE5;
-	Tue,  8 Apr 2025 12:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZP0w5OYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9162BC4CEE5;
+	Tue,  8 Apr 2025 12:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116262;
-	bh=aFRWLCLj6OUs0W48nutSVSfbaqNP6WjX+deLg3mnbJU=;
+	s=korg; t=1744116264;
+	bh=SmZQmjMj5qzuspmHboY6KWYXfkfDTrfpC+gzim+/6hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3oJJ1mUGvanUqLf2mGggLsjYMOVMBG6RYJD0g8zigZhkHzQC6USYI0Z0PKuhBRJo
-	 9dmAYU1t1ulB1qSkw2Yt8c185BcTa3j6zuNcSuRzmMdLNPl3Q/KWM4VGUfIuF/qVxw
-	 d3a4PIo2LpF9FTumJqFkwgC4HeIQCo4cI+kKRyZk=
+	b=ZP0w5OYjS2sHdLgy1eVa5FG3gmg0iWC6/LXpN6RlDh74ZZk22rhD3s43zEftF3RO7
+	 1MqSkrTfPMrisePl7h8pfz9GWa+AST2gZwMerk9Uq3CyXsa8CLCCoobBc3H8QzY3bn
+	 51l5EN0sZ8pVSrjJWZjVMb3Pd/MW35yJKjrHySAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/423] PCI: brcmstb: Fix potential premature regulator disabling
-Date: Tue,  8 Apr 2025 12:46:41 +0200
-Message-ID: <20250408104847.492394981@linuxfoundation.org>
+Subject: [PATCH 6.12 049/423] drm/ssd130x: fix ssd132x encoding
+Date: Tue,  8 Apr 2025 12:46:15 +0200
+Message-ID: <20250408104846.890171863@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -47,49 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jim Quinlan <james.quinlan@broadcom.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit b7de1b60ecab2f7b6f05d8116e93228a0bbb8563 ]
+[ Upstream commit 1e14484677c8e87548f5f0d4eb8800e408004404 ]
 
-The platform supports enabling and disabling regulators only on
-ports below the Root Complex.
+The ssd132x buffer is encoded one pixel per nibble, with two pixels in
+each byte.  When encoding an 8-bit greyscale input, take the top 4-bits
+as the value and ensure the two pixels are distinct and do not overwrite
+each other.
 
-Thus, we need to verify this both when adding and removing the bus,
-otherwise regulators may be disabled prematurely when a bus further
-down the topology is removed.
-
-Fixes: 9e6be018b263 ("PCI: brcmstb: Enable child bus device regulators from DT")
-Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250214173944.47506-6-james.quinlan@broadcom.com
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: fdd591e00a9c ("drm/ssd130x: Add support for the SSD132x OLED controller family")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250115110139.1672488-2-jkeeping@inmusicbrands.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 2 +-
+ drivers/gpu/drm/solomon/ssd130x.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index 31778b5a949d7..582fa11070878 100644
---- a/drivers/pci/controller/pcie-brcmstb.c
-+++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1392,7 +1392,7 @@ static void brcm_pcie_remove_bus(struct pci_bus *bus)
- 	struct subdev_regulators *sr = pcie->sr;
- 	struct device *dev = &bus->dev;
+diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
+index 6f51bcf774e27..7d071a2f7a460 100644
+--- a/drivers/gpu/drm/solomon/ssd130x.c
++++ b/drivers/gpu/drm/solomon/ssd130x.c
+@@ -880,7 +880,7 @@ static int ssd132x_update_rect(struct ssd130x_device *ssd130x,
+ 			u8 n1 = buf[i * width + j];
+ 			u8 n2 = buf[i * width + j + 1];
  
--	if (!sr)
-+	if (!sr || !bus->parent || !pci_is_root_bus(bus->parent))
- 		return;
+-			data_array[array_idx++] = (n2 << 4) | n1;
++			data_array[array_idx++] = (n2 & 0xf0) | (n1 >> 4);
+ 		}
+ 	}
  
- 	if (regulator_bulk_disable(sr->num_supplies, sr->supplies))
 -- 
 2.39.5
 
