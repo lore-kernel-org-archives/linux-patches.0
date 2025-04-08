@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393BD2135CD;
-	Tue,  8 Apr 2025 11:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24CD2135CD;
+	Tue,  8 Apr 2025 11:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110262; cv=none; b=gedZJLyXQD3mJgjJb14Rn6/94qcdofc1xcjYHdfsVDdGCooLpDU+l5tgN/ovVUbYEnzwQ3Ef9KD9nc2cVfNJtw6p9MJD7JDDVBwnzgxWD12k8mHbixECDFVzO8IzL/2DSK5rf4KSEZFB5jIiQq7M7WVgVoBdApAN5BT3pToUF8E=
+	t=1744110264; cv=none; b=YDMC+nKqEH6JIcmkPiZhbXFiRoE4LwwbMbqbm5NtSscxauh99eYXw4qOIqD61/78iDszwPw9Jd3NyUpjnrb00f2jGFCaoONG09Xt/PA0YMCMZzntRee9neyNZa13+w5LehvUpMObIW4o6+cNehA4sVuK6r4EFOLEU5lt1XA/9PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110262; c=relaxed/simple;
-	bh=IVW8+jlEsmRaoxTZ9ReDgrhROH9y0N6zuargdmWH0FI=;
+	s=arc-20240116; t=1744110264; c=relaxed/simple;
+	bh=J4J6M4l/LcdJ3pncMNtbtwSaYHG58sZKdFmqXZ2jq1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLZ+iSNH6/z+jfBU+lk+11rIAFBJJPuLv9jM0+8kAEZx4EhkoIhMAsb2yFSJcxoeo6zjrPQBMdyUAs4hWc3IYiwkAubpQeom+Su9qgajrE502xcJXQF/FQ/nToRQw02BPxxmvaBonf4a5RyRSafk/HGRkOkguVOfjHPbJKiLZa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2Nrrb83; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bxoaq1Tcf7BEUtgdGqJyZ+Qc6f5eve4NtkFB0H/mSzv9sHB5afN6mw+iCEsx26QylKDwB/wjuWwHs6kanqFYgUN4ankJ1aFWWyqXIDTKoKd+v+aN9DDdzjQORpMNZ8rnz3A8qttIvXldDnzOnfW9hPwxqSuChdNJ3cokdlHHTI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLwWQPqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2Nrrb83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE66C4CEEA;
-	Tue,  8 Apr 2025 11:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLwWQPqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C60C4CEE5;
+	Tue,  8 Apr 2025 11:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110262;
-	bh=IVW8+jlEsmRaoxTZ9ReDgrhROH9y0N6zuargdmWH0FI=;
+	s=korg; t=1744110264;
+	bh=J4J6M4l/LcdJ3pncMNtbtwSaYHG58sZKdFmqXZ2jq1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2Nrrb83y/NI4nqGh6x1nrcLvFbFr45fU2+iy99VgjNGOtkMk2EAJEeweNtWGx2Lv
-	 M/ZlyAHFv2fqOR3ZNdXw4S8RUM4kFaihMKlakJvx8ynYG+cQyLNPj6XJ+rF7MMUR+f
-	 UtWo43g2POPwPRAviKxkyN7sgqyxmCF5pvHPAp3Q=
+	b=DLwWQPqAGaZIdCw0i33H4dfn4BKCKNpSPb71jLC+YPvcnx6XhOJJ2Y+rSEi5CrOI/
+	 YGrkQn2Av6U7qGwwd8ypFDeZlZ87Z88UVJTIiz++76+OnZ/kRzK6Jy740iDqIB1ztg
+	 l7Q46R0R+Du5yT9A92Yg0afQYnE+KR0VOHXpx7J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 212/227] btrfs: handle errors from btrfs_dec_ref() properly
-Date: Tue,  8 Apr 2025 12:49:50 +0200
-Message-ID: <20250408104826.672932321@linuxfoundation.org>
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 5.10 213/227] x86/tsc: Always save/restore TSC sched_clock() on suspend/resume
+Date: Tue,  8 Apr 2025 12:49:51 +0200
+Message-ID: <20250408104826.701581199@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,36 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 5eb178f373b4f16f3b42d55ff88fc94dd95b93b1 upstream.
+commit d90c9de9de2f1712df56de6e4f7d6982d358cabe upstream.
 
-In walk_up_proc() we BUG_ON(ret) from btrfs_dec_ref().  This is
-incorrect, we have proper error handling here, return the error.
+TSC could be reset in deep ACPI sleep states, even with invariant TSC.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+That's the reason we have sched_clock() save/restore functions, to deal
+with this situation. But what happens is that such functions are guarded
+with a check for the stability of sched_clock - if not considered stable,
+the save/restore routines aren't executed.
+
+On top of that, we have a clear comment in native_sched_clock() saying
+that *even* with TSC unstable, we continue using TSC for sched_clock due
+to its speed.
+
+In other words, if we have a situation of TSC getting detected as unstable,
+it marks the sched_clock as unstable as well, so subsequent S3 sleep cycles
+could bring bogus sched_clock values due to the lack of the save/restore
+mechanism, causing warnings like this:
+
+  [22.954918] ------------[ cut here ]------------
+  [22.954923] Delta way too big! 18446743750843854390 ts=18446744072977390405 before=322133536015 after=322133536015 write stamp=18446744072977390405
+  [22.954923] If you just came from a suspend/resume,
+  [22.954923] please switch to the trace global clock:
+  [22.954923]   echo global > /sys/kernel/tracing/trace_clock
+  [22.954923] or add trace_clock=global to the kernel command line
+  [22.954937] WARNING: CPU: 2 PID: 5728 at kernel/trace/ring_buffer.c:2890 rb_add_timestamp+0x193/0x1c0
+
+Notice that the above was reproduced even with "trace_clock=global".
+
+The fix for that is to _always_ save/restore the sched_clock on suspend
+cycle _if TSC is used_ as sched_clock - only if we fallback to jiffies
+the sched_clock_stable() check becomes relevant to save/restore the
+sched_clock.
+
+Debugged-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250215210314.351480-1-gpiccoli@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/tsc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -5240,7 +5240,10 @@ static noinline int walk_up_proc(struct
- 				ret = btrfs_dec_ref(trans, root, eb, 1);
- 			else
- 				ret = btrfs_dec_ref(trans, root, eb, 0);
--			BUG_ON(ret); /* -ENOMEM */
-+			if (ret) {
-+				btrfs_abort_transaction(trans, ret);
-+				return ret;
-+			}
- 			if (is_fstree(root->root_key.objectid)) {
- 				ret = btrfs_qgroup_trace_leaf_items(trans, eb);
- 				if (ret) {
+--- a/arch/x86/kernel/tsc.c
++++ b/arch/x86/kernel/tsc.c
+@@ -919,7 +919,7 @@ static unsigned long long cyc2ns_suspend
+ 
+ void tsc_save_sched_clock_state(void)
+ {
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
+ 
+ 	cyc2ns_suspend = sched_clock();
+@@ -939,7 +939,7 @@ void tsc_restore_sched_clock_state(void)
+ 	unsigned long flags;
+ 	int cpu;
+ 
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
+ 
+ 	local_irq_save(flags);
 
 
