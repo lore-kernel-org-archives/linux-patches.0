@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7F93AC1C;
-	Tue,  8 Apr 2025 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B88269801;
+	Tue,  8 Apr 2025 12:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113623; cv=none; b=dOEGHgE0nmJBxz4YNygADl9flEJLeccuDJ/zhKJT2VMfclqkA9Ajz7fWMsQHghfyoNHUEPd7f3U47dQ0nfG3ZsyfGzL2tqyR03yfCEM/HCjh3A/LvsmTN9M1BDosgI60MLNXGLdYwIFDvE8P4qIcGgCyivhlev+X6T4aZS4Xp54=
+	t=1744113626; cv=none; b=h7oFztanZbPxgaDdyW3cEL6nvXHsSxKb7vSby8WUbnI0lQUdwhdD6fOC0Ln5NsuTxAXXZVsLxm9Q/+l7nSV+t6sjv9mEe3ESW8Vxc4fMQSV1o9/nFg+y/XSsK/xB0PhHbEeH9+yprdV7v8RW3cF/QnzJGGJor3Nvv65d4ORvmwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113623; c=relaxed/simple;
-	bh=lKcHf/NJ1JBKHQsohFQrhwbBcx2MT9sea6R9kl37gOE=;
+	s=arc-20240116; t=1744113626; c=relaxed/simple;
+	bh=TV9oOwpMWutZvkj+bilLrDHGdsxfRy2YkxyrfDMLG3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRGAn59Q9749xOQJp5E1+SUJd1OiOgMEJoRVR3W1q6D7dP6V06uXjNb6ZNP6M4njPVLS6wyO+MlVVsFJddml1x4LvxRM0nMmxB9ZC1xE/raXXbFBoQ4HM3V4ZurhH7AUopIcj5yKwCyKucmXY39FIyjnTFyzNh5GYpuLpn7fU+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X03+OOKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmnE+iObrf0SC0dC4nfvrEW1TE6jmU+mLYuPziwJpuSW7lakw2YGzmM2jzIfv2xDSAKfLwscnzwoOQPnzHTca1aLprywd98I2cWy7b6dJboMRC9OJc6LrN29DB5m1giBqkes1oHzStTTQosW6kV9oJJqfp2v0u1iLLSQS6SO9p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cplUdb2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X03+OOKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C437EC4CEEA;
-	Tue,  8 Apr 2025 12:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cplUdb2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7B4C4CEE5;
+	Tue,  8 Apr 2025 12:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113623;
-	bh=lKcHf/NJ1JBKHQsohFQrhwbBcx2MT9sea6R9kl37gOE=;
+	s=korg; t=1744113625;
+	bh=TV9oOwpMWutZvkj+bilLrDHGdsxfRy2YkxyrfDMLG3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X03+OOKSm3W4uOq3RUYUkwgkRk+phuhaAQ9/P6fTUMiSKgviGzUTVORN7RIy0sOhI
-	 UGig7CpcGK1Vn3wmOgeWC9hSbXNCsd8VR00hwLlV3l+Ia3oIOegF08LkeujJS0rh1s
-	 N67NZKBUAs7g+Cbfji+M/XF/POgkj6BytJfpnYug=
+	b=cplUdb2ETfrsC7pUMkfSsPEcDN7uu1wt7tdWWHW7o3KQ5j6PcBjnNA21W+StBCly1
+	 TrctJx5mClNZNy3Ac69QugnvKBCJeOUwFnFEBc9buP+sIlUWKRQGXRT54iC/7LFVV1
+	 FvV6KQ7RjkK2iA9F7S2ui5mVcsyFI1sgQ3wYtBkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Tom Zanussi <zanussi@kernel.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 227/268] tracing/hist: Support POLLPRI event for poll on histogram
-Date: Tue,  8 Apr 2025 12:50:38 +0200
-Message-ID: <20250408104834.710267575@linuxfoundation.org>
+Subject: [PATCH 6.6 228/268] tracing: Correct the refcount if the hist/hist_debug file fails to open
+Date: Tue,  8 Apr 2025 12:50:39 +0200
+Message-ID: <20250408104834.737595046@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -54,117 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 66fc6f521a0b91051ce6968a216a30bc52267bf8 ]
+[ Upstream commit 0b4ffbe4888a2c71185eaf5c1a02dd3586a9bc04 ]
 
-Since POLLIN will not be flushed until the hist file is read, the user
-needs to repeatedly read() and poll() on the hist file for monitoring the
-event continuously. But the read() is somewhat redundant when the user is
-only monitoring for event updates.
+The function event_{hist,hist_debug}_open() maintains the refcount of
+'file->tr' and 'file' through tracing_open_file_tr(). However, it does
+not roll back these counts on subsequent failure paths, resulting in a
+refcount leak.
 
-Add POLLPRI poll event on the hist file so the event returns when a
-histogram is updated after open(), poll() or read(). Thus it is possible
-to wait for the next event without having to issue a read().
+A very obvious case is that if the hist/hist_debug file belongs to a
+specific instance, the refcount leak will prevent the deletion of that
+instance, as it relies on the condition 'tr->ref == 1' within
+__remove_instance().
 
-Cc: Shuah Khan <shuah@kernel.org>
+Fix this by calling tracing_release_file_tr() on all failure paths in
+event_{hist,hist_debug}_open() to correct the refcount.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/173527248770.464571.2536902137325258133.stgit@devnote2
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Link: https://lore.kernel.org/20250314065335.1202817-1-wutengda@huaweicloud.com
+Fixes: 1cc111b9cddc ("tracing: Fix uaf issue when open the hist or hist_debug file")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 0b4ffbe4888a ("tracing: Correct the refcount if the hist/hist_debug file fails to open")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_hist.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 49b7811dec9f8..08cc6405b8837 100644
+index 08cc6405b8837..e6f9cbc622c75 100644
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -5606,6 +5606,7 @@ static void hist_trigger_show(struct seq_file *m,
- struct hist_file_data {
- 	struct file *file;
- 	u64 last_read;
-+	u64 last_act;
- };
- 
- static u64 get_hist_hit_count(struct trace_event_file *event_file)
-@@ -5641,6 +5642,11 @@ static int hist_show(struct seq_file *m, void *v)
- 			hist_trigger_show(m, data, n++);
- 	}
- 	hist_file->last_read = get_hist_hit_count(event_file);
-+	/*
-+	 * Update last_act too so that poll()/POLLPRI can wait for the next
-+	 * event after any syscall on hist file.
-+	 */
-+	hist_file->last_act = hist_file->last_read;
- 
- 	return 0;
- }
-@@ -5650,6 +5656,8 @@ static __poll_t event_hist_poll(struct file *file, struct poll_table_struct *wai
- 	struct trace_event_file *event_file;
- 	struct seq_file *m = file->private_data;
- 	struct hist_file_data *hist_file = m->private;
-+	__poll_t ret = 0;
-+	u64 cnt;
- 
+@@ -5700,12 +5700,16 @@ static int event_hist_open(struct inode *inode, struct file *file)
  	guard(mutex)(&event_mutex);
  
-@@ -5659,10 +5667,15 @@ static __poll_t event_hist_poll(struct file *file, struct poll_table_struct *wai
- 
- 	hist_poll_wait(file, wait);
- 
--	if (hist_file->last_read != get_hist_hit_count(event_file))
--		return EPOLLIN | EPOLLRDNORM;
-+	cnt = get_hist_hit_count(event_file);
-+	if (hist_file->last_read != cnt)
-+		ret |= EPOLLIN | EPOLLRDNORM;
-+	if (hist_file->last_act != cnt) {
-+		hist_file->last_act = cnt;
-+		ret |= EPOLLPRI;
+ 	event_file = event_file_data(file);
+-	if (!event_file)
+-		return -ENODEV;
++	if (!event_file) {
++		ret = -ENODEV;
++		goto err;
 +	}
  
--	return 0;
-+	return ret;
- }
- 
- static int event_hist_release(struct inode *inode, struct file *file)
-@@ -5676,6 +5689,7 @@ static int event_hist_release(struct inode *inode, struct file *file)
- 
- static int event_hist_open(struct inode *inode, struct file *file)
- {
-+	struct trace_event_file *event_file;
- 	struct hist_file_data *hist_file;
- 	int ret;
- 
-@@ -5683,16 +5697,25 @@ static int event_hist_open(struct inode *inode, struct file *file)
- 	if (ret)
- 		return ret;
- 
-+	guard(mutex)(&event_mutex);
-+
-+	event_file = event_file_data(file);
-+	if (!event_file)
-+		return -ENODEV;
-+
  	hist_file = kzalloc(sizeof(*hist_file), GFP_KERNEL);
- 	if (!hist_file)
- 		return -ENOMEM;
-+
- 	hist_file->file = file;
-+	hist_file->last_act = get_hist_hit_count(event_file);
+-	if (!hist_file)
+-		return -ENOMEM;
++	if (!hist_file) {
++		ret = -ENOMEM;
++		goto err;
++	}
  
+ 	hist_file->file = file;
+ 	hist_file->last_act = get_hist_hit_count(event_file);
+@@ -5713,9 +5717,14 @@ static int event_hist_open(struct inode *inode, struct file *file)
  	/* Clear private_data to avoid warning in single_open() */
  	file->private_data = NULL;
  	ret = single_open(file, hist_show, hist_file);
- 	if (ret)
+-	if (ret)
++	if (ret) {
  		kfree(hist_file);
-+
++		goto err;
++	}
+ 
++	return 0;
++err:
++	tracing_release_file_tr(inode, file);
  	return ret;
  }
  
+@@ -5990,7 +5999,10 @@ static int event_hist_debug_open(struct inode *inode, struct file *file)
+ 
+ 	/* Clear private_data to avoid warning in single_open() */
+ 	file->private_data = NULL;
+-	return single_open(file, hist_debug_show, file);
++	ret = single_open(file, hist_debug_show, file);
++	if (ret)
++		tracing_release_file_tr(inode, file);
++	return ret;
+ }
+ 
+ const struct file_operations event_hist_debug_fops = {
 -- 
 2.39.5
 
