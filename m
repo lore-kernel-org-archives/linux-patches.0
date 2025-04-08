@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9123F26B94D;
-	Tue,  8 Apr 2025 12:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2B926B96C;
+	Tue,  8 Apr 2025 12:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116137; cv=none; b=m297DOiIq1QZFBvgUx9AYMy5TiOHcwNkw+tlI3GfiGoWlaDe8QlNogXIc2uSsntQgi5dtg71rnMhjh3FyZBia52iIWb+Px+HvuG/1kjrPI5pzL8xvmIkunmCbRqUq4Sf3RJ2UlonYqcfxzJsvRQfWCTa08KitzPDPammLtfKxjw=
+	t=1744116140; cv=none; b=qvv+FAJb2IHeXOak0oVZ/S//fVU6wgVP/O7gH8YmQ/7c3ewaY+pNd+uAtdRPVyPI4ySAMu7fUAHRUG48oBAqL5BkE0ZkTbQEcwEAZobr2REan3MLrcklAs+q212w1+g918mFHK939ahEg8coHKzX+NM5naKpHZfO+yAnvDR7Fzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116137; c=relaxed/simple;
-	bh=FvWvNLxLgLE4qQBdOYwvK+km0XGn937UOgmKIROYeU8=;
+	s=arc-20240116; t=1744116140; c=relaxed/simple;
+	bh=N0UxZEgRuTCJjL2GHV/fOFGzlrQcvA953hmsFhkobE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLq0ZW3MEzQoxlAGM3g+sNDL5+8MSBr67PAfGUA2Z3APa6VUC1m6rguYQ1R9OphmGw6gSvWt5IPLoH5vg0hpSRiHgXrEv9XOPC5td5gRExWjtoQfcseCOZb10j8fN3XLY0VLKjVOiJyV/8U43r0xfafN3DhTT9aEIpAcnHi2wfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcY+GHx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHVLxw26sThgobwXpGAbBsTTQlDfbuoocfJ6EDxTr+2UX5R9FRQ5bmK4SGMuu89oAyKdBmPsxqu3AqDoKuUmROuOkOugWR9GljZx0uWtT3bS3tpe6wQmvgrgICb/4krTV+mUQGkZHU8SXXe7d0vlUGQnj9DZ5gBTEkgS+EeS8UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSKwDWTJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcY+GHx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245B6C4CEE5;
-	Tue,  8 Apr 2025 12:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSKwDWTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9677BC4CEE5;
+	Tue,  8 Apr 2025 12:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116137;
-	bh=FvWvNLxLgLE4qQBdOYwvK+km0XGn937UOgmKIROYeU8=;
+	s=korg; t=1744116140;
+	bh=N0UxZEgRuTCJjL2GHV/fOFGzlrQcvA953hmsFhkobE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcY+GHx0kRL6Qrx2S/TMB7t/g7MwVjGkQSFlHjZb/kgrbiOp5V7yj+oQkPSB02r7g
-	 Ur58I0LRB86NqAzn+djNcaOYPg0uW6ioq04fBHBlVp+jUobNxPhO5UKZx3mE9H6bnk
-	 I2cQfELd1Za5qcd1WJ9xVY9SYcc1pWexQpT15PsU=
+	b=zSKwDWTJbCA988caWTjXFTUV9nv3HoF/6GlnqG9A6IaLalwb+TUgtMwX6T/VgWJUN
+	 wwZB1GNDlpGE0DI3wyV3eRDvywArB0Apmhuy9TReIfVU8ociCB6RbZAtDmXSHB7RbZ
+	 yWHLRbB5J62Ab0teFn6ApzXndp0tYZey4YLUgVlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Brendan Jackman <jackmanb@google.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/423] x86/traps: Make exc_double_fault() consistently noreturn
-Date: Tue,  8 Apr 2025 12:45:55 +0200
-Message-ID: <20250408104846.427783768@linuxfoundation.org>
+Subject: [PATCH 6.12 030/423] x86/fpu/xstate: Fix inconsistencies in guest FPU xfeatures
+Date: Tue,  8 Apr 2025 12:45:56 +0200
+Message-ID: <20250408104846.450174431@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,125 +63,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Chao Gao <chao.gao@intel.com>
 
-[ Upstream commit 8085fcd78c1a3dbdf2278732579009d41ce0bc4e ]
+[ Upstream commit dda366083e5ff307a4a728757db874bbfe7550be ]
 
-The CONFIG_X86_ESPFIX64 version of exc_double_fault() can return to its
-caller, but the !CONFIG_X86_ESPFIX64 version never does.  In the latter
-case the compiler and/or objtool may consider it to be implicitly
-noreturn.
+Guest FPUs manage vCPU FPU states. They are allocated via
+fpu_alloc_guest_fpstate() and are resized in fpstate_realloc() when XFD
+features are enabled.
 
-However, due to the currently inflexible way objtool detects noreturns,
-a function's noreturn status needs to be consistent across configs.
+Since the introduction of guest FPUs, there have been inconsistencies in
+the kernel buffer size and xfeatures:
 
-The current workaround for this issue is to suppress unreachable
-warnings for exc_double_fault()'s callers.  Unfortunately that can
-result in ORC coverage gaps and potentially worse issues like inert
-static calls and silently disabled CPU mitigations.
+ 1. fpu_alloc_guest_fpstate() uses fpu_user_cfg since its introduction. See:
 
-Instead, prevent exc_double_fault() from ever being implicitly marked
-noreturn by forcing a return behind a never-taken conditional.
+    69f6ed1d14c6 ("x86/fpu: Provide infrastructure for KVM FPU cleanup")
+    36487e6228c4 ("x86/fpu: Prepare guest FPU for dynamically enabled FPU features")
 
-Until a more integrated noreturn detection method exists, this is likely
-the least objectionable workaround.
+ 2. __fpstate_reset() references fpu_kernel_cfg to set storage attributes.
 
-Fixes: 55eeab2a8a11 ("objtool: Ignore exc_double_fault() __noreturn warnings")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/r/d1f4026f8dc35d0de6cc61f2684e0cb6484009d1.1741975349.git.jpoimboe@kernel.org
+ 3. fpu->guest_perm uses fpu_kernel_cfg, affecting fpstate_realloc().
+
+A recent commit in the tip:x86/fpu tree partially addressed the inconsistency
+between (1) and (3) by using fpu_kernel_cfg for size calculation in (1),
+but left fpu_guest->xfeatures and fpu_guest->perm still referencing
+fpu_user_cfg:
+
+  https://lore.kernel.org/all/20250218141045.85201-1-stanspas@amazon.de/
+
+  1937e18cc3cf ("x86/fpu: Fix guest FPU state buffer allocation size")
+
+The inconsistencies within fpu_alloc_guest_fpstate() and across the
+mentioned functions cause confusion.
+
+Fix them by using fpu_kernel_cfg consistently in fpu_alloc_guest_fpstate(),
+except for fields related to the UABI buffer. Referencing fpu_kernel_cfg
+won't impact functionalities, as:
+
+ 1. fpu_guest->perm is overwritten shortly in fpu_init_guest_permissions()
+    with fpstate->guest_perm, which already uses fpu_kernel_cfg.
+
+ 2. fpu_guest->xfeatures is solely used to check if XFD features are enabled.
+    Including supervisor xfeatures doesn't affect the check.
+
+Fixes: 36487e6228c4 ("x86/fpu: Prepare guest FPU for dynamically enabled FPU features")
+Suggested-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: David Woodhouse <dwmw2@infradead.org>
+Link: https://lore.kernel.org/r/20250317140613.1761633-1-chao.gao@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/traps.c | 18 +++++++++++++++++-
- tools/objtool/check.c   | 31 +------------------------------
- 2 files changed, 18 insertions(+), 31 deletions(-)
+ arch/x86/kernel/fpu/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
-index 2dbadf347b5f4..5e3e036e6e537 100644
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -379,6 +379,21 @@ __visible void __noreturn handle_stack_overflow(struct pt_regs *regs,
- }
- #endif
+diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
+index 36df548acc403..dcac3c058fb76 100644
+--- a/arch/x86/kernel/fpu/core.c
++++ b/arch/x86/kernel/fpu/core.c
+@@ -232,8 +232,8 @@ bool fpu_alloc_guest_fpstate(struct fpu_guest *gfpu)
+ 	fpstate->is_guest	= true;
  
-+/*
-+ * Prevent the compiler and/or objtool from marking the !CONFIG_X86_ESPFIX64
-+ * version of exc_double_fault() as noreturn.  Otherwise the noreturn mismatch
-+ * between configs triggers objtool warnings.
-+ *
-+ * This is a temporary hack until we have compiler or plugin support for
-+ * annotating noreturns.
-+ */
-+#ifdef CONFIG_X86_ESPFIX64
-+#define always_true() true
-+#else
-+bool always_true(void);
-+bool __weak always_true(void) { return true; }
-+#endif
-+
- /*
-  * Runs on an IST stack for x86_64 and on a special task stack for x86_32.
-  *
-@@ -514,7 +529,8 @@ DEFINE_IDTENTRY_DF(exc_double_fault)
+ 	gfpu->fpstate		= fpstate;
+-	gfpu->xfeatures		= fpu_user_cfg.default_features;
+-	gfpu->perm		= fpu_user_cfg.default_features;
++	gfpu->xfeatures		= fpu_kernel_cfg.default_features;
++	gfpu->perm		= fpu_kernel_cfg.default_features;
  
- 	pr_emerg("PANIC: double fault, error_code: 0x%lx\n", error_code);
- 	die("double fault", regs, error_code);
--	panic("Machine halted.");
-+	if (always_true())
-+		panic("Machine halted.");
- 	instrumentation_end();
- }
- 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 3c3e5760e81b8..24a1adca30dbc 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4575,35 +4575,6 @@ static int validate_sls(struct objtool_file *file)
- 	return warnings;
- }
- 
--static bool ignore_noreturn_call(struct instruction *insn)
--{
--	struct symbol *call_dest = insn_call_dest(insn);
--
--	/*
--	 * FIXME: hack, we need a real noreturn solution
--	 *
--	 * Problem is, exc_double_fault() may or may not return, depending on
--	 * whether CONFIG_X86_ESPFIX64 is set.  But objtool has no visibility
--	 * to the kernel config.
--	 *
--	 * Other potential ways to fix it:
--	 *
--	 *   - have compiler communicate __noreturn functions somehow
--	 *   - remove CONFIG_X86_ESPFIX64
--	 *   - read the .config file
--	 *   - add a cmdline option
--	 *   - create a generic objtool annotation format (vs a bunch of custom
--	 *     formats) and annotate it
--	 */
--	if (!strcmp(call_dest->name, "exc_double_fault")) {
--		/* prevent further unreachable warnings for the caller */
--		insn->sym->warned = 1;
--		return true;
--	}
--
--	return false;
--}
--
- static int validate_reachable_instructions(struct objtool_file *file)
- {
- 	struct instruction *insn, *prev_insn;
-@@ -4620,7 +4591,7 @@ static int validate_reachable_instructions(struct objtool_file *file)
- 		prev_insn = prev_insn_same_sec(file, insn);
- 		if (prev_insn && prev_insn->dead_end) {
- 			call_dest = insn_call_dest(prev_insn);
--			if (call_dest && !ignore_noreturn_call(prev_insn)) {
-+			if (call_dest) {
- 				WARN_INSN(insn, "%s() is missing a __noreturn annotation",
- 					  call_dest->name);
- 				warnings++;
+ 	/*
+ 	 * KVM sets the FP+SSE bits in the XSAVE header when copying FPU state
 -- 
 2.39.5
 
