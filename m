@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2178A94A;
-	Tue,  8 Apr 2025 11:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A016C1CAA82;
+	Tue,  8 Apr 2025 11:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112908; cv=none; b=pQ3wh2uFUtdz/0f5cctx51HDOzngunXYNUbDmdsmYzo1olm8r2MmpZOpCdTd16WR0+Pm6ND2jStcySDfrzcu0UepDxsKJdf/LfC2Ve4lNChUqEWDQUOQvyk9cfdXDqY/eG0j1yVhHrd1J5lV8AM56ILp9iwFSzV2izIGrL7PAUU=
+	t=1744112910; cv=none; b=e6YDOie1a2wFs03x3SZLY1/fr1uGkrPEl6h7HbwL2x++vjwzSLT4DDydM4ZBoSLI2dI0B7L78o8hn4JzSUENxtBZ0xmvFWOE2ldZbThhKhcY2LP652vvEMEelchPy24qSdU/52WPjXqT9aJa7ihKhq4Hw42rcj8FsJ6hqk7mvOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112908; c=relaxed/simple;
-	bh=k0G6dnZtxYs9UuWlfpfJckJGdXNVXzhsYxQKqrX9TI0=;
+	s=arc-20240116; t=1744112910; c=relaxed/simple;
+	bh=8EGxqHbxWehlZPoyy4JK5YPv3tb1elvFrFA2Liz2Ffw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXb0cprOZLcpRGyxRK4wFbxp15AfSHRLISUwHYqWaDj3ke9xu+Yt+eKiP++W0RMD5lBxa+TK6o83SZXaYM/dmrOGrQkgB2TPtxnpEbPPny1Z+bp6laSLBbUj1ig7VBNnKc8y6E5gmraoaYImGOgIiZfo9FQupjMEaZiiQ8+A65U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itBqDsXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Go1Ufs1wMqJJTu0jDjrTphDvHY+RELHYcNbMrzAyD93F71Iteilr0h4ESrlea2R6ewgtLluhOSNXnqk/KevLEvQV63SjRdpquC9MAoPT3fCwG4J8pIn6PCpZ/im1ekPHnqzsXHb7AIbtHOBJxoMzTYnJVTsSsfkgZ5q5ojECP8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5ndmt86; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itBqDsXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F75CC4CEE5;
-	Tue,  8 Apr 2025 11:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5ndmt86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DACDC4CEE5;
+	Tue,  8 Apr 2025 11:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112907;
-	bh=k0G6dnZtxYs9UuWlfpfJckJGdXNVXzhsYxQKqrX9TI0=;
+	s=korg; t=1744112910;
+	bh=8EGxqHbxWehlZPoyy4JK5YPv3tb1elvFrFA2Liz2Ffw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itBqDsXoEc/lbYqxjdQwIWmLpnIMofwp65CqHB28ax6zwXQpuH6nuk56nSqw03UQD
-	 OboKphekzyqThFupPwD8QyyKbcemUwaMAdwb/55Ma3moDbKMJd9fyLGODkS1ZerD5K
-	 p6sexteTSZixZODxoD7+PzmlkajDOnBMo/OZS/SA=
+	b=p5ndmt86rkJ6U5QzgJzCLHIfy7Ga1SBVu9xUCoC0sZ5xV9NDWgd3OOG7XS6yVGUwV
+	 qpovQ25a5V9H1BCqwAk1A88B8cpNjzuPHU4RfOdbwS0LrAFA4+KH8iqLaY5MsN5l4l
+	 yCx/UWInzMKct9qREyfXCjze6Ql5UgD9lzMbe30E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Debin Zhu <mowenroot@163.com>,
+	Bitao Ouyang <1985755126@qq.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/279] netfilter: nft_set_hash: GC reaps elements with conncount for dynamic sets only
-Date: Tue,  8 Apr 2025 12:50:24 +0200
-Message-ID: <20250408104832.890295082@linuxfoundation.org>
+Subject: [PATCH 5.15 242/279] netlabel: Fix NULL pointer exception caused by CALIPSO on IPv4 sockets
+Date: Tue,  8 Apr 2025 12:50:25 +0200
+Message-ID: <20250408104832.916918017@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,36 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Debin Zhu <mowenroot@163.com>
 
-[ Upstream commit 9d74da1177c800eb3d51c13f9821b7b0683845a5 ]
+[ Upstream commit 078aabd567de3d63d37d7673f714e309d369e6e2 ]
 
-conncount has its own GC handler which determines when to reap stale
-elements, this is convenient for dynamic sets. However, this also reaps
-non-dynamic sets with static configurations coming from control plane.
-Always run connlimit gc handler but honor feedback to reap element if
-this set is dynamic.
+When calling netlbl_conn_setattr(), addr->sa_family is used
+to determine the function behavior. If sk is an IPv4 socket,
+but the connect function is called with an IPv6 address,
+the function calipso_sock_setattr() is triggered.
+Inside this function, the following code is executed:
 
-Fixes: 290180e2448c ("netfilter: nf_tables: add connlimit support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+sk_fullsock(__sk) ? inet_sk(__sk)->pinet6 : NULL;
+
+Since sk is an IPv4 socket, pinet6 is NULL, leading to a
+null pointer dereference.
+
+This patch fixes the issue by checking if inet6_sk(sk)
+returns a NULL pointer before accessing pinet6.
+
+Signed-off-by: Debin Zhu <mowenroot@163.com>
+Signed-off-by: Bitao Ouyang <1985755126@qq.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
+Link: https://patch.msgid.link/20250401124018.4763-1-mowenroot@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/calipso.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 5c4209b49bda7..a592cca7a61f9 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -310,7 +310,8 @@ static bool nft_rhash_expr_needs_gc_run(const struct nft_set *set,
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 1578ed9e97d89..c07e3da08d2a8 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1075,8 +1075,13 @@ static int calipso_sock_getattr(struct sock *sk,
+ 	struct ipv6_opt_hdr *hop;
+ 	int opt_len, len, ret_val = -ENOMSG, offset;
+ 	unsigned char *opt;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return -EAFNOSUPPORT;
  
- 	nft_setelem_expr_foreach(expr, elem_expr, size) {
- 		if (expr->ops->gc &&
--		    expr->ops->gc(read_pnet(&set->net), expr))
-+		    expr->ops->gc(read_pnet(&set->net), expr) &&
-+		    set->flags & NFT_SET_EVAL)
- 			return true;
- 	}
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
+ 
+@@ -1128,8 +1133,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ {
+ 	int ret_val;
+ 	struct ipv6_opt_hdr *old, *new;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return -EAFNOSUPPORT;
+ 
++	txopts = txopt_get(pinfo);
+ 	old = NULL;
+ 	if (txopts)
+ 		old = txopts->hopopt;
+@@ -1156,8 +1166,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ static void calipso_sock_delattr(struct sock *sk)
+ {
+ 	struct ipv6_opt_hdr *new_hop;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return;
+ 
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
  
 -- 
 2.39.5
