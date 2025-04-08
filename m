@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E71122257E;
-	Tue,  8 Apr 2025 11:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51FB22257E;
+	Tue,  8 Apr 2025 11:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112967; cv=none; b=uaS1jU/q4aOttW0V0kyYKnIoeryduC7GWbIeSsTOIMX7WpAi/gRcvXHQ+yzQbtPClMNfn1YJ5z7tfq10WR1P86ST7YR6/cer38rDfH7z3PbcPM30Mw8QbWRfg4n4LAUFnWBdRPomX7KoBU/lBzk2eSyNGh9VoD66Cb7MeIuslNU=
+	t=1744112969; cv=none; b=T6FYCXyA2YgSnWgrMI0TFXyGn6CDmKPk734yzotcsiyoPFhXlVlGt3Z1hv3pVqY05kkZ4rKBlXpGMXlAgBAaMFLd8cXX8Jw2fFlx5/dbPo7BduiubrtkbQles0ZcdYx0NuHniLjxTZcz3g5n6GEQRztDDCGdCoga/PG+5zmnYhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112967; c=relaxed/simple;
-	bh=/BAbtNgQKTBvgGgTTGIHOdgYpwW5On6sj5RG9si4mBo=;
+	s=arc-20240116; t=1744112969; c=relaxed/simple;
+	bh=YhRmAsVZKhFvasoC6WwrElwWVCYX6RnQZQ9PEohrckk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0mkhkdbaeXTqmFfFyxIvSoy+V/QMK3LqkCkbLCfBljHoltPtnmCTTr9bWZe8so6FP+qi+QoRi+YKU1ql3RdCAlQBM4rw8aVDvaEDJnLh14vS7iBO+IOnSOlHhpV3qDDsSkzMyQPeOSRwIMnu16qPzxgCwhDhoSPL0MxUZfgLxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L6MZN7Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p6spiG3HMZ4QNUIUZNyoojiEhPSIFtZVKH3PNNyxBmYLKQTVkZ3ESKl+Dzdg4sAn2aH73v0cexkfZ/phWlTUqcZ0DjyTi73YGNaxrOsYS+Um0ANli+jWjbLcCW6eUn/gc/RqLDDi9jtf10KV6FFa8a1iaPeF+5Nghx7HeRMaqnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu9XfN5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L6MZN7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E01C4CEE5;
-	Tue,  8 Apr 2025 11:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu9XfN5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412D9C4CEE5;
+	Tue,  8 Apr 2025 11:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112966;
-	bh=/BAbtNgQKTBvgGgTTGIHOdgYpwW5On6sj5RG9si4mBo=;
+	s=korg; t=1744112969;
+	bh=YhRmAsVZKhFvasoC6WwrElwWVCYX6RnQZQ9PEohrckk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1L6MZN7ZpBJhijFEzbIZK8O5Cz1aRWlZCdO8hqxMZO5xvw7sh9diAqH43pzQGXgxv
-	 OeTMhiHG8S2vdrZndlKwRtatW6+JvOitOfI4Dt18wMH/NU8d/fb79+xoMJK9DnmXTd
-	 jY6WST+NoZRH6LBjdVycPxTaSK+IWos5b/hAkWuA=
+	b=xu9XfN5+qbB6sxT5+va0Wtakap0TrgtMGLEK3xHy1zFnDarP+1g+trMJjY5YXNtz+
+	 ukLmCmy1HbkDf0npB1Oy2AxqLteRK/Kt+eqX6FyDyLeWpgMmrbS28E/IYjaOuEzyz/
+	 VNTH1tfSUFrDjZJJS9G58B5PWazUIqeXtTHYE0Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Ira Weiny <ira.weiny@intel.com>
-Subject: [PATCH 5.15 265/279] acpi: nfit: fix narrowing conversion in acpi_nfit_ctl
-Date: Tue,  8 Apr 2025 12:50:48 +0200
-Message-ID: <20250408104833.544252590@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Anton Shyndin <mrcold.il@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 266/279] ACPI: resource: Skip IRQ override on ASUS Vivobook 14 X1404VAP
+Date: Tue,  8 Apr 2025 12:50:49 +0200
+Message-ID: <20250408104833.570796257@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -45,56 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-commit 2ff0e408db36c21ed3fa5e3c1e0e687c82cf132f upstream.
+commit 2da31ea2a085cd189857f2db0f7b78d0162db87a upstream.
 
-Syzkaller has reported a warning in to_nfit_bus_uuid(): "only secondary
-bus families can be translated". This warning is emited if the argument
-is equal to NVDIMM_BUS_FAMILY_NFIT == 0. Function acpi_nfit_ctl() first
-verifies that a user-provided value call_pkg->nd_family of type u64 is
-not equal to 0. Then the value is converted to int, and only after that
-is compared to NVDIMM_BUS_FAMILY_MAX. This can lead to passing an invalid
-argument to acpi_nfit_ctl(), if call_pkg->nd_family is non-zero, while
-the lower 32 bits are zero.
+Like the ASUS Vivobook X1504VAP and Vivobook X1704VAP, the ASUS Vivobook 14
+X1404VAP has its keyboard IRQ (1) described as ActiveLow in the DSDT, which
+the kernel overrides to EdgeHigh breaking the keyboard.
 
-Furthermore, it is best to return EINVAL immediately upon seeing the
-invalid user input.  The WARNING is insufficient to prevent further
-undefined behavior based on other invalid user input.
+    $ sudo dmidecode
+    […]
+    System Information
+            Manufacturer: ASUSTeK COMPUTER INC.
+            Product Name: ASUS Vivobook 14 X1404VAP_X1404VA
+    […]
+    $ grep -A 30 PS2K dsdt.dsl | grep IRQ -A 1
+                 IRQ (Level, ActiveLow, Exclusive, )
+                     {1}
 
-All checks of the input value should be applied to the original variable
-call_pkg->nd_family.
+Add the X1404VAP to the irq1_level_low_skip_override[] quirk table to fix
+this.
 
-[iweiny: update commit message]
-
-Fixes: 6450ddbd5d8e ("ACPI: NFIT: Define runtime firmware activation commands")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c80d8dc0d9fa81a3cd8c
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20250123163945.251-1-m.masimov@mt-integration.ru
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219224
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Anton Shyndin <mrcold.il@gmail.com>
+Link: https://patch.msgid.link/20250318160903.77107-1-pmenzel@molgen.mpg.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -485,7 +485,7 @@ int acpi_nfit_ctl(struct nvdimm_bus_desc
- 		cmd_mask = nd_desc->cmd_mask;
- 		if (cmd == ND_CMD_CALL && call_pkg->nd_family) {
- 			family = call_pkg->nd_family;
--			if (family > NVDIMM_BUS_FAMILY_MAX ||
-+			if (call_pkg->nd_family > NVDIMM_BUS_FAMILY_MAX ||
- 			    !test_bit(family, &nd_desc->bus_family_mask))
- 				return -EINVAL;
- 			family = array_index_nospec(family,
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -443,6 +443,13 @@ static const struct dmi_system_id asus_l
+ 		},
+ 	},
+ 	{
++		/* Asus Vivobook X1404VAP */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "X1404VAP"),
++		},
++	},
++	{
+ 		/* Asus Vivobook X1504VAP */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 
 
