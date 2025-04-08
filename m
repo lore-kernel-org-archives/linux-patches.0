@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9754A267F57;
-	Tue,  8 Apr 2025 11:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0A8269801;
+	Tue,  8 Apr 2025 11:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113022; cv=none; b=WBMtjzLg/lNtIGTB0/6SeKwWwKDG4aHuykbVFfbY3IWZI1kt40b+9GQDQwbBdP+R8y9CRHpjdPO6YGH24yHjfw4kgeUoLfYRwur5fL5vPPE24XilND8RWK9IdTlUvBngftgM0ZwktD1KgiwJXmRhDU/jcPNe/sCp/yMsKHh8Xbw=
+	t=1744113025; cv=none; b=JiB1kkccsa/AzMcLJlgUhC80ImSpkxe53o9WYNjssJjgdlCujj3dGAsGMUQPDqBLffMU5kImNRID0Wmseq9YmKaJwfVqimmD1OZQpDFM1vHZpSPFHBi2uwumHKlOENA/1Pt4Cgm0srDEiWfhIU7yUdB/ACZgNoXNvQAiEeBIRqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113022; c=relaxed/simple;
-	bh=thP7a4N6uV0lVke1MdTfAoWYfdr80TWg8O0iAWdsvbg=;
+	s=arc-20240116; t=1744113025; c=relaxed/simple;
+	bh=wYP4r/sJk1FJfqwgMDUUz9JwmkRfq0veD6CrooBddk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2yUW3rubXw0Q5KEx7NKogdiBRxp2K/AfoY1YtEz8LXjKkCQGUOE9xo5jYTYjvrJW6tnl2MentlmmqVHC9i2aA1nOggXchdLHggL3JKrbdSQl3gy9EoMt18syA/GIGW+fbEkf/ED7deyUInVCQYGTyISBnOfh3Asvh2bBFXdv4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzXnC4h8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9Sf77yB9K9IDTL1crkDCgbnYHaxz6MxgAY05ZSnBoC+/u8wa6fez8RBbQ65EtRD5MstKCHTv6verMonjfiTv9PFADkifjVrwsTEoheXFL+rQYVrCJhpf/9TNxPKuHj+LzJYEZfMeJLEG4mpHY3UN8Woey5B0GQWo+qua5gi6xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joVABiZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzXnC4h8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28233C4CEE5;
-	Tue,  8 Apr 2025 11:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joVABiZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEAAC4CEE5;
+	Tue,  8 Apr 2025 11:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113022;
-	bh=thP7a4N6uV0lVke1MdTfAoWYfdr80TWg8O0iAWdsvbg=;
+	s=korg; t=1744113025;
+	bh=wYP4r/sJk1FJfqwgMDUUz9JwmkRfq0veD6CrooBddk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZzXnC4h8fZaaijKBAxj4zpMVTokrN49KmyHzHULzo6kpHYnyLHqHpKN/NBtZ7RkQ2
-	 M45qL2lK8mijFWnA9N/F0HIE9eIjivtgaibGXVA3tk2ig4eef1D3R0q2gkdqvWScfR
-	 tsOzLWZFlsmks93f6b4lBgvNdxpijf3B7FVESOok=
+	b=joVABiZyUJTdSTzdGLa4SX5PsyS61gkV3tiD3NUsAclMYnG8bYwk/ZgER2sViOKZN
+	 J7H5OGs9vsKkHU4APIeUVV9jqvsU7Kx+0pfVks5wPnN7ZmECoifc0sswxOvIoT2ykn
+	 A7zBFfrDPdsfPMBDVuSmr6ubsA2cK8ir9RaNgjOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 256/279] tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
-Date: Tue,  8 Apr 2025 12:50:39 +0200
-Message-ID: <20250408104833.291427081@linuxfoundation.org>
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 257/279] drm/amd/pm: Fix negative array index read
+Date: Tue,  8 Apr 2025 12:50:40 +0200
+Message-ID: <20250408104833.317699872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,63 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit f5cb528d6441eb860250a2f085773aac4f44085e ]
+commit c8c19ebf7c0b202a6a2d37a52ca112432723db5f upstream.
 
-According to the LPUART reference manual, TXRTSE and TXRTSPOL of MODIR
-register only can be changed when the transmitter is disabled.
-So disable the transmitter before changing RS485 related registers and
-re-enable it after the change is done.
+Avoid using the negative values
+for clk_idex as an index into an array pptable->DpmDescriptor.
 
-Fixes: 67b01837861c ("tty: serial: lpuart: Add RS485 support for 32-bit uart flavour")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250312022503.1342990-1-sherry.sun@nxp.com
+V2: fix clk_index return check (Tim Huang)
+
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index fe1fba335483f..6684f6512fb16 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1397,6 +1397,19 @@ static int lpuart32_config_rs485(struct uart_port *port,
- 
- 	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
- 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
-+	u32 ctrl;
-+
-+	/* TXRTSE and TXRTSPOL only can be changed when transmitter is disabled. */
-+	ctrl = lpuart32_read(&sport->port, UARTCTRL);
-+	if (ctrl & UARTCTRL_TE) {
-+		/* wait for the transmit engine to complete */
-+		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+		lpuart32_write(&sport->port, ctrl & ~UARTCTRL_TE, UARTCTRL);
-+
-+		while (lpuart32_read(&sport->port, UARTCTRL) & UARTCTRL_TE)
-+			cpu_relax();
-+	}
-+
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
- 
- 	/* clear unsupported configurations */
-@@ -1437,6 +1450,10 @@ static int lpuart32_config_rs485(struct uart_port *port,
- 	sport->port.rs485 = *rs485;
- 
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
-+
-+	if (ctrl & UARTCTRL_TE)
-+		lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+
- 	return 0;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
+@@ -1231,19 +1231,22 @@ static int navi10_get_current_clk_freq_b
+ 					   value);
  }
  
--- 
-2.39.5
-
+-static bool navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
++static int navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
+ {
+ 	PPTable_t *pptable = smu->smu_table.driver_pptable;
+ 	DpmDescriptor_t *dpm_desc = NULL;
+-	uint32_t clk_index = 0;
++	int clk_index = 0;
+ 
+ 	clk_index = smu_cmn_to_asic_specific_index(smu,
+ 						   CMN2ASIC_MAPPING_CLK,
+ 						   clk_type);
++	if (clk_index < 0)
++		return clk_index;
++
+ 	dpm_desc = &pptable->DpmDescriptor[clk_index];
+ 
+ 	/* 0 - Fine grained DPM, 1 - Discrete DPM */
+-	return dpm_desc->SnapToDiscrete == 0;
++	return dpm_desc->SnapToDiscrete == 0 ? 1 : 0;
+ }
+ 
+ static inline bool navi10_od_feature_is_supported(struct smu_11_0_overdrive_table *od_table, enum SMU_11_0_ODFEATURE_CAP cap)
+@@ -1299,7 +1302,11 @@ static int navi10_print_clk_levels(struc
+ 		if (ret)
+ 			return size;
+ 
+-		if (!navi10_is_support_fine_grained_dpm(smu, clk_type)) {
++		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
++		if (ret < 0)
++			return ret;
++
++		if (!ret) {
+ 			for (i = 0; i < count; i++) {
+ 				ret = smu_v11_0_get_dpm_freq_by_index(smu, clk_type, i, &value);
+ 				if (ret)
+@@ -1468,7 +1475,11 @@ static int navi10_force_clk_levels(struc
+ 	case SMU_UCLK:
+ 	case SMU_FCLK:
+ 		/* There is only 2 levels for fine grained DPM */
+-		if (navi10_is_support_fine_grained_dpm(smu, clk_type)) {
++		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
++		if (ret < 0)
++			return ret;
++
++		if (ret) {
+ 			soft_max_level = (soft_max_level >= 1 ? 1 : 0);
+ 			soft_min_level = (soft_min_level >= 1 ? 1 : 0);
+ 		}
 
 
