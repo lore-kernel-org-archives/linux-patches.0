@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A39267F5B;
-	Tue,  8 Apr 2025 12:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327FC26B094;
+	Tue,  8 Apr 2025 12:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114698; cv=none; b=XyYGtzscu0QPhvNd2Ou3QQzx/vjMX8hkYPMBIQkdE+vmaSXd/4xc6QNz1hyVxrO596C7rupyIq3H5THJ53zPQewQRfd3f6uaqzpeyfE0nfijCLcKS0aDEcFhwkM/fnLVSHprJ8KNXTBTgxzxOxaDYctNCCCpCVBGEocKXw9k0xU=
+	t=1744114701; cv=none; b=dbURyLjVbWAVs8vH7l5uRNLAUEChK65jj/kq/XbEdS2e2Fivo+gAK5p1XKPfh51sX3g3P00gxTOmAgBeyosPPRjqvMKH9XbkaEe9tmi9BC065cgrltWOUIIHelNaWl+ZLGfMQYQ7i0TkWlwLb5iOaIPBEr4V1FrcFVEo/9NBlrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114698; c=relaxed/simple;
-	bh=buZIeWh+GGECXZOVLxGjC/J99Q2gTHfLdzA8/oEW82Q=;
+	s=arc-20240116; t=1744114701; c=relaxed/simple;
+	bh=8mAgqooFEHMPNf8KQt5jbWY3ACIg1Hzu9EVTi2nNhuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QByJhornA0PbNqZW0HgJCJXMBaP3abDzHZxOdL2UkW7wj0PI58bL8u3ltZEHIi0TmHIJGNsOCiGy+725shX2boAf6VeCXm0Iz5yQvyVKv5x0t+sSbbg375GYI4FfHGbqs/Tm2dAuiXjkf1uuFDlR9U06rm6LlQGziS0mm0qe6PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nPXWi14; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKiYpVrQ6qwZd+Y2yKjWXY7G5CWpcu3JkL+rkW86o6OphZIlXdrziR1whAx/tdVwYDVXHnOLTvhpbUlByW1dsKj1RalcwAw1EzZMjuDaRzvHdIf5rIPKMWy2ApeXfmswRIWZq2bC9ztWO1Dp/Afccu5iSrp+1bftCo808fhYYAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAYVelrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nPXWi14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7718C4CEE5;
-	Tue,  8 Apr 2025 12:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAYVelrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F960C4CEE5;
+	Tue,  8 Apr 2025 12:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114698;
-	bh=buZIeWh+GGECXZOVLxGjC/J99Q2gTHfLdzA8/oEW82Q=;
+	s=korg; t=1744114700;
+	bh=8mAgqooFEHMPNf8KQt5jbWY3ACIg1Hzu9EVTi2nNhuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nPXWi14RyFdEiX6srGm1O9wBPC3CEaxzj2GXv5HkPIDgGZ4IAEPkVwu5UXwh7pSZ
-	 OJcuHo4ZdGZqD7gaT1pWcdWOvtrmiyuGnfnS0zHy7AtbnAZbBsw911ypMQEaNlsYtf
-	 Mku8S+O4uF4haNwQxGbYwfdXWGZBaZtiJ0Y1I1mY=
+	b=jAYVelrzka7/+GtleKIbIFgN4NeUAu+jsRiLnGHfPyVxlQAP/mhdj3OEyey2CmaO4
+	 BVLNYCwWwReJeTANb3rOxr3wWFjvMFn8H6+yi2TqX0uWLAuazcuKSRJA14vFjO453S
+	 eOTq2mDfY/7a6d++a5qfwyyR7lsBkEDIpjyNqfkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Angelo Dureghello <adureghello@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 201/499] staging: gpib: Fix pr_err format warning
-Date: Tue,  8 Apr 2025 12:46:53 +0200
-Message-ID: <20250408104856.211511681@linuxfoundation.org>
+Subject: [PATCH 6.13 202/499] iio: dac: adi-axi-dac: modify stream enable
+Date: Tue,  8 Apr 2025 12:46:54 +0200
+Message-ID: <20250408104856.236500936@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Angelo Dureghello <adureghello@baylibre.com>
 
-[ Upstream commit 03ec050c437bb4e7c5d215bbeedaa93932f13b35 ]
+[ Upstream commit 6cc60bc38e8428544f8f4f12ddb6cc05fc83a7da ]
 
-This patch fixes the following compile warning:
+Change suggested from the AXI HDL team, modify the function
+axi_dac_data_stream_enable() to check for interface busy, to avoid
+possible issues when starting the stream.
 
-drivers/staging/gpib/hp_82341/hp_82341.c: In function 'hp_82341_attach':
-./include/linux/kern_levels.h:5:25: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'u32' {aka 'unsigned int'} [-Wformat=]
-
-It was introduced in
-
-commit baf8855c9160 ("staging: gpib: fix address space mixup")
-
-but was not detected as the build of the driver depended on BROKEN.
-
-Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250124105900.27592-2-dpenkler@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e61d7178429a ("iio: dac: adi-axi-dac: extend features")
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Link: https://patch.msgid.link/20250114-wip-bl-ad3552r-axi-v0-iio-testing-carlos-v4-3-979402e33545@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/hp_82341/hp_82341.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/dac/adi-axi-dac.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/staging/gpib/hp_82341/hp_82341.c b/drivers/staging/gpib/hp_82341/hp_82341.c
-index 71d481e88bd96..6ec010965652e 100644
---- a/drivers/staging/gpib/hp_82341/hp_82341.c
-+++ b/drivers/staging/gpib/hp_82341/hp_82341.c
-@@ -718,7 +718,7 @@ int hp_82341_attach(gpib_board_t *board, const gpib_board_config_t *config)
- 	for (i = 0; i < hp_82341_num_io_regions; ++i) {
- 		start_addr = iobase + i * hp_priv->io_region_offset;
- 		if (!request_region(start_addr, hp_82341_region_iosize, "hp_82341")) {
--			pr_err("hp_82341: failed to allocate io ports 0x%lx-0x%lx\n",
-+			pr_err("hp_82341: failed to allocate io ports 0x%x-0x%x\n",
- 			       start_addr,
- 			       start_addr + hp_82341_region_iosize - 1);
- 			return -EIO;
+diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
+index b143f7ed68472..ac871deb8063c 100644
+--- a/drivers/iio/dac/adi-axi-dac.c
++++ b/drivers/iio/dac/adi-axi-dac.c
+@@ -585,6 +585,14 @@ static int axi_dac_ddr_disable(struct iio_backend *back)
+ static int axi_dac_data_stream_enable(struct iio_backend *back)
+ {
+ 	struct axi_dac_state *st = iio_backend_get_priv(back);
++	int ret, val;
++
++	ret = regmap_read_poll_timeout(st->regmap,
++				AXI_DAC_UI_STATUS_REG, val,
++				FIELD_GET(AXI_DAC_UI_STATUS_IF_BUSY, val) == 0,
++				10, 100 * KILO);
++	if (ret)
++		return ret;
+ 
+ 	return regmap_set_bits(st->regmap, AXI_DAC_CUSTOM_CTRL_REG,
+ 			       AXI_DAC_CUSTOM_CTRL_STREAM_ENABLE);
 -- 
 2.39.5
 
