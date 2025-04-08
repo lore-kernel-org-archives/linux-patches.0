@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DEE268FD8;
-	Tue,  8 Apr 2025 11:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319C1A94A;
+	Tue,  8 Apr 2025 11:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113180; cv=none; b=Juq3wffaDd0qBTJum019UOfpQ5ImNrn8reXNegb9FQyLVvL8RRKovkbTQUzHQW4SWhVuuaNEU1cICGyoobHUz8T5F8+pnlxV8G/g13tS5pvqtr/a/C7oXeCsFRTbKzwQEI3lSH+poFiMU53AJWHj6VSkcrlmoa1K6SnUX/GP2CU=
+	t=1744113183; cv=none; b=VjtadIfaYMhwHDncVZS96yX+/hf98pFVNMxONSlN3pAsqarHCGmjPKiVc9PMINS35SxDLDWaBC9y2BS8ZSDDSaokf5zEMZvd/mfZnS/uXddDQqB4SXSPxXzXTgkjwJu9i2IUuejT84w7/9DMou6oNUTMck3fb0e4pCRadlN6Tt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113180; c=relaxed/simple;
-	bh=7PB9y9INk7Kvk5F/daMzTAGISrEy4td+QTm2m58s894=;
+	s=arc-20240116; t=1744113183; c=relaxed/simple;
+	bh=SOexQzTcDn3ZxNfb91pA0gSBFBujpl3wEJqwkSTTXWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EafdyC5ic/ogoOf6ufj7aKehMwu91s8hrLIUgHA4KVzOFTNu4EzCBKF6wKntcEz5+uKroSAf1sVNqGTaeHhmpT50Eg4wpBQW2ahzMAeg3SwaSuT6SgJMtqGvESTlWEF1IZQwTYEeA2BUeBFvJfL53/8G1rOvBJR9s9LtdBTgzYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o05+QEYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwCje6k4prKNRlNv8N2CqMOq0/eX+oN1/9DN2Pywgx3gXeB3jX7OpiEBoNyGR1VyCcT6Tm/LdV4sjELsoaGbZlohFJnxZfh6S4EdXXOU6ZBMXVzjkvwsutKpBa4mdwB4x9VfTR0QeuwZ1Bhdm28VvsfGGbYPGyE8g2AixHoGclw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FffC0C5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o05+QEYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED86C4CEE5;
-	Tue,  8 Apr 2025 11:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FffC0C5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BA7C4CEE5;
+	Tue,  8 Apr 2025 11:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113180;
-	bh=7PB9y9INk7Kvk5F/daMzTAGISrEy4td+QTm2m58s894=;
+	s=korg; t=1744113183;
+	bh=SOexQzTcDn3ZxNfb91pA0gSBFBujpl3wEJqwkSTTXWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o05+QEYxaAWub55eLTF4T8Mr2FjltYgp/qpUmHFe4153xUDuHqgNURiJgB8eGK4ZU
-	 peGpMiMllKCp4CpaVjcbOi49NL2uzpdnqU9ZWcM3oLiPgkkIh0V+t2STEJtuKFQ5oD
-	 0Ir/9GZtgjwSn/Ts8oSZp4SDQwLORIoaCz8cbWUk=
+	b=FffC0C5GZqH59w6Qi89+zc3h/di+D3bIaOb2Qj3v03yieU48eH6KTciHQY0YnSIEU
+	 H6BSSK9nzqY5wQMxvDm1YUjrTZxl0tx1JAQIxw5ffqu/jngUOAfs9I1cDvs1U52TBK
+	 14ep1Pw8054EczxU4x158ZPqtIuMpVPU3HDUrrwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/268] platform/x86: dell-ddv: Fix temperature calculation
-Date: Tue,  8 Apr 2025 12:47:17 +0200
-Message-ID: <20250408104829.210865788@linuxfoundation.org>
+Subject: [PATCH 6.6 062/268] clk: amlogic: gxbb: drop incorrect flag on 32k clock
+Date: Tue,  8 Apr 2025 12:47:53 +0200
+Message-ID: <20250408104830.171827927@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -46,52 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 7a248294a3145bc65eb0d8980a0a8edbb1b92db4 ]
+[ Upstream commit f38f7fe4830c5cb4eac138249225f119e7939965 ]
 
-On the Dell Inspiron 3505 the battery temperature is always
-0.1 degrees larger than the temperature show inside the OEM
-application.
+gxbb_32k_clk_div sets CLK_DIVIDER_ROUND_CLOSEST in the init_data flag which
+is incorrect. This is field is not where the divider flags belong.
 
-Emulate this behaviour to avoid showing strange looking values
-like 29.1 degrees.
+Thankfully, CLK_DIVIDER_ROUND_CLOSEST maps to bit 4 which is an unused
+clock flag, so there is no unintended consequence to this error.
 
-Fixes: 0331b1b0ba653 ("platform/x86: dell-ddv: Fix temperature scaling")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20250305053009.378609-2-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Effectively, the clock has been used without CLK_DIVIDER_ROUND_CLOSEST
+so far, so just drop it.
+
+Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-1-baca56ecf2db@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-ddv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/meson/gxbb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-ddv.c b/drivers/platform/x86/dell/dell-wmi-ddv.c
-index db1e9240dd02c..8fb434b6ab4b9 100644
---- a/drivers/platform/x86/dell/dell-wmi-ddv.c
-+++ b/drivers/platform/x86/dell/dell-wmi-ddv.c
-@@ -665,8 +665,10 @@ static ssize_t temp_show(struct device *dev, struct device_attribute *attr, char
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index 1b1279d94781e..ef89285a86fc0 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -1312,7 +1312,7 @@ static struct clk_regmap gxbb_32k_clk_div = {
+ 			&gxbb_32k_clk_sel.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT | CLK_DIVIDER_ROUND_CLOSEST,
++		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
--	/* Use 2731 instead of 2731.5 to avoid unnecessary rounding */
--	return sysfs_emit(buf, "%d\n", value - 2731);
-+	/* Use 2732 instead of 2731.5 to avoid unnecessary rounding and to emulate
-+	 * the behaviour of the OEM application which seems to round down the result.
-+	 */
-+	return sysfs_emit(buf, "%d\n", value - 2732);
- }
- 
- static ssize_t eppid_show(struct device *dev, struct device_attribute *attr, char *buf)
 -- 
 2.39.5
 
