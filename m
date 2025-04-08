@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8A62288CB;
-	Tue,  8 Apr 2025 11:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4208264A70;
+	Tue,  8 Apr 2025 11:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111821; cv=none; b=k+S4ux2aKieeNHCgKXnPuivfoQ9kzzxXnF7IhE60aeOxIzGEI6omYvCdwOueOh3QhHM1ZPLE/u+3ISJC5x2j1k2KW26MQjDrys98NoIoqqdBdBuIkowgMPzHqLUsVC21TxU4v3NTsXHG/KinRvNpiG+ldfT8O2k6cXwWFntrNi4=
+	t=1744111823; cv=none; b=r/t+uqEESw0Ts86CLAneUaFKmRNUWBHnDF71PwjSnhYXV+vZAhK4HkF0fd3wxjzkV13kvhfxBwTDJTYXrsTN+DftcxTV9I5IEiwJoxSsnBgCxA4Azm+J4w7GKE4NzHZwtDXbc346oqDu/tyQWJiXgCYo43DqO2C3DgfoiygQj6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111821; c=relaxed/simple;
-	bh=tckK6qF/pEy/4Zz9Zo/XLhzAueQDxUSCRUdXWOHQIbA=;
+	s=arc-20240116; t=1744111823; c=relaxed/simple;
+	bh=l7RT9vPaUkoRCF9xi5B9bCje9orUwmrCMBZUYR8Ey+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InQciCBs50dhIV90Fpi7YtP+Ed608/Ou4F0CZVxzehAtxebXeLCkZtt8cup8EH9imdV+Yi9oc0e82mOe5gZMFFfrvcuiRrCZcz5pz1J9prgHZErFZLs7XlN5aldlyvC3aa454Fb3Mv6cqvYaV0jVByCa99JsrR0VnPQrmxwzHxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3B4DRXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0xXMaVV+s7mBlLvkRZyT3xMGi7Ub6Y0GjssfxECCB8/B4uobGx5IfcwPkgcCThujYKs28h89aqqZsiXpGENhtMxcM/jjjVeb23QEDywr4mhWHGwPxKbWYf6+tTY+z34QAt0M864MaxMXbcaOoK4W15LpT5FWoNJPGSG/VT3yjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKhgxGrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3B4DRXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5971EC4CEE5;
-	Tue,  8 Apr 2025 11:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKhgxGrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B52C4CEE5;
+	Tue,  8 Apr 2025 11:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111820;
-	bh=tckK6qF/pEy/4Zz9Zo/XLhzAueQDxUSCRUdXWOHQIbA=;
+	s=korg; t=1744111823;
+	bh=l7RT9vPaUkoRCF9xi5B9bCje9orUwmrCMBZUYR8Ey+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3B4DRXIPH6+tvVeKfFeFhYwCRKgm0OES+mmcs+mBotlw0bUeYcxoBz2srSJzVH9K
-	 Mkscv7Ao7I7wVajNBE2cVRNHajOA2uIx2aTK3rp5wYi2suw2nLup+eVM9WZ8q2loHv
-	 OJEtbv5Ok26Ug0GEgPhTBVBtaisTw1jFiDg5VjJk=
+	b=NKhgxGrdULJVuocog+1BYY0owqvYnTI2+XYrYgCdAs23Hr7LWDlgN31F/O/HioVpd
+	 tYh9SyaLRdgqRerynYl/8in5eH5dpwLEopAoGtQfJNkte+kAPZHFpr6NA32yarCe2l
+	 3iBNV0JGmnmuAd44oXI3SJ7v4NjqxQ5YNJ7eplwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 572/731] context_tracking: Always inline ct_{nmi,irq}_{enter,exit}()
-Date: Tue,  8 Apr 2025 12:47:49 +0200
-Message-ID: <20250408104927.578428732@linuxfoundation.org>
+Subject: [PATCH 6.14 573/731] rcu-tasks: Always inline rcu_irq_work_resched()
+Date: Tue,  8 Apr 2025 12:47:50 +0200
+Message-ID: <20250408104927.600971038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -57,53 +57,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 9ac50f7311dc8b39e355582f14c1e82da47a8196 ]
+[ Upstream commit 6309a5c43b0dc629851f25b2e5ef8beff61d08e5 ]
 
 Thanks to CONFIG_DEBUG_SECTION_MISMATCH, empty functions can be
-generated out of line.  These can be called from noinstr code, so make
-sure they're always inlined.
+generated out of line.  rcu_irq_work_resched() can be called from
+noinstr code, so make sure it's always inlined.
 
-Fixes the following warnings:
-
-  vmlinux.o: warning: objtool: irqentry_nmi_enter+0xa2: call to ct_nmi_enter() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_nmi_exit+0x16: call to ct_nmi_exit() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: irqentry_exit+0x78: call to ct_irq_exit() leaves .noinstr.text section
-
-Fixes: 6f0e6c1598b1 ("context_tracking: Take IRQ eqs entrypoints over RCU")
+Fixes: 564506495ca9 ("rcu/context-tracking: Move deferred nocb resched to context tracking")
 Reported-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: Frederic Weisbecker <frederic@kernel.org>
 Cc: Paul E. McKenney <paulmck@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/8509bce3f536bcd4ae7af3a2cf6930d48c5e631a.1743481539.git.jpoimboe@kernel.org
+Link: https://lore.kernel.org/r/e84f15f013c07e4c410d972e75620c53b62c1b3e.1743481539.git.jpoimboe@kernel.org
 Closes: https://lore.kernel.org/d1eca076-fdde-484a-b33e-70e0d167c36d@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/context_tracking_irq.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/rcupdate.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/context_tracking_irq.h b/include/linux/context_tracking_irq.h
-index c50b5670c4a52..197916ee91a4b 100644
---- a/include/linux/context_tracking_irq.h
-+++ b/include/linux/context_tracking_irq.h
-@@ -10,12 +10,12 @@ void ct_irq_exit_irqson(void);
- void ct_nmi_enter(void);
- void ct_nmi_exit(void);
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 48e5c03df1dd8..bd69ddc102fbc 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -138,7 +138,7 @@ static inline void rcu_sysrq_end(void) { }
+ #if defined(CONFIG_NO_HZ_FULL) && (!defined(CONFIG_GENERIC_ENTRY) || !defined(CONFIG_KVM_XFER_TO_GUEST_WORK))
+ void rcu_irq_work_resched(void);
  #else
--static inline void ct_irq_enter(void) { }
--static inline void ct_irq_exit(void) { }
-+static __always_inline void ct_irq_enter(void) { }
-+static __always_inline void ct_irq_exit(void) { }
- static inline void ct_irq_enter_irqson(void) { }
- static inline void ct_irq_exit_irqson(void) { }
--static inline void ct_nmi_enter(void) { }
--static inline void ct_nmi_exit(void) { }
-+static __always_inline void ct_nmi_enter(void) { }
-+static __always_inline void ct_nmi_exit(void) { }
+-static inline void rcu_irq_work_resched(void) { }
++static __always_inline void rcu_irq_work_resched(void) { }
  #endif
  
- #endif
+ #ifdef CONFIG_RCU_NOCB_CPU
 -- 
 2.39.5
 
