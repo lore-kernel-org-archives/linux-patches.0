@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D39267F68;
-	Tue,  8 Apr 2025 11:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F50267F68;
+	Tue,  8 Apr 2025 11:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113105; cv=none; b=QPIjz9R1ogHxc3QYG+XyOeWMAttu9FqPsZBgwjGCNrLoyizqTNlHa7GlCCX7i47WBeZaBmg7cp7Qgtdn8i67c/mIjTkO9h0IRXxDu/enSl3qhxwOnn+IOp9wbTh2GXlK/ronhDXoR8llManWENWDvygmhGjxjN/fO7cUvz0fdb8=
+	t=1744113107; cv=none; b=bTzZt7XmB+/qaR8rhJJLZx/o9Oqmoo0jw6+YlgGJq1pTdCvKotz+rP3EAvm5s36z88kAianUYtoDNPpZ9K7dmZDrW3NmsbLaN1smfypIYVgmij55FTW8qkAer9HhAbdhx6pvSYm7gOcRS+sZFLTUnog3RF5z/kkaec4PSK94o7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113105; c=relaxed/simple;
-	bh=psMwmmG7prNurx5+P2JzdIpchLZCqg3pYS0otxdMnLM=;
+	s=arc-20240116; t=1744113107; c=relaxed/simple;
+	bh=x8PLsyDKKdvh4C96jBIiztgcnXER8dcmKgjNkfA93s0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZI853YgzhN0cYj14UIgUfLlSJwYGQnG99l0QIjarriLZ9uQRaSTLXkHz88gFF3XWlxaVij3css1VDmqptnC4Hh0QlRfIowczpSjlw87EH+pPWvLLbhu+f/Nzo0bBUmSdNc5EcX+BUANvxQOuNqs47hVDzccN5a65Xog04CbmIVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpKyYTLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSOO7+BGn3caJgHuFFDmhnyE85qPsgAUE8ZSrB+1yV2JSKofTSd/2fpjD5y4/40WBJ0bBj7twaOm/ge70wxPbba5Il0BMvHFOV60eUQumzUdbqkYvB8qdeqcxFZBtjm/3qf4n6aBf2/sOOadYz882NqoMzQoK7N32EQxD4Qv0KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJN4NoJD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpKyYTLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60931C4CEE5;
-	Tue,  8 Apr 2025 11:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJN4NoJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022D1C4CEE5;
+	Tue,  8 Apr 2025 11:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113104;
-	bh=psMwmmG7prNurx5+P2JzdIpchLZCqg3pYS0otxdMnLM=;
+	s=korg; t=1744113107;
+	bh=x8PLsyDKKdvh4C96jBIiztgcnXER8dcmKgjNkfA93s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpKyYTLV9bVI93XsuFqS2gVIXIIgXXp0+i/B9jVssrFqmHOjMbLUl00VF5yaGrF1x
-	 Afs7fZOZj2gPfi5dwXVofgdJvocuQm4gFmGg4D2FJVYBKr+xoHMOqbAQcfH1p95dEk
-	 Q4BMNlyEnKsYtoRzvP4Btw/t4nxPMMtjqXhblQbA=
+	b=ZJN4NoJDQZOPMYTdH25su3oijllk2mtjARghExkiCoqWdSYTXc/Y8QLV5L5SvJ+s1
+	 0u64S+44ZKsgRm/SdHbDwPQLLCuUyy47CJNnpbWQ7L9ZXiuW5VN3SEppPBjWEH+1Oi
+	 bj5HATxgAVEiOF9ArIsnlM+wu6HJO2U1OoCohSoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Thomas Zimmermann <tzimmremann@suse.de>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Carol Soto <csoto@nvidia.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/268] drm/vkms: Fix use after free and double free on init error
-Date: Tue,  8 Apr 2025 12:47:27 +0200
-Message-ID: <20250408104829.473896269@linuxfoundation.org>
+Subject: [PATCH 6.6 037/268] PCI: Use downstream bridges for distributing resources
+Date: Tue,  8 Apr 2025 12:47:28 +0200
+Message-ID: <20250408104829.500587482@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -46,78 +50,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-[ Upstream commit ed15511a773df86205bda66c37193569575ae828 ]
+[ Upstream commit 1a596ad00ffe9b37fc60a93cbdd4daead3bf95f3 ]
 
-If the driver initialization fails, the vkms_exit() function might
-access an uninitialized or freed default_config pointer and it might
-double free it.
+7180c1d08639 ("PCI: Distribute available resources for root buses, too")
+breaks BAR assignment on some devices:
 
-Fix both possible errors by initializing default_config only when the
-driver initialization succeeded.
+  pci 0006:03:00.0: BAR 0 [mem 0x6300c0000000-0x6300c1ffffff 64bit pref]: assigned
+  pci 0006:03:00.1: BAR 0 [mem 0x6300c2000000-0x6300c3ffffff 64bit pref]: assigned
+  pci 0006:03:00.2: BAR 0 [mem size 0x00800000 64bit pref]: can't assign; no space
+  pci 0006:03:00.0: VF BAR 0 [mem size 0x02000000 64bit pref]: can't assign; no space
+  pci 0006:03:00.1: VF BAR 0 [mem size 0x02000000 64bit pref]: can't assign; no space
 
-Reported-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Closes: https://lore.kernel.org/all/Z5uDHcCmAwiTsGte@louis-chauvet-laptop/
-Fixes: 2df7af93fdad ("drm/vkms: Add vkms_config type")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmremann@suse.de>
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250212084912.3196-1-jose.exposito89@gmail.com
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+The apertures of domain 0006 before 7180c1d08639:
+
+  6300c0000000-63ffffffffff : PCI Bus 0006:00
+    6300c0000000-6300c9ffffff : PCI Bus 0006:01
+      6300c0000000-6300c9ffffff : PCI Bus 0006:02        # 160MB
+        6300c0000000-6300c8ffffff : PCI Bus 0006:03      #   144MB
+          6300c0000000-6300c1ffffff : 0006:03:00.0       #     32MB
+          6300c2000000-6300c3ffffff : 0006:03:00.1       #     32MB
+          6300c4000000-6300c47fffff : 0006:03:00.2       #      8MB
+          6300c4800000-6300c67fffff : 0006:03:00.0       #     32MB
+          6300c6800000-6300c87fffff : 0006:03:00.1       #     32MB
+        6300c9000000-6300c9bfffff : PCI Bus 0006:04      #    12MB
+          6300c9000000-6300c9bfffff : PCI Bus 0006:05    #    12MB
+            6300c9000000-6300c91fffff : PCI Bus 0006:06  #      2MB
+            6300c9200000-6300c93fffff : PCI Bus 0006:07  #      2MB
+            6300c9400000-6300c95fffff : PCI Bus 0006:08  #      2MB
+            6300c9600000-6300c97fffff : PCI Bus 0006:09  #      2MB
+
+After 7180c1d08639:
+
+  6300c0000000-63ffffffffff : PCI Bus 0006:00
+    6300c0000000-6300c9ffffff : PCI Bus 0006:01
+      6300c0000000-6300c9ffffff : PCI Bus 0006:02        # 160MB
+        6300c0000000-6300c43fffff : PCI Bus 0006:03      #    68MB
+          6300c0000000-6300c1ffffff : 0006:03:00.0       #      32MB
+          6300c2000000-6300c3ffffff : 0006:03:00.1       #      32MB
+              --- no space ---      : 0006:03:00.2       #       8MB
+              --- no space ---      : 0006:03:00.0       #      32MB
+              --- no space ---      : 0006:03:00.1       #      32MB
+        6300c4400000-6300c4dfffff : PCI Bus 0006:04      #    10MB
+          6300c4400000-6300c4dfffff : PCI Bus 0006:05    #      10MB
+            6300c4400000-6300c45fffff : PCI Bus 0006:06  #        2MB
+            6300c4600000-6300c47fffff : PCI Bus 0006:07  #        2MB
+            6300c4800000-6300c49fffff : PCI Bus 0006:08  #        2MB
+            6300c4a00000-6300c4bfffff : PCI Bus 0006:09  #        2MB
+
+We can see that the window to 0006:03 gets shrunken too much and 0006:04
+eats away the window for 0006:03:00.2.
+
+The offending commit distributes the upstream bridge's resources multiple
+times to every downstream bridge, hence makes the aperture smaller than
+desired because calculation of io_per_b, mmio_per_b and mmio_pref_per_b
+becomes incorrect.
+
+Instead, distribute downstream bridges' own resources to resolve the issue.
+
+Link: https://lore.kernel.org/r/20241204022457.51322-1-kaihengf@nvidia.com
+Fixes: 7180c1d08639 ("PCI: Distribute available resources for root buses, too")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219540
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Carol Soto <csoto@nvidia.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Chris Chiu <chris.chiu@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_drv.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/pci/setup-bus.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-index dd0af086e7fa9..25db36ec06d49 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.c
-+++ b/drivers/gpu/drm/vkms/vkms_drv.c
-@@ -243,17 +243,19 @@ static int __init vkms_init(void)
- 	if (!config)
- 		return -ENOMEM;
- 
--	default_config = config;
--
- 	config->cursor = enable_cursor;
- 	config->writeback = enable_writeback;
- 	config->overlay = enable_overlay;
- 
- 	ret = vkms_create(config);
--	if (ret)
-+	if (ret) {
- 		kfree(config);
-+		return ret;
-+	}
- 
--	return ret;
-+	default_config = config;
-+
-+	return 0;
- }
- 
- static void vkms_destroy(struct vkms_config *config)
-@@ -277,9 +279,10 @@ static void vkms_destroy(struct vkms_config *config)
- 
- static void __exit vkms_exit(void)
- {
--	if (default_config->dev)
--		vkms_destroy(default_config);
-+	if (!default_config)
-+		return;
- 
-+	vkms_destroy(default_config);
- 	kfree(default_config);
- }
- 
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index 5a143ad5fca24..fba402f4f6330 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2018,8 +2018,7 @@ pci_root_bus_distribute_available_resources(struct pci_bus *bus,
+ 		 * in case of root bus.
+ 		 */
+ 		if (bridge && pci_bridge_resources_not_assigned(dev))
+-			pci_bridge_distribute_available_resources(bridge,
+-								  add_list);
++			pci_bridge_distribute_available_resources(dev, add_list);
+ 		else
+ 			pci_root_bus_distribute_available_resources(b, add_list);
+ 	}
 -- 
 2.39.5
 
