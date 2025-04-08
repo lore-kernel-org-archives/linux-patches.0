@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1EF265CD3;
-	Tue,  8 Apr 2025 12:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A87B276042;
+	Tue,  8 Apr 2025 12:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116364; cv=none; b=YDCI89oAvS+BOZHaY+Z2EdwLoxNT7rwuVpybWdsRTW5mE7MWE85EWdVnlIhmC3hb8JEyxOnsUMaBUNedqPVRkAtIZ7SC+Z0hBcI+jIAHeHUZLN0Hgkv550O2eJzS2zwwiVWRv6dtz0tfrHz151uFeo0dVwstX4loVzuqalJpb3Y=
+	t=1744116367; cv=none; b=uxSy211bRVpXCacBxsDbUUIZlFTUy8JaSVtX6/t6zbsIV1SueHTQKWjsn13RwLlpCs6pXVY7RlBTTmXQCQYLncEADCu4Q8G5wuRto4e6LePPmAUvDshM649izHJP9QOcbSF/R8xUST0EBQWpx7DifTDzEe1iPG+A0mbaLZpwcWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116364; c=relaxed/simple;
-	bh=RlgTt24W81BZBWX/ze3JYZvQ5Mtt7YfZWNd1bqE8kfQ=;
+	s=arc-20240116; t=1744116367; c=relaxed/simple;
+	bh=lYY4b6UH/ZjPxEGjeA6Xblo8wCiySVjXzTTMxFtXzj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUEkGFzggidli7LJBFl1rdMmMV4ijuZXB/qVfjFxhhsEx+AkyKS6PJVJxXfaTKAOBM9rTwGhL8VSXN3h3Dnygj5QVZWdiuN4TG0Ux65gGPbMX5VawvgC+dKBI8aA5WPO/6qapQJc7jgMIWKY5Kn0hUbXENHD/8ure2FUGQTCYgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcDNPnwk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzOLo8SuXh+b7OYzGS5ubMkoIpTiDF9+KZbIKqJSM64mdzGg//wWdr2WL1KyZ1zHAltStYR+Rj5zcWy7Gaz5urs1K32cy+tq58MtN0LOBtumiTbp+/hWF6KnolXHGltWieuW+rjsQfbsM3vS6mQpqDjAWFXgAl/VAAcI8bJ9f0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyBbtvo/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcDNPnwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D9FC4CEE5;
-	Tue,  8 Apr 2025 12:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyBbtvo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9004DC4CEE7;
+	Tue,  8 Apr 2025 12:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116364;
-	bh=RlgTt24W81BZBWX/ze3JYZvQ5Mtt7YfZWNd1bqE8kfQ=;
+	s=korg; t=1744116366;
+	bh=lYY4b6UH/ZjPxEGjeA6Xblo8wCiySVjXzTTMxFtXzj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LcDNPnwkgEOnfYeCnlVUfBym+2b+uh3tnP3K1jpBsCusnEIL9P0Lwst/rSetuOxKw
-	 0TebA4ULYNEJW+yn9w04G4jsa4A6qlgpxPfvjwPlvHaAYBujw9mLC/hUZLwgsosuL3
-	 McQjdbPV1zmtxIlX/zCn/0LDlYB885MJYfw7LliQ=
+	b=QyBbtvo/IfRgnYJR8aHavEj2gEdhKyYUb1dpezFlnIHLZimSn9uIbmMVGkUTXDwHg
+	 IlghdnntUiL+Ti1tEq9KjSJT+y/lAvjik5cveGH4LS2dxTi5YZoxJhFRPswF/uDYpG
+	 PdqsSfau8KvQhzMLPUzkbaMPEHhKGQivvIziZp/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yuxin wang <wang1315768607@163.com>,
-	Marius Fleischer <fleischermarius@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/423] x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()
-Date: Tue,  8 Apr 2025 12:47:19 +0200
-Message-ID: <20250408104848.364075451@linuxfoundation.org>
+Subject: [PATCH 6.12 114/423] clk: renesas: r8a08g045: Check the source of the CPU PLL settings
+Date: Tue,  8 Apr 2025 12:47:20 +0200
+Message-ID: <20250408104848.387562661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -61,294 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit dc84bc2aba85a1508f04a936f9f9a15f64ebfb31 ]
+[ Upstream commit dc0f16c1b76293ac942a783e960abfd19e95fdf5 ]
 
-If track_pfn_copy() fails, we already added the dst VMA to the maple
-tree. As fork() fails, we'll cleanup the maple tree, and stumble over
-the dst VMA for which we neither performed any reservation nor copied
-any page tables.
+On the RZ/G3S SoC, the CPU PLL settings can be set and retrieved through
+the CPG_PLL1_CLK1 and CPG_PLL1_CLK2 registers.  However, these settings
+are applied only when CPG_PLL1_SETTING.SEL_PLL1 is set to 0.
+Otherwise, the CPU PLL operates at the default frequency of 1.1 GHz.
+Hence add support to the PLL driver for returning the 1.1 GHz frequency
+when the CPU PLL is configured with the default frequency.
 
-Consequently untrack_pfn() will see VM_PAT and try obtaining the
-PAT information from the page table -- which fails because the page
-table was not copied.
-
-The easiest fix would be to simply clear the VM_PAT flag of the dst VMA
-if track_pfn_copy() fails. However, the whole thing is about "simply"
-clearing the VM_PAT flag is shaky as well: if we passed track_pfn_copy()
-and performed a reservation, but copying the page tables fails, we'll
-simply clear the VM_PAT flag, not properly undoing the reservation ...
-which is also wrong.
-
-So let's fix it properly: set the VM_PAT flag only if the reservation
-succeeded (leaving it clear initially), and undo the reservation if
-anything goes wrong while copying the page tables: clearing the VM_PAT
-flag after undoing the reservation.
-
-Note that any copied page table entries will get zapped when the VMA will
-get removed later, after copy_page_range() succeeded; as VM_PAT is not set
-then, we won't try cleaning VM_PAT up once more and untrack_pfn() will be
-happy. Note that leaving these page tables in place without a reservation
-is not a problem, as we are aborting fork(); this process will never run.
-
-A reproducer can trigger this usually at the first try:
-
-  https://gitlab.com/davidhildenbrand/scratchspace/-/raw/main/reproducers/pat_fork.c
-
-  WARNING: CPU: 26 PID: 11650 at arch/x86/mm/pat/memtype.c:983 get_pat_info+0xf6/0x110
-  Modules linked in: ...
-  CPU: 26 UID: 0 PID: 11650 Comm: repro3 Not tainted 6.12.0-rc5+ #92
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
-  RIP: 0010:get_pat_info+0xf6/0x110
-  ...
-  Call Trace:
-   <TASK>
-   ...
-   untrack_pfn+0x52/0x110
-   unmap_single_vma+0xa6/0xe0
-   unmap_vmas+0x105/0x1f0
-   exit_mmap+0xf6/0x460
-   __mmput+0x4b/0x120
-   copy_process+0x1bf6/0x2aa0
-   kernel_clone+0xab/0x440
-   __do_sys_clone+0x66/0x90
-   do_syscall_64+0x95/0x180
-
-Likely this case was missed in:
-
-  d155df53f310 ("x86/mm/pat: clear VM_PAT if copy_p4d_range failed")
-
-... and instead of undoing the reservation we simply cleared the VM_PAT flag.
-
-Keep the documentation of these functions in include/linux/pgtable.h,
-one place is more than sufficient -- we should clean that up for the other
-functions like track_pfn_remap/untrack_pfn separately.
-
-Fixes: d155df53f310 ("x86/mm/pat: clear VM_PAT if copy_p4d_range failed")
-Fixes: 2ab640379a0a ("x86: PAT: hooks in generic vm code to help archs to track pfnmap regions - v3")
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yuxin wang <wang1315768607@163.com>
-Reported-by: Marius Fleischer <fleischermarius@gmail.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org
-Link: https://lore.kernel.org/r/20250321112323.153741-1-david@redhat.com
-Closes: https://lore.kernel.org/lkml/CABOYnLx_dnqzpCW99G81DmOr+2UzdmZMk=T3uxwNxwz+R1RAwg@mail.gmail.com/
-Closes: https://lore.kernel.org/lkml/CAJg=8jwijTP5fre8woS4JVJQ8iUA6v+iNcsOgtj9Zfpc3obDOQ@mail.gmail.com/
+Fixes: 01eabef547e6 ("clk: renesas: rzg2l: Add support for RZ/G3S PLL")
+Fixes: de60a3ebe410 ("clk: renesas: Add minimal boot support for RZ/G3S SoC")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250115142059.1833063-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/memtype.c | 52 +++++++++++++++++++++------------------
- include/linux/pgtable.h   | 28 ++++++++++++++++-----
- kernel/fork.c             |  4 +++
- mm/memory.c               | 11 +++------
- 4 files changed, 58 insertions(+), 37 deletions(-)
+ drivers/clk/renesas/r9a08g045-cpg.c |  5 +++--
+ drivers/clk/renesas/rzg2l-cpg.c     | 13 ++++++++++++-
+ drivers/clk/renesas/rzg2l-cpg.h     | 10 +++++++---
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/mm/pat/memtype.c b/arch/x86/mm/pat/memtype.c
-index feb8cc6a12bf2..d721cc19addbd 100644
---- a/arch/x86/mm/pat/memtype.c
-+++ b/arch/x86/mm/pat/memtype.c
-@@ -984,29 +984,42 @@ static int get_pat_info(struct vm_area_struct *vma, resource_size_t *paddr,
- 	return -EINVAL;
- }
+diff --git a/drivers/clk/renesas/r9a08g045-cpg.c b/drivers/clk/renesas/r9a08g045-cpg.c
+index 1ce40fb51f13b..a1f961d5b8569 100644
+--- a/drivers/clk/renesas/r9a08g045-cpg.c
++++ b/drivers/clk/renesas/r9a08g045-cpg.c
+@@ -50,7 +50,7 @@
+ #define G3S_SEL_SDHI2		SEL_PLL_PACK(G3S_CPG_SDHI_DSEL, 8, 2)
  
--/*
-- * track_pfn_copy is called when vma that is covering the pfnmap gets
-- * copied through copy_page_range().
-- *
-- * If the vma has a linear pfn mapping for the entire range, we get the prot
-- * from pte and reserve the entire vma range with single reserve_pfn_range call.
-- */
--int track_pfn_copy(struct vm_area_struct *vma)
-+int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn)
+ /* PLL 1/4/6 configuration registers macro. */
+-#define G3S_PLL146_CONF(clk1, clk2)	((clk1) << 22 | (clk2) << 12)
++#define G3S_PLL146_CONF(clk1, clk2, setting)	((clk1) << 22 | (clk2) << 12 | (setting))
+ 
+ #define DEF_G3S_MUX(_name, _id, _conf, _parent_names, _mux_flags, _clk_flags) \
+ 	DEF_TYPE(_name, _id, CLK_TYPE_MUX, .conf = (_conf), \
+@@ -133,7 +133,8 @@ static const struct cpg_core_clk r9a08g045_core_clks[] __initconst = {
+ 
+ 	/* Internal Core Clocks */
+ 	DEF_FIXED(".osc_div1000", CLK_OSC_DIV1000, CLK_EXTAL, 1, 1000),
+-	DEF_G3S_PLL(".pll1", CLK_PLL1, CLK_EXTAL, G3S_PLL146_CONF(0x4, 0x8)),
++	DEF_G3S_PLL(".pll1", CLK_PLL1, CLK_EXTAL, G3S_PLL146_CONF(0x4, 0x8, 0x100),
++		    1100000000UL),
+ 	DEF_FIXED(".pll2", CLK_PLL2, CLK_EXTAL, 200, 3),
+ 	DEF_FIXED(".pll3", CLK_PLL3, CLK_EXTAL, 200, 3),
+ 	DEF_FIXED(".pll4", CLK_PLL4, CLK_EXTAL, 100, 3),
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index b43b763dfe186..229f4540b219e 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -51,6 +51,7 @@
+ #define RZG3S_DIV_M		GENMASK(25, 22)
+ #define RZG3S_DIV_NI		GENMASK(21, 13)
+ #define RZG3S_DIV_NF		GENMASK(12, 1)
++#define RZG3S_SEL_PLL		BIT(0)
+ 
+ #define CLK_ON_R(reg)		(reg)
+ #define CLK_MON_R(reg)		(0x180 + (reg))
+@@ -60,6 +61,7 @@
+ #define GET_REG_OFFSET(val)		((val >> 20) & 0xfff)
+ #define GET_REG_SAMPLL_CLK1(val)	((val >> 22) & 0xfff)
+ #define GET_REG_SAMPLL_CLK2(val)	((val >> 12) & 0xfff)
++#define GET_REG_SAMPLL_SETTING(val)	((val) & 0xfff)
+ 
+ #define CPG_WEN_BIT		BIT(16)
+ 
+@@ -943,6 +945,7 @@ rzg2l_cpg_sipll5_register(const struct cpg_core_clk *core,
+ 
+ struct pll_clk {
+ 	struct clk_hw hw;
++	unsigned long default_rate;
+ 	unsigned int conf;
+ 	unsigned int type;
+ 	void __iomem *base;
+@@ -980,12 +983,19 @@ static unsigned long rzg3s_cpg_pll_clk_recalc_rate(struct clk_hw *hw,
  {
-+	const unsigned long vma_size = src_vma->vm_end - src_vma->vm_start;
- 	resource_size_t paddr;
--	unsigned long vma_size = vma->vm_end - vma->vm_start;
- 	pgprot_t pgprot;
-+	int rc;
+ 	struct pll_clk *pll_clk = to_pll(hw);
+ 	struct rzg2l_cpg_priv *priv = pll_clk->priv;
+-	u32 nir, nfr, mr, pr, val;
++	u32 nir, nfr, mr, pr, val, setting;
+ 	u64 rate;
  
--	if (vma->vm_flags & VM_PAT) {
--		if (get_pat_info(vma, &paddr, &pgprot))
--			return -EINVAL;
--		/* reserve the whole chunk covered by vma. */
--		return reserve_pfn_range(paddr, vma_size, &pgprot, 1);
--	}
-+	if (!(src_vma->vm_flags & VM_PAT))
-+		return 0;
+ 	if (pll_clk->type != CLK_TYPE_G3S_PLL)
+ 		return parent_rate;
+ 
++	setting = GET_REG_SAMPLL_SETTING(pll_clk->conf);
++	if (setting) {
++		val = readl(priv->base + setting);
++		if (val & RZG3S_SEL_PLL)
++			return pll_clk->default_rate;
++	}
 +
-+	/*
-+	 * Duplicate the PAT information for the dst VMA based on the src
-+	 * VMA.
-+	 */
-+	if (get_pat_info(src_vma, &paddr, &pgprot))
-+		return -EINVAL;
-+	rc = reserve_pfn_range(paddr, vma_size, &pgprot, 1);
-+	if (rc)
-+		return rc;
+ 	val = readl(priv->base + GET_REG_SAMPLL_CLK1(pll_clk->conf));
  
-+	/* Reservation for the destination VMA succeeded. */
-+	vm_flags_set(dst_vma, VM_PAT);
-+	*pfn = PHYS_PFN(paddr);
- 	return 0;
- }
+ 	pr = 1 << FIELD_GET(RZG3S_DIV_P, val);
+@@ -1038,6 +1048,7 @@ rzg2l_cpg_pll_clk_register(const struct cpg_core_clk *core,
+ 	pll_clk->base = priv->base;
+ 	pll_clk->priv = priv;
+ 	pll_clk->type = core->type;
++	pll_clk->default_rate = core->default_rate;
  
-+void untrack_pfn_copy(struct vm_area_struct *dst_vma, unsigned long pfn)
-+{
-+	untrack_pfn(dst_vma, pfn, dst_vma->vm_end - dst_vma->vm_start, true);
-+	/*
-+	 * Reservation was freed, any copied page tables will get cleaned
-+	 * up later, but without getting PAT involved again.
-+	 */
-+}
-+
- /*
-  * prot is passed in as a parameter for the new mapping. If the vma has
-  * a linear pfn mapping for the entire range, or no vma is provided,
-@@ -1095,15 +1108,6 @@ void untrack_pfn(struct vm_area_struct *vma, unsigned long pfn,
- 	}
- }
- 
--/*
-- * untrack_pfn_clear is called if the following situation fits:
-- *
-- * 1) while mremapping a pfnmap for a new region,  with the old vma after
-- * its pfnmap page table has been removed.  The new vma has a new pfnmap
-- * to the same pfn & cache type with VM_PAT set.
-- * 2) while duplicating vm area, the new vma fails to copy the pgtable from
-- * old vma.
-- */
- void untrack_pfn_clear(struct vm_area_struct *vma)
- {
- 	vm_flags_clear(vma, VM_PAT);
-diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
-index e8b2ac6bd2ae3..8df030ebd8628 100644
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -1518,14 +1518,25 @@ static inline void track_pfn_insert(struct vm_area_struct *vma, pgprot_t *prot,
- }
- 
- /*
-- * track_pfn_copy is called when vma that is covering the pfnmap gets
-- * copied through copy_page_range().
-+ * track_pfn_copy is called when a VM_PFNMAP VMA is about to get the page
-+ * tables copied during copy_page_range(). On success, stores the pfn to be
-+ * passed to untrack_pfn_copy().
-  */
--static inline int track_pfn_copy(struct vm_area_struct *vma)
-+static inline int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn)
- {
- 	return 0;
- }
- 
-+/*
-+ * untrack_pfn_copy is called when a VM_PFNMAP VMA failed to copy during
-+ * copy_page_range(), but after track_pfn_copy() was already called.
-+ */
-+static inline void untrack_pfn_copy(struct vm_area_struct *dst_vma,
-+		unsigned long pfn)
-+{
-+}
-+
- /*
-  * untrack_pfn is called while unmapping a pfnmap for a region.
-  * untrack can be called for a specific region indicated by pfn and size or
-@@ -1538,8 +1549,10 @@ static inline void untrack_pfn(struct vm_area_struct *vma,
- }
- 
- /*
-- * untrack_pfn_clear is called while mremapping a pfnmap for a new region
-- * or fails to copy pgtable during duplicate vm area.
-+ * untrack_pfn_clear is called in the following cases on a VM_PFNMAP VMA:
-+ *
-+ * 1) During mremap() on the src VMA after the page tables were moved.
-+ * 2) During fork() on the dst VMA, immediately after duplicating the src VMA.
-  */
- static inline void untrack_pfn_clear(struct vm_area_struct *vma)
- {
-@@ -1550,7 +1563,10 @@ extern int track_pfn_remap(struct vm_area_struct *vma, pgprot_t *prot,
- 			   unsigned long size);
- extern void track_pfn_insert(struct vm_area_struct *vma, pgprot_t *prot,
- 			     pfn_t pfn);
--extern int track_pfn_copy(struct vm_area_struct *vma);
-+extern int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn);
-+extern void untrack_pfn_copy(struct vm_area_struct *dst_vma,
-+		unsigned long pfn);
- extern void untrack_pfn(struct vm_area_struct *vma, unsigned long pfn,
- 			unsigned long size, bool mm_wr_locked);
- extern void untrack_pfn_clear(struct vm_area_struct *vma);
-diff --git a/kernel/fork.c b/kernel/fork.c
-index e192bdbc9adeb..12decadff468f 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -505,6 +505,10 @@ struct vm_area_struct *vm_area_dup(struct vm_area_struct *orig)
- 	vma_numab_state_init(new);
- 	dup_anon_vma_name(orig, new);
- 
-+	/* track_pfn_copy() will later take care of copying internal state. */
-+	if (unlikely(new->vm_flags & VM_PFNMAP))
-+		untrack_pfn_clear(new);
-+
- 	return new;
- }
- 
-diff --git a/mm/memory.c b/mm/memory.c
-index 01c0b3a5a4d66..99dceaf6a1057 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -1356,12 +1356,12 @@ int
- copy_page_range(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma)
- {
- 	pgd_t *src_pgd, *dst_pgd;
--	unsigned long next;
- 	unsigned long addr = src_vma->vm_start;
- 	unsigned long end = src_vma->vm_end;
- 	struct mm_struct *dst_mm = dst_vma->vm_mm;
- 	struct mm_struct *src_mm = src_vma->vm_mm;
- 	struct mmu_notifier_range range;
-+	unsigned long next, pfn;
- 	bool is_cow;
- 	int ret;
- 
-@@ -1372,11 +1372,7 @@ copy_page_range(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma)
- 		return copy_hugetlb_page_range(dst_mm, src_mm, dst_vma, src_vma);
- 
- 	if (unlikely(src_vma->vm_flags & VM_PFNMAP)) {
--		/*
--		 * We do not free on error cases below as remove_vma
--		 * gets called on error from higher level routine
--		 */
--		ret = track_pfn_copy(src_vma);
-+		ret = track_pfn_copy(dst_vma, src_vma, &pfn);
- 		if (ret)
- 			return ret;
- 	}
-@@ -1413,7 +1409,6 @@ copy_page_range(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma)
- 			continue;
- 		if (unlikely(copy_p4d_range(dst_vma, src_vma, dst_pgd, src_pgd,
- 					    addr, next))) {
--			untrack_pfn_clear(dst_vma);
- 			ret = -ENOMEM;
- 			break;
- 		}
-@@ -1423,6 +1418,8 @@ copy_page_range(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma)
- 		raw_write_seqcount_end(&src_mm->write_protect_seq);
- 		mmu_notifier_invalidate_range_end(&range);
- 	}
-+	if (ret && unlikely(src_vma->vm_flags & VM_PFNMAP))
-+		untrack_pfn_copy(dst_vma, pfn);
- 	return ret;
- }
- 
+ 	ret = devm_clk_hw_register(dev, &pll_clk->hw);
+ 	if (ret)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
+index ecfe7e7ea8a17..019efe00ffd9f 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.h
++++ b/drivers/clk/renesas/rzg2l-cpg.h
+@@ -102,7 +102,10 @@ struct cpg_core_clk {
+ 	const struct clk_div_table *dtable;
+ 	const u32 *mtable;
+ 	const unsigned long invalid_rate;
+-	const unsigned long max_rate;
++	union {
++		const unsigned long max_rate;
++		const unsigned long default_rate;
++	};
+ 	const char * const *parent_names;
+ 	notifier_fn_t notifier;
+ 	u32 flag;
+@@ -144,8 +147,9 @@ enum clk_types {
+ 	DEF_TYPE(_name, _id, _type, .parent = _parent)
+ #define DEF_SAMPLL(_name, _id, _parent, _conf) \
+ 	DEF_TYPE(_name, _id, CLK_TYPE_SAM_PLL, .parent = _parent, .conf = _conf)
+-#define DEF_G3S_PLL(_name, _id, _parent, _conf) \
+-	DEF_TYPE(_name, _id, CLK_TYPE_G3S_PLL, .parent = _parent, .conf = _conf)
++#define DEF_G3S_PLL(_name, _id, _parent, _conf, _default_rate) \
++	DEF_TYPE(_name, _id, CLK_TYPE_G3S_PLL, .parent = _parent, .conf = _conf, \
++		 .default_rate = _default_rate)
+ #define DEF_INPUT(_name, _id) \
+ 	DEF_TYPE(_name, _id, CLK_TYPE_IN)
+ #define DEF_FIXED(_name, _id, _parent, _mult, _div) \
 -- 
 2.39.5
 
