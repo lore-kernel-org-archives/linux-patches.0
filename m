@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB5224F6;
-	Tue,  8 Apr 2025 11:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991AE224F6;
+	Tue,  8 Apr 2025 11:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111171; cv=none; b=siaF65KbST+0tXUBaabGg3anCQqTojXx2eApH9shYE5syxxZZvkgmqIRuzd5UbsbuNN9X/bFoiLCtLnNaXbCpPT9GdqoL0Lkvg6A92G7yYMGNvdp2rTeXH0Y4btKCoqXN9xM5Xwglib/ztoPrUtHcuAUo0q232W6rcZEMqqkTFk=
+	t=1744111173; cv=none; b=I1mnKHNDp59vdQc58ZqW8ccxgHtKT9jOMQnbhYFegO5Wawrxrw/BRP5UFXISqI0EJjcUn5OXg0tZAng17uG7ng2WJ3ahz1goz6n/Gn1m7bnKQ3H/ahsjzREec6ZluteF1Yfun3mlZyfSgkohdFUNhPiQT4j+v1ERGOgWxRKbJHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111171; c=relaxed/simple;
-	bh=wKU8vrdTGZmlYfdaCWq4J13YsksKlx57D9ZXpJpl/R0=;
+	s=arc-20240116; t=1744111173; c=relaxed/simple;
+	bh=uAOyERcCY4SAU2JW0N54SwlmcglXA9blmoElYR83XS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbRoJ1lTL4xAzEMntLxKhpgDnYp8y0FpJi7gha7ROZM53XZM+gNU3+Q4neuRIitRbs+cESp0FxfvXDsfgxtKxBvgzEIbXlO5gUWC/pTMaAxcwgefJHWImN6hIH9eMVYr7QKXXceyECUkQiB21zYITMPo7Nft2FlJtHIWejdh/kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZtPTf+1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmsOaR3QErRBLCJxppRbtznSt86ReogyC4+qglVfC9Dt00DJ1bQw96ANLB2OMRt3F5p9YHt34xznBC8HLb11TpEE9Qz+NioDbbbtHKXJvhMB4yEeg/cdArDBLyF3Yummxmn5FU4SftT9yd+7m3cyCINZsqcqw0QmuuBRFit5qw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meOhWoCm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZtPTf+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145DAC4CEE5;
-	Tue,  8 Apr 2025 11:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meOhWoCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0EFC4CEE5;
+	Tue,  8 Apr 2025 11:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111170;
-	bh=wKU8vrdTGZmlYfdaCWq4J13YsksKlx57D9ZXpJpl/R0=;
+	s=korg; t=1744111173;
+	bh=uAOyERcCY4SAU2JW0N54SwlmcglXA9blmoElYR83XS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZtPTf+1sa3lfZfGZygwKLTZEnxWS56ZrXReMsOwepp9lYMsqKgfBQ0i4//yrOw6b
-	 YtKVojlqNsQ0GIcjqCmyyiE8Q1Rw6EbGZmF7z8X1nQcOKCcI/2rbxNJtOdVR6OAGYp
-	 T5Xv7Pw3017Y0oNOVD4NqXB5pvRuZF1LbD5nTevE=
+	b=meOhWoCmE5i3SfdCJTuU+QVSXXKGyxby5SNjb2JjjsF8jkDiOJdVd7Z9BjeLW1c69
+	 03HQPuXsN4pnD/ryXSoTmFIHy7DpM2rgxd9ABx7Pg49RId/NYFfNaMeiK0JLOYYtFr
+	 phx0wI72AEzZaETTy0Ad0QpHUto7uOmzJUyhVX9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 333/731] drm/mediatek: dp: drm_err => dev_err in HPD path to avoid NULL ptr
-Date: Tue,  8 Apr 2025 12:43:50 +0200
-Message-ID: <20250408104922.020200444@linuxfoundation.org>
+Subject: [PATCH 6.14 298/731] drm/msm/dsi: Use existing per-interface slice count in DSC timing
+Date: Tue,  8 Apr 2025 12:43:15 +0200
+Message-ID: <20250408104921.209877039@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,67 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 106a6de46cf4887d535018185ec528ce822d6d84 ]
+[ Upstream commit 14ad809ceb66d0874cbe4bd5ca9edf0de8d9ad96 ]
 
-The function mtk_dp_wait_hpd_asserted() may be called before the
-`mtk_dp->drm_dev` pointer is assigned in mtk_dp_bridge_attach().
-Specifically it can be called via this callpath:
- - mtk_edp_wait_hpd_asserted
- - [panel probe]
- - dp_aux_ep_probe
+When configuring the timing of DSI hosts (interfaces) in
+dsi_timing_setup() all values written to registers are taking
+bonded-mode into account by dividing the original mode width by 2
+(half the data is sent over each of the two DSI hosts), but the full
+width instead of the interface width is passed as hdisplay parameter to
+dsi_update_dsc_timing().
 
-Using "drm" level prints anywhere in this callpath causes a NULL
-pointer dereference. Change the error message directly in
-mtk_dp_wait_hpd_asserted() to dev_err() to avoid this. Also change the
-error messages in mtk_dp_parse_capabilities(), which is called by
-mtk_dp_wait_hpd_asserted().
+Currently only msm_dsc_get_slices_per_intf() is called within
+dsi_update_dsc_timing() with the `hdisplay` argument which clearly
+documents that it wants the width of a single interface (which, again,
+in bonded DSI mode is half the total width of the mode) resulting in all
+subsequent values to be completely off.
 
-While touching these prints, also add the error code to them to make
-future debugging easier.
+However, as soon as we start to pass the halved hdisplay
+into dsi_update_dsc_timing() we might as well discard
+msm_dsc_get_slices_per_intf() since the value it calculates is already
+available in dsc->slice_count which is per-interface by the current
+design of MSM DPU/DSI implementations and their use of the DRM DSC
+helpers.
 
-Fixes: 7eacba9a083b ("drm/mediatek: dp: Add .wait_hpd_asserted() for AUX bus")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250116094249.1.I29b0b621abb613ddc70ab4996426a3909e1aa75f@changeid/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/637648/
+Link: https://lore.kernel.org/r/20250217-drm-msm-initial-dualpipe-dsc-fixes-v3-1-913100d6103f@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c   |  8 ++++----
+ drivers/gpu/drm/msm/msm_dsc_helper.h | 11 -----------
+ 2 files changed, 4 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index cd385ba4c66aa..d2cf09124d108 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -1766,7 +1766,7 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 007311c21fdaa..42e100a8adca0 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -846,7 +846,7 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+ 		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+ }
  
- 	ret = drm_dp_dpcd_readb(&mtk_dp->aux, DP_MSTM_CAP, &val);
- 	if (ret < 1) {
--		drm_err(mtk_dp->drm_dev, "Read mstm cap failed\n");
-+		dev_err(mtk_dp->dev, "Read mstm cap failed: %zd\n", ret);
- 		return ret == 0 ? -EIO : ret;
- 	}
+-static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
++static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode)
+ {
+ 	struct drm_dsc_config *dsc = msm_host->dsc;
+ 	u32 reg, reg_ctrl, reg_ctrl2;
+@@ -858,7 +858,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	/* first calculate dsc parameters and then program
+ 	 * compress mode registers
+ 	 */
+-	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
++	slice_per_intf = dsc->slice_count;
  
-@@ -1776,7 +1776,7 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
- 					DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
- 					&val);
- 		if (ret < 1) {
--			drm_err(mtk_dp->drm_dev, "Read irq vector failed\n");
-+			dev_err(mtk_dp->dev, "Read irq vector failed: %zd\n", ret);
- 			return ret == 0 ? -EIO : ret;
- 		}
+ 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+ 	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
+@@ -991,7 +991,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
  
-@@ -2059,7 +2059,7 @@ static int mtk_dp_wait_hpd_asserted(struct drm_dp_aux *mtk_aux, unsigned long wa
+ 	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+ 		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
++			dsi_update_dsc_timing(msm_host, false);
  
- 	ret = mtk_dp_parse_capabilities(mtk_dp);
- 	if (ret) {
--		drm_err(mtk_dp->drm_dev, "Can't parse capabilities\n");
-+		dev_err(mtk_dp->dev, "Can't parse capabilities: %d\n", ret);
- 		return ret;
- 	}
+ 		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+ 			DSI_ACTIVE_H_START(ha_start) |
+@@ -1012,7 +1012,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+ 	} else {		/* command mode */
+ 		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
++			dsi_update_dsc_timing(msm_host, true);
  
+ 		/* image data and 1 byte write_memory_start cmd */
+ 		if (!msm_host->dsc)
+diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+index b9049fe1e2790..63f95523b2cbb 100644
+--- a/drivers/gpu/drm/msm/msm_dsc_helper.h
++++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+@@ -12,17 +12,6 @@
+ #include <linux/math.h>
+ #include <drm/display/drm_dsc_helper.h>
+ 
+-/**
+- * msm_dsc_get_slices_per_intf() - calculate number of slices per interface
+- * @dsc: Pointer to drm dsc config struct
+- * @intf_width: interface width in pixels
+- * Returns: Integer representing the number of slices for the given interface
+- */
+-static inline u32 msm_dsc_get_slices_per_intf(const struct drm_dsc_config *dsc, u32 intf_width)
+-{
+-	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+-}
+-
+ /**
+  * msm_dsc_get_bytes_per_line() - calculate bytes per line
+  * @dsc: Pointer to drm dsc config struct
 -- 
 2.39.5
 
