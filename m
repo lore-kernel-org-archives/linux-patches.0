@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEF420CCD8;
-	Tue,  8 Apr 2025 11:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDBB269885;
+	Tue,  8 Apr 2025 11:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113462; cv=none; b=csNZBQ6nVQwJkHDKITgFZcqD4TCGeN8XNvER28KY2g/yWoO+Q40NG0skdXa+RRymq5ID2IISBvZpWPPmIuL/Oo/K0tIAy45igXxrLZygvIb+634rJzvSxdjf7CgXF/jwnGi6eIibzUo5GGHICjynp5pnz9EER3200L5+utEaW3k=
+	t=1744113465; cv=none; b=TAyU+8lckwmNGG3bOaLfTy/l7CmehhUO8kGcDHRWRPEZizCJA0q0xSO/7TwhcqBj6RZhS7wx/OCT/CcT50n2cSaw3j7m2sbYeO71cE9DEKBdubnnyTVtyi141coj/Ue1SlBUXA/SgzrCMLz3Siil3qLcxnHmYpIPs8lLClAJf2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113462; c=relaxed/simple;
-	bh=NuNJYyJam0EvmmUqmRDv/Eu9h4Nh/D3NEZX4YS3fl9Q=;
+	s=arc-20240116; t=1744113465; c=relaxed/simple;
+	bh=L1Dyfz1Qm2UDpH5avrfAe/6WxUzmp3Yg7Mjgc/+bhTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPW4R1j/+mdl7R/F/1btXpbcUgTUVv0MBizhUaDp2IeopNukRGdEsQ3Y19HZJgvuKwHSjhzTmrHPs7LVnhEYgYFlqIiKb9dv7S8DQcq4z3JHgh4yqMLQvux8HSdGE7wdZXDblCRX7WdNQIDXWt9YQifuY4tQKnJbIffFf4Ik4fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GvWhC2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ij7KGOkc7HIZqWOdxCwcKe+k8GSQUhoW/+nZfiHyn9JcAvWfN+JZDP0k4nNAlVjhaTC6D6dhuFSopqRhcriKOBR69IoS6q7MXVKbjrWBQP48GvsmKcMrgpfxcEHlkdnE7UkdRGTp7COeGiSjCOKUWvYhOC+uu6fIyclhWmGNbV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMq6PfmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GvWhC2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346DFC4CEE5;
-	Tue,  8 Apr 2025 11:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMq6PfmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16BC4CEE5;
+	Tue,  8 Apr 2025 11:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113462;
-	bh=NuNJYyJam0EvmmUqmRDv/Eu9h4Nh/D3NEZX4YS3fl9Q=;
+	s=korg; t=1744113465;
+	bh=L1Dyfz1Qm2UDpH5avrfAe/6WxUzmp3Yg7Mjgc/+bhTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GvWhC2SdIHbWFrZCw90Du13953HHwyJT4mdm5DayQDw2UXzZ2K1qS3/djvUocOcT
-	 W8IHK1pEeZ0SEg9s6kENaKUun7hVSCCLhvsM0u4tuaThXaOXBIlm3E7k7hEShGNc56
-	 vuKD7Nh0SZpcArCa4bqYbufIz+2uFyeEG2u/T7rs=
+	b=UMq6PfmY4ZHhJZngOL3B6OZyTHZkRIZ1KOHySfNXohiDRzWE7zn+vmgRu2AIAOe4k
+	 XQtdm9MG8TJYSHNtp3HuvJkPs4tqoIdqsQF/BoakydP79HA0bdVQ7kaoCOkC0d9v4q
+	 ifqD/4jXtRCqONoRA86ckHymNDn2aS6Z22rMizJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Simon Tatham <anakin@pobox.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/268] ring-buffer: Fix bytes_dropped calculation issue
-Date: Tue,  8 Apr 2025 12:49:22 +0200
-Message-ID: <20250408104832.610698020@linuxfoundation.org>
+Subject: [PATCH 6.6 169/268] affs: dont write overlarge OFS data block size fields
+Date: Tue,  8 Apr 2025 12:49:40 +0200
+Message-ID: <20250408104833.107555670@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,39 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit c73f0b69648501978e8b3e8fa7eef7f4197d0481 ]
+[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
 
-The calculation of bytes-dropped and bytes_dropped_nested is reversed.
-Although it does not affect the final calculation of total_dropped,
-it should still be modified.
+If a data sector on an OFS floppy contains a value > 0x1e8 (the
+largest amount of data that fits in the sector after its header), then
+an Amiga reading the file can return corrupt data, by taking the
+overlarge size at its word and reading past the end of the buffer it
+read the disk sector into!
 
-Link: https://lore.kernel.org/20250223070106.6781-1-yangfeng59949@163.com
-Fixes: 6c43e554a2a5 ("ring-buffer: Add ring buffer startup selftest")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
+the new size field for a data block was computed by adding the amount
+of data currently being written (into the block) to the existing value
+of the size field. This is correct if you're extending the file at the
+end, but if you seek backwards in the file and overwrite _existing_
+data, it can lead to the size field being larger than the maximum
+legal value.
+
+This commit changes the calculation so that it sets the size field to
+the max of its previous size and the position within the block that we
+just wrote up to.
+
+Signed-off-by: Simon Tatham <anakin@pobox.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/affs/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 61caff3d4091f..62d93db72b0a9 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5995,9 +5995,9 @@ static __init int rb_write_something(struct rb_test_data *data, bool nested)
- 		/* Ignore dropped events before test starts. */
- 		if (started) {
- 			if (nested)
--				data->bytes_dropped += len;
--			else
- 				data->bytes_dropped_nested += len;
-+			else
-+				data->bytes_dropped += len;
- 		}
- 		return len;
- 	}
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index 8fd1a7c5958a8..93b319917c9a9 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -726,7 +726,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		tmp = min(bsize - boff, to - from);
+ 		BUG_ON(boff + tmp > bsize || tmp > bsize);
+ 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
+-		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
++		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
++			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
+ 		affs_fix_checksum(sb, bh);
+ 		mark_buffer_dirty_inode(bh, inode);
+ 		written += tmp;
 -- 
 2.39.5
 
