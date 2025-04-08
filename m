@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DB2265630;
-	Tue,  8 Apr 2025 12:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2864326FA75;
+	Tue,  8 Apr 2025 12:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116265; cv=none; b=DPTgRJ0lWW2Sk1qBg4AuHNIWXx5AM03FZ/jKrkQqrmfzInejmfT22i5swd9Wuvgeb/q9Mr9a4Xf3g/UaWJ3ciwooWXYxZBjYAyl5MMpZGakE8V60j4KB9oC27znjwC2FILus3++++eFPd2nwUFzeR7kucH2lDi7jFUQY18pyO/U=
+	t=1744116268; cv=none; b=GPmDkRKcPHnY6XoWqfCz2poFcCxhNrItzD62yGaW08e/EjREOFoUuEvz4OUwkHWfOI9FE/sQEgAdRq+PdPfoGuiuYYxx+lubtr2j+c8jTLcLTyal9wZ+RtuTvpfpV+urR6PrVzAkKCc+t/BZIv334wwan+oAY1wogUn4NYMc1wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116265; c=relaxed/simple;
-	bh=SmZQmjMj5qzuspmHboY6KWYXfkfDTrfpC+gzim+/6hI=;
+	s=arc-20240116; t=1744116268; c=relaxed/simple;
+	bh=KlW/U66DNrruZFoettJ7IFnjeRNODgIHJMtz0o2iCPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdkNCE8ax75IQ27Y+y7yZQCh6PstJ3X0oy5eOSTNij8E63kQ1NgwNWgkBfs3IQg3nF6zfHpeEVRuG1ZQF+WduDSm7oRrRgxGGF3paJW4wk3tI3DO4KMDuCUPt/avsaoJmXhdTQFFnFJvYYn3cUuYvZYL9GzFu4I8Xtlc21KPx/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZP0w5OYj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9Acl78b9kqnLSqLAgl8KpSBY/AtUbrPWAkZo7tVdmeYbov0cJdNnpX4M+g9dYAdxv/vCU8HH4KdqUMCwPz7K7iLhwnMFKlI89V9o5GpJ+Q1Snzo9SdvDo5W/jY7n2/9ljAKIc27rp6QW5dzVze1kNJYVEIfx8HVqhRHvGOYZjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BovIS+hF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZP0w5OYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9162BC4CEE5;
-	Tue,  8 Apr 2025 12:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BovIS+hF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468F3C4CEE5;
+	Tue,  8 Apr 2025 12:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116264;
-	bh=SmZQmjMj5qzuspmHboY6KWYXfkfDTrfpC+gzim+/6hI=;
+	s=korg; t=1744116267;
+	bh=KlW/U66DNrruZFoettJ7IFnjeRNODgIHJMtz0o2iCPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZP0w5OYjS2sHdLgy1eVa5FG3gmg0iWC6/LXpN6RlDh74ZZk22rhD3s43zEftF3RO7
-	 1MqSkrTfPMrisePl7h8pfz9GWa+AST2gZwMerk9Uq3CyXsa8CLCCoobBc3H8QzY3bn
-	 51l5EN0sZ8pVSrjJWZjVMb3Pd/MW35yJKjrHySAI=
+	b=BovIS+hF/I1Uwb4qOAJP0S79pV2k+r+1fX/fBgA6EaQcjhrQ6/4aLBR5M4y3KBQtZ
+	 hZ2j3ZqUxeIMQaAatsBjcRiAxsAFJglJqUZOtTEmIq6PqsIFWLkt7rqnhUi4dfClSS
+	 bdPMt2ZX1jhAKBUMLEKbr2nU2IVIdLHzcCUxFT0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/423] drm/ssd130x: fix ssd132x encoding
-Date: Tue,  8 Apr 2025 12:46:15 +0200
-Message-ID: <20250408104846.890171863@linuxfoundation.org>
+Subject: [PATCH 6.12 076/423] PCI/portdrv: Only disable pciehp interrupts early when needed
+Date: Tue,  8 Apr 2025 12:46:42 +0200
+Message-ID: <20250408104847.514205031@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,38 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-[ Upstream commit 1e14484677c8e87548f5f0d4eb8800e408004404 ]
+[ Upstream commit 9d7db4db19827380e225914618c0c1bf435ed2f5 ]
 
-The ssd132x buffer is encoded one pixel per nibble, with two pixels in
-each byte.  When encoding an 8-bit greyscale input, take the top 4-bits
-as the value and ensure the two pixels are distinct and do not overwrite
-each other.
+Firmware developers reported that Linux issues two PCIe hotplug commands in
+very short intervals on an ARM server, which doesn't comply with the PCIe
+spec.  According to PCIe r6.1, sec 6.7.3.2, if the Command Completed event
+is supported, software must wait for a command to complete or wait at
+least 1 second before sending a new command.
 
-Fixes: fdd591e00a9c ("drm/ssd130x: Add support for the SSD132x OLED controller family")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250115110139.1672488-2-jkeeping@inmusicbrands.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+In the failure case, the first PCIe hotplug command is from
+get_port_device_capability(), which sends a command to disable PCIe hotplug
+interrupts without waiting for its completion, and the second command comes
+from pcie_enable_notification() of pciehp driver, which enables hotplug
+interrupts again.
+
+Fix this by only disabling the hotplug interrupts when the pciehp driver is
+not enabled.
+
+Link: https://lore.kernel.org/r/20250303023630.78397-1-feng.tang@linux.alibaba.com
+Fixes: 2bd50dd800b5 ("PCI: PCIe: Disable PCIe port services during port initialization")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/solomon/ssd130x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/portdrv.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
-index 6f51bcf774e27..7d071a2f7a460 100644
---- a/drivers/gpu/drm/solomon/ssd130x.c
-+++ b/drivers/gpu/drm/solomon/ssd130x.c
-@@ -880,7 +880,7 @@ static int ssd132x_update_rect(struct ssd130x_device *ssd130x,
- 			u8 n1 = buf[i * width + j];
- 			u8 n2 = buf[i * width + j + 1];
+diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
+index 6af5e04258728..604c055f60786 100644
+--- a/drivers/pci/pcie/portdrv.c
++++ b/drivers/pci/pcie/portdrv.c
+@@ -228,10 +228,12 @@ static int get_port_device_capability(struct pci_dev *dev)
  
--			data_array[array_idx++] = (n2 << 4) | n1;
-+			data_array[array_idx++] = (n2 & 0xf0) | (n1 >> 4);
- 		}
+ 		/*
+ 		 * Disable hot-plug interrupts in case they have been enabled
+-		 * by the BIOS and the hot-plug service driver is not loaded.
++		 * by the BIOS and the hot-plug service driver won't be loaded
++		 * to handle them.
+ 		 */
+-		pcie_capability_clear_word(dev, PCI_EXP_SLTCTL,
+-			  PCI_EXP_SLTCTL_CCIE | PCI_EXP_SLTCTL_HPIE);
++		if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
++			pcie_capability_clear_word(dev, PCI_EXP_SLTCTL,
++				PCI_EXP_SLTCTL_CCIE | PCI_EXP_SLTCTL_HPIE);
  	}
  
+ #ifdef CONFIG_PCIEAER
 -- 
 2.39.5
 
