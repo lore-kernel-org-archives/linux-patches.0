@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B868826561C;
-	Tue,  8 Apr 2025 11:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC34227BB6;
+	Tue,  8 Apr 2025 11:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112168; cv=none; b=Eh0AlsHBKVcYzDSai8OhsjvNqR8Ud0704y/hLJIjOtrH20uVZpg4gdHcKYzNybH0IIuQ7bepmzDUrh7wIIOidK2wap1HbK6bVCBJFpknNXd5QoSWbU4+jBJkspfSF2Szw4KYkDLjWKgfBRzUzKfk16geQAw4xUIsuwIRjk0zHN0=
+	t=1744112171; cv=none; b=TBgloI5pgF08ON8+lD/dT921C2nJKm5a5hk8UY2ZDhb4a8UvDhlA18P2LN+kG+uASh7ks0r/+VfIIb6DPtBOTLF6FEwhhJwYhu+/TVKggArCXe0Oj3sBjn3JviyiUHboYW9cBc9lNQNUPHWO6OyGyR6o5Fz1W67jltMUPaPUyLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112168; c=relaxed/simple;
-	bh=m5bYOyx1n0nhx7xoiJWQXr65fK41vmXNP1Z7Hlt6+hA=;
+	s=arc-20240116; t=1744112171; c=relaxed/simple;
+	bh=6XRXn9FjuoSf86RbOuaVS9Jfr5xIsQULPVPZR7F+iIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZo0cEDgfurytuGJR51aHn5PnZv9VWTJh71ZP+Fae/FLFAejQlBMOtvPot/oKw/UrDFXeTW1Fne9eIHqQU/mVtRIaDqZhYLhe+cHnOCe91VO1Q96coiawFl8RP6O5tftleOcQSOlmp63tJG2n8gLUSV1Rdfx3FK/82ggIYJ9dYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieZjT270; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qe4GDfsYeMqFNRexxhHJ4Y96Y5QkpLfZJKIO1kOpFtTvapbrFdm4PL3K4M+aeuQgjsF5BAzJqi4o0rR28LMwrwlJrKVMeHtqiGCCScJKio7e2igZazA4LrOroIBokwYr+BIGj+1gOQNT3ow0y8/w37OmoIA0hWx7xXf8GPDT2yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g93ZuKHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieZjT270"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4177AC4CEE5;
-	Tue,  8 Apr 2025 11:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g93ZuKHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078B1C4CEEB;
+	Tue,  8 Apr 2025 11:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112168;
-	bh=m5bYOyx1n0nhx7xoiJWQXr65fK41vmXNP1Z7Hlt6+hA=;
+	s=korg; t=1744112171;
+	bh=6XRXn9FjuoSf86RbOuaVS9Jfr5xIsQULPVPZR7F+iIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ieZjT270lPoIwZuuYZJnRviHykEsH8dWpHytO5RuL1EMgCexC3VJXtqguX8tRd9KY
-	 fhFLNNq+b9vyHFICkHZFwqZ0FD5o8JRYm1pPp2mBjz/YiZHTHT6ly+c5onELHTBw6v
-	 l0+tmkEpWP5FtNomNbX1iR3MnmVYT3QDcCOhuGSo=
+	b=g93ZuKHJi7UkRrnc775PvGBdkP4Dgd9povjI2wwN9T6o/2qU2VB4+5A3BIc+CghSE
+	 psmMD66XWcnft3jiTfWkay9ZXuTLyEzQsoa9i23hPMJQXkKyxdGj7XMP/38/W03ONU
+	 pY684fWJ8HsDHlukzMuu9eR8PjiQM+7bdwEofCEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Heelan <seanheelan@gmail.com>,
+	Norbert Szetei <norbert@doyensec.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.14 701/731] ksmbd: fix session use-after-free in multichannel connection
-Date: Tue,  8 Apr 2025 12:49:58 +0200
-Message-ID: <20250408104930.574671898@linuxfoundation.org>
+Subject: [PATCH 6.14 702/731] ksmbd: fix overflow in dacloffset bounds check
+Date: Tue,  8 Apr 2025 12:49:59 +0200
+Message-ID: <20250408104930.597476084@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,110 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit fa4cdb8cbca7d6cb6aa13e4d8d83d1103f6345db upstream.
+commit beff0bc9d69bc8e733f9bca28e2d3df5b3e10e42 upstream.
 
-There is a race condition between session setup and
-ksmbd_sessions_deregister. The session can be freed before the connection
-is added to channel list of session.
-This patch check reference count of session before freeing it.
+The dacloffset field was originally typed as int and used in an
+unchecked addition, which could overflow and bypass the existing
+bounds check in both smb_check_perm_dacl() and smb_inherit_dacl().
+
+This could result in out-of-bounds memory access and a kernel crash
+when dereferencing the DACL pointer.
+
+This patch converts dacloffset to unsigned int and uses
+check_add_overflow() to validate access to the DACL.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sean Heelan <seanheelan@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c              |    4 ++--
- fs/smb/server/mgmt/user_session.c |   14 ++++++++------
- fs/smb/server/smb2pdu.c           |    7 ++++---
- 3 files changed, 14 insertions(+), 11 deletions(-)
+ fs/smb/server/smbacl.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -1016,9 +1016,9 @@ static int ksmbd_get_encryption_key(stru
- 
- 	ses_enc_key = enc ? sess->smb3encryptionkey :
- 		sess->smb3decryptionkey;
--	if (enc)
--		ksmbd_user_session_get(sess);
- 	memcpy(key, ses_enc_key, SMB3_ENC_DEC_KEY_SIZE);
-+	if (!enc)
-+		ksmbd_user_session_put(sess);
- 
- 	return 0;
- }
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -181,7 +181,7 @@ static void ksmbd_expire_session(struct
- 	down_write(&sessions_table_lock);
- 	down_write(&conn->session_lock);
- 	xa_for_each(&conn->sessions, id, sess) {
--		if (atomic_read(&sess->refcnt) == 0 &&
-+		if (atomic_read(&sess->refcnt) <= 1 &&
- 		    (sess->state != SMB2_SESSION_VALID ||
- 		     time_after(jiffies,
- 			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
-@@ -233,7 +233,8 @@ void ksmbd_sessions_deregister(struct ks
- 				down_write(&conn->session_lock);
- 				xa_erase(&conn->sessions, sess->id);
- 				up_write(&conn->session_lock);
--				ksmbd_session_destroy(sess);
-+				if (atomic_dec_and_test(&sess->refcnt))
-+					ksmbd_session_destroy(sess);
- 			}
- 		}
- 	}
-@@ -252,7 +253,8 @@ void ksmbd_sessions_deregister(struct ks
- 		if (xa_empty(&sess->ksmbd_chann_list)) {
- 			xa_erase(&conn->sessions, sess->id);
- 			hash_del(&sess->hlist);
--			ksmbd_session_destroy(sess);
-+			if (atomic_dec_and_test(&sess->refcnt))
-+				ksmbd_session_destroy(sess);
- 		}
- 	}
- 	up_write(&conn->session_lock);
-@@ -328,8 +330,8 @@ void ksmbd_user_session_put(struct ksmbd
- 
- 	if (atomic_read(&sess->refcnt) <= 0)
- 		WARN_ON(1);
--	else
--		atomic_dec(&sess->refcnt);
-+	else if (atomic_dec_and_test(&sess->refcnt))
-+		ksmbd_session_destroy(sess);
- }
- 
- struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
-@@ -436,7 +438,7 @@ static struct ksmbd_session *__session_c
- 	xa_init(&sess->rpc_handle_list);
- 	sess->sequence_number = 1;
- 	rwlock_init(&sess->tree_conns_lock);
--	atomic_set(&sess->refcnt, 1);
-+	atomic_set(&sess->refcnt, 2);
- 
- 	ret = __init_smb2_session(sess);
- 	if (ret)
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2235,13 +2235,14 @@ int smb2_session_logoff(struct ksmbd_wor
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1026,7 +1026,9 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	struct dentry *parent = path->dentry->d_parent;
+ 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
+ 	int inherited_flags = 0, flags = 0, i, nt_size = 0, pdacl_size;
+-	int rc = 0, dacloffset, pntsd_type, pntsd_size, acl_len, aces_size;
++	int rc = 0, pntsd_type, pntsd_size, acl_len, aces_size;
++	unsigned int dacloffset;
++	size_t dacl_struct_end;
+ 	u16 num_aces, ace_cnt = 0;
+ 	char *aces_base;
+ 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
+@@ -1035,8 +1037,11 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 					    parent, &parent_pntsd);
+ 	if (pntsd_size <= 0)
  		return -ENOENT;
++
+ 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
+-	if (!dacloffset || (dacloffset + sizeof(struct smb_acl) > pntsd_size)) {
++	if (!dacloffset ||
++	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
++	    dacl_struct_end > (size_t)pntsd_size) {
+ 		rc = -EINVAL;
+ 		goto free_parent_pntsd;
  	}
+@@ -1240,7 +1245,9 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 	struct smb_ntsd *pntsd = NULL;
+ 	struct smb_acl *pdacl;
+ 	struct posix_acl *posix_acls;
+-	int rc = 0, pntsd_size, acl_size, aces_size, pdacl_size, dacl_offset;
++	int rc = 0, pntsd_size, acl_size, aces_size, pdacl_size;
++	unsigned int dacl_offset;
++	size_t dacl_struct_end;
+ 	struct smb_sid sid;
+ 	int granted = le32_to_cpu(*pdaccess & ~FILE_MAXIMAL_ACCESS_LE);
+ 	struct smb_ace *ace;
+@@ -1259,7 +1266,8 @@ int smb_check_perm_dacl(struct ksmbd_con
  
--	ksmbd_destroy_file_table(&sess->file_table);
- 	down_write(&conn->session_lock);
- 	sess->state = SMB2_SESSION_EXPIRED;
- 	up_write(&conn->session_lock);
+ 	dacl_offset = le32_to_cpu(pntsd->dacloffset);
+ 	if (!dacl_offset ||
+-	    (dacl_offset + sizeof(struct smb_acl) > pntsd_size))
++	    check_add_overflow(dacl_offset, sizeof(struct smb_acl), &dacl_struct_end) ||
++	    dacl_struct_end > (size_t)pntsd_size)
+ 		goto err_out;
  
--	ksmbd_free_user(sess->user);
--	sess->user = NULL;
-+	if (sess->user) {
-+		ksmbd_free_user(sess->user);
-+		sess->user = NULL;
-+	}
- 	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_NEGOTIATE);
- 
- 	rsp->StructureSize = cpu_to_le16(4);
+ 	pdacl = (struct smb_acl *)((char *)pntsd + le32_to_cpu(pntsd->dacloffset));
 
 
