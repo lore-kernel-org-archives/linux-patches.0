@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135C0374C4;
-	Tue,  8 Apr 2025 11:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828122673B7;
+	Tue,  8 Apr 2025 11:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110740; cv=none; b=sznJYQLe2unWSAx1KskrKodRFsHccEpTlcMFVXyoLJAsSmJOyDnK5IxEx0An+jnPwxai3eqn6XjaPOgGUAYoH/HSTBmlXiC8prYBob8SLfrvbKq+utYZ20o3XEBB8Jlf8BAHcPUdJQPZoHddrd4BiVRWSa7g9BwSqZbRE+UFR9E=
+	t=1744110740; cv=none; b=UsAmDEURrheiLE25xyAk/IjwuBeQ0fgN9K1SViBKeijnzRCQ3Ks5MHnHfm4dPwPMOHPvFzKTXQFiXcpeWIkZxgN7+EX+Q1MVkvbVEOG+Jq33rN88PZHjmJFyBcwa9Mcokj/6/06zhYzGKyJeoYxs1TmU3RBCVtMXNOHrJ4DsgUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744110740; c=relaxed/simple;
-	bh=js//+UoZ4WiJVSLtkFJPR22ojIdYahIupPUzEOD7/0s=;
+	bh=VsuGen+L6dfru7UT/v30SPWZ8pd1qhpqhFNWgebRXkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+uQNwY6uo4i+MBb/d4kMoUu7uD9ccNhcghKrF/1YC/xFhE4/6QGEi9JZIp0gzy+ss5mWEcORuU2UiUNGK+vClrHZvkg8arjtsHu/rFYaEMLa+TO397d/eDONw/+X4RJFAn4CaXjr8qgSReo6zh3hetrMZATflKaoNP0AmgLn+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOdRz02u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISAoyXApf6kKBpslN4Ie/7ROu1DfvuWOpLyEc4CkgTq20YN6ldZJk3dafgfjncXzGcsf2DCT+d4jWBVXx1PZy7FlsCP7MUZkWY5useUtf8YAPyO60HH0aQpQFVoWiQf0pdEMZq5vgoFNiwmXoWFpVT2aS1MjZHwWXFRaelSbYGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOjJUntO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOdRz02u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349AAC4CEE7;
-	Tue,  8 Apr 2025 11:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOjJUntO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFFBC4CEE5;
+	Tue,  8 Apr 2025 11:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110737;
-	bh=js//+UoZ4WiJVSLtkFJPR22ojIdYahIupPUzEOD7/0s=;
+	s=korg; t=1744110740;
+	bh=VsuGen+L6dfru7UT/v30SPWZ8pd1qhpqhFNWgebRXkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MOdRz02uHmq2T8GEMh+BZQxI4RCrL5nZLEJRQZtFC8Q34iuMaunStoTwVAnYvCXGS
-	 +AjjDV38mvMWwOF4zXNnvnWcAzsqboj6aL7zezL74mb19RTKu5HmUlAFKLNijsF70u
-	 n5Lh7CAoNkQKuh3e6+w23/rU3kmkj3RgmrBhGS7I=
+	b=jOjJUntOI6qYVnnYaOulk+/NrnuqJSUNC5/GbACXgGJoMXC/z2wJoPgZtHWQQvby3
+	 fZtdTkfwX1d8eLzmQ/OVofRhrWPSdHN0P2fJq3lHhaNH5VpXKpDzilrE58TK4JIFHa
+	 C4S+KkgUtBDX6ZgJ0JIa6uX1cUgTZgGRlAg8q5n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kundan Kumar <kundan.kumar@samsung.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Gavin Shan <gshan@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 168/731] gfs2: minor evict fix
-Date: Tue,  8 Apr 2025 12:41:05 +0200
-Message-ID: <20250408104918.184478619@linuxfoundation.org>
+Subject: [PATCH 6.14 177/731] block: fix adding folio to bio
+Date: Tue,  8 Apr 2025 12:41:14 +0200
+Message-ID: <20250408104918.394279720@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,61 +56,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit e9e38ed7250f8ef6b2928216156c09df8b4834b3 ]
+[ Upstream commit 26064d3e2b4d9a14df1072980e558c636fb023ea ]
 
-In evict_should_delete(), when gfs2_upgrade_iopen_glock() fails, we
-detach the iopen glock from the inode without calling
-glock_clear_object().  This leads to a warning in glock_set_object()
-when the same inode is recreated and the glock is reused.
-Fix that by only detaching the iopen glock in gfs2_evict_inode().
+>4GB folio is possible on some ARCHs, such as aarch64, 16GB hugepage
+is supported, then 'offset' of folio can't be held in 'unsigned int',
+cause warning in bio_add_folio_nofail() and IO failure.
 
-In addition, remove the dequeue code from evict_should_delete(); we
-already perform a conditional dequeue in gfs2_evict_inode().
+Fix it by adjusting 'page' & trimming 'offset' so that `->bi_offset` won't
+be overflow, and folio can be added to bio successfully.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 41a8e04c94b8 ("gfs2: skip if we cannot defer delete")
+Fixes: ed9832bc08db ("block: introduce folio awareness and add a bigger size from folio")
+Cc: Kundan Kumar <kundan.kumar@samsung.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250312145136.2891229-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ block/bio.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 92a3b6ddafdc1..ff8fdc6134ff5 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1338,12 +1338,8 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
- 
- 	/* Must not read inode block until block type has been verified */
- 	ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_EXCLUSIVE, GL_SKIP, gh);
--	if (unlikely(ret)) {
--		glock_clear_object(ip->i_iopen_gh.gh_gl, ip);
--		ip->i_iopen_gh.gh_flags |= GL_NOCACHE;
--		gfs2_glock_dq_uninit(&ip->i_iopen_gh);
-+	if (unlikely(ret))
- 		return EVICT_SHOULD_DEFER_DELETE;
--	}
- 
- 	if (gfs2_inode_already_deleted(ip->i_gl, ip->i_no_formal_ino))
- 		return EVICT_SHOULD_SKIP_DELETE;
-@@ -1363,15 +1359,8 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
- 
- should_delete:
- 	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
--	    test_bit(HIF_HOLDER, &ip->i_iopen_gh.gh_iflags)) {
--		enum evict_behavior behavior =
--			gfs2_upgrade_iopen_glock(inode);
--
--		if (behavior != EVICT_SHOULD_DELETE) {
--			gfs2_holder_uninit(&ip->i_iopen_gh);
--			return behavior;
--		}
--	}
-+	    test_bit(HIF_HOLDER, &ip->i_iopen_gh.gh_iflags))
-+		return gfs2_upgrade_iopen_glock(inode);
- 	return EVICT_SHOULD_DELETE;
+diff --git a/block/bio.c b/block/bio.c
+index 6ac5983ba51e6..6deea10b2cd3d 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1026,9 +1026,10 @@ EXPORT_SYMBOL(bio_add_page);
+ void bio_add_folio_nofail(struct bio *bio, struct folio *folio, size_t len,
+ 			  size_t off)
+ {
++	unsigned long nr = off / PAGE_SIZE;
++
+ 	WARN_ON_ONCE(len > UINT_MAX);
+-	WARN_ON_ONCE(off > UINT_MAX);
+-	__bio_add_page(bio, &folio->page, len, off);
++	__bio_add_page(bio, folio_page(folio, nr), len, off % PAGE_SIZE);
  }
+ EXPORT_SYMBOL_GPL(bio_add_folio_nofail);
+ 
+@@ -1049,9 +1050,11 @@ EXPORT_SYMBOL_GPL(bio_add_folio_nofail);
+ bool bio_add_folio(struct bio *bio, struct folio *folio, size_t len,
+ 		   size_t off)
+ {
+-	if (len > UINT_MAX || off > UINT_MAX)
++	unsigned long nr = off / PAGE_SIZE;
++
++	if (len > UINT_MAX)
+ 		return false;
+-	return bio_add_page(bio, &folio->page, len, off) > 0;
++	return bio_add_page(bio, folio_page(folio, nr), len, off % PAGE_SIZE) > 0;
+ }
+ EXPORT_SYMBOL(bio_add_folio);
  
 -- 
 2.39.5
