@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFFB224F6;
-	Tue,  8 Apr 2025 11:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6D4224F6;
+	Tue,  8 Apr 2025 11:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111122; cv=none; b=uilLbFjO4hk9+wbErHvtlsl83H3BxLNAQiUeHz9DZDx1CxbzANZkx/1wvUoQXg0nArwBpf7BhQoiKBEap1TYnsyJZVHZY3GNR/hGUjlQ7dImD2t618c0id7b6I32kXvoiKtW58L20Eoh6pcDkGM5Fs/U8R/Tw5Ap/ToWrFEdIYY=
+	t=1744111124; cv=none; b=X/rPZF+2K4APTmQJVNHdP9XRumXaOxw+mPgGbGJQkpqjQdrrAy7L/ltugh4bCyeB4BsmDLsOIVmUMKffqTFHeKidM0Mrji2xdXmKPsZJRK5s5v8G4JiKPK42smHPFfnCHlwfyfOCSyic187OTCpLnFBD2JRp8mTvx4J9NyJkbhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111122; c=relaxed/simple;
-	bh=XI+R9ROo6UaAdRkHxRpBsLdV931z259N/qV/AdV2aQA=;
+	s=arc-20240116; t=1744111124; c=relaxed/simple;
+	bh=qddyf7Dub+myyGuCjBKs+w5o98pn9BkHi3yLFzcHKN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NPsHsxlH0fZIjJLxqAGm0tz8FasRvUvQB+jpp1JsrZwAlt8TTfxtLB0tbg404mDYC79iRLMR6A7K9J8zGX5Ufna/nY8A68bFiq0lqSeCgi0yNFfef1pk/EkrV+8EFhMgYNO8kghxVJsg0TtW6o62IQxwc5gTmuv7VrFc0YHME5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuQC4zaI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qa2RGFHAigG9oN85lIjPREpR2oo1lPGDLPdQbJc/+VNKgIUpnlaW290bysXp2UDkXCqsaIUxVyKVsKX62GOM5/7UgLS+8vXYcOPZVGF8WuSJOFdmxv60FBNzQr7EZfcAIgGiUIfSHoa0sQS+drtkfPof7n2qCVGiTDWJ81g4QNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASyAeKmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuQC4zaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FD0C4CEE5;
-	Tue,  8 Apr 2025 11:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASyAeKmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFB8C4CEE5;
+	Tue,  8 Apr 2025 11:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111121;
-	bh=XI+R9ROo6UaAdRkHxRpBsLdV931z259N/qV/AdV2aQA=;
+	s=korg; t=1744111124;
+	bh=qddyf7Dub+myyGuCjBKs+w5o98pn9BkHi3yLFzcHKN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RuQC4zaI+fJrloT7Irwb7hdcE1KbvtKg3VqZ2sngmoLiMr3edgBTfu2+0RxtcPKvk
-	 A7PUpN9DHtJrRkgeerl4ok0qXXt9IylA4z+An4/wFo5v94bCag/zuwBqarsXHCA4ki
-	 UTzjVwevnmK1iRyeZcOnHgy455SQcdccivK+nYgc=
+	b=ASyAeKmYF4CDA5rzYo4cbGb8Uwaf+On3Z3qFb7kkA0CGkUHdyhahdU3gQISLi8Bm6
+	 WyJF2IcpL3FRZSGOwgG3f3lpWhxVbFwLEJFAkec9XUQqVDaV82JQYRparlTS5+Osym
+	 AB4SjBWxO0o53oo6otqdp8yw7WQChRddXAHzNoVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashley Smith <ashley.smith@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 316/731] drm/panthor: Update CS_STATUS_ defines to correct values
-Date: Tue,  8 Apr 2025 12:43:33 +0200
-Message-ID: <20250408104921.627870068@linuxfoundation.org>
+Subject: [PATCH 6.14 317/731] drm/file: Add fdinfo helper for printing regions with prefix
+Date: Tue,  8 Apr 2025 12:43:34 +0200
+Message-ID: <20250408104921.651448359@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,45 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashley Smith <ashley.smith@collabora.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit c82734fbdc50dc9e568e8686622eaa4498acb81e ]
+[ Upstream commit af6c2b7c46e16701fba44a21326cb634786e3e71 ]
 
-Values for SC_STATUS_BLOCKED_REASON_ are documented in the G610 "Odin"
-GPU specification (CS_STATUS_BLOCKED_REASON register).
+This is motivated by the desire of some drivers (eg. Panthor) to print the
+size of internal memory regions with a prefix that reflects the driver
+name, as suggested in the previous documentation commit.
 
-This change updates the defines to the correct values.
+That means adding a new argument to print_size and making it available for
+DRM users.
 
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
-Signed-off-by: Ashley Smith <ashley.smith@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250303180444.3768993-1-ashley.smith@collabora.com
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250130172851.941597-3-adrian.larumbe@collabora.com
+Stable-dep-of: e379856b428a ("drm/panthor: Replace sleep locks with spinlocks in fdinfo path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_file.c | 26 ++++++++++++++++++--------
+ include/drm/drm_file.h     |  5 +++++
+ 2 files changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_fw.h b/drivers/gpu/drm/panthor/panthor_fw.h
-index 22448abde9923..6598d96c6d2aa 100644
---- a/drivers/gpu/drm/panthor/panthor_fw.h
-+++ b/drivers/gpu/drm/panthor/panthor_fw.h
-@@ -102,9 +102,9 @@ struct panthor_fw_cs_output_iface {
- #define CS_STATUS_BLOCKED_REASON_SB_WAIT	1
- #define CS_STATUS_BLOCKED_REASON_PROGRESS_WAIT	2
- #define CS_STATUS_BLOCKED_REASON_SYNC_WAIT	3
--#define CS_STATUS_BLOCKED_REASON_DEFERRED	5
--#define CS_STATUS_BLOCKED_REASON_RES		6
--#define CS_STATUS_BLOCKED_REASON_FLUSH		7
-+#define CS_STATUS_BLOCKED_REASON_DEFERRED	4
-+#define CS_STATUS_BLOCKED_REASON_RESOURCE	5
-+#define CS_STATUS_BLOCKED_REASON_FLUSH		6
- #define CS_STATUS_BLOCKED_REASON_MASK		GENMASK(3, 0)
- 	u32 status_blocked_reason;
- 	u32 status_wait_sync_value_hi;
+diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+index 2289e71e2fa24..c299cd94d3f78 100644
+--- a/drivers/gpu/drm/drm_file.c
++++ b/drivers/gpu/drm/drm_file.c
+@@ -830,8 +830,11 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+ }
+ EXPORT_SYMBOL(drm_send_event);
+ 
+-static void print_size(struct drm_printer *p, const char *stat,
+-		       const char *region, u64 sz)
++void drm_fdinfo_print_size(struct drm_printer *p,
++			   const char *prefix,
++			   const char *stat,
++			   const char *region,
++			   u64 sz)
+ {
+ 	const char *units[] = {"", " KiB", " MiB"};
+ 	unsigned u;
+@@ -842,8 +845,10 @@ static void print_size(struct drm_printer *p, const char *stat,
+ 		sz = div_u64(sz, SZ_1K);
+ 	}
+ 
+-	drm_printf(p, "drm-%s-%s:\t%llu%s\n", stat, region, sz, units[u]);
++	drm_printf(p, "%s-%s-%s:\t%llu%s\n",
++		   prefix, stat, region, sz, units[u]);
+ }
++EXPORT_SYMBOL(drm_fdinfo_print_size);
+ 
+ int drm_memory_stats_is_zero(const struct drm_memory_stats *stats)
+ {
+@@ -868,17 +873,22 @@ void drm_print_memory_stats(struct drm_printer *p,
+ 			    enum drm_gem_object_status supported_status,
+ 			    const char *region)
+ {
+-	print_size(p, "total", region, stats->private + stats->shared);
+-	print_size(p, "shared", region, stats->shared);
++	const char *prefix = "drm";
++
++	drm_fdinfo_print_size(p, prefix, "total", region,
++			      stats->private + stats->shared);
++	drm_fdinfo_print_size(p, prefix, "shared", region, stats->shared);
+ 
+ 	if (supported_status & DRM_GEM_OBJECT_ACTIVE)
+-		print_size(p, "active", region, stats->active);
++		drm_fdinfo_print_size(p, prefix, "active", region, stats->active);
+ 
+ 	if (supported_status & DRM_GEM_OBJECT_RESIDENT)
+-		print_size(p, "resident", region, stats->resident);
++		drm_fdinfo_print_size(p, prefix, "resident", region,
++				      stats->resident);
+ 
+ 	if (supported_status & DRM_GEM_OBJECT_PURGEABLE)
+-		print_size(p, "purgeable", region, stats->purgeable);
++		drm_fdinfo_print_size(p, prefix, "purgeable", region,
++				      stats->purgeable);
+ }
+ EXPORT_SYMBOL(drm_print_memory_stats);
+ 
+diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+index ef817926cddd3..94d365b225052 100644
+--- a/include/drm/drm_file.h
++++ b/include/drm/drm_file.h
+@@ -495,6 +495,11 @@ struct drm_memory_stats {
+ enum drm_gem_object_status;
+ 
+ int drm_memory_stats_is_zero(const struct drm_memory_stats *stats);
++void drm_fdinfo_print_size(struct drm_printer *p,
++			   const char *prefix,
++			   const char *stat,
++			   const char *region,
++			   u64 sz);
+ void drm_print_memory_stats(struct drm_printer *p,
+ 			    const struct drm_memory_stats *stats,
+ 			    enum drm_gem_object_status supported_status,
 -- 
 2.39.5
 
