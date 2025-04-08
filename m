@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FEE2676E1;
-	Tue,  8 Apr 2025 11:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9DB22257E;
+	Tue,  8 Apr 2025 11:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113193; cv=none; b=Gt25eCpgtB32LFQHy9LsBuV/uplyvs25BDwS28XL6aN7xUfsbr9DfpH8HeM6N4c231qGGF5wH9bzCbP+cgK6vquQqrPGNxz+XFsOrl/ZXSrxs+Ij4+ATlZyfoYC1S2vGbJuo8H2T0/f9JSSnPwTyt3vZzFEN1L5TST5ah32Qgxg=
+	t=1744113196; cv=none; b=m+63hDC3k+z2J49Iu2tfxR/E7+d+ozyxmrb/rxsDrlHj8GT5vNWKdwWhg2zH76TGdBzmu+hN2dCM/QY7cPW/Pk/Q2ltN0y38VQZ3gssClp+mkF0D+3wkMKdhPwyCVkdbFSzDWIxjWTY8+hlQ1mR+PgnIESCCkCrAwooqhMqGVKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113193; c=relaxed/simple;
-	bh=IeK5gYWFqAEcPg38qTAeJ23u7Z7bb0c/IQFyF4KXbY0=;
+	s=arc-20240116; t=1744113196; c=relaxed/simple;
+	bh=BrFnvSWShk5M2wabR6vRqPlPE1Cj2sMEnq3AK7LNnZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BF/rrqPgytHHv5GqCOYvpnXUFjLAmvXffX3lPaop8oT6RaeZ3baLc2xOldLP7zNCmG38yrbYreSbEqWtv2CLXkV/eqnFD9Gr1jNYpVAeUw5/eXvKGILsskNw+vI9bKyrfnobghHTYaNFO4tEeucewg2yfO2sALCuVZqJFuOuayc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19HdcZBn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=debTml0X7vxMpKvY30lzKAKVpui9dwpvR0XGGbVIgPanl+nTVvbZpAifyPiPuMNLSIL2gKZrVM/MuygLePDFqzZChftxfzzOnZieVfnjePiXHb3GD/Dnmz3FV+6G72U/6djG6YvZJLtDobotwkDcyvUfV9/k2a7xG5+VpDAj6LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUQ5Zlzq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19HdcZBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B8DC4CEE5;
-	Tue,  8 Apr 2025 11:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUQ5Zlzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086F1C4CEE5;
+	Tue,  8 Apr 2025 11:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113193;
-	bh=IeK5gYWFqAEcPg38qTAeJ23u7Z7bb0c/IQFyF4KXbY0=;
+	s=korg; t=1744113196;
+	bh=BrFnvSWShk5M2wabR6vRqPlPE1Cj2sMEnq3AK7LNnZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19HdcZBn3XRA8Auz7iSRRDqqM6NWxOjDzs+HfX7BPXWH/eXfcaNjvXaVWzpWv+Abj
-	 HKLKRc/iXhQVYV2ny8baedyu5dXwsw8BinEDerqe3eT11Zm/3Srir+1K9KvNS4gMC0
-	 4fFQY3Bn6SSxqAaLkB68BSJK8QJzAdA3SyKFyQk4=
+	b=XUQ5ZlzqnjxCJNaGxafrQw6ow5RLhdVYsWufYFyr2sedLDNiP1I0Xt7VE/0cjnMQV
+	 eddgkmLFYTonlz9m243wtPBf+WSc0UKu4IUxPPjZNihohPISc/zTFZ6jC+U74N24TK
+	 fVYDy3Ol/e+75r8xILR9zpeAGfos2NmOruyb+kEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/268] HID: remove superfluous (and wrong) Makefile entry for CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-Date: Tue,  8 Apr 2025 12:47:19 +0200
-Message-ID: <20250408104829.263018027@linuxfoundation.org>
+Subject: [PATCH 6.6 029/268] dt-bindings: vendor-prefixes: add GOcontroll
+Date: Tue,  8 Apr 2025 12:47:20 +0200
+Message-ID: <20250408104829.290371145@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-[ Upstream commit fe0fb58325e519008e2606a5aa2cff7ad23e212d ]
+[ Upstream commit 5f0d2de417166698c8eba433b696037ce04730da ]
 
-The line
+GOcontroll produces embedded linux systems and IO modules to use in
+these systems, add its prefix.
 
-	obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)   += intel-ish-hid/
-
-in top-level HID Makefile is both superfluous (as CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-depends on CONFIG_INTEL_ISH_HID, which contains intel-ish-hid/ already) and wrong (as it's
-missing the CONFIG_ prefix).
-
-Just remove it.
-
-Fixes: 91b228107da3e ("HID: intel-ish-hid: ISH firmware loader client driver")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Link: https://patch.msgid.link/20250226-initial_display-v2-2-23fafa130817@gocontroll.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
-index 082a728eac600..f5a06b62b385d 100644
---- a/drivers/hid/Makefile
-+++ b/drivers/hid/Makefile
-@@ -165,7 +165,6 @@ obj-$(CONFIG_USB_KBD)		+= usbhid/
- obj-$(CONFIG_I2C_HID_CORE)	+= i2c-hid/
- 
- obj-$(CONFIG_INTEL_ISH_HID)	+= intel-ish-hid/
--obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)	+= intel-ish-hid/
- 
- obj-$(CONFIG_AMD_SFH_HID)       += amd-sfh-hid/
- 
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 12a16031d7b6d..dc275ab60e534 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -524,6 +524,8 @@ patternProperties:
+     description: GlobalTop Technology, Inc.
+   "^gmt,.*":
+     description: Global Mixed-mode Technology, Inc.
++  "^gocontroll,.*":
++    description: GOcontroll Modular Embedded Electronics B.V.
+   "^goldelico,.*":
+     description: Golden Delicious Computers GmbH & Co. KG
+   "^goodix,.*":
 -- 
 2.39.5
 
