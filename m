@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22E4D2FB;
-	Tue,  8 Apr 2025 13:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF458836;
+	Tue,  8 Apr 2025 13:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117216; cv=none; b=N4F+0Y6EVziBFP6SPwxdXpR+2EcZ93LCa4pEs9P5bOe0BtaCOWx379X7w82txOOGXxTzM+lE1smNGdK0si2lN8vIcSjKTZKJ7Aq02pnCx/ExvlpUx1jvDx7zh0TtcCy04zx6tkGm82YBWIhfG80+k98PWkFRim7qG+ZPMFNSdRo=
+	t=1744117219; cv=none; b=Gldmf/4hLXT2boYm/oeTfnVHMACrC+Sgf36UQ6zqvnwT44f9TdSzvdIhbyQUoDK1Xf9AZcyY58syL5SbFzSxxYHlPMHl3gT6kF/ERy/rjdu/ti+KJvYyjq7pFYlSqDFiLybysriSaP9M4t9CeVPuSgmWLv+QgJyIJb6d0wuAv30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117216; c=relaxed/simple;
-	bh=qx/p2qV7xGdaow5qvt9wH7ZIQZiS56skV+WOedzB4zE=;
+	s=arc-20240116; t=1744117219; c=relaxed/simple;
+	bh=F4BKSeKIBsnvgYGLfy0hhe5Jbl1GtJ/alwGfuNCpY5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeD7eqdOF0HHq0AL8HsvIwBTzqE9xQEtFKL/hYnfdFWHuwzLtFE/psJY3+8TZ71HaJapZ2p3RjY0FCleiAZ3vjbuQyvht+2J6i/Cjax1Z8KGknB0MbiJygYhMV5RD7mkZeINTMhe+kKJ9SDA/X+0bhgci1/tz0AHdp95e4lauJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sx/HQeOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrXG57FuRpYH7FWxsU+b31QCfUyz6OzsNLhUMQI0NFPaTJCjBWW74ASH9kdkX3/tks2iumArFstev03IdnnTRQrzt7ALAam/W6ZpU2QN+p4ZymhdeT18j0z40pvJIn0AqY16QlZMkfyGbd9seC7WtK6HykD19t3lQ7qFbXke2MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k46F1wY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sx/HQeOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05733C4CEE5;
-	Tue,  8 Apr 2025 13:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k46F1wY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4672C4CEE5;
+	Tue,  8 Apr 2025 13:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117216;
-	bh=qx/p2qV7xGdaow5qvt9wH7ZIQZiS56skV+WOedzB4zE=;
+	s=korg; t=1744117219;
+	bh=F4BKSeKIBsnvgYGLfy0hhe5Jbl1GtJ/alwGfuNCpY5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sx/HQeOt5YnhUqwW/1uX+21unGaTUztKGZDvXFdWefle3ShEYmz55RQ34qPhbfMgL
-	 fYSbCA6MvMjFHodaCYT4R2B+NMIOccTNIpb1o2LEquo44DZH1NSN4/mpVP3ozoheai
-	 wTCRK9kiMTnQSOKEMAypFEgibMYPYs8rFUnfNTXM=
+	b=k46F1wY6YJi9qRA45SMU3g+Y/fb7rXO7guH1FOK1X/jeLv0Tp7J+Nwcz7kjSc4jqz
+	 CXix8heXOdmMufiMjS2ZbGgLuNlq8nBKeHeolUasamOkx+ZxKuaa/VR+Vdj/NxupTx
+	 /WL0u7HO2MY36JEB3jQKvcL6qycQYbKrSo2tMxuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Owens <daowens01@gmail.com>,
-	Romain Naour <romain.naour@smile.fr>,
-	Robert Nelson <robertcnelson@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.12 392/423] mmc: sdhci-omap: Disable MMC_CAP_AGGRESSIVE_PM for eMMC/SD
-Date: Tue,  8 Apr 2025 12:51:58 +0200
-Message-ID: <20250408104855.025229756@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 393/423] KVM: SVM: Dont change target vCPU state on AP Creation VMGEXIT error
+Date: Tue,  8 Apr 2025 12:51:59 +0200
+Message-ID: <20250408104855.048721055@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,41 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 49d162635151d0dd04935070d7cf67137ab863aa upstream.
+commit d26638bfcdfc5c8c4e085dc3f5976a0443abab3c upstream.
 
-We have received reports about cards can become corrupt related to the
-aggressive PM support. Let's make a partial revert of the change that
-enabled the feature.
+If KVM rejects an AP Creation event, leave the target vCPU state as-is.
+Nothing in the GHCB suggests the hypervisor is *allowed* to muck with vCPU
+state on failure, let alone required to do so.  Furthermore, kicking only
+in the !ON_INIT case leads to divergent behavior, and even the "kick" case
+is non-deterministic.
 
-Reported-by: David Owens <daowens01@gmail.com>
-Reported-by: Romain Naour <romain.naour@smile.fr>
-Reported-by: Robert Nelson <robertcnelson@gmail.com>
-Tested-by: Robert Nelson <robertcnelson@gmail.com>
-Fixes: 3edf588e7fe0 ("mmc: sdhci-omap: Allow SDIO card power off and enable aggressive PM")
+E.g. if an ON_INIT request fails, the guest can successfully retry if the
+fixed AP Creation request is made prior to sending INIT.  And if a !ON_INIT
+fails, the guest can successfully retry if the fixed AP Creation request is
+handled before the target vCPU processes KVM's
+KVM_REQ_UPDATE_PROTECTED_GUEST_STATE.
+
+Fixes: e366f92ea99e ("KVM: SEV: Support SEV-SNP AP Creation NAE event")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20250312121712.1168007-1-ulf.hansson@linaro.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/r/20250227012541.3234589-5-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-omap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-omap.c
-+++ b/drivers/mmc/host/sdhci-omap.c
-@@ -1339,8 +1339,8 @@ static int sdhci_omap_probe(struct platf
- 	/* R1B responses is required to properly manage HW busy detection. */
- 	mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3957,16 +3957,12 @@ static int sev_snp_ap_creation(struct vc
  
--	/* Allow card power off and runtime PM for eMMC/SD card devices */
--	mmc->caps |= MMC_CAP_POWER_OFF_CARD | MMC_CAP_AGGRESSIVE_PM;
-+	/*  Enable SDIO card power off. */
-+	mmc->caps |= MMC_CAP_POWER_OFF_CARD;
+ 	/*
+ 	 * The target vCPU is valid, so the vCPU will be kicked unless the
+-	 * request is for CREATE_ON_INIT. For any errors at this stage, the
+-	 * kick will place the vCPU in an non-runnable state.
++	 * request is for CREATE_ON_INIT.
+ 	 */
+ 	kick = true;
  
- 	ret = sdhci_setup_host(host);
- 	if (ret)
+ 	mutex_lock(&target_svm->sev_es.snp_vmsa_mutex);
+ 
+-	target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
+-	target_svm->sev_es.snp_ap_waiting_for_reset = true;
+-
+ 	/* Interrupt injection mode shouldn't change for AP creation */
+ 	if (request < SVM_VMGEXIT_AP_DESTROY) {
+ 		u64 sev_features;
+@@ -4012,20 +4008,23 @@ static int sev_snp_ap_creation(struct vc
+ 		target_svm->sev_es.snp_vmsa_gpa = svm->vmcb->control.exit_info_2;
+ 		break;
+ 	case SVM_VMGEXIT_AP_DESTROY:
++		target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
+ 		break;
+ 	default:
+ 		vcpu_unimpl(vcpu, "vmgexit: invalid AP creation request [%#x] from guest\n",
+ 			    request);
+ 		ret = -EINVAL;
+-		break;
++		goto out;
+ 	}
+ 
+-out:
++	target_svm->sev_es.snp_ap_waiting_for_reset = true;
++
+ 	if (kick) {
+ 		kvm_make_request(KVM_REQ_UPDATE_PROTECTED_GUEST_STATE, target_vcpu);
+ 		kvm_vcpu_kick(target_vcpu);
+ 	}
+ 
++out:
+ 	mutex_unlock(&target_svm->sev_es.snp_vmsa_mutex);
+ 
+ 	return ret;
 
 
