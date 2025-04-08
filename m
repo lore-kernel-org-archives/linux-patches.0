@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E68269825;
-	Tue,  8 Apr 2025 12:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D2526A0E0;
+	Tue,  8 Apr 2025 12:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114132; cv=none; b=nkDoWt7OGw3Yr1E5LkCTuIjf3TeycpKEEeW33n3r2BxiHbHmFUCc3dePqpEX1XMoVdrEMxdduUxDEEIxh0UIiN3Wvkym02gPwKYWQSmrf81jL9Ue5oM/JzfLqi9Ffn111hLcuqNNgCifkxlcgyfH+CzF6Q8F5ThV1aM33rwvWic=
+	t=1744114135; cv=none; b=lsBrexgNvxDs0iOxtl52AQHhLSa111ntY0kzss83MJImoH1UdT4Q7kbd/aTO9WczBhTLCwaGtA6m9fg8JLZ74uWdfPgOi8hbZg24GJvWLOVcq+TBrmC4QLdrS5//nwZVI9G5qlGmgrEfRQWQpIvbTTn6o1HzSbgzBjcXzd2tLOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114132; c=relaxed/simple;
-	bh=1Y61BbcCTf7op7MwDN6aVCHYGXPVPcyl0weOeuALMRc=;
+	s=arc-20240116; t=1744114135; c=relaxed/simple;
+	bh=fD5BxW6jgNmV+5NsRPNH6JbZyN8Zf1gmrI7rJb8T5jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qs8UCRh105fFxLHKHu8EdwkKhVJyEX9bldJM98kuLSkEwOxa8aN2759lRWu/NcDIwKC5e/Cytxo+2Oz5MZuUv9poymy8POXZx/7IDcyzO5pgMD0eOeE+/9vXmIDp4il+otl43HUrUaHPlUGzhe/v8I0OzB4ZBBQlp3ltU8iYDwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjUusmI9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcNOC67kC9pEcfkrunqlWUm9AMoyc5fdbLlHhb+Y2VY+z1J3wFzBOTNu0vBzAK0OU6sUn713Iy5S/jdKGIrEpLbuRD5IHf42gFdqtoR32Etnr2WxBqII2wRJ6xbKZB2gq9rZI7JRRGz2QvTyQ+TIHkZCevEt3PtjG8G1NQgRa20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRjnAmY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjUusmI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C05C4CEE7;
-	Tue,  8 Apr 2025 12:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRjnAmY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9902FC4CEE5;
+	Tue,  8 Apr 2025 12:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114132;
-	bh=1Y61BbcCTf7op7MwDN6aVCHYGXPVPcyl0weOeuALMRc=;
+	s=korg; t=1744114135;
+	bh=fD5BxW6jgNmV+5NsRPNH6JbZyN8Zf1gmrI7rJb8T5jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjUusmI9dxcpfJ382Lhv78pxp2GVYUYpykpbo8ZTGB6hwDCly0B7ZriYdkol9GM1B
-	 v+zpguiGyBSDghWZpcozN/Bj5UnSuqyWRXb8/QyfpqAMh2mAj8GFUcnzfq+T41npIW
-	 W3+FkjzozqbMV2K3AvZRs1ImgNbYde42BXMs+PB8=
+	b=KRjnAmY4lz0ohJ+6es9hkqn5wto+9IF4Zflj0Pz5ib1+ZJ0LckIg0W3KlDOUr3nUY
+	 028biXOVrH4jEJnHO3XjCvcileRYdAIPFROm1cfEUNf/d2GfybktGw0jW2Y/bpgw5N
+	 2WZtVtbkFNcPyLxhOD3pJVd5knNHxmAk0Lm+k72Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 5.4 147/154] ntb_perf: Delete duplicate dmaengine_unmap_put() call in perf_copy_chunk()
-Date: Tue,  8 Apr 2025 12:51:28 +0200
-Message-ID: <20250408104820.012504232@linuxfoundation.org>
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 5.4 148/154] x86/tsc: Always save/restore TSC sched_clock() on suspend/resume
+Date: Tue,  8 Apr 2025 12:51:29 +0200
+Message-ID: <20250408104820.043863039@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -44,45 +48,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 4279e72cab31dd3eb8c89591eb9d2affa90ab6aa upstream.
+commit d90c9de9de2f1712df56de6e4f7d6982d358cabe upstream.
 
-The function call “dmaengine_unmap_put(unmap)” was used in an if branch.
-The same call was immediately triggered by a subsequent goto statement.
-Thus avoid such a call repetition.
+TSC could be reset in deep ACPI sleep states, even with invariant TSC.
 
-This issue was detected by using the Coccinelle software.
+That's the reason we have sched_clock() save/restore functions, to deal
+with this situation. But what happens is that such functions are guarded
+with a check for the stability of sched_clock - if not considered stable,
+the save/restore routines aren't executed.
 
-Fixes: 5648e56d03fa ("NTB: ntb_perf: Add full multi-port NTB API support")
+On top of that, we have a clear comment in native_sched_clock() saying
+that *even* with TSC unstable, we continue using TSC for sched_clock due
+to its speed.
+
+In other words, if we have a situation of TSC getting detected as unstable,
+it marks the sched_clock as unstable as well, so subsequent S3 sleep cycles
+could bring bogus sched_clock values due to the lack of the save/restore
+mechanism, causing warnings like this:
+
+  [22.954918] ------------[ cut here ]------------
+  [22.954923] Delta way too big! 18446743750843854390 ts=18446744072977390405 before=322133536015 after=322133536015 write stamp=18446744072977390405
+  [22.954923] If you just came from a suspend/resume,
+  [22.954923] please switch to the trace global clock:
+  [22.954923]   echo global > /sys/kernel/tracing/trace_clock
+  [22.954923] or add trace_clock=global to the kernel command line
+  [22.954937] WARNING: CPU: 2 PID: 5728 at kernel/trace/ring_buffer.c:2890 rb_add_timestamp+0x193/0x1c0
+
+Notice that the above was reproduced even with "trace_clock=global".
+
+The fix for that is to _always_ save/restore the sched_clock on suspend
+cycle _if TSC is used_ as sched_clock - only if we fallback to jiffies
+the sched_clock_stable() check becomes relevant to save/restore the
+sched_clock.
+
+Debugged-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250215210314.351480-1-gpiccoli@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/test/ntb_perf.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/kernel/tsc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ntb/test/ntb_perf.c
-+++ b/drivers/ntb/test/ntb_perf.c
-@@ -838,10 +838,8 @@ static int perf_copy_chunk(struct perf_t
- 	dma_set_unmap(tx, unmap);
+--- a/arch/x86/kernel/tsc.c
++++ b/arch/x86/kernel/tsc.c
+@@ -912,7 +912,7 @@ static unsigned long long cyc2ns_suspend
  
- 	ret = dma_submit_error(dmaengine_submit(tx));
--	if (ret) {
--		dmaengine_unmap_put(unmap);
-+	if (ret)
- 		goto err_free_resource;
--	}
+ void tsc_save_sched_clock_state(void)
+ {
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
  
- 	dmaengine_unmap_put(unmap);
+ 	cyc2ns_suspend = sched_clock();
+@@ -932,7 +932,7 @@ void tsc_restore_sched_clock_state(void)
+ 	unsigned long flags;
+ 	int cpu;
  
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
+ 
+ 	local_irq_save(flags);
 
 
