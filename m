@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C15268C66;
-	Tue,  8 Apr 2025 11:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233C268683;
+	Tue,  8 Apr 2025 11:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112053; cv=none; b=fBhL3NZXdTdVSLAvoUJcbE5y17CQycw6tyyCK4BFX7iKU1E01Kx2s6dSg8daPYZJ5WlC3M8SGnLJPLiob7WMxgEkn9/DhEQ7NUmmIkwQk/jLUtZAstZ3aArQ3cqeM+z6sr6tNm90lOLZGi2YG2Q4pqZHQJYbc1Z4oEOJ2UQM8fw=
+	t=1744112056; cv=none; b=Q01dKVjzaPSJJOwavyfOLhA0Dnjmf5h1qFwgUZwZbT2YH23k9m/Es6p4qaxUvhAfSnugkbcPFzeGMS/lwUhi0Kx1NEBt7rcItRSUJANjOmIDzBK+WjJHDk1EurtdClBhuTXeyUT/1SSm5C0u3Snn4vXXW50GYC9Ua0EjT/Fbie4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112053; c=relaxed/simple;
-	bh=w2jKuiTQR2FBMNVzNNC8eRP0F0J1XLQ0wBwD82w1WkI=;
+	s=arc-20240116; t=1744112056; c=relaxed/simple;
+	bh=KbSbE2Cf9/ez9221n6Ra2lNJTIf0GjGfXePaLvWahQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Opa/BSI1FFjI6EIegXJKKOFXVHWpFtGGuwChu+l+RkmhL6hOU+WDjmcWy9IaOELf/CyCGbw34d+wAiY1+nDTigoe6bBg7rRRluBKmjRe09HVhgeAKcjUviIp/5q4RKl33NYq2uKyP77X/BYUoRI0FHj+u/UsYjbLJ57uNNS6TLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h42PamHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NdELx9BXk1XmNpEKRH0r8QYD+xDQ6nciVhV12caSD6KLBlFwTiRlgj5lze/E3Fjq/wkZpY7EnxaJV7gPJvI834ETSy8JEkm9zPAV59UfteFri3ZTuw8pvwFpTyjiE1PevqE0kqFRwIMS6vaNYl7cmtS108zsSNoi717eRFrfdvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsFe1ylB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h42PamHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60063C4CEE5;
-	Tue,  8 Apr 2025 11:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsFe1ylB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0333DC4CEE5;
+	Tue,  8 Apr 2025 11:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112053;
-	bh=w2jKuiTQR2FBMNVzNNC8eRP0F0J1XLQ0wBwD82w1WkI=;
+	s=korg; t=1744112056;
+	bh=KbSbE2Cf9/ez9221n6Ra2lNJTIf0GjGfXePaLvWahQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h42PamHafAsAWR9G++6OytUbp8ibEmj8s2BqIr8NQpVyAkBxqZCMH/YZvtM9FhoPB
-	 Axm5+9xiXAPkeAwNP5bLDnUiPibVe2La9FqseDrj4P0Pg086AiytrJQaXIYju7NdbA
-	 EFqMf6G7duaDfwMaC9rUd8xeNxbF4oPAFF6+WJAg=
+	b=OsFe1ylBl4EDBDptm4cgliKLBJTUEeMCMDPkrJ4bwf/K2LXh+tnOyVFmuZZX2grYn
+	 XJ5igt7XNcyZ/hSYTYnVHH6siKrTX1koR0KPQh2cTl3GoAxm81JLcfFn0TDh1m5jfS
+	 vP0QzBpRzbfewJRRxuBxoDy/awZaRvcFQ24qK2B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 658/731] tty: serial: lpuart: only disable CTS instead of overwriting the whole UARTMODIR register
-Date: Tue,  8 Apr 2025 12:49:15 +0200
-Message-ID: <20250408104929.572976049@linuxfoundation.org>
+	Ying Lu <luying1@xiaomi.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 659/731] usbnet:fix NPE during rx_complete
+Date: Tue,  8 Apr 2025 12:49:16 +0200
+Message-ID: <20250408104929.596478768@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,70 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Ying Lu <luying1@xiaomi.com>
 
-[ Upstream commit e98ab45ec5182605d2e00114cba3bbf46b0ea27f ]
+commit 51de3600093429e3b712e5f091d767babc5dd6df upstream.
 
-No need to overwrite the whole UARTMODIR register before waiting the
-transmit engine complete, actually our target here is only to disable
-CTS flow control to avoid the dirty data in TX FIFO may block the
-transmit engine complete.
-Also delete the following duplicate CTS disable configuration.
+Missing usbnet_going_away Check in Critical Path.
+The usb_submit_urb function lacks a usbnet_going_away
+validation, whereas __usbnet_queue_skb includes this check.
 
-Fixes: d5a2e0834364 ("tty: serial: lpuart: disable flow control while waiting for the transmit engine to complete")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20250307065446.1122482-1-sherry.sun@nxp.com
+This inconsistency creates a race condition where:
+A URB request may succeed, but the corresponding SKB data
+fails to be queued.
+
+Subsequent processes:
+(e.g., rx_complete → defer_bh → __skb_unlink(skb, list))
+attempt to access skb->next, triggering a NULL pointer
+dereference (Kernel Panic).
+
+Fixes: 04e906839a05 ("usbnet: fix cyclical race on disconnect with work queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ying Lu <luying1@xiaomi.com>
+Link: https://patch.msgid.link/4c9ef2efaa07eb7f9a5042b74348a67e5a3a7aea.1743584159.git.luying1@xiaomi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/usb/usbnet.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index f26162d98db62..9fdb66f2fcb81 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2346,15 +2346,19 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 	/* update the per-port timeout */
- 	uart_update_timeout(port, termios->c_cflag, baud);
- 
-+	/*
-+	 * disable CTS to ensure the transmit engine is not blocked by the flow
-+	 * control when there is dirty data in TX FIFO
-+	 */
-+	lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
-+
- 	/*
- 	 * LPUART Transmission Complete Flag may never be set while queuing a break
- 	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
- 	 * asserted.
- 	 */
--	if (!(old_ctrl & UARTCTRL_SBK)) {
--		lpuart32_write(port, 0, UARTMODIR);
-+	if (!(old_ctrl & UARTCTRL_SBK))
- 		lpuart32_wait_bit_set(port, UARTSTAT, UARTSTAT_TC);
--	}
- 
- 	/* disable transmit and receive */
- 	lpuart32_write(port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
-@@ -2362,8 +2366,6 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 
- 	lpuart32_write(port, bd, UARTBAUD);
- 	lpuart32_serial_setbrg(sport, baud);
--	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
--	lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
- 	/* restore control register */
- 	lpuart32_write(port, ctrl, UARTCTRL);
- 	/* re-enable the CTS if needed */
--- 
-2.39.5
-
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -530,7 +530,8 @@ static int rx_submit (struct usbnet *dev
+ 	    netif_device_present (dev->net) &&
+ 	    test_bit(EVENT_DEV_OPEN, &dev->flags) &&
+ 	    !test_bit (EVENT_RX_HALT, &dev->flags) &&
+-	    !test_bit (EVENT_DEV_ASLEEP, &dev->flags)) {
++	    !test_bit (EVENT_DEV_ASLEEP, &dev->flags) &&
++	    !usbnet_going_away(dev)) {
+ 		switch (retval = usb_submit_urb (urb, GFP_ATOMIC)) {
+ 		case -EPIPE:
+ 			usbnet_defer_kevent (dev, EVENT_RX_HALT);
+@@ -551,8 +552,7 @@ static int rx_submit (struct usbnet *dev
+ 			tasklet_schedule (&dev->bh);
+ 			break;
+ 		case 0:
+-			if (!usbnet_going_away(dev))
+-				__usbnet_queue_skb(&dev->rxq, skb, rx_start);
++			__usbnet_queue_skb(&dev->rxq, skb, rx_start);
+ 		}
+ 	} else {
+ 		netif_dbg(dev, ifdown, dev->net, "rx: stopped\n");
 
 
