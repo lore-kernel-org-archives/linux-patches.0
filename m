@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F353224239;
-	Tue,  8 Apr 2025 11:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0000F264A76;
+	Tue,  8 Apr 2025 11:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111959; cv=none; b=FlM1NZHeVvU6rwpnN6FC3gYilp5NrQWKiuKqlBWqwg2byvCVm+puRjVXo/1XE7Md1v3ngpC12epRC4sCD49anB8i/gLatzvhfyaR3t1BxvOxWhqetzGEyNYsd59Jj3VV/ejjXThUrHaL6QPmOSo2PqmwvQbT8tynBhkQI4tHtmc=
+	t=1744111962; cv=none; b=kS24V074Q3wxYzT4PMWR6si2LbKZkp0xb5tU6zMFZ4tiBW/f/jY/lIs1kC0wTC07IEphC+Ne7X3MsA4ovhDlU0edOUe8YUmKfOqU74JuS6y5xWiIOG1719fsGPeyoa0x4rq4cYANfpktli1PkQ3AtiDJHh5CAWFLKed98HraFt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111959; c=relaxed/simple;
-	bh=Gcdh2G5oxd1xktUyGOm4Q29r4sa8kAfTXbalz9zAjmw=;
+	s=arc-20240116; t=1744111962; c=relaxed/simple;
+	bh=lwi8Z8fomoGD7Hbkw0YSSrYb2XfNStP/9wUoU5kkCns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEbbmkNgeZO3o+xiPpSvB0iX5bm5QIkhgu07SwMOy86z/dycaXA2kIdDUte5m616JHYDYR6iAk48XQDE9vZRx3obQRnWakfX9CqchbAtaTArZfwFlMJ755is5jhQRQmpIu/EQXn0xBeYYLSOWvr55gDh+8DmbQchhoaIDPJICIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trBP1vot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTAsGWQIjvQqvuo6tNq/Cl5eBgnWovKSszT+5OHwxNqzpOWbQNE+kM958qL6RqvHKWv1cZYHpb6Dkp+Iwj6lYW9aH1SyYyIErNaR8SwqjteSS33qevWmiFhFa0vE75PO/97Z6c0uwbavVaFa+3GiwY4hDdwABA6IoEAKr10ckgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A++o0VxH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trBP1vot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2468C4CEE5;
-	Tue,  8 Apr 2025 11:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A++o0VxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF99C4CEE5;
+	Tue,  8 Apr 2025 11:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111959;
-	bh=Gcdh2G5oxd1xktUyGOm4Q29r4sa8kAfTXbalz9zAjmw=;
+	s=korg; t=1744111961;
+	bh=lwi8Z8fomoGD7Hbkw0YSSrYb2XfNStP/9wUoU5kkCns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trBP1votgQJYOoUmJ6/uGY3WhWcZwmGf+KgJkRAXgFz6HYh3OgHu8AjgLQ1qCdnHF
-	 HKqXuKfvGt7Fe9gMHX+YjQxKfSW7T8kwuB4Zml3kj9ZGePwlHTLJODtd5t6UN/1U4T
-	 UN6QLo9oJNud0EBahhcANOtYCT84R9TD+85t6SiU=
+	b=A++o0VxHMHwAkXg5o5Cm/iAVVDiEIh0iLi7O+YjhB4MnvEt5JHKDJohS+gJW7Tt9l
+	 hTN6MYrV+UiWBdA4YK7K5ksf3BiBh7ACl91g1g3UjBZ4duh7+23QId2Js/56dIZXmj
+	 iZR4WLoz6tWlreyfD01YGRx74fWF8htEKHLPu4lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 622/731] sctp: add mutual exclusion in proc_sctp_do_udp_port()
-Date: Tue,  8 Apr 2025 12:48:39 +0200
-Message-ID: <20250408104928.740995229@linuxfoundation.org>
+Subject: [PATCH 6.14 623/731] net: airoha: Fix qid report in airoha_tc_get_htb_get_leaf_queue()
+Date: Tue,  8 Apr 2025 12:48:40 +0200
+Message-ID: <20250408104928.765263278@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,78 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 10206302af856791fbcc27a33ed3c3eb09b2793d ]
+[ Upstream commit 57b290d97c6150774bf929117ca737a26d8fc33d ]
 
-We must serialize calls to sctp_udp_sock_stop() and sctp_udp_sock_start()
-or risk a crash as syzbot reported:
+Fix the following kernel warning deleting HTB offloaded leafs and/or root
+HTB qdisc in airoha_eth driver properly reporting qid in
+airoha_tc_get_htb_get_leaf_queue routine.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000d: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
-CPU: 1 UID: 0 PID: 6551 Comm: syz.1.44 Not tainted 6.14.0-syzkaller-g7f2ff7b62617 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
- RIP: 0010:kernel_sock_shutdown+0x47/0x70 net/socket.c:3653
-Call Trace:
- <TASK>
-  udp_tunnel_sock_release+0x68/0x80 net/ipv4/udp_tunnel_core.c:181
-  sctp_udp_sock_stop+0x71/0x160 net/sctp/protocol.c:930
-  proc_sctp_do_udp_port+0x264/0x450 net/sctp/sysctl.c:553
-  proc_sys_call_handler+0x3d0/0x5b0 fs/proc/proc_sysctl.c:601
-  iter_file_splice_write+0x91c/0x1150 fs/splice.c:738
-  do_splice_from fs/splice.c:935 [inline]
-  direct_splice_actor+0x18f/0x6c0 fs/splice.c:1158
-  splice_direct_to_actor+0x342/0xa30 fs/splice.c:1102
-  do_splice_direct_actor fs/splice.c:1201 [inline]
-  do_splice_direct+0x174/0x240 fs/splice.c:1227
-  do_sendfile+0xafd/0xe50 fs/read_write.c:1368
-  __do_sys_sendfile64 fs/read_write.c:1429 [inline]
-  __se_sys_sendfile64 fs/read_write.c:1415 [inline]
-  __x64_sys_sendfile64+0x1d8/0x220 fs/read_write.c:1415
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+$tc qdisc replace dev eth1 root handle 10: htb offload
+$tc class add dev eth1 arent 10: classid 10:4 htb rate 100mbit ceil 100mbit
+$tc qdisc replace dev eth1 parent 10:4 handle 4: ets bands 8 \
+ quanta 1514 3028 4542 6056 7570 9084 10598 12112
+$tc qdisc del dev eth1 root
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Reported-by: syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67ea5c01.050a0220.1547ec.012b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250331091532.224982-1-edumazet@google.com
+[   55.827864] ------------[ cut here ]------------
+[   55.832493] WARNING: CPU: 3 PID: 2678 at 0xffffffc0798695a4
+[   55.956510] CPU: 3 PID: 2678 Comm: tc Tainted: G           O 6.6.71 #0
+[   55.963557] Hardware name: Airoha AN7581 Evaluation Board (DT)
+[   55.969383] pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   55.976344] pc : 0xffffffc0798695a4
+[   55.979851] lr : 0xffffffc079869a20
+[   55.983358] sp : ffffffc0850536a0
+[   55.986665] x29: ffffffc0850536a0 x28: 0000000000000024 x27: 0000000000000001
+[   55.993800] x26: 0000000000000000 x25: ffffff8008b19000 x24: ffffff800222e800
+[   56.000935] x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8008b19000
+[   56.008071] x20: ffffff8002225800 x19: ffffff800379d000 x18: 0000000000000000
+[   56.015206] x17: ffffffbf9ea59000 x16: ffffffc080018000 x15: 0000000000000000
+[   56.022342] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000001
+[   56.029478] x11: ffffffc081471008 x10: ffffffc081575a98 x9 : 0000000000000000
+[   56.036614] x8 : ffffffc08167fd40 x7 : ffffffc08069e104 x6 : ffffff8007f86000
+[   56.043748] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000001
+[   56.050884] x2 : 0000000000000000 x1 : 0000000000000250 x0 : ffffff800222c000
+[   56.058020] Call trace:
+[   56.060459]  0xffffffc0798695a4
+[   56.063618]  0xffffffc079869a20
+[   56.066777]  __qdisc_destroy+0x40/0xa0
+[   56.070528]  qdisc_put+0x54/0x6c
+[   56.073748]  qdisc_graft+0x41c/0x648
+[   56.077324]  tc_get_qdisc+0x168/0x2f8
+[   56.080978]  rtnetlink_rcv_msg+0x230/0x330
+[   56.085076]  netlink_rcv_skb+0x5c/0x128
+[   56.088913]  rtnetlink_rcv+0x14/0x1c
+[   56.092490]  netlink_unicast+0x1e0/0x2c8
+[   56.096413]  netlink_sendmsg+0x198/0x3c8
+[   56.100337]  ____sys_sendmsg+0x1c4/0x274
+[   56.104261]  ___sys_sendmsg+0x7c/0xc0
+[   56.107924]  __sys_sendmsg+0x44/0x98
+[   56.111492]  __arm64_sys_sendmsg+0x20/0x28
+[   56.115580]  invoke_syscall.constprop.0+0x58/0xfc
+[   56.120285]  do_el0_svc+0x3c/0xbc
+[   56.123592]  el0_svc+0x18/0x4c
+[   56.126647]  el0t_64_sync_handler+0x118/0x124
+[   56.131005]  el0t_64_sync+0x150/0x154
+[   56.134660] ---[ end trace 0000000000000000 ]---
+
+Fixes: ef1ca9271313b ("net: airoha: Add sched HTB offload support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250331-airoha-htb-qdisc-offload-del-fix-v1-1-4ea429c2c968@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sysctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mediatek/airoha_eth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
-index 8e1e97be4df79..ee3eac338a9de 100644
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -525,6 +525,8 @@ static int proc_sctp_do_auth(const struct ctl_table *ctl, int write,
- 	return ret;
- }
- 
-+static DEFINE_MUTEX(sctp_sysctl_mutex);
-+
- static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
- {
-@@ -549,6 +551,7 @@ static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 		if (new_value > max || new_value < min)
- 			return -EINVAL;
- 
-+		mutex_lock(&sctp_sysctl_mutex);
- 		net->sctp.udp_port = new_value;
- 		sctp_udp_sock_stop(net);
- 		if (new_value) {
-@@ -561,6 +564,7 @@ static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 		lock_sock(sk);
- 		sctp_sk(sk)->udp_port = htons(net->sctp.udp_port);
- 		release_sock(sk);
-+		mutex_unlock(&sctp_sysctl_mutex);
+diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
+index c1c2ab82a08d8..71975c490822b 100644
+--- a/drivers/net/ethernet/mediatek/airoha_eth.c
++++ b/drivers/net/ethernet/mediatek/airoha_eth.c
+@@ -3082,7 +3082,7 @@ static int airoha_tc_get_htb_get_leaf_queue(struct airoha_gdm_port *port,
+ 		return -EINVAL;
  	}
  
- 	return ret;
+-	opt->qid = channel;
++	opt->qid = AIROHA_NUM_TX_RING + channel;
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
