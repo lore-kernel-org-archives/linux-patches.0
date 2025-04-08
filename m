@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662AD269AE5;
-	Tue,  8 Apr 2025 11:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168E126A0D4;
+	Tue,  8 Apr 2025 11:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110118; cv=none; b=EES7ZcP/lz3hyQf657lrncQTK6Yvlmzu7CWS/GaTY4U6Vi81m+8VR5Pmr3fDJ5T0OLC6SoIWV2K6AeyipYJECrgUrjk4kvw3C9QnE7EASIAG2TVFEoh5vavHUJpTLqNyDZBNBMXZLF3QGKLMT6Ys2argqu8bspTYNjslrCgYYkg=
+	t=1744110121; cv=none; b=BK/aSAa/0vCMFNKru9usDhAV4CA6VJzdMlMC1bhs5/LlIepItIZjiHAqWKMurBc1ZftCmf2dWd2BXqd9lgRiAaBtG/QWCcs+niBOI/6GKnWYBwQzTuFaBb2V/Ue9bRUzA51sqF618CyFhDRAwBTuQrN5OgIktwlPQMQAHcla01k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110118; c=relaxed/simple;
-	bh=26Uz1Ko5825OgEs3vRWLJz53AyNt8nPclVEbmtW0Sb0=;
+	s=arc-20240116; t=1744110121; c=relaxed/simple;
+	bh=Qa1GVGLQeX7JUdtrXmWCeNHxnHAal3/B98KQfn+lXlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2LYZLR69YsxeLHuAarYNfuh0G2iU0Ie1XCa/HXiu/yDJz3ftYjyqBrresxL9gwvXCD+02HxkO1XdWDCbbPKE46HhoXvIkk8DbnuIZ4HY+Kaa0w+MZa+29nNKLtgXiYekZzphcyzOojKw2K97pZKi0tKK7JflLLCakC736e4k5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unw6uoOT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rn05oaR1EXGPSrv6JVhkUjoODpBKfvu+sF5EwcuoiCbZjilwF23hDjx4hjNOqjTDXFc8IXmHgZ+DhjeqH8jzAvJZsuieTVLHT7xnPqr4L478VmVh7YBDVHDs5g9W4CYP8L/KZotpIazytAc0MLN/hl2GK0RpPPSSxvENRhBAOdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN79sCCd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unw6uoOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AA9C4CEE5;
-	Tue,  8 Apr 2025 11:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN79sCCd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B328C4CEE7;
+	Tue,  8 Apr 2025 11:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110118;
-	bh=26Uz1Ko5825OgEs3vRWLJz53AyNt8nPclVEbmtW0Sb0=;
+	s=korg; t=1744110121;
+	bh=Qa1GVGLQeX7JUdtrXmWCeNHxnHAal3/B98KQfn+lXlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unw6uoOTRxfmkAQwgbeZW6V5thI+Meu1rZx0j1sJgiZleSqHO0ireoFobDtlyiJkH
-	 mSsL4r0tHiZSAEwS1faiHK7kmgcLZ9i1FDgI6ZHepTaYQEukSxrTzIjcmN2DCv+9p+
-	 Mw/lZsepLjyx+5tjdoo5yqyptsoUsPqtywnDCL3k=
+	b=kN79sCCdqEhhE6I2AG1oa/UL+YGUfSBSeqrFwRTV4XOlPWA0smKuy6WY+pXC4UhUm
+	 5Z07w2tIKtGPOSYS8UjPWscYvZJhzVMSai4Im+q1vXgR9AjT18nS+b9BEey0RVbIUn
+	 LmwpNm0I4Ut/OtdG/HKw/CkMRkPpFjOc8tCusEVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/227] lockdep: Dont disable interrupts on RT in disable_irq_nosync_lockdep.*()
-Date: Tue,  8 Apr 2025 12:48:22 +0200
-Message-ID: <20250408104824.055343528@linuxfoundation.org>
+Subject: [PATCH 5.10 168/227] NFSv4: Dont trigger uneccessary scans for return-on-close delegations
+Date: Tue,  8 Apr 2025 12:49:06 +0200
+Message-ID: <20250408104825.358128054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,79 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 87886b32d669abc11c7be95ef44099215e4f5788 ]
+[ Upstream commit 47acca884f714f41d95dc654f802845544554784 ]
 
-disable_irq_nosync_lockdep() disables interrupts with lockdep enabled to
-avoid false positive reports by lockdep that a certain lock has not been
-acquired with disabled interrupts. The user of this macros expects that
-a lock can be acquried without disabling interrupts because the IRQ line
-triggering the interrupt is disabled.
+The amount of looping through the list of delegations is occasionally
+leading to soft lockups. Avoid at least some loops by not requiring the
+NFSv4 state manager to scan for delegations that are marked for
+return-on-close. Instead, either mark them for immediate return (if
+possible) or else leave it up to nfs4_inode_return_delegation_on_close()
+to return them once the file is closed by the application.
 
-This triggers a warning on PREEMPT_RT because after
-disable_irq_nosync_lockdep.*() the following spinlock_t now is acquired
-with disabled interrupts.
-
-On PREEMPT_RT there is no difference between spin_lock() and
-spin_lock_irq() so avoiding disabling interrupts in this case works for
-the two remaining callers as of today.
-
-Don't disable interrupts on PREEMPT_RT in disable_irq_nosync_lockdep.*().
-
-Closes: https://lore.kernel.org/760e34f9-6034-40e0-82a5-ee9becd24438@roeck-us.net
-Fixes: e8106b941ceab ("[PATCH] lockdep: core, add enable/disable_irq_irqsave/irqrestore() APIs")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250212103619.2560503-2-bigeasy@linutronix.de
+Fixes: b757144fd77c ("NFSv4: Be less aggressive about returning delegations for open files")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/delegation.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 0652b4858ba62..71d3fa7f02655 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -426,7 +426,7 @@ irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
- static inline void disable_irq_nosync_lockdep(unsigned int irq)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_disable();
- #endif
- }
-@@ -434,7 +434,7 @@ static inline void disable_irq_nosync_lockdep(unsigned int irq)
- static inline void disable_irq_nosync_lockdep_irqsave(unsigned int irq, unsigned long *flags)
- {
- 	disable_irq_nosync(irq);
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_save(*flags);
- #endif
- }
-@@ -449,7 +449,7 @@ static inline void disable_irq_lockdep(unsigned int irq)
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 02d9af026ad15..dbed8d44d8053 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -552,17 +552,6 @@ static bool nfs_delegation_need_return(struct nfs_delegation *delegation)
  
- static inline void enable_irq_lockdep(unsigned int irq)
- {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_enable();
- #endif
- 	enable_irq(irq);
-@@ -457,7 +457,7 @@ static inline void enable_irq_lockdep(unsigned int irq)
+ 	if (test_and_clear_bit(NFS_DELEGATION_RETURN, &delegation->flags))
+ 		ret = true;
+-	else if (test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags)) {
+-		struct inode *inode;
+-
+-		spin_lock(&delegation->lock);
+-		inode = delegation->inode;
+-		if (inode && list_empty(&NFS_I(inode)->open_files))
+-			ret = true;
+-		spin_unlock(&delegation->lock);
+-	}
+-	if (ret)
+-		clear_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
+ 	if (test_bit(NFS_DELEGATION_RETURNING, &delegation->flags) ||
+ 	    test_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags) ||
+ 	    test_bit(NFS_DELEGATION_REVOKED, &delegation->flags))
+@@ -800,11 +789,25 @@ int nfs4_inode_make_writeable(struct inode *inode)
+ 	return nfs4_inode_return_delegation(inode);
+ }
  
- static inline void enable_irq_lockdep_irqrestore(unsigned int irq, unsigned long *flags)
+-static void nfs_mark_return_if_closed_delegation(struct nfs_server *server,
+-		struct nfs_delegation *delegation)
++static void
++nfs_mark_return_if_closed_delegation(struct nfs_server *server,
++				     struct nfs_delegation *delegation)
  {
--#ifdef CONFIG_LOCKDEP
-+#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
- 	local_irq_restore(*flags);
- #endif
- 	enable_irq(irq);
+-	set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
+-	set_bit(NFS4CLNT_DELEGRETURN, &server->nfs_client->cl_state);
++	struct inode *inode;
++
++	if (test_bit(NFS_DELEGATION_RETURN, &delegation->flags) ||
++	    test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags))
++		return;
++	spin_lock(&delegation->lock);
++	inode = delegation->inode;
++	if (!inode)
++		goto out;
++	if (list_empty(&NFS_I(inode)->open_files))
++		nfs_mark_return_delegation(server, delegation);
++	else
++		set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
++out:
++	spin_unlock(&delegation->lock);
+ }
+ 
+ static bool nfs_server_mark_return_all_delegations(struct nfs_server *server)
 -- 
 2.39.5
 
