@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DD71AAA32;
-	Tue,  8 Apr 2025 12:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0431AAA32;
+	Tue,  8 Apr 2025 12:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115781; cv=none; b=ko6/gwZ5i39zDyKBlMdStwcCf5WFf0Y0RcSrShBTZ3FDELrh5ioWOTugqho9szPsV634gFLeO6erX+OMTXk12BWGTnUbgbH+4NfPPJe+gsn05Z77IihK9LKVJarPyq/jCOmzO80voJG+42yX5vd3IPweIymhd3HkpBJ0XhNdxDQ=
+	t=1744115784; cv=none; b=ft5AZEXFDHDgkdlEKxOC07lupBI1od9DyZJ+SfMQlAtAX0CShA1N8Nrl2UK/OWCNlAiyNTekB8r001MXGTs3xDB26Qqo61+C0zAUMYoMMxr4LG0cKseim8LTGfKUvs6hLmlXmCXcBwVBHi2washn7IplHVVtectyd1miV2NcbFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115781; c=relaxed/simple;
-	bh=zfsiBOAxlueymf7Ru1iaR3HJYRRwWvuFPVt0sevIkao=;
+	s=arc-20240116; t=1744115784; c=relaxed/simple;
+	bh=oJOXSHINKtsnV/dGtJwDee0RnO+7Dd9YZ9q4iQz5bKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMhayd82EYPdBHVpDJezu/jECOYCuYZMcO2TI1bsnrjBrn3BFMlJ/99RArnN8xOdgq9SyD90YlQknkEhRS2jUlzOPUnuUvZp9JRe7ybPwW/Pbdv8h3qzrmsHxPtrcactGVSrXtSDGvridMHwt9QBQr6wqHHNOzrhwo9B759fKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9Q7r0sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c65pH+gbQHLyiZXNqkRy5ewzVbZ5N1V5g+tqfOAwwlbaV9tWQY0S+881cmmchYeLQjHkKs2QE3AL5Y40JvqzXLpbeR1XpAmo20f/+Ety73nMDwfYixw4CGXGsZqIU1pTSAV3g/ZTN3Ou/FsDMJ4vVInvHSd/cD1uMHt9I/8lFmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoTPRmyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9Q7r0sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA65C4CEE5;
-	Tue,  8 Apr 2025 12:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoTPRmyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E176C4CEE5;
+	Tue,  8 Apr 2025 12:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115781;
-	bh=zfsiBOAxlueymf7Ru1iaR3HJYRRwWvuFPVt0sevIkao=;
+	s=korg; t=1744115784;
+	bh=oJOXSHINKtsnV/dGtJwDee0RnO+7Dd9YZ9q4iQz5bKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9Q7r0sbp3R1oUtzOO9h40Jsnu0X2rvqcQssXMKL0JVYOKkBoUNpr84ylHu6q5064
-	 YWDSeZPTRCskAeIPWFVNCyRQ5D+jUW1h14QjdlpVkSGPB4yfYWN98nmGYXd3GqZ0wg
-	 MZft7Cva41GM9li8NV+qxBn+912V22GhKLT7t3Kk=
+	b=eoTPRmyn/zDcMuNWmQvTrAAoE9UW9tduIGdXdNWHexHDQQ7U1CzS0Ol2P2JMbzVlA
+	 UWso2Qw11WSd620q1zi/pXdMZaUKmrP2BDzHLxVmOcV0aqf2+rg4wKJwy87N556nfd
+	 wvZ9zoTt6vINX4MCb/cXefLiRAr7eCI+QvHhSNmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Duberstein <tamird@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/204] rust: fix signature of rust_fmt_argument
-Date: Tue,  8 Apr 2025 12:50:05 +0200
-Message-ID: <20250408104822.561847019@linuxfoundation.org>
+Subject: [PATCH 6.1 102/204] um: remove copy_from_kernel_nofault_allowed
+Date: Tue,  8 Apr 2025 12:50:32 +0200
+Message-ID: <20250408104823.331009756@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -53,76 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 901b3290bd4dc35e613d13abd03c129e754dd3dd ]
+[ Upstream commit 84a6fc378471fbeaf48f8604566a5a33a3d63c18 ]
 
-Without this change, the rest of this series will emit the following
-error message:
+There is no need to override the default version of this function
+anymore as UML now has proper _nofault memory access functions.
 
-error[E0308]: `if` and `else` have incompatible types
-  --> <linux>/rust/kernel/print.rs:22:22
-   |
-21 | #[export]
-   | --------- expected because of this
-22 | unsafe extern "C" fn rust_fmt_argument(
-   |                      ^^^^^^^^^^^^^^^^^ expected `u8`, found `i8`
-   |
-   = note: expected fn item `unsafe extern "C" fn(*mut u8, *mut u8, *mut c_void) -> *mut u8 {bindings::rust_fmt_argument}`
-              found fn item `unsafe extern "C" fn(*mut i8, *mut i8, *const c_void) -> *mut i8 {print::rust_fmt_argument}`
+Doing this also fixes the fact that the implementation was incorrect as
+using mincore() will incorrectly flag pages as inaccessible if they were
+swapped out by the host.
 
-The error may be different depending on the architecture.
-
-To fix this, change the void pointer argument to use a const pointer,
-and change the imports to use crate::ffi instead of core::ffi for
-integer types.
-
-Fixes: 787983da7718 ("vsprintf: add new `%pA` format specifier")
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20250303-export-macro-v3-1-41fbad85a27f@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: f75b1b1bedfb ("um: Implement probe_kernel_read()")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20250210160926.420133-3-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vsprintf.c       | 2 +-
- rust/kernel/print.rs | 7 +++----
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ arch/um/include/shared/os.h |  1 -
+ arch/um/kernel/Makefile     |  2 +-
+ arch/um/kernel/maccess.c    | 19 --------------
+ arch/um/os-Linux/process.c  | 51 -------------------------------------
+ 4 files changed, 1 insertion(+), 72 deletions(-)
+ delete mode 100644 arch/um/kernel/maccess.c
 
-diff --git a/lib/vsprintf.c b/lib/vsprintf.c
-index fa1c197018551..408a92c5a4f79 100644
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -2257,7 +2257,7 @@ int __init no_hash_pointers_enable(char *str)
- early_param("no_hash_pointers", no_hash_pointers_enable);
+diff --git a/arch/um/include/shared/os.h b/arch/um/include/shared/os.h
+index 0df646c6651ea..3b382da2996f0 100644
+--- a/arch/um/include/shared/os.h
++++ b/arch/um/include/shared/os.h
+@@ -211,7 +211,6 @@ extern int os_protect_memory(void *addr, unsigned long len,
+ extern int os_unmap_memory(void *addr, int len);
+ extern int os_drop_memory(void *addr, int length);
+ extern int can_drop_memory(void);
+-extern int os_mincore(void *addr, unsigned long len);
  
- /* Used for Rust formatting ('%pA'). */
--char *rust_fmt_argument(char *buf, char *end, void *ptr);
-+char *rust_fmt_argument(char *buf, char *end, const void *ptr);
+ /* execvp.c */
+ extern int execvp_noalloc(char *buf, const char *file, char *const argv[]);
+diff --git a/arch/um/kernel/Makefile b/arch/um/kernel/Makefile
+index 1c2d4b29a3d46..6407fc911007b 100644
+--- a/arch/um/kernel/Makefile
++++ b/arch/um/kernel/Makefile
+@@ -17,7 +17,7 @@ extra-y := vmlinux.lds
+ obj-y = config.o exec.o exitcode.o irq.o ksyms.o mem.o \
+ 	physmem.o process.o ptrace.o reboot.o sigio.o \
+ 	signal.o sysrq.o time.o tlb.o trap.o \
+-	um_arch.o umid.o maccess.o kmsg_dump.o capflags.o skas/
++	um_arch.o umid.o kmsg_dump.o capflags.o skas/
+ obj-y += load_file.o
  
- /*
-  * Show a '%p' thing.  A kernel extension is that the '%p' is followed
-diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
-index b6d1c12136de1..e21be6996932e 100644
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -6,12 +6,11 @@
- //!
- //! Reference: <https://www.kernel.org/doc/html/latest/core-api/printk-basics.html>
- 
--use core::{
-+use crate::{
-     ffi::{c_char, c_void},
--    fmt,
-+    str::RawFormatter,
- };
+ obj-$(CONFIG_BLK_DEV_INITRD) += initrd.o
+diff --git a/arch/um/kernel/maccess.c b/arch/um/kernel/maccess.c
+deleted file mode 100644
+index 8ccd56813f684..0000000000000
+--- a/arch/um/kernel/maccess.c
++++ /dev/null
+@@ -1,19 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (C) 2013 Richard Weinberger <richrd@nod.at>
+- */
 -
--use crate::str::RawFormatter;
-+use core::fmt;
+-#include <linux/uaccess.h>
+-#include <linux/kernel.h>
+-#include <os.h>
+-
+-bool copy_from_kernel_nofault_allowed(const void *src, size_t size)
+-{
+-	void *psrc = (void *)rounddown((unsigned long)src, PAGE_SIZE);
+-
+-	if ((unsigned long)src < PAGE_SIZE || size <= 0)
+-		return false;
+-	if (os_mincore(psrc, size + src - psrc) <= 0)
+-		return false;
+-	return true;
+-}
+diff --git a/arch/um/os-Linux/process.c b/arch/um/os-Linux/process.c
+index e52dd37ddadcc..2686120ab2325 100644
+--- a/arch/um/os-Linux/process.c
++++ b/arch/um/os-Linux/process.c
+@@ -223,57 +223,6 @@ int __init can_drop_memory(void)
+ 	return ok;
+ }
  
- #[cfg(CONFIG_PRINTK)]
- use crate::bindings;
+-static int os_page_mincore(void *addr)
+-{
+-	char vec[2];
+-	int ret;
+-
+-	ret = mincore(addr, UM_KERN_PAGE_SIZE, vec);
+-	if (ret < 0) {
+-		if (errno == ENOMEM || errno == EINVAL)
+-			return 0;
+-		else
+-			return -errno;
+-	}
+-
+-	return vec[0] & 1;
+-}
+-
+-int os_mincore(void *addr, unsigned long len)
+-{
+-	char *vec;
+-	int ret, i;
+-
+-	if (len <= UM_KERN_PAGE_SIZE)
+-		return os_page_mincore(addr);
+-
+-	vec = calloc(1, (len + UM_KERN_PAGE_SIZE - 1) / UM_KERN_PAGE_SIZE);
+-	if (!vec)
+-		return -ENOMEM;
+-
+-	ret = mincore(addr, UM_KERN_PAGE_SIZE, vec);
+-	if (ret < 0) {
+-		if (errno == ENOMEM || errno == EINVAL)
+-			ret = 0;
+-		else
+-			ret = -errno;
+-
+-		goto out;
+-	}
+-
+-	for (i = 0; i < ((len + UM_KERN_PAGE_SIZE - 1) / UM_KERN_PAGE_SIZE); i++) {
+-		if (!(vec[i] & 1)) {
+-			ret = 0;
+-			goto out;
+-		}
+-	}
+-
+-	ret = 1;
+-out:
+-	free(vec);
+-	return ret;
+-}
+-
+ void init_new_thread_signals(void)
+ {
+ 	set_handler(SIGSEGV);
 -- 
 2.39.5
 
