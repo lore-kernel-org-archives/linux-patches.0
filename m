@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DF226AA9A;
-	Tue,  8 Apr 2025 12:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9499426656B;
+	Tue,  8 Apr 2025 12:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113906; cv=none; b=cZrn7+qxosoUd+8jiPnoIRJSR9vGfDb/Gbd904Agl30M1wg3EyQYDvhhszhN127MRbtVpJY66c5ok4/q5K2VDsr0FYe8aPgk+dZ7YgK+gf7E4T9vtNZgGGvji21kUpr8+p+mXmtj8sLwPt6rAw1xbzxsMD6p5FJm3p8nVpp3F78=
+	t=1744113908; cv=none; b=fZVWVPDPMYgIMKDtajWc9QcJMZNxUjz+n3kiuqffx18owPrFNwlwpvRAe+h19qD3YDK+1qfPIz8YM9Q/AfUqhxS2JWqQmgM9C2i40m8p/F089DGNVNOZ4/g+oaczLoIXCCvLwyhhW679M6i4f/KKFqfTSHXvw3IjzgssjOeBBfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113906; c=relaxed/simple;
-	bh=yTdvO5Txp/vKFqk4/LDgNgcr7VlZrYVKB+UZKEoxYAs=;
+	s=arc-20240116; t=1744113908; c=relaxed/simple;
+	bh=48fht+LnK3p2kHYTVTZYy4UjAIkslDGz4yM/wDKbI8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgCG3WAcKuhgY20BPhncyWKvIWWmzJy36KckEMP9APM5eLT3sWvyDY1EVmePdm5y5X/an/07VQmYAAs9h0FlYX2Y8IF8O9mGiFJL0QRRPvZfsJ1To085qLoWQ7YiCOZ57pzwKnTCYQn+eAgCB92FeW2JJ/vKgDYn25NhBtyOwOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oX2B99m7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAyo/ESQVzigEUN1mcFtYyzp52rG2JGETphngiQhNMQ9R0R3MN4wi3NkmJDmpgQy4IImuwffe1vJfESYROBYFboAYsbyt2AXeNr6s7427/gucSg6k0WwNnfXwylevpnsEop5KVJF2GmNVcWB013BX0GhZb0zV4OtNErasmEiT4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEjoPf2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oX2B99m7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAB2C4CEE5;
-	Tue,  8 Apr 2025 12:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEjoPf2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253B5C4CEE5;
+	Tue,  8 Apr 2025 12:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113905;
-	bh=yTdvO5Txp/vKFqk4/LDgNgcr7VlZrYVKB+UZKEoxYAs=;
+	s=korg; t=1744113908;
+	bh=48fht+LnK3p2kHYTVTZYy4UjAIkslDGz4yM/wDKbI8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oX2B99m7ZIsfjfH5b9L3tH8eYoLcZ+qNxRM+Isi27NPItLs1mpF+dyJDMMteaOn7h
-	 vmdaIf+gn73KhZbrJ8lSteqf6BNzKvPXF4nfLSXjLb6EP5H2cbTaaNVsXULu3an9xX
-	 1FSKBgqw3e15BXM9d826V22gYfBKmLhPby7NqWOg=
+	b=mEjoPf2ibJxe56vn5IUXCLp2JME7l01Bx3ROP3dROdWeQpRF2choRqiCJDnBw5dDa
+	 78lONRVN9T9VX6a/p0Mace+3Xm0lYUGgcwwC4rzQrXUPpV7+hfGUl+Z4Y4zJzK2/TE
+	 iJyezgWfS/B/AWuhi4X0Bcb3Ylf2vsBpsBDzQUnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: [PATCH 5.4 063/154] ARM: shmobile: smp: Enforce shmobile_smp_* alignment
-Date: Tue,  8 Apr 2025 12:50:04 +0200
-Message-ID: <20250408104817.313221163@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.4 064/154] batman-adv: Ignore own maximum aggregation size during RX
+Date: Tue,  8 Apr 2025 12:50:05 +0200
+Message-ID: <20250408104817.346876007@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -50,42 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 379c590113ce46f605439d4887996c60ab8820cc upstream.
+commit 548b0c5de7619ef53bbde5590700693f2f6d2a56 upstream.
 
-When the addresses of the shmobile_smp_mpidr, shmobile_smp_fn, and
-shmobile_smp_arg variables are not multiples of 4 bytes, secondary CPU
-bring-up fails:
+An OGMv1 and OGMv2 packet receive processing were not only limited by the
+number of bytes in the received packet but also by the nodes maximum
+aggregation packet size limit. But this limit is relevant for TX and not
+for RX. It must not be enforced by batadv_(i)v_ogm_aggr_packet to avoid
+loss of information in case of a different limit for sender and receiver.
 
-    smp: Bringing up secondary CPUs ...
-    CPU1: failed to come online
-    CPU2: failed to come online
-    CPU3: failed to come online
-    smp: Brought up 1 node, 1 CPU
+This has a minor side effect for B.A.T.M.A.N. IV because the
+batadv_iv_ogm_aggr_packet is also used for the preprocessing for the TX.
+But since the aggregation code itself will not allow more than
+BATADV_MAX_AGGREGATION_BYTES bytes, this check was never triggering (in
+this context) prior of removing it.
 
-Fix this by adding the missing alignment directive.
-
-Fixes: 4e960f52fce16a3b ("ARM: shmobile: Move shmobile_smp_{mpidr, fn, arg}[] from .text to .bss")
-Closes: https://lore.kernel.org/r/CAMuHMdU=QR-JLgEHKWpsr6SbaZRc-Hz9r91JfpP8c3n2G-OjqA@mail.gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/c499234d559a0d95ad9472883e46077311051cd8.1741612208.git.geert+renesas@glider.be
 Cc: stable@vger.kernel.org
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: 9323158ef9f4 ("batman-adv: OGMv2 - implement originators logic")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-shmobile/headsmp.S |    1 +
- 1 file changed, 1 insertion(+)
+ net/batman-adv/bat_iv_ogm.c |    3 +--
+ net/batman-adv/bat_v_ogm.c  |    3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/arm/mach-shmobile/headsmp.S
-+++ b/arch/arm/mach-shmobile/headsmp.S
-@@ -136,6 +136,7 @@ ENDPROC(shmobile_smp_sleep)
- 	.long	shmobile_smp_arg - 1b
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -325,8 +325,7 @@ batadv_iv_ogm_aggr_packet(int buff_pos,
+ 	/* check if there is enough space for the optional TVLV */
+ 	next_buff_pos += ntohs(ogm_packet->tvlv_len);
  
- 	.bss
-+	.align	2
- 	.globl	shmobile_smp_mpidr
- shmobile_smp_mpidr:
- 	.space	NR_CPUS * 4
+-	return (next_buff_pos <= packet_len) &&
+-	       (next_buff_pos <= BATADV_MAX_AGGREGATION_BYTES);
++	return next_buff_pos <= packet_len;
+ }
+ 
+ /* send a batman ogm to a given interface */
+--- a/net/batman-adv/bat_v_ogm.c
++++ b/net/batman-adv/bat_v_ogm.c
+@@ -845,8 +845,7 @@ batadv_v_ogm_aggr_packet(int buff_pos, i
+ 	/* check if there is enough space for the optional TVLV */
+ 	next_buff_pos += ntohs(ogm2_packet->tvlv_len);
+ 
+-	return (next_buff_pos <= packet_len) &&
+-	       (next_buff_pos <= BATADV_MAX_AGGREGATION_BYTES);
++	return next_buff_pos <= packet_len;
+ }
+ 
+ /**
 
 
