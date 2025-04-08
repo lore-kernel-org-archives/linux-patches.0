@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF50B28150B;
-	Tue,  8 Apr 2025 12:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBE926E166;
+	Tue,  8 Apr 2025 12:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116833; cv=none; b=e5nwgFNWCaBEkktUxHG0XVUPbFYJwMUPltQx/frQc2ofNnElrGGShs8jp8TV+XNNFxd/7oyPi+3sQNoEJOILRlmsiys9HowEMS4bwyl9B2be5N9YLvOt/dRf8XehF9R1lnV2NFqMSjvOx+eyZDAzkmNqQZGLE2+wNvCEQOs75zU=
+	t=1744116836; cv=none; b=NZxKzL5ApahZgCO0T+gETU3iGqi+BeLy60/Bb0F0FnIF/5xPdEwtFUPi92K5nRpbIEAD05IQ4WwUvHBtCTqzsYnNsOvpFEMh7/Gv+Y2p7htEkMlYA1EXpBetLIhBS5id5rOcoGtrDDGTbl2JI2OBhID8NTYInMd7N6VkTgOOba8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116833; c=relaxed/simple;
-	bh=aG3MEQF5qtrjOoQykXxuLJ1phokKcEBfQBUsSjlE5Ag=;
+	s=arc-20240116; t=1744116836; c=relaxed/simple;
+	bh=+ko9+syxyl8KRqsIM37+malAcKs1V9jZH0ReqhG9/r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EsXoPGahRBrO+Su4AdBdoM4uY2zb4oTqr48oe24LV5AFhUfRbpdU8XTnH7NETDBeP0UFZyAfGZisIX5Vbpr/Zy9By0kUHqcl6485w/FTGrO5jPDMYwT8ICEgV4qRXzX2+YF1tObfoO4fgzQ/YHKXH6qFof6p2QQBJwyHBBfpfv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnDcNJjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VEzQ/kALtXNu1drtvW0y73tN6S/HYxRWphyp/fFK0MoAAW0lBqNlUA77b/G1dNjV+sesoW7Z/eKBqRtCowZQU09hrSGxX/Bm89gJAG+SJbolq/JZISFcudiQBCrRQRv7o3KuL/N/9+erE6OGYA6LC0/oLMkdFbZo5xBrpNJ0hPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RY8vhRw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnDcNJjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CBBC4CEE5;
-	Tue,  8 Apr 2025 12:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RY8vhRw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40109C4CEE5;
+	Tue,  8 Apr 2025 12:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116832;
-	bh=aG3MEQF5qtrjOoQykXxuLJ1phokKcEBfQBUsSjlE5Ag=;
+	s=korg; t=1744116835;
+	bh=+ko9+syxyl8KRqsIM37+malAcKs1V9jZH0ReqhG9/r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnDcNJjRYj+yUhyLkF11MABCcWHaO1pdKzugCnqW81G5jMuYfL/22T6DlWmWO6aho
-	 YmuY07yUA2zDoCV+59fF6sjgV4dFqTQnS44Dba3qwVIpkAOfjw/u6uzNriuV05d06j
-	 sqJa9Poku3HDl0T4NkkcPTDxw2JBBcyLVG1gCK8k=
+	b=RY8vhRw6tcCf84jfz0YuKkbCsnZ744ThxMbA98w/bI7YkE3VrsuKS4P06jKRu3d/i
+	 s6j9fCD9M0W/Ucq8Q3jwjpTUe5MHweUg8JYnRHp+HPgtOLqUAaMLGQ5KLq1sczh4fv
+	 UvIYyZgcDVVhYnWAbCmwIZseijj2Xnlw23sYAJAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Shuming Fan <shumingf@realtek.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/423] ASoC: codecs: wsa884x: report temps to hwmon in millidegree of Celsius
-Date: Tue,  8 Apr 2025 12:50:11 +0200
-Message-ID: <20250408104852.414953686@linuxfoundation.org>
+Subject: [PATCH 6.12 286/423] ASoC: rt1320: set wake_capable = 0 explicitly
+Date: Tue,  8 Apr 2025 12:50:12 +0200
+Message-ID: <20250408104852.441575930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,71 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit d776f016d24816f15033169dcd081f077b6c10f4 ]
+[ Upstream commit 927e6bec5cf3624665b0a2e9f64a1d32f3d22cdd ]
 
-Temperatures are reported in units of Celsius however hwmon expects
-values to be in millidegree of Celsius. Userspace tools observe values
-close to zero and report it as "Not available" or incorrect values like
-0C or 1C. Add a simple conversion to fix that.
+"generic_new_peripheral_assigned: invalid dev_num 1, wake supported 1"
+is reported by our internal CI test.
 
-Before the change:
+Rt1320's wake feature is not used in Linux and that's why it is not in
+the wake_capable_list[] list in intel_auxdevice.c.
+However, BIOS may set it as wake-capable. Overwrite wake_capable to 0
+in the codec driver to align with wake_capable_list[].
 
-wsa884x-virtual-0
-Adapter: Virtual device
-temp1:         +0.0°C
---
-wsa884x-virtual-0
-Adapter: Virtual device
-temp1:         +0.0°C
-
-Also reported as N/A before first amplifier power on.
-
-After this change and initial wsa884x power on:
-
-wsa884x-virtual-0
-Adapter: Virtual device
-temp1:        +39.0°C
---
-wsa884x-virtual-0
-Adapter: Virtual device
-temp1:        +37.0°C
-
-Tested on sm8550 only.
-
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250221044024.1207921-1-alexey.klimov@linaro.org
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Acked-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20250305134113.201326-1-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa884x.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt1320-sdw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
-index 86df5152c547b..560a2c04b6955 100644
---- a/sound/soc/codecs/wsa884x.c
-+++ b/sound/soc/codecs/wsa884x.c
-@@ -1875,7 +1875,7 @@ static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
- 		 * Reading temperature is possible only when Power Amplifier is
- 		 * off. Report last cached data.
- 		 */
--		*temp = wsa884x->temperature;
-+		*temp = wsa884x->temperature * 1000;
- 		return 0;
- 	}
+diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
+index f4e1ea29c2651..f2d194e76a947 100644
+--- a/sound/soc/codecs/rt1320-sdw.c
++++ b/sound/soc/codecs/rt1320-sdw.c
+@@ -3705,6 +3705,9 @@ static int rt1320_read_prop(struct sdw_slave *slave)
+ 	/* set the timeout values */
+ 	prop->clk_stop_timeout = 64;
  
-@@ -1934,7 +1934,7 @@ static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
- 	if ((val > WSA884X_LOW_TEMP_THRESHOLD) &&
- 	    (val < WSA884X_HIGH_TEMP_THRESHOLD)) {
- 		wsa884x->temperature = val;
--		*temp = val;
-+		*temp = val * 1000;
- 		ret = 0;
- 	} else {
- 		ret = -EAGAIN;
++	/* BIOS may set wake_capable. Make sure it is 0 as wake events are disabled. */
++	prop->wake_capable = 0;
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
