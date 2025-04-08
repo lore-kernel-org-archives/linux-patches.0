@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA8F26658B;
-	Tue,  8 Apr 2025 11:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A345026658B;
+	Tue,  8 Apr 2025 11:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112007; cv=none; b=H4QaYGbVPAXDKZGN691+oHWZ7S/l5NvIbipR+f96ylQ9Jg46vPevCNSa4LNyqWiioy/UkvRUc0yl/64TIwAYZIAJqt/EgWwPu/8CXhqn9GonD0ECsttiALqCdA8sa94Acju8HRLWQDi1V6pEKOr2JVQKGYzHVi8cDCKBCblTRxw=
+	t=1744112010; cv=none; b=pHS8v7K/CKRjaNSaIRWNfuT/SdJPBsKnaNDeZ++YLuGBuwevVn+ypDdxUJ3WtViqJ6rBz5PBWtyXiJO3JMum3ACOFc0Q9Tr8bdyfSzFE16e2TS+VtX64fIQNQLm1Lbk31dkpPZaCTGNyBmrGWTwrCvX909OTOaLMYdFswQnICfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112007; c=relaxed/simple;
-	bh=8KdIjk0H07HsKq/xX7yUK2OWB95AeiMd+upGe54dlGc=;
+	s=arc-20240116; t=1744112010; c=relaxed/simple;
+	bh=YWDMp1e+kg18/KCNIqktdPRLkFXmr3Mu2Bm1CSCssZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iXBQa4stjrwpujynZTWh4iFkXKzQ2cyuDpJ7htkMzX13udCJRMDyH2sIbcxYYCMKDIBZGGmI3Cv8L3WBh43Pkhk7SBOBm1SMPHvn9/uZ8R5lIro7chqFqEHRDB6xLmxAww4JLAPwg9pPJhOKe73s0voDuYY8i+3AKogllfFjC6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBsnvdsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RW1PsvQH42AkKqbrwkvJNW51Lc2kLJyFGKYIO6mMyDIQnDeutPKdE0faQj7vGE5tiX5ESy/JEoubZpYl25WtrXBk9tg8dd5+bxXioL/qi878lBoftZW5Tyg7FC2Crp8Z1oOwEvpZspwCkcVxE435BSHLLzEliKjSIZUYNRPkAyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEaIJIj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBsnvdsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515ABC4CEE5;
-	Tue,  8 Apr 2025 11:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEaIJIj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A35C4CEEB;
+	Tue,  8 Apr 2025 11:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112007;
-	bh=8KdIjk0H07HsKq/xX7yUK2OWB95AeiMd+upGe54dlGc=;
+	s=korg; t=1744112010;
+	bh=YWDMp1e+kg18/KCNIqktdPRLkFXmr3Mu2Bm1CSCssZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBsnvdscaLQISv13wx0Ga5/k2asdMuzNpZPLZkNjqezJd8lKZuk79kkHc1ncZdRGu
-	 8YBSowTTLlmu9QfiBeMYPPKlGo7Rs9fSl2zy+77z5p2CBhXizbT2nuO/PHKZP0g7O5
-	 x7Af3Yet0dMoCflU0sYTMo6ZQv29KT3HQxzq+IP8=
+	b=ZEaIJIj5oeoQ5lsivEe2oTcntdQOX5tsXRtm5WERnTycWOCpe2DO83rJjJBI34VMo
+	 QZd180hAo04HdCZh8Exd7w8gGdz1sjweeE3y99/Cg55FcTGoSax3vovCEF9l1GQngK
+	 4zzCAK6CU6Epydve1JTZEgbwXC/wPDMlf3ERuHus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 592/731] riscv: Fix set up of cpu hotplug callbacks
-Date: Tue,  8 Apr 2025 12:48:09 +0200
-Message-ID: <20250408104928.045213355@linuxfoundation.org>
+Subject: [PATCH 6.14 635/731] sfc: fix NULL dereferences in ef100_process_design_param()
+Date: Tue,  8 Apr 2025 12:48:52 +0200
+Message-ID: <20250408104929.041384650@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -46,85 +47,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Edward Cree <ecree.xilinx@gmail.com>
 
-[ Upstream commit 05ee21f0fcb8ca29bf42bd6cbce109f2e49c167f ]
+[ Upstream commit 8241ecec1cdc6699ae197d52d58e76bddd995fa5 ]
 
-CPU hotplug callbacks should be set up even if we detected all
-current cpus emulate misaligned accesses, since we want to
-ensure our expectations of all cpus emulating is maintained.
+Since cited commit, ef100_probe_main() and hence also
+ ef100_check_design_params() run before efx->net_dev is created;
+ consequently, we cannot netif_set_tso_max_size() or _segs() at this
+ point.
+Move those netif calls to ef100_probe_netdev(), and also replace
+ netif_err within the design params code with pci_err.
 
-Fixes: 6e5ce7f2eae3 ("riscv: Decouple emulated unaligned accesses from access speed")
-Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250304120014.143628-15-ajones@ventanamicro.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 98ff4c7c8ac7 ("sfc: Separate netdev probe/remove from PCI probe/remove")
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250401225439.2401047-1-edward.cree@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/unaligned_access_speed.c | 27 +++++++++++-----------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/sfc/ef100_netdev.c |  6 ++--
+ drivers/net/ethernet/sfc/ef100_nic.c    | 47 +++++++++++--------------
+ 2 files changed, 24 insertions(+), 29 deletions(-)
 
-diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
-index bca798153e37d..84694a44f3da4 100644
---- a/arch/riscv/kernel/unaligned_access_speed.c
-+++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -247,13 +247,6 @@ static void __init check_unaligned_access_speed_all_cpus(void)
- 	/* Check core 0. */
- 	smp_call_on_cpu(0, check_unaligned_access, bufs[0], true);
+diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
+index d941f073f1ebf..3a06e3b1bd6bf 100644
+--- a/drivers/net/ethernet/sfc/ef100_netdev.c
++++ b/drivers/net/ethernet/sfc/ef100_netdev.c
+@@ -450,8 +450,9 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+ 	net_dev->hw_enc_features |= efx->type->offload_features;
+ 	net_dev->vlan_features |= NETIF_F_HW_CSUM | NETIF_F_SG |
+ 				  NETIF_F_HIGHDMA | NETIF_F_ALL_TSO;
+-	netif_set_tso_max_segs(net_dev,
+-			       ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS_DEFAULT);
++	nic_data = efx->nic_data;
++	netif_set_tso_max_size(efx->net_dev, nic_data->tso_max_payload_len);
++	netif_set_tso_max_segs(efx->net_dev, nic_data->tso_max_payload_num_segs);
  
--	/*
--	 * Setup hotplug callbacks for any new CPUs that come online or go
--	 * offline.
--	 */
--	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
--				  riscv_online_cpu, riscv_offline_cpu);
--
- out:
- 	for_each_cpu(cpu, cpu_online_mask) {
- 		if (bufs[cpu])
-@@ -386,13 +379,6 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
- {
- 	schedule_on_each_cpu(check_vector_unaligned_access);
+ 	rc = efx_ef100_init_datapath_caps(efx);
+ 	if (rc < 0)
+@@ -477,7 +478,6 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+ 	/* Don't fail init if RSS setup doesn't work. */
+ 	efx_mcdi_push_default_indir_table(efx, efx->n_rx_channels);
  
--	/*
--	 * Setup hotplug callbacks for any new CPUs that come online or go
--	 * offline.
--	 */
--	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
--				  riscv_online_cpu_vec, NULL);
--
- 	return 0;
- }
- #else /* CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS */
-@@ -418,6 +404,19 @@ static int __init check_unaligned_access_all_cpus(void)
- 			    NULL, "vec_check_unaligned_access_speed_all_cpus");
+-	nic_data = efx->nic_data;
+ 	rc = ef100_get_mac_address(efx, net_dev->perm_addr, CLIENT_HANDLE_SELF,
+ 				   efx->type->is_vf);
+ 	if (rc)
+diff --git a/drivers/net/ethernet/sfc/ef100_nic.c b/drivers/net/ethernet/sfc/ef100_nic.c
+index 62e674d6ff60c..3ad95a4c8af2d 100644
+--- a/drivers/net/ethernet/sfc/ef100_nic.c
++++ b/drivers/net/ethernet/sfc/ef100_nic.c
+@@ -887,8 +887,7 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 	case ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS:
+ 		/* We always put HDR_NUM_SEGS=1 in our TSO descriptors */
+ 		if (!reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "TSO_MAX_HDR_NUM_SEGS < 1\n");
++			pci_err(efx->pci_dev, "TSO_MAX_HDR_NUM_SEGS < 1\n");
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+@@ -901,32 +900,28 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		 */
+ 		if (!reader->value || reader->value > EFX_MIN_DMAQ_SIZE ||
+ 		    EFX_MIN_DMAQ_SIZE % (u32)reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "%s size granularity is %llu, can't guarantee safety\n",
+-				  reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
+-				  reader->value);
++			pci_err(efx->pci_dev,
++				"%s size granularity is %llu, can't guarantee safety\n",
++				reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
++				reader->value);
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_LEN:
+ 		nic_data->tso_max_payload_len = min_t(u64, reader->value,
+ 						      GSO_LEGACY_MAX_SIZE);
+-		netif_set_tso_max_size(efx->net_dev,
+-				       nic_data->tso_max_payload_len);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_NUM_SEGS:
+ 		nic_data->tso_max_payload_num_segs = min_t(u64, reader->value, 0xffff);
+-		netif_set_tso_max_segs(efx->net_dev,
+-				       nic_data->tso_max_payload_num_segs);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_NUM_FRAMES:
+ 		nic_data->tso_max_frames = min_t(u64, reader->value, 0xffff);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_COMPAT:
+ 		if (reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
+-				  reader->value);
++			pci_err(efx->pci_dev,
++				"DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
++				reader->value);
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+@@ -946,10 +941,10 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		 * So the value of this shouldn't matter.
+ 		 */
+ 		if (reader->value != ESE_EF100_DP_GZ_VI_STRIDES_DEFAULT)
+-			netif_dbg(efx, probe, efx->net_dev,
+-				  "NIC has other than default VI_STRIDES (mask "
+-				  "%#llx), early probing might use wrong one\n",
+-				  reader->value);
++			pci_dbg(efx->pci_dev,
++				"NIC has other than default VI_STRIDES (mask "
++				"%#llx), early probing might use wrong one\n",
++				reader->value);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_RX_MAX_RUNT:
+ 		/* Driver doesn't look at L2_STATUS:LEN_ERR bit, so we don't
+@@ -961,9 +956,9 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		/* Host interface says "Drivers should ignore design parameters
+ 		 * that they do not recognise."
+ 		 */
+-		netif_dbg(efx, probe, efx->net_dev,
+-			  "Ignoring unrecognised design parameter %u\n",
+-			  reader->type);
++		pci_dbg(efx->pci_dev,
++			"Ignoring unrecognised design parameter %u\n",
++			reader->type);
+ 		return 0;
  	}
- 
-+	/*
-+	 * Setup hotplug callbacks for any new CPUs that come online or go
-+	 * offline.
-+	 */
-+#ifdef CONFIG_RISCV_PROBE_UNALIGNED_ACCESS
-+	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
-+				  riscv_online_cpu, riscv_offline_cpu);
-+#endif
-+#ifdef CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS
-+	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "riscv:online",
-+				  riscv_online_cpu_vec, NULL);
-+#endif
-+
- 	return 0;
  }
- 
+@@ -999,13 +994,13 @@ static int ef100_check_design_params(struct efx_nic *efx)
+ 	 */
+ 	if (reader.state != EF100_TLV_TYPE) {
+ 		if (reader.state == EF100_TLV_TYPE_CONT)
+-			netif_err(efx, probe, efx->net_dev,
+-				  "truncated design parameter (incomplete type %u)\n",
+-				  reader.type);
++			pci_err(efx->pci_dev,
++				"truncated design parameter (incomplete type %u)\n",
++				reader.type);
+ 		else
+-			netif_err(efx, probe, efx->net_dev,
+-				  "truncated design parameter %u\n",
+-				  reader.type);
++			pci_err(efx->pci_dev,
++				"truncated design parameter %u\n",
++				reader.type);
+ 		rc = -EIO;
+ 	}
+ out:
 -- 
 2.39.5
 
