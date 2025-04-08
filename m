@@ -1,54 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF3F268FE4;
-	Tue,  8 Apr 2025 12:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE2268FE4;
+	Tue,  8 Apr 2025 12:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114815; cv=none; b=NmetxCjAYyTymlJm+AZoP3sV+MIhJBUgy8z3uBg524pF86PIUapxFuf/OArCLdnWcDvLZ+kEurjrrh431woGmm7/f0iLuMA8n91c+Nb5EukQTJKkaH5T4OcounnIslnOg2785a2wWw7AH9d7Dx8E8tCO7UWD7mReFjNu+7pbB3k=
+	t=1744114818; cv=none; b=j06vGjztv0eJFhDS0hxu4ii5WzeKd6TV804jkBZezNiweVfEKuVaztJYQWmC+acgfN9aG5vuU+yhjzzo1p9paeh9PIo2EyeHBLUUDhMxYyGl1n4RnyiXUUh2ohUTqUVPx4ezWzM/cHA1dJZMyfxlEgRwXXB+FpEIvj3hhmruU48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114815; c=relaxed/simple;
-	bh=8ReOyN9TO7o7BRDtwtdU8SNaeqWvyJbcXTTjNtr+hCg=;
+	s=arc-20240116; t=1744114818; c=relaxed/simple;
+	bh=jjUS84lyDrMx5AQYhBt0Mg6Xs5AR1XlBACJju2ZmdNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKi0Hg7CN8JivJnfUOza2O81UFlY5VjLZjv2Fz57KE69PI/VRmAwrVXHj/H5f2/YMriweuoDjAhVuukKGdh3j6dASwpF7ibp+6FB+A8wvt28kvKnqhNqFq8UqmxVeVTSrU0+FOSLeItcINhc2uEJ20FfSmm0NwXzNb/W2tIwDU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc5d4c8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+9LLXl9I4jqJUnA+YByCnT7tFV2badnhh91c7vlNLUp6rhYZ4wsQmg9/Smhd0PmY5d/YFuOsuo4MEVDT6vaeoWnuC6mChNO0IZ0inVuovpRw2u+fLKphWGQQSMyNJ9D/08mNnRwJWTAvJ0Ys/LL1Hwi5OnMa2bwugvPh23fuA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsT+exlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc5d4c8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419EFC4CEE5;
-	Tue,  8 Apr 2025 12:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsT+exlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D34C4CEE5;
+	Tue,  8 Apr 2025 12:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114815;
-	bh=8ReOyN9TO7o7BRDtwtdU8SNaeqWvyJbcXTTjNtr+hCg=;
+	s=korg; t=1744114818;
+	bh=jjUS84lyDrMx5AQYhBt0Mg6Xs5AR1XlBACJju2ZmdNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bc5d4c8PijHrA8H7UnzudUXpFLBSO1KMH3EjRy+SnTnEBemcpC20mAEInx0i0/Qvm
-	 vDyySxzgJyiFOVXLJrMPuAkciV5gx73efZBdVqVtr6ay1Ydclzq62QEugp0fAxMlvi
-	 f1owr/U0uobrcRNkywlFdioNzvxOxUPP6/QKOWTc=
+	b=CsT+exlrfMOWC+1Z79b1Ptk9E89sBPJm9wH9S4HWFJUkFn/A/GxNc2+yLBpmJINB4
+	 voD9NicF0u3IlccY+McyLqU327pw1uRSuzriurkMHPhNeuPRdIqRPwAYIqSgCkki70
+	 8ILDWODwgQ24R0rNiyXadOPH/WPS4MGTWYEquvUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 244/499] arch/powerpc: drop GENERIC_PTDUMP from mpc885_ads_defconfig
-Date: Tue,  8 Apr 2025 12:47:36 +0200
-Message-ID: <20250408104857.300931462@linuxfoundation.org>
+Subject: [PATCH 6.13 245/499] NFSv4: Dont trigger uneccessary scans for return-on-close delegations
+Date: Tue,  8 Apr 2025 12:47:37 +0200
+Message-ID: <20250408104857.323597600@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -67,50 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 2c5e6ac2db64ace51f66a9f3b3b3ab9553d748e8 ]
+[ Upstream commit 47acca884f714f41d95dc654f802845544554784 ]
 
-GENERIC_PTDUMP gets selected on powerpc explicitly and hence can be
-dropped off from mpc885_ads_defconfig.  Replace with CONFIG_PTDUMP_DEBUGFS
-instead.
+The amount of looping through the list of delegations is occasionally
+leading to soft lockups. Avoid at least some loops by not requiring the
+NFSv4 state manager to scan for delegations that are marked for
+return-on-close. Instead, either mark them for immediate return (if
+possible) or else leave it up to nfs4_inode_return_delegation_on_close()
+to return them once the file is closed by the application.
 
-Link: https://lkml.kernel.org/r/20250226122404.1927473-3-anshuman.khandual@arm.com
-Fixes: e084728393a5 ("powerpc/ptdump: Convert powerpc to GENERIC_PTDUMP")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b757144fd77c ("NFSv4: Be less aggressive about returning delegations for open files")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/configs/mpc885_ads_defconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/delegation.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/arch/powerpc/configs/mpc885_ads_defconfig b/arch/powerpc/configs/mpc885_ads_defconfig
-index 77306be62e9ee..129355f87f80f 100644
---- a/arch/powerpc/configs/mpc885_ads_defconfig
-+++ b/arch/powerpc/configs/mpc885_ads_defconfig
-@@ -78,4 +78,4 @@ CONFIG_DEBUG_VM_PGTABLE=y
- CONFIG_DETECT_HUNG_TASK=y
- CONFIG_BDI_SWITCH=y
- CONFIG_PPC_EARLY_DEBUG=y
--CONFIG_GENERIC_PTDUMP=y
-+CONFIG_PTDUMP_DEBUGFS=y
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 4db912f562305..df77d68d9ff99 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -590,17 +590,6 @@ static bool nfs_delegation_need_return(struct nfs_delegation *delegation)
+ 
+ 	if (test_and_clear_bit(NFS_DELEGATION_RETURN, &delegation->flags))
+ 		ret = true;
+-	else if (test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags)) {
+-		struct inode *inode;
+-
+-		spin_lock(&delegation->lock);
+-		inode = delegation->inode;
+-		if (inode && list_empty(&NFS_I(inode)->open_files))
+-			ret = true;
+-		spin_unlock(&delegation->lock);
+-	}
+-	if (ret)
+-		clear_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
+ 	if (test_bit(NFS_DELEGATION_RETURNING, &delegation->flags) ||
+ 	    test_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags) ||
+ 	    test_bit(NFS_DELEGATION_REVOKED, &delegation->flags))
+@@ -878,11 +867,25 @@ int nfs4_inode_make_writeable(struct inode *inode)
+ 	return nfs4_inode_return_delegation(inode);
+ }
+ 
+-static void nfs_mark_return_if_closed_delegation(struct nfs_server *server,
+-		struct nfs_delegation *delegation)
++static void
++nfs_mark_return_if_closed_delegation(struct nfs_server *server,
++				     struct nfs_delegation *delegation)
+ {
+-	set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
+-	set_bit(NFS4CLNT_DELEGRETURN, &server->nfs_client->cl_state);
++	struct inode *inode;
++
++	if (test_bit(NFS_DELEGATION_RETURN, &delegation->flags) ||
++	    test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags))
++		return;
++	spin_lock(&delegation->lock);
++	inode = delegation->inode;
++	if (!inode)
++		goto out;
++	if (list_empty(&NFS_I(inode)->open_files))
++		nfs_mark_return_delegation(server, delegation);
++	else
++		set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
++out:
++	spin_unlock(&delegation->lock);
+ }
+ 
+ static bool nfs_server_mark_return_all_delegations(struct nfs_server *server)
 -- 
 2.39.5
 
