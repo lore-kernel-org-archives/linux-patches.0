@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA3C267F68;
-	Tue,  8 Apr 2025 11:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2CC266F17;
+	Tue,  8 Apr 2025 11:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113167; cv=none; b=geazSCSHsjJSD4Zc58wMFpOAsAAAJIINMzHuYI/8TESxkbG+EwA5x1EPqxRx3jy5H0Y9kPSr5HfXaAXdowzK2pRq5KzNW2W59awgiloXurbKTHuxP6PAuO/mjC4cxUacc3Pc/t8UxueEcbIvSVag0/jv2FZZf9wVu2q+zrNsD9s=
+	t=1744113170; cv=none; b=XgCgcxwwkN58UaLEVvSQP0zURTAnzPoVt+C5hAk8LT5zzXG5ldMwR2q+qAo261M5ozQr2MfnMbzeUqndHvzinLqpo9Ldl2f7YPQ1zQwaWCMBtvS1WRc6qCYhyZFFndX4OD9w5eb1wtDtDIGRn8ZAziKUYQ70i9A7xKdGvADdxWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113167; c=relaxed/simple;
-	bh=/ihRBV87h8X8px/c++8OeRtarBM7J+XcvfQnl2IhnFA=;
+	s=arc-20240116; t=1744113170; c=relaxed/simple;
+	bh=clvDgqd4CIBLdMLA+MK5yUhT0Dm03brLHPQTvO7BZ6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VnqsrL+6X2fPUT6T9gg7Wa8CWm6ux/GjbXRZw8r6lb+Lmmlg5JDnT4Zpe4HaDIuBoUXUq587kHrN20uFuOT/1jMTX05K1ov7pR083DnC0ymYbuaeeh/TTDRNCIfBwnSMvXJn0IHdH7OVItL8ieS3wwfisO2X9kpFHukoEjdaK+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+lo9P5H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HHmHafPyBF2DHtuaznzwfAp9RCrfvJfWlryvO2d/nBlZRjzIX3mc15iT2gaQtiJsJ6xzHR7QJEq06auuMZ87xPKvn2AGFhfC+nS6XkbPjpqD+m/w2//QZloN7bHoV6VzbMqJUl04FoJZSkk94gEsZsytnGe0Sgwf1MFXnU0KjAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I27JShjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+lo9P5H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96524C4CEE5;
-	Tue,  8 Apr 2025 11:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I27JShjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEA4C4CEE5;
+	Tue,  8 Apr 2025 11:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113167;
-	bh=/ihRBV87h8X8px/c++8OeRtarBM7J+XcvfQnl2IhnFA=;
+	s=korg; t=1744113169;
+	bh=clvDgqd4CIBLdMLA+MK5yUhT0Dm03brLHPQTvO7BZ6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+lo9P5HAJgVLfcjZz3xKggqzQpJVp0GwYoCDFzTfHPtys8AFVzgkZu4XVAeFRLdW
-	 YJ8tNTWcdARvvPaUOpF/C5QY+IVEM9d+RBsMil4p/wZ4stn6h48ZgxaMR1aUjqMX5/
-	 t0Z+JxQjtk76MIYFuNzazD6mU7EdmkepiN6G3Nxs=
+	b=I27JShjtypa5m0QQNFcytAaSMaPKc4wdPUzXsjNTjkUofPi/jIE+H0MCqsLSdpQfZ
+	 RboCq7OxLFCTS73nWZyaV50ry7/44m6JhnVj60Prf4wIqlmGdz7bLwCBF8Y4Bszpp2
+	 29W6nBz3MmXT7ieSbBZ9oI9ty73wfX21vPKBGHyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/268] PCI: histb: Fix an error handling path in histb_pcie_probe()
-Date: Tue,  8 Apr 2025 12:47:48 +0200
-Message-ID: <20250408104830.039543701@linuxfoundation.org>
+Subject: [PATCH 6.6 058/268] PCI: pciehp: Dont enable HPIE when resuming in poll mode
+Date: Tue,  8 Apr 2025 12:47:49 +0200
+Message-ID: <20250408104830.066394030@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,66 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit b36fb50701619efca5f5450b355d42575cf532ed ]
+[ Upstream commit 527664f738afb6f2c58022cd35e63801e5dc7aec ]
 
-If an error occurs after a successful phy_init() call, then phy_exit()
-should be called.
+PCIe hotplug can operate in poll mode without interrupt handlers using a
+polling kthread only.  eb34da60edee ("PCI: pciehp: Disable hotplug
+interrupt during suspend") failed to consider that and enables HPIE
+(Hot-Plug Interrupt Enable) unconditionally when resuming the Port.
 
-Add the missing call, as already done in the remove function.
+Only set HPIE if non-poll mode is in use. This makes
+pcie_enable_interrupt() match how pcie_enable_notification() already
+handles HPIE.
 
-Fixes: bbd11bddb398 ("PCI: hisi: Add HiSilicon STB SoC PCIe controller driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-[kwilczynski: remove unnecessary hipcie->phy NULL check from
-histb_pcie_probe() and squash a patch that removes similar NULL
-check for hipcie-phy from histb_pcie_remove() from
-https://lore.kernel.org/linux-pci/c369b5d25e17a44984ae5a889ccc28a59a0737f7.1742058005.git.christophe.jaillet@wanadoo.fr]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://lore.kernel.org/r/8301fc15cdea5d2dac21f57613e8e6922fb1ad95.1740854531.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/20250321162114.3939-1-ilpo.jarvinen@linux.intel.com
+Fixes: eb34da60edee ("PCI: pciehp: Disable hotplug interrupt during suspend")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-histb.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/pci/hotplug/pciehp_hpc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-histb.c b/drivers/pci/controller/dwc/pcie-histb.c
-index fd484cc7c481d..335b26635ee99 100644
---- a/drivers/pci/controller/dwc/pcie-histb.c
-+++ b/drivers/pci/controller/dwc/pcie-histb.c
-@@ -409,16 +409,21 @@ static int histb_pcie_probe(struct platform_device *pdev)
- 	ret = histb_pcie_host_enable(pp);
- 	if (ret) {
- 		dev_err(dev, "failed to enable host\n");
--		return ret;
-+		goto err_exit_phy;
- 	}
+diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
+index fd713abdfb9f9..b0bccc4d0da28 100644
+--- a/drivers/pci/hotplug/pciehp_hpc.c
++++ b/drivers/pci/hotplug/pciehp_hpc.c
+@@ -839,7 +839,9 @@ void pcie_enable_interrupt(struct controller *ctrl)
+ {
+ 	u16 mask;
  
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "failed to initialize host\n");
--		return ret;
-+		goto err_exit_phy;
- 	}
- 
- 	return 0;
-+
-+err_exit_phy:
-+	phy_exit(hipcie->phy);
-+
-+	return ret;
+-	mask = PCI_EXP_SLTCTL_HPIE | PCI_EXP_SLTCTL_DLLSCE;
++	mask = PCI_EXP_SLTCTL_DLLSCE;
++	if (!pciehp_poll_mode)
++		mask |= PCI_EXP_SLTCTL_HPIE;
+ 	pcie_write_cmd(ctrl, mask, mask);
  }
  
- static void histb_pcie_remove(struct platform_device *pdev)
-@@ -427,8 +432,7 @@ static void histb_pcie_remove(struct platform_device *pdev)
- 
- 	histb_pcie_host_disable(hipcie);
- 
--	if (hipcie->phy)
--		phy_exit(hipcie->phy);
-+	phy_exit(hipcie->phy);
- }
- 
- static const struct of_device_id histb_pcie_of_match[] = {
 -- 
 2.39.5
 
