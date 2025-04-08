@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B970B224AEB;
-	Tue,  8 Apr 2025 12:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6B22063FD;
+	Tue,  8 Apr 2025 12:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115728; cv=none; b=JLe24q74Q56Rz92Lx0e+EdSAmhn3VIg0X4cjcuDuorPu6C+HBtIfd3XZAF4mCr0tVx62TTFTBDiC6arKVtc8qhAKpqwMzTC/HpeZkOh5TgceRflcjLRss3YRDF8xthyM0DiwZrlJcXFb0V+IqL0bpDszZn43a0bEWf18sszOu40=
+	t=1744115731; cv=none; b=seyvAumUhpSwbG/8CwBuNxQ5zrRWKIejoiIzr9QtpmWxHUGzDYwugYyuWzxKZosqs6GfGmYfdadJxqJiZhUFmHCa4woMOR4LdT91U6a9dtV60XyIzk9JtiqIC8jrgDldirh+x044N8P20LmTM6bj4VADi4jSOYOd9EoWghhtAik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115728; c=relaxed/simple;
-	bh=UgCx2+3HEVlxcMZ+O97qFCz7q9OUFOAhuX67QnhYO4A=;
+	s=arc-20240116; t=1744115731; c=relaxed/simple;
+	bh=7wvbVQFvsqUUIKym0niK9B0p7SbDhssgx3qNzxd7IIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLhv+I+9QkXXiSpcRA4fuXGY8c5dUIWOxPMh/5t8g8Ue1LzRcXhi/uGxlkTHR6bDJ4+x4QOg2f1HgIunxvEBPMTngh4GuQ0JYoXzwANZQrsjGq/k2zF1ifKPFrqodfCfTF3F1nwT/yVvutc5Hj69Czu1Z+CkyrSN9xYgQ+98+U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc7Wu0qa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kykCzZ/ecfEnvcPjEpMHubfkov1dsq9LZ8sihg+nDUj5bOjWtj1gnTxyy1G0PuP+Cyn9D0bBzQQ2NnLxspnAZj1ZFCiOy0GoN0IxkPhgjYxKIAZ29WCXIv6MVDtvuEouhQ0r6mjuVn1X+Hx13dRX24fxjUfkzpb4IDBWOXDL/sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lsv+oJLb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc7Wu0qa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36D6C4CEE5;
-	Tue,  8 Apr 2025 12:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lsv+oJLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D9CC4CEE5;
+	Tue,  8 Apr 2025 12:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115728;
-	bh=UgCx2+3HEVlxcMZ+O97qFCz7q9OUFOAhuX67QnhYO4A=;
+	s=korg; t=1744115730;
+	bh=7wvbVQFvsqUUIKym0niK9B0p7SbDhssgx3qNzxd7IIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qc7Wu0qa2hqCmwJdNvALtcKI1a+cMGZEmt7YC7WXrXdicBTZOp3kdkxEXKRY6F4PR
-	 G39iwI50Oovotl+de59/avVIU41XRui+fRVYD8s+tJlybMXU5Yu1b29a94b/Hy6K0a
-	 GO2AEU8IJOgyiPaph/w+J8x+x2J9jCr+He2wvDzU=
+	b=Lsv+oJLbfr03ELi4loJefvkPwdfnLGoexu1gi118XcG814C7vrXNoYbRgrcgVrk1x
+	 k+h52bVfCwEcnVwUx0LtuW5AKjkv8QzjKUaLnyVkabMCOKredaHVChL3Q7cJWXGRzM
+	 cmqvs9hOwy4bJ+1OpcCja4BwTVPe1T7LN100y9Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/204] x86/dumpstack: Fix inaccurate unwinding from exception stacks due to misplaced assignment
-Date: Tue,  8 Apr 2025 12:50:13 +0200
-Message-ID: <20250408104822.790518502@linuxfoundation.org>
+Subject: [PATCH 6.1 084/204] crypto: hisilicon/sec2 - fix for aead auth key length
+Date: Tue,  8 Apr 2025 12:50:14 +0200
+Message-ID: <20250408104822.822104994@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,66 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit 2c118f50d7fd4d9aefc4533a26f83338b2906b7a ]
+[ Upstream commit 1b284ffc30b02808a0de698667cbcf5ce5f9144e ]
 
-Commit:
+According to the HMAC RFC, the authentication key
+can be 0 bytes, and the hardware can handle this
+scenario. Therefore, remove the incorrect validation
+for this case.
 
-  2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
-
-was intended to ensure alignment of the stack pointer; but it also moved
-the initialization of the "stack" variable down into the loop header.
-
-This was likely intended as a no-op cleanup, since the commit
-message does not mention it; however, this caused a behavioral change
-because the value of "regs" is different between the two places.
-
-Originally, get_stack_pointer() used the regs provided by the caller; after
-that commit, get_stack_pointer() instead uses the regs at the top of the
-stack frame the unwinder is looking at. Often, there are no such regs at
-all, and "regs" is NULL, causing get_stack_pointer() to fall back to the
-task's current stack pointer, which is not what we want here, but probably
-happens to mostly work. Other times, the original regs will point to
-another regs frame - in that case, the linear guess unwind logic in
-show_trace_log_lvl() will start unwinding too far up the stack, causing the
-first frame found by the proper unwinder to never be visited, resulting in
-a stack trace consisting purely of guess lines.
-
-Fix it by moving the "stack = " assignment back where it belongs.
-
-Fixes: 2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250325-2025-03-unwind-fixes-v1-2-acd774364768@google.com
+Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/dumpstack.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
-index f18ca44c904b7..52dc5839d1e8e 100644
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -195,6 +195,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 	printk("%sCall Trace:\n", log_lvl);
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 3de8715aad39d..292ab0ff2b07c 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -1094,11 +1094,6 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
+ 	struct crypto_shash *hash_tfm = ctx->hash_tfm;
+ 	int blocksize, digestsize, ret;
  
- 	unwind_start(&state, task, regs, stack);
-+	stack = stack ?: get_stack_pointer(task, regs);
- 	regs = unwind_get_entry_regs(&state, &partial);
+-	if (!keys->authkeylen) {
+-		pr_err("hisi_sec2: aead auth key error!\n");
+-		return -EINVAL;
+-	}
+-
+ 	blocksize = crypto_shash_blocksize(hash_tfm);
+ 	digestsize = crypto_shash_digestsize(hash_tfm);
+ 	if (keys->authkeylen > blocksize) {
+@@ -1110,7 +1105,8 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
+ 		}
+ 		ctx->a_key_len = digestsize;
+ 	} else {
+-		memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
++		if (keys->authkeylen)
++			memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
+ 		ctx->a_key_len = keys->authkeylen;
+ 	}
  
- 	/*
-@@ -213,9 +214,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 	 * - hardirq stack
- 	 * - entry stack
- 	 */
--	for (stack = stack ?: get_stack_pointer(task, regs);
--	     stack;
--	     stack = stack_info.next_sp) {
-+	for (; stack; stack = stack_info.next_sp) {
- 		const char *stack_name;
- 
- 		stack = PTR_ALIGN(stack, sizeof(long));
 -- 
 2.39.5
 
