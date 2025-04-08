@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0271D1AAA0F;
-	Tue,  8 Apr 2025 11:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973C92641CC;
+	Tue,  8 Apr 2025 11:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112817; cv=none; b=Q6NxvZ9+YbWTPh6mtmth/FQyJsdQ4ELYbRpECYkqaCIvW2Jm4rt1tQU9trFwkxdk7h3RZ+FknoDfhO7wNFcw2YSBI7KcdcEQ+uwra/EXXyEq084H+Xdyq26516DLgQX0WpU0sgo1wtVZayTYun/lN+7Ykso9KSBKmrhxOjFsdcQ=
+	t=1744112819; cv=none; b=k9mUsF7OIRXbbpPCQbQApZaeswi+6x2cQoYtyCXTHVIUSdLO37ZI9a0wHGHN0d51D0EIK0nLiaCw9SDkvHv39zerGDP9bkNihyu5nVLmK8F51qox2NmlTCTnWZKv4Xl8GP2dN30YyiLAcvIJPrtoossLtTXntynQYROtHVUgtEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112817; c=relaxed/simple;
-	bh=B9EhJMGi7aeRP8HE/DoWl1gF4/kocOzcRqW72cJcKJE=;
+	s=arc-20240116; t=1744112819; c=relaxed/simple;
+	bh=BsX0iQBanqjAUTfvniuP1BcjviwFS8/PzDhPycvM78I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3G85zfjwC3ts/Xgi14mP9TRiF638S7ldlXPbomxvf7J1XokbGj2QeLUgC5swfDNlW1w9fcRp11hKAd4DJCvBKFqNQ8RSsC/Z7sa/jQ3xZkIM6k6h87v/OjkwXJgdNT78tM/lHDqwgImFygC7ODS8gjfrxh3vgtIWSpc6wpfO9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9xYAlrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYuhZ8kXFZ3gnLCZl2jp+G2JZZB9raPQ2xrLqkkYL9f3mLPZHFVnik5w049zZA83bhvRd+JsknQ8itGZ5ap2HjUEckKlzNHvu9Lb/nZ0AsR5ziCQXKdYfDC/9LHaYgfTM8NRVA9mPWymC5A20HsGvxl/7td0JIvS4aDEoaS6FZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5DYVa1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9xYAlrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878FEC4CEE5;
-	Tue,  8 Apr 2025 11:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5DYVa1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E25C4CEE5;
+	Tue,  8 Apr 2025 11:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112816;
-	bh=B9EhJMGi7aeRP8HE/DoWl1gF4/kocOzcRqW72cJcKJE=;
+	s=korg; t=1744112819;
+	bh=BsX0iQBanqjAUTfvniuP1BcjviwFS8/PzDhPycvM78I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9xYAlrAAo1vcwSxUkLWusUXOzPYQXOlPNfjikhIJVqPklFxT+bwxI7Iu72lchpiy
-	 kzlZZHWULTqdkU8+rrogKjJgw2eeLs7G1JiGuPL2z2Z8XjOcW2qoerm+Ji7MX0wHC9
-	 GP8+0gzcMnrwsHeS6/4rmP7o7TOEIqzjGhpVYzBE=
+	b=u5DYVa1X0WVMomrwhKXVxNt+LDFMCJ9QpE+YZf2c/b6M1q3w2GUzLv15dsEl/AowQ
+	 3l5Gav/xFSvC4jYuBhgiaGXlgcLfMXqiat8FG2mBu5Gey+0t6p7JgotMmdNSuZrlGI
+	 nRjM1NkfpBOIMbR9jSn2h4eQJc0+M/sK0fVaX4JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/279] remoteproc: core: Clear table_sz when rproc_shutdown
-Date: Tue,  8 Apr 2025 12:49:11 +0200
-Message-ID: <20250408104830.864935959@linuxfoundation.org>
+Subject: [PATCH 5.15 169/279] of: property: Increase NR_FWNODE_REFERENCE_ARGS
+Date: Tue,  8 Apr 2025 12:49:12 +0200
+Message-ID: <20250408104830.892563200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,84 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit efdde3d73ab25cef4ff2d06783b0aad8b093c0e4 ]
+[ Upstream commit eb50844d728f11e87491f7c7af15a4a737f1159d ]
 
-There is case as below could trigger kernel dump:
-Use U-Boot to start remote processor(rproc) with resource table
-published to a fixed address by rproc. After Kernel boots up,
-stop the rproc, load a new firmware which doesn't have resource table
-,and start rproc.
+Currently, the following two macros have different values:
 
-When starting rproc with a firmware not have resource table,
-`memcpy(loaded_table, rproc->cached_table, rproc->table_sz)` will
-trigger dump, because rproc->cache_table is set to NULL during the last
-stop operation, but rproc->table_sz is still valid.
+// The maximal argument count for firmware node reference
+ #define NR_FWNODE_REFERENCE_ARGS	8
+// The maximal argument count for DT node reference
+ #define MAX_PHANDLE_ARGS 16
 
-This issue is found on i.MX8MP and i.MX9.
+It may cause firmware node reference's argument count out of range if
+directly assign DT node reference's argument count to firmware's.
 
-Dump as below:
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Mem abort info:
-  ESR = 0x0000000096000004
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x04: level 0 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=000000010af63000
-[0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 2 UID: 0 PID: 1060 Comm: sh Not tainted 6.14.0-rc7-next-20250317-dirty #38
-Hardware name: NXP i.MX8MPlus EVK board (DT)
-pstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __pi_memcpy_generic+0x110/0x22c
-lr : rproc_start+0x88/0x1e0
-Call trace:
- __pi_memcpy_generic+0x110/0x22c (P)
- rproc_boot+0x198/0x57c
- state_store+0x40/0x104
- dev_attr_store+0x18/0x2c
- sysfs_kf_write+0x7c/0x94
- kernfs_fop_write_iter+0x120/0x1cc
- vfs_write+0x240/0x378
- ksys_write+0x70/0x108
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x10c
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x30/0xcc
- el0t_64_sync_handler+0x10c/0x138
- el0t_64_sync+0x198/0x19c
+drivers/of/property.c:of_fwnode_get_reference_args() is doing the direct
+assignment, so may cause firmware's argument count @args->nargs got out
+of range, namely, in [9, 16].
 
-Clear rproc->table_sz to address the issue.
+Fix by increasing NR_FWNODE_REFERENCE_ARGS to 16 to meet DT requirement.
+Will align both macros later to avoid such inconsistency.
 
-Fixes: 9dc9507f1880 ("remoteproc: Properly deal with the resource table when detaching")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20250319100106.3622619-1-peng.fan@oss.nxp.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250225-fix_arg_count-v4-1-13cdc519eb31@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/fwnode.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 97e59f7461261..9e6d0dda64a99 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2102,6 +2102,7 @@ void rproc_shutdown(struct rproc *rproc)
- 	kfree(rproc->cached_table);
- 	rproc->cached_table = NULL;
- 	rproc->table_ptr = NULL;
-+	rproc->table_sz = 0;
- out:
- 	mutex_unlock(&rproc->lock);
- }
+diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
+index 2d68606fb725d..f0833bafe6bd4 100644
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -67,7 +67,7 @@ struct fwnode_endpoint {
+ #define SWNODE_GRAPH_PORT_NAME_FMT		"port@%u"
+ #define SWNODE_GRAPH_ENDPOINT_NAME_FMT		"endpoint@%u"
+ 
+-#define NR_FWNODE_REFERENCE_ARGS	8
++#define NR_FWNODE_REFERENCE_ARGS	16
+ 
+ /**
+  * struct fwnode_reference_args - Fwnode reference with additional arguments
 -- 
 2.39.5
 
