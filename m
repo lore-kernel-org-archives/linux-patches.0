@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B9F26B954;
-	Tue,  8 Apr 2025 12:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64992236FC;
+	Tue,  8 Apr 2025 12:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116145; cv=none; b=jzPjr9y4K9szAX2hiuvU4Q4vf7q6ftovWXSDwRPBCntmb66PyJdqHuhfz5sjoLWeUl0aNlkA2MspHyqx7KerJB8t/iT90VthXCsY+zsCrj/emfd415H66lec8cVk3mRg8a9EsBiOc3ouAn4Jp1Qzh+ZGIm8mMsXCa0rdRCXQzZg=
+	t=1744116149; cv=none; b=Gg+P8Gyng6kT3Zl5BErh2npYXdsPX/J5xT4arY6kDN886diGAxlidXWw8k31hkEjLclDNMLmUZOQeckl7mRarnE6EFcbDsw0Yb4ih7mCRAEifnZx1KuOltV9OB9aZom5UNAfRaG8sejC+ioqliAXtVIvoCr58ZLKyMp/GZzDNRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116145; c=relaxed/simple;
-	bh=3HHxb+nOgh8mim0l7VaIG8ToclPn2rcB1ZaRIliV5ho=;
+	s=arc-20240116; t=1744116149; c=relaxed/simple;
+	bh=GTtcUhVPldRYLB8Lli2R4lgh06dzKHPGqA5B/sADH+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKEG3CIIVx1vVsOzk12ELr1FxQs0215lm0b1Doqf5axQb3tdQDMy62i1IDwWH4tTVC4dS27kxtOotoW/jE3zOR6DCQr0d63mYzBT73fBmE2dV38KFvqWPW0s1HC+LdPu2mrbZq718w1NxOzGyZT4ujqShdBMPCGZLDbbvyXiNRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E08LUBWA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmLeoK8LR2lRgw5M2f+MhSWM0PmoCvErYi/5iDWx6q46aRwg+zF9uffisM3R0uN26xp3bMzWS1pmxcGH9BwMitBdzt5BhwQjK+WhIBadV9nwcYwdFLFnxA6zpgik45qPVMnfbtUiB7Ygj7SvMV7iNRwrs+6k1tSTM9vRTcLzwQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFTxp2RJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E08LUBWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B209C4CEE5;
-	Tue,  8 Apr 2025 12:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFTxp2RJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29BBC4CEED;
+	Tue,  8 Apr 2025 12:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116145;
-	bh=3HHxb+nOgh8mim0l7VaIG8ToclPn2rcB1ZaRIliV5ho=;
+	s=korg; t=1744116148;
+	bh=GTtcUhVPldRYLB8Lli2R4lgh06dzKHPGqA5B/sADH+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E08LUBWAycTh9KuTXkIMixEIYZtVlCerD2jKg6W3WYgrLDvqi8/2lBy5TewJ+LmBQ
-	 OMcEa2ho0s+4wRHB3gQavTiaLOaVGiEXuz8xnH40R8LLQO3Womp0ywpYthUngYYIIi
-	 zvS2mFHueBgfTZ4GGIa5UaFu8epEacDweHOPRnJU=
+	b=dFTxp2RJ7+px+3QwrtjpbbjRtlabOkhg++bLkkpEDFt5N1PAg004EOAR/OuMY7G9b
+	 F8soc0anZvjxfGzunUUE6bVmFy0iQLb2faWYv/gCj533xpvDmapnezbHMkTne7EsCF
+	 lD4QMu90ZeJmiDLzH55UXbkuXDJ/S7g5a2OPWHBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Marek Vasut <marex@denx.de>,
-	Mark Brown <broonie@kernel.org>,
+	zihan zhou <15645113830zzh@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/423] regulator: pca9450: Fix enable register for LDO5
-Date: Tue,  8 Apr 2025 12:45:58 +0200
-Message-ID: <20250408104846.495162384@linuxfoundation.org>
+Subject: [PATCH 6.12 006/423] sched: Cancel the slice protection of the idle entity
+Date: Tue,  8 Apr 2025 12:45:32 +0200
+Message-ID: <20250408104845.851359546@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,54 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: zihan zhou <15645113830zzh@gmail.com>
 
-[ Upstream commit f5aab0438ef17f01c5ecd25e61ae6a03f82a4586 ]
+[ Upstream commit f553741ac8c0e467a3b873e305f34b902e50b86d ]
 
-The LDO5 regulator has two configuration registers, but only
-LDO5CTRL_L contains the bits for enabling/disabling the regulator.
+A wakeup non-idle entity should preempt idle entity at any time,
+but because of the slice protection of the idle entity, the non-idle
+entity has to wait, so just cancel it.
 
-Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://patch.msgid.link/20241218152842.97483-6-frieder@fris.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch is aimed at minimizing the impact of SCHED_IDLE on
+SCHED_NORMAL. For example, a task with SCHED_IDLE policy that sleeps for
+1s and then runs for 3 ms, running cyclictest on the same cpu, has a
+maximum latency of 3 ms, which is caused by the slice protection of the
+idle entity. It is unreasonable. With this patch, the cyclictest latency
+under the same conditions is basically the same on the cpu with idle
+processes and on empty cpu.
+
+[peterz: add helpers]
+Fixes: 63304558ba5d ("sched/eevdf: Curb wakeup-preemption")
+Signed-off-by: zihan zhou <15645113830zzh@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20250208080850.16300-1-15645113830zzh@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pca9450-regulator.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/fair.c | 46 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 33 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index 9714afe347dcc..1ffa145319f23 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -454,7 +454,7 @@ static const struct pca9450_regulator_desc pca9450a_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
-@@ -663,7 +663,7 @@ static const struct pca9450_regulator_desc pca9450bc_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
-@@ -835,7 +835,7 @@ static const struct pca9450_regulator_desc pca9451a_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 58ba14ed8fbcb..49e340f9fa71b 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -885,6 +885,26 @@ struct sched_entity *__pick_first_entity(struct cfs_rq *cfs_rq)
+ 	return __node_2_se(left);
+ }
+ 
++/*
++ * HACK, stash a copy of deadline at the point of pick in vlag,
++ * which isn't used until dequeue.
++ */
++static inline void set_protect_slice(struct sched_entity *se)
++{
++	se->vlag = se->deadline;
++}
++
++static inline bool protect_slice(struct sched_entity *se)
++{
++	return se->vlag == se->deadline;
++}
++
++static inline void cancel_protect_slice(struct sched_entity *se)
++{
++	if (protect_slice(se))
++		se->vlag = se->deadline + 1;
++}
++
+ /*
+  * Earliest Eligible Virtual Deadline First
+  *
+@@ -921,11 +941,7 @@ static struct sched_entity *pick_eevdf(struct cfs_rq *cfs_rq)
+ 	if (curr && (!curr->on_rq || !entity_eligible(cfs_rq, curr)))
+ 		curr = NULL;
+ 
+-	/*
+-	 * Once selected, run a task until it either becomes non-eligible or
+-	 * until it gets a new slice. See the HACK in set_next_entity().
+-	 */
+-	if (sched_feat(RUN_TO_PARITY) && curr && curr->vlag == curr->deadline)
++	if (sched_feat(RUN_TO_PARITY) && curr && protect_slice(curr))
+ 		return curr;
+ 
+ 	/* Pick the leftmost entity if it's eligible */
+@@ -5626,11 +5642,8 @@ set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 		update_stats_wait_end_fair(cfs_rq, se);
+ 		__dequeue_entity(cfs_rq, se);
+ 		update_load_avg(cfs_rq, se, UPDATE_TG);
+-		/*
+-		 * HACK, stash a copy of deadline at the point of pick in vlag,
+-		 * which isn't used until dequeue.
+-		 */
+-		se->vlag = se->deadline;
++
++		set_protect_slice(se);
+ 	}
+ 
+ 	update_stats_curr_start(cfs_rq, se);
+@@ -8882,8 +8895,15 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
+ 	 * Preempt an idle entity in favor of a non-idle entity (and don't preempt
+ 	 * in the inverse case).
+ 	 */
+-	if (cse_is_idle && !pse_is_idle)
++	if (cse_is_idle && !pse_is_idle) {
++		/*
++		 * When non-idle entity preempt an idle entity,
++		 * don't give idle entity slice protection.
++		 */
++		cancel_protect_slice(se);
+ 		goto preempt;
++	}
++
+ 	if (cse_is_idle != pse_is_idle)
+ 		return;
+ 
+@@ -8902,8 +8922,8 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
+ 	 * Note that even if @p does not turn out to be the most eligible
+ 	 * task at this moment, current's slice protection will be lost.
+ 	 */
+-	if (do_preempt_short(cfs_rq, pse, se) && se->vlag == se->deadline)
+-		se->vlag = se->deadline + 1;
++	if (do_preempt_short(cfs_rq, pse, se))
++		cancel_protect_slice(se);
+ 
+ 	/*
+ 	 * If @p has become the most eligible task, force preemption.
 -- 
 2.39.5
 
