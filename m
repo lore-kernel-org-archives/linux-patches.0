@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48124227EBD;
-	Tue,  8 Apr 2025 11:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDB9227EBD;
+	Tue,  8 Apr 2025 11:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112651; cv=none; b=M5V73Eo8PYoj7ho0T1ABOIh0D60TCdTq7w8SFiiKU5htSUxOV1X4OBoCM0/gs6aYT7TMbHYJxy8gd3hVErU1HzegGykxYWsxHU9H0JR/oHN1jxAnjWjK9UxXcfGoN9/F2b6zblUoH9sez0ZgSHruiWiIs2jb9xBSYcjMo62Lm0c=
+	t=1744112654; cv=none; b=UMw480QnTv1lyYJtp24uOwLZIitXu4XYjRT+lGPamy/eQkzJHj3Y+RFtOxdYoWGsujSAPyppd6pFe559HoIGI+HmDSfJboVBobCVtUjKM09DFYBUDG+vQzm0v4mMBDntCx0MN0ClCXlATWrwNWh5w8TZf0v6spmGJ3ZbPAS+wEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112651; c=relaxed/simple;
-	bh=oiurkCrLTBht796brVLeg9er82SiUtTLyeacpAKTtgI=;
+	s=arc-20240116; t=1744112654; c=relaxed/simple;
+	bh=BckaIZr3igvxG0kUpyYqmT556xYMLKhGdHeiRQoYirw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koFFSTScpO+4V20auODAPmZEdbtG2qTYDCfdPjpuXcDK5fCvs/BHr9zAOAVFe5dOxAJ/i9pYRQM+tz4SKWoM8y+6PJgAYW5GQXrXzwEamZbXGpfQo+Ne/TCTRhxfybD0tYCHAWesMUwuEz7P5eeaKtjTzQtQ7T+4xEVmWapbfvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvuvNl6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=INI8BlidqK+IpJLcMugH9FgTdQlP3iXsqvS9SODYGZhRCuAap/Up/GKWIm9QWDlRcYuh6OdS0RC0Z4D/0AkogGHPu2e6FcinB2sJfEvTxlOqLr9wFl3w75V2z4Celz+9loU3rUaSziyrgHeAZ3A+xqeYRjt8vuDPOsDM6+1LQPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsrJOPE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvuvNl6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B72BC4CEE5;
-	Tue,  8 Apr 2025 11:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsrJOPE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2980DC4CEE5;
+	Tue,  8 Apr 2025 11:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112650;
-	bh=oiurkCrLTBht796brVLeg9er82SiUtTLyeacpAKTtgI=;
+	s=korg; t=1744112653;
+	bh=BckaIZr3igvxG0kUpyYqmT556xYMLKhGdHeiRQoYirw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvuvNl6pD2HDYhh7dYYTMV+hfc+VY0Yvfov1QxjSm1x2AHjNh9n5lCKJQz3GVAsuX
-	 5oEo+WoJnNo9MMNyVs8f5UcIRhL7OEEM7IxyYeQLTu/oi6G2+AB+1Q+3nDFYo7LDAz
-	 JZvTp8c+0GXaNwoA9j86p84RIrhCx9XzuSZ7aJ3g=
+	b=jsrJOPE0tVPrC9+mMuWD23m8yqO7Phi/h0j5Km0f2JLcbCBcElpcZn1DwqjafMy5w
+	 G7uANFI/Vy1iEjrnKZLxNHGwRLMJELubzEVeXXXe0GIlLdNZLHaHCwhQz6atpsh7GN
+	 o1iKSGIiopUDFhZNF0YCpjdwLrMSETIe8cbXanao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Douglas Anderson <dianders@chromium.org>,
+	Imre Deak <imre.deak@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Harry Wentland <hwentlan@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/279] drm/bridge: ti-sn65dsi86: Fix multiple instances
-Date: Tue,  8 Apr 2025 12:48:50 +0200
-Message-ID: <20250408104830.303172740@linuxfoundation.org>
+Subject: [PATCH 5.15 148/279] drm/dp_mst: Fix drm RAD print
+Date: Tue,  8 Apr 2025 12:48:51 +0200
+Message-ID: <20250408104830.331735246@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -45,56 +48,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 574f5ee2c85a00a579549d50e9fc9c6c072ee4c4 ]
+[ Upstream commit 6bbce873a9c97cb12f5455c497be279ac58e707f ]
 
-Each bridge instance creates up to four auxiliary devices with different
-names.  However, their IDs are always zero, causing duplicate filename
-errors when a system has multiple bridges:
+[Why]
+The RAD of sideband message printed today is incorrect.
+For RAD stored within MST branch
+- If MST branch LCT is 1, it's RAD array is untouched and remained as 0.
+- If MST branch LCT is larger than 1, use nibble to store the up facing
+  port number in cascaded sequence as illustrated below:
 
-    sysfs: cannot create duplicate filename '/bus/auxiliary/devices/ti_sn65dsi86.gpio.0'
+  u8 RAD[0] = (LCT_2_UFP << 4) | LCT_3_UFP
+     RAD[1] = (LCT_4_UFP << 4) | LCT_5_UFP
+     ...
 
-Fix this by using a unique instance ID per bridge instance.  The
-instance ID is derived from the I2C adapter number and the bridge's I2C
-address, to support multiple instances on the same bus.
+In drm_dp_mst_rad_to_str(), it wrongly to use BIT_MASK(4) to fetch the port
+number of one nibble.
 
-Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/7a68a0e3f927e26edca6040067fb653eb06efb79.1733840089.git.geert+renesas@glider.be
+[How]
+Adjust the code by:
+- RAD array items are valuable only for LCT >= 1.
+- Use 0xF as the mask to replace BIT_MASK(4)
+
+V2:
+- Document how RAD is constructed (Imre)
+
+V3:
+- Adjust the comment for rad[] so kdoc formats it properly (Lyude)
+
+Fixes: 2f015ec6eab6 ("drm/dp_mst: Add sideband down request tracing + selftests")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Harry Wentland <hwentlan@amd.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250113091100.3314533-2-Wayne.Lin@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 8 ++++----
+ include/drm/drm_dp_mst_helper.h       | 7 +++++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index b488c6cb8f106..1c9dd62d3c47b 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -424,6 +424,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 				       const char *name)
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index 86e1a61b6b6df..70be5719e403b 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -178,13 +178,13 @@ static int
+ drm_dp_mst_rad_to_str(const u8 rad[8], u8 lct, char *out, size_t len)
  {
- 	struct device *dev = pdata->dev;
-+	const struct i2c_client *client = to_i2c_client(dev);
- 	struct auxiliary_device *aux;
- 	int ret;
+ 	int i;
+-	u8 unpacked_rad[16];
++	u8 unpacked_rad[16] = {};
  
-@@ -432,6 +433,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 		return -ENOMEM;
+-	for (i = 0; i < lct; i++) {
++	for (i = 1; i < lct; i++) {
+ 		if (i % 2)
+-			unpacked_rad[i] = rad[i / 2] >> 4;
++			unpacked_rad[i] = rad[(i - 1) / 2] >> 4;
+ 		else
+-			unpacked_rad[i] = rad[i / 2] & BIT_MASK(4);
++			unpacked_rad[i] = rad[(i - 1) / 2] & 0xF;
+ 	}
  
- 	aux->name = name;
-+	aux->id = (client->adapter->nr << 10) | client->addr;
- 	aux->dev.parent = dev;
- 	aux->dev.release = ti_sn65dsi86_aux_device_release;
- 	device_set_of_node_from_dev(&aux->dev, dev);
+ 	/* TODO: Eventually add something to printk so we can format the rad
+diff --git a/include/drm/drm_dp_mst_helper.h b/include/drm/drm_dp_mst_helper.h
+index ddb9231d03097..9911264e0b155 100644
+--- a/include/drm/drm_dp_mst_helper.h
++++ b/include/drm/drm_dp_mst_helper.h
+@@ -232,6 +232,13 @@ struct drm_dp_mst_branch {
+ 	 */
+ 	struct list_head destroy_next;
+ 
++	/**
++	 * @rad: Relative Address of the MST branch.
++	 * For &drm_dp_mst_topology_mgr.mst_primary, it's rad[8] are all 0,
++	 * unset and unused. For MST branches connected after mst_primary,
++	 * in each element of rad[] the nibbles are ordered by the most
++	 * signifcant 4 bits first and the least significant 4 bits second.
++	 */
+ 	u8 rad[8];
+ 	u8 lct;
+ 	int num_ports;
 -- 
 2.39.5
 
