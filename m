@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84D72676CA;
-	Tue,  8 Apr 2025 12:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6467269808;
+	Tue,  8 Apr 2025 12:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113801; cv=none; b=KCp+xg6vJhYrKK4pkAoEuGeWyW/i0xmYSlvsJJMRnQA+fNtY/EKcGlaDoxtvmU9XCLv/+GpxB6VHWOOXx+F6Q1qgM2bz7CQkv0pvpR/4HSPUkrKwlRpfXLaYzDauOVfg0RD0vqT2LWWcRtZ/XATNgQtmNTGm8XbLjIfMC8ZkA/U=
+	t=1744113804; cv=none; b=JOxY8M0MXNAcY81wavnZN7YM0HRSjH7hPh/GTKiw7l3hWG4cpuBG/lRWirWukJkajRaM2ITHwT8UhawC+cKILSRYtjJ7v99kCQzvMuyUIIr40aEC7Xd/UJgqpf23N2OSLgLNa8C/AQkP3B3Zd/4myDEuf1iuqOoO1O/u2uQWHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113801; c=relaxed/simple;
-	bh=wJx1/DBSmjo6dyO1q+y9gIatSn8K96OMRGBtgbzXxiw=;
+	s=arc-20240116; t=1744113804; c=relaxed/simple;
+	bh=FVjYBBRJz0SnmivlIbS+g8UuLKs4lLco4cHbdwJf20s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnyXDm6wQ3UWJ/3jLiZR05YDSTOJadWVBTCqOIhH++uzuFTyi1p3g9/mqAlq6OLpeoEaXSm6RSXGRovZrmnu3Bd7sWLsYXlgGAbsPLU3e+6Zo0GwiC4gvXrt75+AtlFBw/BiMSBmMJF8Fuo54658mi+8wNq+KwMKWEwkUzQbukc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6W38t6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MheoiG6L6wvQy4mp2H5dBPMPVdTUtwhiGPGY6A8svOn718ejpUIe9qCkUgdQ0q4vuDm5IDdphc5rd1+xFGtuE1DmF5I06cDaJ4+FewbTbUDF1bc1teoUNExukq95arQa/Be8R5RudjMuagOoIvXWKYkoE8V8+oTw9Tg/DSQ/Ygg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st8P7DPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6W38t6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFC2C4CEE5;
-	Tue,  8 Apr 2025 12:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st8P7DPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4DAC4CEE5;
+	Tue,  8 Apr 2025 12:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113801;
-	bh=wJx1/DBSmjo6dyO1q+y9gIatSn8K96OMRGBtgbzXxiw=;
+	s=korg; t=1744113804;
+	bh=FVjYBBRJz0SnmivlIbS+g8UuLKs4lLco4cHbdwJf20s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6W38t6muvAapsuFjzEWKlweurP4Dzxdco9Xu6KGB+yxKH6SdE5Mrohs6em55znic
-	 41PN3d+xSGCqWqylbznRX0aeUWYB0+W5uTAe/+KnW412aq4d8itulMXm+fnu1PUJy2
-	 sp8OToOGwY6GL5hU7awTqF4aVpWv/6jQjoz/juuQ=
+	b=st8P7DPybzCZSzSJU5X9jPhltkDvxXtpgw768kSD/mNLhwXiLdXxiorg+MBTwkO61
+	 ZV6OFrEFT80UMPN7wVpZ9uJoCB4CwXoE4ZnWWHRuquLfM+HCmPqQfpEbogTOt7fdEw
+	 6snjxzttyVQCOeFnVylIoklm59sM/SdA2C5UGjlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/154] scsi: qla1280: Fix kernel oops when debug level > 2
-Date: Tue,  8 Apr 2025 12:49:26 +0200
-Message-ID: <20250408104816.076875469@linuxfoundation.org>
+	Chris von Recklinghausen <crecklin@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Phil Auld <pauld@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
+Subject: [PATCH 5.4 003/154] sched/isolation: Prevent boot crash when the boot CPU is nohz_full
+Date: Tue,  8 Apr 2025 12:49:04 +0200
+Message-ID: <20250408104815.404967297@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,38 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 5233e3235dec3065ccc632729675575dbe3c6b8a ]
+Documentation/timers/no_hz.rst states that the "nohz_full=" mask must not
+include the boot CPU, which is no longer true after:
 
-A null dereference or oops exception will eventually occur when qla1280.c
-driver is compiled with DEBUG_QLA1280 enabled and ql_debug_level > 2.  I
-think its clear from the code that the intention here is sg_dma_len(s) not
-length of sg_next(s) when printing the debug info.
+  08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full").
 
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20250125095033.26188-1-linmag7@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However after:
+
+  aae17ebb53cd ("workqueue: Avoid using isolated cpus' timers on queue_delayed_work")
+
+the kernel will crash at boot time in this case; housekeeping_any_cpu()
+returns an invalid CPU number until smp_init() brings the first
+housekeeping CPU up.
+
+Change housekeeping_any_cpu() to check the result of cpumask_any_and() and
+return smp_processor_id() in this case.
+
+This is just the simple and backportable workaround which fixes the
+symptom, but smp_processor_id() at boot time should be safe at least for
+type == HK_TYPE_TIMER, this more or less matches the tick_do_timer_boot_cpu
+logic.
+
+There is no worry about cpu_down(); tick_nohz_cpu_down() will not allow to
+offline tick_do_timer_cpu (the 1st online housekeeping CPU).
+
+[ Apply only documentation changes as commit which causes boot
+  crash when boot CPU is nohz_full is not backported to stable
+  kernels - Krishanth ]
+
+Reported-by: Chris von Recklinghausen <crecklin@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20240411143905.GA19288@redhat.com
+Closes: https://lore.kernel.org/all/20240402105847.GA24832@redhat.com/
+Signed-off-by: Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
+[ strip out upstream commit and Fixes: so tools don't get confused that
+  this commit actually does anything real - gregkh]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla1280.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/timers/no_hz.rst |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/qla1280.c b/drivers/scsi/qla1280.c
-index 832af42130467..a13db27b04ede 100644
---- a/drivers/scsi/qla1280.c
-+++ b/drivers/scsi/qla1280.c
-@@ -2871,7 +2871,7 @@ qla1280_64bit_start_scsi(struct scsi_qla_host *ha, struct srb * sp)
- 			dprintk(3, "S/G Segment phys_addr=%x %x, len=0x%x\n",
- 				cpu_to_le32(upper_32_bits(dma_handle)),
- 				cpu_to_le32(lower_32_bits(dma_handle)),
--				cpu_to_le32(sg_dma_len(sg_next(s))));
-+				cpu_to_le32(sg_dma_len(s)));
- 			remseg--;
- 		}
- 		dprintk(5, "qla1280_64bit_start_scsi: Scatter/gather "
--- 
-2.39.5
-
+--- a/Documentation/timers/no_hz.rst
++++ b/Documentation/timers/no_hz.rst
+@@ -129,11 +129,8 @@ adaptive-tick CPUs:  At least one non-ad
+ online to handle timekeeping tasks in order to ensure that system
+ calls like gettimeofday() returns accurate values on adaptive-tick CPUs.
+ (This is not an issue for CONFIG_NO_HZ_IDLE=y because there are no running
+-user processes to observe slight drifts in clock rate.)  Therefore, the
+-boot CPU is prohibited from entering adaptive-ticks mode.  Specifying a
+-"nohz_full=" mask that includes the boot CPU will result in a boot-time
+-error message, and the boot CPU will be removed from the mask.  Note that
+-this means that your system must have at least two CPUs in order for
++user processes to observe slight drifts in clock rate.) Note that this
++means that your system must have at least two CPUs in order for
+ CONFIG_NO_HZ_FULL=y to do anything for you.
+ 
+ Finally, adaptive-ticks CPUs must have their RCU callbacks offloaded.
 
 
