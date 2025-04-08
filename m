@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA061267B15;
-	Tue,  8 Apr 2025 12:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E17267B15;
+	Tue,  8 Apr 2025 12:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114325; cv=none; b=aM8iiyw6nCgAQym7HyWT0447CFA6t2snX6RwEyenPNK7dSvSjMBq6iCLNBSvEE+/qS9f/SbmG0y5IsNsWk8SFiXGekiP+UHn4G8nNwSprarfnRm+0hq0ibpZwMFo/OLQmYww11E87ikIZ/c3lok1dBkAcVKwgyFmQvSiiLnZpR0=
+	t=1744114329; cv=none; b=A6c5LnSSVb3swOqEUuVDWybPLpmyuEY2HaD2uyCOc3XpsXoJ3Liwn/10VJa/tzHzmbosycMzbZ/52zy2ZSQvFgPI07wBS/dFEzYcS6IuuF5Oa2Fj/L1W4bm9BLH6w8RnGVQTNF4KY4alKXp8FKwfZCoLApV/P7klpAGZdtIEqE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114325; c=relaxed/simple;
-	bh=PhbHzJr9Nne0GYDofVuPRmFKO9e0XH2tHdGNUPcACoc=;
+	s=arc-20240116; t=1744114329; c=relaxed/simple;
+	bh=7e1rJXm1YXtp76SbCQc178EWhmS5mFdsTWwFzGThy14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8cHJgPu8WBuQ8bPs/nPifp2miz2cNKewn1lzz2tFAkFRHi1hBpeAdvX8PaNUu3UJ7FhLmgrv3yeG6CDuEPgS8HNn/GBK55UvRFaSzN9ZEmdJz/UZudKMi6gLzCeW6EPke5x2Zdp+Q7todQ6MXnj5gwTwcJTFrbRJc5aGqR4oQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UY7AEzDP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fTF04S7nDeUkGNN03d1JHg6daCTLBXFvvopAbgtgdHm1k+AYK+gCtDdd3ed/xRjG6dG9tCSRhlnBSy2IMw99qgvKkjGylIqGTyLoup+8wW/pJDPh32m4HqnXGXOJExgajxorzOCAd6L4mHpilS9z+T3Fpej2SxUBT9qdij2kjkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6UR5lc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UY7AEzDP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C43C4CEE5;
-	Tue,  8 Apr 2025 12:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6UR5lc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAA6C4CEE7;
+	Tue,  8 Apr 2025 12:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114325;
-	bh=PhbHzJr9Nne0GYDofVuPRmFKO9e0XH2tHdGNUPcACoc=;
+	s=korg; t=1744114329;
+	bh=7e1rJXm1YXtp76SbCQc178EWhmS5mFdsTWwFzGThy14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UY7AEzDPEHqXZFSgD2yj0UtUVjXBgJfdmcpiNrkzFeVShbFyNh14vieLG+Z0d1vfT
-	 E1mrfkzgB8OiOqijJZctSLkg5eG/430JI040onG7DAWDhH8gMVehE9WzWx4eivpRl9
-	 syWH1sKPtz6rMsZUdk8OB5nGLnzbHhf3pujnsMfc=
+	b=v6UR5lc3nALeSlP2VmfWkKel5wpSqbwfpLPSyALyjjLlEqG83L/CDC4laaA6yQvDB
+	 Sb4vslHBBYnKYkBcBYHBUJBIkbq1NcX7rwxRU/Lek5sLqJGiTz89voEsq8OcIbxmx6
+	 9yT+jA46iVbu84Is3goZEpptC/0cdqBiqjbNcHlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hermes Wu <Hermes.wu@ite.com.tw>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 065/499] drm/bridge: it6505: fix HDCP V match check is not performed correctly
-Date: Tue,  8 Apr 2025 12:44:37 +0200
-Message-ID: <20250408104852.852516912@linuxfoundation.org>
+Subject: [PATCH 6.13 066/499] drm/panthor: Fix race condition when gathering fdinfo group samples
+Date: Tue,  8 Apr 2025 12:44:38 +0200
+Message-ID: <20250408104852.876809747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,55 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hermes Wu <Hermes.wu@ite.com.tw>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit a5072fc77fb9e38fa9fd883642c83c3720049159 ]
+[ Upstream commit 0590c94c3596d6c1a3d549ae611366f2ad4e1d8d ]
 
-Fix a typo where V compare incorrectly compares av[] with av[] itself,
-which can result in HDCP failure.
+Commit e16635d88fa0 ("drm/panthor: add DRM fdinfo support") failed to
+protect access to groups with an xarray lock, which could lead to
+use-after-free errors.
 
-The loop of V compare is expected to iterate for 5 times
-which compare V array form av[0][] to av[4][].
-It should check loop counter reach the last statement "i == 5"
-before return true
-
-Fixes: 0989c02c7a5c ("drm/bridge: it6505: fix HDCP CTS compare V matching")
-Signed-off-by: Hermes Wu <Hermes.wu@ite.com.tw>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250121-fix-hdcp-v-comp-v4-1-185f45c728dc@ite.com.tw
+Fixes: e16635d88fa0 ("drm/panthor: add DRM fdinfo support")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250130172851.941597-6-adrian.larumbe@collabora.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250107173310.88329-1-florent.tomasin@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index faee8e2e82a05..967aa24b7c537 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -2042,12 +2042,13 @@ static bool it6505_hdcp_part2_ksvlist_check(struct it6505 *it6505)
- 			continue;
- 		}
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index ef4bec7ff9c71..eb2c2ca375d77 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -2862,6 +2862,7 @@ void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile)
+ 	if (IS_ERR_OR_NULL(gpool))
+ 		return;
  
--		for (i = 0; i < 5; i++) {
-+		for (i = 0; i < 5; i++)
- 			if (bv[i][3] != av[i][0] || bv[i][2] != av[i][1] ||
--			    av[i][1] != av[i][2] || bv[i][0] != av[i][3])
-+			    bv[i][1] != av[i][2] || bv[i][0] != av[i][3])
- 				break;
- 
--			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d, %d", retry, i);
-+		if (i == 5) {
-+			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d", retry);
- 			return true;
- 		}
++	xa_lock(&gpool->xa);
+ 	xa_for_each(&gpool->xa, i, group) {
+ 		mutex_lock(&group->fdinfo.lock);
+ 		pfile->stats.cycles += group->fdinfo.data.cycles;
+@@ -2870,6 +2871,7 @@ void panthor_fdinfo_gather_group_samples(struct panthor_file *pfile)
+ 		group->fdinfo.data.time = 0;
+ 		mutex_unlock(&group->fdinfo.lock);
  	}
++	xa_unlock(&gpool->xa);
+ }
+ 
+ static void group_sync_upd_work(struct work_struct *work)
 -- 
 2.39.5
 
