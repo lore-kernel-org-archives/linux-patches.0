@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B605F26B2BB;
-	Tue,  8 Apr 2025 12:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D09526B2B1;
+	Tue,  8 Apr 2025 12:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114391; cv=none; b=Pnd4QZ+hWQRs5ee/vxeKAjgTIlvE/rGnw+yQYt9/8R69+0gVz+7mDOJ6zXN4bBFWLbDqcMZB4dWa7rGAuxZm+/y34CUHoyA9aWno9hYcQZLoMr1upWmRw4OsMgSPgEUEZGlxyFB2aP2RNogXMOm6Rcs3EqjaVKHWN2z5pDJqQ4Y=
+	t=1744114394; cv=none; b=LU3poCpZmEipiZ9j9pNFWeaLwNR5izlUCKINfEwl4s4ocqd8ULbquTs4wk1LGkDgi4YXdSMbameWY632BMEhxpOaKxxqNdv+BxU9kEwmto0O56GB9Rramjw9ex57D7nr+k6SmFx6kDgvL7xhMRfFIXXsCL5fCJXn6eYmBLbrCpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114391; c=relaxed/simple;
-	bh=F7WqxA4JHVg4E52R8IZvmpHqS7GFP4r3WOms7rVCPzk=;
+	s=arc-20240116; t=1744114394; c=relaxed/simple;
+	bh=BLAo4yJM+YuGZh4yhdqvH5u1vReJ5u2mRBvKHmrlfZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZONXOjpPrM6VL3xKk1UKsBx/6EAQbJ6Ns9NguYZ5WWgNSWPtp40d1RFc2qaXmuYQ2YWELRzUcoUXHqwAWasaBekaQaWO5X9T4J0k2wHGYx6VPXrXB8bBiExpxvORnOw8w00muxHzBkUASMadjUB7qIKm4R7aSR9gRHmT7BJgwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/R/Wcu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NxEMEsT5ZaMIWiVAu6mzGr+lf90Inblxb/NQlMwuaVWPXKY0MvUJotjdP8l/JE2ejajdJaCSYG6wQcgcj9QhxKkO5dMy/ItM82Y0QmCl9MbnI258+O/RvkyI+cgaeB48bd3JFlr/CKCxX0DPNvl1JWmhsJDlYWn9lZTT+SQNR+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxiMRg40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/R/Wcu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A04C4CEE5;
-	Tue,  8 Apr 2025 12:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxiMRg40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BB4C4CEEA;
+	Tue,  8 Apr 2025 12:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114391;
-	bh=F7WqxA4JHVg4E52R8IZvmpHqS7GFP4r3WOms7rVCPzk=;
+	s=korg; t=1744114394;
+	bh=BLAo4yJM+YuGZh4yhdqvH5u1vReJ5u2mRBvKHmrlfZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/R/Wcu1uTD11RtY1JPZ69iuVSNCwJby2RDWF7rIr7PCIYFHwyfC9A9vfLP16Kd6a
-	 CFJPELusXfjLE63iVLfLjwNDF6qb5XMNpIK1qaQ3MjgAO1D8jtspVU+lN3xueBi6gW
-	 mYnt0zr8WfYBtF9pjODptMdbtWCc8B8XNyB3iU18=
+	b=QxiMRg40EWxN9hbt8ffno6+liDyzxnOwltqmX6k0jp8azYUOxFkWTbYQb14lqlGrF
+	 yntH7nXhDshdLS+XyZQZxKYbMtSb0ZWk8h821vwoWVoowMcS5NUBHkElE6cfZ8nYox
+	 BLwl2/tyqkIeASoESmQXgjeGugnMvV49K9xjidDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Brendan Jackman <jackmanb@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 039/499] x86/traps: Make exc_double_fault() consistently noreturn
-Date: Tue,  8 Apr 2025 12:44:11 +0200
-Message-ID: <20250408104852.222292955@linuxfoundation.org>
+Subject: [PATCH 6.13 083/499] drm/msm/dsi/phy: Program clock inverters in correct register
+Date: Tue,  8 Apr 2025 12:44:55 +0200
+Message-ID: <20250408104853.291500761@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,125 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8085fcd78c1a3dbdf2278732579009d41ce0bc4e ]
+[ Upstream commit baf49072877726616c7f5943a6b45eb86bfeca0a ]
 
-The CONFIG_X86_ESPFIX64 version of exc_double_fault() can return to its
-caller, but the !CONFIG_X86_ESPFIX64 version never does.  In the latter
-case the compiler and/or objtool may consider it to be implicitly
-noreturn.
+Since SM8250 all downstream sources program clock inverters in
+PLL_CLOCK_INVERTERS_1 register and leave the PLL_CLOCK_INVERTERS as
+reset value (0x0).  The most recent Hardware Programming Guide for 3 nm,
+4 nm, 5 nm and 7 nm PHYs also mention PLL_CLOCK_INVERTERS_1.
 
-However, due to the currently inflexible way objtool detects noreturns,
-a function's noreturn status needs to be consistent across configs.
-
-The current workaround for this issue is to suppress unreachable
-warnings for exc_double_fault()'s callers.  Unfortunately that can
-result in ORC coverage gaps and potentially worse issues like inert
-static calls and silently disabled CPU mitigations.
-
-Instead, prevent exc_double_fault() from ever being implicitly marked
-noreturn by forcing a return behind a never-taken conditional.
-
-Until a more integrated noreturn detection method exists, this is likely
-the least objectionable workaround.
-
-Fixes: 55eeab2a8a11 ("objtool: Ignore exc_double_fault() __noreturn warnings")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/r/d1f4026f8dc35d0de6cc61f2684e0cb6484009d1.1741975349.git.jpoimboe@kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/634489/
+Link: https://lore.kernel.org/r/20250129115504.40080-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/traps.c | 18 +++++++++++++++++-
- tools/objtool/check.c   | 31 +------------------------------
- 2 files changed, 18 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
-index 2dbadf347b5f4..5e3e036e6e537 100644
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -379,6 +379,21 @@ __visible void __noreturn handle_stack_overflow(struct pt_regs *regs,
- }
- #endif
- 
-+/*
-+ * Prevent the compiler and/or objtool from marking the !CONFIG_X86_ESPFIX64
-+ * version of exc_double_fault() as noreturn.  Otherwise the noreturn mismatch
-+ * between configs triggers objtool warnings.
-+ *
-+ * This is a temporary hack until we have compiler or plugin support for
-+ * annotating noreturns.
-+ */
-+#ifdef CONFIG_X86_ESPFIX64
-+#define always_true() true
-+#else
-+bool always_true(void);
-+bool __weak always_true(void) { return true; }
-+#endif
-+
- /*
-  * Runs on an IST stack for x86_64 and on a special task stack for x86_32.
-  *
-@@ -514,7 +529,8 @@ DEFINE_IDTENTRY_DF(exc_double_fault)
- 
- 	pr_emerg("PANIC: double fault, error_code: 0x%lx\n", error_code);
- 	die("double fault", regs, error_code);
--	panic("Machine halted.");
-+	if (always_true())
-+		panic("Machine halted.");
- 	instrumentation_end();
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 798168180c1ab..a2c87c84aa05b 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -305,7 +305,7 @@ static void dsi_pll_commit(struct dsi_pll_7nm *pll, struct dsi_pll_config *confi
+ 	writel(pll->phy->cphy_mode ? 0x00 : 0x10,
+ 	       base + REG_DSI_7nm_PHY_PLL_CMODE_1);
+ 	writel(config->pll_clock_inverters,
+-	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS);
++	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS_1);
  }
  
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 6f3f408d0a019..db9ad2d4dcbac 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4594,35 +4594,6 @@ static int validate_sls(struct objtool_file *file)
- 	return warnings;
- }
- 
--static bool ignore_noreturn_call(struct instruction *insn)
--{
--	struct symbol *call_dest = insn_call_dest(insn);
--
--	/*
--	 * FIXME: hack, we need a real noreturn solution
--	 *
--	 * Problem is, exc_double_fault() may or may not return, depending on
--	 * whether CONFIG_X86_ESPFIX64 is set.  But objtool has no visibility
--	 * to the kernel config.
--	 *
--	 * Other potential ways to fix it:
--	 *
--	 *   - have compiler communicate __noreturn functions somehow
--	 *   - remove CONFIG_X86_ESPFIX64
--	 *   - read the .config file
--	 *   - add a cmdline option
--	 *   - create a generic objtool annotation format (vs a bunch of custom
--	 *     formats) and annotate it
--	 */
--	if (!strcmp(call_dest->name, "exc_double_fault")) {
--		/* prevent further unreachable warnings for the caller */
--		insn->sym->warned = 1;
--		return true;
--	}
--
--	return false;
--}
--
- static int validate_reachable_instructions(struct objtool_file *file)
- {
- 	struct instruction *insn, *prev_insn;
-@@ -4639,7 +4610,7 @@ static int validate_reachable_instructions(struct objtool_file *file)
- 		prev_insn = prev_insn_same_sec(file, insn);
- 		if (prev_insn && prev_insn->dead_end) {
- 			call_dest = insn_call_dest(prev_insn);
--			if (call_dest && !ignore_noreturn_call(prev_insn)) {
-+			if (call_dest) {
- 				WARN_INSN(insn, "%s() is missing a __noreturn annotation",
- 					  call_dest->name);
- 				warnings++;
+ static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
