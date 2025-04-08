@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CC3224239;
-	Tue,  8 Apr 2025 12:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A4126A090;
+	Tue,  8 Apr 2025 12:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115567; cv=none; b=RDCP8S31Z0f32zMvCQr8LBqpqZU1q252J4HOO69rxr+WrfcpTMvyfBYMJ4wJO/XVaa2Zk7/3uskssN5bY5DhclmvhMl9UOGezredIfkUbLNpZvYj2VjQUm514O1FaZX+BuZJG4eOTN/OIfyEroHRaYo+AibHEEQ/BXd0bLubSeo=
+	t=1744115570; cv=none; b=dO4AKFr++3jI6LVsPyy0j7qGS5TaRG6jwemMLHU43VrHOE4WDdyia3M2aGH4+3J0x66jRsRas/F6hALjjfaUTSK7ugewKSp1t9Zhfmf5M6MrMM/5k5/U4poTRmt2zpzs9oJfyTDP9UjGRDxrnRCpAu+/2TkJc9q3qeRlJ/+v77A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115567; c=relaxed/simple;
-	bh=1e0w9ext9BaGL9qpZstPfCxdaca1fsWv6v+4ODWrJs0=;
+	s=arc-20240116; t=1744115570; c=relaxed/simple;
+	bh=TlqaFNNHBkyEmQ3QWcpRHdSORbgTQ11zasOVzznQThY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgy8ASlhjCMoTEXMkC2ddB25Pwmy+JGMdD44hJq1iSLLav1Ac90VzSaW+AGdrkyjgHDshCu1mKIo8hKLd4w3lLBSm0DeZaEpvGsKOwTR5RtLY2yvsJ/YpK1AeZ55wGBXFfDJcYT5u4Q32wiSpV9xJtTRL+lmzcAfL3p27M+zeRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUZVQy0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYRwMhaqQAwfnUe26DFhxdGaaiX0n5mc7OIArfLwM6qHDyO08l/TWhThmcUKpYQa5TaN/hdnYl7B426NmtH+gVzRLWKxN9bwCfy/LNRmb7A5G8Yk5R0NqbH0ub63RKTGvpTBBA/SAkXz3jgO4HBNrZk/wNNTqck7bAwUX9otASQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Os8c3BoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUZVQy0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F3DC4CEE5;
-	Tue,  8 Apr 2025 12:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Os8c3BoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1639C4CEE5;
+	Tue,  8 Apr 2025 12:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115567;
-	bh=1e0w9ext9BaGL9qpZstPfCxdaca1fsWv6v+4ODWrJs0=;
+	s=korg; t=1744115570;
+	bh=TlqaFNNHBkyEmQ3QWcpRHdSORbgTQ11zasOVzznQThY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUZVQy0cTfq477+wK0jFQAVb1FfekwTHevA50ZWDsFGSGImigrGSmG7CBtUDtb4XU
-	 2YBtwRmI5ngXE3gfgBBGnQO8fOlKJzXjO/ggzr65hlXPlQMLMAfhTToAFgu5Cqp7kn
-	 tSzodJQ/sGmj6CYcMOxNT/ATI46fO8fGat9eyIis=
+	b=Os8c3BoDdJHxVW7NZYEtb8A51mOFsRzKKGw6f8yFE7t+pvju7qcWk3lM13bThJPqT
+	 h1bjhkMcVWkrjdvFTMmWe1klpBjDHFTRiFsFgHrdq109eQnndvi0IjjT/goQ71iaug
+	 N1e9Erov7axjVx70eQm8F9UoO6Lp9yePxNPvwAB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/204] media: platform: allgro-dvt: unregister v4l2_device on the error path
-Date: Tue,  8 Apr 2025 12:49:12 +0200
-Message-ID: <20250408104820.971558529@linuxfoundation.org>
+Subject: [PATCH 6.1 023/204] ASoC: cs35l41: check the return value from spi_setup()
+Date: Tue,  8 Apr 2025 12:49:13 +0200
+Message-ID: <20250408104821.003260176@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -53,36 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-[ Upstream commit c2b96a6818159fba8a3bcc38262da9e77f9b3ec7 ]
+[ Upstream commit ad5a0970f86d82e39ebd06d45a1f7aa48a1316f8 ]
 
-In allegro_probe(), the v4l2 device is not unregistered in the error
-path, which results in a memory leak. Fix it by calling
-v4l2_device_unregister() before returning error.
+Currently the return value from spi_setup() is not checked for a failure.
+It is unlikely it will ever fail in this particular case but it is still
+better to add this check for the sake of completeness and correctness. This
+is cheap since it is performed once when the device is being probed.
 
-Fixes: d74d4e2359ec ("media: allegro: move driver out of staging")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Handle spi_setup() return value.
+
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 872fc0b6bde8 ("ASoC: cs35l41: Set the max SPI speed for the whole device")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Link: https://patch.msgid.link/20250304115643.2748-1-v.shevtsov@mt-integration.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/allegro-dvt/allegro-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/cs35l41-spi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
-index 3cb4618d23375..1a556e381eac8 100644
---- a/drivers/media/platform/allegro-dvt/allegro-core.c
-+++ b/drivers/media/platform/allegro-dvt/allegro-core.c
-@@ -3915,6 +3915,7 @@ static int allegro_probe(struct platform_device *pdev)
- 	if (ret < 0) {
- 		v4l2_err(&dev->v4l2_dev,
- 			 "failed to request firmware: %d\n", ret);
-+		v4l2_device_unregister(&dev->v4l2_dev);
- 		return ret;
- 	}
+diff --git a/sound/soc/codecs/cs35l41-spi.c b/sound/soc/codecs/cs35l41-spi.c
+index 5c8bb24909eb4..bd73944758c6d 100644
+--- a/sound/soc/codecs/cs35l41-spi.c
++++ b/sound/soc/codecs/cs35l41-spi.c
+@@ -39,7 +39,9 @@ static int cs35l41_spi_probe(struct spi_device *spi)
+ 		return -ENOMEM;
  
+ 	spi->max_speed_hz = CS35L41_SPI_MAX_FREQ;
+-	spi_setup(spi);
++	ret = spi_setup(spi);
++	if (ret < 0)
++		return ret;
+ 
+ 	spi_set_drvdata(spi, cs35l41);
+ 	cs35l41->regmap = devm_regmap_init_spi(spi, regmap_config);
 -- 
 2.39.5
 
