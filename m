@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAD1265602;
-	Tue,  8 Apr 2025 11:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAF1264A76;
+	Tue,  8 Apr 2025 11:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112697; cv=none; b=U5KJ02bECE6TLccbZYzp/BrUys2BBhuTmIWA1Jt+H4zBt7fpoMKptHu033ArYn0dtojE2HbU975WoI4FW02p2AS3Jngn2cxyE6px4oIShk/is+FxSvlp34QVvSzlZaMp3B1JWP6p252Z3POsM1ydckGD/dbhK8TkXML9On9lhZg=
+	t=1744112700; cv=none; b=TZA5u3mwHlipvRVAdlnt1WEg4eiyATLiRFpE19Hcq4U+++AG9wq1Hw2Jlm6s4GLVsZpB7ex56D7bf3pbQanMJ+mVgvFBKuQtfR5IZpb0MR1dM2a9+azz7dOeTRKKqIscGTD+UMwZLL+SDsJI5qhz2A1Z+Qszfe+InGFY20f+w/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112697; c=relaxed/simple;
-	bh=lU82SEjUDhCxFgkytCRCF9GbIMn6odaKKepHxHDVc18=;
+	s=arc-20240116; t=1744112700; c=relaxed/simple;
+	bh=5OgzpZW2QAlXKHgmzkK/dUNpxNkzafxGhEpGTL8j7H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q1R9Nf/+7BoXVh+hyH0ZcSqYFr4oqw6Ytgto9t9olAfkfc/yQgON2rfpfenbMKDC2WAhRybQpvHp9mQFAOkUuUUoz9V22T/w17ffkzfChNqg4y5T5joM5eCRpjWFiuxLzTtWpPj/YwnUcPz6gDvrnaxj78DsmzkmVGmmm9crsDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0MOE9yp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lwEen9JjypNq+5bmEMWQs2yln+ZmrjkNctKjsb8w+kEGbidMTds9GJRMqhnRtC5z3fJJG8B7iWXhRsbMfQ8vOoJ1B3qHsLrHIrHzpe+H2BzebnktelWULhxMYMfBaJMHl7cZosOUKJuQ2V4VAxE62ffia+OmgUyPEnbApFcv5mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8UP0rTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0MOE9yp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C252CC4CEE5;
-	Tue,  8 Apr 2025 11:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8UP0rTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D635C4CEE5;
+	Tue,  8 Apr 2025 11:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112697;
-	bh=lU82SEjUDhCxFgkytCRCF9GbIMn6odaKKepHxHDVc18=;
+	s=korg; t=1744112699;
+	bh=5OgzpZW2QAlXKHgmzkK/dUNpxNkzafxGhEpGTL8j7H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0MOE9ypvM+6FYddl+wzf+zlGujAPi+8qr/kiglKq4tl1AYzxzzfuOFVKVo4Kz4if
-	 9XH4yCyl66kMh6DZEiCEbn7sZeqwhZr36ZG7e7u2VXswGGfSiuDRoiIFAtUjFGu/qz
-	 h7bQbduvRO7m/Qvn1GM/olLvIkC/ge/Wwc0aQXxg=
+	b=v8UP0rTLJKL/pfbPOCtFk1ntffjW7daOHmA7+y9htRuQOZLIvk6OnH2az9OITyoN3
+	 fqpsxDZEQe+6NqkoR9LqzbiyalprBpZFe2BErMEdanOdD6IkLgpPXe5g2ANz38dVUV
+	 45sAS5XXnzQKBHn/uQ/WDMczTmkSdZ4+qYGuY2I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/279] PCI: pciehp: Dont enable HPIE when resuming in poll mode
-Date: Tue,  8 Apr 2025 12:49:05 +0200
-Message-ID: <20250408104830.708814448@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 126/279] serial: 8250_dma: terminate correct DMA in tx_dma_flush()
+Date: Tue,  8 Apr 2025 12:48:29 +0200
+Message-ID: <20250408104829.745541314@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,46 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 527664f738afb6f2c58022cd35e63801e5dc7aec ]
+commit a26503092c75abba70a0be2aa01145ecf90c2a22 upstream.
 
-PCIe hotplug can operate in poll mode without interrupt handlers using a
-polling kthread only.  eb34da60edee ("PCI: pciehp: Disable hotplug
-interrupt during suspend") failed to consider that and enables HPIE
-(Hot-Plug Interrupt Enable) unconditionally when resuming the Port.
+When flushing transmit side DMA, it is the transmit channel that should
+be terminated, not the receive channel.
 
-Only set HPIE if non-poll mode is in use. This makes
-pcie_enable_interrupt() match how pcie_enable_notification() already
-handles HPIE.
-
-Link: https://lore.kernel.org/r/20250321162114.3939-1-ilpo.jarvinen@linux.intel.com
-Fixes: eb34da60edee ("PCI: pciehp: Disable hotplug interrupt during suspend")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9e512eaaf8f40 ("serial: 8250: Fix fifo underflow on flush")
+Cc: stable <stable@kernel.org>
+Reported-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250224121831.1429323-1-jkeeping@inmusicbrands.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/pciehp_hpc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
-index 7773009b8b32e..6647ade09f054 100644
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -840,7 +840,9 @@ void pcie_enable_interrupt(struct controller *ctrl)
- {
- 	u16 mask;
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -150,7 +150,7 @@ void serial8250_tx_dma_flush(struct uart
+ 	 */
+ 	dma->tx_size = 0;
  
--	mask = PCI_EXP_SLTCTL_HPIE | PCI_EXP_SLTCTL_DLLSCE;
-+	mask = PCI_EXP_SLTCTL_DLLSCE;
-+	if (!pciehp_poll_mode)
-+		mask |= PCI_EXP_SLTCTL_HPIE;
- 	pcie_write_cmd(ctrl, mask, mask);
+-	dmaengine_terminate_async(dma->rxchan);
++	dmaengine_terminate_async(dma->txchan);
  }
  
--- 
-2.39.5
-
+ int serial8250_rx_dma(struct uart_8250_port *p)
 
 
