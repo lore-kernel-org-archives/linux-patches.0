@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E8B189B84;
-	Wed,  9 Apr 2025 07:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED14213E77;
+	Wed,  9 Apr 2025 07:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744182284; cv=none; b=gWO5HcCtwf+ZAfgAVRZ40V+vu4JMNgbK4CXZpcNu0WWmIkKJF6X9DL15SMngy5Snl0pyzRjdzgac6b8anjb8+AWyW0O6uaH4VYMnhjMXDiaBZEx/dxdJq1A3Blg/4pbqeOXp9b4PpogXK+eA2EpzbGaRvO9xZaKBl23AC3l3eDY=
+	t=1744182407; cv=none; b=TpjsZcDVJNZsrFPLiXJ4jemDGI7Xb1QxHK2v4qNYu2bDLjHuGuVi+b1a8qpA2ck7mAAlKP1F8bmbrvXy4DQiFAWuKvFGNoL1gWspb0iacj0p+V3gxQWlKNBYLHRxj211lply5EQh5AL/46E/jZ2iBAvzRdfhOf4voAgmhRqYRFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744182284; c=relaxed/simple;
-	bh=YGucoojc/5FltejaJyavg7GKbxfzBEvxlwP/ignbNro=;
+	s=arc-20240116; t=1744182407; c=relaxed/simple;
+	bh=mflL95AIRj3e4w7SQ0uU7taA2tfZwI5QH+IQZ+DDW50=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rNSDWlVrGn33ta6djee5UW2GGsBl50XsNfzLE4BdacIdiAYMw6I82DUH/VYPfD4lIq3FmZWd6TXBV3fB2VFh1BrzmsSJyZQeTVbl7fLaJ06o2HAAliKzed0L7qHKZCmaiikMMLA58CoYyQJ8sjwElI8+FXx+Tre9WuUECH9Cc/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrPXs4X0; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=ZtWUQ0oDZYUEHTPlcax4oK1hxiMBlkTA11Pf6PbreabUKnL5btT2CTKY/Bp+uHkoj6OJHkgb/RpVNkkDzbs8hTDGMJyD/Vw9u+QW03KnYIW8BeaIjoz8bDtUo1ONffj9xZh5dzVnUcoYTsVRNxmnt1KCzdF9/e+f1kHXz7XAY+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/DyPGz+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrPXs4X0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E83DC4CEE3;
-	Wed,  9 Apr 2025 07:04:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/DyPGz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB2FC4CEE3;
+	Wed,  9 Apr 2025 07:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744182283;
-	bh=YGucoojc/5FltejaJyavg7GKbxfzBEvxlwP/ignbNro=;
+	s=k20201202; t=1744182407;
+	bh=mflL95AIRj3e4w7SQ0uU7taA2tfZwI5QH+IQZ+DDW50=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DrPXs4X05GLF4uTB5MKa82nFUjEGictG2AyazD93onEDhQrRfbQ1d0Fa9bo4e3/sV
-	 3dldGcj0JkbCEhT3Xy+DXqg6ylf2FklIQxmJAwbG79Tp09KxVALuQaoAh6cn2Z3+3I
-	 PWYYe9TNMQ9EEOZFJDaI3aFjAAzDQVKvgETLjKrt8dKjkfSm+YNU66lbEIklol6WYl
-	 VLtfPOmPVTF0MKQt0eeGyNFpyU5J9ggqnadO7PPRyS1o3uBpPqLbSCgQaD51HXXjct
-	 7DA19C2OzPDSsTZ6XC/1p1rms1zfKdvFocWtDfSTH3h81JSj6zULWL+m0UWAMtfkGk
-	 E4VzAXAJ487Kg==
-Message-ID: <850ee9aa-a41f-4bbb-9b60-6b2e84ba9b0f@kernel.org>
-Date: Wed, 9 Apr 2025 09:04:40 +0200
+	b=P/DyPGz+VX9zmLTnuWls0TglQXFP2Tpq/RdjpONNWVnG/ojez6zxRQNAALx/8LNIl
+	 rweU3th8j6GhuVTbkZ0k2W9Sv/2BBgiaK03wAZ8FlwLhwnlSxH8pM/7GMLYvIVrmha
+	 bcZ+QUCUKWSV+HPBDINywuL2qZCJZKabkuZig3z11S1p5PspR/AKRjqNDjo8OSgjOn
+	 EIEBZCxsUohT5JsgYYw6j1TjdncKjnRtEBtjSP4wIVOgrC/G2HM856RTtwiCHpDKTk
+	 0GcMISyethBgyNlCsnj1wj0nuXfS3GC7jopOM57tuCQUIfY3npKB1SOAF5QvihV6fH
+	 GQx0l+LdTz97g==
+Message-ID: <78fdcb36-fac7-4894-923b-b88268568e7b@kernel.org>
+Date: Wed, 9 Apr 2025 09:06:43 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,14 +35,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 103/731] arm64: dts: mediatek: mt6359: fix dtbs_check
- error for audio-codec
+Subject: Re: [PATCH 6.14 708/731] tracing: Ensure module defining synth event
+ cannot be unloaded while tracing
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Macpaul Lin <macpaul.lin@mediatek.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Douglas Raillard <douglas.raillard@arm.com>,
+ "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+ "Steven Rostedt (Google)" <rostedt@goodmis.org>
 References: <20250408104914.247897328@linuxfoundation.org>
- <20250408104916.668060636@linuxfoundation.org>
+ <20250408104930.740570814@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -87,57 +89,59 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20250408104916.668060636@linuxfoundation.org>
+In-Reply-To: <20250408104930.740570814@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 08. 04. 25, 12:40, Greg Kroah-Hartman wrote:
+On 08. 04. 25, 12:50, Greg Kroah-Hartman wrote:
 > 6.14-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Macpaul Lin <macpaul.lin@mediatek.com>
+> From: Douglas Raillard <douglas.raillard@arm.com>
 > 
-> [ Upstream commit 76b35f59bbe66d3eda8a98021bc01f9200131f09 ]
+> commit 21581dd4e7ff6c07d0ab577e3c32b13a74b31522 upstream.
 > 
-> This change fixes these dtbs_check errors for audio-codec:
-> 1. pmic: 'mt6359codec' does not match any of the regexes: 'pinctrl-[0-9]+'
->   - Replace device node name to generic 'audio-codec'
-> 2. pmic: regulators: 'compatible' is a required property
->   - Add 'mediatek,mt6359-codec' to compatible.
+> Currently, using synth_event_delete() will fail if the event is being
+> used (tracing in progress), but that is normally done in the module exit
+> function. At that stage, failing is problematic as returning a non-zero
+> status means the module will become locked (impossible to unload or
+> reload again).
 > 
-> Fixes: 3b7d143be4b7 ("arm64: dts: mt6359: add PMIC MT6359 related nodes")
-> Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Link: https://lore.kernel.org/r/20250217113736.1867808-1-macpaul.lin@mediatek.com
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Instead, ensure the module exit function does not get called in the
+> first place by increasing the module refcnt when the event is enabled.
+> 
+> Cc: stable@vger.kernel.org
+> Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+> Fixes: 35ca5207c2d11 ("tracing: Add synthetic event command generation functions")
+> Link: https://lore.kernel.org/20250318180906.226841-1-douglas.raillard@arm.com
+> Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
+> Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+> Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->   arch/arm64/boot/dts/mediatek/mt6359.dtsi | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   kernel/trace/trace_events_synth.c |   30 +++++++++++++++++++++++++++++-
+>   1 file changed, 29 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-> index 150ad84d5d2b3..7b10f9c59819a 100644
-> --- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-> +++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-> @@ -15,7 +15,8 @@
->   			#io-channel-cells = <1>;
->   		};
+> --- a/kernel/trace/trace_events_synth.c
+> +++ b/kernel/trace/trace_events_synth.c
+> @@ -852,6 +852,34 @@ static struct trace_event_fields synth_e
+>   	{}
+>   };
 >   
-> -		mt6359codec: mt6359codec {
-> +		mt6359codec: audio-codec {
+> +static int synth_event_reg(struct trace_event_call *call,
+> +		    enum trace_reg type, void *data)
+> +{
+> +	struct synth_event *event = container_of(call, struct synth_event, call);
+> +
+> +	switch (type) {
+> +	case TRACE_REG_REGISTER:
+> +	case TRACE_REG_PERF_REGISTER:
 
-This needs a change in the driver too:
-   79c080c75cdd ASoC: mediatek: mt6359: Fix DT parse error due to wrong 
-child node name
+Breaks build and needs:
+   8eb151864273 tracing: Do not use PERF enums when perf is not defined
 
-to actually fix it.
-
-> +			compatible = "mediatek,mt6359-codec";
->   		};
->   
->   		regulators {
-
+thanks,
 -- 
 js
 suse labs
