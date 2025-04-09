@@ -1,107 +1,121 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3F127EC99
-	for <patches@lists.linux.dev>; Wed,  9 Apr 2025 18:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB66E25DD0E;
+	Wed,  9 Apr 2025 19:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744224880; cv=none; b=KZHR/AZ9WDCwwx2qmqkuJzZS4weA5LHkvvsN3DMKn1YrTH/7Y7WBL8XmNBlRDXXAh8S46Zp7R0j223fOgyQiL3pbaNmCYI8/1rs52jTH4K73edTBdSrCzFTX6bCp8piIjs32PruHWZWZroJKck4GPM1c2xW9WAc2CrbpKKVLZWQ=
+	t=1744225424; cv=none; b=mNMdvB2ovA1GsQeFwB7uVJFo1vc5Qcd8aY4ZHtCF7WdxZY7s0nXW6wx17zLgzFU5WKpqFcNVAkQdivgMmBBGw2ciyeIAHDuVnrrFhBpZRFdSHahDfa4wKGXAez9H31u0y0cZZNscC16TEFmz97nIhi47tasDaoXQmvktJY9Mmw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744224880; c=relaxed/simple;
-	bh=BItrTn2IJIH0MdLppMsWlQgxElkb3NvoIdETrPiCE0I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jkln/eptFT6PnpQI7+w/I8BdLC9wOmPWcfUP7PH/YPst9cVoK2bj0Wec0UCKSq3CwzNznP20GkL/Lcp3K34aPOiU5751K2O8NRc8lWwMayhRnXN3K5dppqw3toPHtTxk+BWGuOf0kHneT61SpGc2YpNdy1+Yu8sTc0ydOIdC4YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfuEvlAY; arc=none smtp.client-ip=209.85.166.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1744225424; c=relaxed/simple;
+	bh=5RI7XzZpLuIxdNbstAilg7SNq3t9eP/hJt/0NSSzUkc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=C3dHpa2XcpDK45aP6+HynD52JGG+zTm47OyePv5eg+/hULmOWo+P9sbwXj32BtwgQ8CpZxPWiXORNBKS6g+G/yXulKbN91ZIw/XV/pyr0CLhs/eEY42NTy+bkCBniUztmIzV/5R7dppXmG6kYKhzHMPbhpe5VDp/gRjsTp111TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmMb65BZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfuEvlAY"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-85e15dc801aso3930239f.2
-        for <patches@lists.linux.dev>; Wed, 09 Apr 2025 11:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1744224877; x=1744829677; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c7HCUg9+RtKDsPTNL/2WrP5NNIONueuTQQ7XmSzDe9Y=;
-        b=cfuEvlAYh1UYiRKo9jTOIqGTrGN63D2l88cI01MbM2BZB4rhZOh2nGiIgPUFHGs4ZG
-         KxZ0C5zkyqfBxt8oMfQ1WKS3BFBhxk0m89MtKAdPvcSdXPjgOTRUgBU0GmEVyIskrwWC
-         qgwyhremay4gqel6sJhhPVHLXxV04bWHLAUpQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744224877; x=1744829677;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c7HCUg9+RtKDsPTNL/2WrP5NNIONueuTQQ7XmSzDe9Y=;
-        b=FbHb5OYFgWfXGRb5dYeo5gQTMlNra6wwAC1yOKppjepFffz5DuA0Ae27996MsIf0tp
-         RuWzG2zqRKo0UhWKXOoQt/E32c6e16gZrqvr5Zcd48ebSD4mw+NsjJFLv+YSxhbszMKa
-         z7Zd7oi7aXAi6eYpG3vr2KpSJM6EDqO2wLuK2LZVml4jgqfkfepDn/YPxKz5DOlrYQMz
-         7xDnWL/KO/J7ckJ0LmQ8Kt+YbtnPXpPMNXEGXtk2yHu9FXn+O2Z9CfYq+be8oz2wqv9C
-         2hIzjW+UQC8zUGDgFzTyJZuPp3vOkI8P34poCO867brTQqD8eHzSZzOpQAfXpA33hjRf
-         4TYg==
-X-Gm-Message-State: AOJu0Yzy64zTlGzHgHmtU4dCGVHoWtlFx2Tra2l3SpHj7eqBQKixXTSB
-	Ouw3pTdF8uMOUh5YptWaN1DCM2h2MEf7q9THiiyUjX7wET5fWgx4p0aig+N1JXun28Z5p0nKHGG
-	V
-X-Gm-Gg: ASbGncsFqHnXUx+Vu6oh3jIVvMy2cuzHF8dDk1EJy7+Z9OEk4Oumo7oO+iBngp/6tqZ
-	q4B5O9OE2cLzZJ5BjRy3r21hBwX2E5Z34HbhVn6ySJqgs1/faBb6rSRKC2axLyOEzKP+c7Ab65U
-	N6OEV7fhkCWCJNj3P8oDLK1jQa88ghSVhMz3lVNlXBUlCQlF7opMu0bePfnIDtF4heXSHALeffD
-	T14m+e8At/AnsGsNdzHA6qGCLRu8501b5O/0AE/fGFZTSXopYbms9+9YDi4a9zt0pjCqbqNL1ab
-	BAUM/dLEU6PONz+kYAuU0cDFe4VsEn01X6rAnFYzxWMpq2I3pzY=
-X-Google-Smtp-Source: AGHT+IH5i6yQTBGbz82VtAMEMdTBDeDBWpGhiHzbBDbPeaa1aVN55DG89VDgZRcqxydWuF8KbdUa8A==
-X-Received: by 2002:a05:6e02:1522:b0:3d4:6fb7:3a36 with SMTP id e9e14a558f8ab-3d7e478131cmr1913715ab.20.1744224877086;
-        Wed, 09 Apr 2025 11:54:37 -0700 (PDT)
-Received: from [192.168.1.14] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f505e0271bsm369857173.96.2025.04.09.11.54.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 11:54:36 -0700 (PDT)
-Message-ID: <51c911d6-a7bd-40e1-97b8-f73d94d2e9ce@linuxfoundation.org>
-Date: Wed, 9 Apr 2025 12:54:35 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmMb65BZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA325C4CEE2;
+	Wed,  9 Apr 2025 19:03:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744225422;
+	bh=5RI7XzZpLuIxdNbstAilg7SNq3t9eP/hJt/0NSSzUkc=;
+	h=From:Date:Subject:To:Cc:From;
+	b=HmMb65BZ9IQWL5MGSXXOF+OlAaMo1yfG1cAdxW+Er8MeO4RZPFuOZIwljgkyaxmA+
+	 9JmhqCdNLUHq+UpVtoEm4CX0Hzji6iimpH/Ije9PKRlpLLUelricX6ynQbHAJ1RVc4
+	 uxY0mKd9BKY9J79IPgD2SnZNo7NxUmx3b2B0jK835O4Di1MnpnJ5ptIs2wezlLnnUk
+	 BzlFLsxhewuQor8ziukwQzMSGlQnrtvqQsWXS06gmHLQCLJjqGGA36GbYAqmuzjqhW
+	 YlYa1+dYO/nDHt/XpnALJAN5XyRQREeUH5gxB4EfiE9QQVQVbhodTj1uNkVN8zXAol
+	 eMQ5PnCFDSoTg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 09 Apr 2025 12:03:17 -0700
+Subject: [PATCH] drm/sysfb: efidrm: Avoid clang -Wsometimes-uninitialized
+ in efidrm_device_create()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/154] 5.4.292-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20250408104815.295196624@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250409-efidrm-avoid-uninit-screen_info-warning-v1-1-67babb19d831@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHTE9mcC/x2N0QqDMAxFf0XyvEDt1OF+ZcgoberysHSk6gbiv
+ xv2eC6ce3aopEwV7s0OShtXLmLQXhqIryAzISdj8M73rnMjUuakbwxb4YSrsPCCNSqRPFlywW9
+ QG2dMg6c83CJdYw/29lEzf//SYzqOE2GYieJ5AAAA
+X-Change-ID: 20250409-efidrm-avoid-uninit-screen_info-warning-d62ef67ce3c5
+To: Thomas Zimmermann <tzimmermann@suse.de>, 
+ Javier Martinez Canillas <javierm@redhat.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2743; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=5RI7XzZpLuIxdNbstAilg7SNq3t9eP/hJt/0NSSzUkc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOnfjvR4imzmZP15/NzDLVcc+dcqGkSsVnLVfXOj9PsUM
+ 9vsRwmiHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAik+QYGT6s0XGSv3ZG6m62
+ uCQzY9z06apSVu6zK8+3xC17+3N3czrDPyvhVdniVma/bN2a57/rVni5+mqO7mdva233hMXFWU2
+ T2QE=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 4/8/25 04:49, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.292 release.
-> There are 154 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 10 Apr 2025 10:47:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.292-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Clang warns (or errors with CONFIG_WERROR=y):
 
-Compiled and booted on my test system. No dmesg regressions.
+  drivers/gpu/drm/sysfb/efidrm.c:353:11: error: variable 'screen_base' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+    353 |         else if (mem_flags & EFI_MEMORY_WB)
+        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sysfb/efidrm.c:356:7: note: uninitialized use occurs here
+    356 |         if (!screen_base)
+        |              ^~~~~~~~~~~
+  drivers/gpu/drm/sysfb/efidrm.c:353:7: note: remove the 'if' if its condition is always true
+    353 |         else if (mem_flags & EFI_MEMORY_WB)
+        |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    354 |                 screen_base = devm_memremap(&pdev->dev, mem->start, resource_size(mem),
+  drivers/gpu/drm/sysfb/efidrm.c:261:27: note: initialize the variable 'screen_base' to silence this warning
+    261 |         void __iomem *screen_base;
+        |                                  ^
+        |                                   = NULL
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+efidrm_get_mem_flags() can only return a mask that has at least one of
+the tested values set so the else case is impossible but clang's static
+analysis runs before inlining so it cannot know that.
 
-thanks,
--- Shuah
+Initialize screen_base to NULL and add a defensive print in case
+mem_flags were ever returned without one of the four valid values.
+
+Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/sysfb/efidrm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
+index af90064a4c04..7d820f42956b 100644
+--- a/drivers/gpu/drm/sysfb/efidrm.c
++++ b/drivers/gpu/drm/sysfb/efidrm.c
+@@ -258,7 +258,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+ 	struct drm_sysfb_device *sysfb;
+ 	struct drm_device *dev;
+ 	struct resource *mem = NULL;
+-	void __iomem *screen_base;
++	void __iomem *screen_base = NULL;
+ 	struct drm_plane *primary_plane;
+ 	struct drm_crtc *crtc;
+ 	struct drm_encoder *encoder;
+@@ -353,6 +353,8 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+ 	else if (mem_flags & EFI_MEMORY_WB)
+ 		screen_base = devm_memremap(&pdev->dev, mem->start, resource_size(mem),
+ 					    MEMREMAP_WB);
++	else
++		drm_warn(dev, "unhandled mem_flags: 0x%llx\n", mem_flags);
+ 	if (!screen_base)
+ 		return ERR_PTR(-ENOMEM);
+ 	iosys_map_set_vaddr_iomem(&sysfb->fb_addr, screen_base);
+
+---
+base-commit: e8bf4a1bdaeadb28d13b9a2bcfd5910fda06eede
+change-id: 20250409-efidrm-avoid-uninit-screen_info-warning-d62ef67ce3c5
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
