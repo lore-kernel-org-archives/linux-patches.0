@@ -1,52 +1,33 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3604221712
-	for <patches@lists.linux.dev>; Wed,  9 Apr 2025 07:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E8B189B84;
+	Wed,  9 Apr 2025 07:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744182125; cv=none; b=LWt+otiBT1gVS1ZwrSb/it82niQv60HONRYlhy6pGDnccq/td70BKsulEOXe7mV1kE6VpWZmuY6xyXLfmWWj+wxAtj2OQWh5/uFWlzkkqX2Z4ogsiGIEMruhEm17WnlZ6RXrHm0xZPyctT0fH5NfsT4qOSliT3dnfCBuCSNYloQ=
+	t=1744182284; cv=none; b=gWO5HcCtwf+ZAfgAVRZ40V+vu4JMNgbK4CXZpcNu0WWmIkKJF6X9DL15SMngy5Snl0pyzRjdzgac6b8anjb8+AWyW0O6uaH4VYMnhjMXDiaBZEx/dxdJq1A3Blg/4pbqeOXp9b4PpogXK+eA2EpzbGaRvO9xZaKBl23AC3l3eDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744182125; c=relaxed/simple;
-	bh=LYOxysk7LpLeibzmXywLU0KOzfGt6ylPgoDtIPwcId8=;
+	s=arc-20240116; t=1744182284; c=relaxed/simple;
+	bh=YGucoojc/5FltejaJyavg7GKbxfzBEvxlwP/ignbNro=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GqmWlKadW1U2CtQ8pf+MA8arJJZX+//dGW0isjC0MjoiGiuQbgGa6Psckz44+Uv4yAgYkuSafiBPJP16nE6wztL6qQKH+iGt3BLIhR/3kvabl9LtqBmVy68Aog5GBfxboAx2YxYT21KiWaa29tFNeP8J/o8FOPeotpNZ21H+I20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=0rz7Pa/U; arc=none smtp.client-ip=44.202.169.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=rNSDWlVrGn33ta6djee5UW2GGsBl50XsNfzLE4BdacIdiAYMw6I82DUH/VYPfD4lIq3FmZWd6TXBV3fB2VFh1BrzmsSJyZQeTVbl7fLaJ06o2HAAliKzed0L7qHKZCmaiikMMLA58CoYyQJ8sjwElI8+FXx+Tre9WuUECH9Cc/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrPXs4X0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="0rz7Pa/U"
-Received: from eig-obgw-5008a.ext.cloudfilter.net ([10.0.29.246])
-	by cmsmtp with ESMTPS
-	id 2NXfuSOHLiuzS2PRhubwfq; Wed, 09 Apr 2025 07:02:01 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 2PRhunBh7CUo82PRhupVNh; Wed, 09 Apr 2025 07:02:01 +0000
-X-Authority-Analysis: v=2.4 cv=NdLg1XD4 c=1 sm=1 tr=0 ts=67f61b69
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=0W9ZJ4sf5g1JPoPztzuh32ONwPdai1ebV30SG+aO88Y=; b=0rz7Pa/UnlIhoS0XzrofJptErB
-	nxeH/0C3UHg1Gn43uBbNOdJZ+2tfSQzxEm2M6BVQJ1gHAP6fACnJJ2Gmh8VHvwi3/F+kSO4nPM+ob
-	71GdYx7HsKytQ0aAShILMCoHyIxlfmQczRoQDfz4NkeeLNGcGVloG2lgRxHKpbCCyr7Usafx8zsSN
-	HBUfJhFH0ECna1rRUwcTroTNGpTNZmSnaErR1xkExoCECnGzx3bX7z+3QZkWfPGt/XYewHNlPLfQI
-	EVDVx3dqAeiZyPpyib4MDnmvO8/FiW/NQFLzf8Y0QvPTJjSQYjBczk8zWzWrGBb0oe7roulj+G98z
-	UG2fcOAQ==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:43768 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.1)
-	(envelope-from <re@w6rz.net>)
-	id 1u2PRf-00000000SbI-0uUY;
-	Wed, 09 Apr 2025 01:01:59 -0600
-Message-ID: <e4b882ee-996f-4da8-8ccb-ae9699b91110@w6rz.net>
-Date: Wed, 9 Apr 2025 00:01:55 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrPXs4X0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E83DC4CEE3;
+	Wed,  9 Apr 2025 07:04:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744182283;
+	bh=YGucoojc/5FltejaJyavg7GKbxfzBEvxlwP/ignbNro=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DrPXs4X05GLF4uTB5MKa82nFUjEGictG2AyazD93onEDhQrRfbQ1d0Fa9bo4e3/sV
+	 3dldGcj0JkbCEhT3Xy+DXqg6ylf2FklIQxmJAwbG79Tp09KxVALuQaoAh6cn2Z3+3I
+	 PWYYe9TNMQ9EEOZFJDaI3aFjAAzDQVKvgETLjKrt8dKjkfSm+YNU66lbEIklol6WYl
+	 VLtfPOmPVTF0MKQt0eeGyNFpyU5J9ggqnadO7PPRyS1o3uBpPqLbSCgQaD51HXXjct
+	 7DA19C2OzPDSsTZ6XC/1p1rms1zfKdvFocWtDfSTH3h81JSj6zULWL+m0UWAMtfkGk
+	 E4VzAXAJ487Kg==
+Message-ID: <850ee9aa-a41f-4bbb-9b60-6b2e84ba9b0f@kernel.org>
+Date: Wed, 9 Apr 2025 09:04:40 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,61 +35,110 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/279] 5.15.180-rc1 review
+Subject: Re: [PATCH 6.14 103/731] arm64: dts: mediatek: mt6359: fix dtbs_check
+ error for audio-codec
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250408104826.319283234@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Macpaul Lin <macpaul.lin@mediatek.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20250408104914.247897328@linuxfoundation.org>
+ <20250408104916.668060636@linuxfoundation.org>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20250408104916.668060636@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1u2PRf-00000000SbI-0uUY
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:43768
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 17
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfGZ6Vkew28OSZtbfmGJfYtyT1+L6xAR4VxV6NxE05gFzw17jRyDO1wmaEZbzZEhEjQG9MZZPfRo9EvYtDb+C4PwD40rp1VF3wurzVsHgFIJPwqfaI43R
- gqx1xHdpwRP+/8Z2aw7v0M+Qu9yUqN5KW6yFljNfEjjaOghHIg1fL30THNvXoYCK+5s2S5szjpl/aw==
 
-On 4/8/25 03:46, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.180 release.
-> There are 279 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 10 Apr 2025 10:47:53 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.180-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 08. 04. 25, 12:40, Greg Kroah-Hartman wrote:
+> 6.14-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Macpaul Lin <macpaul.lin@mediatek.com>
+> 
+> [ Upstream commit 76b35f59bbe66d3eda8a98021bc01f9200131f09 ]
+> 
+> This change fixes these dtbs_check errors for audio-codec:
+> 1. pmic: 'mt6359codec' does not match any of the regexes: 'pinctrl-[0-9]+'
+>   - Replace device node name to generic 'audio-codec'
+> 2. pmic: regulators: 'compatible' is a required property
+>   - Add 'mediatek,mt6359-codec' to compatible.
+> 
+> Fixes: 3b7d143be4b7 ("arm64: dts: mt6359: add PMIC MT6359 related nodes")
+> Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Link: https://lore.kernel.org/r/20250217113736.1867808-1-macpaul.lin@mediatek.com
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   arch/arm64/boot/dts/mediatek/mt6359.dtsi | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+> index 150ad84d5d2b3..7b10f9c59819a 100644
+> --- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+> +++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+> @@ -15,7 +15,8 @@
+>   			#io-channel-cells = <1>;
+>   		};
+>   
+> -		mt6359codec: mt6359codec {
+> +		mt6359codec: audio-codec {
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+This needs a change in the driver too:
+   79c080c75cdd ASoC: mediatek: mt6359: Fix DT parse error due to wrong 
+child node name
 
-Tested-by: Ron Economos <re@w6rz.net>
+to actually fix it.
+
+> +			compatible = "mediatek,mt6359-codec";
+>   		};
+>   
+>   		regulators {
+
+-- 
+js
+suse labs
 
