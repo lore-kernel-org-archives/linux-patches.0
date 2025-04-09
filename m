@@ -1,91 +1,141 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5FC143748;
-	Wed,  9 Apr 2025 20:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F499211476
+	for <patches@lists.linux.dev>; Wed,  9 Apr 2025 20:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744230399; cv=none; b=UhCn/q2AotTKXKQdqRJ4DXAH615s5EFtHgxhkya0r/C9ofTYh3T+QbHCdG2oTCkUiy/kzFh/lscKDpopkHPRUxVwvz1e6UKG70C3zF51DB5TEO47LOqIyvTSJX+PLhuqUCigEQsW3g+XyOep9j4hHFEgyCFqp3VoAAQkRgMpQDQ=
+	t=1744230683; cv=none; b=DGw/U5sC3t7pVm802cF5fkAuv66ts+FmJ53peKWcYGyA9ZKadkrfuJumeC0/wexnrfqbm3lGWORY4suVB5lEFgdqf6+DaPG1MPtWozTemeKcQZDs9aIzYiBsi5znukxZvZXuCYrhdPr31ep+3BIMZxDK2EExOs4vyd+q+f8AB1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744230399; c=relaxed/simple;
-	bh=WJZb8CIs6oDkFKT7jPcSMeZ3OH2lSmo8VJRB99SoJd8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dSOU83JaGxxa6tyDT0LuX5J//85um12cAi2AaDCDWULKO0Qww9qGjrc3rEudnnBhF0pG8ZmrIP8wBgNddA7duzCOvp+lBllaDqSN3l8TqS8NBhXVd2rnP2P17TltZkJw9kzo3RGmiZWiJxYuGcRQ5NFgXoJF19xZZZVhp5NHdm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyTKDMuw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744230683; c=relaxed/simple;
+	bh=NbC5ELZN9Ih2DYNkyX4oHCuEmbu6CSmsTujIBO0gs6A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q348mrvFokaBIro9pa/YY8xq/vi9XPnQ0KscnaB0ZVl9ArUxL5ckbCIHqLrgPTX2A7RQppS76qQfsghy+izppzW1mdCkuV5+gVV5PJEdsjF1h8VcY1CcTaoTAPOp+fYEhj9UScBY8eYDrA8ispjaYedy1L+MFIxRlL4vQt605FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PRS7Rkmn; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyTKDMuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42867C4CEE8;
-	Wed,  9 Apr 2025 20:26:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744230399;
-	bh=WJZb8CIs6oDkFKT7jPcSMeZ3OH2lSmo8VJRB99SoJd8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eyTKDMuwHg3fOBYyRroHFg3OTUtkLcZn1aygEAvexfGhx1qKq8Sl1tr3LuTJsaWMT
-	 K5nHGj1UAVmmLkVAn1s9rOE9t+mBD7yh+uW8tO8cTVwzZ3JWdqV2UaQLxn9p+sRLRh
-	 s9hwkAd1j6WfFPpBnZ7cLi3N70127xTiKtC+vaWE=
-Date: Wed, 9 Apr 2025 22:25:04 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org,
-	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org, linux@roeck-us.net,
-	lkft-triage@lists.linaro.org, patches@kernelci.org,
-	patches@lists.linux.dev, pavel@denx.de, rwarsow@gmx.de,
-	shuah@kernel.org, srw@sladewatkins.net, stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.1 000/205] 6.1.134-rc2 review
-Message-ID: <2025040918-knapsack-angles-0bb5@gregkh>
-References: <20250409115832.610030955@linuxfoundation.org>
- <20250409161034.1244178-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRS7Rkmn"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2b8e26063e4so11033fac.3
+        for <patches@lists.linux.dev>; Wed, 09 Apr 2025 13:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744230681; x=1744835481; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=s4XngN7z2szBMR/KQWm2XGibZ6ERUrLePzEKPhYqqW8=;
+        b=PRS7Rkmn00aCIhh5ylsFCFqbqD7wqf2S0h8RtowfgXn/b+kayBQZAghnXx4cKExeNy
+         NygW4LaI0J+6aCCXpxJ1SWTthhcQ5Cg4oUtCo6eqdV6owPLyXPrDLCjHdme10ZCI5QCK
+         oX2mBeQIxthLIEstIvj2up9QmBMveNps6OAKdP4KzSQ9bThRxdnjHU8YSG57E/bItlio
+         i0qb8PgCUMj/PR2QCjiKrNvx8m3Aq43VFv8/D6U7kW6J4DikcO+k4qtEJM8kBEBCPZ+9
+         JIUFB67afNP+lnk6PY05iDWPpFSWXMgHGczjSUGsqqbumBUYEBE04iB6IcPZTUk3GKcl
+         +jgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744230681; x=1744835481;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s4XngN7z2szBMR/KQWm2XGibZ6ERUrLePzEKPhYqqW8=;
+        b=EIt0NfI1ObKlbwpbLozAFVkT3F5JlignG0wtcZ2c5h605tHo5lYhPZo9iZaMDxb4qp
+         Sd9k96Vv6t4XjhKsxt7KG8nT+WRPKmqhBEjFoED5sQA3Dj3kWSPV/Prs+K/YD+L2Bk9m
+         7q3fF5wZ+xbiAkRjO7u5Vzfghjz3i09kMC931YYYCrBqKKVjr8qkEjSituH2nBUh+fUj
+         yJnvllIeBBzWazCTr2U/ErYrY28tawOzxHjcKsc+0dxWliX7EUBnJ9yAmp3CaS+kfkMS
+         pppotjXGbBfi2CBaPV07oyFga539vz58uagP2hYc/V2lDar77//sj34BEni1H7yF4JCH
+         ZxyA==
+X-Gm-Message-State: AOJu0Ywb0eTlAISFPOgpS2xFAUY9a+bRI6VF0uJ0/1LAJjlifhGHTBej
+	CCDSmQRDucUvmweTE5X5qyLBqeAv47VP3Fqr9s72bRSyX8lhe/qJ
+X-Gm-Gg: ASbGncvr1sw/e1Pk34NAhj8nMRZLEbH144BmKm5xs75cBcuwxEAAiyrsTeYxqvAiNsS
+	YlZ+SscWmUFEv6iSXOBTAVP7bjaPSymyTW0oU/YYyQiVIQjoOflZ+eV1RYhJuGU74bDIFkislbx
+	KzISiSj1cAm+2Uko3nfH5cfV5UOs3kpDksK/qYipD2VnpKWbFaAgID6kOG0KvSnlYe/r7kKcVRh
+	RM/ZhyRL4ZyrRvUwKlH+hG5hWvIq1b6wZKtdTBRCgIuu3oOnRA8NamKpp5GfKEPSaVAUNOcbCao
+	2Z3neoevC4RHsTENd0uONiBRjQe4qPQgSenwiO8pP2EjOKIMrMcBf+iWgugOE5g3EIf1
+X-Google-Smtp-Source: AGHT+IGbt9Nnnn3HrngqyM2dww5q+XbKn3BlEvNDeWur58HwfY5FSf3BgPJFJjHgXcFpXiFsDFySwA==
+X-Received: by 2002:a05:6870:b9ce:b0:2bc:9197:3508 with SMTP id 586e51a60fabf-2d0b3893c94mr74039fac.34.1744230680874;
+        Wed, 09 Apr 2025 13:31:20 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2d096a20194sm375761fac.30.2025.04.09.13.31.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Apr 2025 13:31:20 -0700 (PDT)
+Message-ID: <62bda51b-8a3b-480c-beb4-5ae1009260b6@gmail.com>
+Date: Wed, 9 Apr 2025 13:31:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250409161034.1244178-1-ojeda@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/205] 6.1.134-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250409115832.610030955@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250409115832.610030955@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 09, 2025 at 06:10:34PM +0200, Miguel Ojeda wrote:
-> On Wed, 09 Apr 2025 14:02:32 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.1.134 release.
-> > There are 205 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 11 Apr 2025 11:58:02 +0000.
-> > Anything received after that time might be too late.
+On 4/9/25 05:02, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.134 release.
+> There are 205 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> For 6.1.y and 6.6.y, Rust fails to build with:
+> Responses should be made by Fri, 11 Apr 2025 11:58:02 +0000.
+> Anything received after that time might be too late.
 > 
->      error[E0432]: unresolved import `crate::ffi`
->       --> rust/kernel/print.rs:10:5
->        |
->     10 |     ffi::{c_char, c_void},
->        |     ^^^
->        |     |
->        |     unresolved import
->        |     help: a similar path exists: `core::ffi`
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.134-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> In 6.1.y, C `char` and `core::ffi::c_char` are both signed. So the only issue is
-> the `const` -- we can keep using the `core::ffi::c_char` type.
+> thanks,
 > 
-> In 6.6.y, C `char` changed to unsigned, but `core::ffi::c_char` is signed.
-> 
-> Either way, for both branches, I would recommend dropping the patch -- it is not
-> critical, and we can always send it later.
-> 
-> Thus, for 6.1.y we could just drop the `rust/kernel/print.rs` changes. And for
-> 6.6.y we would need something like:
+> greg k-h
 
-I've dropped this from both queues now, thanks for checking.  Turns out
-I'm not test-building rust in these stable releases, nice catch.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-If you want this in 6.6.y, can you resubmit it with the suggested
-changes that you had in this email?
-
-thanks,
-
-greg k-h
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
