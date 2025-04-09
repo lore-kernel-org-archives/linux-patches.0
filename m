@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B651CAA87;
-	Wed,  9 Apr 2025 16:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369A25291E;
+	Wed,  9 Apr 2025 16:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744214928; cv=none; b=XvIcEPIzcC0qVEXCmIgHEimxG6K4MgY4P9zR+Qle59L8tzRAZphYGQgdWjzljdLC6LnXiIjMD9VQA4CdE0yjjsrUhrQKtA5B1sEl7qXcepz7vbq6snxaunv4QVok6f+mTZbZZfjr44poQKbFb1YgwG0HeY510TK7rlf6JIMu9PQ=
+	t=1744215053; cv=none; b=p6u5qt9EdXwtMiIf8UNB/wEH02yXiOsVspm6bYdDp5WUiWEBguQfii3mHYnX3+0Q/PKLYOAO0O6vEPd/8GFrYOOrBrIjpCyqmV3MFTYfTS3Ss8KlrhmlDUAsE52qFaEnhTcFL2iCCduvGWiUjI9FWXzLmf9/8dWJYm/b5t1UEHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744214928; c=relaxed/simple;
-	bh=U136m1ePMiHup/OJWWPTED0TS3OMbL/CgENFCdA9fr4=;
+	s=arc-20240116; t=1744215053; c=relaxed/simple;
+	bh=4XkQ2SWqN1yArGEfXIrrxztPbMbkaDy7ww8hcwGwosk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G05rm1QqvYZwvG7FoTcWJiYsBYtlczXt5eO9UXeXPgC5x+D8Yk6dR8Lk3COqaK/xCIN8UpFGcq1I1w+AlQ2EI5GABkddPQTP2/KwLxPxuPa2O2h8a/NcaI9g9fkPU7YamXE3377zufM1CCSqQX/CnMnL3g90LnhXARvGe1VMFDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r2BYMjDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJur2LnhcR//JlMM/ks/i0IhptWOGw+Emyak/r2gSA40qqsbPvfO2lSnOl0tzzpWjUm3q3u5euqTqVGktAYJPGTVcpVLfqlAsUGhDMHAIx9WwW9josUZtk0OcY0xPonLa59ShOhg9h/1kMYwlEuIq9gv3722QGUCDDH0ARI8jdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJqsBxsg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r2BYMjDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE5AC4CEE2;
-	Wed,  9 Apr 2025 16:08:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJqsBxsg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49860C4CEE7;
+	Wed,  9 Apr 2025 16:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744214927;
-	bh=U136m1ePMiHup/OJWWPTED0TS3OMbL/CgENFCdA9fr4=;
+	s=k20201202; t=1744215052;
+	bh=4XkQ2SWqN1yArGEfXIrrxztPbMbkaDy7ww8hcwGwosk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2BYMjDU7ETSO4yGvcd25H3Zyq6RwlCc++3/am2IjZL28A6K7WqSHm2MTJ4QvNPeL
-	 6pBSHesbAsmZTq1CmTTccrgaOrhT15uEAN1xh/Iu4OEPgNtk8G76cTDw27X9w4uWHU
-	 DXO79rwEiRJy+ehNXmxOYMSnIT7MDVz2pV/Ae6TvRt7Hpmm91AhY4/6G4KppDp1gHm
-	 xv5Muz0jBs9SxM4TZ95oStsU6aPCet9dQnHpHRMSKO429jub75cHkXIqcw+yjNMo2I
-	 UULbv3b+cBVKf8/UZZqZBZSkBArkq6c2FlFFpVmnZvHSGJlH7ZEgyE3xskngsgLDcz
-	 OdoKJqXEroZvA==
+	b=kJqsBxsgyLLaaV7kIhO7tGwT2AKJ8fU7TmUrVnLcRpB4GSf9O7w6XQzwt56kLoe9U
+	 p4/tL9h256uvvy0ynfJURZOUVabPQ8ah9iCkoR854qjqZDDxCAhRPedUG8D4ywQFMq
+	 Mdwx8oUxZ2YfAOOZ7nIR+qR6RLY1TK+You+C8pvv+ZSGvwPktHFrarYEYYiCTPtKrE
+	 kDg2RtiGnnLWRSTHl6IzdBEiNj7nMuixe5GXL+g7suLI6uxbycwgJCFUkKNK7aowET
+	 FKl4OFheV49TqDn2Iadf1HmRSWy8srA8Hecpy5j6NTZWRwu3ioASrUuCDAObwZk8zz
+	 ZX2e3ZBEqHDIQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: akpm@linux-foundation.org,
@@ -46,11 +46,11 @@ Cc: akpm@linux-foundation.org,
 	stable@vger.kernel.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.6 000/269] 6.6.87-rc2 review
-Date: Wed,  9 Apr 2025 18:08:31 +0200
-Message-ID: <20250409160831.1243751-1-ojeda@kernel.org>
-In-Reply-To: <20250409115840.028123334@linuxfoundation.org>
-References: <20250409115840.028123334@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/205] 6.1.134-rc2 review
+Date: Wed,  9 Apr 2025 18:10:34 +0200
+Message-ID: <20250409161034.1244178-1-ojeda@kernel.org>
+In-Reply-To: <20250409115832.610030955@linuxfoundation.org>
+References: <20250409115832.610030955@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,14 +59,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 09 Apr 2025 14:02:47 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 09 Apr 2025 14:02:32 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.6.87 release.
-> There are 269 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.134 release.
+> There are 205 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Fri, 11 Apr 2025 11:58:04 +0000.
+> Responses should be made by Fri, 11 Apr 2025 11:58:02 +0000.
 > Anything received after that time might be too late.
 
 For 6.1.y and 6.6.y, Rust fails to build with:
