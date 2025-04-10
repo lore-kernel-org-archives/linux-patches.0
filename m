@@ -1,75 +1,128 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29F2B1E5B62
-	for <patches@lists.linux.dev>; Thu, 10 Apr 2025 16:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D911A1E9B38;
+	Thu, 10 Apr 2025 17:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744301088; cv=none; b=mTRZU+YTCWJoOmGwpGFg4pi4uHUF4xlfJ4HaLrOmHElSLvkk7/i4QszKXGXXIN0IFN7raArs4d6sv9h80bZ+Y3ylU+H/eehezUKvjGMjlphlc9tyKw5GS+9wDydeRydLQxm4LUM+s64q1brdbarc4Z5ER/dd2Vl+ALj035mcDCg=
+	t=1744306999; cv=none; b=ImrMCqHefCboDQCX0A9+hmqBMlgFxvEW6gvcfLlxpk0GnpR1Q4xHH8uDaiWq6B46DTJMfBuBPmKtLpP3ZUmgjc3LFGuaPShYnnCyIcf7ZzP7kbsAzqiS0h9g6/to38CZm8eo79fYs5deQenbqp4stgp2AZQJOi/W3PqJhEVNGFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744301088; c=relaxed/simple;
-	bh=Ldkshp3qHqZUpjJXn5OV5qGrTgV/cfu+Yf9jACfiSYc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=Kr+lhvFEDjF8VSNJaFj5mhzabzYEMJjrB+RPdLuIpPC2D7/t399Z4h9MDJvsZgCfN0UIY70ds/XCTcF7pr2JSPszb3PfAVjAB40q7gdf+Yrow2TkrCT2DR2C2YaRK0R1CveiMb+JfaLfq5XXxSGwNKZV2OCYAsUk+FMc5HQgoWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=s9hwh82a; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1744306999; c=relaxed/simple;
+	bh=sGm9E2uANzIVYfSNuEofrKAgkyeSsVX70Z/Yzq8fawg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jjzaiEIzoYZoKCPl6Jb3i1GaVAaAlP0U3hHQmOoITQUDMFQhjqCO1B6Y2NFI/Fa6CMPSe1YsjcoZ35/zSdNOkmggnEI9lr3nBp+vLhNwMjqaLZeXe6lt2PjSR3M3YmsGDbPV4cNPu8fPyuv7PJ3ygU+PV/3YoKDrjgfBfTb9W1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWJpmd8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="s9hwh82a"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id AC2BB21165B1; Thu, 10 Apr 2025 09:04:46 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AC2BB21165B1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1744301086;
-	bh=2NiEa9beOAZxtn1XHcoAVYmj6lVuKUzGXzW/0nksqCc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9hwh82a5mglj/KK5dX3BT/3MGb05LHh2Q02Yd7CY365wzd3/kRQjysJI/oH2gdo4
-	 nK3u30cFr7NwR1lUxa9w4b/EHmPAxcg42uSIrHenVO+5y5SJt+/qk8fd9DESD2wcwa
-	 K2IyT72loenhWYmXI+PXxk1Bby5P92MuJ4YmXLAE=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: [PATCH 6.12 000/426] 6.12.23-rc3 review
-Date: Thu, 10 Apr 2025 09:04:46 -0700
-Message-Id: <1744301086-13603-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250409115859.721906906@linuxfoundation.org>
-References: <20250409115859.721906906@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hWJpmd8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD85C4CEDD;
+	Thu, 10 Apr 2025 17:43:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744306999;
+	bh=sGm9E2uANzIVYfSNuEofrKAgkyeSsVX70Z/Yzq8fawg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=hWJpmd8ycdtss7keQQ7nQyfRR4acb1VZPz1jeabgTUbYxvu37294IhtdmOZ0j4Vjf
+	 onNFVthijSJnXXFV+RUcPfCA0iQJJKOeiLkpWPFT6cmouqG5n6fJ1z9FXMMTWOSz/C
+	 cfi2jRElinkKNOc6WoTEIx/jogGeoUQ77HQmJ9rzQdM6lk5G4ppLwCcAtp+AvJU2Sh
+	 +BrsaCFU5eAhpsck4OhIAiJ6pbOfhgjHQXTFuRm0Bac5PAzNaUxWVj6JwUlku4wL+I
+	 rLkPxsMFMoxEWSynnjSRjv9tNyY+WW0PNMuQNjEDiYcqjqeeGgHyZQ9E6gCIfievX7
+	 mI7WhTSgVHydg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 10 Apr 2025 10:43:08 -0700
+Subject: [PATCH v2] drm/sysfb: efidrm: Avoid clang
+ -Wsometimes-uninitialized in efidrm_device_create()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250410-efidrm-avoid-uninit-screen_info-warning-v2-1-b79646f58c24@kernel.org>
+X-B4-Tracking: v=1; b=H4sIACsD+GcC/5WNQQ6CMBBFr0K6dgwtAuLKexhiSjvARGnNFKuGc
+ HcrN3D5XvL/W0RAJgzilC2CMVIg7xKoXSbMqN2AQDaxULkq80PeAPZkeQIdPVl4OnI0QzCM6K7
+ keg8vzUkOYCuFfVUbLEwp0tuD0/K9lS5t4pHC7PmzhaP82f8bUYKEqu5018nGHgt5viE7vO89D
+ 6Jd1/ULSySM5d8AAAA=
+X-Change-ID: 20250409-efidrm-avoid-uninit-screen_info-warning-d62ef67ce3c5
+To: Thomas Zimmermann <tzimmermann@suse.de>, 
+ Javier Martinez Canillas <javierm@redhat.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3045; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=sGm9E2uANzIVYfSNuEofrKAgkyeSsVX70Z/Yzq8fawg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOk/mE1fNZs3syYt5Jy168jMFdu8mb6taGnfoVLOZnPhr
+ JuRI9/qjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRfe8Y/hfdf9h1ZObWZ2EN
+ tWbB7MVbWgXPdS3fwycndGXXiQouw/eMDIs1LHbqSudM70nr1tgtrOrhVruMac0yBzXJqtBlXJM
+ n8QIA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-The kernel, bpf tool, perf tool, and kselftest builds fine for v6.12.23-rc3 on x86 and arm64 Azure VM.
+Clang warns (or errors with CONFIG_WERROR=y):
 
-Kernel binary size for x86 build:
-text      data      bss      dec       hex      filename
-27757853  17715822  6393856  51867531  3176f8b  vmlinux
+  drivers/gpu/drm/sysfb/efidrm.c:353:11: error: variable 'screen_base' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+    353 |         else if (mem_flags & EFI_MEMORY_WB)
+        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sysfb/efidrm.c:356:7: note: uninitialized use occurs here
+    356 |         if (!screen_base)
+        |              ^~~~~~~~~~~
+  drivers/gpu/drm/sysfb/efidrm.c:353:7: note: remove the 'if' if its condition is always true
+    353 |         else if (mem_flags & EFI_MEMORY_WB)
+        |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    354 |                 screen_base = devm_memremap(&pdev->dev, mem->start, resource_size(mem),
+  drivers/gpu/drm/sysfb/efidrm.c:261:27: note: initialize the variable 'screen_base' to silence this warning
+    261 |         void __iomem *screen_base;
+        |                                  ^
+        |                                   = NULL
 
-Kernel binary size for arm64 build:
-text      data      bss      dec       hex      filename
-36408685  14997213  1052816  52458714  32074da  vmlinux
+efidrm_get_mem_flags() can only return a mask that has at least one of
+the tested values set so the else case is impossible but clang's static
+analysis runs before inlining so it cannot know that.
 
+Initialize screen_base to NULL and add a defensive error message in case
+mem_flags were ever returned without one of the four valid values.
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Upgrade drm_warn() to drm_err() and adjust message (Thomas).
+- Carry forward Thomas's reviewed-by.
+- Link to v1: https://lore.kernel.org/r/20250409-efidrm-avoid-uninit-screen_info-warning-v1-1-67babb19d831@kernel.org
+---
+ drivers/gpu/drm/sysfb/efidrm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/sysfb/efidrm.c b/drivers/gpu/drm/sysfb/efidrm.c
+index af90064a4c04..3cfd5d2cbf48 100644
+--- a/drivers/gpu/drm/sysfb/efidrm.c
++++ b/drivers/gpu/drm/sysfb/efidrm.c
+@@ -258,7 +258,7 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+ 	struct drm_sysfb_device *sysfb;
+ 	struct drm_device *dev;
+ 	struct resource *mem = NULL;
+-	void __iomem *screen_base;
++	void __iomem *screen_base = NULL;
+ 	struct drm_plane *primary_plane;
+ 	struct drm_crtc *crtc;
+ 	struct drm_encoder *encoder;
+@@ -353,6 +353,8 @@ static struct efidrm_device *efidrm_device_create(struct drm_driver *drv,
+ 	else if (mem_flags & EFI_MEMORY_WB)
+ 		screen_base = devm_memremap(&pdev->dev, mem->start, resource_size(mem),
+ 					    MEMREMAP_WB);
++	else
++		drm_err(dev, "invalid mem_flags: 0x%llx\n", mem_flags);
+ 	if (!screen_base)
+ 		return ERR_PTR(-ENOMEM);
+ 	iosys_map_set_vaddr_iomem(&sysfb->fb_addr, screen_base);
 
+---
+base-commit: e8bf4a1bdaeadb28d13b9a2bcfd5910fda06eede
+change-id: 20250409-efidrm-avoid-uninit-screen_info-warning-d62ef67ce3c5
 
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-Thanks,
-Hardik
