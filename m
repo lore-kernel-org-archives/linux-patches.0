@@ -1,136 +1,216 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1497F20C013
-	for <patches@lists.linux.dev>; Thu, 10 Apr 2025 09:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C4E20DD72
+	for <patches@lists.linux.dev>; Thu, 10 Apr 2025 09:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744275644; cv=none; b=r61S2vJ9U/BJazPNWt1HE3j4vk+PzM4MNYfKZ+nQEXmfslhlYO/K0JIxR9cjA0OxApOHABdmTb0wEZEYBnGdJcDYWnWJjs84DL215m/Bg5QoTZzIsy/rC+lDZYwNjsS1Pro2UISpBZMRuXbyk0kcMZ4Xu2M7csYG/skMFJJF5VA=
+	t=1744276624; cv=none; b=oLPGvvFbXK8YPyY+ZvndKtEFiV7DeA33UaX/lgTnxVHpdn9b/ueKN5Zixyw78W98oHYtW0eOPy/pYK3GGnTgl1lWWfwxgiiOHwuNQNncm9Bor9t86Tsm0fnJb6TQf0t2PPzQIw+qQ20oC8z8qIIwv3fFo7+ggeyqJRJD8KbN5e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744275644; c=relaxed/simple;
-	bh=FEmHElBJejrokSd3xPs1QE7Yqwkl0UlhvxBJEg5WwdI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQzoHjUXi2pZVVSgF4BLa3BIEiiBRRU2NAtzJ8UeenXrwDnWCwgeXHvyMC8tHQNLdqZB0Gxpg1YGPfNlmx4eAjTM4tjFNRLdNW5naAJZ89tQZXSbxt9NcpPCVAREk6jSJh9d8Ssvd6hoo/SW8c1m526L8RoR26bAmmcztSIOtdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=s1ghZdpu; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=VBwc9V0/; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	s=arc-20240116; t=1744276624; c=relaxed/simple;
+	bh=Xa8Ff/pN7rm82/Hw80lblkpQWMIqBTW7/2gVpQ2MNXQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PGBZ3B/R/98y3xCyUfGXq0gu9aKdaHd1s9WjQFX2XkbCfXEA5GrZ/PCSYX4h3Bz45UuIJpYn2M37G41l+YyEc/FCOMHTTThHy7+Um90VOdqKnVU00eQWEPGMY7ROIzCcXISs82EBjiZhYzPN8Ha0rRJrfblbnZhfJ4vuLVjg5W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jRytvYia; arc=none smtp.client-ip=209.85.221.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="s1ghZdpu";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="VBwc9V0/"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3669F1F445;
-	Thu, 10 Apr 2025 09:00:35 +0000 (UTC)
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1744275635; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SYDDnEV5Y0MeLaY+3FjAC6bXywrccw7v4r0ePjrHs5k=;
-	b=s1ghZdpu+xhULAeLE4Dgse5uziK3ThzHlmvr2r/EJjOGH/Ww65kvBmM65q2xVAPX/9bj0E
-	pJ37uWyfZjM9khhxECYTqK95MtJyw0XRF1LPQ4WRJ9BMduVcwKKidTdFe1uBq3okQxjhFz
-	AEuZ2WzGT/i3GoH8925G2vbIuFvcZ3s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1744275635;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SYDDnEV5Y0MeLaY+3FjAC6bXywrccw7v4r0ePjrHs5k=;
-	b=VBwc9V0/jyN841sMjBuTGmasKx+1//3t5sQjLyHqoVaLr7prKqAAy2QilMLP3olf8X3zDn
-	KiZjpw+p6llcPmCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1A46B13A4B;
-	Thu, 10 Apr 2025 09:00:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 6E0jBrOI92fqEQAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Thu, 10 Apr 2025 09:00:35 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Zi Yan <ziy@nvidia.com>
-Subject: [PATCH 2/2] MAINTAINERS: add MM subsection for the page allocator
-Date: Thu, 10 Apr 2025 11:00:23 +0200
-Message-ID: <20250410090021.72296-4-vbabka@suse.cz>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250410090021.72296-3-vbabka@suse.cz>
-References: <20250410090021.72296-3-vbabka@suse.cz>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jRytvYia"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-523f670ca99so315757e0c.1
+        for <patches@lists.linux.dev>; Thu, 10 Apr 2025 02:17:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744276620; x=1744881420; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GdQmyUTj4g0SuNw3N9A0Br4aQqbGmhp5SDoz/CPIiNU=;
+        b=jRytvYiatOyfOmdV+4bicznMySTzWnWqWt12gEhVV/673AcUDnYr8QeA47+gWTI+Lj
+         zbiTZFnV29/KSBrKn6xzFj/CWC/G/wqWvvjWF3eJOTaFThUQV3RoYMC9vVeDkhQzOPIt
+         G5NQVVi0fKuJGMr+31wZM5XCbCOtNcyvbn763JS8bR1KPHyBUlH76Cd9Rzsunwr1q15H
+         8omV/9L+UuxilL8cpi7T6/a2okyb7qFtTbqHbwpMd62VFg06L5Gqw/pFcXG9mMHoLJsK
+         pXGO6j+dZXa8rcE2DKPD7JWjhkOM+nXzpOmSPmJ3ZUBref4HRxyo9qXV/SP/CrQzl6Fq
+         QXZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744276620; x=1744881420;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GdQmyUTj4g0SuNw3N9A0Br4aQqbGmhp5SDoz/CPIiNU=;
+        b=HgsJVGWInp0mBoTnwYAHwQEj5eVXIg/TqaBVfQkqVPq3bdT62ilFH/o9sXB+nVlZyi
+         n2HkXsV8J+sPXw9Dc4OCSMbIEsD9iQJ3elviVAUtQmgN8/JBaOowqXKwqE+G0mXw4I3b
+         tjjHd3jzln0LW6osgZURjLHfXGiwcrW4CkJxsYLN9t+gVsdPVppPfXFT6L8En1U5TPe8
+         3XvVWIiA9syXVYvLKS9vCgKywIZ2RApIOvPaNYdsLRb42Cb3IHqc3axOK8sxsYsaV70T
+         GgRLlmoUWwhCDJ9jiBCSon1GUFl/1MjaZMdN1BlqYKhGUYF6BbPP9d8taAN87OK/fTDQ
+         FUig==
+X-Forwarded-Encrypted: i=1; AJvYcCUs4Q9o9Tc3Sryo2O/l1xqHf8sL0shUrEazVNr6Icv5Xh7XVhNcgsxeUpzHbNkpHqS5UIt4tXPM@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw95rNYrSmmkxmd2w0bTR0WW1KjAfB4Zyd+fz6t979OJRFlLSWn
+	bRa8kQQNtOUT2+ZUlZVyvLRmSN70SqCzIQOfI7SPFIjE2yuMaVUodUg4pfg/bWy0NuM/aTDQN/y
+	clHFoDMA+44y3PfEZd2Vgq06B8rk7a63F9IXdQg==
+X-Gm-Gg: ASbGncvOcpA6r9kzyyMDDa7gStEDgKAmCkGGboyK+zNym1onK1YuImRMb5ryn17QgL0
+	t+jIX5bLb2Ba3OA3eYKuqSD+ct50Q9A7mz9sw0L5C15gFIxyCPumykB7Fxe68fxBfWsZ3V+khCo
+	2sxM0XOCCehKyrhUbJBc+xhIpPipOYxOT3hIuaPeLia7dR1K8pLG6frpUMz9xIvhdx2g==
+X-Google-Smtp-Source: AGHT+IE1KynZHJuyz3u/gcawT+AeiFFoZZSoMAW3X0C3a+4tVcuYH3tbZBo6Pebhc6HyfPbQV+caJt9l4kTsChhokA4=
+X-Received: by 2002:a05:6102:160f:b0:4c1:924e:1a2a with SMTP id
+ ada2fe7eead31-4c9d3620e92mr1047489137.25.1744276619774; Thu, 10 Apr 2025
+ 02:16:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.00 / 50.00];
-	REPLY(-4.00)[];
-	ASN(0.00)[asn:25478, ipnet:::/0, country:RU]
-X-Spam-Score: -4.00
-X-Spam-Flag: NO
-X-Rspamd-Queue-Id: 3669F1F445
-X-Rspamd-Pre-Result: action=no action;
-	module=replies;
-	Message is reply to one we originated
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+References: <20250409115831.755826974@linuxfoundation.org>
+In-Reply-To: <20250409115831.755826974@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 10 Apr 2025 14:46:48 +0530
+X-Gm-Features: ATxdqUF-Jfnj0n0r8H8OdiFSk0hQ53ptwMn1zgVSD-9e5YmY8uzIaVkWfZZN8_g
+Message-ID: <CA+G9fYu3c-bgqcAxs8royX1LJM-+BqZE8yOkNueD=4H2UStNZg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/228] 5.10.236-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add a subsection for the page allocator, including compaction as it's
-crucial for high-order allocations and works together with the
-anti-fragmentation features. Add reviewers (including myself) who
-voluteered.
+On Wed, 9 Apr 2025 at 17:33, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.236 release.
+> There are 228 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 11 Apr 2025 11:57:56 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.236-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- MAINTAINERS | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4fe7cf5fc4ea..c0dbe29b9e45 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -15511,6 +15511,21 @@ F:	mm/numa.c
- F:	mm/numa_emulation.c
- F:	mm/numa_memblks.c
- 
-+MEMORY MANAGEMENT - PAGE ALLOCATOR
-+M:	Andrew Morton <akpm@linux-foundation.org>
-+R:	Vlastimil Babka <vbabka@suse.cz>
-+R:	Suren Baghdasaryan <surenb@google.com>
-+R:	Michal Hocko <mhocko@suse.com>
-+R:	Brendan Jackman <jackmanb@google.com>
-+R:	Johannes Weiner <hannes@cmpxchg.org>
-+R:	Zi Yan <ziy@nvidia.com>
-+L:	linux-mm@kvack.org
-+S:	Maintained
-+F:	mm/compaction.c
-+F:	mm/page_alloc.c
-+F:	include/linux/gfp.h
-+F:	include/linux/compaction.h
-+
- MEMORY MANAGEMENT - SECRETMEM
- M:	Andrew Morton <akpm@linux-foundation.org>
- M:	Mike Rapoport <rppt@kernel.org>
--- 
-2.49.0
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
+## Build
+* kernel: 5.10.236-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 5b68aafded4a439a2c6c9b0fdf18c2c3a7560bb7
+* git describe: v5.10.235-229-g5b68aafded4a
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.235-229-g5b68aafded4a
+
+## Test Regressions (compared to v5.10.234-463-g92c950d96187)
+
+## Metric Regressions (compared to v5.10.234-463-g92c950d96187)
+
+## Test Fixes (compared to v5.10.234-463-g92c950d96187)
+
+## Metric Fixes (compared to v5.10.234-463-g92c950d96187)
+
+## Test result summary
+total: 36631, pass: 24606, fail: 2712, skip: 9093, xfail: 220
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 102 total, 102 passed, 0 failed
+* arm64: 30 total, 30 passed, 0 failed
+* i386: 22 total, 22 passed, 0 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 21 total, 21 passed, 0 failed
+* riscv: 9 total, 9 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 26 total, 26 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
