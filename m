@@ -1,191 +1,154 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE63225D900
-	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 09:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3CD194A6C
+	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 11:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744621258; cv=none; b=SaXOUZLudVUxF8OPd91QKewoUcOvBZnVN0DI+eptW2G9tBhrTDD1d936mgCuB8Z+pe0TxXUnV9h7/a4nRxkmjHUfp6Z40PKSJVd1Z3xs7fRZiSZhjMiFP8nWOtvgNExWg0m2C8A7AJmUCmLoCHkfO1Oy8vmIWiMZ2c4t/qS8BG8=
+	t=1744629748; cv=none; b=ijKoIMKipe/Nl58MGeQ3wuDDTbN0CCa+YaItjBHJVwpxFicaac+JlbAEP8OYA3Cfv9xLoZv+AWt0sGZ7k9Hameq6623MiZnyU+ZMnfQ4oElS+MAnhRsWbXbNvyTknr9BXCqWAe6Yz/jcTfCWlf0wZijYJyiJAVhTDdhscXgKBLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744621258; c=relaxed/simple;
-	bh=/zeE1xow8wBjpWsTV3JAHV6bocCxJtjVfG/nzD2yhv8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t6gdNW/Iocnwyd2tztpRGpFcpOTKspF1QSv4n9w6AQB1uC07yh4RKBfJcGMrVtQoOPpqMG5VGRhe2B1d8FrNVartnCXb4Q4KoS3j/vbYRyZwBRi4n5mPXR5cagQ2ferQivOd7OaipISwdLoWkIgIRpURpa7iwER7mcnPORGGO3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E8vVDr016304;
-	Mon, 14 Apr 2025 02:00:47 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45yqpkhg6m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 14 Apr 2025 02:00:46 -0700 (PDT)
-Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 14 Apr 2025 02:00:46 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 14 Apr 2025 02:00:42 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <tom@talpey.com>, <jiyin@redhat.com>, <pc@manguebit.com>,
-        <stfrench@microsoft.com>, <sfrench@samba.org>, <ematsumiya@suse.de>,
-        <linux-cifs@vger.kernel.org>, <samba-technical@lists.samba.org>
-Subject: [PATCH 5.15.y 2/2] smb: client: fix NULL ptr deref in crypto_aead_setkey()
-Date: Mon, 14 Apr 2025 17:00:42 +0800
-Message-ID: <20250414090042.1633186-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1744629748; c=relaxed/simple;
+	bh=5Fvjkjfat+nJk7Vy80tDWnDp5NpzHStADTmDQuN5aCE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TH90LoqWvA/njyBcIB4OlN52/t3+NAt/WkwRSSJzJxUmJDSmyUp0Kb3z52j2CQi4nM1h8xJ5tJUEi0BUO43toQCdhiKHJg3O7TZE5TB/Gw5p1mewQcF438kshiG69KzjO6AEtNBQI1wfaZWHJ+IMgV2FK5YEY8Zs4u563hNiQUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W9DdGDtA; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W9DdGDtA"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cfe574976so28954415e9.1
+        for <patches@lists.linux.dev>; Mon, 14 Apr 2025 04:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1744629743; x=1745234543; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rft3EAUTLyhnp7+tWC0d5mWYcohYnVvJHm8W23d6BUU=;
+        b=W9DdGDtAq3vM5xaUl6Bu/FJDDtoy9qhIXSWc9LYhmi+RrJDAlXR8J70fld4CbAO4+2
+         lpVvRb7v+47xro4P5agrKXDVu5aTO7gTU9pRPHnj2IHnZ38lo6sOYQgYyb/Yu3Cc2ttY
+         CMg7a45/pUPcCXr2EC2+BUdK08VA7JWeFV37q8Kw46Uua/4nHti0XrCtKH3+Ixbhq7V+
+         EFfR8/bNUa/RU0UPunBGqDNO0F0qU4hZMoGDQz6Nk7eVvxLO+rc1ULKeKZ2OXGsu86n4
+         JyrDU3736gu/DuT+gPl2jKT3NKw8FL/nyCcNsChpufEv4QL6L+2iUc6rWIs1IG3Kxd4G
+         7+vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744629743; x=1745234543;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Rft3EAUTLyhnp7+tWC0d5mWYcohYnVvJHm8W23d6BUU=;
+        b=QsR0EF7/vGn9F+Ws9b+RxD2ek5uDsNiB5StCjIxYDMI83ptta9X0e1qVzht53FtKGz
+         R0UOx2t2LRGkFnwdwEDLDenjM0NKPq8rc+Wq3qHqDLWECKs92Bk3SsjMoyeYT2beszg9
+         VRoBQIUoNQ0uEHNqhzhEbRcIVgRYtZNgS3grnGdNd5nBr23f5jfH/WHpi+IWdTLObZMQ
+         tWukVIQtckCGKSDuBbdBcMEWGKBgxcPZ+EkvILAAhYO7V3vf38I4S6fADYoGBNff60J2
+         i0D2m5LM4hvN9+rrcwpq0WgDcXokyrYty3t0S8tVJnORVq27YGvipq7koj6Va8R56lrv
+         7Ckw==
+X-Forwarded-Encrypted: i=1; AJvYcCUYnBz/+JiDPlVsHMbNh4SUo/Qslnnu2XUJ4imjhXt7cc9kfNXXplc1Qea/HpgUc/9t0kNgvMBo@lists.linux.dev
+X-Gm-Message-State: AOJu0YyZuloGddr5iRBRWaGW24z60zYyuNnFGjHsO6wOy4+QXBYEdIKf
+	CcDHmNXC5WHjS7IPBHdZvqdGRTQB2zMg47NXktkj9JoQori7aFDBzxtdIvclyZ2XkTgLSTRV13s
+	Aj5MJTM5lwvkM0OYMLBnj+UyiwAm7iizWICHf
+X-Gm-Gg: ASbGncsyK3n5/1Y+l0RHrVD+k0N6pJFUW89Yj8XYSoslA5ZmQOg/IpJT5Y7wCJjod4J
+	2LlEHZzo1HLtU/njopaUhkU8AyBMKpCUHjqNCwqARz83i2PZmUEjA+GfMe1kKLAmOMFldagVVLQ
+	NGnN0qvjEsS70OKB3BX2aMRFrfV6g8Sw/RLypd8bbB/bqXHnK5XnQ=
+X-Google-Smtp-Source: AGHT+IEZZBt3UNC3+TSE5+/gmDD+2unhz/9dXO7/xHNdpPGb0TNqsh6CfuUuMhd+ZdyeJAI6BZseyvWSCutQpwcC5zk=
+X-Received: by 2002:a05:6000:2405:b0:39c:1257:feb9 with SMTP id
+ ffacd0b85a97d-39eaaed586amr8788733f8f.57.1744629742684; Mon, 14 Apr 2025
+ 04:22:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: QrCgIwP9G8ZJ11Ba7ESLIweES89dQPaP
-X-Proofpoint-GUID: QrCgIwP9G8ZJ11Ba7ESLIweES89dQPaP
-X-Authority-Analysis: v=2.4 cv=UZBRSLSN c=1 sm=1 tr=0 ts=67fccebe cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=Li1AiuEPAAAA:8 a=SEc3moZ4AAAA:8 a=20KFwNOVAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8
- a=riu9DmvwmDMTBw3IfOsA:9 a=qGKPP_lnpMOaqR3bcYHU:22 a=5oRCH6oROnRZc2VpWJZ3:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_02,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 malwarescore=0
- spamscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504140064
+References: <20250408220311.1033475-1-ojeda@kernel.org>
+In-Reply-To: <20250408220311.1033475-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Mon, 14 Apr 2025 13:22:10 +0200
+X-Gm-Features: ATxdqUF9via54VPG5nlOhtSrUPwWIS_mfTXT8g_wST2xwdZg_Zg47Lq68Zxptiw
+Message-ID: <CAH5fLgjb3Wxbkzvvy9H6QUYVpxXvkse1rnDmmR3nVHjp6zEx9A@mail.gmail.com>
+Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Andrey Ryabinin <ryabinin.a.a@gmail.com>, 
+	Masahiro Yamada <masahiroy@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	Alexander Potapenko <glider@google.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
+	Dmitry Vyukov <dvyukov@google.com>, Vincenzo Frascino <vincenzo.frascino@arm.com>, 
+	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Matthew Maurer <mmaurer@google.com>, Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Paulo Alcantara <pc@manguebit.com>
+On Wed, Apr 9, 2025 at 12:03=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> If KASAN is enabled, and one runs in a clean repository e.g.:
+>
+>     make LLVM=3D1 prepare
+>     make LLVM=3D1 prepare
+>
+> Then the Rust code gets rebuilt, which should not happen.
+>
+> The reason is some of the LLVM KASAN `rustc` flags are added in the
+> second run:
+>
+>     -Cllvm-args=3D-asan-instrumentation-with-call-threshold=3D10000
+>     -Cllvm-args=3D-asan-stack=3D0
+>     -Cllvm-args=3D-asan-globals=3D1
+>     -Cllvm-args=3D-asan-kernel-mem-intrinsic-prefix=3D1
+>
+> Further runs do not rebuild Rust because the flags do not change anymore.
+>
+> Rebuilding like that in the second run is bad, even if this just happens
+> with KASAN enabled, but missing flags in the first one is even worse.
+>
+> The root issue is that we pass, for some architectures and for the moment=
+,
+> a generated `target.json` file. That file is not ready by the time `rustc=
+`
+> gets called for the flag test, and thus the flag test fails just because
+> the file is not available, e.g.:
+>
+>     $ ... --target=3D./scripts/target.json ... -Cllvm-args=3D...
+>     error: target file "./scripts/target.json" does not exist
+>
+> There are a few approaches we could take here to solve this. For instance=
+,
+> we could ensure that every time that the config is rebuilt, we regenerate
+> the file and recompute the flags. Or we could use the LLVM version to
+> check for these flags, instead of testing the flag (which may have other
+> advantages, such as allowing us to detect renames on the LLVM side).
+>
+> However, it may be easier than that: `rustc` is aware of the `-Cllvm-args=
+`
+> regardless of the `--target` (e.g. I checked that the list printed
+> is the same, plus that I can check for these flags even if I pass
+> a completely unrelated target), and thus we can just eliminate the
+> dependency completely.
+>
+> Thus filter out the target.
+>
+> This does mean that `rustc-option` cannot be used to test a flag that
+> requires the right target, but we don't have other users yet, it is a
+> minimal change and we want to get rid of custom targets in the future.
+>
+> We could only filter in the case `target.json` is used, to make it work
+> in more cases, but then it would be harder to notice that it may not
+> work in a couple architectures.
+>
+> Cc: Matthew Maurer <mmaurer@google.com>
+> Cc: Sami Tolvanen <samitolvanen@google.com>
+> Cc: stable@vger.kernel.org
+> Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
+I've boot-tested Android's KASAN configuration with this patch, and it
+continues to work. It also passes Android CI [1].
 
-Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
-when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
-the client uses AES-128-CCM as the default cipher.  See MS-SMB2
-3.3.5.4.
+Tested-by: Alice Ryhl <aliceryhl@google.com>
 
-Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
-a @server->cipher_type check to conditionally call
-smb3_crypto_aead_allocate(), but that check would always be false as
-@server->cipher_type is unset for SMB3.02.
+Alice
 
-Fix the following KASAN splat by setting @server->cipher_type for
-SMB3.02 as well.
-
-mount.cifs //srv/share /mnt -o vers=3.02,seal,...
-
-BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
-Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
-CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- ? crypto_aead_setkey+0x2c/0x130
- kasan_report+0xda/0x110
- ? crypto_aead_setkey+0x2c/0x130
- crypto_aead_setkey+0x2c/0x130
- crypt_message+0x258/0xec0 [cifs]
- ? __asan_memset+0x23/0x50
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? mark_lock+0xb0/0x6a0
- ? hlock_class+0x32/0xb0
- ? mark_lock+0xb0/0x6a0
- smb3_init_transform_rq+0x352/0x3f0 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- smb_send_rqst+0x144/0x230 [cifs]
- ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
- ? hlock_class+0x32/0xb0
- ? smb2_setup_request+0x225/0x3a0 [cifs]
- ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
- compound_send_recv+0x59b/0x1140 [cifs]
- ? __pfx_compound_send_recv+0x10/0x10 [cifs]
- ? __create_object+0x5e/0x90
- ? hlock_class+0x32/0xb0
- ? do_raw_spin_unlock+0x9a/0xf0
- cifs_send_recv+0x23/0x30 [cifs]
- SMB2_tcon+0x3ec/0xb30 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_trylock+0xc6/0x120
- ? lock_acquire+0x3f/0x90
- ? _get_xid+0x16/0xd0 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
- ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
- cifs_mount_get_session+0x8a/0x210 [cifs]
- dfs_mount_share+0x1b0/0x11d0 [cifs]
- ? __pfx___lock_acquire+0x10/0x10
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? find_held_lock+0x8a/0xa0
- ? hlock_class+0x32/0xb0
- ? lock_release+0x203/0x5d0
- cifs_mount+0xb3/0x3d0 [cifs]
- ? do_raw_spin_trylock+0xc6/0x120
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? lock_acquire+0x3f/0x90
- ? find_nls+0x16/0xa0
- ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
- cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
- smb3_get_tree+0x1bf/0x330 [cifs]
- vfs_get_tree+0x4a/0x160
- path_mount+0x3c1/0xfb0
- ? kasan_quarantine_put+0xc7/0x1d0
- ? __pfx_path_mount+0x10/0x10
- ? kmem_cache_free+0x118/0x3e0
- ? user_path_at+0x74/0xa0
- __x64_sys_mount+0x1a6/0x1e0
- ? __pfx___x64_sys_mount+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Cc: Tom Talpey <tom@talpey.com>
-Reported-by: Jianhong Yin <jiyin@redhat.com>
-Cc: stable@vger.kernel.org # v6.12
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-fixes CVE-2024-50047 but brings NULL-pointer dereferebce. So
-commit 4bdec0d1f658 ("smb: client: fix NULL ptr deref in crypto_aead_setkey()")
-should be backported too.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- fs/cifs/smb2pdu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 2b2c3330ba96..302c08dfb686 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -1028,7 +1028,9 @@ SMB2_negotiate(const unsigned int xid, struct cifs_ses *ses)
- 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
- 	 * Set the cipher type manually.
- 	 */
--	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
-+	if ((server->dialect == SMB30_PROT_ID ||
-+	     server->dialect == SMB302_PROT_ID) &&
-+	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
- 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
- 
- 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
--- 
-2.34.1
-
+[1]: http://r.android.com/3584874
