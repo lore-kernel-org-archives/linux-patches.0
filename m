@@ -1,104 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E82D28F937;
-	Mon, 14 Apr 2025 11:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F5D23D297
+	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 13:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744631937; cv=none; b=N0rxhjnJLWqWA/eOtF5+1GQK+Fr1pdS30Xdt04e8HXxZmmu51+A/wvb0KdEzRImpwi8xc6WSLh9TRCNQ3YRoBPAOZdxyCs9nb5r1WiJxqLFAxt7ill/2FKwxL/31ILWWsZ+T8cBClODlYvqwM1YjxiTZpYFYBneDrB41bnaBt3k=
+	t=1744636981; cv=none; b=foKi9svnq5VE+7eYk5DtB1/cBaOrprSBROhMIo1/tQszlG/CRtrQFT2Z7BWliMNaK0lMOCTrbRjjKdaBv2E+DMKUHM6zvYBdGqOWNmOSNWLHgGreQLozrDQVjeq/vsarwDY9yIJ6rnGLmYNl49viRpPWVN85aGRbTJuEXKdTKBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744631937; c=relaxed/simple;
-	bh=PTC6LedfIAUBT2DNzfN9PrguBnlJGCAmjb45BtfCNeE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DHQJyme6ylsDRoHR7tGDX4BO2pBh7WgK6tAPgZRQZsksWQWgY02Ckv6n9QUyE0blDZTTsaC9RTQMemu0KyoOZaRp5PgBSlUUPjpNQ6svWB6QcNaVIw8Yp4cSUo1YJImmVZqhMtWDDfJZZxpj9+FMDDbVVGgGFdsZ1aENfMRR3UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r1sS/iXh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744636981; c=relaxed/simple;
+	bh=YqZznskXltnYKmBVLbbwElNix3jQOvyAnCNlCgTo76Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ii1moUu7p7pjvVgIE4KanJE+rUwVSPNTOm1n57cXphJ0ySNZPzA/Q7RlpilVEMKxrgbzIqCeG+EIykoGJylWv5ece2rh6eQqzX/lpQn4QajxXDN4i1AgtpxE3TvneJ2Xn++qcE7eTyR2i1jD2SJyhV/9HBR8qjxDbFGlgKz5vsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cuOG59N1; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r1sS/iXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED79C4CEE2;
-	Mon, 14 Apr 2025 11:58:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744631934;
-	bh=PTC6LedfIAUBT2DNzfN9PrguBnlJGCAmjb45BtfCNeE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r1sS/iXhVx5ab3qQDLgv0xBCv1Hq14JVqeqN38EYPt3OV2IWu6uIZDNAO1s2CHoiN
-	 +9MPN3C4agm2qUJ5jvTuaY2SOeteZGTvXu2lmpb36+vgnpL2xqCkmK7HHzxjToRu84
-	 nR3ax1dZvkF+/AfTGqqYh/c4PbLZ6J57hp1UadbAINgTJLWuJV43e7hN2wDuXBak+I
-	 EzsbeG++A4uafganyu6OC1lkxLF8HU0V1yZssoS1CXYW5zKt9jZStSvQVtt8xQbqIp
-	 d/r2kanMJS6xMTceEPAJiCMUvrvj1KIGaZrzfCzF/8fhXZKb1/u/NdSG7Bv0M8DMhP
-	 hBILyMH4zhgGA==
-Date: Mon, 14 Apr 2025 13:58:49 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: add C FFI types to the prelude
-Message-ID: <Z_z4eaYwADrHTVLW@cassiopeiae>
-References: <20250413005650.1745894-1-ojeda@kernel.org>
- <CAH5fLgiF0kZdOYaQi18_LTNx6Onq-5PBomA=bwS0m0z+C0wtvg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cuOG59N1"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b07698318ebso92337a12.2
+        for <patches@lists.linux.dev>; Mon, 14 Apr 2025 06:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744636979; x=1745241779; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Df4ZlcRCkKHa57BJ2xndOrkK/FrGdY+gTPtYXvqZp/Y=;
+        b=cuOG59N1t2euKsKiJgLoGW3+SDEmOrEzqeNKL+jcnDcrPRf1+GEe5G1TAvJuqJpkUO
+         I6HvISUeTPLVWzbDmKkah7U5UA8IB4s8YM70DsVXjNEPBzRfWwMfIWwJmj9mK+ipT94G
+         MjwD1TFwAxC82bnkxHn7IffWsR1PnxngBJAABVYHD1kUCRlDB9oq0AuX3fm6f/sGLTvu
+         1lp/DVOCWrKLG8xr3XxnMxiolXhhoBDAprn/kZLEPM3Oasb/qYu5W0Xia4J7uyFEvuyA
+         ZtImi+iH5ALKUfkhJV3pe1rfhyC4xN0MWVLWUTOPYJPy6CKYY493lK0wZH2s3wwWp9LZ
+         NRGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744636979; x=1745241779;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Df4ZlcRCkKHa57BJ2xndOrkK/FrGdY+gTPtYXvqZp/Y=;
+        b=DuHAoUclghIyjIdpGShVTxOqSekG46V+NppSCOFiHWW0zRrM4B/o5AHHjppKcJ93Ib
+         7/XM6i9Rx97fhkiy9sav0jXVEb4OvlpHvr+3Gp4+4xBBerojO0wit2cpsj+8pxPmL1iv
+         YKeo4SmxniXOUSrAbZ/aUF+xjetRYBp63XTxsPHcuNBleg2JDxNTAj84rS4BZKfClYPY
+         YaYCiBPlt5HaCUB1j6iY1oN3m8r2Mi8zmimLw6wiL7SdJC/oJqoOw/Ub5xMSmy42HtiJ
+         tpGjuzlrYyHm51JGGjzKI1oi1mE0cJdtpiVb/ryiKEksH2N66PtXwfHeORChoaj4raal
+         6tDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfAsVBH+Do5Cl4aPOXprQo8gTRUYfb2k6v/b4h3g11l5OyxXbYhIw60Tp7xrepp1oqrgVOyfA0@lists.linux.dev
+X-Gm-Message-State: AOJu0YyMZzZut08bDkaB3IYDXs4lJ5QnljtvqIGRanBXfbiFjXRQbYXk
+	BTXDmlkeFLOiQmn8QR4gbXekZE9nWtHfgn0dFmr3gZZeoQpBdspN2PjpGDFhXE24f9zzA9gYqz1
+	NnYYTnxJVDVgGGVs4HnqMQtjvi1k=
+X-Gm-Gg: ASbGncve4joZvBZFlXW1cDLRtNpp9mP2MNjvOEDMvVWYPp2qgotdfktPeqIbOalMPbx
+	yodJu+aWm31gdtjQLeypuZzwFLRv8kp0LFwD4GgCuuY8KcOEcG3iUtTEP8RkWIca7g8rNPl+9Gf
+	ims3SqZ2RzGFYwmlHFIULEgg==
+X-Google-Smtp-Source: AGHT+IH3zMwiQZZF0MrooAxLxss2WjlELR7XDWfoKS8xT5Swj4kCI9USG4kreGACDD6msII1YqtOpACzPgTOIcNg6iQ=
+X-Received: by 2002:a17:90b:1b0a:b0:306:e6ec:dc82 with SMTP id
+ 98e67ed59e1d1-308273f3c3amr5931863a91.6.1744636979074; Mon, 14 Apr 2025
+ 06:22:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <20250413005650.1745894-1-ojeda@kernel.org> <CAH5fLgiF0kZdOYaQi18_LTNx6Onq-5PBomA=bwS0m0z+C0wtvg@mail.gmail.com>
 In-Reply-To: <CAH5fLgiF0kZdOYaQi18_LTNx6Onq-5PBomA=bwS0m0z+C0wtvg@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 14 Apr 2025 15:22:44 +0200
+X-Gm-Features: ATxdqUGEpSrfVFnwvmwXXDxiUjWRT_U8CHO5cnUITp-hEVmYDeKZxvObhfYQwF0
+Message-ID: <CANiq72ngfTJ5PTYaJOOQ2NedERrLYzA62hL8Fgw5C4QkuZ2R-Q@mail.gmail.com>
+Subject: Re: [PATCH] rust: add C FFI types to the prelude
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 14, 2025 at 10:46:46AM +0200, Alice Ryhl wrote:
-> On Sun, Apr 13, 2025 at 2:57 AM Miguel Ojeda <ojeda@kernel.org> wrote:
-> >
-> > Rust kernel code is supposed to use the custom mapping of C FFI types,
-> > i.e. those from the `ffi` crate, rather than the ones coming from `core`.
-> >
-> > Thus, to minimize mistakes and to simplify the code everywhere, just
-> > provide them in the `kernel` prelude and ask in the Coding Guidelines
-> > to use them directly, i.e. as a single segment path.
-> >
-> > After this lands, we can start cleaning up the existing users.
-> >
-> > Ideally, we would use something like Clippy's `disallowed-types` to
-> > prevent the use of the `core` ones, but that one sees through aliases.
-> >
-> > Link: https://lore.kernel.org/rust-for-linux/CANiq72kc4gzfieD-FjuWfELRDXXD2vLgPv4wqk3nt4pjdPQ=qg@mail.gmail.com/
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> 
-> Yes please!
-> 
-> >  Documentation/rust/coding-guidelines.rst | 17 +++++++++++++++++
-> >  rust/kernel/prelude.rs                   |  5 +++++
-> >  2 files changed, 22 insertions(+)
-> >
-> > diff --git a/Documentation/rust/coding-guidelines.rst b/Documentation/rust/coding-guidelines.rst
-> > index 27f2a7bb5a4a..d0bf0b3a058a 100644
-> > --- a/Documentation/rust/coding-guidelines.rst
-> > +++ b/Documentation/rust/coding-guidelines.rst
-> > @@ -191,6 +191,23 @@ or:
-> >         /// [`struct mutex`]: srctree/include/linux/mutex.h
-> >
-> >
-> > +C FFI types
-> > +-----------
-> > +
-> > +Rust kernel code does not use the C FFI types (such as ``c_char``) from
-> > +``core::ffi::*``. Instead, a custom mapping that matches properly the C types
-> > +used in the kernel is provided in the prelude, i.e. ``kernel::prelude::*``.
-> > +
-> > +These types (aliases) should generally be referred directly by their identifier,
-> > +i.e. as a single segment path. For instance:
-> > +
-> > +.. code-block:: rust
-> > +
-> > +       fn f(p: *const c_char) -> c_int {
-> > +           // ...
-> > +       }
-> 
+On Mon, Apr 14, 2025 at 10:47=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
+>
 > I wonder if it would make more sense to rephrase this section to first
 > say that rfl has type aliases for the C integer types called c_int and
 > so on, then mention that they are available in the prelude, and then
@@ -107,6 +87,38 @@ On Mon, Apr 14, 2025 at 10:46:46AM +0200, Alice Ryhl wrote:
 > types, rather than technical details about how they are defined, is
 > more relevant for a reader who is just looking for coding guidelines.
 
-I think that's a good suggestion. With that,
+Hmm... I see what you mean. In other places in the document, we start
+comparing with userspace Rust in order to establish a bit of context.
+But, more importantly, in this particular guideline I think it is
+quite important to say "do not use the usual ones", because they are
+actually different types, i.e. it is not just a style thing.
 
-	Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+I have thought a couple times about perhaps changing the overall style
+of the document to have a 1-liner short summary on each guideline --
+some books do something like that consistently. And perhaps an
+example, before a longer description. So something like the following,
+which is closer to what you are suggesting:
+
+    To refer to C types, use the FFI types (aliases) available from
+the `kernel` prelude, e.g. ``c_int``.
+
+    For instance:
+
+        ...
+
+    Refer to them with a single segment path: e.g. ``c_char`` instead
+of ``ffi::c_char`` or ``kernel::ffi::c_char``.
+
+    Do not use the `core::ffi::*` types -- they are different and some
+do not map to the correct C type.
+
+But even with this style, I think it is important putting the last
+sentence in the "1-liner summary". Otherwise, someone may skip the
+guideline thinking "oh, OK, it is just a style thing about using just
+small paths, I will fix it later", without realizing they are actually
+different sets of types unless they read the entire section, no?
+
+Thanks!
+
+Cheers,
+Miguel
