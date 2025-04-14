@@ -1,159 +1,190 @@
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2089.outbound.protection.outlook.com [40.107.212.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78502280A4D;
-	Mon, 14 Apr 2025 18:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.89
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744653865; cv=fail; b=frXEk+cHmrSSItZwVPdS44GyQe0Udm3nCFhE9bJpFF0pbWT7UdfRwNcvc94dORvXcwoXWUvrDz4G5fwfNMu5FXJYy9dCiwN6Awl3a46HH2W/QBRcM/VYs9k3hYo+Tl7ndxGceZ7qSKHtX5FDxf1p4U1VpfTvn0C/zA5QP8c3ZwA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744653865; c=relaxed/simple;
-	bh=AI60pU4M9G6DR9KCWLfs4fabDmdwrFYuxdk5LvZdJMc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TrimMkPB77RuaeWt0tASQYela0E2E9aRHR7raZku942o2wvq6nK/MArTTFBBY354OaTR9qz0JLBvbenbaPo/dHrlNJ8ElvyQ7vprVvQFXOQkfMWdrOfmc+kt95wLt1KH3PQpzAVRAkgG8h8fR5gEo6jeT8yB9A7adruFQG7p10g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Y/jlWcoe; arc=fail smtp.client-ip=40.107.212.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CF91624D2
+	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 19:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744657339; cv=none; b=EbwZlra52eoQtvaMYQrIDAm9fS+vgWDfBBoAwyenIi5gJN+c4NNn7R0+Hp/j64wt6mKDa3eIAcrhM9wDH7cpQBlaZO539io6VBbHL4ePL04V4b4q54PRAaAj8/s3KlZwr/Ox2gdoxx40tLSZOA5qdU8jmirdHjW6E6W8YxtKr7w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744657339; c=relaxed/simple;
+	bh=lmVL5iXx8UtM9yGScibg2MyfyJuub7bM6yPpWGeTZS0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F6PBkcOifVmHi9eHSm7tFZLJMoSXDNumqbCRLmeOvEgVn1IAGY64BX4xsoWbjd4nNeb5WqhrxvCbkAAfnH4qfGa8CMUi4dXGRwBjBmHrGbqxJPXCSiclbSgbb4SPCmCYvWgLLNDdadWQzPbwTRTu0bJSDODa/RhZXdcBYpjhlos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l3gynlWL; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Y/jlWcoe"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jWIHcFKjTum4fMeFcgBqUEUrBgjYFBKnk/D+FwiBHLMCOoLc8wtprfEh8h2g00KRY5ywIo+h/G3i8g+gxFz2D6yHYWqK1zfIUOSELxg9YkwhDDu0J/FpxjNpgNSGNSb2nlAJPwITbIsLTI8qX/WOMEARGKaWPHvJMoJTJqmzWr/aT3jE0zxad3kHpqzC1wARXJ6e3KS2WXGAhfOIopY034j5eWSFKEzhuJk2i5l0tu8SisWJoLWW5d/CQT62utbpxsYeZVt3KOyCVeBG+ElqaWn60hOZfAOqjFfajweB2GLGpLjxxZuNihloTLpzLWGBWpnKfb3BgkOcc+Oey6/kNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d1KO5KPGeFnF5imdzk3sXi/swkvTqWyhJAXDTq4weYk=;
- b=uTL5uiuLlEsqUx/Xs1C1qEZkH3qiQGWQTU6RFIkUvMfTEZu8sN0mhqOWPrzQNjeFInKqamGi9UrbFhSTxc4dK8hin8DveAFKrW8ZjvoZP24PbVcqDfS7rMHJfY3wZfDptw44Q+V/vIwC+nH/y1RriSOWKNw1oRe04S+lghXAriYhYjRgxmZHW001gxoH/IP+jKgiMNLWxsBnruKFgE/tMq7l3B9jBugl35LWl31IJ4hNcDB4diOSBzR7iO+orCn1KNZIezAkcEhWRsVBCtE09M801CIemTvENxq6j0Ub9uKXcAmUJuVMOc04O3ffCjUiou1bgkhce8BsWLDCnMkh/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=oracle.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d1KO5KPGeFnF5imdzk3sXi/swkvTqWyhJAXDTq4weYk=;
- b=Y/jlWcoeKUFga58Az7zk5kNxGBTBRiC9rqfbUhtmxrk6WLc9OX14sTw13nI6jvqa/ILtakxDugBLWMpsWwRMAnNzRZtg1RF0z4aFVCJesRTvWIlKdkjIkt/lv2hMr39lNk+68NrApIDXuZJuFxdz2Y05BWWoeobI79BuKg5zV4gQhhyDCkBOg5XHXV1vOVPqdIfFAU+CFSxD03RCsnLlI1HvGey8GgV/+XOdpT02WK3QkM6F37b1dsBXhRwWEswD8LmjAC1WNP4U+B5ZvyekrXAy4cn3V6gS/3NzapV/gNCoejadE+skxiSkzGnF37QnhgVqcM+pw6Nl6mWQoQC4dg==
-Received: from MW3PR05CA0015.namprd05.prod.outlook.com (2603:10b6:303:2b::20)
- by SN7PR12MB7249.namprd12.prod.outlook.com (2603:10b6:806:2a9::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.30; Mon, 14 Apr
- 2025 18:04:19 +0000
-Received: from MWH0EPF000971E6.namprd02.prod.outlook.com
- (2603:10b6:303:2b:cafe::24) by MW3PR05CA0015.outlook.office365.com
- (2603:10b6:303:2b::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.15 via Frontend Transport; Mon,
- 14 Apr 2025 18:04:18 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MWH0EPF000971E6.mail.protection.outlook.com (10.167.243.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8655.12 via Frontend Transport; Mon, 14 Apr 2025 18:04:18 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 14 Apr
- 2025 11:04:02 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 14 Apr
- 2025 11:04:01 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 14 Apr 2025 11:04:00 -0700
-Date: Mon, 14 Apr 2025 11:03:58 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: ALOK TIWARI <alok.a.tiwari@oracle.com>
-CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
-	<will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-	<shuah@kernel.org>, <praan@google.com>, <nathan@kernel.org>,
-	<peterz@infradead.org>, <yi.l.liu@intel.com>, <jsnitsel@redhat.com>,
-	<mshavit@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
-	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v1 03/16] iommu: Add iommu_copy_struct_to_user helper
-Message-ID: <Z/1ODlyv7CXpMRXd@Asurada-Nvidia>
-References: <cover.1744353300.git.nicolinc@nvidia.com>
- <65b51f57d08069c9da909586faf4e73d247a54f5.1744353300.git.nicolinc@nvidia.com>
- <480536af-6830-43ce-a327-adbd13dc3f1d@oracle.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l3gynlWL"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ac25520a289so806000366b.3
+        for <patches@lists.linux.dev>; Mon, 14 Apr 2025 12:02:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744657336; x=1745262136; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6LY3Z65IQjRhzzZTzIq8s4BIA0G+Zu9nAcODU8uzb1U=;
+        b=l3gynlWLLcjJhRv9G9CEz19hPgOU/nezrE3XBVzTD4no5LjZyQp0KTd3jM6n2vJYWw
+         kyW7DdXPHIfgbv0VoqttfGE/kpYb/bmCA7AwsNol9sxN9OOLMLtji2BL+Jn9JYghWJlF
+         OJJXA784JR/E6D5sZHOtuhYBCk24dpt4Yu1FchJnM66k9tU9+TK1uhgO+ZahrpDxGwW2
+         7NO1kAxOCq4/ukIFcdLITaR4l4YqccDewFevqfWKKCbQtwG5cYhJDHhBRfEZzFZ7+uU6
+         0MmLsUtmuLGl1jdBfgbLXs7XQjXggCwbdW5SQP+BpadYR+tWfdrJ3XqzVcTVCwnhfEVn
+         9Y2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744657336; x=1745262136;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6LY3Z65IQjRhzzZTzIq8s4BIA0G+Zu9nAcODU8uzb1U=;
+        b=dc/nEJRje80Ag0N90E+1hRAceBElgWCnIZX08lp/85ZKmB80wS/b2E9fN3g0gQHSLY
+         mI1vu4Msg18tYoKB/Tgm8GH64xWLvJ/AgEnV0vpHen5BkPFbb724I95M4KDaPfEw6qiF
+         WGariS4+KU5MWAwXTs4ZEICO44TuXqhXtiK31OYoJRJESPvAyWE5drxxyOKj/3+mp/bP
+         znr6RcJoGSlwEAQB4BtoxF3I1Xwmr+6ISWe1K/3WU9C6afaEqgM948dqP6PcIUfEiFFO
+         HO7ZDRi9iZzVGYKaeYDkl0H3WQnoFPxafbqWDL7tj/ly7vRlwnv48A63CoQmuWEh2Zk8
+         ROpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVWd7vlRHus2omQy9Ss+dnFy5xfuPKp2dIfPCskZQp45CLtPmDnTbXbE/DECavl91jRMx8Ead5O@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz94MlGoN7T4PRuLbSmUoJSrRimfiUPUmU1ndMebzmtHtlDvAh1
+	NgMRsK4EqqZYD6SLhDK+iYGDuEwNNIx25q1iTPdJo1hxT8l/JDu5
+X-Gm-Gg: ASbGncvCHwkNYbyN6p2rifA2QXr6fgEQQilhVqzWNcyNGBxD5GTY4yMBWdBDXD5S6ZR
+	6S2cGYIMCtP6rVaBDv+gtEx2+AKJk/4mR3roM3kFGqJdDO4EHLCzJCdeeMHzGsqq173ivJBHpVR
+	RF0VKc3uZiC5lcYCFryeO8RbJ20y0OmpB1NAUF5AA08V/OCRH8hqV9CtEwt4qFR8I5+yXUmWaYr
+	mn8Gh+BKvedJBe2BIxdckMUHl9m31b8GVlaedWYpufZZGidOC/xtKXr4eCS2IY0EBc5OxheuG/R
+	cDufMhQnDoQ5YgKj4AfxTHl5s1I9H/zZWKwAjgAiL/ov+xNrTx/IP8T2MnQ6pV5nqHO0rKkB5yb
+	op3PKlcV9
+X-Google-Smtp-Source: AGHT+IFWkE1Glhu6cGY2ezqU0g1m+eeErpXkykD7wcWilXB3BpQqNt8TFncACH+ooaDNRap/v9EI9A==
+X-Received: by 2002:a17:907:7f14:b0:ac7:edfb:5210 with SMTP id a640c23a62f3a-acad3496114mr1183905866b.20.1744657335667;
+        Mon, 14 Apr 2025 12:02:15 -0700 (PDT)
+Received: from eldamar.lan (c-82-192-244-13.customer.ggaweb.ch. [82.192.244.13])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1ce7fdcsm969991366b.176.2025.04.14.12.02.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Apr 2025 12:02:15 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id 2D6C5BE2DE0; Mon, 14 Apr 2025 21:02:14 +0200 (CEST)
+Date: Mon, 14 Apr 2025 21:02:14 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jan Beulich <jbeulich@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 051/198] Xen/swiotlb: mark xen_swiotlb_fixup() __init
+Message-ID: <Z_1btrSDlzd-ac20@eldamar.lan>
+References: <20250325122156.633329074@linuxfoundation.org>
+ <20250325122157.975417185@linuxfoundation.org>
+ <20250407181218.GA737271@ax162>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <480536af-6830-43ce-a327-adbd13dc3f1d@oracle.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E6:EE_|SN7PR12MB7249:EE_
-X-MS-Office365-Filtering-Correlation-Id: 983e4fb2-51e7-4adf-afa7-08dd7b7ec6de
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|1800799024|376014|36860700013|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?29R8euF/Gq+7yn6NDddypLmokaD6zjXGre5pBiOMVjX5a0wah264qfxg2wYQ?=
- =?us-ascii?Q?QNy7Urvvqbo9YelkHgSG3AcTf9YOHjN+LUwEVTkI9YEXCNp4UkR4yzMC0DYL?=
- =?us-ascii?Q?QFMih211paC8VPNSfSQ9S/cTSdrDXxW8wAcHMncfwIul2XuTjhLMig/o64jG?=
- =?us-ascii?Q?nfrXtBo1rGHiQFrDFNToKjHM2xT93SRtgzYn8leBXFPOS1v1P97NhByVvftW?=
- =?us-ascii?Q?vw2U7FpuL9d3FwMBfTIRo5msKY4LKpIoB/RmvcZaS3u+ed2D4O/qJVpyPOCt?=
- =?us-ascii?Q?CCeuIhNpqCB1kGZdvDYlv89gSKFYxn1etApoP/O0vHyqwTVMP5yoB/+LGp6o?=
- =?us-ascii?Q?qMSH3oqHftTcoFQ0MKIVD7TWVuegr9HOObEavvLnlzuBgLF1bGRsbUaOXjI3?=
- =?us-ascii?Q?amynTqaKzAYQt0bkrBcSIr35rzeu4NkW7PVHUyopEGHv9uBmHtOOiXpRHIYf?=
- =?us-ascii?Q?Pt9gzF9rDh1oiYlCeJ354Vd6Vr2N8DZ3lFlyfaYof89HXfD+mjajad0u57eq?=
- =?us-ascii?Q?mR03Z6u2rn5xnx00md7VZG/6NQT9su9YTT0eUTWeGFK9jtdUX6FndimZeO46?=
- =?us-ascii?Q?0+aPU3sn+OkXPKu80VIJWQ61e4GkwCBSggs0Bn6hqsDRww7oOcg0qDrp5+rq?=
- =?us-ascii?Q?cWtXqHF/b753plwDLlQAr7RkGqix3+1K1wkql8RogfEBCk2SNO/R3kYcJzyg?=
- =?us-ascii?Q?cr/G9ck7XlO58kUqsJQ69opMnF6/vPHNphBTYuMlVo5PbxsxRheTEWqJAun3?=
- =?us-ascii?Q?rDV2oVUwuUktHkMDlUVrjHd8NJwohdCumqxXOsWdNuGNJ2uE7TZrc6RipeVS?=
- =?us-ascii?Q?AhlS3f66sfghPwF3zJGIb1d1EH2/iyJU0U9mBkGRDh3YQAIdYvHpXeDYi7oS?=
- =?us-ascii?Q?TJVbgx1JQUosciFPgRoA4ncqyVXiq2jygwbw4RIUWa/PIp/VPtl/rFBbVMZe?=
- =?us-ascii?Q?p2gjDurUyoHCdSlcmP84OSqozUyeEtGTT0aOiaBYOZ9/KtyV8Jbv41/g6pYz?=
- =?us-ascii?Q?dn2Dqd9ISrnm+OLXdhNMuWFpm1wHXw9q2QAL6/b+RpkuDtV44HkNNivV3uQC?=
- =?us-ascii?Q?Q/C2186Fd4UtxQwhxNJYr0kyDpjUTmlMtrouI1p+hYoPl/Gomz7lDdQR9vqN?=
- =?us-ascii?Q?+9oS1eeY/sCmORl9U7QMi7V+RTdICs1EJrBMZbF6BtkaaQOmZALnsDUgnXOy?=
- =?us-ascii?Q?LJ4HBI9G+7l2IXRtv9g4eO/+UpNbDBtLO3qycV42LfEbmklvdLSdIfBjMr9X?=
- =?us-ascii?Q?FdI2HyfHL3xKjGqSzS3EACLOdf/zRcoH1tNIfwySvdSNAEFt9/eGO0GPtiGt?=
- =?us-ascii?Q?oD+TD2te3auW8Q7LlD4qukefhww/SczxfM84mcUVWskI10BW6FkkKwLxXE34?=
- =?us-ascii?Q?XDvGrmxyXLB0Wpz8KcIQxkIHBbzGU2L8WL4Sew4XnoN1kdbTuDo6BanNefwU?=
- =?us-ascii?Q?k4jrOLCLQKFxaKIFRN+v2wxBJug4UugndBqMuMfsRP4MBVPyf1L2u8OpoQvR?=
- =?us-ascii?Q?rk5AG4ZypeA25N7j/23dnG+xRcDd7/1yyNbO?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Apr 2025 18:04:18.7494
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 983e4fb2-51e7-4adf-afa7-08dd7b7ec6de
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000971E6.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7249
+In-Reply-To: <20250407181218.GA737271@ax162>
 
-On Fri, Apr 11, 2025 at 06:05:30PM +0530, ALOK TIWARI wrote:
-> On 11-04-2025 12:07, Nicolin Chen wrote:
-> > + * iommu_copy_struct_to_user - Report iommu driver specific user space data
-> > + * @user_data: Pointer to a struct iommu_user_data for user space data location
-> > + * @ksrc: Pointer to an iommu driver specific user data that is defined in
-> > + *        include/uapi/linux/iommufd.h
-> > + * @data_type: The data type of the @ksrc. Must match with @user_data->type
-> > + * @min_last: The last memember of the data structure @ksrc points in the
+Hi,
+
+On Mon, Apr 07, 2025 at 11:12:18AM -0700, Nathan Chancellor wrote:
+> Hi Greg,
 > 
-> old typo  memember -> member
+> On Tue, Mar 25, 2025 at 08:20:13AM -0400, Greg Kroah-Hartman wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Jan Beulich <jbeulich@suse.com>
+> > 
+> > [ Upstream commit 75ad02318af2e4ae669e26a79f001bd5e1f97472 ]
+> > 
+> > It's sole user (pci_xen_swiotlb_init()) is __init, too.
+> 
+> This is not true in 6.1 though... which results in:
+> 
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: pci_xen_swiotlb_init_late (section: .text) -> xen_swiotlb_fixup (section: .init.text)
+> 
+> Perhaps commit f9a38ea5172a ("x86: always initialize xen-swiotlb when
+> xen-pcifront is enabling") and its dependency 358cd9afd069 ("xen/pci:
+> add flag for PCI passthrough being possible") should be added (I did not
+> test if they applied cleanly though) but it seems like a revert would be
+> more appropriate. I don't see this change as a dependency of another one
+> and the reason it exists upstream does not apply in this tree so why
+> should it be here?
 
-Fixed for this one.
+Might be following bugreport we got in Debian be related?
+https://bugs.debian.org/1103153
 
-And yea, we need a patch fixing iommu_copy_struct_from_user() too.
+The kernel log contains:
 
-Thanks
-Nicolin
+[    1.370662] pcifront pci-0: Installing PCI frontend
+[    1.370674] software IO TLB: area num 4.
+[    1.370853] kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+[    1.370861] BUG: unable to handle page fault for address: ffffffff830c7c05
+[    1.370865] #PF: supervisor instruction fetch in kernel mode
+[    1.370869] #PF: error_code(0x0011) - permissions violation
+[    1.370873] PGD 2a15067 P4D 2a15067 PUD 2a16067 PMD 4a1e067 PTE 80100000030c7067
+[    1.370879] Oops: 0011 [#1] PREEMPT SMP NOPTI
+[    1.370884] CPU: 3 PID: 42 Comm: xenwatch Not tainted 6.1.0-33-amd64 #1  Debian 6.1.133-1
+[    1.370889] RIP: e030:xen_swiotlb_fixup+0x0/0xb7
+[    1.370895] Code: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc <cc> cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc
+[    1.370904] RSP: e02b:ffffc90040177dd8 EFLAGS: 00010286
+[    1.370907] RAX: ffffffff830c7c05 RBX: ffff88810a800000 RCX: 0000000000000001
+[    1.370912] RDX: 000000000000000a RSI: 0000000000000800 RDI: ffff88810a800000
+[    1.370916] RBP: 0000000000000800 R08: 000000000000002a R09: 0000000000000000
+[    1.370920] R10: 000000000000000a R11: 0000000000000000 R12: 0000000000000001
+[    1.370923] R13: 0000000000002cc0 R14: 0000000000000002 R15: 000000000000000a
+[    1.370931] FS:  0000000000000000(0000) GS:ffff888277780000(0000) knlGS:0000000000000000
+[    1.370936] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    1.370940] CR2: ffffffff830c7c05 CR3: 0000000101e88000 CR4: 0000000000050660
+[    1.370946] Call Trace:
+[    1.370950]  <TASK>
+[    1.370952]  ? __die_body.cold+0x1a/0x1f
+[    1.370958]  ? platform_driver_init+0x1a/0x1a
+[    1.370963]  ? page_fault_oops+0xd2/0x2b0
+[    1.370967]  ? search_module_extables+0x15/0x60
+[    1.370973]  ? platform_driver_init+0x1a/0x1a
+[    1.370976]  ? exc_page_fault+0xca/0x170
+[    1.370982]  ? asm_exc_page_fault+0x22/0x30
+[    1.370986]  ? platform_driver_init+0x1a/0x1a
+[    1.370989]  ? platform_driver_init+0x1a/0x1a
+[    1.370993]  ? __get_free_pages+0xd/0x40
+[    1.370997]  swiotlb_init_late+0xd5/0x2b0
+[    1.371001]  ? platform_driver_init+0x1a/0x1a
+[    1.371004]  ? xenbus_dev_request_and_reply+0x80/0x80
+[    1.371009]  pci_xen_swiotlb_init_late+0x4c/0x60
+[    1.371015]  pcifront_connect_and_init_dma.cold+0x42/0x66 [xen_pcifront]
+[    1.371021]  pcifront_backend_changed+0x274/0x397 [xen_pcifront]
+[    1.371028]  ? xenbus_dev_request_and_reply+0x80/0x80
+[    1.371031]  ? xenbus_read_driver_state+0x41/0x70
+[    1.371035]  ? xenbus_otherend_changed+0x5b/0x110
+[    1.371039]  xenwatch_thread+0x8f/0x1b0
+[    1.371042]  ? cpuusage_read+0x10/0x10
+[    1.371046]  kthread+0xd7/0x100
+[    1.371051]  ? kthread_complete_and_exit+0x20/0x20
+[    1.371055]  ret_from_fork+0x1f/0x30
+[    1.371060]  </TASK>
+[    1.371062] Modules linked in: crct10dif_pclmul crct10dif_common crc32_pclmul crc32c_intel xen_pcifront(+)
+[    1.371070] CR2: ffffffff830c7c05
+[    1.371072] ---[ end trace 0000000000000000 ]---
+[    1.371076] RIP: e030:xen_swiotlb_fixup+0x0/0xb7
+[    1.371080] Code: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc <cc> cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc
+[    1.371088] RSP: e02b:ffffc90040177dd8 EFLAGS: 00010286
+[    1.371092] RAX: ffffffff830c7c05 RBX: ffff88810a800000 RCX: 0000000000000001
+[    1.371096] RDX: 000000000000000a RSI: 0000000000000800 RDI: ffff88810a800000
+[    1.371100] RBP: 0000000000000800 R08: 000000000000002a R09: 0000000000000000
+[    1.371104] R10: 000000000000000a R11: 0000000000000000 R12: 0000000000000001
+[    1.371107] R13: 0000000000002cc0 R14: 0000000000000002 R15: 000000000000000a
+[    1.371114] FS:  0000000000000000(0000) GS:ffff888277780000(0000) knlGS:0000000000000000
+[    1.371118] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    1.371122] CR2: ffffffff830c7c05 CR3: 0000000101e88000 CR4: 0000000000050660
+[    1.371127] note: xenwatch[42] exited with irqs disabled
+[    1.377029] xen_netfront: Initialising Xen virtual ethernet driver
+[    6.464888] xenbus_probe_frontend: Waiting for devices to initialise: 25s...
+[    6.472956] xenbus_probe_frontend: Waiting for devices to initialise:
+[    6.472992] xenbus_probe_frontend: Waiting for devices to initialise:
+
+And we have other reports of (KVM) VMs with pci-passthrough devices
+not booting up.
+
+Regards,
+Salvatore
