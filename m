@@ -1,77 +1,97 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFD827B513
-	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 14:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7CE17A58F
+	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 15:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744641755; cv=none; b=WkpCHx/fbNl22wh6V0tU2RL0zs2qj0oROtnOW/7JjehPmr2yBZAJI15omI7xEAMEwfZ/f5EdBX9KFjq5MvA+nhAGhWQW0Ua2uE0/1bVzwOaqVa0Xwe8U+W3MMFaMgR1L2Y3sfwK/AYrREgNXKljkMBwprbilFt/r9LUSkpDzpZM=
+	t=1744643322; cv=none; b=d6aWqYaSg5W8qWvcEjCkRo3cj6ugavdm1sm3j2TTpbGiGbkoJRlDyR7KdvYETL9EIXeLbtC3eqvBRHH4u9Q2shfhV9WFO/oZEQ0+78pTNoWcN1FwhrgN+yS8GAs+yuHUEFMhYRTyn4L9QxclrEo/74X0QZIWY1h79QzF+T8I/xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744641755; c=relaxed/simple;
-	bh=djtPIricfHsVI23PycDI/GBe8v9Mj3BQR5+LxJFEu9w=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Yy8Szjo28KoORXyfC4cpiwIluJy9vLuQ+/4d9gCFKugRkb8FJZaTBjxDQZj9/EAkJ27z0caSiiHurNPlnk3vRcN/owEBSkN/1oCqwaHzEvKf8CeMdPc5xQ9I16e4ttQSDfofzhm8ld+xgk7sDCavftahLcSnszYSbhMPpP9Eqa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QtlytO3N; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1744643322; c=relaxed/simple;
+	bh=DK4Qu0qldN+pzv3ZrtGi5/PL9yAuBfEn1jbExHHQuoI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=plbL/oweM9JFFqm8WsbTxaDJOyipkM9CBSQE5bPjhAMNpBCvw+F02C3buNSyFkNMtvkWYNuTPLgB1g33PElBK2WnAse9uXI11/iBFV3egqZBy5Zq5hz6pwU0HE4a5TKWWtQ1mJ/u+HpUPLaBYFo8oABJTmOVNb5PRnBLOKPXSTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lb+sTH4P; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QtlytO3N"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5f3f04b5dbcso3000663a12.1
-        for <patches@lists.linux.dev>; Mon, 14 Apr 2025 07:42:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lb+sTH4P"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b07698318ebso117772a12.2
+        for <patches@lists.linux.dev>; Mon, 14 Apr 2025 08:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744641751; x=1745246551; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=djtPIricfHsVI23PycDI/GBe8v9Mj3BQR5+LxJFEu9w=;
-        b=QtlytO3NdkucWHzyZi7k1dmNvBXjsr6ngLwEKT4LeL+BxohNKZw5eQV4PRpbMEeuYE
-         6Ca67om4bPm32n0Eg79qRuJp+iQbwG5TXsKdpQ6vvhARtrtFvGK8Jy06RanbsxpwLtuh
-         WsGzOnPNLfYCUPAkcos3NIP5ClPOfv5x0Igm3SPupgH1jXd/RcZUuiJovBXiXRcaocbM
-         +2iWRN5b7tNErH8192yps9Sx3cWm/gGMp65sXwb5juJFBfOj7jh7frpG+5HKZXQr0mgF
-         6UkreF9eFgyQZw4vm3aZRG+Se6Rp+HgHO05PM5NC+bp1gILNBCGYf6HPSVoMBDu+tF9T
-         85Uw==
+        d=gmail.com; s=20230601; t=1744643320; x=1745248120; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DK4Qu0qldN+pzv3ZrtGi5/PL9yAuBfEn1jbExHHQuoI=;
+        b=lb+sTH4PAq3nOOAFj/rahSOryJTwezj2dZ9hvgrGUA5SrHCSWUGLBlC1ebxJHYXZAL
+         /wZA/LEzQJeJ/KzF1N2PLkcF7KZJs90n95CSfiOKFiVzO+L290x6j0+nl3BoLbjKAGk9
+         aU49kThPNOT3OPNIi9CHKKRrQXLEOLckKvPIVKbFrZ3Ot7lS9FLL6QIiPbe3rEwzcPdS
+         8avYlY0/oYLtxbQhQhR8RudDoutoHqK69yvYCexJNVCYHEKGZnOHZNrvX/2rVTZTvlDW
+         acAjEDrTAg2YGTnPlOAGBP6RKZXPaj8JwHH8v/DeRF7ohYuVoNZ7tBINfA0EV/z/2KTj
+         wnsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744641751; x=1745246551;
-        h=cc:to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=djtPIricfHsVI23PycDI/GBe8v9Mj3BQR5+LxJFEu9w=;
-        b=DHUr+uf+J0TYGACBC7Pv/crYNKxtPo8c7piGjuolVkJSPFkiTv8FuKLdtawR24pgsr
-         8txVTok1jOLELGeec8PcbBbfn5VImyYlaAiEu6AsfgLa+IrfYZn4If9jiXdQFLRVm3Ea
-         ZLvZeXUTuS2m/fVtzI2c7+fddibjadwZPGIfv+8DJj1LgB+lABe9HjH0EuZrNcIgIhYB
-         Z6z2Dmfn3L9ebcR/+57aCLRAzI2shUbw0c2dpA65sXjIFOykKS1lVToHl+hubkGihQK1
-         VX61cdiqjpdopWE5ZLTBu2Ht0oQJfcRnakOyZ673Tp0EtDPwzUTrPTDw0qnwcj+6KZ40
-         SMqQ==
-X-Gm-Message-State: AOJu0YzFk2eY72VF1s4gWj+0yKcyyXSkdysMoQOuveXWEYyrhaDfUGbA
-	96wqAdsmIBBEgBKE+GRwb408gMPtaCrFN6LQ76eEUX5yi8+Rwe2F0khXr772VwaiHpHpVlTqUiC
-	xFGDrrdScrhfKozCaKlNroVUQVjw=
-X-Gm-Gg: ASbGncuwoejlKSgHvLimtp/JhYOiSyPVr4fX0xLKQqOT6/cqtUp6G7FuJgs739y9pXr
-	3C10CEhlceUJcPOi0SoPMHoerOD/4a+f5MZMm/FWpVFeKDgw3HuItXUDulw9sDfiSunSlpiB2d7
-	I0lBcKta1VvbPCCynxvmCYSA==
-X-Google-Smtp-Source: AGHT+IFsEcGGKysAt2vnofSURYifpIKNzH9MB3cjbD3WlRr9gBUyEtpSG8hJvd0FN0uCbpU39LWRCsSE6cXDMGEfYF0=
-X-Received: by 2002:a05:6402:845:b0:5ee:486:9d4b with SMTP id
- 4fb4d7f45d1cf-5f37014465fmr10040923a12.34.1744641751210; Mon, 14 Apr 2025
- 07:42:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744643320; x=1745248120;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DK4Qu0qldN+pzv3ZrtGi5/PL9yAuBfEn1jbExHHQuoI=;
+        b=ETKWLj4NfUyGTF3pCLtoBofWEoFK3wfVa5cakuEAfhMOcoXR9fxPuy+XmaqQFvIN3s
+         QQxPfUGpXDGPLax4IIRpK/ihilKb6kDaseaKJXQ6Po1BwTPGsUtQ+dLQx3olozm/ew6u
+         Ld3tLbncDSA4JowWMapqMFZQqgen5DRnjzeHzv21WgZ5C1KnCJYY9Cx9aIVnCwXJ+BWS
+         8d3zztKgceFbopRTC/vACF4Xdfsrz9+NW0rutRQjxbNfWFkY/NCoC8Vtwrf4zburw2Xx
+         kUF12QQ7DnBQleO2xe9MBDFGlpNGPMo2ncVvNlJR5+I3yMeUhJ4WBrkRpECa77R4/Mhj
+         HPhw==
+X-Forwarded-Encrypted: i=1; AJvYcCXAaKoxbiuI+Ok3Koxmim5RuH9TgyGz0W34sLGXNI6NU1Zo784utGsGMCcmY2IhAM6BiHA5Gddb@lists.linux.dev
+X-Gm-Message-State: AOJu0YyQ4STPoTzgCRoY8P4V/n9rpfw1BRABG76+32He5cu83zY8CYul
+	AecL+4xWx1+viE4P+lqxr7mscqogdnZThrw+6L1KL4b3LRq1sqAnLy8T9TuwNiKX5Kybxbeb2EP
+	Vbt+gBGIbxCDFC0VF+jMBku2EL+M=
+X-Gm-Gg: ASbGncu4WYFUd+ZpSUml2pJnURHEsh7S5fiOACD/BKIgn7kTqlm+21Pwc+QYe/BJQuU
+	vrCheOK1/F0Waw1GvA/ViJphL0kjujJUJy28U/g2RAIIaXXkWTO6hXRrLVSkBUhulzAa/Yzk4PS
+	WLxg78Q03MgqBnZTGb+0NayQ==
+X-Google-Smtp-Source: AGHT+IF/3Sug4cH71Iy1yUd34jEFWmX1uxiWoMXWWYEYLAEU8PckJu1uG0PfMyeFYO7FJKOwZzJ7L3pUGCudlaYn1Cw=
+X-Received: by 2002:a17:90b:384b:b0:306:b6ae:4d7a with SMTP id
+ 98e67ed59e1d1-3084e75753emr84387a91.3.1744643319470; Mon, 14 Apr 2025
+ 08:08:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Reply-To: ludloff@gmail.com
-From: Christian Ludloff <ludloff@gmail.com>
-Date: Mon, 14 Apr 2025 16:42:20 +0200
-X-Gm-Features: ATxdqUFBVoO29GwOxxkKyUuhT2RpIRz1JcuDmC5FOD6Sg1krHAdXW8vFt8lFRwM
-Message-ID: <CAKSQd8VKwk=d+ymSp8t3Y6n+pJP45FRXJXWRWmzc4-DTm=6f9Q@mail.gmail.com>
-Subject: Re: [PATCH] x86/cpu: Add two Intel CPU model numbers
-To: linux-kernel@vger.kernel.org
-Cc: patches@lists.linux.dev, x86@kernel.org
+References: <20250413002338.1741593-1-ojeda@kernel.org>
+In-Reply-To: <20250413002338.1741593-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 14 Apr 2025 17:08:27 +0200
+X-Gm-Features: ATxdqUH6rGk6r6-lQ_KWE9TQvnHIiYAFIJPEWNi0sSuE_uUs1uqjOst-DwFVQ_g
+Message-ID: <CANiq72=W_JOV+WLWFpkqt=cbqOiOKkxbsa4wvyuW82O80srMoQ@mail.gmail.com>
+Subject: Re: [PATCH] objtool/rust: add one more `noreturn` Rust function
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> [...] propose we do the below.
+On Sun, Apr 13, 2025 at 2:26=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> +#define INTEL_DIAMONDRAPIDS_X IFM(19, 0x01) /* Panther Cove */
+> Thus add it to the list so that `objtool` knows it is actually `noreturn`=
+.
 
-Make it so.
+Applied to `rust-fixes` -- thanks everyone! I applied it early to
+start to get testing -- tags still welcomed for a day or so.
 
-(In light of the fresh RPC = RPL,BTL mess.)
+I changed the title a bit (adding "for Rust 1.86.0") to avoid
+confusion with a previous patch (and future ones), since a bot already
+got confused.
 
---
-Christian
+If `objtool` prefers to apply this instead, please let me know and I
+will drop it!
+
+Cheers,
+Miguel
