@@ -1,145 +1,251 @@
-Received: from e2i427.smtp2go.com (e2i427.smtp2go.com [103.2.141.171])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC8C1DF971
-	for <patches@lists.linux.dev>; Mon, 14 Apr 2025 20:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.2.141.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58FA2DFA32;
+	Tue, 15 Apr 2025 02:55:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744662201; cv=none; b=sdZNHG8MT+qzWgmHipvU6sp8RCmJDXUx+mAV63usfOn6dn13b/aDJaU2PfnYEPqp6gl4OIuHNP+kUzKh5hvn6+UGl/YVJFSfzmSnWDvmsGgoiUwBjo7/qMhlFTUNXrXNeWVHGxU8S+m/YgBzwQjChSfFy8PxrW1nQWo5xiW8/co=
+	t=1744685728; cv=none; b=b/k1uEmCHmwAuCqEkLtmT/eGjc4Vq9866egsxi4pMlg7M+iWijIUOhKXtxqh71UhvxwEWrrxNqWfRC+A71Q36uUDa5kO738kkuWuXIyTBfz+2rFF50srUXdy2Mwsmfs4HgsDwsUbpTPm8CQtVSkyLi7yTSnYYUuDQT8s3wJNA00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744662201; c=relaxed/simple;
-	bh=XleZMG7I0hBKpWBBZ30vgWlJ3X7D9YnR4f8NvVxN7ZQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lU2pCKu2mkgmQ4kImvUxFTIqu97VvL/MBWu5wtz7b9iTakWQvKKyvHmmmiDVXp7WaCNRimt5B+pwpMmRzO4yRLSJr3/EuOsWsyQPLMtJ7fzn8oxg8JYrymm9vejmtQf/b/uAxirRl6NssQnRn+0sJcEXWlYr0Jx0qZIKsuIN4KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=em1174286.fjasle.eu; dkim=fail (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b=j/PFbwv6 reason="unknown key version"; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=N3tcX6Pw; dkim=pass (1024-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=SgW9pEy3; arc=none smtp.client-ip=103.2.141.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=em1174286.fjasle.eu
+	s=arc-20240116; t=1744685728; c=relaxed/simple;
+	bh=c/72eoNx7CELfAORprzQXHYer9nWl9b9iKcnpAMB/yg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YjKYzm2jchkmwI4L2zIAuzNGNABzGYcWqO6gYT+e/nd51SJhtuW8s7uGhkZ+0vL8hiI4xCoDCEcZ3rDuWQTmmba4k5qRz4kg8qPTCjeRSzyW7c6YIZeew2qnPFfHPeOTpOH+9DAASmaUpj3o5OISo/qiEUMvFGXCB3gB0pbVf9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CJwwOssi; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="unknown key version" (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b="j/PFbwv6";
-	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="N3tcX6Pw";
-	dkim=pass (1024-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="SgW9pEy3"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=smtpservice.net; s=mp6320.a1-4.dyn; x=1744663090; h=Feedback-ID:
-	X-Smtpcorp-Track:Message-ID:Subject:To:From:Date:Reply-To:Sender:
-	List-Unsubscribe:List-Unsubscribe-Post;
-	bh=DBHs10rDRwWakJ+0FNRVX8rLj2BxosVKCp/U+3H5D8k=; b=j/PFbwv6wPZ3BqA3iiM3CcZ+nR
-	SHl/VtanIFYE2urUCPEDRXU3BTjcif/mwzbrXYeiPC6kMwiV6xDGUMHqAtjYMcc/bHzvFyZ7J+Qvd
-	3i2nTNu0Qt9om1oce1W1tdgON8v1VeoyHtsvoHGrdXNIBEicT6SzV7k3XYI3BYAgiMx/e9YOzuYzj
-	ujC6Sx7NUmTNL5mXyd+g/2swqU1qBWxzjUKDd+/W6eLOF1Y354NOsqTXIdVEBeui/ahVzrkBafo1M
-	VfiQMZcx/tQHE2rhdNAm5PVu+Xie7qMiuWt0s54a/XndpFDsQCTL/yXyo6nRHPABP3mS2PqzzpIWj
-	LawBBuGw==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fjasle.eu;
- i=@fjasle.eu; q=dns/txt; s=s1174286; t=1744662190; h=from : subject :
- to : message-id : date;
- bh=DBHs10rDRwWakJ+0FNRVX8rLj2BxosVKCp/U+3H5D8k=;
- b=N3tcX6PwGl+x3nxrw6guwzD9q4gK0CKwR+O1LwCH4PjrZ6idGk5+l4xNZ8pqISGLlvACP
- 1pgjDZ3US7zJU4CoQzUFXFxhk5/f1a1xnC9HTdwEL1V51lMR1e1Pmm5sEtCLeza0PfPtJLf
- A4lo8hURF0y8nl2YNQmN+4LzcwwO692tn2rt5TivBBCu57DPCgmZctjc6XAdSNeZJXn/oHk
- 2uwoEPycmRI31ZXqfehOgKMC0caJzpyb3WGYeVg35ymaDsHMCxivM24Ep8JGVKOGmmRpaAg
- 07iClnjd3dH89wR17abNQi6h3E0AojBrkmTz5OX3FhRsH9vSoV0BMZwe9lzw==
-Received: from [10.172.233.58] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <nicolas@fjasle.eu>)
- id 1u4QFI-TRjwtI-IS; Mon, 14 Apr 2025 20:17:32 +0000
-Received: from [10.85.249.164] (helo=leknes.fjasle.eu)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.97.1-S2G) (envelope-from <nicolas@fjasle.eu>)
- id 1u4QFH-FnQW0hPuS5z-lIjL; Mon, 14 Apr 2025 20:17:32 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fjasle.eu; s=mail;
- t=1744661848; bh=XleZMG7I0hBKpWBBZ30vgWlJ3X7D9YnR4f8NvVxN7ZQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=SgW9pEy3RvEhKOAWcSympA8YWxTr9kdBVMh8OHIPWoLR2eXOIXdcilDMCyUHvC6uC
- mFBwyCLvJfZi2HP3NNPNmFFD9umMjBxCOonKwrwTO1wTyArzylURFLDHqlrUSB3izX
- bVBTVt0qWj3/rJBV+nksjCukEGxSSd+DFjaiCo8Q=
-Received: by leknes.fjasle.eu (Postfix, from userid 1000)
- id 546994973C; Mon, 14 Apr 2025 22:17:28 +0200 (CEST)
-Date: Mon, 14 Apr 2025 22:17:28 +0200
-From: Nicolas Schier <nicolas@fjasle.eu>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>,
- Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
- Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- stable@vger.kernel.org
-Subject: Re: [PATCH] rust: kbuild: use `pound` to support GNU Make < 4.3
-Message-ID: <Z_1tWOkpW_d_OlOW@fjasle.eu>
-References: <20250414171241.2126137-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CJwwOssi"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F15Mor020225;
+	Tue, 15 Apr 2025 02:55:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	39o2Uud3dvVPD6vAB2SUkPsExB4TNyRPHU2N8tihKIc=; b=CJwwOssivCI78QPE
+	0iO3GJ6mGD6IdUxHTpW4a6OHbekAGmquvcyXwrZAsIoXZ7UIO5CKBMrc74HSDi4i
+	K++cUp0GSLgdDYWRkk7lp+pGFK77jN9yHWHciBh9FgM+3Ar0Ugyz4lC730UKhrKU
+	pF3sageAGP+o9BGx+u7s2RI/OBhnXxrQRXt00T+i6NNcdvgZqhny5eI6QTDgrk8Q
+	6kXNhdngA4pkldpUqleieRunSc91TMQ2Oy7EGf8iC59Z7xsJgDox9HB85L64S6M2
+	OJUT1nnjPQ0cHBgFB8cYwgexifIENpksbH/X2MZmU0ORmJL2BbRjV4cqMSHzJx7G
+	9zgA+Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgjeejw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Apr 2025 02:55:21 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53F2tKKr027208
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Apr 2025 02:55:20 GMT
+Received: from [10.133.33.156] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
+ 2025 19:55:17 -0700
+Message-ID: <49b98882-6a69-48b8-af0c-01f78373d0ef@quicinc.com>
+Date: Tue, 15 Apr 2025 10:55:06 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250414171241.2126137-1-ojeda@kernel.org>
-X-Smtpcorp-Track: 3sU6Y0KKEHx6.QoEvYvoj9GpD.RsHnUg7ulLk
-Feedback-ID: 1174286m:1174286a9YXZ7r:1174286s7UJPYc9yz
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.14 084/731] wifi: ath11k: update channel list in reg
+ notifier instead reg worker
+To: Jiri Slaby <jirislaby@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, Wen Gong <quic_wgong@quicinc.com>,
+        "Aditya
+ Kumar Singh" <quic_adisi@quicinc.com>,
+        Jeff Johnson
+	<jeff.johnson@oss.qualcomm.com>,
+        Sasha Levin <sashal@kernel.org>
+References: <20250408104914.247897328@linuxfoundation.org>
+ <20250408104916.224926328@linuxfoundation.org>
+ <5cd9db3f-4abf-4b66-b401-633508e905ac@kernel.org>
+Content-Language: en-US
+From: Kang Yang <quic_kangyang@quicinc.com>
+In-Reply-To: <5cd9db3f-4abf-4b66-b401-633508e905ac@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MEIBxeXhC_5SFRlxJxvyv7She13zuEEC
+X-Proofpoint-ORIG-GUID: MEIBxeXhC_5SFRlxJxvyv7She13zuEEC
+X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=67fdca99 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=bC-a23v3AAAA:8 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=cSPYK51DSqVN3GOQgIQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=-FEs8UIgK8oA:10 a=FO4_E8m0qiDe52t0p3_H:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_01,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504150016
 
-On Mon, Apr 14, 2025 at 07:12:41PM +0200 Miguel Ojeda wrote:
->GNU Make 4.3 changed the behavior of `#` inside commands in commit
->c6966b323811 ("[SV 20513] Un-escaped # are not comments in function
->invocations"):
->
->    * WARNING: Backward-incompatibility!
->      Number signs (#) appearing inside a macro reference or function invocation
->      no longer introduce comments and should not be escaped with backslashes:
->      thus a call such as:
->        foo := $(shell echo '#')
->      is legal.  Previously the number sign needed to be escaped, for example:
->        foo := $(shell echo '\#')
->      Now this latter will resolve to "\#".  If you want to write makefiles
->      portable to both versions, assign the number sign to a variable:
->        H := \#
->        foo := $(shell echo '$H')
->      This was claimed to be fixed in 3.81, but wasn't, for some reason.
->      To detect this change search for 'nocomment' in the .FEATURES variable.
->
->Unlike other commits in the kernel about this issue, such as commit
->633174a7046e ("lib/raid6/test/Makefile: Use $(pound) instead of \#
->for Make 4.3"), that fixed the issue for newer GNU Makes, in our case
->it was the opposite, i.e. we need to fix it for the older ones: someone
->building with e.g. 4.2.1 gets the following error:
->
->    scripts/Makefile.compiler:81: *** unterminated call to function 'call': missing ')'.  Stop.
->
->Thus use the existing variable to fix it.
->
->Reported-by: moyi geek
->Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/291565/topic/x/near/512001985
->Cc: stable@vger.kernel.org
->Fixes: e72a076c620f ("kbuild: fix issues with rustc-option")
->Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
->---
-> scripts/Makefile.compiler | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
->index 7ed7f92a7daa..f4fcc1eaaeae 100644
->--- a/scripts/Makefile.compiler
->+++ b/scripts/Makefile.compiler
->@@ -79,7 +79,7 @@ ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
-> # Usage: MY_RUSTFLAGS += $(call __rustc-option,$(RUSTC),$(MY_RUSTFLAGS),-Cinstrument-coverage,-Zinstrument-coverage)
-> # TODO: remove RUSTC_BOOTSTRAP=1 when we raise the minimum GNU Make version to 4.4
-> __rustc-option = $(call try-run,\
->-	echo '#![allow(missing_docs)]#![feature(no_core)]#![no_core]' | RUSTC_BOOTSTRAP=1\
->+	echo '$(pound)![allow(missing_docs)]$(pound)![feature(no_core)]$(pound)![no_core]' | RUSTC_BOOTSTRAP=1\
-> 	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null --target=%,$(2)) $(3)\
-> 	--crate-type=rlib --out-dir=$(TMPOUT) --emit=obj=- - >/dev/null,$(3),$(4))
->
->
->base-commit: a3cd5f507b72c0532c3345b6913557efab34f405
->-- 
->2.49.0
->
 
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+
+On 4/14/2025 1:59 PM, Jiri Slaby wrote:
+> On 08. 04. 25, 12:39, Greg Kroah-Hartman wrote:
+>> 6.14-stable review patch.  If anyone has any objections, please let me 
+>> know.
+>>
+>> ------------------
+>>
+>> From: Wen Gong <quic_wgong@quicinc.com>
+>>
+>> [ Upstream commit 933ab187e679e6fbdeea1835ae39efcc59c022d2 ]
+>>
+>> Currently when ath11k gets a new channel list, it will be processed
+>> according to the following steps:
+>> 1. update new channel list to cfg80211 and queue reg_work.
+>> 2. cfg80211 handles new channel list during reg_work.
+>> 3. update cfg80211's handled channel list to firmware by
+>> ath11k_reg_update_chan_list().
+>>
+>> But ath11k will immediately execute step 3 after reg_work is just
+>> queued. Since step 2 is asynchronous, cfg80211 may not have completed
+>> handling the new channel list, which may leading to an out-of-bounds
+>> write error:
+>> BUG: KASAN: slab-out-of-bounds in ath11k_reg_update_chan_list
+>> Call Trace:
+>>      ath11k_reg_update_chan_list+0xbfe/0xfe0 [ath11k]
+>>      kfree+0x109/0x3a0
+>>      ath11k_regd_update+0x1cf/0x350 [ath11k]
+>>      ath11k_regd_update_work+0x14/0x20 [ath11k]
+>>      process_one_work+0xe35/0x14c0
+>>
+>> Should ensure step 2 is completely done before executing step 3. Thus
+>> Wen raised patch[1]. When flag NL80211_REGDOM_SET_BY_DRIVER is set,
+>> cfg80211 will notify ath11k after step 2 is done.
+>>
+>> So enable the flag NL80211_REGDOM_SET_BY_DRIVER then cfg80211 will
+>> notify ath11k after step 2 is done. At this time, there will be no
+>> KASAN bug during the execution of the step 3.
+>>
+>> [1] https://patchwork.kernel.org/project/linux-wireless/ 
+>> patch/20230201065313.27203-1-quic_wgong@quicinc.com/
+>>
+>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125- 
+>> QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
+>>
+>> Fixes: f45cb6b29cd3 ("wifi: ath11k: avoid deadlock during regulatory 
+>> update in ath11k_regd_update()")
+>> Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+>> Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+>> Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+>> Link: https://patch.msgid.link/20250117061737.1921-2- 
+>> quic_kangyang@quicinc.com
+>> Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   drivers/net/wireless/ath/ath11k/reg.c | 22 +++++++++++++++-------
+>>   1 file changed, 15 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/ 
+>> wireless/ath/ath11k/reg.c
+>> index b0f289784dd3a..7bfe47ad62a07 100644
+>> --- a/drivers/net/wireless/ath/ath11k/reg.c
+>> +++ b/drivers/net/wireless/ath/ath11k/reg.c
+>> @@ -1,7 +1,7 @@
+>>   // SPDX-License-Identifier: BSD-3-Clause-Clear
+>>   /*
+>>    * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+>> - * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>> + * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>>    */
+>>   #include <linux/rtnetlink.h>
+>> @@ -55,6 +55,19 @@ ath11k_reg_notifier(struct wiphy *wiphy, struct 
+>> regulatory_request *request)
+>>       ath11k_dbg(ar->ab, ATH11K_DBG_REG,
+>>              "Regulatory Notification received for %s\n", 
+>> wiphy_name(wiphy));
+>> +    if (request->initiator == NL80211_REGDOM_SET_BY_DRIVER) {
+>> +        ath11k_dbg(ar->ab, ATH11K_DBG_REG,
+>> +               "driver initiated regd update\n");
+>> +        if (ar->state != ATH11K_STATE_ON)
+>> +            return;
+>> +
+>> +        ret = ath11k_reg_update_chan_list(ar, true);
+>> +        if (ret)
+>> +            ath11k_warn(ar->ab, "failed to update channel list: 
+>> %d\n", ret);
+>> +
+>> +        return;
+>> +    }
+> 
+> I suspect this causes stalls for me.
+> 
+> Workqueues are waiting for rtnl_lock:
+>> Showing busy workqueues and worker pools:
+>> workqueue events_unbound: flags=0x2
+>>   pwq 64: cpus=0-15 flags=0x4 nice=0 active=1 refcnt=2
+>>     in-flight: 107692:linkwatch_event
+>> workqueue netns: flags=0x6000a
+>>   pwq 64: cpus=0-15 flags=0x4 nice=0 active=1 refcnt=18
+>>     in-flight: 107676:cleanup_net workqueue pm: flags=0x4
+>>   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=5 refcnt=6
+>>     in-flight: 
+>> 107843:pm_runtime_work ,100179:pm_runtime_work ,50846:pm_runtime_work ,107845:pm_runtime_work ,107652:pm_runtime_work
+>> workqueue ipv6_addrconf: flags=0x6000a
+>>   pwq 64: cpus=0-15 flags=0x4 nice=0 active=1 refcnt=18
+>>     in-flight: 107705:addrconf_dad_work
+> 
+> While the above reg_notifier is stuck too:
+> 
+>  > workqueue events: flags=0x0
+>  >   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=1 refcnt=2
+>  >     in-flight: 107807:reg_todo [cfg80211]
+> 
+> waiting for:
+>> Workqueue: events reg_todo [cfg80211]
+>> Call Trace:
+>>  <TASK>
+>>  __schedule+0x437/0x1470
+>>  schedule+0x27/0xf0
+>>  schedule_timeout+0x73/0xe0
+>>  __wait_for_common+0x8e/0x1c0
+>>  ath11k_reg_update_chan_list+0x23c/0x290 [ath11k 
+>> 30c4a145118dc3331f552d6275ec7d6272671444]
+>>  ath11k_reg_notifier+0x5a/0x80 [ath11k 
+>> 30c4a145118dc3331f552d6275ec7d6272671444]
+>>  reg_process_self_managed_hint+0x170/0x1b0 [cfg80211 
+>> 2571f504aa68d55c11440c869062c668de1a2dce]
+>>  reg_process_self_managed_hints+0x47/0xf0 [cfg80211 
+>> 2571f504aa68d55c11440c869062c668de1a2dce]
+>>  reg_todo+0x207/0x290 [cfg80211 2571f504aa68d55c11440c869062c668de1a2dce]
+>>  process_one_work+0x17b/0x330
+>>  worker_thread+0x2ce/0x3f0
+> 
+> 
+> Is stable missing some backport or is this a problem in 6.15-rc too?
+> 
+> /me looking...
+> 
+> Ah, what about:
+> commit 02aae8e2f957adc1b15b6b8055316f8a154ac3f5
+> Author: Wen Gong <quic_wgong@quicinc.com>
+> Date:   Fri Jan 17 14:17:37 2025 +0800
+> 
+>      wifi: ath11k: update channel list in worker when wait flag is set
+> 
+> ?
+
+
+Yes, please add this patch. It will minimize the occupation time of 
+rtnl_lock.
+
+You can retry and check if this warning will show again.
+
+
+
+> 
+> thanks,
+
