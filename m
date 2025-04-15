@@ -1,109 +1,92 @@
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B778D28468C
-	for <patches@lists.linux.dev>; Tue, 15 Apr 2025 09:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ED922DFB4
+	for <patches@lists.linux.dev>; Tue, 15 Apr 2025 18:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744709250; cv=none; b=crAo0wTcu/u3uqb0JhBbV83JU/bafm7dtz+CzQ8buf9GOQgw6kptuqjBCweF10xbOL7DbtfdmrkkXQVAvFXhw4ugTzz/wASHyc2QJV2V/yRykENE+yrj+DeUt7m+HKd9AcFPQxEcbr5oSeD2UjoSHCCLxhfJhWKWvuMZs9gF6uU=
+	t=1744742894; cv=none; b=J3pqH/ZDgrXTS8tqRILYTpIGHoUpYmZtreVUS76kQlZxBVthEc/AODkudICwM47y7pXeNvH6XvvLv18yjrwEEe2FvgnLPP6KCLNif6wkg25Zf2x4HOksAO82mP6Xp6XSw+0yFQj2HNeb6yBA1geuK6n4loEolAsmyGmpJRfNKIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744709250; c=relaxed/simple;
-	bh=ACQuDtLySJGUDdPySwcX9laZ30nm6+nLm5qXV88Hr4g=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=r0jTZa25ipGI4YO913b1eyBvYEi8eRlDFMT7bHuSSPAcyP+i6PznfnGB9U8tRq8ev4kFDueO2u3Qp8mgQvj4rMwspGcGFfjWDQ96FDErPdsk6lv4xbwudWoxsz+tS9eX95i81szAgoObh1biopvH4NQuDJF/06xoQHOGgwcI8A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=16rGEwUR; arc=none smtp.client-ip=209.85.128.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1744742894; c=relaxed/simple;
+	bh=2Kpm6GWhgo8Q/IOC4ec8PNWFZP8KUbljZZldwykeRhg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mjPiUDDQrhQwekJtN32h9sKp3pLU3leYf+rCbdmmQomdOQTzOjKsrt/THuI7xtkeCkESC5d3DpMNaP6fNm6ROZBtobq3rGtAULdfijilGnZNNPltfpMd3E3eZzHXUh2m0q4QC6tR0JjN7NBxlegN9UmeNyvDDKHndks2TTu2z/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YEdvpW8O; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="16rGEwUR"
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-43ea256f039so40667375e9.0
-        for <patches@lists.linux.dev>; Tue, 15 Apr 2025 02:27:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEdvpW8O"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-301a6347494so1067770a91.3
+        for <patches@lists.linux.dev>; Tue, 15 Apr 2025 11:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744709246; x=1745314046; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xNqTolRYwEdQ0xZi5RcJyGoxOrWsQ0mEIGkr1N9o2c4=;
-        b=16rGEwURFa1FMORlXoO31B4wPDTdAJJBuTYkZwrS1Wpn3H08cvGmY5+vzzDB5EPbSf
-         wtZOvgQTvdKyFC/vCd1x7EeuHTtNaqkUbA7Cu/AMoqT42dO96+uMy7e8rUnXaFevgyIA
-         jS1xfZQbwbA7jE/j+rTlfNyWgnvCzaPvM9Cxj+WZse494PH/r9Lewf1y6Fa8tWT93B6h
-         fyYzYtLwHdn8Jr/yURH7ZRWQYW37bmQFbpwqnBu+2S01JHxO//LkYf2PzOKUaok5K4Xq
-         PtIgyFC9gRkZcazCDagAyjYEo4gW8GDhaEilfuX+/LMO3N7S8mZo6vj4k70qIDvW9Eg3
-         40SA==
+        d=gmail.com; s=20230601; t=1744742892; x=1745347692; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2Kpm6GWhgo8Q/IOC4ec8PNWFZP8KUbljZZldwykeRhg=;
+        b=YEdvpW8OG2uBVotb+BBlLkOIOqCdN05Xl/jEg0gIVfbgtPfHnEIFZiPYefvDMsfn1/
+         btcKg3EzEaC0QkGVKQmlmT8LTz7+hNvtq3hwPadNmG1vt8doy1MO8QU2SgNcXJANz7Lm
+         MAOPQB+RCOtFrbuHimPVyG2LC7T02fAO4wTRa3DjXYTzflXTIIsGmZJ1IZakgu6abRr0
+         hVPQ3ogxuprkebcC03GcNcVFmyD57FWp+jdQNAEDiHHni02/VDbaJhEUHzzE0YlyaupN
+         VZN/2ihQ5P6LxZ/ocAhxmLxxmDPKbx7OIcLAaVvsskJM+x4cbJi6raOYAHa1PxNZ8Oqh
+         wKmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744709246; x=1745314046;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xNqTolRYwEdQ0xZi5RcJyGoxOrWsQ0mEIGkr1N9o2c4=;
-        b=Z7pqjititL3BZ9+jPJNM1EiZ3Ef73iUzH75IupaDC5o5E5UtNt49V9Hm1pVcur94BM
-         RN4QwBr2Dxag8yNO3I7Kp790LnrgheoJBkuOstqdQEett7RsLUEKw+7pdhorRCrLPWQb
-         gyABzSpCDHBGxuSI6/CdznyGXlqet+qTY2fhOFaQajFfSYoqzQ8HbOSReTozpju0O84f
-         79iosOXUoBmFX5uzSgkk4cEo8fu9oI69q0kmzOfDISiALxdNVyxkJRevnEL+Tq3u1tqk
-         pHTVBiLPW/ENj2sw896dX0AtF8R8GCQRI+kKdqNfcZF5E3TpzH55IHi4pAMeaX+uL6Zu
-         li/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWwUVkXQ5CVLcqdGCUMpff/pmcVCCZsz8/D7HU/2aw3fSgLnt0ods5RJShc8wMMgDMIOJ+SKZlV@lists.linux.dev
-X-Gm-Message-State: AOJu0YxYK4ZEnPTUyPMwXsWbHv8iKOSif/RU6FWU+viQS5tEUDeJVR3h
-	E9s4U3FuDuMVg/oEsuOcTxT5bd+eAI41chyIt5qC0acPI82jpNolmCnghZLcBIA9T9zPZLO6XdE
-	C8KnmRrEn2p3nJQ==
-X-Google-Smtp-Source: AGHT+IGNOnYD9JWXHsjrfEKTxmUhjAQDAgXAWdeq5XqvcbzsPrWDx2ckJ/DQU+m/oiKaf2kSydGbCqfW3XxRxAo=
-X-Received: from wmbz6.prod.google.com ([2002:a05:600c:c086:b0:43d:4ba5:b5d6])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:3b86:b0:43d:db5:7b21 with SMTP id 5b1f17b1804b1-43f3a9b4865mr111301865e9.28.1744709246233;
- Tue, 15 Apr 2025 02:27:26 -0700 (PDT)
-Date: Tue, 15 Apr 2025 09:27:24 +0000
-In-Reply-To: <20250414171241.2126137-1-ojeda@kernel.org>
+        d=1e100.net; s=20230601; t=1744742892; x=1745347692;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2Kpm6GWhgo8Q/IOC4ec8PNWFZP8KUbljZZldwykeRhg=;
+        b=nCryMn1bgx0XILlcsrAyzNT7vk01N1f5PI3Lnw4griNez3Gi2PskR7vaer8mrzHY1O
+         vEiCDfV9DUtV3BzKV65PpzkfAURid2BrnCu78W8Ucz/6907tuGy9VNECDtHSq36s6af5
+         jS3k5KqeazovC59GUqiye8RUf302jV9OssBNZNjIvVJY3Lmuklumm5DT7cBSTEvFHSAl
+         J903A1NkbnotYyTA1ODha3XeUl1CLiGlFh1YXHygHZMIqxHMfxRihgJJub9b96PrmfsO
+         bYEP/Jico4NmeCrGeYcj+PUFNbPSfiM8fSxwnzUgfiLB5/HL8l6IERm6nhugm+h3GV/C
+         vwhA==
+X-Forwarded-Encrypted: i=1; AJvYcCXWXe/IaAHhpM9mpgDrhoaCxPkKFSEsp1JZLgogpTU/5C61HGRRkfwDwgr9rkbs6IDlpjkfJTNj@lists.linux.dev
+X-Gm-Message-State: AOJu0YwpX81enNQJ6hECEbygRbwhSF8mWnwU2iHfYq2VRXJGYWQ264D9
+	6q5fMKaGhKsXICrqXEtIeMizr7Sa8yEW5nPNixVlTAN4vnzY8GdBh6azYUPx2HQ6EEd2X4Nw5hZ
+	vuZoZ8Gok4LYF3q06COODy78ahfQ=
+X-Gm-Gg: ASbGncufSC/N5z4STxhosHkVBQXcymvSlqF+HMgwqVYLFZFIbf4b5sd3lgEloiTD/OV
+	gHjIvrfi60qhc68VCwBI3xQwUX5X2K3mR9l1EsY4+ej/wDfBFIlyOGsDdLOD7MmUxMTvUxVwC+o
+	FNNHz7x1tsPEA1xsQnrSlANg==
+X-Google-Smtp-Source: AGHT+IGL8QPPlQgTyuSsG4JtvKe3+bJVrcOq2MMMB3IlnsadEDXTmZNsLahV3jTtf451YqR9z6dcky4RKUZe/0LTBTA=
+X-Received: by 2002:a17:90b:1d8f:b0:2fe:b879:b68c with SMTP id
+ 98e67ed59e1d1-3085ef97db8mr121803a91.6.1744742891943; Tue, 15 Apr 2025
+ 11:48:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
 References: <20250414171241.2126137-1-ojeda@kernel.org>
-Message-ID: <Z_4mfK2MK2xclvbW@google.com>
+In-Reply-To: <20250414171241.2126137-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 15 Apr 2025 20:47:59 +0200
+X-Gm-Features: ATxdqUHTA9TZry6P0hmW1nNr51e7jiPnolW0gnctSwGdT8fOOpZMfrf6lSkmxuI
+Message-ID: <CANiq72=TjjW+L20su+N_7-FGMvhGZDTUEHnwk-Kz+XWUWyQVUw@mail.gmail.com>
 Subject: Re: [PATCH] rust: kbuild: use `pound` to support GNU Make < 4.3
-From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Masahiro Yamada <masahiroy@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 14, 2025 at 07:12:41PM +0200, Miguel Ojeda wrote:
-> GNU Make 4.3 changed the behavior of `#` inside commands in commit
-> c6966b323811 ("[SV 20513] Un-escaped # are not comments in function
-> invocations"):
-> 
->     * WARNING: Backward-incompatibility!
->       Number signs (#) appearing inside a macro reference or function invocation
->       no longer introduce comments and should not be escaped with backslashes:
->       thus a call such as:
->         foo := $(shell echo '#')
->       is legal.  Previously the number sign needed to be escaped, for example:
->         foo := $(shell echo '\#')
->       Now this latter will resolve to "\#".  If you want to write makefiles
->       portable to both versions, assign the number sign to a variable:
->         H := \#
->         foo := $(shell echo '$H')
->       This was claimed to be fixed in 3.81, but wasn't, for some reason.
->       To detect this change search for 'nocomment' in the .FEATURES variable.
-> 
-> Unlike other commits in the kernel about this issue, such as commit
-> 633174a7046e ("lib/raid6/test/Makefile: Use $(pound) instead of \#
-> for Make 4.3"), that fixed the issue for newer GNU Makes, in our case
-> it was the opposite, i.e. we need to fix it for the older ones: someone
-> building with e.g. 4.2.1 gets the following error:
-> 
->     scripts/Makefile.compiler:81: *** unterminated call to function 'call': missing ')'.  Stop.
-> 
+On Mon, Apr 14, 2025 at 7:13=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
 > Thus use the existing variable to fix it.
-> 
-> Reported-by: moyi geek
-> Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/291565/topic/x/near/512001985
-> Cc: stable@vger.kernel.org
-> Fixes: e72a076c620f ("kbuild: fix issues with rustc-option")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Applied to `rust-fixes` -- thanks everyone!
+
+If Kbuild wants to pick it up instead, please let me know and I will drop i=
+t.
+
+Cheers,
+Miguel
