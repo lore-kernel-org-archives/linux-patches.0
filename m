@@ -1,42 +1,43 @@
 Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D451CEAC2
-	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 00:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77DB33985
+	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 01:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744764938; cv=none; b=BnZJ7Ahh6Z+3D4YnrJDGgLv7B/AnOJopKlm7/W/DzgwUaLyKXM/1NzoHl2V27LRV6LKx0jlnqfsGUHzbYmhLojeXhpkODgdpfPmekZKcBXbJ5Aw2U/7/BOhg0y0XjACxzQlYq047EcIFROqgmFoCI2bFW4MBewiQxLyr0EnoEA0=
+	t=1744765393; cv=none; b=CoUbyxJ4oQcrXYVFDJ1Q5S1XAI/kVQ38IoTHLJWv2WvGRH5laLSBRtuILmf+LoA4FWjlGp3HcQqZotIaRnwEsG1EXWILH36sXkDHi1TrmNFQQHZ7wYFfsbQdrhuwkCjfJ4XZ5CNPO7B+HIuMW0h8bROXxMktuiQQ/1/BiBX1/Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744764938; c=relaxed/simple;
-	bh=be5g8LymW+Bjf4lZeGS2lrWZG1AfDTvZePDsICt13/k=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YISEl0xCdz0yr8LIHq6CFHbB6j3MMbAnsb2hcFgrVqFqYVa8fbMYaLZg103Vkb3y/eXulnIN8Mfs5+6yVd+nuOFp6XL0nhNgmZkp8FL02Ljg4wY1karBLb91e1hsmq8QdKgycASfgZ+6Sk7vETOLGSeGk/rgcnjGMaBGE53rEhk=
+	s=arc-20240116; t=1744765393; c=relaxed/simple;
+	bh=lxyuH2X+QrN69sG9sxQAyhR4CnxidVuoSmTUqIuey+8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fzuBYA0wmtc11YpNLdI3ai440CQP8rzePTGD7Mxn9zT6+etrSQpmd2yqvg07FHUYK3U6eqXvcLxNuQAu6dC6eTPPE7vKutVzYvJpT/zotCypWqAmGEYOWUPNXgOEl7WBCr8Uf48/J/v8DPIHTXPc6x2DBhM3FnCWDrBb8xSxerw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FNx1aR008877;
-	Tue, 15 Apr 2025 17:55:22 -0700
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FLTtJh026884;
+	Tue, 15 Apr 2025 18:02:57 -0700
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45yqpkkvgc-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45ykf3m1nq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Tue, 15 Apr 2025 17:55:22 -0700 (PDT)
+	Tue, 15 Apr 2025 18:02:56 -0700 (PDT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Tue, 15 Apr 2025 17:55:21 -0700
+ 15.1.2507.43; Tue, 15 Apr 2025 18:02:56 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 17:55:18 -0700
+ 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 18:02:53 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
         <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <clm@fb.com>, <josef@toxicpanda.com>, <dsterba@suse.com>,
-        <terrelln@fb.com>, <linux-btrfs@vger.kernel.org>, <wqu@suse.com>,
-        <boris@bur.io>
-Subject: [PATCH 6.1.y] btrfs: fix qgroup reserve leaks in cow_file_range
-Date: Wed, 16 Apr 2025 08:55:17 +0800
-Message-ID: <20250416005517.387669-1-jianqi.ren.cn@windriver.com>
+        <chenxiaosong@kylinos.cn>, <stfrench@microsoft.com>,
+        <linkinjeon@kernel.org>, <sfrench@samba.org>,
+        <senozhatsky@chromium.org>, <tom@talpey.com>,
+        <linux-cifs@vger.kernel.org>
+Subject: [PATCH 6.1.y] smb/server: fix potential null-ptr-deref of lease_ctx_info in smb2_open()
+Date: Wed, 16 Apr 2025 09:02:52 +0800
+Message-ID: <20250416010252.388173-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,133 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: 1f19waSJ6s2oacpfsI7d3UxCe5dsa3tm
-X-Proofpoint-GUID: 1f19waSJ6s2oacpfsI7d3UxCe5dsa3tm
-X-Authority-Analysis: v=2.4 cv=UZBRSLSN c=1 sm=1 tr=0 ts=67fefffa cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=iox4zFpeAAAA:8 a=t7CeM3EgAAAA:8 a=oSb3yfUiBPKWAvThIHwA:9 a=WzC6qhA0u3u7Ye7llzcV:22
- a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-ORIG-GUID: EcdEvtXe86mEZEQLPT-ZqLkngM1F3jhd
+X-Authority-Analysis: v=2.4 cv=Wd0Ma1hX c=1 sm=1 tr=0 ts=67ff01c0 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=4MEYoKLddpgQIFStAo8A:9 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: EcdEvtXe86mEZEQLPT-ZqLkngM1F3jhd
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-15_09,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 malwarescore=0
- spamscore=0 adultscore=0 mlxlogscore=776 lowpriorityscore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504160005
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 clxscore=1011
+ impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 phishscore=0
+ mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504160006
 
-From: Boris Burkov <boris@bur.io>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 30479f31d44d47ed00ae0c7453d9b253537005b2 ]
+[ Upstream commit 4e8771a3666c8f216eefd6bd2fd50121c6c437db ]
 
-In the buffered write path, the dirty page owns the qgroup reserve until
-it creates an ordered_extent.
+null-ptr-deref will occur when (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
+and parse_lease_state() return NULL.
 
-Therefore, any errors that occur before the ordered_extent is created
-must free that reservation, or else the space is leaked. The fstest
-generic/475 exercises various IO error paths, and is able to trigger
-errors in cow_file_range where we fail to get to allocating the ordered
-extent. Note that because we *do* clear delalloc, we are likely to
-remove the inode from the delalloc list, so the inodes/pages to not have
-invalidate/launder called on them in the commit abort path.
+Fix this by check if 'lease_ctx_info' is NULL.
 
-This results in failures at the unmount stage of the test that look like:
+Additionally, remove the redundant parentheses in
+parse_durable_handle_context().
 
-  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
-  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
-  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
-  ------------[ cut here ]------------
-  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
-  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
-  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
-  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
-  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
-  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
-  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
-  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
-  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? __warn.cold+0x8e/0xea
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? report_bug+0xff/0x140
-   ? handle_bug+0x3b/0x70
-   ? exc_invalid_op+0x17/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   generic_shutdown_super+0x70/0x160
-   kill_anon_super+0x11/0x40
-   btrfs_kill_super+0x11/0x20 [btrfs]
-   deactivate_locked_super+0x2e/0xa0
-   cleanup_mnt+0xb5/0x150
-   task_work_run+0x57/0x80
-   syscall_exit_to_user_mode+0x121/0x130
-   do_syscall_64+0xab/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f916847a887
-  ---[ end trace 0000000000000000 ]---
-  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
-
-Cases 2 and 3 in the out_reserve path both pertain to this type of leak
-and must free the reserved qgroup data. Because it is already an error
-path, I opted not to handle the possible errors in
-btrfs_free_qgroup_data.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[Drop the parentheses clean-up since the parentheses was introduced by
+c8efcc786146 ("ksmbd: add support for durable handles v1/v2") in v6.9
+ Minor context change fixed]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- fs/btrfs/inode.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/server/oplock.c  | 2 +-
+ fs/smb/server/smb2pdu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index a13ab3abef12..2102cd676be3 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1428,6 +1428,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 					     locked_page,
- 					     clear_bits,
- 					     page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 		start += cur_alloc_size;
- 	}
- 
-@@ -1441,6 +1442,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
- 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
- 					     clear_bits, page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 	}
- 	return ret;
- }
-@@ -2168,13 +2170,15 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
- 	if (nocow)
- 		btrfs_dec_nocow_writers(bg);
- 
--	if (ret && cur_offset < end)
-+	if (ret && cur_offset < end) {
- 		extent_clear_unlock_delalloc(inode, cur_offset, end,
- 					     locked_page, EXTENT_LOCKED |
- 					     EXTENT_DELALLOC | EXTENT_DEFRAG |
- 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
- 					     PAGE_START_WRITEBACK |
- 					     PAGE_END_WRITEBACK);
-+		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
-+	}
- 	btrfs_free_path(path);
- 	return ret;
- }
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index a3c016a11e27..2fcfabc35b06 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1515,7 +1515,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
+  * @open_req:	buffer containing smb2 file open(create) request
+  * @is_dir:	whether leasing file is directory
+  *
+- * Return:  oplock state, -ENOENT if create lease context not found
++ * Return: allocated lease context object on success, otherwise NULL
+  */
+ struct lease_ctx_info *parse_lease_state(void *open_req, bool is_dir)
+ {
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index dbe272970c25..937c1cd2284e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3241,7 +3241,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			goto err_out1;
+ 		}
+ 	} else {
+-		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
++		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
+ 			/*
+ 			 * Compare parent lease using parent key. If there is no
+ 			 * a lease that has same parent key, Send lease break
 -- 
 2.34.1
 
