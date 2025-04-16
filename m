@@ -1,360 +1,178 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEE41F416D
-	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 00:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D451CEAC2
+	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 00:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744761746; cv=none; b=aoPUxlY0BC50Wyq0DLLFU95k6iQNFKbgdoPebiNMq9zzTg7JLojK48K9V5CD0I9SrLFGc9avW0CdE9shpU5hqP5WYAQD1+j4EpbpgvmNDyT8eUYDG/ZGRGBp18Dgqo1TGob9Ce3TEgVSfA4KP8KMbB2HDe6QUtQx0WKnI2dFl14=
+	t=1744764938; cv=none; b=BnZJ7Ahh6Z+3D4YnrJDGgLv7B/AnOJopKlm7/W/DzgwUaLyKXM/1NzoHl2V27LRV6LKx0jlnqfsGUHzbYmhLojeXhpkODgdpfPmekZKcBXbJ5Aw2U/7/BOhg0y0XjACxzQlYq047EcIFROqgmFoCI2bFW4MBewiQxLyr0EnoEA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744761746; c=relaxed/simple;
-	bh=eDLBVrgnGdyoJQ79t80ww+yTdagNVGC7c/Zmd+hN+sM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=idqAgvpvMmXr8O8rXZXYFPVuNsJoSQKsCrs9cFZb51rKi5VeYtWzvtK9wwRJOjdlp/kdbhW5526QzkKqdqjCAieOvHJmBigTyVxjvo3QDzo6Wm3372IzhH95We6N4EPS9ryLIQrN/7yZuKj9QBmL3dijV6DuDdMxQ6LLdqkqSbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=WXBMxnMO; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="WXBMxnMO"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-73712952e1cso5925808b3a.1
-        for <patches@lists.linux.dev>; Tue, 15 Apr 2025 17:02:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1744761744; x=1745366544; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GPPbtqsuzK5NYYNdc0zpLwLBjiWgWtV76EEhJ0f/yC8=;
-        b=WXBMxnMO6j/hqLn3m3/v0tVA+57bhdB2qzBksPGoBwCaoq3IuNBWhQzp9fr30ng80J
-         NWpN7DA8Lngd+NZvgihJFZjindN47npBM3SivP39zYAzuzd9tIREWTjbAflDLG33sG1V
-         Eqq+i44FpZvVf2Ql9L7cEsT57OPKtR1gDbbvs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744761744; x=1745366544;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GPPbtqsuzK5NYYNdc0zpLwLBjiWgWtV76EEhJ0f/yC8=;
-        b=Aqx98fqzl8pJfODtfdHsE2ejENs/eA1mG1piaVkqHR0KgyP7dGpvAh9kv0uALtPHvY
-         3NwGD76pjdXbg+3mbltZr+Y/8J6wWLqjnn+Q/+uudYXnLIaGC8TpLtPpgMbuPHWaPyS8
-         9R5AmSLBdyboHMRpJFDmCk80G3Ki4MejQMWHV5xA+4MIasLbEUMcSIKrEBg0pQZzEhG5
-         bRJC2COghXXICSHSqTP10geT3oiIAV2TPPTeF0VpWYIOc8z5VKUim6R3+C+scPP/J1q7
-         Qdk/HlNu+Nx3W4yhdp5VaCrGTz8/0sbZvwM9hdBkjlvWq38D2M3RpYslHH60tasyfA2Q
-         wb/g==
-X-Forwarded-Encrypted: i=1; AJvYcCWn8fz68KGEwdjzxSKq/6O0XzQttEN2/TUCRESLxJBiwJN6JiGhOehqGEFNGWQrh/NrqX6+ylyH@lists.linux.dev
-X-Gm-Message-State: AOJu0YyzgSKUlBHpwwL/Gv5wrJ02oBpWGkJeOwjgjR2Ea5VkfxQ0QTn5
-	T33bbQRaKMX2uESgS8uCXLzrHPQ8cmHK+rPaVTG+9Tp5G3l9Yo1Zr0xurdp+LQ==
-X-Gm-Gg: ASbGncuraaLiNbW9jLyvPadslJw4+IB3ryGRfhRsoVjZuIKsBGnLtlnabYz5zZkRgwp
-	MX8lXgB/gyqU4/gXlaxqEiFLKEdLFquQiegX6O1JPz5QZpHI2qJr3zenCC1fu8WOpENvuut2d7u
-	urIO+Q/utj98fwJ4YZ/Vj+gmrYeeWpiEk4tthrzJn/vewqUDjgyI/itl9tOqKgsfsHQ5KQunYDa
-	+HVySHMrk07/rVe/vKQWZfDJKMV7tTxMnv4oA3E7uongma88WmyqSl45B5hvJTGUbxLdE/GCecq
-	/wPD90gF2VgMT3q0aM0e7ytM8ftHgJGQkAYmSHICJhIK7ggI2xpKSSr7ziEHDe+tLJ8jCFuAbPI
-	/oQ==
-X-Google-Smtp-Source: AGHT+IErLrf4vSn8BQ0x8FQOElvg38uwkXskYXgtvXn9GTzRRW4rhFc/IJBl//1/RAJQqDgW15Gcyw==
-X-Received: by 2002:a17:90b:5108:b0:2ee:9b09:7d3d with SMTP id 98e67ed59e1d1-3085ef36625mr1741934a91.19.1744761743673;
-        Tue, 15 Apr 2025 17:02:23 -0700 (PDT)
-Received: from localhost (199.24.125.34.bc.googleusercontent.com. [34.125.24.199])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b0b22217eebsm117742a12.67.2025.04.15.17.02.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Apr 2025 17:02:23 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	devicetree@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Benson Leung <bleung@chromium.org>,
-	chrome-platform@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>
-Subject: [PATCH 7/7] platform/chrome: cros_ec_typec: Support DP muxing
-Date: Tue, 15 Apr 2025 17:02:07 -0700
-Message-ID: <20250416000208.3568635-8-swboyd@chromium.org>
-X-Mailer: git-send-email 2.49.0.604.gff1f9ca942-goog
-In-Reply-To: <20250416000208.3568635-1-swboyd@chromium.org>
-References: <20250416000208.3568635-1-swboyd@chromium.org>
+	s=arc-20240116; t=1744764938; c=relaxed/simple;
+	bh=be5g8LymW+Bjf4lZeGS2lrWZG1AfDTvZePDsICt13/k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YISEl0xCdz0yr8LIHq6CFHbB6j3MMbAnsb2hcFgrVqFqYVa8fbMYaLZg103Vkb3y/eXulnIN8Mfs5+6yVd+nuOFp6XL0nhNgmZkp8FL02Ljg4wY1karBLb91e1hsmq8QdKgycASfgZ+6Sk7vETOLGSeGk/rgcnjGMaBGE53rEhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FNx1aR008877;
+	Tue, 15 Apr 2025 17:55:22 -0700
+Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45yqpkkvgc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Tue, 15 Apr 2025 17:55:22 -0700 (PDT)
+Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Tue, 15 Apr 2025 17:55:21 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 17:55:18 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
+        <clm@fb.com>, <josef@toxicpanda.com>, <dsterba@suse.com>,
+        <terrelln@fb.com>, <linux-btrfs@vger.kernel.org>, <wqu@suse.com>,
+        <boris@bur.io>
+Subject: [PATCH 6.1.y] btrfs: fix qgroup reserve leaks in cow_file_range
+Date: Wed, 16 Apr 2025 08:55:17 +0800
+Message-ID: <20250416005517.387669-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-ORIG-GUID: 1f19waSJ6s2oacpfsI7d3UxCe5dsa3tm
+X-Proofpoint-GUID: 1f19waSJ6s2oacpfsI7d3UxCe5dsa3tm
+X-Authority-Analysis: v=2.4 cv=UZBRSLSN c=1 sm=1 tr=0 ts=67fefffa cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=iox4zFpeAAAA:8 a=t7CeM3EgAAAA:8 a=oSb3yfUiBPKWAvThIHwA:9 a=WzC6qhA0u3u7Ye7llzcV:22
+ a=FdTzh2GWekK77mhwV6Dw:22
+X-Sensitive_Customer_Information: Yes
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_09,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ spamscore=0 adultscore=0 mlxlogscore=776 lowpriorityscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504160005
 
-Most ARM based chromebooks with two usb-c-connector nodes and one DP
-controller are muxing the DP lanes between the two USB ports. This is
-done so that the type-c ports are at least equal in capability if not
-functionality. Either an analog mux is used to steer the DP signal to
-one or the other port, or a DP bridge chip has two lanes (e.g. DP
-ML0/ML1) wired to one type-c port while the other two (e.g. DP ML2/ML3)
-are wired to another type-c port.
+From: Boris Burkov <boris@bur.io>
 
-If a user connects a DP capable cable to both usb-c-connectors the EC
-likes to inform the AP that both ports have entered DP altmode, even
-though one of those ports can't actually display anything because the DP
-lanes aren't steered there. The answer to this problem is to look at the
-HPD bit in the EC messages. The port that isn't steered for DP won't
-ever see HPD be asserted, because the EC hides HPD state for the other
-port. This isn't a great solution though, because some EC firmwares
-don't even signal HPD state in the message at all. Oops! And it really
-does throw the whole type-c subsystem for a loop when the port has DP
-altmode present but it can't be entered properly.
+[ Upstream commit 30479f31d44d47ed00ae0c7453d9b253537005b2 ]
 
-Let's fix these problems by doing two things.
+In the buffered write path, the dirty page owns the qgroup reserve until
+it creates an ordered_extent.
 
-First, we'll only allow the port that's steered for DP to enter DP mode.
-Do that by checking the mux-gpios whenever we see that the EC tells us
-DP mode has been entered. If the mux isn't selecting this port, remove
-the flag from the message so that DP mode doesn't look to be entered.
+Therefore, any errors that occur before the ordered_extent is created
+must free that reservation, or else the space is leaked. The fstest
+generic/475 exercises various IO error paths, and is able to trigger
+errors in cow_file_range where we fail to get to allocating the ordered
+extent. Note that because we *do* clear delalloc, we are likely to
+remove the inode from the delalloc list, so the inodes/pages to not have
+invalidate/launder called on them in the commit abort path.
 
-Second, inject HPD into the EC message when the EC has busted firmware.
-In this case, DT authors add 'no-hpd' to the typec node (essentially
-only on Trogdor). Listen for HPD events from the drm_bridge and read the
-mux when HPD is asserted to figure out which port actually had HPD
-asserted on it. When the port state is processed, check the bit against
-the port and if DP mode is entered, i.e. the mux is still steering
-toward that port, check if HPD is asserted on that port and inject HPD.
-This is necessary so that the typec framework can update the HPD state
-in sysfs, and eventually call drm_connector_oob_hotplug_event() from the
-DP altmode driver.
+This results in failures at the unmount stage of the test that look like:
 
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: <chrome-platform@lists.linux.dev>
-Cc: Pin-yen Lin <treapking@chromium.org>
-Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc: Łukasz Bartosik <ukaszb@chromium.org>
-Cc: Jameson Thies <jthies@google.com>
-Cc: Andrei Kuchynski <akuchynski@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
+  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
+  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
+  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
+  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
+  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
+  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
+  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
+  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
+  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? __warn.cold+0x8e/0xea
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? report_bug+0xff/0x140
+   ? handle_bug+0x3b/0x70
+   ? exc_invalid_op+0x17/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   generic_shutdown_super+0x70/0x160
+   kill_anon_super+0x11/0x40
+   btrfs_kill_super+0x11/0x20 [btrfs]
+   deactivate_locked_super+0x2e/0xa0
+   cleanup_mnt+0xb5/0x150
+   task_work_run+0x57/0x80
+   syscall_exit_to_user_mode+0x121/0x130
+   do_syscall_64+0xab/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f916847a887
+  ---[ end trace 0000000000000000 ]---
+  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
+
+Cases 2 and 3 in the out_reserve path both pertain to this type of leak
+and must free the reserved qgroup data. Because it is already an error
+path, I opted not to handle the possible errors in
+btrfs_free_qgroup_data.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
- drivers/platform/chrome/cros_ec_typec.c      | 115 +++++++++++++++++++
- drivers/platform/chrome/cros_ec_typec.h      |  14 +++
- drivers/platform/chrome/cros_typec_altmode.c |   2 +
- 3 files changed, 131 insertions(+)
+Verified the build test
+---
+ fs/btrfs/inode.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index 27324cf0c0c6..10079129645d 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index a13ab3abef12..2102cd676be3 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1428,6 +1428,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+ 					     locked_page,
+ 					     clear_bits,
+ 					     page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 		start += cur_alloc_size;
+ 	}
  
- #include <linux/acpi.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
-@@ -427,6 +428,41 @@ static int cros_typec_init_ports(struct cros_typec_data *typec)
+@@ -1441,6 +1442,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+ 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
+ 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
+ 					     clear_bits, page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 	}
  	return ret;
  }
+@@ -2168,13 +2170,15 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
+ 	if (nocow)
+ 		btrfs_dec_nocow_writers(bg);
  
-+static void cros_typec_dp_bridge_hpd_notify(struct drm_bridge *bridge, enum drm_connector_status status)
-+{
-+	struct cros_typec_dp_bridge *dp_bridge = bridge_to_cros_typec_dp_bridge(bridge);
-+	struct cros_typec_data *typec = dp_bridge->typec_data;
-+	struct gpio_desc *mux_gpio = dp_bridge->mux_gpio;
-+	int val;
-+	DECLARE_BITMAP(orig, EC_USB_PD_MAX_PORTS);
-+	DECLARE_BITMAP(changed, EC_USB_PD_MAX_PORTS);
-+
-+	if (!mux_gpio)
-+		return;
-+
-+	/* This bridge signals HPD so it must be able to detect HPD properly */
-+	if (dp_bridge->bridge.ops & DRM_BRIDGE_OP_HPD)
-+		return;
-+
-+	bitmap_copy(orig, dp_bridge->hpd_asserted, EC_USB_PD_MAX_PORTS);
-+	bitmap_zero(changed, EC_USB_PD_MAX_PORTS);
-+
-+	if (status == connector_status_connected) {
-+		val = gpiod_get_value_cansleep(mux_gpio);
-+		if (val < 0) {
-+			dev_err(typec->dev, "Failed to read mux gpio\n");
-+			return;
-+		}
-+		__set_bit(val, changed);
+-	if (ret && cur_offset < end)
++	if (ret && cur_offset < end) {
+ 		extent_clear_unlock_delalloc(inode, cur_offset, end,
+ 					     locked_page, EXTENT_LOCKED |
+ 					     EXTENT_DELALLOC | EXTENT_DEFRAG |
+ 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
+ 					     PAGE_START_WRITEBACK |
+ 					     PAGE_END_WRITEBACK);
++		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
 +	}
-+
-+	bitmap_copy(dp_bridge->hpd_asserted, changed, EC_USB_PD_MAX_PORTS);
-+
-+	/* Refresh port state. */
-+	if (!bitmap_equal(orig, changed, EC_USB_PD_MAX_PORTS))
-+		schedule_work(&typec->port_work);
-+}
-+
- static int cros_typec_dp_bridge_attach(struct drm_bridge *bridge,
- 				       enum drm_bridge_attach_flags flags)
- {
-@@ -435,6 +471,7 @@ static int cros_typec_dp_bridge_attach(struct drm_bridge *bridge,
- 
- static const struct drm_bridge_funcs cros_typec_dp_bridge_funcs = {
- 	.attach	= cros_typec_dp_bridge_attach,
-+	.hpd_notify = cros_typec_dp_bridge_hpd_notify,
- };
- 
- static int cros_typec_init_dp_bridge(struct cros_typec_data *typec)
-@@ -452,6 +489,11 @@ static int cros_typec_init_dp_bridge(struct cros_typec_data *typec)
- 	if (!dp_bridge)
- 		return -ENOMEM;
- 	typec->dp_bridge = dp_bridge;
-+	dp_bridge->typec_data = typec;
-+
-+	dp_bridge->mux_gpio = devm_gpiod_get_optional(dev, "mux", GPIOD_ASIS);
-+	if (IS_ERR(dp_bridge->mux_gpio))
-+		return dev_err_probe(dev, PTR_ERR(dp_bridge->mux_gpio), "failed to get mux gpio\n");
- 
- 	bridge = &dp_bridge->bridge;
- 	bridge->funcs = &cros_typec_dp_bridge_funcs;
-@@ -662,6 +704,77 @@ static int cros_typec_enable_usb4(struct cros_typec_data *typec,
- 	return typec_mux_set(port->mux, &port->state);
+ 	btrfs_free_path(path);
+ 	return ret;
  }
- 
-+/*
-+ * Some ECs like to tell AP that both ports have DP enabled when that's
-+ * impossible because the EC is muxing DP to one or the other port. Check the
-+ * mux on the EC in this case and ignore what the EC tells us about DP on the
-+ * port that isn't actually muxed for DP.
-+ */
-+void cros_typec_check_dp(struct cros_typec_data *typec,
-+			 struct ec_response_usb_pd_mux_info *resp,
-+			 struct cros_typec_port *port)
-+{
-+	struct cros_typec_dp_bridge *dp_bridge = typec->dp_bridge;
-+	struct gpio_desc *mux_gpio;
-+	int val;
-+
-+	/* Never registered a drm_bridge. Skip. */
-+	if (!dp_bridge)
-+		return;
-+
-+	/* Don't need to override DP enabled when DP isn't enabled. */
-+	if (!(resp->flags & USB_PD_MUX_DP_ENABLED))
-+		return;
-+
-+	mux_gpio = dp_bridge->mux_gpio;
-+	/* EC mux is required to determine which port actually has DP on it. */
-+	if (!mux_gpio)
-+		return;
-+
-+	val = gpiod_get_value_cansleep(mux_gpio);
-+	if (val < 0) {
-+		dev_err(typec->dev, "Failed to read mux gpio\n");
-+		return;
-+	}
-+
-+	/* Only the muxed port can have DP enabled. Ignore. */
-+	if (val != port->port_num)
-+		resp->flags &= ~USB_PD_MUX_DP_ENABLED;
-+}
-+
-+/*
-+ * Some ECs don't notify AP when HPD goes high or low because their firmware is
-+ * broken. Capture the state of HPD in cros_typec_dp_bridge_hpd_notify() and
-+ * inject the asserted state into the EC's response (deasserted is the
-+ * default).
-+ */
-+static void cros_typec_inject_hpd(struct cros_typec_data *typec,
-+				  struct ec_response_usb_pd_mux_info *resp,
-+				  struct cros_typec_port *port)
-+{
-+	struct cros_typec_dp_bridge *dp_bridge = typec->dp_bridge;
-+
-+	/* Never registered a drm_bridge. Skip. */
-+	if (!dp_bridge)
-+		return;
-+
-+	/* Don't need to inject HPD level when DP isn't enabled. */
-+	if (!(resp->flags & USB_PD_MUX_DP_ENABLED))
-+		return;
-+
-+	/* This bridge signals HPD so it doesn't need to be reinjected */
-+	if (dp_bridge->bridge.ops & DRM_BRIDGE_OP_HPD)
-+		return;
-+
-+	/*
-+	 * The default setting is HPD deasserted. Ignore if nothing to inject.
-+	 */
-+	if (!test_bit(port->port_num, dp_bridge->hpd_asserted))
-+		return;
-+
-+	resp->flags |= USB_PD_MUX_HPD_LVL;
-+}
-+
- static int cros_typec_configure_mux(struct cros_typec_data *typec, int port_num,
- 				struct ec_response_usb_pd_control_v2 *pd_ctrl)
- {
-@@ -682,6 +795,8 @@ static int cros_typec_configure_mux(struct cros_typec_data *typec, int port_num,
- 			 port_num, ret);
- 		return ret;
- 	}
-+	cros_typec_check_dp(typec, &resp, port);
-+	cros_typec_inject_hpd(typec, &resp, port);
- 
- 	/* No change needs to be made, let's exit early. */
- 	if (port->mux_flags == resp.flags && port->role == pd_ctrl->role)
-diff --git a/drivers/platform/chrome/cros_ec_typec.h b/drivers/platform/chrome/cros_ec_typec.h
-index 090f8f5c0492..b4b331aa5dc7 100644
---- a/drivers/platform/chrome/cros_ec_typec.h
-+++ b/drivers/platform/chrome/cros_ec_typec.h
-@@ -6,6 +6,7 @@
- #include <linux/list.h>
- #include <linux/notifier.h>
- #include <linux/platform_data/cros_ec_proto.h>
-+#include <linux/types.h>
- #include <linux/usb/pd.h>
- #include <linux/usb/role.h>
- #include <linux/usb/typec.h>
-@@ -88,6 +89,19 @@ struct cros_typec_port {
- 
- struct cros_typec_dp_bridge {
- 	struct drm_bridge bridge;
-+	struct cros_typec_data *typec_data;
-+	struct gpio_desc *mux_gpio;
-+	DECLARE_BITMAP(hpd_asserted, EC_USB_PD_MAX_PORTS);
- };
- 
-+static inline struct cros_typec_dp_bridge *
-+bridge_to_cros_typec_dp_bridge(struct drm_bridge *bridge)
-+{
-+	return container_of(bridge, struct cros_typec_dp_bridge, bridge);
-+}
-+
-+void cros_typec_check_dp(struct cros_typec_data *typec,
-+			 struct ec_response_usb_pd_mux_info *resp,
-+			 struct cros_typec_port *port);
-+
- #endif /*  __CROS_EC_TYPEC__ */
-diff --git a/drivers/platform/chrome/cros_typec_altmode.c b/drivers/platform/chrome/cros_typec_altmode.c
-index 97ca4cfabbc0..10d21da592f1 100644
---- a/drivers/platform/chrome/cros_typec_altmode.c
-+++ b/drivers/platform/chrome/cros_typec_altmode.c
-@@ -82,6 +82,7 @@ static int cros_typec_altmode_enter(struct typec_altmode *alt, u32 *vdo)
- 		if (ret < 0)
- 			return ret;
- 
-+		cros_typec_check_dp(adata->port->typec_data, &resp, adata->port);
- 		if (!(resp.flags & flags))
- 			return -EINVAL;
- 	} else {
-@@ -147,6 +148,7 @@ static int cros_typec_altmode_exit(struct typec_altmode *alt)
- 		if (ret < 0)
- 			return ret;
- 
-+		cros_typec_check_dp(adata->port->typec_data, &resp, adata->port);
- 		if (resp.flags & flags)
- 			return -EINVAL;
- 	} else {
 -- 
-https://chromeos.dev
+2.34.1
 
