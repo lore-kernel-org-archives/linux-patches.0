@@ -1,127 +1,215 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD49F221F01;
-	Wed, 16 Apr 2025 01:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744766304; cv=none; b=mgxgE+ocg7mbm+QwRNoxi8igIPHGp5jRCl+pZtTTJshOZe5NcmqX7KJ8BF0hkY5Q2A4ZEQDZKt/tEZijuDm2/8lXGQXyrxRfsqL0nFFBnAL0DpDkWnl9wPhk3cIMN1WV72RVSchgJ2ykd9jA52PdUJKQUMjMwRKUN2a/CdlOTr8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744766304; c=relaxed/simple;
-	bh=UuAO4fXQ4yds6ZdpXFhnTJZP3zIEQdUITBaJRPlz6Cg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LWJHdQ3TAzBwPKnxX3+CHgipmLeJkPgpb5f4Fg9orn6O6FUiGTY6+u9Ihuetgsj8x3VE71qKl2mj+k/gloFSopVclP/4jigtKN07M8/OBAk+BCbJ5EhxI5cRU9SD0ORZJHmLQMe8X3PnKbdPVRAuP8s4AUxqCwtC/KYrYYuPjkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G00VhQ012373;
-	Tue, 15 Apr 2025 18:18:15 -0700
-Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45yqpkkw4a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Tue, 15 Apr 2025 18:18:15 -0700 (PDT)
-Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Tue, 15 Apr 2025 18:18:14 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 18:18:09 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <harry.wentland@amd.com>,
-        <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>,
-        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
-        <Xinhui.Pan@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <sashal@kernel.org>, <chiahsuan.chung@amd.com>, <alex.hung@amd.com>,
-        <mario.limonciello@amd.com>, <hersenxs.wu@amd.com>,
-        <Wayne.Lin@amd.com>, <amd-gfx@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <daniel.wheeler@amd.com>
-Subject: [PATCH 5.10.y] drm/amd/display: Stop amdgpu_dm initialize when link nums greater than max_links
-Date: Wed, 16 Apr 2025 09:18:08 +0800
-Message-ID: <20250416011808.388698-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4999F19066D;
+	Wed, 16 Apr 2025 02:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744770325; cv=fail; b=RJnzGOb2rY2OwGHcoJ8rPyKOsvHkVjtiaCsO6mhJseNsEfUVJWCDYn7uWOqeVxELXA4x+9TRTOZKd6qTXM3zVDFLr/0vMcDSSIpRp+hvNiONdJWgFsZoIBfFgImI7CxkkPm4/T0qr+BaDq8ooA5gKSyhHyHufrEMH7yug1WyoPk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744770325; c=relaxed/simple;
+	bh=WcJsa60voDQW1U7jUSFaGPlFNRzW26i8SrBGFgAaf0g=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ik7zfE5V2cdXDxP6ROuaa2iL1hwMzImWVgfgENdsf0l8zbPzpUoFTSo9DMQ4EoW/fv2dCYolemWBTLNwTHfFfucaydS6NUwkb4PVv4YIzv6qchI1U4hkGVqF6Ib4Pul9FODND7K/v9KI+Onfknv6IsHPC8lc+LRD5MH6XjpNwyQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=WDyGQQOe; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=srDbjVQI; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="WDyGQQOe";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="srDbjVQI"
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FMNwpm010317;
+	Wed, 16 Apr 2025 02:25:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2023-11-20; bh=xxyy86daiyeuaeMMzPyaNQGD1PQ7xcsCKgk7RsX5Uq4=; b=
+	WDyGQQOes6pte9l5p+HcuNv5BpImhybT5vjBUdzu9B881PQDAR7rmkGdXCICbhCx
+	31VKn14U5HeyMBwZusJEawlIOwghdLs4yT51+cujp84+Y8zGP7c7UWuSFqzHGsiV
+	FhsMjEgBL91fC1aL65Ye0r3PEklkT/Qied3wZVm0vWSYj+HoJl4E4FeCgUAVNzg1
+	jMGMzQkXLuirrZ9ggDPKr48kc3obigEXqglcrktLkueF2wO8wLTFcNK/hUq3PiK0
+	f6R010YITxUKvv1j40dzinh/XG3/7XMuGRjDBOfMqdwZATQGk8ke64FoakHFPiYG
+	70W+uK04kNwQwivF9dYm8A==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 461944avsg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 16 Apr 2025 02:25:22 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 53G0bLr4024737;
+	Wed, 16 Apr 2025 02:25:21 GMT
+Received: from sa9pr02cu001.outbound.protection.outlook.com (mail-southcentralusazlp17011027.outbound.protection.outlook.com [40.93.14.27])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 460d5169vd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 16 Apr 2025 02:25:20 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KNXWzj6eLWmtTZ56w48/X7EberKKdOeZ3+pG55TkFKm7tkuMm3i65guYyYPevUwH8mla1bnBbs/75qzi1ON725vilqTV23+TbUqRiVO9QOBtVGHzMEO4dcKEbL5a3kmszceyTEOvNyRfrU5Qdv1uipUx3GgwCONqQriJku/LRNDYZmpCgG06NyYFgaWQVIIo6Yw0sBTc84OSRPe9geYpQGe4G8otW28t0NAVjKFQ8wqDZvvxerJPwzst6pF0t9XQWbdhsVg6gRXv63gfa2Q5EsZqHNGNop0hza5yxEUNoVHQdzSiqPpHsCL+xLL4fPYhdOsZd+N8Ej1YcwUltGMjZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xxyy86daiyeuaeMMzPyaNQGD1PQ7xcsCKgk7RsX5Uq4=;
+ b=SorzUeBUfwpfA/C0HPLfabu27EtE4FAvHR5ZvwGBAhQy/fdHES+xdyw/gxPPtH72bDlT0B+qUBVs4Kj+IMvUXO8K9XS2SyM2yphTENbzvj1sDf9cjJn4s6nVa+cN8FYfzsrK0PMQ2TsUSnyXMXH8KfmJrEEfBXDl6P07MxA0DHA8MDbg9Ub4q1508q/RYgS7ji+b04Ew9VNgj2+JNRpcYMmdaiHNhgez3VUqagxvzf15SozQNpwWIZZioZ6Eo98GfBnPT9DhkMsvtdhHNxRK+f1g9QEqXFHj4vQUIlaStQCNDsuA90a1txEYuCMSF6/evFzVo7ingchn8yZgay010w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xxyy86daiyeuaeMMzPyaNQGD1PQ7xcsCKgk7RsX5Uq4=;
+ b=srDbjVQIgf0hC0MsfI+20/pMDHz5di97oC7xt/bSr8yH7+XimaBQ0krqYCCaHmbf2bZVqhAYRpcnx6flsVsNBXqmXUeEmYbljML09qBAWInJ+Zo+gCROXyHJCZ54uzltTRKwe/1lxZ/IlBkR8PPCz2UOXuMNYBlNdxcqR78WNA0=
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com (2603:10b6:5:3a7::5) by
+ CH3PR10MB6762.namprd10.prod.outlook.com (2603:10b6:610:149::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.35; Wed, 16 Apr
+ 2025 02:25:19 +0000
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da]) by DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da%3]) with mapi id 15.20.8632.035; Wed, 16 Apr 2025
+ 02:25:19 +0000
+Message-ID: <4841de65-2843-41e9-8153-bda1f626013e@oracle.com>
+Date: Tue, 15 Apr 2025 22:25:17 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/type1: Remove Fine Grained Superpages detection
+To: Jason Gunthorpe <jgg@nvidia.com>,
+        Alex Williamson <alex.williamson@redhat.com>, iommu@lists.linux.dev,
+        kvm@vger.kernel.org
+Cc: patches@lists.linux.dev
+References: <0-v2-97fa1da8d983+412-vfio_fgsp_jgg@nvidia.com>
+Content-Language: en-US
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+In-Reply-To: <0-v2-97fa1da8d983+412-vfio_fgsp_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BN0PR04CA0044.namprd04.prod.outlook.com
+ (2603:10b6:408:e8::19) To DS7PR10MB5280.namprd10.prod.outlook.com
+ (2603:10b6:5:3a7::5)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: lGjMQycpew1QElTfJ0BFCJ1-sXLc6BR-
-X-Proofpoint-GUID: lGjMQycpew1QElTfJ0BFCJ1-sXLc6BR-
-X-Authority-Analysis: v=2.4 cv=UZBRSLSN c=1 sm=1 tr=0 ts=67ff0557 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=zd2uoN0lAAAA:8 a=t7CeM3EgAAAA:8 a=V2FjD2v6pYOrjI9wGFEA:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Sensitive_Customer_Information: Yes
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5280:EE_|CH3PR10MB6762:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7dd110e7-0383-4043-bf17-08dd7c8dee90
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UmZ3K3N3WFlJNWhUWFVlUGJ4N3lUdW1BYmZUSW5BUmJtWjhSSmp6Znc5WUR2?=
+ =?utf-8?B?OGZrdTZvQkpSYnhKYjA1VzNOZ3FSNEhONU1XK0xOY0VHVWxYVnl0cDE2UG9l?=
+ =?utf-8?B?THpaK1pHNEM2bmVFczAya1NkY2hDOTdIOWxSVDdGektpRUxLQklUSXBBcGEx?=
+ =?utf-8?B?YzVndlNucU85c2xWbXdraU44elVWZzIvQ1paZjhVSFFqenZnSUJmRG9iMVd6?=
+ =?utf-8?B?Qjl3YWQybTk4cVVVa25MODBoMGhJcG5CeFRkM0ltS1gxcE5paThIMEErdndn?=
+ =?utf-8?B?cFB6elIzR29KL0hUQ0dHWVFQR09JUjBZdDBmZHFIc2E2dFVRUXlvemV2bjZP?=
+ =?utf-8?B?TUkxRXFjSkNpRUpLdlBvTGw2SzJNTFdtTFpXd2N4dXZ4d0ZsUGZZUE5JZFlX?=
+ =?utf-8?B?TnI4QWJTNFd6aFhrd3kxUlhsSHhHYXNraGt3ZW5wQnhwQ3hjdkJxMmNjS1hq?=
+ =?utf-8?B?MVZKdUhjQXhtQVByUVdQYUJDcnF0NlVTVmRjeWRIL2xtTmNmKzdrQWltS3A2?=
+ =?utf-8?B?eFNLRURaT0svUkFGUzlVVDBmWWxNMFBGdlZzOGYvK1dYMk1HUklGRUZpV05p?=
+ =?utf-8?B?UGNGZ01GbWF1anR4dStYRktsMEdjQzZMWldzTk0xOVlacWcxMXpnZEdOQXNB?=
+ =?utf-8?B?MTRNYU51QkNoL0I0KzdDMFV0WFVHVlFOU2RTS1dqTm1SdEh2Q05zOENhZU9w?=
+ =?utf-8?B?YWxjTHRJMjk1eUs5TDJJNTB6SU1OcEFqZHl6MitjdjMrcmdrNnV0N1ErZGli?=
+ =?utf-8?B?UEUwYnBFSTIyWU94L2FOd2ZZWTAzZ2ZXc2MrNkYzcmpmWkt1SUJOOFJxandL?=
+ =?utf-8?B?eEYrbG5RQWR2VTNQZ3BhWE1iT2FzeU84QlJiWko0ZHJkQTZWNnUwa1ZyR2tn?=
+ =?utf-8?B?c2hLa2RBRkY4ek5DTXJCMnArUEZ5SFJZc3hGVStwOGFOdnF6ZjlGam43VXlJ?=
+ =?utf-8?B?b3lZU1lwMzFNUG4zWFpVcDJDK1BGTzdmM0VnY01OekpCa2pXc1gwTmVJY2JQ?=
+ =?utf-8?B?ZzZMcUFtUDBjVVVCRlZJcHdKK0JkK1FXNDcrNVZCa0FzMDhEcUVTR0ZMdkp6?=
+ =?utf-8?B?bTNmWjB1NThYM2k4d2gzT2MyejgyRDNubEZGNXlqR1A3a1NrWlhEMWp5MFlm?=
+ =?utf-8?B?SnJSbU9UUzZyTmZTNXgzVDA3eSsyNHJtTEtVWndqK0duTW9Qc1pGSWtzcDNQ?=
+ =?utf-8?B?YnN4QnMybWpsQ05pZUxFTmJweUxkVkFDOHpISXJGWFlGcHV1ZERabVgyd091?=
+ =?utf-8?B?WUpicmpCNzl6cEtncFBxbmVVaE9zdlErSTRTU2FONzF6bUhkdjJ5eS85S3Av?=
+ =?utf-8?B?NVRFeVg1U09PRmNPdi9rellCbVRwZ2ZTdnhGT0d5VWszbUFtb1B4U1lwOG9N?=
+ =?utf-8?B?dUxacTZLRTU3YjllNlBmT0hGSUJ6OERoK3NHRTg2Mm44WU1pMld2N1pHeThL?=
+ =?utf-8?B?ckRSTmplbXFsYVJBMG1QcnFDbjFnOUs3SzdTMlZjODJuczdqQXloSllPWm93?=
+ =?utf-8?B?THB1b0ZXOTJXZm8xOVM5K0hqcks3S1RLcHkzRWVTdGg1aTU5NlFoM1l5WS9o?=
+ =?utf-8?B?SDY5bGRwTWUvUytOcktoTlFQVTRWMlgxMXJJZWNCYU00SzNtY0RhalVxbEZU?=
+ =?utf-8?B?Q2EzWmZ0SFJTMlpWZWFhWmVGU0g2a3p1QWRoUGlLV2RORzBMb2ZRc2dLdXd4?=
+ =?utf-8?B?NGc0SzlGOFJxTHN4djFibktaUUlnbFgwQWgwbDBnMEFpOTVndkI2Q1gyWVdv?=
+ =?utf-8?B?eWtuN2ZwVDZrcG0zOEdHVmpYeTRoOHVLaEhMbU4rR2doSHpWVk9ZSFR2Snh3?=
+ =?utf-8?B?L3FpNjNhQTFzVE1LZ1FJWWRrMm5nSklCNjVBRkcwR2Nac3lKcG1OVzViZ3JV?=
+ =?utf-8?B?UWxsOWRuK2F5Z0l5T2RDb0c2L3RhejRKZklQZHRzT1hXTy9jOGFlN0lGODFj?=
+ =?utf-8?Q?gjKSiMA4eNM=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5280.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RVRzTFR1TFNBN3dFanJwQjM1cjhwZk5WbE1IcTZ4cDducUdTZTFjS1ZIUHJv?=
+ =?utf-8?B?bXZWWldWZTFJdGFEOTExYUJ1QUp2eFBHT2lKRnFsbm01bmpEVk9vb1hmaENy?=
+ =?utf-8?B?eUZaU2pnaTBXanZrMWdCL3RadEM3RnNiYVFNRmYzUWpvallwNjd3bmN3RzF1?=
+ =?utf-8?B?WHlTSmx0YmpoTkF6c0pWNFhXVGZuRzNJU2M4c3dxcE04Mk90UENQQjZiaW9k?=
+ =?utf-8?B?UzJrVW9yYWpGbCttUkVPRFZmSSthV2hxNnMvbWZRK2hPQlJyVXRRc2dJT01B?=
+ =?utf-8?B?cU1NdDNUcmVRS1pEMCt2QmZNMGR3OVBqa1dVcjNsdUY0YWdzWlNzRTdtZXJ5?=
+ =?utf-8?B?VmFTNE9MTWVMTFY5NzlBOU1ESXI0Z1poamt5OTUySnRLeGdGR2F2NkttanNx?=
+ =?utf-8?B?WCtuVnU4S2dWNlk5Qyt2eHFtTzR5Y3dpV05ZM3pKU2tuVm1FdkZzSFpTSmpv?=
+ =?utf-8?B?eU5qdElYZ2k2cFBxa3lod3U3VGpSTDdpNzVQMjEwWHVQZnBwQ3h0WDJ2Smpt?=
+ =?utf-8?B?dzkyZzBiWHFxdWdqVlFSWmM2V29STUdKaDRNMU5PQzFKUEQwSWQyQUVOeU1t?=
+ =?utf-8?B?Wlg4MlVYTG9mRWluOGhaNC9TYmdLNC9ta3V3ZzB0dFNSV0xIdVdiUUVVZGxF?=
+ =?utf-8?B?cWhUVjhiN1FsZzJwbnkxa1RKL0NhNzhwMUVOR0JHams2anlQVVRWOG16YjlR?=
+ =?utf-8?B?S1R5RWdJUGhDMGFNY2RCNENqU2VuMnIrNXYza3U4cVk0Q3l0TFhweVdrN1l5?=
+ =?utf-8?B?TnNOMkd1bUg0bGNOcUxnVWRnL1g5V3B2OGRaSHljLzlkUkprZTIrRmI1K1FW?=
+ =?utf-8?B?UmprZmhkT2s2ZERjRVZic1dIbEsxOE5IYTlDOG5vMDVXMXFzSUhDTjB2c3RZ?=
+ =?utf-8?B?UU9RM3FrYzJWY0N5eVNTcUlScm1CV254ZFRTbkgrNXp6aENzelJoOFVQRzg5?=
+ =?utf-8?B?Ti8xYmlMTE9QK094V0labVZ5WVNNc2ZOQXlVOUpxRmtjVFp1emk4OXltbEJy?=
+ =?utf-8?B?MENtQTBuN1h5clpwanc4QzMwWXJ0WkFXbkZkVExNWGp2ZFVka2ZwM25NN0dZ?=
+ =?utf-8?B?MllEMWc3V1U0dHVkejF5K3dCNGYvTEJ5cC9rdExaZTVmTXVQclNnako2RUdG?=
+ =?utf-8?B?VnEvSHRVRGV0cm5HQ1BSUnkzRExscnhYNG55RFM4ZmVIaXZPdFlkQ0o0aDZR?=
+ =?utf-8?B?Uk96QmxUOENoanNjcXI2amgrWmZ3ZTlCOXZiaDU5aUJtRzVhV0lGdGdCekZQ?=
+ =?utf-8?B?L0VWQVc0YXpkMWFJQk5EZURoaVloa0NXTWlENEpidGZSTUlaOHAyVUFCWEdC?=
+ =?utf-8?B?L2orb25MbXFHM2lpR2VoTUdTbXdwUFQrRTFMY2VibWsxS0F4STIzaUVUR1dT?=
+ =?utf-8?B?aDQrQ0xNcTVzT3J1Y0pVOWl5Y3hsTWI4VVhQYzNmZTJWRDVISEtBbThnUkVv?=
+ =?utf-8?B?VmNkT3VubHFOMWNEM1VVNDZLM2NHSG9mZlpqTzlLcUV0OGRyNFhMbHo1VXpF?=
+ =?utf-8?B?aTZGd0lUYUNGaDVtaGRucEdTdW1wNEE2N3dkWkFteVhxbkxzMDJDaE5KdFBi?=
+ =?utf-8?B?LzFnRDcxa1QranZPeENhWDh4dG1MMnZ2eW5yclJaMkhHWUlhTzhHckFTT2p1?=
+ =?utf-8?B?NGJTVmkrV3JFcWdvZVUxUjI5QnBrYzlhQUxidWFOVXBBM09hMm1DbEc3MVAx?=
+ =?utf-8?B?WkdBYndVUGswSkxKSFNaclFhKzVISzhVcnFjQ3l2WmxUZVJPT2dlcXhCdjJy?=
+ =?utf-8?B?Sm9DMm9sWmUwQVlsQUhNd3YwV2JJY2dDaUtGcFVqTjY1NHVDRGxQcFhsc1FO?=
+ =?utf-8?B?MUtUQ0pGTHVzSjI0ZEVScjBHNExld244Z0ozV0djaUZyTkp5M1dPcU1IRFFx?=
+ =?utf-8?B?QWFtNVFvbGk5QjVTT25mb3dqS1RvZ3pKa1pKeXNObnhObWlNam1vTFdXbldy?=
+ =?utf-8?B?SnRrbXRJRFBHYm9VcDJ6azNRd0FacUxKMHVlbi9mMkVIdk9wdnZVNzlEanpE?=
+ =?utf-8?B?SWkrOUF5N1FpeEVzTWtKOUFWZTE5WlVpSnpyV1laMWNaeUlJSVVoY3VHaXZP?=
+ =?utf-8?B?RlhKYU15am0yOVR0clpBclhtTkpWTkNDK2pkRFZzbGgxcnVXanJhTGZzZ2E2?=
+ =?utf-8?B?QWJWL0NTZ2RTTUVJaEZVTTcyV0xjZTNHeTJTMTJPbFM0aW5CMW9mUE5GM2ht?=
+ =?utf-8?B?akE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	r8Q2TjAuAj+YMqAfVnJlZl/ZQzbpvcpw1syXojm8WdSgiTWZcPl+lwdNJuddntogGZok7dX4udMaZ0jFKgFaISu3xXJfoH+Kbf+w82LiWfIXyhxhxSAqec4U9hVvqetvRKYVaOlr4QmFO1LYTOf268yusrW8/9en8tFvCrG2nEFch/g7oxkY6hUoBED4rLDVQJ36gfjpaIz11UbrR4+Ko8FU1qKtI1Gr26wGcJC42dE+3zeknxisCXto1ALP8HXgTzqWjpghu/otY+mv3vSKFHej8pc9twatVPywqqobmO9yfsl8YwwQp9PN+6zvlHFrN/hlq5mxIvosGohX0WrD34sUzLrVDuJEkqsFmXYH/WU08H0JaMZkz/c3HAuUIud3/DU3JDI5ReSAguBidxfuJbBXOfVqCmcVyVb7mCCz3sjWJvMuE0NWObTU99orK+qRQlIwOnGtoCHCYNk6irnv2F9fgj+u2lMf4iyXvqv4pdI8M/pqpky7D96RhPJXKa/taR/EC8Oq8iXBaA7UDl0JsftnLmNchjMjdo446ibwDXe76FeU4btUQc0Q2yDZ5U2cc/7hWzw8ddKSUBDlQtJasiLaa9Lrhcg84rV7t8H551E=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7dd110e7-0383-4043-bf17-08dd7c8dee90
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5280.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2025 02:25:19.3024
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sjhWKlNB24P3Mr1ENKu8kV2RQvlzbcOzKrK+cwOcyINWz2H+0YF3X/xUWqCTvSFbnCrfuDXpda89fdrCpzWOvodYITUFiX1iqXm4Oo2pu0A=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB6762
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-15_09,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 malwarescore=0
- spamscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504160008
+ definitions=2025-04-16_01,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 suspectscore=0 mlxscore=0 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502280000 definitions=main-2504160018
+X-Proofpoint-GUID: -gq5Mg6-lKaN7TXW3JS2IqM-RmY5_pEW
+X-Proofpoint-ORIG-GUID: -gq5Mg6-lKaN7TXW3JS2IqM-RmY5_pEW
 
-From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit cf8b16857db702ceb8d52f9219a4613363e2b1cf ]
 
-[Why]
-Coverity report OVERRUN warning. There are
-only max_links elements within dc->links. link
-count could up to AMDGPU_DM_MAX_DISPLAY_INDEX 31.
+On 4/14/25 9:46 AM, Jason Gunthorpe wrote:
+> VFIO is looking to enable an optimization where it can rely on a fast
+> unmap operation that returned the size of a larger IOPTE.
+> 
+> Due to how the test was constructed this would only ever succeed on the
+> AMDv1 page table that supported an 8k contiguous size. Nothing else
+> supports this.
+> 
+> Alex says the performance win was fairly minor, so lets remove this
+> code. Always use iommu_iova_to_phys() to extent contiguous pages.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-[How]
-Make sure link count less than max_links.
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Minor conflict resolved due to code context change. And the macro MAX_LINKS
- is introduced by Commit 60df5628144b ("drm/amd/display: handle invalid
- connector indices") after 6.10. So here we still use the original array
- length MAX_PIPES * 2]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Verified on AMD Zen4 host, basic sanity test booting KVM guest with 16 VFs.
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 50921b340b88..69b3f1dc43e5 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3397,17 +3397,17 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
- 			goto fail;
- 		}
- 
-+	if (link_cnt > (MAX_PIPES * 2)) {
-+		DRM_ERROR(
-+			"KMS: Cannot support more than %d display indexes\n",
-+				MAX_PIPES * 2);
-+		goto fail;
-+	}
-+
- 	/* loops over all connectors on the board */
- 	for (i = 0; i < link_cnt; i++) {
- 		struct dc_link *link = NULL;
- 
--		if (i > AMDGPU_DM_MAX_DISPLAY_INDEX) {
--			DRM_ERROR(
--				"KMS: Cannot support more than %d display indexes\n",
--					AMDGPU_DM_MAX_DISPLAY_INDEX);
--			continue;
--		}
--
- 		aconnector = kzalloc(sizeof(*aconnector), GFP_KERNEL);
- 		if (!aconnector)
- 			goto fail;
--- 
-2.34.1
-
+Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
