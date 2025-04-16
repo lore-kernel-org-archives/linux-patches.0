@@ -1,60 +1,60 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CE8C2C9
-	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 00:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28054A24
+	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 00:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744761735; cv=none; b=bAW/RhpvkSSl3ve9mhOOTzpGkuGH780dPk/IUKnUT4/YgztnrnYsi9HJO/kzb+jqI0TEfWvPyXi5JeHThv1ldQiwYS53v8FyRf+eP8hKaEai+aNWW4OMTfVffshSy9DK4mkrrz/CofuXiJw7spVwQn20AIDJzzYHZiEOKCyFpn4=
+	t=1744761738; cv=none; b=R9bOZwa1hGivaGmE2uCjNGO5bykpaalgoJ70cdYS1fX7LFP/GdHQcXNdVCGbj8sUXeM/R6lHRmz81N+hrhqZCazYeOZAvbGMeyD8w6xteJ19mfCwJZIL/tYVSyxjlAIEfmfToQNA00TucmuI1aNlG51j3TVIdGB5LBM9lTQSDBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744761735; c=relaxed/simple;
-	bh=9LdBVOezi3+S4+ZxOQ8+mmTVUoo6eXOCdNB3fmZA2G8=;
+	s=arc-20240116; t=1744761738; c=relaxed/simple;
+	bh=X73kg4tdW06GAOX2zu95FNoOmd3sHwKiCictodfiuao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ArPsCF+cLuonJzTxMPFjKSdGRQZ+57xC2Oeah0tC0DRUVrO9MJr8rqdCjCxMuBes8mWhpT+hVyIJjwdCwp4X9y4ntgoT2cBt4gW7BOT5Cjs7/8w5ED8FA7Fg/R9hjsIHLNrkKYpplNQkfn08hFhxpv28DA+JJyi5SmeOX1mtgmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dvkol6CG; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version:Content-Type; b=gCLZ4fbFITS6nuDEttrWJYVQDxQhTAIXMZ3ItloGjmuO5g46TgjXWG2cpzoUDK6gm8YufdQWdAgj3z6L7t4P3Zbn2sH1NVIPVhO3T6pZIy/ex8YXHwu4t9BHndqfq9RRggbC+b+HylRfoUvpHi4Ze7MFF7X3WJkK/6K001Z+plk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=A2yoB7fN; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dvkol6CG"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-224100e9a5cso70614485ad.2
-        for <patches@lists.linux.dev>; Tue, 15 Apr 2025 17:02:13 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="A2yoB7fN"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-736b34a71a1so7162206b3a.0
+        for <patches@lists.linux.dev>; Tue, 15 Apr 2025 17:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1744761733; x=1745366533; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1744761735; x=1745366535; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ETD26CH6iD+0uFy4hgKYmRwgyWbV2LZsUcS2ttgEWQs=;
-        b=dvkol6CG11OQh6F3fhZRYU05Ma0kbjJGO0UUW5MZCpNCjwzpMVrnKq5uF3nlopriA1
-         EL7iSBGIBw6deuOYv/GUbY5snJ2jfFK/oAzxyqDtWEgkLj3QmDib6V2o2veGwFxSDGyI
-         k/y4QWSl2XdVAXfLJpZdVrEWM8mhp/Do6sRFA=
+        bh=ztpfrrq65RboKoVCNPKCaSBonp9V4OT02BBtVtoD/uU=;
+        b=A2yoB7fNZ6vr106sCoS0BC1bhuUqQ1o9IZsyWw4omSUEgsJESB1XdkfRGVmYk2BgWD
+         xQLXqT2K3TAzVuVBHUiLEioHpuvp8l7jxebQKF7ax5cagILI48OyTqkbDvfD9QRjlXyj
+         LdisZ6l2FQmDpFpgM7h/TNuGWA0hYkZ/OZs40=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744761733; x=1745366533;
+        d=1e100.net; s=20230601; t=1744761735; x=1745366535;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ETD26CH6iD+0uFy4hgKYmRwgyWbV2LZsUcS2ttgEWQs=;
-        b=nOChipvznEw1F8mVqhOOzm2fyZeJpnjFw9U0dQwZkOYg/IHBnDmh42H+xVwLoSZ3Xb
-         LddS0l/E/mUezmFXQzWeisPhlXS8WRIKRzoOHYLvKdLEdP2dLLbWJ1u+QmLss9suwtnB
-         RZIaHtMwabSz+/1Ru6TFsO88zKBmxZzDnnUU0GwTq5G+0duEQ/gdCVSP6wkQ54XOJmY1
-         R2wkLmEBb1zbh7otvRzl0t6uID1451klWU3/fIY0dBPM5MXG5xdax30ZqnQwzGorpXwJ
-         LtSf3l1UBaBlKGP6IVSMavKtz4qatis10MpWX3OsPzSFxHKNfedqrSHjcUy2JoF+rk1l
-         pHSA==
-X-Forwarded-Encrypted: i=1; AJvYcCXwoPWxjnaOPuyuSNzkdyhM1fxtx5A3BT+W9m0CBN3nKRyWcwJJNOS4R67J4W1/Zcz3eEXTxtwn@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw97nXXO2ic/D9JRNt2NxsVI0DxFqM5i0NhGrItgphXRTwJUP/D
-	x4Po2Fx6eVjqRsb58COhka0pji+Q4Bwbwq+i8gX7EnF1yRCAaoNzFNc8phbJ0w==
-X-Gm-Gg: ASbGncsMN1u6FehYMAJO75upI8C1vSMt1pHWOBoOtqjgmIMDZZsh4cdY0piFTuqPwJe
-	xogszp+pf0SQgF898deR6N23Tg5Mb9G+mjsXePG1AQkW39uy4uHs2HG9Y7Cw3zhC0Y3elZq9Xf7
-	KQHopIqieRHYgzPUl/r+1orHA2UXV4ExCBHNB117+93bmAMwcCS0+yDBCD/Junywf9oi4Iv/Z5N
-	5bIPxBB2kgoamlf/YtR0cHuyKPsvvxhNWo05xNNECJIsByI9XhaUj+BP8E1u82apPBaR5lJuZa5
-	1r1SzKNYKcBMccAkA6s/7Ak4rbN4/55J/q1v0rzhne45mpj0VYmIlum5Y1ILsMbYC5Gq4HCs1r1
-	Ajg==
-X-Google-Smtp-Source: AGHT+IGTNhPFIcDKlL3bF0SzfSJ7SIXjnXhh0YeuCFsofT603F8bPtE9D2lDaA650EUHL4OU3b5nnQ==
-X-Received: by 2002:a17:903:2a85:b0:220:e63c:5aff with SMTP id d9443c01a7336-22c31ae8e3emr14464865ad.47.1744761733360;
-        Tue, 15 Apr 2025 17:02:13 -0700 (PDT)
+        bh=ztpfrrq65RboKoVCNPKCaSBonp9V4OT02BBtVtoD/uU=;
+        b=Vp+VQTrEflxPcIR1w09cryoPr7TNfAM6Xaj1EBeBvCC9MED4LoooyxXzWywRJCrwTG
+         nQPf2Mm2tRS7fI77p8lWoHGHh7s5M3bgpz7QsKBvCylIBhqrcWSwAWPI8A9NkLGzIHG4
+         FMlHHhDplXXSzMIbc1vZsfmSpM9Qpfw/wtBfDZ9LUZF4+QhCr2sQlorSIqTKcvhLSFlu
+         4F2C96UsttFduH2VEKQvCJnzNLD4eZ/6qG3oAFuWnmu3SknAZJxvf73zPcbPjx7AugXI
+         1HNwLbKUnnw1iXQKb1ElgxR07xUYIV7mHoMGA9s1T+iEdAnOGJywrXKHOa5gMFyARKc5
+         uE/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUt6wtAZ2JK4NmqMD9OGOmZxO0xr4rRZaJV6Qhk427khYc8EMiRPdwPgiAFktq2olLYBOv5inqV@lists.linux.dev
+X-Gm-Message-State: AOJu0YxdOY3/wvODAH6xBKVvqe8+wCfgzk9dbf2mte93dTELQVpm7etO
+	C7DMqJgXLXWVueqN9icOMSERfomnjq8nSHKVml6e2FewgyF7Vte/Hq+2nd6Hnw==
+X-Gm-Gg: ASbGncsQNKx7Jb9MT1KdExBo0j2/Y2dnCSFqKIEhJLmBu/W2wAM/qFM03AhrTJNNchz
+	tUQPUJym2sucd0Lcd3+xlt3LveciWaJa5PLw66CYlP1tEKjaxgnhq9cSBMa47YHcbqav959ivaW
+	sDYXBUXaaVmmbZVL/s0mlSlwc/b9PbAilTmyv7qUNvvFwreEVialFsOhnSzG594NQWFqLXi97Kj
+	PpZaslhgFOYbvYpNFxACC6eHdFKRWvOMr5hW2BApUbA3tbS3LzuMFLUV7EFQTY+zWjSH1oE4m/l
+	1Y0d9umhQ2QNmfc3M5+9FXIscHavohNY84zryV7Le+00UnJ2CZZdRGdnRRKljlRVOk1XVlxn1Gt
+	0xQ==
+X-Google-Smtp-Source: AGHT+IHkUQNhj55ArcxMsqdZ9goNzK1iX/oCF1gdLXwsnONXGZV+o45RA+2MeBctZXHEWSSuaXlJnA==
+X-Received: by 2002:a05:6a00:2e29:b0:736:48d1:57f7 with SMTP id d2e1a72fcca58-73c1f90d688mr1947843b3a.7.1744761735002;
+        Tue, 15 Apr 2025 17:02:15 -0700 (PDT)
 Received: from localhost (199.24.125.34.bc.googleusercontent.com. [34.125.24.199])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22c33fc47e0sm1235925ad.167.2025.04.15.17.02.12
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73bd21c3216sm9157830b3a.49.2025.04.15.17.02.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Apr 2025 17:02:13 -0700 (PDT)
+        Tue, 15 Apr 2025 17:02:14 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Tzung-Bi Shih <tzungbi@kernel.org>
 Cc: linux-kernel@vger.kernel.org,
@@ -75,9 +75,9 @@ Cc: linux-kernel@vger.kernel.org,
 	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
 	Jameson Thies <jthies@google.com>,
 	Andrei Kuchynski <akuchynski@chromium.org>
-Subject: [PATCH 1/7] platform/chrome: cros_ec_typec: No pending status means attention
-Date: Tue, 15 Apr 2025 17:02:01 -0700
-Message-ID: <20250416000208.3568635-2-swboyd@chromium.org>
+Subject: [PATCH 2/7] platform/chrome: cros_ec_typec: Allow DP configure to work
+Date: Tue, 15 Apr 2025 17:02:02 -0700
+Message-ID: <20250416000208.3568635-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.49.0.604.gff1f9ca942-goog
 In-Reply-To: <20250416000208.3568635-1-swboyd@chromium.org>
 References: <20250416000208.3568635-1-swboyd@chromium.org>
@@ -90,11 +90,11 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-If we aren't expecting a status update when
-cros_typec_displayport_status_update() is called then we're handling an
-attention message, like HPD high/low or IRQ. Call
-typec_altmode_attention() in this case so that HPD signaling works in
-the DP altmode driver.
+The DP altmode driver fails the configure stage because the status VDO
+that is spoofed in cros_typec_enable_dp() is missing a couple flags. Add
+them so that the configure succeeds. This has the nice side effect of
+properly reflecting the pin assignment and configuration of the DP
+altmode in sysfs.
 
 Cc: Benson Leung <bleung@chromium.org>
 Cc: Tzung-Bi Shih <tzungbi@kernel.org>
@@ -106,27 +106,22 @@ Cc: Jameson Thies <jthies@google.com>
 Cc: Andrei Kuchynski <akuchynski@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/platform/chrome/cros_typec_altmode.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/platform/chrome/cros_ec_typec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_typec_altmode.c b/drivers/platform/chrome/cros_typec_altmode.c
-index 557340b53af0..c2d9c548b5e8 100644
---- a/drivers/platform/chrome/cros_typec_altmode.c
-+++ b/drivers/platform/chrome/cros_typec_altmode.c
-@@ -280,11 +280,8 @@ int cros_typec_displayport_status_update(struct typec_altmode *altmode,
- 		typec_altmode_get_drvdata(altmode);
- 	struct cros_typec_altmode_data *adata = &dp_data->adata;
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 6ee182101bc9..2cbe29f08064 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -531,7 +531,7 @@ static int cros_typec_enable_dp(struct cros_typec_data *typec,
+ 	}
  
--	if (!dp_data->pending_status_update) {
--		dev_dbg(&altmode->dev,
--			"Got DPStatus without a pending request\n");
--		return 0;
--	}
-+	if (!dp_data->pending_status_update)
-+		return typec_altmode_attention(altmode, data->status);
- 
- 	if (dp_data->configured && dp_data->data.conf != data->conf)
- 		dev_dbg(&altmode->dev,
+ 	/* Status VDO. */
+-	dp_data.status = DP_STATUS_ENABLED;
++	dp_data.status = DP_STATUS_ENABLED | DP_STATUS_CON_UFP_D | DP_STATUS_PREFER_MULTI_FUNC;
+ 	if (port->mux_flags & USB_PD_MUX_HPD_IRQ)
+ 		dp_data.status |= DP_STATUS_IRQ_HPD;
+ 	if (port->mux_flags & USB_PD_MUX_HPD_LVL)
 -- 
 https://chromeos.dev
 
