@@ -1,32 +1,32 @@
 Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77DB33985
-	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 01:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DF21E51EC
+	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 01:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744765393; cv=none; b=CoUbyxJ4oQcrXYVFDJ1Q5S1XAI/kVQ38IoTHLJWv2WvGRH5laLSBRtuILmf+LoA4FWjlGp3HcQqZotIaRnwEsG1EXWILH36sXkDHi1TrmNFQQHZ7wYFfsbQdrhuwkCjfJ4XZ5CNPO7B+HIuMW0h8bROXxMktuiQQ/1/BiBX1/Ig=
+	t=1744765735; cv=none; b=nclQ8GO3IOHHY4Ld324XbymqimyHlrWZqgsdqBNCsx0bmxUl8mKzmVZkCgyF6kJL3fbkWjYOcfhPCCngrInWDUA1kfZWa0HzZ6lRJX0lEqTiMUfZoAlgNwqr3m6rC3J9KeoVDBFBNKWYJESAm3Q31UnX78sdb8nKmbmmKJHrnNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744765393; c=relaxed/simple;
-	bh=lxyuH2X+QrN69sG9sxQAyhR4CnxidVuoSmTUqIuey+8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fzuBYA0wmtc11YpNLdI3ai440CQP8rzePTGD7Mxn9zT6+etrSQpmd2yqvg07FHUYK3U6eqXvcLxNuQAu6dC6eTPPE7vKutVzYvJpT/zotCypWqAmGEYOWUPNXgOEl7WBCr8Uf48/J/v8DPIHTXPc6x2DBhM3FnCWDrBb8xSxerw=
+	s=arc-20240116; t=1744765735; c=relaxed/simple;
+	bh=khYZfXOINtaEVPJqtyNLykyuFV4g9HbPG0RNsinHOEg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dvtadZC5g8mhg8jm54zllpg6rlrtiQDPOd+W9VEEvuYmU48iwSrnIAhuGU0Ydl+es5OHOqOyCo0VOhfub/BHC3dYNADzdtxKGVuA+gvdugeEIOyvssY8+QCIZdB2cJ9PKHx0acvneFpld7KMPhyCtw7yVdx1jcltbpuVL5cAaMk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FLTtJh026884;
-	Tue, 15 Apr 2025 18:02:57 -0700
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FNx1b0008877;
+	Tue, 15 Apr 2025 18:08:43 -0700
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45ykf3m1nq-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45yqpkkvv6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Tue, 15 Apr 2025 18:02:56 -0700 (PDT)
+	Tue, 15 Apr 2025 18:08:43 -0700 (PDT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Tue, 15 Apr 2025 18:02:56 -0700
+ 15.1.2507.43; Tue, 15 Apr 2025 18:08:42 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 18:02:53 -0700
+ 15.1.2507.43 via Frontend Transport; Tue, 15 Apr 2025 18:08:39 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
         <linkinjeon@kernel.org>, <sfrench@samba.org>,
         <senozhatsky@chromium.org>, <tom@talpey.com>,
         <linux-cifs@vger.kernel.org>
-Subject: [PATCH 6.1.y] smb/server: fix potential null-ptr-deref of lease_ctx_info in smb2_open()
-Date: Wed, 16 Apr 2025 09:02:52 +0800
-Message-ID: <20250416010252.388173-1-jianqi.ren.cn@windriver.com>
+Subject: [PATCH 5.15.y] smb/server: fix potential null-ptr-deref of lease_ctx_info in smb2_open()
+Date: Wed, 16 Apr 2025 09:08:39 +0800
+Message-ID: <20250416010839.388428-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -47,19 +47,19 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: EcdEvtXe86mEZEQLPT-ZqLkngM1F3jhd
-X-Authority-Analysis: v=2.4 cv=Wd0Ma1hX c=1 sm=1 tr=0 ts=67ff01c0 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=4MEYoKLddpgQIFStAo8A:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: EcdEvtXe86mEZEQLPT-ZqLkngM1F3jhd
+X-Proofpoint-ORIG-GUID: 45UemH9LqqQXhHIahuCRssIKf0FaHmIC
+X-Proofpoint-GUID: 45UemH9LqqQXhHIahuCRssIKf0FaHmIC
+X-Authority-Analysis: v=2.4 cv=UZBRSLSN c=1 sm=1 tr=0 ts=67ff031b cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=4MEYoKLddpgQIFStAo8A:9 a=FdTzh2GWekK77mhwV6Dw:22
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-15_09,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 clxscore=1011
- impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 phishscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504160006
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504160007
 
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
@@ -83,15 +83,15 @@ Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- fs/smb/server/oplock.c  | 2 +-
- fs/smb/server/smb2pdu.c | 2 +-
+ fs/ksmbd/oplock.c  | 2 +-
+ fs/ksmbd/smb2pdu.c | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index a3c016a11e27..2fcfabc35b06 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1515,7 +1515,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
+diff --git a/fs/ksmbd/oplock.c b/fs/ksmbd/oplock.c
+index 4e444d01a3c3..9fcdcea0e6bd 100644
+--- a/fs/ksmbd/oplock.c
++++ b/fs/ksmbd/oplock.c
+@@ -1498,7 +1498,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
   * @open_req:	buffer containing smb2 file open(create) request
   * @is_dir:	whether leasing file is directory
   *
@@ -100,11 +100,11 @@ index a3c016a11e27..2fcfabc35b06 100644
   */
  struct lease_ctx_info *parse_lease_state(void *open_req, bool is_dir)
  {
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index dbe272970c25..937c1cd2284e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3241,7 +3241,7 @@ int smb2_open(struct ksmbd_work *work)
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 3dfe0acf21a5..5cd0aa217f67 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3230,7 +3230,7 @@ int smb2_open(struct ksmbd_work *work)
  			goto err_out1;
  		}
  	} else {
