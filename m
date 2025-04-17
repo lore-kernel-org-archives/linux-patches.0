@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160333594D;
-	Thu, 17 Apr 2025 18:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019023594D;
+	Thu, 17 Apr 2025 18:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915934; cv=none; b=TysT0RXKsc/Yvr50qButMbm100REpMj60QGbCpkzK8M6/WTKzo2nX83PbfLlrKV3xfejl+RAYA4D9W5Bdw/e1N6jhIg7Um+GUe1EHYPlG+JzgIx8tRrw1YDy81QonK4qJ8jF9H3j6uWUC/fawuSFMn7YniXPB5Usgt0gP4XBYH4=
+	t=1744915937; cv=none; b=d8VroEFDL8LLDCE53poX227rfqwgi9dhoT15pquF/9BjVdrHFQ3egoaY1aWgGOEy4E1EZvrL7bwNPlg8c8SUUBswtwYfkCST/S1k9Y4yQrtazLd5oHfm6AOudr3n2EY4Fus2cRgAKj9EmDs1P4RqXVyTCmwljdTsUW5FtQIf+ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915934; c=relaxed/simple;
-	bh=o/JmarVxUf7ICHaufRC0TMoTltkwyZdZXQv+4B5fF+I=;
+	s=arc-20240116; t=1744915937; c=relaxed/simple;
+	bh=gqD9f6HspblSzW8iEsXjYrQWGJQU+95kNiGb5a8aIVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ml7AhAVAQF3+rpTwgOUe0yHBikTlfvPORxTwIM69vAM/75gWDJQAvOl5au+R2fOwckEprfLSV+EDSVp5Uc82fHyGRPgJHsT3G0XYXsdigxrPZL3eieeE0cqEIrlnJmx61zJf8ts+xsyPT9F3iaF8UCSMpAhTB1PmYsfKEmxyprc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKyl9AaR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3iE28ysnYL2UmZVHw6SAne+5NR11MXYMXLTVlixlQL6WP1nKPIGDgJDIRv7MGgILOVUVi4PKwjkRke3f7cmM+p1JBv3wE4nkRozXhPk4s2ps8nfsTf4zHrM6felEcKIZrI4fNSRS6Ksi7vNCI+Iz41YW+3/3yhGcwxqFfKnpbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eq2a15wN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKyl9AaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC0BC4CEEF;
-	Thu, 17 Apr 2025 18:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eq2a15wN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7044FC4CEE4;
+	Thu, 17 Apr 2025 18:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915933;
-	bh=o/JmarVxUf7ICHaufRC0TMoTltkwyZdZXQv+4B5fF+I=;
+	s=korg; t=1744915936;
+	bh=gqD9f6HspblSzW8iEsXjYrQWGJQU+95kNiGb5a8aIVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKyl9AaRNbxEgg7fSOkCkz3vLPz0WMBgOipKUfP6lHRfRj3Bhb2gMdmNODwUX7N1f
-	 lxiCkr6EeKADUs0NrX/KWc3NyUfQkwiK6kPbgJfkTU9d+QvOLp2k8c9zD56bQkgiHP
-	 GYGO17itsj8F3ZXVldTZoKmu9G58Poc7+XXSAmRw=
+	b=eq2a15wNL8tsSIIFLsZMLCi7Oaq6QBwEQtU+4vPxerw6KVCn9vTLpzgx5nqPayEsY
+	 ycv25ltzUpjNE9+4huKPi0S+nR9AaGz3nBlCQ5Sy4vR/Ki+gHrein8G68FOXq0WwJI
+	 v4WTClJSI7r+E2ctsmQhpC4gGuIqEw1Ff9TnYPp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Troy Hanson <quic_thanson@quicinc.com>
-Subject: [PATCH 6.12 259/393] bus: mhi: host: Fix race between unprepare and queue_buf
-Date: Thu, 17 Apr 2025 19:51:08 +0200
-Message-ID: <20250417175118.012438738@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.12 260/393] ext4: fix off-by-one error in do_split
+Date: Thu, 17 Apr 2025 19:51:09 +0200
+Message-ID: <20250417175118.053386006@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -54,81 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Hugo <quic_jhugo@quicinc.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-commit 0686a818d77a431fc3ba2fab4b46bbb04e8c9380 upstream.
+commit 94824ac9a8aaf2fb3c54b4bdde842db80ffa555d upstream.
 
-A client driver may use mhi_unprepare_from_transfer() to quiesce
-incoming data during the client driver's tear down. The client driver
-might also be processing data at the same time, resulting in a call to
-mhi_queue_buf() which will invoke mhi_gen_tre(). If mhi_gen_tre() runs
-after mhi_unprepare_from_transfer() has torn down the channel, a panic
-will occur due to an invalid dereference leading to a page fault.
+Syzkaller detected a use-after-free issue in ext4_insert_dentry that was
+caused by out-of-bounds access due to incorrect splitting in do_split.
 
-This occurs because mhi_gen_tre() does not verify the channel state
-after locking it. Fix this by having mhi_gen_tre() confirm the channel
-state is valid, or return error to avoid accessing deinitialized data.
+BUG: KASAN: use-after-free in ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+Write of size 251 at addr ffff888074572f14 by task syz-executor335/5847
 
-Cc: stable@vger.kernel.org # 6.8
-Fixes: b89b6a863dd5 ("bus: mhi: host: Add spinlock to protect WP access when queueing TREs")
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Link: https://lore.kernel.org/r/20250306172913.856982-1-jeff.hugo@oss.qualcomm.com
-[mani: added stable tag]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CPU: 0 UID: 0 PID: 5847 Comm: syz-executor335 Not tainted 6.12.0-rc6-syzkaller-00318-ga9cda7c0ffed #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+ add_dirent_to_buf+0x3d9/0x750 fs/ext4/namei.c:2154
+ make_indexed_dir+0xf98/0x1600 fs/ext4/namei.c:2351
+ ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2455
+ ext4_add_nondir+0x8d/0x290 fs/ext4/namei.c:2796
+ ext4_symlink+0x920/0xb50 fs/ext4/namei.c:3431
+ vfs_symlink+0x137/0x2e0 fs/namei.c:4615
+ do_symlinkat+0x222/0x3a0 fs/namei.c:4641
+ __do_sys_symlink fs/namei.c:4662 [inline]
+ __se_sys_symlink fs/namei.c:4660 [inline]
+ __x64_sys_symlink+0x7a/0x90 fs/namei.c:4660
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+The following loop is located right above 'if' statement.
+
+for (i = count-1; i >= 0; i--) {
+	/* is more than half of this entry in 2nd half of the block? */
+	if (size + map[i].size/2 > blocksize/2)
+		break;
+	size += map[i].size;
+	move++;
+}
+
+'i' in this case could go down to -1, in which case sum of active entries
+wouldn't exceed half the block size, but previous behaviour would also do
+split in half if sum would exceed at the very last block, which in case of
+having too many long name files in a single block could lead to
+out-of-bounds access and following use-after-free.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Cc: stable@vger.kernel.org
+Fixes: 5872331b3d91 ("ext4: fix potential negative array index in do_split()")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250404082804.2567-3-a.sadovnikov@ispras.ru
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -1207,11 +1207,16 @@ int mhi_gen_tre(struct mhi_controller *m
- 	struct mhi_ring_element *mhi_tre;
- 	struct mhi_buf_info *buf_info;
- 	int eot, eob, chain, bei;
--	int ret;
-+	int ret = 0;
- 
- 	/* Protect accesses for reading and incrementing WP */
- 	write_lock_bh(&mhi_chan->lock);
- 
-+	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-+		ret = -ENODEV;
-+		goto out;
-+	}
-+
- 	buf_ring = &mhi_chan->buf_ring;
- 	tre_ring = &mhi_chan->tre_ring;
- 
-@@ -1229,10 +1234,8 @@ int mhi_gen_tre(struct mhi_controller *m
- 
- 	if (!info->pre_mapped) {
- 		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
--		if (ret) {
--			write_unlock_bh(&mhi_chan->lock);
--			return ret;
--		}
-+		if (ret)
-+			goto out;
- 	}
- 
- 	eob = !!(flags & MHI_EOB);
-@@ -1250,9 +1253,10 @@ int mhi_gen_tre(struct mhi_controller *m
- 	mhi_add_ring_element(mhi_cntrl, tre_ring);
- 	mhi_add_ring_element(mhi_cntrl, buf_ring);
- 
-+out:
- 	write_unlock_bh(&mhi_chan->lock);
- 
--	return 0;
-+	return ret;
- }
- 
- int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1995,7 +1995,7 @@ static struct ext4_dir_entry_2 *do_split
+ 	 * split it in half by count; each resulting block will have at least
+ 	 * half the space free.
+ 	 */
+-	if (i > 0)
++	if (i >= 0)
+ 		split = count - move;
+ 	else
+ 		split = count/2;
 
 
