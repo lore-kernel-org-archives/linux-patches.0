@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B397257448;
-	Thu, 17 Apr 2025 18:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621861D07BA;
+	Thu, 17 Apr 2025 18:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914282; cv=none; b=TLejkHWkhUKuxK5cWUieFWF3d77StT03GsZR06+5ENL4oZ1PwgIp2ZCwhaqhUFZuddLMBS3R/XL7v2iGyW8DRyGw0+LdkYUMBx1vAKvlBcEEphgX29U+dK1JDvMUxgpH1ed3z+vxXdPsox87bt9cGsT++Z7EeKnv+hBDnhahUX0=
+	t=1744914285; cv=none; b=Kq3fQkVFIFZER/6ojl3MXGk6DSXi/Nampw+ixQSXUgV/3iov6I77owVsKsVlcba09mRjdmXKK6wRLvBlN1DNNAOCGdXtvE7tgSw5imxFhYNAYsFBjNCTvTpcykhL8TMxsyPQjBRrHXmlQKjLcH7fpuIFUJHOPyE3dAsj8M2ccsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914282; c=relaxed/simple;
-	bh=I1Fbtbz8KXMgVLZziydwpIdI1mOSNmeZVPmNB/27THU=;
+	s=arc-20240116; t=1744914285; c=relaxed/simple;
+	bh=LGcBlDzp32xGeTvTTJIDHtxyk9N/2jBNzl8OKfU5F4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AtQx/PHbdiHr4GLFM5BNMlBvXYomcqdquJqgFwX0H0Ol9vWflX+AtLUij4b4BBK679KT5PvjdKd1q5W1FbZWN3Np7Wdk+Tt5aH80ScwpYiGUpdIKgzuOhPlObq/B6A4A+mWhg6XVzuF5TdJsfAQmG0qkPa+di0fn7z3BCx1xVco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7rjiedZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W7mFhfCmbw74RIovftVr/jyCNXjo6wiGVRpXfWaJj7UMxLWQalW0/cqkhRAWDakBqQ4bj3ryxTRhsGEPXnr7Ef+K+IK4y2Jvhq/QC4VNnCIZu+5TwwIwwiMuwKUds9cwxJSzhI+exYRMRKR3xbIZVNved1/HT7Tral6yvTLBnnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7ydFsfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7rjiedZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DD1C4CEE4;
-	Thu, 17 Apr 2025 18:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7ydFsfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFC5C4CEE4;
+	Thu, 17 Apr 2025 18:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914282;
-	bh=I1Fbtbz8KXMgVLZziydwpIdI1mOSNmeZVPmNB/27THU=;
+	s=korg; t=1744914285;
+	bh=LGcBlDzp32xGeTvTTJIDHtxyk9N/2jBNzl8OKfU5F4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7rjiedZm++rVa4phgMimPeWvbePjqoNPUQGmcFcDAms++EI4tCZYb9NdDP2hBIhy
-	 gAsshmgcg9diw4wj+JYAgzij45dInpqO3rU0rokn/oAT8AaCWsBabCuvCYRMUrvRzp
-	 YnJ3Puy2ICPti7S/rZ+uHYd5r+SDz+M1KZUM8nHk=
+	b=e7ydFsfx2ygDr2qDM6RmWiQ3Ce9rngbCbm2YdYWXqWXsls6VRmi/LtkaMjlsBE7+M
+	 QEb+oRKW8FjcjN4dGijHNrIIGo4xAamYOI8nsalz1Czrc01RG9CQw4Bs+de6p1fFhh
+	 MphIm11arj/vf4ZHEJGPSmUahF9oHZyNWQ1W6YWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@meta.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 165/414] tpm: End any active auth session before shutdown
-Date: Thu, 17 Apr 2025 19:48:43 +0200
-Message-ID: <20250417175118.076998390@linuxfoundation.org>
+Subject: [PATCH 6.13 166/414] pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()
+Date: Thu, 17 Apr 2025 19:48:44 +0200
+Message-ID: <20250417175118.117812440@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,64 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan McDowell <noodles@meta.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 1dbf74e00a5f882b04b398399b6def65cd51ef21 ]
+[ Upstream commit 7ca59947b5fcf94e7ea4029d1bd0f7c41500a161 ]
 
-Lazy flushing of TPM auth sessions can interact badly with IMA + kexec,
-resulting in loaded session handles being leaked across the kexec and
-not cleaned up. Fix by ensuring any active auth session is ended before
-the TPM is told about the shutdown, matching what is done when
-suspending.
+With CONFIG_COMPILE_TEST && !CONFIG_HAVE_CLK, pwm_mediatek_config() has a
+divide-by-zero in the following line:
 
-Before:
+	do_div(resolution, clk_get_rate(pc->clk_pwms[pwm->hwpwm]));
 
-root@debian-qemu-efi:~# tpm2_getcap handles-loaded-session
-root@debian-qemu-efi:~# tpm2_getcap handles-saved-session
-root@debian-qemu-efi:~# kexec --load --kexec-file-syscall …
-root@debian-qemu-efi:~# systemctl kexec
-…
-root@debian-qemu-efi:~# tpm2_getcap handles-loaded-session
-- 0x2000000
-root@debian-qemu-efi:~# tpm2_getcap handles-saved-session
-root@debian-qemu-efi:~#
-(repeat kexec steps)
-root@debian-qemu-efi:~# tpm2_getcap handles-loaded-session
-- 0x2000000
-- 0x2000001
-root@debian-qemu-efi:~# tpm2_getcap handles-saved-session
-root@debian-qemu-efi:~#
+due to the fact that the !CONFIG_HAVE_CLK version of clk_get_rate()
+returns zero.
 
-After:
+This is presumably just a theoretical problem: COMPILE_TEST overrides
+the dependency on RALINK which would select COMMON_CLK.  Regardless it's
+a good idea to check for the error explicitly to avoid divide-by-zero.
 
-root@debian-qemu-efi:~# tpm2_getcap handles-loaded-session
-root@debian-qemu-efi:~# tpm2_getcap handles-saved-session
-root@debian-qemu-efi:~# kexec --load --kexec-file-syscall …
-root@debian-qemu-efi:~# systemctl kexec
-…
-root@debian-qemu-efi:~# tpm2_getcap handles-loaded-session
-root@debian-qemu-efi:~# tpm2_getcap handles-saved-session
-root@debian-qemu-efi:~#
+Fixes the following warning:
 
-Signed-off-by: Jonathan McDowell <noodles@meta.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+  drivers/pwm/pwm-mediatek.o: warning: objtool: .text: unexpected end of section
+
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/fb56444939325cc173e752ba199abd7aeae3bf12.1742852847.git.jpoimboe@kernel.org
+[ukleinek: s/CONFIG_CLK/CONFIG_HAVE_CLK/]
+Fixes: caf065f8fd58 ("pwm: Add MediaTek PWM support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/9e78a0796acba3435553ed7db1c7965dcffa6215.1743501688.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-chip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pwm/pwm-mediatek.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
-index 7df7abaf3e526..87f01269b9b53 100644
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -300,6 +300,7 @@ int tpm_class_shutdown(struct device *dev)
- 	down_write(&chip->ops_sem);
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2) {
- 		if (!tpm_chip_start(chip)) {
-+			tpm2_end_auth_session(chip);
- 			tpm2_shutdown(chip, TPM2_SU_CLEAR);
- 			tpm_chip_stop(chip);
- 		}
+diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
+index 01dfa0fab80a4..7eaab58314995 100644
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -121,21 +121,25 @@ static int pwm_mediatek_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
+ 	u32 clkdiv = 0, cnt_period, cnt_duty, reg_width = PWMDWIDTH,
+ 	    reg_thres = PWMTHRES;
++	unsigned long clk_rate;
+ 	u64 resolution;
+ 	int ret;
+ 
+ 	ret = pwm_mediatek_clk_enable(chip, pwm);
+-
+ 	if (ret < 0)
+ 		return ret;
+ 
++	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
++	if (!clk_rate)
++		return -EINVAL;
++
+ 	/* Make sure we use the bus clock and not the 26MHz clock */
+ 	if (pc->soc->has_ck_26m_sel)
+ 		writel(0, pc->regs + PWM_CK_26M_SEL);
+ 
+ 	/* Using resolution in picosecond gets accuracy higher */
+ 	resolution = (u64)NSEC_PER_SEC * 1000;
+-	do_div(resolution, clk_get_rate(pc->clk_pwms[pwm->hwpwm]));
++	do_div(resolution, clk_rate);
+ 
+ 	cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000, resolution);
+ 	while (cnt_period > 8191) {
 -- 
 2.39.5
 
