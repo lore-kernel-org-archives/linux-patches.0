@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90101257452;
-	Thu, 17 Apr 2025 18:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5218E1DF246;
+	Thu, 17 Apr 2025 18:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915058; cv=none; b=LRSSVrgXNVMVQIOHvRo8k6kx1Vxlln2ePmPYZoGdD8/qU3mctaEId6YZAWj3TIXPQeZmDL0WSrpcRGN+5X1KfU1f0jWcVNEZOUQ7G7z566zp1yq6IePhj9VWzMqHfs936V9CWRAgvcxHuCh8mZmPq0KRLxtzV5yUDVdo54FD8r8=
+	t=1744915061; cv=none; b=eH7zMVdqRqVsYoa0plX2dcvO0xWQjS6QDmHWsG3r4UvRbObkeRSxCVcffFo9cFs45IwVJwEj/0oKlHoPrzvOVvdGkyZh5/AkxubT4kchqGMHxx/knOcLe5ECi7LOczamuKWCb7Xhwmd8u5w0RYYF42q4KA81aW9dv2zNE0XHojs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915058; c=relaxed/simple;
-	bh=hGz4UTRzNZlbXIaZFYWlJSBMLzRLqfwZMFjclnF0fj0=;
+	s=arc-20240116; t=1744915061; c=relaxed/simple;
+	bh=dGD1nmb+9HECVXvvcivRZZ7oz7smmZAiNgigobkgQrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfcTlsCMNJNuCspn2d3bTuHwFeAbu2VtdQkvmfY/ovDLEjAzHG0faqX9dClb2BtLc4B6wikyLliBZC/B7o/e1J8pA5NrQ36Tz8G4hFr8Sk3XWoCMRYJFqaiqSWHnXecooJ2JqjOTsR26CgIUS7B6NNRqVl9bwkw5V9pbnVsBqQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8zsc1qh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nvVBMQQKGa3L3uaBMD7eDe0Jy5BlzSWxsnqoxjBi8v6dvrtxe1/FgGS8iFNNK1CDpWQkLdp4Simde91WOo9zfGlODywS7enK1isFGREm2uGP+TsC+C0km3dl0brTX/338hEe+AXvx2l+5xy/+S0K8uvKnw9BXVJ74a2Yb6P3xt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emwm3y59; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8zsc1qh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED56C4CEE4;
-	Thu, 17 Apr 2025 18:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emwm3y59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD97C4CEE4;
+	Thu, 17 Apr 2025 18:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915058;
-	bh=hGz4UTRzNZlbXIaZFYWlJSBMLzRLqfwZMFjclnF0fj0=;
+	s=korg; t=1744915061;
+	bh=dGD1nmb+9HECVXvvcivRZZ7oz7smmZAiNgigobkgQrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8zsc1qh00K3XvZSD7Wk4Cpd24X/Cz/q73ZXEISbzJGSkJLZ+otn1iuN1nWOX/ONB
-	 eIjpbC7L+pnIrzUJTej15hHjZQLshQ653c16t67A38Jl8SZZ2BfI1wPMSO33Q/dp/5
-	 xYB3n3LKM+0VuoKpv04XobYi0vkJajX7wAT9IgNg=
+	b=emwm3y59fBWwDlRLuwp6wTMFK9vaT8GqL0KZHe9MYTQuq4Gj/HNNDnnqtUV/2lEAr
+	 dM3ffN+1qDKgCqOk0+pARXcJKs/Kcx/VGmyLGZ43t9xLQyEADCeE2RQQn0JCXj5XvV
+	 B9+zR0b4cT2L8oC14yJyL7SnwhF9ZvUqi+Y9lTkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.13 410/414] NFSD: Fix CB_GETATTR status fix
-Date: Thu, 17 Apr 2025 19:52:48 +0200
-Message-ID: <20250417175127.973248496@linuxfoundation.org>
+Subject: [PATCH 6.13 411/414] nfsd: dont ignore the return code of svc_proc_register()
+Date: Thu, 17 Apr 2025 19:52:49 +0200
+Message-ID: <20250417175128.011472362@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,44 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 4990d098433db18c854e75fb0f90d941eb7d479e upstream.
+commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
 
-Jeff says:
+Currently, nfsd_proc_stat_init() ignores the return value of
+svc_proc_register(). If the procfile creation fails, then the kernel
+will WARN when it tries to remove the entry later.
 
-Now that I look, 1b3e26a5ccbf is wrong. The patch on the ml was correct, but
-the one that got committed is different. It should be:
+Fix nfsd_proc_stat_init() to return the same type of pointer as
+svc_proc_register(), and fix up nfsd_net_init() to check that and fail
+the nfsd_net construction if it occurs.
 
-    status = decode_cb_op_status(xdr, OP_CB_GETATTR, &cb->cb_status);
-    if (unlikely(status || cb->cb_status))
+svc_proc_register() can fail if the dentry can't be allocated, or if an
+identical dentry already exists. The second case is pretty unlikely in
+the nfsd_net construction codepath, so if this happens, return -ENOMEM.
 
-If "status" is non-zero, decoding failed (usu. BADXDR), but we also want to
-bail out and not decode the rest of the call if the decoded cb_status is
-non-zero. That's not happening here, cb_seq_status has already been checked and
-is non-zero, so this ends up trying to decode the rest of the CB_GETATTR reply
-when it doesn't exist.
-
-Reported-by: Jeff Layton <jlayton@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219737
-Fixes: 1b3e26a5ccbf ("NFSD: fix decoding in nfs4_xdr_dec_cb_getattr")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
+Cc: stable@vger.kernel.org # v6.9
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4callback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |    9 ++++++++-
+ fs/nfsd/stats.c  |    4 ++--
+ fs/nfsd/stats.h  |    2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -647,7 +647,7 @@ static int nfs4_xdr_dec_cb_getattr(struc
- 		return status;
+I did not have any problem cherry-picking 930b64 onto v6.13.11. This
+built and ran some simple NFSD tests in my lab.
+
+
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2244,8 +2244,14 @@ static __net_init int nfsd_net_init(stru
+ 					  NFSD_STATS_COUNTERS_NUM);
+ 	if (retval)
+ 		goto out_repcache_error;
++
+ 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
+ 	nn->nfsd_svcstats.program = &nfsd_programs[0];
++	if (!nfsd_proc_stat_init(net)) {
++		retval = -ENOMEM;
++		goto out_proc_error;
++	}
++
+ 	for (i = 0; i < sizeof(nn->nfsd_versions); i++)
+ 		nn->nfsd_versions[i] = nfsd_support_version(i);
+ 	for (i = 0; i < sizeof(nn->nfsd4_minorversions); i++)
+@@ -2255,12 +2261,13 @@ static __net_init int nfsd_net_init(stru
+ 	nfsd4_init_leases_net(nn);
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+-	nfsd_proc_stat_init(net);
+ #if IS_ENABLED(CONFIG_NFS_LOCALIO)
+ 	INIT_LIST_HEAD(&nn->local_clients);
+ #endif
+ 	return 0;
  
- 	status = decode_cb_op_status(xdr, OP_CB_GETATTR, &cb->cb_status);
--	if (unlikely(status || cb->cb_seq_status))
-+	if (unlikely(status || cb->cb_status))
- 		return status;
- 	if (xdr_stream_decode_uint32_array(xdr, bitmap, 3) < 0)
- 		return -NFSERR_BAD_XDR;
++out_proc_error:
++	percpu_counter_destroy_many(nn->counter, NFSD_STATS_COUNTERS_NUM);
+ out_repcache_error:
+ 	nfsd_idmap_shutdown(net);
+ out_idmap_error:
+--- a/fs/nfsd/stats.c
++++ b/fs/nfsd/stats.c
+@@ -73,11 +73,11 @@ static int nfsd_show(struct seq_file *se
+ 
+ DEFINE_PROC_SHOW_ATTRIBUTE(nfsd);
+ 
+-void nfsd_proc_stat_init(struct net *net)
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
++	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
+ }
+ 
+ void nfsd_proc_stat_shutdown(struct net *net)
+--- a/fs/nfsd/stats.h
++++ b/fs/nfsd/stats.h
+@@ -10,7 +10,7 @@
+ #include <uapi/linux/nfsd/stats.h>
+ #include <linux/percpu_counter.h>
+ 
+-void nfsd_proc_stat_init(struct net *net);
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
+ void nfsd_proc_stat_shutdown(struct net *net);
+ 
+ static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
 
 
