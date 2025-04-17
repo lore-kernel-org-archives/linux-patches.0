@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBCF433A5;
-	Thu, 17 Apr 2025 18:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4269254878;
+	Thu, 17 Apr 2025 18:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915543; cv=none; b=kLlPpt37Pp0GE2XVBDilytupieb7rHFucXWS9bHLec7mv0d42R8hK+8JvQNx6/tVJmXVsdCjR3PVNQP/tVcZFAo7s7ir9NsMjyN2o9lzT78m43Sb19pgOBd/JdctaiRL36vLFh16YvvzJXCMbEnk4KBHq4tQ9GDHvC7aCQA/L7g=
+	t=1744915547; cv=none; b=aUtMxD4Tet2Xs4kHFimWZRc4jsdJJyg8vt18sMdDPyccDN8grLkVzxnbNbHt/mLtVZabCd+j692e+Kvqpom/0rMQGtuu2xnaT8feGO/tqFAZ39BuWLx3/kgXKw8tCjrEMy9qo5psjiNfH0y6mXN3fi6hEgTSEwAkesPP48XX86g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915543; c=relaxed/simple;
-	bh=sFVCq1NtoLOvYEhfs7zwiJBFjya/dEz7jjmxY7riRH0=;
+	s=arc-20240116; t=1744915547; c=relaxed/simple;
+	bh=ueLWeyCsz/tEa1yTDo3D+/zlkz+OyQ+rtR2uDBhCS9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wopf+Nzw25AId3TDazdD5DLT9srtSFT/pGhwXYI7KekTUi+G6wtUaQ0hog1pmWbb2uWuXfennGYcJ27vJD+r3sGgYv2KBfkniKj0UPGNe7kWR3zrEfF0DfYSmUDn2rm5HvQV78Vp9vcdlyik2vjmVwIbSf7+2wMPKwc/v+Td8PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DXUZE25; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKB5kEXzY6HFCV1kQc2yYkWHd1fqpph4aHGESS+32MuFUCt+BI2mwWsDLGpXDfWEgb2pFG1up0FeaOlPyelUoE0Ns/Zde+bBtxPoe/lpPlwRY/LXJn57pUF0kbkfOZZp7oR5jeDWLFDNRKSQJ4SCT3LotiAPrOCXKx/nHKuyL4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7sED8tF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DXUZE25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35839C4CEE7;
-	Thu, 17 Apr 2025 18:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7sED8tF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1545CC4CEE4;
+	Thu, 17 Apr 2025 18:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915543;
-	bh=sFVCq1NtoLOvYEhfs7zwiJBFjya/dEz7jjmxY7riRH0=;
+	s=korg; t=1744915546;
+	bh=ueLWeyCsz/tEa1yTDo3D+/zlkz+OyQ+rtR2uDBhCS9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DXUZE255Ic5DFLAgxlfXaIrtAxAi5Bs6gnNph0XHILVmfShq1/MMy13HB/UuDk4K
-	 /7GoCyeMMRLyKBe5HKPRA2yclNw7LCSbMTCco+tzcPt+qQcUYGJ+O6noH/oUz3xgxL
-	 LvcWuw6B7P9OOHf0LoIxrCIDUQnL6cFF8QkLXEz4=
+	b=M7sED8tFV/DVEcRT6QoRVb4qZaxYSYQJNbpsLjVSw5NcFBfIr8kJ/SAy36MIh3uPS
+	 z7MkRjyrIZKaQh7aNoAAKffaZYuI/M0XuQW7eE9Mrq9I/9Z83Bk+UQzHCV5i82GQiW
+	 jDkQWkmsDJFC5Ur8K64Cs9efBM8cG2fZtW/gWoHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Leonid Arapov <arapovl839@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/393] Bluetooth: hci_uart: fix race during initialization
-Date: Thu, 17 Apr 2025 19:48:49 +0200
-Message-ID: <20250417175112.427395262@linuxfoundation.org>
+Subject: [PATCH 6.12 154/393] fbdev: omapfb: Add plane value check
+Date: Thu, 17 Apr 2025 19:49:23 +0200
+Message-ID: <20250417175113.781044605@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Leonid Arapov <arapovl839@gmail.com>
 
-[ Upstream commit 366ceff495f902182d42b6f41525c2474caf3f9a ]
+[ Upstream commit 3e411827f31db7f938a30a3c7a7599839401ec30 ]
 
-'hci_register_dev()' calls power up function, which is executed by
-kworker - 'hci_power_on()'. This function does access to bluetooth chip
-using callbacks from 'hci_ldisc.c', for example 'hci_uart_send_frame()'.
-Now 'hci_uart_send_frame()' checks 'HCI_UART_PROTO_READY' bit set, and
-if not - it fails. Problem is that 'HCI_UART_PROTO_READY' is set after
-'hci_register_dev()', and there is tiny chance that 'hci_power_on()' will
-be executed before setting this bit. In that case HCI init logic fails.
+Function dispc_ovl_setup is not intended to work with the value OMAP_DSS_WB
+of the enum parameter plane.
 
-Patch moves setting of 'HCI_UART_PROTO_READY' before calling function
-'hci_uart_register_dev()'.
+The value of this parameter is initialized in dss_init_overlays and in the
+current state of the code it cannot take this value so it's not a real
+problem.
 
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+For the purposes of defensive coding it wouldn't be superfluous to check
+the parameter value, because some functions down the call stack process
+this value correctly and some not.
+
+For example, in dispc_ovl_setup_global_alpha it may lead to buffer
+overflow.
+
+Add check for this value.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
+
+Signed-off-by: Leonid Arapov <arapovl839@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ldisc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/omap2/omapfb/dss/dispc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index 395d66e32a2ea..2651e2e33f2a1 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -707,12 +707,13 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
+index 5832485ab998c..c29b6236952b3 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
+@@ -2749,9 +2749,13 @@ int dispc_ovl_setup(enum omap_plane plane, const struct omap_overlay_info *oi,
+ 		bool mem_to_mem)
+ {
+ 	int r;
+-	enum omap_overlay_caps caps = dss_feat_get_overlay_caps(plane);
++	enum omap_overlay_caps caps;
+ 	enum omap_channel channel;
  
- 	hu->proto = p;
- 
-+	set_bit(HCI_UART_PROTO_READY, &hu->flags);
++	if (plane == OMAP_DSS_WB)
++		return -EINVAL;
 +
- 	err = hci_uart_register_dev(hu);
- 	if (err) {
- 		return err;
- 	}
++	caps = dss_feat_get_overlay_caps(plane);
+ 	channel = dispc_ovl_get_channel_out(plane);
  
--	set_bit(HCI_UART_PROTO_READY, &hu->flags);
- 	return 0;
- }
- 
+ 	DSSDBG("dispc_ovl_setup %d, pa %pad, pa_uv %pad, sw %d, %d,%d, %dx%d ->"
 -- 
 2.39.5
 
