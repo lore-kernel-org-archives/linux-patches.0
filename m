@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3A257AD8;
-	Thu, 17 Apr 2025 18:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D66264A78;
+	Thu, 17 Apr 2025 18:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914903; cv=none; b=awNmVCBWoP34OIJTEGeniiLBtbNXUl8lrtqueJ1Dq6rIe785onYewU7pluZAz/LgpaVw5vj+a7i0nB45zLMXapydylSUWhqO0WDlEd1cpH8eKQ6yyU/y7VGgn+MhPLHwvapyHdNBh/M7OoxbdRAgZsg/aQ3MtUiSnDfOFl4UrQo=
+	t=1744914906; cv=none; b=PcAmwkegschrs674MiVE4ndNm0jvETva1vn4yomijR8IO8MGN1gSK5WLfrPqANhW56qoDdoNi36EtUrySrwNWPiOBhO5WHzTlNSt/3cX7qBIqADEXvvfzpu99KjotqZSnV9qlYvGrKQVzkSSL2WHuJZKdz91zraAnetQNKLbRmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914903; c=relaxed/simple;
-	bh=bLuyetuUtXeOzDXRylFpS3I27XoAopijWzqAtsT8NWc=;
+	s=arc-20240116; t=1744914906; c=relaxed/simple;
+	bh=b3gSJlQkxyZ6na+Lzp3LBv5ZopIuw0135ioIiH9JGjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngoAOnidmlpUrVa9J3F3/2fGcICsEi2MvtMdmKLeRIff9Ywc7ducj1pEDs6jW9JzNvbrjadKAMIMQzVpgRYTSK3VSMLWmDqXfFv3dzYZPJwI9tTQjcXxwfS7Wlu0y0YnRtaLEyDAzPK+Kq50y0Uc2kdvJVmeQJZzMMHyqqT25oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGB1q2tC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDJTF/9pSxvffhYR15UC9a1YitzolwoY2XtyH0VzzWQqGD38euPtiL5rVOdjXaLv9JpUQApm2ev3htPOvPDago2Xo7Al1cuv15uzmaLKLY5t+xU/+sWtNPDIaSYbq2Llk3CnUB/MwovwciGJU9MjxHwG5BLgoY4cUq2JUE4dyos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2froOKK4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGB1q2tC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC900C4CEE4;
-	Thu, 17 Apr 2025 18:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2froOKK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC34C4CEE4;
+	Thu, 17 Apr 2025 18:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914903;
-	bh=bLuyetuUtXeOzDXRylFpS3I27XoAopijWzqAtsT8NWc=;
+	s=korg; t=1744914906;
+	bh=b3gSJlQkxyZ6na+Lzp3LBv5ZopIuw0135ioIiH9JGjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGB1q2tCyR5ffdsJ0u3TVs/ULEAVx0tVB8IRRKmsOiOljKWd9E0sF8rEbqjByIMXM
-	 M2MeFpOtrhkuxL4ClEjeFK8G3qZMZ/hIMv7BByfF8eDWEtPWwYxIurxEiY096IkVas
-	 jNzsQlPSYh/CIu5VMr0CwHB747i9x5Qct/vakrG8=
+	b=2froOKK4U0BUN3x2MGBYz+cWq9jasyDY53Fz/EXnEOYu4fWzTxKbhCBfu0849wLCs
+	 ukhA7vO2wyCso20eDMn/EUo26a//cdVO4R05BMG1UNUisGQWP+OW6/GJhO6s0/eCQb
+	 vEPtSphxerfo5kt0DnLmiC2d+NMdoZ3Y9vyfCl2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 341/414] cifs: avoid NULL pointer dereference in dbg call
-Date: Thu, 17 Apr 2025 19:51:39 +0200
-Message-ID: <20250417175125.145684802@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.13 368/414] scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
+Date: Thu, 17 Apr 2025 19:52:06 +0200
+Message-ID: <20250417175126.266686796@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,42 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit b4885bd5935bb26f0a414ad55679a372e53f9b9b upstream.
+commit ded40f32b55f7f2f4ed9627dd3c37a1fe89ed8c6 upstream.
 
-cifs_server_dbg() implies server to be non-NULL so
-move call under condition to avoid NULL pointer dereference.
+The driver leaks the device reference taken with
+of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e79b0332ae06 ("cifs: ignore cached share root handle closing errors")
+Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com> # SCSI
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-3-1ffa5b6884cb@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/ufs/host/ufs-qcom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -816,11 +816,12 @@ smb2_handle_cancelled_close(struct cifs_
- 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
- 		spin_unlock(&cifs_tcp_ses_lock);
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -118,7 +118,7 @@ static int ufs_qcom_ice_init(struct ufs_
+ 	struct device *dev = hba->dev;
+ 	struct qcom_ice *ice;
  
--		if (tcon->ses)
-+		if (tcon->ses) {
- 			server = tcon->ses->server;
--
--		cifs_server_dbg(FYI, "tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
--				tcon->tid, persistent_fid, volatile_fid);
-+			cifs_server_dbg(FYI,
-+					"tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
-+					tcon->tid, persistent_fid, volatile_fid);
-+		}
- 
- 		return 0;
- 	}
+-	ice = of_qcom_ice_get(dev);
++	ice = devm_of_qcom_ice_get(dev);
+ 	if (ice == ERR_PTR(-EOPNOTSUPP)) {
+ 		dev_warn(dev, "Disabling inline encryption support\n");
+ 		ice = NULL;
 
 
