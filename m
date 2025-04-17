@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3582566D7;
-	Thu, 17 Apr 2025 17:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39642566FB;
+	Thu, 17 Apr 2025 17:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912540; cv=none; b=hbvlHHzPshcFY9j/sIy2Tcep8hxgWvRkqQVgVrTd5PCcbA+777Rny6IExJjN2/Uz3H5Se5mwrpjxE+xAJaXOqX+fJLACFXk0r1onZLUOjfHJy46doR7rsmMjiuR0voHOSxq476QHTgDAEsTjZGae5fxKa+GkYDTW7U9E2oTdPVI=
+	t=1744912543; cv=none; b=Daqt0m27jkNMvv1TRY1mxTuFN2RwippPrmX5085g1+aAqn5FTMGQaSfzrvKqaw/xdvoKQ/UT0529gu9lP+mWN7S2Bj0JK/9/E0dosR/Lhz79b3OwKDXH5v/bZh47Er5BmlCnluiT9CVSUxW8zO6xf2ocPh2OsTUrblOMYDRL2i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912540; c=relaxed/simple;
-	bh=z6V92QLnYXrPlVdnn47DcNsUhZfPtRfrzuvw02FefMM=;
+	s=arc-20240116; t=1744912543; c=relaxed/simple;
+	bh=8zPqB3OgmQHm90K2ryc8Bxw6ZA9t+rfWkMQbAlnbsfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GV4hfDbIzFvECoHb8tAeITQmXPAcEs81a4aIDHiGxmooTsJFIR0bkJ2x8CPL22ekt6+d4ynvKOezkH7/fnoSXlftQMQytg+UWQILe0BWThd0B8hhQTZTFPYATdvkutgD05yEP2OBOeweTKCJzSpLqAszLGhFT9OAVLtHpVFyuLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fkIuWj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkHnk1mcOPV22ZFAiL9p9hDCip5M4SpYhf6F8FDnF+pr5HkjFA4b/WKjgjOq6hYb4i90Q9cwYh16bripu0m3TebMibVtMYyuZbZEFvTsZMtlR+i0Y+tWhPejOW4RBz3VHCqguKMRcvLngS9AKE/ndbKNhBy9d18h5VahLs/qsL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvdeXdA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fkIuWj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF23C4CEE7;
-	Thu, 17 Apr 2025 17:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvdeXdA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A82C4CEE4;
+	Thu, 17 Apr 2025 17:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912539;
-	bh=z6V92QLnYXrPlVdnn47DcNsUhZfPtRfrzuvw02FefMM=;
+	s=korg; t=1744912542;
+	bh=8zPqB3OgmQHm90K2ryc8Bxw6ZA9t+rfWkMQbAlnbsfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fkIuWj6VGRdODvw66EUS11h1+4WYJZKZQ4ehNA5K16XuxO+xwUI/1n7Mbq5/I/I4
-	 eoj5kie+/DD+kv2I3cbhorSFHTy76moiIQbiGHduzA6Wr6QlzFKz6Tw5EL6sLi6MpE
-	 rw2Pk0RKzDq5mxi+fLhnW22k3McQTOdxhoAa6qnI=
+	b=GvdeXdA+Q0qAu1WFQIx1K2iaZFGkxHPio3nf15eG8fjpTX31IhHD2PuS1A+fAQJyI
+	 uMDaOI9XV9n1ESxv4s/dVVz81aYZyRi2hlhu19VF1aWdRKGbG4LbB9+CvuZlLoDtPb
+	 SKdR58s/rzCtRm755IwugQqatgl3WE/iKuJX7EC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
 	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 044/449] iommu/exynos: Fix suspend/resume with IDENTITY domain
-Date: Thu, 17 Apr 2025 19:45:32 +0200
-Message-ID: <20250417175119.760398122@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH 6.14 045/449] iommu/mediatek: Fix NULL pointer deference in mtk_iommu_device_group
+Date: Thu, 17 Apr 2025 19:45:33 +0200
+Message-ID: <20250417175119.799337325@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,50 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
 
-[ Upstream commit 99deffc409b69000ac4877486e69ec6516becd53 ]
+[ Upstream commit 38e8844005e6068f336a3ad45451a562a0040ca1 ]
 
-Commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper probe
-path") changed the sequence of probing the SYSMMU controller devices and
-calls to arm_iommu_attach_device(), what results in resuming SYSMMU
-controller earlier, when it is still set to IDENTITY mapping. Such change
-revealed the bug in IDENTITY handling in the exynos-iommu driver. When
-SYSMMU controller is set to IDENTITY mapping, data->domain is NULL, so
-adjust checks in suspend & resume callbacks to handle this case
-correctly.
+Currently, mtk_iommu calls during probe iommu_device_register before
+the hw_list from driver data is initialized. Since iommu probing issue
+fix, it leads to NULL pointer dereference in mtk_iommu_device_group when
+hw_list is accessed with list_first_entry (not null safe).
 
-Fixes: b3d14960e629 ("iommu/exynos: Implement an IDENTITY domain")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250401202731.2810474-1-m.szyprowski@samsung.com
+So, change the call order to ensure iommu_device_register is called
+after the driver data are initialized.
+
+Fixes: 9e3a2a643653 ("iommu/mediatek: Adapt sharing and non-sharing pgtable case")
+Fixes: bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper probe path")
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
+Tested-by: Chen-Yu Tsai <wenst@chromium.org> # MT8183 Juniper, MT8186 Tentacruel
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Link: https://lore.kernel.org/r/20250403-fix-mtk-iommu-error-v2-1-fe8b18f8b0a8@collabora.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/exynos-iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/mtk_iommu.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-index 69e23e017d9e5..317266aca6e28 100644
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -832,7 +832,7 @@ static int __maybe_unused exynos_sysmmu_suspend(struct device *dev)
- 		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 034b0e670384a..df98d0c65f546 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1372,15 +1372,6 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, data);
+ 	mutex_init(&data->mutex);
  
- 		mutex_lock(&owner->rpm_lock);
--		if (&data->domain->domain != &exynos_identity_domain) {
-+		if (data->domain) {
- 			dev_dbg(data->sysmmu, "saving state\n");
- 			__sysmmu_disable(data);
- 		}
-@@ -850,7 +850,7 @@ static int __maybe_unused exynos_sysmmu_resume(struct device *dev)
- 		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
+-	ret = iommu_device_sysfs_add(&data->iommu, dev, NULL,
+-				     "mtk-iommu.%pa", &ioaddr);
+-	if (ret)
+-		goto out_link_remove;
+-
+-	ret = iommu_device_register(&data->iommu, &mtk_iommu_ops, dev);
+-	if (ret)
+-		goto out_sysfs_remove;
+-
+ 	if (MTK_IOMMU_HAS_FLAG(data->plat_data, SHARE_PGTABLE)) {
+ 		list_add_tail(&data->list, data->plat_data->hw_list);
+ 		data->hw_list = data->plat_data->hw_list;
+@@ -1390,19 +1381,28 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 		data->hw_list = &data->hw_list_head;
+ 	}
  
- 		mutex_lock(&owner->rpm_lock);
--		if (&data->domain->domain != &exynos_identity_domain) {
-+		if (data->domain) {
- 			dev_dbg(data->sysmmu, "restoring state\n");
- 			__sysmmu_enable(data);
- 		}
++	ret = iommu_device_sysfs_add(&data->iommu, dev, NULL,
++				     "mtk-iommu.%pa", &ioaddr);
++	if (ret)
++		goto out_list_del;
++
++	ret = iommu_device_register(&data->iommu, &mtk_iommu_ops, dev);
++	if (ret)
++		goto out_sysfs_remove;
++
+ 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
+ 		ret = component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
+ 		if (ret)
+-			goto out_list_del;
++			goto out_device_unregister;
+ 	}
+ 	return ret;
+ 
+-out_list_del:
+-	list_del(&data->list);
++out_device_unregister:
+ 	iommu_device_unregister(&data->iommu);
+ out_sysfs_remove:
+ 	iommu_device_sysfs_remove(&data->iommu);
+-out_link_remove:
++out_list_del:
++	list_del(&data->list);
+ 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM))
+ 		device_link_remove(data->smicomm_dev, dev);
+ out_runtime_disable:
 -- 
 2.39.5
 
