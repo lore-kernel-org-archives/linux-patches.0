@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA72256C7C;
-	Thu, 17 Apr 2025 18:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EB41EB1BF;
+	Thu, 17 Apr 2025 18:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912992; cv=none; b=XqVCvYjUGFcKRUMRASlMQPY/SvRXXqqhoQPlrXUDp5ynxqgSHssEjr24HDkUBeCCU9KyjozXv+HB57rkWkGrgYOpfJynT2ZohR0rQm63nGhwKkMndj7Fvdfok7sc5vlQRSoIQGRh0k6pKCNmwExh06j8rW5mHh+5+qpIp+JuMyc=
+	t=1744912995; cv=none; b=NZwhEfux/xhj6gjCViPJ6THpnqsMXBH+Qvti5Y72pf2vdEx4YXOxEySkD+XSkP65Nz7hxd6LxalsjjYkwlPUlvvuWngNUhqe5wl6x/mLFdh0mNyRLncPsuTS6cRAWwdH5LbhXixAeK85CtGfZcA2NxzUVcNMnPfRbpeb9d1pcSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912992; c=relaxed/simple;
-	bh=XqFWkeWV89ggUUrkRY8eR39/tvLqCA3SlmMZy8PLOAo=;
+	s=arc-20240116; t=1744912995; c=relaxed/simple;
+	bh=6Lv6NM8CzA7gNG3mYHrO+n+dZ++6NdztPcQ/v3aYehg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J2i7EVrjcLe1G8fjU5+YKjcyCxt3DRbBHky1ynDYJcpLTtMjcAlL93XrUYJSKVZ2hDSNoXjcZjm4eO1aeQpuq3doSbFMDk5Lk3mcQxgBPCegfjgciGT5SjPsBJg9CpsTDlscnTe8lvyKWule5YS6olSRdr2VdRZnLr6cpEQwD/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfBMy91s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTw94ZSvFVkyDR4XyOyvJ2dcBfKiz5TdAQtZuNuxYfIvM/AwMyduVVVtkOBFG8lVtjYalKrLIAX4DgUsL3nqjAIAk3JC6p3HaXbk6vLT0+L6rh28K3oEmrv2Pc1Sv6GJXyetB8UjgrV7yB+UkovePGJMsfTknUUV9CEqammb4f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxMG8366; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfBMy91s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E61C4CEE4;
-	Thu, 17 Apr 2025 18:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxMG8366"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE8CC4CEE4;
+	Thu, 17 Apr 2025 18:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912992;
-	bh=XqFWkeWV89ggUUrkRY8eR39/tvLqCA3SlmMZy8PLOAo=;
+	s=korg; t=1744912995;
+	bh=6Lv6NM8CzA7gNG3mYHrO+n+dZ++6NdztPcQ/v3aYehg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfBMy91sao0B6v170VPi4uWzzGAQMP0ljE0Vj1DTH7RLWKsG4o2YsMfoBA7OIsoRV
-	 cksQNVj2RjgQBWc0RBLX5FpUQaiFGS/av1kzZjIjdKYmSShdZGSAnJ5uC8d1EwjScf
-	 SBfuetyEl1hsoh553UslugrUfqCgvIqaGrf+RO/w=
+	b=PxMG8366wdLJ2pUSYaqGVeNIvz7rvAbkr+PqMiIXNpvQdr0ZI6ca33pVnCo4Mq0Hy
+	 /SJonsL3aP3sW0DEL/wWsMqVhlbCw0v9DxNAAMH4w13sxejP2di6/OXQQaZWvxaggo
+	 XammLBET0V8Vi5fVMm+6Y/tkC2nSlgwcckGYOrs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	David Yat Sin <David.YatSin@amd.com>,
+	Jay Cornwall <jay.cornwall@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 191/449] pwm: stm32: Search an appropriate duty_cycle if period cannot be modified
-Date: Thu, 17 Apr 2025 19:47:59 +0200
-Message-ID: <20250417175125.662121646@linuxfoundation.org>
+Subject: [PATCH 6.14 165/449] drm/amdkfd: clamp queue size to minimum
+Date: Thu, 17 Apr 2025 19:47:33 +0200
+Message-ID: <20250417175124.625254256@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -45,64 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: David Yat Sin <David.YatSin@amd.com>
 
-[ Upstream commit fda6e0034e9da64e1cec31f4539b6c7abd9ed8be ]
+[ Upstream commit e90711946b53590371ecce32e8fcc381a99d6333 ]
 
-If another channel is already enabled period must not be modified. If
-the requested period is smaller than this unchangable period the driver
-is still supposed to search a duty_cycle according to the usual rounding
-rules.
+If queue size is less than minimum, clamp it to minimum to prevent
+underflow when writing queue mqd.
 
-So don't set the duty_cycle to 0 but continue to determine an
-appropriate value for ccr.
-
-Fixes: deaba9cff809 ("pwm: stm32: Implementation of the waveform callbacks")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/f0c50df31daa3d6069bfa8d7fb3e71fae241b026.1743844730.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: David Yat Sin <David.YatSin@amd.com>
+Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 10 ++++++++++
+ include/uapi/linux/kfd_ioctl.h           |  2 ++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index a59de4de18b6e..ec2c05c9ee7a6 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -103,22 +103,16 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
- 		if (ret)
- 			goto out;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 065d878414591..33df35cab4679 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -212,6 +212,11 @@ static int set_queue_properties_from_user(struct queue_properties *q_properties,
+ 		return -EINVAL;
+ 	}
  
--		/*
--		 * calculate the best value for ARR for the given PSC, refuse if
--		 * the resulting period gets bigger than the requested one.
--		 */
- 		arr = mul_u64_u64_div_u64(wf->period_length_ns, rate,
- 					  (u64)NSEC_PER_SEC * (wfhw->psc + 1));
- 		if (arr <= wfhw->arr) {
- 			/*
--			 * requested period is small than the currently
-+			 * requested period is smaller than the currently
- 			 * configured and unchangable period, report back the smallest
--			 * possible period, i.e. the current state; Initialize
--			 * ccr to anything valid.
-+			 * possible period, i.e. the current state and return 1
-+			 * to indicate the wrong rounding direction.
- 			 */
--			wfhw->ccr = 0;
- 			ret = 1;
--			goto out;
- 		}
++	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
++		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
++		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
++	}
++
+ 	if (!access_ok((const void __user *) args->read_pointer_address,
+ 			sizeof(uint32_t))) {
+ 		pr_err("Can't access read pointer\n");
+@@ -461,6 +466,11 @@ static int kfd_ioctl_update_queue(struct file *filp, struct kfd_process *p,
+ 		return -EINVAL;
+ 	}
  
- 	} else {
++	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
++		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
++		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
++	}
++
+ 	properties.queue_address = args->ring_base_address;
+ 	properties.queue_size = args->ring_size;
+ 	properties.queue_percent = args->queue_percentage & 0xFF;
+diff --git a/include/uapi/linux/kfd_ioctl.h b/include/uapi/linux/kfd_ioctl.h
+index fa9f9846b88e4..b0160b09987c1 100644
+--- a/include/uapi/linux/kfd_ioctl.h
++++ b/include/uapi/linux/kfd_ioctl.h
+@@ -62,6 +62,8 @@ struct kfd_ioctl_get_version_args {
+ #define KFD_MAX_QUEUE_PERCENTAGE	100
+ #define KFD_MAX_QUEUE_PRIORITY		15
+ 
++#define KFD_MIN_QUEUE_RING_SIZE		1024
++
+ struct kfd_ioctl_create_queue_args {
+ 	__u64 ring_base_address;	/* to KFD */
+ 	__u64 write_pointer_address;	/* from KFD */
 -- 
 2.39.5
 
