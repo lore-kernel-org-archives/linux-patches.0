@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796048462;
-	Thu, 17 Apr 2025 18:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24FD1DF733;
+	Thu, 17 Apr 2025 18:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915210; cv=none; b=MWDg9JmIABLKiHAYR0E0eN1egGJwmuQgxAXL7s3yW9xCCBBiwUaF6WF2bfh/Et5y2Ajf7fgX+Qp/EA2pbGUHX9WY7Jassznoh7hXGyU07Fnd67hj6DXXbTO/dNablET4JeW9/NSq6es1adh0g6O70h3ioLCtxt9LprsmctKD0mY=
+	t=1744915213; cv=none; b=fzG2+ZoO9YBZIj3cc8fcd7+CuEoNOgbhUvEr3my/fSS1yjtnMJepxmPfMUL/LG3/6IdY8lUny9vu+DWHe+2QtW+cI0TURx3XrFZEoKGLPa6juOomqfFzLtYtzzYsa0GqxrpmvPNqym+8ISHfXJ0wuBkP+dDlF0Dt89nMSIqhe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915210; c=relaxed/simple;
-	bh=tkUViCoUAXEiqqBkNenO5l9wG/9Lhr10TKzA2Lt+8bc=;
+	s=arc-20240116; t=1744915213; c=relaxed/simple;
+	bh=AbDtE8omXKrlF3mBTu6vY2y7j7ZFYnAvSFSkIAJNHag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daJ0UEcTUHx05iYVxLuWid3K3bUtG/M1Zx5hKQNUJqWM9C+NkG8U8e4qLAhHrPExLqWgz/XDt77X7k2yGZu5cSw7+X0cHPVMvnD+Sv1PVsaBOA5wAhdhCUgafXy6L+PtkqpMAVk13t1GjpzTcfI5WHEiY2aTKFd81/aLvtKhG4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN3LKfru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I7t9HBgV67m5QhDev3pe1hqyIXJzs7Os/0RQysuBwL7Fq0KNetM4zVoq6Zc9NxXUIxYocmkxgZz9/tJYIFd2QoQmwNh/9w6gaA53Gbv9ReChYHF84wut5zfceEGhJvheyh+POA6/b9m8LpYT5NIdtwnt8158tpVCr/YlqydjSZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJoX+Frj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN3LKfru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EDDC4CEE4;
-	Thu, 17 Apr 2025 18:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJoX+Frj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B63CC4CEE4;
+	Thu, 17 Apr 2025 18:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915210;
-	bh=tkUViCoUAXEiqqBkNenO5l9wG/9Lhr10TKzA2Lt+8bc=;
+	s=korg; t=1744915213;
+	bh=AbDtE8omXKrlF3mBTu6vY2y7j7ZFYnAvSFSkIAJNHag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EN3LKfruKnxTED7vE220OgfgldySQwQiL6sqlbaa9nrQK9mmFulXsDX2OuSlB/Ci1
-	 lGZ0l9MhPCaNYhTTeZ6jJHVbd8ulG4OVlv+btcXtjfD/ecnEhUs+D/lLrelZkbLB52
-	 JZj1cJCfsiC0I4kiGJC43QJ316VJU12ZHTkS3zRU=
+	b=eJoX+FrjhvGQAztxEWWEfnhnSfTn0o+n6mggFr17L7JuihhGc/2qfCv5a669yqNOx
+	 ptVaxY9Q20Ep02KbOpVfmChdptlN+UTMJOqGAUrwiKG6sV9T8XbEi6EegxIBQxceDK
+	 zTAd4Hp5A/1yQ9R54ITkGTzuF78M6jBH2N2KBTfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@mailbox.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/393] drm/tests: modes: Fix drm_display_mode memory leak
-Date: Thu, 17 Apr 2025 19:47:15 +0200
-Message-ID: <20250417175108.643506021@linuxfoundation.org>
+Subject: [PATCH 6.12 053/393] perf/dwc_pcie: fix some unreleased resources
+Date: Thu, 17 Apr 2025 19:47:42 +0200
+Message-ID: <20250417175109.719623150@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,115 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Yunhui Cui <cuiyunhui@bytedance.com>
 
-[ Upstream commit d34146340f95cd9bf06d4ce71cca72127dc0b7cd ]
+[ Upstream commit 6eb1e8ef586ac4a3dcdc20248f9cb45e4ceb141f ]
 
-drm_analog_tv_mode() and its variants return a drm_display_mode that
-needs to be destroyed later one. The drm_modes_analog_tv tests never
-do however, which leads to a memory leak.
+Release leaked resources, such as plat_dev and dev_info.
 
-Let's make sure it's freed.
-
-Reported-by: Philipp Stanner <phasta@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
-Fixes: 4fcd238560ee ("drm/modes: Add a function to generate analog display modes")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-5-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250220121716.50324-2-cuiyunhui@bytedance.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_modes_test.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/perf/dwc_pcie_pmu.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_modes_test.c b/drivers/gpu/drm/tests/drm_modes_test.c
-index 6ed51f99e133c..7ba646d87856f 100644
---- a/drivers/gpu/drm/tests/drm_modes_test.c
-+++ b/drivers/gpu/drm/tests/drm_modes_test.c
-@@ -40,6 +40,7 @@ static void drm_test_modes_analog_tv_ntsc_480i(struct kunit *test)
+diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+index 4ca50f9b6dfed..7dbda36884c8d 100644
+--- a/drivers/perf/dwc_pcie_pmu.c
++++ b/drivers/perf/dwc_pcie_pmu.c
+@@ -567,8 +567,10 @@ static int dwc_pcie_register_dev(struct pci_dev *pdev)
+ 		return PTR_ERR(plat_dev);
+ 
+ 	dev_info = kzalloc(sizeof(*dev_info), GFP_KERNEL);
+-	if (!dev_info)
++	if (!dev_info) {
++		platform_device_unregister(plat_dev);
+ 		return -ENOMEM;
++	}
+ 
+ 	/* Cache platform device to handle pci device hotplug */
+ 	dev_info->plat_dev = plat_dev;
+@@ -724,6 +726,15 @@ static struct platform_driver dwc_pcie_pmu_driver = {
+ 	.driver = {.name = "dwc_pcie_pmu",},
+ };
+ 
++static void dwc_pcie_cleanup_devices(void)
++{
++	struct dwc_pcie_dev_info *dev_info, *tmp;
++
++	list_for_each_entry_safe(dev_info, tmp, &dwc_pcie_dev_info_head, dev_node) {
++		dwc_pcie_unregister_dev(dev_info);
++	}
++}
++
+ static int __init dwc_pcie_pmu_init(void)
  {
- 	struct drm_test_modes_priv *priv = test->priv;
- 	struct drm_display_mode *mode;
-+	int ret;
+ 	struct pci_dev *pdev = NULL;
+@@ -736,7 +747,7 @@ static int __init dwc_pcie_pmu_init(void)
+ 		ret = dwc_pcie_register_dev(pdev);
+ 		if (ret) {
+ 			pci_dev_put(pdev);
+-			return ret;
++			goto err_cleanup;
+ 		}
+ 	}
  
- 	mode = drm_analog_tv_mode(priv->drm,
- 				  DRM_MODE_TV_MODE_NTSC,
-@@ -47,6 +48,9 @@ static void drm_test_modes_analog_tv_ntsc_480i(struct kunit *test)
- 				  true);
- 	KUNIT_ASSERT_NOT_NULL(test, mode);
+@@ -745,35 +756,35 @@ static int __init dwc_pcie_pmu_init(void)
+ 				      dwc_pcie_pmu_online_cpu,
+ 				      dwc_pcie_pmu_offline_cpu);
+ 	if (ret < 0)
+-		return ret;
++		goto err_cleanup;
  
-+	ret = drm_kunit_add_mode_destroy_action(test, mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_EXPECT_EQ(test, drm_mode_vrefresh(mode), 60);
- 	KUNIT_EXPECT_EQ(test, mode->hdisplay, 720);
+ 	dwc_pcie_pmu_hp_state = ret;
  
-@@ -70,6 +74,7 @@ static void drm_test_modes_analog_tv_ntsc_480i_inlined(struct kunit *test)
- {
- 	struct drm_test_modes_priv *priv = test->priv;
- 	struct drm_display_mode *expected, *mode;
-+	int ret;
+ 	ret = platform_driver_register(&dwc_pcie_pmu_driver);
+ 	if (ret)
+-		goto platform_driver_register_err;
++		goto err_remove_cpuhp;
  
- 	expected = drm_analog_tv_mode(priv->drm,
- 				      DRM_MODE_TV_MODE_NTSC,
-@@ -77,9 +82,15 @@ static void drm_test_modes_analog_tv_ntsc_480i_inlined(struct kunit *test)
- 				      true);
- 	KUNIT_ASSERT_NOT_NULL(test, expected);
+ 	ret = bus_register_notifier(&pci_bus_type, &dwc_pcie_pmu_nb);
+ 	if (ret)
+-		goto platform_driver_register_err;
++		goto err_unregister_driver;
+ 	notify = true;
  
-+	ret = drm_kunit_add_mode_destroy_action(test, expected);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	mode = drm_mode_analog_ntsc_480i(priv->drm);
- 	KUNIT_ASSERT_NOT_NULL(test, mode);
+ 	return 0;
  
-+	ret = drm_kunit_add_mode_destroy_action(test, mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_EXPECT_TRUE(test, drm_mode_equal(expected, mode));
+-platform_driver_register_err:
++err_unregister_driver:
++	platform_driver_unregister(&dwc_pcie_pmu_driver);
++err_remove_cpuhp:
+ 	cpuhp_remove_multi_state(dwc_pcie_pmu_hp_state);
+-
++err_cleanup:
++	dwc_pcie_cleanup_devices();
+ 	return ret;
  }
  
-@@ -87,6 +98,7 @@ static void drm_test_modes_analog_tv_pal_576i(struct kunit *test)
+ static void __exit dwc_pcie_pmu_exit(void)
  {
- 	struct drm_test_modes_priv *priv = test->priv;
- 	struct drm_display_mode *mode;
-+	int ret;
- 
- 	mode = drm_analog_tv_mode(priv->drm,
- 				  DRM_MODE_TV_MODE_PAL,
-@@ -94,6 +106,9 @@ static void drm_test_modes_analog_tv_pal_576i(struct kunit *test)
- 				  true);
- 	KUNIT_ASSERT_NOT_NULL(test, mode);
- 
-+	ret = drm_kunit_add_mode_destroy_action(test, mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_EXPECT_EQ(test, drm_mode_vrefresh(mode), 50);
- 	KUNIT_EXPECT_EQ(test, mode->hdisplay, 720);
- 
-@@ -117,6 +132,7 @@ static void drm_test_modes_analog_tv_pal_576i_inlined(struct kunit *test)
- {
- 	struct drm_test_modes_priv *priv = test->priv;
- 	struct drm_display_mode *expected, *mode;
-+	int ret;
- 
- 	expected = drm_analog_tv_mode(priv->drm,
- 				      DRM_MODE_TV_MODE_PAL,
-@@ -124,9 +140,15 @@ static void drm_test_modes_analog_tv_pal_576i_inlined(struct kunit *test)
- 				      true);
- 	KUNIT_ASSERT_NOT_NULL(test, expected);
- 
-+	ret = drm_kunit_add_mode_destroy_action(test, expected);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	mode = drm_mode_analog_pal_576i(priv->drm);
- 	KUNIT_ASSERT_NOT_NULL(test, mode);
- 
-+	ret = drm_kunit_add_mode_destroy_action(test, mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_EXPECT_TRUE(test, drm_mode_equal(expected, mode));
+-	struct dwc_pcie_dev_info *dev_info, *tmp;
+-
+ 	if (notify)
+ 		bus_unregister_notifier(&pci_bus_type, &dwc_pcie_pmu_nb);
+-	list_for_each_entry_safe(dev_info, tmp, &dwc_pcie_dev_info_head, dev_node)
+-		dwc_pcie_unregister_dev(dev_info);
++	dwc_pcie_cleanup_devices();
+ 	platform_driver_unregister(&dwc_pcie_pmu_driver);
+ 	cpuhp_remove_multi_state(dwc_pcie_pmu_hp_state);
  }
- 
 -- 
 2.39.5
 
