@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589F12641E1;
-	Thu, 17 Apr 2025 18:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831D32641C8;
+	Thu, 17 Apr 2025 18:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914812; cv=none; b=iemD2r7zlX2XEyKq7ARA6y8GuncguLu9iKPXcIcEkIvvOK6eddJEAJA3WzQFzbOPIU0BrPNoPE4hc7VdYIiK2rKAg5yE2ws4O3v06v4BBm4M8Kh4JdTwjB8TapS2Enfl/6zosQg5lal57XbiUs5mWdV71y4VfezhiZ7u+DH0wXA=
+	t=1744914815; cv=none; b=jT2zbcNzcOV2WBbpBfiw1EsoM0pTN6op18FDIjxHfX+gr0QOSzJi2Re79nYc4BnQ2QfEdjNEPyw03lZTcK9ftQrvF1l7PVy1c9QHWaY2rgeZR5CnDHbvteSqGSeKBJKN1Dj/n9YuyAJ9UdiYhM/r15hGOEKIkNnualV2ffs11N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914812; c=relaxed/simple;
-	bh=DhWH4LHDgiJESGwdL/CCh3CjKFJathb4f10vR4M35wk=;
+	s=arc-20240116; t=1744914815; c=relaxed/simple;
+	bh=IQdDRm2ytiLIt2TTp07xSxx261zBDJykHscNClRe+Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5e0KeL1G2tH/yt1BTKBvfof1pPAQnaHY4uTTqIwnRHjCYHHG5eAD9gCsX+tioYbUwfKBgvFYqXGcmluisrDrlWiQwYCeZPYdBDOt63VfzBOdHcYyTerQ/kI2kdhqAQSMYJRMbBzZI3p2B7gV74sPP7eHiLN1dfqIllknYlZ2+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPKYM/Tq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=llwdBGgcKS0D7CsXAT5MvFkOlfddLAk7aJZOnp+51kD1RH8e49ATTSQxotKbu1Wz2euwys1xhMIgjZE19Y8m3m3vfMZ6hetJLKHgV9ZQzbw/p8GEgbYqutqSeIg0mhzWj0Z2Il0bzUAiIyhI1LfFUz2PdOhcCU9Gyr+RhVRzbRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwPSfXh8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPKYM/Tq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03E4C4CEE4;
-	Thu, 17 Apr 2025 18:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwPSfXh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5758C4CEE4;
+	Thu, 17 Apr 2025 18:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914812;
-	bh=DhWH4LHDgiJESGwdL/CCh3CjKFJathb4f10vR4M35wk=;
+	s=korg; t=1744914815;
+	bh=IQdDRm2ytiLIt2TTp07xSxx261zBDJykHscNClRe+Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPKYM/TqBEbqFlobteavflia2SF3EhGwOKZPDmNHykkL8yhegqGfLQU4KzBe96hwW
-	 qiBmZec/NCr+KcJLlr1TqLwwTdteld+h6Iw5jJqGhkzh/WJJKCJNNqv4RLbEj2GESa
-	 uXdLxAkVzEMLth/xPyi5wNQrizHJGnAJ3JtqO6Uo=
+	b=zwPSfXh8ZXGILf89XV8RSkqyUyqOy7Zd8ZfhSvv/ulk5n0jYx1DO0a68AZRBFkqu8
+	 zpIHIGIyp72+EPPG6hFUF5yUugNDnxbMeNdPMWQCkMacki0AW1atVcj8z4uN1Ii2sB
+	 338e5JIC7YwkZq30CJer7zjl6AdwpOfle6JZzbPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.13 337/414] tracing: fprobe events: Fix possible UAF on modules
-Date: Thu, 17 Apr 2025 19:51:35 +0200
-Message-ID: <20250417175124.987524439@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.13 311/414] backlight: led_bl: Hold led_access lock when calling led_sysfs_disable()
+Date: Thu, 17 Apr 2025 19:51:09 +0200
+Message-ID: <20250417175123.942267194@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -49,86 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit dd941507a9486252d6fcf11814387666792020f3 upstream.
+commit 276822a00db3c1061382b41e72cafc09d6a0ec30 upstream.
 
-Commit ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module
-refcount") moved try_module_get() from __find_tracepoint_module_cb()
-to find_tracepoint() caller, but that introduced a possible UAF
-because the module can be unloaded before try_module_get(). In this
-case, the module object should be freed too. Thus, try_module_get()
-does not only fail but may access to the freed object.
+Lockdep detects the following issue on led-backlight removal:
+  [  142.315935] ------------[ cut here ]------------
+  [  142.315954] WARNING: CPU: 2 PID: 292 at drivers/leds/led-core.c:455 led_sysfs_enable+0x54/0x80
+  ...
+  [  142.500725] Call trace:
+  [  142.503176]  led_sysfs_enable+0x54/0x80 (P)
+  [  142.507370]  led_bl_remove+0x80/0xa8 [led_bl]
+  [  142.511742]  platform_remove+0x30/0x58
+  [  142.515501]  device_remove+0x54/0x90
+  ...
 
-To avoid that, try_module_get() in __find_tracepoint_module_cb()
-again.
+Indeed, led_sysfs_enable() has to be called with the led_access
+lock held.
 
-Link: https://lore.kernel.org/all/174342990779.781946.9138388479067729366.stgit@devnote2/
+Hold the lock when calling led_sysfs_disable().
 
-Fixes: ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module refcount")
+Fixes: ae232e45acf9 ("backlight: add led-backlight driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20250122091914.309533-1-herve.codina@bootlin.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_fprobe.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/video/backlight/led_bl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -888,9 +888,15 @@ static void __find_tracepoint_module_cb(
- 	struct __find_tracepoint_cb_data *data = priv;
+--- a/drivers/video/backlight/led_bl.c
++++ b/drivers/video/backlight/led_bl.c
+@@ -229,8 +229,11 @@ static void led_bl_remove(struct platfor
+ 	backlight_device_unregister(bl);
  
- 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
--		data->tpoint = tp;
--		if (!data->mod)
-+		/* If module is not specified, try getting module refcount. */
-+		if (!data->mod && mod) {
-+			/* If failed to get refcount, ignore this tracepoint. */
-+			if (!try_module_get(mod))
-+				return;
-+
- 			data->mod = mod;
-+		}
-+		data->tpoint = tp;
- 	}
+ 	led_bl_power_off(priv);
+-	for (i = 0; i < priv->nb_leds; i++)
++	for (i = 0; i < priv->nb_leds; i++) {
++		mutex_lock(&priv->leds[i]->led_access);
+ 		led_sysfs_enable(priv->leds[i]);
++		mutex_unlock(&priv->leds[i]->led_access);
++	}
  }
  
-@@ -902,7 +908,11 @@ static void __find_tracepoint_cb(struct
- 		data->tpoint = tp;
- }
- 
--/* Find a tracepoint from kernel and module. */
-+/*
-+ * Find a tracepoint from kernel and module. If the tracepoint is on the module,
-+ * the module's refcount is incremented and returned as *@tp_mod. Thus, if it is
-+ * not NULL, caller must call module_put(*tp_mod) after used the tracepoint.
-+ */
- static struct tracepoint *find_tracepoint(const char *tp_name,
- 					  struct module **tp_mod)
- {
-@@ -931,7 +941,10 @@ static void reenable_trace_fprobe(struct
- 	}
- }
- 
--/* Find a tracepoint from specified module. */
-+/*
-+ * Find a tracepoint from specified module. In this case, this does not get the
-+ * module's refcount. The caller must ensure the module is not freed.
-+ */
- static struct tracepoint *find_tracepoint_in_module(struct module *mod,
- 						    const char *tp_name)
- {
-@@ -1167,11 +1180,6 @@ static int __trace_fprobe_create(int arg
- 	if (is_tracepoint) {
- 		ctx.flags |= TPARG_FL_TPOINT;
- 		tpoint = find_tracepoint(symbol, &tp_mod);
--		/* lock module until register this tprobe. */
--		if (tp_mod && !try_module_get(tp_mod)) {
--			tpoint = NULL;
--			tp_mod = NULL;
--		}
- 		if (tpoint) {
- 			ctx.funcname = kallsyms_lookup(
- 				(unsigned long)tpoint->probestub,
+ static const struct of_device_id led_bl_of_match[] = {
 
 
