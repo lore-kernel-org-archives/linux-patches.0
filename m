@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5B5258CE8;
-	Thu, 17 Apr 2025 18:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241B22F43;
+	Thu, 17 Apr 2025 18:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914608; cv=none; b=FibaO8lNHOpEF86SJH913PkAH03Bia1mEMcOuEwyOtR+hs7jM1mVj/wdWoEHGc9jeP1O+eXuHuQnDJ4/9Aaw3eGle6chETssUsH+xB0At+1Q8zO+KjPZIDkLIxH2WwOJyDF0P/zcOQxMQ+7CN4OsSzv83MY+1STeE5key/3jrUg=
+	t=1744914611; cv=none; b=l529DT/YM+eFL1CgvAAX6Lt3bEXbkypUVkvHnBBeM59JIJiCHxKl2uf5b2pNpRx8/JdMn9BxvZdcQlIdkbj8Lk+7hdNJuiQaS7fLpqqt5xXsrNXJZeSEE/B+E1yylZdaxH9r8vCN9a/yTQafJaox9On4ooLWYFqJHsw7gLS+Tfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914608; c=relaxed/simple;
-	bh=PXq2a3zl5Zp1Ej7yYXwpgWNLoXoWh4F0VMh6UT+U8jA=;
+	s=arc-20240116; t=1744914611; c=relaxed/simple;
+	bh=JGnlKlQKDwbuzXZdIIBTjrnP3IBECfJv7HwIFefgIAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaLSEhZPCUEvpJ1M5YIbVfXlYBqzEizO8wN1yz/dpllrlj0QQ5+8YkYlJBhOCBMbdpEGpubYWO9g6Afc0Ru1sWTQkXgYqUwpSQhLBdGzMAMDPL1A/FHJCR0KmyYpAZ0VcZV0DxW8CO0zK5wZopQO3wj4mLSEOS7Pe9onHwYjIe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SD2Ku3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBnhAcJnqX5GxBruMmrm2z2nG708oGlOxsfav0KmLxd/VoT/NOPfKZCJhIUjHTtv2i//hA6fZ+9O8Socb0ji6YcJ7c4HlMtvozN1zuKr1NhFXfsCBS612VR5HGrt3eYEi3a9k5mZ8Fk2x+jo+rH7pWvCNOX3bZnVNuDkV+DImL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLBHLQIQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SD2Ku3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1C0C4CEE4;
-	Thu, 17 Apr 2025 18:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLBHLQIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD353C4CEE4;
+	Thu, 17 Apr 2025 18:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914608;
-	bh=PXq2a3zl5Zp1Ej7yYXwpgWNLoXoWh4F0VMh6UT+U8jA=;
+	s=korg; t=1744914611;
+	bh=JGnlKlQKDwbuzXZdIIBTjrnP3IBECfJv7HwIFefgIAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SD2Ku3tlAYB1O2xaJcqe1DnUFxjHniL+4Xw1KYjYbUd1sjK9afMn4aks9k9aNRKy
-	 vZtyF0S1iKRq/PfS1tCypQYMXlVUNR3tt4evy/YB+FH/1EzmENeCbK9m83x3iNBAu/
-	 VnY9+Br2AFKgrLuFQGSn9Z26rB9oGun3IDL5UP6A=
+	b=bLBHLQIQm+ujfr5U4AuJJqcpDBotca0eybW71qRzmAYQnFrTqoHfYEan+TIeFU3z8
+	 1zFRIwvYYKXB4JP61Y8F108/esM6aybSRw02uxW2rleK5kxDUDj4lAT8/8FZbjXW0L
+	 kRAcLMZFtj8qHynRbgoqd0D8dn9a8wNAoj7Qe28o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 244/414] media: chips-media: wave5: Fix timeout while testing 10bit hevc fluster
-Date: Thu, 17 Apr 2025 19:50:02 +0200
-Message-ID: <20250417175121.236560875@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.13 271/414] ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
+Date: Thu, 17 Apr 2025 19:50:29 +0200
+Message-ID: <20250417175122.325232843@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -53,53 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson.lee <jackson.lee@chipsnmedia.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit 035371c9e5098018b8512efc6a8812912469480c upstream.
+commit 5d01ed9b9939b4c726be74db291a982bc984c584 upstream.
 
-The Wave5 521C variant does not support 10 bit decoding. When 10 bit
-decoding support was added for the 515 variant, a section of the code
-was removed which returned an error. This removal causes a timeout for
-the 521 variant, which was discovered during HEVC 10-bit decoding tests.
+Period sizes less than 6k for capture path triggers overruns in the
+dsp capture pipeline.
 
-Fixes: 143e7ab4d9a0 ("media: chips-media: wave5: support decoding HEVC Main10 profile")
+Change the period size and number of periods to value which DSP is happy with.
+
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://patch.msgid.link/20250314174800.10142-6-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/qcom/qdsp6/q6apm-dai.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1345,10 +1345,24 @@ static int wave5_vpu_dec_start_streaming
- 		if (ret)
- 			goto free_bitstream_vbuf;
- 	} else if (q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
-+		struct dec_initial_info *initial_info =
-+			&inst->codec_info->dec_info.initial_info;
-+
- 		if (inst->state == VPU_INST_STATE_STOP)
- 			ret = switch_state(inst, VPU_INST_STATE_INIT_SEQ);
- 		if (ret)
- 			goto return_buffers;
-+
-+		if (inst->state == VPU_INST_STATE_INIT_SEQ &&
-+		    inst->dev->product_code == WAVE521C_CODE) {
-+			if (initial_info->luma_bitdepth != 8) {
-+				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
-+					 __func__, initial_info->luma_bitdepth);
-+				ret = -EINVAL;
-+				goto return_buffers;
-+			}
-+		}
-+
- 	}
- 	pm_runtime_mark_last_busy(inst->dev->dev);
- 	pm_runtime_put_autosuspend(inst->dev->dev);
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -24,8 +24,8 @@
+ #define PLAYBACK_MIN_PERIOD_SIZE	128
+ #define CAPTURE_MIN_NUM_PERIODS		2
+ #define CAPTURE_MAX_NUM_PERIODS		8
+-#define CAPTURE_MAX_PERIOD_SIZE		4096
+-#define CAPTURE_MIN_PERIOD_SIZE		320
++#define CAPTURE_MAX_PERIOD_SIZE		65536
++#define CAPTURE_MIN_PERIOD_SIZE		6144
+ #define BUFFER_BYTES_MAX (PLAYBACK_MAX_NUM_PERIODS * PLAYBACK_MAX_PERIOD_SIZE)
+ #define BUFFER_BYTES_MIN (PLAYBACK_MIN_NUM_PERIODS * PLAYBACK_MIN_PERIOD_SIZE)
+ #define COMPR_PLAYBACK_MAX_FRAGMENT_SIZE (128 * 1024)
 
 
