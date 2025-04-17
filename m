@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D22571AD;
-	Thu, 17 Apr 2025 18:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9588E2571BF;
+	Thu, 17 Apr 2025 18:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914481; cv=none; b=gQCmtxh0mExqB+2m2LFyze0PObb+901ZfK0lV0L0OrMqq6NGRe6+GaHd1qxUafrZxnJUkHYoKUNp9HEUJSyRddm24Rjkbcfhv4vEYzDcMi7xIAIwDkuyQPMQnqF9pOpPsx3rzvSAjqQJLaHFk5uNMqIbjXdcH4qygDxTOS/Q3/E=
+	t=1744914484; cv=none; b=njvCLvLoG+pHh1xtODAYWp/nggKPEkzmY7yWUm8+9QNSELgphCCg0WUxoo4sHbrDFqcmzMUS5XmvJoE6WSLJyVwmuAishD21WIIDwLCx/97I+r8pYw7liH/+9hcxDQydLzhEwCKBQNKDksqsBSGpZ67G+p3johXFFy5XXdUvYmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914481; c=relaxed/simple;
-	bh=5Qc+8Xwj8662ly7ujtHpcJWGr+9KYmoFrba85vBYCYE=;
+	s=arc-20240116; t=1744914484; c=relaxed/simple;
+	bh=fxhjzv67xl1c9zaIETNeWyod32QC5B2ZU6rJ9nFpEOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcnMUw81aN3rq1Q6huvtg2yaw0LPaDf82EjOiIAxr+BWisvvkYqwlHJFcywlf7cQAdUORBZ0MKspeN16dja2Dmu2WvSvB16sRysPT9RjowQ7t/z6exE2PRdbqUTqaP/EuYvwKcD46MDk9myykjVbUKF70oPenNDhi8MMJ7pHaoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjSrn9u8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlxAI2f3o/YreIiauVguUakX2ugtZgHHPReEORWJ5KwJEa3AHlstw25sbi7O35SAerNR2FQmeEaAE5boiZzk3gOe6VIujzbIq/y9bOxTVt9nOvOxVKiHb5E37EuEM6/FTWObwKejggibduB7bQcjTqFw9LP55eisJigfSW9savM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSuLaYPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjSrn9u8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0D9C4CEE4;
-	Thu, 17 Apr 2025 18:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSuLaYPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A163FC4CEE4;
+	Thu, 17 Apr 2025 18:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914481;
-	bh=5Qc+8Xwj8662ly7ujtHpcJWGr+9KYmoFrba85vBYCYE=;
+	s=korg; t=1744914484;
+	bh=fxhjzv67xl1c9zaIETNeWyod32QC5B2ZU6rJ9nFpEOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjSrn9u8P9V1fw4CrJiIIDSP0I35D1YIFdMNoO712iSR0rf4800GNa4iOriNekgzB
-	 t5NtAcbYWOd0jE+hAeRFI0aI6sRnSwKrKkfNVJN3jfGipm8UxMIxfXUqyu1rbo0o7Q
-	 sWA1ivLYo2H+mRNUNIurSScPGjYtwRDoEEaWO4ac=
+	b=eSuLaYPSaR9wTJF3AZrm2G+TIzJ5SNUUyXsYUCPtNVdOnTvDsqE4I72No2Zi8xtxe
+	 gP6XwhBeQV4+rNEFM2LL0kzGUljrLn///izJ0rkoaUvR4Aswl2vN/I/kZwHkyhObij
+	 94KrjxlVbc0zNs8gm265I7j+ALOZ0kFq9xNg1zi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 229/414] Revert "media: imx214: Fix the error handling in imx214_probe()"
-Date: Thu, 17 Apr 2025 19:49:47 +0200
-Message-ID: <20250417175120.643964866@linuxfoundation.org>
+Subject: [PATCH 6.13 230/414] media: i2c: ccs: Set the devices runtime PM status correctly in remove
+Date: Thu, 17 Apr 2025 19:49:48 +0200
+Message-ID: <20250417175120.682416282@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,31 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit abd88757252c2a2cea7909f3922de1f0e9e04002 upstream.
+commit e04604583095faf455b3490b004254a225fd60d4 upstream.
 
-This reverts commit 9bc92332cc3f06fda3c6e2423995ca2da0a7ec9a.
+Set the device's runtime PM status to suspended in device removal only if
+it wasn't suspended already.
 
-Revert this "fix" as it's not really helpful but makes backporting a
-proper fix harder.
-
-Fixes: 9bc92332cc3f ("media: imx214: Fix the error handling in imx214_probe()")
-Cc: stable@vger.kernel.org # for >= v6.12
+Fixes: 9447082ae666 ("[media] smiapp: Implement power-on and power-off sequences without runtime PM")
+Cc: stable@vger.kernel.org # for >= v5.15
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx214.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/i2c/ccs/ccs-core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/imx214.c
-+++ b/drivers/media/i2c/imx214.c
-@@ -1114,7 +1114,6 @@ free_ctrl:
- 	v4l2_ctrl_handler_free(&imx214->ctrls);
- error_power_off:
- 	pm_runtime_disable(imx214->dev);
--	regulator_bulk_disable(IMX214_NUM_SUPPLIES, imx214->supplies);
+--- a/drivers/media/i2c/ccs/ccs-core.c
++++ b/drivers/media/i2c/ccs/ccs-core.c
+@@ -3591,9 +3591,10 @@ static void ccs_remove(struct i2c_client
+ 	v4l2_async_unregister_subdev(subdev);
  
- 	return ret;
- }
+ 	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
++	if (!pm_runtime_status_suspended(&client->dev)) {
+ 		ccs_power_off(&client->dev);
+-	pm_runtime_set_suspended(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
+ 
+ 	for (i = 0; i < sensor->ssds_used; i++)
+ 		v4l2_device_unregister_subdev(&sensor->ssds[i].sd);
 
 
