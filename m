@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22387264619;
-	Thu, 17 Apr 2025 18:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3749B25A654;
+	Thu, 17 Apr 2025 18:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914876; cv=none; b=OcYTt3wq3V3jgc7VICD7N0R4rJwkhzAu7/dCNtlX7y9KyQQNwDVTYN0dMvw+OK+H3UNBh/oCzxVfBaRdR4mksNo2LAJzNG4ouFjOquZUEJrYjn6nPfJjdISRGDyx4dv7+aRXxBSuKEGqHRhRrCpATc3MtcXAyrrcBb2c1moU4hE=
+	t=1744914879; cv=none; b=hgTEWZvUJoF+SkYIKovr8Z3R/3YBCYwAUpBYK1saCYL6tQHP+knOKxbgc+uw/OyKIei99GsyhQGoYtalS0wMRedWLsJmhhv9cEA48e4ustSfc8QzP77D0DH0koBvOlfMpwSELMS8zcDROsATy1Bhpci2pNWfiSU0YHC8U+b4iu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914876; c=relaxed/simple;
-	bh=ofhkt00YnWe7FXNm75tqyUeiFmNBCDnYLtq8PYVEJp4=;
+	s=arc-20240116; t=1744914879; c=relaxed/simple;
+	bh=ynz50sbnLtVD60g0VYWpDusoKzQ0mQPaAL2XkYVMsDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZ8wObODuJZIsJomXpibAehDTHdnJbtaEVjy5p/d1/EXhR4v73+IYssu42h9u94Ibjf+Y3KoMb6+pVLslnryqnL/Qx380/oOls1O/ucoW5vMCp3ZZvDnK62QD6TMeBrMuejdwnye7GB0S/0ZgctPVs+WcCSRq4HmO+yF4jqhwbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9E4PR2s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HuJ1cqUD4hjv5tbAr2mtMId6UdCBm8Svv4gK4Azisyph6GG0mZ2QKk05U1WzGhW2iBV+WOfm2g1/Z912eQT2KgmixqmfsWVPItbOG1EK2enqJlTp5RX4ZmYIN/OVdoINUVTTF7MeZ3iYnq4zbh6TOcIC28Z4BCf4T17vFDmHVu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mktMTV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9E4PR2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29F2C4CEE4;
-	Thu, 17 Apr 2025 18:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mktMTV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4664C4CEE4;
+	Thu, 17 Apr 2025 18:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914876;
-	bh=ofhkt00YnWe7FXNm75tqyUeiFmNBCDnYLtq8PYVEJp4=;
+	s=korg; t=1744914879;
+	bh=ynz50sbnLtVD60g0VYWpDusoKzQ0mQPaAL2XkYVMsDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h9E4PR2shp8NmEsz3Rr9rDt+FflSFPItvoGNRN5hUKoGWKz9P1HtWn2S537KhhUYi
-	 FOhcRLxrNWdtvgP88m2BMf4kp5JlLLz03Ssr5AX+FEEiXTlKSV3qYslx5duZcDdKJG
-	 zSjnk/EwRbUdfGreGT5PDTjeCv6W0/5qkGYR9110=
+	b=2mktMTV7Mfqzmkcz1/VvFFrGIZ/49Y8agrc5vBYPfpWBmXaPfFDgA/PnIK5SeGdvD
+	 YT4+lcrg7mLoO6B1wYC0i2BOMTEzFsTWU4/5kp8I9gao6JGxejYvvLtZdcJbThworL
+	 b1kDiAh/nPgKRwdxMF8CYXEsfIN1MSshdNM5GzJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhoumin <teczm@foxmail.com>,
+	Andy Chiu <andybnac@gmail.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.13 359/414] ftrace: Add cond_resched() to ftrace_graph_set_hash()
-Date: Thu, 17 Apr 2025 19:51:57 +0200
-Message-ID: <20250417175125.902755414@linuxfoundation.org>
+Subject: [PATCH 6.13 360/414] ftrace: Properly merge notrace hashes
+Date: Thu, 17 Apr 2025 19:51:58 +0200
+Message-ID: <20250417175125.942830329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,39 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhoumin <teczm@foxmail.com>
+From: Andy Chiu <andybnac@gmail.com>
 
-commit 42ea22e754ba4f2b86f8760ca27f6f71da2d982c upstream.
+commit 04a80a34c22f4db245f553d8696d1318d1c00ece upstream.
 
-When the kernel contains a large number of functions that can be traced,
-the loop in ftrace_graph_set_hash() may take a lot of time to execute.
-This may trigger the softlockup watchdog.
-
-Add cond_resched() within the loop to allow the kernel to remain
-responsive even when processing a large number of functions.
-
-This matches the cond_resched() that is used in other locations of the
-code that iterates over all functions that can be traced.
+The global notrace hash should be jointly decided by the intersection of
+each subops's notrace hash, but not the filter hash.
 
 Cc: stable@vger.kernel.org
-Fixes: b9b0c831bed26 ("ftrace: Convert graph filter to use hash tables")
-Link: https://lore.kernel.org/tencent_3E06CE338692017B5809534B9C5C03DA7705@qq.com
-Signed-off-by: zhoumin <teczm@foxmail.com>
+Link: https://lore.kernel.org/20250408160258.48563-1-andybnac@gmail.com
+Fixes: 5fccc7552ccb ("ftrace: Add subops logic to allow one ops to manage many")
+Signed-off-by: Andy Chiu <andybnac@gmail.com>
+[ fixed removing of freeing of filter_hash ]
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ftrace.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -6858,6 +6858,7 @@ ftrace_graph_set_hash(struct ftrace_hash
- 				}
- 			}
+@@ -3542,16 +3542,16 @@ int ftrace_startup_subops(struct ftrace_
+ 	    ftrace_hash_empty(subops->func_hash->notrace_hash)) {
+ 		notrace_hash = EMPTY_HASH;
+ 	} else {
+-		size_bits = max(ops->func_hash->filter_hash->size_bits,
+-				subops->func_hash->filter_hash->size_bits);
++		size_bits = max(ops->func_hash->notrace_hash->size_bits,
++				subops->func_hash->notrace_hash->size_bits);
+ 		notrace_hash = alloc_ftrace_hash(size_bits);
+ 		if (!notrace_hash) {
+ 			free_ftrace_hash(filter_hash);
+ 			return -ENOMEM;
  		}
-+		cond_resched();
- 	} while_for_each_ftrace_rec();
  
- 	return fail ? -EINVAL : 0;
+-		ret = intersect_hash(&notrace_hash, ops->func_hash->filter_hash,
+-				     subops->func_hash->filter_hash);
++		ret = intersect_hash(&notrace_hash, ops->func_hash->notrace_hash,
++				     subops->func_hash->notrace_hash);
+ 		if (ret < 0) {
+ 			free_ftrace_hash(filter_hash);
+ 			free_ftrace_hash(notrace_hash);
 
 
