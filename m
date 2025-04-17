@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E2618C034;
-	Thu, 17 Apr 2025 18:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294361E1DEF;
+	Thu, 17 Apr 2025 18:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913065; cv=none; b=ASSooxvtNrqWuUjCZJQPKgg7udN8mWvUBmjbUDx/E/BSZzFpe8U4TKe5sscBkcyOLivO2kfEls0UENRtk5ActdkQcQRaFGCBw+3YkEwXZRFIP9BoGFpfQbUMbtf5p10OoWN70d4kHTrhX3gbQCSNZUIFmy1N933MCfAhcKRitE4=
+	t=1744913068; cv=none; b=OBTSXjQqO6KgjM57mATUXqQGQyaAaxnEKl6i/CNcghdSycewV+kQVK5HmqXzHpX9G90XhMaLI3xFryTCOUli8XsGlZUPjwD6/zPMazNPLQ0c4kR+N0hYu+frolf0VAmhJ4Uq/UD8rp4oM+no3XYKyrG/GauwFsEEog/MY4o+ke8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913065; c=relaxed/simple;
-	bh=L+nsu4luVHUHLfceWy/GdpNdXIR2zv9kepmFhavx6wk=;
+	s=arc-20240116; t=1744913068; c=relaxed/simple;
+	bh=hx4KyS4I5bEoWGIcDtQrcrk5keoS63izkGXNYoWlxAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ssBRvezcbtW1v80Sub4mYFODeYJo36Fsu07/2iPM9P3nnmz14LpErhg29UAMP/cYVD5Fx/8gnNdMVJPo1y20msA5pEroyuEt6DsHzCaVLEL4DEyODHzVjecbL5pxmAvrrU0NVO5wdkwi75uDwkSa4siZOH8G1BZWAnTKmveyZpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM5ggTke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lp4qhle60V28XMC/4koir2d+tfiaFpXSL03uCNt5boJlBQOaVtPaA6WMdbtuYWa4I7NRUiuZ/nSV2DY4SZrMk2CjhgLYxhKGu0O4u9miRnu1tfBSaCINUEESqX+VZ8tda4JCy8XOZXPsUcLBqg/tFjORhQLh43cx/8X8bjS7Xh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEZ+ZrOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM5ggTke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A1EC4CEE4;
-	Thu, 17 Apr 2025 18:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEZ+ZrOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A190C4CEE4;
+	Thu, 17 Apr 2025 18:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913064;
-	bh=L+nsu4luVHUHLfceWy/GdpNdXIR2zv9kepmFhavx6wk=;
+	s=korg; t=1744913068;
+	bh=hx4KyS4I5bEoWGIcDtQrcrk5keoS63izkGXNYoWlxAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YM5ggTkeU9vhByRWRCgql+OiDu3RKXMt6saZyHeFCdpo094jK59TEuwMJQ8mfGAlE
-	 kGHjj6naDu6eaB28OgxGU4hD3UOiZU8PEaFPjifGim15ag8VqXbvFrkLJNvaAPXmE7
-	 ykkie235uwKvXGTzCtlFnjb4JD1nWR0psboj+5iI=
+	b=JEZ+ZrOx/sJTZjvdfpqlwISheaJphDApNqZye29oYYX6OuU+ROafB/EqqIRaWYf8t
+	 iejVTIWMYvc31Hfqm3X3rhMPVPSHcQvybuK66iIQm7TMx7LZuNSi3y94c9sRK863NG
+	 YFAbGh2IiZmmCofgL8b/6P4oRVhKt1umh/O167Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 215/449] HID: pidff: Fix 90 degrees direction name North -> East
-Date: Thu, 17 Apr 2025 19:48:23 +0200
-Message-ID: <20250417175126.630831328@linuxfoundation.org>
+Subject: [PATCH 6.14 216/449] HID: pidff: Fix set_device_control()
+Date: Thu, 17 Apr 2025 19:48:24 +0200
+Message-ID: <20250417175126.668868395@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,27 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit f98ecedbeca34a8df1460c3a03cce32639c99a9d ]
+[ Upstream commit e2fa0bdf08a70623f24ed52f2037a330999d9800 ]
+
+As the search for Device Control report is permissive, make sure the
+desired field was actually found, before trying to set it.
+
+Fix bitmask clearing as it was erronously using index instead of
+index - 1 (HID arrays index is 1-based).
+
+Add last two missing Device Control usages to the defined array.
+PID_PAUSE and PID_CONTINUE.
 
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/usbhid/hid-pidff.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index a614438e43bd8..6eb7934c8f53b 100644
+index 6eb7934c8f53b..8dfd2c554a276 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -145,7 +145,7 @@ static const u8 pidff_block_load_status[] = { 0x8c, 0x8d, 0x8e};
- #define PID_EFFECT_STOP		1
- static const u8 pidff_effect_operation_status[] = { 0x79, 0x7b };
+@@ -118,7 +118,9 @@ static const u8 pidff_pool[] = { 0x80, 0x83, 0xa9 };
+ #define PID_DISABLE_ACTUATORS	1
+ #define PID_STOP_ALL_EFFECTS	2
+ #define PID_RESET		3
+-static const u8 pidff_device_control[] = { 0x97, 0x98, 0x99, 0x9a };
++#define PID_PAUSE		4
++#define PID_CONTINUE		5
++static const u8 pidff_device_control[] = { 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c };
  
--/* Polar direction 90 degrees (North) */
-+/* Polar direction 90 degrees (East) */
- #define PIDFF_FIXED_WHEEL_DIRECTION	0x4000
+ #define PID_CONSTANT	0
+ #define PID_RAMP	1
+@@ -551,21 +553,29 @@ static void pidff_set_gain_report(struct pidff_device *pidff, u16 gain)
+ }
  
- struct pidff_usage {
+ /*
+- * Clear device control report
++ * Send device control report to the device
+  */
+ static void pidff_set_device_control(struct pidff_device *pidff, int field)
+ {
+-	int i, tmp;
++	int i, index;
+ 	int field_index = pidff->control_id[field];
+ 
++	if (field_index < 1)
++		return;
++
+ 	/* Detect if the field is a bitmask variable or an array */
+ 	if (pidff->device_control->flags & HID_MAIN_ITEM_VARIABLE) {
+ 		hid_dbg(pidff->hid, "DEVICE_CONTROL is a bitmask\n");
++
+ 		/* Clear current bitmask */
+ 		for(i = 0; i < sizeof(pidff_device_control); i++) {
+-			tmp = pidff->control_id[i];
+-			pidff->device_control->value[tmp] = 0;
++			index = pidff->control_id[i];
++			if (index < 1)
++				continue;
++
++			pidff->device_control->value[index - 1] = 0;
+ 		}
++
+ 		pidff->device_control->value[field_index - 1] = 1;
+ 	} else {
+ 		hid_dbg(pidff->hid, "DEVICE_CONTROL is an array\n");
 -- 
 2.39.5
 
