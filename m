@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F0A25525C;
-	Thu, 17 Apr 2025 18:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E1D2522AC;
+	Thu, 17 Apr 2025 18:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915905; cv=none; b=MNDyJPjERtDeJC+LAfSGR+WbaMbs+eq19vRikcOYsnJPuiSA3BdftQO2daAwBrkREaSETL5Hb7G9gN3BCijaioeDynKumdlACnR8asflF7hoeEqW8YmrB/IFq66ROSDThY6QmZd89o3cuEv//M+Baj2qIn7v8gBneAWvt7BRJ34=
+	t=1744915907; cv=none; b=myNnBhUiu6VWqRQb1UIjU4lEYlPHNK/1Zs1m17GgezqdAfguuCcJZ1FMtqezZxtvbR9CC1jaUS36JbBgwMR9+KH2afKanRvAf+hqAKwlbK11IpdUtwlGv47piQJUonxGA2Xn9tCKeJZA34vl0jSCRYHmNvTWyTPr98sfvulcFdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915905; c=relaxed/simple;
-	bh=ItF+ole/2C2yIz546BP5na7eBWvQf83YE8ij0FlUIbI=;
+	s=arc-20240116; t=1744915907; c=relaxed/simple;
+	bh=WNcNh00TcaOwLgocDAErm3fGelFCQ5PypGFua0WgVoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPosBF5fCEvp1dyao6DQKUSIZO1ZvpSq5GUZ+hTMaqw9ZyOBCuNJDsIfoQSuzJe2UF1VHB7sgOQmkip8VzV7iWbgqZK/QRdY/ccWbvu59ywbRwkcp3wKaPlzL/N3j74Dyyb0kDNgH14bOg87KDs5cZ9AdOssonxF8OJTMQ/SiVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTnzhQdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TArxHLm1H3Vun49X0ld27WBratJZTq+epS/pd2liF8zlUjzHjp++euX5Gc3eQSnE53U+xl88jSFJ4TImdKGSYbNwtXRjGAwIAsjPt+Rh+VLT7GrF4zyLMQKhT2dx53Yqqa/R/9pXZuGG0GlgEfGtL0lZKVx07CuXw/fBHPATk0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu3URU7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTnzhQdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB7FC4CEE4;
-	Thu, 17 Apr 2025 18:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu3URU7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB78C4CEE4;
+	Thu, 17 Apr 2025 18:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915904;
-	bh=ItF+ole/2C2yIz546BP5na7eBWvQf83YE8ij0FlUIbI=;
+	s=korg; t=1744915907;
+	bh=WNcNh00TcaOwLgocDAErm3fGelFCQ5PypGFua0WgVoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTnzhQdF8ml81LhlSmMoPjOouYNZoTiC18RvOAxzqGUbFB7NyFGYjbXaHcuvAjOmv
-	 P63IUnAA8QqDVYb0wbnKbPlBUdn5DESoRt0Ed30SWb5pmO3aX6J7AvF/Ipl5a87ZXj
-	 wmZKkMJkV+sW+uy+nVtsMKDw0NUFHZH5FVR/tIVI=
+	b=Tu3URU7jYxsPBjFCCE15/BXrM8JZjRijfZOX4iG4PzTtTnXMNSGpCY9ViY5RvYVaK
+	 2prvMT9qbfdL/CTkfvsHrnrOkMwGnAgPAYchx+D60zMfw8q+/reW2MdJxpKPJSIKSc
+	 WSngM2RTLxSepgE5Na1JQaBbp6QRmmxX8d4fdOpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Waiman Long <longman@redhat.com>
-Subject: [PATCH 6.12 278/393] locking/lockdep: Decrease nr_unused_locks if lock unused in zap_class()
-Date: Thu, 17 Apr 2025 19:51:27 +0200
-Message-ID: <20250417175118.792098689@linuxfoundation.org>
+	T Pratham <t-pratham@ti.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Jens Axboe <axboe@kernel.dk>,
+	Kamlesh Gurudasani <kamlesh@ti.com>,
+	Praneeth Bajjuri <praneeth@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 279/393] lib: scatterlist: fix sg_split_phys to preserve original scatterlist offsets
+Date: Thu, 17 Apr 2025 19:51:28 +0200
+Message-ID: <20250417175118.830146687@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,47 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boqun Feng <boqun.feng@gmail.com>
+From: T Pratham <t-pratham@ti.com>
 
-commit 495f53d5cca0f939eaed9dca90b67e7e6fb0e30c upstream.
+commit 8b46fdaea819a679da176b879e7b0674a1161a5e upstream.
 
-Currently, when a lock class is allocated, nr_unused_locks will be
-increased by 1, until it gets used: nr_unused_locks will be decreased by
-1 in mark_lock(). However, one scenario is missed: a lock class may be
-zapped without even being used once. This could result into a situation
-that nr_unused_locks != 0 but no unused lock class is active in the
-system, and when `cat /proc/lockdep_stats`, a WARN_ON() will
-be triggered in a CONFIG_DEBUG_LOCKDEP=y kernel:
+The split_sg_phys function was incorrectly setting the offsets of all
+scatterlist entries (except the first) to 0.  Only the first scatterlist
+entry's offset and length needs to be modified to account for the skip.
+Setting the rest entries' offsets to 0 could lead to incorrect data
+access.
 
-  [...] DEBUG_LOCKS_WARN_ON(debug_atomic_read(nr_unused_locks) != nr_unused)
-  [...] WARNING: CPU: 41 PID: 1121 at kernel/locking/lockdep_proc.c:283 lockdep_stats_show+0xba9/0xbd0
+I am using this function in a crypto driver that I'm currently developing
+(not yet sent to mailing list).  During testing, it was observed that the
+output scatterlists (except the first one) contained incorrect garbage
+data.
 
-And as a result, lockdep will be disabled after this.
+I narrowed this issue down to the call of sg_split().  Upon debugging
+inside this function, I found that this resetting of offset is the cause
+of the problem, causing the subsequent scatterlists to point to incorrect
+memory locations in a page.  By removing this code, I am obtaining
+expected data in all the split output scatterlists.  Thus, this was indeed
+causing observable runtime effects!
 
-Therefore, nr_unused_locks needs to be accounted correctly at
-zap_class() time.
+This patch removes the offending code, ensuring that the page offsets in
+the input scatterlist are preserved in the output scatterlist.
 
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250326180831.510348-1-boqun.feng@gmail.com
+Link: https://lkml.kernel.org/r/20250319111437.1969903-1-t-pratham@ti.com
+Fixes: f8bcbe62acd0 ("lib: scatterlist: add sg splitting function")
+Signed-off-by: T Pratham <t-pratham@ti.com>
+Cc: Robert Jarzmik <robert.jarzmik@free.fr>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Kamlesh Gurudasani <kamlesh@ti.com>
+Cc: Praneeth Bajjuri <praneeth@ti.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/lockdep.c |    3 +++
- 1 file changed, 3 insertions(+)
+ lib/sg_split.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -6223,6 +6223,9 @@ static void zap_class(struct pending_fre
- 		hlist_del_rcu(&class->hash_entry);
- 		WRITE_ONCE(class->key, NULL);
- 		WRITE_ONCE(class->name, NULL);
-+		/* Class allocated but not used, -1 in nr_unused_locks */
-+		if (class->usage_mask == 0)
-+			debug_atomic_dec(nr_unused_locks);
- 		nr_lock_classes--;
- 		__clear_bit(class - lock_classes, lock_classes_in_use);
- 		if (class - lock_classes == max_lock_class_idx)
+--- a/lib/sg_split.c
++++ b/lib/sg_split.c
+@@ -88,8 +88,6 @@ static void sg_split_phys(struct sg_spli
+ 			if (!j) {
+ 				out_sg->offset += split->skip_sg0;
+ 				out_sg->length -= split->skip_sg0;
+-			} else {
+-				out_sg->offset = 0;
+ 			}
+ 			sg_dma_address(out_sg) = 0;
+ 			sg_dma_len(out_sg) = 0;
 
 
