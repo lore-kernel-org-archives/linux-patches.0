@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4C22566FE;
-	Thu, 17 Apr 2025 18:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6947C2566D7;
+	Thu, 17 Apr 2025 18:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914499; cv=none; b=D9IRj72KnB7RhpKNl5x8nZ4wsA1/RQrxA+fS1vsKV4W3fSNGq7gPNInfSGAXMryFj8TvIB7PVncWfB5ndI9mqu1vh76jP+8sGkfOC10ppKt4Zs0SMLcXNbIZlDTLXEcVMnXdbz2tF0Nk5ns53D7TZKi6f7dbTFswi88TP955lrg=
+	t=1744914502; cv=none; b=hRURkDdfVCyJIrNed66QvuXN/3tl4HsUKBzgeOHx9qqmjFYsFrp3npc8+hsR1ocGrTrxsqoaxkgrYnvdLumgEsRoy7U8Px5/Nz1G6wioPaLhE9n+SGVZhUQz2kOqfJSTRNtBWRLUD/QlixJSqVDNZ0r70vNQpx1+RZz/HIvCG+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914499; c=relaxed/simple;
-	bh=O6v6rAS+cD8Y3SfTD9nN8nuSq03ViO6W4lPwHWSzmOs=;
+	s=arc-20240116; t=1744914502; c=relaxed/simple;
+	bh=ZGoDx620c3EEeZ61L5NUM7mQmYaG+SswBH8CdrjEMUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igxrvz/53j7mnSbg880pMa67GkzpcZmAENzFe/SeVMtV2oLuEICJiasmtIgpQk7qMOxRZzGAJBIitTj7LMvgu2y+k8uhJcu5pXSu9v4pbvrXfhrmVWGsGl6j/WtDANOYs8u2bJ8j++hQaWdL3LpDLdAi8iWLXVbOVcuOKvoAQ8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d27lcVVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRVBdma7EmwdOzITuFA9uC3xVXDwA0AepmGYMfer3XzLu54Jurdx7vJDlMjtFmeyS2Rch9F4HIIpYQUK2Vz1DmUAe7H+7qGorjycsSlj6WeZTKkbRQ9llrmW0KMo3tqVQrfmIXxoqxa2D2VWHFnletDD7VktTblAzs/xj2ZRLis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf2EHMb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d27lcVVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2851C4CEE4;
-	Thu, 17 Apr 2025 18:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf2EHMb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001C0C4CEE4;
+	Thu, 17 Apr 2025 18:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914499;
-	bh=O6v6rAS+cD8Y3SfTD9nN8nuSq03ViO6W4lPwHWSzmOs=;
+	s=korg; t=1744914502;
+	bh=ZGoDx620c3EEeZ61L5NUM7mQmYaG+SswBH8CdrjEMUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d27lcVVQj/pDRiofrOPYUuCnj7L03axUvFadZZhwFdGauTl0E9Qxuikrglh7i+LAV
-	 tw+9Ox06DHdPprzt9RafA7uw9EELzqparEtowj3yKKJxSrKLSdJCR2F/O5XhQOrwnj
-	 GpSFLTVznhUGetgurk2pO0oYmGw5WmPtBMoozGGY=
+	b=Pf2EHMb+fwvKWMFbYsOUSPEW0gjTcaXmoIPraPP9STxuZ0pfw55vXnjHDiG9LoLy6
+	 sifJApfj78Il8EKoK99Cbo/vQc+K5E3DYnAsD6F8P/Cm7w27S1AyOJIfigEFYZJqPl
+	 cnro7MO7gKxIv8ydWIChCCCrO3BmOQtgm+4yxTFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 235/414] media: nuvoton: Fix reference handling of ece_pdev
-Date: Thu, 17 Apr 2025 19:49:53 +0200
-Message-ID: <20250417175120.880801839@linuxfoundation.org>
+Subject: [PATCH 6.13 236/414] media: venus: hfi_parser: add check to avoid out of bound access
+Date: Thu, 17 Apr 2025 19:49:54 +0200
+Message-ID: <20250417175120.919941360@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 453d5cadab1bde8e6fdd5bd05f4200338cb21e72 upstream.
+commit 172bf5a9ef70a399bb227809db78442dc01d9e48 upstream.
 
-When we obtain a reference to of a platform_device, we need to release
-it via put_device.
-
-Found by cocci:
-./platform/nuvoton/npcm-video.c:1677:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-./platform/nuvoton/npcm-video.c:1684:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-./platform/nuvoton/npcm-video.c:1690:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-./platform/nuvoton/npcm-video.c:1694:1-7: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-
-Instead of manually calling put_device, use the __free macros.
+There is a possibility that init_codecs is invoked multiple times during
+manipulated payload from video firmware. In such case, if codecs_count
+can get incremented to value more than MAX_CODEC_NUM, there can be OOB
+access. Reset the count so that it always starts from beginning.
 
 Cc: stable@vger.kernel.org
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/nuvoton/npcm-video.c
-+++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1669,6 +1669,7 @@ static int npcm_video_ece_init(struct np
- 			dev_err(dev, "Failed to find ECE device\n");
- 			return -ENODEV;
- 		}
-+		struct device *ece_dev __free(put_device) = &ece_pdev->dev;
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -19,6 +19,8 @@ static void init_codecs(struct venus_cor
+ 	struct hfi_plat_caps *caps = core->caps, *cap;
+ 	unsigned long bit;
  
- 		regs = devm_platform_ioremap_resource(ece_pdev, 0);
- 		if (IS_ERR(regs)) {
-@@ -1683,7 +1684,7 @@ static int npcm_video_ece_init(struct np
- 			return PTR_ERR(video->ece.regmap);
- 		}
++	core->codecs_count = 0;
++
+ 	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
+ 		return;
  
--		video->ece.reset = devm_reset_control_get(&ece_pdev->dev, NULL);
-+		video->ece.reset = devm_reset_control_get(ece_dev, NULL);
- 		if (IS_ERR(video->ece.reset)) {
- 			dev_err(dev, "Failed to get ECE reset control in DTS\n");
- 			return PTR_ERR(video->ece.reset);
 
 
