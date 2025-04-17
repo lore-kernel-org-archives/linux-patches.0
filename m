@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3381826463B;
-	Thu, 17 Apr 2025 18:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D7A26463B;
+	Thu, 17 Apr 2025 18:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914870; cv=none; b=k/xzP5nfpEbw/SB82PAavvsk++z0UEvgq8n3kHarUhXEqaIASzPqJxsU/tI07ZquX3fPS7PafuYwBRCgaoWG9rPSvDUYa6L5hqXl7grLreJQOTieO4bvphHGvcTSzh2olu9HjDZTW86fP/NMTrjN32tUNXVA0NBcrlxOg7BBHy0=
+	t=1744914873; cv=none; b=W7XfpeLsfRb5bPhYqhQgyv0fz6XLXLE9vCa5gMRw6MyHzUMGfO3+EQUYs8u4VwKEoHxgGFzvaqK887Im2JRXMuWvIrjSKhlKftziDlQZkaakI45R9l8L3ox1NjSy3BlmOMVKoEF3M3kp9vpLmBA0i324+aggUmrc3IbrllPqCOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914870; c=relaxed/simple;
-	bh=wY6BN8SRTKBl1OvNt2711Bs1Sh53/Jbz9n8Fz4CPPBQ=;
+	s=arc-20240116; t=1744914873; c=relaxed/simple;
+	bh=ppApMB80e2X8Xw8UDGqOp6p7Gx/1Bbmaik0niiUi1/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj7K1kABN/fiTTK1RsqbsOZVdg4yXyXPTVe8p7MdhCutji/8kbRyFNASysPVkpmGKqFVAifKDRS8mcv62mwtf8EoxJhrIyqiG02Fkuzr63+RkBdWJFUNWl2Yv7inEabem/ChAuYnuB5mPcGVe5iqsadlLpECFe6dVS7Nj+cVmXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pG4fHKAJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9aqyPTW1Y47bKr/yebGEnK1jRTjrGPQSHMXvls8GHDSql+f1URNOe2kWQUi1D5HzO73TDd+PN+cFUcD2OKeQFomKER3mYGylsB8z/OK2yjCncyPzS7vsOk1PO4rUHSSAz02u8Sxg/XISsj6KQI1Kp6GVxYj4QuqgP2uQl0kVXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtHxMX5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG4fHKAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F4AC4CEE4;
-	Thu, 17 Apr 2025 18:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtHxMX5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99E0C4CEE4;
+	Thu, 17 Apr 2025 18:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914870;
-	bh=wY6BN8SRTKBl1OvNt2711Bs1Sh53/Jbz9n8Fz4CPPBQ=;
+	s=korg; t=1744914873;
+	bh=ppApMB80e2X8Xw8UDGqOp6p7Gx/1Bbmaik0niiUi1/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pG4fHKAJSkrzdIH4TJO9/Ou5+x7oLMLaESxZJvmB/7k1IFI+ZjmR062sC3dGDbXJG
-	 hGrHXHIJjBo+aPQj3S3tAznIZaBl5H88s2E79AGxzWSERAr396WGz3a+GV6AlbF3EK
-	 XweAZJImMBsBA5wYqE2iUuLdD88lFKLYRbbOI0cQ=
+	b=WtHxMX5XyubIfFsDWph7TmAELhz2Kj5yKUHEp3V+kFgPAMeuBwEhgGZ+C9VmZKFow
+	 z75aAy40PySFNF1+IJMdxTMDbhfIeJXU9aHyb0T9ZxHPak+xM7XeiDR8/CWIne+sEV
+	 MFyTq1q5TzQbObNVkSdPRHXhbAKvTQ8x9jQk2Kb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aman <aman1@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 340/414] CIFS: Propagate min offload along with other parameters from primary to secondary channels.
-Date: Thu, 17 Apr 2025 19:51:38 +0200
-Message-ID: <20250417175125.106286783@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 6.13 358/414] dt-bindings: coresight: qcom,coresight-tpdm: Fix too many reg
+Date: Thu, 17 Apr 2025 19:51:56 +0200
+Message-ID: <20250417175125.862418771@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,63 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aman <aman1@microsoft.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 1821e90be08e7d4a54cd167dd818d80d06e064e9 upstream.
+commit 1e4e454223f770748775f211455513c79cb3121e upstream.
 
-In a multichannel setup, it was observed that a few fields were not being
-copied over to the secondary channels, which impacted performance in cases
-where these options were relevant but not properly synchronized. To address
-this, this patch introduces copying the following parameters from the
-primary channel to the secondary channels:
+Binding listed variable number of IO addresses without defining them,
+however example DTS code, all in-tree DTS and Linux kernel driver
+mention only one address space, so drop the second to make binding
+precise and correctly describe the hardware.
 
-- min_offload
-- compression.requested
-- dfs_conn
-- ignore_signature
-- leaf_fullpath
-- noblockcnt
-- retrans
-- sign
-
-By copying these parameters, we ensure consistency across channels and
-prevent performance degradation due to missing or outdated settings.
-
+Fixes: 6c781a35133d ("dt-bindings: arm: Add CoreSight TPDM hardware")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aman <aman1@microsoft.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250226112914.94361-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 +
- fs/smb/client/sess.c    |    7 +++++++
- 2 files changed, 8 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1722,6 +1722,7 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 	/* Grab netns reference for this server. */
- 	cifs_set_net_ns(tcp_ses, get_net(current->nsproxy->net_ns));
+--- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+@@ -41,8 +41,7 @@ properties:
+       - const: arm,primecell
  
-+	tcp_ses->sign = ctx->sign;
- 	tcp_ses->conn_id = atomic_inc_return(&tcpSesNextId);
- 	tcp_ses->noblockcnt = ctx->rootfs;
- 	tcp_ses->noblocksnd = ctx->noblocksnd || ctx->rootfs;
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -522,6 +522,13 @@ cifs_ses_add_channel(struct cifs_ses *se
- 	ctx->sockopt_tcp_nodelay = ses->server->tcp_nodelay;
- 	ctx->echo_interval = ses->server->echo_interval / HZ;
- 	ctx->max_credits = ses->server->max_credits;
-+	ctx->min_offload = ses->server->min_offload;
-+	ctx->compress = ses->server->compression.requested;
-+	ctx->dfs_conn = ses->server->dfs_conn;
-+	ctx->ignore_signature = ses->server->ignore_signature;
-+	ctx->leaf_fullpath = ses->server->leaf_fullpath;
-+	ctx->rootfs = ses->server->noblockcnt;
-+	ctx->retrans = ses->server->retrans;
+   reg:
+-    minItems: 1
+-    maxItems: 2
++    maxItems: 1
  
- 	/*
- 	 * This will be used for encoding/decoding user/domain/pw
+   qcom,dsb-element-bits:
+     description:
 
 
