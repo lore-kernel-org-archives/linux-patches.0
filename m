@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFAB1B3934;
-	Thu, 17 Apr 2025 18:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB6D257AD8;
+	Thu, 17 Apr 2025 18:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915297; cv=none; b=TSAG4zTxvH7TODPS1pFudXsvH2fvFrKmaSKAx36nGnxEfZTyrCpuN0XOUab2Zv5RT5xmTbTnP+Kwzd4fio+aZvO2loWtydw5vC7wGFlQ1RQ0tn/XacOR86vUcT54L9eP6lKrK546eQL6m+lLpXvr66u3bN1han6WDl8owv9nhSU=
+	t=1744915299; cv=none; b=a2nFqD+b1Ud6ynchLd74a9nCNfDtKSE1x3V+ZNn1XL7cCUBnx4FIx9+eykktL8xnbqGftwtvJ8C6DeddSAs7Rw3P/fLQp+TzhvKcSVtaTw1f7VyVIG5RSakD/bwANiSy8qCOhtL1+p9ZsZ4opuLrdYokqJ3SntLe0Uh0UqFkqBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915297; c=relaxed/simple;
-	bh=zvhwxXH8eeM7llZy3Uz75hmeaxYUdjJnXdrc78iB9iw=;
+	s=arc-20240116; t=1744915299; c=relaxed/simple;
+	bh=0EQyVak/WzP068viSD5xyTWwRgfdHhEUGAh434o/BCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZG9CTbNt+5hYVF8W8X+wufyrHPVozSFnueq8j5CWLisZa3heNTGhypE32ErOcGOLzzVv0gkJJEnAspIapMDIz9VSHrTqAU/uovYZJerwYWvgs7uRNwWxA+oZxuE2p86LGQWtA4tIJJQPl0ri4fS6tCmV76dOmbputH01kbxkpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeIXT9Gr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCY9rqGTsIiVwGMRqc+L9BJ3YTpiI7LHgojZx1CzzwyWO7+U7tefELC6wklDME2jCSvoQFlS6MAdKC/KY4rjnVN/Ptmtdl6aEsjkOg4m5I4P0BjLKPWjXBWTIcsiSnYXr3iUJVG68aTzcgIz3kmsvny83RXPH0Xk6c9Su9zvJsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGA8ZqXs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeIXT9Gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CBBC4CEE4;
-	Thu, 17 Apr 2025 18:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGA8ZqXs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199D5C4CEE4;
+	Thu, 17 Apr 2025 18:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915296;
-	bh=zvhwxXH8eeM7llZy3Uz75hmeaxYUdjJnXdrc78iB9iw=;
+	s=korg; t=1744915299;
+	bh=0EQyVak/WzP068viSD5xyTWwRgfdHhEUGAh434o/BCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeIXT9Grvy9VjeTJ5DVre18boQM76Mg/lX1SNsPPRd3I1NGH964zC6rjxradvBBrD
-	 SL6XQ2dnWC3koE2/2W+baEhwV5of1ZoKxNxS3yIP5G9pVSCNdBppLmIo5tMSh9Jo8j
-	 i51Su+tTBRwktSVPHG4oDdMimuwkYM33EuXC3UwA=
+	b=KGA8ZqXsEpBMv5cuquelNEN8IQzYCxQN/drBv92tf1yanVedLmpd7EdIpLlZBG4iK
+	 s+FuCv1ByxiQmcMCTzhz20lZpx5UA6I3Q7TTZvgMXT/rw6HThuiMKwSceokYO0g2Kh
+	 3aozNUqU1b9onqF3X4wV33RguuWOpPPLobfTadHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	P Praneesh <quic_ppranees@quicinc.com>,
+	Miaoqing Pan <quic_miaoqing@quicinc.com>,
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/393] wifi: ath11k: Fix DMA buffer allocation to resolve SWIOTLB issues
-Date: Thu, 17 Apr 2025 19:48:11 +0200
-Message-ID: <20250417175110.902105765@linuxfoundation.org>
+Subject: [PATCH 6.12 083/393] wifi: ath11k: fix memory leak in ath11k_xxx_remove()
+Date: Thu, 17 Apr 2025 19:48:12 +0200
+Message-ID: <20250417175110.942197510@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Miaoqing Pan <quic_miaoqing@quicinc.com>
 
-[ Upstream commit 1bcd20981834928ccc5d981aacb806bb523d8b29 ]
+[ Upstream commit efb24b1f0d29537714dd3cc46fb335ac27855251 ]
 
-Currently, the driver allocates cacheable DMA buffers for rings like
-HAL_REO_DST and HAL_WBM2SW_RELEASE. The buffers for HAL_WBM2SW_RELEASE
-are large (1024 KiB), exceeding the SWIOTLB slot size of 256 KiB. This
-leads to "swiotlb buffer is full" error messages on systems without an
-IOMMU that use SWIOTLB, causing driver initialization failures. The driver
-calls dma_map_single() with these large buffers obtained from kzalloc(),
-resulting in ring initialization errors on systems without an IOMMU that
-use SWIOTLB.
+The firmware memory was allocated in ath11k_pci_probe() or
+ath11k_ahb_probe(), but not freed in ath11k_xxx_remove() in case
+ATH11K_FLAG_QMI_FAIL bit is set. So call ath11k_fw_destroy() to
+free the memory.
 
-To address these issues, replace the flawed buffer allocation mechanism
-with the appropriate DMA API. Specifically, use dma_alloc_noncoherent()
-for cacheable DMA buffers, ensuring proper freeing of buffers with
-dma_free_noncoherent().
+Found while fixing the same problem in ath12k:
+https://lore.kernel.org/linux-wireless/20240314012746.2729101-1-quic_miaoqing@quicinc.com
 
-Error log:
-[   10.194343] ath11k_pci 0000:04:00.0: swiotlb buffer is full (sz:1048583 bytes), total 32768 (slots), used 2529 (slots)
-[   10.194406] ath11k_pci 0000:04:00.0: failed to set up tcl_comp ring (0) :-12
-[   10.194781] ath11k_pci 0000:04:00.0: failed to init DP: -12
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04546-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
-
-Reported-by: Tim Harvey <tharvey@gateworks.com>
-Closes: https://lore.kernel.org/all/20241210041133.GA17116@lst.de/
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Tested-by: Tim Harvey <tharvey@gateworks.com>
-Link: https://patch.msgid.link/20250119164219.647059-2-quic_ppranees@quicinc.com
+Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250123084948.1124357-1-quic_miaoqing@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp.c | 35 +++++++++-------------------
- 1 file changed, 11 insertions(+), 24 deletions(-)
+ drivers/net/wireless/ath/ath11k/ahb.c  | 4 +++-
+ drivers/net/wireless/ath/ath11k/core.c | 3 +--
+ drivers/net/wireless/ath/ath11k/fw.c   | 3 ++-
+ drivers/net/wireless/ath/ath11k/pci.c  | 3 ++-
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp.c b/drivers/net/wireless/ath/ath11k/dp.c
-index fbf666d0ecf1d..f124b7329e1ac 100644
---- a/drivers/net/wireless/ath/ath11k/dp.c
-+++ b/drivers/net/wireless/ath/ath11k/dp.c
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index 97b12f51ef28c..9389dc5f4a3da 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/module.h>
+@@ -1290,6 +1290,7 @@ static void ath11k_ahb_remove(struct platform_device *pdev)
+ 	ath11k_core_deinit(ab);
+ 
+ qmi_fail:
++	ath11k_fw_destroy(ab);
+ 	ath11k_ahb_free_resources(ab);
+ }
+ 
+@@ -1309,6 +1310,7 @@ static void ath11k_ahb_shutdown(struct platform_device *pdev)
+ 	ath11k_core_deinit(ab);
+ 
+ free_resources:
++	ath11k_fw_destroy(ab);
+ 	ath11k_ahb_free_resources(ab);
+ }
+ 
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index ccf4ad35fdc33..7eba6ee054ffe 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
 @@ -1,7 +1,7 @@
  // SPDX-License-Identifier: BSD-3-Clause-Clear
  /*
@@ -101,58 +119,53 @@ index fbf666d0ecf1d..f124b7329e1ac 100644
 + * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
   */
  
- #include <crypto/hash.h>
-@@ -104,14 +104,12 @@ void ath11k_dp_srng_cleanup(struct ath11k_base *ab, struct dp_srng *ring)
- 	if (!ring->vaddr_unaligned)
- 		return;
- 
--	if (ring->cached) {
--		dma_unmap_single(ab->dev, ring->paddr_unaligned, ring->size,
--				 DMA_FROM_DEVICE);
--		kfree(ring->vaddr_unaligned);
--	} else {
-+	if (ring->cached)
-+		dma_free_noncoherent(ab->dev, ring->size, ring->vaddr_unaligned,
-+				     ring->paddr_unaligned, DMA_FROM_DEVICE);
-+	else
- 		dma_free_coherent(ab->dev, ring->size, ring->vaddr_unaligned,
- 				  ring->paddr_unaligned);
--	}
- 
- 	ring->vaddr_unaligned = NULL;
+ #include <linux/module.h>
+@@ -2214,7 +2214,6 @@ void ath11k_core_deinit(struct ath11k_base *ab)
+ 	ath11k_hif_power_down(ab);
+ 	ath11k_mac_destroy(ab);
+ 	ath11k_core_soc_destroy(ab);
+-	ath11k_fw_destroy(ab);
  }
-@@ -249,25 +247,14 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
- 		default:
- 			cached = false;
- 		}
--
--		if (cached) {
--			ring->vaddr_unaligned = kzalloc(ring->size, GFP_KERNEL);
--			if (!ring->vaddr_unaligned)
--				return -ENOMEM;
--
--			ring->paddr_unaligned = dma_map_single(ab->dev,
--							       ring->vaddr_unaligned,
--							       ring->size,
--							       DMA_FROM_DEVICE);
--			if (dma_mapping_error(ab->dev, ring->paddr_unaligned)) {
--				kfree(ring->vaddr_unaligned);
--				ring->vaddr_unaligned = NULL;
--				return -ENOMEM;
--			}
--		}
- 	}
+ EXPORT_SYMBOL(ath11k_core_deinit);
  
--	if (!cached)
-+	if (cached)
-+		ring->vaddr_unaligned = dma_alloc_noncoherent(ab->dev, ring->size,
-+							      &ring->paddr_unaligned,
-+							      DMA_FROM_DEVICE,
-+							      GFP_KERNEL);
-+	else
- 		ring->vaddr_unaligned = dma_alloc_coherent(ab->dev, ring->size,
- 							   &ring->paddr_unaligned,
- 							   GFP_KERNEL);
+diff --git a/drivers/net/wireless/ath/ath11k/fw.c b/drivers/net/wireless/ath/ath11k/fw.c
+index 4e36292a79db8..cbbd8e57119f2 100644
+--- a/drivers/net/wireless/ath/ath11k/fw.c
++++ b/drivers/net/wireless/ath/ath11k/fw.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+- * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include "core.h"
+@@ -166,3 +166,4 @@ void ath11k_fw_destroy(struct ath11k_base *ab)
+ {
+ 	release_firmware(ab->fw.fw);
+ }
++EXPORT_SYMBOL(ath11k_fw_destroy);
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index be9d2c69cc413..6ebfa5d02e2e5 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2019-2020 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/module.h>
+@@ -981,6 +981,7 @@ static void ath11k_pci_remove(struct pci_dev *pdev)
+ 	ath11k_core_deinit(ab);
+ 
+ qmi_fail:
++	ath11k_fw_destroy(ab);
+ 	ath11k_mhi_unregister(ab_pci);
+ 
+ 	ath11k_pcic_free_irq(ab);
 -- 
 2.39.5
 
