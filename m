@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E4B256C7B;
-	Thu, 17 Apr 2025 18:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3C2571BC;
+	Thu, 17 Apr 2025 18:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915662; cv=none; b=mcP1OMZjTcwjtvJDxOCMnDyh/30I8TPVi8GN3yJ6IVACjUdPz46ZyiRLbN427g3XYLYIs++haH/Ru4ixEEbZFr8Kisis4t6a1aiBqO6p6Kr4fF+Y9EtEgro9bgqcm0uSGaEzyTQ4GA8Ic/n2/pIXDKLbanXyfCdzMboAsKVOPPM=
+	t=1744915665; cv=none; b=DX1Wxh8Jcets031YpoLhiDY5f5kHuLlCV/0PcErh9xn5iptGU2S2N3RdMdEhBj+zpjWp31q24KVcdUPVb56pnRTfnzR7CH6KVqYmTHjbylSf0OmPaSBYuodcc8TfDsVV6SIUhpc3vlWwYjoxoe2pJUqQfMfqOAYaaVZXNoFmDJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915662; c=relaxed/simple;
-	bh=SRHO5g19/Dp6ez5Pvn4NPf5npocqNpZ7DwdHV7+1SJc=;
+	s=arc-20240116; t=1744915665; c=relaxed/simple;
+	bh=tmuR7LT/CnChGLP0IAxzH6Tp+l/su7xqYyAaautac3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXCb0CmNbiRXOHAYnWaEIQCKVS5fQyekIoV7lpgMSsNETYTVUCv0gvfigFuVNKXXs7KQMR/PBV9UratTNU0V0ymu2uPyBjK/Y7/XvpSNCporAyLr4HSn/t34niPeEXFumXlfTekKgCy5WtlQGI0nC2cwxFoC7rSd5vYnxO5n2Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfyunCxZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6CpbbsotZP5N4pEJHUbTyE8ETOd2HUavothiMzY+IlRXwxFCuXYC3gB+J9YOhyzmwFOM+MnlyBbhhUVgp8daIDCenMMOmWLriQI5ooUCHZnxLABEeQ+6KJ/FO198ONtF9znxZu57IPmM0QfVyhNysyw143JERF//g7wwuFfGu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5U2T3U1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfyunCxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7820AC4CEEA;
-	Thu, 17 Apr 2025 18:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5U2T3U1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEFEC4CEE4;
+	Thu, 17 Apr 2025 18:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915662;
-	bh=SRHO5g19/Dp6ez5Pvn4NPf5npocqNpZ7DwdHV7+1SJc=;
+	s=korg; t=1744915665;
+	bh=tmuR7LT/CnChGLP0IAxzH6Tp+l/su7xqYyAaautac3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfyunCxZOJZPPWI4LenftArdpXatG5v7fhzsHV1kbE+vu4wLcUwrjxt5ClGGJQyKW
-	 DAO+nKmX/B/agYMNV/uNHqSZtvb0vApe3UIJFWNgWWRqsdl9LFF29Q98dXw1juujE2
-	 HdmaG4WF+u1zaaSLwjAn/VdaQWkcXvGGWOrSo9kE=
+	b=i5U2T3U1iJt5v0WQHEoBeTnR69JPM6hK8GnL8CRsZ40ALCmvPf4SUVxGnAOx71lmZ
+	 MB0ly8IG453iGZgNP8EILG3k4yEoZMYdzUHw/yJZqswdwiEWgitJuLJdnJajsO6LK6
+	 v6gqwscLUlQ6xL1FUPgbokaZwxJxVcq1X3btfYHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 200/393] media: rockchip: rga: fix rga offset lookup
-Date: Thu, 17 Apr 2025 19:50:09 +0200
-Message-ID: <20250417175115.631918859@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 201/393] xenfs/xensyms: respect hypervisors "next" indication
+Date: Thu, 17 Apr 2025 19:50:10 +0200
+Message-ID: <20250417175115.670641452@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,33 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 11de3582675cc0b7136e12f3971f1da3e5a05382 upstream.
+commit 5c4e79e29a9fe4ea132118ac40c2bc97cfe23077 upstream.
 
-The arguments to rga_lookup_draw_pos() are passed in the wrong order,
-rotate mode should be before mirror mode.
+The interface specifies the symnum field as an input and output; the
+hypervisor sets it to the next sequential symbol's index. xensyms_next()
+incrementing the position explicitly (and xensyms_next_sym()
+decrementing it to "rewind") is only correct as long as the sequence of
+symbol indexes is non-sparse. Use the hypervisor-supplied value instead
+to update the position in xensyms_next(), and use the saved incoming
+index in xensyms_next_sym().
 
-Fixes: 558c248f930e6 ("media: rockchip: rga: split src and dst buffer setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: stable@kernel.org
+Fixes: a11f4f0a4e18 ("xen: xensyms support")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <15d5e7fa-ec5d-422f-9319-d28bed916349@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/rockchip/rga/rga-hw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/xenfs/xensyms.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/rockchip/rga/rga-hw.c
-+++ b/drivers/media/platform/rockchip/rga/rga-hw.c
-@@ -376,7 +376,7 @@ static void rga_cmd_set_dst_info(struct
- 	 * Configure the dest framebuffer base address with pixel offset.
- 	 */
- 	offsets = rga_get_addr_offset(&ctx->out, offset, dst_x, dst_y, dst_w, dst_h);
--	dst_offset = rga_lookup_draw_pos(&offsets, mir_mode, rot_mode);
-+	dst_offset = rga_lookup_draw_pos(&offsets, rot_mode, mir_mode);
+--- a/drivers/xen/xenfs/xensyms.c
++++ b/drivers/xen/xenfs/xensyms.c
+@@ -48,7 +48,7 @@ static int xensyms_next_sym(struct xensy
+ 			return -ENOMEM;
  
- 	dest[(RGA_DST_Y_RGB_BASE_ADDR - RGA_MODE_BASE_REG) >> 2] =
- 		dst_offset->y_off;
+ 		set_xen_guest_handle(symdata->name, xs->name);
+-		symdata->symnum--; /* Rewind */
++		symdata->symnum = symnum; /* Rewind */
+ 
+ 		ret = HYPERVISOR_platform_op(&xs->op);
+ 		if (ret < 0)
+@@ -78,7 +78,7 @@ static void *xensyms_next(struct seq_fil
+ {
+ 	struct xensyms *xs = m->private;
+ 
+-	xs->op.u.symdata.symnum = ++(*pos);
++	*pos = xs->op.u.symdata.symnum;
+ 
+ 	if (xensyms_next_sym(xs))
+ 		return NULL;
 
 
