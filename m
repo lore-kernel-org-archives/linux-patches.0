@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BBE25A654;
-	Thu, 17 Apr 2025 18:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDBB25F97F;
+	Thu, 17 Apr 2025 18:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915164; cv=none; b=FZWJEAkEaVfceNODVNMlJZqdXXPVeV1XRgp4y8RfD2q54ZZQsGtGOn9xFCT/NBx6Vi9WN3gD/idMSDKnYBO0nxf5G8KRFiHJ9DJhiMaZ18Xf2rlbBvuoWkG5rH63BrDKgdKQLXYVzk7P4fq3uw/P/wnGxBCjRiXVu9Qxk2/alYY=
+	t=1744915167; cv=none; b=WenpBLJXS7xqcZpV7ux4cZ4hyKW4VOw5jsOS8wCnLxHE8KJKZAxJ1CuujUNwn5IkwiEiSug02QoWKJYyTnj/jdGRw/tu6ZrAKB+H4YfW6edcTBSFFdEEX8CcjKJ8EZVfYCoo7WzLKTTpPUeEnBEfM8+fYcre7Wmidc515XsXMCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915164; c=relaxed/simple;
-	bh=6GT5cmM6Wnu2NNnkeQrM05FophqaaFuOgRckPt2yt38=;
+	s=arc-20240116; t=1744915167; c=relaxed/simple;
+	bh=G7YT7ETk/fTcGuXVFZ3YOrFxj0A62VXZLOoPEwf5GJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIv0qnq18i2m1AZjkJOYbXvHr86rgXzXOR5G61T55D8/oEhliN7HIY6zjMKbSaG2LJev7G2hSBUZzbNdXqPs26ERxLBT2KbUXaYf8ARwR+JunXeNzmaBBiHwnVBB9dtM3XszjkdbSq4v0Aaej+QEzjnP9/aTiSXcDcueACpWiKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wm7bXEuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a3MtN+KmaSXQ+H9x8tZW0F/2ld3O1+vVK5XLVeKZZzt6814u6+SsyBWunYfITCyLVPBu9oJfJQdILfrJckNeokbQH2pM7f+y2Qvp6BHlwZV3FOyjCIkrdNqUkWiMr1/cRj5KWnZcFKw7ayG/MZ8NOrLNbpzFg2IfWjMRJSZR9vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImGog9QY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wm7bXEuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88034C4CEE7;
-	Thu, 17 Apr 2025 18:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImGog9QY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9176BC4CEEA;
+	Thu, 17 Apr 2025 18:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915163;
-	bh=6GT5cmM6Wnu2NNnkeQrM05FophqaaFuOgRckPt2yt38=;
+	s=korg; t=1744915167;
+	bh=G7YT7ETk/fTcGuXVFZ3YOrFxj0A62VXZLOoPEwf5GJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wm7bXEuzX1MPzVT4gvKvXOucDPaMsquzyDhB5/NN2XaeZeTQhmpM1t8bP9BNWGWen
-	 lQmjpgXMMEuQImQFWPptdZtYa/TQhODuSgmmOMnJ57QILSCiZabwELHAHlOUVy0UgK
-	 7Tw9G0233XGnvberkVr9wOv8ZkCsaAWOdRlsWPHA=
+	b=ImGog9QYIIKHsh9gMOTwcrUy9q+2pGHIAfSnlfI+er71ePSGD5cwl4IAsVkwHzqze
+	 8EVJ4ONT0a9EWzWirzMRVeZ5wAEAgG4t68Wu1xfETdK3zECyYvPQKmGFEaMTe0BmQ6
+	 Dwy2eOofBVuVKyXYCIUkjc9abwRR3A5/7BvFKNDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sontu mazumdar <sontu21@gmail.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/393] nft_set_pipapo: fix incorrect avx2 match of 5th field octet
-Date: Thu, 17 Apr 2025 19:47:28 +0200
-Message-ID: <20250417175109.166093133@linuxfoundation.org>
+Subject: [PATCH 6.12 040/393] iommu/exynos: Fix suspend/resume with IDENTITY domain
+Date: Thu, 17 Apr 2025 19:47:29 +0200
+Message-ID: <20250417175109.205192394@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,51 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit e042ed950d4e176379ba4c0722146cd96fb38aa2 ]
+[ Upstream commit 99deffc409b69000ac4877486e69ec6516becd53 ]
 
-Given a set element like:
+Commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper probe
+path") changed the sequence of probing the SYSMMU controller devices and
+calls to arm_iommu_attach_device(), what results in resuming SYSMMU
+controller earlier, when it is still set to IDENTITY mapping. Such change
+revealed the bug in IDENTITY handling in the exynos-iommu driver. When
+SYSMMU controller is set to IDENTITY mapping, data->domain is NULL, so
+adjust checks in suspend & resume callbacks to handle this case
+correctly.
 
-	icmpv6 . dead:beef:00ff::1
-
-The value of 'ff' is irrelevant, any address will be matched
-as long as the other octets are the same.
-
-This is because of too-early register clobbering:
-ymm7 is reloaded with new packet data (pkt[9])  but it still holds data
-of an earlier load that wasn't processed yet.
-
-The existing tests in nft_concat_range.sh selftests do exercise this code
-path, but do not trigger incorrect matching due to the network prefix
-limitation.
-
-Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
-Reported-by: sontu mazumdar <sontu21@gmail.com>
-Closes: https://lore.kernel.org/netfilter/CANgxkqwnMH7fXra+VUfODT-8+qFLgskq3set1cAzqqJaV4iEZg@mail.gmail.com/T/#t
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b3d14960e629 ("iommu/exynos: Implement an IDENTITY domain")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250401202731.2810474-1-m.szyprowski@samsung.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo_avx2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/exynos-iommu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index b8d3c3213efee..c15db28c5ebc4 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -994,8 +994,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(5, lt,  8,  pkt[8], bsize);
+diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
+index c666ecab955d2..7465dbb6fa80c 100644
+--- a/drivers/iommu/exynos-iommu.c
++++ b/drivers/iommu/exynos-iommu.c
+@@ -832,7 +832,7 @@ static int __maybe_unused exynos_sysmmu_suspend(struct device *dev)
+ 		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
  
- 		NFT_PIPAPO_AVX2_AND(6, 2, 3);
-+		NFT_PIPAPO_AVX2_AND(3, 4, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(7, lt,  9,  pkt[9], bsize);
--		NFT_PIPAPO_AVX2_AND(0, 4, 5);
-+		NFT_PIPAPO_AVX2_AND(0, 3, 5);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(1, lt, 10, pkt[10], bsize);
- 		NFT_PIPAPO_AVX2_AND(2, 6, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(3, lt, 11, pkt[11], bsize);
+ 		mutex_lock(&owner->rpm_lock);
+-		if (&data->domain->domain != &exynos_identity_domain) {
++		if (data->domain) {
+ 			dev_dbg(data->sysmmu, "saving state\n");
+ 			__sysmmu_disable(data);
+ 		}
+@@ -850,7 +850,7 @@ static int __maybe_unused exynos_sysmmu_resume(struct device *dev)
+ 		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
+ 
+ 		mutex_lock(&owner->rpm_lock);
+-		if (&data->domain->domain != &exynos_identity_domain) {
++		if (data->domain) {
+ 			dev_dbg(data->sysmmu, "restoring state\n");
+ 			__sysmmu_enable(data);
+ 		}
 -- 
 2.39.5
 
