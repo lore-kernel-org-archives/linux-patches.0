@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5268B25B678;
-	Thu, 17 Apr 2025 18:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9182571BA;
+	Thu, 17 Apr 2025 18:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914472; cv=none; b=K5JpXLMqjeOYYJQcyh644FUCOIYvgca5k5B3BreNbylChjzvHH0wD6OdSjRsY2cLdHHguKcksrfHiJZJta/Hsp6byHnnYOiqlLBhOa9+TkoFl4OQDxmmuT19Kafb+JvR8m9Mj1SDGxUgkLFw4rcWF2YOD0ddFCh3nyDmQbv87Ck=
+	t=1744914475; cv=none; b=hFYfbDoXs2AsrFNIlNWgL3TAizgM4FsNw0b8aun4oaOguiuTw7N/GSCpV5MNcxn0Jh6+BpBeBe0cldwVxB5VXnE24soLeZxrULTyRA2XHsMDR1/1Tr23ph32xo3GJf23ENPKN2cNLM52U3nmqs5mRnlX/a6SNxszky4/9XSpdJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914472; c=relaxed/simple;
-	bh=JVYppP10407CABpVpTDmFXbgJJOsHDWVNSLk1Xdh/Hk=;
+	s=arc-20240116; t=1744914475; c=relaxed/simple;
+	bh=QIReCUEVHXFzR3QZ2JIviRSm93SJoLQA661ox/ZltzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAYgPdGYTdeGooKyi91MrZ5UI5tMeI+dX70Dbr9aE9lqbLZKgeevguIb27DgpZJb5LOw/cy0LMx3PN+ZaK0M0wQLgcTkoe4hUpU3pkZ4H82/OB93M2pDRWitxKC56VnrVbxKTYKBfxudICMB2WHWkBMezs+LLxg54i/lgM8q9A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AS9tEGOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNpQbUCpCEqsOFdkNs/Q9HKIxwHcRK9IHWVjdiY3QGcZOoNN1ZDj1mJiUPP+m/lXoyCOOFiXrOi6pRts8pHSvZuJrjb0Ayu5d/CVBZsk+MJ0RgptZOZQrYwkMbuSQ0K9LiHRIfofQInBWM8SJaU/Mc+ILvp6OsPTA98M9YiGNeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ8rY7bR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AS9tEGOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88E1C4CEE4;
-	Thu, 17 Apr 2025 18:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ8rY7bR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E74C4CEEA;
+	Thu, 17 Apr 2025 18:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914472;
-	bh=JVYppP10407CABpVpTDmFXbgJJOsHDWVNSLk1Xdh/Hk=;
+	s=korg; t=1744914475;
+	bh=QIReCUEVHXFzR3QZ2JIviRSm93SJoLQA661ox/ZltzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AS9tEGOZsWq8r9VBqXmdeREqf0BYcYn27ivs9Mga+qEa27LrSZ/Gk7Gc/gc5rW9Eo
-	 2J/7JITh6IooiHkryOUBig3I3zmCjC5/q6FGpvkR45DX7L9q2QeuH33JyzyxVabznH
-	 Ym9lkSrNt30AyKyCssybzqquJ1e47zTsKW8ajvsw=
+	b=JZ8rY7bRUTM0tmX5XTr3QueLH2vh7LvSWT9wgnCtAuNC7I9a9t5t3qkPM8NgZ68oI
+	 6jB2q0rf/ZDznH29cfiAUm8W/sOuKtI2nS3z1haTABdnvM6v1kkfaydHN+MgmREsVR
+	 zE0jzRDuVEMnamO2GnjPW/BRA//Hj2/XmE15Pd6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peyton Howe <peyton.howe@bellsouth.net>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 227/414] media: imx219: Adjust PLL settings based on the number of MIPI lanes
-Date: Thu, 17 Apr 2025 19:49:45 +0200
-Message-ID: <20250417175120.565693534@linuxfoundation.org>
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.13 210/414] KVM: arm64: PMU: Set raw values from user to PM{C,I}NTEN{SET,CLR}, PMOVS{SET,CLR}
+Date: Thu, 17 Apr 2025 19:49:28 +0200
+Message-ID: <20250417175119.886663147@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,195 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-commit 591a07588c03437dbcc3addfff07675de95a461e upstream.
+commit f2aeb7bbd5745fbcf7f0769e29a184e24924b9a9 upstream.
 
-Commit ceddfd4493b3 ("media: i2c: imx219: Support four-lane operation")
-added support for device tree to allow configuration of the sensor to
-use 4 lanes with a link frequency of 363MHz, and amended the advertised
-pixel rate to 280.8MPix/s.
+Commit a45f41d754e0 ("KVM: arm64: Add {get,set}_user for
+PM{C,I}NTEN{SET,CLR}, PMOVS{SET,CLR}") changed KVM_SET_ONE_REG to update
+the mentioned registers in a way matching with the behavior of guest
+register writes. This is a breaking change of a UAPI though the new
+semantics looks cleaner and VMMs are not prepared for this.
 
-However it didn't change any of the PLL settings, so actually it would
-have been running overclocked in the MIPI block, and with the frame
-rate and exposure calculations being wrong as the pixel rate was
-unchanged.
+Firecracker, QEMU, and crosvm perform migration by listing registers
+with KVM_GET_REG_LIST, getting their values with KVM_GET_ONE_REG and
+setting them with KVM_SET_ONE_REG. This algorithm assumes
+KVM_SET_ONE_REG restores the values retrieved with KVM_GET_ONE_REG
+without any alteration. However, bit operations added by the earlier
+commit do not preserve the values retried with KVM_GET_ONE_REG and
+potentially break migration.
 
-The pixel rate and link frequency advertised were taken from the "Clock
-Setting Example" section of the datasheet. However those are based on an
-external clock of 12MHz, and are unachievable with a clock of 24MHz - it
-seems PREPLLCLK_VT_DIV and PREPLLCK_OP_DIV can ONLY be set via the
-automatic configuration documented in "9-1-2 EXCK_FREQ setting depend on
-INCK frequency", not by writing the registers.
-The closest we can get with a 24MHz clock is 281.6MPix/s and 364MHz.
+Remove the bit operations that alter the values retrieved with
+KVM_GET_ONE_REG.
 
-Dropping all support for the 363MHz link frequency would cause problems
-for existing users, so allow it, but log a warning that the requested
-value is being changed to the supported one.
-
-Fixes: ceddfd4493b3 ("media: i2c: imx219: Support four-lane operation")
 Cc: stable@vger.kernel.org
-Co-developed-by: Peyton Howe <peyton.howe@bellsouth.net>
-Signed-off-by: Peyton Howe <peyton.howe@bellsouth.net>
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: a45f41d754e0 ("KVM: arm64: Add {get,set}_user for PM{C,I}NTEN{SET,CLR}, PMOVS{SET,CLR}")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20250315-pmc-v5-1-ecee87dab216@daynix.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx219.c |   93 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 69 insertions(+), 24 deletions(-)
+ arch/arm64/kvm/sys_regs.c |   21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -133,10 +133,11 @@
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1166,26 +1166,9 @@ static bool access_pmu_evtyper(struct kv
  
- /* Pixel rate is fixed for all the modes */
- #define IMX219_PIXEL_RATE		182400000
--#define IMX219_PIXEL_RATE_4LANE		280800000
-+#define IMX219_PIXEL_RATE_4LANE		281600000
- 
- #define IMX219_DEFAULT_LINK_FREQ	456000000
--#define IMX219_DEFAULT_LINK_FREQ_4LANE	363000000
-+#define IMX219_DEFAULT_LINK_FREQ_4LANE_UNSUPPORTED	363000000
-+#define IMX219_DEFAULT_LINK_FREQ_4LANE	364000000
- 
- /* IMX219 native and active pixel array size. */
- #define IMX219_NATIVE_WIDTH		3296U
-@@ -168,15 +169,6 @@ static const struct cci_reg_sequence imx
- 	{ CCI_REG8(0x30eb), 0x05 },
- 	{ CCI_REG8(0x30eb), 0x09 },
- 
--	/* PLL Clock Table */
--	{ IMX219_REG_VTPXCK_DIV, 5 },
--	{ IMX219_REG_VTSYCK_DIV, 1 },
--	{ IMX219_REG_PREPLLCK_VT_DIV, 3 },	/* 0x03 = AUTO set */
--	{ IMX219_REG_PREPLLCK_OP_DIV, 3 },	/* 0x03 = AUTO set */
--	{ IMX219_REG_PLL_VT_MPY, 57 },
--	{ IMX219_REG_OPSYCK_DIV, 1 },
--	{ IMX219_REG_PLL_OP_MPY, 114 },
--
- 	/* Undocumented registers */
- 	{ CCI_REG8(0x455e), 0x00 },
- 	{ CCI_REG8(0x471e), 0x4b },
-@@ -201,12 +193,45 @@ static const struct cci_reg_sequence imx
- 	{ IMX219_REG_EXCK_FREQ, IMX219_EXCK_FREQ(IMX219_XCLK_FREQ / 1000000) },
- };
- 
-+static const struct cci_reg_sequence imx219_2lane_regs[] = {
-+	/* PLL Clock Table */
-+	{ IMX219_REG_VTPXCK_DIV, 5 },
-+	{ IMX219_REG_VTSYCK_DIV, 1 },
-+	{ IMX219_REG_PREPLLCK_VT_DIV, 3 },	/* 0x03 = AUTO set */
-+	{ IMX219_REG_PREPLLCK_OP_DIV, 3 },	/* 0x03 = AUTO set */
-+	{ IMX219_REG_PLL_VT_MPY, 57 },
-+	{ IMX219_REG_OPSYCK_DIV, 1 },
-+	{ IMX219_REG_PLL_OP_MPY, 114 },
-+
-+	/* 2-Lane CSI Mode */
-+	{ IMX219_REG_CSI_LANE_MODE, IMX219_CSI_2_LANE_MODE },
-+};
-+
-+static const struct cci_reg_sequence imx219_4lane_regs[] = {
-+	/* PLL Clock Table */
-+	{ IMX219_REG_VTPXCK_DIV, 5 },
-+	{ IMX219_REG_VTSYCK_DIV, 1 },
-+	{ IMX219_REG_PREPLLCK_VT_DIV, 3 },	/* 0x03 = AUTO set */
-+	{ IMX219_REG_PREPLLCK_OP_DIV, 3 },	/* 0x03 = AUTO set */
-+	{ IMX219_REG_PLL_VT_MPY, 88 },
-+	{ IMX219_REG_OPSYCK_DIV, 1 },
-+	{ IMX219_REG_PLL_OP_MPY, 91 },
-+
-+	/* 4-Lane CSI Mode */
-+	{ IMX219_REG_CSI_LANE_MODE, IMX219_CSI_4_LANE_MODE },
-+};
-+
- static const s64 imx219_link_freq_menu[] = {
- 	IMX219_DEFAULT_LINK_FREQ,
- };
- 
- static const s64 imx219_link_freq_4lane_menu[] = {
- 	IMX219_DEFAULT_LINK_FREQ_4LANE,
-+	/*
-+	 * This will never be advertised to userspace, but will be used for
-+	 * v4l2_link_freq_to_bitmap
-+	 */
-+	IMX219_DEFAULT_LINK_FREQ_4LANE_UNSUPPORTED,
- };
- 
- static const char * const imx219_test_pattern_menu[] = {
-@@ -662,9 +687,11 @@ static int imx219_set_framefmt(struct im
- 
- static int imx219_configure_lanes(struct imx219 *imx219)
+ static int set_pmreg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r, u64 val)
  {
--	return cci_write(imx219->regmap, IMX219_REG_CSI_LANE_MODE,
--			 imx219->lanes == 2 ? IMX219_CSI_2_LANE_MODE :
--			 IMX219_CSI_4_LANE_MODE, NULL);
-+	/* Write the appropriate PLL settings for the number of MIPI lanes */
-+	return cci_multi_reg_write(imx219->regmap,
-+				  imx219->lanes == 2 ? imx219_2lane_regs : imx219_4lane_regs,
-+				  imx219->lanes == 2 ? ARRAY_SIZE(imx219_2lane_regs) :
-+				  ARRAY_SIZE(imx219_4lane_regs), NULL);
- };
- 
- static int imx219_start_streaming(struct imx219 *imx219,
-@@ -1035,6 +1062,7 @@ static int imx219_check_hwcfg(struct dev
- 	struct v4l2_fwnode_endpoint ep_cfg = {
- 		.bus_type = V4L2_MBUS_CSI2_DPHY
- 	};
-+	unsigned long link_freq_bitmap;
- 	int ret = -EINVAL;
- 
- 	endpoint = fwnode_graph_get_next_endpoint(dev_fwnode(dev), NULL);
-@@ -1056,23 +1084,40 @@ static int imx219_check_hwcfg(struct dev
- 	imx219->lanes = ep_cfg.bus.mipi_csi2.num_data_lanes;
- 
- 	/* Check the link frequency set in device tree */
--	if (!ep_cfg.nr_of_link_frequencies) {
--		dev_err_probe(dev, -EINVAL,
--			      "link-frequency property not found in DT\n");
--		goto error_out;
-+	switch (imx219->lanes) {
-+	case 2:
-+		ret = v4l2_link_freq_to_bitmap(dev,
-+					       ep_cfg.link_frequencies,
-+					       ep_cfg.nr_of_link_frequencies,
-+					       imx219_link_freq_menu,
-+					       ARRAY_SIZE(imx219_link_freq_menu),
-+					       &link_freq_bitmap);
-+		break;
-+	case 4:
-+		ret = v4l2_link_freq_to_bitmap(dev,
-+					       ep_cfg.link_frequencies,
-+					       ep_cfg.nr_of_link_frequencies,
-+					       imx219_link_freq_4lane_menu,
-+					       ARRAY_SIZE(imx219_link_freq_4lane_menu),
-+					       &link_freq_bitmap);
-+
-+		if (!ret && (link_freq_bitmap & BIT(1))) {
-+			dev_warn(dev, "Link frequency of %d not supported, but has been incorrectly advertised previously\n",
-+				 IMX219_DEFAULT_LINK_FREQ_4LANE_UNSUPPORTED);
-+			dev_warn(dev, "Using link frequency of %d\n",
-+				 IMX219_DEFAULT_LINK_FREQ_4LANE);
-+			link_freq_bitmap |= BIT(0);
-+		}
-+		break;
- 	}
- 
--	if (ep_cfg.nr_of_link_frequencies != 1 ||
--	   (ep_cfg.link_frequencies[0] != ((imx219->lanes == 2) ?
--	    IMX219_DEFAULT_LINK_FREQ : IMX219_DEFAULT_LINK_FREQ_4LANE))) {
-+	if (ret || !(link_freq_bitmap & BIT(0))) {
-+		ret = -EINVAL;
- 		dev_err_probe(dev, -EINVAL,
- 			      "Link frequency not supported: %lld\n",
- 			      ep_cfg.link_frequencies[0]);
--		goto error_out;
- 	}
- 
--	ret = 0;
+-	bool set;
 -
- error_out:
- 	v4l2_fwnode_endpoint_free(&ep_cfg);
- 	fwnode_handle_put(endpoint);
+-	val &= kvm_pmu_accessible_counter_mask(vcpu);
+-
+-	switch (r->reg) {
+-	case PMOVSSET_EL0:
+-		/* CRm[1] being set indicates a SET register, and CLR otherwise */
+-		set = r->CRm & 2;
+-		break;
+-	default:
+-		/* Op2[0] being set indicates a SET register, and CLR otherwise */
+-		set = r->Op2 & 1;
+-		break;
+-	}
+-
+-	if (set)
+-		__vcpu_sys_reg(vcpu, r->reg) |= val;
+-	else
+-		__vcpu_sys_reg(vcpu, r->reg) &= ~val;
++	u64 mask = kvm_pmu_accessible_counter_mask(vcpu);
+ 
++	__vcpu_sys_reg(vcpu, r->reg) = val & mask;
+ 	return 0;
+ }
+ 
 
 
