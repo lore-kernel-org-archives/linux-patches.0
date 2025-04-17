@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B4D258CE0;
-	Thu, 17 Apr 2025 18:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B4B2571A1;
+	Thu, 17 Apr 2025 18:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915867; cv=none; b=cAs1CzVwRowEUOrVE0s/U4Jx+92dHf+Vxhb/ystYZJD8AhUuYGvc4lK3NQtwlG1u5pt/PdONsvAaVITKZx+22ZrCGt88Hhk5kQFtDnKnyzqg4wbZNwH44GNrwu+xTLnwHtIQFzbg7jAJDCdJire2sabD3R6VdaDEw19diw+zmrg=
+	t=1744915870; cv=none; b=NBeR8gWM0L1z15c/4DaSI3Bqw9YdTIIRhRTHaxYYt90ct69FLyWlofu+1dQHpyXtC5BdZZSVs4CDezoahZnWxVUXf6QisZ0XJEs4Rd4zAdOo8m3zkP9UPmXqgN80aD6kzPpykDU2TzlUcd85O3AHfDerX5Co6toMdv6thiop4Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915867; c=relaxed/simple;
-	bh=51AwOjpO7MFHRvz10cIVWxhZjXs/qfaVJtHC6W3zJxg=;
+	s=arc-20240116; t=1744915870; c=relaxed/simple;
+	bh=dHZZ7ZApBU7/C2KG8vfX3YSywyMBXFQMOxmrlSFX++w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnn7A+0VicxVTBxHozvvy7Chta8rDHALh70KW1UFNpc1JM1GUWjkoZ8SmMu+4h+ot/O5nTzpa+iorigJi93pQxhaea+a2mfjsGlJRFUMxZy/RESa794xmZ7aEt9tQe47qA1yYYD97iNCuKWN0/GjVNvT/kgWHi7GMG7ntoWBNEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tr7eHu07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EszL2ukcHAEssqE8qGsU5LK8dd3tsx8gFMvWpgjCj08wXUZZN1gJYQ0Na7J43vXjDOEE+LqyzWWYaiF/DMA50d8ulED243jRj7Q+fK9Umt6/+oYYlXu2AjNkvB/xdbKizPr8p7VpYe5PGxAB9np/+wwC2vbE9g72Qowv4RtktTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgRYiFhN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tr7eHu07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D71C4CEE4;
-	Thu, 17 Apr 2025 18:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgRYiFhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64E2C4CEE4;
+	Thu, 17 Apr 2025 18:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915867;
-	bh=51AwOjpO7MFHRvz10cIVWxhZjXs/qfaVJtHC6W3zJxg=;
+	s=korg; t=1744915870;
+	bh=dHZZ7ZApBU7/C2KG8vfX3YSywyMBXFQMOxmrlSFX++w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tr7eHu07oMZdQoNNjYDUHMd7OX5HHJdkHyRI3dAvd+EegpXbaASjRKTk5lilVtm5N
-	 xi3SpQkxEMWYO1HR1VO3nQN7qt/dRGzlSrfR6rskKrp4N9nC+w5MKLUyopDXFuwrCC
-	 KAHDBEEPAajZiRw/jk3F9xYbebtetF2PcP0Maa8E=
+	b=CgRYiFhNhjIXL1IcspK0GGn+SSrL/WDbhuDYB3XjLwuEtnd4NVGBQ+3dc5/WP4+Ff
+	 6yAPTwUTFnmCBgScUjrWAk0gImwYWpmrmoWzB2TSo2ulXFowm21PH00QApF6AM+fwc
+	 2RD4czTqqXoV20k5oBe0ZxilpSUxwSUqJHI2zmcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.12 266/393] soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()
-Date: Thu, 17 Apr 2025 19:51:15 +0200
-Message-ID: <20250417175118.305826567@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 267/393] smb311 client: fix missing tcon check when mounting with linux/posix extensions
+Date: Thu, 17 Apr 2025 19:51:16 +0200
+Message-ID: <20250417175118.345016367@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,37 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit c8222ef6cf29dd7cad21643228f96535cc02b327 upstream.
+commit b365b9d404b7376c60c91cd079218bfef11b7822 upstream.
 
-soc_dev_attr->revision could be NULL, thus,
-a pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+When mounting the same share twice, once with the "linux" mount parameter
+(or equivalently "posix") and then once without (or e.g. with "nolinux"),
+we were incorrectly reusing the same tree connection for both mounts.
+This meant that the first mount of the share on the client, would
+cause subsequent mounts of that same share on the same client to
+ignore that mount parm ("linux" vs. "nolinux") and incorrectly reuse
+the same tcon.
 
-This issue is found by our static analysis tool.
-
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250212213518.69432-1-chenyuan0y@gmail.com
-Fixes: 3253b7b7cd44 ("soc: samsung: Add exynos chipid driver support")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/samsung/exynos-chipid.c |    2 ++
+ fs/smb/client/connect.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/soc/samsung/exynos-chipid.c
-+++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -131,6 +131,8 @@ static int exynos_chipid_probe(struct pl
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2474,6 +2474,8 @@ static int match_tcon(struct cifs_tcon *
+ 		return 0;
+ 	if (tcon->nodelete != ctx->nodelete)
+ 		return 0;
++	if (tcon->posix_extensions != ctx->linux_ext)
++		return 0;
+ 	return 1;
+ }
  
- 	soc_dev_attr->revision = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 						"%x", soc_info.revision);
-+	if (!soc_dev_attr->revision)
-+		return -ENOMEM;
- 	soc_dev_attr->soc_id = product_id_to_soc_id(soc_info.product_id);
- 	if (!soc_dev_attr->soc_id) {
- 		pr_err("Unknown SoC\n");
 
 
