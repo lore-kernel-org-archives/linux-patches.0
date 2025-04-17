@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B887A2571AE;
-	Thu, 17 Apr 2025 18:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE480256C9C;
+	Thu, 17 Apr 2025 18:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915191; cv=none; b=n2WB0nEeal1eqA+F/H1DO7qJWkGaB7fQ2wwk6ekIGI4XXCiBt/SVSL1ycKrEgrYTWw5BWAR/wzTlkzeBxysIpD3XHuwu7nXhv5hpgLEuEZQOPyLwnrs6AcSzZxut0xu6no0LSH8t0U1+//CrSC5JRIqJpeTfQrEytl14I15IMuM=
+	t=1744915194; cv=none; b=dEw9+umSWGHry0irODAfWbLmXeyfM4312iRrEig/LtoUGJGDRjPK5/lz8yE2G5uD20/DDuTLlVF8Qm3XYuZjCSgLX9hZ9WIf1ZI1jClnyBzhL+0613uJ/FCLlY+Iy1pabeYL+NoLY9DDuQTQrdx+8M/1rf0S710nr/IE1Llry2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915191; c=relaxed/simple;
-	bh=IxBERqQFQlzKqyxFU9QYiP7cXb6R5O4tVnHgtK2UZ3w=;
+	s=arc-20240116; t=1744915194; c=relaxed/simple;
+	bh=HIAkBZnexgkYmTy52IWDgQ+3vTQZyrlAA8Vy9Gy/rfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXSRkSzKaLyJReWmawASJc2Ar+beCnlI7rYXQVAnqJcNfbjYwhKxSJjgveUtfo+vXIcR4eTL5UiJ/NwlGlLayuqxjZ5+dFDBKXnkZjMjWO4uIB7JMDHP8YQVsjnnTPqDvdskfgZQkPyFWzSRGbhhZv0wYcPPd5uNgw/QbfQbVS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryKijWOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S3KHt60mV/MWmsBdq4xuQo/5YjUf+MKjXTHlw2ZP0wTYpEX+nQsTKQMrvxD7RecniIENIXTYqIDhHyxx6FWNcR2pOzfOpVjQOQVZ67VKNRFD8R/60RAlE3uvqKFCGJxFThACez6YKXfeMzHREx1o5NTYxKZJ4pcObbYtiMM7N9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqe7qSoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryKijWOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287D1C4CEE4;
-	Thu, 17 Apr 2025 18:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqe7qSoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D571C4CEE4;
+	Thu, 17 Apr 2025 18:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915191;
-	bh=IxBERqQFQlzKqyxFU9QYiP7cXb6R5O4tVnHgtK2UZ3w=;
+	s=korg; t=1744915194;
+	bh=HIAkBZnexgkYmTy52IWDgQ+3vTQZyrlAA8Vy9Gy/rfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryKijWOMb6AvDUJnGpFovdKj/vVPa/Qg5jr9R+pHmhbbQYq9HX+R9WMu8bhDxbv9y
-	 eyiFUUNDHiUYLwU8ZZSpdfwjKs/8Y6JtzHiTG+0z3oC/UQxVpKavN+OxZloiBZ8DBw
-	 m+ZAAmSegF2mb9nTwMYWclx0PAdJmGBzW7qmCjY0=
+	b=sqe7qSoL8By7C1iQjK5wTdXmUxH5ZjjAAy642GkIoKcMOpA/wV71oT9QLG6PpvoGU
+	 Dugw0WvTbd5yNo9i7IPybu37VuPET8Pj5XsNvXu0YwltNoNUQzprNDhLLJKCprfusQ
+	 O0Zu1Kd1EWb9z3H0Fv5bV4vanwZi/ALjn3EXEYeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/393] pm: cpupower: bench: Prevent NULL dereference on malloc failure
-Date: Thu, 17 Apr 2025 19:47:36 +0200
-Message-ID: <20250417175109.483993229@linuxfoundation.org>
+Subject: [PATCH 6.12 048/393] x86/mm: Clear _PAGE_DIRTY for kernel mappings when we clear _PAGE_RW
+Date: Thu, 17 Apr 2025 19:47:37 +0200
+Message-ID: <20250417175109.523866525@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,35 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 208baa3ec9043a664d9acfb8174b332e6b17fb69 ]
+[ Upstream commit c1fcf41cf37f7a3fd3bbf6f0c04aba3ea4258888 ]
 
-If malloc returns NULL due to low memory, 'config' pointer can be NULL.
-Add a check to prevent NULL dereference.
+The bit pattern of _PAGE_DIRTY set and _PAGE_RW clear is used to mark
+shadow stacks.  This is currently checked for in mk_pte() but not
+pfn_pte().  If we add the check to pfn_pte(), it catches vfree()
+calling set_direct_map_invalid_noflush() which calls
+__change_page_attr() which loads the old protection bits from the
+PTE, clears the specified bits and uses pfn_pte() to construct the
+new PTE.
 
-Link: https://lore.kernel.org/r/20250219122715.3892223-1-quic_zhonhan@quicinc.com
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+We should, therefore, for kernel mappings, clear the _PAGE_DIRTY bit
+consistently whenever we clear _PAGE_RW.  I opted to do it in the
+callers in case we want to use __change_page_attr() to create shadow
+stacks inside the kernel at some point in the future.  Arguably, we
+might also want to clear _PAGE_ACCESSED here.
+
+Note that the 3 functions involved:
+
+  __set_pages_np()
+  kernel_map_pages_in_pgd()
+  kernel_unmap_pages_in_pgd()
+
+Only ever manipulate non-swappable kernel mappings, so maintaining
+the DIRTY:1|RW:0 special pattern for shadow stacks and DIRTY:0
+pattern for non-shadow-stack entries can be maintained consistently
+and doesn't result in the unintended clearing of a live dirty bit
+that could corrupt (destroy) dirty bit information for user mappings.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/174051422675.10177.13226545170101706336.tip-bot2@tip-bot2
+Closes: https://lore.kernel.org/oe-lkp/202502241646.719f4651-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/bench/parse.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/mm/pat/set_memory.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/power/cpupower/bench/parse.c b/tools/power/cpupower/bench/parse.c
-index e63dc11fa3a53..48e25be6e1635 100644
---- a/tools/power/cpupower/bench/parse.c
-+++ b/tools/power/cpupower/bench/parse.c
-@@ -120,6 +120,10 @@ FILE *prepare_output(const char *dirname)
- struct config *prepare_default_config()
- {
- 	struct config *config = malloc(sizeof(struct config));
-+	if (!config) {
-+		perror("malloc");
-+		return NULL;
-+	}
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 44f7b2ea6a073..69ceb967d73e9 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2422,7 +2422,7 @@ static int __set_pages_np(struct page *page, int numpages)
+ 				.pgd = NULL,
+ 				.numpages = numpages,
+ 				.mask_set = __pgprot(0),
+-				.mask_clr = __pgprot(_PAGE_PRESENT | _PAGE_RW),
++				.mask_clr = __pgprot(_PAGE_PRESENT | _PAGE_RW | _PAGE_DIRTY),
+ 				.flags = CPA_NO_CHECK_ALIAS };
  
- 	dprintf("loading defaults\n");
+ 	/*
+@@ -2501,7 +2501,7 @@ int __init kernel_map_pages_in_pgd(pgd_t *pgd, u64 pfn, unsigned long address,
+ 		.pgd = pgd,
+ 		.numpages = numpages,
+ 		.mask_set = __pgprot(0),
+-		.mask_clr = __pgprot(~page_flags & (_PAGE_NX|_PAGE_RW)),
++		.mask_clr = __pgprot(~page_flags & (_PAGE_NX|_PAGE_RW|_PAGE_DIRTY)),
+ 		.flags = CPA_NO_CHECK_ALIAS,
+ 	};
+ 
+@@ -2544,7 +2544,7 @@ int __init kernel_unmap_pages_in_pgd(pgd_t *pgd, unsigned long address,
+ 		.pgd		= pgd,
+ 		.numpages	= numpages,
+ 		.mask_set	= __pgprot(0),
+-		.mask_clr	= __pgprot(_PAGE_PRESENT | _PAGE_RW),
++		.mask_clr	= __pgprot(_PAGE_PRESENT | _PAGE_RW | _PAGE_DIRTY),
+ 		.flags		= CPA_NO_CHECK_ALIAS,
+ 	};
  
 -- 
 2.39.5
