@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5218E1DF246;
-	Thu, 17 Apr 2025 18:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AD01CAA99;
+	Thu, 17 Apr 2025 18:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915061; cv=none; b=eH7zMVdqRqVsYoa0plX2dcvO0xWQjS6QDmHWsG3r4UvRbObkeRSxCVcffFo9cFs45IwVJwEj/0oKlHoPrzvOVvdGkyZh5/AkxubT4kchqGMHxx/knOcLe5ECi7LOczamuKWCb7Xhwmd8u5w0RYYF42q4KA81aW9dv2zNE0XHojs=
+	t=1744915064; cv=none; b=AHrj+eKbHMPPeipNMicAYFpFe6X7pC+N/SS6dYsjXvUFuLdAvoHrhWVH8YhgPRXcq30FzaMMbYZq2wdI+yb6ye28wOYs7R0zDHwvJH0OMWM2xE27NP6BnH8AIvkp5S14CfC6Ji6+MB/SqSc7j29t1Z3E04Ttdv7+wmh10ZuXDhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915061; c=relaxed/simple;
-	bh=dGD1nmb+9HECVXvvcivRZZ7oz7smmZAiNgigobkgQrM=;
+	s=arc-20240116; t=1744915064; c=relaxed/simple;
+	bh=fBXpufjXf+yX2xul2MgzNhTZxRuu601XaL+lT8aCq+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvVBMQQKGa3L3uaBMD7eDe0Jy5BlzSWxsnqoxjBi8v6dvrtxe1/FgGS8iFNNK1CDpWQkLdp4Simde91WOo9zfGlODywS7enK1isFGREm2uGP+TsC+C0km3dl0brTX/338hEe+AXvx2l+5xy/+S0K8uvKnw9BXVJ74a2Yb6P3xt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emwm3y59; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOvsW6e+anyUQhqxk/fJDCm60Fwls+A6g75UZcwcdfxRw9ov4K2Xfy6l5Z75pknUb3IXPUiJprsSOaYDa5+/M4noeFm284dhzguVbRlqKEj/BuVJzZRPLxtRBDWpdTpjNF7NHQQ1qoaRjgu/GwedvknNyV418++IUCDeCgtbdsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svX72IZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emwm3y59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD97C4CEE4;
-	Thu, 17 Apr 2025 18:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svX72IZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F6BC4CEE4;
+	Thu, 17 Apr 2025 18:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915061;
-	bh=dGD1nmb+9HECVXvvcivRZZ7oz7smmZAiNgigobkgQrM=;
+	s=korg; t=1744915064;
+	bh=fBXpufjXf+yX2xul2MgzNhTZxRuu601XaL+lT8aCq+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emwm3y59fBWwDlRLuwp6wTMFK9vaT8GqL0KZHe9MYTQuq4Gj/HNNDnnqtUV/2lEAr
-	 dM3ffN+1qDKgCqOk0+pARXcJKs/Kcx/VGmyLGZ43t9xLQyEADCeE2RQQn0JCXj5XvV
-	 B9+zR0b4cT2L8oC14yJyL7SnwhF9ZvUqi+Y9lTkM=
+	b=svX72IZGsqQG5VcPPcDRn3gcs8+TqxevkL9tAB1RaoFCQegzSVAHDWxhT9s8/ZQeQ
+	 ldnFldt0J9B3IrfwfVzIUTDamkiZdwhTOAs2HNiH4Wwmu2OUN5SO60WAuVzTB/7iZ0
+	 1EalXNqW+ZEcW9eZpRvYx7YpxHaD38taweqCf5j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.13 411/414] nfsd: dont ignore the return code of svc_proc_register()
-Date: Thu, 17 Apr 2025 19:52:49 +0200
-Message-ID: <20250417175128.011472362@linuxfoundation.org>
+	Roberto Ricci <io@r-ricci.it>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Len Brown <len.brown@intel.com>
+Subject: [PATCH 6.13 412/414] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
+Date: Thu, 17 Apr 2025 19:52:50 +0200
+Message-ID: <20250417175128.056095378@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,96 +58,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
+commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
 
-Currently, nfsd_proc_stat_init() ignores the return value of
-svc_proc_register(). If the procfile creation fails, then the kernel
-will WARN when it tries to remove the entry later.
+While debugging kexec/hibernation hangs and crashes, it turned out that
+the current implementation of e820__register_nosave_regions() suffers from
+multiple serious issues:
 
-Fix nfsd_proc_stat_init() to return the same type of pointer as
-svc_proc_register(), and fix up nfsd_net_init() to check that and fail
-the nfsd_net construction if it occurs.
+ - The end of last region is tracked by PFN, causing it to find holes
+   that aren't there if two consecutive subpage regions are present
 
-svc_proc_register() can fail if the dentry can't be allocated, or if an
-identical dentry already exists. The second case is pretty unlikely in
-the nfsd_net construction codepath, so if this happens, return -ENOMEM.
+ - The nosave PFN ranges derived from holes are rounded out (instead of
+   rounded in) which makes it inconsistent with how explicitly reserved
+   regions are handled
 
-Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
-Cc: stable@vger.kernel.org # v6.9
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fix this by:
+
+ - Treating reserved regions as if they were holes, to ensure consistent
+   handling (rounding out nosave PFN ranges is more correct as the
+   kernel does not use partial pages)
+
+ - Tracking the end of the last RAM region by address instead of pages
+   to detect holes more precisely
+
+These bugs appear to have been introduced about ~18 years ago with the very
+first version of e820_mark_nosave_regions(), and its flawed assumptions were
+carried forward uninterrupted through various waves of rewrites and renames.
+
+[ mingo: Added Git archeology details, for kicks and giggles. ]
+
+Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Tested-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
+Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |    9 ++++++++-
- fs/nfsd/stats.c  |    4 ++--
- fs/nfsd/stats.h  |    2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ arch/x86/kernel/e820.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-I did not have any problem cherry-picking 930b64 onto v6.13.11. This
-built and ran some simple NFSD tests in my lab.
-
-
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2244,8 +2244,14 @@ static __net_init int nfsd_net_init(stru
- 					  NFSD_STATS_COUNTERS_NUM);
- 	if (retval)
- 		goto out_repcache_error;
-+
- 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
- 	nn->nfsd_svcstats.program = &nfsd_programs[0];
-+	if (!nfsd_proc_stat_init(net)) {
-+		retval = -ENOMEM;
-+		goto out_proc_error;
-+	}
-+
- 	for (i = 0; i < sizeof(nn->nfsd_versions); i++)
- 		nn->nfsd_versions[i] = nfsd_support_version(i);
- 	for (i = 0; i < sizeof(nn->nfsd4_minorversions); i++)
-@@ -2255,12 +2261,13 @@ static __net_init int nfsd_net_init(stru
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
--	nfsd_proc_stat_init(net);
- #if IS_ENABLED(CONFIG_NFS_LOCALIO)
- 	INIT_LIST_HEAD(&nn->local_clients);
- #endif
- 	return 0;
- 
-+out_proc_error:
-+	percpu_counter_destroy_many(nn->counter, NFSD_STATS_COUNTERS_NUM);
- out_repcache_error:
- 	nfsd_idmap_shutdown(net);
- out_idmap_error:
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -73,11 +73,11 @@ static int nfsd_show(struct seq_file *se
- 
- DEFINE_PROC_SHOW_ATTRIBUTE(nfsd);
- 
--void nfsd_proc_stat_init(struct net *net)
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -754,22 +754,21 @@ void __init e820__memory_setup_extended(
+ void __init e820__register_nosave_regions(unsigned long limit_pfn)
  {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	int i;
+-	unsigned long pfn = 0;
++	u64 last_addr = 0;
  
--	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
-+	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
+ 	for (i = 0; i < e820_table->nr_entries; i++) {
+ 		struct e820_entry *entry = &e820_table->entries[i];
+ 
+-		if (pfn < PFN_UP(entry->addr))
+-			register_nosave_region(pfn, PFN_UP(entry->addr));
+-
+-		pfn = PFN_DOWN(entry->addr + entry->size);
+-
+ 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
+-			register_nosave_region(PFN_UP(entry->addr), pfn);
++			continue;
+ 
+-		if (pfn >= limit_pfn)
+-			break;
++		if (last_addr < entry->addr)
++			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
++
++		last_addr = entry->addr + entry->size;
+ 	}
++
++	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
  }
  
- void nfsd_proc_stat_shutdown(struct net *net)
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -10,7 +10,7 @@
- #include <uapi/linux/nfsd/stats.h>
- #include <linux/percpu_counter.h>
- 
--void nfsd_proc_stat_init(struct net *net);
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
- void nfsd_proc_stat_shutdown(struct net *net);
- 
- static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
+ #ifdef CONFIG_ACPI
 
 
