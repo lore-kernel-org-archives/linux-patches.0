@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33061A3178;
-	Thu, 17 Apr 2025 18:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D158462;
+	Thu, 17 Apr 2025 18:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913740; cv=none; b=adpcpzcP6BJEfxHpTZD5j3x2tbuxgTc/MJCcW0QX9x3NZ07hZLLjwozqHkl6gNRawldzfueSE+jm4V3qe10N8DB57RBiXYpiV+cvKIwUJr0O4H2qo1MZb/ZtQf92vQjF7orER0y8uqtT8VX2Ftirk8fNG2H+E4MC72lFS5GQ2Eo=
+	t=1744913743; cv=none; b=ro8pHnNusl8S9sZ/f+6kFQOqF7AAcVpYPLj41o8r+WAagb7nb5qitm9sBA6wYD4Wav7n7s4A1pzq6+6cfgCz9PNVTuSUyV6QTvMxqy6qx6lqxWwad+SYe6DniI+nocpf644qFTUHuZ7UJ7I8mts9Ae+DBlnd9/Iu6b+fXViS/ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913740; c=relaxed/simple;
-	bh=rElL2C5R+mfkULOaYtuC6YqmX7nNRvfQ3Fj9GBMNgQo=;
+	s=arc-20240116; t=1744913743; c=relaxed/simple;
+	bh=rp2XpYGNtLN7v/61RR7Qwr0m120ePQJzLxQM1ZUv+Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/hxuz4aBZX5OFJ1Q/47s58p1zdgs7MYJA7074MPeFf/bf3YfQxHhCvHEDM5CH73Sb/iGOgn5RwupJjMTpTlWnZG9iR7/e/Du3ZHjs2Cr2ztq7wmJxzIv/NBf09ggaEeqaDgNp3PyYYUijUCw/si5ty2vjhOEFZoPjrAV8NlQ2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWDKdG2B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctzpMozsPJxInrycC7cHHPGAJQnPu8qeOi5H57JfevUJUlbZVVOMvmXtmfxwopXZ7OWgyyoWQYXOEgC0of41HSmAa5TIqW6sobkuuU8Pb5iJvcBbBTmFIH9abyK/Va9oeEDA1l72zPQKyDbpSLktrPrR2HZp6i/o7GmH+GT9ts8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdCDzMbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWDKdG2B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762CBC4CEE4;
-	Thu, 17 Apr 2025 18:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdCDzMbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392DBC4CEE4;
+	Thu, 17 Apr 2025 18:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913739;
-	bh=rElL2C5R+mfkULOaYtuC6YqmX7nNRvfQ3Fj9GBMNgQo=;
+	s=korg; t=1744913743;
+	bh=rp2XpYGNtLN7v/61RR7Qwr0m120ePQJzLxQM1ZUv+Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWDKdG2BnL3D/AhKRcndWak6wmzeWZrqwyjkpyohFbh9GHVU8ahFko3B7NVMasPOd
-	 MZibxoDd4onkQIgIPxJVJG2nES13471IkkPVhxksOBJkGJYFrouD7ZwAjaUw2ZDPB+
-	 Q0i8meq/GlDP+LNQVdNuFoqj/KSFibr040Zygs+Q=
+	b=VdCDzMbAQKv4PWeDLP0AVMuOpqAJgJZy6iMrECgYS0YK+RCraT9xb7CqkTBKKGe4L
+	 3MWi6vpz0kdCKquUpBGnkOIp3LVavJzJxxlRJ0hZbq4AKxquG0pgbknF/3YR2eoLGy
+	 lF6gzuEB++qlASIAu+riVio1UKCKgdAvFd44bVmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geliang Tang <geliang@kernel.org>,
 	Cong Liu <liucong2@kylinos.cn>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.14 438/449] selftests: mptcp: close fd_in before returning in main_loop
-Date: Thu, 17 Apr 2025 19:52:06 +0200
-Message-ID: <20250417175135.945766006@linuxfoundation.org>
+Subject: [PATCH 6.14 439/449] selftests: mptcp: fix incorrect fd checks in main_loop
+Date: Thu, 17 Apr 2025 19:52:07 +0200
+Message-ID: <20250417175135.986647366@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Cong Liu <liucong2@kylinos.cn>
 
-commit c183165f87a486d5879f782c05a23c179c3794ab upstream.
+commit 7335d4ac812917c16e04958775826d12d481c92d upstream.
 
-The file descriptor 'fd_in' is opened when cfg_input is configured, but
-not closed in main_loop(), this patch fixes it.
+Fix a bug where the code was checking the wrong file descriptors
+when opening the input files. The code was checking 'fd' instead
+of 'fd_in', which could lead to incorrect error handling.
 
 Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
 Cc: stable@vger.kernel.org
-Co-developed-by: Cong Liu <liucong2@kylinos.cn>
+Fixes: ca7ae8916043 ("selftests: mptcp: mptfo Initiator/Listener")
+Co-developed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Geliang Tang <geliang@kernel.org>
 Signed-off-by: Cong Liu <liucong2@kylinos.cn>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-3-34161a482a7f@kernel.org
+Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-2-34161a482a7f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
 +++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -1299,7 +1299,7 @@ again:
+@@ -1270,7 +1270,7 @@ int main_loop(void)
  
- 	ret = copyfd_io(fd_in, fd, 1, 0, &winfo);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	if (cfg_truncate > 0) {
- 		shutdown(fd, SHUT_WR);
-@@ -1320,7 +1320,10 @@ again:
- 		close(fd);
+ 	if (cfg_input && cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
  	}
  
--	return 0;
-+out:
-+	if (cfg_input)
-+		close(fd_in);
-+	return ret;
- }
+@@ -1293,7 +1293,7 @@ again:
  
- int parse_proto(const char *proto)
+ 	if (cfg_input && !cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
+ 	}
+ 
 
 
