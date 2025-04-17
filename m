@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83376256C96;
-	Thu, 17 Apr 2025 18:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B1A256C65;
+	Thu, 17 Apr 2025 18:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914177; cv=none; b=DrCdXQHxib0CrAFE7FwJl6GrSCfupCq4AVqLg+O3UVZ3B5R8N4ZkqiUFCv3b5OlBOzDf8jbECUrq/R9ozvevvZzUD/SxO7R3ZuMKKkfZlqOr2U2uH8m4DFtioyi05IiI1uCG7fNrFs9aIidb+OAPeXRXKuqRtEgpt3FtOpRarGA=
+	t=1744914180; cv=none; b=nQi9TcXx6blTfPPfsQ6+guCIt8rur4cEsnrRTRM92pPEKDlqiDzL27a9a829as0o3HxzMH/IVppYrxOYIXyzWGLMmB/CtAE08zFsxVwUHyBQ2XX1fN6LH6gBOkgo9e8EC20OCiOfvRnRqi2tTkX0bAhDj8kUlTfzouvMxIqJYCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914177; c=relaxed/simple;
-	bh=f/OQ6OJ2LkqRbjWmr1EpJ9c/SXX5WTd6B305KiL3Yg0=;
+	s=arc-20240116; t=1744914180; c=relaxed/simple;
+	bh=pgEB6TF//V9ckB8f5CtD5BKs2aTAXepp+GAIiUdoRNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GQsskHlyWfL732M0FFTyBRPHjrQrw1wbEXLd+QH6KPehgoqWk0witplfUgrTM4yGnoD1h/cmGzfFQcUP5Ph1hFgFb+XnCOpbhK5N526xXI81Am6nXKDm3PfN+OLy+Kl0Q2dNukXJPNbJmHMsuhzlH1mBhQoq6/YElfEHCpq1Qiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4pg/SMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pAMct5KAtMRZQZM+hgbzMe3S0Qo+KsKq+iZFX370b4698hHk3dG/C6uuyPGc4TBZlIyNTzZNtRMMioRYaFvVjbF2FfJQG8tFbQwA3pq1X9YbGRWnyJx5uzxKccP+u/+6Fd+y0uYCeWxcU8WKmVJNsvJiyIgLnd6DpbMwXlfzeXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaAL5lCU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4pg/SMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15222C4CEE7;
-	Thu, 17 Apr 2025 18:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaAL5lCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CBBC4CEE4;
+	Thu, 17 Apr 2025 18:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914177;
-	bh=f/OQ6OJ2LkqRbjWmr1EpJ9c/SXX5WTd6B305KiL3Yg0=;
+	s=korg; t=1744914180;
+	bh=pgEB6TF//V9ckB8f5CtD5BKs2aTAXepp+GAIiUdoRNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4pg/SMGyyiViSlebKdVYUiqYdTw6r3aRssz1fjNAAr1qrTFbGE2M3XEh+U99phvf
-	 uUtlr4rWZBNZfb1pdv9jX3d+71Yd4jOHMCx3QAYDZ5wmYMU6+vU2FORzD+zuzXDcV7
-	 gBtt/T2tPHwJaPsAxkYWYqAUTLc5AM4T8WSTE16Q=
+	b=TaAL5lCUaW0XrwSYTB4iu/it22AQUstQLKbOTaB6qr+12O4iSjwuHexU+UN4BY1d1
+	 4xBLlizT9JGkD8fC/FnoC2sj/wJHzv4X+O4XcNbtAz0cjh0NMBsabkhyhgEFujDVsO
+	 5cC4Q9NwFnrtF8NK59xQyj1Tdkg1CCyRqki4I/PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 131/414] drm/xe/pf: Dont send BEGIN_ID if VF has no context/doorbells
-Date: Thu, 17 Apr 2025 19:48:09 +0200
-Message-ID: <20250417175116.699971632@linuxfoundation.org>
+Subject: [PATCH 6.13 132/414] drm/xe/vf: Dont try to trigger a full GT reset if VF
+Date: Thu, 17 Apr 2025 19:48:10 +0200
+Message-ID: <20250417175116.741988543@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
@@ -54,77 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 21ccac0e22aaf27b767f9de4bf573e7c47f619c8 ]
+[ Upstream commit 459777724d306315070d24608fcd89aea85516d6 ]
 
-It turned out that GuC validates VF configuration immediately
-after receiving "some" set of configuration KLVs and complains
-if one of the critical, from GuC understanding, resource is left
-unprovisioned, even if PF should be still allowed to make late VF
-config adjustments, since VF was not yet started.
+VFs don't have access to the GDRST(0x941c) register that driver
+uses to reset a GT. Attempt to trigger a reset using debugfs:
 
-This issue was discovered after we decided to asynchronously
-re-send configuration KLVs after GT reset/resume, as then fair
-VF auto-provisioning could already allocate some of the resources,
-which was a prerequiste for sending those config KLVs:
+ $ cat /sys/kernel/debug/dri/0000:00:02.1/gt0/force_reset
 
- # fair GGTT provisioning
- [] xe 0000:00:02.0: [drm] GT0: PF: pushed VF1 config with 2 KLVs:
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0001 : 64b value 0x176a000 } # ggtt_start
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0002 : 64b value 0xfd696000 } # ggtt_size
- [] xe 0000:00:02.0: [drm] GT0: PF: VF1 provisioned with 4251541504 (3.96 GiB) GGTT
- # re-provisioning worker
- [] xe 0000:00:02.0: [drm] *ERROR* GT0: H2G request 0x5503 failed: error 0x60 hint 0x0
- [] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 14 config KLVs (-EIO)
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0001 : 64b value 0x176a000 } # ggtt_start
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0002 : 64b value 0xfd696000 } # ggtt_size
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a0b : 32b value 0 } # begin_ctx_id
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0004 : 32b value 0 } # num_contexts
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a0a : 32b value 0 } # begin_db_id
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0006 : 32b value 0 } # num_doorbells
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a01 : 32b value 0 } # exec_quantum
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a02 : 32b value 0 } # preempt_timeout
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a03 : 32b value 0 } # cat_error_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a04 : 32b value 0 } # engine_reset_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a05 : 32b value 0 } # page_fault_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a06 : 32b value 0 } # guc_time_us
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a07 : 32b value 0 } # irq_time_us
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a08 : 32b value 0 } # doorbell_time_us
- [] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 configuration (-EIO)
+or due to a hang condition detected by the driver leads to:
 
-To avoid such errors stop sending BEGIN_CONTEXT/DOORBELL_ID KLVs
-if no GuC context/doorbell IDs were provisioned to VF.
+ [ ] xe 0000:00:02.1: [drm] GT0: trying reset from force_reset [xe]
+ [ ] xe 0000:00:02.1: [drm] GT0: reset queued
+ [ ] xe 0000:00:02.1: [drm] GT0: reset started
+ [ ] ------------[ cut here ]------------
+ [ ] xe 0000:00:02.1: [drm] GT0: VF is trying to write 0x1 to an inaccessible register 0x941c+0x0
+ [ ] WARNING: CPU: 3 PID: 3069 at drivers/gpu/drm/xe/xe_gt_sriov_vf.c:996 xe_gt_sriov_vf_write32+0xc6/0x580 [xe]
+ [ ] RIP: 0010:xe_gt_sriov_vf_write32+0xc6/0x580 [xe]
+ [ ] Call Trace:
+ [ ]  <TASK>
+ [ ]  ? show_regs+0x6c/0x80
+ [ ]  ? __warn+0x93/0x1c0
+ [ ]  ? xe_gt_sriov_vf_write32+0xc6/0x580 [xe]
+ [ ]  ? report_bug+0x182/0x1b0
+ [ ]  ? handle_bug+0x6e/0xb0
+ [ ]  ? exc_invalid_op+0x18/0x80
+ [ ]  ? asm_exc_invalid_op+0x1b/0x20
+ [ ]  ? xe_gt_sriov_vf_write32+0xc6/0x580 [xe]
+ [ ]  ? xe_gt_sriov_vf_write32+0xc6/0x580 [xe]
+ [ ]  ? xe_gt_tlb_invalidation_reset+0xef/0x110 [xe]
+ [ ]  ? __mutex_unlock_slowpath+0x41/0x2e0
+ [ ]  xe_mmio_write32+0x64/0x150 [xe]
+ [ ]  do_gt_reset+0x2f/0xa0 [xe]
+ [ ]  gt_reset_worker+0x14e/0x1e0 [xe]
+ [ ]  process_one_work+0x21c/0x740
+ [ ]  worker_thread+0x1db/0x3c0
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4176
+Fix that by sending H2G VF_RESET(0x5507) action instead.
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4078
 Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Michał Winiarski <michal.winiarski@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250129195947.764-2-michal.wajdeczko@intel.com
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250131182502.852-1-michal.wajdeczko@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c          |  4 ++++
+ drivers/gpu/drm/xe/xe_gt_sriov_vf.c | 16 ++++++++++++++++
+ drivers/gpu/drm/xe/xe_gt_sriov_vf.h |  1 +
+ 3 files changed, 21 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-index ca49860168f6d..ca566e3761e1d 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-@@ -257,7 +257,7 @@ static u32 encode_config(u32 *cfg, const struct xe_gt_sriov_config *config, bool
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 560fb82f5dc40..adff1f44b3a62 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -32,6 +32,7 @@
+ #include "xe_gt_pagefault.h"
+ #include "xe_gt_printk.h"
+ #include "xe_gt_sriov_pf.h"
++#include "xe_gt_sriov_vf.h"
+ #include "xe_gt_sysfs.h"
+ #include "xe_gt_tlb_invalidation.h"
+ #include "xe_gt_topology.h"
+@@ -676,6 +677,9 @@ static int do_gt_reset(struct xe_gt *gt)
+ {
+ 	int err;
  
- 	n += encode_config_ggtt(cfg, config, details);
++	if (IS_SRIOV_VF(gt_to_xe(gt)))
++		return xe_gt_sriov_vf_reset(gt);
++
+ 	xe_gsc_wa_14015076503(gt, true);
  
--	if (details) {
-+	if (details && config->num_ctxs) {
- 		cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_BEGIN_CONTEXT_ID);
- 		cfg[n++] = config->begin_ctx;
- 	}
-@@ -265,7 +265,7 @@ static u32 encode_config(u32 *cfg, const struct xe_gt_sriov_config *config, bool
- 	cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_NUM_CONTEXTS);
- 	cfg[n++] = config->num_ctxs;
+ 	xe_mmio_write32(&gt->mmio, GDRST, GRDOM_FULL);
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
+index d3baba50f0851..d331d3b0ec95b 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
+@@ -57,6 +57,22 @@ static int vf_reset_guc_state(struct xe_gt *gt)
+ 	return err;
+ }
  
--	if (details) {
-+	if (details && config->num_dbs) {
- 		cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_BEGIN_DOORBELL_ID);
- 		cfg[n++] = config->begin_db;
- 	}
++/**
++ * xe_gt_sriov_vf_reset - Reset GuC VF internal state.
++ * @gt: the &xe_gt
++ *
++ * It requires functional `GuC MMIO based communication`_.
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int xe_gt_sriov_vf_reset(struct xe_gt *gt)
++{
++	if (!xe_device_uc_enabled(gt_to_xe(gt)))
++		return -ENODEV;
++
++	return vf_reset_guc_state(gt);
++}
++
+ static int guc_action_match_version(struct xe_guc *guc,
+ 				    u32 wanted_branch, u32 wanted_major, u32 wanted_minor,
+ 				    u32 *branch, u32 *major, u32 *minor, u32 *patch)
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
+index e541ce57bec24..576ff5e795a8b 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
+@@ -12,6 +12,7 @@ struct drm_printer;
+ struct xe_gt;
+ struct xe_reg;
+ 
++int xe_gt_sriov_vf_reset(struct xe_gt *gt);
+ int xe_gt_sriov_vf_bootstrap(struct xe_gt *gt);
+ int xe_gt_sriov_vf_query_config(struct xe_gt *gt);
+ int xe_gt_sriov_vf_connect(struct xe_gt *gt);
 -- 
 2.39.5
 
