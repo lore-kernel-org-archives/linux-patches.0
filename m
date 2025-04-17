@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A46E2627E9;
-	Thu, 17 Apr 2025 18:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BE72627FE;
+	Thu, 17 Apr 2025 18:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914737; cv=none; b=expD4dhbOV3aWa1ZzknghUOYRgKFS8w0hFRfcdOjG7yiDsvTWkpvZN+n/qcZv8V55ftpajM43HjLt6kVJUDrsrycGZ+BGxgFDrbXDwNWPZL839KkxaxTQ41YRQKp6/Lpufh2BBvc5kJ7HwRck5GxpnnsMPz7fdxaP9okjnh0pFY=
+	t=1744914740; cv=none; b=Le8zIOMI+G+c7zVnfl+0RgxRp1AUUXGSqtbX9Q8ykKrBQFyX6EVLlX7SGs2nBHs9IjWM/LTKkDChrJKqoXJEhov1yvfNiKS3rZR4AGN8vx6fEC1RHXtUKMzabb5M4qJs4DFbT6wsPTLREcBzmTlk8q5iSGVroK9vCnix9kZW4tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914737; c=relaxed/simple;
-	bh=qfWGYuS5MDXRdwxnmHsCJBX76C+MfM1S1IUQtRdm9vo=;
+	s=arc-20240116; t=1744914740; c=relaxed/simple;
+	bh=d8ZnmajJTGv0RCytpxERed+T5qJzIJf0GwaEb+lim0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0Fxio4540ZN8jo9Nu04nzYk5Z/8QSQtFCsWgDDMpcN2ssipxOModjH3f14lUqCPaqFvujF3TveqZt+hkaPV/aOSJNmlhzIOpX6JiQ4p4pEorD0XCv541T7s9LpX5cjz7wF6cdTe2jZy3KA5moQegBW14s0AfUCao0gZtB4GRfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQpz//lJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Spqt48r3ugeu3tUXWHGZ4/y79tnidL6mpsFO2nyQ5MHlp1dWLcPce8iyYyldFQe9FpCu8sdez1V+a6IopAENl8pMa/Qzg0bevdGXjLBhNdMctr7dEr99ppT9vtvLm2QlMaG/AY+RBKYdVyhYnt5sIop8esA4LyzFNi5+hGe1HbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2LU80YQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQpz//lJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE91FC4CEE4;
-	Thu, 17 Apr 2025 18:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2LU80YQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B6AC4CEE4;
+	Thu, 17 Apr 2025 18:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914737;
-	bh=qfWGYuS5MDXRdwxnmHsCJBX76C+MfM1S1IUQtRdm9vo=;
+	s=korg; t=1744914740;
+	bh=d8ZnmajJTGv0RCytpxERed+T5qJzIJf0GwaEb+lim0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQpz//lJQfla9JPVNsP4zRPl7sTeYHzS8zdfZ1x4UcYuh0uhvMIbDXJbHc3vSQ+s+
-	 NjHiGEqrosUln71wMMJeo4KJyQgr+qUXfscTMHZRRn63FrPsKQKWZlhjCgFi27isvT
-	 Tq1KMFtoCBVIle9S40+bLxZ95QAk9Uc2ACt5IDZE=
+	b=e2LU80YQEHmW/NOYDzbyxTYe+nhwPA4wWJAy91tV9a3rNtbwXpJPUlRPW15OjRguW
+	 Nfktr54Z8Dc+aSI+asfAONGJql+rdNHTlnBUw+8iZm6YlKHj1azRHoyKnTKqIPQOXs
+	 hWnkWeF2IfxVFY9pvqD4xm8SNlG4zW5NkozeT37k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.13 274/414] accel/ivpu: Fix warning in ivpu_ipc_send_receive_internal()
-Date: Thu, 17 Apr 2025 19:50:32 +0200
-Message-ID: <20250417175122.446064103@linuxfoundation.org>
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>
+Subject: [PATCH 6.13 308/414] arm64: dts: mediatek: mt8188: Assign apll1 clock as parent to avoid hang
+Date: Thu, 17 Apr 2025 19:51:06 +0200
+Message-ID: <20250417175123.824263505@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -45,42 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-commit 6b4568b675b14cf890c0c21779773c3e08e80ce5 upstream.
+commit a69d5795f12b06d07b6437cafdd08f929fff2706 upstream.
 
-Warn if device is suspended only when runtime PM is enabled.
-Runtime PM is disabled during reset/recovery and it is not an error
-to use ivpu_ipc_send_receive_internal() in such cases.
+Certain registers in the AFE IO space require the apll1 clock to be
+enabled in order to be read, otherwise the machine hangs (registers like
+0x280, 0x410 (AFE_GAIN1_CON0) and 0x830 (AFE_CONN0_5)). During AFE
+driver probe, when initializing the regmap for the AFE IO space those
+registers are read, resulting in a hang during boot.
 
-Fixes: 5eaa49741119 ("accel/ivpu: Prevent recovery invocation during probe and resume")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250325114219.3739951-1-maciej.falkowski@linux.intel.com
+This has been observed on the Genio 700 EVK, Genio 510 EVK and
+MT8188-Geralt-Ciri Chromebook, all of which are based on the MT8188 SoC.
+
+Assign CLK_TOP_APLL1_D4 as the parent for CLK_TOP_A1SYS_HP, which is
+enabled during register read and write, to make sure the apll1 is
+enabled during register operations and prevent the MT8188 machines from
+hanging during boot.
+
+Cc: stable@vger.kernel.org
+Fixes: bd568ce198b8 ("arm64: dts: mediatek: mt8188: Add audio support")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20250207-mt8188-afe-fix-hang-disabled-apll1-clk-v2-1-a636d844c272@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_ipc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8188.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/accel/ivpu/ivpu_ipc.c
-+++ b/drivers/accel/ivpu/ivpu_ipc.c
-@@ -302,7 +302,8 @@ ivpu_ipc_send_receive_internal(struct iv
- 	struct ivpu_ipc_consumer cons;
- 	int ret;
- 
--	drm_WARN_ON(&vdev->drm, pm_runtime_status_suspended(vdev->drm.dev));
-+	drm_WARN_ON(&vdev->drm, pm_runtime_status_suspended(vdev->drm.dev) &&
-+		    pm_runtime_enabled(vdev->drm.dev));
- 
- 	ivpu_ipc_consumer_add(vdev, &cons, channel, NULL);
- 
+--- a/arch/arm64/boot/dts/mediatek/mt8188.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
+@@ -1392,7 +1392,7 @@
+ 			compatible = "mediatek,mt8188-afe";
+ 			reg = <0 0x10b10000 0 0x10000>;
+ 			assigned-clocks = <&topckgen CLK_TOP_A1SYS_HP>;
+-			assigned-clock-parents =  <&clk26m>;
++			assigned-clock-parents = <&topckgen CLK_TOP_APLL1_D4>;
+ 			clocks = <&clk26m>,
+ 				 <&apmixedsys CLK_APMIXED_APLL1>,
+ 				 <&apmixedsys CLK_APMIXED_APLL2>,
 
 
