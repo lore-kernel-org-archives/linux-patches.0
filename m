@@ -1,60 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B89C2638A6;
-	Thu, 17 Apr 2025 18:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A572571A2;
+	Thu, 17 Apr 2025 18:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914775; cv=none; b=OWsFpyTKU1LOu1xTWLYgaWqISsE6v6CYbVQpGQa4j32WoWlTppNSqZhU/c34vvDobHL87BA59fE8I7AwPFDfCrRemGA56GXbZJK4RAz7BE8ne7KT5EiZs4fWug7aOJAUj6lPdX9mx05ugKQ02hLZTCyV0bVIpwJhQgIV2GqxZxw=
+	t=1744914776; cv=none; b=hDMbfV93L7ezQctFVlvI8aU9EbiouuCfsDT0I3lA4E7uw/5nbq9ZRaICp8fqZjBPV8fd0B3JbzltbtI03KVDDrJvY4vbpF8Ekf8c8g7IkfrXA57eWvhBUHMGzQ92z0axXctqKeA6xpNgWE8y0K7yHTMs3rFxPU1NlV4x5Bx7OUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914775; c=relaxed/simple;
-	bh=ajPFpkFAuhzwMTDbRnq1cYt5mCF7wSa5sD7pbhO4rbU=;
+	s=arc-20240116; t=1744914776; c=relaxed/simple;
+	bh=MDbk0M7TciQ7isi3HWbeSwMSOhagaxF62jdP5skGhwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/koR8eAxEoMUFDfdFi8tG5MlOAWML5KBBPrmlIgmYLn0aTTFLZmYFoDJKt0RgA0GIkZdschEHmKIf+szeYQf08NPBq+Mwcw/IFP0j7Ank6Ci+F358qyrzXDBMt25QztS1ZBVQJsUnsZCz8IXVAZ42h7hYgzzNtt1hKwjfRpRXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvQcW1FV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ElC+M2+EjZ1GTNnW521INHz2Q1FhWcRWzsHcvbihzOKTIExJEJQX31qYzoksslv34SpkZcVaeT2VVZjG54dDDDBUz/MnwoDsz9eEoy7YLDyS2mMo8vXexprsU4guZPOWXO3MpBq/couKUWgrvjKoQSHjWR5OOMAzRueer88N9bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agT02btu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvQcW1FV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0628C4CEE4;
-	Thu, 17 Apr 2025 18:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agT02btu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC047C4CEE4;
+	Thu, 17 Apr 2025 18:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914773;
-	bh=ajPFpkFAuhzwMTDbRnq1cYt5mCF7wSa5sD7pbhO4rbU=;
+	s=korg; t=1744914776;
+	bh=MDbk0M7TciQ7isi3HWbeSwMSOhagaxF62jdP5skGhwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvQcW1FVl5xrGZl5RwfFhFoRRikfd5+gTACyvxu5VNMgumdH6/OHspDF76NJM+kWH
-	 iGTdPMvrHzK4anicfnTtRMqQaUeE7bhh5jXF6AN3v0JmJKVKqQvxrleiwPDeSR/XkU
-	 8sEq109qmrvioeQUuOfQd++BLvAPirmK8Uj+yNTE=
+	b=agT02btuWl/Q2X1kUduUQdLxvX8ITgLnyddanQEJ2VJZVt93aeuRPXLPgPJYnlCEo
+	 vFfLozDmU4pbXnN5XXfmhs8vAIGeNEFtVs/sGSemur2N3hawL+RONz/uM1C1x+shgS
+	 bPuqhhLOvYGhDGhYiU+PFrOrJnF8fGYKfHzKMxpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Alex Shi <alexs@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dave Airlie <airlied@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Karol Herbst <kherbst@redhat.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Lyude <lyude@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Xu <peterx@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	SeongJae Park <sj@kernel.org>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Barry Song <v-songbaohua@oppo.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 326/414] mm/rmap: reject hugetlb folios in folio_make_device_exclusive()
-Date: Thu, 17 Apr 2025 19:51:24 +0200
-Message-ID: <20250417175124.544995866@linuxfoundation.org>
+	YH Huang <yh.huang@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.13 309/414] arm64: dts: mediatek: mt8173: Fix disp-pwm compatible string
+Date: Thu, 17 Apr 2025 19:51:07 +0200
+Message-ID: <20250417175123.863651924@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -73,66 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-commit bc3fe6805cf09a25a086573a17d40e525208c5d8 upstream.
+commit 46ad36002088eff8fc5cae200aa42ae9f9310ddd upstream.
 
-Even though FOLL_SPLIT_PMD on hugetlb now always fails with -EOPNOTSUPP,
-let's add a safety net in case FOLL_SPLIT_PMD usage would ever be
-reworked.
+The MT8173 disp-pwm device should have only one compatible string, based
+on the following DT validation error:
 
-In particular, before commit 9cb28da54643 ("mm/gup: handle hugetlb in the
-generic follow_page_mask code"), GUP(FOLL_SPLIT_PMD) would just have
-returned a page.  In particular, hugetlb folios that are not PMD-sized
-would never have been prone to FOLL_SPLIT_PMD.
+    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401e000: compatible: 'oneOf' conditional failed, one must be fixed:
+	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' was expected
+	    'mediatek,mt8183-disp-pwm' was expected
+	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
+    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401f000: compatible: 'oneOf' conditional failed, one must be fixed:
+	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' was expected
+	    'mediatek,mt8183-disp-pwm' was expected
+	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
 
-hugetlb folios can be anonymous, and page_make_device_exclusive_one() is
-not really prepared for handling them at all.  So let's spell that out.
+Drop the extra "mediatek,mt6595-disp-pwm" compatible string.
 
-Link: https://lkml.kernel.org/r/20250210193801.781278-3-david@redhat.com
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Tested-by: Alistair Popple <apopple@nvidia.com>
-Cc: Alex Shi <alexs@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dave Airlie <airlied@gmail.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Karol Herbst <kherbst@redhat.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Lyude <lyude@redhat.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Yanteng Si <si.yanteng@linux.dev>
-Cc: Barry Song <v-songbaohua@oppo.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 61aee9342514 ("arm64: dts: mt8173: add MT8173 display PWM driver support node")
+Cc: YH Huang <yh.huang@mediatek.com>
+Cc: stable@vger.kernel.org # v4.5+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250108083424.2732375-2-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8173.dtsi |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -2499,7 +2499,7 @@ static bool folio_make_device_exclusive(
- 	 * Restrict to anonymous folios for now to avoid potential writeback
- 	 * issues.
- 	 */
--	if (!folio_test_anon(folio))
-+	if (!folio_test_anon(folio) || folio_test_hugetlb(folio))
- 		return false;
+--- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
+@@ -1255,8 +1255,7 @@
+ 		};
  
- 	rmap_walk(folio, &rwc);
+ 		pwm0: pwm@1401e000 {
+-			compatible = "mediatek,mt8173-disp-pwm",
+-				     "mediatek,mt6595-disp-pwm";
++			compatible = "mediatek,mt8173-disp-pwm";
+ 			reg = <0 0x1401e000 0 0x1000>;
+ 			#pwm-cells = <2>;
+ 			clocks = <&mmsys CLK_MM_DISP_PWM026M>,
+@@ -1266,8 +1265,7 @@
+ 		};
+ 
+ 		pwm1: pwm@1401f000 {
+-			compatible = "mediatek,mt8173-disp-pwm",
+-				     "mediatek,mt6595-disp-pwm";
++			compatible = "mediatek,mt8173-disp-pwm";
+ 			reg = <0 0x1401f000 0 0x1000>;
+ 			#pwm-cells = <2>;
+ 			clocks = <&mmsys CLK_MM_DISP_PWM126M>,
 
 
