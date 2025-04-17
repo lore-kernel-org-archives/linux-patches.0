@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B3A257AD8;
-	Thu, 17 Apr 2025 18:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DA5264FBB;
+	Thu, 17 Apr 2025 18:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914931; cv=none; b=T/wbKNVIFbYvBqkSLxgGcwKL2obpQ68PCmTY/qajGFoW/uHb0eRbOto4fl0dq6m86ppYVsO2bqit261FxXTCLEL2KTjz6EDPYPq/U2yRcGjVjr4pDOx2MA3nPF/gDSMYNTkJrKT+l4rqc9NzyPOhPP4c9XHU70nKt4JVrNzL7Pk=
+	t=1744914933; cv=none; b=G0/jgMBaM0IEMrolfNSZymYlc1UhqLgVG4jhvrGBZsWXOsRj2LlAwkeAnP/sIRT6ANAMZUMvOrqrQOEDZtYx4OPrAwmoiH5hGdaqYe3s9SpECURavxOW7QPrrByFCqLlHt4cu5ofriH8Pd8nxyaSa0jwsLyc2KZtcvdh4i92ak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914931; c=relaxed/simple;
-	bh=pvdUWoW6AO1Mx/nm3dPfpIvJq8QrmcSi8DEnB+Ah2AM=;
+	s=arc-20240116; t=1744914933; c=relaxed/simple;
+	bh=I+3bJyMt4JtSHdFQasl6FQ5o4+zBP/rDMsko/7krViI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQFtxiy4aHTZ1IWmDC9KRV34UxQ5Wp3IZ0NdtryTU5WmsjQIF76h+9Ga8yF7hFdLAtkrWskqHCdfg9JOrDFLTOBZIXuFKzgeQtH0DLrvUmjjbZEbIfOr5c4+xftvdS/yCMCdPNEZ00jdUqD91b0ejrsw18Iuq49hSSPT7nAbmk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pICD6rAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E7qytmf0WG7dP9+S0IKk7ooNoFgEf1dwSTKdOxUXetOpg6jRimx98k4X6XuA3tSDWM2lbgTaXSgZxdNanko7c5kMe5Gj5P1VjeS3OVquAe9ouZRBDigVWoE01nSrbA/wDMR/y/D+uPiYsMoy+gNBBpzyxpqiP0rnBvCyHKIpT8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmzE+wkW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pICD6rAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD65C4CEE7;
-	Thu, 17 Apr 2025 18:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmzE+wkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340A7C4CEE4;
+	Thu, 17 Apr 2025 18:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914930;
-	bh=pvdUWoW6AO1Mx/nm3dPfpIvJq8QrmcSi8DEnB+Ah2AM=;
+	s=korg; t=1744914933;
+	bh=I+3bJyMt4JtSHdFQasl6FQ5o4+zBP/rDMsko/7krViI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pICD6rARcw73+hO0/3KCVXVEH3Ef77vN+EuF4U3vvp2XrW9lsDyG59SCDSMzZeblj
-	 9WxVUdFFsqhULVx6U2eXhsaUs6pqg8cahBgpyfmozTjM3tx36aXNNRRisYwdwBBoSE
-	 or4VBv1nq0tku06NftccSfrW0ThA89LYBTzFGl8Y=
+	b=JmzE+wkWHISBXSF3IudiLk/aii7sEpJLRSebO8sWuJomjmWRCv/CPVYRsOh9ekVfW
+	 ZxrGg1GsABMjmLf9vQxbpMu/uxViXoW0wnWB1ubYeGxtrydlspo3xhJnJ5lpE8E/SP
+	 u+/EBjQlCUYPcdTIoid8GitH3TEdVXqBS0Odh8uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.13 347/414] clk: qcom: gdsc: Capture pm_genpd_add_subdomain result code
-Date: Thu, 17 Apr 2025 19:51:45 +0200
-Message-ID: <20250417175125.383742277@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Douglas Raillard <douglas.raillard@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.13 338/414] tracing: Do not add length to print format in synthetic events
+Date: Thu, 17 Apr 2025 19:51:36 +0200
+Message-ID: <20250417175125.026138673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,92 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 65a733464553ea192797b889d1533a1a37216f32 upstream.
+commit e1a453a57bc76be678bd746f84e3d73f378a9511 upstream.
 
-Adding a new clause to this if/else I noticed the existing usage of
-pm_genpd_add_subdomain() wasn't capturing and returning the result code.
+The following causes a vsnprintf fault:
 
-pm_genpd_add_subdomain() returns an int and can fail. Capture that result
-code and throw it up the call stack if something goes wrong.
+  # echo 's:wake_lat char[] wakee; u64 delta;' >> /sys/kernel/tracing/dynamic_events
+  # echo 'hist:keys=pid:ts=common_timestamp.usecs if !(common_flags & 0x18)' > /sys/kernel/tracing/events/sched/sched_waking/trigger
+  # echo 'hist:keys=next_pid:delta=common_timestamp.usecs-$ts:onmatch(sched.sched_waking).trace(wake_lat,next_comm,$delta)' > /sys/kernel/tracing/events/sched/sched_switch/trigger
 
-Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+Because the synthetic event's "wakee" field is created as a dynamic string
+(even though the string copied is not). The print format to print the
+dynamic string changed from "%*s" to "%s" because another location
+(__set_synth_event_print_fmt()) exported this to user space, and user
+space did not need that. But it is still used in print_synth_event(), and
+the output looks like:
+
+          <idle>-0       [001] d..5.   193.428167: wake_lat: wakee=(efault)sshd-sessiondelta=155
+    sshd-session-879     [001] d..5.   193.811080: wake_lat: wakee=(efault)kworker/u34:5delta=58
+          <idle>-0       [002] d..5.   193.811198: wake_lat: wakee=(efault)bashdelta=91
+            bash-880     [002] d..5.   193.811371: wake_lat: wakee=(efault)kworker/u35:2delta=21
+          <idle>-0       [001] d..5.   193.811516: wake_lat: wakee=(efault)sshd-sessiondelta=129
+    sshd-session-879     [001] d..5.   193.967576: wake_lat: wakee=(efault)kworker/u34:5delta=50
+
+The length isn't needed as the string is always nul terminated. Just print
+the string and not add the length (which was hard coded to the max string
+length anyway).
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-2-13f2bb656dad@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Douglas Raillard <douglas.raillard@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/20250407154139.69955768@gandalf.local.home
+Fixes: 4d38328eb442d ("tracing: Fix synth event printk format for str fields");
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gdsc.c |   40 +++++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ kernel/trace/trace_events_synth.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -506,6 +506,23 @@ err_disable_supply:
- 	return ret;
- }
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -377,7 +377,6 @@ static enum print_line_t print_synth_eve
+ 				union trace_synth_field *data = &entry->fields[n_u64];
  
-+static void gdsc_pm_subdomain_remove(struct gdsc_desc *desc, size_t num)
-+{
-+	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
-+	int i;
-+
-+	/* Remove subdomains */
-+	for (i = num - 1; i >= 0; i--) {
-+		if (!scs[i])
-+			continue;
-+		if (scs[i]->parent)
-+			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
-+		else if (!IS_ERR_OR_NULL(dev->pm_domain))
-+			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+	}
-+}
-+
- int gdsc_register(struct gdsc_desc *desc,
- 		  struct reset_controller_dev *rcdev, struct regmap *regmap)
- {
-@@ -555,30 +572,27 @@ int gdsc_register(struct gdsc_desc *desc
- 		if (!scs[i])
- 			continue;
- 		if (scs[i]->parent)
--			pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
-+			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
- 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
--			pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+		if (ret)
-+			goto err_pm_subdomain_remove;
- 	}
- 
- 	return of_genpd_add_provider_onecell(dev->of_node, data);
-+
-+err_pm_subdomain_remove:
-+	gdsc_pm_subdomain_remove(desc, i);
-+
-+	return ret;
- }
- 
- void gdsc_unregister(struct gdsc_desc *desc)
- {
--	int i;
- 	struct device *dev = desc->dev;
--	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
- 
--	/* Remove subdomains */
--	for (i = num - 1; i >= 0; i--) {
--		if (!scs[i])
--			continue;
--		if (scs[i]->parent)
--			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
--		else if (!IS_ERR_OR_NULL(dev->pm_domain))
--			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
--	}
-+	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
- }
- 
+ 				trace_seq_printf(s, print_fmt, se->fields[i]->name,
+-						 STR_VAR_LEN_MAX,
+ 						 (char *)entry + data->as_dynamic.offset,
+ 						 i == se->n_fields - 1 ? "" : " ");
+ 				n_u64++;
 
 
