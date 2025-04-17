@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E77256C96;
-	Thu, 17 Apr 2025 18:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC53E2571CE;
+	Thu, 17 Apr 2025 18:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913032; cv=none; b=E9gDIamBppHCt0eJfOEcz2sgDVyuiq1kqpteBVrTv/JFzczEV89u0dh2ouMGS109TizEdAg/DJgKgwhdhPwDr/CWYKCAsG6f3vxe0ftJk5XUDi+Z8YF2tyuPUFE/GVfxTqVTDpyI3nLfDNfjp1sxYiruDo7aBVPibasVuD/LR+I=
+	t=1744913034; cv=none; b=exSL+NQ8OtkBZdb47W+0KTi7Qfvj19di5lbsDda0b5r5Q+ezlCue2aS+SLaTQCpoKgNmZs71QdV+tLUZnPSMocAOv1bVrkoI9tCbc62BWXjb5KoRJDDloJ8Y19ebDV2uQc6wTkd3oHz/TtxKAK7DnA0E3hXDtu4UI0SGeBnTvno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913032; c=relaxed/simple;
-	bh=2avgUJCrHPsCM8v1U+uHF664Jby3oCUV30A/5N2KU2k=;
+	s=arc-20240116; t=1744913034; c=relaxed/simple;
+	bh=GKRYehwwR/4HBKsnJt/cj3ufPIdnFG1vozfEqhI2bUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BMlXWrIykyfLU2ujZuEd+aX+VT2uFG3zOOV2qEKGfHTWLSaKKAQU1Pnb8OfUOoTN6OUwo21tD8EtZxBtIQ/VFc/7EMUPLOEr8jdp7Yf1H8BhzlzNFo9vepqnbcaKATJ84LKycF3hwQQABAhUW7JajtfLCBrBdPptBg6e2dkKtMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AV2ZEiV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CCa7DmM/Ggch4GdUnE9JP9srUVxZHeyEYdo6v52A/YD7MfyaywCxu1+Dd7b6LWWlfo2UNygtTlvhJLMQplGwuDj09BFus+eaG1Z/eVM3vSmJja8gH6hEGdyBosD3H6qe2DkX18CUmXM3C0O7PG/1UwPuRcu42j10Regr0H1tmU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5xmVXZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AV2ZEiV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C96C4CEE4;
-	Thu, 17 Apr 2025 18:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5xmVXZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451E4C4CEE4;
+	Thu, 17 Apr 2025 18:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913031;
-	bh=2avgUJCrHPsCM8v1U+uHF664Jby3oCUV30A/5N2KU2k=;
+	s=korg; t=1744913034;
+	bh=GKRYehwwR/4HBKsnJt/cj3ufPIdnFG1vozfEqhI2bUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AV2ZEiV86A5eNMkVCiEoUsTNUGXxGhmnxR//0V8rPa8ymrRjfwgO//107sre04XcE
-	 Cv4tJdP/y+n9m2ksBeLg/a+xcPjdHG24Ft1FC+lE7DT+LWW2UN3AwqhA5mddwMmdhQ
-	 N1untYIaQQHc/DmB/LLr4Bu5dZj3esAxvCz+sgJo=
+	b=K5xmVXZhtwRCpRNpPhsmt8ycEzthYDvBkSO+H1OqvQ7+RcP+cuw7DFAEtOkZu+88R
+	 AyZ6NhFVrVpZOmrPmJSmu7TRESkuws1vgvkBbjROWhfIBE+TmLGZChGQwvpYgcCpHx
+	 bXVLrcoUIuuHoIJEyxHRwD1xjS0T5qlD32QikOrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 205/449] HID: pidff: Use macros instead of hardcoded min/max values for shorts
-Date: Thu, 17 Apr 2025 19:48:13 +0200
-Message-ID: <20250417175126.217002815@linuxfoundation.org>
+Subject: [PATCH 6.14 206/449] HID: pidff: Factor out pool report fetch and remove excess declaration
+Date: Thu, 17 Apr 2025 19:48:14 +0200
+Message-ID: <20250417175126.257003010@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -58,10 +58,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 21755162456902998f8d9897086b8c980c540df5 ]
+[ Upstream commit 5d98079b2d0186e1f586301a9c00144a669416a8 ]
 
-Makes it obvious these magic values ARE in fact derived from min and
-max values for s16 and u16
+We only want to refetch the pool report during device init. Reset
+function is now called when uploading effects to an empty device so
+extract pool fetch to separate function and call it from init before
+autocenter check (autocenter check triggered reset during init).
+
+Remove a superfluous pointer declaration and assigment as well.
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Reviewed-by: Michał Kopeć <michal@nozomi.space>
@@ -72,101 +76,91 @@ Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c | 45 ++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 8083eb7684e5e..b21e844f5f3a3 100644
+index b21e844f5f3a3..f23381b6e3447 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -21,7 +21,7 @@
+@@ -591,12 +591,9 @@ static void pidff_modify_actuators_state(struct pidff_device *pidff, bool enable
  
+ /*
+  * Reset the device, stop all effects, enable actuators
+- * Refetch pool report
+  */
+ static void pidff_reset(struct pidff_device *pidff)
+ {
+-	int i = 0;
+-
+ 	/* We reset twice as sometimes hid_wait_io isn't waiting long enough */
+ 	pidff_send_device_control(pidff, PID_RESET);
+ 	pidff_send_device_control(pidff, PID_RESET);
+@@ -604,23 +601,29 @@ static void pidff_reset(struct pidff_device *pidff)
  
- #define	PID_EFFECTS_MAX		64
--#define	PID_INFINITE		0xffff
-+#define	PID_INFINITE		U16_MAX
+ 	pidff_send_device_control(pidff, PID_STOP_ALL_EFFECTS);
+ 	pidff_modify_actuators_state(pidff, 1);
++}
  
- /* Linux Force Feedback API uses miliseconds as time unit */
- #define FF_TIME_EXPONENT	-3
-@@ -226,12 +226,12 @@ static int pidff_rescale(int i, int max, struct hid_field *field)
+-	/* pool report is sometimes messed up, refetch it */
+-	hid_hw_request(pidff->hid, pidff->reports[PID_POOL], HID_REQ_GET_REPORT);
+-	hid_hw_wait(pidff->hid);
++/*
++ * Refetch pool report
++ */
++static void pidff_fetch_pool(struct pidff_device *pidff)
++{
++	if (!pidff->pool[PID_SIMULTANEOUS_MAX].value)
++		return;
+ 
+-	if (pidff->pool[PID_SIMULTANEOUS_MAX].value) {
+-		while (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] < 2) {
+-			if (i++ > 20) {
+-				hid_warn(pidff->hid,
+-					 "device reports %d simultaneous effects\n",
+-					 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
+-				break;
+-			}
+-			hid_dbg(pidff->hid, "pid_pool requested again\n");
+-			hid_hw_request(pidff->hid, pidff->reports[PID_POOL],
+-					  HID_REQ_GET_REPORT);
+-			hid_hw_wait(pidff->hid);
++	int i = 0;
++	while (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] < 2) {
++		hid_dbg(pidff->hid, "pid_pool requested again\n");
++		hid_hw_request(pidff->hid, pidff->reports[PID_POOL],
++				HID_REQ_GET_REPORT);
++		hid_hw_wait(pidff->hid);
++
++		/* break after 20 tries with SIMULTANEOUS_MAX < 2 */
++		if (i++ > 20) {
++			hid_warn(pidff->hid,
++				 "device reports %d simultaneous effects\n",
++				 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
++			break;
+ 		}
+ 	}
+ }
+@@ -916,9 +919,7 @@ static void pidff_autocenter(struct pidff_device *pidff, u16 magnitude)
+  */
+ static void pidff_set_autocenter(struct input_dev *dev, u16 magnitude)
+ {
+-	struct pidff_device *pidff = dev->ff->private;
+-
+-	pidff_autocenter(pidff, magnitude);
++	pidff_autocenter(dev->ff->private, magnitude);
  }
  
  /*
-- * Scale a signed value in range -0x8000..0x7fff for the given field
-+ * Scale a signed value in range S16_MIN..S16_MAX for the given field
-  */
- static int pidff_rescale_signed(int i, struct hid_field *field)
- {
--	if (i > 0) return i * field->logical_maximum / 0x7fff;
--	if (i < 0) return i * field->logical_minimum / -0x8000;
-+	if (i > 0) return i * field->logical_maximum / S16_MAX;
-+	if (i < 0) return i * field->logical_minimum / S16_MIN;
- 	return 0;
- }
- 
-@@ -255,7 +255,7 @@ static u32 pidff_rescale_time(u16 time, struct hid_field *field)
- 
- static void pidff_set(struct pidff_usage *usage, u16 value)
- {
--	usage->value[0] = pidff_rescale(value, 0xffff, usage->field);
-+	usage->value[0] = pidff_rescale(value, U16_MAX, usage->field);
- 	pr_debug("calculated from %d to %d\n", value, usage->value[0]);
- }
- 
-@@ -266,10 +266,10 @@ static void pidff_set_signed(struct pidff_usage *usage, s16 value)
- 	else {
- 		if (value < 0)
- 			usage->value[0] =
--			    pidff_rescale(-value, 0x8000, usage->field);
-+			    pidff_rescale(-value, -S16_MIN, usage->field);
- 		else
- 			usage->value[0] =
--			    pidff_rescale(value, 0x7fff, usage->field);
-+			    pidff_rescale(value, S16_MAX, usage->field);
- 	}
- 	pr_debug("calculated from %d to %d\n", value, usage->value[0]);
- }
-@@ -306,11 +306,11 @@ static void pidff_set_envelope_report(struct pidff_device *pidff,
- 
- 	pidff->set_envelope[PID_ATTACK_LEVEL].value[0] =
- 	    pidff_rescale(envelope->attack_level >
--			  0x7fff ? 0x7fff : envelope->attack_level, 0x7fff,
-+			  S16_MAX ? S16_MAX : envelope->attack_level, S16_MAX,
- 			  pidff->set_envelope[PID_ATTACK_LEVEL].field);
- 	pidff->set_envelope[PID_FADE_LEVEL].value[0] =
- 	    pidff_rescale(envelope->fade_level >
--			  0x7fff ? 0x7fff : envelope->fade_level, 0x7fff,
-+			  S16_MAX ? S16_MAX : envelope->fade_level, S16_MAX,
- 			  pidff->set_envelope[PID_FADE_LEVEL].field);
- 
- 	pidff_set_time(&pidff->set_envelope[PID_ATTACK_TIME],
-@@ -399,7 +399,7 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 	pidff->effect_direction->value[0] = pidff_rescale(
- 		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
- 		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
--		0xffff, pidff->effect_direction);
-+		U16_MAX, pidff->effect_direction);
- 
- 	/* Omit setting delay field if it's missing */
- 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
-@@ -1366,7 +1366,7 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
- 
- 	if (pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] ==
- 	    pidff->block_load[PID_EFFECT_BLOCK_INDEX].field->logical_minimum + 1) {
--		pidff_autocenter(pidff, 0xffff);
-+		pidff_autocenter(pidff, U16_MAX);
- 		set_bit(FF_AUTOCENTER, dev->ffbit);
- 	} else {
- 		hid_notice(pidff->hid,
-@@ -1424,7 +1424,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
+@@ -1424,6 +1425,8 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
  	if (error)
  		goto fail;
  
--	pidff_set_gain_report(pidff, 0xffff);
-+	pidff_set_gain_report(pidff, U16_MAX);
++	/* pool report is sometimes messed up, refetch it */
++	pidff_fetch_pool(pidff);
+ 	pidff_set_gain_report(pidff, U16_MAX);
  	error = pidff_check_autocenter(pidff, dev);
  	if (error)
- 		goto fail;
 -- 
 2.39.5
 
