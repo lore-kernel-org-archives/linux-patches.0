@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832A257432;
-	Thu, 17 Apr 2025 18:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824C224BBFD;
+	Thu, 17 Apr 2025 18:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915989; cv=none; b=reDW/dWbyabAkWeVdp0RK4e5J7iGFFdsU0QdioXjr0U24+lV1hwAOCPac/mh4pcz17kBzBfhuZfEqjYpMYxZqPre2HbOYNm/XjRPw3AjLu4RBFj8cADq3Pwv+zWRohiLjQVCsrq1sv7rKMgqxxiZWpeOyRzeC/xERn7FjBszpp8=
+	t=1744915992; cv=none; b=qb6VTZ837MzQimFDaPJFip0bHo+ce/Q6c3QDo15fbJXkJwOEbU7gvTJmAwD9hk7C/ENHOspA8tD0Y/WdILpFwU5SWVNck8ExprwHu5+iLmZ8UusUDfXqPFLcJATJn2qSW2RSMDV9ufFII88gzfADLo8Jkl7FHiC/dzXkv2+2+LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915989; c=relaxed/simple;
-	bh=hyW/beEWhVWzL0EI+LC2QpM72J9bSMmGeq3kCrgLMac=;
+	s=arc-20240116; t=1744915992; c=relaxed/simple;
+	bh=2BfXWe4/+QCP0Lm9j1LkMgM3WcvOLeF8EoDC+y9RcrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBMNyf2OR4Eml8+DmGq3cNasD6XsW7hnMLvgaIck2r6qjYkI6nP6hRyFOs/lHmEi9E3TzQvrzwi0QQIWaea097O97mx/pjebvmS57huoZyyFm379WraSIEyaJ/OWn0NZcsxFec0BT2ZTNPAIwNJzbM1EmvwjXJduahZbsTuUVNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKtk9apn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ImaWHb//QdXoEDgVL1RaMwI7in8A7kWh5Z3fTGakhqhDvfwVRN9NZmSuc3ujZon1eq5NPj1s2VzNolM3JbatzDwYTAU/gI9fKT80zm4AmZa/+FXJ+5cXPQxYy6Nrk1RUJhd2WSYxFZgXFB/7KVCzhzEP1NosZdSbbnVtEmgy/Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2avjWuXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKtk9apn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D17C4CEE4;
-	Thu, 17 Apr 2025 18:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2avjWuXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ABFC4CEE4;
+	Thu, 17 Apr 2025 18:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915989;
-	bh=hyW/beEWhVWzL0EI+LC2QpM72J9bSMmGeq3kCrgLMac=;
+	s=korg; t=1744915992;
+	bh=2BfXWe4/+QCP0Lm9j1LkMgM3WcvOLeF8EoDC+y9RcrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKtk9apnBl07KRz7FE4DPB96aZORwlQ4zSalnZk0VMtsRhi0m5PYDVe7fOrap/jlZ
-	 NzwRljzTANzOHsLJD+LqU/MX3qO0GwPb5SZx0mtz6gfKVwfBGUplxizCJiDQrEQzeA
-	 w1tv3g7wMUfjPXKk7kKF/xtls9s18OowiZ9Oeysc=
+	b=2avjWuXWi4XL20ane1LrZyuR2oSdHwXaNEt7lkhmuk9F/NtDXTSbaNOYv1RMIl5N7
+	 TsdgGcsKc9DGh81lUe1ibgBEprPiStFRQ1iseCZqwLMWa1b6ZZcI70C6F/rx/VinbU
+	 D5GtU+q6wyVU9+pduOKTnNcb1vRYBfFtWhDbVmZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Juergen Gross <jgross@suse.com>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Borislav Betkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
-	Thomas Gleinxer <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 306/393] mm: fix lazy mmu docs and usage
-Date: Thu, 17 Apr 2025 19:51:55 +0200
-Message-ID: <20250417175119.921704665@linuxfoundation.org>
+Subject: [PATCH 6.12 307/393] mm/mremap: correctly handle partial mremap() of VMA starting at 0
+Date: Thu, 17 Apr 2025 19:51:56 +0200
+Message-ID: <20250417175119.960447519@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -62,148 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 691ee97e1a9de0cdb3efb893c1f180e3f4a35e32 upstream.
+commit 937582ee8e8d227c30ec147629a0179131feaa80 upstream.
 
-Patch series "Fix lazy mmu mode", v2.
+Patch series "refactor mremap and fix bug", v3.
 
-I'm planning to implement lazy mmu mode for arm64 to optimize vmalloc.  As
-part of that, I will extend lazy mmu mode to cover kernel mappings in
-vmalloc table walkers.  While lazy mmu mode is already used for kernel
-mappings in a few places, this will extend it's use significantly.
+The existing mremap() logic has grown organically over a very long period
+of time, resulting in code that is in many parts, very difficult to follow
+and full of subtleties and sources of confusion.
 
-Having reviewed the existing lazy mmu implementations in powerpc, sparc
-and x86, it looks like there are a bunch of bugs, some of which may be
-more likely to trigger once I extend the use of lazy mmu.  So this series
-attempts to clarify the requirements and fix all the bugs in advance of
-that series.  See patch #1 commit log for all the details.
+In addition, it is difficult to thread state through the operation
+correctly, as function arguments have expanded, some parameters are
+expected to be temporarily altered during the operation, others are
+intended to remain static and some can be overridden.
+
+This series completely refactors the mremap implementation, sensibly
+separating functions, adding comments to explain the more subtle aspects
+of the implementation and making use of small structs to thread state
+through everything.
+
+The reason for doing so is to lay the groundwork for planned future
+changes to the mremap logic, changes which require the ability to easily
+pass around state.
+
+Additionally, it would be unhelpful to add yet more logic to code that is
+already difficult to follow without first refactoring it like this.
+
+The first patch in this series additionally fixes a bug when a VMA with
+start address zero is partially remapped.
+
+Tested on real hardware under heavy workload and all self tests are
+passing.
 
 
-This patch (of 5):
+This patch (of 3):
 
-The docs, implementations and use of arch_[enter|leave]_lazy_mmu_mode() is
-a bit of a mess (to put it politely).  There are a number of issues
-related to nesting of lazy mmu regions and confusion over whether the
-task, when in a lazy mmu region, is preemptible or not.  Fix all the
-issues relating to the core-mm.  Follow up commits will fix the
-arch-specific implementations.  3 arches implement lazy mmu; powerpc,
-sparc and x86.
+Consider the case of a partial mremap() (that results in a VMA split) of
+an accountable VMA (i.e.  which has the VM_ACCOUNT flag set) whose start
+address is zero, with the MREMAP_MAYMOVE flag specified and a scenario
+where a move does in fact occur:
 
-When arch_[enter|leave]_lazy_mmu_mode() was first introduced by commit
-6606c3e0da53 ("[PATCH] paravirt: lazy mmu mode hooks.patch"), it was
-expected that lazy mmu regions would never nest and that the appropriate
-page table lock(s) would be held while in the region, thus ensuring the
-region is non-preemptible.  Additionally lazy mmu regions were only used
-during manipulation of user mappings.
+       addr  end
+        |     |
+        v     v
+    |-------------|
+    |     vma     |
+    |-------------|
+    0
 
-Commit 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy
-updates") started invoking the lazy mmu mode in apply_to_pte_range(),
-which is used for both user and kernel mappings.  For kernel mappings the
-region is no longer protected by any lock so there is no longer any
-guarantee about non-preemptibility.  Additionally, for RT configs, the
-holding the PTL only implies no CPU migration, it doesn't prevent
-preemption.
+This move is affected by unmapping the range [addr, end).  In order to
+prevent an incorrect decrement of accounted memory which has already been
+determined, the mremap() code in move_vma() clears VM_ACCOUNT from the VMA
+prior to doing so, before reestablishing it in each of the VMAs
+post-split:
 
-Commit bcc6cc832573 ("mm: add default definition of set_ptes()") added
-arch_[enter|leave]_lazy_mmu_mode() to the default implementation of
-set_ptes(), used by x86.  So after this commit, lazy mmu regions can be
-nested.  Additionally commit 1a10a44dfc1d ("sparc64: implement the new
-page table range API") and commit 9fee28baa601 ("powerpc: implement the
-new page table range API") did the same for the sparc and powerpc
-set_ptes() overrides.
+    addr  end
+     |     |
+     v     v
+ |---|     |---|
+ | A |     | B |
+ |---|     |---|
 
-powerpc couldn't deal with preemption so avoids it in commit b9ef323ea168
-("powerpc/64s: Disable preemption in hash lazy mmu mode"), which
-explicitly disables preemption for the whole region in its implementation.
-x86 can support preemption (or at least it could until it tried to add
-support nesting; more on this below).  Sparc looks to be totally broken in
-the face of preemption, as far as I can tell.
+Commit 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
+changed this logic such as to determine whether there is a need to do so
+by establishing account_start and account_end and, in the instance where
+such an operation is required, assigning them to vma->vm_start and
+vma->vm_end.
 
-powerpc can't deal with nesting, so avoids it in commit 47b8def9358c
-("powerpc/mm: Avoid calling arch_enter/leave_lazy_mmu() in set_ptes"),
-which removes the lazy mmu calls from its implementation of set_ptes().
-x86 attempted to support nesting in commit 49147beb0ccb ("x86/xen: allow
-nesting of same lazy mode") but as far as I can tell, this breaks its
-support for preemption.
+Later the code checks if the operation is required for 'A' referenced
+above thusly:
 
-In short, it's all a mess; the semantics for
-arch_[enter|leave]_lazy_mmu_mode() are not clearly defined and as a result
-the implementations all have different expectations, sticking plasters and
-bugs.
+	if (account_start) {
+		...
+	}
 
-arm64 is aiming to start using these hooks, so let's clean everything up
-before adding an arm64 implementation.  Update the documentation to state
-that lazy mmu regions can never be nested, must not be called in interrupt
-context and preemption may or may not be enabled for the duration of the
-region.  And fix the generic implementation of set_ptes() to avoid
-nesting.
+However, if the VMA described above has vma->vm_start == 0, which is now
+assigned to account_start, this branch will not be executed.
 
-arch-specific fixes to conform to the new spec will proceed this one.
+As a result, the VMA 'A' above will remain stripped of its VM_ACCOUNT
+flag, incorrectly.
 
-These issues were spotted by code review and I have no evidence of issues
-being reported in the wild.
+The fix is to simply convert these variables to booleans and set them as
+required.
 
-Link: https://lkml.kernel.org/r/20250303141542.3371656-1-ryan.roberts@arm.com
-Link: https://lkml.kernel.org/r/20250303141542.3371656-2-ryan.roberts@arm.com
-Fixes: bcc6cc832573 ("mm: add default definition of set_ptes()")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juegren Gross <jgross@suse.com>
-Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
+Link: https://lkml.kernel.org/r/cover.1741639347.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/dc55cb6db25d97c3d9e460de4986a323fa959676.1741639347.git.lorenzo.stoakes@oracle.com
+Fixes: 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pgtable.h |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ mm/mremap.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -201,10 +201,14 @@ static inline int pmd_dirty(pmd_t pmd)
-  * hazard could result in the direct mode hypervisor case, since the actual
-  * write to the page tables may not yet have taken place, so reads though
-  * a raw PTE pointer after it has been modified are not guaranteed to be
-- * up to date.  This mode can only be entered and left under the protection of
-- * the page table locks for all page tables which may be modified.  In the UP
-- * case, this is required so that preemption is disabled, and in the SMP case,
-- * it must synchronize the delayed page table writes properly on other CPUs.
-+ * up to date.
-+ *
-+ * In the general case, no lock is guaranteed to be held between entry and exit
-+ * of the lazy mode. So the implementation must assume preemption may be enabled
-+ * and cpu migration is possible; it must take steps to be robust against this.
-+ * (In practice, for user PTE updates, the appropriate page table lock(s) are
-+ * held, but for kernel PTE updates, no lock is held). Nesting is not permitted
-+ * and the mode cannot be used in interrupt context.
-  */
- #ifndef __HAVE_ARCH_ENTER_LAZY_MMU_MODE
- #define arch_enter_lazy_mmu_mode()	do {} while (0)
-@@ -266,7 +270,6 @@ static inline void set_ptes(struct mm_st
- {
- 	page_table_check_ptes_set(mm, ptep, pte, nr);
- 
--	arch_enter_lazy_mmu_mode();
- 	for (;;) {
- 		set_pte(ptep, pte);
- 		if (--nr == 0)
-@@ -274,7 +277,6 @@ static inline void set_ptes(struct mm_st
- 		ptep++;
- 		pte = pte_next_pfn(pte);
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -696,8 +696,8 @@ static unsigned long move_vma(struct vm_
+ 	unsigned long vm_flags = vma->vm_flags;
+ 	unsigned long new_pgoff;
+ 	unsigned long moved_len;
+-	unsigned long account_start = 0;
+-	unsigned long account_end = 0;
++	bool account_start = false;
++	bool account_end = false;
+ 	unsigned long hiwater_vm;
+ 	int err = 0;
+ 	bool need_rmap_locks;
+@@ -781,9 +781,9 @@ static unsigned long move_vma(struct vm_
+ 	if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP)) {
+ 		vm_flags_clear(vma, VM_ACCOUNT);
+ 		if (vma->vm_start < old_addr)
+-			account_start = vma->vm_start;
++			account_start = true;
+ 		if (vma->vm_end > old_addr + old_len)
+-			account_end = vma->vm_end;
++			account_end = true;
  	}
--	arch_leave_lazy_mmu_mode();
- }
- #endif
- #define set_pte_at(mm, addr, ptep, pte) set_ptes(mm, addr, ptep, pte, 1)
+ 
+ 	/*
+@@ -823,7 +823,7 @@ static unsigned long move_vma(struct vm_
+ 		/* OOM: unable to split vma, just get accounts right */
+ 		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
+ 			vm_acct_memory(old_len >> PAGE_SHIFT);
+-		account_start = account_end = 0;
++		account_start = account_end = false;
+ 	}
+ 
+ 	if (vm_flags & VM_LOCKED) {
 
 
