@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BAB257AF3;
-	Thu, 17 Apr 2025 17:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6ED2561DF;
+	Thu, 17 Apr 2025 17:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912503; cv=none; b=BsnFmbpXnSex6Nca6JNbx7g9Aw68mUIqN51VRI5PNGDlsbIBmQBxQNQ3EeZIKvDt8AVqvTfh/mRCM1nqpEpBLYYgg/3uZ6G9Ymn4EIffr3GR32Gz51+fgVs9ODbat+W6rt2nSUnFiZqLj33uJiDihcR5E5KA01KsOhNq5/6zPK4=
+	t=1744912506; cv=none; b=BnEjDN6mgigzvliONOzUqyv7WQDxZEsCkRByjo4VbYh8OcTswKVxa2PlBjkUyDd6j+82SVOX6Cp2tn4oxu6CAU+oc6/bKwgh87lWbQNMCun+4MXK3acmaNmw54oyZvWcyPxOz+Ea0M1zo3DMydNhJLZq5zoZvLQupf9MIGDgf3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912503; c=relaxed/simple;
-	bh=aox7SJpieXhrRe3MvkUvHUXkWTkWYzhLZxPKLFQ4Dwg=;
+	s=arc-20240116; t=1744912506; c=relaxed/simple;
+	bh=e71SNCBrWu94h9OPHCRuhoMn3pUxwGAwzi/BlusGeZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwoaIuBeTkmbY246Q5Zz0aPgxMh0P+ZEb3AXcu88qIOJNSJclH0eKBD1p9HkKXglqmq1zmx/nujGXKAH1+3V7EH0zsBb7X6TBNk1H5i/kNdUgPNpTwcd3VRH2worg4sgVJLQese4W4MNnqSQ2OYY62HCVyDdb1FsX0jzXCT8THk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRUD+R8y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtG9r/Pgd68QgGRR529q78msBwCgQj/6kBGRm2Q86TSTynMtXFXoyQkG5bxGzKLJCqejqAg8QsizBN99a3llqJ4LuFvi2CJbID9Jcd8fg0/M+o+JefIJkjwaGOkAFvZdPGjrTmwerDeMP949ALRTE2grlumiTKgsJDniQZnUmDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpWfVjdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRUD+R8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2000BC4CEE4;
-	Thu, 17 Apr 2025 17:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpWfVjdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1C5C4CEE4;
+	Thu, 17 Apr 2025 17:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912503;
-	bh=aox7SJpieXhrRe3MvkUvHUXkWTkWYzhLZxPKLFQ4Dwg=;
+	s=korg; t=1744912506;
+	bh=e71SNCBrWu94h9OPHCRuhoMn3pUxwGAwzi/BlusGeZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRUD+R8yGYJQFsrGRFhdpgpFtfOZXJ5G4TXzbxtjaGDO4zn9RmUlXmxTHFeR/tX76
-	 9vqXSvLhyBUvi+z1ftBWOnEHiIH2tB8/KEWxXqMfgEgvyqaLBXF7+4IV0SCycSHA4O
-	 Hi8ZorrVVu7LHtGWki2Iw1sW0r1q1dK/e/ci1vuw=
+	b=DpWfVjdKXbFlGXKlHdRyWaW+rs27Ol+U1Pn/Bpu/0XqqfYxKiw+YbV6pzCtC8jXAl
+	 1s/dtBqJ3xPL/XOVDwsU3/VakXtnjPQ8Tdd0ho2P7bolnvNYAP1quBmSVTMORyeWF5
+	 y8X9G+JkZZTHP0w/9ziARhCEcCMysUgX+G1/PAUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 004/449] cgroup/cpuset: Fix race between newly created partition and dying one
-Date: Thu, 17 Apr 2025 19:44:52 +0200
-Message-ID: <20250417175118.158171123@linuxfoundation.org>
+Subject: [PATCH 6.14 031/449] drm/i915/huc: Fix fence not released on early probe errors
+Date: Thu, 17 Apr 2025 19:45:19 +0200
+Message-ID: <20250417175119.249284884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,142 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit a22b3d54de94f82ca057cc2ebf9496fa91ebf698 ]
+[ Upstream commit e3ea2eae70692a455e256787e4f54153fb739b90 ]
 
-There is a possible race between removing a cgroup diectory that is
-a partition root and the creation of a new partition.  The partition
-to be removed can be dying but still online, it doesn't not currently
-participate in checking for exclusive CPUs conflict, but the exclusive
-CPUs are still there in subpartitions_cpus and isolated_cpus. These
-two cpumasks are global states that affect the operation of cpuset
-partitions. The exclusive CPUs in dying cpusets will only be removed
-when cpuset_css_offline() function is called after an RCU delay.
+HuC delayed loading fence, introduced with commit 27536e03271da
+("drm/i915/huc: track delayed HuC load with a fence"), is registered with
+object tracker early on driver probe but unregistered only from driver
+remove, which is not called on early probe errors.  Since its memory is
+allocated under devres, then released anyway, it may happen to be
+allocated again to the fence and reused on future driver probes, resulting
+in kernel warnings that taint the kernel:
 
-As a result, it is possible that a new partition can be created with
-exclusive CPUs that overlap with those of a dying one. When that dying
-partition is finally offlined, it removes those overlapping exclusive
-CPUs from subpartitions_cpus and maybe isolated_cpus resulting in an
-incorrect CPU configuration.
+<4> [309.731371] ------------[ cut here ]------------
+<3> [309.731373] ODEBUG: init destroyed (active state 0) object: ffff88813d7dd2e0 object type: i915_sw_fence hint: sw_fence_dummy_notify+0x0/0x20 [i915]
+<4> [309.731575] WARNING: CPU: 2 PID: 3161 at lib/debugobjects.c:612 debug_print_object+0x93/0xf0
+...
+<4> [309.731693] CPU: 2 UID: 0 PID: 3161 Comm: i915_module_loa Tainted: G     U             6.14.0-CI_DRM_16362-gf0fd77956987+ #1
+...
+<4> [309.731700] RIP: 0010:debug_print_object+0x93/0xf0
+...
+<4> [309.731728] Call Trace:
+<4> [309.731730]  <TASK>
+...
+<4> [309.731949]  __debug_object_init+0x17b/0x1c0
+<4> [309.731957]  debug_object_init+0x34/0x50
+<4> [309.732126]  __i915_sw_fence_init+0x34/0x60 [i915]
+<4> [309.732256]  intel_huc_init_early+0x4b/0x1d0 [i915]
+<4> [309.732468]  intel_uc_init_early+0x61/0x680 [i915]
+<4> [309.732667]  intel_gt_common_init_early+0x105/0x130 [i915]
+<4> [309.732804]  intel_root_gt_init_early+0x63/0x80 [i915]
+<4> [309.732938]  i915_driver_probe+0x1fa/0xeb0 [i915]
+<4> [309.733075]  i915_pci_probe+0xe6/0x220 [i915]
+<4> [309.733198]  local_pci_probe+0x44/0xb0
+<4> [309.733203]  pci_device_probe+0xf4/0x270
+<4> [309.733209]  really_probe+0xee/0x3c0
+<4> [309.733215]  __driver_probe_device+0x8c/0x180
+<4> [309.733219]  driver_probe_device+0x24/0xd0
+<4> [309.733223]  __driver_attach+0x10f/0x220
+<4> [309.733230]  bus_for_each_dev+0x7d/0xe0
+<4> [309.733236]  driver_attach+0x1e/0x30
+<4> [309.733239]  bus_add_driver+0x151/0x290
+<4> [309.733244]  driver_register+0x5e/0x130
+<4> [309.733247]  __pci_register_driver+0x7d/0x90
+<4> [309.733251]  i915_pci_register_driver+0x23/0x30 [i915]
+<4> [309.733413]  i915_init+0x34/0x120 [i915]
+<4> [309.733655]  do_one_initcall+0x62/0x3f0
+<4> [309.733667]  do_init_module+0x97/0x2a0
+<4> [309.733671]  load_module+0x25ff/0x2890
+<4> [309.733688]  init_module_from_file+0x97/0xe0
+<4> [309.733701]  idempotent_init_module+0x118/0x330
+<4> [309.733711]  __x64_sys_finit_module+0x77/0x100
+<4> [309.733715]  x64_sys_call+0x1f37/0x2650
+<4> [309.733719]  do_syscall_64+0x91/0x180
+<4> [309.733763]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<4> [309.733792]  </TASK>
+...
+<4> [309.733806] ---[ end trace 0000000000000000 ]---
 
-This bug was found when a warning was triggered in
-remote_partition_disable() during testing because the subpartitions_cpus
-mask was empty.
+That scenario is most easily reproducible with
+igt@i915_module_load@reload-with-fault-injection.
 
-One possible way to fix this is to iterate the dying cpusets as well and
-avoid using the exclusive CPUs in those dying cpusets. However, this
-can still cause random partition creation failures or other anomalies
-due to racing. A better way to fix this race is to reset the partition
-state at the moment when a cpuset is being killed.
+Fix the issue by moving the cleanup step to driver release path.
 
-Introduce a new css_killed() CSS function pointer and call it, if
-defined, before setting CSS_DYING flag in kill_css(). Also update the
-css_is_dying() helper to use the CSS_DYING flag introduced by commit
-33c35aa48178 ("cgroup: Prevent kill_css() from being called more than
-once") for proper synchronization.
-
-Add a new cpuset_css_killed() function to reset the partition state of
-a valid partition root if it is being killed.
-
-Fixes: ee8dde0cd2ce ("cpuset: Add new v2 cpuset.sched.partition flag")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 27536e03271da ("drm/i915/huc: track delayed HuC load with a fence")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13592
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://lore.kernel.org/r/20250402172057.209924-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 795dbde92fe5c6996a02a5b579481de73035e7bf)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup-defs.h |  1 +
- include/linux/cgroup.h      |  2 +-
- kernel/cgroup/cgroup.c      |  6 ++++++
- kernel/cgroup/cpuset.c      | 20 +++++++++++++++++---
- 4 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gt/uc/intel_huc.c | 11 +++++------
+ drivers/gpu/drm/i915/gt/uc/intel_huc.h |  1 +
+ drivers/gpu/drm/i915/gt/uc/intel_uc.c  |  1 +
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/cgroup-defs.h b/include/linux/cgroup-defs.h
-index 17960a1e858db..d1aee2d3e189e 100644
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -711,6 +711,7 @@ struct cgroup_subsys {
- 	void (*css_released)(struct cgroup_subsys_state *css);
- 	void (*css_free)(struct cgroup_subsys_state *css);
- 	void (*css_reset)(struct cgroup_subsys_state *css);
-+	void (*css_killed)(struct cgroup_subsys_state *css);
- 	void (*css_rstat_flush)(struct cgroup_subsys_state *css, int cpu);
- 	int (*css_extra_stat_show)(struct seq_file *seq,
- 				   struct cgroup_subsys_state *css);
-diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index f8ef47f8a634d..fc1324ed597d6 100644
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -343,7 +343,7 @@ static inline u64 cgroup_id(const struct cgroup *cgrp)
-  */
- static inline bool css_is_dying(struct cgroup_subsys_state *css)
- {
--	return !(css->flags & CSS_NO_REF) && percpu_ref_is_dying(&css->refcnt);
-+	return css->flags & CSS_DYING;
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.c b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
+index b3cbf85c00cbd..eb59c1f2dccdc 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_huc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.c
+@@ -317,6 +317,11 @@ void intel_huc_init_early(struct intel_huc *huc)
+ 	}
  }
  
- static inline void cgroup_get(struct cgroup *cgrp)
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index afc665b7b1fe5..81f078c059e86 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -5909,6 +5909,12 @@ static void kill_css(struct cgroup_subsys_state *css)
- 	if (css->flags & CSS_DYING)
- 		return;
- 
-+	/*
-+	 * Call css_killed(), if defined, before setting the CSS_DYING flag
-+	 */
-+	if (css->ss->css_killed)
-+		css->ss->css_killed(css);
-+
- 	css->flags |= CSS_DYING;
- 
- 	/*
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index e8ab1a16076fb..d72f843d9feeb 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -3495,9 +3495,6 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
- 	cpus_read_lock();
- 	mutex_lock(&cpuset_mutex);
- 
--	if (is_partition_valid(cs))
--		update_prstate(cs, 0);
--
- 	if (!cpuset_v2() && is_sched_load_balance(cs))
- 		cpuset_update_flag(CS_SCHED_LOAD_BALANCE, cs, 0);
- 
-@@ -3508,6 +3505,22 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
- 	cpus_read_unlock();
- }
- 
-+static void cpuset_css_killed(struct cgroup_subsys_state *css)
++void intel_huc_fini_late(struct intel_huc *huc)
 +{
-+	struct cpuset *cs = css_cs(css);
-+
-+	cpus_read_lock();
-+	mutex_lock(&cpuset_mutex);
-+
-+	/* Reset valid partition back to member */
-+	if (is_partition_valid(cs))
-+		update_prstate(cs, PRS_MEMBER);
-+
-+	mutex_unlock(&cpuset_mutex);
-+	cpus_read_unlock();
-+
++	delayed_huc_load_fini(huc);
 +}
 +
- static void cpuset_css_free(struct cgroup_subsys_state *css)
+ #define HUC_LOAD_MODE_STRING(x) (x ? "GSC" : "legacy")
+ static int check_huc_loading_mode(struct intel_huc *huc)
  {
- 	struct cpuset *cs = css_cs(css);
-@@ -3629,6 +3642,7 @@ struct cgroup_subsys cpuset_cgrp_subsys = {
- 	.css_alloc	= cpuset_css_alloc,
- 	.css_online	= cpuset_css_online,
- 	.css_offline	= cpuset_css_offline,
-+	.css_killed	= cpuset_css_killed,
- 	.css_free	= cpuset_css_free,
- 	.can_attach	= cpuset_can_attach,
- 	.cancel_attach	= cpuset_cancel_attach,
+@@ -414,12 +419,6 @@ int intel_huc_init(struct intel_huc *huc)
+ 
+ void intel_huc_fini(struct intel_huc *huc)
+ {
+-	/*
+-	 * the fence is initialized in init_early, so we need to clean it up
+-	 * even if HuC loading is off.
+-	 */
+-	delayed_huc_load_fini(huc);
+-
+ 	if (huc->heci_pkt)
+ 		i915_vma_unpin_and_release(&huc->heci_pkt, 0);
+ 
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_huc.h b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
+index d5e441b9e08d6..921ad4b1687f0 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_huc.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_huc.h
+@@ -55,6 +55,7 @@ struct intel_huc {
+ 
+ int intel_huc_sanitize(struct intel_huc *huc);
+ void intel_huc_init_early(struct intel_huc *huc);
++void intel_huc_fini_late(struct intel_huc *huc);
+ int intel_huc_init(struct intel_huc *huc);
+ void intel_huc_fini(struct intel_huc *huc);
+ int intel_huc_auth(struct intel_huc *huc, enum intel_huc_authentication_type type);
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_uc.c b/drivers/gpu/drm/i915/gt/uc/intel_uc.c
+index 5b8080ec5315b..4f751ce74214d 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_uc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_uc.c
+@@ -136,6 +136,7 @@ void intel_uc_init_late(struct intel_uc *uc)
+ 
+ void intel_uc_driver_late_release(struct intel_uc *uc)
+ {
++	intel_huc_fini_late(&uc->huc);
+ }
+ 
+ /**
 -- 
 2.39.5
 
