@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3590E1E834D;
-	Thu, 17 Apr 2025 18:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED041B3934;
+	Thu, 17 Apr 2025 18:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916090; cv=none; b=Ms8S94qh9OmbC3CTfJE8SiIc0h034wpIXwdVYwW2NrVJvGxXPpA+TQKK6uEzp4XKAzRl4YeHs6csk7hyPS1vHn45FYQzlW0wtcYl4q8MJ8ep3zSItZ8K2lJt+bt+xsV6/zMIYfSF4bg5gEZ/P1Sr0y6cvYFGo1YuGIgRkMYoJsA=
+	t=1744916093; cv=none; b=S7/+e2UGQJNHyhX0WIPcnhOTiKmyVl5f2i5ENFaCeJaZLfyBS8CcRT3KDwnN8ge20uMEmgUfOWyi4e0bprWBM8/M9ejk69ticva2bG6nvxNIi57otsu/rWUpXem0OjbxMnLjTYz58V4Zo0CG3Dl9F9TNGWExCfN21sIEaEHENbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916090; c=relaxed/simple;
-	bh=iq4lTLS6W839CKa8S0sIo4LpOC0C6g0cw+y/5dBMMMY=;
+	s=arc-20240116; t=1744916093; c=relaxed/simple;
+	bh=508ElVOVL/lonoUm5hQ93h74khxjgqZJh9o0N9+BYGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTReRBk4GRou65jjQBnqtcmpUCIhonUn1IrF2Pfm0xApsF+V1MR2KpPq/O6K/iE5iGsc3MNEv6dI0JFcBHvrzmdw33eMCYxMcVuZpEURF28Ng00ZJrnklxfOLAcoEuyz8pBq623YfagHI7wdov8gymc4BtZWYuLSqvhkYGIV7dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYWEHHUu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzI8JaCAOhrrJcnm3gTeuc9j81xxS5DRUrbSidRiuuJPoli4POLPgOvWNg+B/gfZbEjPYNrDwoywvNnX3OlDHS2bRugKfcI+Gfi9QiG5K1A2J2HVRKsKnyZBVUBxxRFo2k5mHP4tcwfOs/ZaObNtEo1MChRcTTeMyTziTC7Rq6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0wXtFsl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYWEHHUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB03C4CEE4;
-	Thu, 17 Apr 2025 18:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0wXtFsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF85AC4CEF0;
+	Thu, 17 Apr 2025 18:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916090;
-	bh=iq4lTLS6W839CKa8S0sIo4LpOC0C6g0cw+y/5dBMMMY=;
+	s=korg; t=1744916093;
+	bh=508ElVOVL/lonoUm5hQ93h74khxjgqZJh9o0N9+BYGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYWEHHUuzvGCoun2D1dzg6psWMYY+FXjYYlO+Fz19cbGpegXsA2Ctl/c/DEcjlfFu
-	 RrJCFJ4e+Bcj+W2yIcmf/oLTL0I6IH9fsvxQdVO4jBx1wwqu/Y9K8wI0NrO4qpfHIt
-	 pQxKR0lyUI53bq0DyiV0eqgydgUQF0/JRqU6753Q=
+	b=t0wXtFslvEdiTFR0tZEZqlEV6dM08pfiVEinTBLbmC1i9RvBbMT71j1f9e0/lWjJe
+	 hn+WBcwrV3OZ3p5UJoQjt7txxP9RB8x6YWQFXDccS5JT6MaGdL362Cql5p2NjBU9LC
+	 DGPl0fSvokM8l2qOhUzGknMFT1cCltQyUZ0QCZWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 339/393] gpio: tegra186: fix resource handling in ACPI probe path
-Date: Thu, 17 Apr 2025 19:52:28 +0200
-Message-ID: <20250417175121.231434590@linuxfoundation.org>
+Subject: [PATCH 6.12 340/393] gpio: zynq: Fix wakeup source leaks on device unbind
+Date: Thu, 17 Apr 2025 19:52:29 +0200
+Message-ID: <20250417175121.270387742@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,69 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 8323f3a69de6f6e96bf22f32dd8e2920766050c2 upstream.
+commit c5672e310ad971d408752fce7596ed27adc6008f upstream.
 
-When the Tegra186 GPIO controller is probed through ACPI matching,
-the driver emits two error messages during probing:
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-Fix this by getting resource first and then do the ioremap.
-
-Fixes: 2606e7c9f5fc ("gpio: tegra186: Add ACPI support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250327032349.78809-1-kanie@linux.alibaba.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250406202245.53854-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-tegra186.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/gpio/gpio-zynq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -823,6 +823,7 @@ static int tegra186_gpio_probe(struct pl
- 	struct gpio_irq_chip *irq;
- 	struct tegra_gpio *gpio;
- 	struct device_node *np;
-+	struct resource *res;
- 	char **names;
- 	int err;
- 
-@@ -842,19 +843,19 @@ static int tegra186_gpio_probe(struct pl
- 	gpio->num_banks++;
- 
- 	/* get register apertures */
--	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
--	if (IS_ERR(gpio->secure)) {
--		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
--		if (IS_ERR(gpio->secure))
--			return PTR_ERR(gpio->secure);
--	}
--
--	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
--	if (IS_ERR(gpio->base)) {
--		gpio->base = devm_platform_ioremap_resource(pdev, 1);
--		if (IS_ERR(gpio->base))
--			return PTR_ERR(gpio->base);
--	}
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "security");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	gpio->secure = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->secure))
-+		return PTR_ERR(gpio->secure);
-+
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gpio");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	gpio->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->base))
-+		return PTR_ERR(gpio->base);
- 
- 	err = platform_irq_count(pdev);
- 	if (err < 0)
+--- a/drivers/gpio/gpio-zynq.c
++++ b/drivers/gpio/gpio-zynq.c
+@@ -1011,6 +1011,7 @@ static void zynq_gpio_remove(struct plat
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0)
+ 		dev_warn(&pdev->dev, "pm_runtime_get_sync() Failed\n");
++	device_init_wakeup(&pdev->dev, 0);
+ 	gpiochip_remove(&gpio->chip);
+ 	device_set_wakeup_capable(&pdev->dev, 0);
+ 	pm_runtime_disable(&pdev->dev);
 
 
