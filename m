@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FD01DB148;
-	Thu, 17 Apr 2025 18:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961342550DD;
+	Thu, 17 Apr 2025 18:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913201; cv=none; b=Fok30aP2zNvw8Hg0mtFU1+6IpyZQGx7AWtr6ILG+yHido0/AzTfKMQdrzRcnQDRacxdIBkvU5c4hzLrBCE6j2Eg0WgPOnJSrCeOljtPDXH0zhFYdCe5Qlh38S2RiHfZoKDGrQPkheVBw28yvqX6Ab6X3CUvIUOVRFJNIVmwQ3PA=
+	t=1744913204; cv=none; b=Pu6Tvw3HhV2O+MpB9qNHa2gl+BITsChiee4WaaE3FnBR6IGJftsxg8eM7sT1UPr6Md3bewbUfFQIv37C63rd/l0x4Ecyj4URkce6EmWVhSLtM/BF+430h0xWgJwkkWIHQCdz5SSibcqsbwxVGns3tZdx8yg97d1TAW5TGfdPCWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913201; c=relaxed/simple;
-	bh=ttXW5T6GEJibsWfrY8Kt4qccYVisZcFW3TRdwOe1pOQ=;
+	s=arc-20240116; t=1744913204; c=relaxed/simple;
+	bh=EqxtXN5dtpzLTvCZtK1byL1xhTgea4nti74FCBdmj+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yl2xFcc9ikhW0srvc1s5jFifmpuQllg5KRR7j1pcBpQqwH7LlK1pfn0uJvJbxqhXHN4mHbtd6KX6dPQQoq39f6g4fFuEhXTVMRGpK8EWGWJE2voZ4jq47uxTxFP0eOQ3fXgnBfGaViflF2OXOtrumEd+Ot8OBr/Z7EhJZ+dTWF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+aRL2md; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qv9T9jCA+8uWCtdRxbygYv3ScLTujNtXaphukFrfm3/PU040w95yP0nsadu1asKqryfvMfmWezQPqQ46chiBTZJxsvTS3YjDXaPg+x73Ysjn9Pu9EhCE5pIs5re+rP9NAXRPHYQkFM7OsR89fEG8em2pY8IOFzpjhxVggezSzII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeNVi2Uy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+aRL2md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49932C4CEE4;
-	Thu, 17 Apr 2025 18:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeNVi2Uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E4BC4CEE4;
+	Thu, 17 Apr 2025 18:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913201;
-	bh=ttXW5T6GEJibsWfrY8Kt4qccYVisZcFW3TRdwOe1pOQ=;
+	s=korg; t=1744913204;
+	bh=EqxtXN5dtpzLTvCZtK1byL1xhTgea4nti74FCBdmj+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+aRL2mdrF0KPZ7MkjMlPT2Bs98O4q0m3ydPSAhtFlit8yHF4vPcpCpUdkDPMv6We
-	 oUrlokAXZmuyzYlBGrJQuipw7I0Yxrg/tV8cbjHRAPZieKmIPNIu5gA+vwZJPB+u+T
-	 IoXhfiY5cSc/716sFQbGlvgrdOjDOh9zRdOSztOM=
+	b=QeNVi2UyVxVAluqT3OKSk9ytJS9diwpm0mw2VmkGVSaAnS/r3TPh3i8YYOmViOrZQ
+	 ZswHE5pxOC6BsMtrTFWUEyBa3SYB/mc/r2ptLEjMCaivZMA6ajDDXtuo8KApHoLw07
+	 PorEJuFZVu7ax/zdDUDFsqVMgyf37ZriufJ9U72s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 259/449] media: venus: hfi_parser: refactor hfi packet parsing logic
-Date: Thu, 17 Apr 2025 19:49:07 +0200
-Message-ID: <20250417175128.424532860@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.14 231/449] xenfs/xensyms: respect hypervisors "next" indication
+Date: Thu, 17 Apr 2025 19:48:39 +0200
+Message-ID: <20250417175127.296702482@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,270 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 9edaaa8e3e15aab1ca413ab50556de1975bcb329 upstream.
+commit 5c4e79e29a9fe4ea132118ac40c2bc97cfe23077 upstream.
 
-words_count denotes the number of words in total payload, while data
-points to payload of various property within it. When words_count
-reaches last word, data can access memory beyond the total payload. This
-can lead to OOB access. With this patch, the utility api for handling
-individual properties now returns the size of data consumed. Accordingly
-remaining bytes are calculated before parsing the payload, thereby
-eliminates the OOB access possibilities.
+The interface specifies the symnum field as an input and output; the
+hypervisor sets it to the next sequential symbol's index. xensyms_next()
+incrementing the position explicitly (and xensyms_next_sym()
+decrementing it to "rewind") is only correct as long as the sequence of
+symbol indexes is non-sparse. Use the hypervisor-supplied value instead
+to update the position in xensyms_next(), and use the saved incoming
+index in xensyms_next_sym().
 
-Cc: stable@vger.kernel.org
-Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: stable@kernel.org
+Fixes: a11f4f0a4e18 ("xen: xensyms support")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <15d5e7fa-ec5d-422f-9319-d28bed916349@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |   98 ++++++++++++++++++-------
- 1 file changed, 72 insertions(+), 26 deletions(-)
+ drivers/xen/xenfs/xensyms.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -64,7 +64,7 @@ fill_buf_mode(struct hfi_plat_caps *cap,
- 		cap->cap_bufs_mode_dynamic = true;
- }
+--- a/drivers/xen/xenfs/xensyms.c
++++ b/drivers/xen/xenfs/xensyms.c
+@@ -48,7 +48,7 @@ static int xensyms_next_sym(struct xensy
+ 			return -ENOMEM;
  
--static void
-+static int
- parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
+ 		set_xen_guest_handle(symdata->name, xs->name);
+-		symdata->symnum--; /* Rewind */
++		symdata->symnum = symnum; /* Rewind */
+ 
+ 		ret = HYPERVISOR_platform_op(&xs->op);
+ 		if (ret < 0)
+@@ -78,7 +78,7 @@ static void *xensyms_next(struct seq_fil
  {
- 	struct hfi_buffer_alloc_mode_supported *mode = data;
-@@ -72,7 +72,7 @@ parse_alloc_mode(struct venus_core *core
- 	u32 *type;
+ 	struct xensyms *xs = m->private;
  
- 	if (num_entries > MAX_ALLOC_MODE_ENTRIES)
--		return;
-+		return -EINVAL;
+-	xs->op.u.symdata.symnum = ++(*pos);
++	*pos = xs->op.u.symdata.symnum;
  
- 	type = mode->data;
- 
-@@ -84,6 +84,8 @@ parse_alloc_mode(struct venus_core *core
- 
- 		type++;
- 	}
-+
-+	return sizeof(*mode);
- }
- 
- static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
-@@ -98,7 +100,7 @@ static void fill_profile_level(struct hf
- 	cap->num_pl += num;
- }
- 
--static void
-+static int
- parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, void *data)
- {
- 	struct hfi_profile_level_supported *pl = data;
-@@ -106,12 +108,14 @@ parse_profile_level(struct venus_core *c
- 	struct hfi_profile_level pl_arr[HFI_MAX_PROFILE_COUNT] = {};
- 
- 	if (pl->profile_count > HFI_MAX_PROFILE_COUNT)
--		return;
-+		return -EINVAL;
- 
- 	memcpy(pl_arr, proflevel, pl->profile_count * sizeof(*proflevel));
- 
- 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
- 		       fill_profile_level, pl_arr, pl->profile_count);
-+
-+	return pl->profile_count * sizeof(*proflevel) + sizeof(u32);
- }
- 
- static void
-@@ -126,7 +130,7 @@ fill_caps(struct hfi_plat_caps *cap, con
- 	cap->num_caps += num;
- }
- 
--static void
-+static int
- parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
- {
- 	struct hfi_capabilities *caps = data;
-@@ -135,12 +139,14 @@ parse_caps(struct venus_core *core, u32
- 	struct hfi_capability caps_arr[MAX_CAP_ENTRIES] = {};
- 
- 	if (num_caps > MAX_CAP_ENTRIES)
--		return;
-+		return -EINVAL;
- 
- 	memcpy(caps_arr, cap, num_caps * sizeof(*cap));
- 
- 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
- 		       fill_caps, caps_arr, num_caps);
-+
-+	return sizeof(*caps);
- }
- 
- static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
-@@ -155,7 +161,7 @@ static void fill_raw_fmts(struct hfi_pla
- 	cap->num_fmts += num_fmts;
- }
- 
--static void
-+static int
- parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
- {
- 	struct hfi_uncompressed_format_supported *fmt = data;
-@@ -164,7 +170,8 @@ parse_raw_formats(struct venus_core *cor
- 	struct raw_formats rawfmts[MAX_FMT_ENTRIES] = {};
- 	u32 entries = fmt->format_entries;
- 	unsigned int i = 0;
--	u32 num_planes;
-+	u32 num_planes = 0;
-+	u32 size;
- 
- 	while (entries) {
- 		num_planes = pinfo->num_planes;
-@@ -174,7 +181,7 @@ parse_raw_formats(struct venus_core *cor
- 		i++;
- 
- 		if (i >= MAX_FMT_ENTRIES)
--			return;
-+			return -EINVAL;
- 
- 		if (pinfo->num_planes > MAX_PLANES)
- 			break;
-@@ -186,9 +193,13 @@ parse_raw_formats(struct venus_core *cor
- 
- 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
- 		       fill_raw_fmts, rawfmts, i);
-+	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
-+		+ 2 * sizeof(u32);
-+
-+	return size;
- }
- 
--static void parse_codecs(struct venus_core *core, void *data)
-+static int parse_codecs(struct venus_core *core, void *data)
- {
- 	struct hfi_codec_supported *codecs = data;
- 
-@@ -200,21 +211,27 @@ static void parse_codecs(struct venus_co
- 		core->dec_codecs &= ~HFI_VIDEO_CODEC_SPARK;
- 		core->enc_codecs &= ~HFI_VIDEO_CODEC_HEVC;
- 	}
-+
-+	return sizeof(*codecs);
- }
- 
--static void parse_max_sessions(struct venus_core *core, const void *data)
-+static int parse_max_sessions(struct venus_core *core, const void *data)
- {
- 	const struct hfi_max_sessions_supported *sessions = data;
- 
- 	core->max_sessions_supported = sessions->max_sessions;
-+
-+	return sizeof(*sessions);
- }
- 
--static void parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
-+static int parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
- {
- 	struct hfi_codec_mask_supported *mask = data;
- 
- 	*codecs = mask->codecs;
- 	*domain = mask->video_domains;
-+
-+	return sizeof(*mask);
- }
- 
- static void parser_init(struct venus_inst *inst, u32 *codecs, u32 *domain)
-@@ -283,8 +300,9 @@ static int hfi_platform_parser(struct ve
- u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
- 	       u32 size)
- {
--	unsigned int words_count = size >> 2;
--	u32 *word = buf, *data, codecs = 0, domain = 0;
-+	u32 *words = buf, *payload, codecs = 0, domain = 0;
-+	u32 *frame_size = buf + size;
-+	u32 rem_bytes = size;
- 	int ret;
- 
- 	ret = hfi_platform_parser(core, inst);
-@@ -301,38 +319,66 @@ u32 hfi_parser(struct venus_core *core,
- 		memset(core->caps, 0, sizeof(core->caps));
- 	}
- 
--	while (words_count) {
--		data = word + 1;
-+	while (words < frame_size) {
-+		payload = words + 1;
- 
--		switch (*word) {
-+		switch (*words) {
- 		case HFI_PROPERTY_PARAM_CODEC_SUPPORTED:
--			parse_codecs(core, data);
-+			if (rem_bytes <= sizeof(struct hfi_codec_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_codecs(core, payload);
-+			if (ret < 0)
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
- 			init_codecs(core);
- 			break;
- 		case HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED:
--			parse_max_sessions(core, data);
-+			if (rem_bytes <= sizeof(struct hfi_max_sessions_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_max_sessions(core, payload);
- 			break;
- 		case HFI_PROPERTY_PARAM_CODEC_MASK_SUPPORTED:
--			parse_codecs_mask(&codecs, &domain, data);
-+			if (rem_bytes <= sizeof(struct hfi_codec_mask_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_codecs_mask(&codecs, &domain, payload);
- 			break;
- 		case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SUPPORTED:
--			parse_raw_formats(core, codecs, domain, data);
-+			if (rem_bytes <= sizeof(struct hfi_uncompressed_format_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_raw_formats(core, codecs, domain, payload);
- 			break;
- 		case HFI_PROPERTY_PARAM_CAPABILITY_SUPPORTED:
--			parse_caps(core, codecs, domain, data);
-+			if (rem_bytes <= sizeof(struct hfi_capabilities))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_caps(core, codecs, domain, payload);
- 			break;
- 		case HFI_PROPERTY_PARAM_PROFILE_LEVEL_SUPPORTED:
--			parse_profile_level(core, codecs, domain, data);
-+			if (rem_bytes <= sizeof(struct hfi_profile_level_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_profile_level(core, codecs, domain, payload);
- 			break;
- 		case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE_SUPPORTED:
--			parse_alloc_mode(core, codecs, domain, data);
-+			if (rem_bytes <= sizeof(struct hfi_buffer_alloc_mode_supported))
-+				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+			ret = parse_alloc_mode(core, codecs, domain, payload);
- 			break;
- 		default:
-+			ret = sizeof(u32);
- 			break;
- 		}
- 
--		word++;
--		words_count--;
-+		if (ret < 0)
-+			return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
-+
-+		words += ret / sizeof(u32);
-+		rem_bytes -= ret;
- 	}
- 
- 	if (!core->max_sessions_supported)
+ 	if (xensyms_next_sym(xs))
+ 		return NULL;
 
 
