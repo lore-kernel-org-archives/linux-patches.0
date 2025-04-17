@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE851DF756;
-	Thu, 17 Apr 2025 18:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F593770B;
+	Thu, 17 Apr 2025 18:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915428; cv=none; b=nCWKU90ILI7C3lYcgUenf2SdcajtEyazu8Za/wdYxGLjVh/GM8mUm31bVOSKQF39hMx2XmQaz+nFhWRG7SaqSX34AMwiDYvALu/UErXJScyzakd7ras1w86yvE7cdAuMUkFjW32yk8Sz1ChduZib7ktr9UJ/Ps/1riOIsolLmMU=
+	t=1744915431; cv=none; b=OIRVYOJSNbFZPSTg3K1vYqLiP17oZpWaQ2jaDEWlHxNAKEE/d2odkad8cBQoHKr0PMHoOcsNQeIkcJKT1fA+D0LFy8erD5kkBQdyUrjZiITbCoFXp5jQksTXnioUTaRWnHgi1O3siLBy0SbaoDRwdzmhgF4x6PP3cqL09Yt+CH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915428; c=relaxed/simple;
-	bh=8H75L6ov0aRmwqTwRi4m3zzl3napcq8J0uTT+r6Co4c=;
+	s=arc-20240116; t=1744915431; c=relaxed/simple;
+	bh=nJoY3/g3947MV1rmmybTek3Tr66cB78ENjZi5yA10EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etjEL1Ce5D+Cg7a8Bd2wZ5a+KdZThDp+o3fJq5iVOHKJckKZoKMx5CfatNIUqg2YmoQkuk/osjn3NBT1BQADv5lc8qt4UaWphodnvpxIhk68jgi/wrC5u6HRylxldhvxZMVc1AuBxgbF9x5/yqENYg59OL6Z1gk+7LTZP1P+Scw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC3IOnld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WoxWV93OheBd7WmPdsWyh53Qg6j+iGDGfXAY7eG1PYiI3RHv9EeWVvULOGI6Djc0ovaVeYgfYBr+KDW5e5cgC2jaRBuOdcuAjzqFho5bbZ2By7TQpFHY+/yYZ2SBoRmGM8v1pwDQd2Brx8PipO4fSejl2x4tiKazol1gW/fkDEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1UIuvvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC3IOnld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CB4C4CEE4;
-	Thu, 17 Apr 2025 18:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1UIuvvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AA0C4CEEC;
+	Thu, 17 Apr 2025 18:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915428;
-	bh=8H75L6ov0aRmwqTwRi4m3zzl3napcq8J0uTT+r6Co4c=;
+	s=korg; t=1744915431;
+	bh=nJoY3/g3947MV1rmmybTek3Tr66cB78ENjZi5yA10EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QC3IOnldreyck/oioiIRBb9OXMmfuYwieQLqkgXdC1vmwaEVlH60nmDluKRWP9ApD
-	 DvXUmc9OOObPmI2023RiZ6uzLGybWyp6hkZ2b/y+N/vvBq2uGk5h+a+OBhe/3U+yAU
-	 0FDfix20OqO6xVI8aOMaWrf8LOWOTaW+1iwdWxpM=
+	b=z1UIuvvYLr5TThBF7A1n8UEpGDL3glitFtGlYfvCIgA/sdg/eQIuIuXXO9SP3zYd7
+	 pvH4OyY3v00uj4vACIdPfgRgmOJaROyZCQHz7qaFkxSvz/Vrt4HhGbJPrLwrResfbB
+	 HPEloWbgmXn8iWr7DvbzkOMkZHwGSjgVziS9C4KA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/393] page_pool: avoid infinite loop to schedule delayed worker
-Date: Thu, 17 Apr 2025 19:48:24 +0200
-Message-ID: <20250417175111.415084180@linuxfoundation.org>
+Subject: [PATCH 6.12 096/393] can: flexcan: Add quirk to handle separate interrupt lines for mailboxes
+Date: Thu, 17 Apr 2025 19:48:25 +0200
+Message-ID: <20250417175111.454127582@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,66 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kerneljasonxing@gmail.com>
+From: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
 
-[ Upstream commit 43130d02baa137033c25297aaae95fd0edc41654 ]
+[ Upstream commit 8c652cf030a769fbfc73cfc280ed3f1656343c35 ]
 
-We noticed the kworker in page_pool_release_retry() was waken
-up repeatedly and infinitely in production because of the
-buggy driver causing the inflight less than 0 and warning
-us in page_pool_inflight()[1].
+Introduce 'FLEXCAN_QUIRK_SECONDARY_MB_IRQ' quirk to handle a FlexCAN
+hardware module integration particularity where two ranges of mailboxes
+are controlled by separate hardware interrupt lines.
+The same 'flexcan_irq' handler is used for both separate mailbox interrupt
+lines, with no other changes.
 
-Since the inflight value goes negative, it means we should
-not expect the whole page_pool to get back to work normally.
-
-This patch mitigates the adverse effect by not rescheduling
-the kworker when detecting the inflight negative in
-page_pool_release_retry().
-
-[1]
-[Mon Feb 10 20:36:11 2025] ------------[ cut here ]------------
-[Mon Feb 10 20:36:11 2025] Negative(-51446) inflight packet-pages
-...
-[Mon Feb 10 20:36:11 2025] Call Trace:
-[Mon Feb 10 20:36:11 2025]  page_pool_release_retry+0x23/0x70
-[Mon Feb 10 20:36:11 2025]  process_one_work+0x1b1/0x370
-[Mon Feb 10 20:36:11 2025]  worker_thread+0x37/0x3a0
-[Mon Feb 10 20:36:11 2025]  kthread+0x11a/0x140
-[Mon Feb 10 20:36:11 2025]  ? process_one_work+0x370/0x370
-[Mon Feb 10 20:36:11 2025]  ? __kthread_cancel_work+0x40/0x40
-[Mon Feb 10 20:36:11 2025]  ret_from_fork+0x35/0x40
-[Mon Feb 10 20:36:11 2025] ---[ end trace ebffe800f33e7e34 ]---
-Note: before this patch, the above calltrace would flood the
-dmesg due to repeated reschedule of release_dw kworker.
-
-Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250214064250.85987-1-kerneljasonxing@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250113120704.522307-3-ciprianmarian.costea@oss.nxp.com
+[mkl: flexcan_open(): change order and free irq_secondary_mb first]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/can/flexcan/flexcan-core.c | 24 +++++++++++++++++++++++-
+ drivers/net/can/flexcan/flexcan.h      |  5 +++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index a813d30d21353..7b20f6fcb82c0 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -1066,7 +1066,13 @@ static void page_pool_release_retry(struct work_struct *wq)
- 	int inflight;
+diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
+index b080740bcb104..1a94586cbd11e 100644
+--- a/drivers/net/can/flexcan/flexcan-core.c
++++ b/drivers/net/can/flexcan/flexcan-core.c
+@@ -1762,14 +1762,25 @@ static int flexcan_open(struct net_device *dev)
+ 			goto out_free_irq_boff;
+ 	}
  
- 	inflight = page_pool_release(pool);
--	if (!inflight)
-+	/* In rare cases, a driver bug may cause inflight to go negative.
-+	 * Don't reschedule release if inflight is 0 or negative.
-+	 * - If 0, the page_pool has been destroyed
-+	 * - if negative, we will never recover
-+	 * in both cases no reschedule is necessary.
-+	 */
-+	if (inflight <= 0)
- 		return;
++	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ) {
++		err = request_irq(priv->irq_secondary_mb,
++				  flexcan_irq, IRQF_SHARED, dev->name, dev);
++		if (err)
++			goto out_free_irq_err;
++	}
++
+ 	flexcan_chip_interrupts_enable(dev);
  
- 	/* Periodic warning for page pools the user can't see */
+ 	netif_start_queue(dev);
+ 
+ 	return 0;
+ 
++ out_free_irq_err:
++	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3)
++		free_irq(priv->irq_err, dev);
+  out_free_irq_boff:
+-	free_irq(priv->irq_boff, dev);
++	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3)
++		free_irq(priv->irq_boff, dev);
+  out_free_irq:
+ 	free_irq(dev->irq, dev);
+  out_can_rx_offload_disable:
+@@ -1794,6 +1805,9 @@ static int flexcan_close(struct net_device *dev)
+ 	netif_stop_queue(dev);
+ 	flexcan_chip_interrupts_disable(dev);
+ 
++	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ)
++		free_irq(priv->irq_secondary_mb, dev);
++
+ 	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
+ 		free_irq(priv->irq_err, dev);
+ 		free_irq(priv->irq_boff, dev);
+@@ -2187,6 +2201,14 @@ static int flexcan_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ) {
++		priv->irq_secondary_mb = platform_get_irq_byname(pdev, "mb-1");
++		if (priv->irq_secondary_mb < 0) {
++			err = priv->irq_secondary_mb;
++			goto failed_platform_get_irq;
++		}
++	}
++
+ 	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SUPPORT_FD) {
+ 		priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD |
+ 			CAN_CTRLMODE_FD_NON_ISO;
+diff --git a/drivers/net/can/flexcan/flexcan.h b/drivers/net/can/flexcan/flexcan.h
+index 4933d8c7439e6..2cf886618c962 100644
+--- a/drivers/net/can/flexcan/flexcan.h
++++ b/drivers/net/can/flexcan/flexcan.h
+@@ -70,6 +70,10 @@
+ #define FLEXCAN_QUIRK_SUPPORT_RX_FIFO BIT(16)
+ /* Setup stop mode with ATF SCMI protocol to support wakeup */
+ #define FLEXCAN_QUIRK_SETUP_STOP_MODE_SCMI BIT(17)
++/* Device has two separate interrupt lines for two mailbox ranges, which
++ * both need to have an interrupt handler registered.
++ */
++#define FLEXCAN_QUIRK_SECONDARY_MB_IRQ	BIT(18)
+ 
+ struct flexcan_devtype_data {
+ 	u32 quirks;		/* quirks needed for different IP cores */
+@@ -107,6 +111,7 @@ struct flexcan_priv {
+ 
+ 	int irq_boff;
+ 	int irq_err;
++	int irq_secondary_mb;
+ 
+ 	/* IPC handle when setup stop mode by System Controller firmware(scfw) */
+ 	struct imx_sc_ipc *sc_ipc_handle;
 -- 
 2.39.5
 
