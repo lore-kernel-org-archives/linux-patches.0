@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF282566ED;
-	Thu, 17 Apr 2025 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219611CAA7D;
+	Thu, 17 Apr 2025 18:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913397; cv=none; b=Qwl6I0J4l18DiBWHUoslkX+cjQjU9MZFBwVWwXAStZ8OfG3rewaVNgb8n+NGnSo2/Uf23M1WMOlWrtvRaSebpwcnTPHlgY5++bMfffqPODBt+LJGa7BQ6g2Ya76/aXzOuxxdqIdptPD9o4alwxVhE2jZBCcBAIxRQu6h0X6oXDE=
+	t=1744913400; cv=none; b=jqFCuEGB0qc0MmEgSKvec9c29GAW1giVn4xPMMcow0Uoh9dzzWZBoybBTfb+ElTbANb/fWC/t602yFT7fdwD6dR9fDgQ521gIKuHvEY85pGkcwNgdGs2FlxEaQP5XoMpbdYdz/VyCIFMO1kuatRysZ6vlf93lu45G6Idr0QzHpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913397; c=relaxed/simple;
-	bh=HlRKEtzgAyTW5NQxm/wsCvcJqOqtpPDzN22+d4gZde0=;
+	s=arc-20240116; t=1744913400; c=relaxed/simple;
+	bh=tfpOPbr5V++YJmvBSHGJdEKxdMemop8CKYfknS3yqrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0dgxWY4fCQOBAsh9yYh4E+6LdKgPHueb7dH4cWp1XGKFY6pa89vSypeS0J1/P3L9lb9TLzpwTBsYOtBhSmgbl2svs2ZhkmHgLxExWvlc6bpWyUZiL+fduQaqGWj0aIUcztVftxHimJNKQq9ZncqW620gFn5sEA7HudC0DLHdhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTz3VxrN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbmB8X3ml9hJXnfyxL1NbWZaEQ7Jv2IEwmMgBwSKLcdsv78WyHJzddOiEXQTR0vcholXYJ+scBJ1ZeN0ope2DtTHXFmGPmZU197m2aU3pcDgJt2+lSbRAv0uEZ3CBt86QXvgzmDkBmevHxQngSCRgeN9c/lqsUZWMBrzt/3Tcto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUqgBPKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTz3VxrN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69BAC4CEEA;
-	Thu, 17 Apr 2025 18:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUqgBPKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9B9C4CEE7;
+	Thu, 17 Apr 2025 18:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913397;
-	bh=HlRKEtzgAyTW5NQxm/wsCvcJqOqtpPDzN22+d4gZde0=;
+	s=korg; t=1744913400;
+	bh=tfpOPbr5V++YJmvBSHGJdEKxdMemop8CKYfknS3yqrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTz3VxrNEEKtHySPe/iTgjz1gwx9SlAUDAvrjWKUxlgD58BtSBANIEaDcwqePHH1d
-	 2O0nIXH5HFDYuIrRpe4kORUOZgNTFtten8Hflt+U5tkwzqh+2NRtDKNGjhqAsPHPKn
-	 goRxPjJvUV5jBrKGoRZtKLOTh8v/pW5lQrfEEMFI=
+	b=nUqgBPKknSXWvZmBV01qILXJ+LnwFcPndIJe0qO5HG7Te9eRXssHGHpOZxoFU/pI0
+	 QubgTanv32bKd6gEL847V0+rWGmDCkttTrWgx6NEi+6Tv5sP0FchAmIoft0p92waB3
+	 B3akvtzK1ubgZwkxjpyWBMU1O+ujvC0U2+LRz1WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.14 324/449] leds: rgb: leds-qcom-lpg: Fix calculation of best period Hi-Res PWMs
-Date: Thu, 17 Apr 2025 19:50:12 +0200
-Message-ID: <20250417175131.169512491@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 297/449] ASoC: qdsp6: q6apm-dai: set 10 ms period and buffer alignment.
+Date: Thu, 17 Apr 2025 19:49:45 +0200
+Message-ID: <20250417175130.044070267@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,59 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit 2528eec7da0ec58fcae6d12cfa79a622c933d86b upstream.
+commit 3107019501842c27334554ba9d6583b1f200f61f upstream.
 
-When determining the actual best period by looping through all
-possible PWM configs, the resolution currently used is based on
-bit shift value which is off-by-one above the possible maximum
-PWM value allowed.
+DSP expects the periods to be aligned to fragment sizes, currently
+setting up to hw constriants on periods bytes is not going to work
+correctly as we can endup with periods sizes aligned to 32 bytes however
+not aligned to fragment size.
 
-So subtract one from the resolution before determining the best
-period so that the maximum duty cycle requested by the PWM user
-won't result in a value above the maximum allowed by the selected
-resolution.
+Update the constriants to use fragment size, and also set at step of
+10ms for period size to accommodate DSP requirements of 10ms latency.
 
-Cc: stable@vger.kernel.org    # 6.4
-Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Sebastian Reichel <sre@kernel.org>
-Link: https://lore.kernel.org/r/20250305-leds-qcom-lpg-fix-max-pwm-on-hi-res-v4-3-bfe124a53a9f@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://patch.msgid.link/20250314174800.10142-5-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-dai.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -461,7 +461,7 @@ static int lpg_calc_freq(struct lpg_chan
- 		max_res = LPG_RESOLUTION_9BIT;
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -385,13 +385,14 @@ static int q6apm_dai_open(struct snd_soc
+ 		}
  	}
  
--	min_period = div64_u64((u64)NSEC_PER_SEC * (1 << pwm_resolution_arr[0]),
-+	min_period = div64_u64((u64)NSEC_PER_SEC * ((1 << pwm_resolution_arr[0]) - 1),
- 			       clk_rate_arr[clk_len - 1]);
- 	if (period <= min_period)
- 		return -EINVAL;
-@@ -482,7 +482,7 @@ static int lpg_calc_freq(struct lpg_chan
- 	 */
+-	ret = snd_pcm_hw_constraint_step(runtime, 0, SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 32);
++	/* setup 10ms latency to accommodate DSP restrictions */
++	ret = snd_pcm_hw_constraint_step(runtime, 0, SNDRV_PCM_HW_PARAM_PERIOD_SIZE, 480);
+ 	if (ret < 0) {
+ 		dev_err(dev, "constraint for period bytes step ret = %d\n", ret);
+ 		goto err;
+ 	}
  
- 	for (i = 0; i < pwm_resolution_count; i++) {
--		resolution = 1 << pwm_resolution_arr[i];
-+		resolution = (1 << pwm_resolution_arr[i]) - 1;
- 		for (clk_sel = 1; clk_sel < clk_len; clk_sel++) {
- 			u64 numerator = period * clk_rate_arr[clk_sel];
- 
-@@ -1291,7 +1291,7 @@ static int lpg_pwm_get_state(struct pwm_
- 		if (ret)
- 			return ret;
- 
--		state->period = DIV_ROUND_UP_ULL((u64)NSEC_PER_SEC * (1 << resolution) *
-+		state->period = DIV_ROUND_UP_ULL((u64)NSEC_PER_SEC * ((1 << resolution) - 1) *
- 						 pre_div * (1 << m), refclk);
- 		state->duty_cycle = DIV_ROUND_UP_ULL((u64)NSEC_PER_SEC * pwm_value * pre_div * (1 << m), refclk);
- 	} else {
+-	ret = snd_pcm_hw_constraint_step(runtime, 0, SNDRV_PCM_HW_PARAM_BUFFER_BYTES, 32);
++	ret = snd_pcm_hw_constraint_step(runtime, 0, SNDRV_PCM_HW_PARAM_BUFFER_SIZE, 480);
+ 	if (ret < 0) {
+ 		dev_err(dev, "constraint for buffer bytes step ret = %d\n", ret);
+ 		goto err;
 
 
