@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39609255248;
-	Thu, 17 Apr 2025 18:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218021E25E1;
+	Thu, 17 Apr 2025 18:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913190; cv=none; b=JKY+IxNySFd5xqrSfRhTRcelIQcxtnNZ7MR4hFJJcNCJg5O7sO+yrVMdnpreBW2C8HyUzJfMS1/jY2S7F4r4J+FKGTTjOdm3YBrhyciBVolXKRPTSoVivf6R6Q/C2/gA74X+TDvp0NgqC546BvtRQWyaAYanpfkP5kc91Kx7RoQ=
+	t=1744913193; cv=none; b=FA0esBCnyVGQtzFNrqCEFpfFCtU2vOGMv8z9P08MT04k4qli27HI5r4v/CpaQyLYjpT+MbH5qIHjKlnL2LHyA13a9TzCZsPG/IEmo5MXZMqUolC9aS/xOyFOQoANKfUPoY98Pg/eJjqWatKs4UtyGbmxumkbh8e5hfSnLgTwXLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913190; c=relaxed/simple;
-	bh=pGrop4howCUs0bkexn81BIl2IweJC4Frqn9kl2w7iWg=;
+	s=arc-20240116; t=1744913193; c=relaxed/simple;
+	bh=+ef4bc7Oj+HCIX23fvwyQvnx5jM3MCerFzmePUwRzlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XusqiTYxJRWHOdDQtw+n9YaekpL9V40IafQq182XJr0aFLjLpizNdRgQ2e648DLHAfYyvCwq/1qofZoKL6pErNJfuPSLE2cW2pc4fhIInviB5Lux3tHHdSEPcMm/nXi0epRJ0KQd9DGhimyUC9QMG+2AuwdRaXtPjUuvIsaxgNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xy1q12hb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuSd6uFClQqsm/Ts5FH0Zoxh2fY9w8vF5r/kY+v+ENtZ4rnhLFDeVO08cmLCxT9PWwKHlw+vkFtgaId0OzNVvzTzhdMnIbBUpM0hcWOCTEwVavgYtI2K4+1keDeN4GcBEtsSAVehf5Z1rmlGxoKzrkcl58o7MPaIhhmjO1BYvhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uABfc3sl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xy1q12hb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98606C4CEE4;
-	Thu, 17 Apr 2025 18:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uABfc3sl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DCFC4CEE4;
+	Thu, 17 Apr 2025 18:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913190;
-	bh=pGrop4howCUs0bkexn81BIl2IweJC4Frqn9kl2w7iWg=;
+	s=korg; t=1744913193;
+	bh=+ef4bc7Oj+HCIX23fvwyQvnx5jM3MCerFzmePUwRzlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xy1q12hbL3bjQ0GrpvIBbzA5Lqo+Gg1/LKdZ/urSxjKGxRYr+RU+b3bHXvoZU4uNu
-	 DjH3HxEHZhxUtYQciV1vPF/jIGyqE1lxzSbuqe4Em59vWYzlYfMA+5zgaslcQgzgwU
-	 lkLCULTDNSNXxQ4odVhwturvToGg6Caqb3yRFUMg=
+	b=uABfc3slbmfnb8aWmH9ww+Ayl/DyD4J0LrLqxORXtkbKEINvWqzE9WJk7BtgcLKNX
+	 rcc/4JDgZ4W1gOQoPLSbOPwLMOa8KDxOT9Fm60pEZvmT53+P4QSk3Elw+KVgG4VJ1H
+	 hmlg5HBkgzYc2EXGzYb263F2BdIO4632invBZxAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Michael Tretter <m.tretter@pengutronix.de>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 256/449] media: nuvoton: Fix reference handling of ece_node
-Date: Thu, 17 Apr 2025 19:49:04 +0200
-Message-ID: <20250417175128.299230890@linuxfoundation.org>
+Subject: [PATCH 6.14 230/449] media: rockchip: rga: fix rga offset lookup
+Date: Thu, 17 Apr 2025 19:48:38 +0200
+Message-ID: <20250417175127.255133066@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,42 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-commit 8ba4ef40ad6ca62368292a69855324213181abfb upstream.
+commit 11de3582675cc0b7136e12f3971f1da3e5a05382 upstream.
 
-Make sure all the code paths call of_node_put().
+The arguments to rga_lookup_draw_pos() are passed in the wrong order,
+rotate mode should be before mirror mode.
 
-Instead of manually calling of_node_put, use the __free macros/helpers.
-
+Fixes: 558c248f930e6 ("media: rockchip: rga: split src and dst buffer setup")
 Cc: stable@vger.kernel.org
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/platform/rockchip/rga/rga-hw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/nuvoton/npcm-video.c
-+++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1648,8 +1648,8 @@ rel_ctrl_handler:
+--- a/drivers/media/platform/rockchip/rga/rga-hw.c
++++ b/drivers/media/platform/rockchip/rga/rga-hw.c
+@@ -376,7 +376,7 @@ static void rga_cmd_set_dst_info(struct
+ 	 * Configure the dest framebuffer base address with pixel offset.
+ 	 */
+ 	offsets = rga_get_addr_offset(&ctx->out, offset, dst_x, dst_y, dst_w, dst_h);
+-	dst_offset = rga_lookup_draw_pos(&offsets, mir_mode, rot_mode);
++	dst_offset = rga_lookup_draw_pos(&offsets, rot_mode, mir_mode);
  
- static int npcm_video_ece_init(struct npcm_video *video)
- {
-+	struct device_node *ece_node __free(device_node) = NULL;
- 	struct device *dev = video->dev;
--	struct device_node *ece_node;
- 	struct platform_device *ece_pdev;
- 	void __iomem *regs;
- 
-@@ -1669,7 +1669,6 @@ static int npcm_video_ece_init(struct np
- 			dev_err(dev, "Failed to find ECE device\n");
- 			return -ENODEV;
- 		}
--		of_node_put(ece_node);
- 
- 		regs = devm_platform_ioremap_resource(ece_pdev, 0);
- 		if (IS_ERR(regs)) {
+ 	dest[(RGA_DST_Y_RGB_BASE_ADDR - RGA_MODE_BASE_REG) >> 2] =
+ 		dst_offset->y_off;
 
 
