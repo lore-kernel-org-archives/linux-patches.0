@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A85F262802;
-	Thu, 17 Apr 2025 17:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC282571B2;
+	Thu, 17 Apr 2025 17:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912437; cv=none; b=DqVXzMHKVIepuVGlpYhRRvOXSa11nQbk6HLjJNDILqU7WfmPNovpuuvbfN55glaiwlR0/7Qf2ZGY2tGt8xI/7ZBIvh7Ko+t71jNiGkbu+kGqeClHAUCgwdmhVeRgm+ARslup0p7cvWtjNp+5aU/ZMs1u5cUPcK+6Y2dehBMJlPU=
+	t=1744912441; cv=none; b=Ljp3Q1v31Y2Qcq+nLutaRG1Vl7u6UUVAw6EkevWLDInCNT1CkFdYATUiKZ91V9/WUIrH19H7B9duzjTZcGcAgHlfQ0NUDs63U2pcEZkP9a4uGdsrtxUeqLZvKSJkrZX9BZXXDNz/unHhPcfWnjLQuWq3++EB/yvTA38xNV5Yi+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912437; c=relaxed/simple;
-	bh=CS/e7Pz5VnWxSncfGpOpzbzJguQyAL77/I8TgoRhE/M=;
+	s=arc-20240116; t=1744912441; c=relaxed/simple;
+	bh=5qaFXxA5hPXhINfLjGdvS7G+eEorKeaaigOxcSqF/xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DftcyC8IaxVFt1+nS+L32Cnpf4mAwEY/0My8hinz6BElM++D2JPp1OqMjkSDEDn854PrDywIe5Qb9fTuWYqrDOlFIov4Or3w6oECbTG1HTiWyu8ISLkeRAW759BCksYliQBVKfsQwGRCpnpa+luGiAo2lPl+doG3+FykOv0nkGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNMjyA8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n1Zwym5FHhckFP/8GmlSCMD/wv706H8g972jj9zQlHcZihiA5qpkdd+IRd4s2Jeunsr3FcRWyOB/J+cdmGdslOrcbvooPlQ666Ihdrmgt7x+I8M0XaSPRSQy4C6wKnvJJ3KQYypy/BaJ0DguiHaQKB9nSw1OXHTOo25y1NcT+nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5N54Skg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNMjyA8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34D8C4CEE4;
-	Thu, 17 Apr 2025 17:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5N54Skg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C2EC4CEE7;
+	Thu, 17 Apr 2025 17:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912437;
-	bh=CS/e7Pz5VnWxSncfGpOpzbzJguQyAL77/I8TgoRhE/M=;
+	s=korg; t=1744912440;
+	bh=5qaFXxA5hPXhINfLjGdvS7G+eEorKeaaigOxcSqF/xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNMjyA8odwAMi3YM8ryrNi9b3PEHitKhjF6bot2VfOF0uwnMnFxhw6qa9zdMHQFRA
-	 RV5ltfXVV7Fq/7hNH6BXfIOiDKM/Jue1HpIywkZbRELFAxl1xujqxssMsU3VbVkHlv
-	 X+iAdL01kPxP+Oe7PoRUZj5vFundg4Zw0TL5QPoI=
+	b=W5N54SkgdKgBA2b68TuYn6Lbzxhh3h6QpycYu+su5mzQ792UMABZ2CK81MBlP6Jvu
+	 mg2l7aAvb2QlOQHFM+C+VvWilEUPCtyuNc/pyEbLZW1t/n3gkv3SdOZUaNrw1LF6SF
+	 ZWXZ3S9sPeh/ii5rjnpm3kNpN1B5JuVB0dDSiyJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 011/449] x86/acpi: Dont limit CPUs to 1 for Xen PV guests due to disabled ACPI
-Date: Thu, 17 Apr 2025 19:44:59 +0200
-Message-ID: <20250417175118.442797760@linuxfoundation.org>
+Subject: [PATCH 6.14 012/449] net: ethtool: fix ethtool_ringparam_get_cfg() returns a hds_thresh value always as 0.
+Date: Thu, 17 Apr 2025 19:45:00 +0200
+Message-ID: <20250417175118.484693093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -45,68 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Vaněk <arkamar@atlas.cz>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 8b37357a78d7fa13d88ea822b35b40137da1c85e ]
+[ Upstream commit 216a61d33c0728a8cf1650aaed2c523c6ce16354 ]
 
-Xen disables ACPI for PV guests in DomU, which causes acpi_mps_check() to
-return 1 when CONFIG_X86_MPPARSE is not set. As a result, the local APIC is
-disabled and the guest is later limited to a single vCPU, despite being
-configured with more.
+When hds-thresh is configured, ethnl_set_rings() is called, and it calls
+ethtool_ringparam_get_cfg() to get ringparameters from .get_ringparam()
+callback and dev->cfg.
+Both hds_config and hds_thresh values should be set from dev->cfg, not
+from .get_ringparam().
+But ethtool_ringparam_get_cfg() sets only hds_config from dev->cfg.
+So, ethtool_ringparam_get_cfg() returns always a hds_thresh as 0.
 
-This regression was introduced in version 6.9 in commit 7c0edad3643f
-("x86/cpu/topology: Rework possible CPU management"), which added an
-early check that limits CPUs to 1 if apic_is_disabled.
+If an input value of hds-thresh is 0, a hds_thresh value from
+ethtool_ringparam_get_cfg() are same. So ethnl_set_rings() does
+nothing and returns immediately.
+It causes a bug that setting a hds-thresh value to 0 is not working.
 
-Update the acpi_mps_check() logic to return 0 early when running as a Xen
-PV guest in DomU, preventing APIC from being disabled in this specific case
-and restoring correct multi-vCPU behaviour.
+Reproducer:
+    modprobe netdevsim
+    echo 1 > /sys/bus/netdevsim/new_device
+    ethtool -G eth0 hds-thresh 100
+    ethtool -G eth0 hds-thresh 0
+    ethtool -g eth0
+    #hds-thresh value should be 0, but it shows 100.
 
-Fixes: 7c0edad3643f ("x86/cpu/topology: Rework possible CPU management")
-Signed-off-by: Petr Vaněk <arkamar@atlas.cz>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250407132445.6732-2-arkamar@atlas.cz
+The tools/testing/selftests/drivers/net/hds.py can test it too with
+applying a following patch for hds.py.
+
+Fixes: 928459bbda19 ("net: ethtool: populate the default HDS params in the core")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20250404122126.1555648-2-ap420073@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/acpi/boot.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/ethtool/common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
-index dae6a73be40e1..9fa321a95eb33 100644
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -23,6 +23,8 @@
- #include <linux/serial_core.h>
- #include <linux/pgtable.h>
+diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+index b97374b508f67..e2f8a41cc1084 100644
+--- a/net/ethtool/common.c
++++ b/net/ethtool/common.c
+@@ -785,6 +785,7 @@ void ethtool_ringparam_get_cfg(struct net_device *dev,
  
-+#include <xen/xen.h>
-+
- #include <asm/e820/api.h>
- #include <asm/irqdomain.h>
- #include <asm/pci_x86.h>
-@@ -1729,6 +1731,15 @@ int __init acpi_mps_check(void)
- {
- #if defined(CONFIG_X86_LOCAL_APIC) && !defined(CONFIG_X86_MPPARSE)
- /* mptable code is not built-in*/
-+
-+	/*
-+	 * Xen disables ACPI in PV DomU guests but it still emulates APIC and
-+	 * supports SMP. Returning early here ensures that APIC is not disabled
-+	 * unnecessarily and the guest is not limited to a single vCPU.
-+	 */
-+	if (xen_pv_domain() && !xen_initial_domain())
-+		return 0;
-+
- 	if (acpi_disabled || acpi_noirq) {
- 		pr_warn("MPS support code is not built-in, using acpi=off or acpi=noirq or pci=noacpi may have problem\n");
- 		return 1;
+ 	/* Driver gives us current state, we want to return current config */
+ 	kparam->tcp_data_split = dev->cfg->hds_config;
++	kparam->hds_thresh = dev->cfg->hds_thresh;
+ }
+ 
+ static void ethtool_init_tsinfo(struct kernel_ethtool_ts_info *info)
 -- 
 2.39.5
 
