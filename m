@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E94D1DEFC5;
-	Thu, 17 Apr 2025 18:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52331EB1BF;
+	Thu, 17 Apr 2025 18:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913144; cv=none; b=lhdJGD5oGXP3BA8sXlFf9FCeE+XJvYhPWxWUOLc3Yidme/5a1wtyIt1mCXH80sUYB6Eg8Kich3hM6gyWsQfwu9GF9O+Yuaw4RXdz31WvbyO/RBrINzuS2YlniBAuazihk02tk4v7p+rU7yirp9/kZPh1q9GWkpGMN+kv2zTikCo=
+	t=1744913147; cv=none; b=rPFSuKij/Gcsh8+4I+A7ysWNN1U84PTCCSA5Dyl6GcJA8oM266uCZWuSzgKYwfxCuXqK6GFigLgiU2jpB4ywLYRylKGrLUIgLWsg8AgyG5QTXlRkjxSVjPneQouiaZ/XxXRwlbjughy8hhvHM+rsgssswfQeEKt707elQXVzwdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913144; c=relaxed/simple;
-	bh=6mwbK38xGyhg0to12xSJou4htn4bLzT7V9TkejpFn1U=;
+	s=arc-20240116; t=1744913147; c=relaxed/simple;
+	bh=1gP/y9TeceGfVMe/58d9Vxvx6WoA1BUJZLT6xLQnShw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZNj4dAQfBcb05f4KKOEmPSBXqDOiDC18rrnAIocwj3DhwZ9NWIQnkp/w9xzkKbgzUxcJQONm4f/JswDdc6vdZuIKwFAAU98xXen+0BuzvHp1TllWPn9prPKq9ElZKpY9oLoN43Ov8+kD5bWHNnpxAWrCYs5GjVRZGe/1VKyU8go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTaJUNdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNRH+XI2SXda8Ugy446bwHoKxviDkoTF3syUHc+ooBs1A98VfX+rEke5SaX9+aDKkjRO0MscwCxmQFWe6NDUu3GegEyvP/d1WEM8Pjp7BZqdXR1Ngqa4gYgTQRwuL6W91uyRdnzqGTk4XkeijEIr83nx9auJkaA/1ItFqyqadac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEnxlPa7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTaJUNdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C6AC4CEE4;
-	Thu, 17 Apr 2025 18:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEnxlPa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FC0C4CEE4;
+	Thu, 17 Apr 2025 18:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913144;
-	bh=6mwbK38xGyhg0to12xSJou4htn4bLzT7V9TkejpFn1U=;
+	s=korg; t=1744913147;
+	bh=1gP/y9TeceGfVMe/58d9Vxvx6WoA1BUJZLT6xLQnShw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTaJUNdAaJFd793yRH8JWV0J+ee7+cvnXSsgmAkZdUeGauDaIkNNnVu6gcWAnaXlh
-	 0qv9Jg0sXJLgwfCeyDmMCtNBlzaxvLSDwrmDmTP/yd2M3st9KjO7A0waTS+i0iMK5w
-	 T4vJyBjI+u2aXPnl32RjBnd0JzwqlO0hDJw3qd2g=
+	b=iEnxlPa7Kv0l0AfxNNtKosr5PBzq9XSy4a2wNuIKdi0NblLSP0zowO5lh+R1UJ162
+	 ufXpdvy2IW0VfijDRjwJyx1a/BpXrK+yOYAe6OimSf0lZBF5ya2yJQdeLhfpx/ZZbt
+	 5/qtvzwsOfqU7eW/1BbV8h3UccaQj87UgunhF12o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.14 242/449] accel/ivpu: Fix PM related deadlocks in MS IOCTLs
-Date: Thu, 17 Apr 2025 19:48:50 +0200
-Message-ID: <20250417175127.738229991@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.14 243/449] media: ov08x40: Properly turn sensor on/off when runtime-suspended
+Date: Thu, 17 Apr 2025 19:48:51 +0200
+Message-ID: <20250417175127.779485358@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,112 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit d893da85e06edf54737bb80648bb58ba8fd56d9f upstream.
+commit 69dea0ed84611b2b83f4f5fb4f5a1ec4b6bc902d upstream.
 
-Prevent runtime resume/suspend while MS IOCTLs are in progress.
-Failed suspend will call ivpu_ms_cleanup() that would try to acquire
-file_priv->ms_lock, which is already held by the IOCTLs.
+Commit df1ae2251a50 ("media: ov08x40: Add OF probe support") added support
+for a reset GPIO, regulators and a clk provider controlled through new
+ov08x40_power_off() and ov08x40_power_on() functions.
 
-Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250325114306.3740022-3-maciej.falkowski@linux.intel.com
+But it missed adding a pm ops structure to call these functions on
+runtime suspend/resume. Add the missing pm ops and only call
+ov08x40_power_off() on remove() when not already runtime-suspended
+to avoid unbalanced regulator / clock disable calls.
+
+Fixes: df1ae2251a50 ("media: ov08x40: Add OF probe support")
+Cc: stable@vger.kernel.org
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_debugfs.c |    4 ++--
- drivers/accel/ivpu/ivpu_ms.c      |   18 ++++++++++++++++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov08x40.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_debugfs.c
-+++ b/drivers/accel/ivpu/ivpu_debugfs.c
-@@ -331,7 +331,7 @@ ivpu_force_recovery_fn(struct file *file
- 		return -EINVAL;
+--- a/drivers/media/i2c/ov08x40.c
++++ b/drivers/media/i2c/ov08x40.c
+@@ -2324,11 +2324,14 @@ static void ov08x40_remove(struct i2c_cl
+ 	ov08x40_free_controls(ov08x);
  
- 	ret = ivpu_rpm_get(vdev);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
- 
- 	ivpu_pm_trigger_recovery(vdev, "debugfs");
-@@ -382,7 +382,7 @@ static int dct_active_set(void *data, u6
- 		return -EINVAL;
- 
- 	ret = ivpu_rpm_get(vdev);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
- 
- 	if (active_percent)
---- a/drivers/accel/ivpu/ivpu_ms.c
-+++ b/drivers/accel/ivpu/ivpu_ms.c
-@@ -44,6 +44,10 @@ int ivpu_ms_start_ioctl(struct drm_devic
- 	    args->sampling_period_ns < MS_MIN_SAMPLE_PERIOD_NS)
- 		return -EINVAL;
- 
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
-+
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	if (get_instance_by_mask(file_priv, args->metric_group_mask)) {
-@@ -96,6 +100,8 @@ err_free_ms:
- 	kfree(ms);
- unlock:
- 	mutex_unlock(&file_priv->ms_lock);
-+
-+	ivpu_rpm_put(vdev);
- 	return ret;
+ 	pm_runtime_disable(&client->dev);
++	if (!pm_runtime_status_suspended(&client->dev))
++		ov08x40_power_off(&client->dev);
+ 	pm_runtime_set_suspended(&client->dev);
+-
+-	ov08x40_power_off(&client->dev);
  }
  
-@@ -160,6 +166,10 @@ int ivpu_ms_get_data_ioctl(struct drm_de
- 	if (!args->metric_group_mask)
- 		return -EINVAL;
- 
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
++static DEFINE_RUNTIME_DEV_PM_OPS(ov08x40_pm_ops, ov08x40_power_off,
++				 ov08x40_power_on, NULL);
 +
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
-@@ -187,6 +197,7 @@ int ivpu_ms_get_data_ioctl(struct drm_de
- unlock:
- 	mutex_unlock(&file_priv->ms_lock);
- 
-+	ivpu_rpm_put(vdev);
- 	return ret;
- }
- 
-@@ -204,11 +215,17 @@ int ivpu_ms_stop_ioctl(struct drm_device
- {
- 	struct ivpu_file_priv *file_priv = file->driver_priv;
- 	struct drm_ivpu_metric_streamer_stop *args = data;
-+	struct ivpu_device *vdev = file_priv->vdev;
- 	struct ivpu_ms_instance *ms;
-+	int ret;
- 
- 	if (!args->metric_group_mask)
- 		return -EINVAL;
- 
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
-+
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
-@@ -217,6 +234,7 @@ int ivpu_ms_stop_ioctl(struct drm_device
- 
- 	mutex_unlock(&file_priv->ms_lock);
- 
-+	ivpu_rpm_put(vdev);
- 	return ms ? 0 : -EINVAL;
- }
- 
+ #ifdef CONFIG_ACPI
+ static const struct acpi_device_id ov08x40_acpi_ids[] = {
+ 	{"OVTI08F4"},
+@@ -2349,6 +2352,7 @@ static struct i2c_driver ov08x40_i2c_dri
+ 		.name = "ov08x40",
+ 		.acpi_match_table = ACPI_PTR(ov08x40_acpi_ids),
+ 		.of_match_table = ov08x40_of_match,
++		.pm = pm_sleep_ptr(&ov08x40_pm_ops),
+ 	},
+ 	.probe = ov08x40_probe,
+ 	.remove = ov08x40_remove,
 
 
