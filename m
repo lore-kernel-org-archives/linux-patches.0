@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839BD1D07BA;
-	Thu, 17 Apr 2025 18:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796048462;
+	Thu, 17 Apr 2025 18:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915207; cv=none; b=YLo8u7UxvnU+vqQCZoGvoig/fG54tIgJ6MvPPiQ04/rMHUZm3ZKn1N1RXBl+ew+iqp16XL1D24/QqK0LVjmUDpPem3Pw6M75kXM7tYnrFBKvtRo9+r9A19kEnRUMMxoexTvEMtjOsmbexkp3J2mpTVOVB3Ur9TNEgLZYTnevHSI=
+	t=1744915210; cv=none; b=MWDg9JmIABLKiHAYR0E0eN1egGJwmuQgxAXL7s3yW9xCCBBiwUaF6WF2bfh/Et5y2Ajf7fgX+Qp/EA2pbGUHX9WY7Jassznoh7hXGyU07Fnd67hj6DXXbTO/dNablET4JeW9/NSq6es1adh0g6O70h3ioLCtxt9LprsmctKD0mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915207; c=relaxed/simple;
-	bh=9odaS8Oa+k7u7d9SEi0WKhYC7grzUViPd8pdVYO4we8=;
+	s=arc-20240116; t=1744915210; c=relaxed/simple;
+	bh=tkUViCoUAXEiqqBkNenO5l9wG/9Lhr10TKzA2Lt+8bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1o+1Uyv/xYxjn494ONDxN3hNyPyez206rD0/Oz5dIzOW/6fVV5j+F4hvp/J+FuQqg88F8pCvjLmQ5mXaeG792E0x3vTvgacIUj1zg679VWwQjIzwF+gxUtLv5zZ6xw2TzrA2WCyhOc16fCOLKepMiXiPt3iwG/ZsXtsODmMgvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ek6iSG/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daJ0UEcTUHx05iYVxLuWid3K3bUtG/M1Zx5hKQNUJqWM9C+NkG8U8e4qLAhHrPExLqWgz/XDt77X7k2yGZu5cSw7+X0cHPVMvnD+Sv1PVsaBOA5wAhdhCUgafXy6L+PtkqpMAVk13t1GjpzTcfI5WHEiY2aTKFd81/aLvtKhG4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN3LKfru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ek6iSG/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7FBC4CEE7;
-	Thu, 17 Apr 2025 18:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN3LKfru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EDDC4CEE4;
+	Thu, 17 Apr 2025 18:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915207;
-	bh=9odaS8Oa+k7u7d9SEi0WKhYC7grzUViPd8pdVYO4we8=;
+	s=korg; t=1744915210;
+	bh=tkUViCoUAXEiqqBkNenO5l9wG/9Lhr10TKzA2Lt+8bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek6iSG/V4QUDoo0w+ojTA8BHJOMNiVNOFJY99Z1TIkQ+8hNfPyF3Ofqa5+L9yEvGH
-	 KNZwebP1PkQ5o2kONO2xfUYnb/6YGTAE9yBs3bTAjvZ4tbfPVQccy6GHXw07sLshXz
-	 60Cq0gqRdrZU/MkZ3KXtzCFC60pNAMQ5t6z1cFZI=
+	b=EN3LKfruKnxTED7vE220OgfgldySQwQiL6sqlbaa9nrQK9mmFulXsDX2OuSlB/Ci1
+	 lGZ0l9MhPCaNYhTTeZ6jJHVbd8ulG4OVlv+btcXtjfD/ecnEhUs+D/lLrelZkbLB52
+	 JZj1cJCfsiC0I4kiGJC43QJ316VJU12ZHTkS3zRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Philipp Stanner <phasta@mailbox.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/393] perf: arm_pmu: Dont disable counter in armpmu_add()
-Date: Thu, 17 Apr 2025 19:47:41 +0200
-Message-ID: <20250417175109.680896886@linuxfoundation.org>
+Subject: [PATCH 6.12 026/393] drm/tests: modes: Fix drm_display_mode memory leak
+Date: Thu, 17 Apr 2025 19:47:15 +0200
+Message-ID: <20250417175108.643506021@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -54,65 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit dcca27bc1eccb9abc2552aab950b18a9742fb8e7 ]
+[ Upstream commit d34146340f95cd9bf06d4ce71cca72127dc0b7cd ]
 
-Currently armpmu_add() tries to handle a newly-allocated counter having
-a stale associated event, but this should not be possible, and if this
-were to happen the current mitigation is insufficient and potentially
-expensive. It would be better to warn if we encounter the impossible
-case.
+drm_analog_tv_mode() and its variants return a drm_display_mode that
+needs to be destroyed later one. The drm_modes_analog_tv tests never
+do however, which leads to a memory leak.
 
-Calls to pmu::add() and pmu::del() are serialized by the core perf code,
-and armpmu_del() clears the relevant slot in pmu_hw_events::events[]
-before clearing the bit in pmu_hw_events::used_mask such that the
-counter can be reallocated. Thus when armpmu_add() allocates a counter
-index from pmu_hw_events::used_mask, it should not be possible to observe
-a stale even in pmu_hw_events::events[] unless either
-pmu_hw_events::used_mask or pmu_hw_events::events[] have been corrupted.
+Let's make sure it's freed.
 
-If this were to happen, we'd end up with two events with the same
-event->hw.idx, which would clash with each other during reprogramming,
-deletion, etc, and produce bogus results. Add a WARN_ON_ONCE() for this
-case so that we can detect if this ever occurs in practice.
-
-That possiblity aside, there's no need to call arm_pmu::disable(event)
-for the new event. The PMU reset code initialises the counter in a
-disabled state, and armpmu_del() will disable the counter before it can
-be reused. Remove the redundant disable.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Tested-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250218-arm-brbe-v19-v20-2-4e9922fc2e8e@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: Philipp Stanner <phasta@mailbox.org>
+Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
+Fixes: 4fcd238560ee ("drm/modes: Add a function to generate analog display modes")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-5-996305a2e75a@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_pmu.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/tests/drm_modes_test.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
-index 398cce3d76fc4..2f33e69a8caf2 100644
---- a/drivers/perf/arm_pmu.c
-+++ b/drivers/perf/arm_pmu.c
-@@ -342,12 +342,10 @@ armpmu_add(struct perf_event *event, int flags)
- 	if (idx < 0)
- 		return idx;
+diff --git a/drivers/gpu/drm/tests/drm_modes_test.c b/drivers/gpu/drm/tests/drm_modes_test.c
+index 6ed51f99e133c..7ba646d87856f 100644
+--- a/drivers/gpu/drm/tests/drm_modes_test.c
++++ b/drivers/gpu/drm/tests/drm_modes_test.c
+@@ -40,6 +40,7 @@ static void drm_test_modes_analog_tv_ntsc_480i(struct kunit *test)
+ {
+ 	struct drm_test_modes_priv *priv = test->priv;
+ 	struct drm_display_mode *mode;
++	int ret;
  
--	/*
--	 * If there is an event in the counter we are going to use then make
--	 * sure it is disabled.
--	 */
-+	/* The newly-allocated counter should be empty */
-+	WARN_ON_ONCE(hw_events->events[idx]);
+ 	mode = drm_analog_tv_mode(priv->drm,
+ 				  DRM_MODE_TV_MODE_NTSC,
+@@ -47,6 +48,9 @@ static void drm_test_modes_analog_tv_ntsc_480i(struct kunit *test)
+ 				  true);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, mode);
++	KUNIT_ASSERT_EQ(test, ret, 0);
 +
- 	event->hw.idx = idx;
--	armpmu->disable(event);
- 	hw_events->events[idx] = event;
+ 	KUNIT_EXPECT_EQ(test, drm_mode_vrefresh(mode), 60);
+ 	KUNIT_EXPECT_EQ(test, mode->hdisplay, 720);
  
- 	hwc->state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
+@@ -70,6 +74,7 @@ static void drm_test_modes_analog_tv_ntsc_480i_inlined(struct kunit *test)
+ {
+ 	struct drm_test_modes_priv *priv = test->priv;
+ 	struct drm_display_mode *expected, *mode;
++	int ret;
+ 
+ 	expected = drm_analog_tv_mode(priv->drm,
+ 				      DRM_MODE_TV_MODE_NTSC,
+@@ -77,9 +82,15 @@ static void drm_test_modes_analog_tv_ntsc_480i_inlined(struct kunit *test)
+ 				      true);
+ 	KUNIT_ASSERT_NOT_NULL(test, expected);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, expected);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
+ 	mode = drm_mode_analog_ntsc_480i(priv->drm);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, mode);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
+ 	KUNIT_EXPECT_TRUE(test, drm_mode_equal(expected, mode));
+ }
+ 
+@@ -87,6 +98,7 @@ static void drm_test_modes_analog_tv_pal_576i(struct kunit *test)
+ {
+ 	struct drm_test_modes_priv *priv = test->priv;
+ 	struct drm_display_mode *mode;
++	int ret;
+ 
+ 	mode = drm_analog_tv_mode(priv->drm,
+ 				  DRM_MODE_TV_MODE_PAL,
+@@ -94,6 +106,9 @@ static void drm_test_modes_analog_tv_pal_576i(struct kunit *test)
+ 				  true);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, mode);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
+ 	KUNIT_EXPECT_EQ(test, drm_mode_vrefresh(mode), 50);
+ 	KUNIT_EXPECT_EQ(test, mode->hdisplay, 720);
+ 
+@@ -117,6 +132,7 @@ static void drm_test_modes_analog_tv_pal_576i_inlined(struct kunit *test)
+ {
+ 	struct drm_test_modes_priv *priv = test->priv;
+ 	struct drm_display_mode *expected, *mode;
++	int ret;
+ 
+ 	expected = drm_analog_tv_mode(priv->drm,
+ 				      DRM_MODE_TV_MODE_PAL,
+@@ -124,9 +140,15 @@ static void drm_test_modes_analog_tv_pal_576i_inlined(struct kunit *test)
+ 				      true);
+ 	KUNIT_ASSERT_NOT_NULL(test, expected);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, expected);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
+ 	mode = drm_mode_analog_pal_576i(priv->drm);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
+ 
++	ret = drm_kunit_add_mode_destroy_action(test, mode);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
+ 	KUNIT_EXPECT_TRUE(test, drm_mode_equal(expected, mode));
+ }
+ 
 -- 
 2.39.5
 
