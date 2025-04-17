@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0060325525C;
-	Thu, 17 Apr 2025 18:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F0A25525C;
+	Thu, 17 Apr 2025 18:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915902; cv=none; b=jZ+XWMuiLbs4Yr5dZRIXM7UEXZWXD2rOcRXL1wWrOvg3aIj1hJ/DZPY2nni/Z+WCn4j9amKnFjnrkhiIU9mN+y0Dki2oUJCRLdGLCYAHKesn6UXhG7sujGjFlv8rfkHmeUh5HErNhWo/KxpIO2zu0PSpOvarA04Eegbxuy2qa7M=
+	t=1744915905; cv=none; b=MNDyJPjERtDeJC+LAfSGR+WbaMbs+eq19vRikcOYsnJPuiSA3BdftQO2daAwBrkREaSETL5Hb7G9gN3BCijaioeDynKumdlACnR8asflF7hoeEqW8YmrB/IFq66ROSDThY6QmZd89o3cuEv//M+Baj2qIn7v8gBneAWvt7BRJ34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915902; c=relaxed/simple;
-	bh=/295lFogW39KqCvpD3SxiH0yR8xGP5IVJfUYpQUYBDU=;
+	s=arc-20240116; t=1744915905; c=relaxed/simple;
+	bh=ItF+ole/2C2yIz546BP5na7eBWvQf83YE8ij0FlUIbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZRt0v9QUKcxJDii1+Jp/B7j99fCK9bE2rEuuirj4TDCJXao7X0p+1Pf6pWrtxkQKZv8UMlmRfBbKJGSiWkpm3UgDugXbPwKRb6nEiZA4NSuEgVwPrPUnZofshG/u/uAoxwFfIGceUO6OelPDuA/mdGek9H4S0HCowIUr+rBHZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLxB7cxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tPosBF5fCEvp1dyao6DQKUSIZO1ZvpSq5GUZ+hTMaqw9ZyOBCuNJDsIfoQSuzJe2UF1VHB7sgOQmkip8VzV7iWbgqZK/QRdY/ccWbvu59ywbRwkcp3wKaPlzL/N3j74Dyyb0kDNgH14bOg87KDs5cZ9AdOssonxF8OJTMQ/SiVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTnzhQdF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLxB7cxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A23C4CEE4;
-	Thu, 17 Apr 2025 18:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTnzhQdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB7FC4CEE4;
+	Thu, 17 Apr 2025 18:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915901;
-	bh=/295lFogW39KqCvpD3SxiH0yR8xGP5IVJfUYpQUYBDU=;
+	s=korg; t=1744915904;
+	bh=ItF+ole/2C2yIz546BP5na7eBWvQf83YE8ij0FlUIbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLxB7cxw1yTcAeGzN1s7mVDHhQnXwu4kehoDDkghnvNkmDQl2/BeNs0fm8Cz6ge1o
-	 GYoem201vxPrDhRWJwh/123kloUFeavyPMV44eihITk629gfg+j4DVDbhkALcDDO/H
-	 uRzSkiFAhkvfqx4YVJ7TaysVqwKG4Haxpu86+iCA=
+	b=dTnzhQdF8ml81LhlSmMoPjOouYNZoTiC18RvOAxzqGUbFB7NyFGYjbXaHcuvAjOmv
+	 P63IUnAA8QqDVYb0wbnKbPlBUdn5DESoRt0Ed30SWb5pmO3aX6J7AvF/Ipl5a87ZXj
+	 wmZKkMJkV+sW+uy+nVtsMKDw0NUFHZH5FVR/tIVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 6.12 277/393] mailbox: tegra-hsp: Define dimensioning masks in SoC data
-Date: Thu, 17 Apr 2025 19:51:26 +0200
-Message-ID: <20250417175118.753199736@linuxfoundation.org>
+	Boqun Feng <boqun.feng@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 6.12 278/393] locking/lockdep: Decrease nr_unused_locks if lock unused in zap_class()
+Date: Thu, 17 Apr 2025 19:51:27 +0200
+Message-ID: <20250417175118.792098689@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,160 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Boqun Feng <boqun.feng@gmail.com>
 
-commit bf0c9fb462038815f5f502653fb6dba06e6af415 upstream.
+commit 495f53d5cca0f939eaed9dca90b67e7e6fb0e30c upstream.
 
-Tegra264 has updated HSP_INT_DIMENSIONING register as follows:
-	* nSI is now BIT17:BIT21.
-	* nDB is now BIT12:BIT16.
+Currently, when a lock class is allocated, nr_unused_locks will be
+increased by 1, until it gets used: nr_unused_locks will be decreased by
+1 in mark_lock(). However, one scenario is missed: a lock class may be
+zapped without even being used once. This could result into a situation
+that nr_unused_locks != 0 but no unused lock class is active in the
+system, and when `cat /proc/lockdep_stats`, a WARN_ON() will
+be triggered in a CONFIG_DEBUG_LOCKDEP=y kernel:
 
-Currently, we are using a static macro HSP_nINT_MASK to get the values
-from HSP_INT_DIMENSIONING register. This results in wrong values for nSI
-for HSP instances that supports 16 shared interrupts.
+  [...] DEBUG_LOCKS_WARN_ON(debug_atomic_read(nr_unused_locks) != nr_unused)
+  [...] WARNING: CPU: 41 PID: 1121 at kernel/locking/lockdep_proc.c:283 lockdep_stats_show+0xba9/0xbd0
 
-Define dimensioning masks in soc data and use them to parse nSI, nDB,
-nAS, nSS & nSM values.
+And as a result, lockdep will be disabled after this.
 
-Fixes: 602dbbacc3ef ("mailbox: tegra: add support for Tegra264")
+Therefore, nr_unused_locks needs to be accounted correctly at
+zap_class() time.
+
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://lore.kernel.org/r/20250326180831.510348-1-boqun.feng@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/tegra-hsp.c |   72 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 60 insertions(+), 12 deletions(-)
+ kernel/locking/lockdep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2016-2023, NVIDIA CORPORATION.  All rights reserved.
-+ * Copyright (c) 2016-2025, NVIDIA CORPORATION.  All rights reserved.
-  */
- 
- #include <linux/delay.h>
-@@ -28,12 +28,6 @@
- #define HSP_INT_FULL_MASK	0xff
- 
- #define HSP_INT_DIMENSIONING	0x380
--#define HSP_nSM_SHIFT		0
--#define HSP_nSS_SHIFT		4
--#define HSP_nAS_SHIFT		8
--#define HSP_nDB_SHIFT		12
--#define HSP_nSI_SHIFT		16
--#define HSP_nINT_MASK		0xf
- 
- #define HSP_DB_TRIGGER	0x0
- #define HSP_DB_ENABLE	0x4
-@@ -97,6 +91,20 @@ struct tegra_hsp_soc {
- 	bool has_per_mb_ie;
- 	bool has_128_bit_mb;
- 	unsigned int reg_stride;
-+
-+	/* Shifts for dimensioning register. */
-+	unsigned int si_shift;
-+	unsigned int db_shift;
-+	unsigned int as_shift;
-+	unsigned int ss_shift;
-+	unsigned int sm_shift;
-+
-+	/* Masks for dimensioning register. */
-+	unsigned int si_mask;
-+	unsigned int db_mask;
-+	unsigned int as_mask;
-+	unsigned int ss_mask;
-+	unsigned int sm_mask;
- };
- 
- struct tegra_hsp {
-@@ -747,11 +755,11 @@ static int tegra_hsp_probe(struct platfo
- 		return PTR_ERR(hsp->regs);
- 
- 	value = tegra_hsp_readl(hsp, HSP_INT_DIMENSIONING);
--	hsp->num_sm = (value >> HSP_nSM_SHIFT) & HSP_nINT_MASK;
--	hsp->num_ss = (value >> HSP_nSS_SHIFT) & HSP_nINT_MASK;
--	hsp->num_as = (value >> HSP_nAS_SHIFT) & HSP_nINT_MASK;
--	hsp->num_db = (value >> HSP_nDB_SHIFT) & HSP_nINT_MASK;
--	hsp->num_si = (value >> HSP_nSI_SHIFT) & HSP_nINT_MASK;
-+	hsp->num_sm = (value >> hsp->soc->sm_shift) & hsp->soc->sm_mask;
-+	hsp->num_ss = (value >> hsp->soc->ss_shift) & hsp->soc->ss_mask;
-+	hsp->num_as = (value >> hsp->soc->as_shift) & hsp->soc->as_mask;
-+	hsp->num_db = (value >> hsp->soc->db_shift) & hsp->soc->db_mask;
-+	hsp->num_si = (value >> hsp->soc->si_shift) & hsp->soc->si_mask;
- 
- 	err = platform_get_irq_byname_optional(pdev, "doorbell");
- 	if (err >= 0)
-@@ -915,6 +923,16 @@ static const struct tegra_hsp_soc tegra1
- 	.has_per_mb_ie = false,
- 	.has_128_bit_mb = false,
- 	.reg_stride = 0x100,
-+	.si_shift = 16,
-+	.db_shift = 12,
-+	.as_shift = 8,
-+	.ss_shift = 4,
-+	.sm_shift = 0,
-+	.si_mask = 0xf,
-+	.db_mask = 0xf,
-+	.as_mask = 0xf,
-+	.ss_mask = 0xf,
-+	.sm_mask = 0xf,
- };
- 
- static const struct tegra_hsp_soc tegra194_hsp_soc = {
-@@ -922,6 +940,16 @@ static const struct tegra_hsp_soc tegra1
- 	.has_per_mb_ie = true,
- 	.has_128_bit_mb = false,
- 	.reg_stride = 0x100,
-+	.si_shift = 16,
-+	.db_shift = 12,
-+	.as_shift = 8,
-+	.ss_shift = 4,
-+	.sm_shift = 0,
-+	.si_mask = 0xf,
-+	.db_mask = 0xf,
-+	.as_mask = 0xf,
-+	.ss_mask = 0xf,
-+	.sm_mask = 0xf,
- };
- 
- static const struct tegra_hsp_soc tegra234_hsp_soc = {
-@@ -929,6 +957,16 @@ static const struct tegra_hsp_soc tegra2
- 	.has_per_mb_ie = false,
- 	.has_128_bit_mb = true,
- 	.reg_stride = 0x100,
-+	.si_shift = 16,
-+	.db_shift = 12,
-+	.as_shift = 8,
-+	.ss_shift = 4,
-+	.sm_shift = 0,
-+	.si_mask = 0xf,
-+	.db_mask = 0xf,
-+	.as_mask = 0xf,
-+	.ss_mask = 0xf,
-+	.sm_mask = 0xf,
- };
- 
- static const struct tegra_hsp_soc tegra264_hsp_soc = {
-@@ -936,6 +974,16 @@ static const struct tegra_hsp_soc tegra2
- 	.has_per_mb_ie = false,
- 	.has_128_bit_mb = true,
- 	.reg_stride = 0x1000,
-+	.si_shift = 17,
-+	.db_shift = 12,
-+	.as_shift = 8,
-+	.ss_shift = 4,
-+	.sm_shift = 0,
-+	.si_mask = 0x1f,
-+	.db_mask = 0x1f,
-+	.as_mask = 0xf,
-+	.ss_mask = 0xf,
-+	.sm_mask = 0xf,
- };
- 
- static const struct of_device_id tegra_hsp_match[] = {
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -6223,6 +6223,9 @@ static void zap_class(struct pending_fre
+ 		hlist_del_rcu(&class->hash_entry);
+ 		WRITE_ONCE(class->key, NULL);
+ 		WRITE_ONCE(class->name, NULL);
++		/* Class allocated but not used, -1 in nr_unused_locks */
++		if (class->usage_mask == 0)
++			debug_atomic_dec(nr_unused_locks);
+ 		nr_lock_classes--;
+ 		__clear_bit(class - lock_classes, lock_classes_in_use);
+ 		if (class - lock_classes == max_lock_class_idx)
 
 
