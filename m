@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891C418C034;
-	Thu, 17 Apr 2025 18:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5038C25525A;
+	Thu, 17 Apr 2025 18:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912872; cv=none; b=N3n2IsRuNTViKLGyvQuFOWANz9T1OLqhj5Se+1LQV9YXuK7B2R0A8Pp6kkxiiVU23wW4iMn5hRUqJFFjCxbD4tLgr8QEuk/n09V3HLpLsQPqPjO7IIBGQMIEUPnJPx3rfvjzpqy/0b2yiNvxSUWZBNArwPeSNxr/0VHGT0C6Heo=
+	t=1744912875; cv=none; b=kF+RkTWVNgkGz8FyiAfS2n0F/sUCAe/EHrTAxDyYALK8lo2rwxQvIPGGhfoUpNK3DB1R0csc38XXa31l/Nqc6lmx3nHBX601bgYR8YQ3OSZ8d9lozQTgfops4L+1zPsI0FUfTDLQcDIDf0VGdtkaLIYeQJDG7HZYv1rFnZcRDdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912872; c=relaxed/simple;
-	bh=jlm/7KJQIsYu8nh0Zwj9CslerRFYlo/+nV2IkFI/QCo=;
+	s=arc-20240116; t=1744912875; c=relaxed/simple;
+	bh=dzNgHZCSDFf0u+QMvGbtNtvmap0ngD/iWEcmXCr29n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlP2L+1AS0fFewLYW7sW3Vy6qDRMrf/Wh9jjuHFoBKVIxCAhpCyifX5XtMUP4XQT9gL+JtlwAlZLWabhebDz8qA8DBg9NLQ6I8sNtBjEMG5t6Wo/wDkcvL3wAl8LsvkjWIgDAKisB5+fmERgB6B5+A7EW0tAZA84eJ3VICeOR5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIHsA5X/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTx4ZpzXjPV5IFz6BYmpc46Xi0n/9yIo/aC4DbrGi2Hv5Vk0X+Nummt6vg09Rokfh0rhUKG8DU4Ng7zsltfqztI5ijE76SeMuk91B20g5bgON/F05i0kTsOyMk/8uTJ63VsQ8TBxeAg5OOOo4Hlm1FirjfO549BFzZ3/OxQ2n6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8sIILyc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIHsA5X/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1B8C4CEEA;
-	Thu, 17 Apr 2025 18:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8sIILyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D729FC4CEE4;
+	Thu, 17 Apr 2025 18:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912872;
-	bh=jlm/7KJQIsYu8nh0Zwj9CslerRFYlo/+nV2IkFI/QCo=;
+	s=korg; t=1744912875;
+	bh=dzNgHZCSDFf0u+QMvGbtNtvmap0ngD/iWEcmXCr29n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIHsA5X/ObGIOkPtt5pg/W/YNtcLrD+nwt1pbHG+0y7LCExe3HtG96bvyPLQz6cbk
-	 MJ1i/U4yVxj359gpfGnIQfujKdCznDVOZFE0bP3zWOUVgLy2ZmNP4B5qpEbPo0cnpd
-	 GLuyawnjxoYlGtqSlVbN04yA9GZEcC/jybg9EMGA=
+	b=h8sIILycp+bF/N26qo8Af7IHmtedXWb/G4OFkPMNQ6Fbe1ctxr0aFcVMemgCxdaXh
+	 MU6ylcnEW81W5YlWWTaeo+OFWvriIKECuZsIlyI/7CQNYlsQBdk4sR7xyyXgWs4loV
+	 N+gYsk/P5tfTVvCBn0DVs2ICn4WIvJ+xYb8dZNZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Aberback <joshua.aberback@amd.com>,
-	Sung Lee <Sung.Lee@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Brendan Tam <Brendan.Tam@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 152/449] drm/amd/display: Guard Possible Null Pointer Dereference
-Date: Thu, 17 Apr 2025 19:47:20 +0200
-Message-ID: <20250417175124.094177860@linuxfoundation.org>
+Subject: [PATCH 6.14 153/449] drm/amd/display: add workaround flag to link to force FFE preset
+Date: Thu, 17 Apr 2025 19:47:21 +0200
+Message-ID: <20250417175124.134090945@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,45 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Lee <Sung.Lee@amd.com>
+From: Brendan Tam <Brendan.Tam@amd.com>
 
-[ Upstream commit c87d202692de34ee71d1fd4679a549a29095658a ]
+[ Upstream commit 51d1b338541dea83fec8e6f95d3e46fa469a73a8 ]
 
-[WHY]
-In some situations, dc->res_pool may be null.
+[Why]
+There have been instances of some monitors being unable to link train on
+their reported link speed using their selected FFE preset. If a different
+FFE preset is found that has a higher rate of success during link training
+this workaround can be used to force its FFE preset.
 
-[HOW]
-Check if pointer is null before dereference.
+[How]
+A new link workaround flag is made called force_dp_ffe_preset. The flag is
+checked in override_training_settings and will set lt_settings->ffe_preset
+which is null if the flag is not set. The flag is then set in
+override_lane_settings.
 
-Reviewed-by: Joshua Aberback <joshua.aberback@amd.com>
-Signed-off-by: Sung Lee <Sung.Lee@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Brendan Tam <Brendan.Tam@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                             | 2 ++
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c    | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index f84e795e35f58..4683c7ef4507f 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -5549,9 +5549,11 @@ void dc_allow_idle_optimizations_internal(struct dc *dc, bool allow, char const
- 	if (dc->clk_mgr != NULL && dc->clk_mgr->funcs->get_hard_min_memclk)
- 		idle_dramclk_khz = dc->clk_mgr->funcs->get_hard_min_memclk(dc->clk_mgr);
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 053481ab69efb..ab77dcbc10584 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1788,7 +1788,9 @@ struct dc_link {
+ 		bool dongle_mode_timing_override;
+ 		bool blank_stream_on_ocs_change;
+ 		bool read_dpcd204h_on_irq_hpd;
++		bool force_dp_ffe_preset;
+ 	} wa_flags;
++	union dc_dp_ffe_preset forced_dp_ffe_preset;
+ 	struct link_mst_stream_allocation_table mst_stream_alloc_table;
  
--	for (i = 0; i < dc->res_pool->pipe_count; i++) {
--		pipe = &context->res_ctx.pipe_ctx[i];
--		subvp_pipe_type[i] = dc_state_get_pipe_subvp_type(context, pipe);
-+	if (dc->res_pool && context) {
-+		for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+			pipe = &context->res_ctx.pipe_ctx[i];
-+			subvp_pipe_type[i] = dc_state_get_pipe_subvp_type(context, pipe);
-+		}
- 	}
- 
- 	DC_LOG_DC("%s: allow_idle=%d\n HardMinUClk_Khz=%d HardMinDramclk_Khz=%d\n Pipe_0=%d Pipe_1=%d Pipe_2=%d Pipe_3=%d Pipe_4=%d Pipe_5=%d (caller=%s)\n",
+ 	struct dc_link_status link_status;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 88d4288cde0f5..751c18e592ea5 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -736,6 +736,8 @@ void override_training_settings(
+ 		lt_settings->pre_emphasis = overrides->pre_emphasis;
+ 	if (overrides->post_cursor2 != NULL)
+ 		lt_settings->post_cursor2 = overrides->post_cursor2;
++	if (link->wa_flags.force_dp_ffe_preset && !dp_is_lttpr_present(link))
++		lt_settings->ffe_preset = &link->forced_dp_ffe_preset;
+ 	if (overrides->ffe_preset != NULL)
+ 		lt_settings->ffe_preset = overrides->ffe_preset;
+ 	/* Override HW lane settings with BIOS forced values if present */
 -- 
 2.39.5
 
