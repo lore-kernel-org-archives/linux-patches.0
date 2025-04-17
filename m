@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DB3256C9C;
-	Thu, 17 Apr 2025 18:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583892566F7;
+	Thu, 17 Apr 2025 18:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914195; cv=none; b=co/1zDQv8+XaewOqrKzdud+KoEYTrKh99m2aYml03vaht6kA5m87hZSzCYT9IO1sX1plHtSYZGiMH4Dd5YwmlzOIw0G40pULbVKOMeoneP0PHrivEfTIYAF+qirBEjkSwfCzhXJlQszon4XQWvwUVmnlbvxJM/YUlI2tCGD3ExY=
+	t=1744914198; cv=none; b=deNfASQhUv240xF0tUTn6ES8Ph2Cp58BjLxzUFa/06Weo5qD6KN1bzxLVDQjAEB0gv0QSA5xKyAfezhTaFpiAtNqDbfLIA58ume25RWO3Uoczh6zjUdE2WKdioI67g9ibogQfnI8enRUIxnR6p40vbsiNv9bGhklE9u+pIocPkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914195; c=relaxed/simple;
-	bh=GtWRa79q/gt3FUJr8tUQHWVEeDQWqbmwulO+nAyowwg=;
+	s=arc-20240116; t=1744914198; c=relaxed/simple;
+	bh=Bchjme8NrHtbWaQh9iBJXOGfj8jGRJZDMPzjLIF+8kU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZ9T6D/TFogF+2R8Zl1gW1sB9B2fpw2pt6AUg5tIeMbXwS6Ctuq13hE+Q5Nr19iq+lh+QotFXm0J8/Z+aHI9dHX1JSZJ3ZEr+tgFjfJb/xUKlFoTWADPWULG0PJUIxJRcni7qMbTG2Ul89LGn7mQoyiQSDlKxb26oPs960vFMDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPbdKc1m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eM3zXLGelYgdjk0bqBja5HWpZ78BUgHVJSYbC78sqsB1XaoTcyLMAH0Dkn/TBPoa2hnj8GCi9Vknihv/YWE4qJxy878veS+EFMIhqv1epqT47/0OWozXrwF+HjYRCBq953FHwZVezvo81bMaJ+zKFlf6GqPMDeUpiLB4oRKEZQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8kf0Laa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPbdKc1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60F8C4CEE4;
-	Thu, 17 Apr 2025 18:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8kf0Laa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7549C4CEE4;
+	Thu, 17 Apr 2025 18:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914195;
-	bh=GtWRa79q/gt3FUJr8tUQHWVEeDQWqbmwulO+nAyowwg=;
+	s=korg; t=1744914198;
+	bh=Bchjme8NrHtbWaQh9iBJXOGfj8jGRJZDMPzjLIF+8kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cPbdKc1mNagqbdA2dwSu7KLbcTulKGtBeaaivORXEzpXimyjL4cHvU9gKVIudWZoO
-	 J3OH7FeAviwVGdy+fywXZ8E4Aev2wriofIJmaKshz111U/qsdosoA3PydYp6/UHhIF
-	 ni8zE3TeTBygDB9JdHCzfGTPFT4gQHFxpRYjfXv0=
+	b=j8kf0LaaQAY8h+gopekMkO7MDoUqo0+z/hFIbNXDaxflYy04z0aSOWGBNtPCha67Y
+	 L0I8SOGQMIjWSKpUnfynw2feMWXdu5E0ertHQro8u3mdAHbxd/8O/j5hRfrFZ+5kCV
+	 gkdjNOKXQDqAyi0CbImH5s6xMXSkdRRc7smNg7eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrew Wyatt <fewtarius@steamfork.org>,
 	John Edwards <uejji@uejji.net>,
-	Paco Avelar <pacoavelar@hotmail.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 137/414] drm: panel-orientation-quirks: Add quirks for AYA NEO Flip DS and KB
-Date: Thu, 17 Apr 2025 19:48:15 +0200
-Message-ID: <20250417175116.944294925@linuxfoundation.org>
+Subject: [PATCH 6.13 138/414] drm: panel-orientation-quirks: Add quirk for AYA NEO Slide
+Date: Thu, 17 Apr 2025 19:48:16 +0200
+Message-ID: <20250417175116.984179531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -56,62 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrew Wyatt <fewtarius@steamfork.org>
 
-[ Upstream commit 529741c331da1fbf54f86c6ec3a4558b9b0b16dc ]
+[ Upstream commit 132c89ef8872e602cfb909377815111d121fe8d7 ]
 
-The AYA NEO Flip DS and KB both use a 1080x1920 portrait LCD panel.  The
-Flip DS additionally uses a 640x960 portrait LCD panel as a second display.
+The AYANEO Slide uses a 1080x1920 portrait LCD panel.  This is the same
+panel used on the AYANEO Air Plus, but the DMI data is too different to
+match both with one entry.
 
-Add DMI matches to correctly rotate these panels.
+Add a DMI match to correctly rotate the panel on the AYANEO Slide.
+
+This also covers the Antec Core HS, which is a rebranded AYANEO Slide with
+the exact same hardware and DMI strings.
 
 Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Co-developed-by: John Edwards <uejji@uejji.net>
 Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: Paco Avelar <pacoavelar@hotmail.com>
+Tested-by: John Edwards <uejji@uejji.net>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-3-uejji@uejji.net
+Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-4-uejji@uejji.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index f9c975338fc9e..b5f6ae0459459 100644
+index b5f6ae0459459..b57078cfdd80f 100644
 --- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
 +++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -93,6 +93,12 @@ static const struct drm_dmi_panel_orientation_data onegx1_pro = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
- };
- 
-+static const struct drm_dmi_panel_orientation_data lcd640x960_leftside_up = {
-+	.width = 640,
-+	.height = 960,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
-+};
-+
- static const struct drm_dmi_panel_orientation_data lcd720x1280_rightside_up = {
- 	.width = 720,
- 	.height = 1280,
-@@ -202,6 +208,18 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
+@@ -244,6 +244,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
  		},
- 		.driver_data = (void *)&lcd1080x1920_leftside_up,
-+	}, {    /* AYA NEO Flip DS Bottom Screen */
+ 		.driver_data = (void *)&lcd1600x2560_rightside_up,
++	}, {	/* AYA NEO SLIDE */
 +		.matches = {
 +		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "FLIP DS"),
-+		},
-+		.driver_data = (void *)&lcd640x960_leftside_up,
-+	}, {    /* AYA NEO Flip KB/DS Top Screen */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "FLIP"),
++		  DMI_MATCH(DMI_PRODUCT_NAME, "SLIDE"),
 +		},
 +		.driver_data = (void *)&lcd1080x1920_leftside_up,
- 	}, {	/* AYA NEO Founder */
+ 	}, {    /* AYN Loki Max */
  		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYA NEO"),
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
 -- 
 2.39.5
 
