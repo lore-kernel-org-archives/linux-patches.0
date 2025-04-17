@@ -1,38 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23052255246;
-	Thu, 17 Apr 2025 18:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810BA225787;
+	Thu, 17 Apr 2025 18:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915980; cv=none; b=I7RLM2dhTLJt+amd7aOrOdPzWdnaEajvTvo32AW9CJEJG9SUtaMtnmiTC/wBtjfvjNxt4DGOJNR5jeR3I1R4aftgGCkRjQ/XwmzLFLrNVx9/e3k+OXijiMowEZKS9/ZZzq3RNcgt19WK59BueUor50rT4rbpwE1Hyp5mkgUa3zg=
+	t=1744915983; cv=none; b=oXYuW5qRJI968s/VpVpYTVA/WHExVea69FdBHPLtX97I1odcsGpAEPeeQemowp2cbWT9oqUt3qVoh0e6fLqMJlexlFKYWp6zsuj7Ud9GPU9Qn/ps7sooP1rIu7vBK3byT3/B2sdXRVSzLbo6hIJgpEEbviNpj1Nb6l/DsObbOjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915980; c=relaxed/simple;
-	bh=IH9GAb9gRQi9+IZCvfQ4Nl+kYwJD65V/pEk/F3sRRfQ=;
+	s=arc-20240116; t=1744915983; c=relaxed/simple;
+	bh=z6U1NzaYDTS3aTcOj4/EKkQvCvthJ+omQAUqkYIZjKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tn2wWPkqnxUuQOhx/6vDEqI67lTK3XfdmIKrv86qtbeTep1HLqV3nyCw/fdlR3CaYKWjVAOpyn3rCMt/AtDFdrXlM4GE4FfuZ9BSB/72N7yXNRKXRnMRD/oLIZ5XzuPs8RrFsIHsUZocillqtJt/gEkmwqbk8JO5KVPEVurjh30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KmsB9bF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSJ4ScsYZownVebFcI2gkPQEbTRumOiPimxN1S4mdfZcxDbdaXaQ5zJZYnNAlX16AVmfKXYGj5VR6jMN8e4s1B7MIPyniG55hf0X7o1fknLWk5VCnihvMAQE58Q/gDa72J355mdYJ5J4C/gLA2sDRUP0N8hfp8Z1DWuSXqOXo20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTo6lkAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KmsB9bF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9516EC4CEE4;
-	Thu, 17 Apr 2025 18:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTo6lkAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F572C4CEE4;
+	Thu, 17 Apr 2025 18:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915980;
-	bh=IH9GAb9gRQi9+IZCvfQ4Nl+kYwJD65V/pEk/F3sRRfQ=;
+	s=korg; t=1744915983;
+	bh=z6U1NzaYDTS3aTcOj4/EKkQvCvthJ+omQAUqkYIZjKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0KmsB9bFdo9aP3gHYTI2DGLi+6zscVhUgefTOGNv8/gDkM3P009VIzx8CqeG+RSdr
-	 yR+DYnzUzs6aNzkMSFP48OlNUVDAyG9DkJ7EOlNM71NhpGnBSFV3X88pW4KlDXeL53
-	 Fkjb2rly0fgqhCa4S3omu2rjCzqllNmWFjcxi4/g=
+	b=FTo6lkAdjkDyzpxGHRV/YH7nAyyfa5FeL88AlME2tK7Qyfe+1rSIfr0RohlsX1J8h
+	 CEi4+qDPSLP7MEEjbppPd5UYBDWNLmQsANs1wD4gw0ArXS6WJW1lISqu7F1WHQ2hvA
+	 3Aj3QfqOqT5JsD9l2FecIN4CqnmE0DWFPnp8GV58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usamaarif642@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Alex Shi <alexs@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dave Airlie <airlied@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Jerome Glisse <jglisse@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Karol Herbst <kherbst@redhat.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Lyude <lyude@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Xu <peterx@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	SeongJae Park <sj@kernel.org>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Barry Song <v-songbaohua@oppo.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 303/393] mm/damon/ops: have damon_get_folio return folio even for tail pages
-Date: Thu, 17 Apr 2025 19:51:52 +0200
-Message-ID: <20250417175119.798662739@linuxfoundation.org>
+Subject: [PATCH 6.12 304/393] mm/rmap: reject hugetlb folios in folio_make_device_exclusive()
+Date: Thu, 17 Apr 2025 19:51:53 +0200
+Message-ID: <20250417175119.838796543@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,140 +73,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usamaarif642@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 3a06696305e757f652dd0dcf4dfa2272eda39434 upstream.
+commit bc3fe6805cf09a25a086573a17d40e525208c5d8 upstream.
 
-Patch series "mm/damon/paddr: fix large folios access and schemes handling".
+Even though FOLL_SPLIT_PMD on hugetlb now always fails with -EOPNOTSUPP,
+let's add a safety net in case FOLL_SPLIT_PMD usage would ever be
+reworked.
 
-DAMON operations set for physical address space, namely 'paddr', treats
-tail pages as unaccessed always.  It can also apply DAMOS action to a
-large folio multiple times within single DAMOS' regions walking.  As a
-result, the monitoring output has poor quality and DAMOS works in
-unexpected ways when large folios are being used.  Fix those.
+In particular, before commit 9cb28da54643 ("mm/gup: handle hugetlb in the
+generic follow_page_mask code"), GUP(FOLL_SPLIT_PMD) would just have
+returned a page.  In particular, hugetlb folios that are not PMD-sized
+would never have been prone to FOLL_SPLIT_PMD.
 
-The patches were parts of Usama's hugepage_size DAMOS filter patch
-series[1].  The first fix has collected from there with a slight commit
-message change for the subject prefix.  The second fix is re-written by SJ
-and posted as an RFC before this series.  The second one also got a slight
-commit message change for the subject prefix.
+hugetlb folios can be anonymous, and page_make_device_exclusive_one() is
+not really prepared for handling them at all.  So let's spell that out.
 
-[1] https://lore.kernel.org/20250203225604.44742-1-usamaarif642@gmail.com
-[2] https://lore.kernel.org/20250206231103.38298-1-sj@kernel.org
-
-
-This patch (of 2):
-
-This effectively adds support for large folios in damon for paddr, as
-damon_pa_mkold/young won't get a null folio from this function and won't
-ignore it, hence access will be checked and reported.  This also means
-that larger folios will be considered for different DAMOS actions like
-pageout, prioritization and migration.  As these DAMOS actions will
-consider larger folios, iterate through the region at folio_size and not
-PAGE_SIZE intervals.  This should not have an affect on vaddr, as
-damon_young_pmd_entry considers pmd entries.
-
-Link: https://lkml.kernel.org/r/20250207212033.45269-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20250207212033.45269-2-sj@kernel.org
-Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
-Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
+Link: https://lkml.kernel.org/r/20250210193801.781278-3-david@redhat.com
+Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Tested-by: Alistair Popple <apopple@nvidia.com>
+Cc: Alex Shi <alexs@kernel.org>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dave Airlie <airlied@gmail.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Lyude <lyude@redhat.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Yanteng Si <si.yanteng@linux.dev>
+Cc: Barry Song <v-songbaohua@oppo.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |    2 +-
- mm/damon/paddr.c      |   24 ++++++++++++++++++------
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ mm/rmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -24,7 +24,7 @@ struct folio *damon_get_folio(unsigned l
- 	struct page *page = pfn_to_online_page(pfn);
- 	struct folio *folio;
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -2488,7 +2488,7 @@ static bool folio_make_device_exclusive(
+ 	 * Restrict to anonymous folios for now to avoid potential writeback
+ 	 * issues.
+ 	 */
+-	if (!folio_test_anon(folio))
++	if (!folio_test_anon(folio) || folio_test_hugetlb(folio))
+ 		return false;
  
--	if (!page || PageTail(page))
-+	if (!page)
- 		return NULL;
- 
- 	folio = page_folio(page);
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -264,11 +264,14 @@ static unsigned long damon_pa_pageout(st
- 		damos_add_filter(s, filter);
- 	}
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -282,6 +285,7 @@ static unsigned long damon_pa_pageout(st
- 		else
- 			list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	if (install_young_filter)
-@@ -296,11 +300,14 @@ static inline unsigned long damon_pa_mar
- {
- 	unsigned long addr, applied = 0;
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -311,6 +318,7 @@ static inline unsigned long damon_pa_mar
- 			folio_deactivate(folio);
- 		applied += folio_nr_pages(folio);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	return applied * PAGE_SIZE;
-@@ -454,11 +462,14 @@ static unsigned long damon_pa_migrate(st
- 	unsigned long addr, applied;
- 	LIST_HEAD(folio_list);
- 
--	for (addr = r->ar.start; addr < r->ar.end; addr += PAGE_SIZE) {
-+	addr = r->ar.start;
-+	while (addr < r->ar.end) {
- 		struct folio *folio = damon_get_folio(PHYS_PFN(addr));
- 
--		if (!folio)
-+		if (!folio) {
-+			addr += PAGE_SIZE;
- 			continue;
-+		}
- 
- 		if (damos_pa_filter_out(s, folio))
- 			goto put_folio;
-@@ -467,6 +478,7 @@ static unsigned long damon_pa_migrate(st
- 			goto put_folio;
- 		list_add(&folio->lru, &folio_list);
- put_folio:
-+		addr += folio_size(folio);
- 		folio_put(folio);
- 	}
- 	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
+ 	rmap_walk(folio, &rwc);
 
 
