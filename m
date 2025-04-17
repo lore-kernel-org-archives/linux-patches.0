@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5FF3594D;
-	Thu, 17 Apr 2025 18:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5398462;
+	Thu, 17 Apr 2025 18:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915412; cv=none; b=NlhIZaYw46jkJMCe0/cdb9F2Bi68s6MeCo2HjOUu/6oqVN1tpaXc6bhRZkeDabZSWD/+OxXLAuDMqPV7uTFtXV8BneVChzgeb2BLh+63XaCshchj22aA5I5kCpZ2gVLMARF4ju9nGROQ7X6kcAtm1ZkjGhROc5bBrAChlZk7048=
+	t=1744915416; cv=none; b=hpceQXXwjtsazCzvRuLbjJRvanZFQn9vTIBcAx4xcviUN0RJqZJfa/RPFm2lJ0ocPmucTDFCTRY/GpFZ4LSjlX6uybs89z61m02ES8o9yR2GYpEEGdMdEdxEMQvpGd+3h8WqS7XjuhEi0Vj2m+wZp6a8TugRFe1ephfPwvttaws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915412; c=relaxed/simple;
-	bh=v3xE9U8Ps8oovsdvcW9PlNb+VeoZIlxXd/S5JXo3dcE=;
+	s=arc-20240116; t=1744915416; c=relaxed/simple;
+	bh=Y4hA6MvnvIO+r+0tK/ZJOYoilKaR8Xtcf27Xn+OphdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gE4gBLEvRP5TEXfX3KharEpF3IU2niyUJSftxbzDYuOuMQLFUjPid0LHgzuyunp/Bk9vwkfgzMj5n/CcDkq5Cjj3SxGcy1A3+snTOyaxpwFDWixE4lgmkIGa5pRYkWc3G5wqb/dAnUrkrpBGUypzbSGGZ+SYy0qkdYKsqfJM4+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3tEUDDy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sy4qVmBwS1GFp1tgkal1+wrQ8kVl3rJ+6L+Xnkb7Whve21AMUrNS7KDrWqM4psDDJ/tkeFDBR58tnpyDruWM238hFzMBUn3bDbP5I3n6P5w91zGBW2m9H/rV+fr4Ci5dOgxrinojhUWdEGj7z1F/yY/iRE5HhlegD8VUsMwVIQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiTV2iny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3tEUDDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAE6C4CEE4;
-	Thu, 17 Apr 2025 18:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiTV2iny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67576C4CEE4;
+	Thu, 17 Apr 2025 18:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915412;
-	bh=v3xE9U8Ps8oovsdvcW9PlNb+VeoZIlxXd/S5JXo3dcE=;
+	s=korg; t=1744915415;
+	bh=Y4hA6MvnvIO+r+0tK/ZJOYoilKaR8Xtcf27Xn+OphdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I3tEUDDyTR77FBhrvnD0427z3PkAFPEZNWW4FiSgthIhSbUauFnSKeEvStE1k3iOQ
-	 VRaktm4Hw75YY7Smgm6mql3vdN9YFmgJul1bIUonH59PSgis8+N3CBDiz9f9i5uBC/
-	 CafHCLOCRT/beLpRuTT5AkaQ/3u0kQh9GBnPGpFg=
+	b=uiTV2inyblxLrcEWoqykJhc/A84av0/KOiO9AhiYgTlmEq6UIBoww74mAXm+EMveY
+	 nloqDodmnl/RJKyzJptDc6eDaZY54hv753Y2qDqOBXmXqSrvui+MEGa/MTgycDDt7L
+	 lOWgYFcHxJseiwHcicHfCpFqEtvDFgIp2fgdJacM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/393] tracing: fix return value in __ftrace_event_enable_disable for TRACE_REG_UNREGISTER
-Date: Thu, 17 Apr 2025 19:48:47 +0200
-Message-ID: <20250417175112.342590023@linuxfoundation.org>
+Subject: [PATCH 6.12 119/393] Bluetooth: btintel_pcie: Add device id of Whale Peak
+Date: Thu, 17 Apr 2025 19:48:48 +0200
+Message-ID: <20250417175112.383030345@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Paoloni <gpaoloni@redhat.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 0c588ac0ca6c22b774d9ad4a6594681fdfa57d9d ]
+[ Upstream commit 6b8c05e52d66e4fe4ab1df4c6e15f339ecd9aa51 ]
 
-When __ftrace_event_enable_disable invokes the class callback to
-unregister the event, the return value is not reported up to the
-caller, hence leading to event unregister failures being silently
-ignored.
+Add device of Whale Peak.
 
-This patch assigns the ret variable to the invocation of the
-event unregister callback, so that its return value is stored
-and reported to the caller, and it raises a warning in case
-of error.
+Output of sudo lspci -v  -s 00:14.7:
 
-Link: https://lore.kernel.org/20250321170821.101403-1-gpaoloni@redhat.com
-Signed-off-by: Gabriele Paoloni <gpaoloni@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+00:14.7 Bluetooth: Intel Corporation Device e476
+        Subsystem: Intel Corporation Device 0011
+        Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 11
+        Memory at 11011c30000 (64-bit, non-prefetchable) [size=16K]
+        Capabilities: [c8] Power Management version 3
+        Capabilities: [d0] MSI: Enable- Count=1/1 Maskable- 64bit+
+        Capabilities: [40] Express Root Complex Integrated Endpoint, MSI 00
+        Capabilities: [80] MSI-X: Enable+ Count=32 Masked-
+        Capabilities: [100] Latency Tolerance Reporting
+        Kernel driver in use: btintel_pcie
+        Kernel modules: btintel_pcie
+
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel_pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 29eba68e07859..11dea25ef880a 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -790,7 +790,9 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 				clear_bit(EVENT_FILE_FL_RECORDED_TGID_BIT, &file->flags);
- 			}
- 
--			call->class->reg(call, TRACE_REG_UNREGISTER, file);
-+			ret = call->class->reg(call, TRACE_REG_UNREGISTER, file);
-+
-+			WARN_ON_ONCE(ret);
- 		}
- 		/* If in SOFT_MODE, just set the SOFT_DISABLE_BIT, else clear it */
- 		if (file->flags & EVENT_FILE_FL_SOFT_MODE)
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 53f6b4f76bccd..ab465e13c1f60 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -36,6 +36,7 @@
+ /* Intel Bluetooth PCIe device id table */
+ static const struct pci_device_id btintel_pcie_table[] = {
+ 	{ BTINTEL_PCI_DEVICE(0xA876, PCI_ANY_ID) },
++	{ BTINTEL_PCI_DEVICE(0xE476, PCI_ANY_ID) },
+ 	{ 0 }
+ };
+ MODULE_DEVICE_TABLE(pci, btintel_pcie_table);
 -- 
 2.39.5
 
