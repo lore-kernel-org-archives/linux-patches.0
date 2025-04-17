@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D861726156F;
-	Thu, 17 Apr 2025 17:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972BA26156F;
+	Thu, 17 Apr 2025 17:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912629; cv=none; b=I6o7stKguwcuFEJy1K1p9ekWYg1Xpe8xJO4xvhgI4xu/42HOgSkZuWVrZtrOuXEQvwmPxNWoLRBBZipcHQB6AZhufCfaHqBtmrB8I3gF94B4WMGnhdlj5tXlkKwqWATfh1Qn9lpaaqPHSaYTguZcAcrPM6pt34pAgROPU2jW5Kc=
+	t=1744912632; cv=none; b=D184TNjd4SVlnTpyLyU+kAeZPuQUVPKO7hnkEdOUjsgvwNkznWBYUCnhx2lk+stvMus2uhWZrg9aOtCpACzy5Rezmd1KcRoSctMn/xMP2TtwUFOMsSOAJAQ5XBJWgEm9F6advnFsJNrumUrcAlYzNKJTOfRO8Y1Iutrw43P6rYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912629; c=relaxed/simple;
-	bh=zq5QQr+rTgBTYvlcq7oF5D7gzogiFuqw/Rt/oItCnEQ=;
+	s=arc-20240116; t=1744912632; c=relaxed/simple;
+	bh=j4jjgESO4XpMNJGjenHNLBFni59cE9rfOHxTktpo+BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUvnqeYqE9n6N32b7INDyi9xt/HRZ3Hn5ogtk++xSqcp1hQX+bGbA5f2n+ofgtCCOv7dcd1dhMBFYfyXrlqOmjSPuOfjwtAEsa3kdkeXMvppj+XWt4upch5bFNrQQhMvu2R3rphm66iEbBn6k+bDFnalLvku1C/HgPHeqJHI48M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm7skSao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rmaNOohkUIXUvsHTlnNtjIaRmrwwaf1RDh/X3VQy+L+OzesQuLzKynGEiwKhCbGV0+Jk9vRrv+PYKMO4vHI/R8aa7vJtG07eVkMbq3Fd1n8RJ44B6uHlvr+1zCP0XKOJyHku58x/gv3BngTI8LgdaivFiscwSsYEQOcdv898bDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OR4alx/r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm7skSao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C03C4CEE4;
-	Thu, 17 Apr 2025 17:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OR4alx/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2594EC4CEE4;
+	Thu, 17 Apr 2025 17:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912629;
-	bh=zq5QQr+rTgBTYvlcq7oF5D7gzogiFuqw/Rt/oItCnEQ=;
+	s=korg; t=1744912632;
+	bh=j4jjgESO4XpMNJGjenHNLBFni59cE9rfOHxTktpo+BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gm7skSao51GmiIl0kh19qXsFuXEkIp2wR6c0TvW+3XXtbyCywXYHRPAPkuLfASOQU
-	 BQjy0VlRgNXIJpFnsnctCQd7s649plNFxm4g/lr4K4wmEcRrVo3RsCIuvCExqI2Uh0
-	 yoBXJjBUgcfEPxQrg2ecl2a9B642WcHq2dySoTSM=
+	b=OR4alx/rItXx6AfMuGw5EM8+PqfrndECbw985yVzpcGFlhj8wI/7Ngo0ChTRHZWjQ
+	 d++33FUVEdv1zy+UTpBNe+3J0s5oVzaasfd7jVcpUoEkBd9hnTD1rFRxI/bfpZm+1g
+	 kAb+LmNewnO4t7xrN313uo5cbgMOxkLVVJHkr308=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 034/449] net_sched: sch_sfq: use a temporary work area for validating configuration
-Date: Thu, 17 Apr 2025 19:45:22 +0200
-Message-ID: <20250417175119.369087572@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Subject: [PATCH 6.14 066/449] zstd: Increase DYNAMIC_BMI2 GCC version cutoff from 4.8 to 11.0 to work around compiler segfault
+Date: Thu, 17 Apr 2025 19:45:54 +0200
+Message-ID: <20250417175120.643477810@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,121 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Ingo Molnar <mingo@kernel.org>
 
-[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
+[ Upstream commit 1400c87e6cac47eb243f260352c854474d9a9073 ]
 
-Many configuration parameters have influence on others (e.g. divisor
--> flows -> limit, depth -> limit) and so it is difficult to correctly
-do all of the validation before applying the configuration. And if a
-validation error is detected late it is difficult to roll back a
-partially applied configuration.
+Due to pending percpu improvements in -next, GCC9 and GCC10 are
+crashing during the build with:
 
-To avoid these issues use a temporary work area to update and validate
-the configuration and only then apply the configuration to the
-internal state.
+    lib/zstd/compress/huf_compress.c:1033:1: internal compiler error: Segmentation fault
+     1033 | {
+          | ^
+    Please submit a full bug report,
+    with preprocessed source if appropriate.
+    See <file:///usr/share/doc/gcc-9/README.Bugs> for instructions.
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b3bf8f63e617 ("net_sched: sch_sfq: move the limit validation")
+The DYNAMIC_BMI2 feature is a known-challenging feature of
+the ZSTD library, with an existing GCC quirk turning it off
+for GCC versions below 4.8.
+
+Increase the DYNAMIC_BMI2 version cutoff to GCC 11.0 - GCC 10.5
+is the last version known to crash.
+
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Debugged-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 56 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 12 deletions(-)
+ lib/zstd/common/portability_macros.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 65d5b59da5830..7714ae94e0521 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 	struct red_parms *p = NULL;
- 	struct sk_buff *to_free = NULL;
- 	struct sk_buff *tail = NULL;
-+	unsigned int maxflows;
-+	unsigned int quantum;
-+	unsigned int divisor;
-+	int perturb_period;
-+	u8 headdrop;
-+	u8 maxdepth;
-+	int limit;
-+	u8 flags;
-+
- 
- 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
- 		return -EINVAL;
-@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
- 		return -EINVAL;
- 	}
-+
- 	sch_tree_lock(sch);
-+
-+	limit = q->limit;
-+	divisor = q->divisor;
-+	headdrop = q->headdrop;
-+	maxdepth = q->maxdepth;
-+	maxflows = q->maxflows;
-+	perturb_period = q->perturb_period;
-+	quantum = q->quantum;
-+	flags = q->flags;
-+
-+	/* update and validate configuration */
- 	if (ctl->quantum)
--		q->quantum = ctl->quantum;
--	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
-+		quantum = ctl->quantum;
-+	perturb_period = ctl->perturb_period * HZ;
- 	if (ctl->flows)
--		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-+		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
--		q->divisor = ctl->divisor;
--		q->maxflows = min_t(u32, q->maxflows, q->divisor);
-+		divisor = ctl->divisor;
-+		maxflows = min_t(u32, maxflows, divisor);
- 	}
- 	if (ctl_v1) {
- 		if (ctl_v1->depth)
--			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
-+			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
- 		if (p) {
--			swap(q->red_parms, p);
--			red_set_parms(q->red_parms,
-+			red_set_parms(p,
- 				      ctl_v1->qth_min, ctl_v1->qth_max,
- 				      ctl_v1->Wlog,
- 				      ctl_v1->Plog, ctl_v1->Scell_log,
- 				      NULL,
- 				      ctl_v1->max_P);
- 		}
--		q->flags = ctl_v1->flags;
--		q->headdrop = ctl_v1->headdrop;
-+		flags = ctl_v1->flags;
-+		headdrop = ctl_v1->headdrop;
- 	}
- 	if (ctl->limit) {
--		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
--		q->maxflows = min_t(u32, q->maxflows, q->limit);
-+		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
-+		maxflows = min_t(u32, maxflows, limit);
- 	}
- 
-+	/* commit configuration */
-+	q->limit = limit;
-+	q->divisor = divisor;
-+	q->headdrop = headdrop;
-+	q->maxdepth = maxdepth;
-+	q->maxflows = maxflows;
-+	WRITE_ONCE(q->perturb_period, perturb_period);
-+	q->quantum = quantum;
-+	q->flags = flags;
-+	if (p)
-+		swap(q->red_parms, p);
-+
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > q->limit) {
- 		dropped += sfq_drop(sch, &to_free);
+diff --git a/lib/zstd/common/portability_macros.h b/lib/zstd/common/portability_macros.h
+index 0e3b2c0a527db..0dde8bf56595e 100644
+--- a/lib/zstd/common/portability_macros.h
++++ b/lib/zstd/common/portability_macros.h
+@@ -55,7 +55,7 @@
+ #ifndef DYNAMIC_BMI2
+   #if ((defined(__clang__) && __has_attribute(__target__)) \
+       || (defined(__GNUC__) \
+-          && (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)))) \
++          && (__GNUC__ >= 11))) \
+       && (defined(__x86_64__) || defined(_M_X64)) \
+       && !defined(__BMI2__)
+   #  define DYNAMIC_BMI2 1
 -- 
 2.39.5
 
