@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DDA256C61;
-	Thu, 17 Apr 2025 18:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79807256C80;
+	Thu, 17 Apr 2025 18:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916127; cv=none; b=bQLB/F2HhU2Ka+yybyCTYuakV4xTpawjdLbPHchra9dzSU+6viK3ZB6K5MSzgb9BS5jytUvjuYNh6SkjpNjm4Dsk0FAqcw66tIjHjsx/1cWSL5TPOqY9fQrATKjdzV5hCchfOBrRnbhlnVsrY1BNd7/q5X5qNShIJIH8ZxLA9hE=
+	t=1744916129; cv=none; b=plFOmK5yka9BsdOxFyp/iN8a086EWVqlGB0WKLc7OWVtdf/9HBiVtPqRrFaLoUgnpPeo1bqc9PG+aYbfehkRAsWPS3LqkLW1Wh2KKW+BfKNa94SDCWyGGQyg/C1eb9LpPf6bQsadZsRTAtRwlIJVh+nYKYlaoB8yJ0SAPWhs4/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916127; c=relaxed/simple;
-	bh=cr3LQVicr0Z+u0FfsNwIFkQgSl5nMol+sQY7hhhVINQ=;
+	s=arc-20240116; t=1744916129; c=relaxed/simple;
+	bh=3P/EA3ZXA52ebzCl7AGYWduhn4OWKGxAEAJiz4sEdPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlGL7YIgQyTgNpsPuL3XJUrQTMh9cvvxRjBoE6E3jH5hGMGYdwjKsBszcDOUl+Oj30/EZqfjDgrEQGbvrMD+D82kx643otrHsmQ2pLFRkUOtkh6Muu/ki/FmWvH+OzT3ehzfJM8lpFHz/tWttzurTeaCmf8nibGMhmRksdglOtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8UZnRtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCbjUbWkMDtAaGpf7BCTjzGmjenQnhiN4WvfP4CkEj8lEdMLJBgpRXo2VCNQuD8Y6X00mDKREK8ism6nq2grSlGsSn9yDVfv2WUySiGaleOv0mS1AyNWE6NpL3bFAIyIXNJNq0Dnnjl68o87C99isXIMlAyJIOj0FOloJqsS3f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR/oDvFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8UZnRtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B842C4CEE4;
-	Thu, 17 Apr 2025 18:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR/oDvFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5F0C4CEE4;
+	Thu, 17 Apr 2025 18:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916126;
-	bh=cr3LQVicr0Z+u0FfsNwIFkQgSl5nMol+sQY7hhhVINQ=;
+	s=korg; t=1744916129;
+	bh=3P/EA3ZXA52ebzCl7AGYWduhn4OWKGxAEAJiz4sEdPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8UZnRtn40Nsac/aG8RJccitNo7f+deCmp6AP+Qm5sad6VVeOmZqdRk2YhCpADOIk
-	 aNqwnHL/WCAnDeHfAF1DmZETGKWEn0dmIf4hNhklyg6D/ir25C2/A9YpjGmhf20OqP
-	 QdRBz8gJ4uXSbec8u2vXONG5uev64Q1gRtCXyW3M=
+	b=UR/oDvFqWQJrco/c6VcijqbrsypNdPLwCKLji6DXNknru35QqzR6A0f0jfAt89Ld/
+	 6ZV6sHsgzd3M/zkzVpS0CbKQ8wv6mWOWHy59gIc7riNLOZvQTpGA0wKSg5Xme8FeB3
+	 xd3REuQ7SPEJikJuFTUHykslqwn6UF43EsAERrTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.12 322/393] clk: renesas: r9a07g043: Fix HP clock source for RZ/Five
-Date: Thu, 17 Apr 2025 19:52:11 +0200
-Message-ID: <20250417175120.568527205@linuxfoundation.org>
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.12 323/393] clk: qcom: clk-branch: Fix invert halt status bit check for votable clocks
+Date: Thu, 17 Apr 2025 19:52:12 +0200
+Message-ID: <20250417175120.606928191@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,54 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Ajit Pandey <quic_ajipan@quicinc.com>
 
-commit 7f22a298d926664b51fcfe2f8ea5feb7f8b79952 upstream.
+commit 5eac348182d2b5ed1066459abedb7bc6b5466f81 upstream.
 
-According to the Rev.1.20 hardware manual for the RZ/Five SoC, the clock
-source for HP is derived from PLL6 divided by 2.  Correct the
-implementation by configuring HP as a fixed clock source instead of a
-MUX.
+BRANCH_HALT_ENABLE and BRANCH_HALT_ENABLE_VOTED flags are used to check
+halt status of branch clocks, which have an inverted logic for the halt
+bit in CBCR register. However, the current logic in the _check_halt()
+method only compares the BRANCH_HALT_ENABLE flags, ignoring the votable
+branch clocks.
 
-The `CPG_PL6_ETH_SSEL' register, which is available on the RZ/G2UL SoC,
-is not present on the RZ/Five SoC, necessitating this change.
+Update the logic to correctly handle the invert logic for votable clocks
+using the BRANCH_HALT_ENABLE_VOTED flags.
 
-Fixes: 95d48d270305ad2c ("clk: renesas: r9a07g043: Add support for RZ/Five SoC")
+Fixes: 9092d1083a62 ("clk: qcom: branch: Extend the invert logic for branch2 clocks")
 Cc: stable@vger.kernel.org
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250127173159.34572-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250128-push_fix-v1-1-fafec6747881@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/qcom/clk-branch.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -89,7 +89,9 @@ static const struct clk_div_table dtable
+--- a/drivers/clk/qcom/clk-branch.c
++++ b/drivers/clk/qcom/clk-branch.c
+@@ -28,7 +28,7 @@ static bool clk_branch_in_hwcg_mode(cons
  
- /* Mux clock tables */
- static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
-+#ifdef CONFIG_ARM64
- static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
-+#endif
- static const char * const sel_sdhi[] = { ".clk_533", ".clk_400", ".clk_266" };
+ static bool clk_branch_check_halt(const struct clk_branch *br, bool enabling)
+ {
+-	bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
++	bool invert = (br->halt_check & BRANCH_HALT_ENABLE);
+ 	u32 val;
  
- static const u32 mtable_sdhi[] = { 1, 2, 3 };
-@@ -137,7 +139,12 @@ static const struct cpg_core_clk r9a07g0
- 	DEF_DIV("P2", R9A07G043_CLK_P2, CLK_PLL3_DIV2_4_2, DIVPL3A, dtable_1_32),
- 	DEF_FIXED("M0", R9A07G043_CLK_M0, CLK_PLL3_DIV2_4, 1, 1),
- 	DEF_FIXED("ZT", R9A07G043_CLK_ZT, CLK_PLL3_DIV2_4_2, 1, 1),
-+#ifdef CONFIG_ARM64
- 	DEF_MUX("HP", R9A07G043_CLK_HP, SEL_PLL6_2, sel_pll6_2),
-+#endif
-+#ifdef CONFIG_RISCV
-+	DEF_FIXED("HP", R9A07G043_CLK_HP, CLK_PLL6_250, 1, 1),
-+#endif
- 	DEF_FIXED("SPI0", R9A07G043_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
- 	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_sdhi,
+ 	regmap_read(br->clkr.regmap, br->halt_reg, &val);
+@@ -44,7 +44,7 @@ static bool clk_branch2_check_halt(const
+ {
+ 	u32 val;
+ 	u32 mask;
+-	bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
++	bool invert = (br->halt_check & BRANCH_HALT_ENABLE);
+ 
+ 	mask = CBCR_NOC_FSM_STATUS;
+ 	mask |= CBCR_CLK_OFF;
 
 
