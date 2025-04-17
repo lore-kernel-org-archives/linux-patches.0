@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27142571B4;
-	Thu, 17 Apr 2025 17:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3824257427;
+	Thu, 17 Apr 2025 17:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912459; cv=none; b=P6JuxsRDCSDoRh0QNTdvZfStukMFyOEV08RsX9UCdV270T9ZBFFdAt6mQN0P3RV7/5B63pUERuKXCJrxaZ77aH0QYYZRjzTQAd97MFtY4lo1pdOUu+3RH6657zn4f9hQmwt0lvnldTUFx8Ykz5DuKhCSZCTKc2qfmlBQiFczpuc=
+	t=1744912462; cv=none; b=t97+mLTjCVLTnASDargaaRq1ZmTaPCSL7SBRHc8aJq/nIKuSlVOZrT0WUIeqSy1kPjS67DzvayKwwIUxpaGM/t/9wuWOhRKsiTEwIRi7dGfsPD7eJWa37SEqoaT5QckYD4BY5JGIQz3eluis1EKU09IMT4U8vIsueSqAgt1asbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912459; c=relaxed/simple;
-	bh=0+ZT+/lQye5Y77KJRT5en1YbQH6Wi7rkci33b8EF+H4=;
+	s=arc-20240116; t=1744912462; c=relaxed/simple;
+	bh=f9gDD3FrU4YP6pNbIUCyZfYD35FHrcQcKHGpCJ2CY60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBS34HVWiAePfkmo2PWRgXwVk0RzYCOQpXUQ5yF5EoCIy5+DDSiwvXRrIAhcz7hYBhBG43NM2MtNq3mJy+P5SSkZXV4B834pFhVfaToR71Q+KRufMnwM6OlmVccck39qYF+xvRRSrKA98GhW0pGHChG1Ty0RHlJs3oE7Ym+DhQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVvDLUMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXpC6sG768CPTMOPgNJ/5D4lF/4FK6bRoVsOKKXlfI+PmnMXJSc65Z2FEVYOhd5kcPY4h9Jv89Bhl23ceIj+Df/3S62FeBcZpIrddSDtRL63kGM4jmRA7rUPimL8QHaFso+cnssmBWFfDIaUBFaJL2PCaKuhh3Jw/6XpqAsHnR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Twzu4BUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVvDLUMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00E7C4CEE4;
-	Thu, 17 Apr 2025 17:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Twzu4BUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F99C4CEE4;
+	Thu, 17 Apr 2025 17:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912459;
-	bh=0+ZT+/lQye5Y77KJRT5en1YbQH6Wi7rkci33b8EF+H4=;
+	s=korg; t=1744912462;
+	bh=f9gDD3FrU4YP6pNbIUCyZfYD35FHrcQcKHGpCJ2CY60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVvDLUMpkhtacFuMguMWkWgL2coN5UqgCGgyeqji1AaplFVGofSdgny/D/+ijlGd0
-	 Wo/Uu0BB7l3moRIMbXNcBLB8AMFNJzk1pY4IeLXrsPqeiUJsHO1E2w6wk8UjIbF43J
-	 ZxIEfQMpgvD554c8ZRklXetTA9o+VDmo/vTl30lY=
+	b=Twzu4BUSO7dxy+Tbj9Q/RDk7wS79lzvzLNHjGSq3HIKMjZEUt11XTI25avrIHw5z+
+	 JFbxEto1yEiztDiZQI+R2gYJP4kcgdXtZIA3jMhZVEKlHeCPj42WMZ8VHmz7izAnjL
+	 CtTBRkaDCMIsLgFKUSNa2FqHmh5+GBUS2TI5mIcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 018/449] codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()
-Date: Thu, 17 Apr 2025 19:45:06 +0200
-Message-ID: <20250417175118.723781891@linuxfoundation.org>
+Subject: [PATCH 6.14 019/449] net: tls: explicitly disallow disconnect
+Date: Thu, 17 Apr 2025 19:45:07 +0200
+Message-ID: <20250417175118.763163370@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,61 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 342debc12183b51773b3345ba267e9263bdfaaef ]
+[ Upstream commit 5071a1e606b30c0c11278d3c6620cd6a24724cf6 ]
 
-After making all ->qlen_notify() callbacks idempotent, now it is safe to
-remove the check of qlen!=0 from both fq_codel_dequeue() and
-codel_qdisc_dequeue().
+syzbot discovered that it can disconnect a TLS socket and then
+run into all sort of unexpected corner cases. I have a vague
+recollection of Eric pointing this out to us a long time ago.
+Supporting disconnect is really hard, for one thing if offload
+is enabled we'd need to wait for all packets to be _acked_.
+Disconnect is not commonly used, disallow it.
 
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
-Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250403211636.166257-1-xiyou.wangcong@gmail.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+The immediate problem syzbot run into is the warning in the strp,
+but that's just the easiest bug to trigger:
+
+  WARNING: CPU: 0 PID: 5834 at net/tls/tls_strp.c:486 tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
+  RIP: 0010:tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
+  Call Trace:
+   <TASK>
+   tls_rx_rec_wait+0x280/0xa60 net/tls/tls_sw.c:1363
+   tls_sw_recvmsg+0x85c/0x1c30 net/tls/tls_sw.c:2043
+   inet6_recvmsg+0x2c9/0x730 net/ipv6/af_inet6.c:678
+   sock_recvmsg_nosec net/socket.c:1023 [inline]
+   sock_recvmsg+0x109/0x280 net/socket.c:1045
+   __sys_recvfrom+0x202/0x380 net/socket.c:2237
+
+Fixes: 3c4d7559159b ("tls: kernel TLS support")
+Reported-by: syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250404180334.3224206-1-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_codel.c    | 5 +----
- net/sched/sch_fq_codel.c | 6 ++----
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ net/tls/tls_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 81189d02fee76..12dd71139da39 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -65,10 +65,7 @@ static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
- 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
- 			    drop_func, dequeue_func);
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 99ca4465f7021..4d7702ce17c06 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -852,6 +852,11 @@ static int tls_setsockopt(struct sock *sk, int level, int optname,
+ 	return do_tls_setsockopt(sk, optname, optval, optlen);
+ }
  
--	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
--	 * or HTB crashes. Defer it for next round.
--	 */
--	if (q->stats.drop_count && sch->q.qlen) {
-+	if (q->stats.drop_count) {
- 		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
- 		q->stats.drop_count = 0;
- 		q->stats.drop_len = 0;
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 799f5397ad4c1..6c9029f71e88d 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -315,10 +315,8 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
- 	}
- 	qdisc_bstats_update(sch, skb);
- 	flow->deficit -= qdisc_pkt_len(skb);
--	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
--	 * or HTB crashes. Defer it for next round.
--	 */
--	if (q->cstats.drop_count && sch->q.qlen) {
++static int tls_disconnect(struct sock *sk, int flags)
++{
++	return -EOPNOTSUPP;
++}
 +
-+	if (q->cstats.drop_count) {
- 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
- 					  q->cstats.drop_len);
- 		q->cstats.drop_count = 0;
+ struct tls_context *tls_ctx_create(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+@@ -947,6 +952,7 @@ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
+ 	prot[TLS_BASE][TLS_BASE] = *base;
+ 	prot[TLS_BASE][TLS_BASE].setsockopt	= tls_setsockopt;
+ 	prot[TLS_BASE][TLS_BASE].getsockopt	= tls_getsockopt;
++	prot[TLS_BASE][TLS_BASE].disconnect	= tls_disconnect;
+ 	prot[TLS_BASE][TLS_BASE].close		= tls_sk_proto_close;
+ 
+ 	prot[TLS_SW][TLS_BASE] = prot[TLS_BASE][TLS_BASE];
 -- 
 2.39.5
 
