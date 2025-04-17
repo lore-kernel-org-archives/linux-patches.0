@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A35D1DE3A8;
-	Thu, 17 Apr 2025 18:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB43A2550C2;
+	Thu, 17 Apr 2025 18:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913868; cv=none; b=Vqnqj4KaJ9/KtEOgoN1cIYubAm4BXXoqDBd5R0+aaySsKkAPmFEPPGIUme8/izruLg4H/X3xoXAf8y9aySUFncW6QUmjo6AyD2vSy6VAhgOSbVgOft9ntYVohcoJqOJFPq9tFpooOw1nX85jrwZX+2cFabFG2xEjMzRmtW/zGjA=
+	t=1744913870; cv=none; b=jSTHvDY1KuEgs5oNlwktumdXGWkyRG6NAJECJGTLoY5UIViwEmGCuqRVIVbQUrIOfJ/WknsUS5wvrJ59eXhzx40sJ0NPAHKYfOCLVC4m0o31FdxiSWIE3e1vpg4bshfTtSkz9Kx8pqxaoQS8rqtcvIk6m7gEqSdJvuXiE7gZ1Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913868; c=relaxed/simple;
-	bh=CFRPzEv/7hKbKdV+FdG1GqMkOdcW1YWpFf8lE/FDEtI=;
+	s=arc-20240116; t=1744913870; c=relaxed/simple;
+	bh=6qzRIwI6tkmYU5o3qZKPJLBGd8Wezso8ThYIvN5GRN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIBgvkVh2atkCQNroh4hTiO+nE1lGM1vEQpYn5aKNkaKyB70NBy7HOPUF+gZXOaoXH8yRqtwk2JxcvHgP2/RME2gvYwXDTQi8v9jHqKTr78zsz7WIHergb7xI3345v/pBpPsBT45kCGPbWHAwIo6oFsAJSB6tv/4wvE4Ru772CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMNMYm2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NW5uQI8Wp0KzvUMj1wEP6XRAtCm378YMqEY+7mNbHW69ofaZBVQXn6z08HjMViTvWxus0a2poIYbF4wQn77qe+larx+liOHm28YZ4QDTmI4YBY7w1FSK5+GSL2hLsTBd3TA1/B6bX60TabTcjkUaZhLkz6dr5dnnZyoHgZ7a47s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bj4OZuPh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMNMYm2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0EBC4CEE4;
-	Thu, 17 Apr 2025 18:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bj4OZuPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3FEC4CEE4;
+	Thu, 17 Apr 2025 18:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913867;
-	bh=CFRPzEv/7hKbKdV+FdG1GqMkOdcW1YWpFf8lE/FDEtI=;
+	s=korg; t=1744913870;
+	bh=6qzRIwI6tkmYU5o3qZKPJLBGd8Wezso8ThYIvN5GRN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMNMYm2DGGn0/tvbMn7I52aGyy2TUwbR3X/7tKua0XS2e5nS305m9bZ0pZm+ET9K6
-	 VBIMfw7LQczhRxQJLDYRfMVY/RCdBQngNeFVS3UFtNeC5ufoo1D2CfXnhiIblyH7Uy
-	 TOEMv7xLgUHv5Y8ZGw4cMhl2Z3UFfj72nd63hs9Y=
+	b=bj4OZuPhfNu1burHgJQHNUpjGB0pxa023C3pGa/M1abzXwV8nl2Fp4cs/GAhI/g1y
+	 DR/GjNJg25JNxWLoKShSPSXTUzftzAUmIgB0tZhDwDXRielt3+6plp5MUGGnQVMRcd
+	 FIZfSn/CA0WdVyGdK4lGQsiuX3NQUFltHl7TQ7Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Octavian Purdila <tavip@google.com>,
 	Cong Wang <xiyou.wangcong@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 029/414] net_sched: sch_sfq: use a temporary work area for validating configuration
-Date: Thu, 17 Apr 2025 19:46:27 +0200
-Message-ID: <20250417175112.587653071@linuxfoundation.org>
+Subject: [PATCH 6.13 030/414] net_sched: sch_sfq: move the limit validation
+Date: Thu, 17 Apr 2025 19:46:28 +0200
+Message-ID: <20250417175112.626521284@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,119 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
+[ Upstream commit b3bf8f63e6179076b57c9de660c9f80b5abefe70 ]
 
-Many configuration parameters have influence on others (e.g. divisor
--> flows -> limit, depth -> limit) and so it is difficult to correctly
-do all of the validation before applying the configuration. And if a
-validation error is detected late it is difficult to roll back a
-partially applied configuration.
+It is not sufficient to directly validate the limit on the data that
+the user passes as it can be updated based on how the other parameters
+are changed.
 
-To avoid these issues use a temporary work area to update and validate
-the configuration and only then apply the configuration to the
-internal state.
+Move the check at the end of the configuration update process to also
+catch scenarios where the limit is indirectly updated, for example
+with the following configurations:
 
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 depth 1
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 divisor 1
+
+This fixes the following syzkaller reported crash:
+
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:203:6
+index 65535 is out of range for type 'struct sfq_head[128]'
+CPU: 1 UID: 0 PID: 3037 Comm: syz.2.16 Not tainted 6.14.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x201/0x300 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_out_of_bounds+0xf5/0x120 lib/ubsan.c:429
+ sfq_link net/sched/sch_sfq.c:203 [inline]
+ sfq_dec+0x53c/0x610 net/sched/sch_sfq.c:231
+ sfq_dequeue+0x34e/0x8c0 net/sched/sch_sfq.c:493
+ sfq_reset+0x17/0x60 net/sched/sch_sfq.c:518
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ tbf_reset+0x41/0x110 net/sched/sch_tbf.c:339
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ dev_reset_queue+0x100/0x1b0 net/sched/sch_generic.c:1311
+ netdev_for_each_tx_queue include/linux/netdevice.h:2590 [inline]
+ dev_deactivate_many+0x7e5/0xe70 net/sched/sch_generic.c:1375
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
 Signed-off-by: Octavian Purdila <tavip@google.com>
 Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b3bf8f63e617 ("net_sched: sch_sfq: move the limit validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 56 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 12 deletions(-)
+ net/sched/sch_sfq.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 65d5b59da5830..7714ae94e0521 100644
+index 7714ae94e0521..58b42dcf8f201 100644
 --- a/net/sched/sch_sfq.c
 +++ b/net/sched/sch_sfq.c
-@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 	struct red_parms *p = NULL;
- 	struct sk_buff *to_free = NULL;
- 	struct sk_buff *tail = NULL;
-+	unsigned int maxflows;
-+	unsigned int quantum;
-+	unsigned int divisor;
-+	int perturb_period;
-+	u8 headdrop;
-+	u8 maxdepth;
-+	int limit;
-+	u8 flags;
-+
- 
- 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
- 		return -EINVAL;
-@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
- 		return -EINVAL;
+@@ -661,10 +661,6 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		if (!p)
+ 			return -ENOMEM;
  	}
-+
+-	if (ctl->limit == 1) {
+-		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
+-		return -EINVAL;
+-	}
+ 
  	sch_tree_lock(sch);
-+
-+	limit = q->limit;
-+	divisor = q->divisor;
-+	headdrop = q->headdrop;
-+	maxdepth = q->maxdepth;
-+	maxflows = q->maxflows;
-+	perturb_period = q->perturb_period;
-+	quantum = q->quantum;
-+	flags = q->flags;
-+
-+	/* update and validate configuration */
- 	if (ctl->quantum)
--		q->quantum = ctl->quantum;
--	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
-+		quantum = ctl->quantum;
-+	perturb_period = ctl->perturb_period * HZ;
- 	if (ctl->flows)
--		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-+		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
--		q->divisor = ctl->divisor;
--		q->maxflows = min_t(u32, q->maxflows, q->divisor);
-+		divisor = ctl->divisor;
-+		maxflows = min_t(u32, maxflows, divisor);
- 	}
- 	if (ctl_v1) {
- 		if (ctl_v1->depth)
--			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
-+			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
- 		if (p) {
--			swap(q->red_parms, p);
--			red_set_parms(q->red_parms,
-+			red_set_parms(p,
- 				      ctl_v1->qth_min, ctl_v1->qth_max,
- 				      ctl_v1->Wlog,
- 				      ctl_v1->Plog, ctl_v1->Scell_log,
- 				      NULL,
- 				      ctl_v1->max_P);
- 		}
--		q->flags = ctl_v1->flags;
--		q->headdrop = ctl_v1->headdrop;
-+		flags = ctl_v1->flags;
-+		headdrop = ctl_v1->headdrop;
- 	}
- 	if (ctl->limit) {
--		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
--		q->maxflows = min_t(u32, q->maxflows, q->limit);
-+		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
-+		maxflows = min_t(u32, maxflows, limit);
- 	}
  
-+	/* commit configuration */
-+	q->limit = limit;
-+	q->divisor = divisor;
-+	q->headdrop = headdrop;
-+	q->maxdepth = maxdepth;
-+	q->maxflows = maxflows;
-+	WRITE_ONCE(q->perturb_period, perturb_period);
-+	q->quantum = quantum;
-+	q->flags = flags;
-+	if (p)
-+		swap(q->red_parms, p);
-+
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > q->limit) {
- 		dropped += sfq_drop(sch, &to_free);
+@@ -705,6 +701,12 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
+ 		maxflows = min_t(u32, maxflows, limit);
+ 	}
++	if (limit == 1) {
++		sch_tree_unlock(sch);
++		kfree(p);
++		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
++		return -EINVAL;
++	}
+ 
+ 	/* commit configuration */
+ 	q->limit = limit;
 -- 
 2.39.5
 
