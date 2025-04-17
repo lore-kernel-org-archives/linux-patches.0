@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E651A3178;
-	Thu, 17 Apr 2025 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2261A3178;
+	Thu, 17 Apr 2025 18:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914004; cv=none; b=NK8DFRdtKP7nn8s3SEEYSCPUSyLRZ8083U8CSQwkDzgi7/BtJJWv3BWgnOu6XfItt4efOWaf22NTW/Ml4eLLFComp6WwtsO26aXlPhFNsYwNZWseNhPfLgmcuZgatbuhJ1Sx0PpHYFWN70lv9fxVQb/nwi332tCEFDcJCOgx2ZU=
+	t=1744914006; cv=none; b=n2FQHPiHgfY94nVv3P/9doICXjKF18tGwSRd6TLLaQp9SwNXk+EuLciEFcWhyv1zdnwqq4QrQdE3urxzUE9DWkYDvSJ6OuVsfYoV1uaJp45dI003Xl7O+JIoucJAmozQQjNc7M39vCM8ayp5HkO+y05gHJt0lrZuVrJw35z4SzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914004; c=relaxed/simple;
-	bh=E9JfXx2la424YJoadUWI90EVJfsrexkDy2K2/990JMc=;
+	s=arc-20240116; t=1744914006; c=relaxed/simple;
+	bh=yHOGiKu1f3FIBQ2UwxsI9nJQUaHvqS9HehPFjthc+Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQTxuw627wvYKyOnzAKZfn0FQe7rvcni4iokw787paTMtZD0lVg74bNUgEm3Ub0+lTfE7uNrPrtq8T2AgKQVKhc4DJGAPCiTgtmTtyCOU4gqbbumvwkKYWjqTv+kgUhqiirquXBIo7QA6Y4JlJi/dBymR/eKWAZNEePcpC3tm7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8l+g48v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdSo5wCe5eblSQZnO7+S8AwgWAgDJ0Ar1tA7Iy96VEBkQbMzFC8W+Z8Ac+E+d0KKsTdOYHtvP/XR5kIJJ2eH6vnJm2cQW+6KOnx/xULB9Cc7rzE05l3myErxlEncr9NU7qcHI3YzVoFJvN3oq5qVYSQlD7ImH3i3ViLDBtn/a9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zepPaGcD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8l+g48v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797C1C4CEE7;
-	Thu, 17 Apr 2025 18:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zepPaGcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622D9C4CEEA;
+	Thu, 17 Apr 2025 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914003;
-	bh=E9JfXx2la424YJoadUWI90EVJfsrexkDy2K2/990JMc=;
+	s=korg; t=1744914006;
+	bh=yHOGiKu1f3FIBQ2UwxsI9nJQUaHvqS9HehPFjthc+Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8l+g48vw9nQBaWtk46naSxeVBFSMY1IgBhUgLr6sO+6LP2hXgS3bv1YsQ9g2eMzo
-	 pjTz741VaxHrgY+HNHIaPJd5HSycLd/joYJbD3rybmCuLCFnXitHIYXhaKeZyvAN61
-	 i6rZIplX4dXY6VutkEHz5hQTPbeud51EhhAWWcyw=
+	b=zepPaGcDNVEeBi/7s86pmju5YFmyfjo88V8kVQTJQTjvw2AALqvogu5hkijPez88h
+	 sX+RYXbL4MT1pGdwKey+mj7Zh7AAHv718+t2rCb7+6AK6Gu6/V3KNhCPJBY18uviRs
+	 kJtSVBiIiklaC+SlwTLXdvTEzuJNqV3T30YqRilQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maxim Mikityanskiy <maxtram95@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 073/414] ALSA: hda: intel: Fix Optimus when GPU has no sound
-Date: Thu, 17 Apr 2025 19:47:11 +0200
-Message-ID: <20250417175114.375586820@linuxfoundation.org>
+Subject: [PATCH 6.13 074/414] ALSA: hda: intel: Add Lenovo IdeaPad Z570 to probe denylist
+Date: Thu, 17 Apr 2025 19:47:12 +0200
+Message-ID: <20250417175114.420859831@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -53,62 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit 2b360ba9a4936486380bc30d1eabceb40a714d98 ]
+[ Upstream commit becc794c5e46f4dfca59f2385f78d83fc9e84700 ]
 
-quirk_nvidia_hda() forcefully enables HDA controller on all NVIDIA GPUs,
-because some buggy BIOSes leave it disabled. However, some dual-GPU
-laptops do not have a functional HDA controller in DGPU, and BIOS
-disables it on purpose. After quirk_nvidia_hda() reenables this dummy
-HDA controller, attempting to probe it fails at azx_first_init(), which
-is too late to cancel the probe, as it happens in azx_probe_continue().
+Lenovo IdeaPad Z570 with NVIDIA GeForce Ge 540M doesn't have sound on
+the discrete GPU. The HDA controller in DGPU is disabled by BIOS, but
+then reenabled by quirk_nvidia_hda(). The probe fails and ends up with
+the "GPU sound probed, but not operational" error.
 
-The sna_hda_intel driver calls azx_free() and stops the chip, however,
-it stays probed, and from the runtime PM point of view, the device
-remains active (it was set as active by the PCI subsystem on probe). It
-prevents vga_switcheroo from turning off the DGPU, because
-pci_create_device_link() syncs power management for video and audio
-devices.
-
-Affected devices should be added to driver_denylist to prevent them from
-probing early. This patch helps identify such devices by printing a
-warning, and also forces the device to the suspended state to allow
-vga_switcheroo turn off DGPU.
+Add this laptop to DMI-based denylist to prevent probe early. DMI is
+used, because the audio device has zero subsystem IDs, and this entry
+would be too much, blocking all 540M chips:
+    PCI_DEVICE_SUB(0x10de, 0x0bea, 0x0000, 0x0000)
+Also, this laptop comes in a variety of modifications with different
+NVIDIA GPUs, so the DMI check will cover them all.
 
 Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://patch.msgid.link/20250208214602.39607-2-maxtram95@gmail.com
+Link: https://patch.msgid.link/20250208214602.39607-3-maxtram95@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_intel.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index c050539d6057b..c547a86ba659c 100644
+index c547a86ba659c..230be67b70286 100644
 --- a/sound/pci/hda/hda_intel.c
 +++ b/sound/pci/hda/hda_intel.c
-@@ -1352,8 +1352,21 @@ static void azx_free(struct azx *chip)
- 	if (use_vga_switcheroo(hda)) {
- 		if (chip->disabled && hda->probe_continued)
- 			snd_hda_unlock_devices(&chip->bus);
--		if (hda->vga_switcheroo_registered)
-+		if (hda->vga_switcheroo_registered) {
- 			vga_switcheroo_unregister_client(chip->pci);
+@@ -37,6 +37,7 @@
+ #include <linux/completion.h>
+ #include <linux/acpi.h>
+ #include <linux/pgtable.h>
++#include <linux/dmi.h>
+ 
+ #ifdef CONFIG_X86
+ /* for snoop control */
+@@ -2074,6 +2075,27 @@ static const struct pci_device_id driver_denylist[] = {
+ 	{}
+ };
+ 
++static struct pci_device_id driver_denylist_ideapad_z570[] = {
++	{ PCI_DEVICE_SUB(0x10de, 0x0bea, 0x0000, 0x0000) }, /* NVIDIA GF108 HDA */
++	{}
++};
 +
-+			/* Some GPUs don't have sound, and azx_first_init fails,
-+			 * leaving the device probed but non-functional. As long
-+			 * as it's probed, the PCI subsystem keeps its runtime
-+			 * PM status as active. Force it to suspended (as we
-+			 * actually stop the chip) to allow GPU to suspend via
-+			 * vga_switcheroo, and print a warning.
-+			 */
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
-+			pm_runtime_disable(&pci->dev);
-+			pm_runtime_set_suspended(&pci->dev);
-+			pm_runtime_enable(&pci->dev);
-+		}
++/* DMI-based denylist, to be used when:
++ *  - PCI subsystem IDs are zero, impossible to distinguish from valid sound cards.
++ *  - Different modifications of the same laptop use different GPU models.
++ */
++static const struct dmi_system_id driver_denylist_dmi[] = {
++	{
++		/* No HDA in NVIDIA DGPU. BIOS disables it, but quirk_nvidia_hda() reenables. */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "Ideapad Z570"),
++		},
++		.driver_data = &driver_denylist_ideapad_z570,
++	},
++	{}
++};
++
+ static const struct hda_controller_ops pci_hda_ops = {
+ 	.disable_msi_reset_irq = disable_msi_reset_irq,
+ 	.position_check = azx_position_check,
+@@ -2084,6 +2106,7 @@ static DECLARE_BITMAP(probed_devs, SNDRV_CARDS);
+ static int azx_probe(struct pci_dev *pci,
+ 		     const struct pci_device_id *pci_id)
+ {
++	const struct dmi_system_id *dmi;
+ 	struct snd_card *card;
+ 	struct hda_intel *hda;
+ 	struct azx *chip;
+@@ -2096,6 +2119,12 @@ static int azx_probe(struct pci_dev *pci,
+ 		return -ENODEV;
  	}
  
- 	if (bus->chip_init) {
++	dmi = dmi_first_match(driver_denylist_dmi);
++	if (dmi && pci_match_id(dmi->driver_data, pci)) {
++		dev_info(&pci->dev, "Skipping the device on the DMI denylist\n");
++		return -ENODEV;
++	}
++
+ 	dev = find_first_zero_bit(probed_devs, SNDRV_CARDS);
+ 	if (dev >= SNDRV_CARDS)
+ 		return -ENODEV;
 -- 
 2.39.5
 
