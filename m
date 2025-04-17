@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F551257ADB;
-	Thu, 17 Apr 2025 17:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D5B2561B3;
+	Thu, 17 Apr 2025 17:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912497; cv=none; b=nDIIsiAYQh7GGI4+tu8C/yWCN9tXL9B9f+RgO+Z8kGwa/CjocdknL/q25WqA7pPH4HGqUOZ0H4eCCYDxK41GlTSGRZYSP8+EDidZJFib0Ve7ybqVdskaj1timr+9nQfrSurxsbl8yv5daOs6l7tMQ91NNK4Uong4+5jZQjYJfTk=
+	t=1744912500; cv=none; b=V8MBQ4D8t5VlV7XS6CLA83cZsAh9mIwFXzjHIMj+zrdZpyN+iB5V7UKJUZ8OIOg3dc445UNPf0XstgIuYMnk2kz/Nw3t46rgLhvDTCdmEl0PqEeMUp+AGWbH7f5zNjYFINv3Cdf6gKH+by8mc05Hgeo3Yx4RRusEIL1rUZpmIKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912497; c=relaxed/simple;
-	bh=/8AhAUQLXRRVtSITZUOhKxQCFloGdCfpHIeh7mosxeE=;
+	s=arc-20240116; t=1744912500; c=relaxed/simple;
+	bh=bhObQt0d/pDvLdEEwzMpb5Z45ze0gaAvluY+QPRzQus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tEuOEbl0mavkXI0E5hk1sy3FF2HHJ/QDWk9k0ZyzILcJe53q8lH1YtsNuWUX/Crf/DL+k4U6HWdrRA6wQrMk0BAFd2wt/OEp6FN1P8JD18kbWkhbT8Hv8o1DbwMnB6RUeZGq/O5mEjLSz/4TQ9n4Jy/39fKd74pd75xnfGVQp+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaQ/LZ8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kcBkWRf50MuPymJtIEukqCEmROJ4H3wfP3m8hCIvmEPpmwRNojX1efDgDB/L1IdqoR/yAQC4PQLssj9eVAiOd9V80SSidsDfUgzKaFigcAL7/N7Wwsne8lJ4zP14QYYSy+hRoj3EE043RIxHM52JDQoy3b0cmDK0yQR9nroHfJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3Rs5+V7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaQ/LZ8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A443BC4CEE4;
-	Thu, 17 Apr 2025 17:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3Rs5+V7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8971C4CEE4;
+	Thu, 17 Apr 2025 17:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912497;
-	bh=/8AhAUQLXRRVtSITZUOhKxQCFloGdCfpHIeh7mosxeE=;
+	s=korg; t=1744912500;
+	bh=bhObQt0d/pDvLdEEwzMpb5Z45ze0gaAvluY+QPRzQus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UaQ/LZ8ZDtg93YlFmgDpfe8h7mumEIdDbqulxkCrer/PNreYOVGI8urUea6P9/pWP
-	 eMMc1wNG8r6YmjxN1opNLdfxSkBKANhLJVrDazxT59YR2jl6KfAxbyIv8feuLFcczO
-	 fKRw2ZD56goXo4cA6vtVnHetIi+Rp94hBpUkaiBA=
+	b=U3Rs5+V7qfgy+1YjxF8M00fZvTxyQwqwKJ2/+OxlbYTKZLjKrxeAQjRxbqokSm3/w
+	 YUlV5AlYS6aqhXn2NRfa8Lj4txmYeS26lYISc1gLvnGJbR7hAe/EzE8S9AB12oFWKg
+	 I9VEMjjpzDyXn2KrZOaq8mP0sb46o+vXt2ds3Dt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 029/449] cifs: Fix support for WSL-style symlinks
-Date: Thu, 17 Apr 2025 19:45:17 +0200
-Message-ID: <20250417175119.172664431@linuxfoundation.org>
+Subject: [PATCH 6.14 030/449] ata: sata_sx4: Add error handling in pdc20621_i2c_read()
+Date: Thu, 17 Apr 2025 19:45:18 +0200
+Message-ID: <20250417175119.211130196@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -45,125 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit c7efac7f1c71470ecd9b1a9a49b1b8164583c7dc ]
+[ Upstream commit 8d46a27085039158eb5e253ab8a35a0e33b5e864 ]
 
-MS-FSCC in section 2.1.2.7 LX SYMLINK REPARSE_DATA_BUFFER now contains
-documentation about WSL symlink reparse point buffers.
+The function pdc20621_prog_dimm0() calls the function pdc20621_i2c_read()
+but does not handle the error if the read fails. This could lead to
+process with invalid data. A proper implementation can be found in
+/source/drivers/ata/sata_sx4.c, pdc20621_prog_dimm_global(). As mentioned
+in its commit: bb44e154e25125bef31fa956785e90fccd24610b, the variable spd0
+might be used uninitialized when pdc20621_i2c_read() fails.
 
-https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/68337353-9153-4ee1-ac6b-419839c3b7ad
+Add error handling to pdc20621_i2c_read(). If a read operation fails,
+an error message is logged via dev_err(), and return a negative error
+code.
 
-Fix the struct reparse_wsl_symlink_data_buffer to reflect buffer fields
-according to the MS-FSCC documentation.
+Add error handling to pdc20621_prog_dimm0() in pdc20621_dimm_init(), and
+return a negative error code if pdc20621_prog_dimm0() fails.
 
-Fix the Linux SMB client to correctly fill the WSL symlink reparse point
-buffer when creaing new WSL-style symlink. There was a mistake during
-filling the data part of the reparse point buffer. It should starts with
-bytes "\x02\x00\x00\x00" (which represents version 2) but this constant was
-written as number 0x02000000 encoded in little endian, which resulted bytes
-"\x00\x00\x00\x02". This change is fixing this mistake.
-
-Fixes: 4e2043be5c14 ("cifs: Add support for creating WSL-style symlinks")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 4447d3515616 ("libata: convert the remaining SATA drivers to new init model")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 25 ++++++++++++++++---------
- fs/smb/common/smb2pdu.h |  6 +++---
- 2 files changed, 19 insertions(+), 12 deletions(-)
+ drivers/ata/sata_sx4.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 2b9e9885dc425..7a01f5def58fb 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -542,12 +542,12 @@ static int wsl_set_reparse_buf(struct reparse_data_buffer **buf,
- 			kfree(symname_utf16);
- 			return -ENOMEM;
- 		}
--		/* Flag 0x02000000 is unknown, but all wsl symlinks have this value */
--		symlink_buf->Flags = cpu_to_le32(0x02000000);
--		/* PathBuffer is in UTF-8 but without trailing null-term byte */
-+		/* Version field must be set to 2 (MS-FSCC 2.1.2.7) */
-+		symlink_buf->Version = cpu_to_le32(2);
-+		/* Target for Version 2 is in UTF-8 but without trailing null-term byte */
- 		symname_utf8_len = utf16s_to_utf8s((wchar_t *)symname_utf16, symname_utf16_len/2,
- 						   UTF16_LITTLE_ENDIAN,
--						   symlink_buf->PathBuffer,
-+						   symlink_buf->Target,
- 						   symname_utf8_maxlen);
- 		*buf = (struct reparse_data_buffer *)symlink_buf;
- 		buf_len = sizeof(struct reparse_wsl_symlink_data_buffer) + symname_utf8_len;
-@@ -1016,29 +1016,36 @@ static int parse_reparse_wsl_symlink(struct reparse_wsl_symlink_data_buffer *buf
- 				     struct cifs_open_info_data *data)
- {
- 	int len = le16_to_cpu(buf->ReparseDataLength);
-+	int data_offset = offsetof(typeof(*buf), Target) - offsetof(typeof(*buf), Version);
- 	int symname_utf8_len;
- 	__le16 *symname_utf16;
- 	int symname_utf16_len;
+diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
+index a482741eb181f..c3042eca6332d 100644
+--- a/drivers/ata/sata_sx4.c
++++ b/drivers/ata/sata_sx4.c
+@@ -1117,9 +1117,14 @@ static int pdc20621_prog_dimm0(struct ata_host *host)
+ 	mmio += PDC_CHIP0_OFS;
  
--	if (len <= sizeof(buf->Flags)) {
-+	if (len <= data_offset) {
- 		cifs_dbg(VFS, "srv returned malformed wsl symlink buffer\n");
- 		return -EIO;
- 	}
+ 	for (i = 0; i < ARRAY_SIZE(pdc_i2c_read_data); i++)
+-		pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
+-				  pdc_i2c_read_data[i].reg,
+-				  &spd0[pdc_i2c_read_data[i].ofs]);
++		if (!pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
++				       pdc_i2c_read_data[i].reg,
++				       &spd0[pdc_i2c_read_data[i].ofs])) {
++			dev_err(host->dev,
++				"Failed in i2c read at index %d: device=%#x, reg=%#x\n",
++				i, PDC_DIMM0_SPD_DEV_ADDRESS, pdc_i2c_read_data[i].reg);
++			return -EIO;
++		}
  
--	/* PathBuffer is in UTF-8 but without trailing null-term byte */
--	symname_utf8_len = len - sizeof(buf->Flags);
-+	/* MS-FSCC 2.1.2.7 defines layout of the Target field only for Version 2. */
-+	if (le32_to_cpu(buf->Version) != 2) {
-+		cifs_dbg(VFS, "srv returned unsupported wsl symlink version %u\n", le32_to_cpu(buf->Version));
-+		return -EIO;
-+	}
-+
-+	/* Target for Version 2 is in UTF-8 but without trailing null-term byte */
-+	symname_utf8_len = len - data_offset;
- 	/*
- 	 * Check that buffer does not contain null byte
- 	 * because Linux cannot process symlink with null byte.
- 	 */
--	if (strnlen(buf->PathBuffer, symname_utf8_len) != symname_utf8_len) {
-+	if (strnlen(buf->Target, symname_utf8_len) != symname_utf8_len) {
- 		cifs_dbg(VFS, "srv returned null byte in wsl symlink target location\n");
- 		return -EIO;
- 	}
- 	symname_utf16 = kzalloc(symname_utf8_len * 2, GFP_KERNEL);
- 	if (!symname_utf16)
- 		return -ENOMEM;
--	symname_utf16_len = utf8s_to_utf16s(buf->PathBuffer, symname_utf8_len,
-+	symname_utf16_len = utf8s_to_utf16s(buf->Target, symname_utf8_len,
- 					    UTF16_LITTLE_ENDIAN,
- 					    (wchar_t *) symname_utf16, symname_utf8_len * 2);
- 	if (symname_utf16_len < 0) {
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index c7a0efda44036..12f0013334057 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -1564,13 +1564,13 @@ struct reparse_nfs_data_buffer {
- 	__u8	DataBuffer[];
- } __packed;
+ 	data |= (spd0[4] - 8) | ((spd0[21] != 0) << 3) | ((spd0[3]-11) << 4);
+ 	data |= ((spd0[17] / 4) << 6) | ((spd0[5] / 2) << 7) |
+@@ -1284,6 +1289,8 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
  
--/* For IO_REPARSE_TAG_LX_SYMLINK */
-+/* For IO_REPARSE_TAG_LX_SYMLINK - see MS-FSCC 2.1.2.7 */
- struct reparse_wsl_symlink_data_buffer {
- 	__le32	ReparseTag;
- 	__le16	ReparseDataLength;
- 	__u16	Reserved;
--	__le32	Flags;
--	__u8	PathBuffer[]; /* Variable Length UTF-8 string without nul-term */
-+	__le32	Version; /* Always 2 */
-+	__u8	Target[]; /* Variable Length UTF-8 string without nul-term */
- } __packed;
+ 	/* Programming DIMM0 Module Control Register (index_CID0:80h) */
+ 	size = pdc20621_prog_dimm0(host);
++	if (size < 0)
++		return size;
+ 	dev_dbg(host->dev, "Local DIMM Size = %dMB\n", size);
  
- struct validate_negotiate_info_req {
+ 	/* Programming DIMM Module Global Control Register (index_CID0:88h) */
 -- 
 2.39.5
 
