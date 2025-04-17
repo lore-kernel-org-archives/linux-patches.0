@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE154256C9C;
-	Thu, 17 Apr 2025 18:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E902566DB;
+	Thu, 17 Apr 2025 18:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914183; cv=none; b=Lzz4X6oYwRmmSPoP789a2KXtDG0lXTdQhFGWFFYxD0FRj1rpVpedbVG2GtHZ+wiqZuOOph93FaFDUuAuuDZltjXnJadD1t6qUp/gi+Y05j+uy/Ylbo/TE3kxsYnOfeGvFOrHogoQDlH28ALpaVQLC14hFEl4AkSw6y22nkqOAjE=
+	t=1744914186; cv=none; b=QDKSXLcfBTUGUcsH6N0T4Yl6zYDp5gJBw/hvfiMLqzFuLSJeyn34767+QsKfmTl1fn5BC7afW+1w6mveTk2VAhs7MynE3Efl54QwGMrcp/W2bO3HO31fQm+5KUs1s4H5kIiaM0BhpDg3tDnGepcVT8XvPSBxMi8nDWN8jIPPE7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914183; c=relaxed/simple;
-	bh=nbg4YNegVJGaP8xyNyNtgHvdnuxjrVMU9LsWEjDenK0=;
+	s=arc-20240116; t=1744914186; c=relaxed/simple;
+	bh=qVtXPFk62+4OusNe6rPc1lZhvuk2Y5nmOIw2nTgEKAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZvH5LKiH+OsJ3yKCyLH06EMIIj5YlPR3AI1hf9aSbFRsWlYdIGI0/08l8Y7acqnd/Nx84oCXi3zMSlGkgcz/S+7a/P1QbBgxM+Ge36IPEXQY2vkyKbk6PCzeX8cwfpT70RK9i7nH6n9RjunvR08VZ4FxtG+lbt1LAv9LluBefk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWkvgWzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pmqa/I0hy0vGGwnD3PycNcDJ5sFNNnH0cJLQBO2P2+AVKYZ+Io2PR/3kESgnpNQ1Zwmg4lEafGybKksy7mPgyLivJQbaamSl7I9bHY+zRgxLftzqfmYW9sRdmdfxdYlGhoYybrFwh4waSTGmiCTdH5frIus12DEnNOugs4+sY0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wv1K/Dbd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWkvgWzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA23C4CEE4;
-	Thu, 17 Apr 2025 18:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wv1K/Dbd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89E1C4CEE4;
+	Thu, 17 Apr 2025 18:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914183;
-	bh=nbg4YNegVJGaP8xyNyNtgHvdnuxjrVMU9LsWEjDenK0=;
+	s=korg; t=1744914186;
+	bh=qVtXPFk62+4OusNe6rPc1lZhvuk2Y5nmOIw2nTgEKAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWkvgWzlEawHrAaLL0ccBXieUSzduwGEjrDumFRjXWj7hswFGlHjoEOvgjFMJBWgA
-	 Hi7yqCiC6WztYo0mIYrfr4JZxnTli7WuV4nNx7bqtpO/7G4ugkaGx3zeHXW24EPJhB
-	 xDAxDXQI00Kh8tsAhS+FEYZqlS0XUyKMyHEnlf/4=
+	b=wv1K/DbdApBhcJetaaVz3l2A5Dg51PqCXhTrqTx5v2HcrsrYM0YL2niPIH2cmAycL
+	 pB1aPwHk/l+eaIsvro6nzv3KF5cAw2jkiSI7WoYwuInQQMwQBkyZ/oQiXd4cjn2R2Q
+	 Rf0apmEY+y+/IrS6FO+//I/el3y3dDdDG2Ze+toQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Zhikai Zhai <zhikai.zhai@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Brendan Tam <Brendan.Tam@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 133/414] drm/amd/display: Update Cursor request mode to the beginning prefetch always
-Date: Thu, 17 Apr 2025 19:48:11 +0200
-Message-ID: <20250417175116.780771897@linuxfoundation.org>
+Subject: [PATCH 6.13 134/414] drm/amd/display: add workaround flag to link to force FFE preset
+Date: Thu, 17 Apr 2025 19:48:12 +0200
+Message-ID: <20250417175116.821176180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,93 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhikai Zhai <zhikai.zhai@amd.com>
+From: Brendan Tam <Brendan.Tam@amd.com>
 
-[ Upstream commit 4a4077b4b63a8404efd6d37fc2926f03fb25bace ]
+[ Upstream commit 51d1b338541dea83fec8e6f95d3e46fa469a73a8 ]
 
 [Why]
-The double buffer cursor registers is updated by the cursor
-vupdate event. There is a gap between vupdate and cursor data
-fetch if cursor fetch data reletive to cursor position.
-Cursor corruption will happen if we update the cursor surface
-in this gap.
+There have been instances of some monitors being unable to link train on
+their reported link speed using their selected FFE preset. If a different
+FFE preset is found that has a higher rate of success during link training
+this workaround can be used to force its FFE preset.
 
 [How]
-Modify the cursor request mode to the beginning prefetch always
-and avoid wraparound calculation issues.
+A new link workaround flag is made called force_dp_ffe_preset. The flag is
+checked in override_training_settings and will set lt_settings->ffe_preset
+which is null if the flag is not set. The flag is then set in
+override_lane_settings.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Brendan Tam <Brendan.Tam@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hubp/dcn31/dcn31_hubp.c    |  2 +-
- .../amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 22 ++++++++-----------
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                             | 2 ++
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c    | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-index a65a0ddee6467..c671908ba7d06 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-@@ -44,7 +44,7 @@ void hubp31_set_unbounded_requesting(struct hubp *hubp, bool enable)
- 	struct dcn20_hubp *hubp2 = TO_DCN20_HUBP(hubp);
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 08c5a315b3a67..1e1633b7771c5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1780,7 +1780,9 @@ struct dc_link {
+ 		bool dongle_mode_timing_override;
+ 		bool blank_stream_on_ocs_change;
+ 		bool read_dpcd204h_on_irq_hpd;
++		bool force_dp_ffe_preset;
+ 	} wa_flags;
++	union dc_dp_ffe_preset forced_dp_ffe_preset;
+ 	struct link_mst_stream_allocation_table mst_stream_alloc_table;
  
- 	REG_UPDATE(DCHUBP_CNTL, HUBP_UNBOUNDED_REQ_MODE, enable);
--	REG_UPDATE(CURSOR_CONTROL, CURSOR_REQ_MODE, enable);
-+	REG_UPDATE(CURSOR_CONTROL, CURSOR_REQ_MODE, 1);
- }
- 
- void hubp31_soft_reset(struct hubp *hubp, bool reset)
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index 44e405e9bc971..13f9e9b439f6a 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -1992,20 +1992,11 @@ static void delay_cursor_until_vupdate(struct dc *dc, struct pipe_ctx *pipe_ctx)
- 	dc->hwss.get_position(&pipe_ctx, 1, &position);
- 	vpos = position.vertical_count;
- 
--	/* Avoid wraparound calculation issues */
--	vupdate_start += stream->timing.v_total;
--	vupdate_end += stream->timing.v_total;
--	vpos += stream->timing.v_total;
--
- 	if (vpos <= vupdate_start) {
- 		/* VPOS is in VACTIVE or back porch. */
- 		lines_to_vupdate = vupdate_start - vpos;
--	} else if (vpos > vupdate_end) {
--		/* VPOS is in the front porch. */
--		return;
- 	} else {
--		/* VPOS is in VUPDATE. */
--		lines_to_vupdate = 0;
-+		lines_to_vupdate = stream->timing.v_total - vpos + vupdate_start;
- 	}
- 
- 	/* Calculate time until VUPDATE in microseconds. */
-@@ -2013,13 +2004,18 @@ static void delay_cursor_until_vupdate(struct dc *dc, struct pipe_ctx *pipe_ctx)
- 		stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz;
- 	us_to_vupdate = lines_to_vupdate * us_per_line;
- 
-+	/* Stall out until the cursor update completes. */
-+	if (vupdate_end < vupdate_start)
-+		vupdate_end += stream->timing.v_total;
-+
-+	/* Position is in the range of vupdate start and end*/
-+	if (lines_to_vupdate > stream->timing.v_total - vupdate_end + vupdate_start)
-+		us_to_vupdate = 0;
-+
- 	/* 70 us is a conservative estimate of cursor update time*/
- 	if (us_to_vupdate > 70)
- 		return;
- 
--	/* Stall out until the cursor update completes. */
--	if (vupdate_end < vupdate_start)
--		vupdate_end += stream->timing.v_total;
- 	us_vupdate = (vupdate_end - vupdate_start + 1) * us_per_line;
- 	udelay(us_to_vupdate + us_vupdate);
- }
+ 	struct dc_link_status link_status;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 754c895e1bfbd..09024a8bac128 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -736,6 +736,8 @@ void override_training_settings(
+ 		lt_settings->pre_emphasis = overrides->pre_emphasis;
+ 	if (overrides->post_cursor2 != NULL)
+ 		lt_settings->post_cursor2 = overrides->post_cursor2;
++	if (link->wa_flags.force_dp_ffe_preset && !dp_is_lttpr_present(link))
++		lt_settings->ffe_preset = &link->forced_dp_ffe_preset;
+ 	if (overrides->ffe_preset != NULL)
+ 		lt_settings->ffe_preset = overrides->ffe_preset;
+ 	/* Override HW lane settings with BIOS forced values if present */
 -- 
 2.39.5
 
