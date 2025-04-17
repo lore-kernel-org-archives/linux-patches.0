@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB162571B3;
-	Thu, 17 Apr 2025 18:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908AF25A2A2;
+	Thu, 17 Apr 2025 18:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916198; cv=none; b=Xn0ZNLi/04O0m/nbSgnd76QU+eIhaJcmRp39JbyQRT6/IT75AOVzuQ0F8/DVMF2okTMYrXdaho1ggYIc5vCHGUr7GmwPRgZj3A6zWVToOcHZzlsJcoffxtFhHOv6ZP+G2G9sk+jehvHF/GXEelN0FWp7TbZtef2HhVSDD0wt82g=
+	t=1744916202; cv=none; b=lr1wKnLSghDb2DpgfTDciGJDEKWVe/XpwHdMZDIWNyk1YfOgwT/IK3uFlPVCuegcNzjuF1Qq2H7psnBE7D3SIOViGkw5+qy9J/G775+fSgTzqJjAVbnr3yKmgn22KGKD2Aslo3v6GsA95ZD1uwhDA27QqKFV0I97DeYA+btnvaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916198; c=relaxed/simple;
-	bh=HyRudmYEOpLTQgGzqKFPlxEGBvzireoI+d6Qfp7L3eU=;
+	s=arc-20240116; t=1744916202; c=relaxed/simple;
+	bh=qRBfTVmwvrfwxkQKHfAXAV9GDLEzjJyvoY1/JnKEfes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWRJUEHt+Cc89o1CSClXKVY7QooKR1GXKdb+qobBmruFjdOf9KfS57exid07BQrrO3xSuQmbCXuNOc2pTHpAdP2w+Uo0+CtbDhYGJPuHedhCCH/Kx8xo98SEir4AVVYxrNX5wgtfM+yNCpzjJnOZVSF3paHW9z8V1CVx+ZOlbrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ez/6+1dL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSX3d/bsE9vDGGTXNSOpH2YKSl1CEH+gliBiaGYE3z8K3G8hljAPl1CGB/AVDCxYCEi5cb49fAv7aoIoOwbL6eavgMg3u+nbAPVOS+gmkDmK/PZJEaB4gFux/zMvXv3C844ASqbYgD+/e5+Y5Gc/N9Hfs45IlcXkiSNGTLrS4Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su8KzdFz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ez/6+1dL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D90C4CEE4;
-	Thu, 17 Apr 2025 18:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su8KzdFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3E5C4CEEC;
+	Thu, 17 Apr 2025 18:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916197;
-	bh=HyRudmYEOpLTQgGzqKFPlxEGBvzireoI+d6Qfp7L3eU=;
+	s=korg; t=1744916201;
+	bh=qRBfTVmwvrfwxkQKHfAXAV9GDLEzjJyvoY1/JnKEfes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ez/6+1dL9Dpkvc8seNWGmp7lAcegH8P0cEOvjMUk77oNDNT/esLp603qYFmVUlLAc
-	 6GT3TNZ372iayzTYnizkItSG0dpcLO+72jVAaj+Xnww4nbGFmmB1Lp6H1OCKXO74zD
-	 p70QaSQjpRMhXC3Y1Au+q/nrH3ZrMdhY3cf5OTeA=
+	b=Su8KzdFzjGZo1uyLvIFFwoH6GgZqPmZJL88FZGjTNnechcB0aJFxj+lRoZ6066TnH
+	 IqCblbXdll6UN+v4axbv+5HMHSW7cyF36Ih2CXwQNPbLyuA7LJh0UVyYmUEqkZmX3x
+	 j9+vPZ3pREel3bArQdMAs4oxTb/HGzs06svXPLhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Hillion <jake@hillion.co.uk>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 375/393] sched_ext: create_dsq: Return -EEXIST on duplicate request
-Date: Thu, 17 Apr 2025 19:53:04 +0200
-Message-ID: <20250417175122.686075955@linuxfoundation.org>
+	Cong Liu <liucong2@kylinos.cn>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 376/393] selftests: mptcp: close fd_in before returning in main_loop
+Date: Thu, 17 Apr 2025 19:53:05 +0200
+Message-ID: <20250417175122.726334158@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,45 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Hillion <jake@hillion.co.uk>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit a8897ed8523d4c9d782e282b18005a3779c92714 upstream.
+commit c183165f87a486d5879f782c05a23c179c3794ab upstream.
 
-create_dsq and therefore the scx_bpf_create_dsq kfunc currently silently
-ignore duplicate entries. As a sched_ext scheduler is creating each DSQ
-for a different purpose this is surprising behaviour.
+The file descriptor 'fd_in' is opened when cfg_input is configured, but
+not closed in main_loop(), this patch fixes it.
 
-Replace rhashtable_insert_fast which ignores duplicates with
-rhashtable_lookup_insert_fast that reports duplicates (though doesn't
-return their value). The rest of the code is structured correctly and
-this now returns -EEXIST.
-
-Tested by adding an extra scx_bpf_create_dsq to scx_simple. Previously
-this was ignored, now init fails with a -17 code. Also ran scx_lavd
-which continued to work well.
-
-Signed-off-by: Jake Hillion <jake@hillion.co.uk>
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
+Cc: stable@vger.kernel.org
+Co-developed-by: Cong Liu <liucong2@kylinos.cn>
+Signed-off-by: Cong Liu <liucong2@kylinos.cn>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-3-34161a482a7f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4160,8 +4160,8 @@ static struct scx_dispatch_q *create_dsq
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1299,7 +1299,7 @@ again:
  
- 	init_dsq(dsq, dsq_id);
+ 	ret = copyfd_io(fd_in, fd, 1, 0, &winfo);
+ 	if (ret)
+-		return ret;
++		goto out;
  
--	ret = rhashtable_insert_fast(&dsq_hash, &dsq->hash_node,
--				     dsq_hash_params);
-+	ret = rhashtable_lookup_insert_fast(&dsq_hash, &dsq->hash_node,
-+					    dsq_hash_params);
- 	if (ret) {
- 		kfree(dsq);
- 		return ERR_PTR(ret);
+ 	if (cfg_truncate > 0) {
+ 		shutdown(fd, SHUT_WR);
+@@ -1320,7 +1320,10 @@ again:
+ 		close(fd);
+ 	}
+ 
+-	return 0;
++out:
++	if (cfg_input)
++		close(fd_in);
++	return ret;
+ }
+ 
+ int parse_proto(const char *proto)
 
 
