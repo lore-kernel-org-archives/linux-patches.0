@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124DE1A3178;
-	Thu, 17 Apr 2025 18:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1B91D07BA;
+	Thu, 17 Apr 2025 18:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915201; cv=none; b=tK/5O7U0ceDIsfCnbqimQkUpm4lbQyQyFc5ZHIPK+grY/a4NHeqTHdiM85wcdCU5JN1pL/Q8MQ5S6jPTZTeUDP8/Q90KKS3Ib0Rq/WLuDU6EOZohfaZn/gehx2DMwZY4KmIvuADeC0nKe9+NzugwNJhZlrEbSh0c7T9y+RUQ4Ec=
+	t=1744915204; cv=none; b=W+6fi4z9nIOVkfypnmEW8/bztBp8dUIW2+tjchrGVBvTYZBYKDHT0wa5vET0aY/P9kNdQEvKJRDbtJ04j28A57jL+85osOJfxrlrrgeFqjOGYPmwVdzPvncwXa40GUqzLDegZSa8Bdb+fW7yk/YjFTCTs7vBDSrpyYZFc9DN6zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915201; c=relaxed/simple;
-	bh=08vhaarHIrdSVA9BKg6ePkOfRC/OeMQ83ehj2gnZfss=;
+	s=arc-20240116; t=1744915204; c=relaxed/simple;
+	bh=5ZSggvVIO9l7KRGT9JcnNC5OPiaL2vBh0qScxIhsNNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8aZTjNJRXsKJ6oiwOX6JkEcSb4BLD8zdo/kE+sBP0V/7QctvVGGZKFdv1RWNwvb+tffgXW7DmeNL0lUsTVF0GtIqBqykVXIVvV7xcLOEX6jrllDmljQoUskZynR+SJgtaqMwqSmNbbeYj9rcytO2Ztzmrs5+jBCVtR13Ti5QUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ja/5Iz9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZWXCXk1EPxuIAJt7tW8iRTuQP4EF838C/Bc+KunnIIf8wZWZW+1YoHxC6FXQlUYEWKQWiI86YodtZMQURTi10bEHBfK88aUCO27QiQ3ZMtanSMwdJKKD8Fcn8PuqM8tlTlUu6ztyP4Fd9aC5oWO5fcrqCU9hZY34nLZkV7DHXPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsakHoAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ja/5Iz9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFACC4CEE4;
-	Thu, 17 Apr 2025 18:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsakHoAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4CDC4CEE4;
+	Thu, 17 Apr 2025 18:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915200;
-	bh=08vhaarHIrdSVA9BKg6ePkOfRC/OeMQ83ehj2gnZfss=;
+	s=korg; t=1744915204;
+	bh=5ZSggvVIO9l7KRGT9JcnNC5OPiaL2vBh0qScxIhsNNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ja/5Iz9yqEx3UGCQWoiZg7QIAOD4w4m9er4rD0QK2ss3+RMYIuid7dKGANh1VhkpU
-	 7jE9I6Wui3WQOa1EVxolAD/AVuyDGOJUrDnOtjZ7h1povHOhOdmAAIrtO208lC3LNe
-	 x+d8shjakmKJewvokHHr+Ifhlb8MIOMD+7k32/vc=
+	b=VsakHoAutyutrqfXsCo0q73vTq0118Xnu/8MWw0Hy0d2w2AX4iKuZi7oxtDj1wFLz
+	 0XDUbLAX2NYGG0ZvtW+xN+wHnjOt3ADcljHzs3Ncqy5Kxsl1mSNn2qr/yL+prRd67u
+	 3Ywe8cNsKUginXIiK2VXvqhHVUIAsVI5xTn1iYi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
+	Max Grobecker <max@grobecker.info>,
 	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/393] x86/ia32: Leave NULL selector values 0~3 unchanged
-Date: Thu, 17 Apr 2025 19:47:39 +0200
-Message-ID: <20250417175109.601959598@linuxfoundation.org>
+Subject: [PATCH 6.12 051/393] x86/cpu: Dont clear X86_FEATURE_LAHF_LM flag in init_amd_k8() on AMD when running in a virtual machine
+Date: Thu, 17 Apr 2025 19:47:40 +0200
+Message-ID: <20250417175109.640050377@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,145 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Max Grobecker <max@grobecker.info>
 
-[ Upstream commit ad546940b5991d3e141238cd80a6d1894b767184 ]
+[ Upstream commit a4248ee16f411ac1ea7dfab228a6659b111e3d65 ]
 
-The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
-and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
-GDT, selector values 0~3 all point to the NULL descriptor, thus values
-0, 1, 2 and 3 are all valid NULL selector values.
+When running in a virtual machine, we might see the original hardware CPU
+vendor string (i.e. "AuthenticAMD"), but a model and family ID set by the
+hypervisor. In case we run on AMD hardware and the hypervisor sets a model
+ID < 0x14, the LAHF cpu feature is eliminated from the the list of CPU
+capabilities present to circumvent a bug with some BIOSes in conjunction with
+AMD K8 processors.
 
-When a NULL selector value is to be loaded into a segment register,
-reload_segments() sets its RPL bits.  Later IRET zeros ES, FS, GS, and
-DS segment registers if any of them is found to have any nonzero NULL
-selector value.  The two operations offset each other to actually effect
-a nop.
+Parsing the flags list from /proc/cpuinfo seems to be happening mostly in
+bash scripts and prebuilt Docker containers, as it does not need to have
+additionals tools present – even though more reliable ways like using "kcpuid",
+which calls the CPUID instruction instead of parsing a list, should be preferred.
+Scripts, that use /proc/cpuinfo to determine if the current CPU is
+"compliant" with defined microarchitecture levels like x86-64-v2 will falsely
+claim the CPU is incapable of modern CPU instructions when "lahf_lm" is missing
+in that flags list.
 
-Besides, zeroing of RPL in NULL selector values is an information leak
-in pre-FRED systems as userspace can spot any interrupt/exception by
-loading a nonzero NULL selector, and waiting for it to become zero.
-But there is nothing software can do to prevent it before FRED.
+This can prevent some docker containers from starting or build scripts to create
+unoptimized binaries.
 
-ERETU, the only legit instruction to return to userspace from kernel
-under FRED, by design does NOT zero any segment register to avoid this
-problem behavior.
+Admittably, this is more a small inconvenience than a severe bug in the kernel
+and the shoddy scripts that rely on parsing /proc/cpuinfo
+should be fixed instead.
 
-As such, leave NULL selector values 0~3 unchanged and close the leak.
+This patch adds an additional check to see if we're running inside a
+virtual machine (X86_FEATURE_HYPERVISOR is present), which, to my
+understanding, can't be present on a real K8 processor as it was introduced
+only with the later/other Athlon64 models.
 
-Do the same on 32-bit kernel as well.
+Example output with the "lahf_lm" flag missing in the flags list
+(should be shown between "hypervisor" and "abm"):
 
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+    $ cat /proc/cpuinfo
+    processor       : 0
+    vendor_id       : AuthenticAMD
+    cpu family      : 15
+    model           : 6
+    model name      : Common KVM processor
+    stepping        : 1
+    microcode       : 0x1000065
+    cpu MHz         : 2599.998
+    cache size      : 512 KB
+    physical id     : 0
+    siblings        : 1
+    core id         : 0
+    cpu cores       : 1
+    apicid          : 0
+    initial apicid  : 0
+    fpu             : yes
+    fpu_exception   : yes
+    cpuid level     : 13
+    wp              : yes
+    flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca
+                      cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp
+                      lm rep_good nopl cpuid extd_apicid tsc_known_freq pni
+                      pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt
+                      tsc_deadline_timer aes xsave avx f16c hypervisor abm
+                      3dnowprefetch vmmcall bmi1 avx2 bmi2 xsaveopt
+
+... while kcpuid shows the feature to be present in the CPU:
+
+    # kcpuid -d | grep lahf
+         lahf_lm             - LAHF/SAHF available in 64-bit mode
+
+[ mingo: Updated the comment a bit, incorporated Boris's review feedback. ]
+
+Signed-off-by: Max Grobecker <max@grobecker.info>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241126184529.1607334-1-xin@zytor.com
+Cc: linux-kernel@vger.kernel.org
+Cc: Borislav Petkov <bp@alien8.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/signal_32.c | 62 +++++++++++++++++++++++++------------
- 1 file changed, 43 insertions(+), 19 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/signal_32.c b/arch/x86/kernel/signal_32.c
-index ef654530bf5a9..98123ff10506c 100644
---- a/arch/x86/kernel/signal_32.c
-+++ b/arch/x86/kernel/signal_32.c
-@@ -33,25 +33,55 @@
- #include <asm/smap.h>
- #include <asm/gsseg.h>
- 
-+/*
-+ * The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
-+ * and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
-+ * GDT, selector values 0~3 all point to the NULL descriptor, thus values
-+ * 0, 1, 2 and 3 are all valid NULL selector values.
-+ *
-+ * However IRET zeros ES, FS, GS, and DS segment registers if any of them
-+ * is found to have any nonzero NULL selector value, which can be used by
-+ * userspace in pre-FRED systems to spot any interrupt/exception by loading
-+ * a nonzero NULL selector and waiting for it to become zero.  Before FRED
-+ * there was nothing software could do to prevent such an information leak.
-+ *
-+ * ERETU, the only legit instruction to return to userspace from kernel
-+ * under FRED, by design does NOT zero any segment register to avoid this
-+ * problem behavior.
-+ *
-+ * As such, leave NULL selector values 0~3 unchanged.
-+ */
-+static inline u16 fixup_rpl(u16 sel)
-+{
-+	return sel <= 3 ? sel : sel | 3;
-+}
-+
- #ifdef CONFIG_IA32_EMULATION
- #include <asm/unistd_32_ia32.h>
- 
- static inline void reload_segments(struct sigcontext_32 *sc)
- {
--	unsigned int cur;
-+	u16 cur;
- 
-+	/*
-+	 * Reload fs and gs if they have changed in the signal
-+	 * handler.  This does not handle long fs/gs base changes in
-+	 * the handler, but does not clobber them at least in the
-+	 * normal case.
-+	 */
- 	savesegment(gs, cur);
--	if ((sc->gs | 0x03) != cur)
--		load_gs_index(sc->gs | 0x03);
-+	if (fixup_rpl(sc->gs) != cur)
-+		load_gs_index(fixup_rpl(sc->gs));
- 	savesegment(fs, cur);
--	if ((sc->fs | 0x03) != cur)
--		loadsegment(fs, sc->fs | 0x03);
-+	if (fixup_rpl(sc->fs) != cur)
-+		loadsegment(fs, fixup_rpl(sc->fs));
-+
- 	savesegment(ds, cur);
--	if ((sc->ds | 0x03) != cur)
--		loadsegment(ds, sc->ds | 0x03);
-+	if (fixup_rpl(sc->ds) != cur)
-+		loadsegment(ds, fixup_rpl(sc->ds));
- 	savesegment(es, cur);
--	if ((sc->es | 0x03) != cur)
--		loadsegment(es, sc->es | 0x03);
-+	if (fixup_rpl(sc->es) != cur)
-+		loadsegment(es, fixup_rpl(sc->es));
- }
- 
- #define sigset32_t			compat_sigset_t
-@@ -105,18 +135,12 @@ static bool ia32_restore_sigcontext(struct pt_regs *regs,
- 	regs->orig_ax = -1;
- 
- #ifdef CONFIG_IA32_EMULATION
--	/*
--	 * Reload fs and gs if they have changed in the signal
--	 * handler.  This does not handle long fs/gs base changes in
--	 * the handler, but does not clobber them at least in the
--	 * normal case.
--	 */
- 	reload_segments(&sc);
- #else
--	loadsegment(gs, sc.gs);
--	regs->fs = sc.fs;
--	regs->es = sc.es;
--	regs->ds = sc.ds;
-+	loadsegment(gs, fixup_rpl(sc.gs));
-+	regs->fs = fixup_rpl(sc.fs);
-+	regs->es = fixup_rpl(sc.es);
-+	regs->ds = fixup_rpl(sc.ds);
- #endif
- 
- 	return fpu__restore_sig(compat_ptr(sc.fpstate), 1);
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 79d2e17f6582e..425bed00b2e07 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -627,7 +627,7 @@ static void init_amd_k8(struct cpuinfo_x86 *c)
+ 	 * (model = 0x14) and later actually support it.
+ 	 * (AMD Erratum #110, docId: 25759).
+ 	 */
+-	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM)) {
++	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM) && !cpu_has(c, X86_FEATURE_HYPERVISOR)) {
+ 		clear_cpu_cap(c, X86_FEATURE_LAHF_LM);
+ 		if (!rdmsrl_amd_safe(0xc001100d, &value)) {
+ 			value &= ~BIT_64(32);
 -- 
 2.39.5
 
