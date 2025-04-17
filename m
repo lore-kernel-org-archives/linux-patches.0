@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F40819F40A;
-	Thu, 17 Apr 2025 18:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48D519F40A;
+	Thu, 17 Apr 2025 18:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913243; cv=none; b=am1n5NqbUfe3RI8YzFFbm9XzkinOa68XO3xNBsu5Ssibp7/cH4D9BR3yY2y2uhDTP7WGiMb7IVrsQWtLwkCUSAoDxQSWozfeDRrNHoUOUVE+CfPIuwLPZz7s9NnI+08X//tu4tXd5s4Wmp4Z79ysL0aDslKxIShxn3z3jBMDF0E=
+	t=1744913246; cv=none; b=TkVeC+++RjdpvDsI3Kr0ObrAxTh4K9b+hyJqEP+pK1zoGG8aC6giIydXh2JbjdHI3HYBzEqrsvUUnknRcOCR9N5DaSiZ1QzYxWOulZM3el4B2XitwvM7XUGe12vBXIxvas/uVgXU+Q/7hS5hioxNmpCYHzJakmHGgHloKMhb+2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913243; c=relaxed/simple;
-	bh=hDIhx/FB2w5Yr7GYU3sT6An52DH/lXeAxwW2YBymt9o=;
+	s=arc-20240116; t=1744913246; c=relaxed/simple;
+	bh=qeclHQY1g17+sANKP/Zd/uTfwOqlOTnf7MgfWP1YvkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1H4jnTmIbzyfS/mlZ8szriK8fG6yjdIDA6CmbEzqZwspyEOtqjTIX+zDkD/A7LyvxXn1uslcnqCpL7/HcBmXInzEQn5VIvgB00RtFevG2aSf90OumlE3oqydIeKxGclqGr0CLFck3lQWylLXKG9qRdp9QPzPkiu1GFiLjqKh98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2pttEru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BX8Alv3akNKg61MrRRWBGMdqrbv2Ngv/6LIFastioY1Y/xzMM//zg7XFOPujUpbV8jtFF6wlpBVR4uoJuEA0bWI8J5eFC+6Hjym7nxic0gOGTKP0ZmGvS9Xkggb0tLoUVnInnsc3tMgmMUxPpiFkol5FZNtLxPGJb12nZ+x9a7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtOmxPGz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2pttEru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E3BC4CEE4;
-	Thu, 17 Apr 2025 18:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtOmxPGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350C2C4CEE4;
+	Thu, 17 Apr 2025 18:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913243;
-	bh=hDIhx/FB2w5Yr7GYU3sT6An52DH/lXeAxwW2YBymt9o=;
+	s=korg; t=1744913246;
+	bh=qeclHQY1g17+sANKP/Zd/uTfwOqlOTnf7MgfWP1YvkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2pttEruQWDIYSA1CLkNEjsAjDWm1Z5CxkjTaaQduOMbhoS6AVlLJOgvHDUDhpi1E
-	 jZKTPGQDpJOMQ/E2AKNLRWIS9ANcPekm6tyo6kZ6DNQ09Z31LaonUlUtJAWwd8n98M
-	 DpvQDPogCKeet43q6K3OXf3/mORiTIC2SVgKIVU8=
+	b=UtOmxPGzdwL9lkZYnaaa+upHl4XbOsIV8Li7VVdSEgLnqZWvJYLz71Dq5+3eQTlQ/
+	 AT9cepIaJdEQIdtB0D+imMUoYxRY8h4Yy3GJh3canR9I+21QCUMygCd/IbZ6oVZgOm
+	 n3zvk0kwslTW8Z9548s5iSlT43mZCB8PlNt2SmnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.14 275/449] mtd: Replace kcalloc() with devm_kcalloc()
-Date: Thu, 17 Apr 2025 19:49:23 +0200
-Message-ID: <20250417175129.129531997@linuxfoundation.org>
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.14 276/449] clocksource/drivers/stm32-lptimer: Use wakeup capable instead of init wakeup
+Date: Thu, 17 Apr 2025 19:49:24 +0200
+Message-ID: <20250417175129.169147724@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Alexandre Torgue <alexandre.torgue@foss.st.com>
 
-commit 1b61a59876f0eafc19b23007c522ee407f55dbec upstream.
+commit 96bf4b89a6ab22426ad83ef76e66c72a5a8daca0 upstream.
 
-Replace kcalloc() with devm_kcalloc() to prevent memory leaks in case of
-errors.
+"wakeup-source" property describes a device which has wakeup capability
+but should not force this device as a wakeup source.
 
-Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 48b41c5e2de6 ("clocksource: Add Low Power STM32 timers driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Rule: add
+Link: https://lore.kernel.org/stable/20250306083407.2374894-1-fabrice.gasnier%40foss.st.com
+Link: https://lore.kernel.org/r/20250306102501.2980153-1-fabrice.gasnier@foss.st.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdpstore.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/clocksource/timer-stm32-lp.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/mtd/mtdpstore.c
-+++ b/drivers/mtd/mtdpstore.c
-@@ -417,11 +417,11 @@ static void mtdpstore_notify_add(struct
+--- a/drivers/clocksource/timer-stm32-lp.c
++++ b/drivers/clocksource/timer-stm32-lp.c
+@@ -168,9 +168,7 @@ static int stm32_clkevent_lp_probe(struc
  	}
  
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, info->kmsg_size));
--	cxt->rmmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
--	cxt->usedmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->rmmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->usedmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
+ 	if (of_property_read_bool(pdev->dev.parent->of_node, "wakeup-source")) {
+-		ret = device_init_wakeup(&pdev->dev, true);
+-		if (ret)
+-			goto out_clk_disable;
++		device_set_wakeup_capable(&pdev->dev, true);
  
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
--	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->badmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
- 
- 	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
- 		return;
-@@ -530,9 +530,6 @@ static void mtdpstore_notify_remove(stru
- 	mtdpstore_flush_removed(cxt);
- 
- 	unregister_pstore_device(&cxt->dev);
--	kfree(cxt->badmap);
--	kfree(cxt->usedmap);
--	kfree(cxt->rmmap);
- 	cxt->mtd = NULL;
- 	cxt->index = -1;
- }
+ 		ret = dev_pm_set_wake_irq(&pdev->dev, irq);
+ 		if (ret)
 
 
