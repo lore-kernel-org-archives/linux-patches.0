@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA57255E34;
-	Thu, 17 Apr 2025 18:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC14253B5E;
+	Thu, 17 Apr 2025 18:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914402; cv=none; b=bBign6W5ZyU+eYFwm5tNY4VT1de22eyjDcpnf81jdCujMNdvM61By+pmvtzVlNOdMwIN3zh+ge+/lpDOslCQcd8USENpdzC/19R4JsHWFCvR5Fuk2P2NMRWPtPKYOli+ddqsls3Fo5nQK2My6Nsd444y7KNVDm0ACKsGS+IHYz0=
+	t=1744914405; cv=none; b=H1jEBIEGcR84/rlXZ7hNLRocgwFZY5n1mI5En3aHxBWp7y2wDKSSbgdJnR0AoH0zHId+FXP0HYXbl0mRMmmbw9EKx2sOHRahGgFL/2ZHeI5qPhz5A+vzdhyj5iZJe4emN8J/O1DPa3W1gLAyT9dlTjUYB+mG5JhJesLuePiK0Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914402; c=relaxed/simple;
-	bh=9ZOzRsitorkf6+CbhWKsFpA/+Z/PRHTZvf+5FslSXNU=;
+	s=arc-20240116; t=1744914405; c=relaxed/simple;
+	bh=lyfkRhoyrzgcQGzrFtzZiYzhQ6DGaCeWAF+pzgHOBn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJ8je+Bh0tGkCGfCQQ+kuDlR2B6unZIfK67YiPT3e4qa04XuHM5Uceo1BPaI8j++bvelGdiX599NvT5jV1hdgdA+sB1ZlQfbFuUONDKNrH+gTAGbQTemOoppl5RSxyKqE1m8grSz72TcORevhS4lize5hSHGCkouMBG8zeygokE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0INDEhEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiYzcIhME5NyCPNA4nk5KIMuzEisFXk0zFWNWa/IAfHx5s+7to2E54kxxYLXaWpS666I1unqI0zq2hF5Eku7fRcPK0jgzpofUmwPY7RYQF9u9V24nnhc2JJZQ9CKhu35l03Ab05QjVHL5SlmhAtbK7+YIrWJgJyFWHsXp7NEHKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeYUI9lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0INDEhEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE7CC4CEE4;
-	Thu, 17 Apr 2025 18:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeYUI9lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7015EC4CEE4;
+	Thu, 17 Apr 2025 18:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914402;
-	bh=9ZOzRsitorkf6+CbhWKsFpA/+Z/PRHTZvf+5FslSXNU=;
+	s=korg; t=1744914404;
+	bh=lyfkRhoyrzgcQGzrFtzZiYzhQ6DGaCeWAF+pzgHOBn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0INDEhEZoPbZL53eQ53yZIgPh0rt/zpwEJRJ/3bN06XriQRgvV9+jUIiwSKoGo/Va
-	 V1Win1LILGGW0vSVhjob9bhVNjmbDdUqVJ2zRWvpHGPL9h7mgkOXO9knRqLmZ9EwCT
-	 47ezhevbTmPw9y8cqJki9vRUEmHhh6dfLz/4+7Hk=
+	b=WeYUI9lhXlZFP3F9l8pqQpxQJ+tIWtKvLNzKS8WDEJDnJMI5SAX+zjeDgR2YfU/LW
+	 Yuvofq6efU03ABPDD2DLjUVzm8gNNW5A+YvPnRO73nmqZMLyfRb1sjZ53ROn1aA4v/
+	 ITHmfTYxa6EQD1KZi8cNyH9UNRKStbR7Y1G0CWjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidenori Kobayashi <hidenorik@chromium.org>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 203/414] media: intel/ipu6: set the dev_parent of video device to pdev
-Date: Thu, 17 Apr 2025 19:49:21 +0200
-Message-ID: <20250417175119.604088296@linuxfoundation.org>
+Subject: [PATCH 6.13 204/414] media: venus: hfi: add a check to handle OOB in sfr region
+Date: Thu, 17 Apr 2025 19:49:22 +0200
+Message-ID: <20250417175119.643331207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,39 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 6f0ab5d3671f7cbb326c8cab6fb69cb7ab9901cc upstream.
+commit f4b211714bcc70effa60c34d9fa613d182e3ef1e upstream.
 
-The bus_info in v4l2_capability of IPU6 isys v4l2_dev is missing.
-The driver didn't set the dev_parent of v4l2_dev, its parent is set
-to its parent auxdev which is neither platform nor PCI device, thus
-media_set_bus_info() will not set the bus_info of v4l2_capability, then
-`v4l2-ctl --all` cannot show the bus_info.
+sfr->buf_size is in shared memory and can be modified by malicious user.
+OOB write is possible when the size is made higher than actual sfr data
+buffer. Cap the size to allocated size for such cases.
 
-This patch fixes it by setting the dev_parent of video_device and v4l2
-framework can detect the device type and set the bus_info instead.
-
-Fixes: 3c1dfb5a69cf ("media: intel/ipu6: input system video nodes and buffer queues")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-isys-video.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
-@@ -1296,6 +1296,7 @@ int ipu6_isys_video_init(struct ipu6_isy
- 	av->vdev.release = video_device_release_empty;
- 	av->vdev.fops = &isys_fops;
- 	av->vdev.v4l2_dev = &av->isys->v4l2_dev;
-+	av->vdev.dev_parent = &av->isys->adev->isp->pdev->dev;
- 	if (!av->vdev.ioctl_ops)
- 		av->vdev.ioctl_ops = &ipu6_v4l2_ioctl_ops;
- 	av->vdev.queue = &av->aq.vbq;
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -1035,18 +1035,26 @@ static void venus_sfr_print(struct venus
+ {
+ 	struct device *dev = hdev->core->dev;
+ 	struct hfi_sfr *sfr = hdev->sfr.kva;
++	u32 size;
+ 	void *p;
+ 
+ 	if (!sfr)
+ 		return;
+ 
+-	p = memchr(sfr->data, '\0', sfr->buf_size);
++	size = sfr->buf_size;
++	if (!size)
++		return;
++
++	if (size > ALIGNED_SFR_SIZE)
++		size = ALIGNED_SFR_SIZE;
++
++	p = memchr(sfr->data, '\0', size);
+ 	/*
+ 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
+ 	 * that Venus is in the process of crashing.
+ 	 */
+ 	if (!p)
+-		sfr->data[sfr->buf_size - 1] = '\0';
++		sfr->data[size - 1] = '\0';
+ 
+ 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
+ }
 
 
