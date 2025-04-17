@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A8D1DF756;
-	Thu, 17 Apr 2025 18:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B791D86ED;
+	Thu, 17 Apr 2025 18:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915497; cv=none; b=YUKjRZAkgbKkprTAz9606cDuBVW/N1Q0Hf5ms0Rgx44XGbp84VmiweH3AOQsTYQRajwU/Yq1IkVA5KFTiCfUqI0tjiM0NIan7kyTAtMkWPJVM2S/fTTf6LKt/bKRRX76vmEruTsmo+lOAR38FtkvMXxa+H1BguyPweH9j2So+S8=
+	t=1744915501; cv=none; b=BS9JToPkHjzTI20NYVYz68MBHAL2uyKbHX+TISLabrO7rdRO5gudteE15z/FA+Y7v59xcOpBjZlnRzQ+gScYFoFbVUfGndYWXuI8eA7a8bELWp0GypNF+kt45MnhCfv2bkEtZyeeAqtRjWiUWVIEQgaBK1mofAlMGry5dUgcPAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915497; c=relaxed/simple;
-	bh=tjkaqHtz6GpLkMBXgEREcjM7A1huHWnACghwnctJYrw=;
+	s=arc-20240116; t=1744915501; c=relaxed/simple;
+	bh=gLd35BUzjPiz02ks6iXp6Vi7nYo5RvGIOpn9BZEB+p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cN6lLNcIpzHC+VgRHCJQYYdExe6NvzGbbMyzEAzbZNBUEcl5EGXshj0hueOU8NSQIC29UKoNVPMMX72hsNGAttY/s2BnAXCrul1HKcsVoG4MsoH2RBBKmoizsTqBb63rqaGdV1zHP9hY0kDbHVjMps7MJYr16UeC7jyvWMfHE+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbp1GofW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DVCMFrGIc6AJktIFlwePbnqrq6z686kHKJSNlIBQ9mc7DjhEBchAyk7r0uP7NOlDGPkjGOXZTME5NaTpbN+EjWAfbadPExcMt3wl6SJ5e7Au2bubfKcCLtB4vTC1LU2IA7lyL51at8sjEHkxRDxn6Gnzat7zGhvBEmsUh7cTXFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5x2Tn1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbp1GofW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E285BC4CEE4;
-	Thu, 17 Apr 2025 18:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5x2Tn1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD16C4CEE4;
+	Thu, 17 Apr 2025 18:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915497;
-	bh=tjkaqHtz6GpLkMBXgEREcjM7A1huHWnACghwnctJYrw=;
+	s=korg; t=1744915501;
+	bh=gLd35BUzjPiz02ks6iXp6Vi7nYo5RvGIOpn9BZEB+p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbp1GofWGjYZkoCse9EioqKEmTbME9ImraqwNkDPmd5CGSBGjuOr3qQv22bJDSIef
-	 Ddl/OAnYL1iMRtbu/33DV1xX7xBkrr/zEOPMvyNhY+mmrYKRXCOe25Iss1gzdQCOW0
-	 KAGBrF9GV0LVbzvn4F1Q6lhHVrNUYnb3vilGwMC8=
+	b=H5x2Tn1DiZBC3RfmV1sR616yucZIzyuBu4szr23s823VPigvTkPTD/HFr78jOz8iU
+	 MBOEBkp3yxFm/pXAd9wjrJf4b3gUrPQqjyIXhXRgvetFhP/kJheA4i62jVsZUYAum6
+	 TJNHxm8VWwoPKWCk4ByRoJbdmMT5u6U+vjJ31mIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 146/393] drm/mediatek: mtk_dpi: Explicitly manage TVD clock in power on/off
-Date: Thu, 17 Apr 2025 19:49:15 +0200
-Message-ID: <20250417175113.454149178@linuxfoundation.org>
+Subject: [PATCH 6.12 147/393] PCI: Add Rockchip Vendor ID
+Date: Thu, 17 Apr 2025 19:49:16 +0200
+Message-ID: <20250417175113.493174150@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -46,73 +47,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 473c33f5ce651365468503c76f33158aaa1c7dd2 ]
+[ Upstream commit 20bbb083bbc9d3f8db390f2e35e168f1b23dae8a ]
 
-In preparation for adding support for MT8195's HDMI reserved
-DPI, add calls to clk_prepare_enable() / clk_disable_unprepare()
-for the TVD clock: in this particular case, the aforementioned
-clock is not (and cannot be) parented to neither pixel or engine
-clocks hence it won't get enabled automatically by the clock
-framework.
+Move PCI_VENDOR_ID_ROCKCHIP from pci_endpoint_test.c to pci_ids.h and
+reuse it in pcie-rockchip-host.c.
 
-Please note that on all of the currently supported MediaTek
-platforms, the TVD clock is always a parent of either pixel or
-engine clocks, and this means that the common clock framework
-is already enabling this clock before the children.
-On such platforms, this commit will only increase the refcount
-of the TVD clock without any functional change.
-
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-10-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Link: https://lore.kernel.org/r/20250218092120.2322784-2-cassel@kernel.org
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/misc/pci_endpoint_test.c            | 1 -
+ drivers/pci/controller/pcie-rockchip-host.c | 2 +-
+ drivers/pci/controller/pcie-rockchip.h      | 1 -
+ include/linux/pci_ids.h                     | 2 ++
+ 4 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index 21ec6c775521f..9c11d3158324c 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -471,6 +471,7 @@ static void mtk_dpi_power_off(struct mtk_dpi *dpi)
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index 3aaaf47fa4ee2..b5c8422fd2f04 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -85,7 +85,6 @@
+ #define PCI_DEVICE_ID_RENESAS_R8A774E1		0x0025
+ #define PCI_DEVICE_ID_RENESAS_R8A779F0		0x0031
  
- 	mtk_dpi_disable(dpi);
- 	clk_disable_unprepare(dpi->pixel_clk);
-+	clk_disable_unprepare(dpi->tvd_clk);
- 	clk_disable_unprepare(dpi->engine_clk);
- }
+-#define PCI_VENDOR_ID_ROCKCHIP			0x1d87
+ #define PCI_DEVICE_ID_ROCKCHIP_RK3588		0x3588
  
-@@ -487,6 +488,12 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 		goto err_refcount;
+ static DEFINE_IDA(pci_endpoint_test_ida);
+diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
+index cbec711148253..481dcc476c556 100644
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -367,7 +367,7 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
+ 		}
  	}
  
-+	ret = clk_prepare_enable(dpi->tvd_clk);
-+	if (ret) {
-+		dev_err(dpi->dev, "Failed to enable tvd pll: %d\n", ret);
-+		goto err_engine;
-+	}
-+
- 	ret = clk_prepare_enable(dpi->pixel_clk);
- 	if (ret) {
- 		dev_err(dpi->dev, "Failed to enable pixel clock: %d\n", ret);
-@@ -496,6 +503,8 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 	return 0;
+-	rockchip_pcie_write(rockchip, ROCKCHIP_VENDOR_ID,
++	rockchip_pcie_write(rockchip, PCI_VENDOR_ID_ROCKCHIP,
+ 			    PCIE_CORE_CONFIG_VENDOR);
+ 	rockchip_pcie_write(rockchip,
+ 			    PCI_CLASS_BRIDGE_PCI_NORMAL << 8,
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index 15ee949f2485e..688f51d9bde63 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -188,7 +188,6 @@
+ #define AXI_WRAPPER_NOR_MSG			0xc
  
- err_pixel:
-+	clk_disable_unprepare(dpi->tvd_clk);
-+err_engine:
- 	clk_disable_unprepare(dpi->engine_clk);
- err_refcount:
- 	dpi->refcount--;
+ #define PCIE_RC_SEND_PME_OFF			0x11960
+-#define ROCKCHIP_VENDOR_ID			0x1d87
+ #define PCIE_LINK_IS_L2(x) \
+ 	(((x) & PCIE_CLIENT_DEBUG_LTSSM_MASK) == PCIE_CLIENT_DEBUG_LTSSM_L2)
+ #define PCIE_LINK_UP(x) \
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index c9dc15355f1ba..c395b3c5c05cf 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -2605,6 +2605,8 @@
+ 
+ #define PCI_VENDOR_ID_ZHAOXIN		0x1d17
+ 
++#define PCI_VENDOR_ID_ROCKCHIP		0x1d87
++
+ #define PCI_VENDOR_ID_HYGON		0x1d94
+ 
+ #define PCI_VENDOR_ID_META		0x1d9b
 -- 
 2.39.5
 
