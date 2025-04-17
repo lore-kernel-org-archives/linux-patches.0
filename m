@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64321DB148;
-	Thu, 17 Apr 2025 18:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600CF1A3178;
+	Thu, 17 Apr 2025 18:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913352; cv=none; b=EfJcDiscAFv29qG5V1jm91rVgMclA2OEK8WdHuqLL23WQLuV9clLWsyLzc8T/UceoPOimLdL63Fd5baUADVFVShtGWooLdvp8cwDAYlMxVKXgKsQgBvUFWfs77KyFbwV6gYJ9+Inh4HKOqXyZwDzujahhmFGeQXyrMhaFFXENXc=
+	t=1744913355; cv=none; b=egdldNpek/DcjkwzQq6x5I7GXI/hjl77tVbVMhn2reL5geMl4LNa3IUhJyds+2iS811RA7bD+xDGnxShfaQlFkKxeAAArveTjpxjrQO1W7x1OZoIaYKHTBGUD/Hwb+nM01GI4iFGJLJ326fL8qpnH7CpcNXFjjJ19zUrCW597Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913352; c=relaxed/simple;
-	bh=hivFNvM2Cf4ejN6i2KuIKxZkvX9CQ5umWUZ+MEjS20g=;
+	s=arc-20240116; t=1744913355; c=relaxed/simple;
+	bh=+NlI1i5qYkHFsiD2rC5ds823KnUBPYhARA/F9qhvhpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghduUZfjJ0CbOS3RYzh/1o+LKVnUQn0OJyze53QO1D3s5Z9T5onbppCZoIe9Z4NZXv1uruDfDNk/MmZhsVcqSz+kTGgyX9a5lV9NTn0RN7AeGIptHJnXF/RXWMiAXAqzPz+rry5x4J707ZIP183ONn1+G6vUxMaL1Vp0Si3B0Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhNMP6q5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bypm3dfdhNMRnlk/Wz+LckqgDQMurrB/hkHGvA7J9DkFBohgv13Ud1Mkgnt7ovzm9oqtrJR150giaOsXmsCztX1ogsQzXCvLv1WDPCGXTswoC41KQGVQyCkO0d280kxvxIJ7LltWT/2qkt4QJV1o76YLsegahd1ME0Ox1mbJy3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgN6yoVw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhNMP6q5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE97C4CEE4;
-	Thu, 17 Apr 2025 18:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgN6yoVw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB94C4CEE4;
+	Thu, 17 Apr 2025 18:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913352;
-	bh=hivFNvM2Cf4ejN6i2KuIKxZkvX9CQ5umWUZ+MEjS20g=;
+	s=korg; t=1744913355;
+	bh=+NlI1i5qYkHFsiD2rC5ds823KnUBPYhARA/F9qhvhpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhNMP6q5iIUppAA2GVKLhaPKyq3v20DQ8TGgaajfNJImTLPwy4O7Fjbhn70J9/31W
-	 3vJ/P++hFFQ9ifDsM08yrXXHGq7qJ3l5lRZJH/mxTxD0Q0/0m1t1Vycp9wbMoBnpp8
-	 5WoR2U5+zclpEX5UuvqZdEzBTlfSGcAEG4XF7LqU=
+	b=sgN6yoVwdQhuVmFzc5yzU4H87OKH3s0uaNqvVYbAmGj6PKRkA9VuVfgP5Q57NHAAF
+	 Zr3HckvrDzosyLNRhna/9TMhQ1nfRHB3T8Shag9IpNCXEgtwuMHYWjmlKSFQys1Vy7
+	 ArmY7TrkrC0wGDJ9C+SvJcljl2Hwpkpuh2eaG1E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Mike Seo <mikeseohyungjin@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.14 311/449] tpm: do not start chip while suspended
-Date: Thu, 17 Apr 2025 19:49:59 +0200
-Message-ID: <20250417175130.629607043@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Olga Kornievskaia <okorniev@redhat.com>
+Subject: [PATCH 6.14 312/449] svcrdma: do not unregister device for listeners
+Date: Thu, 17 Apr 2025 19:50:00 +0200
+Message-ID: <20250417175130.669264701@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,100 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit 17d253af4c2c8a2acf84bb55a0c2045f150b7dfd upstream.
+commit 750037aa0a9f28d84df3dcf319a28423d69092fd upstream.
 
-Checking TPM_CHIP_FLAG_SUSPENDED after the call to tpm_find_get_ops() can
-lead to a spurious tpm_chip_start() call:
+On an rdma-capable machine, a start/stop/start and then on a stop of
+a knfsd server would lead kref underflow warning because svc_rdma_free
+would indiscriminately unregister the rdma device but a listening
+transport never calls the rdma_rn_register() thus leading to kref
+going down to 0 on the 1st stop of the server and on the 2nd stop
+it leads to a problem.
 
-[35985.503771] i2c i2c-1: Transfer while suspended
-[35985.503796] WARNING: CPU: 0 PID: 74 at drivers/i2c/i2c-core.h:56 __i2c_transfer+0xbe/0x810
-[35985.503802] Modules linked in:
-[35985.503808] CPU: 0 UID: 0 PID: 74 Comm: hwrng Tainted: G        W          6.13.0-next-20250203-00005-gfa0cb5642941 #19 9c3d7f78192f2d38e32010ac9c90fdc71109ef6f
-[35985.503814] Tainted: [W]=WARN
-[35985.503817] Hardware name: Google Morphius/Morphius, BIOS Google_Morphius.13434.858.0 10/26/2023
-[35985.503819] RIP: 0010:__i2c_transfer+0xbe/0x810
-[35985.503825] Code: 30 01 00 00 4c 89 f7 e8 40 fe d8 ff 48 8b 93 80 01 00 00 48 85 d2 75 03 49 8b 16 48 c7 c7 0a fb 7c a7 48 89 c6 e8 32 ad b0 fe <0f> 0b b8 94 ff ff ff e9 33 04 00 00 be 02 00 00 00 83 fd 02 0f 5
-[35985.503828] RSP: 0018:ffffa106c0333d30 EFLAGS: 00010246
-[35985.503833] RAX: 074ba64aa20f7000 RBX: ffff8aa4c1167120 RCX: 0000000000000000
-[35985.503836] RDX: 0000000000000000 RSI: ffffffffa77ab0e4 RDI: 0000000000000001
-[35985.503838] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
-[35985.503841] R10: 0000000000000004 R11: 00000001000313d5 R12: ffff8aa4c10f1820
-[35985.503843] R13: ffff8aa4c0e243c0 R14: ffff8aa4c1167250 R15: ffff8aa4c1167120
-[35985.503846] FS:  0000000000000000(0000) GS:ffff8aa4eae00000(0000) knlGS:0000000000000000
-[35985.503849] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[35985.503852] CR2: 00007fab0aaf1000 CR3: 0000000105328000 CR4: 00000000003506f0
-[35985.503855] Call Trace:
-[35985.503859]  <TASK>
-[35985.503863]  ? __warn+0xd4/0x260
-[35985.503868]  ? __i2c_transfer+0xbe/0x810
-[35985.503874]  ? report_bug+0xf3/0x210
-[35985.503882]  ? handle_bug+0x63/0xb0
-[35985.503887]  ? exc_invalid_op+0x16/0x50
-[35985.503892]  ? asm_exc_invalid_op+0x16/0x20
-[35985.503904]  ? __i2c_transfer+0xbe/0x810
-[35985.503913]  tpm_cr50_i2c_transfer_message+0x24/0xf0
-[35985.503920]  tpm_cr50_i2c_read+0x8e/0x120
-[35985.503928]  tpm_cr50_request_locality+0x75/0x170
-[35985.503935]  tpm_chip_start+0x116/0x160
-[35985.503942]  tpm_try_get_ops+0x57/0x90
-[35985.503948]  tpm_find_get_ops+0x26/0xd0
-[35985.503955]  tpm_get_random+0x2d/0x80
-
-Don't move forward with tpm_chip_start() inside tpm_try_get_ops(), unless
-TPM_CHIP_FLAG_SUSPENDED is not set. tpm_find_get_ops() will return NULL in
-such a failure case.
-
-Fixes: 9265fed6db60 ("tpm: Lock TPM chip in tpm_pm_suspend() first")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Suggested-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: c4de97f7c454 ("svcrdma: Handle device removal outside of the CM event handler")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
 Cc: stable@vger.kernel.org
-Cc: Jerry Snitselaar <jsnitsel@redhat.com>
-Cc: Mike Seo <mikeseohyungjin@gmail.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c      |    5 +++++
- drivers/char/tpm/tpm-interface.c |    7 -------
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -168,6 +168,11 @@ int tpm_try_get_ops(struct tpm_chip *chi
- 		goto out_ops;
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -621,7 +621,8 @@ static void __svc_rdma_free(struct work_
+ 	/* Destroy the CM ID */
+ 	rdma_destroy_id(rdma->sc_cm_id);
  
- 	mutex_lock(&chip->tpm_mutex);
-+
-+	/* tmp_chip_start may issue IO that is denied while suspended */
-+	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED)
-+		goto out_lock;
-+
- 	rc = tpm_chip_start(chip);
- 	if (rc)
- 		goto out_lock;
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -445,18 +445,11 @@ int tpm_get_random(struct tpm_chip *chip
- 	if (!chip)
- 		return -ENODEV;
- 
--	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
--	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED) {
--		rc = 0;
--		goto out;
--	}
--
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		rc = tpm2_get_random(chip, out, max);
- 	else
- 		rc = tpm1_get_random(chip, out, max);
- 
--out:
- 	tpm_put_ops(chip);
- 	return rc;
+-	rpcrdma_rn_unregister(device, &rdma->sc_rn);
++	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
++		rpcrdma_rn_unregister(device, &rdma->sc_rn);
+ 	kfree(rdma);
  }
+ 
 
 
