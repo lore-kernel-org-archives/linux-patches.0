@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9588E2571BF;
-	Thu, 17 Apr 2025 18:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6002571BA;
+	Thu, 17 Apr 2025 18:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914484; cv=none; b=njvCLvLoG+pHh1xtODAYWp/nggKPEkzmY7yWUm8+9QNSELgphCCg0WUxoo4sHbrDFqcmzMUS5XmvJoE6WSLJyVwmuAishD21WIIDwLCx/97I+r8pYw7liH/+9hcxDQydLzhEwCKBQNKDksqsBSGpZ67G+p3johXFFy5XXdUvYmk=
+	t=1744914487; cv=none; b=jcESRjNBLsMPK22pLWdJNDOr5XTPhTX4Tv1hlKfIzK3WmPBD+pEwGlmIGRMF8gVIF2upBs+zfuYF8wxob4iiQUKMGPMg4eGaSnkesHnJ8X8uv3xxBW/3PhLhjRmgt3WQz5IcGco7OliJQcbkuEBFqnIBtCOyYmHkHK77Zr53+1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914484; c=relaxed/simple;
-	bh=fxhjzv67xl1c9zaIETNeWyod32QC5B2ZU6rJ9nFpEOE=;
+	s=arc-20240116; t=1744914487; c=relaxed/simple;
+	bh=2wmGXHtCgrc1q4RNBcPbmGXnDp1jULlaRtdXFTU45VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlxAI2f3o/YreIiauVguUakX2ugtZgHHPReEORWJ5KwJEa3AHlstw25sbi7O35SAerNR2FQmeEaAE5boiZzk3gOe6VIujzbIq/y9bOxTVt9nOvOxVKiHb5E37EuEM6/FTWObwKejggibduB7bQcjTqFw9LP55eisJigfSW9savM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSuLaYPS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j0RhHvIzvqbDJBcXmfcpZVAGSishycenicHMd/A/tAhlkSnNwaLe7wqngTolE3YO8NuJ+HM2BrzV/fnD43W/K6jgUeU1srbngLaPFOhdg+MgkPIg4/sqQ4WBMOL1eE4F1T3YT0kXCengoygsBcCZ20ou8XYVeyS0iYJp1LM06+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGKnptP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSuLaYPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A163FC4CEE4;
-	Thu, 17 Apr 2025 18:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGKnptP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB3CC4CEE4;
+	Thu, 17 Apr 2025 18:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914484;
-	bh=fxhjzv67xl1c9zaIETNeWyod32QC5B2ZU6rJ9nFpEOE=;
+	s=korg; t=1744914487;
+	bh=2wmGXHtCgrc1q4RNBcPbmGXnDp1jULlaRtdXFTU45VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSuLaYPSaR9wTJF3AZrm2G+TIzJ5SNUUyXsYUCPtNVdOnTvDsqE4I72No2Zi8xtxe
-	 gP6XwhBeQV4+rNEFM2LL0kzGUljrLn///izJ0rkoaUvR4Aswl2vN/I/kZwHkyhObij
-	 94KrjxlVbc0zNs8gm265I7j+ALOZ0kFq9xNg1zi4=
+	b=kGKnptP/8t1XbJGGIaxcVPrg7cK98W9AjTv9FdlD8mgYlUF47yfehxC8R0MTytOnP
+	 QvTEVslkmOVtWHVytFKWWBlF7I+oT1l2kFFGlzbiGHm1dERz35S56ZllNfhzSuxvWg
+	 X5w+8hhRasgEaZsAzJBGCxnyhwk/ykCR5ohLTUbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 230/414] media: i2c: ccs: Set the devices runtime PM status correctly in remove
-Date: Thu, 17 Apr 2025 19:49:48 +0200
-Message-ID: <20250417175120.682416282@linuxfoundation.org>
+Subject: [PATCH 6.13 231/414] media: i2c: ccs: Set the devices runtime PM status correctly in probe
+Date: Thu, 17 Apr 2025 19:49:49 +0200
+Message-ID: <20250417175120.723485230@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,10 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit e04604583095faf455b3490b004254a225fd60d4 upstream.
+commit 80704d14f1bd3628f578510e0a88b66824990ef6 upstream.
 
-Set the device's runtime PM status to suspended in device removal only if
-it wasn't suspended already.
+Set the device's runtime PM status to suspended in probe error paths where
+it was previously set to active.
 
 Fixes: 9447082ae666 ("[media] smiapp: Implement power-on and power-off sequences without runtime PM")
 Cc: stable@vger.kernel.org # for >= v5.15
@@ -63,23 +63,18 @@ Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ccs/ccs-core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/media/i2c/ccs/ccs-core.c
 +++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3591,9 +3591,10 @@ static void ccs_remove(struct i2c_client
- 	v4l2_async_unregister_subdev(subdev);
- 
+@@ -3562,6 +3562,7 @@ static int ccs_probe(struct i2c_client *
+ out_disable_runtime_pm:
+ 	pm_runtime_put_noidle(&client->dev);
  	pm_runtime_disable(&client->dev);
--	if (!pm_runtime_status_suspended(&client->dev))
-+	if (!pm_runtime_status_suspended(&client->dev)) {
- 		ccs_power_off(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+		pm_runtime_set_suspended(&client->dev);
-+	}
++	pm_runtime_set_suspended(&client->dev);
  
- 	for (i = 0; i < sensor->ssds_used; i++)
- 		v4l2_device_unregister_subdev(&sensor->ssds[i].sd);
+ out_cleanup:
+ 	ccs_cleanup(sensor);
 
 
