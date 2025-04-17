@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C7125C70F;
-	Thu, 17 Apr 2025 18:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B57258CDC;
+	Thu, 17 Apr 2025 18:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914453; cv=none; b=MPRNFZCP1vR990BOmXDfx915TqWR28xmbn27xhJOvoiR7nobeVNASRByrPdTaalFgy9SimfHp+35zWRgUxIa0HS6fPrUX+gawhuPA/MCXswQzsSUI3BxnrPkLfo3dT8swUd/5Ez9oL180hcVUllOevvZ3+UH8GcSLUxpnLvMrN0=
+	t=1744914456; cv=none; b=mggRJ2Y19ePhM3sX/llN359/4g3e+9yECL2e1imcCNlzkn7m54OXksp88ZeWFKH+EYSvhgjKQDDUlP2KOZh7rW/T9T/75+iaPHry9U6IBUureijVNBzY5UjOc7k+3A0a1+pMfFScSabODGTZ6wQkf1iW2lbxmfA1co7ayMjKZug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914453; c=relaxed/simple;
-	bh=u8OKIYADNq8QN8Fx/19/YxH0k8ffKdbwClHoAUvQLsg=;
+	s=arc-20240116; t=1744914456; c=relaxed/simple;
+	bh=mzAQ4U9nO42eXIH+2XZMBaSb/zIxOtvtexxvEmLusYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ry7Ta21OT/P3fxvwesBCBuXUXZz7UXa75UnpeVOdy4QP+tQEIj3CnufTa3VXiZnEof1DytHvgzqCMcgVZOTKIkF4OWKYAS9NVP/6nMCmTZsiUrDTKfPAGO+BQ52jwu5RZfcK77Z52U2wR+AUgwePa8wXN7+rYkv0WbKbS2Mb8Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMJ7zW/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkzJXG5jEX/mA1K8LjBdlhOHnSmtON8Oe9yhPR+BXvojeU2tzRyiqrE4aRou0GReMM9YAXTm+S4Htiza51ISmLGf/LWytOSHAxYhtqf87fTRhdVgdEf9qxzQLv+/G/8TTNDnHjksnhF7nao39yEqR118RQ3yxXTZbUsKNrZLjtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGjBpk3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMJ7zW/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4D9C4CEE4;
-	Thu, 17 Apr 2025 18:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGjBpk3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF989C4CEE4;
+	Thu, 17 Apr 2025 18:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914453;
-	bh=u8OKIYADNq8QN8Fx/19/YxH0k8ffKdbwClHoAUvQLsg=;
+	s=korg; t=1744914456;
+	bh=mzAQ4U9nO42eXIH+2XZMBaSb/zIxOtvtexxvEmLusYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMJ7zW/6+7UW7Be9+8Tu0IjZv5uxi0zZMZQ8p/4gq2cn3wInrxeX8TEBKkRANEbt/
-	 5Bay3XY+qLbc4aQ8zLlKWmnHEicyTzyB+JIJkImycV/maM55fOifXlrbe/hBd9Qhya
-	 GOgmeAL5KqSoxsAP/2cefh+LUIgBhg0TC0MOmMWU=
+	b=kGjBpk3BWSLuScKFcqWNkUNshyJoAqoKXz2JlNLQFoyZkpLig9Ul6dPTIpdEkOXKb
+	 30lJFp7t5d2nafzS7dySwkCumbZS1vfIq0rHvpSaJG+GlIPjRxLkqycjc2y1JXI6jd
+	 6TiEneHiTbNEhXMzVsMy2R4J5Q9BuyfBYB1al0rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 221/414] media: ov08x40: Properly turn sensor on/off when runtime-suspended
-Date: Thu, 17 Apr 2025 19:49:39 +0200
-Message-ID: <20250417175120.327538670@linuxfoundation.org>
+Subject: [PATCH 6.13 222/414] media: streamzap: prevent processing IR data on URB failure
+Date: Thu, 17 Apr 2025 19:49:40 +0200
+Message-ID: <20250417175120.366601831@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,56 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit 69dea0ed84611b2b83f4f5fb4f5a1ec4b6bc902d upstream.
+commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
 
-Commit df1ae2251a50 ("media: ov08x40: Add OF probe support") added support
-for a reset GPIO, regulators and a clk provider controlled through new
-ov08x40_power_off() and ov08x40_power_on() functions.
+If streamzap_callback() receives an urb with any non-critical error
+status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
+it will try to process IR data, ignoring a possible transfer failure.
 
-But it missed adding a pm ops structure to call these functions on
-runtime suspend/resume. Add the missing pm ops and only call
-ov08x40_power_off() on remove() when not already runtime-suspended
-to avoid unbalanced regulator / clock disable calls.
+Make streamzap_callback() process IR data only when urb->status is 0.
+Move processing logic to a separate function to make code cleaner and
+more similar to the URB completion handlers in other RC drivers.
 
-Fixes: df1ae2251a50 ("media: ov08x40: Add OF probe support")
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
 Cc: stable@vger.kernel.org
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov08x40.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
---- a/drivers/media/i2c/ov08x40.c
-+++ b/drivers/media/i2c/ov08x40.c
-@@ -2324,11 +2324,14 @@ static void ov08x40_remove(struct i2c_cl
- 	ov08x40_free_controls(ov08x);
- 
- 	pm_runtime_disable(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev))
-+		ov08x40_power_off(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
--
--	ov08x40_power_off(&client->dev);
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -138,39 +138,10 @@ static void sz_push_half_space(struct st
+ 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
  }
  
-+static DEFINE_RUNTIME_DEV_PM_OPS(ov08x40_pm_ops, ov08x40_power_off,
-+				 ov08x40_power_on, NULL);
+-/*
+- * streamzap_callback - usb IRQ handler callback
+- *
+- * This procedure is invoked on reception of data from
+- * the usb remote.
+- */
+-static void streamzap_callback(struct urb *urb)
++static void sz_process_ir_data(struct streamzap_ir *sz, int len)
+ {
+-	struct streamzap_ir *sz;
+ 	unsigned int i;
+-	int len;
+-
+-	if (!urb)
+-		return;
+-
+-	sz = urb->context;
+-	len = urb->actual_length;
+-
+-	switch (urb->status) {
+-	case -ECONNRESET:
+-	case -ENOENT:
+-	case -ESHUTDOWN:
+-		/*
+-		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+-		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
+-		return;
+-	default:
+-		break;
+-	}
+ 
+-	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
+ 	for (i = 0; i < len; i++) {
+ 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
+ 			i, (unsigned char)sz->buf_in[i]);
+@@ -219,6 +190,43 @@ static void streamzap_callback(struct ur
+ 	}
+ 
+ 	ir_raw_event_handle(sz->rdev);
++}
 +
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id ov08x40_acpi_ids[] = {
- 	{"OVTI08F4"},
-@@ -2349,6 +2352,7 @@ static struct i2c_driver ov08x40_i2c_dri
- 		.name = "ov08x40",
- 		.acpi_match_table = ACPI_PTR(ov08x40_acpi_ids),
- 		.of_match_table = ov08x40_of_match,
-+		.pm = pm_sleep_ptr(&ov08x40_pm_ops),
- 	},
- 	.probe = ov08x40_probe,
- 	.remove = ov08x40_remove,
++/*
++ * streamzap_callback - usb IRQ handler callback
++ *
++ * This procedure is invoked on reception of data from
++ * the usb remote.
++ */
++static void streamzap_callback(struct urb *urb)
++{
++	struct streamzap_ir *sz;
++	int len;
++
++	if (!urb)
++		return;
++
++	sz = urb->context;
++	len = urb->actual_length;
++
++	switch (urb->status) {
++	case 0:
++		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
++		sz_process_ir_data(sz, len);
++		break;
++	case -ECONNRESET:
++	case -ENOENT:
++	case -ESHUTDOWN:
++		/*
++		 * this urb is terminated, clean up.
++		 * sz might already be invalid at this point
++		 */
++		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		return;
++	default:
++		break;
++	}
++
+ 	usb_submit_urb(urb, GFP_ATOMIC);
+ }
+ 
 
 
