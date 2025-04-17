@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF204254B12;
-	Thu, 17 Apr 2025 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDB3255E23;
+	Thu, 17 Apr 2025 18:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912860; cv=none; b=ozZ4Ml42qeBDyM7avVprEPQ7MnRXuPwZjkqQyN7RDk5UwNmjttURpLgGS7jy4tGUVg38+idL/vlF37HlnHDdJ5rsG6LVXJfNMTLAIQk5q97uyQ7nRVSony3RQkjts9F0CpLh1IapkM1anlEF4ubJYTIniBsOTXcbHoy/DpTyTak=
+	t=1744912864; cv=none; b=qvmoL6449vuLV9YFkX5lY65OJatiGdTy7xE7cGZXmieYtGIM/U8m2XqPkyl+YhAkIgUmrqGoEP0d4/rUeYfS7pq0zu9m72FwTZhrerSehh9mfZZt6Dm2k9k8hXNuIABxB3HUjdjY/MvLUHoVMi+B3j19/P1SdlYbIxl1EWsEEng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912860; c=relaxed/simple;
-	bh=2SkmMk7CzLW0iwziXArd73tyx9CaD//cvdX+N/QDLHI=;
+	s=arc-20240116; t=1744912864; c=relaxed/simple;
+	bh=d83tcuQ4GKJhpo6h6VJM5mIWnRYmzVcPk6qdGG+l1fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KB3d5RZ8pdTFPyzISThPBxP5NzmlasTbXixGSQEnQvR/Crmbv5zb8o40YUluZ+kgH5bHPRVcz1XFlEXBpIqFDqChK/V1wITi+6QvudcyPFCBaDD6ij/Dp+6AiwQ04q5nesdB2Lr4rzGbgEA5COBg0nzkpUiu2zhpiV43L0TrhFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwLs2gfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GVZ66HrCxFEl5hKFg5V0Kc4YiG0s6JgQDm+DfAVKdIcD7+z0IG5Wgl4D4WXRJAKFOjYQeMM7QsQv2O+zR+EBajENFRmH1cRJgPWCnEEoJKV4iCW1hnzmxTcuLk5r0SX/ywdt0d3Zi0T+0XpO44I7a8dt3QLgUWe2rHIB/7nc9SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5WwGi6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwLs2gfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6620CC4CEE4;
-	Thu, 17 Apr 2025 18:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5WwGi6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9EBC4CEE4;
+	Thu, 17 Apr 2025 18:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912860;
-	bh=2SkmMk7CzLW0iwziXArd73tyx9CaD//cvdX+N/QDLHI=;
+	s=korg; t=1744912863;
+	bh=d83tcuQ4GKJhpo6h6VJM5mIWnRYmzVcPk6qdGG+l1fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwLs2gfQMqCQGIThBHUaUeIVqrYDqrL/5HSRmytGX2kG0aciXR8eFfTr2su8cMx0g
-	 bW0T+s7YCUnWfU1DVQjGull5ccpcKfC3sZbcx1uR251SQfjP5t+J0+DyZNVHLIrbkm
-	 jD29RjRYWmHa1MKgAlLFd5a3XEP9N57Px8ePABNQ=
+	b=d5WwGi6AUV6A0pIt6o+NEvL29Ibb+joeBnamWE3jFnOC+k7p38Ji3Q/y/Ae9jRXX0
+	 FtTmyqJeQWo6uIyt3Qh+iw+QU5TnMYBK8guS4oFsSK8nMtEhfssUDPDBzdcbIfWddI
+	 yhNmOIv6v6k/XiI15jvWwLTliQEBTxEfIfZ9tjlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 149/449] drm/xe/pf: Dont send BEGIN_ID if VF has no context/doorbells
-Date: Thu, 17 Apr 2025 19:47:17 +0200
-Message-ID: <20250417175123.972039638@linuxfoundation.org>
+Subject: [PATCH 6.14 132/449] btrfs: harden block_group::bg_list against list_del() races
+Date: Thu, 17 Apr 2025 19:47:00 +0200
+Message-ID: <20250417175123.279828147@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -45,86 +47,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 21ccac0e22aaf27b767f9de4bf573e7c47f619c8 ]
+[ Upstream commit 7511e29cf1355b2c47d0effb39e463119913e2f6 ]
 
-It turned out that GuC validates VF configuration immediately
-after receiving "some" set of configuration KLVs and complains
-if one of the critical, from GuC understanding, resource is left
-unprovisioned, even if PF should be still allowed to make late VF
-config adjustments, since VF was not yet started.
+As far as I can tell, these calls of list_del_init() on bg_list cannot
+run concurrently with btrfs_mark_bg_unused() or btrfs_mark_bg_to_reclaim(),
+as they are in transaction error paths and situations where the block
+group is readonly.
 
-This issue was discovered after we decided to asynchronously
-re-send configuration KLVs after GT reset/resume, as then fair
-VF auto-provisioning could already allocate some of the resources,
-which was a prerequiste for sending those config KLVs:
+However, if there is any chance at all of racing with mark_bg_unused(),
+or a different future user of bg_list, better to be safe than sorry.
 
- # fair GGTT provisioning
- [] xe 0000:00:02.0: [drm] GT0: PF: pushed VF1 config with 2 KLVs:
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0001 : 64b value 0x176a000 } # ggtt_start
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0002 : 64b value 0xfd696000 } # ggtt_size
- [] xe 0000:00:02.0: [drm] GT0: PF: VF1 provisioned with 4251541504 (3.96 GiB) GGTT
- # re-provisioning worker
- [] xe 0000:00:02.0: [drm] *ERROR* GT0: H2G request 0x5503 failed: error 0x60 hint 0x0
- [] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 14 config KLVs (-EIO)
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0001 : 64b value 0x176a000 } # ggtt_start
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0002 : 64b value 0xfd696000 } # ggtt_size
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a0b : 32b value 0 } # begin_ctx_id
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0004 : 32b value 0 } # num_contexts
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a0a : 32b value 0 } # begin_db_id
- [] xe 0000:00:02.0: [drm] GT0: { key 0x0006 : 32b value 0 } # num_doorbells
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a01 : 32b value 0 } # exec_quantum
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a02 : 32b value 0 } # preempt_timeout
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a03 : 32b value 0 } # cat_error_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a04 : 32b value 0 } # engine_reset_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a05 : 32b value 0 } # page_fault_count
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a06 : 32b value 0 } # guc_time_us
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a07 : 32b value 0 } # irq_time_us
- [] xe 0000:00:02.0: [drm] GT0: { key 0x8a08 : 32b value 0 } # doorbell_time_us
- [] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 configuration (-EIO)
+Otherwise we risk the following interleaving (bg_list refcount in parens)
 
-To avoid such errors stop sending BEGIN_CONTEXT/DOORBELL_ID KLVs
-if no GuC context/doorbell IDs were provisioned to VF.
+T1 (some random op)                       T2 (btrfs_mark_bg_unused)
+                                        !list_empty(&bg->bg_list); (1)
+list_del_init(&bg->bg_list); (1)
+                                        list_move_tail (1)
+btrfs_put_block_group (0)
+                                        btrfs_delete_unused_bgs
+                                             bg = list_first_entry
+                                             list_del_init(&bg->bg_list);
+                                             btrfs_put_block_group(bg); (-1)
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4176
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Michał Winiarski <michal.winiarski@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250129195947.764-2-michal.wajdeczko@intel.com
+Ultimately, this results in a broken ref count that hits zero one deref
+early and the real final deref underflows the refcount, resulting in a WARNING.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c |  8 ++++++++
+ fs/btrfs/transaction.c | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-index 878e96281c035..4bd255adfb401 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-@@ -262,7 +262,7 @@ static u32 encode_config(u32 *cfg, const struct xe_gt_sriov_config *config, bool
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 3014a1a23efdb..6d615711f0400 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2874,7 +2874,15 @@ int btrfs_finish_extent_commit(struct btrfs_trans_handle *trans)
+ 						   block_group->length,
+ 						   &trimmed);
  
- 	n += encode_config_ggtt(cfg, config, details);
++		/*
++		 * Not strictly necessary to lock, as the block_group should be
++		 * read-only from btrfs_delete_unused_bgs().
++		 */
++		ASSERT(block_group->ro);
++		spin_lock(&fs_info->unused_bgs_lock);
+ 		list_del_init(&block_group->bg_list);
++		spin_unlock(&fs_info->unused_bgs_lock);
++
+ 		btrfs_unfreeze_block_group(block_group);
+ 		btrfs_put_block_group(block_group);
  
--	if (details) {
-+	if (details && config->num_ctxs) {
- 		cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_BEGIN_CONTEXT_ID);
- 		cfg[n++] = config->begin_ctx;
- 	}
-@@ -270,7 +270,7 @@ static u32 encode_config(u32 *cfg, const struct xe_gt_sriov_config *config, bool
- 	cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_NUM_CONTEXTS);
- 	cfg[n++] = config->num_ctxs;
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index aca83a98b75a2..c0e9d4bbe380d 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -160,7 +160,13 @@ void btrfs_put_transaction(struct btrfs_transaction *transaction)
+ 			cache = list_first_entry(&transaction->deleted_bgs,
+ 						 struct btrfs_block_group,
+ 						 bg_list);
++			/*
++			 * Not strictly necessary to lock, as no other task will be using a
++			 * block_group on the deleted_bgs list during a transaction abort.
++			 */
++			spin_lock(&transaction->fs_info->unused_bgs_lock);
+ 			list_del_init(&cache->bg_list);
++			spin_unlock(&transaction->fs_info->unused_bgs_lock);
+ 			btrfs_unfreeze_block_group(cache);
+ 			btrfs_put_block_group(cache);
+ 		}
+@@ -2096,7 +2102,13 @@ static void btrfs_cleanup_pending_block_groups(struct btrfs_trans_handle *trans)
  
--	if (details) {
-+	if (details && config->num_dbs) {
- 		cfg[n++] = PREP_GUC_KLV_TAG(VF_CFG_BEGIN_DOORBELL_ID);
- 		cfg[n++] = config->begin_db;
- 	}
+        list_for_each_entry_safe(block_group, tmp, &trans->new_bgs, bg_list) {
+                btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
++		/*
++		* Not strictly necessary to lock, as no other task will be using a
++		* block_group on the new_bgs list during a transaction abort.
++		*/
++	       spin_lock(&fs_info->unused_bgs_lock);
+                list_del_init(&block_group->bg_list);
++	       spin_unlock(&fs_info->unused_bgs_lock);
+        }
+ }
+ 
 -- 
 2.39.5
 
