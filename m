@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067D52571A0;
-	Thu, 17 Apr 2025 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E47253F22;
+	Thu, 17 Apr 2025 18:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915580; cv=none; b=fBHmvRbZDd9o1EfG+gpAOo/8WvMoVLsEycSrIz6SlNJ/XqzmGCpbF+53wr7VS6vQS+/gblff/KL2L48TjrsfD6yp/SPFmjSlrkygBa0A5BQw58bGDc877TCV5pxD8uQ8yD5UGB+X+2PL3w1HM5wzLa6nqz2eKuNvSBgkxVj93qA=
+	t=1744915582; cv=none; b=Xu9KiaotaLQMeC7EdfQFVnp5X/8NSPfIAvuXZhia9oljYFawvGvTq7PeEGfs/zPTuPKZ1HmWstp8BiXpif7lGm8rbkgJPgomcIe+CRQR5eywRq0UBd+Xz2GmjkxZH2R4x3joOpjE/9o4B8rIAF03+DnQRasz5OjQFxZRp85kpZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915580; c=relaxed/simple;
-	bh=8JaITGA134F6oUcSvVm9SW7TJnKWaD75GKE4SPucFks=;
+	s=arc-20240116; t=1744915582; c=relaxed/simple;
+	bh=bie4sz8G8ZtkKjshKzEC2uaO50zRMsFSSaieHO191kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1/AwBU7onFImGk7URKB3zPOYDDTBYTK0Ud8u34bSVfcp/DuAdER5n1pn6VEcgKjvCyB8jqtSfLLkxX4DN44dMSh97uYtE5E98NYoHPHxl+AYaPyIWVfrs63leROYxYjrTSsEGrIFHcRcYLrMRg9ymIOeCXOn2u5+N6KjNUmRN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyQcpftc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ewTSk9NTvV8Pj4/OloWxjoht7w5sAD6KDo74MX4tQGbAbkDVkFHRq7p4eD0YIlSSrQZle/OQ3PA90PK5HV2hYUpxvrWpWcHL6iaEThBtI/jnRC3+C9LpQyuuaCW9e3S8Nt91gOIPZSuRoQ7ZWoDTV/Jm2fxwwtAi7r/kaFk5u5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvB2IL3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyQcpftc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F03C4CEE4;
-	Thu, 17 Apr 2025 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvB2IL3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F789C4CEE4;
+	Thu, 17 Apr 2025 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915579;
-	bh=8JaITGA134F6oUcSvVm9SW7TJnKWaD75GKE4SPucFks=;
+	s=korg; t=1744915582;
+	bh=bie4sz8G8ZtkKjshKzEC2uaO50zRMsFSSaieHO191kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyQcpftcRErZkRPf2fC8MK+pwXsXm4tYnxQbVaLiaKJGUbzzFkt3cjhhT2uvBvVyp
-	 8Fyoo3Kwn8UcoSEtoL1VZn14rlEDPWpSa9xmGgmUkZdvmSTyhDrArV103hNUO0zWQc
-	 miCee6hDDFRRQK0KqU3cYkX9pkEwq182UfZYPjFA=
+	b=ZvB2IL3ZINqIl6cG4l2vFnt9Rajpab5nQgaeVwq6n45LjapLLN+E5zUwEGvoWcFeN
+	 GO4AdPsTA+XpW4eQ8CJ0vCxmVkkMuf2pVVa5hXQasQMzEZnlT+tkyRu4/UTRyRBPP/
+	 tXnzH7l3mjI1CE3IxfEphX2UNASzXOWJIfUdvQbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Paul Dino Jones <paul@spacefreak18.xyz>,
+	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
+	Pablo Cisneros <patchkez@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/393] tracing: probe-events: Add comments about entry data storing code
-Date: Thu, 17 Apr 2025 19:49:24 +0200
-Message-ID: <20250417175113.819868788@linuxfoundation.org>
+Subject: [PATCH 6.12 173/393] HID: pidff: Move all hid-pidff definitions to a dedicated header
+Date: Thu, 17 Apr 2025 19:49:42 +0200
+Message-ID: <20250417175114.559077756@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -45,86 +49,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit bb9c6020f4c3a07a90dc36826cb5fbe83f09efd5 ]
+[ Upstream commit 0d24d4b1da96df9fc5ff36966f40f980ef864d46 ]
 
-Add comments about entry data storing code to __store_entry_arg() and
-traceprobe_get_entry_data_size(). These are a bit complicated because of
-building the entry data storing code and scanning it.
+Do not clutter hid includes with stuff not needed outside of
+the kernel.
 
-This just add comments, no behavior change.
-
-Link: https://lore.kernel.org/all/174061715004.501424.333819546601401102.stgit@devnote2/
-
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/all/20250226102223.586d7119@gandalf.local.home/
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Michał Kopeć <michal@nozomi.space>
+Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
+Tested-by: Pablo Cisneros <patchkez@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/hid/hid-universal-pidff.c |  3 ++-
+ drivers/hid/usbhid/hid-core.c     |  1 +
+ drivers/hid/usbhid/hid-pidff.c    |  3 ++-
+ drivers/hid/usbhid/hid-pidff.h    | 33 +++++++++++++++++++++++++++++++
+ include/linux/hid.h               | 15 --------------
+ 5 files changed, 38 insertions(+), 17 deletions(-)
+ create mode 100644 drivers/hid/usbhid/hid-pidff.h
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 16a5e368e7b77..578919962e5df 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -770,6 +770,10 @@ static int check_prepare_btf_string_fetch(char *typename,
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 7ef5ab9146b1c..1b713b741d192 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/input-event-codes.h>
+ #include "hid-ids.h"
++#include "usbhid/hid-pidff.h"
  
- #ifdef CONFIG_HAVE_FUNCTION_ARG_ACCESS_API
+ #define JOY_RANGE (BTN_DEAD - BTN_JOYSTICK + 1)
  
-+/*
-+ * Add the entry code to store the 'argnum'th parameter and return the offset
-+ * in the entry data buffer where the data will be stored.
-+ */
- static int __store_entry_arg(struct trace_probe *tp, int argnum)
- {
- 	struct probe_entry_arg *earg = tp->entry_arg;
-@@ -793,6 +797,20 @@ static int __store_entry_arg(struct trace_probe *tp, int argnum)
- 		tp->entry_arg = earg;
+@@ -89,7 +90,7 @@ static int universal_pidff_probe(struct hid_device *hdev,
  	}
  
-+	/*
-+	 * The entry code array is repeating the pair of
-+	 * [FETCH_OP_ARG(argnum)][FETCH_OP_ST_EDATA(offset of entry data buffer)]
-+	 * and the rest of entries are filled with [FETCH_OP_END].
-+	 *
-+	 * To reduce the redundant function parameter fetching, we scan the entry
-+	 * code array to find the FETCH_OP_ARG which already fetches the 'argnum'
-+	 * parameter. If it doesn't match, update 'offset' to find the last
-+	 * offset.
-+	 * If we find the FETCH_OP_END without matching FETCH_OP_ARG entry, we
-+	 * will save the entry with FETCH_OP_ARG and FETCH_OP_ST_EDATA, and
-+	 * return data offset so that caller can find the data offset in the entry
-+	 * data buffer.
-+	 */
- 	offset = 0;
- 	for (i = 0; i < earg->size - 1; i++) {
- 		switch (earg->code[i].op) {
-@@ -826,6 +844,16 @@ int traceprobe_get_entry_data_size(struct trace_probe *tp)
- 	if (!earg)
- 		return 0;
+ 	/* Check if HID_PID support is enabled */
+-	int (*init_function)(struct hid_device *, __u32);
++	int (*init_function)(struct hid_device *, u32);
+ 	init_function = hid_pidff_init_with_quirks;
  
-+	/*
-+	 * earg->code[] array has an operation sequence which is run in
-+	 * the entry handler.
-+	 * The sequence stopped by FETCH_OP_END and each data stored in
-+	 * the entry data buffer by FETCH_OP_ST_EDATA. The FETCH_OP_ST_EDATA
-+	 * stores the data at the data buffer + its offset, and all data are
-+	 * "unsigned long" size. The offset must be increased when a data is
-+	 * stored. Thus we need to find the last FETCH_OP_ST_EDATA in the
-+	 * code array.
-+	 */
- 	for (i = 0; i < earg->size; i++) {
- 		switch (earg->code[i].op) {
- 		case FETCH_OP_END:
+ 	if (!init_function) {
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index a9e85bdd4cc65..bf0f51ef0149f 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -35,6 +35,7 @@
+ #include <linux/hid-debug.h>
+ #include <linux/hidraw.h>
+ #include "usbhid.h"
++#include "hid-pidff.h"
+ 
+ /*
+  * Version Information
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index ac6f940abd901..a8eaa77e80be3 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -12,6 +12,7 @@
+ 
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include "hid-pidff.h"
+ #include <linux/input.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
+@@ -1383,7 +1384,7 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
+  * Check if the device is PID and initialize it
+  * Set initial quirks
+  */
+-int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
++int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
+ {
+ 	struct pidff_device *pidff;
+ 	struct hid_input *hidinput = list_entry(hid->inputs.next,
+diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
+new file mode 100644
+index 0000000000000..dda571e0a5bd3
+--- /dev/null
++++ b/drivers/hid/usbhid/hid-pidff.h
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef __HID_PIDFF_H
++#define __HID_PIDFF_H
++
++#include <linux/hid.h>
++
++/* HID PIDFF quirks */
++
++/* Delay field (0xA7) missing. Skip it during set effect report upload */
++#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
++
++/* Missing Paramter block offset (0x23). Skip it during SET_CONDITION
++   report upload */
++#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
++
++/* Initialise device control field even if logical_minimum != 1 */
++#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
++
++/* Use fixed 0x4000 direction during SET_EFFECT report upload */
++#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
++
++/* Force all periodic effects to be uploaded as SINE */
++#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
++
++#ifdef CONFIG_HID_PID
++int hid_pidff_init(struct hid_device *hid);
++int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks);
++#else
++#define hid_pidff_init NULL
++#define hid_pidff_init_with_quirks NULL
++#endif
++
++#endif
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 495b5b3b2cb80..018de72505b07 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -1221,21 +1221,6 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev);
+ int hid_quirks_init(char **quirks_param, __u16 bus, int count);
+ void hid_quirks_exit(__u16 bus);
+ 
+-#ifdef CONFIG_HID_PID
+-int hid_pidff_init(struct hid_device *hid);
+-int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
+-#else
+-#define hid_pidff_init NULL
+-#define hid_pidff_init_with_quirks NULL
+-#endif
+-
+-/* HID PIDFF quirks */
+-#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
+-#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
+-#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
+-#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
+-#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
+-
+ #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
+ 
+ #define hid_err(hid, fmt, ...)				\
 -- 
 2.39.5
 
