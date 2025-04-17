@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832C2571B4;
-	Thu, 17 Apr 2025 18:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FAC2571B4;
+	Thu, 17 Apr 2025 18:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915019; cv=none; b=tUyKykUknaKOmbnqMgh6Alc7KapZ+XKcY04guVerFmpqcoIRvQJch685edoGoCKgE+AWDYXNfmnwCZQKOU7HtZOFZLpd0byNAvw1zaNwX6MOC2vZCn+V9DkK3nTu/koyjYBEbQnJYTZwirHAAy8Bkb/Nr4whk7GXV8bsqW/+RZ8=
+	t=1744915022; cv=none; b=nWoP8pguUwUkxzDCdEmYNmIkV9lqxnzRMotAkFB0ZgSdigQIKNZzV7r7V9hCTIIcHjHQFd40MXN2nQ1K1OahaGizBXRiDzBKS7/uoVOOyvgFiM7f2KsDmTTfHrGITp97iBd7Nj3uXKQ5x32zOebZT/ziNB9n+E0QrgRhqFLI95I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915019; c=relaxed/simple;
-	bh=1g9ou7Kk6+F2jNMIAg3+VqWnqksFlH7/qlpArKXsADY=;
+	s=arc-20240116; t=1744915022; c=relaxed/simple;
+	bh=5zk8X3AJl8a2zLu46hnPPn7Sx6QEVJygCVjTJnBN0J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZLbvQRD92o/Bvo3Se4DSgbMjiWFLs9vNm8PvEyss/Db5pITlEdyvW0U743kru6/og1HyXzvlBrIBsDgHRlMSlcefD7Pvp7yrhV+5TZ6b/vbzyzb3f30kAOoHrUCMW9JupwK2TF59jRn/BSOfXxQjz1ZXFi50U6zUQl05yjFJwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqkpJa0o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmW5WStGGTYn+bDVoQuf5LjOklRiM6oQ5jK3o0UJmq8YpAP7oTobAcM9/KqPhmC+VS8y3DwV4TGJoAKzLrmSKMK6z5ktWo0cix76Di39YxQt6wLdAIydAV2S/J75XX96WBrPB4e9+8dGJLKAYDOLtmoZVXIKJy5o6kbH6H/wJfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMe1JR8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqkpJa0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75E6C4CEE4;
-	Thu, 17 Apr 2025 18:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMe1JR8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8966C4CEE4;
+	Thu, 17 Apr 2025 18:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915019;
-	bh=1g9ou7Kk6+F2jNMIAg3+VqWnqksFlH7/qlpArKXsADY=;
+	s=korg; t=1744915022;
+	bh=5zk8X3AJl8a2zLu46hnPPn7Sx6QEVJygCVjTJnBN0J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqkpJa0o+FBh3E02L4eyBVHnw/JZI2ohAy4UsU0WsBe469bvMjGywmLKybjWjRFf9
-	 KJJTGi9WbgsW17BOlXmTfK3ppp38q7fHkwFcdqod0limi22iMma3N7/Ao1Tt3Up+Mi
-	 lvD90XhkZTtq+Hl4u/iBFeStmIYg51R+jIiBFu9Y=
+	b=DMe1JR8SRPgxPD5DiB9lAf9SIAKDiq49HAqf3e8EJqOlxbWme4XFnmfDNFH9GNMRR
+	 ZnoRCbxjocoa0oMydiqlhQleZOgs1p6jFfhlUORUYlZQDW70xAxt0xHn6ZGIFPNh1a
+	 mFRkM1zyS9py7SJqimNoKIxAHpb3JYwD26ijdz4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 6.13 378/414] ntb: use 64-bit arithmetic for the MSI doorbell mask
-Date: Thu, 17 Apr 2025 19:52:16 +0200
-Message-ID: <20250417175126.662428198@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.13 379/414] of/irq: Fix device node refcount leakage in API of_irq_parse_one()
+Date: Thu, 17 Apr 2025 19:52:17 +0200
+Message-ID: <20250417175126.701916307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,40 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
+commit 0cb58d6c7b558a69957fabe159bfb184196e1e8d upstream.
 
-msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
-performed to compute its value.
+of_irq_parse_one(@int_gen_dev, i, ...) will leak refcount of @i_th_phandle
 
-While most of the ntb_hw drivers actually don't utilize the higher 32
-bits of the doorbell mask now, this may be the case for Switchtec - see
-switchtec_ntb_init_db().
+int_gen_dev {
+    ...
+    interrupts-extended = ..., <&i_th_phandle ...>, ...;
+    ...
+};
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE static
-analysis tool.
+Refcount of @i_th_phandle is increased by of_parse_phandle_with_args()
+but is not decreased by API of_irq_parse_one() before return, so causes
+refcount leakage.
 
-Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
+Rework the refcounting to use __free() cleanup and simplify the code to
+have a single call to of_irq_parse_raw().
+
+Also add comments about refcount of node @out_irq->np got by the API.
+
+Fixes: 79d9701559a9 ("of/irq: create interrupts-extended property")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-2-93e3a2659aa7@quicinc.com
+[robh: Use __free() to do puts]
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/irq.c |   59 +++++++++++++++++++++++++------------------------------
+ 1 file changed, 27 insertions(+), 32 deletions(-)
 
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1353,7 +1353,7 @@ static int ntb_transport_probe(struct nt
- 	qp_count = ilog2(qp_bitmap);
- 	if (nt->use_msi) {
- 		qp_count -= 1;
--		nt->msi_db_mask = 1 << qp_count;
-+		nt->msi_db_mask = BIT_ULL(qp_count);
- 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -16,6 +16,7 @@
+ 
+ #define pr_fmt(fmt)	"OF: " fmt
+ 
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+ #include <linux/list.h>
+@@ -339,10 +340,12 @@ EXPORT_SYMBOL_GPL(of_irq_parse_raw);
+  * This function resolves an interrupt for a node by walking the interrupt tree,
+  * finding which interrupt controller node it is attached to, and returning the
+  * interrupt specifier that can be used to retrieve a Linux IRQ number.
++ *
++ * Note: refcount of node @out_irq->np is increased by 1 on success.
+  */
+ int of_irq_parse_one(struct device_node *device, int index, struct of_phandle_args *out_irq)
+ {
+-	struct device_node *p;
++	struct device_node __free(device_node) *p = NULL;
+ 	const __be32 *addr;
+ 	u32 intsize;
+ 	int i, res, addr_len;
+@@ -367,41 +370,33 @@ int of_irq_parse_one(struct device_node
+ 	/* Try the new-style interrupts-extended first */
+ 	res = of_parse_phandle_with_args(device, "interrupts-extended",
+ 					"#interrupt-cells", index, out_irq);
+-	if (!res)
+-		return of_irq_parse_raw(addr_buf, out_irq);
+-
+-	/* Look for the interrupt parent. */
+-	p = of_irq_find_parent(device);
+-	if (p == NULL)
+-		return -EINVAL;
+-
+-	/* Get size of interrupt specifier */
+-	if (of_property_read_u32(p, "#interrupt-cells", &intsize)) {
+-		res = -EINVAL;
+-		goto out;
+-	}
+-
+-	pr_debug(" parent=%pOF, intsize=%d\n", p, intsize);
++	if (!res) {
++		p = out_irq->np;
++	} else {
++		/* Look for the interrupt parent. */
++		p = of_irq_find_parent(device);
++		/* Get size of interrupt specifier */
++		if (!p || of_property_read_u32(p, "#interrupt-cells", &intsize))
++			return -EINVAL;
++
++		pr_debug(" parent=%pOF, intsize=%d\n", p, intsize);
++
++		/* Copy intspec into irq structure */
++		out_irq->np = p;
++		out_irq->args_count = intsize;
++		for (i = 0; i < intsize; i++) {
++			res = of_property_read_u32_index(device, "interrupts",
++							(index * intsize) + i,
++							out_irq->args + i);
++			if (res)
++				return res;
++		}
+ 
+-	/* Copy intspec into irq structure */
+-	out_irq->np = p;
+-	out_irq->args_count = intsize;
+-	for (i = 0; i < intsize; i++) {
+-		res = of_property_read_u32_index(device, "interrupts",
+-						 (index * intsize) + i,
+-						 out_irq->args + i);
+-		if (res)
+-			goto out;
++		pr_debug(" intspec=%d\n", *out_irq->args);
  	}
+ 
+-	pr_debug(" intspec=%d\n", *out_irq->args);
+-
+-
+ 	/* Check if there are any interrupt-map translations to process */
+-	res = of_irq_parse_raw(addr_buf, out_irq);
+- out:
+-	of_node_put(p);
+-	return res;
++	return of_irq_parse_raw(addr_buf, out_irq);
+ }
+ EXPORT_SYMBOL_GPL(of_irq_parse_one);
  
 
 
