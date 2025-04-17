@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C8E1D5CCD;
-	Thu, 17 Apr 2025 18:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F71DF733;
+	Thu, 17 Apr 2025 18:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915321; cv=none; b=Wwa8Egv9hjHpE+Itg1NTNvTtZ3vwi6O8b5QNGEupu2yR2ip0u9yLO5cIJN4I8nkr8Q7CjBKLDpL4UaQUeDo72lTqSaSOs4gnIbQL+9ylpioVQslBI8M8wlJsQ/NNw/bAVeyXFF02Qpj7DyYcVaFA8qNkcMYupJjqDgv+gpb35Ag=
+	t=1744915324; cv=none; b=KWAy0+MVLXh5eJoY9sqGGcglC8NRzt9fm7RDwvSyFfMLpWzSgFJ9SE5SDbT9dvn/r1PcidVSuehh1G9NWHjB4ZbsmJynj2gO19AXzvjsX/oLYUDNV64iVGHfj2faONnpWV81HIR25+EWgT3KEk/wPtCIbhola2YvUn+nOw0GcfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915321; c=relaxed/simple;
-	bh=a0lDqeQl1ZQWaF4Qft7Rn4d/dE1IEnaC/8lT0kN4I/0=;
+	s=arc-20240116; t=1744915324; c=relaxed/simple;
+	bh=VUPNaQObw0u+UJ7yesxwRnnL0juIMVA6NXdA+1j9vFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVVgRqJ4o/qBwmuWDDMZ4J2trJM2CkpGG0okdbtJDqwRTu5UjRJ+iHM+YgPs2G0FUNszuZ8oUOBaUYU0drkYzSrobOl4HjbGGqwivUntQP/SN0muMfZQHsYVPdUG8JYY42ox0n7akAg+1f9PjJ2Qmj1myXneqwNfPoWI+/o72yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yiMpfY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q/ykf3aIXR034sRXHkaQxRQXaSjKOftuW/6jX10qil3WJVy4bmGbeH8Yqe451t5TqSHaaHe80zo16viqAfnVM98p+NI9lihuVQVTFvn62FQEzlF24ps+UF5MXwJIhXMhrJWVkA1HkElE91ak+GhPQSCYp/8N4oJ0A9idm+ZeFkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4Z6Nbfz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yiMpfY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB82C4CEE4;
-	Thu, 17 Apr 2025 18:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4Z6Nbfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF553C4CEE4;
+	Thu, 17 Apr 2025 18:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915321;
-	bh=a0lDqeQl1ZQWaF4Qft7Rn4d/dE1IEnaC/8lT0kN4I/0=;
+	s=korg; t=1744915324;
+	bh=VUPNaQObw0u+UJ7yesxwRnnL0juIMVA6NXdA+1j9vFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yiMpfY5QwbrCzaYQgVTQ5J+ntCkYpJV0c9NYjBQE02p4wj+5ob1dFfQcQ4os4yKQ
-	 XFqV3gzlRIm7wDgqDcOvCo9ijLR0Smhg6f7JyNyPFFZu93PGur5cxEdOrOGshKrOCU
-	 ZREuw2ZOeY2LLrQ5e7tysSuDI9AKlAjnK6s3q0TE=
+	b=M4Z6Nbfzn+WLDnyn1rXgmLBnk/0jugf3U/MpGHQfrDBUiyZg2rXSdQEcry4gNGAb5
+	 QZ23YpPTtP3KzxjEfWjmOYl+LlnljZGNKfok4F7VV2NT3qHd6N0EeeAMEjbFUI/Uhu
+	 dAGFCBvzxN6tkDtw2G8QuF0l4rrc8bj8J6+VrWg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Makarenko Oleg <oleg@makarenk.ooo>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Paul Dino Jones <paul@spacefreak18.xyz>,
+	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
+	Pablo Cisneros <patchkez@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/393] ASoC: SOF: topology: Use krealloc_array() to replace krealloc()
-Date: Thu, 17 Apr 2025 19:47:49 +0200
-Message-ID: <20250417175110.008188800@linuxfoundation.org>
+Subject: [PATCH 6.12 061/393] HID: pidff: Convert infinite length from Linux API to PID standard
+Date: Thu, 17 Apr 2025 19:47:50 +0200
+Message-ID: <20250417175110.047549920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -45,42 +50,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit a05143a8f713d9ae6abc41141dac52c66fca8b06 ]
+[ Upstream commit 37e0591fe44dce39d1ebc7a82d5b6e4dba1582eb ]
 
-Use krealloc_array() to replace krealloc() with multiplication.
-krealloc_array() has multiply overflow check, which will be safer.
+Software uses 0 as de-facto infinite lenght on Linux FF apis (SDL),
+Linux doesn't actually define anythi as of now, while USB PID defines
+NULL (0xffff). Most PID devices do not expect a 0-length effect and
+can't interpret it as infinite. This change fixes Force Feedback for
+most PID compliant devices.
 
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20250117014343.451503-1-zhangheng@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+As most games depend on updating the values of already playing infinite
+effects, this is crucial to ensure they will actually work.
+
+Previously, users had to rely on third-party software to do this conversion
+and make their PID devices usable.
+
+Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
+Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Michał Kopeć <michal@nozomi.space>
+Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
+Tested-by: Pablo Cisneros <patchkez@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/topology.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index b3fca5fd87d68..37ca15cc5728c 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -1269,8 +1269,8 @@ static int sof_widget_parse_tokens(struct snd_soc_component *scomp, struct snd_s
- 			struct snd_sof_tuple *new_tuples;
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 3b4ee21cd8111..5fe4422bb5bad 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -21,6 +21,7 @@
+ #include "usbhid.h"
  
- 			num_tuples += token_list[object_token_list[i]].count * (num_sets - 1);
--			new_tuples = krealloc(swidget->tuples,
--					      sizeof(*new_tuples) * num_tuples, GFP_KERNEL);
-+			new_tuples = krealloc_array(swidget->tuples,
-+						    num_tuples, sizeof(*new_tuples), GFP_KERNEL);
- 			if (!new_tuples) {
- 				ret = -ENOMEM;
- 				goto err;
+ #define	PID_EFFECTS_MAX		64
++#define	PID_INFINITE		0xffff
+ 
+ /* Report usage table used to put reports into an array */
+ 
+@@ -301,7 +302,12 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+ 	pidff->set_effect_type->value[0] =
+ 		pidff->create_new_effect_type->value[0];
+-	pidff->set_effect[PID_DURATION].value[0] = effect->replay.length;
++
++	/* Convert infinite length from Linux API (0)
++	   to PID standard (NULL) if needed */
++	pidff->set_effect[PID_DURATION].value[0] =
++		effect->replay.length == 0 ? PID_INFINITE : effect->replay.length;
++
+ 	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
+ 	pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] =
+ 		effect->trigger.interval;
 -- 
 2.39.5
 
