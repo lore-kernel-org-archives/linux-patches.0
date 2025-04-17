@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B545A258CF5;
-	Thu, 17 Apr 2025 18:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F3525742B;
+	Thu, 17 Apr 2025 18:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916261; cv=none; b=AKWMcirem7zIQTXXytqSSH3NRu32D/ptNZJ/ACA9I1Z9Hw0ci7n7ekMTZX7SUUuvkVBLspnyHGZKksPFVTc8Qk2dG1hHn2+P+2rTqbEeRWG6lrRnLGypoY2KXyDlfrt+XcpVFJe/rUB1uxVUNrPS7VUZB8u3SxUmvStXhUpZLeE=
+	t=1744916264; cv=none; b=sdubMW4W9UpCo/brZl79UUbqNWEy6PdkQnyEE8YlY/UpX6dmFjflJRAv79OQqefD0DKnB374GWZojmwOakIH4jnq4znQk4xYUU7tpM3f1+vDg6eOt510nx7cHVIRpPn9PZf5iZ5sBYE7TZehVz26oshwPZCmHmfMJnfa52AlX4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916261; c=relaxed/simple;
-	bh=bfGpIpA8weucEOtkGwMnvanBwnDwOij4MiWw01QXA4Q=;
+	s=arc-20240116; t=1744916264; c=relaxed/simple;
+	bh=cfhK8mnuhYCJFJHBKnaMTLUc+YR6eK5DHSLcFfQ5LSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2iF1uStZ4Huc3PFyEwv4aKwHIgqjDJ/aHTUKi5M9/5spxNg3MsiP/33tglCdQZJHi7PQUddaH0zZe1Kqb9HRKIxsUU4D2L7GXNvtl4l6eobeZv+5uASUk6SpzdTXYuc+5mHe+07kD8rFJrv/lhRscp4FLNFs9M8lHH67xdnFrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJGEJLZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tN3n12Gw6yaITabX/8ISJ9CrS2xFeyJCRjI3E9NkQtfIsH/xCufccB3PwMSM3DrFfs3r7IrINk9uDr3huFgFajqTFb0NplNlHOx30w5mg9xrfKksv+2GXAbYgKKWhsdR2ifuNgmpb0NVAGqELvplFE1tTSIziWA8QZK/hXvaF4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qj/fbaIz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJGEJLZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C5FC4CEEA;
-	Thu, 17 Apr 2025 18:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qj/fbaIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2C6C4CEEA;
+	Thu, 17 Apr 2025 18:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916261;
-	bh=bfGpIpA8weucEOtkGwMnvanBwnDwOij4MiWw01QXA4Q=;
+	s=korg; t=1744916264;
+	bh=cfhK8mnuhYCJFJHBKnaMTLUc+YR6eK5DHSLcFfQ5LSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJGEJLZ44Y98oG7jjvk3++SQ5KZJtRINp/3GGecAGfo28Vm8yd1dtdUeYTWF6hbsg
-	 oNr+iiQfWX9EG4xPXU2YIrfovy4gg2ZE3+2MIMl0+LKpKrfmB3WbsD0fnxhmz8LlxJ
-	 7qZI4fajCsjZxmOtHDDL+PHW8RiFjvB+5JqU/h/c=
+	b=Qj/fbaIzldNj7HMGoWBqAoL0msp+zjw4CXGKdNLfLLGLtQFCCj7gOV72n6muEV/AY
+	 Lft3qKu5KSJJckX8wv6ggc8/S48jJ4HsIbNBgnbUaQQUpDVCDNBZaUxfdAfLtgRrWX
+	 r7Ic5fs5c7aUEVduDGqORdUoFLkN7n0Wnrcwzs9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Vishal Annapurve <vannapurve@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	Ryan Afranji <afranji@google.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	stable@kernel.org
-Subject: [PATCH 6.12 383/393] x86/paravirt: Move halt paravirt calls under CONFIG_PARAVIRT
-Date: Thu, 17 Apr 2025 19:53:12 +0200
-Message-ID: <20250417175123.009165107@linuxfoundation.org>
+	John Rowley <lkml@johnrowley.me>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 384/393] ACPI: platform-profile: Fix CFI violation when accessing sysfs files
+Date: Thu, 17 Apr 2025 19:53:13 +0200
+Message-ID: <20250417175123.057984444@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -62,195 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 22cc5ca5de52bbfc36a7d4a55323f91fb4492264 upstream.
+commit dd4f730b557ce701a2cd4f604bf1e57667bd8b6e upstream.
 
-CONFIG_PARAVIRT_XXL is mainly defined/used by XEN PV guests. For
-other VM guest types, features supported under CONFIG_PARAVIRT
-are self sufficient. CONFIG_PARAVIRT mainly provides support for
-TLB flush operations and time related operations.
+When an attribute group is created with sysfs_create_group(), the
+->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
+and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
+respectively. These functions use container_of() to get the respective
+callback from the passed attribute, meaning that these callbacks need to
+be of the same type as the callbacks in 'struct kobj_attribute'.
 
-For TDX guest as well, paravirt calls under CONFIG_PARVIRT meets
-most of its requirement except the need of HLT and SAFE_HLT
-paravirt calls, which is currently defined under
-CONFIG_PARAVIRT_XXL.
+However, ->show() and ->store() in the platform_profile driver are
+defined for struct device_attribute with the help of DEVICE_ATTR_RO()
+and DEVICE_ATTR_RW(), which results in a CFI violation when accessing
+platform_profile or platform_profile_choices under /sys/firmware/acpi
+because the types do not match:
 
-Since enabling CONFIG_PARAVIRT_XXL is too bloated for TDX guest
-like platforms, move HLT and SAFE_HLT paravirt calls under
-CONFIG_PARAVIRT.
+  CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
 
-Moving HLT and SAFE_HLT paravirt calls are not fatal and should not
-break any functionality for current users of CONFIG_PARAVIRT.
+There is no functional issue from the type mismatch because the layout
+of 'struct kobj_attribute' and 'struct device_attribute' are the same,
+so the container_of() cast does not break anything aside from CFI.
 
-Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-Co-developed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Vishal Annapurve <vannapurve@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Andi Kleen <ak@linux.intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Ryan Afranji <afranji@google.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20250228014416.3925664-2-vannapurve@google.com
+Change the type of platform_profile_choices_show() and
+platform_profile_{show,store}() to match the callbacks in
+'struct kobj_attribute' and update the attribute variables to
+match, which resolves the CFI violation.
+
+Cc: All applicable <stable@vger.kernel.org>
+Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
+Reported-by: John Rowley <lkml@johnrowley.me>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
+Tested-by: John Rowley <lkml@johnrowley.me>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[nathan: Fix conflicts in older stable branches]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/irqflags.h       |   40 ++++++++++++++++++----------------
- arch/x86/include/asm/paravirt.h       |   20 ++++++++---------
- arch/x86/include/asm/paravirt_types.h |    3 --
- arch/x86/kernel/paravirt.c            |   13 ++++++-----
- 4 files changed, 41 insertions(+), 35 deletions(-)
+ drivers/acpi/platform_profile.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/arch/x86/include/asm/irqflags.h
-+++ b/arch/x86/include/asm/irqflags.h
-@@ -76,6 +76,28 @@ static __always_inline void native_local
+--- a/drivers/acpi/platform_profile.c
++++ b/drivers/acpi/platform_profile.c
+@@ -22,8 +22,8 @@ static const char * const profile_names[
+ };
+ static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
  
- #endif
- 
-+#ifndef CONFIG_PARAVIRT
-+#ifndef __ASSEMBLY__
-+/*
-+ * Used in the idle loop; sti takes one instruction cycle
-+ * to complete:
-+ */
-+static __always_inline void arch_safe_halt(void)
-+{
-+	native_safe_halt();
-+}
-+
-+/*
-+ * Used when interrupts are already enabled or to
-+ * shutdown the processor:
-+ */
-+static __always_inline void halt(void)
-+{
-+	native_halt();
-+}
-+#endif /* __ASSEMBLY__ */
-+#endif /* CONFIG_PARAVIRT */
-+
- #ifdef CONFIG_PARAVIRT_XXL
- #include <asm/paravirt.h>
- #else
-@@ -98,24 +120,6 @@ static __always_inline void arch_local_i
- }
- 
- /*
-- * Used in the idle loop; sti takes one instruction cycle
-- * to complete:
-- */
--static __always_inline void arch_safe_halt(void)
--{
--	native_safe_halt();
--}
--
--/*
-- * Used when interrupts are already enabled or to
-- * shutdown the processor:
-- */
--static __always_inline void halt(void)
--{
--	native_halt();
--}
--
--/*
-  * For spinlocks, etc:
-  */
- static __always_inline unsigned long arch_local_irq_save(void)
---- a/arch/x86/include/asm/paravirt.h
-+++ b/arch/x86/include/asm/paravirt.h
-@@ -107,6 +107,16 @@ static inline void notify_page_enc_statu
- 	PVOP_VCALL3(mmu.notify_page_enc_status_changed, pfn, npages, enc);
- }
- 
-+static __always_inline void arch_safe_halt(void)
-+{
-+	PVOP_VCALL0(irq.safe_halt);
-+}
-+
-+static inline void halt(void)
-+{
-+	PVOP_VCALL0(irq.halt);
-+}
-+
- #ifdef CONFIG_PARAVIRT_XXL
- static inline void load_sp0(unsigned long sp0)
+-static ssize_t platform_profile_choices_show(struct device *dev,
+-					struct device_attribute *attr,
++static ssize_t platform_profile_choices_show(struct kobject *kobj,
++					struct kobj_attribute *attr,
+ 					char *buf)
  {
-@@ -170,16 +180,6 @@ static inline void __write_cr4(unsigned
- 	PVOP_VCALL1(cpu.write_cr4, x);
+ 	int len = 0;
+@@ -49,8 +49,8 @@ static ssize_t platform_profile_choices_
+ 	return len;
  }
  
--static __always_inline void arch_safe_halt(void)
--{
--	PVOP_VCALL0(irq.safe_halt);
--}
--
--static inline void halt(void)
--{
--	PVOP_VCALL0(irq.halt);
--}
--
- extern noinstr void pv_native_wbinvd(void);
- 
- static __always_inline void wbinvd(void)
---- a/arch/x86/include/asm/paravirt_types.h
-+++ b/arch/x86/include/asm/paravirt_types.h
-@@ -122,10 +122,9 @@ struct pv_irq_ops {
- 	struct paravirt_callee_save save_fl;
- 	struct paravirt_callee_save irq_disable;
- 	struct paravirt_callee_save irq_enable;
--
-+#endif
- 	void (*safe_halt)(void);
- 	void (*halt)(void);
--#endif
- } __no_randomize_layout;
- 
- struct pv_mmu_ops {
---- a/arch/x86/kernel/paravirt.c
-+++ b/arch/x86/kernel/paravirt.c
-@@ -100,6 +100,11 @@ int paravirt_disable_iospace(void)
- 	return request_resource(&ioport_resource, &reserve_ioports);
- }
- 
-+static noinstr void pv_native_safe_halt(void)
-+{
-+	native_safe_halt();
-+}
-+
- #ifdef CONFIG_PARAVIRT_XXL
- static noinstr void pv_native_write_cr2(unsigned long val)
+-static ssize_t platform_profile_show(struct device *dev,
+-					struct device_attribute *attr,
++static ssize_t platform_profile_show(struct kobject *kobj,
++					struct kobj_attribute *attr,
+ 					char *buf)
  {
-@@ -121,10 +126,6 @@ noinstr void pv_native_wbinvd(void)
- 	native_wbinvd();
+ 	enum platform_profile_option profile = PLATFORM_PROFILE_BALANCED;
+@@ -77,8 +77,8 @@ static ssize_t platform_profile_show(str
+ 	return sysfs_emit(buf, "%s\n", profile_names[profile]);
  }
  
--static noinstr void pv_native_safe_halt(void)
--{
--	native_safe_halt();
--}
- #endif
+-static ssize_t platform_profile_store(struct device *dev,
+-			    struct device_attribute *attr,
++static ssize_t platform_profile_store(struct kobject *kobj,
++			    struct kobj_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+ 	int err, i;
+@@ -115,12 +115,12 @@ static ssize_t platform_profile_store(st
+ 	return count;
+ }
  
- struct pv_info pv_info = {
-@@ -182,9 +183,11 @@ struct paravirt_patch_template pv_ops =
- 	.irq.save_fl		= __PV_IS_CALLEE_SAVE(pv_native_save_fl),
- 	.irq.irq_disable	= __PV_IS_CALLEE_SAVE(pv_native_irq_disable),
- 	.irq.irq_enable		= __PV_IS_CALLEE_SAVE(pv_native_irq_enable),
-+#endif /* CONFIG_PARAVIRT_XXL */
-+
-+	/* Irq HLT ops. */
- 	.irq.safe_halt		= pv_native_safe_halt,
- 	.irq.halt		= native_halt,
--#endif /* CONFIG_PARAVIRT_XXL */
+-static DEVICE_ATTR_RO(platform_profile_choices);
+-static DEVICE_ATTR_RW(platform_profile);
++static struct kobj_attribute attr_platform_profile_choices = __ATTR_RO(platform_profile_choices);
++static struct kobj_attribute attr_platform_profile = __ATTR_RW(platform_profile);
  
- 	/* Mmu ops. */
- 	.mmu.flush_tlb_user	= native_flush_tlb_local,
+ static struct attribute *platform_profile_attrs[] = {
+-	&dev_attr_platform_profile_choices.attr,
+-	&dev_attr_platform_profile.attr,
++	&attr_platform_profile_choices.attr,
++	&attr_platform_profile.attr,
+ 	NULL
+ };
+ 
 
 
