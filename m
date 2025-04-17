@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BE42550C8;
-	Thu, 17 Apr 2025 18:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3456E250C15;
+	Thu, 17 Apr 2025 18:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916171; cv=none; b=Trr+Q+wBSBgb2lFIbDJAIOCPMt0F+q9YACLKf7ffY3/BOyQoEUz94NYDFAFSHp4jwitQm6paa/4uhyfH9Lz/cyvlPFnUpqAbhcq/mUoA0FTlLjBj7mB9Snl2z/1KGidrRZs/bns4mk3AAqH07GH2TkkH+JfDioyYN8cuO1MqpVU=
+	t=1744916174; cv=none; b=KpbdYciA5fGtM8SP3rI85KbeKFrzbtQvkUlJJx6pgBtCyuPBMLkbG6HwYGSIjNB2cdqk1HSlK91IhkZhnCjM0uvfEyXOY2hYSgGpIMBeF+ZXXvpMkN5x6HTJ3eR5NFwPPD1e0ehe34VupYOhWu4xOBzNm/90nOW21Pdpdqzo3tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916171; c=relaxed/simple;
-	bh=0tdx/rTuMziHk6GeX6nbHBDaVTXdYJJiRYj5AtM5K+8=;
+	s=arc-20240116; t=1744916174; c=relaxed/simple;
+	bh=NWsMOZT17UhHO4WJ1HH4mj4kb4NPlmzyqPCoJMYvDIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T2bmdhvduP22bixvHa9j+4tGXlqVv26l+rFIrk/0+cV/FdsLpYDPIvnDTNpvAm+CyA5m1ugPATe2mMQ0pL52ghm4oThMOHuFVxQ51OTQxGOGb6kCRzUstZoY+0ECFSxEW5dX038vNOZN3jg729w4omBQuTU+UbGswVsJoM1FPZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEO5Z9x0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hideXdjPunBD26CdseG/PlyBTVKeMlKDIdwu5WJ3+lDVjjY2gMaKCC5Frwwd67+6iABqqPbkQygYrvlpUx1UbhcyMxOaJk7KhaKxnUZNxGzrJMiUqcdTNaZ9y+WHaXkg1MiwuTcSLGB4+58ExAZ5xzcg2yVmXbv6cE9ngMyXYWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXO5dyBQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEO5Z9x0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CF6C4CEEA;
-	Thu, 17 Apr 2025 18:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXO5dyBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934C9C4CEE7;
+	Thu, 17 Apr 2025 18:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916171;
-	bh=0tdx/rTuMziHk6GeX6nbHBDaVTXdYJJiRYj5AtM5K+8=;
+	s=korg; t=1744916174;
+	bh=NWsMOZT17UhHO4WJ1HH4mj4kb4NPlmzyqPCoJMYvDIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEO5Z9x0gqV+ZvnLij04U7t8+2u6jdLrIU0jSMoIf7aJycsBLgYXm6YJWn+JnLJLI
-	 GfcMn5ONvVgbD8jmhDVgjnvSNt6Dbm4te2rauUlqYtoEcT4UMtTr9t3mq78VOK55Gb
-	 w1XN2OcdXZHUIdJ0ehVZysKGMYCfE5jaTRpka6Js=
+	b=iXO5dyBQ2EpllOmZDfd07txp0VLd1qHBCsFqZa+aeLh/bhMEf9UhuhJNC333Rox6+
+	 4r6HIbfzu/aL511QT+CPO8blyCflKzBUlHJBB1eli1VnAJsmMamajxp1i+ij49d1fb
+	 42P8+sBIIp0V299a3yqANL1D54CuoWefVe9vhiDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.12 349/393] landlock: Add erratum for TCP fix
-Date: Thu, 17 Apr 2025 19:52:38 +0200
-Message-ID: <20250417175121.636829117@linuxfoundation.org>
+	Philipp Stanner <phasta@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.12 367/393] PCI: Fix wrong length of devres array
+Date: Thu, 17 Apr 2025 19:52:56 +0200
+Message-ID: <20250417175122.364214374@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Philipp Stanner <phasta@kernel.org>
 
-commit 48fce74fe209ba9e9b416d7100ccee546edc9fc6 upstream.
+commit f09d3937d400433080d17982bd1a540da53a156d upstream.
 
-Add erratum for the TCP socket identification fixed with commit
-854277e2cc8c ("landlock: Fix non-TCP sockets restriction").
+The array for the iomapping cookie addresses has a length of
+PCI_STD_NUM_BARS. This constant, however, only describes standard BARs;
+while PCI can allow for additional, special BARs.
 
-Fixes: 854277e2cc8c ("landlock: Fix non-TCP sockets restriction")
-Cc: Günther Noack <gnoack@google.com>
-Cc: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250318161443.279194-4-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+The total number of PCI resources is described by constant
+PCI_NUM_RESOURCES, which is also used in, e.g., pci_select_bars().
+
+Thus, the devres array has so far been too small.
+
+Change the length of the devres array to PCI_NUM_RESOURCES.
+
+Link: https://lore.kernel.org/r/20250312080634.13731-3-phasta@kernel.org
+Fixes: bbaff68bf4a4 ("PCI: Add managed partial-BAR request and map infrastructure")
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: stable@vger.kernel.org	# v6.11+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/errata/abi-4.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 security/landlock/errata/abi-4.h
+ drivers/pci/devres.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/landlock/errata/abi-4.h b/security/landlock/errata/abi-4.h
-new file mode 100644
-index 000000000000..c052ee54f89f
---- /dev/null
-+++ b/security/landlock/errata/abi-4.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+/**
-+ * DOC: erratum_1
-+ *
-+ * Erratum 1: TCP socket identification
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix addresses an issue where IPv4 and IPv6 stream sockets (e.g., SMC,
-+ * MPTCP, or SCTP) were incorrectly restricted by TCP access rights during
-+ * :manpage:`bind(2)` and :manpage:`connect(2)` operations. This change ensures
-+ * that only TCP sockets are subject to TCP access rights, allowing other
-+ * protocols to operate without unnecessary restrictions.
-+ */
-+LANDLOCK_ERRATUM(1)
--- 
-2.49.0
-
+--- a/drivers/pci/devres.c
++++ b/drivers/pci/devres.c
+@@ -40,7 +40,7 @@
+  * Legacy struct storing addresses to whole mapped BARs.
+  */
+ struct pcim_iomap_devres {
+-	void __iomem *table[PCI_STD_NUM_BARS];
++	void __iomem *table[PCI_NUM_RESOURCES];
+ };
+ 
+ /* Used to restore the old INTx state on driver detach. */
 
 
