@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347872528FA;
-	Thu, 17 Apr 2025 18:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1138462;
+	Thu, 17 Apr 2025 18:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915470; cv=none; b=CdC2ZW6d1Py27WWqmooYmabBWYEm6V7Z6hsxuCWsA15OKCBQY9ZJcS6QtVoI8Cge7cHH3etPyETBM3mRxMtD5cRrrOY3GjYAcqfR+F1famWXJ6fnp7FZoUgW5MjCVqzGpvpBxwdDK8pP1VA7PBISMoJoXCSoW8dnVKc3vNw8IKE=
+	t=1744915473; cv=none; b=jEZWP2bKOqK2yTk4c8HlbFQEMu+9Jhg5uAYP8uRnDetqRTT5FGMlpe2u+oUqGXTM6v86ZgZ6z4LYxgoHWN5QOAut7rpB418BsO+8FlPeFNtQxn3aeeJdhw1er225nqoBq1GX0XJu4ts/NMheT/YQw0/OJTLacFIEORcMf2nHLlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915470; c=relaxed/simple;
-	bh=nl7LZmtqiBUmONXaY2OxTyjqYnNRPAZjJMq3XOWKJME=;
+	s=arc-20240116; t=1744915473; c=relaxed/simple;
+	bh=KdyJtsDs8id/FHlLD6b/1QVZnZeBnddPAZPc8epvwr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePPLVghDOm62CNlEuCrk8MrXUlBYuPPNpvoNnvxMyWrDwuRhxyq3Hrem70Sm7vpmJdMQ/u+AYHCqVqGwCvCDF5UqAmt+B6+BmqmUtTg2WrFpIfxUOJ/WuXZj9vLghJN/45CmaZhRGaNBGgHg4rfRhF0jeSNr1X5tKw/edn57770=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USMvGUzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i8g3qFObNsxfE4h39J/3YdtqAj4oMeft4+6986BjSm2YqBQaKkf8g4dps3Pz/fcqn64hXdrh5llnm3QuoTJ5RPYUfZvO3iSzMrVMyp1FZ/pOIKoMIu8z4duwhTQBrMJdODXrkXYFXJkNrYwUoNbdjBElKIUjt2GCkMH7jy088YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoJsARms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USMvGUzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908E0C4CEEA;
-	Thu, 17 Apr 2025 18:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoJsARms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48FFC4CEE4;
+	Thu, 17 Apr 2025 18:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915470;
-	bh=nl7LZmtqiBUmONXaY2OxTyjqYnNRPAZjJMq3XOWKJME=;
+	s=korg; t=1744915473;
+	bh=KdyJtsDs8id/FHlLD6b/1QVZnZeBnddPAZPc8epvwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USMvGUzTPjGzXK7PaaHFcx9hQ0Wvgp88JCrOJKk0Zfg8HTAx7DhKKNt9eG67aZVln
-	 676sPICEMsoeFAMXh7GHwG4gckijdnFGgm9a31gTQXdOa0C8XLIA8Wwjz03Whk+bAN
-	 QrFCA4yaOpLkz97LpnyZzkSiceOq9NiM4tJ62VoM=
+	b=HoJsARmszOb/X7vIF4UeI7IMN4/WU0fOsvJ9SFVyOhvm9+biDgTal4buKqDsRn8Za
+	 u/vlvpBKZEu+/XDI25aasuYc2634SHaX48S5UHF6Vafa8yKXCimcqrZP3Y+aSqRtvv
+	 nrpQ/CbWgccG6Y8Cqne2NMBO9SDb090c22kPu7cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Mike Katsnelson <mike.katsnelson@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/393] drm/amd/display: stop DML2 from removing pipes based on planes
-Date: Thu, 17 Apr 2025 19:49:07 +0200
-Message-ID: <20250417175113.138238369@linuxfoundation.org>
+Subject: [PATCH 6.12 139/393] drivers: base: devres: Allow to release group on device release
+Date: Thu, 17 Apr 2025 19:49:08 +0200
+Message-ID: <20250417175113.179297536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -54,79 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Katsnelson <mike.katsnelson@amd.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 8adeff83a3b07fa6d0958ed51e1b38ba7469e448 ]
+[ Upstream commit 8e1ddfada4530939a8cb64ee9251aef780474274 ]
 
-[Why]
-Transitioning from low to high resolutions at high refresh rates caused grey corruption.
-During the transition state, there is a period where plane size is based on low resultion
-state and ODM slices are based on high resoultion state, causing the entire plane to be
-contained in one ODM slice. DML2 would turn off the pipe for the ODM slice with no plane,
-causing an underflow since the pixel rate for the higher resolution cannot be supported on
-one pipe. This change stops DML2 from turning off pipes that are mapped to an ODM slice
-with no plane. This is possible to do without negative consequences because pipes can now
-take the minimum viewport and draw with zero recout size, removing the need to have the
-pipe turned off.
+When releasing a device, if the release action causes a group to be
+released, a warning is emitted because it can't find the group. This
+happens because devres_release_all() moves the entire list to a todo
+list and also move the group markers. Considering r* normal resource
+nodes and g1 a group resource node:
 
-[How]
-In map_pipes_from_plane(), remove "check" that skips ODM slices that are not covered by
-the plane. This prevents the pipes for those ODM slices from being freed.
+		    g1 -----------.
+		    v		  v
+	r1 -> r2 -> g1[0] -> r3-> g[1] -> r4
 
-Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: Mike Katsnelson <mike.katsnelson@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+After devres_release_all(), dev->devres_head becomes empty and the todo
+list it iterates on becomes:
+
+			       g1
+			       v
+	r1 -> r2 -> r3-> r4 -> g1[0]
+
+When a call to component_del() is made and takes down the aggregate
+device, a warning like this happen:
+
+	RIP: 0010:devres_release_group+0x362/0x530
+	...
+	Call Trace:
+	 <TASK>
+	 component_unbind+0x156/0x380
+	 component_unbind_all+0x1d0/0x270
+	 mei_component_master_unbind+0x28/0x80 [mei_hdcp]
+	 take_down_aggregate_device+0xc1/0x160
+	 component_del+0x1c6/0x3e0
+	 intel_hdcp_component_fini+0xf1/0x170 [xe]
+	 xe_display_fini+0x1e/0x40 [xe]
+
+Because the devres group corresponding to the hdcp component cannot be
+found. Just ignore this corner case: if the dev->devres_head is empty
+and the caller is trying to remove a group, it's likely in the process
+of device cleanup so just ignore it instead of warning.
+
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250222001051.3012936-2-lucas.demarchi@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/dml2/dml2_dc_resource_mgmt.c   | 26 -------------------
- 1 file changed, 26 deletions(-)
+ drivers/base/devres.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
-index 1ed21c1b86a5b..a966abd407881 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
-@@ -532,26 +532,6 @@ static void calculate_odm_slices(const struct dc_stream_state *stream, unsigned
- 	odm_slice_end_x[odm_factor - 1] = stream->src.width - 1;
- }
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index 2152eec0c1352..68224f2f83fff 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -687,6 +687,13 @@ int devres_release_group(struct device *dev, void *id)
+ 		spin_unlock_irqrestore(&dev->devres_lock, flags);
  
--static bool is_plane_in_odm_slice(const struct dc_plane_state *plane, unsigned int slice_index, unsigned int *odm_slice_end_x, unsigned int num_slices)
--{
--	unsigned int slice_start_x, slice_end_x;
--
--	if (slice_index == 0)
--		slice_start_x = 0;
--	else
--		slice_start_x = odm_slice_end_x[slice_index - 1] + 1;
--
--	slice_end_x = odm_slice_end_x[slice_index];
--
--	if (plane->clip_rect.x + plane->clip_rect.width < slice_start_x)
--		return false;
--
--	if (plane->clip_rect.x > slice_end_x)
--		return false;
--
--	return true;
--}
--
- static void add_odm_slice_to_odm_tree(struct dml2_context *ctx,
- 		struct dc_state *state,
- 		struct dc_pipe_mapping_scratch *scratch,
-@@ -791,12 +771,6 @@ static void map_pipes_for_plane(struct dml2_context *ctx, struct dc_state *state
- 	sort_pipes_for_splitting(&scratch->pipe_pool);
- 
- 	for (odm_slice_index = 0; odm_slice_index < scratch->odm_info.odm_factor; odm_slice_index++) {
--		// We build the tree for one ODM slice at a time.
--		// Each ODM slice shares a common OPP
--		if (!is_plane_in_odm_slice(plane, odm_slice_index, scratch->odm_info.odm_slice_end_x, scratch->odm_info.odm_factor)) {
--			continue;
--		}
--
- 		// Now we have a list of all pipes to be used for this plane/stream, now setup the tree.
- 		scratch->odm_info.next_higher_pipe_for_odm_slice[odm_slice_index] = add_plane_to_blend_tree(ctx, state,
- 				plane,
+ 		release_nodes(dev, &todo);
++	} else if (list_empty(&dev->devres_head)) {
++		/*
++		 * dev is probably dying via devres_release_all(): groups
++		 * have already been removed and are on the process of
++		 * being released - don't touch and don't warn.
++		 */
++		spin_unlock_irqrestore(&dev->devres_lock, flags);
+ 	} else {
+ 		WARN_ON(1);
+ 		spin_unlock_irqrestore(&dev->devres_lock, flags);
 -- 
 2.39.5
 
