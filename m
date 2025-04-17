@@ -1,49 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0AC263C7B;
-	Thu, 17 Apr 2025 18:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589F12641E1;
+	Thu, 17 Apr 2025 18:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914809; cv=none; b=NZR93j4kIb3omIgMJriwbIticxdtiJsyt+ihMOScDMhvU7KfedP3bc6RxZ4stBQhM+QHVE+t3KLNnwODbDQf/Vz4Vi9cpWq0/yty84N4cDLIU2G/fjLfnWI2AjzI5ZxozT9yy1KIrDKv2Eh7wLnW1O+h+moYlFVe6BKJWpEBCEU=
+	t=1744914812; cv=none; b=iemD2r7zlX2XEyKq7ARA6y8GuncguLu9iKPXcIcEkIvvOK6eddJEAJA3WzQFzbOPIU0BrPNoPE4hc7VdYIiK2rKAg5yE2ws4O3v06v4BBm4M8Kh4JdTwjB8TapS2Enfl/6zosQg5lal57XbiUs5mWdV71y4VfezhiZ7u+DH0wXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914809; c=relaxed/simple;
-	bh=Km2icXNqXx7o4xq6KE28SzZPWTGc5lNPBFy4x6Ap7EU=;
+	s=arc-20240116; t=1744914812; c=relaxed/simple;
+	bh=DhWH4LHDgiJESGwdL/CCh3CjKFJathb4f10vR4M35wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDDtMrCO9VOWLoEo5WfDgXls8RWZOJYZXUSI4Cry+dXQi3kRu6l0jKVURIuvfdzb6nD9SSvevB2GWbxn6aTOCZIsgeC6OoYAk6VxoPjM9+VH3DCiY7Gwy9wClseyQ5ifGC7FVBxKHfBcGPIdrfSoy8i7aYUwt06XD7v+tsugDks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQnCTOcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5e0KeL1G2tH/yt1BTKBvfof1pPAQnaHY4uTTqIwnRHjCYHHG5eAD9gCsX+tioYbUwfKBgvFYqXGcmluisrDrlWiQwYCeZPYdBDOt63VfzBOdHcYyTerQ/kI2kdhqAQSMYJRMbBzZI3p2B7gV74sPP7eHiLN1dfqIllknYlZ2+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPKYM/Tq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQnCTOcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD737C4CEE4;
-	Thu, 17 Apr 2025 18:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPKYM/Tq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03E4C4CEE4;
+	Thu, 17 Apr 2025 18:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914809;
-	bh=Km2icXNqXx7o4xq6KE28SzZPWTGc5lNPBFy4x6Ap7EU=;
+	s=korg; t=1744914812;
+	bh=DhWH4LHDgiJESGwdL/CCh3CjKFJathb4f10vR4M35wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQnCTOcd/YdhA4019iU8AxnJ8X761CfmfDxs1MzpLdZerZladc00/U9sg7AbYDpds
-	 SL5L9PGa8W9phwB2xU/cfSFErqMB/kKs7yD6yNjRaLUuUIUxy052BIc0XIACLPuIqu
-	 eWCaE+aKc4miOtN6wKNdiSbz2WRgVHNufywT8eRk=
+	b=XPKYM/TqBEbqFlobteavflia2SF3EhGwOKZPDmNHykkL8yhegqGfLQU4KzBe96hwW
+	 qiBmZec/NCr+KcJLlr1TqLwwTdteld+h6Iw5jJqGhkzh/WJJKCJNNqv4RLbEj2GESa
+	 uXdLxAkVzEMLth/xPyi5wNQrizHJGnAJ3JtqO6Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	tudor.ambarus@linaro.org,
-	andre.draszik@linaro.org,
-	kernel-team@android.com,
-	willmcvicker@google.com,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.13 310/414] arm64: dts: exynos: gs101: disable pinctrl_gsacore node
-Date: Thu, 17 Apr 2025 19:51:08 +0200
-Message-ID: <20250417175123.902965434@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.13 337/414] tracing: fprobe events: Fix possible UAF on modules
+Date: Thu, 17 Apr 2025 19:51:35 +0200
+Message-ID: <20250417175124.987524439@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -62,47 +49,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 168e24966f10ff635b0ec9728aa71833bf850ee5 upstream.
+commit dd941507a9486252d6fcf11814387666792020f3 upstream.
 
-gsacore registers are not accessible from normal world.
+Commit ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module
+refcount") moved try_module_get() from __find_tracepoint_module_cb()
+to find_tracepoint() caller, but that introduced a possible UAF
+because the module can be unloaded before try_module_get(). In this
+case, the module object should be freed too. Thus, try_module_get()
+does not only fail but may access to the freed object.
 
-Disable this node, so that the suspend/resume callbacks
-in the pinctrl driver don't cause a Serror attempting to
-access the registers.
+To avoid that, try_module_get() in __find_tracepoint_module_cb()
+again.
 
-Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-To: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: tudor.ambarus@linaro.org
-Cc: andre.draszik@linaro.org
-Cc: kernel-team@android.com
-Cc: willmcvicker@google.com
+Link: https://lore.kernel.org/all/174342990779.781946.9138388479067729366.stgit@devnote2/
+
+Fixes: ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module refcount")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250106-contrib-pg-pinctrl_gsacore_disable-v1-1-d3fc88a48aed@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_fprobe.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -1451,6 +1451,7 @@
- 			/* TODO: update once support for this CMU exists */
- 			clocks = <0>;
- 			clock-names = "pclk";
-+			status = "disabled";
- 		};
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -888,9 +888,15 @@ static void __find_tracepoint_module_cb(
+ 	struct __find_tracepoint_cb_data *data = priv;
  
- 		cmu_top: clock-controller@1e080000 {
+ 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
+-		data->tpoint = tp;
+-		if (!data->mod)
++		/* If module is not specified, try getting module refcount. */
++		if (!data->mod && mod) {
++			/* If failed to get refcount, ignore this tracepoint. */
++			if (!try_module_get(mod))
++				return;
++
+ 			data->mod = mod;
++		}
++		data->tpoint = tp;
+ 	}
+ }
+ 
+@@ -902,7 +908,11 @@ static void __find_tracepoint_cb(struct
+ 		data->tpoint = tp;
+ }
+ 
+-/* Find a tracepoint from kernel and module. */
++/*
++ * Find a tracepoint from kernel and module. If the tracepoint is on the module,
++ * the module's refcount is incremented and returned as *@tp_mod. Thus, if it is
++ * not NULL, caller must call module_put(*tp_mod) after used the tracepoint.
++ */
+ static struct tracepoint *find_tracepoint(const char *tp_name,
+ 					  struct module **tp_mod)
+ {
+@@ -931,7 +941,10 @@ static void reenable_trace_fprobe(struct
+ 	}
+ }
+ 
+-/* Find a tracepoint from specified module. */
++/*
++ * Find a tracepoint from specified module. In this case, this does not get the
++ * module's refcount. The caller must ensure the module is not freed.
++ */
+ static struct tracepoint *find_tracepoint_in_module(struct module *mod,
+ 						    const char *tp_name)
+ {
+@@ -1167,11 +1180,6 @@ static int __trace_fprobe_create(int arg
+ 	if (is_tracepoint) {
+ 		ctx.flags |= TPARG_FL_TPOINT;
+ 		tpoint = find_tracepoint(symbol, &tp_mod);
+-		/* lock module until register this tprobe. */
+-		if (tp_mod && !try_module_get(tp_mod)) {
+-			tpoint = NULL;
+-			tp_mod = NULL;
+-		}
+ 		if (tpoint) {
+ 			ctx.funcname = kallsyms_lookup(
+ 				(unsigned long)tpoint->probestub,
 
 
