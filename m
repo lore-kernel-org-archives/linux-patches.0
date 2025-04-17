@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C53265CA6;
-	Thu, 17 Apr 2025 18:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38CF269817;
+	Thu, 17 Apr 2025 18:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914431; cv=none; b=X0kzac9O1dNGaGWpHAjG9VtkNY1HmKash5l9MLRYulVbjhQLsfHVxrYn1welEu6mAAulpEuVm3pdN2WWmdj3/iLUA3CssQeDuEFtn1/8nlW5r6JMXJ+nHqrckGWoNZjClLnXYSuNViQ9N8zi/+30fBG+z9y2d+0UL3Xk9lanBzY=
+	t=1744914435; cv=none; b=r6l01ZJuFmkMMfazunyxZGqD++S7JVNysOztgBciIImnr4chmFXKhHz8stctWOTwwo0BJfAfpbpYDcuB2E3gw0gfDDpYCAk590l5PN4hKZ+EoP+/rQU+pkOWmwaVqBY22/DiHWuLUXTudwUqwN7ZScYbSOe8IbqtKos49O0l9pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914431; c=relaxed/simple;
-	bh=U8oEMVN0xeQd8UkBYE24jHVIeazrhHBUzpCRpqTimcQ=;
+	s=arc-20240116; t=1744914435; c=relaxed/simple;
+	bh=g/cytp7c5r6l3mcnwZdOo8nQRyJeY/2pKbzxZxKqfV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KdDf84GFKQY8R0NOU3l+NPMElWPq/BsU8IRsEepEMQgkQ8DCi9svWWAybxJmVxczMbfIE7+3rqgqT93/LQXkWEJeD9bLpbLwVAqsBPt22a8FY/sXV7P++eFWLsQmPtLEUxOQD2LKeauKaMKIJz8Sk5FgPx6xpjtEjWjLpIXychE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEZi7+DG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OoCvsvqJLV1L54wWwcrKMr4qFSGran1k2D+qIii8zxb+5KF+OQem060pCeP7mejgtYS9eLjwZj69hElD8Pr2HyLyAqg4kjLwqtfDz/bw0XBreAklSaQUvV9s585/HywrlY64mq83CYHQuwEZTu/tX0nWr750p0w8hvqYD1fRZ28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxKBz4Zd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEZi7+DG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF00C4CEE4;
-	Thu, 17 Apr 2025 18:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxKBz4Zd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F54C4CEEA;
+	Thu, 17 Apr 2025 18:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914430;
-	bh=U8oEMVN0xeQd8UkBYE24jHVIeazrhHBUzpCRpqTimcQ=;
+	s=korg; t=1744914434;
+	bh=g/cytp7c5r6l3mcnwZdOo8nQRyJeY/2pKbzxZxKqfV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEZi7+DG79eTSZQUWHUbBo5bQn7H9BiGHC+2gzn+KIt9dn8Dvc0Wz1VeFsu3x3rRf
-	 clHLV8alLZwVEt3glMJu41pAcXQwJdsGTZCe8z4ct2YMZYKG+HAbGlxQOljUk8r39M
-	 70/OUgQHWupiyYhJxBmBx+kuScDHeZTO/9BdD1RE=
+	b=yxKBz4ZdhmuIxd+7sEihbm0uxvGzgTyOyT0m/+ocBP78inEv9w1W6yOZ0FiZ3Bu4l
+	 HgYz9lBJ6Kfgs07N5LSv5/fA1bJm63T296ZG9THLYziqzZxC/RF0tzuBHQoZVZu7ab
+	 Hqh16dEjM1yldGpHroIRbokSjo/lW3s4coDgHu7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 184/414] HID: pidff: Factor out pool report fetch and remove excess declaration
-Date: Thu, 17 Apr 2025 19:49:02 +0200
-Message-ID: <20250417175118.850551192@linuxfoundation.org>
+Subject: [PATCH 6.13 185/414] HID: pidff: Make sure to fetch pool before checking SIMULTANEOUS_MAX
+Date: Thu, 17 Apr 2025 19:49:03 +0200
+Message-ID: <20250417175118.889687513@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -58,109 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 5d98079b2d0186e1f586301a9c00144a669416a8 ]
+[ Upstream commit 1f650dcec32d22deb1d6db12300a2b98483099a9 ]
 
-We only want to refetch the pool report during device init. Reset
-function is now called when uploading effects to an empty device so
-extract pool fetch to separate function and call it from init before
-autocenter check (autocenter check triggered reset during init).
+As noted by Anssi some 20 years ago, pool report is sometimes messed up.
+This worked fine on many devices but casued oops on VRS DirectForce PRO.
 
-Remove a superfluous pointer declaration and assigment as well.
+Here, we're making sure pool report is refetched before trying to access
+any of it's fields. While loop was replaced with a for loop + exit
+conditions were moved aroud to decrease the possibility of creating an
+infinite loop scenario.
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 45 ++++++++++++++++++----------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index b21e844f5f3a3..f23381b6e3447 100644
+index f23381b6e3447..503f643b59cad 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -591,12 +591,9 @@ static void pidff_modify_actuators_state(struct pidff_device *pidff, bool enable
+@@ -604,28 +604,25 @@ static void pidff_reset(struct pidff_device *pidff)
+ }
  
  /*
-  * Reset the device, stop all effects, enable actuators
 - * Refetch pool report
++ * Fetch pool report
   */
- static void pidff_reset(struct pidff_device *pidff)
+ static void pidff_fetch_pool(struct pidff_device *pidff)
  {
+-	if (!pidff->pool[PID_SIMULTANEOUS_MAX].value)
+-		return;
++	int i;
++	struct hid_device *hid = pidff->hid;
+ 
 -	int i = 0;
--
- 	/* We reset twice as sometimes hid_wait_io isn't waiting long enough */
- 	pidff_send_device_control(pidff, PID_RESET);
- 	pidff_send_device_control(pidff, PID_RESET);
-@@ -604,23 +601,29 @@ static void pidff_reset(struct pidff_device *pidff)
+-	while (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] < 2) {
+-		hid_dbg(pidff->hid, "pid_pool requested again\n");
+-		hid_hw_request(pidff->hid, pidff->reports[PID_POOL],
+-				HID_REQ_GET_REPORT);
+-		hid_hw_wait(pidff->hid);
++	/* Repeat if PID_SIMULTANEOUS_MAX < 2 to make sure it's correct */
++	for(i = 0; i < 20; i++) {
++		hid_hw_request(hid, pidff->reports[PID_POOL], HID_REQ_GET_REPORT);
++		hid_hw_wait(hid);
  
- 	pidff_send_device_control(pidff, PID_STOP_ALL_EFFECTS);
- 	pidff_modify_actuators_state(pidff, 1);
-+}
- 
--	/* pool report is sometimes messed up, refetch it */
--	hid_hw_request(pidff->hid, pidff->reports[PID_POOL], HID_REQ_GET_REPORT);
--	hid_hw_wait(pidff->hid);
-+/*
-+ * Refetch pool report
-+ */
-+static void pidff_fetch_pool(struct pidff_device *pidff)
-+{
-+	if (!pidff->pool[PID_SIMULTANEOUS_MAX].value)
-+		return;
- 
--	if (pidff->pool[PID_SIMULTANEOUS_MAX].value) {
--		while (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] < 2) {
--			if (i++ > 20) {
--				hid_warn(pidff->hid,
--					 "device reports %d simultaneous effects\n",
--					 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
--				break;
--			}
--			hid_dbg(pidff->hid, "pid_pool requested again\n");
--			hid_hw_request(pidff->hid, pidff->reports[PID_POOL],
--					  HID_REQ_GET_REPORT);
--			hid_hw_wait(pidff->hid);
-+	int i = 0;
-+	while (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] < 2) {
-+		hid_dbg(pidff->hid, "pid_pool requested again\n");
-+		hid_hw_request(pidff->hid, pidff->reports[PID_POOL],
-+				HID_REQ_GET_REPORT);
-+		hid_hw_wait(pidff->hid);
-+
-+		/* break after 20 tries with SIMULTANEOUS_MAX < 2 */
-+		if (i++ > 20) {
-+			hid_warn(pidff->hid,
-+				 "device reports %d simultaneous effects\n",
-+				 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
-+			break;
- 		}
+-		/* break after 20 tries with SIMULTANEOUS_MAX < 2 */
+-		if (i++ > 20) {
+-			hid_warn(pidff->hid,
+-				 "device reports %d simultaneous effects\n",
+-				 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
+-			break;
+-		}
++		if (!pidff->pool[PID_SIMULTANEOUS_MAX].value)
++			return;
++		if (pidff->pool[PID_SIMULTANEOUS_MAX].value[0] >= 2)
++			return;
  	}
- }
-@@ -916,9 +919,7 @@ static void pidff_autocenter(struct pidff_device *pidff, u16 magnitude)
-  */
- static void pidff_set_autocenter(struct input_dev *dev, u16 magnitude)
- {
--	struct pidff_device *pidff = dev->ff->private;
--
--	pidff_autocenter(pidff, magnitude);
-+	pidff_autocenter(dev->ff->private, magnitude);
++	hid_warn(hid, "device reports %d simultaneous effects\n",
++		 pidff->pool[PID_SIMULTANEOUS_MAX].value[0]);
  }
  
  /*
-@@ -1424,6 +1425,8 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
- 	if (error)
- 		goto fail;
- 
-+	/* pool report is sometimes messed up, refetch it */
-+	pidff_fetch_pool(pidff);
- 	pidff_set_gain_report(pidff, U16_MAX);
- 	error = pidff_check_autocenter(pidff, dev);
- 	if (error)
 -- 
 2.39.5
 
