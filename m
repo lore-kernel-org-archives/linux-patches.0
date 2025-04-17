@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B77C18C034;
-	Thu, 17 Apr 2025 18:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9302722E3E6;
+	Thu, 17 Apr 2025 18:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913364; cv=none; b=HlslwVeBuBW2j9MH0UXJOm7ooSBKKEL4G8+Jdf24P672R0gIMe+F4X1/vpp7YBBUAX9DFzzEnAW0k2fRh1R4DD6PSdJfaVC57gNW85Wnz1Kb85m7VVzwUm2t7+BCWbylYolGXGjvh81+AyYKhC/+diL4E3rEw2Li85/rN5RE2l0=
+	t=1744913367; cv=none; b=Y7bRApJ4mRiraLAPzBDdgKXFHmEN49uCltaCf61yvZx2/bpJHqQgP2guSueACMVAoaUUSf/LDSjsasTft8d/pVtJ3ro1UF6Q4yRMDqwU21Wu+aQC42t1af0h3gI2ouPPYQn5WHMt/Vc2RadPDXUzi7oIsnbZLhwbrGcxHpkVSeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913364; c=relaxed/simple;
-	bh=GeUizqc88Yt5na6IKmRHw8eOqhLFXGMLV1m7EtBBpQY=;
+	s=arc-20240116; t=1744913367; c=relaxed/simple;
+	bh=hq8MDOqBywcnxHFmQ0cM2b5mFrssDb9XQcEl5agL56k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8K0WEdzoX4DUk3Btf6LUJZgNuOLa3Xs6bgmlfOVA8EiTMYIv25GPQi8hmYSXH8BdHPYgCj+OZhbqx2PHue9/+LkCov1TyHuWhtDZfBqgcZ1tAr3cEwzCHkp2UzgLijwSSrSEql72z/ZG8ZoAf/SDiZDYC9dscM+h8nDCan/470=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVrQzi73; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeLopTUbeUaHS9++tIxwnwsiQKcHdH7dC9TMIFAzSesZZAd0jrKc3l697fzf98W+uw7nwxVmFGoL3dVKj5bydbt4chVZkjTt+WtS/OzbmYAJRnVPGDYmlwRmmDA3h/kGG3BrpwzBdp5kEgpgmaEffweudxP1YeqJeTcoxI1tGdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngY758w1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVrQzi73"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19B7C4CEE4;
-	Thu, 17 Apr 2025 18:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngY758w1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBC7C4CEE4;
+	Thu, 17 Apr 2025 18:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913364;
-	bh=GeUizqc88Yt5na6IKmRHw8eOqhLFXGMLV1m7EtBBpQY=;
+	s=korg; t=1744913367;
+	bh=hq8MDOqBywcnxHFmQ0cM2b5mFrssDb9XQcEl5agL56k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVrQzi73vb9ZfddVebALTAW+P2BcQbBvewMdCDlj4FpTnWDRFDZPMD9Y+reSmtHOT
-	 yFGQAKYxtQvuM1+EoagS0G//bJyLGJ2HRV1916Flu9Z+u21Tz95+JI9x71wmWuoeo5
-	 ZlLZ6fMXsIeJsvZ1bEQ+ar5C9ahvonIZGJdtbKi8=
+	b=ngY758w1rMK2hFNvxHkcs+wv/7OPtdkfzU7TdFIEn1PzCd7T9DuzYdzqB0AR2msor
+	 dNvssi5dksysZnRKD9XuBSn6gjYxBUsEtSUPd3ybnH35oWhgoWDXianNBnSglSVB2x
+	 p7u0H32cWKYUDgQbJd+BS9+pvvRI3rF+TMiP0oOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.14 314/449] smb311 client: fix missing tcon check when mounting with linux/posix extensions
-Date: Thu, 17 Apr 2025 19:50:02 +0200
-Message-ID: <20250417175130.752876068@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Petr Vorel <pvorel@suse.cz>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.14 315/449] ima: limit the number of open-writers integrity violations
+Date: Thu, 17 Apr 2025 19:50:03 +0200
+Message-ID: <20250417175130.793357080@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -49,35 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Mimi Zohar <zohar@linux.ibm.com>
 
-commit b365b9d404b7376c60c91cd079218bfef11b7822 upstream.
+commit 5b3cd801155f0b34b0b95942a5b057c9b8cad33e upstream.
 
-When mounting the same share twice, once with the "linux" mount parameter
-(or equivalently "posix") and then once without (or e.g. with "nolinux"),
-we were incorrectly reusing the same tree connection for both mounts.
-This meant that the first mount of the share on the client, would
-cause subsequent mounts of that same share on the same client to
-ignore that mount parm ("linux" vs. "nolinux") and incorrectly reuse
-the same tcon.
+Each time a file in policy, that is already opened for write, is opened
+for read, an open-writers integrity violation audit message is emitted
+and a violation record is added to the IMA measurement list. This
+occurs even if an open-writers violation has already been recorded.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Limit the number of open-writers integrity violations for an existing
+file open for write to one.  After the existing file open for write
+closes (__fput), subsequent open-writers integrity violations may be
+emitted.
+
+Cc: stable@vger.kernel.org # applies cleanly up to linux-6.6
+Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    2 ++
- 1 file changed, 2 insertions(+)
+ security/integrity/ima/ima.h      |    1 +
+ security/integrity/ima/ima_main.c |   11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2455,6 +2455,8 @@ static int match_tcon(struct cifs_tcon *
- 		return 0;
- 	if (tcon->nodelete != ctx->nodelete)
- 		return 0;
-+	if (tcon->posix_extensions != ctx->linux_ext)
-+		return 0;
- 	return 1;
- }
+--- a/security/integrity/ima/ima.h
++++ b/security/integrity/ima/ima.h
+@@ -182,6 +182,7 @@ struct ima_kexec_hdr {
+ #define IMA_CHANGE_ATTR		2
+ #define IMA_DIGSIG		3
+ #define IMA_MUST_MEASURE	4
++#define IMA_EMITTED_OPENWRITERS	5
  
+ /* IMA integrity metadata associated with an inode */
+ struct ima_iint_cache {
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -137,8 +137,13 @@ static void ima_rdwr_violation_check(str
+ 	} else {
+ 		if (must_measure)
+ 			set_bit(IMA_MUST_MEASURE, &iint->atomic_flags);
+-		if (inode_is_open_for_write(inode) && must_measure)
+-			send_writers = true;
++
++		/* Limit number of open_writers violations */
++		if (inode_is_open_for_write(inode) && must_measure) {
++			if (!test_and_set_bit(IMA_EMITTED_OPENWRITERS,
++					      &iint->atomic_flags))
++				send_writers = true;
++		}
+ 	}
+ 
+ 	if (!send_tomtou && !send_writers)
+@@ -167,6 +172,8 @@ static void ima_check_last_writer(struct
+ 	if (atomic_read(&inode->i_writecount) == 1) {
+ 		struct kstat stat;
+ 
++		clear_bit(IMA_EMITTED_OPENWRITERS, &iint->atomic_flags);
++
+ 		update = test_and_clear_bit(IMA_UPDATE_XATTR,
+ 					    &iint->atomic_flags);
+ 		if ((iint->flags & IMA_NEW_FILE) ||
 
 
