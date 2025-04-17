@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587B263A9;
-	Thu, 17 Apr 2025 18:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8524C255E2B;
+	Thu, 17 Apr 2025 18:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912893; cv=none; b=SiNMatrZMUcCeZhhVsSzgxTr8CnCJ+mThjCP7wltxMM8YweLYIHy4kCm9Gc2WzIMv8SoPkENuWz+ANMLzH7Vr04is9jK3TBhdP0eGziy6W0kNfzwvID/9ooik71eqhWh/yB8eYqjzbTb9Uv3vV2cmpkCeOaB4rma1Sp75SkVipo=
+	t=1744912896; cv=none; b=QIFzWuGipcof0Ak/5F/Ts7mMhi/TGHEt1P0LqBGQ+t+5mcsd1A8AKVXCiz5kL9vOBX+csK9Mj1Hr0pHsKIyO8zKSEKnZsHniUQ6c1+HURkcFz+ztprkUoBJHUvN8HR8m9/XFLWQZHnWDWOySUQ/q3STR8iR8UkR8yEOgFdh9Wu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912893; c=relaxed/simple;
-	bh=pisoM5QAAoztYbH8AEpAY9aJzB4O7xjGx/j4eyfOP1o=;
+	s=arc-20240116; t=1744912896; c=relaxed/simple;
+	bh=5nAB6lgnyUzDQahYY1F5AUD4La0/NITGu7yLxjE+p1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DJYmkfjtEp6aqWwIcH7hJL/uvH12iWFPGjTVByUN6GCOe4lPsRBTv86WIZ4Ors/aFVCjO7IaMBuu8Bne4Netxri/c01bSz0q2HpFcNnT9vj1epXuPRZK/5XsNP7NxYVFhKUJJ++HpPMO0nGx9TMKja84/cKgbrzoW9Jrew2B78g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEwIt0JZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgU2Ck/HPWgrcmR7c2eIZPHUrBew5xzB9KjD/Mk8Rjm9eDsAyAo2Zoy2u4bmXNvBT24pVyQrszEIQKVkZlbrFw0doh1JajJQ2Z19POCr369QyKLh8he0FGRqoh3IVBbs7cRMUlCfBD/v7oQlrxw3LQEC4tZtG1R051AaQUhJlr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3eTGt8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEwIt0JZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F498C4CEE4;
-	Thu, 17 Apr 2025 18:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3eTGt8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DA5C4CEE4;
+	Thu, 17 Apr 2025 18:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912892;
-	bh=pisoM5QAAoztYbH8AEpAY9aJzB4O7xjGx/j4eyfOP1o=;
+	s=korg; t=1744912896;
+	bh=5nAB6lgnyUzDQahYY1F5AUD4La0/NITGu7yLxjE+p1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEwIt0JZ6f8BIEag/6ONPUVOz3+H2ADClSziLOdhjJeIq4lYoQtZMmedZBtI1AuTm
-	 frIHnr6bnu04A3T+HPdez3Um686knuYqx3P/5Bt6mwQ+3cUDsQ0n7mx4NAI7roZqoU
-	 Ij54FB0plMt7YFSbRvFA2exr6xVYd5bIaNRvaNws=
+	b=X3eTGt8I4UujL9FzdyIlrlusNtwbqO+fZq1jOowXl4q59od/wTfwxsIeynwYnPQ9s
+	 nLWZigceXRlo+045BX3AYSUQHwfa+lqeCjQ12xQy2pDcm1LSG8C90sGQ/bLsOqEydo
+	 Bh+T3YtrZPA0kdc5LyZeZeaJ8L/3hXw9E1XSLz58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Wyatt <fewtarius@steamfork.org>,
-	John Edwards <uejji@uejji.net>,
-	=?UTF-8?q?Jo=C3=A3o=20Pedro=20Kurtz?= <joexkurtz@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 159/449] drm: panel-orientation-quirks: Add quirk for OneXPlayer Mini (Intel)
-Date: Thu, 17 Apr 2025 19:47:27 +0200
-Message-ID: <20250417175124.376333153@linuxfoundation.org>
+Subject: [PATCH 6.14 133/449] wifi: mt76: mt76x2u: add TP-Link TL-WDN6200 ID to device table
+Date: Thu, 17 Apr 2025 19:47:01 +0200
+Message-ID: <20250417175123.320584777@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -48,66 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Wyatt <fewtarius@steamfork.org>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit b24dcc183583fc360ae0f0899e286a68f46abbd0 ]
+[ Upstream commit 06cccc2ebbe6c8a20f714f3a0ff3ff489d3004bb ]
 
-The Intel model of the OneXPlayer Mini uses a 1200x1920 portrait LCD panel.
-The DMI strings are the same as the OneXPlayer, which already has a DMI
-quirk, but the panel is different.
+The TP-Link TL-WDN6200 "Driverless" version cards use a MT7612U chipset.
 
-Add a DMI match to correctly rotate this panel.
+Add the USB ID to mt76x2u driver.
 
-Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Co-developed-by: John Edwards <uejji@uejji.net>
-Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: João Pedro Kurtz <joexkurtz@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-6-uejji@uejji.net
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Link: https://patch.msgid.link/20250317102235.1421726-1-uwu@icenowy.me
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 384a8dcf454fb..c554ad8f246b6 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -129,6 +129,12 @@ static const struct drm_dmi_panel_orientation_data lcd1080x1920_rightside_up = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+index e832ad53e2393..a4f4d12f904e7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -22,6 +22,7 @@ static const struct usb_device_id mt76x2u_device_table[] = {
+ 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
+ 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
+ 	{ USB_DEVICE(0x045e, 0x02fe) },	/* XBox One Wireless Adapter */
++	{ USB_DEVICE(0x2357, 0x0137) },	/* TP-Link TL-WDN6200 */
+ 	{ },
  };
  
-+static const struct drm_dmi_panel_orientation_data lcd1200x1920_leftside_up = {
-+	.width = 1200,
-+	.height = 1920,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
-+};
-+
- static const struct drm_dmi_panel_orientation_data lcd1200x1920_rightside_up = {
- 	.width = 1200,
- 	.height = 1920,
-@@ -473,6 +479,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ONE XPLAYER"),
- 		},
- 		.driver_data = (void *)&lcd1600x2560_leftside_up,
-+	}, {	/* OneXPlayer Mini (Intel) */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ONE-NETBOOK TECHNOLOGY CO., LTD."),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ONE XPLAYER"),
-+		},
-+		.driver_data = (void *)&lcd1200x1920_leftside_up,
- 	}, {	/* OrangePi Neo */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "OrangePi"),
 -- 
 2.39.5
 
