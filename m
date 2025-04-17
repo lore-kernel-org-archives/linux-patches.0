@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8225256C93;
-	Thu, 17 Apr 2025 18:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E27256C93;
+	Thu, 17 Apr 2025 18:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915967; cv=none; b=gU3MDUsLeAxWD7Z7g+N9EUTg8uAULh2yoUg2z5uMeoxvjN2Fj3ydXDqec5lQbki+b60v6tMDW27d3kgSJVRVwI+DjAKEJy55zK1SJO18Q/6ABD8KF4XRKbKDKfKHLBQnK1LKCJtYcVGUnWTC5+d1DAhzQKm7Au9MCjG6nEPntDY=
+	t=1744915971; cv=none; b=ijYw4s4zBBWRjJnt3muHHfKF1kMbcrwOjglKFzsm4zdByCRZvNarzcHUAK6pj9deJ/s3OV/cyzBp+rFlhV2aFueoz9S6sEqIvtjqwhHDlKAJg/fu3jSroceHylG+0epz/8tV9m5bt+Q8CSQxb+uy8rcgaku6SdbnRO+2PuCu888=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915967; c=relaxed/simple;
-	bh=ARnqRe0DryUYzhiMRD9ZFbirZSOrnjDFxJl0XytC+jk=;
+	s=arc-20240116; t=1744915971; c=relaxed/simple;
+	bh=nq7xMhKE7msNuEP+OfYZflZeqxdNx8+swZjdbbsxhDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQBLER3vdf2YKF+BRNOmAEKp2SqHuQlATYxCRi8OokL1f3YlZVY88JuxM6GIUkG0Nh0/kMFTA4oXv7IGNm/IDJjsGdEnyonYeSkO2A6NU18U/yQQy3uCmP/qDq1wZT1G5b1KpeczifR/foXnJpklCFAwrLvhNbvn2Grhk+AS4Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KskrFMSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oz2V2RHCpFdJgVWAnshm9JPw2JNzG7pvuE7iHG+xNziHxbvedsL62V5EBnpXl8AD9g26tXZb/ahxNYrofdKq3OBk6OAeN9orERLmCzQVbKpmwBtjTmPSL8Tzd4d0utmtmuROz9mm4UkYh5C3+NBGO36BRWLzeyq0o2xlbV4dhFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=of9xheIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KskrFMSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43663C4CEE4;
-	Thu, 17 Apr 2025 18:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="of9xheIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52121C4CEE4;
+	Thu, 17 Apr 2025 18:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915967;
-	bh=ARnqRe0DryUYzhiMRD9ZFbirZSOrnjDFxJl0XytC+jk=;
+	s=korg; t=1744915970;
+	bh=nq7xMhKE7msNuEP+OfYZflZeqxdNx8+swZjdbbsxhDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KskrFMSsC/4Y8Ewa4lSY2e0E54ca5rIRbBVhXjupUOVucFdnVkZvHcXBACC8l2Bfo
-	 ZpA9rJn4xNAbaF2qCzlJuSEoKnwrGQkPQb7QcBvwl2BUkQJfL/STvKAe2BtWDaDmX7
-	 IvW4InuddvhnSp0o4tnG0EQKzBBitw2/QCCB/JHw=
+	b=of9xheItYKDj1hknDM96EP27iI/y1CqBIyRnOObucGCUoQbUcv1Y5FoVqx4zLx5+w
+	 H5WcgamxPK39cyFZgDaAg64o3fJJDZbQMVa695Pzl+8U5I1SsKOJSgSRtVt3We54Mr
+	 137S6RM3Sv47MlLm+t9VlvXYgav/DcPl0U2EiS2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -41,9 +41,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
 	Thomas Gleinxer <tglx@linutronix.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 300/393] sparc/mm: disable preemption in lazy mmu mode
-Date: Thu, 17 Apr 2025 19:51:49 +0200
-Message-ID: <20250417175119.677741659@linuxfoundation.org>
+Subject: [PATCH 6.12 301/393] sparc/mm: avoid calling arch_enter/leave_lazy_mmu() in set_ptes
+Date: Thu, 17 Apr 2025 19:51:50 +0200
+Message-ID: <20250417175119.718675458@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -64,26 +64,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit a1d416bf9faf4f4871cb5a943614a07f80a7d70f upstream.
+commit eb61ad14c459b54f71f76331ca35d12fa3eb8f98 upstream.
 
-Since commit 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy
-updates") it's been possible for arch_[enter|leave]_lazy_mmu_mode() to be
-called without holding a page table lock (for the kernel mappings case),
-and therefore it is possible that preemption may occur while in the lazy
-mmu mode.  The Sparc lazy mmu implementation is not robust to preemption
-since it stores the lazy mode state in a per-cpu structure and does not
-attempt to manage that state on task switch.
+With commit 1a10a44dfc1d ("sparc64: implement the new page table range
+API") set_ptes was added to the sparc architecture.  The implementation
+included calling arch_enter/leave_lazy_mmu() calls.
 
-Powerpc had the same issue and fixed it by explicitly disabling preemption
-in arch_enter_lazy_mmu_mode() and re-enabling in
-arch_leave_lazy_mmu_mode().  See commit b9ef323ea168 ("powerpc/64s:
-Disable preemption in hash lazy mmu mode").
+The patch removes the usage of arch_enter/leave_lazy_mmu() since this
+implies nesting of lazy mmu regions which is not supported.  Without this
+fix, lazy mmu mode is effectively disabled because we exit the mode after
+the first set_ptes:
 
-Given Sparc's lazy mmu mode is based on powerpc's, let's fix it in the
-same way here.
+remap_pte_range()
+  -> arch_enter_lazy_mmu()
+  -> set_ptes()
+      -> arch_enter_lazy_mmu()
+      -> arch_leave_lazy_mmu()
+  -> arch_leave_lazy_mmu()
 
-Link: https://lkml.kernel.org/r/20250303141542.3371656-4-ryan.roberts@arm.com
-Fixes: 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy updates")
+Powerpc suffered the same problem and fixed it in a corresponding way with
+commit 47b8def9358c ("powerpc/mm: Avoid calling
+arch_enter/leave_lazy_mmu() in set_ptes").
+
+Link: https://lkml.kernel.org/r/20250303141542.3371656-5-ryan.roberts@arm.com
+Fixes: 1a10a44dfc1d ("sparc64: implement the new page table range API")
 Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Acked-by: David Hildenbrand <david@redhat.com>
 Acked-by: Andreas Larsson <andreas@gaisler.com>
@@ -102,30 +106,26 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/mm/tlb.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/sparc/include/asm/pgtable_64.h |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/sparc/mm/tlb.c
-+++ b/arch/sparc/mm/tlb.c
-@@ -52,8 +52,10 @@ out:
- 
- void arch_enter_lazy_mmu_mode(void)
+--- a/arch/sparc/include/asm/pgtable_64.h
++++ b/arch/sparc/include/asm/pgtable_64.h
+@@ -936,7 +936,6 @@ static inline void __set_pte_at(struct m
+ static inline void set_ptes(struct mm_struct *mm, unsigned long addr,
+ 		pte_t *ptep, pte_t pte, unsigned int nr)
  {
--	struct tlb_batch *tb = this_cpu_ptr(&tlb_batch);
-+	struct tlb_batch *tb;
- 
-+	preempt_disable();
-+	tb = this_cpu_ptr(&tlb_batch);
- 	tb->active = 1;
+-	arch_enter_lazy_mmu_mode();
+ 	for (;;) {
+ 		__set_pte_at(mm, addr, ptep, pte, 0);
+ 		if (--nr == 0)
+@@ -945,7 +944,6 @@ static inline void set_ptes(struct mm_st
+ 		pte_val(pte) += PAGE_SIZE;
+ 		addr += PAGE_SIZE;
+ 	}
+-	arch_leave_lazy_mmu_mode();
  }
+ #define set_ptes set_ptes
  
-@@ -64,6 +66,7 @@ void arch_leave_lazy_mmu_mode(void)
- 	if (tb->tlb_nr)
- 		flush_tlb_pending();
- 	tb->active = 0;
-+	preempt_enable();
- }
- 
- static void tlb_batch_add_one(struct mm_struct *mm, unsigned long vaddr,
 
 
