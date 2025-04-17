@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643721CAA99;
-	Thu, 17 Apr 2025 18:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13881CAA99;
+	Thu, 17 Apr 2025 18:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915091; cv=none; b=r1hKZyh2BRzR/J4RnHIJfzuVrID5nMW9o4g2ofbaPDh44BAdibvVB04kTz7ID7Wk+uizhBQ7ZCvRq2l5wLcNppDNWKSgHnYUtULXHNvwSV3KtCJIpQKafuBXD3DR76yhEG1RpPl3yEa+LKURzTVXx38NdzAHZzad1x2SP5vOY+E=
+	t=1744915095; cv=none; b=fwTTcu2/IWsdxNu/YsMi4YUDaWQu6RVt+d6lEVliCIXKwEJG4z7xvdz3m8XNl3T4JUlPAquNdSNj1UV1W0ZNNYRmCVWZAds/UFJFnBv5m43JVMbJ8/dKe4ahQ82le9iucHCBSTmDbSlloLXjRRshGluxeeF6p68LLV4Ja/hDPWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915091; c=relaxed/simple;
-	bh=ysvXi3Km1Q8gByeinX46wBdlU0Vu7+SYuE9qnfyF8ds=;
+	s=arc-20240116; t=1744915095; c=relaxed/simple;
+	bh=1pSGHsGXVSoRjbTPYVQpqfICOx2QSvIKi4GGA50XNdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtDJucuAelTfuramDUJElP3oSc/bDyIgA+RogtHKGXGOPiZf8YaYaeg6ubIWM2rqw6/Rz1IqXqwyv5xfqG4oUBq5C02Iyhq/jP3DAK7+NPPDCyk0l4Xh/5zrsJW4PAc00XapYoBpHpzLLGL8c1l27oxhgNISZjiEl4A2F79sKec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnYe95wW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B40ceg1px0RcK7b2Zx+1gIMsjjjNkCuKf2ndEC8iNyWgHuavePyEmYWI2yzsmzA9dfg0nmST2Gfb+1xvLwgh4rGEbeEPACc+zd9xSC13idCvPNARNnC0hwhiZvrixIZzGeJFdb46AJ4AOa2MgNAYc3RB6ujptBXheSUGBDI26AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMwQBrR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnYe95wW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA329C4CEE4;
-	Thu, 17 Apr 2025 18:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMwQBrR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09BBC4CEE4;
+	Thu, 17 Apr 2025 18:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915091;
-	bh=ysvXi3Km1Q8gByeinX46wBdlU0Vu7+SYuE9qnfyF8ds=;
+	s=korg; t=1744915094;
+	bh=1pSGHsGXVSoRjbTPYVQpqfICOx2QSvIKi4GGA50XNdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnYe95wWVYQFPjzc5t8jK4GIN2teqdW3BkhFa3sxLfq3oxQ7DBeO9t6M55kuOBu74
-	 BMZwuLujPL3KeO16gFLlqF6VP+HtQ9XPyOZro47lEg2LnSwyQEvScpCYSi2NEg+vu7
-	 atYSp/DxPZEnU2+ZTjtjHUP/nokHsqXwRm1zv4yM=
+	b=RMwQBrR18z2YSH1tKeZQUlS9mprpna43EsqcSRulk2XNm/eCJJlVSnIdWkooBiIGX
+	 +y/t7U5/C7TQu40O44ZU0Zhgph8fiMxDSMN5iHYl2QtLXxZ5L9NfM07/JhcsJLzZzl
+	 TY8BXkSpLYpKwqv3MtvXFUYEPghAILYaVfvRglsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/393] objtool: Fix INSN_CONTEXT_SWITCH handling in validate_unret()
-Date: Thu, 17 Apr 2025 19:47:05 +0200
-Message-ID: <20250417175108.248968342@linuxfoundation.org>
+Subject: [PATCH 6.12 017/393] tipc: fix memory leak in tipc_link_xmit
+Date: Thu, 17 Apr 2025 19:47:06 +0200
+Message-ID: <20250417175108.289352184@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit a8df7d0ef92eca28c610206c6748daf537ac0586 ]
+[ Upstream commit 69ae94725f4fc9e75219d2d69022029c5b24bc9a ]
 
-The !CONFIG_IA32_EMULATION version of xen_entry_SYSCALL_compat() ends
-with a SYSCALL instruction which is classified by objtool as
-INSN_CONTEXT_SWITCH.
+In case the backlog transmit queue for system-importance messages is overloaded,
+tipc_link_xmit() returns -ENOBUFS but the skb list is not purged. This leads to
+memory leak and failure when a skb is allocated.
 
-Unlike validate_branch(), validate_unret() doesn't consider
-INSN_CONTEXT_SWITCH in a non-function to be a dead end, so it keeps
-going past the end of xen_entry_SYSCALL_compat(), resulting in the
-following warning:
+This commit fixes this issue by purging the skb list before tipc_link_xmit()
+returns.
 
-  vmlinux.o: warning: objtool: xen_reschedule_interrupt+0x2a: RET before UNTRAIN
-
-Fix that by adding INSN_CONTEXT_SWITCH handling to validate_unret() to
-match what validate_branch() is already doing.
-
-Fixes: a09a6e2399ba ("objtool: Add entry UNRET validation")
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/f5eda46fd09f15b1f5cde3d9ae3b92b958342add.1744095216.git.jpoimboe@kernel.org
+Fixes: 365ad353c256 ("tipc: reduce risk of user starvation during link congestion")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250403092431.514063-1-tung.quang.nguyen@est.tech
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/tipc/link.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 286a2c0af02aa..127862fa05c61 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -3990,6 +3990,11 @@ static int validate_unret(struct objtool_file *file, struct instruction *insn)
- 			WARN_INSN(insn, "RET before UNTRAIN");
- 			return 1;
- 
-+		case INSN_CONTEXT_SWITCH:
-+			if (insn_func(insn))
-+				break;
-+			return 0;
-+
- 		case INSN_NOP:
- 			if (insn->retpoline_safe)
- 				return 0;
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index 5c2088a469cea..5689e1f485479 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -1046,6 +1046,7 @@ int tipc_link_xmit(struct tipc_link *l, struct sk_buff_head *list,
+ 	if (unlikely(l->backlog[imp].len >= l->backlog[imp].limit)) {
+ 		if (imp == TIPC_SYSTEM_IMPORTANCE) {
+ 			pr_warn("%s<%s>, link overflow", link_rst_msg, l->name);
++			__skb_queue_purge(list);
+ 			return -ENOBUFS;
+ 		}
+ 		rc = link_schedule_user(l, hdr);
 -- 
 2.39.5
 
