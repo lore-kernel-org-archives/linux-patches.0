@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E2C1A3178;
-	Thu, 17 Apr 2025 18:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8151E98ED;
+	Thu, 17 Apr 2025 18:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913934; cv=none; b=mlQdcBYSyhzOi22LdFvZwIwXyxvgkJHYf1vrBlTrdVh3eGY8Ci/9+Yvb2D2Yj6jePVlD72zgOHn3Cm8tOFl47qLBs8AD8aavS5Ik1+CxY1vX1BhJqJrrV9hoFO8EMum2566lkaZRiwN9wqT2NNsab4BxHhDTwvNLy+gjEGyb45M=
+	t=1744913937; cv=none; b=CMR8dCka6NqIibjPR/AZmBRS2ZC5PAbIY3Q0xb1hG2QtUUrhLWMeMJs46Dr7F0YTYmGhexue5ML96nz6oBm0KXgrw90pccuicD8uXiop9OL26V7EqM9hUSLL8mDSxYpgzG9/9dOgHPzTN+VERVpPRWkYIMTtDxYDutxiBp4Xn3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913934; c=relaxed/simple;
-	bh=nUK/ju/aDiXcmFXg0FHGz/UhsHGzQeyB87Qf94jZkek=;
+	s=arc-20240116; t=1744913937; c=relaxed/simple;
+	bh=70laMPoKP1rgtDahdLLq7vEeklwmN/ZSmriM9IGCmak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZVlruihWwYYQTJ7J7/ZyJDKV6qv7l/acu+IqqXx+ykkK6aLS//TI+weq4jCECA55vQQI5KcF/03A341S5lkxCZ4f4XPTGIzqbzNpHQXXevJZ/XD07DyFud6gX51uS925EYcBr0jMGpKiZWJ/tQ70+sY8qZQiZGiXERNQWHH2caU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU+P9IkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D0pFabPUYsJ2G84ftULmqOtxK8U5QZeA1jAuXX+NWD88KNo6AQ3CJJv1Y2f6yoivTtJgcvYCxzYXmAkEJML8oo3w9p+UjsWNCZLdwp+CAKcgi0uU7j3n7yOOPOWvrd9D0x2fhCjCHOHYm9qKBRAPvcqwd8vZQVuXQgnvSfuqpm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW4TC+mq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU+P9IkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234FCC4CEE4;
-	Thu, 17 Apr 2025 18:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW4TC+mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA09C4CEEC;
+	Thu, 17 Apr 2025 18:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913934;
-	bh=nUK/ju/aDiXcmFXg0FHGz/UhsHGzQeyB87Qf94jZkek=;
+	s=korg; t=1744913937;
+	bh=70laMPoKP1rgtDahdLLq7vEeklwmN/ZSmriM9IGCmak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FU+P9IkE8LC5nTGSJ2/cT103eEHPJ4yUyNYo1PcST+og1C5H9orEjrRilaotSIbCt
-	 FjR6fHAVIC2FlpFduVJ5mYSqXOS6zTjgUYedlk3O9/P07SOiYTwBkQBmAHq0vMeLxb
-	 63KhnQwnX8ix0IJ/FCQmHoDSqnqR55c4LB2W8BWM=
+	b=OW4TC+mqYM8po/lJlmGBbvCyeVOKaFu3vxNCWPKxD2pN5fA7njFbCGbGYmt7Rz8vI
+	 weMIJ8wEaIGGQns7D3CVdgPNTRgAqDBZ0HaRbND3JI8b4gSn04EnLP525AlsWS2nOJ
+	 3IZAwaxUxeOuDhMcn3FoVPVlDBD/Yrn5LOkCghdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@mailbox.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 020/414] drm/tests: modeset: Fix drm_display_mode memory leak
-Date: Thu, 17 Apr 2025 19:46:18 +0200
-Message-ID: <20250417175112.214385132@linuxfoundation.org>
+Subject: [PATCH 6.13 021/414] drm/tests: helpers: Create kunit helper to destroy a drm_display_mode
+Date: Thu, 17 Apr 2025 19:46:19 +0200
+Message-ID: <20250417175112.255796837@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,39 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit dacafdcc7789cfeb0f0552716db56f210238225d ]
+[ Upstream commit 13c1d5f3a7fa7b55a26e73bb9e95342374a489b2 ]
 
-drm_mode_find_dmt() returns a drm_display_mode that needs to be
-destroyed later one. The drm_test_pick_cmdline_res_1920_1080_60() test
-never does however, which leads to a memory leak.
+A number of test suites call functions that expect the returned
+drm_display_mode to be destroyed eventually.
 
-Let's make sure it's freed.
+However, none of the tests called drm_mode_destroy, which results in a
+memory leak.
 
-Reported-by: Philipp Stanner <phasta@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
-Fixes: 8fc0380f6ba7 ("drm/client: Add some tests for drm_connector_pick_cmdline_mode()")
+Since drm_mode_destroy takes two pointers as argument, we can't use a
+kunit wrapper. Let's just create a helper every test suite can use.
+
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-2-996305a2e75a@kernel.org
+Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-1-996305a2e75a@kernel.org
 Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Stable-dep-of: 70f29ca3117a ("drm/tests: cmdline: Fix drm_display_mode memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_client_modeset_test.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/tests/drm_kunit_helpers.c | 22 ++++++++++++++++++++++
+ include/drm/drm_kunit_helpers.h           |  3 +++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/drivers/gpu/drm/tests/drm_client_modeset_test.c b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-index 7516f6cb36e4e..3e9518d7b8b7e 100644
---- a/drivers/gpu/drm/tests/drm_client_modeset_test.c
-+++ b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-@@ -95,6 +95,9 @@ static void drm_test_pick_cmdline_res_1920_1080_60(struct kunit *test)
- 	expected_mode = drm_mode_find_dmt(priv->drm, 1920, 1080, 60, false);
- 	KUNIT_ASSERT_NOT_NULL(test, expected_mode);
+diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+index 3c0b7824c0be3..922c4b6ed1dc9 100644
+--- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
++++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+@@ -319,6 +319,28 @@ static void kunit_action_drm_mode_destroy(void *ptr)
+ 	drm_mode_destroy(NULL, mode);
+ }
  
-+	ret = drm_kunit_add_mode_destroy_action(test, expected_mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
++/**
++ * drm_kunit_add_mode_destroy_action() - Add a drm_destroy_mode kunit action
++ * @test: The test context object
++ * @mode: The drm_display_mode to destroy eventually
++ *
++ * Registers a kunit action that will destroy the drm_display_mode at
++ * the end of the test.
++ *
++ * If an error occurs, the drm_display_mode will be destroyed.
++ *
++ * Returns:
++ * 0 on success, an error code otherwise.
++ */
++int drm_kunit_add_mode_destroy_action(struct kunit *test,
++				      struct drm_display_mode *mode)
++{
++	return kunit_add_action_or_reset(test,
++					 kunit_action_drm_mode_destroy,
++					 mode);
++}
++EXPORT_SYMBOL_GPL(drm_kunit_add_mode_destroy_action);
 +
- 	KUNIT_ASSERT_TRUE(test,
- 			  drm_mode_parse_command_line_for_connector(cmdline,
- 								    connector,
+ /**
+  * drm_kunit_display_mode_from_cea_vic() - return a mode for CEA VIC for a KUnit test
+  * @test: The test context object
+diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
+index afdd46ef04f70..c835f113055dc 100644
+--- a/include/drm/drm_kunit_helpers.h
++++ b/include/drm/drm_kunit_helpers.h
+@@ -120,6 +120,9 @@ drm_kunit_helper_create_crtc(struct kunit *test,
+ 			     const struct drm_crtc_funcs *funcs,
+ 			     const struct drm_crtc_helper_funcs *helper_funcs);
+ 
++int drm_kunit_add_mode_destroy_action(struct kunit *test,
++				      struct drm_display_mode *mode);
++
+ struct drm_display_mode *
+ drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
+ 				    u8 video_code);
 -- 
 2.39.5
 
