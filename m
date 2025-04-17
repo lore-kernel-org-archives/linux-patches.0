@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824C224BBFD;
-	Thu, 17 Apr 2025 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE3024BBFD;
+	Thu, 17 Apr 2025 18:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915992; cv=none; b=qb6VTZ837MzQimFDaPJFip0bHo+ce/Q6c3QDo15fbJXkJwOEbU7gvTJmAwD9hk7C/ENHOspA8tD0Y/WdILpFwU5SWVNck8ExprwHu5+iLmZ8UusUDfXqPFLcJATJn2qSW2RSMDV9ufFII88gzfADLo8Jkl7FHiC/dzXkv2+2+LE=
+	t=1744915998; cv=none; b=FmKORuRprbRUe8Cj+kYoUacjvMhAkzdJb9I6XPflUefiWp3LT8iyjj7roPqNfFmgnL1+4gV2njeBFj28pA+yVtR+5ZoUa8aIlxbKdmBc13XDwK0IUnjvtXZ25rdF64PjrS2MuFKA2J4xPzh1WV5m2knV3lI3BzBLzOKIojvZWJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915992; c=relaxed/simple;
-	bh=2BfXWe4/+QCP0Lm9j1LkMgM3WcvOLeF8EoDC+y9RcrU=;
+	s=arc-20240116; t=1744915998; c=relaxed/simple;
+	bh=dIvgEyjblBNGSuqTUS4egqqRDhI6Sni9i0Ea94PmfoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImaWHb//QdXoEDgVL1RaMwI7in8A7kWh5Z3fTGakhqhDvfwVRN9NZmSuc3ujZon1eq5NPj1s2VzNolM3JbatzDwYTAU/gI9fKT80zm4AmZa/+FXJ+5cXPQxYy6Nrk1RUJhd2WSYxFZgXFB/7KVCzhzEP1NosZdSbbnVtEmgy/Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2avjWuXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+A66bPXCBTbv9gJdb2x1tL4be/v8QNuGy+IIjT7XvfUo3II+MHe70jj3QBQPJJ4Zs8cNg5KUYiK8lq1grWhruSAj6nbEwFNjkPv8/9oo17bY3XTAEGav6R8/BPfasmLE1VNQS7qo6zEXamYgy6kwnSB5VacbGSdxRG6ZfjLeMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYVstaR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2avjWuXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ABFC4CEE4;
-	Thu, 17 Apr 2025 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYVstaR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02080C4CEE7;
+	Thu, 17 Apr 2025 18:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915992;
-	bh=2BfXWe4/+QCP0Lm9j1LkMgM3WcvOLeF8EoDC+y9RcrU=;
+	s=korg; t=1744915998;
+	bh=dIvgEyjblBNGSuqTUS4egqqRDhI6Sni9i0Ea94PmfoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2avjWuXWi4XL20ane1LrZyuR2oSdHwXaNEt7lkhmuk9F/NtDXTSbaNOYv1RMIl5N7
-	 TsdgGcsKc9DGh81lUe1ibgBEprPiStFRQ1iseCZqwLMWa1b6ZZcI70C6F/rx/VinbU
-	 D5GtU+q6wyVU9+pduOKTnNcb1vRYBfFtWhDbVmZA=
+	b=qYVstaR3cFFzmOgfxL+MRCykdbtCpnQ2YBWDAw6Z3s1vAhh2/uh0EG1l9yuXYrieM
+	 KCapwW92uHtvgloQyLYUBMNjONx57Tlgm7M5FmlpPVR4VLDiAZY6nZ8dVIFvlQI40t
+	 Ajr4mmfS3hDed7xX0WGeqiJtE/PdbUfFBoo+Hkow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Peter Xu <peterx@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 307/393] mm/mremap: correctly handle partial mremap() of VMA starting at 0
-Date: Thu, 17 Apr 2025 19:51:56 +0200
-Message-ID: <20250417175119.960447519@linuxfoundation.org>
+Subject: [PATCH 6.12 309/393] mm/userfaultfd: fix release hang over concurrent GUP
+Date: Thu, 17 Apr 2025 19:51:58 +0200
+Message-ID: <20250417175120.042694024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,137 +55,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit 937582ee8e8d227c30ec147629a0179131feaa80 upstream.
+commit fe4cdc2c4e248f48de23bc778870fd71e772a274 upstream.
 
-Patch series "refactor mremap and fix bug", v3.
+This patch should fix a possible userfaultfd release() hang during
+concurrent GUP.
 
-The existing mremap() logic has grown organically over a very long period
-of time, resulting in code that is in many parts, very difficult to follow
-and full of subtleties and sources of confusion.
+This problem was initially reported by Dimitris Siakavaras in July 2023
+[1] in a firecracker use case.  Firecracker has a separate process
+handling page faults remotely, and when the process releases the
+userfaultfd it can race with a concurrent GUP from KVM trying to fault in
+a guest page during the secondary MMU page fault process.
 
-In addition, it is difficult to thread state through the operation
-correctly, as function arguments have expanded, some parameters are
-expected to be temporarily altered during the operation, others are
-intended to remain static and some can be overridden.
+A similar problem was reported recently again by Jinjiang Tu in March 2025
+[2], even though the race happened this time with a mlockall() operation,
+which does GUP in a similar fashion.
 
-This series completely refactors the mremap implementation, sensibly
-separating functions, adding comments to explain the more subtle aspects
-of the implementation and making use of small structs to thread state
-through everything.
+In 2017, commit 656710a60e36 ("userfaultfd: non-cooperative: closing the
+uffd without triggering SIGBUS") was trying to fix this issue.  AFAIU,
+that fixes well the fault paths but may not work yet for GUP.  In GUP, the
+issue is NOPAGE will be almost treated the same as "page fault resolved"
+in faultin_page(), then the GUP will follow page again, seeing page
+missing, and it'll keep going into a live lock situation as reported.
 
-The reason for doing so is to lay the groundwork for planned future
-changes to the mremap logic, changes which require the ability to easily
-pass around state.
+This change makes core mm return RETRY instead of NOPAGE for both the GUP
+and fault paths, proactively releasing the mmap read lock.  This should
+guarantee the other release thread make progress on taking the write lock
+and avoid the live lock even for GUP.
 
-Additionally, it would be unhelpful to add yet more logic to code that is
-already difficult to follow without first refactoring it like this.
+When at it, rearrange the comments to make sure it's uptodate.
 
-The first patch in this series additionally fixes a bug when a VMA with
-start address zero is partially remapped.
+[1] https://lore.kernel.org/r/79375b71-db2e-3e66-346b-254c90d915e2@cslab.ece.ntua.gr
+[2] https://lore.kernel.org/r/20250307072133.3522652-1-tujinjiang@huawei.com
 
-Tested on real hardware under heavy workload and all self tests are
-passing.
-
-
-This patch (of 3):
-
-Consider the case of a partial mremap() (that results in a VMA split) of
-an accountable VMA (i.e.  which has the VM_ACCOUNT flag set) whose start
-address is zero, with the MREMAP_MAYMOVE flag specified and a scenario
-where a move does in fact occur:
-
-       addr  end
-        |     |
-        v     v
-    |-------------|
-    |     vma     |
-    |-------------|
-    0
-
-This move is affected by unmapping the range [addr, end).  In order to
-prevent an incorrect decrement of accounted memory which has already been
-determined, the mremap() code in move_vma() clears VM_ACCOUNT from the VMA
-prior to doing so, before reestablishing it in each of the VMAs
-post-split:
-
-    addr  end
-     |     |
-     v     v
- |---|     |---|
- | A |     | B |
- |---|     |---|
-
-Commit 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
-changed this logic such as to determine whether there is a need to do so
-by establishing account_start and account_end and, in the instance where
-such an operation is required, assigning them to vma->vm_start and
-vma->vm_end.
-
-Later the code checks if the operation is required for 'A' referenced
-above thusly:
-
-	if (account_start) {
-		...
-	}
-
-However, if the VMA described above has vma->vm_start == 0, which is now
-assigned to account_start, this branch will not be executed.
-
-As a result, the VMA 'A' above will remain stripped of its VM_ACCOUNT
-flag, incorrectly.
-
-The fix is to simply convert these variables to booleans and set them as
-required.
-
-Link: https://lkml.kernel.org/r/cover.1741639347.git.lorenzo.stoakes@oracle.com
-Link: https://lkml.kernel.org/r/dc55cb6db25d97c3d9e460de4986a323fa959676.1741639347.git.lorenzo.stoakes@oracle.com
-Fixes: 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lkml.kernel.org/r/20250312145131.1143062-1-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mremap.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/userfaultfd.c |   51 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 25 insertions(+), 26 deletions(-)
 
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -696,8 +696,8 @@ static unsigned long move_vma(struct vm_
- 	unsigned long vm_flags = vma->vm_flags;
- 	unsigned long new_pgoff;
- 	unsigned long moved_len;
--	unsigned long account_start = 0;
--	unsigned long account_end = 0;
-+	bool account_start = false;
-+	bool account_end = false;
- 	unsigned long hiwater_vm;
- 	int err = 0;
- 	bool need_rmap_locks;
-@@ -781,9 +781,9 @@ static unsigned long move_vma(struct vm_
- 	if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP)) {
- 		vm_flags_clear(vma, VM_ACCOUNT);
- 		if (vma->vm_start < old_addr)
--			account_start = vma->vm_start;
-+			account_start = true;
- 		if (vma->vm_end > old_addr + old_len)
--			account_end = vma->vm_end;
-+			account_end = true;
- 	}
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -396,32 +396,6 @@ vm_fault_t handle_userfault(struct vm_fa
+ 		goto out;
  
  	/*
-@@ -823,7 +823,7 @@ static unsigned long move_vma(struct vm_
- 		/* OOM: unable to split vma, just get accounts right */
- 		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
- 			vm_acct_memory(old_len >> PAGE_SHIFT);
--		account_start = account_end = 0;
-+		account_start = account_end = false;
- 	}
+-	 * If it's already released don't get it. This avoids to loop
+-	 * in __get_user_pages if userfaultfd_release waits on the
+-	 * caller of handle_userfault to release the mmap_lock.
+-	 */
+-	if (unlikely(READ_ONCE(ctx->released))) {
+-		/*
+-		 * Don't return VM_FAULT_SIGBUS in this case, so a non
+-		 * cooperative manager can close the uffd after the
+-		 * last UFFDIO_COPY, without risking to trigger an
+-		 * involuntary SIGBUS if the process was starting the
+-		 * userfaultfd while the userfaultfd was still armed
+-		 * (but after the last UFFDIO_COPY). If the uffd
+-		 * wasn't already closed when the userfault reached
+-		 * this point, that would normally be solved by
+-		 * userfaultfd_must_wait returning 'false'.
+-		 *
+-		 * If we were to return VM_FAULT_SIGBUS here, the non
+-		 * cooperative manager would be instead forced to
+-		 * always call UFFDIO_UNREGISTER before it can safely
+-		 * close the uffd.
+-		 */
+-		ret = VM_FAULT_NOPAGE;
+-		goto out;
+-	}
+-
+-	/*
+ 	 * Check that we can return VM_FAULT_RETRY.
+ 	 *
+ 	 * NOTE: it should become possible to return VM_FAULT_RETRY
+@@ -457,6 +431,31 @@ vm_fault_t handle_userfault(struct vm_fa
+ 	if (vmf->flags & FAULT_FLAG_RETRY_NOWAIT)
+ 		goto out;
  
- 	if (vm_flags & VM_LOCKED) {
++	if (unlikely(READ_ONCE(ctx->released))) {
++		/*
++		 * If a concurrent release is detected, do not return
++		 * VM_FAULT_SIGBUS or VM_FAULT_NOPAGE, but instead always
++		 * return VM_FAULT_RETRY with lock released proactively.
++		 *
++		 * If we were to return VM_FAULT_SIGBUS here, the non
++		 * cooperative manager would be instead forced to
++		 * always call UFFDIO_UNREGISTER before it can safely
++		 * close the uffd, to avoid involuntary SIGBUS triggered.
++		 *
++		 * If we were to return VM_FAULT_NOPAGE, it would work for
++		 * the fault path, in which the lock will be released
++		 * later.  However for GUP, faultin_page() does nothing
++		 * special on NOPAGE, so GUP would spin retrying without
++		 * releasing the mmap read lock, causing possible livelock.
++		 *
++		 * Here only VM_FAULT_RETRY would make sure the mmap lock
++		 * be released immediately, so that the thread concurrently
++		 * releasing the userfault would always make progress.
++		 */
++		release_fault_lock(vmf);
++		goto out;
++	}
++
+ 	/* take the reference before dropping the mmap_lock */
+ 	userfaultfd_ctx_get(ctx);
+ 
 
 
