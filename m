@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25202255E23;
-	Thu, 17 Apr 2025 18:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20341257420;
+	Thu, 17 Apr 2025 18:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912855; cv=none; b=gzGErJoxKFODEakFRibMtyZZvrFH1EzTPr4DIBJpBCTgNppJEFkNK27D2R+A9xaIoBsccOc4BvhWcRCQTizxUcHNH+x+sq3tSF9E5tWUgjIUykgOkx9tegmzNVLVNIRdEhZSzNg0lu72FIH/QFQGWdZ4PkzP3G0JIsHliI7kW14=
+	t=1744912858; cv=none; b=HqHzDH9WvrBf/r9yJXDHt22d2SG4yGOkuKD9ImYmh8AsvCL1lp/4bOwJ6OPznqhi1TCCydMCWjRQB0PcFZuTPyEyd0szsh15jCnszDAxVOmhTrOEVcG5DvxzsU+IWIoT/DVcsBWKb9rJKDAAWc5kbslclp5uyxauE9Y7n3OQnX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912855; c=relaxed/simple;
-	bh=Kmn9xpz13XxnysOaYBVKvlZ0ROTfxlaHwZat5oyQmac=;
+	s=arc-20240116; t=1744912858; c=relaxed/simple;
+	bh=Hs/+fIO2DUjCtVpGb10kA1LzX8eNSvBIEHmCPfsIy+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4dZUC7acBy2chXlQr/YDPVJi7gi2ZVOCLxt8JuuYfa1lrXk4nN3e19mpfo4WkNDFuVLPX7i4ugEKgH5peycm4Nj1INf0GbppdxzilbtmCW+ekIWh8CwablerJUHsvcIrg6e1CxyKYQIisy0gJxdXVmSpWl7po8wRMvDsC/78Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o1E2wV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKQblcG+w3rvQLqBJ1VEX/+QYbJF1zXiIE05sgnnoV9Q/SEjIMdh2fZLJpa1a3HZsNeQBXvk50nngSH8Q/QxguS1VLYEm6c6TCQc3wA3xsJ8CdEJpTlvaUIYjYdT1IEPuPLqY9HGYUZ6Ngj5T2C///TrCVEtYELuIKQ6kSow4T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRlKBxCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o1E2wV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A62AC4CEE4;
-	Thu, 17 Apr 2025 18:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRlKBxCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975C5C4CEE4;
+	Thu, 17 Apr 2025 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912855;
-	bh=Kmn9xpz13XxnysOaYBVKvlZ0ROTfxlaHwZat5oyQmac=;
+	s=korg; t=1744912858;
+	bh=Hs/+fIO2DUjCtVpGb10kA1LzX8eNSvBIEHmCPfsIy+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2o1E2wV3CFPgqmdMgffFUsoiUHRuk8mkxNt5vf9eh/NWGOIGRXWlmJmnKcyl6K6Vw
-	 DSftj1bp9LU40EUgUryQVgneLTIs8frmAQ6BEm5NHgIMHo00Ak/donOgSw0f0kCzg4
-	 1v9hy3c2V5VGSRCinVW16v42bxG704dq4v2XhSPk=
+	b=JRlKBxCNrWznDRSPPOvxVd8uOgildPmI+40TgGSb9Z/+CcL+8R9IUodisVkLzd0vc
+	 5XaDA6wxSF015GcR+XigTic/xIRRFnXgIn8e1fhRmTGfzLFnfnWmdV8LkzyHNbzq8s
+	 nTD55X4Sa07ZrsQglVv5O1csHwHylVZTlWZU7lbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shekhar Chauhan <shekhar.chauhan@intel.com>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
 	Clint Taylor <Clinton.A.Taylor@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 147/449] drm/xe/bmg: Add new PCI IDs
-Date: Thu, 17 Apr 2025 19:47:15 +0200
-Message-ID: <20250417175123.890583316@linuxfoundation.org>
+Subject: [PATCH 6.14 148/449] drm/xe/ptl: Update the PTL pci id table
+Date: Thu, 17 Apr 2025 19:47:16 +0200
+Message-ID: <20250417175123.932726517@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shekhar Chauhan <shekhar.chauhan@intel.com>
+From: Matt Atwood <matthew.s.atwood@intel.com>
 
-[ Upstream commit fa8ffaae1b15236b8afb0fbbc04117ff7c900a83 ]
+[ Upstream commit 16016ade13f691da315fac7b23ebf1ab7b28b7ab ]
 
-Add 3 new PCI IDs for BMG.
+Update to current bspec table.
 
-v2: Fix typo -> Replace '.' with ','
+Bspec: 72574
 
-Signed-off-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
+Signed-off-by: Matt Atwood <matthew.s.atwood@intel.com>
 Reviewed-by: Clint Taylor <Clinton.A.Taylor@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250128162015.3288675-1-shekhar.chauhan@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250128175102.45797-1-matthew.s.atwood@intel.com
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/intel/pciids.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/drm/intel/pciids.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/include/drm/intel/pciids.h b/include/drm/intel/pciids.h
-index 77c826589ec11..4035e215c962a 100644
+index 4035e215c962a..f9d3e85142ea8 100644
 --- a/include/drm/intel/pciids.h
 +++ b/include/drm/intel/pciids.h
-@@ -846,7 +846,10 @@
- 	MACRO__(0xE20B, ## __VA_ARGS__), \
- 	MACRO__(0xE20C, ## __VA_ARGS__), \
- 	MACRO__(0xE20D, ## __VA_ARGS__), \
--	MACRO__(0xE212, ## __VA_ARGS__)
-+	MACRO__(0xE210, ## __VA_ARGS__), \
-+	MACRO__(0xE212, ## __VA_ARGS__), \
-+	MACRO__(0xE215, ## __VA_ARGS__), \
-+	MACRO__(0xE216, ## __VA_ARGS__)
+@@ -856,12 +856,10 @@
+ 	MACRO__(0xB080, ## __VA_ARGS__), \
+ 	MACRO__(0xB081, ## __VA_ARGS__), \
+ 	MACRO__(0xB082, ## __VA_ARGS__), \
++	MACRO__(0xB083, ## __VA_ARGS__), \
++	MACRO__(0xB08F, ## __VA_ARGS__), \
+ 	MACRO__(0xB090, ## __VA_ARGS__), \
+-	MACRO__(0xB091, ## __VA_ARGS__), \
+-	MACRO__(0xB092, ## __VA_ARGS__), \
+ 	MACRO__(0xB0A0, ## __VA_ARGS__), \
+-	MACRO__(0xB0A1, ## __VA_ARGS__), \
+-	MACRO__(0xB0A2, ## __VA_ARGS__), \
+ 	MACRO__(0xB0B0, ## __VA_ARGS__)
  
- /* PTL */
- #define INTEL_PTL_IDS(MACRO__, ...) \
+ #endif /* __PCIIDS_H__ */
 -- 
 2.39.5
 
