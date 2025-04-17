@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A894D256C6D;
-	Thu, 17 Apr 2025 18:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D32561C7;
+	Thu, 17 Apr 2025 18:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913636; cv=none; b=hrxtQnAvsfOFP2Ab8h1HWrdyPZ/CCxM1QEtpqhxp5gqnLlLtHBNxVLRWjIdF1x/o464Wc3WuIuL/AQfbtIShAKVo5eUOJJGmCdIWObLDP2JI2kNyFAUPOSMwcPqxm17tVOhZnxEYmWE1T+l3jrdguqz+96Q8RLWhp+43EeErTRs=
+	t=1744913640; cv=none; b=bxdxWw0yqqnS6YThYkv9nemx72sKCT9zNzNxyb49r9V6cc1ozwf/kRfSpuc0hP+Iu1hH8Uhlrj61rWTz2vWEyNdtBzeIMQpAfhfq75Nmjm5EjaBo5oYkvNvGB4zjkXYfRUOihZFuHKV2BzeE6pbazdDDNPn5mbaHGNKShdraPiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913636; c=relaxed/simple;
-	bh=BFfIWSSJVhBFNRNlbGvBV0Nt6hmlrA6noDpmQ34Yr7s=;
+	s=arc-20240116; t=1744913640; c=relaxed/simple;
+	bh=kdmQVCsdUIwMYeTmbLqI3PDbIR1G5N75KZE9HmvSOEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbXkE2lNG9tcpSWzWa/TrEJUizhej7l3b6iR/jH+0bnzzTXZbRDR/naHEpb2Y6KthqUPE3iw9bc5pMyZv+Tf1S7wQCnwXBxgBgXfTQmDuWcqVIHnF7bb8cDI4yQ5E6uwLaLrnBvf7BcMoIidrkeZtfrZaSO9FCRvSlnztjXrD/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciN65E4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S9HC3lmw/vP2mBGbZXfUtefICq8/T3mk5q/SIk4QRXPvJEAkRt26ClVei80lY7MnqIBRuQV9N8pUjzn1Gb/SfN2rlHNyx1Td2iTjd47MYUcuF75+zcbK8GC5hbpS8dUpxU51JS3hPePIdOOyvtT7BqrXhU0iYTqhLHYxiHi7ZbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+Os+lEf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciN65E4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30478C4CEE4;
-	Thu, 17 Apr 2025 18:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+Os+lEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A760C4CEE4;
+	Thu, 17 Apr 2025 18:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913636;
-	bh=BFfIWSSJVhBFNRNlbGvBV0Nt6hmlrA6noDpmQ34Yr7s=;
+	s=korg; t=1744913639;
+	bh=kdmQVCsdUIwMYeTmbLqI3PDbIR1G5N75KZE9HmvSOEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciN65E4xoBPGxo4iWAGP1GUiolWP7mtGadEw+ylcbrPOAWvHgM/7AyRgm2vfneAgb
-	 FIH4nRl0gciel2x2PpLzunX1jmDjaAcMk4mfIg5os1VcEOFW6cc7zl7giTj2C36NM2
-	 7Pjd6m5/KCW4SotqaWUwNfUoLaA0JFwqdQhf5Rus=
+	b=e+Os+lEfgecyBBfNvQKVNLmFKcPb54hRNdBCYdpgyJ5tELFa5cHm/D844Ey4WH984
+	 oE3L183UXavq88PZJlXtykASJZ5wRmpotfBBXh5ab8gnDhxwjBZ0PFZO7yDxJ2bQoj
+	 5HbdBUFi2Yqi1uHDf9Ail+F7r98u+RMu78MmEpnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.14 404/449] KVM: x86: Acquire SRCU in KVM_GET_MP_STATE to protect guest memory accesses
-Date: Thu, 17 Apr 2025 19:51:32 +0200
-Message-ID: <20250417175134.528964318@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.14 405/449] scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
+Date: Thu, 17 Apr 2025 19:51:33 +0200
+Message-ID: <20250417175134.577020991@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,82 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit ef01cac401f18647d62720cf773d7bb0541827da upstream.
+commit ded40f32b55f7f2f4ed9627dd3c37a1fe89ed8c6 upstream.
 
-Acquire a lock on kvm->srcu when userspace is getting MP state to handle a
-rather extreme edge case where "accepting" APIC events, i.e. processing
-pending INIT or SIPI, can trigger accesses to guest memory.  If the vCPU
-is in L2 with INIT *and* a TRIPLE_FAULT request pending, then getting MP
-state will trigger a nested VM-Exit by way of ->check_nested_events(), and
-emuating the nested VM-Exit can access guest memory.
+The driver leaks the device reference taken with
+of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
 
-The splat was originally hit by syzkaller on a Google-internal kernel, and
-reproduced on an upstream kernel by hacking the triple_fault_event_test
-selftest to stuff a pending INIT, store an MSR on VM-Exit (to generate a
-memory access on VMX), and do vcpu_mp_state_get() to trigger the scenario.
-
-  =============================
-  WARNING: suspicious RCU usage
-  6.14.0-rc3-b112d356288b-vmx/pi_lockdep_false_pos-lock #3 Not tainted
-  -----------------------------
-  include/linux/kvm_host.h:1058 suspicious rcu_dereference_check() usage!
-
-  other info that might help us debug this:
-
-  rcu_scheduler_active = 2, debug_locks = 1
-  1 lock held by triple_fault_ev/1256:
-   #0: ffff88810df5a330 (&vcpu->mutex){+.+.}-{4:4}, at: kvm_vcpu_ioctl+0x8b/0x9a0 [kvm]
-
-  stack backtrace:
-  CPU: 11 UID: 1000 PID: 1256 Comm: triple_fault_ev Not tainted 6.14.0-rc3-b112d356288b-vmx #3
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x7f/0x90
-   lockdep_rcu_suspicious+0x144/0x190
-   kvm_vcpu_gfn_to_memslot+0x156/0x180 [kvm]
-   kvm_vcpu_read_guest+0x3e/0x90 [kvm]
-   read_and_check_msr_entry+0x2e/0x180 [kvm_intel]
-   __nested_vmx_vmexit+0x550/0xde0 [kvm_intel]
-   kvm_check_nested_events+0x1b/0x30 [kvm]
-   kvm_apic_accept_events+0x33/0x100 [kvm]
-   kvm_arch_vcpu_ioctl_get_mpstate+0x30/0x1d0 [kvm]
-   kvm_vcpu_ioctl+0x33e/0x9a0 [kvm]
-   __x64_sys_ioctl+0x8b/0xb0
-   do_syscall_64+0x6c/0x170
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-
+Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20250401150504.829812-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com> # SCSI
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-3-1ffa5b6884cb@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ufs/host/ufs-qcom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11773,6 +11773,8 @@ int kvm_arch_vcpu_ioctl_get_mpstate(stru
- 	if (kvm_mpx_supported())
- 		kvm_load_guest_fpu(vcpu);
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -125,7 +125,7 @@ static int ufs_qcom_ice_init(struct ufs_
+ 	int err;
+ 	int i;
  
-+	kvm_vcpu_srcu_read_lock(vcpu);
-+
- 	r = kvm_apic_accept_events(vcpu);
- 	if (r < 0)
- 		goto out;
-@@ -11786,6 +11788,8 @@ int kvm_arch_vcpu_ioctl_get_mpstate(stru
- 		mp_state->mp_state = vcpu->arch.mp_state;
- 
- out:
-+	kvm_vcpu_srcu_read_unlock(vcpu);
-+
- 	if (kvm_mpx_supported())
- 		kvm_put_guest_fpu(vcpu);
- 	vcpu_put(vcpu);
+-	ice = of_qcom_ice_get(dev);
++	ice = devm_of_qcom_ice_get(dev);
+ 	if (ice == ERR_PTR(-EOPNOTSUPP)) {
+ 		dev_warn(dev, "Disabling inline encryption support\n");
+ 		ice = NULL;
 
 
