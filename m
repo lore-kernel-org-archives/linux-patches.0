@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D118D25335A;
-	Thu, 17 Apr 2025 18:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8AB25335A;
+	Thu, 17 Apr 2025 18:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915336; cv=none; b=NTdFgceN1t/po8aPs+ZMtchB0ex1jx+fFE+e1j5qWM2EEAVnyVJ9AyUEoyI3LYu+gn4O/i8ne6ytPDxkHx/BV4cj6MjM/iBLwBDeuw3T3HhDddZgtYXqc/t+PUbeto95xmtQCBYjC4BvACxdXBDlou1GlyFtlO5R6UN8TAfmigI=
+	t=1744915340; cv=none; b=RuHavoO3UckYQ16Rp8qWyrQAUUDPHTrrX4SNjIcA8fjKAL0iJnLPrl5qv/ZhCA9pNs23mAMycmKdxTt7+hbjJ15egdyL/g65h3w8bD9ji25njZKr+tZk5Ceq/iU0QDi0sIDHQu8cFqHk+Bso5P/lo2AXuissT2yg8G1V3+NfJVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915336; c=relaxed/simple;
-	bh=wVs5Tug8IwHp5IA5G4x0/MTv5d9ujipzCjehYYYhTVk=;
+	s=arc-20240116; t=1744915340; c=relaxed/simple;
+	bh=Pky979WpaWzgxXOe8o9ouWbFVkPai4HjmI40lUDIOY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sH4w/YqSYCt+EeNZBAGYIODx17rBOzGz/ECwzaOPXJJPhp5hcyIkOP+ENQko4va0+Rzx2BGdt7oiD+i4WO+ub7tkDbg4Fgsm8b6mZhhNgJuaGQ/pVjJ5gmp4iISQo5lbFhHI3m62yzsN+sWmJZPxeyGOioS7WOZASsKNFG1BMkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7wHeuKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cb+01RAvCvGSw7vt772ykOLV21lxqQ34GzxqWHjc1SFz7z9yCdftRLC/0o52d5fwUgxpBrVR91OCIEp2T6+zYEOXdeM7BC4CMl70BDynKH3XJjysvvq5EIAV4LiKQ7j4V8zhwMfUEHiN3xJ8pybvr0/btve4mkj1ezxUI73Ohws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkWMJyea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7wHeuKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E96C4CEE4;
-	Thu, 17 Apr 2025 18:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkWMJyea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8488DC4CEE4;
+	Thu, 17 Apr 2025 18:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915336;
-	bh=wVs5Tug8IwHp5IA5G4x0/MTv5d9ujipzCjehYYYhTVk=;
+	s=korg; t=1744915340;
+	bh=Pky979WpaWzgxXOe8o9ouWbFVkPai4HjmI40lUDIOY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7wHeuKwTDtqK/Fbb/TZ7rFnb56JTiW+H9yC4C6/GrkYKHSH2DqPPqR2ry5G6zwat
-	 Os0g75aROtJLWoVIXuBbGcrTfIJfP2MR6pqTFtJOiEHEOtVVKLW1crFk4XzFp4cB4y
-	 O/vTsRZLIL1cPWfOj7A1w+nXRTRrKjRh9nNMvFGg=
+	b=xkWMJyea7mHLAB7K0Q5xLAIKFQkKbaKC4zfPbCpUBM4iFl1y8POtTovjaAH4df2Bh
+	 pq2wHg0oZFxJdzsy6AgnZN6cLqujgB+onXnrviRHluwzcyMRWxQqtatsxzXwuwnSNR
+	 vcrrNVFDtJ06B4eKGdpuLtCaylMBEj4ttz6qfpys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Mina Almasry <almasrymina@google.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	David Wei <dw@davidwei.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/393] Flush console log from kernel_power_off()
-Date: Thu, 17 Apr 2025 19:47:44 +0200
-Message-ID: <20250417175109.800339695@linuxfoundation.org>
+Subject: [PATCH 6.12 089/393] net: page_pool: dont cast mp param to devmem
+Date: Thu, 17 Apr 2025 19:48:18 +0200
+Message-ID: <20250417175111.174706611@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -55,98 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 6ea9a1781c70a8be1fcdc49134fc1bf4baba8bca ]
+[ Upstream commit 8d522566ae9cb3f0609ddb2a6ce3f4f39988043c ]
 
-Kernels built with CONFIG_PREEMPT_RT=y can lose significant console output
-and shutdown time, which hides shutdown-time RCU issues from rcutorture.
-Therefore, make pr_flush() public and invoke it after then last print
-in kernel_power_off().
+page_pool_check_memory_provider() is a generic path and shouldn't assume
+anything about the actual type of the memory provider argument. It's
+fine while devmem is the only provider, but cast away the devmem
+specific binding types to avoid confusion.
 
-[ paulmck: Apply John Ogness feedback. ]
-[ paulmck: Appy Sebastian Andrzej Siewior feedback. ]
-[ paulmck: Apply kernel test robot feedback. ]
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Link: https://lore.kernel.org/r/5f743488-dc2a-4f19-bdda-cf50b9314832@paulmck-laptop
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: David Wei <dw@davidwei.uk>
+Link: https://patch.msgid.link/20250204215622.695511-2-dw@davidwei.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/printk.h | 6 ++++++
- kernel/printk/printk.c | 4 +---
- kernel/reboot.c        | 1 +
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ net/core/page_pool_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/printk.h b/include/linux/printk.h
-index eca9bb2ee637b..0cb647ecd77f5 100644
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -204,6 +204,7 @@ void printk_legacy_allow_panic_sync(void);
- extern bool nbcon_device_try_acquire(struct console *con);
- extern void nbcon_device_release(struct console *con);
- void nbcon_atomic_flush_unsafe(void);
-+bool pr_flush(int timeout_ms, bool reset_on_progress);
- #else
- static inline __printf(1, 0)
- int vprintk(const char *s, va_list args)
-@@ -304,6 +305,11 @@ static inline void nbcon_atomic_flush_unsafe(void)
+diff --git a/net/core/page_pool_user.c b/net/core/page_pool_user.c
+index 48335766c1bfd..8d31c71bea1a3 100644
+--- a/net/core/page_pool_user.c
++++ b/net/core/page_pool_user.c
+@@ -353,7 +353,7 @@ void page_pool_unlist(struct page_pool *pool)
+ int page_pool_check_memory_provider(struct net_device *dev,
+ 				    struct netdev_rx_queue *rxq)
  {
- }
+-	struct net_devmem_dmabuf_binding *binding = rxq->mp_params.mp_priv;
++	void *binding = rxq->mp_params.mp_priv;
+ 	struct page_pool *pool;
+ 	struct hlist_node *n;
  
-+static inline bool pr_flush(int timeout_ms, bool reset_on_progress)
-+{
-+	return true;
-+}
-+
- #endif
- 
- bool this_cpu_in_panic(void);
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 3b75f6e8410b9..881a26e18c658 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -2436,7 +2436,6 @@ asmlinkage __visible int _printk(const char *fmt, ...)
- }
- EXPORT_SYMBOL(_printk);
- 
--static bool pr_flush(int timeout_ms, bool reset_on_progress);
- static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress);
- 
- #else /* CONFIG_PRINTK */
-@@ -2449,7 +2448,6 @@ static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progre
- 
- static u64 syslog_seq;
- 
--static bool pr_flush(int timeout_ms, bool reset_on_progress) { return true; }
- static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress) { return true; }
- 
- #endif /* CONFIG_PRINTK */
-@@ -4436,7 +4434,7 @@ static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progre
-  * Context: Process context. May sleep while acquiring console lock.
-  * Return: true if all usable printers are caught up.
-  */
--static bool pr_flush(int timeout_ms, bool reset_on_progress)
-+bool pr_flush(int timeout_ms, bool reset_on_progress)
- {
- 	return __pr_flush(NULL, timeout_ms, reset_on_progress);
- }
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index f05dbde2c93fe..d6ee090eda943 100644
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -697,6 +697,7 @@ void kernel_power_off(void)
- 	migrate_to_reboot_cpu();
- 	syscore_shutdown();
- 	pr_emerg("Power down\n");
-+	pr_flush(1000, true);
- 	kmsg_dump(KMSG_DUMP_SHUTDOWN);
- 	machine_power_off();
- }
 -- 
 2.39.5
 
