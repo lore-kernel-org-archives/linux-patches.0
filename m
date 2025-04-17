@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E901154430;
-	Thu, 17 Apr 2025 18:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BBE25A654;
+	Thu, 17 Apr 2025 18:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915161; cv=none; b=g9t8SkufNhXglox9sR2++rfPAogXXnO0IicqZPYTykHa0QxtvjktWalUNMnY3A0geTv1IrVp6XUhSmgvJI8dFe2bOi1PRDAI73SdYOdBiPIvqK/pP2xlo5kXjBGmafhDRGY2INk4wgdWo15sVcI2tO4fKf0aWTb4C+2aOhTIPiE=
+	t=1744915164; cv=none; b=FZWJEAkEaVfceNODVNMlJZqdXXPVeV1XRgp4y8RfD2q54ZZQsGtGOn9xFCT/NBx6Vi9WN3gD/idMSDKnYBO0nxf5G8KRFiHJ9DJhiMaZ18Xf2rlbBvuoWkG5rH63BrDKgdKQLXYVzk7P4fq3uw/P/wnGxBCjRiXVu9Qxk2/alYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915161; c=relaxed/simple;
-	bh=nvx9R+Ej92jhZMhbaQOR8hx/ybNSB2SGJZOmJ0nhuGI=;
+	s=arc-20240116; t=1744915164; c=relaxed/simple;
+	bh=6GT5cmM6Wnu2NNnkeQrM05FophqaaFuOgRckPt2yt38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K/jOULmGKUcM7Xc2KY7zduWLDrUgHs2KKgPgdthd7P7vYPv29qM57gKhnog0kk1XCXojlekEaLB7wKvg2DoUkK/1qQEtNjfMHqhwWOSqSXLLzxeB/mt7OLXWWeQKNT8KQ0MH4RXnEmH4c7j5RXovrmxM0Av4P0XFXquS9HSvS4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOVbS+y1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIv0qnq18i2m1AZjkJOYbXvHr86rgXzXOR5G61T55D8/oEhliN7HIY6zjMKbSaG2LJev7G2hSBUZzbNdXqPs26ERxLBT2KbUXaYf8ARwR+JunXeNzmaBBiHwnVBB9dtM3XszjkdbSq4v0Aaej+QEzjnP9/aTiSXcDcueACpWiKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wm7bXEuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOVbS+y1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85164C4CEE4;
-	Thu, 17 Apr 2025 18:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wm7bXEuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88034C4CEE7;
+	Thu, 17 Apr 2025 18:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915161;
-	bh=nvx9R+Ej92jhZMhbaQOR8hx/ybNSB2SGJZOmJ0nhuGI=;
+	s=korg; t=1744915163;
+	bh=6GT5cmM6Wnu2NNnkeQrM05FophqaaFuOgRckPt2yt38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOVbS+y1SNnQ5GUXYf5G9MKxZPY9joaMBODeA8ANovvacjm1QcdxOctPzbvU2yMki
-	 uVzUBH2WbX/LVRcqG7UwTUjjlqUf9Xi7yC15DrC883f2oVrZjWIecOPu1haXj2h1DK
-	 MrftW9cxzrCydG5C6Mtgykqo+HuPrnprF8A37CD0=
+	b=Wm7bXEuzX1MPzVT4gvKvXOucDPaMsquzyDhB5/NN2XaeZeTQhmpM1t8bP9BNWGWen
+	 lQmjpgXMMEuQImQFWPptdZtYa/TQhODuSgmmOMnJ57QILSCiZabwELHAHlOUVy0UgK
+	 7Tw9G0233XGnvberkVr9wOv8ZkCsaAWOdRlsWPHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	sontu mazumdar <sontu21@gmail.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/393] net: ppp: Add bound checking for skb data on ppp_sync_txmung
-Date: Thu, 17 Apr 2025 19:47:27 +0200
-Message-ID: <20250417175109.126819303@linuxfoundation.org>
+Subject: [PATCH 6.12 039/393] nft_set_pipapo: fix incorrect avx2 match of 5th field octet
+Date: Thu, 17 Apr 2025 19:47:28 +0200
+Message-ID: <20250417175109.166093133@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -46,75 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit aabc6596ffb377c4c9c8f335124b92ea282c9821 ]
+[ Upstream commit e042ed950d4e176379ba4c0722146cd96fb38aa2 ]
 
-Ensure we have enough data in linear buffer from skb before accessing
-initial bytes. This prevents potential out-of-bounds accesses
-when processing short packets.
+Given a set element like:
 
-When ppp_sync_txmung receives an incoming package with an empty
-payload:
-(remote) gef➤  p *(struct pppoe_hdr *) (skb->head + skb->network_header)
-$18 = {
-	type = 0x1,
-	ver = 0x1,
-	code = 0x0,
-	sid = 0x2,
-        length = 0x0,
-	tag = 0xffff8880371cdb96
-}
+	icmpv6 . dead:beef:00ff::1
 
-from the skb struct (trimmed)
-      tail = 0x16,
-      end = 0x140,
-      head = 0xffff88803346f400 "4",
-      data = 0xffff88803346f416 ":\377",
-      truesize = 0x380,
-      len = 0x0,
-      data_len = 0x0,
-      mac_len = 0xe,
-      hdr_len = 0x0,
+The value of 'ff' is irrelevant, any address will be matched
+as long as the other octets are the same.
 
-it is not safe to access data[2].
+This is because of too-early register clobbering:
+ymm7 is reloaded with new packet data (pkt[9])  but it still holds data
+of an earlier load that wasn't processed yet.
 
-Reported-by: syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=29fc8991b0ecb186cf40
-Tested-by: syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Link: https://patch.msgid.link/20250408-bound-checking-ppp_txmung-v2-1-94bb6e1b92d0@arnaud-lcm.com
-[pabeni@redhat.com: fixed subj typo]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The existing tests in nft_concat_range.sh selftests do exercise this code
+path, but do not trigger incorrect matching due to the network prefix
+limitation.
+
+Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
+Reported-by: sontu mazumdar <sontu21@gmail.com>
+Closes: https://lore.kernel.org/netfilter/CANgxkqwnMH7fXra+VUfODT-8+qFLgskq3set1cAzqqJaV4iEZg@mail.gmail.com/T/#t
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nft_set_pipapo_avx2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 644e99fc3623f..9c4932198931f 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -506,6 +506,11 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
- 	unsigned char *data;
- 	int islcp;
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index b8d3c3213efee..c15db28c5ebc4 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -994,8 +994,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(5, lt,  8,  pkt[8], bsize);
  
-+	/* Ensure we can safely access protocol field and LCP code */
-+	if (!pskb_may_pull(skb, 3)) {
-+		kfree_skb(skb);
-+		return NULL;
-+	}
- 	data  = skb->data;
- 	proto = get_unaligned_be16(data);
- 
+ 		NFT_PIPAPO_AVX2_AND(6, 2, 3);
++		NFT_PIPAPO_AVX2_AND(3, 4, 7);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(7, lt,  9,  pkt[9], bsize);
+-		NFT_PIPAPO_AVX2_AND(0, 4, 5);
++		NFT_PIPAPO_AVX2_AND(0, 3, 5);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(1, lt, 10, pkt[10], bsize);
+ 		NFT_PIPAPO_AVX2_AND(2, 6, 7);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(3, lt, 11, pkt[11], bsize);
 -- 
 2.39.5
 
