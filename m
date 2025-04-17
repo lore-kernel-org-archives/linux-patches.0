@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8524C255E2B;
-	Thu, 17 Apr 2025 18:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AC255254;
+	Thu, 17 Apr 2025 18:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912896; cv=none; b=QIFzWuGipcof0Ak/5F/Ts7mMhi/TGHEt1P0LqBGQ+t+5mcsd1A8AKVXCiz5kL9vOBX+csK9Mj1Hr0pHsKIyO8zKSEKnZsHniUQ6c1+HURkcFz+ztprkUoBJHUvN8HR8m9/XFLWQZHnWDWOySUQ/q3STR8iR8UkR8yEOgFdh9Wu0=
+	t=1744912899; cv=none; b=DF1HaiBJojM3t+Swu2qZdGlB6+bnQ9gmyyyr3HqYulOCgpwZ2zPU/3+qMASTmKavLMTrcaDVJn8aQZDb1V9ke3EyZXCxSRW/FOkCYU5/x3Nt0b1UhsttcWDsAFShMar0MDTZTJzyZyLr4PKDtMzS0GmZ1h+xrJGI4f9J0GPDSn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912896; c=relaxed/simple;
-	bh=5nAB6lgnyUzDQahYY1F5AUD4La0/NITGu7yLxjE+p1U=;
+	s=arc-20240116; t=1744912899; c=relaxed/simple;
+	bh=FtRaBl75AMnSEKkcNtwFf5ohMLjLgMp4BLDA2+c9NMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgU2Ck/HPWgrcmR7c2eIZPHUrBew5xzB9KjD/Mk8Rjm9eDsAyAo2Zoy2u4bmXNvBT24pVyQrszEIQKVkZlbrFw0doh1JajJQ2Z19POCr369QyKLh8he0FGRqoh3IVBbs7cRMUlCfBD/v7oQlrxw3LQEC4tZtG1R051AaQUhJlr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3eTGt8I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fcUMrJME4BoDJLP3Uk3Yx6x/oKDD2aJMPyGanTZYCy+I15MpbzHNgY26li+0/XeXN4xIM84XMpqAxeADCMiL/8G49QGh8XDR+MHCdw6CfF+qbZ+y3PfdWQl2wOSB2Ap1hEfkQQQxW0K/3LfUtbtg1z9qd2oSl0e+Q73Uh6q00Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCuqiWMF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3eTGt8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DA5C4CEE4;
-	Thu, 17 Apr 2025 18:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCuqiWMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB28AC4CEE4;
+	Thu, 17 Apr 2025 18:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912896;
-	bh=5nAB6lgnyUzDQahYY1F5AUD4La0/NITGu7yLxjE+p1U=;
+	s=korg; t=1744912899;
+	bh=FtRaBl75AMnSEKkcNtwFf5ohMLjLgMp4BLDA2+c9NMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3eTGt8I4UujL9FzdyIlrlusNtwbqO+fZq1jOowXl4q59od/wTfwxsIeynwYnPQ9s
-	 nLWZigceXRlo+045BX3AYSUQHwfa+lqeCjQ12xQy2pDcm1LSG8C90sGQ/bLsOqEydo
-	 Bh+T3YtrZPA0kdc5LyZeZeaJ8L/3hXw9E1XSLz58=
+	b=bCuqiWMF0anopksG4Fiy0dexfMVucIDJZOxQLxzIg7MMp7r6DkTRwGCuFGniKvlR2
+	 EDDyvRjo7PvDY8VKvKhJCBYCaQMReHAM4FK2BYqjTdzk7jQesbzxoxj/clMRKqLAV2
+	 gOUyZa/DK1N5l/Up1s9To9JLQGMyDaiTwJAmOLJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 133/449] wifi: mt76: mt76x2u: add TP-Link TL-WDN6200 ID to device table
-Date: Thu, 17 Apr 2025 19:47:01 +0200
-Message-ID: <20250417175123.320584777@linuxfoundation.org>
+Subject: [PATCH 6.14 160/449] drm/debugfs: fix printk format for bridge index
+Date: Thu, 17 Apr 2025 19:47:28 +0200
+Message-ID: <20250417175124.421817821@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,34 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit 06cccc2ebbe6c8a20f714f3a0ff3ff489d3004bb ]
+[ Upstream commit 72443c730b7a7b5670a921ea928e17b9b99bd934 ]
 
-The TP-Link TL-WDN6200 "Driverless" version cards use a MT7612U chipset.
+idx is an unsigned int, use %u for printk-style strings.
 
-Add the USB ID to mt76x2u driver.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Link: https://patch.msgid.link/20250317102235.1421726-1-uwu@icenowy.me
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-1-88ca5827d7af@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index e832ad53e2393..a4f4d12f904e7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -22,6 +22,7 @@ static const struct usb_device_id mt76x2u_device_table[] = {
- 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
- 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
- 	{ USB_DEVICE(0x045e, 0x02fe) },	/* XBox One Wireless Adapter */
-+	{ USB_DEVICE(0x2357, 0x0137) },	/* TP-Link TL-WDN6200 */
- 	{ },
- };
+diff --git a/drivers/gpu/drm/drm_debugfs.c b/drivers/gpu/drm/drm_debugfs.c
+index 536409a35df40..6b2178864c7ee 100644
+--- a/drivers/gpu/drm/drm_debugfs.c
++++ b/drivers/gpu/drm/drm_debugfs.c
+@@ -748,7 +748,7 @@ static int bridges_show(struct seq_file *m, void *data)
+ 	unsigned int idx = 0;
  
+ 	drm_for_each_bridge_in_chain(encoder, bridge) {
+-		drm_printf(&p, "bridge[%d]: %ps\n", idx++, bridge->funcs);
++		drm_printf(&p, "bridge[%u]: %ps\n", idx++, bridge->funcs);
+ 		drm_printf(&p, "\ttype: [%d] %s\n",
+ 			   bridge->type,
+ 			   drm_get_connector_type_name(bridge->type));
 -- 
 2.39.5
 
