@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF37A152532;
-	Thu, 17 Apr 2025 18:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F153223710;
+	Thu, 17 Apr 2025 18:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913530; cv=none; b=SZQYM6aIyo3ah/74Xi21gbxDzlZQKXSQ/oCy/O43YkeQYRX7j1C/Hv+cXVKW75WWYe7bCfZxybo7c6mIHB4qc62l0tGWAEOA5uCC93u+n/ToLpzao9Ndlkvyo7XG7IdT3z4XnvzVAHs7dphWceLf3t02+LMwFrIzeNJBhz8l73E=
+	t=1744913533; cv=none; b=G8hbv/R7UXZ9W6bi/JhwrdyO95FcCeRdrNZ/yVP0s16B4T51TsKJbzBNwioawXTHsUKAJoTx9iqlPtZCSFmGJbdTWcxPQedQU5kISbpg3Tqe7Jwm971PB2jfdcKA7MyKjIpD+g0F+7YySxzSRn/8FM5vjT6PUeGmPwd0GgjjRfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913530; c=relaxed/simple;
-	bh=EyM2JGFhEBxr/UAXTzav0+W/1rHwVODkOooq4sey4lI=;
+	s=arc-20240116; t=1744913533; c=relaxed/simple;
+	bh=ty6cm4sLquDd5bC4ObbOJBwpmOAgLd5DLE8DaaGWVgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NucYiLHxqdQexj5XLnTw4waLBtbmGaFNmVJYUob9r8Y/bjnWku/z+/dtOfAdB3OLCbRVPF6FFuFd3lyHL6Nqb0TBAiHx1zs6K5J9nqlsDve/R4egOMbcPjYYZruQtVqcDIQyKEdCgif7rG5DllRvcva1/UkE/J4qbmPlI+oarAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yT8RUlbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpsKMWz8erk3snAYbuHcPyK28wukMRAvP2LQ+S6cpa9sO1ZfmKTfArDuUYS8zoxmwipUtD58zAM/gyVBF6X5k8wvmiJ81bgAmkvooeUCtEnNLwngFArWOFWScY+3eW6NDaPZHCY96kPJ0inQNCxpi28Z2XBLFlQJeTgUPOTaeIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+s1LDbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yT8RUlbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDFFC4CEE4;
-	Thu, 17 Apr 2025 18:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+s1LDbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68797C4CEE4;
+	Thu, 17 Apr 2025 18:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913529;
-	bh=EyM2JGFhEBxr/UAXTzav0+W/1rHwVODkOooq4sey4lI=;
+	s=korg; t=1744913532;
+	bh=ty6cm4sLquDd5bC4ObbOJBwpmOAgLd5DLE8DaaGWVgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yT8RUlbksW9awYKLm1mZsLsi7HrncGQdvbc5oHKrbOmmoSkKg8DPr4DW/JOa/UZV0
-	 0yFag2tf8Gqp/3mdRMxhQhFyt3S+vP++rEf1zj+/MUR9Fl8o8cU136fTElZ2khdNIa
-	 0NngjYbGn3DerevREIrAZifl9d+3bHe7nkMwxvgs=
+	b=K+s1LDbtpuN8KxPs3NhgmZOiQ8TsrHFITNTfWMKj7EMvR7fPzu6IfU+oAvquDhjYp
+	 bTVQEhGquwRW7uhny2uzxnTyMo1MoU2X3q6lXHpovj2gXgTcEw7NSmEISPHzcgEMIr
+	 ZVTbGOgihBk5FyoEGyxEb/k4cbXMdzaPMkKvW1Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.14 370/449] tracing: fprobe: Fix to lock module while registering fprobe
-Date: Thu, 17 Apr 2025 19:50:58 +0200
-Message-ID: <20250417175133.148899867@linuxfoundation.org>
+Subject: [PATCH 6.14 371/449] tracing: fprobe events: Fix possible UAF on modules
+Date: Thu, 17 Apr 2025 19:50:59 +0200
+Message-ID: <20250417175133.188496845@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,140 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit d24fa977eec53399a9a49a2e1dc592430ea0a607 upstream.
+commit dd941507a9486252d6fcf11814387666792020f3 upstream.
 
-Since register_fprobe() does not get the module reference count while
-registering fgraph filter, if the target functions (symbols) are in
-modules, those modules can be unloaded when registering fprobe to
-fgraph.
+Commit ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module
+refcount") moved try_module_get() from __find_tracepoint_module_cb()
+to find_tracepoint() caller, but that introduced a possible UAF
+because the module can be unloaded before try_module_get(). In this
+case, the module object should be freed too. Thus, try_module_get()
+does not only fail but may access to the freed object.
 
-To avoid this issue, get the reference counter of module for each
-symbol, and put it after register the fprobe.
+To avoid that, try_module_get() in __find_tracepoint_module_cb()
+again.
 
-Link: https://lore.kernel.org/all/174330568792.459674.16874380163991113156.stgit@devnote2/
+Link: https://lore.kernel.org/all/174342990779.781946.9138388479067729366.stgit@devnote2/
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/all/20250325130628.3a9e234c@gandalf.local.home/
-Fixes: 4346ba160409 ("fprobe: Rewrite fprobe on function-graph tracer")
+Fixes: ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module refcount")
 Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |   67 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 48 insertions(+), 19 deletions(-)
+ kernel/trace/trace_fprobe.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -544,6 +544,7 @@ struct filter_match_data {
- 	size_t index;
- 	size_t size;
- 	unsigned long *addrs;
-+	struct module **mods;
- };
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -919,9 +919,15 @@ static void __find_tracepoint_module_cb(
+ 	struct __find_tracepoint_cb_data *data = priv;
  
- static int filter_match_callback(void *data, const char *name, unsigned long addr)
-@@ -557,30 +558,47 @@ static int filter_match_callback(void *d
- 	if (!ftrace_location(addr))
- 		return 0;
- 
--	if (match->addrs)
--		match->addrs[match->index] = addr;
-+	if (match->addrs) {
-+		struct module *mod = __module_text_address(addr);
+ 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
+-		data->tpoint = tp;
+-		if (!data->mod)
++		/* If module is not specified, try getting module refcount. */
++		if (!data->mod && mod) {
++			/* If failed to get refcount, ignore this tracepoint. */
++			if (!try_module_get(mod))
++				return;
 +
-+		if (mod && !try_module_get(mod))
-+			return 0;
- 
-+		match->mods[match->index] = mod;
-+		match->addrs[match->index] = addr;
-+	}
- 	match->index++;
- 	return match->index == match->size;
+ 			data->mod = mod;
++		}
++		data->tpoint = tp;
+ 	}
  }
  
- /*
-  * Make IP list from the filter/no-filter glob patterns.
-- * Return the number of matched symbols, or -ENOENT.
-+ * Return the number of matched symbols, or errno.
-+ * If @addrs == NULL, this just counts the number of matched symbols. If @addrs
-+ * is passed with an array, we need to pass the an @mods array of the same size
-+ * to increment the module refcount for each symbol.
-+ * This means we also need to call `module_put` for each element of @mods after
-+ * using the @addrs.
-  */
--static int ip_list_from_filter(const char *filter, const char *notfilter,
--			       unsigned long *addrs, size_t size)
-+static int get_ips_from_filter(const char *filter, const char *notfilter,
-+			       unsigned long *addrs, struct module **mods,
-+			       size_t size)
+@@ -933,7 +939,11 @@ static void __find_tracepoint_cb(struct
+ 		data->tpoint = tp;
+ }
+ 
+-/* Find a tracepoint from kernel and module. */
++/*
++ * Find a tracepoint from kernel and module. If the tracepoint is on the module,
++ * the module's refcount is incremented and returned as *@tp_mod. Thus, if it is
++ * not NULL, caller must call module_put(*tp_mod) after used the tracepoint.
++ */
+ static struct tracepoint *find_tracepoint(const char *tp_name,
+ 					  struct module **tp_mod)
  {
- 	struct filter_match_data match = { .filter = filter, .notfilter = notfilter,
--		.index = 0, .size = size, .addrs = addrs};
-+		.index = 0, .size = size, .addrs = addrs, .mods = mods};
- 	int ret;
- 
-+	if (addrs && !mods)
-+		return -EINVAL;
-+
- 	ret = kallsyms_on_each_symbol(filter_match_callback, &match);
- 	if (ret < 0)
- 		return ret;
--	ret = module_kallsyms_on_each_symbol(NULL, filter_match_callback, &match);
--	if (ret < 0)
--		return ret;
-+	if (IS_ENABLED(CONFIG_MODULES)) {
-+		ret = module_kallsyms_on_each_symbol(NULL, filter_match_callback, &match);
-+		if (ret < 0)
-+			return ret;
-+	}
- 
- 	return match.index ?: -ENOENT;
+@@ -962,7 +972,10 @@ static void reenable_trace_fprobe(struct
+ 	}
  }
-@@ -642,24 +660,35 @@ static int fprobe_init(struct fprobe *fp
-  */
- int register_fprobe(struct fprobe *fp, const char *filter, const char *notfilter)
+ 
+-/* Find a tracepoint from specified module. */
++/*
++ * Find a tracepoint from specified module. In this case, this does not get the
++ * module's refcount. The caller must ensure the module is not freed.
++ */
+ static struct tracepoint *find_tracepoint_in_module(struct module *mod,
+ 						    const char *tp_name)
  {
--	unsigned long *addrs;
--	int ret;
-+	unsigned long *addrs __free(kfree) = NULL;
-+	struct module **mods __free(kfree) = NULL;
-+	int ret, num;
- 
- 	if (!fp || !filter)
- 		return -EINVAL;
- 
--	ret = ip_list_from_filter(filter, notfilter, NULL, FPROBE_IPS_MAX);
--	if (ret < 0)
--		return ret;
-+	num = get_ips_from_filter(filter, notfilter, NULL, NULL, FPROBE_IPS_MAX);
-+	if (num < 0)
-+		return num;
- 
--	addrs = kcalloc(ret, sizeof(unsigned long), GFP_KERNEL);
-+	addrs = kcalloc(num, sizeof(*addrs), GFP_KERNEL);
- 	if (!addrs)
- 		return -ENOMEM;
--	ret = ip_list_from_filter(filter, notfilter, addrs, ret);
--	if (ret > 0)
--		ret = register_fprobe_ips(fp, addrs, ret);
- 
--	kfree(addrs);
-+	mods = kcalloc(num, sizeof(*mods), GFP_KERNEL);
-+	if (!mods)
-+		return -ENOMEM;
-+
-+	ret = get_ips_from_filter(filter, notfilter, addrs, mods, num);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = register_fprobe_ips(fp, addrs, ret);
-+
-+	for (int i = 0; i < num; i++) {
-+		if (mods[i])
-+			module_put(mods[i]);
-+	}
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(register_fprobe);
+@@ -1169,11 +1182,6 @@ static int trace_fprobe_create_internal(
+ 	if (is_tracepoint) {
+ 		ctx->flags |= TPARG_FL_TPOINT;
+ 		tpoint = find_tracepoint(symbol, &tp_mod);
+-		/* lock module until register this tprobe. */
+-		if (tp_mod && !try_module_get(tp_mod)) {
+-			tpoint = NULL;
+-			tp_mod = NULL;
+-		}
+ 		if (tpoint) {
+ 			ctx->funcname = kallsyms_lookup(
+ 				(unsigned long)tpoint->probestub,
 
 
