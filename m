@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A58C1A3178;
-	Thu, 17 Apr 2025 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE2E1E25E1;
+	Thu, 17 Apr 2025 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913536; cv=none; b=LKCiOqYu9v2mw8IC2Q9POpb3pdSvHrZYRZBZYE7gbJLZqkZsQEx8JujHAzCLnuXCY2MZ/zEWvB7cxoA5/Y2z+pKlcdDEc5Xay3mKHn3/135eMYAAzknXT+eOcVmUbBonDI8wLQwsdNXMEVnkNhF8zl5NESFyKKKqOpkiWaFKqYM=
+	t=1744913540; cv=none; b=decYPOMtQRZbf6/wmZPrnY5BLGgACgsqu78f0lvO1d5wk/uioMnQyvI3X3vDroTepErgrYJd2/feLiwmIKxhBbxZSA9A6JE7jSnJ74D0LadJyFQ+56GYTrQCRovRCGNXNeY28MHEQA5IJeHWSedj1jBvrFlKOMGFEY394oOdUjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913536; c=relaxed/simple;
-	bh=PmacY0gM9gJW+4lDX64xHZjCUQYRu4vqXHaR8PNbd+0=;
+	s=arc-20240116; t=1744913540; c=relaxed/simple;
+	bh=8XvUgDVDu2WgW/yLRxjytCsabjKOlQggTwz0/Wwc3UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7tXMvMZtNzghfUZ6R7Iaz6SeXYIIHNYscFiauXKTZLiiTpR2KM713Vgiq2P4/sy9VimsCINHOLfiu5QsIy8u0q7zGB2JxdN49W9dPwFQdyDoh911CrlkFownkf0DjGoo1N2BSd7EcQpMCtKrtuSC8ClEb15EMSG+MxP5E0PmgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlBHu2i1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JoE7805+6o4bS6eZtvRqJpZ2oqmnzsZWklIhN4iiPLsJcjhyQ6H8na2wDaxfqr5HnMsMhgdqQ/5dWiX4mvXTQMcGlO+qf3zU6XcRugJ0DOGaw5uvOg9juNkA89RPkOTRoVwVzPGF6tKq6c3aRJqVDMFE/d+wjALwYZKpjAK2p54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4ijzCEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlBHu2i1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B63C4CEE4;
-	Thu, 17 Apr 2025 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4ijzCEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58673C4CEE4;
+	Thu, 17 Apr 2025 18:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913536;
-	bh=PmacY0gM9gJW+4lDX64xHZjCUQYRu4vqXHaR8PNbd+0=;
+	s=korg; t=1744913539;
+	bh=8XvUgDVDu2WgW/yLRxjytCsabjKOlQggTwz0/Wwc3UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RlBHu2i1T2O9JZQEUYQV2VVF3u12dlbCe3StxZQbjmMGh0Cql7JVt+0uwKpuln7Oe
-	 qsHlcZZ4dlhaVf7YCdd962v7M2+sjqjO7hBXYDwebT87HRgn/2r+jmmOIfh5tayfLl
-	 yhFwkR4JgWI0uk+JqAreF4zYive/ICSgiXkQKj94=
+	b=W4ijzCEK42X9SNjZ7oQ3aWWrrd8k82heeZ4VIMz45kqlR2LUjYT6Xo1TSRD+DsvoH
+	 aq4QYNUEi4lPQn8HGrgMh27C84Z+GXDx1qtmUUolFc7dWvewpHqO6cvz/6XRZiKkbM
+	 plZArvE5irl1tG2h4q00kDnEjeBGj7mjD46ykhpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.14 372/449] tracing: Do not add length to print format in synthetic events
-Date: Thu, 17 Apr 2025 19:51:00 +0200
-Message-ID: <20250417175133.229574074@linuxfoundation.org>
+	Trevor Woerner <twoerner@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.14 373/449] thermal/drivers/rockchip: Add missing rk3328 mapping entry
+Date: Thu, 17 Apr 2025 19:51:01 +0200
+Message-ID: <20250417175133.270457624@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,56 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Trevor Woerner <twoerner@gmail.com>
 
-commit e1a453a57bc76be678bd746f84e3d73f378a9511 upstream.
+commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
 
-The following causes a vsnprintf fault:
+The mapping table for the rk3328 is missing the entry for -25C which is
+found in the TRM section 9.5.2 "Temperature-to-code mapping".
 
-  # echo 's:wake_lat char[] wakee; u64 delta;' >> /sys/kernel/tracing/dynamic_events
-  # echo 'hist:keys=pid:ts=common_timestamp.usecs if !(common_flags & 0x18)' > /sys/kernel/tracing/events/sched/sched_waking/trigger
-  # echo 'hist:keys=next_pid:delta=common_timestamp.usecs-$ts:onmatch(sched.sched_waking).trace(wake_lat,next_comm,$delta)' > /sys/kernel/tracing/events/sched/sched_switch/trigger
+NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
+      4096-<code in table>. Whereas the table in the TRM gives the code
+      "3774" for -25C, the kernel uses 4096-3774=322.
 
-Because the synthetic event's "wakee" field is created as a dynamic string
-(even though the string copied is not). The print format to print the
-dynamic string changed from "%*s" to "%s" because another location
-(__set_synth_event_print_fmt()) exported this to user space, and user
-space did not need that. But it is still used in print_synth_event(), and
-the output looks like:
+[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
+  well as through the downstream kernel code, it seems we may have
+  some troubles at our hands.  Let me explain, please.
 
-          <idle>-0       [001] d..5.   193.428167: wake_lat: wakee=(efault)sshd-sessiondelta=155
-    sshd-session-879     [001] d..5.   193.811080: wake_lat: wakee=(efault)kworker/u34:5delta=58
-          <idle>-0       [002] d..5.   193.811198: wake_lat: wakee=(efault)bashdelta=91
-            bash-880     [002] d..5.   193.811371: wake_lat: wakee=(efault)kworker/u35:2delta=21
-          <idle>-0       [001] d..5.   193.811516: wake_lat: wakee=(efault)sshd-sessiondelta=129
-    sshd-session-879     [001] d..5.   193.967576: wake_lat: wakee=(efault)kworker/u34:5delta=50
+  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
+  the equation for the output when tsadc_q_sel equals 1 is (4096 -
+  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
+  equation is (1024 - tsadc_q) in that case.
 
-The length isn't needed as the string is always nul terminated. Just print
-the string and not add the length (which was hard coded to the max string
-length anyway).
+  The downstream kernel code, however, treats the RK3308 and RK3328
+  tables and their values as being the same.  It even mentions 1024 as
+  the "offset" value in a comment block for the rk_tsadcv3_control()
+  function, just like the upstream code does, which is obviously wrong
+  "offset" value when correlated with the table on page 544 of part 1
+  of the RK3308 TRM v1.1.
 
+  With all this in mind, it's obvious that more work is needed to make
+  it clear where's the actual mistake (it could be that the TRM is
+  wrong), which I'll volunteer for as part of the SoC binning project.
+  In the meantime, this patch looks fine as-is to me, by offering
+  what's a clear improvement to the current state of the upstream
+  code"
+
+Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
 Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Cc: Douglas Raillard <douglas.raillard@arm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/20250407154139.69955768@gandalf.local.home
-Fixes: 4d38328eb442d ("tracing: Fix synth event printk format for str fields");
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
+Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/thermal/rockchip_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -370,7 +370,6 @@ static enum print_line_t print_synth_eve
- 				union trace_synth_field *data = &entry->fields[n_u64];
- 
- 				trace_seq_printf(s, print_fmt, se->fields[i]->name,
--						 STR_VAR_LEN_MAX,
- 						 (char *)entry + data->as_dynamic.offset,
- 						 i == se->n_fields - 1 ? "" : " ");
- 				n_u64++;
+--- a/drivers/thermal/rockchip_thermal.c
++++ b/drivers/thermal/rockchip_thermal.c
+@@ -386,6 +386,7 @@ static const struct tsadc_table rk3328_c
+ 	{296, -40000},
+ 	{304, -35000},
+ 	{313, -30000},
++	{322, -25000},
+ 	{331, -20000},
+ 	{340, -15000},
+ 	{349, -10000},
 
 
