@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B8C25F785;
-	Thu, 17 Apr 2025 18:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EE125F78C;
+	Thu, 17 Apr 2025 18:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915141; cv=none; b=VQXywmOjYRzovljOwEkfqPggqHOI80QkSydUAn0itAF/1JCKKVuTZgzroofcCQbNuDDV+67CSPjskVj5mZVpnz+blYZQL3DOW8deymuzdbTmsjZPmVoLieJj/n5VNudP3IMfraFC8EjNUfw7cWtFG/CW5xggUKTtE+JpWBQNOkA=
+	t=1744915144; cv=none; b=aZ+mTdEeFeLwW+ZH5QimBWJ+XIexRxzhkeIOcCWGmSV7CAG8LSQgcrqVoeO80GQtq8e5DrvRanWXirofVwnfPqsuTNFCwKOrjAipQja1XvvLLgaF6LdtKLr1pQZ6NCrM/IXreLwKvEzwqgdLi/Jqp5VeqerAByWMJRqJEDg/kMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915141; c=relaxed/simple;
-	bh=6UHw0PuPEAPreJLm6QLmNiZqFRJ2P9HLbJOGWh7qp/0=;
+	s=arc-20240116; t=1744915144; c=relaxed/simple;
+	bh=lSDh7ApWsV1xxYlc5/OuHGtL+XQD4y9y+7iPtbjeFV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qF0bC3OWTGlwG+bTObcsm6H951FGd/T3peqQap7n/deiUltOdZKWUiqlOT+PF0MvCxa9mWN0Who6zz4BDkjAEoGVeHMQ+FG4hSOOGL0v0eEYfau0347kx2SCEpSd+0GGuCBp951ZxDnC1hZ5lnW/IueYLAs/Hh6OdRVaYfyl/pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3RTUWda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmwVWXbpqLnkZarJyCPD4qQ2i8szyiigX9SLLyqtQBqx4blKJLGrsh5hCuYQ6+jdIqPFuh9QluxZlXpo5DLiJ35uE9z+whrHcc/5M0bZfenMT10hDgMlt0de2Th2Chw33v9mbCqXo2re01GCpdAtgEpxkFHHldNHS0U2YTzl+gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEBLxZbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3RTUWda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D770CC4CEE4;
-	Thu, 17 Apr 2025 18:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEBLxZbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A21C4CEE4;
+	Thu, 17 Apr 2025 18:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915141;
-	bh=6UHw0PuPEAPreJLm6QLmNiZqFRJ2P9HLbJOGWh7qp/0=;
+	s=korg; t=1744915144;
+	bh=lSDh7ApWsV1xxYlc5/OuHGtL+XQD4y9y+7iPtbjeFV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3RTUWdav0Qjnl1m5TovozZvUpwj2wbeSNRtlYqYCnD7N8qY0GiTerAJ5NRIIiyQw
-	 FoekJW+C0gs2VEp9VzXVsRyeyhyhDuDlLgViKAd8BOwz+FS/I95vuUqGehYcy39QqN
-	 uXUC/dVob8umPHqWx369ZwuTturt5UL2QBblStRg=
+	b=wEBLxZbPq1/Byiu+KfJOCNCoqkbAoXCTz/26Jymj9NKDfQzXP2O2cD2P9mlMT5yOf
+	 MSp/qwsgKXu17B3qbRfA4fBhP602yfkCsYZhmqKSyK3WAffevxkFMD7Qv4ogrYlFnA
+	 8NgEMF3mLvyDEsI6O9Az6vzoRb9ApneP3b61g5IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Octavian Purdila <tavip@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/393] drm/tests: helpers: Create kunit helper to destroy a drm_display_mode
-Date: Thu, 17 Apr 2025 19:47:13 +0200
-Message-ID: <20250417175108.563109293@linuxfoundation.org>
+Subject: [PATCH 6.12 033/393] net_sched: sch_sfq: move the limit validation
+Date: Thu, 17 Apr 2025 19:47:22 +0200
+Message-ID: <20250417175108.929821146@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,76 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit 13c1d5f3a7fa7b55a26e73bb9e95342374a489b2 ]
+[ Upstream commit b3bf8f63e6179076b57c9de660c9f80b5abefe70 ]
 
-A number of test suites call functions that expect the returned
-drm_display_mode to be destroyed eventually.
+It is not sufficient to directly validate the limit on the data that
+the user passes as it can be updated based on how the other parameters
+are changed.
 
-However, none of the tests called drm_mode_destroy, which results in a
-memory leak.
+Move the check at the end of the configuration update process to also
+catch scenarios where the limit is indirectly updated, for example
+with the following configurations:
 
-Since drm_mode_destroy takes two pointers as argument, we can't use a
-kunit wrapper. Let's just create a helper every test suite can use.
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 depth 1
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 divisor 1
 
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-1-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Stable-dep-of: 70f29ca3117a ("drm/tests: cmdline: Fix drm_display_mode memory leak")
+This fixes the following syzkaller reported crash:
+
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:203:6
+index 65535 is out of range for type 'struct sfq_head[128]'
+CPU: 1 UID: 0 PID: 3037 Comm: syz.2.16 Not tainted 6.14.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x201/0x300 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_out_of_bounds+0xf5/0x120 lib/ubsan.c:429
+ sfq_link net/sched/sch_sfq.c:203 [inline]
+ sfq_dec+0x53c/0x610 net/sched/sch_sfq.c:231
+ sfq_dequeue+0x34e/0x8c0 net/sched/sch_sfq.c:493
+ sfq_reset+0x17/0x60 net/sched/sch_sfq.c:518
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ tbf_reset+0x41/0x110 net/sched/sch_tbf.c:339
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ dev_reset_queue+0x100/0x1b0 net/sched/sch_generic.c:1311
+ netdev_for_each_tx_queue include/linux/netdevice.h:2590 [inline]
+ dev_deactivate_many+0x7e5/0xe70 net/sched/sch_generic.c:1375
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_kunit_helpers.c | 22 ++++++++++++++++++++++
- include/drm/drm_kunit_helpers.h           |  3 +++
- 2 files changed, 25 insertions(+)
+ net/sched/sch_sfq.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-index 3c0b7824c0be3..922c4b6ed1dc9 100644
---- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
-+++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-@@ -319,6 +319,28 @@ static void kunit_action_drm_mode_destroy(void *ptr)
- 	drm_mode_destroy(NULL, mode);
- }
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 7714ae94e0521..58b42dcf8f201 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -661,10 +661,6 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		if (!p)
+ 			return -ENOMEM;
+ 	}
+-	if (ctl->limit == 1) {
+-		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
+-		return -EINVAL;
+-	}
  
-+/**
-+ * drm_kunit_add_mode_destroy_action() - Add a drm_destroy_mode kunit action
-+ * @test: The test context object
-+ * @mode: The drm_display_mode to destroy eventually
-+ *
-+ * Registers a kunit action that will destroy the drm_display_mode at
-+ * the end of the test.
-+ *
-+ * If an error occurs, the drm_display_mode will be destroyed.
-+ *
-+ * Returns:
-+ * 0 on success, an error code otherwise.
-+ */
-+int drm_kunit_add_mode_destroy_action(struct kunit *test,
-+				      struct drm_display_mode *mode)
-+{
-+	return kunit_add_action_or_reset(test,
-+					 kunit_action_drm_mode_destroy,
-+					 mode);
-+}
-+EXPORT_SYMBOL_GPL(drm_kunit_add_mode_destroy_action);
-+
- /**
-  * drm_kunit_display_mode_from_cea_vic() - return a mode for CEA VIC for a KUnit test
-  * @test: The test context object
-diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
-index afdd46ef04f70..c835f113055dc 100644
---- a/include/drm/drm_kunit_helpers.h
-+++ b/include/drm/drm_kunit_helpers.h
-@@ -120,6 +120,9 @@ drm_kunit_helper_create_crtc(struct kunit *test,
- 			     const struct drm_crtc_funcs *funcs,
- 			     const struct drm_crtc_helper_funcs *helper_funcs);
+ 	sch_tree_lock(sch);
  
-+int drm_kunit_add_mode_destroy_action(struct kunit *test,
-+				      struct drm_display_mode *mode);
-+
- struct drm_display_mode *
- drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
- 				    u8 video_code);
+@@ -705,6 +701,12 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
+ 		maxflows = min_t(u32, maxflows, limit);
+ 	}
++	if (limit == 1) {
++		sch_tree_unlock(sch);
++		kfree(p);
++		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
++		return -EINVAL;
++	}
+ 
+ 	/* commit configuration */
+ 	q->limit = limit;
 -- 
 2.39.5
 
