@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918DA26139A;
-	Thu, 17 Apr 2025 17:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D861726156F;
+	Thu, 17 Apr 2025 17:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912626; cv=none; b=oneP/+X0XOqwtEJ3gOQUfmrLbxe/D41djDbBwS5RVwFZXGQyduG9CGvXI9flg93gryQooXjbuTJZjNqgujnu/WPLNQFHqX/IZAf+XNDscM+BEpKNo2bow3CJIcFyk8eC/o1W3ClmlqOYrTHmEHHEph4XKDMgnCE7s50xq1L/6cI=
+	t=1744912629; cv=none; b=I6o7stKguwcuFEJy1K1p9ekWYg1Xpe8xJO4xvhgI4xu/42HOgSkZuWVrZtrOuXEQvwmPxNWoLRBBZipcHQB6AZhufCfaHqBtmrB8I3gF94B4WMGnhdlj5tXlkKwqWATfh1Qn9lpaaqPHSaYTguZcAcrPM6pt34pAgROPU2jW5Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912626; c=relaxed/simple;
-	bh=471/7iQIgtqJmwiJuLNFM1QfJ2PCofe7DpmnG2vG4Cw=;
+	s=arc-20240116; t=1744912629; c=relaxed/simple;
+	bh=zq5QQr+rTgBTYvlcq7oF5D7gzogiFuqw/Rt/oItCnEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtRE3gimAAPZ6pgJQ42J9TUYUz+CwouWWcbAwg8KL43FrWHeuzRkb8M4DCQMI2f/Xn0fWOoP+k3b5/d6Xh8nFoVQKjXytJkjcSmWLl+G8tmlObPYYeoB4lQiDnQJEy/K/DzTW7Vz0Y8BEqu4hgj6iMikgRqxeKRBjVQdO1hb7S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLrgzCFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUvnqeYqE9n6N32b7INDyi9xt/HRZ3Hn5ogtk++xSqcp1hQX+bGbA5f2n+ofgtCCOv7dcd1dhMBFYfyXrlqOmjSPuOfjwtAEsa3kdkeXMvppj+XWt4upch5bFNrQQhMvu2R3rphm66iEbBn6k+bDFnalLvku1C/HgPHeqJHI48M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm7skSao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLrgzCFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0228FC4CEE4;
-	Thu, 17 Apr 2025 17:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm7skSao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C03C4CEE4;
+	Thu, 17 Apr 2025 17:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912626;
-	bh=471/7iQIgtqJmwiJuLNFM1QfJ2PCofe7DpmnG2vG4Cw=;
+	s=korg; t=1744912629;
+	bh=zq5QQr+rTgBTYvlcq7oF5D7gzogiFuqw/Rt/oItCnEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLrgzCFhEdwFsmEZXgYPUT13/VKwZmjN6rZwG1KRYFqVKprtdpjEQoN0VTeHGUu/j
-	 /8oPSzEsCJBFf/mGemFQHkGLqVFMVc2JMdnZIB5lGavmMLe4ZTXjzLRmiqTIH8QzEt
-	 bsnMPL3sZBcy+s0owdik+S+zYnWP1L4w9oocNZKA=
+	b=Gm7skSao51GmiIl0kh19qXsFuXEkIp2wR6c0TvW+3XXtbyCywXYHRPAPkuLfASOQU
+	 BQjy0VlRgNXIJpFnsnctCQd7s649plNFxm4g/lr4K4wmEcRrVo3RsCIuvCExqI2Uh0
+	 yoBXJjBUgcfEPxQrg2ecl2a9B642WcHq2dySoTSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Octavian Purdila <tavip@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 043/449] ethtool: cmis_cdb: Fix incorrect read / write length extension
-Date: Thu, 17 Apr 2025 19:45:31 +0200
-Message-ID: <20250417175119.720681955@linuxfoundation.org>
+Subject: [PATCH 6.14 034/449] net_sched: sch_sfq: use a temporary work area for validating configuration
+Date: Thu, 17 Apr 2025 19:45:22 +0200
+Message-ID: <20250417175119.369087572@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,103 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit eaa517b77e63442260640d875f824d1111ca6569 ]
+[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
 
-The 'read_write_len_ext' field in 'struct ethtool_cmis_cdb_cmd_args'
-stores the maximum number of bytes that can be read from or written to
-the Local Payload (LPL) page in a single multi-byte access.
+Many configuration parameters have influence on others (e.g. divisor
+-> flows -> limit, depth -> limit) and so it is difficult to correctly
+do all of the validation before applying the configuration. And if a
+validation error is detected late it is difficult to roll back a
+partially applied configuration.
 
-Cited commit started overwriting this field with the maximum number of
-bytes that can be read from or written to the Extended Payload (LPL)
-pages in a single multi-byte access. Transceiver modules that support
-auto paging can advertise a number larger than 255 which is problematic
-as 'read_write_len_ext' is a 'u8', resulting in the number getting
-truncated and firmware flashing failing [1].
+To avoid these issues use a temporary work area to update and validate
+the configuration and only then apply the configuration to the
+internal state.
 
-Fix by ignoring the maximum EPL access size as the kernel does not
-currently support auto paging (even if the transceiver module does) and
-will not try to read / write more than 128 bytes at once.
-
-[1]
-Transceiver module firmware flashing started for device enp177s0np0
-Transceiver module firmware flashing in progress for device enp177s0np0
-Progress: 0%
-Transceiver module firmware flashing encountered an error for device enp177s0np0
-Status message: Write FW block EPL command failed, LPL length is longer
-	than CDB read write length extension allows.
-
-Fixes: 9a3b0d078bd8 ("net: ethtool: Add support for writing firmware blocks using EPL payload")
-Reported-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Closes: https://lore.kernel.org/netdev/20250402183123.321036-3-michael.chan@broadcom.com/
-Tested-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20250409112440.365672-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: b3bf8f63e617 ("net_sched: sch_sfq: move the limit validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis.h     |  1 -
- net/ethtool/cmis_cdb.c | 18 +++---------------
- 2 files changed, 3 insertions(+), 16 deletions(-)
+ net/sched/sch_sfq.c | 56 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 44 insertions(+), 12 deletions(-)
 
-diff --git a/net/ethtool/cmis.h b/net/ethtool/cmis.h
-index 1e790413db0e8..4a9a946cabf05 100644
---- a/net/ethtool/cmis.h
-+++ b/net/ethtool/cmis.h
-@@ -101,7 +101,6 @@ struct ethtool_cmis_cdb_rpl {
- };
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 65d5b59da5830..7714ae94e0521 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 	struct red_parms *p = NULL;
+ 	struct sk_buff *to_free = NULL;
+ 	struct sk_buff *tail = NULL;
++	unsigned int maxflows;
++	unsigned int quantum;
++	unsigned int divisor;
++	int perturb_period;
++	u8 headdrop;
++	u8 maxdepth;
++	int limit;
++	u8 flags;
++
  
- u32 ethtool_cmis_get_max_lpl_size(u8 num_of_byte_octs);
--u32 ethtool_cmis_get_max_epl_size(u8 num_of_byte_octs);
- 
- void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
- 				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *lpl,
-diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
-index d159dc121bde5..0e2691ccb0df3 100644
---- a/net/ethtool/cmis_cdb.c
-+++ b/net/ethtool/cmis_cdb.c
-@@ -16,15 +16,6 @@ u32 ethtool_cmis_get_max_lpl_size(u8 num_of_byte_octs)
- 	return 8 * (1 + min_t(u8, num_of_byte_octs, 15));
- }
- 
--/* For accessing the EPL field on page 9Fh, the allowable length extension is
-- * min(i, 255) byte octets where i specifies the allowable additional number of
-- * byte octets in a READ or a WRITE.
-- */
--u32 ethtool_cmis_get_max_epl_size(u8 num_of_byte_octs)
--{
--	return 8 * (1 + min_t(u8, num_of_byte_octs, 255));
--}
--
- void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
- 				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *lpl,
- 				   u8 lpl_len, u8 *epl, u16 epl_len,
-@@ -33,19 +24,16 @@ void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
- {
- 	args->req.id = cpu_to_be16(cmd);
- 	args->req.lpl_len = lpl_len;
--	if (lpl) {
-+	if (lpl)
- 		memcpy(args->req.payload, lpl, args->req.lpl_len);
--		args->read_write_len_ext =
--			ethtool_cmis_get_max_lpl_size(read_write_len_ext);
--	}
- 	if (epl) {
- 		args->req.epl_len = cpu_to_be16(epl_len);
- 		args->req.epl = epl;
--		args->read_write_len_ext =
--			ethtool_cmis_get_max_epl_size(read_write_len_ext);
+ 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
+ 		return -EINVAL;
+@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
+ 		return -EINVAL;
+ 	}
++
+ 	sch_tree_lock(sch);
++
++	limit = q->limit;
++	divisor = q->divisor;
++	headdrop = q->headdrop;
++	maxdepth = q->maxdepth;
++	maxflows = q->maxflows;
++	perturb_period = q->perturb_period;
++	quantum = q->quantum;
++	flags = q->flags;
++
++	/* update and validate configuration */
+ 	if (ctl->quantum)
+-		q->quantum = ctl->quantum;
+-	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
++		quantum = ctl->quantum;
++	perturb_period = ctl->perturb_period * HZ;
+ 	if (ctl->flows)
+-		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
++		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
+-		q->divisor = ctl->divisor;
+-		q->maxflows = min_t(u32, q->maxflows, q->divisor);
++		divisor = ctl->divisor;
++		maxflows = min_t(u32, maxflows, divisor);
+ 	}
+ 	if (ctl_v1) {
+ 		if (ctl_v1->depth)
+-			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
++			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
+ 		if (p) {
+-			swap(q->red_parms, p);
+-			red_set_parms(q->red_parms,
++			red_set_parms(p,
+ 				      ctl_v1->qth_min, ctl_v1->qth_max,
+ 				      ctl_v1->Wlog,
+ 				      ctl_v1->Plog, ctl_v1->Scell_log,
+ 				      NULL,
+ 				      ctl_v1->max_P);
+ 		}
+-		q->flags = ctl_v1->flags;
+-		q->headdrop = ctl_v1->headdrop;
++		flags = ctl_v1->flags;
++		headdrop = ctl_v1->headdrop;
+ 	}
+ 	if (ctl->limit) {
+-		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
+-		q->maxflows = min_t(u32, q->maxflows, q->limit);
++		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
++		maxflows = min_t(u32, maxflows, limit);
  	}
  
- 	args->max_duration = max_duration;
-+	args->read_write_len_ext =
-+		ethtool_cmis_get_max_lpl_size(read_write_len_ext);
- 	args->msleep_pre_rpl = msleep_pre_rpl;
- 	args->rpl_exp_len = rpl_exp_len;
- 	args->flags = flags;
++	/* commit configuration */
++	q->limit = limit;
++	q->divisor = divisor;
++	q->headdrop = headdrop;
++	q->maxdepth = maxdepth;
++	q->maxflows = maxflows;
++	WRITE_ONCE(q->perturb_period, perturb_period);
++	q->quantum = quantum;
++	q->flags = flags;
++	if (p)
++		swap(q->red_parms, p);
++
+ 	qlen = sch->q.qlen;
+ 	while (sch->q.qlen > q->limit) {
+ 		dropped += sfq_drop(sch, &to_free);
 -- 
 2.39.5
 
