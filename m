@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E228185920;
-	Thu, 17 Apr 2025 18:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D185920;
+	Thu, 17 Apr 2025 18:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915727; cv=none; b=MDj9fA1/LVBWL0WNIgEWjf40wwFeKVwBmnK5eZpJHkTLXX4eCpViL6Oay63Bm2pK0XhCSkXDHwIsMZrJ3B+a3bbcCicnW5Gtnz/+yWeoN4mRhldDnc4BlX0mdEOOTtFlm33csCmQWg9lvMvoJ2rQGKT5RwDbpmpTmBVQSXmvRpQ=
+	t=1744915730; cv=none; b=nSBSkW9qKs3Zry/v8WR5rQ9cEf8p80ga6ES2U0MV5FPnxm9ikQ6Av3dNMkol5rUDzOghIW9rvq6qCVgvln6IOIvNpKMmf7gtQAlmoJtQcd/CEqdW1yrNLR1CL0PiaTEKDuXimVS4cY57DrF7xTF64PyVZ5GdscJY9irav1hv7MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915727; c=relaxed/simple;
-	bh=Ixelf/7irSgnWBI4ay/YPXJdQgYq1IdZMpAcarMm09Q=;
+	s=arc-20240116; t=1744915730; c=relaxed/simple;
+	bh=WFE1kXPsJ4RPeLgytRt6DMo5KWTXoxboWdM0PD3EiRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ricO4tFFXDfQ8WOH//wNVPjZfPRyT+GKhFrUy+aXvfrxcEWDsEyrkoOwbB7xJbKFeGfP1oJKg3KjUdvufDUM1KMSdcyFzbhflkslp7Y1Bv2E8lUuUEbJyxgBBwJNCfkF5cr+g372k9W7+szGQIMdErn5VxoH5/A9HPUS4NKr6ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdCKYu30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IuieMLrWSGIqv51MVUckQQJh6QmvM+mT1e3QKsT0BLSy12XOD2rv84KRodHVouwFBNGCv+DxKEEK7VtylO3BdwWEi8ZGT1NdP39YR2NbXzyaUrtv7FLbzd4pFD6SScX3t8nlGXWf3UHQICSYZzH7dkJ0ugy11hufaO9YHzlX7lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rO9vok3t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdCKYu30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB0DC4CEE4;
-	Thu, 17 Apr 2025 18:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO9vok3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C62C4CEE7;
+	Thu, 17 Apr 2025 18:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915727;
-	bh=Ixelf/7irSgnWBI4ay/YPXJdQgYq1IdZMpAcarMm09Q=;
+	s=korg; t=1744915730;
+	bh=WFE1kXPsJ4RPeLgytRt6DMo5KWTXoxboWdM0PD3EiRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdCKYu30MPDwBe4E+PyKRyiWKGRes3ajWhyiVYriKHvnszI5jbzVYfy97pAtI7dIt
-	 EiQidn4Qavz7z0uD1Hdt7ptJ/i4LcJFkocFiClh3w/BKYcdLZOu6wju1ogG2cfe2l2
-	 dE4PxJ0V9Sa768dHz5PuWYg9pGvC5wwf+exCd134=
+	b=rO9vok3tl0WjECehO7u+KigCz2luUPw96dCb9bpS9l68q43uAQnYGNcJU2c0COYk6
+	 C5s0nXXRMtIk/UCwXvXYcJB9JIXfRJO+VATS2VeKfL76aH95c7uzJ1G6L9MGeMuCA5
+	 qjrbGbsVXswgzzaHGWQq+WwdgTxIZRymJavBqqeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexandre Courbot <acourbot@google.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 190/393] media: mtk-vcodec: venc: avoid -Wenum-compare-conditional warning
-Date: Thu, 17 Apr 2025 19:49:59 +0200
-Message-ID: <20250417175115.228040270@linuxfoundation.org>
+Subject: [PATCH 6.12 191/393] media: uapi: rkisp1-config: Fix typo in extensible params example
+Date: Thu, 17 Apr 2025 19:50:00 +0200
+Message-ID: <20250417175115.268900189@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -46,50 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-commit 07df4f23ef3ffe6fee697cd2e03623ad27108843 upstream.
+commit 7b0ee2de7c76e5518e2235a927fd211bc785d320 upstream.
 
-This is one of three clang warnings about incompatible enum types
-in a conditional expression:
+The define used for the version in the example diagram does not match what
+is defined in enum rksip1_ext_param_buffer_version, nor the description
+above it. Correct the typo to make it clear which define to use.
 
-drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c:597:29: error: conditional expression between different enumeration types ('enum scp_ipi_id' and 'enum ipi_id') [-Werror,-Wenum-compare-conditional]
-  597 |         inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
-      |                                    ^ ~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~
-
-The code is correct, so just rework it to avoid the warning.
-
-Fixes: 0dc4b3286125 ("media: mtk-vcodec: venc: support SCP firmware")
+Fixes: e9d05e9d5db1 ("media: uapi: rkisp1-config: Add extensible params format")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Alexandre Courbot <acourbot@google.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/uapi/linux/rkisp1-config.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c
-@@ -594,7 +594,11 @@ static int h264_enc_init(struct mtk_vcod
- 
- 	inst->ctx = ctx;
- 	inst->vpu_inst.ctx = ctx;
--	inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
-+	if (is_ext)
-+		inst->vpu_inst.id = SCP_IPI_VENC_H264;
-+	else
-+		inst->vpu_inst.id = IPI_VENC_H264;
-+
- 	inst->hw_base = mtk_vcodec_get_reg_addr(inst->ctx->dev->reg_base, VENC_SYS);
- 
- 	ret = vpu_enc_init(&inst->vpu_inst);
+diff --git a/include/uapi/linux/rkisp1-config.h b/include/uapi/linux/rkisp1-config.h
+index 430daceafac7..2d995f3c1ca3 100644
+--- a/include/uapi/linux/rkisp1-config.h
++++ b/include/uapi/linux/rkisp1-config.h
+@@ -1528,7 +1528,7 @@ enum rksip1_ext_param_buffer_version {
+  * The expected memory layout of the parameters buffer is::
+  *
+  *	+-------------------- struct rkisp1_ext_params_cfg -------------------+
+- *	| version = RKISP_EXT_PARAMS_BUFFER_V1;                               |
++ *	| version = RKISP1_EXT_PARAM_BUFFER_V1;                               |
+  *	| data_size = sizeof(struct rkisp1_ext_params_bls_config)             |
+  *	|           + sizeof(struct rkisp1_ext_params_dpcc_config);           |
+  *	| +------------------------- data  ---------------------------------+ |
+-- 
+2.49.0
+
 
 
