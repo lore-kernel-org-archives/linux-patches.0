@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6A21A3178;
-	Thu, 17 Apr 2025 18:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66CC1A3178;
+	Thu, 17 Apr 2025 18:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913913; cv=none; b=QZLim9wHzvI4gsmVEGKQXiv1sHpoYn2a9CrTi55BxQeMWCX1QmNnWy/Upl9Dh0JigFY95mQEb10Pf1b5jETBCHRF13vFZUCx2fVNKzys/HVzt3L6bFrr756b0JtxlgkhfHU8+d5KKpy/8JIURxQWjEWhiWZGWpRKUHqmBlh4y+I=
+	t=1744913916; cv=none; b=YePnVViwnHP3fKlgVBrLKY9vXTcqv+2xD6OjiHz2R/nUVdMb9YIS2DlbI6ePWhl9A70tiT0JHGaJynkUE6x7xr510/ntrFMqPaiSc3TC4EQmT1Yva0NBiENk2ffM5tqAuG56SRZDQ+C9Iok9tDCtIDUOP2x2jYOgPEv6mZPVI2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913913; c=relaxed/simple;
-	bh=NrkdY1Poy4gBUcX0N7Jo1yDJfQBNn+4g6kiWBcN4hvU=;
+	s=arc-20240116; t=1744913916; c=relaxed/simple;
+	bh=/6wP+uCidGuqot0utOd6zMR4OSBWxyW4VnmLvjSXNBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gziWXskDsKv8o5HN9uZdh48A9SYTwuscse7yAV8dmpEqyRMakrGgDgnni3VDCYYvcNEGwV4H7ed0s2mTVev3HV4YQofFUsZELjx9omh+4s5FxrNeMEZMR/Ge6u8pJQimbhE62rwmk3ofRUOBJkt8niitXp+NBHrBuzRWpCPvZYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynNdeRe8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdY1fkooky8Ju3XY4GcHCkQHin8X5cglr1Dj8BBvzuDIwI1l9Pat46opmRko9+uukt2JWiI6J2ALzdK2JPSmyEjZfiTLJuKsXqGbP1kbgVBEYm/dsp9wpPtpKaV7A8iIj4oEioutTQ/lbF2tT0k2UVAM1WRDPt0bx4wBa2N403I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orFBX8Vn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynNdeRe8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06187C4CEEC;
-	Thu, 17 Apr 2025 18:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orFBX8Vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C1DC4CEE7;
+	Thu, 17 Apr 2025 18:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913913;
-	bh=NrkdY1Poy4gBUcX0N7Jo1yDJfQBNn+4g6kiWBcN4hvU=;
+	s=korg; t=1744913916;
+	bh=/6wP+uCidGuqot0utOd6zMR4OSBWxyW4VnmLvjSXNBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynNdeRe89hPxNAryO1/dCrQ7EyrqUM6Szl1wMbuHOUlxslNPnkuwNaurCBC6ZQkbz
-	 qPwYEAq/43QMgGoDj5gC2AM2qelICO6XHP7aYqCktxFv8F1ts7jZxpL8USpc1Wq39/
-	 jOcjC29fSLH9RDnuAHori4bvcIUNtFoI79IVdhqk=
+	b=orFBX8Vn2/GN+0eAcDvTqUY64DSFywivgOGDh63CRv6mLYWihcBMqFp/BypefAa01
+	 dfNrybpP2717smzf6mPEq6hVTP4JJAJXthrw+JXqDcivaASTaWtq1ZAA7VLjFswitn
+	 o1CjxhdMvHl0NqzM9rzVPn3w0GVIUYXE45rwQ2U0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 016/414] net: tls: explicitly disallow disconnect
-Date: Thu, 17 Apr 2025 19:46:14 +0200
-Message-ID: <20250417175112.056827063@linuxfoundation.org>
+Subject: [PATCH 6.13 043/414] umount: Allow superblock owners to force umount
+Date: Thu, 17 Apr 2025 19:46:41 +0200
+Message-ID: <20250417175113.146680752@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,67 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5071a1e606b30c0c11278d3c6620cd6a24724cf6 ]
+[ Upstream commit e1ff7aa34dec7e650159fd7ca8ec6af7cc428d9f ]
 
-syzbot discovered that it can disconnect a TLS socket and then
-run into all sort of unexpected corner cases. I have a vague
-recollection of Eric pointing this out to us a long time ago.
-Supporting disconnect is really hard, for one thing if offload
-is enabled we'd need to wait for all packets to be _acked_.
-Disconnect is not commonly used, disallow it.
+Loosen the permission check on forced umount to allow users holding
+CAP_SYS_ADMIN privileges in namespaces that are privileged with respect
+to the userns that originally mounted the filesystem.
 
-The immediate problem syzbot run into is the warning in the strp,
-but that's just the easiest bug to trigger:
-
-  WARNING: CPU: 0 PID: 5834 at net/tls/tls_strp.c:486 tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  RIP: 0010:tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  Call Trace:
-   <TASK>
-   tls_rx_rec_wait+0x280/0xa60 net/tls/tls_sw.c:1363
-   tls_sw_recvmsg+0x85c/0x1c30 net/tls/tls_sw.c:2043
-   inet6_recvmsg+0x2c9/0x730 net/ipv6/af_inet6.c:678
-   sock_recvmsg_nosec net/socket.c:1023 [inline]
-   sock_recvmsg+0x109/0x280 net/socket.c:1045
-   __sys_recvfrom+0x202/0x380 net/socket.c:2237
-
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Reported-by: syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250404180334.3224206-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Link: https://lore.kernel.org/r/12f212d4ef983714d065a6bb372fbb378753bf4c.1742315194.git.trond.myklebust@hammerspace.com
+Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/namespace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 6b4b9f2749a6f..0acf313deb01f 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -809,6 +809,11 @@ static int tls_setsockopt(struct sock *sk, int level, int optname,
- 	return do_tls_setsockopt(sk, optname, optval, optlen);
- }
- 
-+static int tls_disconnect(struct sock *sk, int flags)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- struct tls_context *tls_ctx_create(struct sock *sk)
+diff --git a/fs/namespace.c b/fs/namespace.c
+index cb08db40fc039..6a22882d5f54c 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1986,6 +1986,7 @@ static void warn_mandlock(void)
+ static int can_umount(const struct path *path, int flags)
  {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
-@@ -904,6 +909,7 @@ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
- 	prot[TLS_BASE][TLS_BASE] = *base;
- 	prot[TLS_BASE][TLS_BASE].setsockopt	= tls_setsockopt;
- 	prot[TLS_BASE][TLS_BASE].getsockopt	= tls_getsockopt;
-+	prot[TLS_BASE][TLS_BASE].disconnect	= tls_disconnect;
- 	prot[TLS_BASE][TLS_BASE].close		= tls_sk_proto_close;
+ 	struct mount *mnt = real_mount(path->mnt);
++	struct super_block *sb = path->dentry->d_sb;
  
- 	prot[TLS_SW][TLS_BASE] = prot[TLS_BASE][TLS_BASE];
+ 	if (!may_mount())
+ 		return -EPERM;
+@@ -1995,7 +1996,7 @@ static int can_umount(const struct path *path, int flags)
+ 		return -EINVAL;
+ 	if (mnt->mnt.mnt_flags & MNT_LOCKED) /* Check optimistically */
+ 		return -EINVAL;
+-	if (flags & MNT_FORCE && !capable(CAP_SYS_ADMIN))
++	if (flags & MNT_FORCE && !ns_capable(sb->s_user_ns, CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 	return 0;
+ }
 -- 
 2.39.5
 
