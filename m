@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C61EB1BF;
-	Thu, 17 Apr 2025 18:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D002571AC;
+	Thu, 17 Apr 2025 18:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913153; cv=none; b=K4cjTbMPIlUu5BLeVbdLt0NrEqPsTEXK8B3IdFPMvUK2dpJnZn3r6SD/EACU2zyqVzYaGHES2mJrZlJWV3vTGX+Yh8ywZcdbhseuONWJhhjKc4h9E7lNJ/po7QM8MTNIIyMeXauGVlugGB6GM6g/nDdS/wKvWS65tmcDXlBRnhs=
+	t=1744913157; cv=none; b=X1pN3vZFxDdt20FOd5VzzXN49u5RJEV6ZjvCOBv97LrbxhWK7RHLQ9fYRLceDE8KiluCom40xfHqza3TsXPWOiYC/fmpIRT3Du5lN7nD69U4OUdu/7ZLK2dNeXBF5pyI6ytgVjGRpyatwChXVpoMlQEre3gVF4vNg4yfdzHFslI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913153; c=relaxed/simple;
-	bh=QKwF1Pk2Dlf4fLE5T0oHC+1U/UcvKq4wvBScUArOE9s=;
+	s=arc-20240116; t=1744913157; c=relaxed/simple;
+	bh=z8zam4u99w5AyE5FMA9JsQ38B/pjfWNXkAlsRjEntWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czuioE1TEqsg4wP9hS1d6srfcQh6/9qldlQx9CmFhU6oLJWDkYxpl14JfUSegmoJY+fL++Q1XcXwGcusqAP4C/H5Kdeyngz/AxVIyyBUsMwGUssWO4LfOcHlYSXSpZF7d3to9H6w21KLgjGkf4IjfflV8UMm9ZogrnxUwmO6nJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNT0mSXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgFFY0sqSizsSXIR5GzBPK2w8OMhM9knHrkrJQDEq9qxGjnd7M2smmyZKj/o3GQN56Xt5c4hlHR9vVQVtnGqW9tykpqwAmxhY748g0KnRm3v2zIAqGziWkkZHlg03p52/V3D1wB/IelPdSstxZqOv2YZCNc1PTgqEKWXHm7tcl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LohNqXAk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNT0mSXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103F0C4CEE4;
-	Thu, 17 Apr 2025 18:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LohNqXAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64DCC4CEE4;
+	Thu, 17 Apr 2025 18:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913153;
-	bh=QKwF1Pk2Dlf4fLE5T0oHC+1U/UcvKq4wvBScUArOE9s=;
+	s=korg; t=1744913157;
+	bh=z8zam4u99w5AyE5FMA9JsQ38B/pjfWNXkAlsRjEntWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNT0mSXxT5uziKo7FDalZi/mqB0mpWxMakzrrAJLigLy3i5lYJNtLLrsHS0KLT1y9
-	 +UZF/KCH3bNKKLk0ApiHBmZQi5GYUlzU+NvJSTK6SK/Ph3mb3AZDeuWyrlIXONRMT+
-	 MKDbDDOJp2l7nGzpbc/fISL0YCqyklnZj5saGRug=
+	b=LohNqXAkKvkcmNWNYLkay4v0hhSKcaPTYyamyaB3jFz2iD+QmLiIO3+e6IA9GZj77
+	 Gl9Pf/uYPByXjV9WLYhoZSyUN3PDFy/6Tcq8IDXyTfKVZBZLVTbVF/fpYXOZkKnksJ
+	 pVNV3xqlJJfXLC+rfg2QXS/361vvsMgupeR1c9SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 245/449] media: hi556: Fix memory leak (on error) in hi556_check_hwcfg()
-Date: Thu, 17 Apr 2025 19:48:53 +0200
-Message-ID: <20250417175127.858103447@linuxfoundation.org>
+Subject: [PATCH 6.14 246/449] media: visl: Fix ERANGE error when setting enum controls
+Date: Thu, 17 Apr 2025 19:48:54 +0200
+Message-ID: <20250417175127.896580124@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,46 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-commit ed554da65abd0c561e40d35272d1a61d030fe977 upstream.
+commit d98e9213a768a3cc3a99f5e1abe09ad3baff2104 upstream.
 
-Commit 7d968b5badfc ("media: hi556: Return -EPROBE_DEFER if no endpoint is
-found") moved the v4l2_fwnode_endpoint_alloc_parse() call in
-hi556_check_hwcfg() up, but it did not make the error-exit paths between
-the old and new call-site use "goto check_hwcfg_error;" to free the bus_cfg
-on errors.
+The visl driver supports both frame and slice mode, with and without a
+start-code. But, the range and default for these enum controls was not
+set, which currently limits the decoder to enums with a value of 0. Fix
+this by setting the decoder mode and start code controls for both the
+H.264 and HEVC codecs.
 
-Add the missing "goto check_hwcfg_error;" statements to fix a memleak on
-early error-exits from hi556_check_hwcfg().
-
-Fixes: 7d968b5badfc ("media: hi556: Return -EPROBE_DEFER if no endpoint is found")
+Fixes: 0c078e310b6d ("media: visl: add virtual stateless decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/hi556.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/visl/visl-core.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/media/i2c/hi556.c
-+++ b/drivers/media/i2c/hi556.c
-@@ -1230,12 +1230,13 @@ static int hi556_check_hwcfg(struct devi
- 	ret = fwnode_property_read_u32(fwnode, "clock-frequency", &mclk);
- 	if (ret) {
- 		dev_err(dev, "can't get clock frequency");
--		return ret;
-+		goto check_hwcfg_error;
- 	}
- 
- 	if (mclk != HI556_MCLK) {
- 		dev_err(dev, "external clock %d is not supported", mclk);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	if (bus_cfg.bus.mipi_csi2.num_data_lanes != 2) {
+--- a/drivers/media/test-drivers/visl/visl-core.c
++++ b/drivers/media/test-drivers/visl/visl-core.c
+@@ -161,9 +161,15 @@ static const struct visl_ctrl_desc visl_
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_H264_DECODE_MODE,
++		.cfg.min = V4L2_STATELESS_H264_DECODE_MODE_SLICE_BASED,
++		.cfg.max = V4L2_STATELESS_H264_DECODE_MODE_FRAME_BASED,
++		.cfg.def = V4L2_STATELESS_H264_DECODE_MODE_SLICE_BASED,
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_H264_START_CODE,
++		.cfg.min = V4L2_STATELESS_H264_START_CODE_NONE,
++		.cfg.max = V4L2_STATELESS_H264_START_CODE_ANNEX_B,
++		.cfg.def = V4L2_STATELESS_H264_START_CODE_NONE,
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_H264_SLICE_PARAMS,
+@@ -198,9 +204,15 @@ static const struct visl_ctrl_desc visl_
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_HEVC_DECODE_MODE,
++		.cfg.min = V4L2_STATELESS_HEVC_DECODE_MODE_SLICE_BASED,
++		.cfg.max = V4L2_STATELESS_HEVC_DECODE_MODE_FRAME_BASED,
++		.cfg.def = V4L2_STATELESS_HEVC_DECODE_MODE_SLICE_BASED,
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_HEVC_START_CODE,
++		.cfg.min = V4L2_STATELESS_HEVC_START_CODE_NONE,
++		.cfg.max = V4L2_STATELESS_HEVC_START_CODE_ANNEX_B,
++		.cfg.def = V4L2_STATELESS_HEVC_START_CODE_NONE,
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_HEVC_ENTRY_POINT_OFFSETS,
 
 
