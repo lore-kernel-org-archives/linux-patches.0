@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B1C2561DA;
-	Thu, 17 Apr 2025 18:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786C9253333;
+	Thu, 17 Apr 2025 18:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914631; cv=none; b=QJwRE8Qu/o+6IhRzPem+hk79vYo4MZEQuP5iQ0B3h4ZoN+tkLRna5XoDljRiCR5GecrefnEue7IK/Sdy4Lbu3ha5fKNtqcpplR7jMkrBszQWx+OmThoI/CGBtVveiKnUCw6zfbXL6ivv/PSNSVjyN8atQCbxY1wt5JHaUDTdPTo=
+	t=1744914634; cv=none; b=SPt6BC1+JzwRKA8PhxLqoZeKweQWioOneyf/gEjDChOyEeD/rCs/4jK0HaZxYvmnLAZWBnEynE0PTgW/Ev5TPEufhsnvAMEvzMLhwJ+D3+ycwi+Kl9fz39O4jhoMvh9iiU4r8yJU11VwvHRgy3ZCXaUx48JeFX3/KW+JbaE7ys0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914631; c=relaxed/simple;
-	bh=n0+4Igx9QHHX2oP3MKx663ET0CnII0jlUsQhoLPdRbk=;
+	s=arc-20240116; t=1744914634; c=relaxed/simple;
+	bh=bdOSsFAk9Z+6LIfofYlRggDgF1Au7ZCHAo12hFoHLko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsrMXfVU81fLVyQJ+DHSx4wYd4t5pGjiSYqlwW0IOGZnMUj1Qq+UrclfGNJog698uvY73CxQMXyaAelu4BJThYATBi6wVHDvr1qlbEKJtr4Io/crs3kfTt83bLL+SjWcoM5ujsMpNU7zU+/2nDJ/9CWFh48r8rtOog3MaZZNBpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PomymBRE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eGDOB4pTR3/tLAhd4BJZ/v9S6Hkuma0XV7cirAdlHirZyKHh7e+KRxA1DZPbDc8Q3xSbs87ALJHvGHmStx9uMkFcT86g01fHSGJmf0GFR3nBEoiAtxz013jBqXtn28NcxyBo34fDZGj3DDGo6xvh3zyxhAUZR06xUC1INbUWZa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPPICO1s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PomymBRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDDDC4CEE4;
-	Thu, 17 Apr 2025 18:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPPICO1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA698C4CEE4;
+	Thu, 17 Apr 2025 18:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914631;
-	bh=n0+4Igx9QHHX2oP3MKx663ET0CnII0jlUsQhoLPdRbk=;
+	s=korg; t=1744914634;
+	bh=bdOSsFAk9Z+6LIfofYlRggDgF1Au7ZCHAo12hFoHLko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PomymBREaowOu+zvjmdZI96/BPjLWMaUuKWqCK92owjY1OE4AgIk6V7mfe+ptB4GX
-	 jFxlzgyzPenyjOn01/qFmwBySqvqrjCPQiQCn+DyjlS6nNvDB2jj9muHzQ2iZNT8U4
-	 +hObgFLO63UKBfqwZvjDDWAZlvgQyDiJ5QiSL4gE=
+	b=KPPICO1sV5VZIvp4Wp70HyPu7ygI4eOWnGTpJMHYiQWWrrF+pkp/k4x1eCOr2c0SP
+	 XAE6n/6bS7HEy+QFUxjAsIHJMVyI4LIdmBAwwGvB5WCaGAbE02sYLAmooKBCDZy/lR
+	 0hQm2BNeWtd9/oLNnuRIiVdPa7cZMmaSex+FbfQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 249/414] block: make sure ->nr_integrity_segments is cloned in blk_rq_prep_clone
-Date: Thu, 17 Apr 2025 19:50:07 +0200
-Message-ID: <20250417175121.436498042@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.13 250/414] mtd: Add check for devm_kcalloc()
+Date: Thu, 17 Apr 2025 19:50:08 +0200
+Message-ID: <20250417175121.475046227@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,36 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit fc0e982b8a3a169b1c654d9a1aa45bf292943ef2 upstream.
+commit 2aee30bb10d7bad0a60255059c9ce1b84cf0130e upstream.
 
-Make sure ->nr_integrity_segments is cloned in blk_rq_prep_clone(),
-otherwise requests cloned by device-mapper multipath will not have the
-proper nr_integrity_segments values set, then BUG() is hit from
-sg_alloc_table_chained().
+Add a check for devm_kcalloc() to ensure successful allocation.
 
-Fixes: b0fd271d5fba ("block: add request clone interface (v2)")
-Cc: stable@vger.kernel.org
-Cc: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250310115453.2271109-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/mtdpstore.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3310,6 +3310,7 @@ int blk_rq_prep_clone(struct request *rq
- 		rq->special_vec = rq_src->special_vec;
- 	}
- 	rq->nr_phys_segments = rq_src->nr_phys_segments;
-+	rq->nr_integrity_segments = rq_src->nr_integrity_segments;
+--- a/drivers/mtd/mtdpstore.c
++++ b/drivers/mtd/mtdpstore.c
+@@ -423,6 +423,9 @@ static void mtdpstore_notify_add(struct
+ 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
+ 	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
  
- 	if (rq->bio && blk_crypto_rq_bio_prep(rq, rq->bio, gfp_mask) < 0)
- 		goto free_and_out;
++	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
++		return;
++
+ 	/* just support dmesg right now */
+ 	cxt->dev.flags = PSTORE_FLAGS_DMESG;
+ 	cxt->dev.zone.read = mtdpstore_read;
 
 
