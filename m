@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFEB26156F;
-	Thu, 17 Apr 2025 17:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86997256C9E;
+	Thu, 17 Apr 2025 17:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912635; cv=none; b=GTVeOimYrND2FmWJ6OSJLxrSNMftjc3OLrM0Sk5Do6wML3z7+9Oqa59j3BGKYwkY2BSAK1sMJ8MkoLV/JOjo7mOZcd/Su9DUSCd3tZ6Eww1r05DZJPMYN4Vc2PDOmoJEtUqCVKBA6AkpVXjXfZQTx53dcUQZDZ/CoHs7EpA+0Bw=
+	t=1744912638; cv=none; b=qZ8lHsLrnFe5Dlrt1+m8+oXHnw9/E6Q5JFSGh+t6fKEvKa5S8kKHzF45Myh0DoAsoFgGe9TKk5InmfjvLP158IPtqLWY27G4hdGXvVjYem7W16rT4bmhY2d35s6JZjThHk87uN/vriYVGVBwJRpXSTa9hCWh7R19ZaF73b9FODU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912635; c=relaxed/simple;
-	bh=9Ng32IrABKZdVnL4mcbBPgTu+LKskEOTLITBd5Wn58c=;
+	s=arc-20240116; t=1744912638; c=relaxed/simple;
+	bh=O3NgJOtsDf1IZYSN1hbdcSy1nDgR2jnQLi7AsT4TWIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hhVv7fa/ULwBUDGbbCELD2SIkA3GJWu4fOnEoKK9JK6Hntuh/03ugVGauWT95+Q9n25SmvYVdCJ+FM1AMfUuZzwmtYbpDpmHywPQAz/a59MBmmlm6xue9xk9VcVpwtzKyd+cGjqTaMZexwP30kiXWh4LTm+NIL6VqktEWIT4gYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wooh+qK8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qVQKJLtxmNy8WjEc1YEILmwr/t/pTsxfzLuVozeTY/J80GqjZhTBqqkEqGI5nzstC5A4DjB2WFg07mRW1N3Yhn2tdltmKCo7usKz0695+Le/7ozaFA2Uyy94xt81oQWNURgHFoUc8LPCHP5d36Fn617KuB/Fy16xBsFXQIHGGJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhK77mch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wooh+qK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050D6C4CEE4;
-	Thu, 17 Apr 2025 17:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhK77mch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1655EC4CEE4;
+	Thu, 17 Apr 2025 17:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912635;
-	bh=9Ng32IrABKZdVnL4mcbBPgTu+LKskEOTLITBd5Wn58c=;
+	s=korg; t=1744912638;
+	bh=O3NgJOtsDf1IZYSN1hbdcSy1nDgR2jnQLi7AsT4TWIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wooh+qK8hvkwZWXUaRbWiVKor7TUhOhVE+W/UnDR8C+K9H0zHTGr6GVRYEWhH575v
-	 Dk/zAeqcVr6xNHsdKNOw4dVgwj9jwYrP9BuYVnfMp9m57M/OcCEnerYIqRPKWpft+e
-	 Hzli1buW2tmXcpZv1GiUNQmY87nYr5J/TbpOk5G4=
+	b=VhK77mchJkz3u17724WF0yCD8yMsv3/kJhV8XnTlz8+aI74ZRv6QNgjZ+JLI1F6R+
+	 0r++eiJIdzGIYOSliITVQ4rr8zTA2X+3IQI/bjyuMeXIQ6kVFjgk7kr9cJimUzZ8ts
+	 sxOBU9srKXHFNKGzx72m3xjm5qTaFiU7C2UVKE5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,13 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
 	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
 	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 075/449] HID: pidff: Add hid_pidff_init_with_quirks and export as GPL symbol
-Date: Thu, 17 Apr 2025 19:46:03 +0200
-Message-ID: <20250417175120.998587890@linuxfoundation.org>
+Subject: [PATCH 6.14 076/449] HID: pidff: Add FIX_WHEEL_DIRECTION quirk
+Date: Thu, 17 Apr 2025 19:46:04 +0200
+Message-ID: <20250417175121.036774297@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -58,81 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 36de0164bbaff1484288e84ac5df5cff00580263 ]
+[ Upstream commit 3051bf5ec773b803c474ea556b57d678a8885be3 ]
 
-This lays out a way to provide an initial set of quirks to enable before
-device initialization takes place. GPL symbol export needed for the
-possibility of building HID drivers which use this function as modules.
+Most steering wheels simply ignore DIRECTION field, but some try to be
+compliant with the PID standard and use it in force calculations. Games
+often ignore setting this field properly and/or there can be issues with
+dinput8 -> wine -> SDL -> Linux API translation, and this value can be
+incorrect. This can lead to partial/complete loss of Force Feedback or
+even unexpected force reversal.
 
-Adding a wrapper function to ensure compatibility with the old behavior
-of hid_pidff_init.
+Sadly, this quirk can't be detected automatically without sending out
+effects that would move an axis.
+
+This fixes FFB on Moza Racing devices and others where effect direction
+is not simply ignored.
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Reviewed-by: Michał Kopeć <michal@nozomi.space>
 Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 15 ++++++++++++++-
- include/linux/hid.h            |  2 ++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/hid/usbhid/hid-pidff.c | 12 +++++++++---
+ include/linux/hid.h            |  1 +
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 5a57ba0d7026a..b8c2ba0a930c2 100644
+index b8c2ba0a930c2..a37cf852a2836 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -1268,8 +1268,9 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
+@@ -137,6 +137,9 @@ static const u8 pidff_block_load_status[] = { 0x8c, 0x8d };
+ #define PID_EFFECT_STOP		1
+ static const u8 pidff_effect_operation_status[] = { 0x79, 0x7b };
  
- /*
-  * Check if the device is PID and initialize it
-+ * Set initial quirks
-  */
--int hid_pidff_init(struct hid_device *hid)
-+int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
- {
- 	struct pidff_device *pidff;
- 	struct hid_input *hidinput = list_entry(hid->inputs.next,
-@@ -1291,6 +1292,7 @@ int hid_pidff_init(struct hid_device *hid)
- 		return -ENOMEM;
- 
- 	pidff->hid = hid;
-+	pidff->quirks = initial_quirks;
- 
- 	hid_device_io_start(hid);
- 
-@@ -1369,3 +1371,14 @@ int hid_pidff_init(struct hid_device *hid)
- 	kfree(pidff);
- 	return error;
- }
-+EXPORT_SYMBOL_GPL(hid_pidff_init_with_quirks);
++/* Polar direction 90 degrees (North) */
++#define PIDFF_FIXED_WHEEL_DIRECTION	0x4000
 +
-+/*
-+ * Check if the device is PID and initialize it
-+ * Wrapper made to keep the compatibility with old
-+ * init function
-+ */
-+int hid_pidff_init(struct hid_device *hid)
-+{
-+	return hid_pidff_init_with_quirks(hid, 0);
-+}
+ struct pidff_usage {
+ 	struct hid_field *field;
+ 	s32 *value;
+@@ -328,9 +331,12 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 	pidff->set_effect[PID_GAIN].value[0] =
+ 		pidff->set_effect[PID_GAIN].field->logical_maximum;
+ 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
+-	pidff->effect_direction->value[0] =
+-		pidff_rescale(effect->direction, 0xffff,
+-				pidff->effect_direction);
++
++	/* Use fixed direction if needed */
++	pidff->effect_direction->value[0] = pidff_rescale(
++		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
++		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
++		0xffff, pidff->effect_direction);
+ 
+ 	/* Omit setting delay field if it's missing */
+ 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
 diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 89a4dee377292..31dfe9ed5394b 100644
+index 31dfe9ed5394b..7a55accf689e0 100644
 --- a/include/linux/hid.h
 +++ b/include/linux/hid.h
-@@ -1224,8 +1224,10 @@ void hid_quirks_exit(__u16 bus);
+@@ -1234,6 +1234,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
+ #define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
+ #define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
+ #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
++#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
  
- #ifdef CONFIG_HID_PID
- int hid_pidff_init(struct hid_device *hid);
-+int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
- #else
- #define hid_pidff_init NULL
-+#define hid_pidff_init_with_quirks NULL
- #endif
+ #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
  
- /* HID PIDFF quirks */
 -- 
 2.39.5
 
