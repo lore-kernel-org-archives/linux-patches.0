@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979D8256C61;
-	Thu, 17 Apr 2025 18:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22F21DB148;
+	Thu, 17 Apr 2025 18:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913322; cv=none; b=EbWVzws1g3UMe659fk4suon0W4Ak190GsFQg/jI+JaNZMi1t3zhA619CYUM1cUEB0bwXhG6UYmiI2jmZhdx5jb/qmG+w5z/MS+ci32OzkyO7FeL/PeK925BbB/LTEfaNTBHl08ubMgqvZXZH5eFciT37zjaQsB6VOsVsZrKGPpI=
+	t=1744913325; cv=none; b=kHnGd67twYaOXm/nKKFAa5+brOsVq4HYv/FyNceo4Z1/t8thFlsKbK/aEMZzlqf8B+0F9IufWS0CGXaoL1tSBt6p0UsxweR0vcGQkNXMIug6SQ3LLzraxIFylIVQdcHr/4xulAX9t8eP5+3Bx6w2948nN0QDcCBsRoEU8kOXOgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913322; c=relaxed/simple;
-	bh=0To7sJ91rBwZp7lpdSuBFMhypy8JeXsUcvcY3DoqXLY=;
+	s=arc-20240116; t=1744913325; c=relaxed/simple;
+	bh=yzlLD98Q06VDfIndt/iJeME4oXpXcDIPcTTepnoKRVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/0mq95UL5rOxEzDu4fuoqJmZkAfNZNYCFvttFZkIGyvnnRFZlAFge1e5PBm2TVCHdLlZ+ZP6EnEUzfs2e4KcANJsBNKR510AROyUfPtQZZbNlhicnx9mmD2ZvhLGH8jSOWBJo0n97zqG63NvxgxsxNEcPqxBJDEOVCBgugKvQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSo9zIoE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNr5Og6F/bbfntsWs/2GlISDOvBuB3S+GOp/T+149uf7MIyK4IuMx7fK+u17SfLFdtjZA8KnxuEoLj/5eC0cJj2Sx2zI9PQweeR7ZaZLH13tfiSEDyPHNIbd+u5mXg1inb7NViDNS6/Yez/lrOQP+cqJ36aoq6bnZzXglVVLK9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjen5bcx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSo9zIoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E91C4CEE4;
-	Thu, 17 Apr 2025 18:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjen5bcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193FEC4CEE4;
+	Thu, 17 Apr 2025 18:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913322;
-	bh=0To7sJ91rBwZp7lpdSuBFMhypy8JeXsUcvcY3DoqXLY=;
+	s=korg; t=1744913325;
+	bh=yzlLD98Q06VDfIndt/iJeME4oXpXcDIPcTTepnoKRVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSo9zIoEgsbw822XwWE5esZ04CL+FFJjhnKUdhTp60ZbooB546kPFQir21OQglvtd
-	 su/bjdnsI6ScGf9BM2cYEIvIZxGsWmsDeTQlkioRB4QNy5SJTH/qOlHjGqQX1ezoKK
-	 hvIB2bBuqKmOTes4K8nHTd3QiJQaOS77eNdTuSms=
+	b=qjen5bcxBjnPOcR87FEX19BGICJIiEn3eOVmB8UR647Ur7Oidz94hS3mYvkIhT/5J
+	 mnX8jtfZ3m4CsSO9JEW7tZdGGzGwgkTRAnnoFpFDyDvdahdy6huPJuOVOvENs+U3Da
+	 Y8ipFfGJ9nqjpQJyBy34gaBUrRokjbJwt4E0azD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 260/449] media: i2c: imx319: Rectify runtime PM handling probe and remove
-Date: Thu, 17 Apr 2025 19:49:08 +0200
-Message-ID: <20250417175128.474572810@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 294/449] ASoC: q6apm: add q6apm_get_hw_pointer helper
+Date: Thu, 17 Apr 2025 19:49:42 +0200
+Message-ID: <20250417175129.916414061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,59 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit 5f5ffd3bc62b2e6c478061918b10473d8b90ac2d upstream.
+commit 0badb5432fd525a00db5630c459b635e9d47f445 upstream.
 
-Idle the device only after the async sub-device has been successfully
-registered. In error handling, set the device's runtime PM status to
-suspended only if it has been set to active previously in probe.
+Implement an helper function in q6apm to be able to read the current
+hardware pointer for both read and write buffers.
 
-Also set the device's runtime PM status to suspended in remove only if it
-wasn't so already.
+This should help q6apm-dai to get the hardware pointer consistently
+without it doing manual calculation, which could go wrong in some race
+conditions.
 
-Fixes: 8a89dc62f28c ("media: add imx319 camera sensor driver")
-Cc: stable@vger.kernel.org # for >= v6.12
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://patch.msgid.link/20250314174800.10142-3-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx319.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm.c |   18 +++++++++++++++++-
+ sound/soc/qcom/qdsp6/q6apm.h |    3 +++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/media/i2c/imx319.c
-+++ b/drivers/media/i2c/imx319.c
-@@ -2442,17 +2442,19 @@ static int imx319_probe(struct i2c_clien
- 	if (full_power)
- 		pm_runtime_set_active(&client->dev);
- 	pm_runtime_enable(&client->dev);
--	pm_runtime_idle(&client->dev);
- 
- 	ret = v4l2_async_register_subdev_sensor(&imx319->sd);
- 	if (ret < 0)
- 		goto error_media_entity_pm;
- 
-+	pm_runtime_idle(&client->dev);
-+
- 	return 0;
- 
- error_media_entity_pm:
- 	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	if (full_power)
-+		pm_runtime_set_suspended(&client->dev);
- 	media_entity_cleanup(&imx319->sd.entity);
- 
- error_handler_free:
-@@ -2474,7 +2476,8 @@ static void imx319_remove(struct i2c_cli
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 
- 	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev))
-+		pm_runtime_set_suspended(&client->dev);
- 
- 	mutex_destroy(&imx319->mutex);
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -494,6 +494,19 @@ int q6apm_read(struct q6apm_graph *graph
  }
+ EXPORT_SYMBOL_GPL(q6apm_read);
+ 
++int q6apm_get_hw_pointer(struct q6apm_graph *graph, int dir)
++{
++	struct audioreach_graph_data *data;
++
++	if (dir == SNDRV_PCM_STREAM_PLAYBACK)
++		data = &graph->rx_data;
++	else
++		data = &graph->tx_data;
++
++	return (int)atomic_read(&data->hw_ptr);
++}
++EXPORT_SYMBOL_GPL(q6apm_get_hw_pointer);
++
+ static int graph_callback(struct gpr_resp_pkt *data, void *priv, int op)
+ {
+ 	struct data_cmd_rsp_rd_sh_mem_ep_data_buffer_done_v2 *rd_done;
+@@ -520,7 +533,8 @@ static int graph_callback(struct gpr_res
+ 		done = data->payload;
+ 		phys = graph->rx_data.buf[token].phys;
+ 		mutex_unlock(&graph->lock);
+-
++		/* token numbering starts at 0 */
++		atomic_set(&graph->rx_data.hw_ptr, token + 1);
+ 		if (lower_32_bits(phys) == done->buf_addr_lsw &&
+ 		    upper_32_bits(phys) == done->buf_addr_msw) {
+ 			graph->result.opcode = hdr->opcode;
+@@ -553,6 +567,8 @@ static int graph_callback(struct gpr_res
+ 		rd_done = data->payload;
+ 		phys = graph->tx_data.buf[hdr->token].phys;
+ 		mutex_unlock(&graph->lock);
++		/* token numbering starts at 0 */
++		atomic_set(&graph->tx_data.hw_ptr, hdr->token + 1);
+ 
+ 		if (upper_32_bits(phys) == rd_done->buf_addr_msw &&
+ 		    lower_32_bits(phys) == rd_done->buf_addr_lsw) {
+--- a/sound/soc/qcom/qdsp6/q6apm.h
++++ b/sound/soc/qcom/qdsp6/q6apm.h
+@@ -2,6 +2,7 @@
+ #ifndef __Q6APM_H__
+ #define __Q6APM_H__
+ #include <linux/types.h>
++#include <linux/atomic.h>
+ #include <linux/slab.h>
+ #include <linux/wait.h>
+ #include <linux/kernel.h>
+@@ -77,6 +78,7 @@ struct audioreach_graph_data {
+ 	uint32_t num_periods;
+ 	uint32_t dsp_buf;
+ 	uint32_t mem_map_handle;
++	atomic_t hw_ptr;
+ };
+ 
+ struct audioreach_graph {
+@@ -150,4 +152,5 @@ int q6apm_enable_compress_module(struct
+ int q6apm_remove_initial_silence(struct device *dev, struct q6apm_graph *graph, uint32_t samples);
+ int q6apm_remove_trailing_silence(struct device *dev, struct q6apm_graph *graph, uint32_t samples);
+ int q6apm_set_real_module_id(struct device *dev, struct q6apm_graph *graph, uint32_t codec_id);
++int q6apm_get_hw_pointer(struct q6apm_graph *graph, int dir);
+ #endif /* __APM_GRAPH_ */
 
 
