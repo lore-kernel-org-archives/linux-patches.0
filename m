@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AB62571A1;
-	Thu, 17 Apr 2025 18:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C61D257448;
+	Thu, 17 Apr 2025 18:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916081; cv=none; b=DdVV5PU9H2t2FmpDtcfob2XtNbhZgr3lmvyqmrgWTpzAjNJN5gfmnY2Mn9jnaCw1Xe6KMA2T807y61SSvPIi0oohVoF+3L0dijWUpdlwYQ/k9YlAT3s/6MC9MEs/5qnLIb5Qi5mMjMMmpHN3r2KgmCpj0iN7SNHKhRsH+I9W+cI=
+	t=1744916084; cv=none; b=gOOdX6y+pQAJd9DW7Ygnst3e9jqQTVlmgljyuKCcFviY3EMQHErY/Xu9wpRMn+OIcr6V/SdEWwZmmPQYhUn9uNBytNTe9kgw1E+OCfyO1t5e3D5yiPbRIB/pg/VJ0jZqtvnS2TXfkWmMpH/sUNI4v4X/6jGlzIV4G/+wFBmx4tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916081; c=relaxed/simple;
-	bh=bq3G0NEY5M9Q10gviG2V9czPkmVTVdakwmLBsnn0YqM=;
+	s=arc-20240116; t=1744916084; c=relaxed/simple;
+	bh=5esZfmXJvS8yYdlLk+W8IHVMzZ/I2KUKepSmMJw4ym0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzvB6mny9mXKbebH7CD9OqsIsIBxQ4R/nUnL6wM9KZEyVtzJmsiE7T4/JxWWQ8IteV21DpA5nNmL5G078dWw7komgqPzREfwqdfCncEYkFp7zeK854AWaO1LugL+JxpdU6wqFvmjWTHgucMCpawh0FGhOF/0iq6kxH4yCEeOfvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQsGR2Yz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZu4otOsaw5+N5BHQCJ7BxaIzh+sKvi1JvoqxKL832B0Um7/YU7GPSNB0WJky+bU2PyP/2OR543fIH37V9lXm/EDCY4xNS+fmkP2G9LFZKkGyEp2pUV9AKQ7vkIgqjm0L/IMKzs5i/e7peDNKXBzOjVLWxVuIe1R19jEt3ShLgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PLaAEi8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQsGR2Yz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E6BC4CEE7;
-	Thu, 17 Apr 2025 18:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PLaAEi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855C1C4CEE7;
+	Thu, 17 Apr 2025 18:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916080;
-	bh=bq3G0NEY5M9Q10gviG2V9czPkmVTVdakwmLBsnn0YqM=;
+	s=korg; t=1744916083;
+	bh=5esZfmXJvS8yYdlLk+W8IHVMzZ/I2KUKepSmMJw4ym0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQsGR2Yzws4hgVvQ4aU1M+ADt/RFP2h6hJiQ7H5IxadwjWnwQNU/K7/IPnIoN2SXr
-	 pA+Ywssu0vY+9WVOPyqblGERvmDxtPk1I8Qc6z+NrUZzlOTyfVoJ+kdngz9xsplHLY
-	 0WhyOnGb3VI49TNOGVwsS5jikEpNZ6MFvQBT+YpA=
+	b=2PLaAEi8kmjqG2V7CniXiy3Q2tNAOdztFJkRip/Tnjy3K65XEgRrEl5BwY1ukyKtE
+	 HGa4fbZqKCJtca9XuafEVq3dX570Rkskd6mhy43MjP5C7BUrvtcS7biVB7x3r+qH9E
+	 0CghFFv++/u1lWgi6JCBNCjgAgIRw1oFmNUst6AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.12 336/393] dt-bindings: coresight: qcom,coresight-tpdm: Fix too many reg
-Date: Thu, 17 Apr 2025 19:52:25 +0200
-Message-ID: <20250417175121.115598455@linuxfoundation.org>
+	zhoumin <teczm@foxmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 337/393] ftrace: Add cond_resched() to ftrace_graph_set_hash()
+Date: Thu, 17 Apr 2025 19:52:26 +0200
+Message-ID: <20250417175121.154118091@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,36 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: zhoumin <teczm@foxmail.com>
 
-commit 1e4e454223f770748775f211455513c79cb3121e upstream.
+commit 42ea22e754ba4f2b86f8760ca27f6f71da2d982c upstream.
 
-Binding listed variable number of IO addresses without defining them,
-however example DTS code, all in-tree DTS and Linux kernel driver
-mention only one address space, so drop the second to make binding
-precise and correctly describe the hardware.
+When the kernel contains a large number of functions that can be traced,
+the loop in ftrace_graph_set_hash() may take a lot of time to execute.
+This may trigger the softlockup watchdog.
 
-Fixes: 6c781a35133d ("dt-bindings: arm: Add CoreSight TPDM hardware")
+Add cond_resched() within the loop to allow the kernel to remain
+responsive even when processing a large number of functions.
+
+This matches the cond_resched() that is used in other locations of the
+code that iterates over all functions that can be traced.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250226112914.94361-2-krzysztof.kozlowski@linaro.org
+Fixes: b9b0c831bed26 ("ftrace: Convert graph filter to use hash tables")
+Link: https://lore.kernel.org/tencent_3E06CE338692017B5809534B9C5C03DA7705@qq.com
+Signed-off-by: zhoumin <teczm@foxmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/trace/ftrace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-@@ -41,8 +41,7 @@ properties:
-       - const: arm,primecell
- 
-   reg:
--    minItems: 1
--    maxItems: 2
-+    maxItems: 1
- 
-   qcom,dsb-element-bits:
-     description:
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -6848,6 +6848,7 @@ ftrace_graph_set_hash(struct ftrace_hash
+ 				}
+ 			}
+ 		}
++		cond_resched();
+ 	} while_for_each_ftrace_rec();
+ out:
+ 	mutex_unlock(&ftrace_lock);
 
 
