@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8666F2566F2;
-	Thu, 17 Apr 2025 17:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABF7256C6A;
+	Thu, 17 Apr 2025 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912548; cv=none; b=ds+hU163pG3aLRDvsVF5Ay6yVLWfHgIh/e1v/gnMy32TZF0Hf1wIddiYvEZnQgIcPM59vggT7TeN9jaaTnHd6BRE3UDnwFyi2afQT04VMg/K+cUdB7m0Z7bh2EM4xQoTlMVHclmLiWHOl7UWtWdG1PR3p97kWyG8xVZ3gShUNmE=
+	t=1744912551; cv=none; b=ZJAz9qKJgApAGnuUGHGcNGbEImnvSladssMDhWIwrtvCQKTuo3Z6IUDM67ocV0yl/kVEMKagXW8SJ/MYGovQxH0bzqED5QqxdAg/6bSDV8Dkn2tGIzlBUQdW1JkqxCsWXT+gZzQc0PLv+nn1ixsfRbhpLTlqK3TEp+2CfJA28kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912548; c=relaxed/simple;
-	bh=luoE9Bo6UNX5a1ZbWn06Gc6LwjTyF3LZgTQVmcLQWJ8=;
+	s=arc-20240116; t=1744912551; c=relaxed/simple;
+	bh=nzMKksT/W74aNxQ5uoaGHDgtWz1HGao/6rluH5qB4Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7weBK/dYM03HdhsWvMpO0dSMovE/bHdLwYer6afsSIrNfdr1xxdwk7Tm+/RBdWcd+EFvFPzQMv+1CBxclRNL5aBb8+aBs1PdV+8uQdU/qA+48QaVKjos/abmcynChMEhbtWVUiPFTvHbZp+JXD2fwql8mehDmUy2vrIZk0dGnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7AOSf4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lST36C+1a5lSgyi0oQiGvg9C8JYybNjJoQ/SKw/qnJVonKKGvRIBPoxg+2pMFckcOP5oHcpPc8W+eKpgyA+49cuRG0ogctYAFVbBiDXr6T2d5Ero3kGejAFsMsEefNWnvwRFtqr/Pt0d7HO5oWqpatJV3dohvR4eG7c9i35o6uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwSxSs5F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7AOSf4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B62C4CEE4;
-	Thu, 17 Apr 2025 17:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwSxSs5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C56EC4CEE4;
+	Thu, 17 Apr 2025 17:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912548;
-	bh=luoE9Bo6UNX5a1ZbWn06Gc6LwjTyF3LZgTQVmcLQWJ8=;
+	s=korg; t=1744912551;
+	bh=nzMKksT/W74aNxQ5uoaGHDgtWz1HGao/6rluH5qB4Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7AOSf4k2gbyNw7R9VXfO+yojD+QEfNgjv8srTQTktd4QmnE1Hw7/Mk/sgC6JSLiK
-	 IMTuTEjV316nxU+LxbQ5XnRSzMnNuPgSEQk5DFIb7zw/Jx4CB2JMmc4GNzOhO3fkT+
-	 WSYI3uVGuUreP2Pkp0gaIvgwi1WBWQP1nVYtkNMs=
+	b=WwSxSs5F5iM+jABwlc25KSXhb3mX7wWm65NAxA0I+CvTTIRmru2MnWfWMc17e6Yzb
+	 vvBYpSUta5M4p0fL9OXZqXasUGLfyw4qmLu+ZKEzxVn2GJVHebYMk8S7O6L2pVPMjo
+	 mt3V03/Tv9pdcuAsW5oUHrGJ+O+lkwawuk+sXu5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Yi Lai" <yi1.lai@linux.intel.com>,
+	syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com,
+	Frederic Weisbecker <frederic@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 047/449] perf/core: Simplify the perf_event_alloc() error path
-Date: Thu, 17 Apr 2025 19:45:35 +0200
-Message-ID: <20250417175119.882465385@linuxfoundation.org>
+Subject: [PATCH 6.14 048/449] perf: Fix hang while freeing sigtrap event
+Date: Thu, 17 Apr 2025 19:45:36 +0200
+Message-ID: <20250417175119.919923687@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,326 +53,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit c70ca298036c58a88686ff388d3d367e9d21acf0 ]
+[ Upstream commit 56799bc035658738f362acec3e7647bb84e68933 ]
 
-The error cleanup sequence in perf_event_alloc() is a subset of the
-existing _free_event() function (it must of course be).
+Perf can hang while freeing a sigtrap event if a related deferred
+signal hadn't managed to be sent before the file got closed:
 
-Split this out into __free_event() and simplify the error path.
+perf_event_overflow()
+   task_work_add(perf_pending_task)
 
+fput()
+   task_work_add(____fput())
+
+task_work_run()
+    ____fput()
+        perf_release()
+            perf_event_release_kernel()
+                _free_event()
+                    perf_pending_task_sync()
+                        task_work_cancel() -> FAILED
+                        rcuwait_wait_event()
+
+Once task_work_run() is running, the list of pending callbacks is
+removed from the task_struct and from this point on task_work_cancel()
+can't remove any pending and not yet started work items, hence the
+task_work_cancel() failure and the hang on rcuwait_wait_event().
+
+Task work could be changed to remove one work at a time, so a work
+running on the current task can always cancel a pending one, however
+the wait / wake design is still subject to inverted dependencies when
+remote targets are involved, as pictured by Oleg:
+
+T1                                                      T2
+
+fd = perf_event_open(pid => T2->pid);                  fd = perf_event_open(pid => T1->pid);
+close(fd)                                              close(fd)
+    <IRQ>                                                  <IRQ>
+    perf_event_overflow()                                  perf_event_overflow()
+       task_work_add(perf_pending_task)                        task_work_add(perf_pending_task)
+    </IRQ>                                                 </IRQ>
+    fput()                                                 fput()
+        task_work_add(____fput())                              task_work_add(____fput())
+
+    task_work_run()                                        task_work_run()
+        ____fput()                                             ____fput()
+            perf_release()                                         perf_release()
+                perf_event_release_kernel()                            perf_event_release_kernel()
+                    _free_event()                                          _free_event()
+                        perf_pending_task_sync()                               perf_pending_task_sync()
+                            rcuwait_wait_event()                                   rcuwait_wait_event()
+
+Therefore the only option left is to acquire the event reference count
+upon queueing the perf task work and release it from the task work, just
+like it was done before 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+but without the leaks it fixed.
+
+Some adjustments are necessary to make it work:
+
+* A child event might dereference its parent upon freeing. Care must be
+  taken to release the parent last.
+
+* Some places assuming the event doesn't have any reference held and
+  therefore can be freed right away must instead put the reference and
+  let the reference counting to its job.
+
+Reported-by: "Yi Lai" <yi1.lai@linux.intel.com>
+Closes: https://lore.kernel.org/all/Zx9Losv4YcJowaP%2F@ly-workstation/
+Reported-by: syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/673adf75.050a0220.87769.0024.GAE@google.com/
+Fixes: 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20241104135517.967889521@infradead.org
-Stable-dep-of: 56799bc03565 ("perf: Fix hang while freeing sigtrap event")
+Link: https://lkml.kernel.org/r/20250304135446.18905-1-frederic@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/perf_event.h |  16 +++--
- kernel/events/core.c       | 138 ++++++++++++++++++-------------------
- 2 files changed, 78 insertions(+), 76 deletions(-)
+ include/linux/perf_event.h |  1 -
+ kernel/events/core.c       | 64 +++++++++++---------------------------
+ 2 files changed, 18 insertions(+), 47 deletions(-)
 
 diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index bcb764c3a8034..677f80249458e 100644
+index 677f80249458e..93ea9c6672f0e 100644
 --- a/include/linux/perf_event.h
 +++ b/include/linux/perf_event.h
-@@ -673,13 +673,15 @@ struct swevent_hlist {
- 	struct rcu_head			rcu_head;
- };
+@@ -833,7 +833,6 @@ struct perf_event {
+ 	struct irq_work			pending_disable_irq;
+ 	struct callback_head		pending_task;
+ 	unsigned int			pending_work;
+-	struct rcuwait			pending_work_wait;
  
--#define PERF_ATTACH_CONTEXT	0x01
--#define PERF_ATTACH_GROUP	0x02
--#define PERF_ATTACH_TASK	0x04
--#define PERF_ATTACH_TASK_DATA	0x08
--#define PERF_ATTACH_ITRACE	0x10
--#define PERF_ATTACH_SCHED_CB	0x20
--#define PERF_ATTACH_CHILD	0x40
-+#define PERF_ATTACH_CONTEXT	0x0001
-+#define PERF_ATTACH_GROUP	0x0002
-+#define PERF_ATTACH_TASK	0x0004
-+#define PERF_ATTACH_TASK_DATA	0x0008
-+#define PERF_ATTACH_ITRACE	0x0010
-+#define PERF_ATTACH_SCHED_CB	0x0020
-+#define PERF_ATTACH_CHILD	0x0040
-+#define PERF_ATTACH_EXCLUSIVE	0x0080
-+#define PERF_ATTACH_CALLCHAIN	0x0100
+ 	atomic_t			event_limit;
  
- struct bpf_prog;
- struct perf_cgroup;
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index f6cf17929bb98..3a69e816d6f12 100644
+index 3a69e816d6f12..ee6b7281a1994 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -5253,6 +5253,8 @@ static int exclusive_event_init(struct perf_event *event)
- 			return -EBUSY;
- 	}
+@@ -5303,30 +5303,6 @@ static bool exclusive_event_installable(struct perf_event *event,
+ static void perf_addr_filters_splice(struct perf_event *event,
+ 				       struct list_head *head);
  
-+	event->attach_state |= PERF_ATTACH_EXCLUSIVE;
-+
- 	return 0;
- }
- 
-@@ -5260,14 +5262,13 @@ static void exclusive_event_destroy(struct perf_event *event)
- {
- 	struct pmu *pmu = event->pmu;
- 
--	if (!is_exclusive_pmu(pmu))
+-static void perf_pending_task_sync(struct perf_event *event)
+-{
+-	struct callback_head *head = &event->pending_task;
+-
+-	if (!event->pending_work)
 -		return;
+-	/*
+-	 * If the task is queued to the current task's queue, we
+-	 * obviously can't wait for it to complete. Simply cancel it.
+-	 */
+-	if (task_work_cancel(current, head)) {
+-		event->pending_work = 0;
+-		local_dec(&event->ctx->nr_no_switch_fast);
+-		return;
+-	}
 -
- 	/* see comment in exclusive_event_init() */
- 	if (event->attach_state & PERF_ATTACH_TASK)
- 		atomic_dec(&pmu->exclusive_cnt);
- 	else
- 		atomic_inc(&pmu->exclusive_cnt);
-+
-+	event->attach_state &= ~PERF_ATTACH_EXCLUSIVE;
- }
- 
- static bool exclusive_event_match(struct perf_event *e1, struct perf_event *e2)
-@@ -5326,40 +5327,20 @@ static void perf_pending_task_sync(struct perf_event *event)
- 	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
- }
- 
--static void _free_event(struct perf_event *event)
-+/* vs perf_event_alloc() error */
-+static void __free_event(struct perf_event *event)
+-	/*
+-	 * All accesses related to the event are within the same RCU section in
+-	 * perf_pending_task(). The RCU grace period before the event is freed
+-	 * will make sure all those accesses are complete by then.
+-	 */
+-	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
+-}
+-
+ /* vs perf_event_alloc() error */
+ static void __free_event(struct perf_event *event)
  {
--	irq_work_sync(&event->pending_irq);
--	irq_work_sync(&event->pending_disable_irq);
+@@ -5379,7 +5355,6 @@ static void _free_event(struct perf_event *event)
+ {
+ 	irq_work_sync(&event->pending_irq);
+ 	irq_work_sync(&event->pending_disable_irq);
 -	perf_pending_task_sync(event);
-+	if (event->attach_state & PERF_ATTACH_CALLCHAIN)
-+		put_callchain_buffers();
  
--	unaccount_event(event);
-+	kfree(event->addr_filter_ranges);
+ 	unaccount_event(event);
  
--	security_perf_event_free(event);
--
--	if (event->rb) {
--		/*
--		 * Can happen when we close an event with re-directed output.
--		 *
--		 * Since we have a 0 refcount, perf_mmap_close() will skip
--		 * over us; possibly making our ring_buffer_put() the last.
--		 */
--		mutex_lock(&event->mmap_mutex);
--		ring_buffer_attach(event, NULL);
--		mutex_unlock(&event->mmap_mutex);
--	}
-+	if (event->attach_state & PERF_ATTACH_EXCLUSIVE)
-+		exclusive_event_destroy(event);
+@@ -5472,10 +5447,17 @@ static void perf_remove_from_owner(struct perf_event *event)
  
- 	if (is_cgroup_event(event))
- 		perf_detach_cgroup(event);
+ static void put_event(struct perf_event *event)
+ {
++	struct perf_event *parent;
++
+ 	if (!atomic_long_dec_and_test(&event->refcount))
+ 		return;
  
--	if (!event->parent) {
--		if (event->attr.sample_type & PERF_SAMPLE_CALLCHAIN)
--			put_callchain_buffers();
--	}
--
--	perf_event_free_bpf_prog(event);
--	perf_addr_filters_splice(event, NULL);
--	kfree(event->addr_filter_ranges);
--
- 	if (event->destroy)
- 		event->destroy(event);
- 
-@@ -5370,22 +5351,58 @@ static void _free_event(struct perf_event *event)
- 	if (event->hw.target)
- 		put_task_struct(event->hw.target);
- 
--	if (event->pmu_ctx)
-+	if (event->pmu_ctx) {
-+		/*
-+		 * put_pmu_ctx() needs an event->ctx reference, because of
-+		 * epc->ctx.
-+		 */
-+		WARN_ON_ONCE(!event->ctx);
-+		WARN_ON_ONCE(event->pmu_ctx->ctx != event->ctx);
- 		put_pmu_ctx(event->pmu_ctx);
-+	}
- 
- 	/*
--	 * perf_event_free_task() relies on put_ctx() being 'last', in particular
--	 * all task references must be cleaned up.
-+	 * perf_event_free_task() relies on put_ctx() being 'last', in
-+	 * particular all task references must be cleaned up.
- 	 */
- 	if (event->ctx)
- 		put_ctx(event->ctx);
- 
--	exclusive_event_destroy(event);
--	module_put(event->pmu->module);
-+	if (event->pmu)
-+		module_put(event->pmu->module);
- 
- 	call_rcu(&event->rcu_head, free_event_rcu);
++	parent = event->parent;
+ 	_free_event(event);
++
++	/* Matches the refcount bump in inherit_event() */
++	if (parent)
++		put_event(parent);
  }
  
-+/* vs perf_event_alloc() success */
-+static void _free_event(struct perf_event *event)
-+{
-+	irq_work_sync(&event->pending_irq);
-+	irq_work_sync(&event->pending_disable_irq);
-+	perf_pending_task_sync(event);
-+
-+	unaccount_event(event);
-+
-+	security_perf_event_free(event);
-+
-+	if (event->rb) {
-+		/*
-+		 * Can happen when we close an event with re-directed output.
-+		 *
-+		 * Since we have a 0 refcount, perf_mmap_close() will skip
-+		 * over us; possibly making our ring_buffer_put() the last.
-+		 */
-+		mutex_lock(&event->mmap_mutex);
-+		ring_buffer_attach(event, NULL);
-+		mutex_unlock(&event->mmap_mutex);
-+	}
-+
-+	perf_event_free_bpf_prog(event);
-+	perf_addr_filters_splice(event, NULL);
-+
-+	__free_event(event);
-+}
-+
  /*
-  * Used to free events which have a known refcount of 1, such as in error paths
-  * where the event isn't exposed yet and inherited events.
-@@ -12056,8 +12073,10 @@ static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
- 			event->destroy(event);
- 	}
- 
--	if (ret)
-+	if (ret) {
-+		event->pmu = NULL;
- 		module_put(pmu->module);
-+	}
- 
- 	return ret;
- }
-@@ -12385,7 +12404,7 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 	 * See perf_output_read().
- 	 */
- 	if (has_inherit_and_sample_read(attr) && !(attr->sample_type & PERF_SAMPLE_TID))
--		goto err_ns;
-+		goto err;
- 
- 	if (!has_branch_stack(event))
- 		event->attr.branch_sample_type = 0;
-@@ -12393,7 +12412,7 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 	pmu = perf_init_event(event);
- 	if (IS_ERR(pmu)) {
- 		err = PTR_ERR(pmu);
--		goto err_ns;
-+		goto err;
- 	}
- 
- 	/*
-@@ -12403,25 +12422,25 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 	 */
- 	if (pmu->task_ctx_nr == perf_invalid_context && (task || cgroup_fd != -1)) {
- 		err = -EINVAL;
--		goto err_pmu;
-+		goto err;
- 	}
- 
- 	if (event->attr.aux_output &&
- 	    (!(pmu->capabilities & PERF_PMU_CAP_AUX_OUTPUT) ||
- 	     event->attr.aux_pause || event->attr.aux_resume)) {
- 		err = -EOPNOTSUPP;
--		goto err_pmu;
-+		goto err;
- 	}
- 
- 	if (event->attr.aux_pause && event->attr.aux_resume) {
- 		err = -EINVAL;
--		goto err_pmu;
-+		goto err;
- 	}
- 
- 	if (event->attr.aux_start_paused) {
- 		if (!(pmu->capabilities & PERF_PMU_CAP_AUX_PAUSE)) {
- 			err = -EOPNOTSUPP;
--			goto err_pmu;
-+			goto err;
+@@ -5559,11 +5541,6 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		if (tmp == child) {
+ 			perf_remove_from_context(child, DETACH_GROUP);
+ 			list_move(&child->child_list, &free_list);
+-			/*
+-			 * This matches the refcount bump in inherit_event();
+-			 * this can't be the last reference.
+-			 */
+-			put_event(event);
+ 		} else {
+ 			var = &ctx->refcount;
  		}
- 		event->hw.aux_paused = 1;
- 	}
-@@ -12429,12 +12448,12 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 	if (cgroup_fd != -1) {
- 		err = perf_cgroup_connect(cgroup_fd, event, attr, group_leader);
- 		if (err)
--			goto err_pmu;
-+			goto err;
- 	}
+@@ -5589,7 +5566,8 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		void *var = &child->ctx->refcount;
  
- 	err = exclusive_event_init(event);
- 	if (err)
--		goto err_pmu;
-+		goto err;
- 
- 	if (has_addr_filter(event)) {
- 		event->addr_filter_ranges = kcalloc(pmu->nr_addr_filters,
-@@ -12442,7 +12461,7 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 						    GFP_KERNEL);
- 		if (!event->addr_filter_ranges) {
- 			err = -ENOMEM;
--			goto err_per_task;
-+			goto err;
- 		}
+ 		list_del(&child->child_list);
+-		free_event(child);
++		/* Last reference unless ->pending_task work is pending */
++		put_event(child);
  
  		/*
-@@ -12467,41 +12486,22 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
- 		if (event->attr.sample_type & PERF_SAMPLE_CALLCHAIN) {
- 			err = get_callchain_buffers(attr->sample_max_stack);
- 			if (err)
--				goto err_addr_filters;
-+				goto err;
-+			event->attach_state |= PERF_ATTACH_CALLCHAIN;
- 		}
+ 		 * Wake any perf_event_free_task() waiting for this event to be
+@@ -5600,7 +5578,11 @@ int perf_event_release_kernel(struct perf_event *event)
  	}
  
- 	err = security_perf_event_alloc(event);
- 	if (err)
--		goto err_callchain_buffer;
-+		goto err;
+ no_ctx:
+-	put_event(event); /* Must be the 'last' reference */
++	/*
++	 * Last reference unless ->pending_task work is pending on this event
++	 * or any of its children.
++	 */
++	put_event(event);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(perf_event_release_kernel);
+@@ -7014,12 +6996,6 @@ static void perf_pending_task(struct callback_head *head)
+ 	struct perf_event *event = container_of(head, struct perf_event, pending_task);
+ 	int rctx;
  
- 	/* symmetric to unaccount_event() in _free_event() */
- 	account_event(event);
+-	/*
+-	 * All accesses to the event must belong to the same implicit RCU read-side
+-	 * critical section as the ->pending_work reset. See comment in
+-	 * perf_pending_task_sync().
+-	 */
+-	rcu_read_lock();
+ 	/*
+ 	 * If we 'fail' here, that's OK, it means recursion is already disabled
+ 	 * and we won't recurse 'further'.
+@@ -7030,9 +7006,8 @@ static void perf_pending_task(struct callback_head *head)
+ 		event->pending_work = 0;
+ 		perf_sigtrap(event);
+ 		local_dec(&event->ctx->nr_no_switch_fast);
+-		rcuwait_wake_up(&event->pending_work_wait);
+ 	}
+-	rcu_read_unlock();
++	put_event(event);
  
- 	return event;
+ 	if (rctx >= 0)
+ 		perf_swevent_put_recursion_context(rctx);
+@@ -9978,6 +9953,7 @@ static int __perf_event_overflow(struct perf_event *event,
+ 		    !task_work_add(current, &event->pending_task, notify_mode)) {
+ 			event->pending_work = pending_id;
+ 			local_inc(&event->ctx->nr_no_switch_fast);
++			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
  
--err_callchain_buffer:
--	if (!event->parent) {
--		if (event->attr.sample_type & PERF_SAMPLE_CALLCHAIN)
--			put_callchain_buffers();
--	}
--err_addr_filters:
--	kfree(event->addr_filter_ranges);
+ 			event->pending_addr = 0;
+ 			if (valid_sample && (data->sample_flags & PERF_SAMPLE_ADDR))
+@@ -12325,7 +12301,6 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+ 	init_irq_work(&event->pending_irq, perf_pending_irq);
+ 	event->pending_disable_irq = IRQ_WORK_INIT_HARD(perf_pending_disable);
+ 	init_task_work(&event->pending_task, perf_pending_task);
+-	rcuwait_init(&event->pending_work_wait);
+ 
+ 	mutex_init(&event->mmap_mutex);
+ 	raw_spin_lock_init(&event->addr_filters.lock);
+@@ -13466,8 +13441,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
+ 		 * Kick perf_poll() for is_event_hup();
+ 		 */
+ 		perf_event_wakeup(parent_event);
+-		free_event(event);
+-		put_event(parent_event);
++		put_event(event);
+ 		return;
+ 	}
+ 
+@@ -13585,13 +13559,11 @@ static void perf_free_event(struct perf_event *event,
+ 	list_del_init(&event->child_list);
+ 	mutex_unlock(&parent->child_mutex);
+ 
+-	put_event(parent);
 -
--err_per_task:
--	exclusive_event_destroy(event);
--
--err_pmu:
--	if (is_cgroup_event(event))
--		perf_detach_cgroup(event);
--	if (event->destroy)
--		event->destroy(event);
--	module_put(pmu->module);
--err_ns:
--	if (event->hw.target)
--		put_task_struct(event->hw.target);
--	call_rcu(&event->rcu_head, free_event_rcu);
--
-+err:
-+	__free_event(event);
- 	return ERR_PTR(err);
+ 	raw_spin_lock_irq(&ctx->lock);
+ 	perf_group_detach(event);
+ 	list_del_event(event, ctx);
+ 	raw_spin_unlock_irq(&ctx->lock);
+-	free_event(event);
++	put_event(event);
  }
  
+ /*
 -- 
 2.39.5
 
