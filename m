@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB66255E2B;
-	Thu, 17 Apr 2025 18:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C89E1EB1BF;
+	Thu, 17 Apr 2025 18:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912983; cv=none; b=GaEWAFOuFtZU5m9liCAUMHlfmeRG7KDswxrspphjWS86n/x/psfBWI8Vq+OrT7aceHDH1SRffaL12FmeOg1z5m9g9T4d5saW+OMrBqei7D/Y0VHAo14mFy6KRqikmwCDSojTYqABnhZe+OrHuJs0YJXKTyVNjrJXFG1jPeZ44gA=
+	t=1744912986; cv=none; b=n3iU4hIOVjg5pJeoYzArPXIhvAMfSUHAWKCNgrF2p6NPGYd+yKbDweYebitxh+huPrOTblMl/MKV0uSpUXwPYZK+TWFOAO/GjQZDTwWdKUu9y9/+tZlFL4W2uCGX48bVhUAyd9KzNO83G6htMc4miAwS0BEEdZk2o0eyBDjCm2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912983; c=relaxed/simple;
-	bh=IaCtLfsWojcIXANOKbMF8kjC/cEuBrybo+yPBbwhBuU=;
+	s=arc-20240116; t=1744912986; c=relaxed/simple;
+	bh=/TMRHWQ+1BzJyqMY6iVmyUsmo805aBY97RErLlZC/Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I1eISoC+vQOhhjY5GXHlUcIdjKlahdu/ZI+xZe3EnCl8sirLC4S3Fvpkrgp665Xk2I0bwu6o1BIAzQSEKY0qnItRH82PmNqNpWrPFK8ZmdijKzMElFXjhbVYHJTOo+EqD4ZsXYw1lgJd4oq+/tO8z588mxrPHa55EnAGh88KogU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9UHZeWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hbDfCddO52s2P9YwxhWjW+kDqoWtj22z17f8CZ3WI94WvUTkwi11FJbjt7FMMrF4Ro2KnXsCRCTck/vyo/xurtnRp4T6/SfZghaqpMV9WVBkfNbbWIk8mqWCYWKvxFRNPihuc696bVZTQw7qYmUEFn6an+20rmXhIDvSSmuw38E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC6ffOQs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9UHZeWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0005C4CEE4;
-	Thu, 17 Apr 2025 18:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC6ffOQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69F2C4CEE4;
+	Thu, 17 Apr 2025 18:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912983;
-	bh=IaCtLfsWojcIXANOKbMF8kjC/cEuBrybo+yPBbwhBuU=;
+	s=korg; t=1744912986;
+	bh=/TMRHWQ+1BzJyqMY6iVmyUsmo805aBY97RErLlZC/Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9UHZeWM3iq5LMFj6j0TIaQEf5Z7vXBZHRGQZrR0xpXgK3s0SOdD9SWQUfK7o2qh+
-	 OiTdBmd48//m+Pudx3MV/mhGp6pzr0fuBE8YjJW6NRiz3F8u69DpeDFDQtu8SRll48
-	 XQ8zbpWA/Us6hjWqrB+XPdyBQHzHii0FIMAd4AA4=
+	b=DC6ffOQswRKGkuWsepiM2nHFMlvdPZ5OGJUNSZCprk4wBehRHTUSgUEMjYfy2ERby
+	 dYIYHFAxZM8LlQNXJW70HF5fQUCX1YY3IlArztCbboXFv6KeHK7/XFTwgMyS9Wt3FF
+	 i1B1o33YUfoydgIglIbA2QOEf+q+7RtF2DGPCe9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 188/449] pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()
-Date: Thu, 17 Apr 2025 19:47:56 +0200
-Message-ID: <20250417175125.541462994@linuxfoundation.org>
+Subject: [PATCH 6.14 189/449] pwm: rcar: Improve register calculation
+Date: Thu, 17 Apr 2025 19:47:57 +0200
+Message-ID: <20250417175125.580206828@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,70 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 7ca59947b5fcf94e7ea4029d1bd0f7c41500a161 ]
+[ Upstream commit e7327c193014a4d8666e9c1cda09cf2c060518e8 ]
 
-With CONFIG_COMPILE_TEST && !CONFIG_HAVE_CLK, pwm_mediatek_config() has a
-divide-by-zero in the following line:
+There were several issues in the function rcar_pwm_set_counter():
 
-	do_div(resolution, clk_get_rate(pc->clk_pwms[pwm->hwpwm]));
+ - The u64 values period_ns and duty_ns were cast to int on function
+   call which might loose bits on 32 bit architectures.
+   Fix: Make parameters to rcar_pwm_set_counter() u64
+ - The algorithm divided by the result of a division which looses
+   precision.
+   Fix: Make use of mul_u64_u64_div_u64()
+ - The calculated values were just masked to fit the respective register
+   fields which again might loose bits.
+   Fix: Explicitly check for overlow
 
-due to the fact that the !CONFIG_HAVE_CLK version of clk_get_rate()
-returns zero.
+Implement the respective fixes.
 
-This is presumably just a theoretical problem: COMPILE_TEST overrides
-the dependency on RALINK which would select COMMON_CLK.  Regardless it's
-a good idea to check for the error explicitly to avoid divide-by-zero.
+A side effect of fixing the 2nd issue is that there is no division by 0
+if clk_get_rate() returns 0.
 
-Fixes the following warning:
-
-  drivers/pwm/pwm-mediatek.o: warning: objtool: .text: unexpected end of section
-
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/fb56444939325cc173e752ba199abd7aeae3bf12.1742852847.git.jpoimboe@kernel.org
-[ukleinek: s/CONFIG_CLK/CONFIG_HAVE_CLK/]
-Fixes: caf065f8fd58 ("pwm: Add MediaTek PWM support")
+Fixes: ed6c1476bf7f ("pwm: Add support for R-Car PWM Timer")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/9e78a0796acba3435553ed7db1c7965dcffa6215.1743501688.git.u.kleine-koenig@baylibre.com
+Link: https://lore.kernel.org/r/ab3dac794b2216cc1cc56d65c93dd164f8bd461b.1743501688.git.u.kleine-koenig@baylibre.com
+[ukleinek: Added an explicit #include <linux/bitfield.h> to please the
+0day build bot]
+Link: https://lore.kernel.org/oe-kbuild-all/202504031354.VJtxScP5-lkp@intel.com/
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mediatek.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-rcar.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
-index 01dfa0fab80a4..7eaab58314995 100644
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -121,21 +121,25 @@ static int pwm_mediatek_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	struct pwm_mediatek_chip *pc = to_pwm_mediatek_chip(chip);
- 	u32 clkdiv = 0, cnt_period, cnt_duty, reg_width = PWMDWIDTH,
- 	    reg_thres = PWMTHRES;
-+	unsigned long clk_rate;
- 	u64 resolution;
- 	int ret;
+diff --git a/drivers/pwm/pwm-rcar.c b/drivers/pwm/pwm-rcar.c
+index 2261789cc27da..578dbdd2d5a72 100644
+--- a/drivers/pwm/pwm-rcar.c
++++ b/drivers/pwm/pwm-rcar.c
+@@ -8,6 +8,7 @@
+  * - The hardware cannot generate a 0% duty cycle.
+  */
  
- 	ret = pwm_mediatek_clk_enable(chip, pwm);
--
- 	if (ret < 0)
- 		return ret;
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+@@ -102,23 +103,24 @@ static void rcar_pwm_set_clock_control(struct rcar_pwm_chip *rp,
+ 	rcar_pwm_write(rp, value, RCAR_PWMCR);
+ }
  
-+	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
-+	if (!clk_rate)
-+		return -EINVAL;
-+
- 	/* Make sure we use the bus clock and not the 26MHz clock */
- 	if (pc->soc->has_ck_26m_sel)
- 		writel(0, pc->regs + PWM_CK_26M_SEL);
+-static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, int duty_ns,
+-				int period_ns)
++static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, u64 duty_ns,
++				u64 period_ns)
+ {
+-	unsigned long long one_cycle, tmp;	/* 0.01 nanoseconds */
++	unsigned long long tmp;
+ 	unsigned long clk_rate = clk_get_rate(rp->clk);
+ 	u32 cyc, ph;
  
- 	/* Using resolution in picosecond gets accuracy higher */
- 	resolution = (u64)NSEC_PER_SEC * 1000;
--	do_div(resolution, clk_get_rate(pc->clk_pwms[pwm->hwpwm]));
-+	do_div(resolution, clk_rate);
+-	one_cycle = NSEC_PER_SEC * 100ULL << div;
+-	do_div(one_cycle, clk_rate);
++	/* div <= 24 == RCAR_PWM_MAX_DIVISION, so the shift doesn't overflow. */
++	tmp = mul_u64_u64_div_u64(period_ns, clk_rate, (u64)NSEC_PER_SEC << div);
++	if (tmp > FIELD_MAX(RCAR_PWMCNT_CYC0_MASK))
++		tmp = FIELD_MAX(RCAR_PWMCNT_CYC0_MASK);
  
- 	cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000, resolution);
- 	while (cnt_period > 8191) {
+-	tmp = period_ns * 100ULL;
+-	do_div(tmp, one_cycle);
+-	cyc = (tmp << RCAR_PWMCNT_CYC0_SHIFT) & RCAR_PWMCNT_CYC0_MASK;
++	cyc = FIELD_PREP(RCAR_PWMCNT_CYC0_MASK, tmp);
+ 
+-	tmp = duty_ns * 100ULL;
+-	do_div(tmp, one_cycle);
+-	ph = tmp & RCAR_PWMCNT_PH0_MASK;
++	tmp = mul_u64_u64_div_u64(duty_ns, clk_rate, (u64)NSEC_PER_SEC << div);
++	if (tmp > FIELD_MAX(RCAR_PWMCNT_PH0_MASK))
++		tmp = FIELD_MAX(RCAR_PWMCNT_PH0_MASK);
++	ph = FIELD_PREP(RCAR_PWMCNT_PH0_MASK, tmp);
+ 
+ 	/* Avoid prohibited setting */
+ 	if (cyc == 0 || ph == 0)
 -- 
 2.39.5
 
