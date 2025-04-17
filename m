@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F851D8DF6;
-	Thu, 17 Apr 2025 18:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97931DE3A8;
+	Thu, 17 Apr 2025 18:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913370; cv=none; b=L7JiKuaSy05SV7JsQuQAFq7gWMnywjHmF6mv8aTd56D/4oG2MIBhoKMQ+ozpXxfOrfuDvBhM118AfCxE0iy7hdirvYLzot6WpO4Vw3OWhlL5tmq7u432eppSi4upDeQf0da5AWeuEL735Z52ax2R/YyRyDDKFzlgnrYOXB7NYTc=
+	t=1744913372; cv=none; b=BZi1Xt5fvGkQccM+0baRDEcSHjod//ZJRN1FVEIKeohGLLIqJYUmk2/qO8fIezLHGMvOtrZRcJXqx0jTV64n46zFVMwSXQrDrA4CTHNTzh7Qg2Zkd8RhGl2lWUXCJxusPUsUlLVCQTyEN4KQpPTwL08bkP0uHjyU+17ZG/ubp58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913370; c=relaxed/simple;
-	bh=fxRTxWfokBHg7kvj0yGyKgWr4SY20Ix0A/EI6p5KPyo=;
+	s=arc-20240116; t=1744913372; c=relaxed/simple;
+	bh=Fz21OXs7qgx2Efx6FoGLasL+wCjNGTSlS2lsRFOY7+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZBQDFe1EC8pf6wit7pUpQFC2T7szpRAAieoXia05+3umGjbQ9VNm/2qc5Wsn20h/ZEov9oes6gclt+Khj5q/UoatK5VC9SzcH9/IteerK3yinB7PsulndOmRghrzf3HTIDqXxUNg0O5NwyIvmJxCrtbytdYKL0+tfn1/4049v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLulRIZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vo4xykY1YOu7SpxnE3DQdWK5fXkaozIpI7avn9LpEBSqw2Uw7MAOwIrYYOZk3YJb0bI69giXSq5iWwSca5xfe1dPsP32bW+rCe8vGsBzBHLgLvgD6q9HBnlHIynGqIANnZmIvslRp2xIB+njuElFl19tZnC8a0eP3h4ghB0AczQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLmaRsDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLulRIZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846DAC4CEE4;
-	Thu, 17 Apr 2025 18:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLmaRsDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB1DC4CEE4;
+	Thu, 17 Apr 2025 18:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913370;
-	bh=fxRTxWfokBHg7kvj0yGyKgWr4SY20Ix0A/EI6p5KPyo=;
+	s=korg; t=1744913372;
+	bh=Fz21OXs7qgx2Efx6FoGLasL+wCjNGTSlS2lsRFOY7+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLulRIZCo+2YfTXq31slvotNad9OSG5fJNkgy+8lO9M1/pg8p7O2P354B9BxOiV6t
-	 fXdNn2B5u3n8xfdYRTl0sPB8jZHCiYIHFdRuRkibwLFh0WMmywN6fi+/w0s+H8LN/3
-	 DseAWATKM8lJUAgBRimvP3A0LarIO5pEvb4L9leo=
+	b=jLmaRsDZe22p0u1oJn8w9Qw0MJ+0WiTpjQR+Zh/8zA1qQiARaRmCC6C7xd8Z4tfdV
+	 RXLw7n3kemy4p4NdnumZRRQjSFfyBEn+R1u1/aSmH8Nx5ZQQoEVdeDif9sNYfl9HXc
+	 bXC09XaEYCSRtN6xkmW0cK5uhTBe+LJKGppbrnjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.14 316/449] ima: limit the number of ToMToU integrity violations
-Date: Thu, 17 Apr 2025 19:50:04 +0200
-Message-ID: <20250417175130.832876448@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.14 317/449] igc: Fix XSK queue NAPI ID mapping
+Date: Thu, 17 Apr 2025 19:50:05 +0200
+Message-ID: <20250417175130.874073676@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,68 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mimi Zohar <zohar@linux.ibm.com>
+From: Joe Damato <jdamato@fastly.com>
 
-commit a414016218ca97140171aa3bb926b02e1f68c2cc upstream.
+commit dddeeaa16ce9d163ccf3b681715512d338afa541 upstream.
 
-Each time a file in policy, that is already opened for read, is opened
-for write, a Time-of-Measure-Time-of-Use (ToMToU) integrity violation
-audit message is emitted and a violation record is added to the IMA
-measurement list.  This occurs even if a ToMToU violation has already
-been recorded.
+In commit b65969856d4f ("igc: Link queues to NAPI instances"), the XSK
+queues were incorrectly unmapped from their NAPI instances. After
+discussion on the mailing list and the introduction of a test to codify
+the expected behavior, we can see that the unmapping causes the
+check_xsk test to fail:
 
-Limit the number of ToMToU integrity violations per file open for read.
+NETIF=enp86s0 ./tools/testing/selftests/drivers/net/queues.py
 
-Note: The IMA_MAY_EMIT_TOMTOU atomic flag must be set from the reader
-side based on policy.  This may result in a per file open for read
-ToMToU violation.
+[...]
+  # Check|     ksft_eq(q.get('xsk', None), {},
+  # Check failed None != {} xsk attr on queue we configured
+  not ok 4 queues.check_xsk
 
-Since IMA_MUST_MEASURE is only used for violations, rename the atomic
-IMA_MUST_MEASURE flag to IMA_MAY_EMIT_TOMTOU.
+After this commit, the test passes:
 
-Cc: stable@vger.kernel.org # applies cleanly up to linux-6.6
-Tested-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+  ok 4 queues.check_xsk
+
+Note that the test itself is only in net-next, so I tested this change
+by applying it to my local net-next tree, booting, and running the test.
+
+Cc: stable@vger.kernel.org
+Fixes: b65969856d4f ("igc: Link queues to NAPI instances")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima.h      |    2 +-
- security/integrity/ima/ima_main.c |    7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igc/igc.h      |    2 --
+ drivers/net/ethernet/intel/igc/igc_main.c |    4 ++--
+ drivers/net/ethernet/intel/igc/igc_xdp.c  |    2 --
+ 3 files changed, 2 insertions(+), 6 deletions(-)
 
---- a/security/integrity/ima/ima.h
-+++ b/security/integrity/ima/ima.h
-@@ -181,7 +181,7 @@ struct ima_kexec_hdr {
- #define IMA_UPDATE_XATTR	1
- #define IMA_CHANGE_ATTR		2
- #define IMA_DIGSIG		3
--#define IMA_MUST_MEASURE	4
-+#define IMA_MAY_EMIT_TOMTOU	4
- #define IMA_EMITTED_OPENWRITERS	5
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -337,8 +337,6 @@ struct igc_adapter {
+ 	struct igc_led_classdev *leds;
+ };
  
- /* IMA integrity metadata associated with an inode */
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -129,14 +129,15 @@ static void ima_rdwr_violation_check(str
- 		if (atomic_read(&inode->i_readcount) && IS_IMA(inode)) {
- 			if (!iint)
- 				iint = ima_iint_find(inode);
-+
- 			/* IMA_MEASURE is set from reader side */
--			if (iint && test_bit(IMA_MUST_MEASURE,
--						&iint->atomic_flags))
-+			if (iint && test_and_clear_bit(IMA_MAY_EMIT_TOMTOU,
-+						       &iint->atomic_flags))
- 				send_tomtou = true;
- 		}
- 	} else {
- 		if (must_measure)
--			set_bit(IMA_MUST_MEASURE, &iint->atomic_flags);
-+			set_bit(IMA_MAY_EMIT_TOMTOU, &iint->atomic_flags);
+-void igc_set_queue_napi(struct igc_adapter *adapter, int q_idx,
+-			struct napi_struct *napi);
+ void igc_up(struct igc_adapter *adapter);
+ void igc_down(struct igc_adapter *adapter);
+ int igc_open(struct net_device *netdev);
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -5021,8 +5021,8 @@ static int igc_sw_init(struct igc_adapte
+ 	return 0;
+ }
  
- 		/* Limit number of open_writers violations */
- 		if (inode_is_open_for_write(inode) && must_measure) {
+-void igc_set_queue_napi(struct igc_adapter *adapter, int vector,
+-			struct napi_struct *napi)
++static void igc_set_queue_napi(struct igc_adapter *adapter, int vector,
++			       struct napi_struct *napi)
+ {
+ 	struct igc_q_vector *q_vector = adapter->q_vector[vector];
+ 
+--- a/drivers/net/ethernet/intel/igc/igc_xdp.c
++++ b/drivers/net/ethernet/intel/igc/igc_xdp.c
+@@ -86,7 +86,6 @@ static int igc_xdp_enable_pool(struct ig
+ 		napi_disable(napi);
+ 	}
+ 
+-	igc_set_queue_napi(adapter, queue_id, NULL);
+ 	set_bit(IGC_RING_FLAG_AF_XDP_ZC, &rx_ring->flags);
+ 	set_bit(IGC_RING_FLAG_AF_XDP_ZC, &tx_ring->flags);
+ 
+@@ -136,7 +135,6 @@ static int igc_xdp_disable_pool(struct i
+ 	xsk_pool_dma_unmap(pool, IGC_RX_DMA_ATTR);
+ 	clear_bit(IGC_RING_FLAG_AF_XDP_ZC, &rx_ring->flags);
+ 	clear_bit(IGC_RING_FLAG_AF_XDP_ZC, &tx_ring->flags);
+-	igc_set_queue_napi(adapter, queue_id, napi);
+ 
+ 	if (needs_reset) {
+ 		napi_enable(napi);
 
 
