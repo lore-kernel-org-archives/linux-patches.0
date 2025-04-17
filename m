@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC96F2566DE;
-	Thu, 17 Apr 2025 18:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E882566DE;
+	Thu, 17 Apr 2025 18:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915804; cv=none; b=lObdOVfvCdI88e3TrZQS/N/2IiUGp4nz5ZVZRewvVyyhuJjBO9LLdfaiUj4gqDUtiO4u6nR2Ouzno8cD+S1setJIEGHcaBZc6TNEZNOM3ZO4IFGThY0J/to8DebHlgWijMtUdMysVSYazypnloYDoStZZkZUaKvGxu7ucDa8HU4=
+	t=1744915807; cv=none; b=GYNo0rT/znsfTngAwQSt5PAhAmpIn5zy3ss06FoC0rcUANBWaPAdHQX5/jIOkIruvzvy7yA9BaBZ17C0e7O2bMsSK393K0YVlaXruQcuXxtVRW0g2OEk2+R3ETS2hF+S/sPGfMUQEg2PsbOVzdZ926q+OG1tBhYYMvmLAUXtcNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915804; c=relaxed/simple;
-	bh=QNiY/afF4cKZeoeF2pIqN9O2Fk2JuyUIWkuu9lJRpjM=;
+	s=arc-20240116; t=1744915807; c=relaxed/simple;
+	bh=TsKmtBUI8Em/aDBBEIyTtjplMwwVtLu8X9AvKQd0hGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fN8jAPfiwrHGb0Azn9oMUKHnWe8s8QkHWy6npI2cjAul9Qn1K+v3HErnpqfLwvIox3S60p+e/GIZ12+QP4JyIw7RFi7dZVBiVPBBu68HQQX7+2QHUvpl2m+KvkxIJH4iT3h1bz/XQeCAlTG7v+pvfktJ25nI6juC0t5TzCxVz1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HohrwHU1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmnOKmUJbEImF4DkDMUd/Mw/sfrDRPasS2lBwPDIQ52t4QtEKzUUd9N6ZXPTXf88aR4LdxW2rjUSVe45EhXaw7TKwK90K3iepOrB069b5vR91o+A4i2Mme3ocJAHybbdGOPfk5g3RkX4ZCGqByA39G3SukJ5VgtVds25wkhvROM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wX43ES8+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HohrwHU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6449C4CEF0;
-	Thu, 17 Apr 2025 18:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wX43ES8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC0EC4CEE4;
+	Thu, 17 Apr 2025 18:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915804;
-	bh=QNiY/afF4cKZeoeF2pIqN9O2Fk2JuyUIWkuu9lJRpjM=;
+	s=korg; t=1744915807;
+	bh=TsKmtBUI8Em/aDBBEIyTtjplMwwVtLu8X9AvKQd0hGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HohrwHU1VcKWfcmovJAinCXP7kCG11ann2kKCIXq3qm9m9EpReB1TbsPQ5V3+cJRH
-	 yz37ZYYcnt9h04NIViopfKoUe+OR3/qtphqjhFQSq9Rb85BylrsGo6HnG2sPfyBk8r
-	 zZiiKrJuygzAtSeuEN8Z+D877Ejt2tbABHP3JJiY=
+	b=wX43ES8+1S3sjLcRthvhrB2tS0l4iCcO5boZ+5Kg1hXWpMQ5qIWqbG/19uHsr2HtU
+	 Jbexf1oW9l1MOej2+s/QAU5chrXeFGMaOoUHq9ur8BD8HxKytdD9o9AlhXoaOc4HRu
+	 Xz03FvT4m+AI4FpKJZyTcaOK7bscKQ12bgx51reI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	Caleb Jorden <cjorden@gmail.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 245/393] wifi: mt76: mt7925: fix the wrong simultaneous cap for MLO
-Date: Thu, 17 Apr 2025 19:50:54 +0200
-Message-ID: <20250417175117.447912743@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 246/393] io_uring/net: fix accept multishot handling
+Date: Thu, 17 Apr 2025 19:50:55 +0200
+Message-ID: <20250417175117.486705946@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,41 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 7dcea6fe33ee3d7cbb65baee0dd7adc76d1c9ddc upstream.
+commit f6a89bf5278d6e15016a736db67043560d1b50d5 upstream.
 
-The mt7925 chip is only support a single radio, so the maximum
-number of simultaneous should be 0.
+REQ_F_APOLL_MULTISHOT doesn't guarantee it's executed from the multishot
+context, so a multishot accept may get executed inline, fail
+io_req_post_cqe(), and ask the core code to kill the request with
+-ECANCELED by returning IOU_STOP_MULTISHOT even when a socket has been
+accepted and installed.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
 Cc: stable@vger.kernel.org
-Co-developed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Tested-by: Caleb Jorden <cjorden@gmail.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250305000851.493671-3-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 390ed29b5e425 ("io_uring: add IORING_ACCEPT_MULTISHOT for accept")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/51c6deb01feaa78b08565ca8f24843c017f5bc80.1740331076.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/net.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 676882f3928e..dd886b39f550 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -256,7 +256,7 @@ int mt7925_init_mlo_caps(struct mt792x_phy *phy)
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1616,6 +1616,8 @@ retry:
+ 	}
  
- 	ext_capab[0].eml_capabilities = phy->eml_cap;
- 	ext_capab[0].mld_capa_and_ops =
--		u16_encode_bits(1, IEEE80211_MLD_CAP_OP_MAX_SIMUL_LINKS);
-+		u16_encode_bits(0, IEEE80211_MLD_CAP_OP_MAX_SIMUL_LINKS);
+ 	io_req_set_res(req, ret, cflags);
++	if (!(issue_flags & IO_URING_F_MULTISHOT))
++		return IOU_OK;
+ 	return IOU_STOP_MULTISHOT;
+ }
  
- 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_MLO;
- 	wiphy->iftype_ext_capab = ext_capab;
--- 
-2.49.0
-
 
 
