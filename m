@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A481DF246;
-	Thu, 17 Apr 2025 18:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495621DF246;
+	Thu, 17 Apr 2025 18:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915067; cv=none; b=ZDswPP3Exh/hft0UT97EcZoM4b6m8fIvyLSE6IwhERVcotWer769lprLKg3T5T3GPeOPK/UBi+26lW2MGGdtwiXT2V7pNx/9Q6eFA0ZcYlwU4iBW3PD2+F/uNpCIZiE/NXX5kii3Vv116miAYw/VYb4z/yBLRlNI0rh1n9fQfk4=
+	t=1744915070; cv=none; b=pdgepZ7vRPXYeBAYqY7l1vm4T2d6Fha5HHRNETAIRLH9ipIoL6/LmPFs/KDZ0sWGJP7clgY6+Dx8QLTZindDIJp/M9yioBJGNFbHH36tWPLcyeggtUa7RXQGoX4XwkBe4DLU7l+LS1R+8lWIhaAD4MWMd7+a6fypRGPScr4/Cxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915067; c=relaxed/simple;
-	bh=ERsrcrVIZizj36XnMz4nR0qnR4Ew4BLqHGuWq5TD0kA=;
+	s=arc-20240116; t=1744915070; c=relaxed/simple;
+	bh=R1UFjg35tOwP0pjfqm3MSluy10ghpLPXICaZr8O5cSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=exwVMiwdei6JVwHgv85QJdvyt3WpuAfrQO018UnYNJlVva27nLAqRB4irmvk8NRtBttQQ+VtLigeJ60d96TNJ3JI+SlVKW/qL9rZJWt3SoRWIsZ5kYuZqMBZHgAWFJUW7K+yBmjdboPuV4Iy/It6iQ+/2wxCglArW3yButYUASE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8Z4x7hm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tuzI4qB0/koRBr2KRtsssgbinjTMoyPsnvJH5CGZD484tgqf1H9oE4vPWamjKh6WqP6WjQCjpux9YlAwx0rHHl6gw0Xs4qy+LPBDPfacmrFSvbBwidSAUW/gO/SSlVAzeCxzb0HbK/YJsHAY0yAxDpPu8/s0ew4UQN1RrdaxoWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gduf59FB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8Z4x7hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F21C4CEE4;
-	Thu, 17 Apr 2025 18:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gduf59FB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD74EC4CEE4;
+	Thu, 17 Apr 2025 18:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915067;
-	bh=ERsrcrVIZizj36XnMz4nR0qnR4Ew4BLqHGuWq5TD0kA=;
+	s=korg; t=1744915070;
+	bh=R1UFjg35tOwP0pjfqm3MSluy10ghpLPXICaZr8O5cSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8Z4x7hmGQ0nBVzEIt0LPz+EI3Gjfw9gMLXiaa2F5mETbzfIv+R6GVEiSMnT7p0M2
-	 RfNm0ZccqsASLFBOOeXVO5zWuau7ElIC2ghgt4+HW0/X9Xsn12FTn9KopoHixVkvqx
-	 5xSmabsmBb8Xou7auY0dXPdKy/CT66a9DGFQm/Uo=
+	b=Gduf59FBtvrV+grVNZcUw5JEb7AAbN/n7CeIm3UJWWgDLRAZL6T6lHk9AGopVZPBI
+	 lLAEGHdlBG2wd5jl5ScgN/uiWuEJOldHayslDkCbGNFeljSOx7orSKqwzNpL3O43DD
+	 juXMWy+ETxNbeORV7P/wJhD63FFy0xqsDSN4+i4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 6.13 403/414] thermal/drivers/mediatek/lvts: Disable Stage 3 thermal threshold
-Date: Thu, 17 Apr 2025 19:52:41 +0200
-Message-ID: <20250417175127.688815108@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 001/393] ASoC: Intel: adl: add 2xrt1316 audio configuration
+Date: Thu, 17 Apr 2025 19:46:50 +0200
+Message-ID: <20250417175107.611790718@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
-References: <20250417175111.386381660@linuxfoundation.org>
+In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
+References: <20250417175107.546547190@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,105 +49,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-commit c612cbcdf603aefb3358b2e3964dcd5aa3f827a0 upstream.
+commit 8b36447c9ae102539d82d6278971b23b20d87629 upstream.
 
-The Stage 3 thermal threshold is currently configured during
-the controller initialization to 105 Celsius. From the kernel
-perspective, this configuration is harmful because:
-* The stage 3 interrupt that gets triggered when the threshold is
-  crossed is not handled in any way by the IRQ handler, it just gets
-  cleared. Besides, the temperature used for stage 3 comes from the
-  sensors, and the critical thermal trip points described in the
-  Devicetree will already cause a shutdown when crossed (at a lower
-  temperature, of 100 Celsius, for all SoCs currently using this
-  driver).
-* The only effect of crossing the stage 3 threshold that has been
-  observed is that it causes the machine to no longer be able to enter
-  suspend. Even if that was a result of a momentary glitch in the
-  temperature reading of a sensor (as has been observed on the
-  MT8192-based Chromebooks).
+That is a speaker only configuration and 2 rt1316 are on link 0 and 2.
 
-For those reasons, disable the Stage 3 thermal threshold configuration.
-
-Cc: stable@vger.kernel.org
-Reported-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Closes: https://lore.kernel.org/all/20241108-lvts-v1-1-eee339c6ca20@chromium.org/
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20250113-mt8192-lvts-filtered-suspend-fix-v2-2-07a25200c7c6@collabora.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250305135443.201884-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c |   16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ sound/soc/intel/common/soc-acpi-intel-adl-match.c |   29 ++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -65,7 +65,7 @@
- #define LVTS_HW_FILTER				0x0
- #define LVTS_TSSEL_CONF				0x13121110
- #define LVTS_CALSCALE_CONF			0x300
--#define LVTS_MONINT_CONF			0x8300318C
-+#define LVTS_MONINT_CONF			0x0300318C
- 
- #define LVTS_MONINT_OFFSET_SENSOR0		0xC
- #define LVTS_MONINT_OFFSET_SENSOR1		0x180
-@@ -91,8 +91,6 @@
- #define LVTS_MSR_READ_TIMEOUT_US	400
- #define LVTS_MSR_READ_WAIT_US		(LVTS_MSR_READ_TIMEOUT_US / 2)
- 
--#define LVTS_HW_TSHUT_TEMP		105000
--
- #define LVTS_MINIMUM_THRESHOLD		20000
- 
- static int golden_temp = LVTS_GOLDEN_TEMP_DEFAULT;
-@@ -145,7 +143,6 @@ struct lvts_ctrl {
- 	struct lvts_sensor sensors[LVTS_SENSOR_MAX];
- 	const struct lvts_data *lvts_data;
- 	u32 calibration[LVTS_SENSOR_MAX];
--	u32 hw_tshut_raw_temp;
- 	u8 valid_sensor_mask;
- 	int mode;
- 	void __iomem *base;
-@@ -837,14 +834,6 @@ static int lvts_ctrl_init(struct device
- 		 */
- 		lvts_ctrl[i].mode = lvts_data->lvts_ctrl[i].mode;
- 
--		/*
--		 * The temperature to raw temperature must be done
--		 * after initializing the calibration.
--		 */
--		lvts_ctrl[i].hw_tshut_raw_temp =
--			lvts_temp_to_raw(LVTS_HW_TSHUT_TEMP,
--					 lvts_data->temp_factor);
--
- 		lvts_ctrl[i].low_thresh = INT_MIN;
- 		lvts_ctrl[i].high_thresh = INT_MIN;
+--- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+@@ -214,6 +214,15 @@ static const struct snd_soc_acpi_adr_dev
  	}
-@@ -919,7 +908,6 @@ static int lvts_irq_init(struct lvts_ctr
- 	 *         10 : Selected sensor with bits 19-18
- 	 *         11 : Reserved
- 	 */
--	writel(BIT(16), LVTS_PROTCTL(lvts_ctrl->base));
+ };
  
- 	/*
- 	 * LVTS_PROTTA : Stage 1 temperature threshold
-@@ -932,8 +920,8 @@ static int lvts_irq_init(struct lvts_ctr
- 	 *
- 	 * writel(0x0, LVTS_PROTTA(lvts_ctrl->base));
- 	 * writel(0x0, LVTS_PROTTB(lvts_ctrl->base));
-+	 * writel(0x0, LVTS_PROTTC(lvts_ctrl->base));
- 	 */
--	writel(lvts_ctrl->hw_tshut_raw_temp, LVTS_PROTTC(lvts_ctrl->base));
++static const struct snd_soc_acpi_adr_device rt1316_2_group2_adr[] = {
++	{
++		.adr = 0x000232025D131601ull,
++		.num_endpoints = 1,
++		.endpoints = &spk_r_endpoint,
++		.name_prefix = "rt1316-2"
++	}
++};
++
+ static const struct snd_soc_acpi_adr_device rt1316_1_single_adr[] = {
+ 	{
+ 		.adr = 0x000130025D131601ull,
+@@ -547,6 +556,20 @@ static const struct snd_soc_acpi_link_ad
+ 	{}
+ };
  
- 	/*
- 	 * LVTS_MONINT : Interrupt configuration register
++static const struct snd_soc_acpi_link_adr adl_sdw_rt1316_link02[] = {
++	{
++		.mask = BIT(0),
++		.num_adr = ARRAY_SIZE(rt1316_0_group2_adr),
++		.adr_d = rt1316_0_group2_adr,
++	},
++	{
++		.mask = BIT(2),
++		.num_adr = ARRAY_SIZE(rt1316_2_group2_adr),
++		.adr_d = rt1316_2_group2_adr,
++	},
++	{}
++};
++
+ static const struct snd_soc_acpi_codecs adl_max98357a_amp = {
+ 	.num_codecs = 1,
+ 	.codecs = {"MX98357A"}
+@@ -749,6 +772,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 		.drv_name = "sof_sdw",
+ 		.sof_tplg_filename = "sof-adl-sdw-max98373-rt5682.tplg",
+ 	},
++	{
++		.link_mask = BIT(0) | BIT(2),
++		.links = adl_sdw_rt1316_link02,
++		.drv_name = "sof_sdw",
++		.sof_tplg_filename = "sof-adl-rt1316-l02.tplg",
++	},
+ 	{},
+ };
+ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_adl_sdw_machines);
 
 
