@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31A42571C6;
-	Thu, 17 Apr 2025 18:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2500825742E;
+	Thu, 17 Apr 2025 18:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915776; cv=none; b=gD+X3op9Rg1/xc+Wom+U75Tmg3DLwB2VKHbql3iFtrpHuUAkmqcezac1KT4gjAuKHokCghH6HvtLKQCptpphkD6/Q0bDtVvFtvny8CSOhzWkeXEfFinq7PjBI2BTarQLehFwtGsx0x8SfcDsJZJfDc55/5yInHKwxjolzztzu0w=
+	t=1744915781; cv=none; b=naSm+eDJj4oabWYOR1E4m0UOjHN5QXE1ZkvYNEnpvl1Eurb++EM3LNwEwFp1rqxUdgYGAC2lgI3LYgd+2zGeuCUsMVk0zPu4wM2vqIiai1TBoArb0R9eHFfU5Z/yZi/9X23jilWpQvF8U/TU9q3yjBhCmh8mFV4rEm29I/Dif+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915776; c=relaxed/simple;
-	bh=FR+vV/fr26ayipu7PZiPLyhLv6MZKdORZv4n7ljlAbw=;
+	s=arc-20240116; t=1744915781; c=relaxed/simple;
+	bh=aWoaM0QPyxs4pmapIIU2UUoKLsxqE5UBfO76uZZpK5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r3lwaykZJPdKQqeY6UFgKeaCUTciZQJgtocjUFt64qhHmL6zQxCN+h14JWLJDWl3UNViSpC1fIFRe1OyVnpgThO2diKcIsA2+kmKmpPjrsy7DE+X8kelX1AhCAJ/6WWHXDs1CTAt8iAGNnNe2MaaHsTVwHVrpEd6SGfcAhzZEa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDO6gVpq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALPsGbrcR81VGFMhVDePhbIk3IHdOzBfhRUUcRUlEFrROTPXHtTDI5a0ICj20D4CCbmAjSYTWwn4gCtBxtneTq1tGrBC8nPu4nbAfEqKNy5tVW+fg2fgaTXMxmb6O5dxy0MjGXZlOY6NQanJSxTpRkJhHo7p2t2mcM13R5WPH/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeAlk+M+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDO6gVpq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3E0C4CEE4;
-	Thu, 17 Apr 2025 18:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeAlk+M+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342FCC4CEE4;
+	Thu, 17 Apr 2025 18:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915776;
-	bh=FR+vV/fr26ayipu7PZiPLyhLv6MZKdORZv4n7ljlAbw=;
+	s=korg; t=1744915779;
+	bh=aWoaM0QPyxs4pmapIIU2UUoKLsxqE5UBfO76uZZpK5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDO6gVpqnkiPyolTlJg5WiAfWG+ZK+ZIbIeOjXNgiU42jzj9a6LSrQmte1X67zWwG
-	 o7pGoZUZCoDrpkDBtcegHl3B9eWKYYfVjge4o8lhmvkcymKY2Oc4k9xoI0CdGqlSPg
-	 AXYxO2NiJXN8HRz7QRuDoWnpq5FgY7ZAtEugJQNY=
+	b=CeAlk+M+3XU1g5tGXkqgwQcWntiarwgtIFiZoVb8uL+PkfCCs6wLCv+ZVJNOWcBCp
+	 9FTtHr6V4OQB66jLY0W7JsuiITP/b3Zncs3yULjj8nLP02waft3icI01NftGKjSiAR
+	 rMWtbanExYEfzvMf5Khju3Cb+Rkf7qPNRfMlxU10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 237/393] net: dsa: mv88e6xxx: fix internal PHYs for 6320 family
-Date: Thu, 17 Apr 2025 19:50:46 +0200
-Message-ID: <20250417175117.132363620@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 238/393] mtd: Replace kcalloc() with devm_kcalloc()
+Date: Thu, 17 Apr 2025 19:50:47 +0200
+Message-ID: <20250417175117.174565851@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -45,52 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit 52fdc41c3278c981066a461d03d5477ebfcf270c upstream.
+commit 1b61a59876f0eafc19b23007c522ee407f55dbec upstream.
 
-Fix internal PHYs definition for the 6320 family, which has only 2
-internal PHYs (on ports 3 and 4).
+Replace kcalloc() with devm_kcalloc() to prevent memory leaks in case of
+errors.
 
-Fixes: bc3931557d1d ("net: dsa: mv88e6xxx: Add number of internal PHYs")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.6.x
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-7-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdpstore.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -6171,7 +6171,8 @@ static const struct mv88e6xxx_info mv88e
- 		.num_databases = 4096,
- 		.num_macs = 8192,
- 		.num_ports = 7,
--		.num_internal_phys = 5,
-+		.num_internal_phys = 2,
-+		.internal_phys_offset = 3,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
- 		.max_sid = 63,
-@@ -6365,7 +6366,8 @@ static const struct mv88e6xxx_info mv88e
- 		.num_databases = 4096,
- 		.num_macs = 8192,
- 		.num_ports = 7,
--		.num_internal_phys = 5,
-+		.num_internal_phys = 2,
-+		.internal_phys_offset = 3,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
- 		.max_sid = 63,
+--- a/drivers/mtd/mtdpstore.c
++++ b/drivers/mtd/mtdpstore.c
+@@ -417,11 +417,11 @@ static void mtdpstore_notify_add(struct
+ 	}
+ 
+ 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, info->kmsg_size));
+-	cxt->rmmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
+-	cxt->usedmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
++	cxt->rmmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
++	cxt->usedmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
+ 
+ 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
+-	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
++	cxt->badmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
+ 
+ 	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
+ 		return;
+@@ -530,9 +530,6 @@ static void mtdpstore_notify_remove(stru
+ 	mtdpstore_flush_removed(cxt);
+ 
+ 	unregister_pstore_device(&cxt->dev);
+-	kfree(cxt->badmap);
+-	kfree(cxt->usedmap);
+-	kfree(cxt->rmmap);
+ 	cxt->mtd = NULL;
+ 	cxt->index = -1;
+ }
 
 
