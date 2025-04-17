@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D800719ABC6;
-	Thu, 17 Apr 2025 18:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F11D1B3934;
+	Thu, 17 Apr 2025 18:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915680; cv=none; b=QZCWMFskxCCGIoR14LlsTRWLGFOiujUIUvp7VXMl2M+hEj0cEpASiQV2W6Ju85u7ke9ikeqVyOiv4MFwg4hJO/mPo/lYoa/aPk4dcD9VVGX1VYU2JuXoSd3ZXKtg35z6oyqYlJf+zBgSTgDB+aqgwgYyIeVtO6DdQ/FWpKC1kxs=
+	t=1744915683; cv=none; b=Uc9o87hw87RFI+ZmE8NA7Sw2ahdsw+LyeH+2ReZPu9Y8ccfxv+er3i4aBpqygJ1RP4C+9aa1DZnkEQa8gyY/zYorm5B4eMd0CGYMQrLbmvPBuyiqPSGuYnGPqWCorkjaQd3S5b5ecdRid9T83m+B/HWiMiTaF1PvhZK1kqCEUAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915680; c=relaxed/simple;
-	bh=uwqLWvZKTDi11E2Ij+8M+FKnUDK633RBKZNPhrn6fag=;
+	s=arc-20240116; t=1744915683; c=relaxed/simple;
+	bh=W4lZtm81hdSC4GZu7qzryIs28w+K4bKD4QjdpmFehfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaOZW4PjY3aqb8ducXfymzH8yNJzqjfiUAehJIBtDqlIjwRZpCTxpHrgDLcw5ZC2YLP440BcEVUl9b65yogR3LhRG5GM1IEEJhhHQtuZbaEeJ+nrAO2zEllf7uAN1XX1xkk87kCDn0TASVUc8Pd4ildqEwRLr4nlEtfM/h4ztag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/JzCV8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdpBRqqPJtqtHMfF80OKCkDhcWP8q1YuF8wlqWqnKFBNXrJG+a57bWhVv8tklvV7RKvrtiwO72dLnffNa89S0oj5x5Us+IfNkskTGw34OgNVK2Gf1a3FWWeh5DgvxuI8WXI3XimXaIQ4/Mg6s3LbQAtxrxDjcLYXPXavTGwQNgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXtUmkcy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/JzCV8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26CDC4CEE4;
-	Thu, 17 Apr 2025 18:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXtUmkcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECC8C4CEE4;
+	Thu, 17 Apr 2025 18:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915680;
-	bh=uwqLWvZKTDi11E2Ij+8M+FKnUDK633RBKZNPhrn6fag=;
+	s=korg; t=1744915683;
+	bh=W4lZtm81hdSC4GZu7qzryIs28w+K4bKD4QjdpmFehfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/JzCV8t66RKWrjHW/yKVtnCVBDEH10yp6P0ls6V8NyzRpU/sYChaRPb24+2WR5pg
-	 5z6uNYpbwQj4VP8qYoysvk69u1AzH5qIogYiL1Tkas/61nanMu3IY3/AMVczzGxF6/
-	 POEFnykb7NeR1iW9YGXdNTufN7V1ipg/2piEmcc8=
+	b=LXtUmkcy2f+Cddd2HeWKLXvwrOQAdScPOpAdSkypvnJwSwBiNdK8sbortxNB1eOw3
+	 VJ9GlXeHE1Jo4yFDW4ARQlwhNtbxAL1E+s9cysjEillBYpKOMR6Y6C+oO2OlJX9cpA
+	 Rokz2xBEDvftCW7yt4+LrtX47FBfAmWsKsX03p+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 188/393] dt-bindings: media: st,stmipid02: correct lane-polarities maxItems
-Date: Thu, 17 Apr 2025 19:49:57 +0200
-Message-ID: <20250417175115.151211389@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Quentin Perret <qperret@google.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 206/393] KVM: arm64: Tear down vGIC on failed vCPU creation
+Date: Thu, 17 Apr 2025 19:50:15 +0200
+Message-ID: <20250417175115.868502784@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,34 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Will Deacon <will@kernel.org>
 
-commit 3a544a39e0a4c492e3026dfbed018321d2bd6caa upstream.
+commit 250f25367b58d8c65a1b060a2dda037eea09a672 upstream.
 
-The MIPID02 can use up to 2 data lanes which leads to having a maximum
-item number of 3 for the lane-polarities since this also contains the
-clock lane.
+If kvm_arch_vcpu_create() fails to share the vCPU page with the
+hypervisor, we propagate the error back to the ioctl but leave the
+vGIC vCPU data initialised. Note only does this leak the corresponding
+memory when the vCPU is destroyed but it can also lead to use-after-free
+if the redistributor device handling tries to walk into the vCPU.
 
-CC: stable@vger.kernel.org
-Fixes: c2741cbe7f8a ("dt-bindings: media: st,stmipid02: Convert the text bindings to YAML")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Add the missing cleanup to kvm_arch_vcpu_create(), ensuring that the
+vGIC vCPU structures are destroyed on error.
+
+Cc: <stable@vger.kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Quentin Perret <qperret@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20250314133409.9123-1-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml
-+++ b/Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml
-@@ -71,7 +71,7 @@ properties:
-                 description:
-                   Any lane can be inverted or not.
-                 minItems: 1
--                maxItems: 2
-+                maxItems: 3
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -493,7 +493,11 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+ 	if (err)
+ 		return err;
  
-             required:
-               - data-lanes
+-	return kvm_share_hyp(vcpu, vcpu + 1);
++	err = kvm_share_hyp(vcpu, vcpu + 1);
++	if (err)
++		kvm_vgic_vcpu_destroy(vcpu);
++
++	return err;
+ }
+ 
+ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
 
 
