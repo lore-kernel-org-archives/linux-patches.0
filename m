@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FCC2571D2;
-	Thu, 17 Apr 2025 18:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB037256C6A;
+	Thu, 17 Apr 2025 18:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914233; cv=none; b=Gq1OHHAPpuvuUXPlfFDR+2FqcuVNcNsrG+a/5oU5kso5MVjBrhqTmE6wkGaG+4jYobGC40Z7xYTYur4EdAaBmCCVb4wxZR8vMR9ypMTbhasIdiqc/msFvioYV97idea5dB36RK1KASEdlaowAPLlhDt5uHzk5wQT98qL9RAy4Hg=
+	t=1744914236; cv=none; b=IHyVvIa2Tu0QueZXmt+Ayu3cErHWD1nY4sEDESvVDyKNxq4i5JnDiMcc0v5lbo5a6tKHoMOBlep+WRarwyztOMShnVfhJX0P4QMw28UG+5NKVfbHZ4j4kgZVEIDrflo/0ato2JQMp/1zVwc0vaHF1pFTNeIJxLxBaUTX2o9PelE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914233; c=relaxed/simple;
-	bh=+BdZ2DZPeZfPvFgAy9XTuX2eExsh08VA9Lj8teOq/1s=;
+	s=arc-20240116; t=1744914236; c=relaxed/simple;
+	bh=PcCO27V1k9fxp35d2JfIv14yVIrftJiBJLz20hhLQo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnzvidIdnfHyDhDyrehM+MfEaIw66tvhZ9Kmfh02o5i2GzkJXi2cVXuko9XwinZ0Ror+hBP5BOasFYpcR8MxZ3MFnrcVw7cyMQ3CcqKdIicQtEJO72HEFixRwMLYDxKKxjM7CnnJST4vbX59hir7lq7FyyMnxcTgh+znprlz5jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0r1jS0vt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sT3LoPCc+jU1dn0ohn/AH4bRQ4TNxwI8GRsxqNrVgQrBJiaVsE5pB39SPkDC7WityL20Zy/WMNnb6A16KLM8gY4udewhGF/GxWujiz/fdEtCT+m/OCsO+2om/ODQuTH9Ouvx94bl/GRv8FGDtKQ6xa+9hZRaBGXDsAlYE6xtCis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+P7XO95; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0r1jS0vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FB2C4CEE4;
-	Thu, 17 Apr 2025 18:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+P7XO95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3C1C4CEE7;
+	Thu, 17 Apr 2025 18:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914233;
-	bh=+BdZ2DZPeZfPvFgAy9XTuX2eExsh08VA9Lj8teOq/1s=;
+	s=korg; t=1744914236;
+	bh=PcCO27V1k9fxp35d2JfIv14yVIrftJiBJLz20hhLQo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0r1jS0vtk0KPeob5BkC6e7JlGyAiRNA28ZrGg3E0nBdp66YgEFBvfUMaT5JfIqy2b
-	 rCZH8I53UpBfvauwyDv+2OAMwWQaCvs/dYJKMd31UuP3/2s3R8KXdGfSg3S+OuhE00
-	 STGjTxoE1aC8nJlqSrb8OV14/07TBHuiuMOf0aRo=
+	b=k+P7XO95wjFTi+56IfkD9320dw3bv/W496jcSrPUD92VrEbDP6OdcB8WUkYtqBfKJ
+	 ZreVlDoRDTDZQU4dhR9nIs4ba/f/wAmi4Cqd21aRUf6T6Q2uUhudjXrbNcFjsz6FnH
+	 R/294JstY69g0E4VMWn8QOsL4J0sIo/1CENtkOVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 119/414] tracing: fix return value in __ftrace_event_enable_disable for TRACE_REG_UNREGISTER
-Date: Thu, 17 Apr 2025 19:47:57 +0200
-Message-ID: <20250417175116.222865899@linuxfoundation.org>
+Subject: [PATCH 6.13 110/414] ext4: protect ext4_release_dquot against freezing
+Date: Thu, 17 Apr 2025 19:47:48 +0200
+Message-ID: <20250417175115.864924996@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,43 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Paoloni <gpaoloni@redhat.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit 0c588ac0ca6c22b774d9ad4a6594681fdfa57d9d ]
+[ Upstream commit 530fea29ef82e169cd7fe048c2b7baaeb85a0028 ]
 
-When __ftrace_event_enable_disable invokes the class callback to
-unregister the event, the return value is not reported up to the
-caller, hence leading to event unregister failures being silently
-ignored.
+Protect ext4_release_dquot against freezing so that we
+don't try to start a transaction when FS is frozen, leading
+to warnings.
 
-This patch assigns the ret variable to the invocation of the
-event unregister callback, so that its return value is stored
-and reported to the caller, and it raises a warning in case
-of error.
+Further, avoid taking the freeze protection if a transaction
+is already running so that we don't need end up in a deadlock
+as described in
 
-Link: https://lore.kernel.org/20250321170821.101403-1-gpaoloni@redhat.com
-Signed-off-by: Gabriele Paoloni <gpaoloni@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  46e294efc355 ext4: fix deadlock with fs freezing and EA inodes
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241121123855.645335-3-ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/super.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 44d8549522501..a1cf3dae9a62d 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -797,7 +797,9 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 				clear_bit(EVENT_FILE_FL_RECORDED_TGID_BIT, &file->flags);
- 			}
- 
--			call->class->reg(call, TRACE_REG_UNREGISTER, file);
-+			ret = call->class->reg(call, TRACE_REG_UNREGISTER, file);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 229f43539af39..f25cb564a10f4 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6953,12 +6953,25 @@ static int ext4_release_dquot(struct dquot *dquot)
+ {
+ 	int ret, err;
+ 	handle_t *handle;
++	bool freeze_protected = false;
 +
-+			WARN_ON_ONCE(ret);
- 		}
- 		/* If in SOFT_MODE, just set the SOFT_DISABLE_BIT, else clear it */
- 		if (file->flags & EVENT_FILE_FL_SOFT_MODE)
++	/*
++	 * Trying to sb_start_intwrite() in a running transaction
++	 * can result in a deadlock. Further, running transactions
++	 * are already protected from freezing.
++	 */
++	if (!ext4_journal_current_handle()) {
++		sb_start_intwrite(dquot->dq_sb);
++		freeze_protected = true;
++	}
+ 
+ 	handle = ext4_journal_start(dquot_to_inode(dquot), EXT4_HT_QUOTA,
+ 				    EXT4_QUOTA_DEL_BLOCKS(dquot->dq_sb));
+ 	if (IS_ERR(handle)) {
+ 		/* Release dquot anyway to avoid endless cycle in dqput() */
+ 		dquot_release(dquot);
++		if (freeze_protected)
++			sb_end_intwrite(dquot->dq_sb);
+ 		return PTR_ERR(handle);
+ 	}
+ 	ret = dquot_release(dquot);
+@@ -6969,6 +6982,10 @@ static int ext4_release_dquot(struct dquot *dquot)
+ 	err = ext4_journal_stop(handle);
+ 	if (!ret)
+ 		ret = err;
++
++	if (freeze_protected)
++		sb_end_intwrite(dquot->dq_sb);
++
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
