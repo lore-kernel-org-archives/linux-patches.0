@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983671E98ED;
-	Thu, 17 Apr 2025 18:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B69253B57;
+	Thu, 17 Apr 2025 18:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913940; cv=none; b=DrdveDmcSo7V9ntmfabM+DAd4WuXl97UAjMmNpbCmQD8lCQULjQXCnjK9tvzUi7ak5RfTQKVgL7Z3qvdYqZHFC1aE7GuIsTP9RgOaQxSN/gpYfDz+ZxFrfffw8jWHsHG/XkO556rneep5VgPSTJpigYjrEryS5rgCCzwbgCETAA=
+	t=1744913943; cv=none; b=t+DkCIbh8MnGPIft3sjG4704A8FAUL+7AleNeRCCoA8rNDKC9UMmxNqQwI4U1PeI48grbx+EKxFyIDMUwbOT0WpK34tsi4OJTBTB0UDe8TIsVgqitcQK0tztIQ5tZbMnrQNlXoy/4z1BxuPcgSjiQgf8OUKS+bd8ygFQL0Mr74c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913940; c=relaxed/simple;
-	bh=ZZZF6nKXsH9kVEhGskQ72CuYfvXBmqZdX+GjwCqdaM8=;
+	s=arc-20240116; t=1744913943; c=relaxed/simple;
+	bh=SPH+I3MZGJHU8XS2U/IE/M2ziWO+G2ITARJ6fHkzRNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=um3rSAvryKvVsUPo39Gbgr4dnpTTgq571/Y/9K7urrZVH2VuCyFBltRhmzHe6SZvWtBq9g7LnGc46R4qhcf1V7ch9xuaK2161gBcPHIMNHaY8FO/Lw2VhF+T3pd+sFEN3ySr5TvRqkRwgY+YKksDcyRzuIdcdUhjmBYR949rFuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pFXlFnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQmlEaTx+AuIEzb5pIJe16WGTyeVvyTHWDMXhz3emmnCZsqmUIu1pUg7ti0FeWwMB8fBjytFeedRn40hAVu5Uq9ZybQDZ7CvgBqW+jKx/8DyX+0Wo8wIW9TWFVw1PedzIZxISTOUb4euEyYOvRTxOExrEOSkx//RotZQRaaC7xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8ZXeDCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pFXlFnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E263EC4CEE4;
-	Thu, 17 Apr 2025 18:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8ZXeDCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03716C4CEEC;
+	Thu, 17 Apr 2025 18:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913940;
-	bh=ZZZF6nKXsH9kVEhGskQ72CuYfvXBmqZdX+GjwCqdaM8=;
+	s=korg; t=1744913943;
+	bh=SPH+I3MZGJHU8XS2U/IE/M2ziWO+G2ITARJ6fHkzRNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pFXlFnWcM1BB4Yv6ThCfpyrJnJvrVlyjeXzxakwSNL341pQ5xVmJFQ7LoexgbSYy
-	 NraAw09Tr2VFtbvj4Q95otHTEjThkr0GxlKywcLwGvKxArwEVzjcde61Vq8yRCl3S7
-	 ugAOl38T+nhwe+RUik3bLaWiPm7ZVCsiPtGWbapU=
+	b=w8ZXeDCPJv3x+48hAIegAEcvPOoPKIb1mvAu5ZHNcJa/YSwwYCu2Axx4XGv8exE9i
+	 WBoiuXlvWl6ql850pmroLDQ3Pbtgj3B+IXtNpguRmJ3EmES5+sdc7Cq1fS9/3X3wtR
+	 X5MXLC/g5LFNzbLg+Wo/3uDY651il+U5t3Dpbbi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@mailbox.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 022/414] drm/tests: cmdline: Fix drm_display_mode memory leak
-Date: Thu, 17 Apr 2025 19:46:20 +0200
-Message-ID: <20250417175112.305008471@linuxfoundation.org>
+Subject: [PATCH 6.13 013/414] objtool: Fix INSN_CONTEXT_SWITCH handling in validate_unret()
+Date: Thu, 17 Apr 2025 19:46:11 +0200
+Message-ID: <20250417175111.939075753@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,56 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 70f29ca3117a8796cd6bde7612a3ded96d0f2dde ]
+[ Upstream commit a8df7d0ef92eca28c610206c6748daf537ac0586 ]
 
-drm_analog_tv_mode() and its variants return a drm_display_mode that
-needs to be destroyed later one. The drm_test_cmdline_tv_options() test
-never does however, which leads to a memory leak.
+The !CONFIG_IA32_EMULATION version of xen_entry_SYSCALL_compat() ends
+with a SYSCALL instruction which is classified by objtool as
+INSN_CONTEXT_SWITCH.
 
-Let's make sure it's freed.
+Unlike validate_branch(), validate_unret() doesn't consider
+INSN_CONTEXT_SWITCH in a non-function to be a dead end, so it keeps
+going past the end of xen_entry_SYSCALL_compat(), resulting in the
+following warning:
 
-Reported-by: Philipp Stanner <phasta@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
-Fixes: e691c9992ae1 ("drm/modes: Introduce the tv_mode property as a command-line option")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-4-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+  vmlinux.o: warning: objtool: xen_reschedule_interrupt+0x2a: RET before UNTRAIN
+
+Fix that by adding INSN_CONTEXT_SWITCH handling to validate_unret() to
+match what validate_branch() is already doing.
+
+Fixes: a09a6e2399ba ("objtool: Add entry UNRET validation")
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/f5eda46fd09f15b1f5cde3d9ae3b92b958342add.1744095216.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_cmdline_parser_test.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/objtool/check.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/tests/drm_cmdline_parser_test.c b/drivers/gpu/drm/tests/drm_cmdline_parser_test.c
-index 59c8408c453c2..1cfcb597b088b 100644
---- a/drivers/gpu/drm/tests/drm_cmdline_parser_test.c
-+++ b/drivers/gpu/drm/tests/drm_cmdline_parser_test.c
-@@ -7,6 +7,7 @@
- #include <kunit/test.h>
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 9c7e60f71327d..94b46f1effce7 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3990,6 +3990,11 @@ static int validate_unret(struct objtool_file *file, struct instruction *insn)
+ 			WARN_INSN(insn, "RET before UNTRAIN");
+ 			return 1;
  
- #include <drm/drm_connector.h>
-+#include <drm/drm_kunit_helpers.h>
- #include <drm/drm_modes.h>
- 
- static const struct drm_connector no_connector = {};
-@@ -955,8 +956,15 @@ struct drm_cmdline_tv_option_test {
- static void drm_test_cmdline_tv_options(struct kunit *test)
- {
- 	const struct drm_cmdline_tv_option_test *params = test->param_value;
--	const struct drm_display_mode *expected_mode = params->mode_fn(NULL);
-+	struct drm_display_mode *expected_mode;
- 	struct drm_cmdline_mode mode = { };
-+	int ret;
++		case INSN_CONTEXT_SWITCH:
++			if (insn_func(insn))
++				break;
++			return 0;
 +
-+	expected_mode = params->mode_fn(NULL);
-+	KUNIT_ASSERT_NOT_NULL(test, expected_mode);
-+
-+	ret = drm_kunit_add_mode_destroy_action(test, expected_mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
- 
- 	KUNIT_EXPECT_TRUE(test, drm_mode_parse_command_line_for_connector(params->cmdline,
- 									  &no_connector, &mode));
+ 		case INSN_NOP:
+ 			if (insn->retpoline_safe)
+ 				return 0;
 -- 
 2.39.5
 
