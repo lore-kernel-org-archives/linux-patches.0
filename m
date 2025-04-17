@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9B225FA0F;
-	Thu, 17 Apr 2025 18:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2381E256C84;
+	Thu, 17 Apr 2025 18:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914351; cv=none; b=HdPmQnYZKmVbN3q92Y9ujxHVvfXu+kvXg69RqPlKmPOa0W2DEOHMdaFH87b9oTcgn6KT6zvxDMrMz2+tpBxQl4BgecTDKzAnGMuilQuprOxj48iannnCxDugowQ92rap5fHqPcT8AePHQHRQZLAXJsMEZ/HSgPR0Zxz0PZuXWro=
+	t=1744914356; cv=none; b=shXtgQH4MsBzKWKoFypEt+/eFqAnkjsaVcT2G/XGyrAAO8xD8ElCsHEdI+NdsWcByXtabJCU/vRUxmspS9qP+j5ZaFtwCJf8FMJ3b0kdDewffJ1ATseLytSid7lEHG6FUkY0Q3e41Ck40zXoHomnk2MiSvfJSGhVZSO8mybMadM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914351; c=relaxed/simple;
-	bh=62hrYhTh0JZL/T2hXM26lIbIQmdXb07D1TTtiutvKDA=;
+	s=arc-20240116; t=1744914356; c=relaxed/simple;
+	bh=ZC/jZvJIcdFJRDdFPmA01X0PuOoXw2e1EQ04oqPIRXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q4OKPDJcDXnGl8TgWxwI8Gy93omNRyuXCR22CSaRYdEkNFWT+N3HKWmO3XI87XI0jvOcy8p0BnvOw8t/wHGV1+4z9sHXDn/Pavf2LGJpR++mxDPfPN9+iSyHoOq97Ah9LIUefKw3mQdbwBN97R9e1KvykABIkp4ocjf8XDif0zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEjF8802; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oVuarkoXBnWrtv4QjNiI9A1oiveUND8QiArm5AQDqB8P2iVggso+c+m3KhMnlLsleCqMzJ/zA3+EnZxjNYnRr8YL6JZFB4mgPrjldNPnIYRPcZfiuD9A05cF4aTv1TMi/fjOGBhm4mGxgxrxzZNBDYgrPWOe+CFOTMcl67hHFsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3wFeygJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEjF8802"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CD0C4CEE4;
-	Thu, 17 Apr 2025 18:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3wFeygJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3F5C4CEE7;
+	Thu, 17 Apr 2025 18:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914351;
-	bh=62hrYhTh0JZL/T2hXM26lIbIQmdXb07D1TTtiutvKDA=;
+	s=korg; t=1744914355;
+	bh=ZC/jZvJIcdFJRDdFPmA01X0PuOoXw2e1EQ04oqPIRXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEjF8802CZFODdEs+o8yHfv/gE63s0UyEdV4bVe0sha6ml8rKr+exTRF+x8qBoEsD
-	 XWBXUHkIgYY7Dupv1YGuE/JuNrtwWLHjav1vCd5mF2IDlT6o4ibaZZPMvxGO9IVbcX
-	 Nm5elO+S7/B06nIZmU/ogoBXgURQYuYlvjr4tfyc=
+	b=j3wFeygJJWRMQ4OduIS1YXE28MVMAuzu9hkMTC0cKgg/pSwZOaIDCwpQjtYYwkI0O
+	 bYOfPagmWX/MzeDEWH8jNam+RP2qBBYATUeiChIFN5RLHQe3gk8weFGkI/+jlGgh2n
+	 +mFUqeMCy6MqJ5KqoTJQn65eBGXwUvU2y4fjlY+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 187/414] HID: pidff: Comment and code style update
-Date: Thu, 17 Apr 2025 19:49:05 +0200
-Message-ID: <20250417175118.966621184@linuxfoundation.org>
+Subject: [PATCH 6.13 188/414] HID: pidff: Support device error response from PID_BLOCK_LOAD
+Date: Thu, 17 Apr 2025 19:49:06 +0200
+Message-ID: <20250417175119.006029533@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,186 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit e19675c2477491401b236ed939ad5a43ddc339af ]
+[ Upstream commit 9d4174dc4a234408d91fd83725e1899766cd1731 ]
 
-Update comments to fully conform to the Linux comment styling.
-Define Linux infinite effect duration (0) as FF_INFINITE
+If an error happens on the device, the driver will no longer fall
+into the trap of reading this status 60 times before it decides that
+this reply won't change to success/memory full.
 
-Chanage Oleg's name order
+Greatly reduces communication overhead during device error situation.
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 57 +++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 32 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 503f643b59cad..e2508a4d754d3 100644
+index e2508a4d754d3..d5734cbf745d1 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -3,13 +3,9 @@
-  *  Force feedback driver for USB HID PID compliant devices
-  *
-  *  Copyright (c) 2005, 2006 Anssi Hannula <anssi.hannula@gmail.com>
-+ *  Upgraded 2025 by Oleg Makarenko and Tomasz Pakuła
-  */
+@@ -138,7 +138,8 @@ static const u8 pidff_effect_types[] = {
  
--/*
-- */
--
--/* #define DEBUG */
--
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #define PID_BLOCK_LOAD_SUCCESS	0
+ #define PID_BLOCK_LOAD_FULL	1
+-static const u8 pidff_block_load_status[] = { 0x8c, 0x8d };
++#define PID_BLOCK_LOAD_ERROR	2
++static const u8 pidff_block_load_status[] = { 0x8c, 0x8d, 0x8e};
  
- #include "hid-pidff.h"
-@@ -25,9 +21,9 @@
- 
- /* Linux Force Feedback API uses miliseconds as time unit */
- #define FF_TIME_EXPONENT	-3
-+#define FF_INFINITE		0
- 
- /* Report usage table used to put reports into an array */
--
- #define PID_SET_EFFECT		0
- #define PID_EFFECT_OPERATION	1
- #define PID_DEVICE_GAIN		2
-@@ -48,12 +44,12 @@ static const u8 pidff_reports[] = {
- 	0x21, 0x77, 0x7d, 0x7f, 0x89, 0x90, 0x96, 0xab,
- 	0x5a, 0x5f, 0x6e, 0x73, 0x74
- };
--
--/* device_control is really 0x95, but 0x96 specified as it is the usage of
--the only field in that report */
-+/*
-+ * device_control is really 0x95, but 0x96 specified
-+ * as it is the usage of the only field in that report.
-+ */
- 
- /* PID special fields */
--
- #define PID_EFFECT_TYPE			0x25
- #define PID_DIRECTION			0x57
- #define PID_EFFECT_OPERATION_ARRAY	0x78
-@@ -61,7 +57,6 @@ the only field in that report */
- #define PID_DEVICE_CONTROL_ARRAY	0x96
- 
- /* Value usage tables used to put fields and values into arrays */
--
- #define PID_EFFECT_BLOCK_INDEX	0
- 
- #define PID_DURATION		1
-@@ -119,7 +114,6 @@ static const u8 pidff_device_gain[] = { 0x7e };
- static const u8 pidff_pool[] = { 0x80, 0x83, 0xa9 };
- 
- /* Special field key tables used to put special field keys into arrays */
--
- #define PID_ENABLE_ACTUATORS	0
- #define PID_DISABLE_ACTUATORS	1
- #define PID_STOP_ALL_EFFECTS	2
-@@ -176,8 +170,10 @@ struct pidff_device {
- 	struct pidff_usage effect_operation[sizeof(pidff_effect_operation)];
- 	struct pidff_usage block_free[sizeof(pidff_block_free)];
- 
--	/* Special field is a field that is not composed of
--	   usage<->value pairs that pidff_usage values are */
-+	/*
-+	 * Special field is a field that is not composed of
-+	 * usage<->value pairs that pidff_usage values are
-+	 */
- 
- 	/* Special field in create_new_effect */
- 	struct hid_field *create_new_effect_type;
-@@ -222,7 +218,7 @@ static s32 pidff_clamp(s32 i, struct hid_field *field)
- static int pidff_rescale(int i, int max, struct hid_field *field)
- {
- 	return i * (field->logical_maximum - field->logical_minimum) / max +
--	    field->logical_minimum;
-+		field->logical_minimum;
- }
- 
- /*
-@@ -282,9 +278,8 @@ static void pidff_set_time(struct pidff_usage *usage, u16 time)
- 
- static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
- {
--	/* Convert infinite length from Linux API (0)
--	   to PID standard (NULL) if needed */
--	if (duration == 0)
-+	/* Infinite value conversion from Linux API -> PID */
-+	if (duration == FF_INFINITE)
- 		duration = PID_INFINITE;
- 
- 	if (duration == PID_INFINITE) {
-@@ -302,16 +297,16 @@ static void pidff_set_envelope_report(struct pidff_device *pidff,
- 				      struct ff_envelope *envelope)
- {
- 	pidff->set_envelope[PID_EFFECT_BLOCK_INDEX].value[0] =
--	    pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
-+		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
- 
- 	pidff->set_envelope[PID_ATTACK_LEVEL].value[0] =
--	    pidff_rescale(envelope->attack_level >
--			  S16_MAX ? S16_MAX : envelope->attack_level, S16_MAX,
--			  pidff->set_envelope[PID_ATTACK_LEVEL].field);
-+		pidff_rescale(envelope->attack_level >
-+			S16_MAX ? S16_MAX : envelope->attack_level, S16_MAX,
-+			pidff->set_envelope[PID_ATTACK_LEVEL].field);
- 	pidff->set_envelope[PID_FADE_LEVEL].value[0] =
--	    pidff_rescale(envelope->fade_level >
--			  S16_MAX ? S16_MAX : envelope->fade_level, S16_MAX,
--			  pidff->set_envelope[PID_FADE_LEVEL].field);
-+		pidff_rescale(envelope->fade_level >
-+			S16_MAX ? S16_MAX : envelope->fade_level, S16_MAX,
-+			pidff->set_envelope[PID_FADE_LEVEL].field);
- 
- 	pidff_set_time(&pidff->set_envelope[PID_ATTACK_TIME],
- 			envelope->attack_length);
-@@ -702,9 +697,7 @@ static void pidff_playback_pid(struct pidff_device *pidff, int pid_id, int n)
- static int pidff_playback(struct input_dev *dev, int effect_id, int value)
- {
- 	struct pidff_device *pidff = dev->ff->private;
--
- 	pidff_playback_pid(pidff, pidff->pid_id[effect_id], value);
--
- 	return 0;
- }
- 
-@@ -732,8 +725,11 @@ static int pidff_erase_effect(struct input_dev *dev, int effect_id)
- 
- 	hid_dbg(pidff->hid, "starting to erase %d/%d\n",
- 		effect_id, pidff->pid_id[effect_id]);
--	/* Wait for the queue to clear. We do not want a full fifo to
--	   prevent the effect removal. */
-+
-+	/*
-+	 * Wait for the queue to clear. We do not want
-+	 * a full fifo to prevent the effect removal.
-+	 */
- 	hid_hw_wait(pidff->hid);
- 	pidff_playback_pid(pidff, pid_id, 0);
- 	pidff_erase_pid(pidff, pid_id);
-@@ -1239,7 +1235,6 @@ static int pidff_find_effects(struct pidff_device *pidff,
- 		set_bit(FF_FRICTION, dev->ffbit);
- 
- 	return 0;
--
- }
- 
- #define PIDFF_FIND_FIELDS(name, report, strict) \
-@@ -1370,12 +1365,10 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
- 		hid_notice(pidff->hid,
- 			   "device has unknown autocenter control method\n");
+ #define PID_EFFECT_START	0
+ #define PID_EFFECT_STOP		1
+@@ -666,6 +667,11 @@ static int pidff_request_effect_upload(struct pidff_device *pidff, int efnum)
+ 				pidff->block_load[PID_RAM_POOL_AVAILABLE].value[0] : -1);
+ 			return -ENOSPC;
+ 		}
++		if (pidff->block_load_status->value[0] ==
++		    pidff->status_id[PID_BLOCK_LOAD_ERROR]) {
++			hid_dbg(pidff->hid, "device error during effect creation\n");
++			return -EREMOTEIO;
++		}
  	}
--
- 	pidff_erase_pid(pidff,
- 			pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0]);
- 
- 	return 0;
--
- }
- 
- /*
+ 	hid_err(pidff->hid, "pid_block_load failed 60 times\n");
+ 	return -EIO;
 -- 
 2.39.5
 
