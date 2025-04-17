@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B9D1DEFD4;
-	Thu, 17 Apr 2025 18:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144E31DB148;
+	Thu, 17 Apr 2025 18:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913812; cv=none; b=AEO8N8+CbkIOTiIl9Z+SyJyIscv9ILq1k6TdfvaG3pUx4j/VJBMQb6N0aJYaQYJzVbjnPc4l0Dxjf794NGuTRSVWluKvWJ1N7xl8VzptEX7NmttC1mGM2D4nK23vC/A19UkwB/lFyDphoK5JHBdZ6YOOdYk0V8BJvJNrS6+ftLo=
+	t=1744913815; cv=none; b=ftG0iOJBXi0O2Wn0C7E5+rPWjBeUdy4pZOv01sJiRf/uNyNwX6D2VgEs55L41K0VkCBHaquROdd93IkpE65rnrxsLWr0GzH3APzuHeWWUDbGdKFXcKdNlMmQkilqZqpvF7PWPgbYufguFH5yJ995RhLmqAUB085ZUo0S8G3QHxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913812; c=relaxed/simple;
-	bh=Lo/jY6xntSRXO/9wUwm22YufZOYPkIXY1PssM8c03eU=;
+	s=arc-20240116; t=1744913815; c=relaxed/simple;
+	bh=3LAkob1DvaTTbV8Is9XRCyoyb5I7Epdi035+nzb/ASs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B77FUFyuZC/4V6I5XEFeaCdcEGn1XTYpdcX1Qs9ej3AtANO/fvTJFYZ8PLI+8QCz0b8iuyzSVjkZXIKLj/U1sJCHwj2Jmp5kTHyMSIDRe9Q6l3kgNxaG+oydeZJGIFiNjFprJkIn4lEqFZnXMlz9VJBgD1w8roXhnmfFhVCg/08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oo3Yyu1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUcFfDU7sjA3BZZVePOHNBsXw4BtFz6E/43I5xyzGi/8505mEOo8Uu3l/6Dz+4nirucTbwDC3ofSM5ZF0nlzlVNv+WmxPxMuMX+Jq1ZdE6SfCD44JD2NSYMnWg0ZtoOqKpBL/DKaVdNC8fxGGKlimuvMV9OGNItqyZI+ICDfKKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMRAsXL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo3Yyu1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF94AC4CEEA;
-	Thu, 17 Apr 2025 18:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMRAsXL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99749C4CEE4;
+	Thu, 17 Apr 2025 18:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913812;
-	bh=Lo/jY6xntSRXO/9wUwm22YufZOYPkIXY1PssM8c03eU=;
+	s=korg; t=1744913815;
+	bh=3LAkob1DvaTTbV8Is9XRCyoyb5I7Epdi035+nzb/ASs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oo3Yyu1My6r2uvlACgPVxIRwNRUj6M+cge8QCC2ODsi2DTpfnxjmcWHi/gGttWgW9
-	 b6k7+3vqohA4WsO0EWO7272KqPCGUv5DxzRCMR7MnvslWuRiESRlrtbsTZNuGZipnU
-	 VK/Q4YSXfOM+9zOuT+0DPsiZNYV98AdEoquA8O/c=
+	b=kMRAsXL5ti04hrUDvdICe5pgr7a1Mhmftg/W6bIhDfCPLOzltIAre446l4ZBXJ8tP
+	 xar22nD4a5OJvCm/szttfxHS7cMEZFzJLvPaCu6VUURRMyS0QiE+tgE3Bjp1xKwGvv
+	 12FcIbj21d6IHirXl0AT9eL55w1e+CqfONmcBXXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 012/414] ata: pata_pxa: Fix potential NULL pointer dereference in pxa_ata_probe()
-Date: Thu, 17 Apr 2025 19:46:10 +0200
-Message-ID: <20250417175111.898924649@linuxfoundation.org>
+Subject: [PATCH 6.13 002/414] cgroup/cpuset: Fix incorrect isolated_cpus update in update_parent_effective_cpumask()
+Date: Thu, 17 Apr 2025 19:46:00 +0200
+Message-ID: <20250417175111.495767196@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,44 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit ad320e408a8c95a282ab9c05cdf0c9b95e317985 ]
+[ Upstream commit 668e041662e92ab3ebcb9eb606d3ec01884546ab ]
 
-devm_ioremap() returns NULL on error. Currently, pxa_ata_probe() does
-not check for this case, which can result in a NULL pointer dereference.
+Before commit f0af1bfc27b5 ("cgroup/cpuset: Relax constraints to
+partition & cpus changes"), a cpuset partition cannot be enabled if not
+all the requested CPUs can be granted from the parent cpuset. After
+that commit, a cpuset partition can be created even if the requested
+exclusive CPUs contain CPUs not allowed its parent.  The delmask
+containing exclusive CPUs to be removed from its parent wasn't
+adjusted accordingly.
 
-Add NULL check after devm_ioremap() to prevent this issue.
+That is not a problem until the introduction of a new isolated_cpus
+mask in commit 11e5f407b64a ("cgroup/cpuset: Keep track of CPUs in
+isolated partitions") as the CPUs in the delmask may be added directly
+into isolated_cpus.
 
-Fixes: 2dc6c6f15da9 ("[ARM] pata_pxa: DMA-capable PATA driver")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+As a result, isolated_cpus may incorrectly contain CPUs that are not
+isolated leading to incorrect data reporting. Fix this by adjusting
+the delmask to reflect the actual exclusive CPUs for the creation of
+the partition.
+
+Fixes: 11e5f407b64a ("cgroup/cpuset: Keep track of CPUs in isolated partitions")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_pxa.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/cgroup/cpuset.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/pata_pxa.c b/drivers/ata/pata_pxa.c
-index 434f380114af0..03dbaf4a13a75 100644
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -223,10 +223,16 @@ static int pxa_ata_probe(struct platform_device *pdev)
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 0f910c828973a..02f3e9d076894 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1680,9 +1680,9 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 		if (nocpu)
+ 			return PERR_NOCPUS;
  
- 	ap->ioaddr.cmd_addr	= devm_ioremap(&pdev->dev, cmd_res->start,
- 						resource_size(cmd_res));
-+	if (!ap->ioaddr.cmd_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.ctl_addr	= devm_ioremap(&pdev->dev, ctl_res->start,
- 						resource_size(ctl_res));
-+	if (!ap->ioaddr.ctl_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.bmdma_addr	= devm_ioremap(&pdev->dev, dma_res->start,
- 						resource_size(dma_res));
-+	if (!ap->ioaddr.bmdma_addr)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Adjust register offsets
+-		cpumask_copy(tmp->delmask, xcpus);
+-		deleting = true;
+-		subparts_delta++;
++		deleting = cpumask_and(tmp->delmask, xcpus, parent->effective_xcpus);
++		if (deleting)
++			subparts_delta++;
+ 		new_prs = (cmd == partcmd_enable) ? PRS_ROOT : PRS_ISOLATED;
+ 	} else if (cmd == partcmd_disable) {
+ 		/*
 -- 
 2.39.5
 
