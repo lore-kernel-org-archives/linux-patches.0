@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCD42586C5;
-	Thu, 17 Apr 2025 18:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9C5257AE7;
+	Thu, 17 Apr 2025 18:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914347; cv=none; b=K6ATvRJk7CrP43h6DVxDAkG/CwKyLDde1FD3EegVZkLclgeQqo/sL6S+cT91pX+P92YXf02dyfMKcLHMLYbjw9YvYwbPuwH2rVWdU8oW78N99B4Qbj6TAy2m5cTrLy6in1vOz6aPh2S/EW2rCo4W/8x0ehxY0RChbh1ViPRDT6Y=
+	t=1744914349; cv=none; b=f6SpR9+rLxaj84KDOV9tywL6XJ7pfWD114Nr6niAClV4yCm8xE8hxyWVoT8dlgAE6pd+4UxWo1jzPK6mHm98IfT753vFK2Fi4TT6CJTPYG22i/yeYENM7Uwi0kNh1GEkwOLqL0vsFc34R7iJP1sams9fU08PHipGlZWnt1RViRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914347; c=relaxed/simple;
-	bh=eSMlAdIQs5jkockXqCaKrv4gWE0QWw9EtqxFh/cQ91M=;
+	s=arc-20240116; t=1744914349; c=relaxed/simple;
+	bh=/luoMvqlRUIX5D3Pu7Msl3izke7E+DxfiGpnpPJgT70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VsDsI/o+3owgUOy+yZomLJncTodsW5miRsfT/w4ouyXojo4ADep6o2JET9sChV+aMuLi5oaY6OTvRRZ5WtrT+vS2iYk6QryLT8TlL8ZfRk7g0X7om2lH2/wHaVMRwjVvEoxyAul8qTEisWPFV8RY4Q9my3LVNICsui//NrCVplI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3Lbyk7Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rArIc9PO+MQNLCn/U1x1a8WygdUo8DhEm3dysZmWhceApjhEXZeYBGc0CZu8K+zu89yjCCa7huoqW4S3pLNCwo+cnLXi1IpR5XgN7g5WuMgAatcpLWCvyBs6jo79nP+PZxPg55Z5fGdWcOGB2MQDpSyzUKVvYxPDqYUHXbtIs1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHE6YaWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3Lbyk7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42D5C4CEE7;
-	Thu, 17 Apr 2025 18:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHE6YaWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB29C4CEE4;
+	Thu, 17 Apr 2025 18:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914346;
-	bh=eSMlAdIQs5jkockXqCaKrv4gWE0QWw9EtqxFh/cQ91M=;
+	s=korg; t=1744914348;
+	bh=/luoMvqlRUIX5D3Pu7Msl3izke7E+DxfiGpnpPJgT70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3Lbyk7YgAm0KAPKfJBD0W/gZSvimAGecYGE9wzrWroUXq7fWdMw/Rm2Dan18JxNj
-	 zBs6f8z/BBYacE1WRcITtgghxagjwbchP6Jk+WA9qA4j9PCgCCW74x3KKFpeCVCRMt
-	 72g5c+deXaF5t0ex7Yggo18v4uJieGwKP6HPJU10=
+	b=JHE6YaWx0m9pp+LbjwRjzHaTiY3wcG07o/XtUAq3elxzLksShtROmkb0UuWdU1gRS
+	 9e6fw44Lr8+kzQ/irEuVYHGkhukxastvrtdRVQZ90eghfE70mS1idn4HcirpQEzXic
+	 8T0ae0NblibvGHO479kZ0EWJIhjtZo3kUFGtBZZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 177/414] HID: pidff: Simplify pidff_upload_effect function
-Date: Thu, 17 Apr 2025 19:48:55 +0200
-Message-ID: <20250417175118.563747770@linuxfoundation.org>
+Subject: [PATCH 6.13 186/414] HID: hid-universal-pidff: Add Asetek wheelbases support
+Date: Thu, 17 Apr 2025 19:49:04 +0200
+Message-ID: <20250417175118.928327577@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -58,93 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit e4bdc80ef14272ef56c38d8ca2f365fdf59cd0ba ]
+[ Upstream commit c385f61108d403633e8cfbdae15b35ccf7cee686 ]
 
-Merge a bit of code that reqeusts conditional effects upload.
-Makes it clear, that effect handling should be identical for
-SPRING, DAMPER, INERTIA and FRICTION.
+Adds Asetek vendor id and product ids for:
+- Invicta
+- Forte
+- La Prima
+- Tony Kanaan
+
+v2:
+- Misc spelling fix in driver loaded info
+
+v3:
+- Chanage Oleg's name order
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 54 ++++++++++------------------------
- 1 file changed, 16 insertions(+), 38 deletions(-)
+ drivers/hid/hid-ids.h             |  6 ++++++
+ drivers/hid/hid-universal-pidff.c | 10 +++++++---
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 99b5d3deb40d0..42c951a1d65bf 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -770,48 +770,26 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
- 		break;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index e1e002df64de2..db88831633466 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -190,6 +190,12 @@
+ #define USB_DEVICE_ID_APPLE_TOUCHBAR_BACKLIGHT 0x8102
+ #define USB_DEVICE_ID_APPLE_TOUCHBAR_DISPLAY 0x8302
  
- 	case FF_SPRING:
--		if (!old) {
--			error = pidff_request_effect_upload(pidff,
--					pidff->type_id[PID_SPRING]);
--			if (error)
--				return error;
--		}
--		if (!old || pidff_needs_set_effect(effect, old))
--			pidff_set_effect_report(pidff, effect);
--		if (!old || pidff_needs_set_condition(effect, old))
--			pidff_set_condition_report(pidff, effect);
--		break;
--
--	case FF_FRICTION:
--		if (!old) {
--			error = pidff_request_effect_upload(pidff,
--					pidff->type_id[PID_FRICTION]);
--			if (error)
--				return error;
--		}
--		if (!old || pidff_needs_set_effect(effect, old))
--			pidff_set_effect_report(pidff, effect);
--		if (!old || pidff_needs_set_condition(effect, old))
--			pidff_set_condition_report(pidff, effect);
--		break;
--
- 	case FF_DAMPER:
--		if (!old) {
--			error = pidff_request_effect_upload(pidff,
--					pidff->type_id[PID_DAMPER]);
--			if (error)
--				return error;
--		}
--		if (!old || pidff_needs_set_effect(effect, old))
--			pidff_set_effect_report(pidff, effect);
--		if (!old || pidff_needs_set_condition(effect, old))
--			pidff_set_condition_report(pidff, effect);
--		break;
--
- 	case FF_INERTIA:
-+	case FF_FRICTION:
- 		if (!old) {
-+			switch(effect->type) {
-+			case FF_SPRING:
-+				type_id = PID_SPRING;
-+				break;
-+			case FF_DAMPER:
-+				type_id = PID_DAMPER;
-+				break;
-+			case FF_INERTIA:
-+				type_id = PID_INERTIA;
-+				break;
-+			case FF_FRICTION:
-+				type_id = PID_FRICTION;
-+				break;
-+			}
- 			error = pidff_request_effect_upload(pidff,
--					pidff->type_id[PID_INERTIA]);
-+					pidff->type_id[type_id]);
- 			if (error)
- 				return error;
- 		}
++#define USB_VENDOR_ID_ASETEK			0x2433
++#define USB_DEVICE_ID_ASETEK_INVICTA		0xf300
++#define USB_DEVICE_ID_ASETEK_FORTE		0xf301
++#define USB_DEVICE_ID_ASETEK_LA_PRIMA		0xf303
++#define USB_DEVICE_ID_ASETEK_TONY_KANAAN	0xf306
++
+ #define USB_VENDOR_ID_ASUS		0x0486
+ #define USB_DEVICE_ID_ASUS_T91MT	0x0185
+ #define USB_DEVICE_ID_ASUSTEK_MULTITOUCH_YFO	0x0186
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 1b713b741d192..5b89ec7b5c26c 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -4,7 +4,7 @@
+  * hid-pidff wrapper for PID-enabled devices
+  * Handles device reports, quirks and extends usable button range
+  *
+- * Copyright (c) 2024, 2025 Makarenko Oleg
++ * Copyright (c) 2024, 2025 Oleg Makarenko
+  * Copyright (c) 2024, 2025 Tomasz Pakuła
+  */
+ 
+@@ -104,7 +104,7 @@ static int universal_pidff_probe(struct hid_device *hdev,
+ 		goto err;
+ 	}
+ 
+-	hid_info(hdev, "Universal pidff driver loaded sucesfully!");
++	hid_info(hdev, "Universal pidff driver loaded sucessfully!");
+ 
+ 	return 0;
+ err:
+@@ -179,6 +179,10 @@ static const struct hid_device_id universal_pidff_devices[] = {
+ 		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_LITE_STAR_GT987_FF),
+ 		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_INVICTA) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_FORTE) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_LA_PRIMA) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_TONY_KANAAN) },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
+@@ -194,5 +198,5 @@ module_hid_driver(universal_pidff);
+ 
+ MODULE_DESCRIPTION("Universal driver for USB PID Force Feedback devices");
+ MODULE_LICENSE("GPL");
+-MODULE_AUTHOR("Makarenko Oleg <oleg@makarenk.ooo>");
++MODULE_AUTHOR("Oleg Makarenko <oleg@makarenk.ooo>");
+ MODULE_AUTHOR("Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>");
 -- 
 2.39.5
 
