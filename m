@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D061A3178;
-	Thu, 17 Apr 2025 18:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAB21DE3A8;
+	Thu, 17 Apr 2025 18:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913406; cv=none; b=NXcjvbcgDEsWKxC4MObY4rQO2F/dgRGFeJIJkevHU2sN7GNT9MJ6bONyT4/0toqZ8hdxap5N9oUl0zKDol4m51TpfVgy+JKuxcFmy8ufoDTmf1VQOcmWtRm2aVFo8ze9+dQH8vdZJljS0xHzOoHUrc8EZBxcQg7CYYJcEVyQ/o0=
+	t=1744913409; cv=none; b=dDDX09DpRnJZI+G+Hci1iaCZNksRd1NLXXR+qy/kkJ/cwdtqgGZWU+NZvOUHUQPcW3bQyx/P+BSLLS0CIZ4vFsiFS/MiLU7dVNmY3+1O5axXTd9Xoo9pmXFbz1ANNzIZXtzEon8H/OOVtF6RubV0ImA7GU+4a1x4ccAA9vUG1zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913406; c=relaxed/simple;
-	bh=nF5RlRttTkhhLib3THmC+zA71sZLR/0jm6n8XjB+4+Q=;
+	s=arc-20240116; t=1744913409; c=relaxed/simple;
+	bh=Quxl/Ojp+aKmo5TbrVvgbj7E4LQIPInQqV4hOvNhnuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNpW/ik39MKoW9jUm0qYoiUQYzGTTmOlNg4baAOn+cUh9YaY+Y3Or+5jXQwdB7vLfXJ6/2mbOmWctuIn7/n1YXFswxJyZ5BdFxShhbcwfdM6kHwlFodBKA40oMkMQ7PuLNv3ddZkUC1KRGYXaRI0dR1pYfXAFGIM/wPJDjp52ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBEvLx05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kp9kZQzPEhkgVtVSLGUgMIDtjq+2WFze3ioyTZfGG4OovpedZMyeFVYvUZu4XJqLhdTpNWE4HDbfzG8dRN2VQmNNKk8o8czXDxmOvb88Q3GhpjCmRlVpHB8CCz2nMwWR3RrgV+6K3wt/K1Wgx6ME7A2ktN0/CBHN8YACSFcMqg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUMdnIEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBEvLx05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA61C4CEE4;
-	Thu, 17 Apr 2025 18:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUMdnIEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884EFC4CEE4;
+	Thu, 17 Apr 2025 18:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913406;
-	bh=nF5RlRttTkhhLib3THmC+zA71sZLR/0jm6n8XjB+4+Q=;
+	s=korg; t=1744913409;
+	bh=Quxl/Ojp+aKmo5TbrVvgbj7E4LQIPInQqV4hOvNhnuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBEvLx05Qu1gCojUBHsVbvJnfMThuOdJvj7mtOZ8XuKF0S3PhEYzn80BgydS8ETxQ
-	 JBJCsFYpuUjoNEnzviSWEKKxzmbA0M6P2SfWA0sg4Of/szMfGDzxdJjaSMQqqe9/UC
-	 qCgkRA3sjIsB6G/VyEOcwDKTAbaqHBAaXzJRh3QY=
+	b=yUMdnIEqcpyd5aQ7eCkP3KQb0F+SEvDWhT23Gv0skuJ14aPS9yNx76a9MnljUA9SU
+	 v7wKUXpra/rhDzfW0pDcGFE6YsYZNGJ1QSWBoljAew60/lVdtJVGtaughYFfRs/mVY
+	 o7R2b7qn5KVOqDWujxkttbFAGU27QdH2PyOj1eCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.14 299/449] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params error path
-Date: Thu, 17 Apr 2025 19:49:47 +0200
-Message-ID: <20250417175130.130072198@linuxfoundation.org>
+	Sharan Kumar M <sharweshraajan@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.14 300/449] ALSA: hda/realtek: Enable Mute LED on HP OMEN 16 Laptop xd000xx
+Date: Thu, 17 Apr 2025 19:49:48 +0200
+Message-ID: <20250417175130.169760445@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,110 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Sharan Kumar M <sharweshraajan@gmail.com>
 
-commit 7eccc86e90f04a0d758d16c08627a620ac59604d upstream.
+commit e5182305a5199246dbcb4053299dcb1c8867b6ff upstream.
 
-In case of attempts to compress playback something, for instance,
-when audio routing is not set up correctly, the audio DSP is left in
-inconsistent state because we are not doing the correct things in
-the error path of q6asm_dai_compr_set_params().
+This patch adds the HP OMEN 16 Laptop xd000xx to enable mute led.
+it uses ALC245_FIXUP_HP_MUTE_LED_COEFBIT with a slight modification
+setting mute_led_coef.off to 0(it was set to 4 i guess
+in that function) which i referred to your previous patch disscusion
+https://bugzilla.kernel.org/show_bug.cgi?id=214735 .
+i am not sure whether i can modify the current working function so i
+added another version calling
+ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT. and both works for me.
 
-So, when routing is not set up and compress playback is attempted
-the following errors are present (simplified log):
+Tested on 6.13.4-arch1-1 to 6.14.0-arch1-1
 
-q6routing routing: Routing not setup for MultiMedia-1 Session
-q6asm-dai dais: Stream reg failed ret:-22
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
-
-After setting the correct routing the compress playback will always fail:
-
-q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
-q6asm-dai dais: DSP returned error[9]
-q6asm-dai dais: q6asm_open_write failed
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
-
-0x9 here means "Operation is already processed". The CMD_OPEN here was
-sent the second time hence DSP responds that it was already done.
-
-Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
-succeeded but something failed after that, for instance, routing
-setup.
-
-Fix this by slightly reworking the error path in
-q6asm_dai_compr_set_params().
-
-Tested on QRB5165 RB5 and SDM845 RB3 boards.
-
-Cc: stable@vger.kernel.org
-Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://patch.msgid.link/20250327154650.337404-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sharan Kumar M <sharweshraajan@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250329154105.7618-2-sharweshraajan@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -892,9 +892,7 @@ static int q6asm_dai_compr_set_params(st
- 
- 		if (ret < 0) {
- 			dev_err(dev, "q6asm_open_write failed\n");
--			q6asm_audio_client_free(prtd->audio_client);
--			prtd->audio_client = NULL;
--			return ret;
-+			goto open_err;
- 		}
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4742,6 +4742,22 @@ static void alc245_fixup_hp_mute_led_coe
  	}
- 
-@@ -903,7 +901,7 @@ static int q6asm_dai_compr_set_params(st
- 			      prtd->session_id, dir);
- 	if (ret) {
- 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
-@@ -911,7 +909,7 @@ static int q6asm_dai_compr_set_params(st
- 						 prtd->stream_id);
- 	if (ret) {
- 		dev_err(dev, "codec param setup failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
-@@ -920,12 +918,21 @@ static int q6asm_dai_compr_set_params(st
- 
- 	if (ret < 0) {
- 		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto q6_err;
- 	}
- 
- 	prtd->state = Q6ASM_STREAM_RUNNING;
- 
- 	return 0;
-+
-+q6_err:
-+	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
-+
-+open_err:
-+	q6asm_audio_client_free(prtd->audio_client);
-+	prtd->audio_client = NULL;
-+	return ret;
  }
  
- static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
++static void alc245_fixup_hp_mute_led_v1_coefbit(struct hda_codec *codec,
++					  const struct hda_fixup *fix,
++					  int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->mute_led_polarity = 0;
++		spec->mute_led_coef.idx = 0x0b;
++		spec->mute_led_coef.mask = 1 << 3;
++		spec->mute_led_coef.on = 1 << 3;
++		spec->mute_led_coef.off = 0;
++		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
++	}
++}
++
+ /* turn on/off mic-mute LED per capture hook by coef bit */
+ static int coef_micmute_led_set(struct led_classdev *led_cdev,
+ 				enum led_brightness brightness)
+@@ -7885,6 +7901,7 @@ enum {
+ 	ALC245_FIXUP_TAS2781_SPI_2,
+ 	ALC287_FIXUP_YOGA7_14ARB7_I2C,
+ 	ALC245_FIXUP_HP_MUTE_LED_COEFBIT,
++	ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT,
+ 	ALC245_FIXUP_HP_X360_MUTE_LEDS,
+ 	ALC287_FIXUP_THINKPAD_I2S_SPK,
+ 	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD,
+@@ -10132,6 +10149,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc245_fixup_hp_mute_led_coefbit,
+ 	},
++	[ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc245_fixup_hp_mute_led_v1_coefbit,
++	},
+ 	[ALC245_FIXUP_HP_X360_MUTE_LEDS] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc245_fixup_hp_mute_led_coefbit,
+@@ -10626,6 +10647,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8b97, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8bb3, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bb4, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8bcd, "HP Omen 16-xd0xxx", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bdd, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bde, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bdf, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
 
 
