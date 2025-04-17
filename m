@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7E2256C79;
-	Thu, 17 Apr 2025 18:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBC92566DE;
+	Thu, 17 Apr 2025 18:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915816; cv=none; b=Hi7Kxo1NzecH58bF6na85K8ARxE1rPBJM9p9o4a/kDbrZrzxTmsj/vfkCcW4m1iNT3n3mSkD26IGro0DtuQ1QHU/Z+rpZNjrRCergN8GF5nqn6RWxqx9TZowEofcrb6LGOU1+SDtqIoZKWyEGy3RIs/VfaBO2OU0AzPQUav/Q+g=
+	t=1744915819; cv=none; b=Ns59ayLtPScQq2JpRfOtgYhB/qB3ebzoaRt2BlSHZNsMMvnc1dqxXb2R3fvAxnHXYU/IgUZrM69889HkTlV4gfqMDcQ4YIYLjs3t4Od0QZd4blPYXTxXww+Q0W0NLZFADUVX9c9dLrBn3tgTZYpkjwuEXWcUPuPXYDMbZU5b1dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915816; c=relaxed/simple;
-	bh=2imkWe3GnjqIzu9hFkjrE5orcQ2FsbTSH0GAchxTgbU=;
+	s=arc-20240116; t=1744915819; c=relaxed/simple;
+	bh=EaOFcMxJsmUI+M9OGxZW1osap84Vg8BACBQ32xBhaaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUV/dSweL1A/FIxxwUoXNa0RekffWcDUfgtOqcrFeXmRemh8x+8N1hLLDIpiNw7lfrI7KVS1OTDebI3OqGRAjtc79XiNIEDbM2r4IIkwuPqih8en3d6y0OLtDlzeCSjSmJC0HdybY47ZNKO1fWIOqBCyzNGNE+lc+DMBDAvw0Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/x2T3Td; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S39S53lZ9uZLX/IOooGhkWSDh7eeabtvdvU7s5aH0ZG7ucH37qf9OTy6gl1shftrsR+yu3MXNyXgLoBoJcEQK1/gY/3/L9AVlWGa0nU9LgGDRbqwkwoTlfZtreeChMutSQVDIgT6Zn/6qFX70vFuIrbRqG3fQkjrSh1c8HsKgk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKLWzt4G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/x2T3Td"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD25DC4CEE4;
-	Thu, 17 Apr 2025 18:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKLWzt4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF708C4CEE4;
+	Thu, 17 Apr 2025 18:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915816;
-	bh=2imkWe3GnjqIzu9hFkjrE5orcQ2FsbTSH0GAchxTgbU=;
+	s=korg; t=1744915819;
+	bh=EaOFcMxJsmUI+M9OGxZW1osap84Vg8BACBQ32xBhaaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/x2T3Td+eUKSVgO4n2ZngvH2A6JEA8naxf00JgPk+8P9066ugV2X8ezIi9Hu4e2h
-	 BkZIO1cLKIkP6V8bX9YWYqbvxfGm0pR93zJUiLVgSZWtEcCV+sZjAlUs6mYJviyHRS
-	 jfxYz2rNcFkAk+Y0DdYRM/Sw0DiGVJBsK2VEOv00=
+	b=dKLWzt4GYlnswLLJsYppr+UbhQCXoPNY/nf19X2td3VWa4zTP9KWTHKpYTAEVZ8kc
+	 Fxk158G3xi0x095lwhih6y7CxGvKv+www9aHg3XQ4JBN3csKkxJQ0rix0oDl1+Dzgf
+	 Ac83oYZIHVUkADQ+LKaHZwAOrzAWWputMYXVI5PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 222/393] media: nuvoton: Fix reference handling of ece_node
-Date: Thu, 17 Apr 2025 19:50:31 +0200
-Message-ID: <20250417175116.514134862@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 249/393] ASoC: codecs: wcd937x: fix a potential memory leak in wcd937x_soc_codec_probe()
+Date: Thu, 17 Apr 2025 19:50:58 +0200
+Message-ID: <20250417175117.606443633@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,42 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 8ba4ef40ad6ca62368292a69855324213181abfb upstream.
+commit 3e330acf4efd63876d673c046cd073a1d4ed57a8 upstream.
 
-Make sure all the code paths call of_node_put().
+When snd_soc_dapm_new_controls() or snd_soc_dapm_add_routes() fails,
+wcd937x_soc_codec_probe() returns without releasing 'wcd937x->clsh_info',
+which is allocated by wcd_clsh_ctrl_alloc. Add wcd_clsh_ctrl_free()
+to prevent potential memory leak.
 
-Instead of manually calling of_node_put, use the __free macros/helpers.
-
+Fixes: 313e978df7fc ("ASoC: codecs: wcd937x: add audio routing and Kconfig")
 Cc: stable@vger.kernel.org
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250226085050.3584898-1-haoxiang_li2024@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/wcd937x.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/nuvoton/npcm-video.c
-+++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1650,8 +1650,8 @@ rel_ctrl_handler:
- 
- static int npcm_video_ece_init(struct npcm_video *video)
- {
-+	struct device_node *ece_node __free(device_node) = NULL;
- 	struct device *dev = video->dev;
--	struct device_node *ece_node;
- 	struct platform_device *ece_pdev;
- 	void __iomem *regs;
- 
-@@ -1671,7 +1671,6 @@ static int npcm_video_ece_init(struct np
- 			dev_err(dev, "Failed to find ECE device\n");
- 			return -ENODEV;
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -2564,6 +2564,7 @@ static int wcd937x_soc_codec_probe(struc
+ 						ARRAY_SIZE(wcd9375_dapm_widgets));
+ 		if (ret < 0) {
+ 			dev_err(component->dev, "Failed to add snd_ctls\n");
++			wcd_clsh_ctrl_free(wcd937x->clsh_info);
+ 			return ret;
  		}
--		of_node_put(ece_node);
  
- 		regs = devm_platform_ioremap_resource(ece_pdev, 0);
- 		if (IS_ERR(regs)) {
+@@ -2571,6 +2572,7 @@ static int wcd937x_soc_codec_probe(struc
+ 					      ARRAY_SIZE(wcd9375_audio_map));
+ 		if (ret < 0) {
+ 			dev_err(component->dev, "Failed to add routes\n");
++			wcd_clsh_ctrl_free(wcd937x->clsh_info);
+ 			return ret;
+ 		}
+ 	}
 
 
