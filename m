@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE052DFA4B;
-	Thu, 17 Apr 2025 18:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C2E25525C;
+	Thu, 17 Apr 2025 18:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914747; cv=none; b=dUJDUDG3n6bhfV0ulLzN4xftLZrFUY83j27oVio8ythMo3PFiK9ww8941fll380TvYjoZkyDOWC3EbLwR/D+SOc5nuMI4Syw/ymzW8BHiRVzLgb9gBmWONEEq5Z53olWlS6OEQkKZph4dCqCkhU3No7gkqEk6tL9TUSbNOVD1HQ=
+	t=1744914752; cv=none; b=u4SVUI9KjgHvy04Gfzhh4/3VKQXluLfrb1i5GhfGjRL0z0ba0jlf+KI4Xgw4w6RmnU4rLaw2da1k4ZgqH+DHmcmLM3oIzD70c6cVuj1kgjFWgpixF20p6VbpkuGpCs7/7EL9LYcxUPydzs7WH96j2COaqAFAbJT/G+RGoLnQvmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914747; c=relaxed/simple;
-	bh=MlChsecDT03DsM+zCSKJ0loByjDC0G2oJVUrwAJJj5k=;
+	s=arc-20240116; t=1744914752; c=relaxed/simple;
+	bh=wjVNWGcP6kPMj8V76jpyN565OYxiE1Hf0bTjo5TfN54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tW+6l6GqB61KGynqbL2oqYfCSAag6d5VlFEcNFCZjmirbhA87vzHgVAOouN5HdfBWl6K2M+mAbIR5l6Nv9QGanNJ2eYPZ8xKQmBFyiIsu4Y4ttmzett7iHzamjVv7GzWzEn+Lwabr5J1I0QJSVK4wnLksP5i1Pi5slYsaKtjJLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ij/hx61b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQBwRpQLqC1JS5NQDu77sKYy0ZUiSxSVX103Nlcf5ru6/aEQwbvGiuBaK83ci2t5r7XyfjhHJ6Nxei6KKWCoILakm5cFjzI1rYvh64JG3EaEjFqP8YmyuHfJlJscSZmv17RS9u7tw82LbFNp+zqqJz3h0YAY8dN+ZkVKVql1e7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OefrME2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ij/hx61b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102F5C4CEE4;
-	Thu, 17 Apr 2025 18:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OefrME2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C868EC4CEE4;
+	Thu, 17 Apr 2025 18:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914747;
-	bh=MlChsecDT03DsM+zCSKJ0loByjDC0G2oJVUrwAJJj5k=;
+	s=korg; t=1744914752;
+	bh=wjVNWGcP6kPMj8V76jpyN565OYxiE1Hf0bTjo5TfN54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ij/hx61bSf3hI/9skEl0k5E69GGsWN7nahFIxUuHfqW8O4/pJgAdWvdvNh4tixUdn
-	 blUdvI4WHHjCDvP8KV5ggLId0H1VDkZq5jMQ0+hsDOzz6Iy+OgJU5BGniYUN6z39U6
-	 tEkAp/TB78Y6LY1SSIJUcA3zWUuQ1iLiIRbOiCn8=
+	b=OefrME2xqjfA2KzQFgC/PPP2QRAywRa0a34E5X4g3s6xmkSi9QFzHUXyeRymV2Bcx
+	 +5uy0kXyxwcUJQ7ouGmC6K1UL95t2txvRmlYFzbplRB+FqGGaLf5dPp4xvoVWvp5v/
+	 Iime1dqimxshwtW+YXw30CmcwnukDSHH3mJ1+3N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.13 318/414] iommu/vt-d: Put IRTE back into posted MSI mode if vCPU posting is disabled
-Date: Thu, 17 Apr 2025 19:51:16 +0200
-Message-ID: <20250417175124.224973683@linuxfoundation.org>
+Subject: [PATCH 6.13 319/414] iommu/vt-d: Dont clobber posted vCPU IRTE when host IRQ affinity changes
+Date: Thu, 17 Apr 2025 19:51:17 +0200
+Message-ID: <20250417175124.264315604@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -55,68 +55,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 2454823e97a63d85a6b215905f71e5a06324eab7 upstream.
+commit 688124cc541f60d26a7547f45637b23dada4e527 upstream.
 
-Add a helper to take care of reconfiguring an IRTE to deliver IRQs to the
-host, i.e. not to a vCPU, and use the helper when an IRTE's vCPU affinity
-is nullified, i.e. when KVM puts an IRTE back into "host" mode.  Because
-posted MSIs use an ephemeral IRTE, using modify_irte() puts the IRTE into
-full remapped mode, i.e. unintentionally disables posted MSIs on the IRQ.
+Don't overwrite an IRTE that is posting IRQs to a vCPU with a posted MSI
+entry if the host IRQ affinity happens to change.  If/when the IRTE is
+reverted back to "host mode", it will be reconfigured as a posted MSI or
+remapped entry as appropriate.
+
+Drop the "mode" field, which doesn't differentiate between posted MSIs and
+posted vCPUs, in favor of a dedicated posted_vcpu flag.  Note!  The two
+posted_{msi,vcpu} flags are intentionally not mutually exclusive; an IRTE
+can transition between posted MSI and posted vCPU.
 
 Fixes: ed1e48ea4370 ("iommu/vt-d: Enable posted mode for device MSIs")
 Cc: stable@vger.kernel.org
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Jacob Pan <jacob.jun.pan@linux.intel.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20250315025135.2365846-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20250315025135.2365846-3-seanjc@google.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/irq_remapping.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/iommu/intel/irq_remapping.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
 --- a/drivers/iommu/intel/irq_remapping.c
 +++ b/drivers/iommu/intel/irq_remapping.c
-@@ -1173,7 +1173,17 @@ static void intel_ir_reconfigure_irte_po
- static inline void intel_ir_reconfigure_irte_posted(struct irq_data *irqd) {}
- #endif
+@@ -26,11 +26,6 @@
+ #include "../iommu-pages.h"
+ #include "cap_audit.h"
  
--static void intel_ir_reconfigure_irte(struct irq_data *irqd, bool force)
-+static void __intel_ir_reconfigure_irte(struct irq_data *irqd, bool force_host)
-+{
-+	struct intel_ir_data *ir_data = irqd->chip_data;
-+
-+	if (ir_data->irq_2_iommu.posted_msi)
-+		intel_ir_reconfigure_irte_posted(irqd);
-+	else if (force_host || ir_data->irq_2_iommu.mode == IRQ_REMAPPING)
-+		modify_irte(&ir_data->irq_2_iommu, &ir_data->irte_entry);
-+}
-+
-+static void intel_ir_reconfigure_irte(struct irq_data *irqd, bool force_host)
+-enum irq_mode {
+-	IRQ_REMAPPING,
+-	IRQ_POSTING,
+-};
+-
+ struct ioapic_scope {
+ 	struct intel_iommu *iommu;
+ 	unsigned int id;
+@@ -50,8 +45,8 @@ struct irq_2_iommu {
+ 	u16 irte_index;
+ 	u16 sub_handle;
+ 	u8  irte_mask;
+-	enum irq_mode mode;
+ 	bool posted_msi;
++	bool posted_vcpu;
+ };
+ 
+ struct intel_ir_data {
+@@ -139,7 +134,6 @@ static int alloc_irte(struct intel_iommu
+ 		irq_iommu->irte_index =  index;
+ 		irq_iommu->sub_handle = 0;
+ 		irq_iommu->irte_mask = mask;
+-		irq_iommu->mode = IRQ_REMAPPING;
+ 	}
+ 	raw_spin_unlock_irqrestore(&irq_2_ir_lock, flags);
+ 
+@@ -194,8 +188,6 @@ static int modify_irte(struct irq_2_iomm
+ 
+ 	rc = qi_flush_iec(iommu, index, 0);
+ 
+-	/* Update iommu mode according to the IRTE mode */
+-	irq_iommu->mode = irte->pst ? IRQ_POSTING : IRQ_REMAPPING;
+ 	raw_spin_unlock_irqrestore(&irq_2_ir_lock, flags);
+ 
+ 	return rc;
+@@ -1177,9 +1169,18 @@ static void __intel_ir_reconfigure_irte(
  {
  	struct intel_ir_data *ir_data = irqd->chip_data;
- 	struct irte *irte = &ir_data->irte_entry;
-@@ -1186,10 +1196,7 @@ static void intel_ir_reconfigure_irte(st
- 	irte->vector = cfg->vector;
- 	irte->dest_id = IRTE_DEST(cfg->dest_apicid);
  
--	if (ir_data->irq_2_iommu.posted_msi)
--		intel_ir_reconfigure_irte_posted(irqd);
--	else if (force || ir_data->irq_2_iommu.mode == IRQ_REMAPPING)
--		modify_irte(&ir_data->irq_2_iommu, irte);
-+	__intel_ir_reconfigure_irte(irqd, force_host);
++	/*
++	 * Don't modify IRTEs for IRQs that are being posted to vCPUs if the
++	 * host CPU affinity changes.
++	 */
++	if (ir_data->irq_2_iommu.posted_vcpu && !force_host)
++		return;
++
++	ir_data->irq_2_iommu.posted_vcpu = false;
++
+ 	if (ir_data->irq_2_iommu.posted_msi)
+ 		intel_ir_reconfigure_irte_posted(irqd);
+-	else if (force_host || ir_data->irq_2_iommu.mode == IRQ_REMAPPING)
++	else
+ 		modify_irte(&ir_data->irq_2_iommu, &ir_data->irte_entry);
  }
  
- /*
-@@ -1244,7 +1251,7 @@ static int intel_ir_set_vcpu_affinity(st
+@@ -1274,6 +1275,7 @@ static int intel_ir_set_vcpu_affinity(st
+ 		irte_pi.pda_h = (vcpu_pi_info->pi_desc_addr >> 32) &
+ 				~(-1UL << PDA_HIGH_BIT);
  
- 	/* stop posting interrupts, back to the default mode */
- 	if (!vcpu_pi_info) {
--		modify_irte(&ir_data->irq_2_iommu, &ir_data->irte_entry);
-+		__intel_ir_reconfigure_irte(data, true);
- 	} else {
- 		struct irte irte_pi;
++		ir_data->irq_2_iommu.posted_vcpu = true;
+ 		modify_irte(&ir_data->irq_2_iommu, &irte_pi);
+ 	}
  
+@@ -1501,6 +1503,9 @@ static void intel_irq_remapping_deactiva
+ 	struct intel_ir_data *data = irq_data->chip_data;
+ 	struct irte entry;
+ 
++	WARN_ON_ONCE(data->irq_2_iommu.posted_vcpu);
++	data->irq_2_iommu.posted_vcpu = false;
++
+ 	memset(&entry, 0, sizeof(entry));
+ 	modify_irte(&data->irq_2_iommu, &entry);
+ }
 
 
