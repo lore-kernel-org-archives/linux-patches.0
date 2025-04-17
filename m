@@ -1,42 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6FB2638A1;
-	Thu, 17 Apr 2025 18:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5EA263C6C;
+	Thu, 17 Apr 2025 18:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914791; cv=none; b=CzvRqamQ4aKfJM8qzc1eeOWseaSj3pMPJCKx0engIn4V3MarbN/YbQPJkMJR/0SOlPjyMRMJmPLIBC2OgWT1IReV8xQavlwTc5nE3pwfTKgqgnewG1G5XyJvh6xsce4CcT/KCD6+pATAVjjemMm8CvOt5mMZyzFJCsbNuVV+Nio=
+	t=1744914795; cv=none; b=ifZBlTLZealjL57FLnWzKRGzSw7G0xaK35FGguzgd2iBNbrQ2b/9j3zbmHzJLCv2sFAxmbDF3+s5FSW9/qexI8uWazCRSrBEf5CxWcTUprw/YWaKhCMjrHOWYpvkqKcYwHDhl1/KFLMa34I8m5STsQuMhaajmC7BKONVJMhuzjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914791; c=relaxed/simple;
-	bh=6OcXm+umw5bB7aMVM+6P+4Eup2ohtqi5CNpOowWU99A=;
+	s=arc-20240116; t=1744914795; c=relaxed/simple;
+	bh=YjYImiMEN0Nnpnrh+xMjGEpDCdy6ShSTTPuteyfzKak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vsu8pcX/KyyeOoKFsgqbTVqiQvkrSR8uzbG6DIlpk0O+sIi/SvYXwV5br7FSKarYYP0GHUmQIz1ceAtKNjlC2051B0R6+4htQhbedL93kshsI9SJqa2rB5CbukXTcUPNj2OvJrXZyjCqeWdxP82DCgbIk/I50ubRsagZUTBqISA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARHSwl1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOh47MdHAR0H7YLQyvbiY2YSySXHPq3UtLwHxQv6lB0488Ij1pj7kDK+qUq43oWMDsSF61MTFU5Ro0I75qpqjC9rcUhN93F8YHPwE2rJQzIrzYLQRDL9lsbidVkq5DkHRe9EBl91hTtHmtMk7y4C50RHaDQ+mH0GDVUZTxHWazY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nR5LrZEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARHSwl1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C434C4CEE4;
-	Thu, 17 Apr 2025 18:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nR5LrZEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B694C4CEE4;
+	Thu, 17 Apr 2025 18:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914790;
-	bh=6OcXm+umw5bB7aMVM+6P+4Eup2ohtqi5CNpOowWU99A=;
+	s=korg; t=1744914793;
+	bh=YjYImiMEN0Nnpnrh+xMjGEpDCdy6ShSTTPuteyfzKak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARHSwl1vqMlbkwuBW+tfzngKvhl4rKW9gPi7JSNg+nl3G8lnKmp/Kzzz+VwXbIHQI
-	 skelkVFifLpQvfRy/Cle4fQceYCilAEX3haigPoWZf2uwMuYL5Q+3w7sZsSV4gR+PF
-	 CB0t8oe2cBp6DUOQUw+4nVMS9ZHIthQtErbgtth4=
+	b=nR5LrZEVm2bMcoaCFiCpV6nln/bYO0dTI1vta5zn3lbQ7MymgD1Ycs165TS2vllEJ
+	 4PZynf/lpa6ZSnATci1e37spVJzW62froVBj/UlyylpanoS0RMClyT4yMDBepnQsta
+	 sXQ8vWCGCVEKhPspOYJRFzLt6SbO0jvxNsj/nO/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Borislav Betkov <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 331/414] mm/userfaultfd: fix release hang over concurrent GUP
-Date: Thu, 17 Apr 2025 19:51:29 +0200
-Message-ID: <20250417175124.744127549@linuxfoundation.org>
+Subject: [PATCH 6.13 332/414] mm/hwpoison: do not send SIGBUS to processes with recovered clean pages
+Date: Thu, 17 Apr 2025 19:51:30 +0200
+Message-ID: <20250417175124.783197420@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -55,120 +67,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit fe4cdc2c4e248f48de23bc778870fd71e772a274 upstream.
+commit aaf99ac2ceb7c974f758a635723eeaf48596388e upstream.
 
-This patch should fix a possible userfaultfd release() hang during
-concurrent GUP.
+When an uncorrected memory error is consumed there is a race between the
+CMCI from the memory controller reporting an uncorrected error with a UCNA
+signature, and the core reporting and SRAR signature machine check when
+the data is about to be consumed.
 
-This problem was initially reported by Dimitris Siakavaras in July 2023
-[1] in a firecracker use case.  Firecracker has a separate process
-handling page faults remotely, and when the process releases the
-userfaultfd it can race with a concurrent GUP from KVM trying to fault in
-a guest page during the secondary MMU page fault process.
+- Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
 
-A similar problem was reported recently again by Jinjiang Tu in March 2025
-[2], even though the race happened this time with a mlockall() operation,
-which does GUP in a similar fashion.
+Prior to Icelake memory controllers reported patrol scrub events that
+detected a previously unseen uncorrected error in memory by signaling a
+broadcast machine check with an SRAO (Software Recoverable Action
+Optional) signature in the machine check bank.  This was overkill because
+it's not an urgent problem that no core is on the verge of consuming that
+bad data.  It's also found that multi SRAO UCE may cause nested MCE
+interrupts and finally become an IERR.
 
-In 2017, commit 656710a60e36 ("userfaultfd: non-cooperative: closing the
-uffd without triggering SIGBUS") was trying to fix this issue.  AFAIU,
-that fixes well the fault paths but may not work yet for GUP.  In GUP, the
-issue is NOPAGE will be almost treated the same as "page fault resolved"
-in faultin_page(), then the GUP will follow page again, seeing page
-missing, and it'll keep going into a live lock situation as reported.
+Hence, Intel downgrades the machine check bank signature of patrol scrub
+from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
+#CMCI.  Just to add to the confusion, Linux does take an action (in
+uc_decode_notifier()) to try to offline the page despite the UC*NA*
+signature name.
 
-This change makes core mm return RETRY instead of NOPAGE for both the GUP
-and fault paths, proactively releasing the mmap read lock.  This should
-guarantee the other release thread make progress on taking the write lock
-and avoid the live lock even for GUP.
+- Background: why #CMCI and #MCE race when poison is consuming in Intel platform [1]
 
-When at it, rearrange the comments to make sure it's uptodate.
+Having decided that CMCI/UCNA is the best action for patrol scrub errors,
+the memory controller uses it for reads too.  But the memory controller is
+executing asynchronously from the core, and can't tell the difference
+between a "real" read and a speculative read.  So it will do CMCI/UCNA if
+an error is found in any read.
 
-[1] https://lore.kernel.org/r/79375b71-db2e-3e66-346b-254c90d915e2@cslab.ece.ntua.gr
-[2] https://lore.kernel.org/r/20250307072133.3522652-1-tujinjiang@huawei.com
+Thus:
 
-Link: https://lkml.kernel.org/r/20250312145131.1143062-1-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>
+1) Core is clever and thinks address A is needed soon, issues a speculative read.
+2) Core finds it is going to use address A soon after sending the read request
+3) The CMCI from the memory controller is in a race with MCE from the core
+   that will soon try to retire the load from address A.
+
+Quite often (because speculation has got better) the CMCI from the memory
+controller is delivered before the core is committed to the instruction
+reading address A, so the interrupt is taken, and Linux offlines the page
+(marking it as poison).
+
+- Why user process is killed for instr case
+
+Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
+"not recovered"") tries to fix noise message "Memory error not recovered"
+and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
+that kill_accessing_process() return -EHWPOISON for instr case, as result,
+kill_me_maybe() send a SIGBUS to user process.
+
+If the CMCI wins that race, the page is marked poisoned when
+uc_decode_notifier() calls memory_failure().  For dirty pages,
+memory_failure() invokes try_to_unmap() with the TTU_HWPOISON flag,
+converting the PTE to a hwpoison entry.  As a result,
+kill_accessing_process():
+
+- call walk_page_range() and return 1 regardless of whether
+  try_to_unmap() succeeds or fails,
+- call kill_proc() to make sure a SIGBUS is sent
+- return -EHWPOISON to indicate that SIGBUS is already sent to the
+  process and kill_me_maybe() doesn't have to send it again.
+
+However, for clean pages, the TTU_HWPOISON flag is cleared, leaving the
+PTE unchanged and not converted to a hwpoison entry.  Conversely, for
+clean pages where PTE entries are not marked as hwpoison,
+kill_accessing_process() returns -EFAULT, causing kill_me_maybe() to send
+a SIGBUS.
+
+Console log looks like this:
+
+    Memory failure: 0x827ca68: corrupted page was clean: dropped without side effects
+    Memory failure: 0x827ca68: recovery action for clean LRU page: Recovered
+    Memory failure: 0x827ca68: already hardware poisoned
+    mce: Memory error not recovered
+
+To fix it, return 0 for "corrupted page was clean", preventing an
+unnecessary SIGBUS to user process.
+
+[1] https://lore.kernel.org/lkml/20250217063335.22257-1-xueshuai@linux.alibaba.com/T/#mba94f1305b3009dd340ce4114d3221fe810d1871
+Link: https://lkml.kernel.org/r/20250312112852.82415-3-xueshuai@linux.alibaba.com
+Fixes: 046545a661af ("mm/hwpoison: fix error page recovered but reported "not recovered"")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |   51 +++++++++++++++++++++++++--------------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+ mm/memory-failure.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -396,32 +396,6 @@ vm_fault_t handle_userfault(struct vm_fa
- 		goto out;
- 
- 	/*
--	 * If it's already released don't get it. This avoids to loop
--	 * in __get_user_pages if userfaultfd_release waits on the
--	 * caller of handle_userfault to release the mmap_lock.
--	 */
--	if (unlikely(READ_ONCE(ctx->released))) {
--		/*
--		 * Don't return VM_FAULT_SIGBUS in this case, so a non
--		 * cooperative manager can close the uffd after the
--		 * last UFFDIO_COPY, without risking to trigger an
--		 * involuntary SIGBUS if the process was starting the
--		 * userfaultfd while the userfaultfd was still armed
--		 * (but after the last UFFDIO_COPY). If the uffd
--		 * wasn't already closed when the userfault reached
--		 * this point, that would normally be solved by
--		 * userfaultfd_must_wait returning 'false'.
--		 *
--		 * If we were to return VM_FAULT_SIGBUS here, the non
--		 * cooperative manager would be instead forced to
--		 * always call UFFDIO_UNREGISTER before it can safely
--		 * close the uffd.
--		 */
--		ret = VM_FAULT_NOPAGE;
--		goto out;
--	}
--
--	/*
- 	 * Check that we can return VM_FAULT_RETRY.
- 	 *
- 	 * NOTE: it should become possible to return VM_FAULT_RETRY
-@@ -457,6 +431,31 @@ vm_fault_t handle_userfault(struct vm_fa
- 	if (vmf->flags & FAULT_FLAG_RETRY_NOWAIT)
- 		goto out;
- 
-+	if (unlikely(READ_ONCE(ctx->released))) {
-+		/*
-+		 * If a concurrent release is detected, do not return
-+		 * VM_FAULT_SIGBUS or VM_FAULT_NOPAGE, but instead always
-+		 * return VM_FAULT_RETRY with lock released proactively.
-+		 *
-+		 * If we were to return VM_FAULT_SIGBUS here, the non
-+		 * cooperative manager would be instead forced to
-+		 * always call UFFDIO_UNREGISTER before it can safely
-+		 * close the uffd, to avoid involuntary SIGBUS triggered.
-+		 *
-+		 * If we were to return VM_FAULT_NOPAGE, it would work for
-+		 * the fault path, in which the lock will be released
-+		 * later.  However for GUP, faultin_page() does nothing
-+		 * special on NOPAGE, so GUP would spin retrying without
-+		 * releasing the mmap read lock, causing possible livelock.
-+		 *
-+		 * Here only VM_FAULT_RETRY would make sure the mmap lock
-+		 * be released immediately, so that the thread concurrently
-+		 * releasing the userfault would always make progress.
-+		 */
-+		release_fault_lock(vmf);
-+		goto out;
-+	}
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -881,12 +881,17 @@ static int kill_accessing_process(struct
+ 	mmap_read_lock(p->mm);
+ 	ret = walk_page_range(p->mm, 0, TASK_SIZE, &hwpoison_walk_ops,
+ 			      (void *)&priv);
++	/*
++	 * ret = 1 when CMCI wins, regardless of whether try_to_unmap()
++	 * succeeds or fails, then kill the process with SIGBUS.
++	 * ret = 0 when poison page is a clean page and it's dropped, no
++	 * SIGBUS is needed.
++	 */
+ 	if (ret == 1 && priv.tk.addr)
+ 		kill_proc(&priv.tk, pfn, flags);
+-	else
+-		ret = 0;
+ 	mmap_read_unlock(p->mm);
+-	return ret > 0 ? -EHWPOISON : -EFAULT;
 +
- 	/* take the reference before dropping the mmap_lock */
- 	userfaultfd_ctx_get(ctx);
++	return ret > 0 ? -EHWPOISON : 0;
+ }
  
+ /*
 
 
