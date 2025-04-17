@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F831A3178;
-	Thu, 17 Apr 2025 18:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04663594D;
+	Thu, 17 Apr 2025 18:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913834; cv=none; b=qD6Acg8tBSO7SvNKULWP6veame7z8Lma4hwnTcKLntWrO7PLQQ7tFYURlqutTDwJk3HIGxW24mKgKIt3AO+EG1n6GxhHpFwbaWAMltoxUwMvTiuQudwWI/L44IviOeOQJibClLkscpnA0cI3kEM5hvf4abPtb/c/9zYmVsUZzBM=
+	t=1744913840; cv=none; b=AfQEEpb/J8N5TC+Ek5uJQtI6vZxUfCyJuQ1pchSrV5NMKq75zdKafMi5z49DpHG6L4hob10Bw5Q7fDjOlO0x3YU9Huh5sz9d50XjAkbJO4G2BiOdfjabXbRqdJ9VApiQ3p3W3xPiDHpleAsuKK0oOcnRjIzsSsiGsqqMqX5bWaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913834; c=relaxed/simple;
-	bh=8ZqYWDKLEEIvn5dQRYveNcgR524TIpj3yItTJYL3dWI=;
+	s=arc-20240116; t=1744913840; c=relaxed/simple;
+	bh=LZC4bIhV/i1aEAKnlum3DSORtEmSpYE2zyigNYJITq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u84H3Btzws3l34vxJmjRDgb/ImVsFRk3Gz/wY0fPr/bYoIgwkVD0PvDOzhzRfGwkgv9HRzwfV005ERQyWZeaImpD4wUb83L+5u8/n+zmfAs0a7LJBhFkrulj93hS1YX195GAfwBH7RbwKfuE0RPtdqgtNGPqkED1oa/l+511UdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbYzJDL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eQtMCBRsd77yNMuOMlZKt+ErgadcdbjVwGuOYTVnwqIfEGbUXMj8Sj+vZR+Ta7IgR9zxbLjtk9AyjparEckzou7spzgN+Wh69HSoS6Uri49wXQf/ANdEhEOR+KQwhdG5ACyb8k8aLpZ0mqnI1XHfceo9z8PqNZqXGQZKX3RxgZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grC7kwDW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbYzJDL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87865C4CEEA;
-	Thu, 17 Apr 2025 18:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grC7kwDW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA20DC4CEEA;
+	Thu, 17 Apr 2025 18:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913833;
-	bh=8ZqYWDKLEEIvn5dQRYveNcgR524TIpj3yItTJYL3dWI=;
+	s=korg; t=1744913840;
+	bh=LZC4bIhV/i1aEAKnlum3DSORtEmSpYE2zyigNYJITq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbYzJDL54ctG8DoXvkXpegA8voKh9HiD0v/EJobpWCfcD87Sac8dlReNegqJvrone
-	 hlkZt9uxDkTtItONFWZlJPJmM5LrNsa0c5ec6ysutx8VV3FmG3V0nYRVI1e0/GBK61
-	 d0zpKo2NQd55P9ZAMQ3zW6DaT5xYViW5N+7MV4rU=
+	b=grC7kwDWJAUBR0vsyEPPDwH1cdASa3P7vEsTd76flB09XkJ2+UJsVlIje/nDiKq4m
+	 S8uAunjub+XTWiJDxQ/J2AZHWMJG9I5xkUFB5VUH7EmOLkIKoWjBYVLEurIQ+l882T
+	 5ZgVwfjSOotbshhuPhqJ2S4hl0u7nmb6mv0vlQao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Andi Shyti <andi.shyti@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Sk Anirban <sk.anirban@intel.com>,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 008/414] drm/i915: Disable RPG during live selftest
-Date: Thu, 17 Apr 2025 19:46:06 +0200
-Message-ID: <20250417175111.736320585@linuxfoundation.org>
+Subject: [PATCH 6.13 009/414] x86/acpi: Dont limit CPUs to 1 for Xen PV guests due to disabled ACPI
+Date: Thu, 17 Apr 2025 19:46:07 +0200
+Message-ID: <20250417175111.777387673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,114 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Badal Nilawar <badal.nilawar@intel.com>
+From: Petr Vaněk <arkamar@atlas.cz>
 
-[ Upstream commit 9d3d9776bd3bd9c32d460dfe6c3363134de578bc ]
+[ Upstream commit 8b37357a78d7fa13d88ea822b35b40137da1c85e ]
 
-The Forcewake timeout issue has been observed on Gen 12.0 and above.
-To address this, disable Render Power-Gating (RPG) during live self-tests
-for these generations. The temporary workaround 'drm/i915/mtl: do not
-enable render power-gating on MTL' disables RPG globally, which is
-unnecessary since the issues were only seen during self-tests.
+Xen disables ACPI for PV guests in DomU, which causes acpi_mps_check() to
+return 1 when CONFIG_X86_MPPARSE is not set. As a result, the local APIC is
+disabled and the guest is later limited to a single vCPU, despite being
+configured with more.
 
-v2: take runtime pm wakeref
+This regression was introduced in version 6.9 in commit 7c0edad3643f
+("x86/cpu/topology: Rework possible CPU management"), which added an
+early check that limits CPUs to 1 if apic_is_disabled.
 
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/9413
-Fixes: 25e7976db86b ("drm/i915/mtl: do not enable render power-gating on MTL")
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Andi Shyti <andi.shyti@intel.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
-Signed-off-by: Sk Anirban <sk.anirban@intel.com>
-Reviewed-by: Karthik Poosa <karthik.poosa@intel.com>
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250310152821.2931678-1-sk.anirban@intel.com
-(cherry picked from commit 0a4ae87706c6d15d14648e428c3a76351f823e48)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Update the acpi_mps_check() logic to return 0 early when running as a Xen
+PV guest in DomU, preventing APIC from being disabled in this specific case
+and restoring correct multi-vCPU behaviour.
+
+Fixes: 7c0edad3643f ("x86/cpu/topology: Rework possible CPU management")
+Signed-off-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250407132445.6732-2-arkamar@atlas.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rc6.c           | 19 ++++---------------
- .../gpu/drm/i915/selftests/i915_selftest.c    | 18 ++++++++++++++++++
- 2 files changed, 22 insertions(+), 15 deletions(-)
+ arch/x86/kernel/acpi/boot.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
-index 9378d5901c493..9ca42589da4da 100644
---- a/drivers/gpu/drm/i915/gt/intel_rc6.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
-@@ -117,21 +117,10 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
- 			GEN6_RC_CTL_RC6_ENABLE |
- 			GEN6_RC_CTL_EI_MODE(1);
+diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
+index 18485170d51b4..619de9109e7a7 100644
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -23,6 +23,8 @@
+ #include <linux/serial_core.h>
+ #include <linux/pgtable.h>
  
--	/*
--	 * BSpec 52698 - Render powergating must be off.
--	 * FIXME BSpec is outdated, disabling powergating for MTL is just
--	 * temporary wa and should be removed after fixing real cause
--	 * of forcewake timeouts.
--	 */
--	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74)))
--		pg_enable =
--			GEN9_MEDIA_PG_ENABLE |
--			GEN11_MEDIA_SAMPLER_PG_ENABLE;
--	else
--		pg_enable =
--			GEN9_RENDER_PG_ENABLE |
--			GEN9_MEDIA_PG_ENABLE |
--			GEN11_MEDIA_SAMPLER_PG_ENABLE;
-+	pg_enable =
-+		GEN9_RENDER_PG_ENABLE |
-+		GEN9_MEDIA_PG_ENABLE |
-+		GEN11_MEDIA_SAMPLER_PG_ENABLE;
- 
- 	if (GRAPHICS_VER(gt->i915) >= 12 && !IS_DG1(gt->i915)) {
- 		for (i = 0; i < I915_MAX_VCS; i++)
-diff --git a/drivers/gpu/drm/i915/selftests/i915_selftest.c b/drivers/gpu/drm/i915/selftests/i915_selftest.c
-index fee76c1d2f450..889281819c5b1 100644
---- a/drivers/gpu/drm/i915/selftests/i915_selftest.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_selftest.c
-@@ -23,7 +23,9 @@
- 
- #include <linux/random.h>
- 
-+#include "gt/intel_gt.h"
- #include "gt/intel_gt_pm.h"
-+#include "gt/intel_gt_regs.h"
- #include "gt/uc/intel_gsc_fw.h"
- 
- #include "i915_driver.h"
-@@ -253,11 +255,27 @@ int i915_mock_selftests(void)
- int i915_live_selftests(struct pci_dev *pdev)
- {
- 	struct drm_i915_private *i915 = pdev_to_i915(pdev);
-+	struct intel_uncore *uncore = &i915->uncore;
- 	int err;
-+	u32 pg_enable;
-+	intel_wakeref_t wakeref;
- 
- 	if (!i915_selftest.live)
- 		return 0;
- 
-+	/*
-+	 * FIXME Disable render powergating, this is temporary wa and should be removed
-+	 * after fixing real cause of forcewake timeouts.
-+	 */
-+	with_intel_runtime_pm(uncore->rpm, wakeref) {
-+		if (IS_GFX_GT_IP_RANGE(to_gt(i915), IP_VER(12, 00), IP_VER(12, 74))) {
-+			pg_enable = intel_uncore_read(uncore, GEN9_PG_ENABLE);
-+			if (pg_enable & GEN9_RENDER_PG_ENABLE)
-+				intel_uncore_write_fw(uncore, GEN9_PG_ENABLE,
-+						      pg_enable & ~GEN9_RENDER_PG_ENABLE);
-+		}
-+	}
++#include <xen/xen.h>
 +
- 	__wait_gsc_proxy_completed(i915);
- 	__wait_gsc_huc_load_completed(i915);
- 
+ #include <asm/e820/api.h>
+ #include <asm/irqdomain.h>
+ #include <asm/pci_x86.h>
+@@ -1732,6 +1734,15 @@ int __init acpi_mps_check(void)
+ {
+ #if defined(CONFIG_X86_LOCAL_APIC) && !defined(CONFIG_X86_MPPARSE)
+ /* mptable code is not built-in*/
++
++	/*
++	 * Xen disables ACPI in PV DomU guests but it still emulates APIC and
++	 * supports SMP. Returning early here ensures that APIC is not disabled
++	 * unnecessarily and the guest is not limited to a single vCPU.
++	 */
++	if (xen_pv_domain() && !xen_initial_domain())
++		return 0;
++
+ 	if (acpi_disabled || acpi_noirq) {
+ 		pr_warn("MPS support code is not built-in, using acpi=off or acpi=noirq or pci=noacpi may have problem\n");
+ 		return 1;
 -- 
 2.39.5
 
