@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391F62566FB;
-	Thu, 17 Apr 2025 17:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FA62566DF;
+	Thu, 17 Apr 2025 17:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912733; cv=none; b=ho/5WhWUgyI758GkAP+FHkR9g2jTRgD4LebbXSOUYTTVu0HqaMrowepMkBL10ajkSPnHZN/mU9EjSMJW+AzQwihtpikFROk2Em93P3cpKLS2pcARwSudGrkZ+RUjD9bw3SlkS5qk5gfln7AjqdktgOP3MBBJwvZIRCGWsHlpQIc=
+	t=1744912736; cv=none; b=JFKm95ocRaPb+sE7XoYy1gnCOvaqJ4VnQtgDSQSy37JTVYHOa8V/MG9NoT6tbzZ32n+BHWMXHolECcaHqMCoCdsyAlo+7SIATYGKlSbU5W43QHz7Rcq/IjrpxzoT8UBZjMxueQAPRLnuM7S6uQWc66dsuesEF72SvWAIoBgIjgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912733; c=relaxed/simple;
-	bh=IYHrVVrYMFJNwPG7rTig8SybX6OKVGxssGD6s9gERBs=;
+	s=arc-20240116; t=1744912736; c=relaxed/simple;
+	bh=QLH/fqU1zpIFP2XCPF1VtneRWX5D4oA3Zho2GJGGb28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnZ/x2avM8jpoQI1kpThZCQh2auZgjOMqg/qHxbYrSUDOAouMaVGZ+fXmQMSG3rRyvLmUFsTzLZnGDcFkvB80h0ImU0iz5b9DMblL0HpKCPvAq5spQQX7XdNHuIXLuBHMZzRwxdH3vT5hYhUqvFaq+7Xcrfd6RBWDop2CcH/SG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgOQ4Y+5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCbVBMFY/MXr6XZ2wAGcYB2wJ825BUah+VFNTLGSJ2EUEVIzel1qTTBIMM3ul0wE+Ti1W+021CdgWTUzEzHfxeAqdQXUuLZOq7Mp743RTdSucNv6OE/5r5qq8KNBtOcaGznbAy+cTRSiq8ouyNVccttpRRCBVhENWoCoY2KKnAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gl2gU69Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgOQ4Y+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40371C4CEE4;
-	Thu, 17 Apr 2025 17:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gl2gU69Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B344C4CEE4;
+	Thu, 17 Apr 2025 17:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912732;
-	bh=IYHrVVrYMFJNwPG7rTig8SybX6OKVGxssGD6s9gERBs=;
+	s=korg; t=1744912735;
+	bh=QLH/fqU1zpIFP2XCPF1VtneRWX5D4oA3Zho2GJGGb28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NgOQ4Y+5qGVveDWfWZ66ju06AfyGipjUlKIPcnNO1E58GTLtNlrrRXr1zmMdM0H17
-	 KQbU/86c7S65qq8rqrs99CZcFYToycwdRmn+5KmMidgNDW2H/2ynuKw9gRWPmeirfi
-	 JgQMK8P1Q15NN904d7bBbWFGf3C1EJ3DZ+TGw/j0=
+	b=Gl2gU69QXjP34nH9Isw98mQXG/+bNLsh9CPQQd6MoHqT1u1fJnoEot0ztVHJEe70e
+	 I88A85ymaegD/iCljoqcP9r3QnvzuwRHQPcjahtQ4R9CBHT4U5CpWYlFYsX5I6gYiU
+	 XRZSPPd2BUta0vyzlY/ibEspMF48kkwtHWbhAiPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chaohai Chen <wdhh66@163.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 107/449] wifi: mac80211: ensure sdata->work is canceled before initialized.
-Date: Thu, 17 Apr 2025 19:46:35 +0200
-Message-ID: <20250417175122.271785586@linuxfoundation.org>
+Subject: [PATCH 6.14 108/449] scsi: target: spc: Fix RSOC parameter data header size
+Date: Thu, 17 Apr 2025 19:46:36 +0200
+Message-ID: <20250417175122.311637253@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,48 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Chaohai Chen <wdhh66@163.com>
 
-[ Upstream commit 6c93fd502023dd919b5987ccbe990735410edd49 ]
+[ Upstream commit b50532318793d28a7628c1ffc129a2226e83e495 ]
 
-This wiphy work is canceled when the iface is stopped,
-and shouldn't be queued for a non-running iface.
-If it happens to be queued for a non-running iface (due to a bug)
-it can cause a corruption of wiphy_work_list when ieee80211_setup_sdata
-is called. Make sure to cancel it in this case and warn on.
+The SPC document states that "The COMMAND DATA LENGTH field indicates the
+length in bytes of the command descriptor list".
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20250205110958.99204c767c10.I84ce27a239059f6009cee197b252549a11426046@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The length should be subtracted by 4 to represent the length of the
+description list, not 3.
+
+Signed-off-by: Chaohai Chen <wdhh66@163.com>
+Link: https://lore.kernel.org/r/20250115070739.216154-1-wdhh66@163.com
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/target/target_core_spc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 738de269e13f0..459fc391a4d93 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -8,7 +8,7 @@
-  * Copyright 2008, Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright (c) 2016        Intel Deutschland GmbH
-- * Copyright (C) 2018-2024 Intel Corporation
-+ * Copyright (C) 2018-2025 Intel Corporation
-  */
- #include <linux/slab.h>
- #include <linux/kernel.h>
-@@ -807,6 +807,9 @@ static void ieee80211_set_multicast_list(struct net_device *dev)
-  */
- static void ieee80211_teardown_sdata(struct ieee80211_sub_if_data *sdata)
- {
-+	if (WARN_ON(!list_empty(&sdata->work.entry)))
-+		wiphy_work_cancel(sdata->local->hw.wiphy, &sdata->work);
-+
- 	/* free extra data */
- 	ieee80211_free_keys(sdata, false);
- 
+diff --git a/drivers/target/target_core_spc.c b/drivers/target/target_core_spc.c
+index ea14a38356814..61c065702350e 100644
+--- a/drivers/target/target_core_spc.c
++++ b/drivers/target/target_core_spc.c
+@@ -2243,7 +2243,7 @@ spc_emulate_report_supp_op_codes(struct se_cmd *cmd)
+ 			response_length += spc_rsoc_encode_command_descriptor(
+ 					&buf[response_length], rctd, descr);
+ 		}
+-		put_unaligned_be32(response_length - 3, buf);
++		put_unaligned_be32(response_length - 4, buf);
+ 	} else {
+ 		response_length = spc_rsoc_encode_one_command_descriptor(
+ 				&buf[response_length], rctd, descr,
 -- 
 2.39.5
 
