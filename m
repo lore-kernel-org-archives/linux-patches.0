@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D185920;
-	Thu, 17 Apr 2025 18:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941B9185920;
+	Thu, 17 Apr 2025 18:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915730; cv=none; b=nSBSkW9qKs3Zry/v8WR5rQ9cEf8p80ga6ES2U0MV5FPnxm9ikQ6Av3dNMkol5rUDzOghIW9rvq6qCVgvln6IOIvNpKMmf7gtQAlmoJtQcd/CEqdW1yrNLR1CL0PiaTEKDuXimVS4cY57DrF7xTF64PyVZ5GdscJY9irav1hv7MU=
+	t=1744915733; cv=none; b=JioUPFggEN+JJC/lOl0S0v4Mb9jfyV+91hoHmj6MGIq9MC+ScKf1/fqRODdMZ3+q1bTOia0JfT78uHxB5645NnmNeiUo1+T5WrM13w1gpEY7tvSJ3mZCJyFX64PZ/Et3KGnhcnkvxHEc8QnCmjkl6p1h0H6/b+Rrz34+7qwuTkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915730; c=relaxed/simple;
-	bh=WFE1kXPsJ4RPeLgytRt6DMo5KWTXoxboWdM0PD3EiRM=;
+	s=arc-20240116; t=1744915733; c=relaxed/simple;
+	bh=CO49+a9ZG4PcAVYYJX5o2KFmTl9olFM+zBxS/PSW/2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IuieMLrWSGIqv51MVUckQQJh6QmvM+mT1e3QKsT0BLSy12XOD2rv84KRodHVouwFBNGCv+DxKEEK7VtylO3BdwWEi8ZGT1NdP39YR2NbXzyaUrtv7FLbzd4pFD6SScX3t8nlGXWf3UHQICSYZzH7dkJ0ugy11hufaO9YHzlX7lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rO9vok3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cp521kCQWuRh61o+AVgc1xB4PJhbBRsTxAPrTLKnJ9PMs46gpTwIQICAM0PGZT6pQspTV6u4ko5hwHrC5s6VGihgRUe+roitDfydIoBImLJcpQu90h6hTGhdXpGis3iHlwC3IxOfTIBcbK73724QKrVeTRLrHqKhmgAuuPIc2FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJFArCz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO9vok3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C62C4CEE7;
-	Thu, 17 Apr 2025 18:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJFArCz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A23FC4CEE4;
+	Thu, 17 Apr 2025 18:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915730;
-	bh=WFE1kXPsJ4RPeLgytRt6DMo5KWTXoxboWdM0PD3EiRM=;
+	s=korg; t=1744915733;
+	bh=CO49+a9ZG4PcAVYYJX5o2KFmTl9olFM+zBxS/PSW/2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rO9vok3tl0WjECehO7u+KigCz2luUPw96dCb9bpS9l68q43uAQnYGNcJU2c0COYk6
-	 C5s0nXXRMtIk/UCwXvXYcJB9JIXfRJO+VATS2VeKfL76aH95c7uzJ1G6L9MGeMuCA5
-	 qjrbGbsVXswgzzaHGWQq+WwdgTxIZRymJavBqqeU=
+	b=tJFArCz7S5U5vr1RhI49Z8AEygHW/PfipYFhImDwn+okfxZNSAnc/ZaqrZkWMqLf/
+	 WF76C9qiYRD38X9L2FiNePcJBh9saI2Oe6OuwepJdvm4IPBBQFrDX5z6kl007Q9ktB
+	 LnN/+m8jqhjV6c+uSyDYnGVJ2TA4OBpH4jUVr3Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 191/393] media: uapi: rkisp1-config: Fix typo in extensible params example
-Date: Thu, 17 Apr 2025 19:50:00 +0200
-Message-ID: <20250417175115.268900189@linuxfoundation.org>
+Subject: [PATCH 6.12 192/393] media: mgb4: Fix CMT registers update logic
+Date: Thu, 17 Apr 2025 19:50:01 +0200
+Message-ID: <20250417175115.309016614@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,39 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-commit 7b0ee2de7c76e5518e2235a927fd211bc785d320 upstream.
+commit dd05443189f9ae175dd806594b67bf55ddb6539e upstream.
 
-The define used for the version in the example diagram does not match what
-is defined in enum rksip1_ext_param_buffer_version, nor the description
-above it. Correct the typo to make it clear which define to use.
+The CMT "magic values" registers must be updated while the CMT reset
+registers are active.
 
-Fixes: e9d05e9d5db1 ("media: uapi: rkisp1-config: Add extensible params format")
+Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/rkisp1-config.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/mgb4/mgb4_cmt.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/rkisp1-config.h b/include/uapi/linux/rkisp1-config.h
-index 430daceafac7..2d995f3c1ca3 100644
---- a/include/uapi/linux/rkisp1-config.h
-+++ b/include/uapi/linux/rkisp1-config.h
-@@ -1528,7 +1528,7 @@ enum rksip1_ext_param_buffer_version {
-  * The expected memory layout of the parameters buffer is::
-  *
-  *	+-------------------- struct rkisp1_ext_params_cfg -------------------+
-- *	| version = RKISP_EXT_PARAMS_BUFFER_V1;                               |
-+ *	| version = RKISP1_EXT_PARAM_BUFFER_V1;                               |
-  *	| data_size = sizeof(struct rkisp1_ext_params_bls_config)             |
-  *	|           + sizeof(struct rkisp1_ext_params_dpcc_config);           |
-  *	| +------------------------- data  ---------------------------------+ |
--- 
-2.49.0
-
+--- a/drivers/media/pci/mgb4/mgb4_cmt.c
++++ b/drivers/media/pci/mgb4/mgb4_cmt.c
+@@ -206,10 +206,11 @@ u32 mgb4_cmt_set_vout_freq(struct mgb4_v
+ 
+ 	mgb4_write_reg(video, regs->config, 0x1 | (config & ~0x3));
+ 
++	mgb4_mask_reg(video, regs->config, 0x100, 0x100);
++
+ 	for (i = 0; i < ARRAY_SIZE(cmt_addrs_out[0]); i++)
+ 		mgb4_write_reg(&voutdev->mgbdev->cmt, addr[i], reg_set[i]);
+ 
+-	mgb4_mask_reg(video, regs->config, 0x100, 0x100);
+ 	mgb4_mask_reg(video, regs->config, 0x100, 0x0);
+ 
+ 	mgb4_write_reg(video, regs->config, config & ~0x1);
+@@ -236,10 +237,11 @@ void mgb4_cmt_set_vin_freq_range(struct
+ 
+ 	mgb4_write_reg(video, regs->config, 0x1 | (config & ~0x3));
+ 
++	mgb4_mask_reg(video, regs->config, 0x1000, 0x1000);
++
+ 	for (i = 0; i < ARRAY_SIZE(cmt_addrs_in[0]); i++)
+ 		mgb4_write_reg(&vindev->mgbdev->cmt, addr[i], reg_set[i]);
+ 
+-	mgb4_mask_reg(video, regs->config, 0x1000, 0x1000);
+ 	mgb4_mask_reg(video, regs->config, 0x1000, 0x0);
+ 
+ 	mgb4_write_reg(video, regs->config, config & ~0x1);
 
 
