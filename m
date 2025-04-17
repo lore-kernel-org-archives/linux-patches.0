@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4E9256C63;
-	Thu, 17 Apr 2025 18:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA3A256C63;
+	Thu, 17 Apr 2025 18:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914073; cv=none; b=E9yYFsIOqVI9bfJhWyk9/xvyQecciZWvFtJ8sveFFrNf2LevV3KRVgfuUZZt45KMlbc6yBFxE0fntO9M5wxm44wCk0tSdXmpunMdG1+TBLS1zmnC4hq6Et4Vfp0T3xiPtMLnLkEHTUNaWjxuBwP4WQloDGYPur/qli3RJXc2cu8=
+	t=1744914078; cv=none; b=QRLteKRIXQV7s6l5WDiSWoUWOxvhYbpXhg9ZrISVNdE3mwyVDiSiMgm2o26HaSXkWpSx3OV+tBrm5qA09tcWttZYiiykjXVteTyhqCNJ1YJynhQas0bzClpA2p47fkG+1o4BYpSyV3QgIVtKY8Gy7PSi3j42LN0AJZekWBCsP0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914073; c=relaxed/simple;
-	bh=HVgeoEpdW3CCUpPwQ83nCy99EnmtcXAuGi30CuasDgs=;
+	s=arc-20240116; t=1744914078; c=relaxed/simple;
+	bh=iGjudG2J+46mkIsHwyrN2lqrXu/7L2dJshSJvzwAp1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Blhhr7NfjSnmTufQqFHLTjXA2rqGgcx+kbIWQP5bEl9GrMxQkZjK9UpmBHr2s0LPIaXRc/6sIJjWxv13XJVkh+SZYNIK8sgcfaNyW1ENPuWhP3nzYPtIH4UDoaqNQxMis6+0HqFT2X1/TvTMZL3R3asW4ZSELT70muM5b/CvOX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC3T13qH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsZUQwRNjxnPN31IWBnKacekJ32QcRdV4tyTAj8ZhRHPqnxZnq0FWre6BoySfcFeVndn5SEFyOcO0ZHIuM3ED5ZOGTARpZby24Cs7WbpuSL3sdDtm8Z2ZM7uFDbsb+nTPv3gCG4+KJHucETu8924qRG8TeSV0I7WchnFF+7YaYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2U7sOnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC3T13qH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4453BC4CEE7;
-	Thu, 17 Apr 2025 18:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2U7sOnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C669C4CEEE;
+	Thu, 17 Apr 2025 18:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914072;
-	bh=HVgeoEpdW3CCUpPwQ83nCy99EnmtcXAuGi30CuasDgs=;
+	s=korg; t=1744914075;
+	bh=iGjudG2J+46mkIsHwyrN2lqrXu/7L2dJshSJvzwAp1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zC3T13qHmmPSWuEonhfdnsrPptBCF7dwlWGsSzl1vXPCu8ceZSvWnpaS1NwsZaHSl
-	 rqDkKD57N0jZx1acL176rqODsxiz5u4sHpRRNVMkXXH5ETbrnHLoRb+HIsZ2NfF2F7
-	 sqUDEcWcya+kqBoYLaVKwyLrspOCXrDxHIv3aYKE=
+	b=l2U7sOnIgvQLQQrBbX4xXMrI9m8uZMvxZUH6Gq620mxPYQOzbqdQ5ec/o70cKzObI
+	 fxNIj0JlQfUihTOKS/Z8toUFJuncatEVgxQaP1eMze++bXIWb+2P3oqcm7YDWJ/cXR
+	 49SQKqsMPOa5vt0A8KWk/thCUvWIi1PMN4pKBz6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	keenplify <keenplify@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 097/414] can: flexcan: Add quirk to handle separate interrupt lines for mailboxes
-Date: Thu, 17 Apr 2025 19:47:35 +0200
-Message-ID: <20250417175115.343866095@linuxfoundation.org>
+Subject: [PATCH 6.13 080/414] ASoC: amd: Add DMI quirk for ACP6X mic support
+Date: Thu, 17 Apr 2025 19:47:18 +0200
+Message-ID: <20250417175114.664264341@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,106 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
+From: keenplify <keenplify@gmail.com>
 
-[ Upstream commit 8c652cf030a769fbfc73cfc280ed3f1656343c35 ]
+[ Upstream commit 309b367eafc8e162603cd29189da6db770411fea ]
 
-Introduce 'FLEXCAN_QUIRK_SECONDARY_MB_IRQ' quirk to handle a FlexCAN
-hardware module integration particularity where two ranges of mailboxes
-are controlled by separate hardware interrupt lines.
-The same 'flexcan_irq' handler is used for both separate mailbox interrupt
-lines, with no other changes.
+Some AMD laptops with ACP6X do not expose the DMIC properly on Linux.
+Adding a DMI quirk enables mic functionality.
 
-Signed-off-by: Ciprian Marian Costea <ciprianmarian.costea@oss.nxp.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20250113120704.522307-3-ciprianmarian.costea@oss.nxp.com
-[mkl: flexcan_open(): change order and free irq_secondary_mb first]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Similar to Bugzilla #218402, this issue affects multiple users.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219853
+Signed-off-by: keenplify <keenplify@gmail.com>
+Link: https://patch.msgid.link/20250315111617.12194-1-keenplify@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/flexcan/flexcan-core.c | 24 +++++++++++++++++++++++-
- drivers/net/can/flexcan/flexcan.h      |  5 +++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/flexcan/flexcan-core.c
-index b080740bcb104..1a94586cbd11e 100644
---- a/drivers/net/can/flexcan/flexcan-core.c
-+++ b/drivers/net/can/flexcan/flexcan-core.c
-@@ -1762,14 +1762,25 @@ static int flexcan_open(struct net_device *dev)
- 			goto out_free_irq_boff;
- 	}
- 
-+	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ) {
-+		err = request_irq(priv->irq_secondary_mb,
-+				  flexcan_irq, IRQF_SHARED, dev->name, dev);
-+		if (err)
-+			goto out_free_irq_err;
-+	}
-+
- 	flexcan_chip_interrupts_enable(dev);
- 
- 	netif_start_queue(dev);
- 
- 	return 0;
- 
-+ out_free_irq_err:
-+	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3)
-+		free_irq(priv->irq_err, dev);
-  out_free_irq_boff:
--	free_irq(priv->irq_boff, dev);
-+	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3)
-+		free_irq(priv->irq_boff, dev);
-  out_free_irq:
- 	free_irq(dev->irq, dev);
-  out_can_rx_offload_disable:
-@@ -1794,6 +1805,9 @@ static int flexcan_close(struct net_device *dev)
- 	netif_stop_queue(dev);
- 	flexcan_chip_interrupts_disable(dev);
- 
-+	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ)
-+		free_irq(priv->irq_secondary_mb, dev);
-+
- 	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
- 		free_irq(priv->irq_err, dev);
- 		free_irq(priv->irq_boff, dev);
-@@ -2187,6 +2201,14 @@ static int flexcan_probe(struct platform_device *pdev)
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index a7637056972aa..bd3808f98ec9e 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -584,6 +584,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang13"),
  		}
- 	}
- 
-+	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SECONDARY_MB_IRQ) {
-+		priv->irq_secondary_mb = platform_get_irq_byname(pdev, "mb-1");
-+		if (priv->irq_secondary_mb < 0) {
-+			err = priv->irq_secondary_mb;
-+			goto failed_platform_get_irq;
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7UCX"),
 +		}
-+	}
-+
- 	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_SUPPORT_FD) {
- 		priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD |
- 			CAN_CTRLMODE_FD_NON_ISO;
-diff --git a/drivers/net/can/flexcan/flexcan.h b/drivers/net/can/flexcan/flexcan.h
-index 4933d8c7439e6..2cf886618c962 100644
---- a/drivers/net/can/flexcan/flexcan.h
-+++ b/drivers/net/can/flexcan/flexcan.h
-@@ -70,6 +70,10 @@
- #define FLEXCAN_QUIRK_SUPPORT_RX_FIFO BIT(16)
- /* Setup stop mode with ATF SCMI protocol to support wakeup */
- #define FLEXCAN_QUIRK_SETUP_STOP_MODE_SCMI BIT(17)
-+/* Device has two separate interrupt lines for two mailbox ranges, which
-+ * both need to have an interrupt handler registered.
-+ */
-+#define FLEXCAN_QUIRK_SECONDARY_MB_IRQ	BIT(18)
++	},
+ 	{}
+ };
  
- struct flexcan_devtype_data {
- 	u32 quirks;		/* quirks needed for different IP cores */
-@@ -107,6 +111,7 @@ struct flexcan_priv {
- 
- 	int irq_boff;
- 	int irq_err;
-+	int irq_secondary_mb;
- 
- 	/* IPC handle when setup stop mode by System Controller firmware(scfw) */
- 	struct imx_sc_ipc *sc_ipc_handle;
 -- 
 2.39.5
 
