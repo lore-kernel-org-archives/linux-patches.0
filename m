@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C4E26137F;
-	Thu, 17 Apr 2025 18:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590F726137F;
+	Thu, 17 Apr 2025 18:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914667; cv=none; b=mkDFDMXCdzFaU7nryzFz0+2qt74cykmAZH9GxF5EYecV0kwtZdvxW+f6JVvBO78vB0bOYuPpaxHcH2Gc97yd87LojGZKHbpHyLta0TUECxL2M2Jq3TF4VKWYwk7EDuLSRIPKXyLDsaHF8LFEy1VETVUBWNBfO1t760ccYGiDBJE=
+	t=1744914670; cv=none; b=mCY70cLm4c/1jGLtkA5wmfjudNWp2QpiJzT7fQrJQFX0O44L2Vw83QR3SBgZm5AJ962iQ+fDKzMqNh5YXkCUN0h69/L0IXkSv8lUCgD/YTGJK7z0KDmuumYwhm0BcolfHtwsM2IJ4HnobyEjOz8rriJ9/Priez5teISX1EhTqf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914667; c=relaxed/simple;
-	bh=hZfAfqXsJLOBxklE2SGWrjTzeXHGK4bdpKVTsjEPqbE=;
+	s=arc-20240116; t=1744914670; c=relaxed/simple;
+	bh=m0pE1JH8cMc+9etrrMvXz5AEQfTSlRpJJhJgVzsAbUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7smrPgToASf3UrgwVf4pOY/F2ay9/8vJfKT2VtNl0R/e3UJc8WcYEOWum/l142srQRSzB/9R81MgRjCXLESXxU5BgM1VFtlMRfYtChxkn0m/SbPMIuOcuBX/pyI0xUsubIjAK37XZ3rpG/nOHCi75aRI9zEwLBUCUh5uqfv9BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5Imo+DL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A67gQtLHarSALUPVMJsHt9YZMuceLO24LLBgnyJGoZUVBmweLJlz6fhOsnhD3BF75+56XC/AZmr9aTAMvxwGpdRseKQpOnXzgV4ycbXHNssKjdqqNs0Fc0kCMBADmm232ewEl77bx6chQeuWxk1hY9VIBPr4laNs02fS43sj3MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kL8sVGfI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5Imo+DL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00591C4CEE4;
-	Thu, 17 Apr 2025 18:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kL8sVGfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FE9C4CEE4;
+	Thu, 17 Apr 2025 18:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914667;
-	bh=hZfAfqXsJLOBxklE2SGWrjTzeXHGK4bdpKVTsjEPqbE=;
+	s=korg; t=1744914670;
+	bh=m0pE1JH8cMc+9etrrMvXz5AEQfTSlRpJJhJgVzsAbUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E5Imo+DLkVPWF2Vppwga9fEw82fmxe8uX694mi74nJB1D5N5BpPx8FHnoei4oICml
-	 5kG7BchVCpPXkNYqxn+sAqpbOFZ6WXA+LPYGPwXLqeuQRenj/r8aJkDFInPCNqFmKG
-	 +6Sz7WWr+mtjfsNu1DYHPnEPg0wRMgX+IM988GOw=
+	b=kL8sVGfI5mI9+ac/JDlZodTH4AawxNoqtaUuT5WktWSiFDLVr4tWq3lSRPnQBJ53B
+	 Vd6d9CrKppotlqMEAXA0CIO1/n8TAQQpuiP/9w+k0zL+U3Hjj/b1E154TWsikQMfjp
+	 LRATKWVqd82XUdZvfLXn7OIhFy/6QnqcgHkSnIlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.13 292/414] kbuild: Add -fno-builtin-wcslen
-Date: Thu, 17 Apr 2025 19:50:50 +0200
-Message-ID: <20250417175123.171134946@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.13 293/414] leds: rgb: leds-qcom-lpg: Fix pwm resolution max for Hi-Res PWMs
+Date: Thu, 17 Apr 2025 19:50:51 +0200
+Message-ID: <20250417175123.211765547@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,57 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
+commit b7881eacc07fdf50be3f33c662997541bb59366d upstream.
 
-A recent optimization change in LLVM [1] aims to transform certain loop
-idioms into calls to strlen() or wcslen(). This change transforms the
-first while loop in UniStrcat() into a call to wcslen(), breaking the
-build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
+Ideally, the requested duty cycle should never translate to a PWM
+value higher than the selected resolution (PWM size), but currently the
+best matched period is never reported back to the PWM consumer, so the
+consumer will still be using the requested period which is higher than
+the best matched one. This will result in PWM consumer requesting
+duty cycle values higher than the allowed PWM value.
 
-  ld.lld: error: undefined symbol: wcslen
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+For example, a consumer might request a period of 5ms while the best
+(closest) period the PWM hardware will do is 4.26ms. For this best
+matched resolution, if the selected resolution is 8-bit wide, when
+the consumer asks for a duty cycle of 5ms, the PWM value will be 300,
+which is outside of what the resolution allows. This will happen with
+all possible resolutions when selected.
 
-Disable this optimization with '-fno-builtin-wcslen', which prevents the
-compiler from assuming that wcslen() is available in the kernel's C
-library.
+Since for these Hi-Res PWMs, the current implementation is capping the PWM
+value at a 15-bit resolution, even when lower resolutions are selected,
+the value will be wrapped around by the HW internal logic to the selected
+resolution.
 
-[ More to the point - it's not that we couldn't implement wcslen(), it's
-  that this isn't an optimization at all in the context of the kernel.
+Fix the issue by capping the PWM value to the maximum value allowed by
+the selected resolution.
 
-  Replacing a simple inlined loop with a function call to the same loop
-  is just stupid and pointless if you don't have long strings and fancy
-  libraries with vectorization support etc.
-
-  For the regular 'strlen()' cases, we want the compiler to do this in
-  order to handle the trivial case of constant strings. And we do have
-  optimized versions of 'strlen()' on some architectures. But for
-  wcslen? Just no.    - Linus ]
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org    # 6.4
+Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Sebastian Reichel <sre@kernel.org>
+Link: https://lore.kernel.org/r/20250305-leds-qcom-lpg-fix-max-pwm-on-hi-res-v4-2-bfe124a53a9f@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/leds/rgb/leds-qcom-lpg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1064,6 +1064,9 @@ ifdef CONFIG_CC_IS_GCC
- KBUILD_CFLAGS   += -fconserve-stack
- endif
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -529,7 +529,7 @@ static void lpg_calc_duty(struct lpg_cha
+ 	unsigned int clk_rate;
  
-+# Ensure compilers do not transform certain loops into calls to wcslen()
-+KBUILD_CFLAGS += -fno-builtin-wcslen
-+
- # change __FILE__ to the relative path to the source directory
- ifdef building_out_of_srctree
- KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srcroot)/=)
+ 	if (chan->subtype == LPG_SUBTYPE_HI_RES_PWM) {
+-		max = LPG_RESOLUTION_15BIT - 1;
++		max = BIT(lpg_pwm_resolution_hi_res[chan->pwm_resolution_sel]) - 1;
+ 		clk_rate = lpg_clk_rates_hi_res[chan->clk_sel];
+ 	} else {
+ 		max = LPG_RESOLUTION_9BIT - 1;
 
 
