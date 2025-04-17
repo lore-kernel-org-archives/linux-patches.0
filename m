@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D312566ED;
-	Thu, 17 Apr 2025 18:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F26E2561D7;
+	Thu, 17 Apr 2025 18:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915508; cv=none; b=Lt6TC2yo3FEcr/yFMR9V/s6PkPiARXtadVD2FqHsN2dimKpHct3spXhDBXCM3FPvATFfYqnmogCymSW/jz0Dg8rnHcSyJZFDoeWZcH9jw5wfYzTqT0qQwQi+pOMrBHlwDeHdf8eLfyvohzqDUZ/Za9IBUi/RQ6dlItrPoiwDdWI=
+	t=1744915511; cv=none; b=GxkBySggcDtuJZNJoV5fICzYUKEk5ZnLqBqP+M+DEg9aWZcaSm1VbQI1HNjpUmjB6y8Q6fcJpFgWzwIkVVMtTDTsGjXTL3hYCaJBDcuKMARKzvKnoIhrM/5fqHNoAjo4UOoRpZpuc4FmRen0MwdByMO9gWL457Tjhtm+DJ0wDB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915508; c=relaxed/simple;
-	bh=wMeSOvgMyGw28DkYOhNwjGou8s35bw2RSlhMhFDa1dI=;
+	s=arc-20240116; t=1744915511; c=relaxed/simple;
+	bh=B70s7R1kyWKAB7hGOAeS3AI69hcyzDhHxwWxLJtd0ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORRhcQAAcHtSKxqawfShPqgD0BW1dbL7sDtBWFwowKTmKq+XsKMyPGyDlV9UQZVS5du4wnkQkMz/w9zbuIbILjJIOhKTLLg4XsxNugurYU5hHxtWnyv9rGLWkbe5wE5kU7Fz20RldFTRRDefjHom2A6KEaDUPPJWT7/cLT42qAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1li4KDTP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMeoAQcg1qm1qJxbxGa+rb63X2DUssc4Iwu5NBtjUxv5OvxcGf9Absz3Y8+sFzGuqGFqqzz8DbLnqkraLT7uMmaoiGr54J0T+sYtiUyuIjwUl/EfyvuhtHVDYrPjDMUqIjpS15xbAwoBHVw6aR5pnH3rWSAxWapcWt+63C/IZoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwvrSo/f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1li4KDTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A8EC4CEE4;
-	Thu, 17 Apr 2025 18:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwvrSo/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871EEC4CEEC;
+	Thu, 17 Apr 2025 18:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915507;
-	bh=wMeSOvgMyGw28DkYOhNwjGou8s35bw2RSlhMhFDa1dI=;
+	s=korg; t=1744915510;
+	bh=B70s7R1kyWKAB7hGOAeS3AI69hcyzDhHxwWxLJtd0ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1li4KDTP1wj0sG4s9g7Vgl10ANPJamDuBXkhqVzERGFph/6tbImsQf7yVtm/EKDEl
-	 2ZJCDPxhRfvQpJWbiRQPg5VgSArCqiduDHB/3hq3gnuu2g3N7ePXTJDt+h8wHzgL66
-	 1aCTP9xsSAy0+hdkakWY478UytYUhDZHwW3vq2Do=
+	b=RwvrSo/fIyetNGviHdv8e1AnGtReVDu2B1goS5f1as3qdO22zfXIr1gUI/75T1Xko
+	 WGUnpOQonHn0W8s5LWzT/3Vnhr7Xhf4c/zZOrfixj/3I0j26r/Zslngd7ZobjYLL05
+	 viCFxZovsv/QIeaRyBVra5t4OFvDWgkNPPEd7jiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/393] PCI: Enable Configuration RRS SV early
-Date: Thu, 17 Apr 2025 19:49:18 +0200
-Message-ID: <20250417175113.573580807@linuxfoundation.org>
+Subject: [PATCH 6.12 123/393] Bluetooth: qca: simplify WCN399x NVM loading
+Date: Thu, 17 Apr 2025 19:48:52 +0200
+Message-ID: <20250417175112.544185448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,64 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 3f8c4959fc18e477801386a625e726c59f52a2c4 ]
+[ Upstream commit 1cc41b5092e3aa511454ec882c525af311bee631 ]
 
-Following a reset, a Function may respond to Config Requests with Request
-Retry Status (RRS) Completion Status to indicate that it is temporarily
-unable to process the Request, but will be able to process the Request in
-the future (PCIe r6.0, sec 2.3.1).
+The WCN399x code has two separate cases for loading the NVM data. In
+preparation to adding support for WCN3950, which also requires similar
+quirk, split the "variant" to be specified explicitly and merge two
+snprintfs into a single one.
 
-If the Configuration RRS Software Visibility feature is enabled and a Root
-Complex receives RRS for a config read of the Vendor ID, the Root Complex
-completes the Request to the host by returning PCI_VENDOR_ID_PCI_SIG,
-0x0001 (sec 2.3.2).
-
-The Config RRS SV feature applies only to Root Ports and is not directly
-related to pci_scan_bridge_extend().  Move the RRS SV enable to
-set_pcie_port_type() where we handle other PCIe-specific configuration.
-
-Link: https://lore.kernel.org/r/20250303210217.199504-1-helgaas@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btqca.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index 0e757b23a09f0..80dcfb72ea121 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1327,8 +1327,6 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
- 	pci_write_config_word(dev, PCI_BRIDGE_CONTROL,
- 			      bctl & ~PCI_BRIDGE_CTL_MASTER_ABORT);
- 
--	pci_enable_rrs_sv(dev);
--
- 	if ((secondary || subordinate) && !pcibios_assign_all_busses() &&
- 	    !is_cardbus && !broken) {
- 		unsigned int cmax, buses;
-@@ -1569,6 +1567,11 @@ void set_pcie_port_type(struct pci_dev *pdev)
- 	pdev->pcie_cap = pos;
- 	pci_read_config_word(pdev, pos + PCI_EXP_FLAGS, &reg16);
- 	pdev->pcie_flags_reg = reg16;
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 04d02c746ec0f..dd2c0485b9848 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -785,6 +785,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   const char *firmware_name)
+ {
+ 	struct qca_fw_config config = {};
++	const char *variant = "";
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
+@@ -879,13 +880,11 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		case QCA_WCN3990:
+ 		case QCA_WCN3991:
+ 		case QCA_WCN3998:
+-			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID) {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02xu.bin", rom_ver);
+-			} else {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02x.bin", rom_ver);
+-			}
++			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID)
++				variant = "u";
 +
-+	type = pci_pcie_type(pdev);
-+	if (type == PCI_EXP_TYPE_ROOT_PORT)
-+		pci_enable_rrs_sv(pdev);
-+
- 	pci_read_config_dword(pdev, pos + PCI_EXP_DEVCAP, &pdev->devcap);
- 	pdev->pcie_mpss = FIELD_GET(PCI_EXP_DEVCAP_PAYLOAD, pdev->devcap);
- 
-@@ -1585,7 +1588,6 @@ void set_pcie_port_type(struct pci_dev *pdev)
- 	 * correctly so detect impossible configurations here and correct
- 	 * the port type accordingly.
- 	 */
--	type = pci_pcie_type(pdev);
- 	if (type == PCI_EXP_TYPE_DOWNSTREAM) {
- 		/*
- 		 * If pdev claims to be downstream port but the parent
++			snprintf(config.fwname, sizeof(config.fwname),
++				 "qca/crnv%02x%s.bin", rom_ver, variant);
+ 			break;
+ 		case QCA_WCN3988:
+ 			snprintf(config.fwname, sizeof(config.fwname),
 -- 
 2.39.5
 
