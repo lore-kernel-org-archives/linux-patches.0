@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8523770B;
-	Thu, 17 Apr 2025 18:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459DE8462;
+	Thu, 17 Apr 2025 18:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915382; cv=none; b=Z5IMGT8b03VHOTLt1ziZHFKoeX5XENfWwbFqC/TKiirO5S+BoPewHxOzBcXCzj8/+SKP9TU80blJI+XV2mOVVt69448yUYdMi1fhOS2OY8uDdZYMKiQWjVU2IMz2q3lp5XZLyY9Ss5pLsuutQlWjzOI3T1asWDGeQ45R6aWP3Bc=
+	t=1744915385; cv=none; b=iayXGBfAzxk6KaXKk8FwwAS0hae1XEkZuNsuhoNMKDdYaYPSpThaOAdQqwccnxkR42X058jo8HeiuZLTg1hzfncJLCL9XO+4BcCYpqE7jujl4vVTseYmSqNtLUaaWY9JdLUxv/7Mpmumu+5OCMjljGdtHTN1mfWGu9McMNsbQ8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915382; c=relaxed/simple;
-	bh=85NLhwv/U7RZtapRhyJ3N/gvuxa8fnSZqa8T8cOTI6Y=;
+	s=arc-20240116; t=1744915385; c=relaxed/simple;
+	bh=GVVJt27WmoMunm6x82gZrso3FISJ4rAxAxB7Bn/143A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKMZofScxWsvwy+/Ss8pCFrQxdk5MFlnOEvq9sWD1O0LMeRpXYpdx22juvdLFiw8KVJ+4khxPTDnwQYiTzjJ0fBFbSR/GucQYdoK0jhGzXFfV1ALCkZUrfs0R45/Z3kMZjHeupOjLIdb1EeDLf3Dpb5qTyf4LXYgjJArs42bsQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpa/zrNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mz87D11mWIAjiVCt/24hNwMNyWO37EZfp5XgTx5OJkQDpwW1avDk3HoUx1QvuLk5iyT2AIAlccef3P/eS6R5AGKWFLNk03tgZXhOSiBXtdb6J7LqII0jzlk5luxA85Z6ndKyQFIKwHXqcHTGZ1SmqDGKEuD442JrvkrP0+QeAW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUDhV6vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpa/zrNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4A9C4CEF4;
-	Thu, 17 Apr 2025 18:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUDhV6vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDAAC4CEE4;
+	Thu, 17 Apr 2025 18:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915382;
-	bh=85NLhwv/U7RZtapRhyJ3N/gvuxa8fnSZqa8T8cOTI6Y=;
+	s=korg; t=1744915385;
+	bh=GVVJt27WmoMunm6x82gZrso3FISJ4rAxAxB7Bn/143A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpa/zrNobd3fOESHGt78wjRQ7y+9DQvp2DVlclva+ShsNcqAV0rZ2Qg1TdtJIDlQG
-	 8J1MmYDTMjiQG+LNQIzWcWZ/pAc7hl1nQLTV5XlySm/0eCdH6dW//IXd1TlKomuHb0
-	 mvdHHnwKGmRB1XL7CGBRXm6xp8wdKAPmQSzX2Y5w=
+	b=CUDhV6vI+THhiTzOtFt/L4/Ct7lkIai8V635Qb5DDm6Xn3+/yobcFHq00eo7s7wVG
+	 6kaW/EoqMZHmjmN8Ka61jS5hQtnzLtuQrLqK74rSi3qkQcHd0uBTZLa8ewst2nLx2Y
+	 kU5QRFC1vLd02sQ06IYJNbVKdTDz+4qqCbX8NEcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/393] ext4: protect ext4_release_dquot against freezing
-Date: Thu, 17 Apr 2025 19:48:38 +0200
-Message-ID: <20250417175111.974774357@linuxfoundation.org>
+Subject: [PATCH 6.12 110/393] Revert "f2fs: rebuild nat_bits during umount"
+Date: Thu, 17 Apr 2025 19:48:39 +0200
+Message-ID: <20250417175112.013291192@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,72 +51,316 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 530fea29ef82e169cd7fe048c2b7baaeb85a0028 ]
+[ Upstream commit 19426c4988aa85298c1b4caf2889d37ec5c80fea ]
 
-Protect ext4_release_dquot against freezing so that we
-don't try to start a transaction when FS is frozen, leading
-to warnings.
+This reverts commit 94c821fb286b545d37549ff30a0c341e066f0d6c.
 
-Further, avoid taking the freeze protection if a transaction
-is already running so that we don't need end up in a deadlock
-as described in
+It reports that there is potential corruption in node footer,
+the most suspious feature is nat_bits, let's revert recovery
+related code.
 
-  46e294efc355 ext4: fix deadlock with fs freezing and EA inodes
-
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241121123855.645335-3-ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/f2fs/checkpoint.c |  21 +++------
+ fs/f2fs/f2fs.h       |  32 +++++++++++++-
+ fs/f2fs/node.c       | 101 ++++++++++---------------------------------
+ 3 files changed, 59 insertions(+), 95 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index d3795c6c0a9d8..4291ab3c20be6 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6906,12 +6906,25 @@ static int ext4_release_dquot(struct dquot *dquot)
- {
- 	int ret, err;
- 	handle_t *handle;
-+	bool freeze_protected = false;
-+
-+	/*
-+	 * Trying to sb_start_intwrite() in a running transaction
-+	 * can result in a deadlock. Further, running transactions
-+	 * are already protected from freezing.
-+	 */
-+	if (!ext4_journal_current_handle()) {
-+		sb_start_intwrite(dquot->dq_sb);
-+		freeze_protected = true;
-+	}
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index efda9a0229816..86228f82f54d0 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -1344,21 +1344,13 @@ static void update_ckpt_flags(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
+ 	unsigned long flags;
  
- 	handle = ext4_journal_start(dquot_to_inode(dquot), EXT4_HT_QUOTA,
- 				    EXT4_QUOTA_DEL_BLOCKS(dquot->dq_sb));
- 	if (IS_ERR(handle)) {
- 		/* Release dquot anyway to avoid endless cycle in dqput() */
- 		dquot_release(dquot);
-+		if (freeze_protected)
-+			sb_end_intwrite(dquot->dq_sb);
- 		return PTR_ERR(handle);
- 	}
- 	ret = dquot_release(dquot);
-@@ -6922,6 +6935,10 @@ static int ext4_release_dquot(struct dquot *dquot)
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
+-	if (cpc->reason & CP_UMOUNT) {
+-		if (le32_to_cpu(ckpt->cp_pack_total_block_count) +
+-			NM_I(sbi)->nat_bits_blocks > BLKS_PER_SEG(sbi)) {
+-			clear_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-			f2fs_notice(sbi, "Disable nat_bits due to no space");
+-		} else if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG) &&
+-						f2fs_nat_bitmap_enabled(sbi)) {
+-			f2fs_enable_nat_bits(sbi);
+-			set_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-			f2fs_notice(sbi, "Rebuild and enable nat_bits");
+-		}
+-	}
+-
+ 	spin_lock_irqsave(&sbi->cp_lock, flags);
+ 
++	if ((cpc->reason & CP_UMOUNT) &&
++			le32_to_cpu(ckpt->cp_pack_total_block_count) >
++			sbi->blocks_per_seg - NM_I(sbi)->nat_bits_blocks)
++		disable_nat_bits(sbi, false);
 +
-+	if (freeze_protected)
-+		sb_end_intwrite(dquot->dq_sb);
-+
- 	return ret;
+ 	if (cpc->reason & CP_TRIMMED)
+ 		__set_ckpt_flags(ckpt, CP_TRIMMED_FLAG);
+ 	else
+@@ -1541,8 +1533,7 @@ static int do_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	start_blk = __start_cp_next_addr(sbi);
+ 
+ 	/* write nat bits */
+-	if ((cpc->reason & CP_UMOUNT) &&
+-			is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG)) {
++	if (enabled_nat_bits(sbi, cpc)) {
+ 		__u64 cp_ver = cur_cp_version(ckpt);
+ 		block_t blk;
+ 
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index b52df8aa95350..1c783c2e4902a 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -2231,6 +2231,36 @@ static inline void f2fs_up_write(struct f2fs_rwsem *sem)
+ #endif
  }
  
++static inline void disable_nat_bits(struct f2fs_sb_info *sbi, bool lock)
++{
++	unsigned long flags;
++	unsigned char *nat_bits;
++
++	/*
++	 * In order to re-enable nat_bits we need to call fsck.f2fs by
++	 * set_sbi_flag(sbi, SBI_NEED_FSCK). But it may give huge cost,
++	 * so let's rely on regular fsck or unclean shutdown.
++	 */
++
++	if (lock)
++		spin_lock_irqsave(&sbi->cp_lock, flags);
++	__clear_ckpt_flags(F2FS_CKPT(sbi), CP_NAT_BITS_FLAG);
++	nat_bits = NM_I(sbi)->nat_bits;
++	NM_I(sbi)->nat_bits = NULL;
++	if (lock)
++		spin_unlock_irqrestore(&sbi->cp_lock, flags);
++
++	kvfree(nat_bits);
++}
++
++static inline bool enabled_nat_bits(struct f2fs_sb_info *sbi,
++					struct cp_control *cpc)
++{
++	bool set = is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
++
++	return (cpc) ? (cpc->reason & CP_UMOUNT) && set : set;
++}
++
+ static inline void f2fs_lock_op(struct f2fs_sb_info *sbi)
+ {
+ 	f2fs_down_read(&sbi->cp_rwsem);
+@@ -3671,7 +3701,6 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from);
+ int f2fs_truncate_xattr_node(struct inode *inode);
+ int f2fs_wait_on_node_pages_writeback(struct f2fs_sb_info *sbi,
+ 					unsigned int seq_id);
+-bool f2fs_nat_bitmap_enabled(struct f2fs_sb_info *sbi);
+ int f2fs_remove_inode_page(struct inode *inode);
+ struct page *f2fs_new_inode_page(struct inode *inode);
+ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs);
+@@ -3696,7 +3725,6 @@ int f2fs_recover_xattr_data(struct inode *inode, struct page *page);
+ int f2fs_recover_inode_page(struct f2fs_sb_info *sbi, struct page *page);
+ int f2fs_restore_node_summary(struct f2fs_sb_info *sbi,
+ 			unsigned int segno, struct f2fs_summary_block *sum);
+-void f2fs_enable_nat_bits(struct f2fs_sb_info *sbi);
+ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc);
+ int f2fs_build_node_manager(struct f2fs_sb_info *sbi);
+ void f2fs_destroy_node_manager(struct f2fs_sb_info *sbi);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 9fc07737d8661..12c76e3d1cd49 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -2277,24 +2277,6 @@ static void __move_free_nid(struct f2fs_sb_info *sbi, struct free_nid *i,
+ 	}
+ }
+ 
+-bool f2fs_nat_bitmap_enabled(struct f2fs_sb_info *sbi)
+-{
+-	struct f2fs_nm_info *nm_i = NM_I(sbi);
+-	unsigned int i;
+-	bool ret = true;
+-
+-	f2fs_down_read(&nm_i->nat_tree_lock);
+-	for (i = 0; i < nm_i->nat_blocks; i++) {
+-		if (!test_bit_le(i, nm_i->nat_block_bitmap)) {
+-			ret = false;
+-			break;
+-		}
+-	}
+-	f2fs_up_read(&nm_i->nat_tree_lock);
+-
+-	return ret;
+-}
+-
+ static void update_free_nid_bitmap(struct f2fs_sb_info *sbi, nid_t nid,
+ 							bool set, bool build)
+ {
+@@ -2973,23 +2955,7 @@ static void __adjust_nat_entry_set(struct nat_entry_set *nes,
+ 	list_add_tail(&nes->set_list, head);
+ }
+ 
+-static void __update_nat_bits(struct f2fs_nm_info *nm_i, unsigned int nat_ofs,
+-							unsigned int valid)
+-{
+-	if (valid == 0) {
+-		__set_bit_le(nat_ofs, nm_i->empty_nat_bits);
+-		__clear_bit_le(nat_ofs, nm_i->full_nat_bits);
+-		return;
+-	}
+-
+-	__clear_bit_le(nat_ofs, nm_i->empty_nat_bits);
+-	if (valid == NAT_ENTRY_PER_BLOCK)
+-		__set_bit_le(nat_ofs, nm_i->full_nat_bits);
+-	else
+-		__clear_bit_le(nat_ofs, nm_i->full_nat_bits);
+-}
+-
+-static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
++static void __update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 						struct page *page)
+ {
+ 	struct f2fs_nm_info *nm_i = NM_I(sbi);
+@@ -2998,7 +2964,7 @@ static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 	int valid = 0;
+ 	int i = 0;
+ 
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
++	if (!enabled_nat_bits(sbi, NULL))
+ 		return;
+ 
+ 	if (nat_index == 0) {
+@@ -3009,36 +2975,17 @@ static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 		if (le32_to_cpu(nat_blk->entries[i].block_addr) != NULL_ADDR)
+ 			valid++;
+ 	}
+-
+-	__update_nat_bits(nm_i, nat_index, valid);
+-}
+-
+-void f2fs_enable_nat_bits(struct f2fs_sb_info *sbi)
+-{
+-	struct f2fs_nm_info *nm_i = NM_I(sbi);
+-	unsigned int nat_ofs;
+-
+-	f2fs_down_read(&nm_i->nat_tree_lock);
+-
+-	for (nat_ofs = 0; nat_ofs < nm_i->nat_blocks; nat_ofs++) {
+-		unsigned int valid = 0, nid_ofs = 0;
+-
+-		/* handle nid zero due to it should never be used */
+-		if (unlikely(nat_ofs == 0)) {
+-			valid = 1;
+-			nid_ofs = 1;
+-		}
+-
+-		for (; nid_ofs < NAT_ENTRY_PER_BLOCK; nid_ofs++) {
+-			if (!test_bit_le(nid_ofs,
+-					nm_i->free_nid_bitmap[nat_ofs]))
+-				valid++;
+-		}
+-
+-		__update_nat_bits(nm_i, nat_ofs, valid);
++	if (valid == 0) {
++		__set_bit_le(nat_index, nm_i->empty_nat_bits);
++		__clear_bit_le(nat_index, nm_i->full_nat_bits);
++		return;
+ 	}
+ 
+-	f2fs_up_read(&nm_i->nat_tree_lock);
++	__clear_bit_le(nat_index, nm_i->empty_nat_bits);
++	if (valid == NAT_ENTRY_PER_BLOCK)
++		__set_bit_le(nat_index, nm_i->full_nat_bits);
++	else
++		__clear_bit_le(nat_index, nm_i->full_nat_bits);
+ }
+ 
+ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+@@ -3057,7 +3004,7 @@ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+ 	 * #1, flush nat entries to journal in current hot data summary block.
+ 	 * #2, flush nat entries to nat page.
+ 	 */
+-	if ((cpc->reason & CP_UMOUNT) ||
++	if (enabled_nat_bits(sbi, cpc) ||
+ 		!__has_cursum_space(journal, set->entry_cnt, NAT_JOURNAL))
+ 		to_journal = false;
+ 
+@@ -3104,7 +3051,7 @@ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+ 	if (to_journal) {
+ 		up_write(&curseg->journal_rwsem);
+ 	} else {
+-		update_nat_bits(sbi, start_nid, page);
++		__update_nat_bits(sbi, start_nid, page);
+ 		f2fs_put_page(page, 1);
+ 	}
+ 
+@@ -3135,7 +3082,7 @@ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	 * during unmount, let's flush nat_bits before checking
+ 	 * nat_cnt[DIRTY_NAT].
+ 	 */
+-	if (cpc->reason & CP_UMOUNT) {
++	if (enabled_nat_bits(sbi, cpc)) {
+ 		f2fs_down_write(&nm_i->nat_tree_lock);
+ 		remove_nats_in_journal(sbi);
+ 		f2fs_up_write(&nm_i->nat_tree_lock);
+@@ -3151,7 +3098,7 @@ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	 * entries, remove all entries from journal and merge them
+ 	 * into nat entry set.
+ 	 */
+-	if (cpc->reason & CP_UMOUNT ||
++	if (enabled_nat_bits(sbi, cpc) ||
+ 		!__has_cursum_space(journal,
+ 			nm_i->nat_cnt[DIRTY_NAT], NAT_JOURNAL))
+ 		remove_nats_in_journal(sbi);
+@@ -3188,18 +3135,15 @@ static int __get_nat_bitmaps(struct f2fs_sb_info *sbi)
+ 	__u64 cp_ver = cur_cp_version(ckpt);
+ 	block_t nat_bits_addr;
+ 
++	if (!enabled_nat_bits(sbi, NULL))
++		return 0;
++
+ 	nm_i->nat_bits_blocks = F2FS_BLK_ALIGN((nat_bits_bytes << 1) + 8);
+ 	nm_i->nat_bits = f2fs_kvzalloc(sbi,
+ 			F2FS_BLK_TO_BYTES(nm_i->nat_bits_blocks), GFP_KERNEL);
+ 	if (!nm_i->nat_bits)
+ 		return -ENOMEM;
+ 
+-	nm_i->full_nat_bits = nm_i->nat_bits + 8;
+-	nm_i->empty_nat_bits = nm_i->full_nat_bits + nat_bits_bytes;
+-
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
+-		return 0;
+-
+ 	nat_bits_addr = __start_cp_addr(sbi) + BLKS_PER_SEG(sbi) -
+ 						nm_i->nat_bits_blocks;
+ 	for (i = 0; i < nm_i->nat_bits_blocks; i++) {
+@@ -3216,12 +3160,13 @@ static int __get_nat_bitmaps(struct f2fs_sb_info *sbi)
+ 
+ 	cp_ver |= (cur_cp_crc(ckpt) << 32);
+ 	if (cpu_to_le64(cp_ver) != *(__le64 *)nm_i->nat_bits) {
+-		clear_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-		f2fs_notice(sbi, "Disable nat_bits due to incorrect cp_ver (%llu, %llu)",
+-			cp_ver, le64_to_cpu(*(__le64 *)nm_i->nat_bits));
++		disable_nat_bits(sbi, true);
+ 		return 0;
+ 	}
+ 
++	nm_i->full_nat_bits = nm_i->nat_bits + 8;
++	nm_i->empty_nat_bits = nm_i->full_nat_bits + nat_bits_bytes;
++
+ 	f2fs_notice(sbi, "Found nat_bits in checkpoint");
+ 	return 0;
+ }
+@@ -3232,7 +3177,7 @@ static inline void load_free_nid_bitmap(struct f2fs_sb_info *sbi)
+ 	unsigned int i = 0;
+ 	nid_t nid, last_nid;
+ 
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
++	if (!enabled_nat_bits(sbi, NULL))
+ 		return;
+ 
+ 	for (i = 0; i < nm_i->nat_blocks; i++) {
 -- 
 2.39.5
 
