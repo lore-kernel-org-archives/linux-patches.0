@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFFD266B78;
-	Thu, 17 Apr 2025 18:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6857C266F16;
+	Thu, 17 Apr 2025 18:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914134; cv=none; b=Km4kDJaSgFwhNHm5hNMTZ1MlibXHiU6dz0oIdkU21heHLutVPoum5Wvy+TxR+BJt0MnuCXYqs5I0zd+RlvsLT3rg7zGf91nDjdMx6v8yLPtPEIaNM40qXuEGoyyxqm/ysxvCYw5R3rKjpwoIZmeG8ulozocZhhchJPybsdUtq0g=
+	t=1744914137; cv=none; b=s0RcuBZFdFqpfH1px7O/fZEPPVbO01uz+0CTyj64v2gTplp4maQ0QcUJ85WuVW7F/+XuMbnyoSb559Qnce05dhHVrESK2fYdMFCy3HcPH91PtuiD/AAf/wmG2l1qH0p2jq5hlLZYJeD2drvTJMXEC+b9fFMLhDR3yJwlgJSDo5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914134; c=relaxed/simple;
-	bh=2xq58B7Q37m+Zip4dhKDlSNVjMudGDdx3uWa+VlmFlI=;
+	s=arc-20240116; t=1744914137; c=relaxed/simple;
+	bh=meJWrzAWeQaCy48ynS/PQTMgud9TmjjrC+RFrXRVzm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2m3tIshvDZpyJ7HIlh8KWpiM+lZGmXHSHx4pUVtKhFKsZiifSnrFAzwvrRvb0h+veAha68gx+pKzx06J05vR2CxClQbUvpw5SpTowUiDwf1tzx7gJuB+XwH+hBuQV9MI+1J9dtpgP9S2JLNuB8m7MFaoYrgFjP90y5XLfIAR4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZBImDzs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rq+tJyeNPGkz8erWQVI94JHEFULVWZu/sEEcuz78LN+S5vCNcoT3zH9yI2Y3pY4w8vftB1MrawBV/jnpLKlxDzb2hpw+jkGewSBAzmsZCQe3il/5voyim751RetnimHMi5dSjpuHu1h1hRGHKX9OtxsBnACxaSI9NDiY8LOEQeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/YGNEDM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZBImDzs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3F8C4CEE4;
-	Thu, 17 Apr 2025 18:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/YGNEDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BD2C4CEE4;
+	Thu, 17 Apr 2025 18:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914133;
-	bh=2xq58B7Q37m+Zip4dhKDlSNVjMudGDdx3uWa+VlmFlI=;
+	s=korg; t=1744914136;
+	bh=meJWrzAWeQaCy48ynS/PQTMgud9TmjjrC+RFrXRVzm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZBImDzsweNAK+XTOYOXqphAYn56d9wZlGNH+0f8gVm/FXCjEebjT/j/75sNKERzZ
-	 A0Gout2pqQNXKWqP7DThX1FqK91B1xQq/dDPXZkMMIvl7i0YR2rh4cxyxjz7nXzlfz
-	 p7s5N/zQgGCblznK5QjeLYOL2cjWIxShAnSpNSUg=
+	b=z/YGNEDMw8CIrply6pBxD7sNB9XCtEye48A3bxznoSveUr3qevEN8N9XOSl2pbLRC
+	 wWc+8RfuFvcPhO4tLBbJRuqyjPQMoUp8T29CUs6yDAMQhavdrstm9xKxegKkpoBtH3
+	 WYoFUUZbLnHaufdrMtMC3j/Dzv8cXFlrG5nVQFqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 078/414] mmc: dw_mmc: add a quirk for accessing 64-bit FIFOs in two halves
-Date: Thu, 17 Apr 2025 19:47:16 +0200
-Message-ID: <20250417175114.582108314@linuxfoundation.org>
+Subject: [PATCH 6.13 111/414] Revert "f2fs: rebuild nat_bits during umount"
+Date: Thu, 17 Apr 2025 19:47:49 +0200
+Message-ID: <20250417175115.903424552@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,181 +51,316 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 57c0902f8bec51add5a1eb908d8b876592725d81 ]
+[ Upstream commit 19426c4988aa85298c1b4caf2889d37ec5c80fea ]
 
-In certain DW MMC implementations (such as in some Exynos7870
-controllers), 64-bit read/write is not allowed from a 64-bit FIFO.
-Add a quirk which facilitates accessing the 64-bit FIFO registers in two
-32-bit halves.
+This reverts commit 94c821fb286b545d37549ff30a0c341e066f0d6c.
 
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Link: https://lore.kernel.org/r/20250219-exynos7870-mmc-v2-2-b4255a3e39ed@disroot.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+It reports that there is potential corruption in node footer,
+the most suspious feature is nat_bits, let's revert recovery
+related code.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/dw_mmc.c | 94 ++++++++++++++++++++++++++++++++++++++-
- drivers/mmc/host/dw_mmc.h | 27 +++++++++++
- 2 files changed, 119 insertions(+), 2 deletions(-)
+ fs/f2fs/checkpoint.c |  21 +++------
+ fs/f2fs/f2fs.h       |  32 +++++++++++++-
+ fs/f2fs/node.c       | 101 ++++++++++---------------------------------
+ 3 files changed, 59 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
-index 3cbda98d08d28..74f224647bf1e 100644
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2579,6 +2579,91 @@ static void dw_mci_pull_data64(struct dw_mci *host, void *buf, int cnt)
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index efda9a0229816..86228f82f54d0 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -1344,21 +1344,13 @@ static void update_ckpt_flags(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
+ 	unsigned long flags;
+ 
+-	if (cpc->reason & CP_UMOUNT) {
+-		if (le32_to_cpu(ckpt->cp_pack_total_block_count) +
+-			NM_I(sbi)->nat_bits_blocks > BLKS_PER_SEG(sbi)) {
+-			clear_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-			f2fs_notice(sbi, "Disable nat_bits due to no space");
+-		} else if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG) &&
+-						f2fs_nat_bitmap_enabled(sbi)) {
+-			f2fs_enable_nat_bits(sbi);
+-			set_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-			f2fs_notice(sbi, "Rebuild and enable nat_bits");
+-		}
+-	}
+-
+ 	spin_lock_irqsave(&sbi->cp_lock, flags);
+ 
++	if ((cpc->reason & CP_UMOUNT) &&
++			le32_to_cpu(ckpt->cp_pack_total_block_count) >
++			sbi->blocks_per_seg - NM_I(sbi)->nat_bits_blocks)
++		disable_nat_bits(sbi, false);
++
+ 	if (cpc->reason & CP_TRIMMED)
+ 		__set_ckpt_flags(ckpt, CP_TRIMMED_FLAG);
+ 	else
+@@ -1541,8 +1533,7 @@ static int do_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	start_blk = __start_cp_next_addr(sbi);
+ 
+ 	/* write nat bits */
+-	if ((cpc->reason & CP_UMOUNT) &&
+-			is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG)) {
++	if (enabled_nat_bits(sbi, cpc)) {
+ 		__u64 cp_ver = cur_cp_version(ckpt);
+ 		block_t blk;
+ 
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index da199fdfebfc6..faa90227ef3f1 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -2232,6 +2232,36 @@ static inline void f2fs_up_write(struct f2fs_rwsem *sem)
+ #endif
+ }
+ 
++static inline void disable_nat_bits(struct f2fs_sb_info *sbi, bool lock)
++{
++	unsigned long flags;
++	unsigned char *nat_bits;
++
++	/*
++	 * In order to re-enable nat_bits we need to call fsck.f2fs by
++	 * set_sbi_flag(sbi, SBI_NEED_FSCK). But it may give huge cost,
++	 * so let's rely on regular fsck or unclean shutdown.
++	 */
++
++	if (lock)
++		spin_lock_irqsave(&sbi->cp_lock, flags);
++	__clear_ckpt_flags(F2FS_CKPT(sbi), CP_NAT_BITS_FLAG);
++	nat_bits = NM_I(sbi)->nat_bits;
++	NM_I(sbi)->nat_bits = NULL;
++	if (lock)
++		spin_unlock_irqrestore(&sbi->cp_lock, flags);
++
++	kvfree(nat_bits);
++}
++
++static inline bool enabled_nat_bits(struct f2fs_sb_info *sbi,
++					struct cp_control *cpc)
++{
++	bool set = is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
++
++	return (cpc) ? (cpc->reason & CP_UMOUNT) && set : set;
++}
++
+ static inline void f2fs_lock_op(struct f2fs_sb_info *sbi)
+ {
+ 	f2fs_down_read(&sbi->cp_rwsem);
+@@ -3675,7 +3705,6 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from);
+ int f2fs_truncate_xattr_node(struct inode *inode);
+ int f2fs_wait_on_node_pages_writeback(struct f2fs_sb_info *sbi,
+ 					unsigned int seq_id);
+-bool f2fs_nat_bitmap_enabled(struct f2fs_sb_info *sbi);
+ int f2fs_remove_inode_page(struct inode *inode);
+ struct page *f2fs_new_inode_page(struct inode *inode);
+ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs);
+@@ -3700,7 +3729,6 @@ int f2fs_recover_xattr_data(struct inode *inode, struct page *page);
+ int f2fs_recover_inode_page(struct f2fs_sb_info *sbi, struct page *page);
+ int f2fs_restore_node_summary(struct f2fs_sb_info *sbi,
+ 			unsigned int segno, struct f2fs_summary_block *sum);
+-void f2fs_enable_nat_bits(struct f2fs_sb_info *sbi);
+ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc);
+ int f2fs_build_node_manager(struct f2fs_sb_info *sbi);
+ void f2fs_destroy_node_manager(struct f2fs_sb_info *sbi);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 65e735b1c6002..cec443937ad3a 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -2274,24 +2274,6 @@ static void __move_free_nid(struct f2fs_sb_info *sbi, struct free_nid *i,
  	}
  }
  
-+static void dw_mci_push_data64_32(struct dw_mci *host, void *buf, int cnt)
-+{
-+	struct mmc_data *data = host->data;
-+	int init_cnt = cnt;
-+
-+	/* try and push anything in the part_buf */
-+	if (unlikely(host->part_buf_count)) {
-+		int len = dw_mci_push_part_bytes(host, buf, cnt);
-+
-+		buf += len;
-+		cnt -= len;
-+
-+		if (host->part_buf_count == 8) {
-+			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
-+			host->part_buf_count = 0;
-+		}
-+	}
-+#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	if (unlikely((unsigned long)buf & 0x7)) {
-+		while (cnt >= 8) {
-+			u64 aligned_buf[16];
-+			int len = min(cnt & -8, (int)sizeof(aligned_buf));
-+			int items = len >> 3;
-+			int i;
-+			/* memcpy from input buffer into aligned buffer */
-+			memcpy(aligned_buf, buf, len);
-+			buf += len;
-+			cnt -= len;
-+			/* push data from aligned buffer into fifo */
-+			for (i = 0; i < items; ++i)
-+				mci_fifo_l_writeq(host->fifo_reg, aligned_buf[i]);
-+		}
-+	} else
-+#endif
-+	{
-+		u64 *pdata = buf;
-+
-+		for (; cnt >= 8; cnt -= 8)
-+			mci_fifo_l_writeq(host->fifo_reg, *pdata++);
-+		buf = pdata;
-+	}
-+	/* put anything remaining in the part_buf */
-+	if (cnt) {
-+		dw_mci_set_part_bytes(host, buf, cnt);
-+		/* Push data if we have reached the expected data length */
-+		if ((data->bytes_xfered + init_cnt) ==
-+		    (data->blksz * data->blocks))
-+			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
-+	}
-+}
-+
-+static void dw_mci_pull_data64_32(struct dw_mci *host, void *buf, int cnt)
-+{
-+#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	if (unlikely((unsigned long)buf & 0x7)) {
-+		while (cnt >= 8) {
-+			/* pull data from fifo into aligned buffer */
-+			u64 aligned_buf[16];
-+			int len = min(cnt & -8, (int)sizeof(aligned_buf));
-+			int items = len >> 3;
-+			int i;
-+
-+			for (i = 0; i < items; ++i)
-+				aligned_buf[i] = mci_fifo_l_readq(host->fifo_reg);
-+
-+			/* memcpy from aligned buffer into output buffer */
-+			memcpy(buf, aligned_buf, len);
-+			buf += len;
-+			cnt -= len;
-+		}
-+	} else
-+#endif
-+	{
-+		u64 *pdata = buf;
-+
-+		for (; cnt >= 8; cnt -= 8)
-+			*pdata++ = mci_fifo_l_readq(host->fifo_reg);
-+		buf = pdata;
-+	}
-+	if (cnt) {
-+		host->part_buf = mci_fifo_l_readq(host->fifo_reg);
-+		dw_mci_pull_final_bytes(host, buf, cnt);
-+	}
-+}
-+
- static void dw_mci_pull_data(struct dw_mci *host, void *buf, int cnt)
+-bool f2fs_nat_bitmap_enabled(struct f2fs_sb_info *sbi)
+-{
+-	struct f2fs_nm_info *nm_i = NM_I(sbi);
+-	unsigned int i;
+-	bool ret = true;
+-
+-	f2fs_down_read(&nm_i->nat_tree_lock);
+-	for (i = 0; i < nm_i->nat_blocks; i++) {
+-		if (!test_bit_le(i, nm_i->nat_block_bitmap)) {
+-			ret = false;
+-			break;
+-		}
+-	}
+-	f2fs_up_read(&nm_i->nat_tree_lock);
+-
+-	return ret;
+-}
+-
+ static void update_free_nid_bitmap(struct f2fs_sb_info *sbi, nid_t nid,
+ 							bool set, bool build)
  {
- 	int len;
-@@ -3379,8 +3464,13 @@ int dw_mci_probe(struct dw_mci *host)
- 		width = 16;
- 		host->data_shift = 1;
- 	} else if (i == 2) {
--		host->push_data = dw_mci_push_data64;
--		host->pull_data = dw_mci_pull_data64;
-+		if ((host->quirks & DW_MMC_QUIRK_FIFO64_32)) {
-+			host->push_data = dw_mci_push_data64_32;
-+			host->pull_data = dw_mci_pull_data64_32;
-+		} else {
-+			host->push_data = dw_mci_push_data64;
-+			host->pull_data = dw_mci_pull_data64;
-+		}
- 		width = 64;
- 		host->data_shift = 3;
+@@ -2970,23 +2952,7 @@ static void __adjust_nat_entry_set(struct nat_entry_set *nes,
+ 	list_add_tail(&nes->set_list, head);
+ }
+ 
+-static void __update_nat_bits(struct f2fs_nm_info *nm_i, unsigned int nat_ofs,
+-							unsigned int valid)
+-{
+-	if (valid == 0) {
+-		__set_bit_le(nat_ofs, nm_i->empty_nat_bits);
+-		__clear_bit_le(nat_ofs, nm_i->full_nat_bits);
+-		return;
+-	}
+-
+-	__clear_bit_le(nat_ofs, nm_i->empty_nat_bits);
+-	if (valid == NAT_ENTRY_PER_BLOCK)
+-		__set_bit_le(nat_ofs, nm_i->full_nat_bits);
+-	else
+-		__clear_bit_le(nat_ofs, nm_i->full_nat_bits);
+-}
+-
+-static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
++static void __update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 						struct page *page)
+ {
+ 	struct f2fs_nm_info *nm_i = NM_I(sbi);
+@@ -2995,7 +2961,7 @@ static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 	int valid = 0;
+ 	int i = 0;
+ 
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
++	if (!enabled_nat_bits(sbi, NULL))
+ 		return;
+ 
+ 	if (nat_index == 0) {
+@@ -3006,36 +2972,17 @@ static void update_nat_bits(struct f2fs_sb_info *sbi, nid_t start_nid,
+ 		if (le32_to_cpu(nat_blk->entries[i].block_addr) != NULL_ADDR)
+ 			valid++;
+ 	}
+-
+-	__update_nat_bits(nm_i, nat_index, valid);
+-}
+-
+-void f2fs_enable_nat_bits(struct f2fs_sb_info *sbi)
+-{
+-	struct f2fs_nm_info *nm_i = NM_I(sbi);
+-	unsigned int nat_ofs;
+-
+-	f2fs_down_read(&nm_i->nat_tree_lock);
+-
+-	for (nat_ofs = 0; nat_ofs < nm_i->nat_blocks; nat_ofs++) {
+-		unsigned int valid = 0, nid_ofs = 0;
+-
+-		/* handle nid zero due to it should never be used */
+-		if (unlikely(nat_ofs == 0)) {
+-			valid = 1;
+-			nid_ofs = 1;
+-		}
+-
+-		for (; nid_ofs < NAT_ENTRY_PER_BLOCK; nid_ofs++) {
+-			if (!test_bit_le(nid_ofs,
+-					nm_i->free_nid_bitmap[nat_ofs]))
+-				valid++;
+-		}
+-
+-		__update_nat_bits(nm_i, nat_ofs, valid);
++	if (valid == 0) {
++		__set_bit_le(nat_index, nm_i->empty_nat_bits);
++		__clear_bit_le(nat_index, nm_i->full_nat_bits);
++		return;
+ 	}
+ 
+-	f2fs_up_read(&nm_i->nat_tree_lock);
++	__clear_bit_le(nat_index, nm_i->empty_nat_bits);
++	if (valid == NAT_ENTRY_PER_BLOCK)
++		__set_bit_le(nat_index, nm_i->full_nat_bits);
++	else
++		__clear_bit_le(nat_index, nm_i->full_nat_bits);
+ }
+ 
+ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+@@ -3054,7 +3001,7 @@ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+ 	 * #1, flush nat entries to journal in current hot data summary block.
+ 	 * #2, flush nat entries to nat page.
+ 	 */
+-	if ((cpc->reason & CP_UMOUNT) ||
++	if (enabled_nat_bits(sbi, cpc) ||
+ 		!__has_cursum_space(journal, set->entry_cnt, NAT_JOURNAL))
+ 		to_journal = false;
+ 
+@@ -3101,7 +3048,7 @@ static int __flush_nat_entry_set(struct f2fs_sb_info *sbi,
+ 	if (to_journal) {
+ 		up_write(&curseg->journal_rwsem);
  	} else {
-diff --git a/drivers/mmc/host/dw_mmc.h b/drivers/mmc/host/dw_mmc.h
-index 6447b916990dc..5463392dc8110 100644
---- a/drivers/mmc/host/dw_mmc.h
-+++ b/drivers/mmc/host/dw_mmc.h
-@@ -281,6 +281,8 @@ struct dw_mci_board {
+-		update_nat_bits(sbi, start_nid, page);
++		__update_nat_bits(sbi, start_nid, page);
+ 		f2fs_put_page(page, 1);
+ 	}
  
- /* Support for longer data read timeout */
- #define DW_MMC_QUIRK_EXTENDED_TMOUT            BIT(0)
-+/* Force 32-bit access to the FIFO */
-+#define DW_MMC_QUIRK_FIFO64_32                 BIT(1)
+@@ -3132,7 +3079,7 @@ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	 * during unmount, let's flush nat_bits before checking
+ 	 * nat_cnt[DIRTY_NAT].
+ 	 */
+-	if (cpc->reason & CP_UMOUNT) {
++	if (enabled_nat_bits(sbi, cpc)) {
+ 		f2fs_down_write(&nm_i->nat_tree_lock);
+ 		remove_nats_in_journal(sbi);
+ 		f2fs_up_write(&nm_i->nat_tree_lock);
+@@ -3148,7 +3095,7 @@ int f2fs_flush_nat_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 	 * entries, remove all entries from journal and merge them
+ 	 * into nat entry set.
+ 	 */
+-	if (cpc->reason & CP_UMOUNT ||
++	if (enabled_nat_bits(sbi, cpc) ||
+ 		!__has_cursum_space(journal,
+ 			nm_i->nat_cnt[DIRTY_NAT], NAT_JOURNAL))
+ 		remove_nats_in_journal(sbi);
+@@ -3185,18 +3132,15 @@ static int __get_nat_bitmaps(struct f2fs_sb_info *sbi)
+ 	__u64 cp_ver = cur_cp_version(ckpt);
+ 	block_t nat_bits_addr;
  
- #define DW_MMC_240A		0x240a
- #define DW_MMC_280A		0x280a
-@@ -472,6 +474,31 @@ struct dw_mci_board {
- #define mci_fifo_writel(__value, __reg)	__raw_writel(__reg, __value)
- #define mci_fifo_writeq(__value, __reg)	__raw_writeq(__reg, __value)
++	if (!enabled_nat_bits(sbi, NULL))
++		return 0;
++
+ 	nm_i->nat_bits_blocks = F2FS_BLK_ALIGN((nat_bits_bytes << 1) + 8);
+ 	nm_i->nat_bits = f2fs_kvzalloc(sbi,
+ 			F2FS_BLK_TO_BYTES(nm_i->nat_bits_blocks), GFP_KERNEL);
+ 	if (!nm_i->nat_bits)
+ 		return -ENOMEM;
  
-+/*
-+ * Some dw_mmc devices have 64-bit FIFOs, but expect them to be
-+ * accessed using two 32-bit accesses. If such controller is used
-+ * with a 64-bit kernel, this has to be done explicitly.
-+ */
-+static inline u64 mci_fifo_l_readq(void __iomem *addr)
-+{
-+	u64 ans;
-+	u32 proxy[2];
+-	nm_i->full_nat_bits = nm_i->nat_bits + 8;
+-	nm_i->empty_nat_bits = nm_i->full_nat_bits + nat_bits_bytes;
+-
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
+-		return 0;
+-
+ 	nat_bits_addr = __start_cp_addr(sbi) + BLKS_PER_SEG(sbi) -
+ 						nm_i->nat_bits_blocks;
+ 	for (i = 0; i < nm_i->nat_bits_blocks; i++) {
+@@ -3213,12 +3157,13 @@ static int __get_nat_bitmaps(struct f2fs_sb_info *sbi)
+ 
+ 	cp_ver |= (cur_cp_crc(ckpt) << 32);
+ 	if (cpu_to_le64(cp_ver) != *(__le64 *)nm_i->nat_bits) {
+-		clear_ckpt_flags(sbi, CP_NAT_BITS_FLAG);
+-		f2fs_notice(sbi, "Disable nat_bits due to incorrect cp_ver (%llu, %llu)",
+-			cp_ver, le64_to_cpu(*(__le64 *)nm_i->nat_bits));
++		disable_nat_bits(sbi, true);
+ 		return 0;
+ 	}
+ 
++	nm_i->full_nat_bits = nm_i->nat_bits + 8;
++	nm_i->empty_nat_bits = nm_i->full_nat_bits + nat_bits_bytes;
 +
-+	proxy[0] = mci_fifo_readl(addr);
-+	proxy[1] = mci_fifo_readl(addr + 4);
-+	memcpy(&ans, proxy, 8);
-+	return ans;
-+}
-+
-+static inline void mci_fifo_l_writeq(void __iomem *addr, u64 value)
-+{
-+	u32 proxy[2];
-+
-+	memcpy(proxy, &value, 8);
-+	mci_fifo_writel(addr, proxy[0]);
-+	mci_fifo_writel(addr + 4, proxy[1]);
-+}
-+
- /* Register access macros */
- #define mci_readl(dev, reg)			\
- 	readl_relaxed((dev)->regs + SDMMC_##reg)
+ 	f2fs_notice(sbi, "Found nat_bits in checkpoint");
+ 	return 0;
+ }
+@@ -3229,7 +3174,7 @@ static inline void load_free_nid_bitmap(struct f2fs_sb_info *sbi)
+ 	unsigned int i = 0;
+ 	nid_t nid, last_nid;
+ 
+-	if (!is_set_ckpt_flags(sbi, CP_NAT_BITS_FLAG))
++	if (!enabled_nat_bits(sbi, NULL))
+ 		return;
+ 
+ 	for (i = 0; i < nm_i->nat_blocks; i++) {
 -- 
 2.39.5
 
