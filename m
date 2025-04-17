@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B8D2638AF;
-	Thu, 17 Apr 2025 18:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F18E256C7A;
+	Thu, 17 Apr 2025 18:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915761; cv=none; b=BVUBbFIkyew1t2LFAPUsjE2epK+Cxgfj3JK3114UrEIDlb4XajPQjOtEqufxnbP1a/dLhkeq3XBSGIsz4Jy9oPB1jaXalrtjN/u3vXcgFfB9j2E28RnR5QD6J6wK02It4hwVfXMWsYvh6ianE24SIdG0Rh7z0wcs/MbZf0GkOQk=
+	t=1744915764; cv=none; b=gKXAQZZxw7fiuwRaXsyfs0vZb+UDDeaW8MahJ92mJe1R/gyB0iNfBqLS1UAAhF078N8E191GTlz/TQNRdwtbaAoqBPTsXvsn+tGoVMgX6m4BgQ4zst7mi2FDCPHbU0xJMByWBTqlgjY+9MvcfiPTUmiWv195KMNGFCWgy4WlWAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915761; c=relaxed/simple;
-	bh=gP2kbhyeT4Q0qJPI4/4aHSjZ6WIaoF/KRkYKFvnRtEk=;
+	s=arc-20240116; t=1744915764; c=relaxed/simple;
+	bh=8+JtJeHnTJ35rV8rRNbIroEEMUg6Jav/l5rJ+60/BWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkE1cxL4afCNJGVoE5cDhst3/CDY7fo1T8rmwyDjt6za/P4yF/nnadXBpgUTTjjBSmYNt3HLIgtgRiV1yr+FEwH4JQClVE91dAxy1vS1EJn+dSGan3HH1qeF1r84zBybmf/6HwsjaCW4AsrGXI7ohA9opVlKJ/x7e5Z9cmgau74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns/1P3e+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZd4SDWx9YxOZTfkaz5WjnpH3VOpAUwzU2hWXfhlEsdfOzZEQM4I9H/fhipNUaDdR1LgsJmbk7mg7QNT6vxCrdvtntKucb7Wmm+xSDWaPg3MMQNBlJY5wk4NAPPNWqYNgI2/NYDYPVqp/AGdAf5Ut7cInnWKQGX90fPETQFDOz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q21frDZ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns/1P3e+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BBFC4CEEC;
-	Thu, 17 Apr 2025 18:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q21frDZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C201AC4CEEA;
+	Thu, 17 Apr 2025 18:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915761;
-	bh=gP2kbhyeT4Q0qJPI4/4aHSjZ6WIaoF/KRkYKFvnRtEk=;
+	s=korg; t=1744915764;
+	bh=8+JtJeHnTJ35rV8rRNbIroEEMUg6Jav/l5rJ+60/BWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ns/1P3e+K3LDncyNKodJxzuO1XXay7WPhB9dwmCEBnmueTVXvAnQZ1cs8PbdAJZ4Q
-	 hrlwz6kI2qTrI8XJaLpBIs9s8vDeZwWPAgKCvaAh1+oeQawtM4Fkfa+Yu6Wb/ZXTmv
-	 QxPL7kK7zD4jIQJNHx/uwWLFBLEBBajmKOeWolYE=
+	b=Q21frDZ5tGOr4WQZNtyUCuaCx25PL5+6Mb+Y41rz6VnJ+tsLhJi2NHsVgRwArtgBc
+	 BcRdQuc1eYkkg4xVJbJz4dyzWVVGwNzISyDLYhbK6Stj/RrHsZHv5NuHFqn5rfuf8M
+	 JOGIKQ4d/VHFmxtiYbp3UrhpspZMrV8x+5ISLVOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 232/393] media: chips-media: wave5: Fix timeout while testing 10bit hevc fluster
-Date: Thu, 17 Apr 2025 19:50:41 +0200
-Message-ID: <20250417175116.920686601@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 233/393] mptcp: sockopt: fix getting IPV6_V6ONLY
+Date: Thu, 17 Apr 2025 19:50:42 +0200
+Message-ID: <20250417175116.968824122@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,53 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson.lee <jackson.lee@chipsnmedia.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 035371c9e5098018b8512efc6a8812912469480c upstream.
+commit 8c39633759885b6ff85f6d96cf445560e74df5e8 upstream.
 
-The Wave5 521C variant does not support 10 bit decoding. When 10 bit
-decoding support was added for the 515 variant, a section of the code
-was removed which returned an error. This removal causes a timeout for
-the 521 variant, which was discovered during HEVC 10-bit decoding tests.
+When adding a socket option support in MPTCP, both the get and set parts
+are supposed to be implemented.
 
-Fixes: 143e7ab4d9a0 ("media: chips-media: wave5: support decoding HEVC Main10 profile")
+IPV6_V6ONLY support for the setsockopt part has been added a while ago,
+but it looks like the get part got forgotten. It should have been
+present as a way to verify a setting has been set as expected, and not
+to act differently from TCP or any other socket types.
+
+Not supporting this getsockopt(IPV6_V6ONLY) blocks some apps which want
+to check the default value, before doing extra actions. On Linux, the
+default value is 0, but this can be changed with the net.ipv6.bindv6only
+sysctl knob. On Windows, it is set to 1 by default. So supporting the
+get part, like for all other socket options, is important.
+
+Everything was in place to expose it, just the last step was missing.
+Only new code is added to cover this specific getsockopt(), that seems
+safe.
+
+Fixes: c9b95a135987 ("mptcp: support IPV6_V6ONLY setsockopt")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/550
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250314-net-mptcp-fix-data-stream-corr-sockopt-v1-2-122dbb249db3@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/mptcp/sockopt.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1424,10 +1424,24 @@ static int wave5_vpu_dec_start_streaming
- 		if (ret)
- 			goto free_bitstream_vbuf;
- 	} else if (q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
-+		struct dec_initial_info *initial_info =
-+			&inst->codec_info->dec_info.initial_info;
-+
- 		if (inst->state == VPU_INST_STATE_STOP)
- 			ret = switch_state(inst, VPU_INST_STATE_INIT_SEQ);
- 		if (ret)
- 			goto return_buffers;
-+
-+		if (inst->state == VPU_INST_STATE_INIT_SEQ &&
-+		    inst->dev->product_code == WAVE521C_CODE) {
-+			if (initial_info->luma_bitdepth != 8) {
-+				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
-+					 __func__, initial_info->luma_bitdepth);
-+				ret = -EINVAL;
-+				goto return_buffers;
-+			}
-+		}
-+
- 	}
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -1430,6 +1430,20 @@ static int mptcp_getsockopt_v4(struct mp
+ 	return -EOPNOTSUPP;
+ }
  
- 	return ret;
++static int mptcp_getsockopt_v6(struct mptcp_sock *msk, int optname,
++			       char __user *optval, int __user *optlen)
++{
++	struct sock *sk = (void *)msk;
++
++	switch (optname) {
++	case IPV6_V6ONLY:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    sk->sk_ipv6only);
++	}
++
++	return -EOPNOTSUPP;
++}
++
+ static int mptcp_getsockopt_sol_mptcp(struct mptcp_sock *msk, int optname,
+ 				      char __user *optval, int __user *optlen)
+ {
+@@ -1469,6 +1483,8 @@ int mptcp_getsockopt(struct sock *sk, in
+ 
+ 	if (level == SOL_IP)
+ 		return mptcp_getsockopt_v4(msk, optname, optval, option);
++	if (level == SOL_IPV6)
++		return mptcp_getsockopt_v6(msk, optname, optval, option);
+ 	if (level == SOL_TCP)
+ 		return mptcp_getsockopt_sol_tcp(msk, optname, optval, option);
+ 	if (level == SOL_MPTCP)
 
 
