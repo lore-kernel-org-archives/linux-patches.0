@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DE725A325;
-	Thu, 17 Apr 2025 18:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A262571BC;
+	Thu, 17 Apr 2025 18:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912943; cv=none; b=ZTqbYZybWDIeBlmrXTwyFlF0yju97Z5xRv029Lozr4fhQzH8jhFUepOAZpoUaBOONkbo8VH1R2lbd89NDzN1FQLZqoUXAjvLtULBhZozr+w/RugTzaCNbgwwQjFFXVIQqb42s9GNUAtWpafQ/f60S73U+SOzpc/ot80MdxSdJW8=
+	t=1744912946; cv=none; b=DagKeV0TjeDxsnAIkRv9Hzdvl/znvLCQeE9eVl2zG+hFINLHlfLmVfiWFI4UIjHKyFshH8Vg8Sb2Jrefx9jI1BAki2CH3jbwMWjA8YeCbZu0w5IWWVPog0RIP2YlHgt9Y3mKPgObCoqDe9CJJFplY+4hUgc32nfnsSFWLaE0ba4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912943; c=relaxed/simple;
-	bh=WDFx3pazidk0Yix1WJBnl7LqcbRoT1feR1Z16fF+bwE=;
+	s=arc-20240116; t=1744912946; c=relaxed/simple;
+	bh=obFZQ0Qn/4ifuWcmUoC3iLALR0/999uWAxEWNmEzkDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJQS+Y45mR+qcOpVfssPPNFFqVYbZPdwyb82Q4zl3iR6Uhf7tZTn7jtfOWCWcKFmY3dN4qalk4yaw/JXQRH1LdFmIsi2kMJD3zfXqk72HBQOAGjDMpoDxx0VT4D8A7GrKMfTu4DwqS7S2YSveB014Mdza1od1SOE+i4mJU4+Axs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfcAvG1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsJ+KwiHPZLszvXLpSOmJ4ZPFW2RAB/emf/7FcBdYrzKC25DRGCujICfaqtpizpMouckNA+I1Sya7vCwImT2goMS5/ad/PkI4ysMb6WSbOTTw4QPzfvJP0VGmuvJg5pEvSIPn24HMO3l5Nr34khlWr9YfO/VYXjCxPOWbYaU/ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etpdrLSR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfcAvG1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E534DC4CEEA;
-	Thu, 17 Apr 2025 18:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etpdrLSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F280EC4CEE4;
+	Thu, 17 Apr 2025 18:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912943;
-	bh=WDFx3pazidk0Yix1WJBnl7LqcbRoT1feR1Z16fF+bwE=;
+	s=korg; t=1744912946;
+	bh=obFZQ0Qn/4ifuWcmUoC3iLALR0/999uWAxEWNmEzkDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfcAvG1TSv0v7lXuO344ZQ+mvrdhhSyo1jQ5enO63p0UfNot1NW52e4a/QI/P5KwM
-	 G/pVS4Y8/J1PlOB/XPtXJ4tVjs3wpoqlAw/8EDR3GXMu+1c9UilBHHFoHozFd0mHAI
-	 3msVZrHvtPKiPA59itcoPutip4u9cVkiwPXBxT3k=
+	b=etpdrLSRLW1M3/K+yJBUOVv73NM1biGv81+mA4Kr5n1zkySSdcw98YAsEMrSqG+Cw
+	 EugHX1YpTvWTJoVmUSyZQvmwQTwjq6w7unShw0jGRQyO2X/QgmxpgCt/bdPnFtStFb
+	 mrwh/DVaZnN5gZ4hCa/5SUb/dIbMK0edZ3gm68+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Emily Deng <Emily.Deng@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 176/449] PCI: Enable Configuration RRS SV early
-Date: Thu, 17 Apr 2025 19:47:44 +0200
-Message-ID: <20250417175125.063862874@linuxfoundation.org>
+Subject: [PATCH 6.14 177/449] drm/amdgpu: Fix the race condition for draining retry fault
+Date: Thu, 17 Apr 2025 19:47:45 +0200
+Message-ID: <20250417175125.103440202@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,64 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Emily Deng <Emily.Deng@amd.com>
 
-[ Upstream commit 3f8c4959fc18e477801386a625e726c59f52a2c4 ]
+[ Upstream commit f844732e3ad9c4b78df7436232949b8d2096d1a6 ]
 
-Following a reset, a Function may respond to Config Requests with Request
-Retry Status (RRS) Completion Status to indicate that it is temporarily
-unable to process the Request, but will be able to process the Request in
-the future (PCIe r6.0, sec 2.3.1).
+Issue:
+In the scenario where svm_range_restore_pages is called, but
+svm->checkpoint_ts has not been set and the retry fault has not been
+drained, svm_range_unmap_from_cpu is triggered and calls svm_range_free.
+Meanwhile, svm_range_restore_pages continues execution and reaches
+svm_range_from_addr. This results in a "failed to find prange..." error,
+ causing the page recovery to fail.
 
-If the Configuration RRS Software Visibility feature is enabled and a Root
-Complex receives RRS for a config read of the Vendor ID, the Root Complex
-completes the Request to the host by returning PCI_VENDOR_ID_PCI_SIG,
-0x0001 (sec 2.3.2).
+How to fix:
+Move the timestamp check code under the protection of svm->lock.
 
-The Config RRS SV feature applies only to Root Ports and is not directly
-related to pci_scan_bridge_extend().  Move the RRS SV enable to
-set_pcie_port_type() where we handle other PCIe-specific configuration.
+v2:
+Make sure all right locks are released before go out.
 
-Link: https://lore.kernel.org/r/20250303210217.199504-1-helgaas@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+v3:
+Directly goto out_unlock_svms, and return -EAGAIN.
+
+v4:
+Refine code.
+
+Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 31 +++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index 0154b48bfbd7b..b4093f470d2d8 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1373,8 +1373,6 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
- 	pci_write_config_word(dev, PCI_BRIDGE_CONTROL,
- 			      bctl & ~PCI_BRIDGE_CTL_MASTER_ABORT);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 9477a4adcd36d..d1cf9dd352904 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -3002,19 +3002,6 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 		goto out;
+ 	}
  
--	pci_enable_rrs_sv(dev);
+-	/* check if this page fault time stamp is before svms->checkpoint_ts */
+-	if (svms->checkpoint_ts[gpuidx] != 0) {
+-		if (amdgpu_ih_ts_after(ts,  svms->checkpoint_ts[gpuidx])) {
+-			pr_debug("draining retry fault, drop fault 0x%llx\n", addr);
+-			r = 0;
+-			goto out;
+-		} else
+-			/* ts is after svms->checkpoint_ts now, reset svms->checkpoint_ts
+-			 * to zero to avoid following ts wrap around give wrong comparing
+-			 */
+-			svms->checkpoint_ts[gpuidx] = 0;
+-	}
 -
- 	if ((secondary || subordinate) && !pcibios_assign_all_busses() &&
- 	    !is_cardbus && !broken) {
- 		unsigned int cmax, buses;
-@@ -1615,6 +1613,11 @@ void set_pcie_port_type(struct pci_dev *pdev)
- 	pdev->pcie_cap = pos;
- 	pci_read_config_word(pdev, pos + PCI_EXP_FLAGS, &reg16);
- 	pdev->pcie_flags_reg = reg16;
+ 	if (!p->xnack_enabled) {
+ 		pr_debug("XNACK not enabled for pasid 0x%x\n", pasid);
+ 		r = -EFAULT;
+@@ -3034,6 +3021,21 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 	mmap_read_lock(mm);
+ retry_write_locked:
+ 	mutex_lock(&svms->lock);
 +
-+	type = pci_pcie_type(pdev);
-+	if (type == PCI_EXP_TYPE_ROOT_PORT)
-+		pci_enable_rrs_sv(pdev);
++	/* check if this page fault time stamp is before svms->checkpoint_ts */
++	if (svms->checkpoint_ts[gpuidx] != 0) {
++		if (amdgpu_ih_ts_after(ts,  svms->checkpoint_ts[gpuidx])) {
++			pr_debug("draining retry fault, drop fault 0x%llx\n", addr);
++			r = -EAGAIN;
++			goto out_unlock_svms;
++		} else {
++			/* ts is after svms->checkpoint_ts now, reset svms->checkpoint_ts
++			 * to zero to avoid following ts wrap around give wrong comparing
++			 */
++			svms->checkpoint_ts[gpuidx] = 0;
++		}
++	}
 +
- 	pci_read_config_dword(pdev, pos + PCI_EXP_DEVCAP, &pdev->devcap);
- 	pdev->pcie_mpss = FIELD_GET(PCI_EXP_DEVCAP_PAYLOAD, pdev->devcap);
+ 	prange = svm_range_from_addr(svms, addr, NULL);
+ 	if (!prange) {
+ 		pr_debug("failed to find prange svms 0x%p address [0x%llx]\n",
+@@ -3159,7 +3161,8 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
+ 	mutex_unlock(&svms->lock);
+ 	mmap_read_unlock(mm);
  
-@@ -1631,7 +1634,6 @@ void set_pcie_port_type(struct pci_dev *pdev)
- 	 * correctly so detect impossible configurations here and correct
- 	 * the port type accordingly.
- 	 */
--	type = pci_pcie_type(pdev);
- 	if (type == PCI_EXP_TYPE_DOWNSTREAM) {
- 		/*
- 		 * If pdev claims to be downstream port but the parent
+-	svm_range_count_fault(node, p, gpuidx);
++	if (r != -EAGAIN)
++		svm_range_count_fault(node, p, gpuidx);
+ 
+ 	mmput(mm);
+ out:
 -- 
 2.39.5
 
