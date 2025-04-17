@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F15D25525C;
-	Thu, 17 Apr 2025 18:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6FB2638A1;
+	Thu, 17 Apr 2025 18:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914788; cv=none; b=bOmKgQlKkuxBOP3zWghWWKZU/4D0O1lSQ6gd1fbkoxEXlcnKiFYGiEztQh7QNwgsOKAmYq4Y9xgT4NKP+fvXa6hQJVlE10dd96rNqe69csghCMaJmVnFmYEOu7YzMqabp3RA+DGwLQCqKuQsXmrsoZLzg1EcPrFdLl8agEWKRws=
+	t=1744914791; cv=none; b=CzvRqamQ4aKfJM8qzc1eeOWseaSj3pMPJCKx0engIn4V3MarbN/YbQPJkMJR/0SOlPjyMRMJmPLIBC2OgWT1IReV8xQavlwTc5nE3pwfTKgqgnewG1G5XyJvh6xsce4CcT/KCD6+pATAVjjemMm8CvOt5mMZyzFJCsbNuVV+Nio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914788; c=relaxed/simple;
-	bh=Cuvyt1wgGRlq1zL5z9Mj5j6CqPi6Ftuwvya84jQiCxc=;
+	s=arc-20240116; t=1744914791; c=relaxed/simple;
+	bh=6OcXm+umw5bB7aMVM+6P+4Eup2ohtqi5CNpOowWU99A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ky/jDs5erf3bH9tiTP8jeS8kprLNF9kcnXI0xYHyABfkfdQXu9WGimwAkoO/kKA+DiatBDRAAO6mZ0th+9xX8nPYbBlheSLcZyq1Ul7fwRa34U/FrQo8+5pHqaX0yahv7BgTaNcvfUADIJ6RhbQXSX9R9Kipnr3epT+vQZPKeaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCqrILzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vsu8pcX/KyyeOoKFsgqbTVqiQvkrSR8uzbG6DIlpk0O+sIi/SvYXwV5br7FSKarYYP0GHUmQIz1ceAtKNjlC2051B0R6+4htQhbedL93kshsI9SJqa2rB5CbukXTcUPNj2OvJrXZyjCqeWdxP82DCgbIk/I50ubRsagZUTBqISA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARHSwl1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCqrILzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B330C4CEE4;
-	Thu, 17 Apr 2025 18:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARHSwl1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C434C4CEE4;
+	Thu, 17 Apr 2025 18:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914788;
-	bh=Cuvyt1wgGRlq1zL5z9Mj5j6CqPi6Ftuwvya84jQiCxc=;
+	s=korg; t=1744914790;
+	bh=6OcXm+umw5bB7aMVM+6P+4Eup2ohtqi5CNpOowWU99A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCqrILzWgubrmi5/JEhAsOpX3wupBNTVFFKbHKkBogAxkW1ELDhTcmL3mB3lK70YX
-	 OFUix3yKlhHtxklB3eoVJ7RwhtT3v412Bl4LE4q3ioEdM1gqxBWpjuCmnj194iu7NQ
-	 O/0nsnEqO33RrX56pN0ac8nTUFjLG55jDU8yWEo4=
+	b=ARHSwl1vqMlbkwuBW+tfzngKvhl4rKW9gPi7JSNg+nl3G8lnKmp/Kzzz+VwXbIHQI
+	 skelkVFifLpQvfRy/Cle4fQceYCilAEX3haigPoWZf2uwMuYL5Q+3w7sZsSV4gR+PF
+	 CB0t8oe2cBp6DUOQUw+4nVMS9ZHIthQtErbgtth4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 330/414] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
-Date: Thu, 17 Apr 2025 19:51:28 +0200
-Message-ID: <20250417175124.702785503@linuxfoundation.org>
+Subject: [PATCH 6.13 331/414] mm/userfaultfd: fix release hang over concurrent GUP
+Date: Thu, 17 Apr 2025 19:51:29 +0200
+Message-ID: <20250417175124.744127549@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -62,62 +55,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
+commit fe4cdc2c4e248f48de23bc778870fd71e772a274 upstream.
 
-The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
-reclaim for struct pglist_data using a single bit.
+This patch should fix a possible userfaultfd release() hang during
+concurrent GUP.
 
-It is "locked" with a test_and_set_bit (similarly to a try lock) which
-provides full ordering with respect to loads and stores done within
-__node_reclaim().
+This problem was initially reported by Dimitris Siakavaras in July 2023
+[1] in a firecracker use case.  Firecracker has a separate process
+handling page faults remotely, and when the process releases the
+userfaultfd it can race with a concurrent GUP from KVM trying to fault in
+a guest page during the secondary MMU page fault process.
 
-It is "unlocked" with clear_bit(), which does not provide any ordering
-with respect to loads and stores done before clearing the bit.
+A similar problem was reported recently again by Jinjiang Tu in March 2025
+[2], even though the race happened this time with a mlockall() operation,
+which does GUP in a similar fashion.
 
-The lack of clear_bit() memory ordering with respect to stores within
-__node_reclaim() can cause a subsequent CPU to fail to observe stores from
-a prior node reclaim.  This is not an issue in practice on TSO (e.g.
-x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
+In 2017, commit 656710a60e36 ("userfaultfd: non-cooperative: closing the
+uffd without triggering SIGBUS") was trying to fix this issue.  AFAIU,
+that fixes well the fault paths but may not work yet for GUP.  In GUP, the
+issue is NOPAGE will be almost treated the same as "page fault resolved"
+in faultin_page(), then the GUP will follow page again, seeing page
+missing, and it'll keep going into a live lock situation as reported.
 
-Fix this by using clear_bit_unlock rather than clear_bit to clear
-PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
+This change makes core mm return RETRY instead of NOPAGE for both the GUP
+and fault paths, proactively releasing the mmap read lock.  This should
+guarantee the other release thread make progress on taking the write lock
+and avoid the live lock even for GUP.
 
-This provides stronger memory ordering (release rather than relaxed).
+When at it, rearrange the comments to make sure it's uptodate.
 
-Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
-Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Andrea Parri <parri.andrea@gmail.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jade Alglave <j.alglave@ucl.ac.uk>
-Cc: Luc Maranget <luc.maranget@inria.fr>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
+[1] https://lore.kernel.org/r/79375b71-db2e-3e66-346b-254c90d915e2@cslab.ece.ntua.gr
+[2] https://lore.kernel.org/r/20250307072133.3522652-1-tujinjiang@huawei.com
+
+Link: https://lkml.kernel.org/r/20250312145131.1143062-1-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/userfaultfd.c |   51 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 25 insertions(+), 26 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -7571,7 +7571,7 @@ int node_reclaim(struct pglist_data *pgd
- 		return NODE_RECLAIM_NOSCAN;
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -396,32 +396,6 @@ vm_fault_t handle_userfault(struct vm_fa
+ 		goto out;
  
- 	ret = __node_reclaim(pgdat, gfp_mask, order);
--	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
-+	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
+ 	/*
+-	 * If it's already released don't get it. This avoids to loop
+-	 * in __get_user_pages if userfaultfd_release waits on the
+-	 * caller of handle_userfault to release the mmap_lock.
+-	 */
+-	if (unlikely(READ_ONCE(ctx->released))) {
+-		/*
+-		 * Don't return VM_FAULT_SIGBUS in this case, so a non
+-		 * cooperative manager can close the uffd after the
+-		 * last UFFDIO_COPY, without risking to trigger an
+-		 * involuntary SIGBUS if the process was starting the
+-		 * userfaultfd while the userfaultfd was still armed
+-		 * (but after the last UFFDIO_COPY). If the uffd
+-		 * wasn't already closed when the userfault reached
+-		 * this point, that would normally be solved by
+-		 * userfaultfd_must_wait returning 'false'.
+-		 *
+-		 * If we were to return VM_FAULT_SIGBUS here, the non
+-		 * cooperative manager would be instead forced to
+-		 * always call UFFDIO_UNREGISTER before it can safely
+-		 * close the uffd.
+-		 */
+-		ret = VM_FAULT_NOPAGE;
+-		goto out;
+-	}
+-
+-	/*
+ 	 * Check that we can return VM_FAULT_RETRY.
+ 	 *
+ 	 * NOTE: it should become possible to return VM_FAULT_RETRY
+@@ -457,6 +431,31 @@ vm_fault_t handle_userfault(struct vm_fa
+ 	if (vmf->flags & FAULT_FLAG_RETRY_NOWAIT)
+ 		goto out;
  
- 	if (ret)
- 		count_vm_event(PGSCAN_ZONE_RECLAIM_SUCCESS);
++	if (unlikely(READ_ONCE(ctx->released))) {
++		/*
++		 * If a concurrent release is detected, do not return
++		 * VM_FAULT_SIGBUS or VM_FAULT_NOPAGE, but instead always
++		 * return VM_FAULT_RETRY with lock released proactively.
++		 *
++		 * If we were to return VM_FAULT_SIGBUS here, the non
++		 * cooperative manager would be instead forced to
++		 * always call UFFDIO_UNREGISTER before it can safely
++		 * close the uffd, to avoid involuntary SIGBUS triggered.
++		 *
++		 * If we were to return VM_FAULT_NOPAGE, it would work for
++		 * the fault path, in which the lock will be released
++		 * later.  However for GUP, faultin_page() does nothing
++		 * special on NOPAGE, so GUP would spin retrying without
++		 * releasing the mmap read lock, causing possible livelock.
++		 *
++		 * Here only VM_FAULT_RETRY would make sure the mmap lock
++		 * be released immediately, so that the thread concurrently
++		 * releasing the userfault would always make progress.
++		 */
++		release_fault_lock(vmf);
++		goto out;
++	}
++
+ 	/* take the reference before dropping the mmap_lock */
+ 	userfaultfd_ctx_get(ctx);
+ 
 
 
