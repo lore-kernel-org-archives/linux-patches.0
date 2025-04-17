@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF34256C93;
-	Thu, 17 Apr 2025 18:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CC1256C93;
+	Thu, 17 Apr 2025 18:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914706; cv=none; b=MX6P0g66RHkY5VHSDw9B8ZMMT+JlaYJ7eDaA3zR1YlhCKDxSIhAn1ZK8moV4oEBAzakRIOcMmQ4BPyShs2dS/bxXOZbf2ioZ9CKzMnI1DFc/WEeytzKM3qaUVcGNoZttbWVQ9ao8UE/3Ur7RfHbjzyRBe1/XCjtpRIPp9mr/DTY=
+	t=1744914709; cv=none; b=Hl9HC41bnwfT17I2TS5sByQYGXwLKeqE9xO0+Dc58ywrxTvK7uAC4JSQ8xZL6XueVtg7B62wZIe0d3pufO8xxx1QTVBRCwLZ3aJnNkj3q8ZqMm/UcVyZ38K7Up+E0ixl7roIX0R0mvaCclHaqzkc0eO7hZSqRarGyIK+3gRluDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914706; c=relaxed/simple;
-	bh=BXyWZLqmlqmmDb61wI352U/8NAYU89/9VlPpuBADENc=;
+	s=arc-20240116; t=1744914709; c=relaxed/simple;
+	bh=N04x1S6TVSJhoDg1bY//NeyzpL0+zjbQxOdWVpjcRdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLSBysOgyeGpzCTjlhgPGdg2p9Yq7Gz0QWyC0qaX00p2Nir1pgbSHHvIvPv7p+iQiW/3BJ8qQ4AmqyhIGK5lWQ4rHzEgZI5aQlxZws4kd2z0OTbzEz4fy3nOr3j4u95xpTxg3arlSHBhZ4nRIqEITBJGqeER95zvMRHLsQsgPqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjXLxHzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H8qjZYtNwByOPCbp+bzRWVlzS3fX2OcKnxcdPagfFt5BlOUwlwcr1v3IAsBBezqQQAGqX87va/4dX2GGTRc/bQoDI8MJQavQpiNbrwu/6zxwjXLRSwUj8fVnbt+i4LENmWTTPFdh36nMgWwTZ+mU603iyk7555KbxvpDxX810cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZV/BYzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjXLxHzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4758C4CEE4;
-	Thu, 17 Apr 2025 18:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZV/BYzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699EDC4CEE4;
+	Thu, 17 Apr 2025 18:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914706;
-	bh=BXyWZLqmlqmmDb61wI352U/8NAYU89/9VlPpuBADENc=;
+	s=korg; t=1744914708;
+	bh=N04x1S6TVSJhoDg1bY//NeyzpL0+zjbQxOdWVpjcRdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjXLxHzQ8rDhf8JUt+y0EgLYGy0I7uUtMiRT8IJN6qOkly0WhnSpRzWlH0yb+psyD
-	 7igbim2zrcHHWHVkEI0r6uEzuWBXszJznzIGp7U9vuhUMwHFgJoANBlE32RpyQWKMe
-	 mFhgQ0eHVSyHcsieuKKQFcF/4AppfssE8dWjMFlU=
+	b=CZV/BYzF0UZQI2jkZeVLuyPYKzixI7rc9koRdqL1M3J66F/CiCITvbQQ1nUi4maSE
+	 84ZZ4Rue7La6vXBpgTVKaGbHIdp8tN8RQcfmWHOozYtKBTHKKQEMJA9Ssu2evfxDzJ
+	 CzDY9a722z4+NOuUDmoTSp9bfMw54xd26gdlK6c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.13 277/414] ext4: fix off-by-one error in do_split
-Date: Thu, 17 Apr 2025 19:50:35 +0200
-Message-ID: <20250417175122.572381507@linuxfoundation.org>
+	Ninad Malwade <nmalwade@nvidia.com>,
+	Ivy Huang <yijuh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.13 304/414] arm64: tegra: Remove the Orin NX/Nano suspend key
+Date: Thu, 17 Apr 2025 19:51:02 +0200
+Message-ID: <20250417175123.659500415@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,82 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+From: Ninad Malwade <nmalwade@nvidia.com>
 
-commit 94824ac9a8aaf2fb3c54b4bdde842db80ffa555d upstream.
+commit bb8a3ad25f098b6ea9b1d0f522427b4ad53a7bba upstream.
 
-Syzkaller detected a use-after-free issue in ext4_insert_dentry that was
-caused by out-of-bounds access due to incorrect splitting in do_split.
+As per the Orin Nano Dev Kit schematic, GPIO_G.02 is not available
+on this device family. It should not be used at all on Orin NX/Nano.
+Having this unused pin mapped as the suspend key can lead to
+unpredictable behavior for low power modes.
 
-BUG: KASAN: use-after-free in ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
-Write of size 251 at addr ffff888074572f14 by task syz-executor335/5847
-
-CPU: 0 UID: 0 PID: 5847 Comm: syz-executor335 Not tainted 6.12.0-rc6-syzkaller-00318-ga9cda7c0ffed #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
- add_dirent_to_buf+0x3d9/0x750 fs/ext4/namei.c:2154
- make_indexed_dir+0xf98/0x1600 fs/ext4/namei.c:2351
- ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2455
- ext4_add_nondir+0x8d/0x290 fs/ext4/namei.c:2796
- ext4_symlink+0x920/0xb50 fs/ext4/namei.c:3431
- vfs_symlink+0x137/0x2e0 fs/namei.c:4615
- do_symlinkat+0x222/0x3a0 fs/namei.c:4641
- __do_sys_symlink fs/namei.c:4662 [inline]
- __se_sys_symlink fs/namei.c:4660 [inline]
- __x64_sys_symlink+0x7a/0x90 fs/namei.c:4660
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-The following loop is located right above 'if' statement.
-
-for (i = count-1; i >= 0; i--) {
-	/* is more than half of this entry in 2nd half of the block? */
-	if (size + map[i].size/2 > blocksize/2)
-		break;
-	size += map[i].size;
-	move++;
-}
-
-'i' in this case could go down to -1, in which case sum of active entries
-wouldn't exceed half the block size, but previous behaviour would also do
-split in half if sum would exceed at the very last block, which in case of
-having too many long name files in a single block could lead to
-out-of-bounds access and following use-after-free.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Orin NX/Nano uses GPIO_EE.04 as both a "power" button and a "suspend"
+button. However, we cannot have two gpio-keys mapped to the same
+GPIO. Therefore remove the "suspend" key.
 
 Cc: stable@vger.kernel.org
-Fixes: 5872331b3d91 ("ext4: fix potential negative array index in do_split()")
-Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250404082804.2567-3-a.sadovnikov@ispras.ru
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: e63472eda5ea ("arm64: tegra: Support Jetson Orin NX reference platform")
+Signed-off-by: Ninad Malwade <nmalwade@nvidia.com>
+Signed-off-by: Ivy Huang <yijuh@nvidia.com>
+Link: https://lore.kernel.org/r/20250206224034.3691397-1-yijuh@nvidia.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra234-p3768-0000+p3767.dtsi |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1995,7 +1995,7 @@ static struct ext4_dir_entry_2 *do_split
- 	 * split it in half by count; each resulting block will have at least
- 	 * half the space free.
- 	 */
--	if (i > 0)
-+	if (i >= 0)
- 		split = count - move;
- 	else
- 		split = count/2;
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000+p3767.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000+p3767.dtsi
+@@ -227,13 +227,6 @@
+ 			wakeup-event-action = <EV_ACT_ASSERTED>;
+ 			wakeup-source;
+ 		};
+-
+-		key-suspend {
+-			label = "Suspend";
+-			gpios = <&gpio TEGRA234_MAIN_GPIO(G, 2) GPIO_ACTIVE_LOW>;
+-			linux,input-type = <EV_KEY>;
+-			linux,code = <KEY_SLEEP>;
+-		};
+ 	};
+ 
+ 	fan: pwm-fan {
 
 
