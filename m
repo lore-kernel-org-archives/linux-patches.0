@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A28918C034;
-	Thu, 17 Apr 2025 18:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613B32566DA;
+	Thu, 17 Apr 2025 18:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913310; cv=none; b=NCHGHmmw78/l/d9fsRA5XmlVQI1KQHxHFs0bm3BZffwovNAdDs3BgboWJaxMFqrfNkIhzqcU4UvhDUC2Q9ZvjNTCsQ6p0UE4v+i3Iw66EzqHSSFLvxZvulOIQoyWQjUTmAdN0Yl46npkJhZB5vj0VDGVd1S57q8NsttRl1OT38Y=
+	t=1744913313; cv=none; b=BiYLAHqpr0JFJYBU3m3sEeGpzBl6YpzrCm3736ZqxWGaJ0gZCTjqGcMFgUeF62/o5BSz/VOTzTQ9HIvDGmwqUjiWNLirTPl+8aHVZBo7e14WMQm0cWAXOY+a27iKW5yjY9if2+depHzA4ovZSMFdqNKZ4CCxYJntqg9EyaJvA3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913310; c=relaxed/simple;
-	bh=BxyCtRKanjlTFRukLnfko1YJNJV3mOQyCMe/Vrc/i1Q=;
+	s=arc-20240116; t=1744913313; c=relaxed/simple;
+	bh=slwk46eklvW6fNoeOluymadwCxm3SRwwBWLN+rWVdyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1+AG5XoMza5qYduL7eT2mfv8599jLduCr7FR/cQB4tlV0tHb2+sxEx03iGOHo3h59bOB4/UtEL+qi6Edjwi/jqXzkgsG9vP+2k+k0Kcj27U+WZOeTMuHvVQFq7rJBBu1upVmwyAvahHO/HAbgRjNhRLJGZrfN32IvR7VQlTUtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/zbLkOE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKw6whLEkHdYrAu45bkYnriXksJLncG0ei7vYtHQ0CLPO1sY84D7Ed09Td+0UE4OPHFYBlx2ZvIZ+CG6tqpXIMrdBeiIsv2RC/OlqOyD50VfhnYb5zjqsoGSrfpQqLnpJWdF3gBad1l7IbyXqiW8amRGpJnxpATSWxeWIWT+/Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbfZI65u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/zbLkOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF4EC4CEE4;
-	Thu, 17 Apr 2025 18:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbfZI65u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2745C4CEE4;
+	Thu, 17 Apr 2025 18:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913310;
-	bh=BxyCtRKanjlTFRukLnfko1YJNJV3mOQyCMe/Vrc/i1Q=;
+	s=korg; t=1744913313;
+	bh=slwk46eklvW6fNoeOluymadwCxm3SRwwBWLN+rWVdyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/zbLkOEVb5m5za5JR7NpqwVRBmf9quA8lFV0QDwnxIE1E8c06xHzzza5gOqPuVFN
-	 asvf2GKO68Ppjb+oymMLvYDZgFXzpF0GXKB4zqYqqbSGQKN6Mfjg2OwJpvNKipLPRZ
-	 L+0xPHKoZTWXBUY9gWM49kfHJzYhqQurxzxKQLx4=
+	b=dbfZI65u0IGt6uCpmWrA2uCRGbJir+dfr2je6ATuQAXtbjxZh6TsLDnZbrOFIO2nF
+	 T1F81kpP8Emne40sm1Gl1qO+kWFHSLiHpM57WeeXPW/0qgBaaKAFieGnEYHnqVlKPR
+	 k21hY58aigqhpO5MqQF3Q2k0pchWg4CBnpHh4BmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 266/449] media: chips-media: wave5: Fix timeout while testing 10bit hevc fluster
-Date: Thu, 17 Apr 2025 19:49:14 +0200
-Message-ID: <20250417175128.731380081@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.14 267/449] irqchip/renesas-rzv2h: Fix wrong variable usage in rzv2h_tint_set_type()
+Date: Thu, 17 Apr 2025 19:49:15 +0200
+Message-ID: <20250417175128.773467052@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,53 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson.lee <jackson.lee@chipsnmedia.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 035371c9e5098018b8512efc6a8812912469480c upstream.
+commit 72310650788ad3d3afe3810735656dd291fea885 upstream.
 
-The Wave5 521C variant does not support 10 bit decoding. When 10 bit
-decoding support was added for the 515 variant, a section of the code
-was removed which returned an error. This removal causes a timeout for
-the 521 variant, which was discovered during HEVC 10-bit decoding tests.
+The variable tssel_n is used for selecting TINT source and titsel_n for
+setting the interrupt type. The variable titsel_n is wrongly used for
+enabling the TINT interrupt in rzv2h_tint_set_type(). Fix this issue by
+using the correct variable tssel_n.
 
-Fixes: 143e7ab4d9a0 ("media: chips-media: wave5: support decoding HEVC Main10 profile")
+While at it, move the tien variable assignment near to tssr.
+
+Fixes: 0d7605e75ac2 ("irqchip: Add RZ/V2H(P) Interrupt Control Unit (ICU) driver")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Link: https://lore.kernel.org/all/20250224131253.134199-3-biju.das.jz@bp.renesas.com
+Closes: https://lore.kernel.org/CAMuHMdU3xJpz-jh=j7t4JreBat2of2ksP_OR3+nKAoZBr4pSxg@mail.gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/irqchip/irq-renesas-rzv2h.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1345,10 +1345,24 @@ static int wave5_vpu_dec_start_streaming
- 		if (ret)
- 			goto free_bitstream_vbuf;
- 	} else if (q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
-+		struct dec_initial_info *initial_info =
-+			&inst->codec_info->dec_info.initial_info;
-+
- 		if (inst->state == VPU_INST_STATE_STOP)
- 			ret = switch_state(inst, VPU_INST_STATE_INIT_SEQ);
- 		if (ret)
- 			goto return_buffers;
-+
-+		if (inst->state == VPU_INST_STATE_INIT_SEQ &&
-+		    inst->dev->product_code == WAVE521C_CODE) {
-+			if (initial_info->luma_bitdepth != 8) {
-+				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
-+					 __func__, initial_info->luma_bitdepth);
-+				ret = -EINVAL;
-+				goto return_buffers;
-+			}
-+		}
-+
- 	}
- 	pm_runtime_mark_last_busy(inst->dev->dev);
- 	pm_runtime_put_autosuspend(inst->dev->dev);
+--- a/drivers/irqchip/irq-renesas-rzv2h.c
++++ b/drivers/irqchip/irq-renesas-rzv2h.c
+@@ -301,10 +301,10 @@ static int rzv2h_tint_set_type(struct ir
+ 
+ 	tssr_k = ICU_TSSR_K(tint_nr);
+ 	tssel_n = ICU_TSSR_TSSEL_N(tint_nr);
++	tien = ICU_TSSR_TIEN(tssel_n);
+ 
+ 	titsr_k = ICU_TITSR_K(tint_nr);
+ 	titsel_n = ICU_TITSR_TITSEL_N(tint_nr);
+-	tien = ICU_TSSR_TIEN(titsel_n);
+ 
+ 	guard(raw_spinlock)(&priv->lock);
+ 
 
 
