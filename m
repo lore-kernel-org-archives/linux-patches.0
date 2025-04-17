@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72E325C708;
-	Thu, 17 Apr 2025 18:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA4325C71F;
+	Thu, 17 Apr 2025 18:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914143; cv=none; b=tFHDVAoWjnDQrFWz/FZsZMgh3FRytdIjV+XgkGwJ6Qr8+0POdvj6yXUZ11uKKu415MosRgaLnI8UtG4fJuSY7dWonL/LJ7IsruttTZckNbsDTd2rKw5vx82eQtPeNSJp/TicDbk+ECEYwEFvdLAvBByaN6xOWyBqcDN/jhuMaVg=
+	t=1744914146; cv=none; b=sulPsuFzD5hgxHEZ8+adLJIIrNhrhb5Oa5O/FEV1X7XFgIdAwIvMQdarKA4TX2XkbO7zwTFtjyp3w6s9VOpSuO4emq7lfxemmwNkzW3eyNhatQyyX/0fp4ms360ENLdlDQHcq6qUE4cYJKFb/O7km1gGkYdoKHCMrnM0Av/nieM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914143; c=relaxed/simple;
-	bh=+BtQKPmIxJztQa7qDyRgflI66DeFeuOz/O2DF9+5PhM=;
+	s=arc-20240116; t=1744914146; c=relaxed/simple;
+	bh=xs+qBa+7QJJQtmU6aaeZ2Xhir14kQR0+jBYez+O41EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFQgRAQKwIZioU+YEpplTDk2N+15EZmj1Py4vk3MCAYys81vZ2k2ua07SONLKRMkSe2gQgRs7Bbzpq7s/e4YnLzqCVrSnDePaLKRtYoUycwTybOjOBr+82EBb4Vq7rE8sFjBSfqaaN1IIU/YMgSPoBbR/B3mOp4tKfdiI8YqyLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RYffNxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aL4kw++521M+BbyCnlxforyIu01k6Lc2DG/BiNxC9nJJe/yedXLU4XW9W973SxvI9jTmb03KlmPQG95+jDqT414v1Hvv6PfY541OvMpJx8nHkkXuYregxwo0LzXpFbD9nSyysTjWnfaDL8tLiJyR/Od9EJKYr/os6stvYYcAU1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPfYMZtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RYffNxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CFFC4CEE4;
-	Thu, 17 Apr 2025 18:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPfYMZtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F69C4CEE4;
+	Thu, 17 Apr 2025 18:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914142;
-	bh=+BtQKPmIxJztQa7qDyRgflI66DeFeuOz/O2DF9+5PhM=;
+	s=korg; t=1744914145;
+	bh=xs+qBa+7QJJQtmU6aaeZ2Xhir14kQR0+jBYez+O41EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RYffNxPo25qXuEwVhz3IBtFMHrO+X6pgtgyx4ZNI++nETVbXHj8Tv7vvBTVyNSWE
-	 qB4Xc+zzrAE09lq4NeZJyzIRlE4PVj6/R3Z7CS3EFR1aleN116C1hYj+wFpHsCy5Wv
-	 G0sZz3LwSSNMTYgX5//S5TeTvaBfLcYefxeDF1fM=
+	b=oPfYMZtDYts34JzF1WpkBbjmO3+PvBnsDuhQjllPs+PlHb9fSUTQV78hOEZeu1lMi
+	 SJ2fbJYjdjlKm4WkH2bRTa3IUeIWs9yEI/EZaqBz+zTX6GxjAA+6B3MK7hGWNPjAI1
+	 7NmkSKI5FOPmsASQpMxn1umQMc7dwfqG1UI5cQw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 121/414] Bluetooth: btintel_pcie: Add device id of Whale Peak
-Date: Thu, 17 Apr 2025 19:47:59 +0200
-Message-ID: <20250417175116.302948498@linuxfoundation.org>
+Subject: [PATCH 6.13 122/414] Bluetooth: btusb: Add 13 USB device IDs for Qualcomm WCN785x
+Date: Thu, 17 Apr 2025 19:48:00 +0200
+Message-ID: <20250417175116.342043340@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,45 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 6b8c05e52d66e4fe4ab1df4c6e15f339ecd9aa51 ]
+[ Upstream commit 2dd1c1eee3e496fcc16971be4db5bb792a36025c ]
 
-Add device of Whale Peak.
+Add 13 USB device IDs for Qualcomm WCN785x, and these IDs are
+extracted from Windows driver inf file for various types of
+WoS (Windows on Snapdragon) laptop.
 
-Output of sudo lspci -v  -s 00:14.7:
-
-00:14.7 Bluetooth: Intel Corporation Device e476
-        Subsystem: Intel Corporation Device 0011
-        Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 11
-        Memory at 11011c30000 (64-bit, non-prefetchable) [size=16K]
-        Capabilities: [c8] Power Management version 3
-        Capabilities: [d0] MSI: Enable- Count=1/1 Maskable- 64bit+
-        Capabilities: [40] Express Root Complex Integrated Endpoint, MSI 00
-        Capabilities: [80] MSI-X: Enable+ Count=32 Masked-
-        Capabilities: [100] Latency Tolerance Reporting
-        Kernel driver in use: btintel_pcie
-        Kernel modules: btintel_pcie
-
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 091ffe3e14954..6130854b6658a 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -36,6 +36,7 @@
- /* Intel Bluetooth PCIe device id table */
- static const struct pci_device_id btintel_pcie_table[] = {
- 	{ BTINTEL_PCI_DEVICE(0xA876, PCI_ANY_ID) },
-+	{ BTINTEL_PCI_DEVICE(0xE476, PCI_ANY_ID) },
- 	{ 0 }
- };
- MODULE_DEVICE_TABLE(pci, btintel_pcie_table);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index cf15e18521607..11005d7d9cc0f 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -375,12 +375,38 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe100), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe103), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe10a), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe10d), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe11b), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe11c), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe11f), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe141), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe14a), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe14b), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe14d), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3624), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2c7c, 0x0131), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2c7c, 0x0132), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
 -- 
 2.39.5
 
