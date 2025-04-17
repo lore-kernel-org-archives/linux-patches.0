@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0D025F78E;
-	Thu, 17 Apr 2025 18:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F551A3178;
+	Thu, 17 Apr 2025 18:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913013; cv=none; b=u7Vds9OTEkKM+WX2An7jvOQ1hcOwNUw/OrEy8537sPYSCTy6CaxSivZno0tgga0gbz6GLRNIWkcGPJ/GaZJmL1t1G96NRBDuv4gY5vOjwdmv85ArrbJJPpC7pei7uFiPXS/KCiCVjxbH4oQUVH1IL5Tv7ckxB9R9gRI4ndndvwY=
+	t=1744913016; cv=none; b=KbWQDNPM+SCnktAUj2EYk1M+pjJjnlsG+6aZmyivK7nQjUC4/atjDPIbq2LP4vPbrQcam04a+6XGe4mcKUbmKojfrMYujE8pAfb0PbHAdwQKYhumo7Gn1iYNWDzspcUllLdqqhEry7Sg5+b/YUbQEmECGZWjy15HzTREy4gkVPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913013; c=relaxed/simple;
-	bh=52z5nsNoWWn+Nj05mFcuW76VoayHxQlWOZqzRez/1vE=;
+	s=arc-20240116; t=1744913016; c=relaxed/simple;
+	bh=kAMDNTowrdb9G7PYX7eMmVkfm4w4qn/V+vGNI5SlD0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Av40RWZyGcz77YVnSwancLxtcIG8wwNxLTus5sZSEMfhMae6JitktrqgYq/cLdKER0kECPp6KVff+oXJt5JhjqvM8HasIxaeO6qIZEZW1gRFwUabyoJMooTEVTMqSa44ZwW3Uk7YpS9SwQXXhkVM+aFIZCNlW6uq9loEVy4J3AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ns//WIC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGZuWMsnqYuqp3JiswR9NRgtaObGEbpqd7mPWeWTx4kYR2Vi6ZVPI3TwgN+Tz6bAZReNQPjKEfHjYQoXbF4SpQY7JMw4td2BT1xieVJaDXFB7V/pa3S4+l795S3i1vhw4EpfHf/M1jnGlSRjU2Twcx5LXZSpT1hDbGbYi3Trxv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJpJfxML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ns//WIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BE6C4CEEA;
-	Thu, 17 Apr 2025 18:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJpJfxML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A282CC4CEE4;
+	Thu, 17 Apr 2025 18:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913013;
-	bh=52z5nsNoWWn+Nj05mFcuW76VoayHxQlWOZqzRez/1vE=;
+	s=korg; t=1744913016;
+	bh=kAMDNTowrdb9G7PYX7eMmVkfm4w4qn/V+vGNI5SlD0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ns//WICb2AS0JVfaQ6vrzuS1vfutRrtalZQUL1Jq+I+HzSHU9oDrlHWJFRX4Q7Eh
-	 NJgXyfhEyQRSu8ads4ZxwIVIxAB1t6bPXN2EyNtkwdvsORvemL3Wihg/tZGdGLR47f
-	 1WzBnS9TJ4CKdOsycFS1K6D/HQU0rPD98gMU8Xmk=
+	b=SJpJfxMLPnkJACDgCUIwrG5EA7Tj944y5NUNaljdqB9zcfMruYBJ2pSJOSkZrvPFO
+	 nsMDg9hvdn62YvPDg+J6Dd6vZy9NORHh3tQEXUtv62i/8fEL8Ra9lN7/R08gOiCrKV
+	 +/FPtjlW6L0nTrsGjQBLAXavTjMbbSd3bo1OEDtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 169/449] drm/xe/xelp: Move Wa_16011163337 from tunings to workarounds
-Date: Thu, 17 Apr 2025 19:47:37 +0200
-Message-ID: <20250417175124.784344882@linuxfoundation.org>
+Subject: [PATCH 6.14 170/449] drm/mediatek: mtk_dpi: Move the input_2p_en bit to platform data
+Date: Thu, 17 Apr 2025 19:47:38 +0200
+Message-ID: <20250417175124.822641530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -53,63 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit d9b5d83c5a4d720af6ddbefe2825c78f0325a3fd ]
+[ Upstream commit c90876a695dd83e76680b88b40067275a5982811 ]
 
-Workaround database specifies 16011163337 as a workaround so lets move it
-there.
+In preparation for adding support for MT8195's HDMI reserved DPI
+instance, move the input_2p_en bit for DP_INTF to platform data.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250227101304.46660-3-tvrtko.ursulin@igalia.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+While at it, remove the input_2pixel member from platform data as
+having this bit implies that the 2pixel feature must be enabled.
+
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-7-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_tuning.c | 8 --------
- drivers/gpu/drm/xe/xe_wa.c     | 7 +++++++
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dpi.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_tuning.c b/drivers/gpu/drm/xe/xe_tuning.c
-index d449de0fb6ecb..3c78f3d715591 100644
---- a/drivers/gpu/drm/xe/xe_tuning.c
-+++ b/drivers/gpu/drm/xe/xe_tuning.c
-@@ -97,14 +97,6 @@ static const struct xe_rtp_entry_sr engine_tunings[] = {
+diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
+index 1864eb02dbf50..c3fc85764c973 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dpi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
+@@ -127,14 +127,14 @@ struct mtk_dpi_yc_limit {
+  * @is_ck_de_pol: Support CK/DE polarity.
+  * @swap_input_support: Support input swap function.
+  * @support_direct_pin: IP supports direct connection to dpi panels.
+- * @input_2pixel: Input pixel of dp_intf is 2 pixel per round, so enable this
+- *		  config to enable this feature.
+  * @dimension_mask: Mask used for HWIDTH, HPORCH, VSYNC_WIDTH and VSYNC_PORCH
+  *		    (no shift).
+  * @hvsize_mask: Mask of HSIZE and VSIZE mask (no shift).
+  * @channel_swap_shift: Shift value of channel swap.
+  * @yuv422_en_bit: Enable bit of yuv422.
+  * @csc_enable_bit: Enable bit of CSC.
++ * @input_2p_en_bit: Enable bit for input two pixel per round feature.
++ *		     If present, implies that the feature must be enabled.
+  * @pixels_per_iter: Quantity of transferred pixels per iteration.
+  * @edge_cfg_in_mmsys: If the edge configuration for DPI's output needs to be set in MMSYS.
+  */
+@@ -148,12 +148,12 @@ struct mtk_dpi_conf {
+ 	bool is_ck_de_pol;
+ 	bool swap_input_support;
+ 	bool support_direct_pin;
+-	bool input_2pixel;
+ 	u32 dimension_mask;
+ 	u32 hvsize_mask;
+ 	u32 channel_swap_shift;
+ 	u32 yuv422_en_bit;
+ 	u32 csc_enable_bit;
++	u32 input_2p_en_bit;
+ 	u32 pixels_per_iter;
+ 	bool edge_cfg_in_mmsys;
+ };
+@@ -610,9 +610,9 @@ static int mtk_dpi_set_display_mode(struct mtk_dpi *dpi,
+ 		mtk_dpi_dual_edge(dpi);
+ 		mtk_dpi_config_disable_edge(dpi);
+ 	}
+-	if (dpi->conf->input_2pixel) {
+-		mtk_dpi_mask(dpi, DPI_CON, DPINTF_INPUT_2P_EN,
+-			     DPINTF_INPUT_2P_EN);
++	if (dpi->conf->input_2p_en_bit) {
++		mtk_dpi_mask(dpi, DPI_CON, dpi->conf->input_2p_en_bit,
++			     dpi->conf->input_2p_en_bit);
+ 	}
+ 	mtk_dpi_sw_reset(dpi, false);
+ 
+@@ -1006,12 +1006,12 @@ static const struct mtk_dpi_conf mt8195_dpintf_conf = {
+ 	.output_fmts = mt8195_output_fmts,
+ 	.num_output_fmts = ARRAY_SIZE(mt8195_output_fmts),
+ 	.pixels_per_iter = 4,
+-	.input_2pixel = true,
+ 	.dimension_mask = DPINTF_HPW_MASK,
+ 	.hvsize_mask = DPINTF_HSIZE_MASK,
+ 	.channel_swap_shift = DPINTF_CH_SWAP,
+ 	.yuv422_en_bit = DPINTF_YUV422_EN,
+ 	.csc_enable_bit = DPINTF_CSC_ENABLE,
++	.input_2p_en_bit = DPINTF_INPUT_2P_EN,
  };
  
- static const struct xe_rtp_entry_sr lrc_tunings[] = {
--	{ XE_RTP_NAME("Tuning: ganged timer, also known as 16011163337"),
--	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210), ENGINE_CLASS(RENDER)),
--	  /* read verification is ignored due to 1608008084. */
--	  XE_RTP_ACTIONS(FIELD_SET_NO_READ_MASK(FF_MODE2,
--						FF_MODE2_GS_TIMER_MASK,
--						FF_MODE2_GS_TIMER_224))
--	},
--
- 	/* DG2 */
- 
- 	{ XE_RTP_NAME("Tuning: L3 cache"),
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 570fe03764025..2553accf8c517 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -618,6 +618,13 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- };
- 
- static const struct xe_rtp_entry_sr lrc_was[] = {
-+	{ XE_RTP_NAME("16011163337"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210), ENGINE_CLASS(RENDER)),
-+	  /* read verification is ignored due to 1608008084. */
-+	  XE_RTP_ACTIONS(FIELD_SET_NO_READ_MASK(FF_MODE2,
-+						FF_MODE2_GS_TIMER_MASK,
-+						FF_MODE2_GS_TIMER_224))
-+	},
- 	{ XE_RTP_NAME("1409342910, 14010698770, 14010443199, 1408979724, 1409178076, 1409207793, 1409217633, 1409252684, 1409347922, 1409142259"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210)),
- 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN3,
+ static int mtk_dpi_probe(struct platform_device *pdev)
 -- 
 2.39.5
 
