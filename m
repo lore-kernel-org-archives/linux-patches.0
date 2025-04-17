@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E35B2571D2;
-	Thu, 17 Apr 2025 18:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8C0256C6A;
+	Thu, 17 Apr 2025 18:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914246; cv=none; b=THDudeYp28wroNqM0g66uyQ1YUk7Q/5sTeCTuYihY34ZQg+S+W0ltVF2K7BAG5FhirTVI8Q616HkyNDCuAWYXFofJ5foeMe+1d3RxMlKvND7AGbV47IvmW2zBjlMVZFXFdVz6dBfoq7S0QmSKOEOgvlvsO742ltDFRJHlFltrik=
+	t=1744914249; cv=none; b=tPL//IBQ9+VQ0tD/XUyjeKcN7L5crN08QZ0JkrCyThp3qY3xu7M2KO39w6/v890Qyt6xXCiRxm13FkiA0HQhWtWAaKsq2DeMI9MTtdXJ/OzsCUgbrRNdkrVhtwBnvLklpGERcs7QNmfv9V4TilvIgs6sauu+zS4mNdJ8/XAKBts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914246; c=relaxed/simple;
-	bh=9Fr3JSiZzQdjHuO2BSxsNWTtE7xk7Zjh4+BWiI4GLyI=;
+	s=arc-20240116; t=1744914249; c=relaxed/simple;
+	bh=apQDOrFOWUFZ5SIBfnEQM8ZvjabGNdZ57jXBsWR5WAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZbrcUa0AxbJmP2KznUXkw2K1mQr/kVwStim89qk9pfAva5HbjLK4PiOoc6eZnyx00mDLy52GNwOElZ1R2pixafN+CynCCvmgAXflqOBKypuxVT7pioO3bi68NAucpT7WZLCJN+yfjBhbuvSiwadrQpjsK8OalQKtc8RixH5M+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWJiAXn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mprdqjxTV3snMoidsfCMzCEBUF/VWqKEN84VcoHrXeTqMBaAOfvKFhkPxXUh6GnSyPeTQxpheVkHKKFaDqHKLZxImdA9gRZZoXjL7xvdXCmF/m34pRUOSOrUE3Ilct52Ojq8fy0rFOZ2LYEZcrdDB8lhezR9gfwvcolirAmREqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLe1xKAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWJiAXn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B878CC4CEE4;
-	Thu, 17 Apr 2025 18:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLe1xKAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6F5C4CEE4;
+	Thu, 17 Apr 2025 18:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914246;
-	bh=9Fr3JSiZzQdjHuO2BSxsNWTtE7xk7Zjh4+BWiI4GLyI=;
+	s=korg; t=1744914249;
+	bh=apQDOrFOWUFZ5SIBfnEQM8ZvjabGNdZ57jXBsWR5WAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWJiAXn7zxy8efKjk3QwYltI6ZMizbHoQT4tFpC7FM5zi4D1OEOJOEJOnVP2NFc5k
-	 CeHZcIY2tWRgR2LGYRdi/+yKgEBmlW5Oq30qH0jEpQYP8PWiDRqlSWprDUmynhxhv1
-	 DKwg5vT+hSHFo68aDK5KaiTq5s4E1Mn1osLfTFJM=
+	b=BLe1xKALRTj/1+EAEfcthVEi6uB1F8ipEMoGLvwtZ9VNBSHBlWcjG/X0Vz6RDIH4S
+	 n8hHxklhtwLvBYit/IEwueU/Nc6/Vi7CdMwjj90lUQlM3GtZb78Usjh4DYkjVAWac/
+	 OxEVzmG7vPeNXwKDS+31pW+8gn/PBSlnwnY8Afhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Ryan Seto <ryanseto@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 154/414] drm/amdgpu: handle amdgpu_cgs_create_device() errors in amd_powerplay_create()
-Date: Thu, 17 Apr 2025 19:48:32 +0200
-Message-ID: <20250417175117.630875512@linuxfoundation.org>
+Subject: [PATCH 6.13 155/414] drm/amd/display: Prevent VStartup Overflow
+Date: Thu, 17 Apr 2025 19:48:33 +0200
+Message-ID: <20250417175117.672563556@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,39 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ryan Seto <ryanseto@amd.com>
 
-[ Upstream commit 1435e895d4fc967d64e9f5bf81e992ac32f5ac76 ]
+[ Upstream commit 29c1c20496a7a9bafe2bc2f833d69aa52e0f2c2d ]
 
-Add error handling to propagate amdgpu_cgs_create_device() failures
-to the caller. When amdgpu_cgs_create_device() fails, release hwmgr
-and return -ENOMEM to prevent null pointer dereference.
+[Why]
+For some VR headsets with large blanks, it's possible
+to overflow the OTG_VSTARTUP_PARAM:VSTARTUP_START
+register. This can lead to incorrect DML calculations
+and underflow downstream.
 
-[v1]->[v2]: Change error code from -EINVAL to -ENOMEM. Free hwmgr.
+[How]
+Min the calcualted max_vstartup_lines with the max
+value of the register.
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Ryan Seto <ryanseto@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c  | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 26624a716fc60..f8434158a4022 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -51,6 +51,11 @@ static int amd_powerplay_create(struct amdgpu_device *adev)
- 	hwmgr->adev = adev;
- 	hwmgr->not_vf = !amdgpu_sriov_vf(adev);
- 	hwmgr->device = amdgpu_cgs_create_device(adev);
-+	if (!hwmgr->device) {
-+		kfree(hwmgr);
-+		return -ENOMEM;
-+	}
-+
- 	mutex_init(&hwmgr->msg_lock);
- 	hwmgr->chip_family = adev->family;
- 	hwmgr->chip_id = adev->asic_type;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+index ecfa3c898e09d..4285cb7fcbe71 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+@@ -12,6 +12,7 @@
+ #define DML2_MAX_FMT_420_BUFFER_WIDTH 4096
+ #define DML_MAX_NUM_OF_SLICES_PER_DSC 4
+ #define ALLOW_SDPIF_RATE_LIMIT_PRE_CSTATE
++#define DML_MAX_VSTARTUP_START 1023
+ 
+ const char *dml2_core_internal_bw_type_str(enum dml2_core_internal_bw_type bw_type)
+ {
+@@ -3648,6 +3649,7 @@ static unsigned int CalculateMaxVStartup(
+ 	dml2_printf("DML::%s: vblank_avail = %u\n", __func__, vblank_avail);
+ 	dml2_printf("DML::%s: max_vstartup_lines = %u\n", __func__, max_vstartup_lines);
+ #endif
++	max_vstartup_lines = (unsigned int)math_min2(max_vstartup_lines, DML_MAX_VSTARTUP_START);
+ 	return max_vstartup_lines;
+ }
+ 
 -- 
 2.39.5
 
