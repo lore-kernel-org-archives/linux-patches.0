@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F71DF733;
-	Thu, 17 Apr 2025 18:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD271D07BA;
+	Thu, 17 Apr 2025 18:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915324; cv=none; b=KWAy0+MVLXh5eJoY9sqGGcglC8NRzt9fm7RDwvSyFfMLpWzSgFJ9SE5SDbT9dvn/r1PcidVSuehh1G9NWHjB4ZbsmJynj2gO19AXzvjsX/oLYUDNV64iVGHfj2faONnpWV81HIR25+EWgT3KEk/wPtCIbhola2YvUn+nOw0GcfI=
+	t=1744915327; cv=none; b=G82tKQC79zQFPzv39gwa+wrvDJi/p2MZsZaTAL7JJmEFxPq8BMyHkv4wGm7cxAPFpFAa6aEd1e3clbLnj/enSN5OXJgJIfXfZybOFBCJMqu3b2cykMqHnKjHa8Gv4UcKtjE+scYpBrJginJlcPy+6tucPmx51qpULBQyr+71rYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915324; c=relaxed/simple;
-	bh=VUPNaQObw0u+UJ7yesxwRnnL0juIMVA6NXdA+1j9vFo=;
+	s=arc-20240116; t=1744915327; c=relaxed/simple;
+	bh=Rt5veOx09FWyfJg4wUEry+duwzYrJzspl/sb1RNLglo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q/ykf3aIXR034sRXHkaQxRQXaSjKOftuW/6jX10qil3WJVy4bmGbeH8Yqe451t5TqSHaaHe80zo16viqAfnVM98p+NI9lihuVQVTFvn62FQEzlF24ps+UF5MXwJIhXMhrJWVkA1HkElE91ak+GhPQSCYp/8N4oJ0A9idm+ZeFkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4Z6Nbfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dkICzZIlJPf+w6jYj/NYk5RqwVdQqjLcTvyTZ2I2mvmRNrBrM5D6BbCli++LKME64s+eQ0lzyYCBGP7peB+dsP33plrWcJdZQfPeKP3TbV/WJ/tuAHGrwoV4Znqb5xmKH25fAUKNkfPMk8omc7R1wj8jBANIq4JqV2a145a6sZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCXNVR7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4Z6Nbfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF553C4CEE4;
-	Thu, 17 Apr 2025 18:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCXNVR7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C513C4CEE4;
+	Thu, 17 Apr 2025 18:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915324;
-	bh=VUPNaQObw0u+UJ7yesxwRnnL0juIMVA6NXdA+1j9vFo=;
+	s=korg; t=1744915327;
+	bh=Rt5veOx09FWyfJg4wUEry+duwzYrJzspl/sb1RNLglo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4Z6Nbfzn+WLDnyn1rXgmLBnk/0jugf3U/MpGHQfrDBUiyZg2rXSdQEcry4gNGAb5
-	 QZ23YpPTtP3KzxjEfWjmOYl+LlnljZGNKfok4F7VV2NT3qHd6N0EeeAMEjbFUI/Uhu
-	 dAGFCBvzxN6tkDtw2G8QuF0l4rrc8bj8J6+VrWg0=
+	b=oCXNVR7v3wHYk+rq5xqTcaX+UcL7LC8pi5qkrvOwOecrRGIIOrpFfCsokIbE3zsp2
+	 7X7c5JlfRsDrkRKb7xBSYJRDoNtsuCXpGlv0EMwStkZpjxU5XrFjrA9PvgDv51eFzh
+	 HzXmdG0Cp7/lpAw6NI+jpr2pgdljv5bR2azMNgfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Makarenko Oleg <oleg@makarenk.ooo>,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
 	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
 	Paul Dino Jones <paul@spacefreak18.xyz>,
@@ -35,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/393] HID: pidff: Convert infinite length from Linux API to PID standard
-Date: Thu, 17 Apr 2025 19:47:50 +0200
-Message-ID: <20250417175110.047549920@linuxfoundation.org>
+Subject: [PATCH 6.12 062/393] HID: pidff: Do not send effect envelope if its empty
+Date: Thu, 17 Apr 2025 19:47:51 +0200
+Message-ID: <20250417175110.086420562@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -59,22 +58,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 37e0591fe44dce39d1ebc7a82d5b6e4dba1582eb ]
+[ Upstream commit 8876fc1884f5b39550c8387ff3176396c988541d ]
 
-Software uses 0 as de-facto infinite lenght on Linux FF apis (SDL),
-Linux doesn't actually define anythi as of now, while USB PID defines
-NULL (0xffff). Most PID devices do not expect a 0-length effect and
-can't interpret it as infinite. This change fixes Force Feedback for
-most PID compliant devices.
+Envelope struct is always initialized, but the envelope itself is
+optional as described in USB PID Device class definition 1.0.
 
-As most games depend on updating the values of already playing infinite
-effects, this is crucial to ensure they will actually work.
+5.1.1.1 Type Specific Block Offsets
+...
+4) Effects that do not use Condition Blocks use 1 Parameter Block and
+an *optional* Envelope Block.
 
-Previously, users had to rely on third-party software to do this conversion
-and make their PID devices usable.
+Sending out "empty" envelope breaks force feedback on some devices with
+games that use SINE effect + offset to emulate constant force effect, as
+well as generally breaking Constant/Periodic effects. One of the affected
+brands is Moza Racing.
 
-Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
+This change prevents the envelope from being sent if it contains all
+0 values while keeping the old behavior of only sending it, if it differs
+from the old one.
+
+Changes in v6:
+- Simplify the checks to make them clearer
+- Fix possible null pointer dereference while calling
+  pidff_needs_set_envelope
+
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Reviewed-by: Michał Kopeć <michal@nozomi.space>
 Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
@@ -84,35 +91,84 @@ Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hid/usbhid/hid-pidff.c | 42 +++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 3b4ee21cd8111..5fe4422bb5bad 100644
+index 5fe4422bb5bad..a01c1b2ab2f4c 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -21,6 +21,7 @@
- #include "usbhid.h"
- 
- #define	PID_EFFECTS_MAX		64
-+#define	PID_INFINITE		0xffff
- 
- /* Report usage table used to put reports into an array */
- 
-@@ -301,7 +302,12 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
- 	pidff->set_effect_type->value[0] =
- 		pidff->create_new_effect_type->value[0];
--	pidff->set_effect[PID_DURATION].value[0] = effect->replay.length;
+@@ -262,10 +262,22 @@ static void pidff_set_envelope_report(struct pidff_device *pidff,
+ static int pidff_needs_set_envelope(struct ff_envelope *envelope,
+ 				    struct ff_envelope *old)
+ {
+-	return envelope->attack_level != old->attack_level ||
+-	       envelope->fade_level != old->fade_level ||
++	bool needs_new_envelope;
++	needs_new_envelope = envelope->attack_level  != 0 ||
++			     envelope->fade_level    != 0 ||
++			     envelope->attack_length != 0 ||
++			     envelope->fade_length   != 0;
 +
-+	/* Convert infinite length from Linux API (0)
-+	   to PID standard (NULL) if needed */
-+	pidff->set_effect[PID_DURATION].value[0] =
-+		effect->replay.length == 0 ? PID_INFINITE : effect->replay.length;
++	if (!needs_new_envelope)
++		return false;
 +
- 	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
- 	pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] =
- 		effect->trigger.interval;
++	if (!old)
++		return needs_new_envelope;
++
++	return envelope->attack_level  != old->attack_level  ||
++	       envelope->fade_level    != old->fade_level    ||
+ 	       envelope->attack_length != old->attack_length ||
+-	       envelope->fade_length != old->fade_length;
++	       envelope->fade_length   != old->fade_length;
+ }
+ 
+ /*
+@@ -580,11 +592,9 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
+ 			pidff_set_effect_report(pidff, effect);
+ 		if (!old || pidff_needs_set_constant(effect, old))
+ 			pidff_set_constant_force_report(pidff, effect);
+-		if (!old ||
+-		    pidff_needs_set_envelope(&effect->u.constant.envelope,
+-					&old->u.constant.envelope))
+-			pidff_set_envelope_report(pidff,
+-					&effect->u.constant.envelope);
++		if (pidff_needs_set_envelope(&effect->u.constant.envelope,
++					old ? &old->u.constant.envelope : NULL))
++			pidff_set_envelope_report(pidff, &effect->u.constant.envelope);
+ 		break;
+ 
+ 	case FF_PERIODIC:
+@@ -619,11 +629,9 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
+ 			pidff_set_effect_report(pidff, effect);
+ 		if (!old || pidff_needs_set_periodic(effect, old))
+ 			pidff_set_periodic_report(pidff, effect);
+-		if (!old ||
+-		    pidff_needs_set_envelope(&effect->u.periodic.envelope,
+-					&old->u.periodic.envelope))
+-			pidff_set_envelope_report(pidff,
+-					&effect->u.periodic.envelope);
++		if (pidff_needs_set_envelope(&effect->u.periodic.envelope,
++					old ? &old->u.periodic.envelope : NULL))
++			pidff_set_envelope_report(pidff, &effect->u.periodic.envelope);
+ 		break;
+ 
+ 	case FF_RAMP:
+@@ -637,11 +645,9 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
+ 			pidff_set_effect_report(pidff, effect);
+ 		if (!old || pidff_needs_set_ramp(effect, old))
+ 			pidff_set_ramp_force_report(pidff, effect);
+-		if (!old ||
+-		    pidff_needs_set_envelope(&effect->u.ramp.envelope,
+-					&old->u.ramp.envelope))
+-			pidff_set_envelope_report(pidff,
+-					&effect->u.ramp.envelope);
++		if (pidff_needs_set_envelope(&effect->u.ramp.envelope,
++					old ? &old->u.ramp.envelope : NULL))
++			pidff_set_envelope_report(pidff, &effect->u.ramp.envelope);
+ 		break;
+ 
+ 	case FF_SPRING:
 -- 
 2.39.5
 
