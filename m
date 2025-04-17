@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AE31DB148;
-	Thu, 17 Apr 2025 18:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A28918C034;
+	Thu, 17 Apr 2025 18:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913307; cv=none; b=K52yQ+hBvPTOLEx2exeIzrnKatg4yWmCMpB5qJo6v1p9f+WLi3bhBNd7LCg9B5rynKUsW/7BgMsA8MSRqbdIhfgaLzHs+AOjeDimnVx6CENOXE49sSLu0+rAbFLUdt8W775TfvUnaKibYMv1YSddk0biHX4IkJRhGubXEBpNtLc=
+	t=1744913310; cv=none; b=NCHGHmmw78/l/d9fsRA5XmlVQI1KQHxHFs0bm3BZffwovNAdDs3BgboWJaxMFqrfNkIhzqcU4UvhDUC2Q9ZvjNTCsQ6p0UE4v+i3Iw66EzqHSSFLvxZvulOIQoyWQjUTmAdN0Yl46npkJhZB5vj0VDGVd1S57q8NsttRl1OT38Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913307; c=relaxed/simple;
-	bh=je6ty7ChTIH8R2jlh4nUOD4hI+D5aslCov8d1fwxnT0=;
+	s=arc-20240116; t=1744913310; c=relaxed/simple;
+	bh=BxyCtRKanjlTFRukLnfko1YJNJV3mOQyCMe/Vrc/i1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4Z1l1ApfQk4J8Nui3AtNe98QpEl/nP+Vgu8O4JRhjsmAGm3e0MPZR3/Gab+9dEWZrBVbVs5R7rus7U37uX0jbD0FnZ3gf6nAZ8FoOy7sQcsw9dArVro80pFbdmrK6StyViS4Feq1EkG7muw2qN3RcNNx2SkRS+n6irAxeEh+cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GjRuuIV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1+AG5XoMza5qYduL7eT2mfv8599jLduCr7FR/cQB4tlV0tHb2+sxEx03iGOHo3h59bOB4/UtEL+qi6Edjwi/jqXzkgsG9vP+2k+k0Kcj27U+WZOeTMuHvVQFq7rJBBu1upVmwyAvahHO/HAbgRjNhRLJGZrfN32IvR7VQlTUtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/zbLkOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GjRuuIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC55BC4CEE4;
-	Thu, 17 Apr 2025 18:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/zbLkOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF4EC4CEE4;
+	Thu, 17 Apr 2025 18:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913307;
-	bh=je6ty7ChTIH8R2jlh4nUOD4hI+D5aslCov8d1fwxnT0=;
+	s=korg; t=1744913310;
+	bh=BxyCtRKanjlTFRukLnfko1YJNJV3mOQyCMe/Vrc/i1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GjRuuIVawerINPYCAh6ZdrdPahYhG4HeoeSJyDHvAWSGoMoTWtKUyDb+mpKUucc5
-	 AhQdz5+ySp7iFnk7C8Dyd8gTE9VdmpcF6pqn8oZa6n2lJr+YeHnpOEeokuj+LwFN2x
-	 9fI+KV4ytWDAdN4aFDIg/xaQ5sizzxWFtj2JJEXk=
+	b=n/zbLkOEVb5m5za5JR7NpqwVRBmf9quA8lFV0QDwnxIE1E8c06xHzzza5gOqPuVFN
+	 asvf2GKO68Ppjb+oymMLvYDZgFXzpF0GXKB4zqYqqbSGQKN6Mfjg2OwJpvNKipLPRZ
+	 L+0xPHKoZTWXBUY9gWM49kfHJzYhqQurxzxKQLx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Sebastian Fricke <sebastian.fricke@collabora.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 265/449] media: chips-media: wave5: Fix a hang after seeking
-Date: Thu, 17 Apr 2025 19:49:13 +0200
-Message-ID: <20250417175128.689150510@linuxfoundation.org>
+Subject: [PATCH 6.14 266/449] media: chips-media: wave5: Fix timeout while testing 10bit hevc fluster
+Date: Thu, 17 Apr 2025 19:49:14 +0200
+Message-ID: <20250417175128.731380081@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -55,14 +55,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Jackson.lee <jackson.lee@chipsnmedia.com>
 
-commit a2c75e964e51b096e9fe6adfa3eaed53594a668b upstream.
+commit 035371c9e5098018b8512efc6a8812912469480c upstream.
 
-While seeking, the driver calls the flush command. Before the flush
-command is sent to the VPU, the driver should handle the display buffer
-flags and should get all decoded information from the VPU if the VCORE
-is running.
+The Wave5 521C variant does not support 10 bit decoding. When 10 bit
+decoding support was added for the 515 variant, a section of the code
+was removed which returned an error. This removal causes a timeout for
+the 521 variant, which was discovered during HEVC 10-bit decoding tests.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Fixes: 143e7ab4d9a0 ("media: chips-media: wave5: support decoding HEVC Main10 profile")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
 Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
@@ -71,68 +71,35 @@ Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   17 ++++++++++++++-
- drivers/media/platform/chips-media/wave5/wave5-vpuapi.c  |   10 ++++++++
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
 +++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1369,6 +1369,16 @@ static int streamoff_output(struct vb2_q
- 	struct vb2_v4l2_buffer *buf;
- 	int ret;
- 	dma_addr_t new_rd_ptr;
-+	struct dec_output_info dec_info;
-+	unsigned int i;
+@@ -1345,10 +1345,24 @@ static int wave5_vpu_dec_start_streaming
+ 		if (ret)
+ 			goto free_bitstream_vbuf;
+ 	} else if (q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
++		struct dec_initial_info *initial_info =
++			&inst->codec_info->dec_info.initial_info;
 +
-+	for (i = 0; i < v4l2_m2m_num_dst_bufs_ready(m2m_ctx); i++) {
-+		ret = wave5_vpu_dec_set_disp_flag(inst, i);
-+		if (ret)
-+			dev_dbg(inst->dev->dev,
-+				"%s: Setting display flag of buf index: %u, fail: %d\n",
-+				__func__, i, ret);
-+	}
- 
- 	while ((buf = v4l2_m2m_src_buf_remove(m2m_ctx))) {
- 		dev_dbg(inst->dev->dev, "%s: (Multiplanar) buf type %4u | index %4u\n",
-@@ -1376,6 +1386,11 @@ static int streamoff_output(struct vb2_q
- 		v4l2_m2m_buf_done(buf, VB2_BUF_STATE_ERROR);
+ 		if (inst->state == VPU_INST_STATE_STOP)
+ 			ret = switch_state(inst, VPU_INST_STATE_INIT_SEQ);
+ 		if (ret)
+ 			goto return_buffers;
++
++		if (inst->state == VPU_INST_STATE_INIT_SEQ &&
++		    inst->dev->product_code == WAVE521C_CODE) {
++			if (initial_info->luma_bitdepth != 8) {
++				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
++					 __func__, initial_info->luma_bitdepth);
++				ret = -EINVAL;
++				goto return_buffers;
++			}
++		}
++
  	}
- 
-+	while (wave5_vpu_dec_get_output_info(inst, &dec_info) == 0) {
-+		if (dec_info.index_frame_display >= 0)
-+			wave5_vpu_dec_set_disp_flag(inst, dec_info.index_frame_display);
-+	}
-+
- 	ret = wave5_vpu_flush_instance(inst);
- 	if (ret)
- 		return ret;
-@@ -1459,7 +1474,7 @@ static void wave5_vpu_dec_stop_streaming
- 			break;
- 
- 		if (wave5_vpu_dec_get_output_info(inst, &dec_output_info))
--			dev_dbg(inst->dev->dev, "Getting decoding results from fw, fail\n");
-+			dev_dbg(inst->dev->dev, "there is no output info\n");
- 	}
- 
- 	v4l2_m2m_update_stop_streaming_state(m2m_ctx, q);
---- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
-@@ -75,6 +75,16 @@ int wave5_vpu_flush_instance(struct vpu_
- 				 inst->type == VPU_INST_TYPE_DEC ? "DECODER" : "ENCODER", inst->id);
- 			mutex_unlock(&inst->dev->hw_lock);
- 			return -ETIMEDOUT;
-+		} else if (ret == -EBUSY) {
-+			struct dec_output_info dec_info;
-+
-+			mutex_unlock(&inst->dev->hw_lock);
-+			wave5_vpu_dec_get_output_info(inst, &dec_info);
-+			ret = mutex_lock_interruptible(&inst->dev->hw_lock);
-+			if (ret)
-+				return ret;
-+			if (dec_info.index_frame_display > 0)
-+				wave5_vpu_dec_set_disp_flag(inst, dec_info.index_frame_display);
- 		}
- 	} while (ret != 0);
- 	mutex_unlock(&inst->dev->hw_lock);
+ 	pm_runtime_mark_last_busy(inst->dev->dev);
+ 	pm_runtime_put_autosuspend(inst->dev->dev);
 
 
