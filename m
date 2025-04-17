@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293C72580E0;
-	Thu, 17 Apr 2025 18:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BA72580C6;
+	Thu, 17 Apr 2025 18:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913120; cv=none; b=La9q+Qt+a91Mp01w64stPbSxfejKSrLN0Z1IWMnSHj7aS/5yLVOn3tee+Q71wUCuH22YuFRLigbHoWqdPBzxQ9+3+nj9vrYXarS9l6tv7SqpArVdJz47Ma7a5oNno5mekgzP8Z7eVuIdjvt2/q8gVagOf3xzb061Aim9dGTskfE=
+	t=1744913123; cv=none; b=HNGho5llaukdjp2eUwYiizN3nPYxOPnlQwB/Ag7iW/HmYRz9bkAoJaXLC6zyniXRpWDZvz2CGszHVwgvw2W9wdCzbq2soR3qVUAshL89h1TsWcnW8No9D7O4eJPzRNHXwsNI6fqECrLppr5DW+wmHwR9Fcg/NXWl4MKic34ZFfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913120; c=relaxed/simple;
-	bh=UVVnSOdMMwzo3ELIQeSPVBWt3LwJxh9zeIfJmjDrJMQ=;
+	s=arc-20240116; t=1744913123; c=relaxed/simple;
+	bh=MyXey4tijAOpR32/68EBpIUQpRRdkO6oZu5qQp044Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T7MXL50bgF9h2xlTH7ZIQfwkcNF5rYL74ZzTKKGhN6WGTSYpo2IWHDT5/m0Sx+O7W90s4rybmXizWPQiCK86mvFOMVXt1Eh7mbaGYCtgwmqutcSiwOZXpseSxSA3LNbL7tHX059GdULbUbR2qn9pOxe7XGEdHvJVVvI58K3Ncls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHEw5SwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxtbT6c5tZ89ZoSX8pv3vxFIadAK0vB2yiO9IxeXfFslTeI4iw99zjzbvZu8eTxsRHmLTmQlD2xXTKWjMk7J5dMRY+47B3Wr66bdxME8CFZI9vNaO9gx2788xGv0EhCasA/MMIZAILZCqCh6YUUWCwqZUtd0a1KgYCVdgsDJK5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytdHdd9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHEw5SwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E14BC4CEE4;
-	Thu, 17 Apr 2025 18:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytdHdd9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F918C4CEE4;
+	Thu, 17 Apr 2025 18:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913120;
-	bh=UVVnSOdMMwzo3ELIQeSPVBWt3LwJxh9zeIfJmjDrJMQ=;
+	s=korg; t=1744913123;
+	bh=MyXey4tijAOpR32/68EBpIUQpRRdkO6oZu5qQp044Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHEw5SwR1NHaTyn26guMLv4i1d384hUdkyfY0o7u4SBzZ4seAa76muqP+8mp53M8E
-	 o6KabgHCkHAOQj9gbmxTZEazLeak5zuMzOGYruVwmTCkYdaY8O4AXiwNkzabBvCGAA
-	 8IqMa73D8E+5d0swTpFTRmouIg0pOVJIGdkbx1mA=
+	b=ytdHdd9ljR8agA2EXcBgUni2z5EEq0KYH4LvcjJxmZGawdNnOK+VPydDpU+9QVgkT
+	 aOVfA7vvKcys4XOu71ietU5vcxNfRvrmU81w0zWYeTDDZ05iZ3ikx+AajkRj7aunBz
+	 1NXRL7G1o3pkahrni0iHZ1jLsYFDoii0SI6gXS5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Jann Horn <jannh@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 203/449] HID: pidff: Move all hid-pidff definitions to a dedicated header
-Date: Thu, 17 Apr 2025 19:48:11 +0200
-Message-ID: <20250417175126.137999087@linuxfoundation.org>
+Subject: [PATCH 6.14 194/449] ext4: dont treat fhandle lookup of ea_inode as FS corruption
+Date: Thu, 17 Apr 2025 19:48:02 +0200
+Message-ID: <20250417175125.786418913@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -49,156 +46,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 0d24d4b1da96df9fc5ff36966f40f980ef864d46 ]
+[ Upstream commit 642335f3ea2b3fd6dba03e57e01fa9587843a497 ]
 
-Do not clutter hid includes with stuff not needed outside of
-the kernel.
+A file handle that userspace provides to open_by_handle_at() can
+legitimately contain an outdated inode number that has since been reused
+for another purpose - that's why the file handle also contains a generation
+number.
 
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+But if the inode number has been reused for an ea_inode, check_igot_inode()
+will notice, __ext4_iget() will go through ext4_error_inode(), and if the
+inode was newly created, it will also be marked as bad by iget_failed().
+This all happens before the point where the inode generation is checked.
+
+ext4_error_inode() is supposed to only be used on filesystem corruption; it
+should not be used when userspace just got unlucky with a stale file
+handle. So when this happens, let __ext4_iget() just return an error.
+
+Fixes: b3e6bcb94590 ("ext4: add EA_INODE checking to ext4_iget()")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241129-ext4-ignore-ea-fhandle-v1-1-e532c0d1cee0@google.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-universal-pidff.c |  3 ++-
- drivers/hid/usbhid/hid-core.c     |  1 +
- drivers/hid/usbhid/hid-pidff.c    |  3 ++-
- drivers/hid/usbhid/hid-pidff.h    | 33 +++++++++++++++++++++++++++++++
- include/linux/hid.h               | 15 --------------
- 5 files changed, 38 insertions(+), 17 deletions(-)
- create mode 100644 drivers/hid/usbhid/hid-pidff.h
+ fs/ext4/inode.c | 68 ++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 48 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
-index 7ef5ab9146b1c..1b713b741d192 100644
---- a/drivers/hid/hid-universal-pidff.c
-+++ b/drivers/hid/hid-universal-pidff.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/input-event-codes.h>
- #include "hid-ids.h"
-+#include "usbhid/hid-pidff.h"
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 4009f9017a0e9..4108b7d1696ff 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4710,22 +4710,43 @@ static inline void ext4_inode_set_iversion_queried(struct inode *inode, u64 val)
+ 		inode_set_iversion_queried(inode, val);
+ }
  
- #define JOY_RANGE (BTN_DEAD - BTN_JOYSTICK + 1)
- 
-@@ -89,7 +90,7 @@ static int universal_pidff_probe(struct hid_device *hdev,
- 	}
- 
- 	/* Check if HID_PID support is enabled */
--	int (*init_function)(struct hid_device *, __u32);
-+	int (*init_function)(struct hid_device *, u32);
- 	init_function = hid_pidff_init_with_quirks;
- 
- 	if (!init_function) {
-diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
-index a6eb6fe6130d1..44c2351b870fa 100644
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -35,6 +35,7 @@
- #include <linux/hid-debug.h>
- #include <linux/hidraw.h>
- #include "usbhid.h"
-+#include "hid-pidff.h"
- 
- /*
-  * Version Information
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index ac6f940abd901..a8eaa77e80be3 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -12,6 +12,7 @@
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include "hid-pidff.h"
- #include <linux/input.h>
- #include <linux/slab.h>
- #include <linux/usb.h>
-@@ -1383,7 +1384,7 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
-  * Check if the device is PID and initialize it
-  * Set initial quirks
-  */
--int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
-+int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
+-static const char *check_igot_inode(struct inode *inode, ext4_iget_flags flags)
+-
++static int check_igot_inode(struct inode *inode, ext4_iget_flags flags,
++			    const char *function, unsigned int line)
  {
- 	struct pidff_device *pidff;
- 	struct hid_input *hidinput = list_entry(hid->inputs.next,
-diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
-new file mode 100644
-index 0000000000000..dda571e0a5bd3
---- /dev/null
-+++ b/drivers/hid/usbhid/hid-pidff.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef __HID_PIDFF_H
-+#define __HID_PIDFF_H
++	const char *err_str;
 +
-+#include <linux/hid.h>
+ 	if (flags & EXT4_IGET_EA_INODE) {
+-		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
+-			return "missing EA_INODE flag";
++		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
++			err_str = "missing EA_INODE flag";
++			goto error;
++		}
+ 		if (ext4_test_inode_state(inode, EXT4_STATE_XATTR) ||
+-		    EXT4_I(inode)->i_file_acl)
+-			return "ea_inode with extended attributes";
++		    EXT4_I(inode)->i_file_acl) {
++			err_str = "ea_inode with extended attributes";
++			goto error;
++		}
+ 	} else {
+-		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
+-			return "unexpected EA_INODE flag";
++		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
++			/*
++			 * open_by_handle_at() could provide an old inode number
++			 * that has since been reused for an ea_inode; this does
++			 * not indicate filesystem corruption
++			 */
++			if (flags & EXT4_IGET_HANDLE)
++				return -ESTALE;
++			err_str = "unexpected EA_INODE flag";
++			goto error;
++		}
++	}
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
++		err_str = "unexpected bad inode w/o EXT4_IGET_BAD";
++		goto error;
+ 	}
+-	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD))
+-		return "unexpected bad inode w/o EXT4_IGET_BAD";
+-	return NULL;
++	return 0;
 +
-+/* HID PIDFF quirks */
-+
-+/* Delay field (0xA7) missing. Skip it during set effect report upload */
-+#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
-+
-+/* Missing Paramter block offset (0x23). Skip it during SET_CONDITION
-+   report upload */
-+#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
-+
-+/* Initialise device control field even if logical_minimum != 1 */
-+#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
-+
-+/* Use fixed 0x4000 direction during SET_EFFECT report upload */
-+#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
-+
-+/* Force all periodic effects to be uploaded as SINE */
-+#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
-+
-+#ifdef CONFIG_HID_PID
-+int hid_pidff_init(struct hid_device *hid);
-+int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks);
-+#else
-+#define hid_pidff_init NULL
-+#define hid_pidff_init_with_quirks NULL
-+#endif
-+
-+#endif
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index e180679ab284c..9ca7e26ac4e92 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1222,21 +1222,6 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev);
- int hid_quirks_init(char **quirks_param, __u16 bus, int count);
- void hid_quirks_exit(__u16 bus);
++error:
++	ext4_error_inode(inode, function, line, 0, err_str);
++	return -EFSCORRUPTED;
+ }
  
--#ifdef CONFIG_HID_PID
--int hid_pidff_init(struct hid_device *hid);
--int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
--#else
--#define hid_pidff_init NULL
--#define hid_pidff_init_with_quirks NULL
--#endif
+ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+@@ -4737,7 +4758,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 	struct ext4_inode_info *ei;
+ 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
+ 	struct inode *inode;
+-	const char *err_str;
+ 	journal_t *journal = EXT4_SB(sb)->s_journal;
+ 	long ret;
+ 	loff_t size;
+@@ -4766,10 +4786,10 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 	if (!inode)
+ 		return ERR_PTR(-ENOMEM);
+ 	if (!(inode->i_state & I_NEW)) {
+-		if ((err_str = check_igot_inode(inode, flags)) != NULL) {
+-			ext4_error_inode(inode, function, line, 0, err_str);
++		ret = check_igot_inode(inode, flags, function, line);
++		if (ret) {
+ 			iput(inode);
+-			return ERR_PTR(-EFSCORRUPTED);
++			return ERR_PTR(ret);
+ 		}
+ 		return inode;
+ 	}
+@@ -5050,13 +5070,21 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 		ret = -EFSCORRUPTED;
+ 		goto bad_inode;
+ 	}
+-	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
+-		ext4_error_inode(inode, function, line, 0, err_str);
+-		ret = -EFSCORRUPTED;
+-		goto bad_inode;
++	ret = check_igot_inode(inode, flags, function, line);
++	/*
++	 * -ESTALE here means there is nothing inherently wrong with the inode,
++	 * it's just not an inode we can return for an fhandle lookup.
++	 */
++	if (ret == -ESTALE) {
++		brelse(iloc.bh);
++		unlock_new_inode(inode);
++		iput(inode);
++		return ERR_PTR(-ESTALE);
+ 	}
 -
--/* HID PIDFF quirks */
--#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
--#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
--#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
--#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
--#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
--
- #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
++	if (ret)
++		goto bad_inode;
+ 	brelse(iloc.bh);
++
+ 	unlock_new_inode(inode);
+ 	return inode;
  
- #define hid_err(hid, fmt, ...)				\
 -- 
 2.39.5
 
