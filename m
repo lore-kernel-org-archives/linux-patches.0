@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EFB252915;
-	Thu, 17 Apr 2025 18:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF34256C93;
+	Thu, 17 Apr 2025 18:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914704; cv=none; b=nkwlVIl90IyQj3VOMr+aspnXDUX5C4SYEgesOuPyabNwV77a3ew2w17reCQGYhtTGNyDQU1DTcrs6+JMmkgQiLrkzzudp8ZgYCHvxVvktu01dpv/zAVjYFqOJJPfu0HHgr2mpQEOIolIO8L1xQsyO8MReMSJxmQh7AIBRfX9WO0=
+	t=1744914706; cv=none; b=MX6P0g66RHkY5VHSDw9B8ZMMT+JlaYJ7eDaA3zR1YlhCKDxSIhAn1ZK8moV4oEBAzakRIOcMmQ4BPyShs2dS/bxXOZbf2ioZ9CKzMnI1DFc/WEeytzKM3qaUVcGNoZttbWVQ9ao8UE/3Ur7RfHbjzyRBe1/XCjtpRIPp9mr/DTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914704; c=relaxed/simple;
-	bh=EGaZ3yax8QsKE7fZY0seowdpLGXV5V1A8gXjWGj7juA=;
+	s=arc-20240116; t=1744914706; c=relaxed/simple;
+	bh=BXyWZLqmlqmmDb61wI352U/8NAYU89/9VlPpuBADENc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=av+uYp9Vv1E1VmzPIISa80vZW5gYpU4AGXttbolFB6y1HfIQDCVaIutIeBL8u5DjLVl5fL+cAkVmXDH7jHn659Vl8Kso8NsuIwGqqoVgFToxfkvMOcLrXeGgqomLg2YB4x0gLZ5eU2j7GjKI3112DRTOCBCURVQk1s7e8EAGkoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giTyTogZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PLSBysOgyeGpzCTjlhgPGdg2p9Yq7Gz0QWyC0qaX00p2Nir1pgbSHHvIvPv7p+iQiW/3BJ8qQ4AmqyhIGK5lWQ4rHzEgZI5aQlxZws4kd2z0OTbzEz4fy3nOr3j4u95xpTxg3arlSHBhZ4nRIqEITBJGqeER95zvMRHLsQsgPqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjXLxHzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giTyTogZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA76C4CEE7;
-	Thu, 17 Apr 2025 18:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjXLxHzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4758C4CEE4;
+	Thu, 17 Apr 2025 18:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914703;
-	bh=EGaZ3yax8QsKE7fZY0seowdpLGXV5V1A8gXjWGj7juA=;
+	s=korg; t=1744914706;
+	bh=BXyWZLqmlqmmDb61wI352U/8NAYU89/9VlPpuBADENc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giTyTogZYX6OE9eJrNn0arfBgleRJPac+Irw1mls2hbRC2ZwtUoBdReHMcJrwhvIa
-	 +jDWUJYpWnbucqz8o8ZVIY/SgC+y0CWX28BVnbAxJYAnJfoVUZk6DbiOudPnmWD5j5
-	 i7QcFVWaMDysYwMf5higUVGReWl6kxMd5klJVfEA=
+	b=xjXLxHzQ8rDhf8JUt+y0EgLYGy0I7uUtMiRT8IJN6qOkly0WhnSpRzWlH0yb+psyD
+	 7igbim2zrcHHWHVkEI0r6uEzuWBXszJznzIGp7U9vuhUMwHFgJoANBlE32RpyQWKMe
+	 mFhgQ0eHVSyHcsieuKKQFcF/4AppfssE8dWjMFlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kristina Martsenko <kristina.martsenko@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Keir Fraser <keirf@google.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.13 303/414] arm64: mops: Do not dereference src reg for a set operation
-Date: Thu, 17 Apr 2025 19:51:01 +0200
-Message-ID: <20250417175123.618816824@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.13 277/414] ext4: fix off-by-one error in do_split
+Date: Thu, 17 Apr 2025 19:50:35 +0200
+Message-ID: <20250417175122.572381507@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -48,63 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keir Fraser <keirf@google.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-commit a13bfa4fe0d6949cea14718df2d1fe84c38cd113 upstream.
+commit 94824ac9a8aaf2fb3c54b4bdde842db80ffa555d upstream.
 
-The source register is not used for SET* and reading it can result in
-a UBSAN out-of-bounds array access error, specifically when the MOPS
-exception is taken from a SET* sequence with XZR (reg 31) as the
-source. Architecturally this is the only case where a src/dst/size
-field in the ESR can be reported as 31.
+Syzkaller detected a use-after-free issue in ext4_insert_dentry that was
+caused by out-of-bounds access due to incorrect splitting in do_split.
 
-Prior to 2de451a329cf662b the code in do_el0_mops() was benign as the
-use of pt_regs_read_reg() prevented the out-of-bounds access.
+BUG: KASAN: use-after-free in ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+Write of size 251 at addr ffff888074572f14 by task syz-executor335/5847
 
-Fixes: 2de451a329cf ("KVM: arm64: Add handler for MOPS exceptions")
-Cc: <stable@vger.kernel.org> # 6.12.x
-Cc: Kristina Martsenko <kristina.martsenko@arm.com>
-Cc: Will Deacon <will@kernel.org>
+CPU: 0 UID: 0 PID: 5847 Comm: syz-executor335 Not tainted 6.12.0-rc6-syzkaller-00318-ga9cda7c0ffed #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+ add_dirent_to_buf+0x3d9/0x750 fs/ext4/namei.c:2154
+ make_indexed_dir+0xf98/0x1600 fs/ext4/namei.c:2351
+ ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2455
+ ext4_add_nondir+0x8d/0x290 fs/ext4/namei.c:2796
+ ext4_symlink+0x920/0xb50 fs/ext4/namei.c:3431
+ vfs_symlink+0x137/0x2e0 fs/namei.c:4615
+ do_symlinkat+0x222/0x3a0 fs/namei.c:4641
+ __do_sys_symlink fs/namei.c:4662 [inline]
+ __se_sys_symlink fs/namei.c:4660 [inline]
+ __x64_sys_symlink+0x7a/0x90 fs/namei.c:4660
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+The following loop is located right above 'if' statement.
+
+for (i = count-1; i >= 0; i--) {
+	/* is more than half of this entry in 2nd half of the block? */
+	if (size + map[i].size/2 > blocksize/2)
+		break;
+	size += map[i].size;
+	move++;
+}
+
+'i' in this case could go down to -1, in which case sum of active entries
+wouldn't exceed half the block size, but previous behaviour would also do
+split in half if sum would exceed at the very last block, which in case of
+having too many long name files in a single block could lead to
+out-of-bounds access and following use-after-free.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Keir Fraser <keirf@google.com>
-Reviewed-by: Kristina Martšenko <kristina.martsenko@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250326110448.3792396-1-keirf@google.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 5872331b3d91 ("ext4: fix potential negative array index in do_split()")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250404082804.2567-3-a.sadovnikov@ispras.ru
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/traps.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/traps.h
-+++ b/arch/arm64/include/asm/traps.h
-@@ -109,10 +109,9 @@ static inline void arm64_mops_reset_regs
- 	int dstreg = ESR_ELx_MOPS_ISS_DESTREG(esr);
- 	int srcreg = ESR_ELx_MOPS_ISS_SRCREG(esr);
- 	int sizereg = ESR_ELx_MOPS_ISS_SIZEREG(esr);
--	unsigned long dst, src, size;
-+	unsigned long dst, size;
- 
- 	dst = regs->regs[dstreg];
--	src = regs->regs[srcreg];
- 	size = regs->regs[sizereg];
- 
- 	/*
-@@ -129,6 +128,7 @@ static inline void arm64_mops_reset_regs
- 		}
- 	} else {
- 		/* CPY* instruction */
-+		unsigned long src = regs->regs[srcreg];
- 		if (!(option_a ^ wrong_option)) {
- 			/* Format is from Option B */
- 			if (regs->pstate & PSR_N_BIT) {
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1995,7 +1995,7 @@ static struct ext4_dir_entry_2 *do_split
+ 	 * split it in half by count; each resulting block will have at least
+ 	 * half the space free.
+ 	 */
+-	if (i > 0)
++	if (i >= 0)
+ 		split = count - move;
+ 	else
+ 		split = count/2;
 
 
