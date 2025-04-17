@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C81C2566DF;
-	Thu, 17 Apr 2025 18:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B8A254AF0;
+	Thu, 17 Apr 2025 18:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915270; cv=none; b=tMiMlfxuZDrOO+Xzys7OzFz5bmQmnVT4tn+WOeUivwoUJVG9RaeT2+MwbLOsfOF+B6UzvzSpmf0V2hqN0556gBmZeSo+ap49+JjAobI7Wum8rbxcvUzQrM+ETk9BxzIo3EUIFvybsVKIXEVY4fJAiiSymcQL0ac7tFR56qs9bIk=
+	t=1744915273; cv=none; b=Tpa0Hq04gKuBL5kiUSaB08P1HSpDzVNQv0vkg/42gLv/1Fizb7IiWMuLnY9aX2zdncpucEgqOWymbV72WCv/LSLvfucZb3nVG1SSHA6E16u8DU2x+0t2T80RTMxrudQ18hIos0aLJfpr0ZrcRJxiiSout0i4eu4aHyjc7cypZM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915270; c=relaxed/simple;
-	bh=pEY2zQUq4pZo+pRfxcp1w2BGzAk2xSLeorBfqQFfLcg=;
+	s=arc-20240116; t=1744915273; c=relaxed/simple;
+	bh=rKoW00D4NBEEOYkxUCE4vnUn5yxrioEpk/o3/TB3uAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cC5pX4YNON+Z2bJsW8dKUMheQjjvAqKlToa2WTA784g3Uw8b2QBBUgjHGSCHVN46nryXBPo40i6Mdwm+w9m8vjRKeL62M/zLiq3zlIw6DW29LhXTN1SPGZjkbfaKp50hU5cjaNUuCBafwh54kW37fEPBwm84uwDpo9jMztT3yhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQoRjMw7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBaRfI2MOKJJYRelAmNFayCVhcV0WW3MF/l+8n3YdObZXDp7Z3jWjp+77WUKwN+YIiwMYHuVTfgrHDSCt+4kFppyg/O7KNzCIRYDEgr1RFKEA07tItR4z9CiFtR4/rizXuQn8WYIE9cWIFvQNxS6DXQT9oVkNmzEkkjqErDx6ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awdEebjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQoRjMw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC47EC4CEE7;
-	Thu, 17 Apr 2025 18:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awdEebjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A966C4CEE4;
+	Thu, 17 Apr 2025 18:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915270;
-	bh=pEY2zQUq4pZo+pRfxcp1w2BGzAk2xSLeorBfqQFfLcg=;
+	s=korg; t=1744915273;
+	bh=rKoW00D4NBEEOYkxUCE4vnUn5yxrioEpk/o3/TB3uAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQoRjMw7rheQ/ivb94CJkvCG2X/O1PlHh9UIXzvvFNsvyU90DbqK8PkaaK+c7ZEbc
-	 prElXxNQ5eHWE9Cf+VnnOy16roE2rOEEZvA6v4DkMhm3vKhox0DFlVXOw456ab86ko
-	 MG9dObU9QikFfJNgOHmng/3Ks997mvPCKU620D0c=
+	b=awdEebjjlmpEsa6sp62s+7Q3BzcI8BCogxDTARxRHcWlPwT3wddQ/1gkAAkp/5X8C
+	 0nA2MYbqrJ7ylG9PXuo9Ii32LfOZ8FgslzklSs7cz4/JCfQAMbsR/LB5qlvKnslucY
+	 qID6CDLwOdWLNy6fKVdrRpReX8bcldTwBLFeHaVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	xen-devel@lists.xenproject.org,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/393] ASoC: fsl_audmix: register card device depends on dais property
-Date: Thu, 17 Apr 2025 19:48:03 +0200
-Message-ID: <20250417175110.571090146@linuxfoundation.org>
+Subject: [PATCH 6.12 057/393] xen/mcelog: Add __nonstring annotations for unterminated strings
+Date: Thu, 17 Apr 2025 19:47:46 +0200
+Message-ID: <20250417175109.882985709@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,51 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 294a60e5e9830045c161181286d44ce669f88833 ]
+[ Upstream commit 1c3dfc7c6b0f551fdca3f7c1f1e4c73be8adb17d ]
 
-In order to make the audmix device linked by audio graph card, make
-'dais' property to be optional.
+When a character array without a terminating NUL character has a static
+initializer, GCC 15's -Wunterminated-string-initialization will only
+warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
+with __nonstring to and correctly identify the char array as "not a C
+string" and thereby eliminate the warning.
 
-If 'dais' property exists, then register the imx-audmix card driver.
-otherwise, it should be linked by audio graph card.
-
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250226100508.2352568-5-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117178 [1]
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Cc: xen-devel@lists.xenproject.org
+Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250310222234.work.473-kees@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_audmix.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ include/xen/interface/xen-mca.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
-index 3cd9a66b70a15..7981d598ba139 100644
---- a/sound/soc/fsl/fsl_audmix.c
-+++ b/sound/soc/fsl/fsl_audmix.c
-@@ -488,11 +488,17 @@ static int fsl_audmix_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
- 	}
+diff --git a/include/xen/interface/xen-mca.h b/include/xen/interface/xen-mca.h
+index 464aa6b3a5f92..1c9afbe8cc260 100644
+--- a/include/xen/interface/xen-mca.h
++++ b/include/xen/interface/xen-mca.h
+@@ -372,7 +372,7 @@ struct xen_mce {
+ #define XEN_MCE_LOG_LEN 32
  
--	priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
--	if (IS_ERR(priv->pdev)) {
--		ret = PTR_ERR(priv->pdev);
--		dev_err(dev, "failed to register platform: %d\n", ret);
--		goto err_disable_pm;
-+	/*
-+	 * If dais property exist, then register the imx-audmix card driver.
-+	 * otherwise, it should be linked by audio graph card.
-+	 */
-+	if (of_find_property(pdev->dev.of_node, "dais", NULL)) {
-+		priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
-+		if (IS_ERR(priv->pdev)) {
-+			ret = PTR_ERR(priv->pdev);
-+			dev_err(dev, "failed to register platform: %d\n", ret);
-+			goto err_disable_pm;
-+		}
- 	}
- 
- 	return 0;
+ struct xen_mce_log {
+-	char signature[12]; /* "MACHINECHECK" */
++	char signature[12] __nonstring; /* "MACHINECHECK" */
+ 	unsigned len;	    /* = XEN_MCE_LOG_LEN */
+ 	unsigned next;
+ 	unsigned flags;
 -- 
 2.39.5
 
