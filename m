@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A307425525C;
-	Thu, 17 Apr 2025 18:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB9225335A;
+	Thu, 17 Apr 2025 18:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915359; cv=none; b=ZmUMIEL20oDGh9QHC2chuiA9fDmrzT4RHnBlS4rD93usNlrqN4/odJ0aeS0Nbq58KRQqjGO1vSTBZw/0LiEquIDyRWuphEJpDTlwtGxLh/N7Jh/MCGryH9dCeOtYuFqda0jbsJImVPSW9N3MSfkcz3dsby41J0pIiDWqxYiuBVQ=
+	t=1744915363; cv=none; b=HKPLXHbp/q7RjSTQk42TiWfubNVEANbrlCHm2QjpQA6GlRyC8iMnfF4uwyeK1b/NcE8P4xQ0yyChaDqVulpEXsXl6tMUthKEWAjm2i58h3j8qRp4qjhHp8zacz9Fh0azvErmL7M24WUlaD6Uo1W96mZc/7GkxgN30iyW1pnKd7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915359; c=relaxed/simple;
-	bh=XoqPcdJZqJ1ID3Q8bxs4QW8JcDBz+qeMCkDaPpiOPGo=;
+	s=arc-20240116; t=1744915363; c=relaxed/simple;
+	bh=vYH13eubK0GQJhAA4AoKWCozRTz1Rf/8WkIZZTcBXdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9USBHoFEQPq+8dCQYnGQ0oAYo+tDs39npxgBHBHpwTo6JbDFwie1N/XdKDF1DwLFlqeGQ/xm2JIFmSiQqXpw8gYNtxDOQtbB98Ar7W1QGlw45Degx0rulaHLUMacsEDaWb3rhW5DCCCMAmBcSQjx0RyLhGijUkNCmemwQ/JW8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrEG8u6G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bWbzw5oJRKRts3BhMQA/zrg20djLRlFhrL+PPcVzxV7WICAT4W9q2pfyb/+yguHss2MfPcEqXqlYjm4AWgCpQ+kY3Q44tej5JvQ4HnZ/+f0+5Tw+PPZ9W7HOUC8CNYJ1Y87qUycr1h4+CqqiDedkjzCU2UCG+Oow9v0j8Bo+kcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOkdDvos; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrEG8u6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CECC4CEE4;
-	Thu, 17 Apr 2025 18:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOkdDvos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BEA2C4CEE4;
+	Thu, 17 Apr 2025 18:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915359;
-	bh=XoqPcdJZqJ1ID3Q8bxs4QW8JcDBz+qeMCkDaPpiOPGo=;
+	s=korg; t=1744915362;
+	bh=vYH13eubK0GQJhAA4AoKWCozRTz1Rf/8WkIZZTcBXdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrEG8u6GQEBFbgPumMeUhA+1rE1QQfYLCFMS8c8FglUHgHic8PJcOJ3TTeoC9iy9N
-	 g1KptrmE3uUhy1kLcNEoH7WdSrdSVx2dzler52e5rkkaNYT0OHfS5EeNPtoi507TVw
-	 Bimn9WL9KVtsVSGzfbj1aU27x3+ECK/7ysVayPeA=
+	b=IOkdDvosDMhQmxNVXKmMsz/egMyMmcnpk9Q1KqpoRoV6WKyVdlWebNPZPs0hINB92
+	 +5D4Gjvzn2JVUqjtxzLGZ0n3L2NJAGCc5AfGj2/6SOFmbre7p6Tv2rcJ08sXyif4Ys
+	 d3cWbyAAWVzztSbAr9AA1bxIwbuWwaTBN+SWbg1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Pemberton <lists@philpem.me.uk>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Birger Koblitz <mail@birger-koblitz.de>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/393] ata: libata-eh: Do not use ATAPI DMA for a device limited to PIO mode
-Date: Thu, 17 Apr 2025 19:48:32 +0200
-Message-ID: <20250417175111.738853898@linuxfoundation.org>
+Subject: [PATCH 6.12 104/393] net: sfp: add quirk for 2.5G OEM BX SFP
+Date: Thu, 17 Apr 2025 19:48:33 +0200
+Message-ID: <20250417175111.777252944@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,55 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Birger Koblitz <mail@birger-koblitz.de>
 
-[ Upstream commit 91ec84f8eaddbc93d7c62e363d68aeb7b89879c7 ]
+[ Upstream commit a85035561025063125f81090e4f2bd65da368c83 ]
 
-atapi_eh_request_sense() currently uses ATAPI DMA if the SATA controller
-has ATA_FLAG_PIO_DMA (PIO cmds via DMA) set.
+The OEM SFP-2.5G-BX10-D/U SFP module pair is meant to operate with
+2500Base-X. However, in their EEPROM they incorrectly specify:
+Transceiver codes   : 0x00 0x12 0x00 0x00 0x12 0x00 0x01 0x05 0x00
+BR, Nominal         : 2500MBd
 
-However, ATA_FLAG_PIO_DMA is a flag that can be set by a low-level driver
-on a port at initialization time, before any devices are scanned.
+Use sfp_quirk_2500basex for this module to allow 2500Base-X mode anyway.
+Tested on BananaPi R3.
 
-If a controller detects a connected device that only supports PIO, we set
-the flag ATA_DFLAG_PIO.
-
-Modify atapi_eh_request_sense() to not use ATAPI DMA if the connected
-device only supports PIO.
-
-Reported-by: Philip Pemberton <lists@philpem.me.uk>
-Closes: https://lore.kernel.org/linux-ide/c6722ee8-5e21-4169-af59-cbbae9edc02f@philpem.me.uk/
-Tested-by: Philip Pemberton <lists@philpem.me.uk>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250221015422.20687-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Birger Koblitz <mail@birger-koblitz.de>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/20250218-b4-lkmsub-v1-1-1e51dcabed90@birger-koblitz.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 3b303d4ae37a0..16cd676eae1f9 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -1542,8 +1542,15 @@ unsigned int atapi_eh_request_sense(struct ata_device *dev,
- 	tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	tf.command = ATA_CMD_PACKET;
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index dcec92625cf65..9a5de80acd2f7 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -515,6 +515,8 @@ static const struct sfp_quirk sfp_quirks[] = {
  
--	/* is it pointless to prefer PIO for "safety reasons"? */
--	if (ap->flags & ATA_FLAG_PIO_DMA) {
-+	/*
-+	 * Do not use DMA if the connected device only supports PIO, even if the
-+	 * port prefers PIO commands via DMA.
-+	 *
-+	 * Ideally, we should call atapi_check_dma() to check if it is safe for
-+	 * the LLD to use DMA for REQUEST_SENSE, but we don't have a qc.
-+	 * Since we can't check the command, perhaps we should only use pio?
-+	 */
-+	if ((ap->flags & ATA_FLAG_PIO_DMA) && !(dev->flags & ATA_DFLAG_PIO)) {
- 		tf.protocol = ATAPI_PROT_DMA;
- 		tf.feature |= ATAPI_PKT_DMA;
- 	} else {
+ 	SFP_QUIRK_F("OEM", "SFP-10G-T", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_M("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
++	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
++	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
+ 	SFP_QUIRK_F("OEM", "RTSFP-10", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_F("OEM", "RTSFP-10G", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_F("Turris", "RTSFP-2.5G", sfp_fixup_rollball),
 -- 
 2.39.5
 
