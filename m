@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38261EB1BF;
-	Thu, 17 Apr 2025 18:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA72256C7C;
+	Thu, 17 Apr 2025 18:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912989; cv=none; b=YpQ51sJnd7oAA6yVfMrI83txA/vM0ok9YS0A81irJ4HbVCZ3ViZ7xs12msIIghamMdbZBPCQ38vWotGnFXEo+JuWSRTV+7irzZQbEiL/vOjgaNgLEDgZsis0YvZnNM8/5prLLfRaOdqO6ZPlePhF+lMwdFLLUL5CNtjDFVQZ7FQ=
+	t=1744912992; cv=none; b=XqVCvYjUGFcKRUMRASlMQPY/SvRXXqqhoQPlrXUDp5ynxqgSHssEjr24HDkUBeCCU9KyjozXv+HB57rkWkGrgYOpfJynT2ZohR0rQm63nGhwKkMndj7Fvdfok7sc5vlQRSoIQGRh0k6pKCNmwExh06j8rW5mHh+5+qpIp+JuMyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912989; c=relaxed/simple;
-	bh=BqM6Mf1B/9MIWRzftWL9Fypkhfj7ipYM56DVDYANryc=;
+	s=arc-20240116; t=1744912992; c=relaxed/simple;
+	bh=XqFWkeWV89ggUUrkRY8eR39/tvLqCA3SlmMZy8PLOAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RHvOdObEXPqnLfLiiH5Sn1I4o0IN0NfHRwNcAaRjW2QOgSeviA18k3o7FBJPEerC0jyuVklua1kK70dhCb64ZIchYsgQ3Vb51tNU3VYV0fo5Ai68NXE7kOIQuxhUMFd/pNnRZyu3UdRMDyhCMbj+bLl9hPPiRSGhwW5ELo7ysNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWA+ZCm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J2i7EVrjcLe1G8fjU5+YKjcyCxt3DRbBHky1ynDYJcpLTtMjcAlL93XrUYJSKVZ2hDSNoXjcZjm4eO1aeQpuq3doSbFMDk5Lk3mcQxgBPCegfjgciGT5SjPsBJg9CpsTDlscnTe8lvyKWule5YS6olSRdr2VdRZnLr6cpEQwD/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfBMy91s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWA+ZCm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCE0C4CEE4;
-	Thu, 17 Apr 2025 18:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfBMy91s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E61C4CEE4;
+	Thu, 17 Apr 2025 18:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912989;
-	bh=BqM6Mf1B/9MIWRzftWL9Fypkhfj7ipYM56DVDYANryc=;
+	s=korg; t=1744912992;
+	bh=XqFWkeWV89ggUUrkRY8eR39/tvLqCA3SlmMZy8PLOAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWA+ZCm/LbsSFp40ANWsCN+Lfj1SeV6Y6GMSVncEYdtfHwvuXr3fU3Elu+eO+eCET
-	 9Yil9F4oKjq5EMr+zlLjLiLEkaAjR+8/YXTrZ9cPaIw3wFQ8neVvCW+NhvjsOeHwv9
-	 ChQN1l/xkz6RZhIttaPRW76MIYTLPn/p9MadIcys=
+	b=CfBMy91sao0B6v170VPi4uWzzGAQMP0ljE0Vj1DTH7RLWKsG4o2YsMfoBA7OIsoRV
+	 cksQNVj2RjgQBWc0RBLX5FpUQaiFGS/av1kzZjIjdKYmSShdZGSAnJ5uC8d1EwjScf
+	 SBfuetyEl1hsoh553UslugrUfqCgvIqaGrf+RO/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 190/449] pwm: fsl-ftm: Handle clk_get_rate() returning 0
-Date: Thu, 17 Apr 2025 19:47:58 +0200
-Message-ID: <20250417175125.620655780@linuxfoundation.org>
+Subject: [PATCH 6.14 191/449] pwm: stm32: Search an appropriate duty_cycle if period cannot be modified
+Date: Thu, 17 Apr 2025 19:47:59 +0200
+Message-ID: <20250417175125.662121646@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,46 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 928446a5302eee30ebb32075c0db5dda5a138fb7 ]
+[ Upstream commit fda6e0034e9da64e1cec31f4539b6c7abd9ed8be ]
 
-Considering that the driver doesn't enable the used clocks (and also
-that clk_get_rate() returns 0 if CONFIG_HAVE_CLK is unset) better check
-the return value of clk_get_rate() for being non-zero before dividing by
-it.
+If another channel is already enabled period must not be modified. If
+the requested period is smaller than this unchangable period the driver
+is still supposed to search a duty_cycle according to the usual rounding
+rules.
 
-Fixes: 3479bbd1e1f8 ("pwm: fsl-ftm: More relaxed permissions for updating period")
+So don't set the duty_cycle to 0 but continue to determine an
+appropriate value for ccr.
+
+Fixes: deaba9cff809 ("pwm: stm32: Implementation of the waveform callbacks")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/b68351a51017035651bc62ad3146afcb706874f0.1743501688.git.u.kleine-koenig@baylibre.com
+Link: https://lore.kernel.org/r/f0c50df31daa3d6069bfa8d7fb3e71fae241b026.1743844730.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-fsl-ftm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pwm/pwm-stm32.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pwm/pwm-fsl-ftm.c b/drivers/pwm/pwm-fsl-ftm.c
-index 2510c10ca4730..c45a5fca4cbbd 100644
---- a/drivers/pwm/pwm-fsl-ftm.c
-+++ b/drivers/pwm/pwm-fsl-ftm.c
-@@ -118,6 +118,9 @@ static unsigned int fsl_pwm_ticks_to_ns(struct fsl_pwm_chip *fpc,
- 	unsigned long long exval;
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index a59de4de18b6e..ec2c05c9ee7a6 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -103,22 +103,16 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
+ 		if (ret)
+ 			goto out;
  
- 	rate = clk_get_rate(fpc->clk[fpc->period.clk_select]);
-+	if (rate >> fpc->period.clk_ps == 0)
-+		return 0;
-+
- 	exval = ticks;
- 	exval *= 1000000000UL;
- 	do_div(exval, rate >> fpc->period.clk_ps);
-@@ -190,6 +193,9 @@ static unsigned int fsl_pwm_calculate_duty(struct fsl_pwm_chip *fpc,
- 	unsigned int period = fpc->period.mod_period + 1;
- 	unsigned int period_ns = fsl_pwm_ticks_to_ns(fpc, period);
+-		/*
+-		 * calculate the best value for ARR for the given PSC, refuse if
+-		 * the resulting period gets bigger than the requested one.
+-		 */
+ 		arr = mul_u64_u64_div_u64(wf->period_length_ns, rate,
+ 					  (u64)NSEC_PER_SEC * (wfhw->psc + 1));
+ 		if (arr <= wfhw->arr) {
+ 			/*
+-			 * requested period is small than the currently
++			 * requested period is smaller than the currently
+ 			 * configured and unchangable period, report back the smallest
+-			 * possible period, i.e. the current state; Initialize
+-			 * ccr to anything valid.
++			 * possible period, i.e. the current state and return 1
++			 * to indicate the wrong rounding direction.
+ 			 */
+-			wfhw->ccr = 0;
+ 			ret = 1;
+-			goto out;
+ 		}
  
-+	if (!period_ns)
-+		return 0;
-+
- 	duty = (unsigned long long)duty_ns * period;
- 	do_div(duty, period_ns);
- 
+ 	} else {
 -- 
 2.39.5
 
