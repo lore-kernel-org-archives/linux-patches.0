@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954A25525F;
-	Thu, 17 Apr 2025 18:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC392550DD;
+	Thu, 17 Apr 2025 18:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913210; cv=none; b=mNWKFds9ympcD0kiRpwI5oH/BXenaeGpyAw6kvF3+MdfGS898wQJaT8va8R54vdoYYoqD2ITm8ICF4narAu2OQOsbduDMMNLl/Wllx3hV5ceXfvvqV4/7WhQKnMXvnUpPfJ6e9ns71Q6SyFYire1F9OxPbMYvIYG2hpoHWwwMrg=
+	t=1744913213; cv=none; b=YBKr2WT+SSKkiakezUoKpIq3k/1tVmsI2w2pzHdMBbVTbkiAQfwh5GYuS/jNVYfzgvz1F8nF9OwzpV+bY1gnk4jE52Fbzi5AMo8Y3kWO+x5ylHPrfus7IcjZZFpLchbZAoj6YaJZdMiO+0maINKiGnvAo5AJun69m3VWAfLPlKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913210; c=relaxed/simple;
-	bh=z8Mn0wh32mXpSe7qxKl6g9MuvRWwkNQGz4b7AQ9h8iU=;
+	s=arc-20240116; t=1744913213; c=relaxed/simple;
+	bh=CFYth2MKRUYC4MM+qZ8PFrOLeDWmZ8qR9YeWB5rSnTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApNF4EInzU77PGkenuSyl6HXHhJMKGPSpn8sQ097aYbbP4ar3qzgUFQRxOehWSliPpMAg69LRjq8VlYXM+dvjx8gF7vAGeyK5F8cWS9igyLJqXs1A7GiJJqAHwPhbelSu5R68oaQ6UXVuQpkrKt/5FkbVC1LasDDVD+B4dZ9EoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBfqOcx3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCzbVzU1YrpFBGw/dw6wzkgFm9WCX3MWGADeJ2jfFI7srUN/rPz4o65fscvl7I+yppYS8uMU0x03CwsFSb6A7qsBWQHu1UfMB+AxTS22Q+O/H8tChYY0ssWO2pa8XVhTTLARnkRWw1Yj0GsWtOdYj6ICbTlicPEA7SREj/rKuxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzXVFM6c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBfqOcx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2FCC4CEEA;
-	Thu, 17 Apr 2025 18:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzXVFM6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B30C4CEE4;
+	Thu, 17 Apr 2025 18:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913210;
-	bh=z8Mn0wh32mXpSe7qxKl6g9MuvRWwkNQGz4b7AQ9h8iU=;
+	s=korg; t=1744913213;
+	bh=CFYth2MKRUYC4MM+qZ8PFrOLeDWmZ8qR9YeWB5rSnTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBfqOcx3gfR8NQNns6m5fL6VUmoKk4UNpcKIGZRNyamt7fOBjEoancHkjx047cAML
-	 Z65vGWHIC2QZfNvSWDDHeLs+I3lJiwamIEP+qTdcDnmmEdNPeiBinQZshRaRp/OUyb
-	 nfUSXd3AWvJW7i59azWgkIFk68dAtF8K1Hd2HPqk=
+	b=rzXVFM6c8RYM6UgqWsbxPk7Tplgqlwu8euxMbk2SsiJqC07Jvr+5Ptc3wXoWmA0Rn
+	 eVep6QVqhrSKuWxqCkrvfcasD6fsfOM4aJjczypQfGuFHvZ2Q2yQc3/meUrFUmUguV
+	 W/GFAEgUjPZS1uf8ehimwNrWGOSVhSvaSGKHUnGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Scott Bauer <sbauer@quicinc.com>,
 	Douglas Anderson <dianders@chromium.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.14 233/449] arm64: cputype: Add MIDR_CORTEX_A76AE
-Date: Thu, 17 Apr 2025 19:48:41 +0200
-Message-ID: <20250417175127.373833341@linuxfoundation.org>
+Subject: [PATCH 6.14 234/449] arm64: errata: Add QCOM_KRYO_4XX_GOLD to the spectre_bhb_k24_list
+Date: Thu, 17 Apr 2025 19:48:42 +0200
+Message-ID: <20250417175127.414873100@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,37 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-commit a9b5bd81b294d30a747edd125e9f6aef2def7c79 upstream.
+commit ed1ce841245d8febe3badf51c57e81c3619d0a1d upstream.
 
->From the TRM, MIDR_CORTEX_A76AE has a partnum of 0xDOE and an
-implementor of 0x41 (ARM). Add the values.
+Qualcomm Kryo 400-series Gold cores have a derivative of an ARM Cortex
+A76 in them. Since A76 needs Spectre mitigation via looping then the
+Kyro 400-series Gold cores also need Spectre mitigation via looping.
 
-Cc: stable@vger.kernel.org # dependency of the next fix in the series
+Qualcomm has confirmed that the proper "k" value for Kryo 400-series
+Gold cores is 24.
+
+Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+Cc: stable@vger.kernel.org
+Cc: Scott Bauer <sbauer@quicinc.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250107120555.v4.4.I151f3b7ee323bcc3082179b8c60c3cd03308aa94@changeid
+Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
+Link: https://lore.kernel.org/r/20250107120555.v4.1.Ie4ef54abe02e7eb0eee50f830575719bf23bda48@changeid
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kernel/proton-pack.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -75,6 +75,7 @@
- #define ARM_CPU_PART_CORTEX_A76		0xD0B
- #define ARM_CPU_PART_NEOVERSE_N1	0xD0C
- #define ARM_CPU_PART_CORTEX_A77		0xD0D
-+#define ARM_CPU_PART_CORTEX_A76AE	0xD0E
- #define ARM_CPU_PART_NEOVERSE_V1	0xD40
- #define ARM_CPU_PART_CORTEX_A78		0xD41
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
-@@ -160,6 +161,7 @@
- #define MIDR_CORTEX_A76	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A76)
- #define MIDR_NEOVERSE_N1 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N1)
- #define MIDR_CORTEX_A77	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A77)
-+#define MIDR_CORTEX_A76AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A76AE)
- #define MIDR_NEOVERSE_V1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V1)
- #define MIDR_CORTEX_A78	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78)
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -866,6 +866,7 @@ u8 spectre_bhb_loop_affected(int scope)
+ 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+ 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
++			MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+ 			{},
+ 		};
+ 		static const struct midr_range spectre_bhb_k11_list[] = {
 
 
