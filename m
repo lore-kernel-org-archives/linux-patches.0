@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7238E1E1DEF;
-	Thu, 17 Apr 2025 18:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFF41DE3A8;
+	Thu, 17 Apr 2025 18:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913074; cv=none; b=tEJ4MduryaLARp5CevB0+POLNX5XnkfK7VDkzUNbnbe2mA6UgPJQO4+3VxY0RNJDBL+Ky9VfstJeI8EXtkdVX3YQa9E5U2ExdtpZDL7DcYDSh3TIfONrGq6sNOtA44NO5/V6/b5TUwkjTF9U3HicXLMFyXapCNiaQCnC3bi0dQo=
+	t=1744913077; cv=none; b=GkSt76Z6W85RoJlQk5kz/PHPfRPBIla+m07boXDfeRyzLGGGCaRHJZ91klga6e4SvjdFTzKycJMk28VNzaEKShYpNYVLgEEIGqPZP+12SSYbFPLhdyY9axJh9dgoHDquGPL1/5nxroyQ5hhHHCuu5wKesq2IOLRL9pC1yOmhwH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913074; c=relaxed/simple;
-	bh=5cxbJ4W1YK349dp9pAIoZ9+dWl22Yhn7u7K19GwGS5w=;
+	s=arc-20240116; t=1744913077; c=relaxed/simple;
+	bh=vrSo6axG+StzuQxNRIccw2NbiDcIonr1WJuT1P76uNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1a33HZE+1oTC7DnShWMzCTjrxr3sIpw6LRB+qapMQhJUnPcR2Uw2dYUi6iu57dV5TbH1VBmwN16x+c/h5YN22SkFzMOSvCr8gyaUW5WCEzREyckjW/u3vHCrN0QwgTQ0/xZ0h19M1y9HEtjMuzqPyZBvUl//e7dtFEcV7RmjD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkc8WfNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9XvO3NeBYsC/cW0Z3Bkj648anrs3LgM4iXPmaoilp7LQkjsevJVaFuk4z/3cg/GYDvrGT8GDwnXaQ55HX2Jr1YPFh2/qstl/DE+UjaWU9PeDTtAj5c5P+t1oIwtoWAYgBh/E3xZrbKWHkn7BO8Lq8JrPVrzG54GxH9mau7kPCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg+JKk7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkc8WfNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FA6C4CEE4;
-	Thu, 17 Apr 2025 18:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg+JKk7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC276C4CEE7;
+	Thu, 17 Apr 2025 18:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913074;
-	bh=5cxbJ4W1YK349dp9pAIoZ9+dWl22Yhn7u7K19GwGS5w=;
+	s=korg; t=1744913077;
+	bh=vrSo6axG+StzuQxNRIccw2NbiDcIonr1WJuT1P76uNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkc8WfNEs+8yI69gA6mEn8AySXDVZyoZ9PY3Vkf4PnB97P5U/FiqdQmKjtCaRw/Bo
-	 LIXKrw6IhY44lvEn/dTG6fO27xI13y84wsUHqe5l/BVk4r9nAOqaowpwRDGFQNulVZ
-	 72zlkhdgpt1omd6sDaBcn48dRq9IseMxgS+QdiIU=
+	b=dg+JKk7r7qFoUz3frQp9NwQAas3tUyenRYHTIRbgUugtcc17vQ6fszQsftgF5XCWY
+	 DM8lXxL5UnHtenlAepfcyJAvkR1i5Riw1S63PGq3/T7/omHsssI96d+WGJHLCbzNcf
+	 o5OBu5SYVaL/iPZE/m5CjxgOfTJjpXomxtDAQL9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 218/449] dt-bindings: media: st,stmipid02: correct lane-polarities maxItems
-Date: Thu, 17 Apr 2025 19:48:26 +0200
-Message-ID: <20250417175126.747244317@linuxfoundation.org>
+Subject: [PATCH 6.14 219/449] media: mediatek: vcodec: Fix a resource leak related to the scp device in FW initialization
+Date: Thu, 17 Apr 2025 19:48:27 +0200
+Message-ID: <20250417175126.785873661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,34 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit 3a544a39e0a4c492e3026dfbed018321d2bd6caa upstream.
+commit 4936cd5817af35d23e4d283f48fa59a18ef481e4 upstream.
 
-The MIPID02 can use up to 2 data lanes which leads to having a maximum
-item number of 3 for the lane-polarities since this also contains the
-clock lane.
+On Mediatek devices with a system companion processor (SCP) the mtk_scp
+structure has to be removed explicitly to avoid a resource leak.
+Free the structure in case the allocation of the firmware structure fails
+during the firmware initialization.
 
-CC: stable@vger.kernel.org
-Fixes: c2741cbe7f8a ("dt-bindings: media: st,stmipid02: Convert the text bindings to YAML")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 53dbe0850444 ("media: mtk-vcodec: potential null pointer deference in SCP")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml
-+++ b/Documentation/devicetree/bindings/media/i2c/st,st-mipid02.yaml
-@@ -71,7 +71,7 @@ properties:
-                 description:
-                   Any lane can be inverted or not.
-                 minItems: 1
--                maxItems: 2
-+                maxItems: 3
+--- a/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c
++++ b/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c
+@@ -79,8 +79,11 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_
+ 	}
  
-             required:
-               - data-lanes
+ 	fw = devm_kzalloc(&plat_dev->dev, sizeof(*fw), GFP_KERNEL);
+-	if (!fw)
++	if (!fw) {
++		scp_put(scp);
+ 		return ERR_PTR(-ENOMEM);
++	}
++
+ 	fw->type = SCP;
+ 	fw->ops = &mtk_vcodec_rproc_msg;
+ 	fw->scp = scp;
 
 
