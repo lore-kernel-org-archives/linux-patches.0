@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8153225A2C8;
-	Thu, 17 Apr 2025 18:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C888259C98;
+	Thu, 17 Apr 2025 18:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914620; cv=none; b=u3Rn9ohSW5Xdjt7LIiEVGwt/44kN3I1LnS3q9YmEJU3lo/5PHH2ORLyWJKKfEFP9050LpSckNwRAiMkZ1LSPG3ufV1e0nPTrjtxn/31W8uUjx5Jm9I5QCUoKm+l3wThFw8s3/7dkhr9o8IcuoUlMxQwifR+0eXrFXHT1Z7dLF2w=
+	t=1744914623; cv=none; b=pCJWj88mbNwi3KfKjjUjmiEWnYCjUpc7RzeLpEhx9TVtrWS+5nlLlY2fAH5qbWl0trrm5KMBvL9z5Rb1wyE4iXxl6SgMP9OU73lWQTedy6lvOCWhy7Ni/b3IM3xdSCeXWineEyVXmrQvYT0if3piGd1VYTP++NCZZ9a848hFdAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914620; c=relaxed/simple;
-	bh=nKmSAOGinwQ5A0z1a0xOiVt1kqvpubVJGuMi2H2jCU0=;
+	s=arc-20240116; t=1744914623; c=relaxed/simple;
+	bh=Qh+jjpDVNXDjBiziJAu+HW2HBVNbHJg27LUscp3R1Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUtbIW1yfVBFdFvC8T63RaFsHGciPM8D1BApr0QNbZllKhOPOtmrR8N6arzwHYWJuXc4x6GI4m19kIKjShtvrNvGMj4c4KyScXyYoglrQgxJFh4U5RvzoNv0cIVQFwnhgyah2Ngjjx37lZZ+QipgL5Rp1D8Y+d9uUjDg6f0aCXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmAtB7VF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYvNc1iiisWE5Suo+76OWjtLYFwJwJMKuFsI+ORAEO3CX0fWsnAQZZDuC5sMT+MehH6jOdmkH5F3ZH+fQRHp5MRYXUyZqUXY8EPqhaR2wp61h11Lw6wf0p634tvgni385eH3dMKOYtIGKD8XeRjZ0NFvyUvIMSc1Xe9pj7EuZtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZoxKlr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmAtB7VF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93446C4CEE4;
-	Thu, 17 Apr 2025 18:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZoxKlr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996F4C4CEE4;
+	Thu, 17 Apr 2025 18:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914620;
-	bh=nKmSAOGinwQ5A0z1a0xOiVt1kqvpubVJGuMi2H2jCU0=;
+	s=korg; t=1744914623;
+	bh=Qh+jjpDVNXDjBiziJAu+HW2HBVNbHJg27LUscp3R1Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmAtB7VFG/+Yv/7FSciVFvvAaYCJOxBEi+FzS3W78K4UfcKwHH2DPRmTHIN4SHFoZ
-	 0G/5R50oQ26a7YoZKLUPP7pGGcc1fEKKEeYSzoUTnU2/SfMxWewZHgGfmGo3bSWY3h
-	 hM9fG0DEwDDkNRCqYvsHx3Isr9qDoAx+BQmBl1KM=
+	b=pZoxKlr1HxCEU2928qp33YD5mU/LxtTbHTYJn1/Vn8xn+C82mAP4RQlxb/R4he4J8
+	 A4jQ2IrmBD3TSFjuitu/vDxlrdxZNZCLIZ8j0cM3E5g3SUCp2+fiFUS6WtPRehejUh
+	 Y5U5onknp4L7K9GDSn67quRL8KuhuNixRhlD+c+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.13 245/414] irqchip/renesas-rzv2h: Fix wrong variable usage in rzv2h_tint_set_type()
-Date: Thu, 17 Apr 2025 19:50:03 +0200
-Message-ID: <20250417175121.277117037@linuxfoundation.org>
+	Joshua Washington <joshwash@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.13 246/414] gve: unlink old napi only if page pool exists
+Date: Thu, 17 Apr 2025 19:50:04 +0200
+Message-ID: <20250417175121.318699462@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,42 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Harshitha Ramamurthy <hramamurthy@google.com>
 
-commit 72310650788ad3d3afe3810735656dd291fea885 upstream.
+commit 81273eb87af86d4a43244b553762348e364b2df7 upstream.
 
-The variable tssel_n is used for selecting TINT source and titsel_n for
-setting the interrupt type. The variable titsel_n is wrongly used for
-enabling the TINT interrupt in rzv2h_tint_set_type(). Fix this issue by
-using the correct variable tssel_n.
+Commit de70981f295e ("gve: unlink old napi when stopping a queue using
+queue API") unlinks the old napi when stopping a queue. But this breaks
+QPL mode of the driver which does not use page pool. Fix this by checking
+that there's a page pool associated with the ring.
 
-While at it, move the tien variable assignment near to tssr.
-
-Fixes: 0d7605e75ac2 ("irqchip: Add RZ/V2H(P) Interrupt Control Unit (ICU) driver")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250224131253.134199-3-biju.das.jz@bp.renesas.com
-Closes: https://lore.kernel.org/CAMuHMdU3xJpz-jh=j7t4JreBat2of2ksP_OR3+nKAoZBr4pSxg@mail.gmail.com
+Fixes: de70981f295e ("gve: unlink old napi when stopping a queue using queue API")
+Reviewed-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250317214141.286854-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-renesas-rzv2h.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-renesas-rzv2h.c
-+++ b/drivers/irqchip/irq-renesas-rzv2h.c
-@@ -301,10 +301,10 @@ static int rzv2h_tint_set_type(struct ir
+diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+index f0674a443567..b5be2c18858a 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -114,7 +114,8 @@ void gve_rx_stop_ring_dqo(struct gve_priv *priv, int idx)
+ 	if (!gve_rx_was_added_to_block(priv, idx))
+ 		return;
  
- 	tssr_k = ICU_TSSR_K(tint_nr);
- 	tssel_n = ICU_TSSR_TSSEL_N(tint_nr);
-+	tien = ICU_TSSR_TIEN(tssel_n);
- 
- 	titsr_k = ICU_TITSR_K(tint_nr);
- 	titsel_n = ICU_TITSR_TITSEL_N(tint_nr);
--	tien = ICU_TSSR_TIEN(titsel_n);
- 
- 	guard(raw_spinlock)(&priv->lock);
- 
+-	page_pool_disable_direct_recycling(rx->dqo.page_pool);
++	if (rx->dqo.page_pool)
++		page_pool_disable_direct_recycling(rx->dqo.page_pool);
+ 	gve_remove_napi(priv, ntfy_idx);
+ 	gve_rx_remove_from_block(priv, idx);
+ 	gve_rx_reset_ring_dqo(priv, idx);
+-- 
+2.49.0
+
 
 
