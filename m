@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85617256C96;
-	Thu, 17 Apr 2025 18:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB5E2566F7;
+	Thu, 17 Apr 2025 18:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915302; cv=none; b=Xcz2ikAkNSJtihgrrK+Mhs65r2pq5UdVqKik6EpQFBGH8kuQKz7dUbLT/qcStkBN+BY/Y/UR0Nol0f12lAmoaro88tfMIgNtdCZ3oXE8YhJnyByfM+qBpnIt6Fs6FICrQ6TOHFjY/Or4x6fSDqvF7LRN0UdgK36JgBdvhHMgSv4=
+	t=1744915305; cv=none; b=T+nzDuA/dy7kj0YXCjmUgrNa48UE37GxEKWZnHERYWrDzTTqgos19z7Sf3+MMx1pySUz7F+HpU7/yV9wD40Od7Ljk8yBAU7o/6Vq0BQlI2W5VFRzbgGQ0c1umbP3qsjZ8ZD8H7qVrtohVCUDEa0/QH6tv7JRm2GYru4+27JziiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915302; c=relaxed/simple;
-	bh=tlfAP6qrT8R03NvWrNTq/vs7j5fZZvoPGfqBrvd8mZs=;
+	s=arc-20240116; t=1744915305; c=relaxed/simple;
+	bh=r9uKmoj5HvGkWQHRAEikIhT+mEv1DaErW0v73I4QXKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzi+VDgRDhfGCLK3GhXFI6YALZ7x7xTIVTCg6pogR07D/gYqwqoEJ37WYjfrZ/ZpPgTBEBEe08adZxf90qQvdCXqpfhhdZ60/kwVN/3Lvc7uDSXG807qJpyJnONltQV4adz91CjDPTTftgtu9nIykRrdVovnC9no7FPDtd7kXFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gI7ExZzn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WiiNWjbsYl2XsmVVpJtKfnJl6yT+J29OcN29Po6H64spPEv/AFQg2uMLBCnzcrI/QrNSIXmWn4sO7Mb0bDHyCqzFy3/FMHu6sUsohS/6RhBvu1PXpUD/WSBqxUvmyZfWtfvLWcVX3edQRY22FwpLjtJI4ICQ6wIyOa0sXkvVn7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpmCrAIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gI7ExZzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D397AC4CEE4;
-	Thu, 17 Apr 2025 18:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpmCrAIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C387C4CEE4;
+	Thu, 17 Apr 2025 18:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915302;
-	bh=tlfAP6qrT8R03NvWrNTq/vs7j5fZZvoPGfqBrvd8mZs=;
+	s=korg; t=1744915305;
+	bh=r9uKmoj5HvGkWQHRAEikIhT+mEv1DaErW0v73I4QXKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gI7ExZzn337ep777hM7ykLz90oocaafYFHpQ3am9/Px7UJn5gfqdN3xEyHgsvt8aB
-	 Elik7N1HAZR2kpiZgYI+1HaxcZiS9h2/MKx+X1+YoHxMcBhsoc12PR1QyMLNRDXsgL
-	 ZYVFy6WFCrG9+y2Y25tYjNp7A/Q0smdgXItI4414=
+	b=VpmCrAIjeJenpGQMDeWl7UKqtIG3vCZbXJ7PZCHFTlt00JkDKz2DjtpERhpAqY2/b
+	 SXHXq7PlwEp2t01wEYW/8KT45x8b+R+buHfiDL67rxCbbgbn2CKsuRTTmIxIp5AquL
+	 N0rxCK1oRhQ1BJIUm5jFdKadVpjUeVIWAvyy97fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/393] wifi: ath12k: fix memory leak in ath12k_pci_remove()
-Date: Thu, 17 Apr 2025 19:48:13 +0200
-Message-ID: <20250417175110.980212208@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Subject: [PATCH 6.12 058/393] zstd: Increase DYNAMIC_BMI2 GCC version cutoff from 4.8 to 11.0 to work around compiler segfault
+Date: Thu, 17 Apr 2025 19:47:47 +0200
+Message-ID: <20250417175109.922533357@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,50 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
+From: Ingo Molnar <mingo@kernel.org>
 
-[ Upstream commit 1b24394ed5c8a8d8f7b9e3aa9044c31495d46f2e ]
+[ Upstream commit 1400c87e6cac47eb243f260352c854474d9a9073 ]
 
-Kmemleak reported this error:
+Due to pending percpu improvements in -next, GCC9 and GCC10 are
+crashing during the build with:
 
-  unreferenced object 0xffff1c165cec3060 (size 32):
-    comm "insmod", pid 560, jiffies 4296964570 (age 235.596s)
-    backtrace:
-      [<000000005434db68>] __kmem_cache_alloc_node+0x1f4/0x2c0
-      [<000000001203b155>] kmalloc_trace+0x40/0x88
-      [<0000000028adc9c8>] _request_firmware+0xb8/0x608
-      [<00000000cad1aef7>] firmware_request_nowarn+0x50/0x80
-      [<000000005011a682>] local_pci_probe+0x48/0xd0
-      [<00000000077cd295>] pci_device_probe+0xb4/0x200
-      [<0000000087184c94>] really_probe+0x150/0x2c0
+    lib/zstd/compress/huf_compress.c:1033:1: internal compiler error: Segmentation fault
+     1033 | {
+          | ^
+    Please submit a full bug report,
+    with preprocessed source if appropriate.
+    See <file:///usr/share/doc/gcc-9/README.Bugs> for instructions.
 
-The firmware memory was allocated in ath12k_pci_probe(), but not
-freed in ath12k_pci_remove() in case ATH12K_FLAG_QMI_FAIL bit is
-set. So call ath12k_fw_unmap() to free the memory.
+The DYNAMIC_BMI2 feature is a known-challenging feature of
+the ZSTD library, with an existing GCC quirk turning it off
+for GCC versions below 4.8.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.2.0-02280-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
+Increase the DYNAMIC_BMI2 version cutoff to GCC 11.0 - GCC 10.5
+is the last version known to crash.
 
-Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250123080226.1116479-1-quic_miaoqing@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Debugged-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/zstd/common/portability_macros.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index bd269aa1740bc..2ff866e1d7d5b 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1541,6 +1541,7 @@ static void ath12k_pci_remove(struct pci_dev *pdev)
- 	ath12k_core_deinit(ab);
- 
- qmi_fail:
-+	ath12k_fw_unmap(ab);
- 	ath12k_mhi_unregister(ab_pci);
- 
- 	ath12k_pci_free_irq(ab);
+diff --git a/lib/zstd/common/portability_macros.h b/lib/zstd/common/portability_macros.h
+index 0e3b2c0a527db..0dde8bf56595e 100644
+--- a/lib/zstd/common/portability_macros.h
++++ b/lib/zstd/common/portability_macros.h
+@@ -55,7 +55,7 @@
+ #ifndef DYNAMIC_BMI2
+   #if ((defined(__clang__) && __has_attribute(__target__)) \
+       || (defined(__GNUC__) \
+-          && (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)))) \
++          && (__GNUC__ >= 11))) \
+       && (defined(__x86_64__) || defined(_M_X64)) \
+       && !defined(__BMI2__)
+   #  define DYNAMIC_BMI2 1
 -- 
 2.39.5
 
