@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180E2257AE7;
-	Thu, 17 Apr 2025 18:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CC9256C6D;
+	Thu, 17 Apr 2025 18:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914312; cv=none; b=Ne+TPzNN8tvFeUitgOON9X+worXCsS1dzUUUL5KwAbM8CSsN+i0TyR9KzWYoGuzAZpz7VTsVryMce8W1wvdjlemj+XEXkKgBs99zvxs5CZrr8691OM8vffy+b+yPKPIS5KBFMw7jcAUavHGxHpcJKxoX8uCzE562gC+5vhTqtZ4=
+	t=1744914315; cv=none; b=AlBeVbPBNEi66gt5qKP61aqmXVktrplZ78WWuzpbgbObZFCBNHKqkD1aqFrxC3XSUbNexYsp7zIFmfqBsOXad2pHmPFhH6rbqKaf6TKz92j+3q8ggh9O57WM6EKLTerF6itSBTiFlAI3n6xbdYgsaX+g+Q/WwBL5LwriFURwy7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914312; c=relaxed/simple;
-	bh=jXDlw44RLwCNsZCd4EfoEwe5jZIv7khC1Aa6cOuK7EE=;
+	s=arc-20240116; t=1744914315; c=relaxed/simple;
+	bh=paPMSmV5y4U9C/fzERxVLpXR4e5GHrhWDO2D71PxfQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAxssOYsXEQX4wOrf5+AkwJj5yUYvj2hxlagJnvVgru5UmBJVCII8FTm2BeJ95LP1Vc2dnJ5eLV5sfZRwWdsVx0HbLAZJvLsE1CVZ6EyeKE0HxeLVUx816a5BwJJQ87O1cVBcqHnOQxmQ4+hHN9lY9wsgXPAA29oDEnxt1+ce6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4aGW6hS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gtNoGCjIs26zJJMbEK+rH+5KiLTkNnsfLo/Fya/H4c15gYB1g+wxXOZhqEU/CCLL7wXuEhCBOLeW8ovk4daPvPs2ECKAOfyjqgNxgseN+XVwoocLBmR1+SCUjjGG5Mz8xQEyulwNcXflzo5ZvEJTgtew4vBOPFYxQAca/RdoBcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkDKBl3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4aGW6hS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE17C4CEEA;
-	Thu, 17 Apr 2025 18:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkDKBl3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B9BC4CEE4;
+	Thu, 17 Apr 2025 18:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914312;
-	bh=jXDlw44RLwCNsZCd4EfoEwe5jZIv7khC1Aa6cOuK7EE=;
+	s=korg; t=1744914314;
+	bh=paPMSmV5y4U9C/fzERxVLpXR4e5GHrhWDO2D71PxfQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4aGW6hSH09vA6IrJSaMV/TwSr3bimKmzkUhtswOiOVDs4Gn9+BAVU7WMcAmCElYM
-	 47v3LNBD0edhJgNLd/Rfym0QPfDCe+EtgYMqnAxwDPpRNncJLznXtCBtd5BFPOM9zz
-	 ILj2HdcQ5RbiD9JyTXYirzFRF4XSEtTgJIbAcSV4=
+	b=AkDKBl3/rgptdB+cbpVGruyw68OM6g/R+zf5g8xz8GZsRvaFn7rc1x/5v863FQ5t7
+	 ProZIVOe9JUz89Btwxd8O2GrIpidb/M/Sg58pO7k5lwuiuY159q4TsPJyVwVQTEIAJ
+	 HEbMMHXS6XvtAKTimrKUAJS/GwYABEzYzxh5nD5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Paul Dino Jones <paul@spacefreak18.xyz>,
+	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
+	Pablo Cisneros <patchkez@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 173/414] s390/pci: Fix s390_mmio_read/write syscall page fault handling
-Date: Thu, 17 Apr 2025 19:48:51 +0200
-Message-ID: <20250417175118.395526612@linuxfoundation.org>
+Subject: [PATCH 6.13 174/414] HID: pidff: Clamp PERIODIC effect period to devices logical range
+Date: Thu, 17 Apr 2025 19:48:52 +0200
+Message-ID: <20250417175118.434891212@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -46,74 +49,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 41a0926e82f4963046876ed9a1b5f681be8087a8 ]
+[ Upstream commit f538183e997a9fb6087e94e71e372de967b9e56a ]
 
-The s390 MMIO syscalls when using the classic PCI instructions do not
-cause a page fault when follow_pfnmap_start() fails due to the page not
-being present. Besides being a general deficiency this breaks vfio-pci's
-mmap() handling once VFIO_PCI_MMAP gets enabled as this lazily maps on
-first access. Fix this by following a failed follow_pfnmap_start() with
-fixup_user_page() and retrying the follow_pfnmap_start(). Also fix
-a VM_READ vs VM_WRITE mixup in the read syscall.
+This ensures the effect can actually be played on the connected force
+feedback device. Adds clamping functions used instead of rescaling, as we
+don't want to change the characteristics of the periodic effects.
 
-Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-1-c5c0f1d26efd@linux.ibm.com
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Fixes edge cases found on Moza Racing and some other hardware where
+the effects would not play if the period is outside the defined
+logical range.
+
+Changes in v6:
+- Use in-kernel clamp macro instead of a custom solution
+
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Michał Kopeć <michal@nozomi.space>
+Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
+Tested-by: Pablo Cisneros <patchkez@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_mmio.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/pci/pci_mmio.c b/arch/s390/pci/pci_mmio.c
-index 46f99dc164ade..1997d9b7965df 100644
---- a/arch/s390/pci/pci_mmio.c
-+++ b/arch/s390/pci/pci_mmio.c
-@@ -175,8 +175,12 @@ SYSCALL_DEFINE3(s390_pci_mmio_write, unsigned long, mmio_addr,
- 	args.address = mmio_addr;
- 	args.vma = vma;
- 	ret = follow_pfnmap_start(&args);
--	if (ret)
--		goto out_unlock_mmap;
-+	if (ret) {
-+		fixup_user_fault(current->mm, mmio_addr, FAULT_FLAG_WRITE, NULL);
-+		ret = follow_pfnmap_start(&args);
-+		if (ret)
-+			goto out_unlock_mmap;
-+	}
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 25dbed076f530..6b55345ce75ac 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -15,10 +15,9 @@
+ #include <linux/input.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
+-
+ #include <linux/hid.h>
++#include <linux/minmax.h>
  
- 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
- 			(mmio_addr & ~PAGE_MASK));
-@@ -315,14 +319,18 @@ SYSCALL_DEFINE3(s390_pci_mmio_read, unsigned long, mmio_addr,
- 	if (!(vma->vm_flags & (VM_IO | VM_PFNMAP)))
- 		goto out_unlock_mmap;
- 	ret = -EACCES;
--	if (!(vma->vm_flags & VM_WRITE))
-+	if (!(vma->vm_flags & VM_READ))
- 		goto out_unlock_mmap;
+-#include "usbhid.h"
  
- 	args.vma = vma;
- 	args.address = mmio_addr;
- 	ret = follow_pfnmap_start(&args);
--	if (ret)
--		goto out_unlock_mmap;
-+	if (ret) {
-+		fixup_user_fault(current->mm, mmio_addr, 0, NULL);
-+		ret = follow_pfnmap_start(&args);
-+		if (ret)
-+			goto out_unlock_mmap;
-+	}
+ #define	PID_EFFECTS_MAX		64
+ #define	PID_INFINITE		0xffff
+@@ -192,6 +191,16 @@ struct pidff_device {
+ 	u32 quirks;
+ };
  
- 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
- 			(mmio_addr & ~PAGE_MASK));
++/*
++ * Clamp value for a given field
++ */
++static s32 pidff_clamp(s32 i, struct hid_field *field)
++{
++	s32 clamped = clamp(i, field->logical_minimum, field->logical_maximum);
++	pr_debug("clamped from %d to %d", i, clamped);
++	return clamped;
++}
++
+ /*
+  * Scale an unsigned value with range 0..max for the given field
+  */
+@@ -372,7 +381,11 @@ static void pidff_set_periodic_report(struct pidff_device *pidff,
+ 	pidff_set_signed(&pidff->set_periodic[PID_OFFSET],
+ 			 effect->u.periodic.offset);
+ 	pidff_set(&pidff->set_periodic[PID_PHASE], effect->u.periodic.phase);
+-	pidff->set_periodic[PID_PERIOD].value[0] = effect->u.periodic.period;
++
++	/* Clamp period to ensure the device can play the effect */
++	pidff->set_periodic[PID_PERIOD].value[0] =
++		pidff_clamp(effect->u.periodic.period,
++			pidff->set_periodic[PID_PERIOD].field);
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_PERIODIC],
+ 			HID_REQ_SET_REPORT);
 -- 
 2.39.5
 
