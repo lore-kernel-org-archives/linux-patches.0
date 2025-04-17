@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C138462;
-	Thu, 17 Apr 2025 18:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304368462;
+	Thu, 17 Apr 2025 18:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913748; cv=none; b=Osm3pSpBeFCW3zrd7KcakCHgyeVOWr/RGCZgwVJZ9VKjxGPI4XFNBcj9AWnKpwEvSWyBnGKUtuYM5r6eXrkrGJuFlcAlhvoVCYSE06VAmGPkjweErMzrPFX2sP+rGKfihQmM3rixnFZvwVIViiPZotj2Ypb/r1A8Uvxy9rFXkf4=
+	t=1744913752; cv=none; b=GeF5OTOvBONZ9C9hpWRNwbf+OdFLwyeDmxoJ3bdsK9IfUVk6+xEi26w/lnv2f0U/Eam+EzTrJ2ubLdsQgKYiwVXaNGCHz7iJc3ScEiQLF7yqkE+981rsdRy5id+nH3R1Z3x7ueUHk4gX4x6yC6wlIYp/tNGYanjgFsyuwspIOEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913748; c=relaxed/simple;
-	bh=jmhP5z0WEJPgG0yz+7cTzquxfic+tmmsKVPoUu5viik=;
+	s=arc-20240116; t=1744913752; c=relaxed/simple;
+	bh=XIv0ATNcvxAR5vX2mGsZ6uAKG/WLHZSNbbkupRsy+cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qIJuVi5CW0Qk6nw0Mb/37ZVyvQN7CcqtnrSBW49gx0Dycs8KbU9tvyqD+FLsfsbZ3tBUf48HfH95x4GWJhJXhNexlV0HNU+qXIyZ4L7uUCoSYzCnwn4Sn4tkQ6bgIA9GSZ+yMo7fVme9meoP0UXy7IDPMPw6X/PybipWtAb5lGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fg37jD0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3tYl0vvnMlv0Mml7c/CrHrFV7L0MIeBxuyQzOPMUlFW/uPnRxoaJaza+SQqhLUIXav1m8NjcfesVUrAYZQLFRJdaScTkBzDYZoUP+ocM+QQ0qP1RvI9OjU6YoqNxTKwIeWcIkx4D3TSJBuVproky9O4DK7z1zP3GUyeVLdWTXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W++B/2e7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fg37jD0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA76C4CEE4;
-	Thu, 17 Apr 2025 18:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W++B/2e7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F65C4CEE4;
+	Thu, 17 Apr 2025 18:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913748;
-	bh=jmhP5z0WEJPgG0yz+7cTzquxfic+tmmsKVPoUu5viik=;
+	s=korg; t=1744913752;
+	bh=XIv0ATNcvxAR5vX2mGsZ6uAKG/WLHZSNbbkupRsy+cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fg37jD0yuooS8Ftl23rHRvs+95L/gHNsv9WGls1kezepniddD32g7uMFZgWzrEQHa
-	 y+TzWwXUXNws/PIcaY97qJeqeus8sZRJR4Gql2bpIaCMJ3/+Dssrr+dgoaQ/vSllo7
-	 1ckl+tdyUqjPk6q8xAmYsOafIvYADBMImOQxojBo=
+	b=W++B/2e7LcfvKRGi5Nft0FiMxlaHmR93g7Mv/1i8w/AgaIUaNrg5yn5qtAkuaEonu
+	 Vp7o+CiYaoATli9KPAsog3VpbHjgkFDonvjgN2FJc/hddnZLJPH6uali7gtClxPFIG
+	 RRO+hE12bKlFNtaRgAU5rMw6TwXf3uGTkC2rG09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanimir Varbanov <svarbanov@suse.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.14 423/449] PCI: brcmstb: Fix missing of_node_put() in brcm_pcie_probe()
-Date: Thu, 17 Apr 2025 19:51:51 +0200
-Message-ID: <20250417175135.317541971@linuxfoundation.org>
+	Kevin Hao <haokexin@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 441/449] spi: fsl-qspi: Fix double cleanup in probe error path
+Date: Thu, 17 Apr 2025 19:52:09 +0200
+Message-ID: <20250417175136.067007134@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -46,65 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanimir Varbanov <svarbanov@suse.de>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit 2df181e1aea4628a8fd257f866026625d0519627 upstream.
+commit 5d07ab2a7fa1305e429d9221716582f290b58078 upstream.
 
-A call to of_parse_phandle() is incrementing the refcount, and as such,
-the of_node_put() must be called when the reference is no longer needed.
+Commit 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver
+remove") introduced managed cleanup via fsl_qspi_cleanup(), but
+incorrectly retain manual cleanup in two scenarios:
 
-Thus, refactor the existing code and add a missing of_node_put() call
-following the check to ensure that "msi_np" matches "pcie->np" and after
-MSI initialization, but only if the MSI support is enabled system-wide.
+- On devm_add_action_or_reset() failure, the function automatically call
+  fsl_qspi_cleanup(). However, the current code still jumps to
+  err_destroy_mutex, repeating cleanup.
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: 40ca1bf580ef ("PCI: brcmstb: Add MSI support")
-Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250122222955.1752778-1-svarbanov@suse.de
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+- After the fsl_qspi_cleanup() action is added successfully, there is no
+  need to manually perform the cleanup in the subsequent error path.
+  However, the current code still jumps to err_destroy_mutex on spi
+  controller failure, repeating cleanup.
+
+Skip redundant manual cleanup calls to fix these issues.
+
+Cc: stable@vger.kernel.org
+Fixes: 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver remove")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Link: https://patch.msgid.link/20250410-spi-v1-1-56e867cc19cf@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/spi/spi-fsl-qspi.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/pcie-brcmstb.c
-+++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1786,7 +1786,7 @@ static struct pci_ops brcm7425_pcie_ops
+--- a/drivers/spi/spi-fsl-qspi.c
++++ b/drivers/spi/spi-fsl-qspi.c
+@@ -949,17 +949,14 @@ static int fsl_qspi_probe(struct platfor
  
- static int brcm_pcie_probe(struct platform_device *pdev)
- {
--	struct device_node *np = pdev->dev.of_node, *msi_np;
-+	struct device_node *np = pdev->dev.of_node;
- 	struct pci_host_bridge *bridge;
- 	const struct pcie_cfg_data *data;
- 	struct brcm_pcie *pcie;
-@@ -1890,9 +1890,14 @@ static int brcm_pcie_probe(struct platfo
- 		goto fail;
- 	}
+ 	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
+ 	if (ret)
+-		goto err_destroy_mutex;
++		goto err_put_ctrl;
  
--	msi_np = of_parse_phandle(pcie->np, "msi-parent", 0);
--	if (pci_msi_enabled() && msi_np == pcie->np) {
--		ret = brcm_pcie_enable_msi(pcie);
-+	if (pci_msi_enabled()) {
-+		struct device_node *msi_np = of_parse_phandle(pcie->np, "msi-parent", 0);
-+
-+		if (msi_np == pcie->np)
-+			ret = brcm_pcie_enable_msi(pcie);
-+
-+		of_node_put(msi_np);
-+
- 		if (ret) {
- 			dev_err(pcie->dev, "probe of internal MSI failed");
- 			goto fail;
+ 	ret = devm_spi_register_controller(dev, ctlr);
+ 	if (ret)
+-		goto err_destroy_mutex;
++		goto err_put_ctrl;
+ 
+ 	return 0;
+ 
+-err_destroy_mutex:
+-	mutex_destroy(&q->lock);
+-
+ err_disable_clk:
+ 	fsl_qspi_clk_disable_unprep(q);
+ 
 
 
