@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B4223710;
-	Thu, 17 Apr 2025 18:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312652550DD;
+	Thu, 17 Apr 2025 18:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913576; cv=none; b=flVBaMToIw7wu9EjZGVB5DTTW8U79ZJdgtj8CFpEBosgGVxVhzou6l5wFj7zDFtmeQvnI1lOyXckK+tYCHvii+8fQtsaBNHGOM8XH8bKtSPFUsx5/EAZJjIS5Es0sB1ImjOfzUbBEIiPQdxpjtS2Xd+HpxR13xv4o0m1qgEGQvU=
+	t=1744913579; cv=none; b=mUXF/6Hpq5o/tYdv7AMWxn4dmuQ8c1S9DQ6RNr8PEelIsSQQZMcis/yftsTUMzM1nVUmhYXrEtudfx1eReI/0aPEQedRMC+hvtVjUg7F9KY0EKujxol7YVsvPal7kMo1W6PSho5um7Ihp/g5nTP70cKxYy8dwNg5/aYo/ePHbIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913576; c=relaxed/simple;
-	bh=T+wi5MuiKygieo/Y4XYIP7kJKq8ZmOM2nk8NBY7Dg0U=;
+	s=arc-20240116; t=1744913579; c=relaxed/simple;
+	bh=hGGeFYMk04aCfyADGmbIxGb7y2HjuRtBrCysrLkzfcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKks8KT7IegNmAjgsH3tYf+aXezsbNgRw2Lz1wJKMqim+GZGm6590XDPhf0oYEknM/v3UyEIIY7eH2O4GkVtmwvCaelA13PgDQlL4fYWa85zVuZp/n4W0qeVthZhsF2DUC0GBIWfD1rjnP47lSdlXwIy6syoOYR+jpK60ZdoKXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIZT/I+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCEg87JLP5X3iR5ustJTLzjojc0eP7iGGUlgipensfgoEpU/janQOyNhpgJdFVADSS5WW/XivJzzSXDh0iujDgCDOV2M4SIVZuSG9Hz0LrbecWqNoZb6DFxaM3a3vZXSqX3RnRpuUaY6ErvM7SxL7FvOwchyTcdqm10tGnPI/4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnXQMH3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIZT/I+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7320BC4CEE4;
-	Thu, 17 Apr 2025 18:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnXQMH3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F64AC4CEE4;
+	Thu, 17 Apr 2025 18:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913575;
-	bh=T+wi5MuiKygieo/Y4XYIP7kJKq8ZmOM2nk8NBY7Dg0U=;
+	s=korg; t=1744913579;
+	bh=hGGeFYMk04aCfyADGmbIxGb7y2HjuRtBrCysrLkzfcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIZT/I+o5lNWBma6R9ly8MpFHbTD/9LyDOnbYcvC5UflRD7kkdd3lmU9j4zBqysjG
-	 1Ao81L6NbeN6VB8/NmvWU7miK9iHL5jJH3xhf2VGunygfGVgpbrOth1ebOIBExLK7b
-	 uymQ5Ht6Wbbtvu1HaPeqNVwAs83R/lUBNOBakQ5w=
+	b=rnXQMH3h8Wec2p1+Xm3leoYZJrjPfXygR0oy/vltHD+PK3UnA8hFb+Y2j7Kna89pF
+	 LMxAKWZ5VNb82LVbMpcCTQIHr+C5AXppjKcHgPE99WdMqOGIVlxd1zxe0LD/SoeHoy
+	 zMUygKQyNSxYs4+EzZe99qgo13JwE/iUvX50zjRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dionna Glaze <dionnaglaze@google.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.14 384/449] crypto: ccp - Fix uAPI definitions of PSP errors
-Date: Thu, 17 Apr 2025 19:51:12 +0200
-Message-ID: <20250417175133.714440176@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.14 385/449] dlm: fix error if inactive rsb is not hashed
+Date: Thu, 17 Apr 2025 19:51:13 +0200
+Message-ID: <20250417175133.755803763@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,56 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dionna Glaze <dionnaglaze@google.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit b949f55644a6d1645c0a71f78afabf12aec7c33b upstream.
+commit 94e6e889a786dd16542fc8f2a45405fa13e3bbb5 upstream.
 
-Additions to the error enum after explicit 0x27 setting for
-SEV_RET_INVALID_KEY leads to incorrect value assignments.
+If an inactive rsb is not hashed anymore and this could occur because we
+releases and acquired locks we need to signal the followed code that the
+lookup failed. Since the lookup was successful, but it isn't part of the
+rsb hash anymore we need to signal it by setting error to -EBADR as
+dlm_search_rsb_tree() does it.
 
-Use explicit values to match the manufacturer specifications more
-clearly.
-
-Fixes: 3a45dc2b419e ("crypto: ccp: Define the SEV-SNP commands")
-CC: stable@vger.kernel.org
-Signed-off-by: Dionna Glaze <dionnaglaze@google.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: stable@vger.kernel.org
+Fixes: 01fdeca1cc2d ("dlm: use rcu to avoid an extra rsb struct lookup")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/psp-sev.h |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/dlm/lock.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/uapi/linux/psp-sev.h
-+++ b/include/uapi/linux/psp-sev.h
-@@ -73,13 +73,20 @@ typedef enum {
- 	SEV_RET_INVALID_PARAM,
- 	SEV_RET_RESOURCE_LIMIT,
- 	SEV_RET_SECURE_DATA_INVALID,
--	SEV_RET_INVALID_KEY = 0x27,
--	SEV_RET_INVALID_PAGE_SIZE,
--	SEV_RET_INVALID_PAGE_STATE,
--	SEV_RET_INVALID_MDATA_ENTRY,
--	SEV_RET_INVALID_PAGE_OWNER,
--	SEV_RET_INVALID_PAGE_AEAD_OFLOW,
--	SEV_RET_RMP_INIT_REQUIRED,
-+	SEV_RET_INVALID_PAGE_SIZE          = 0x0019,
-+	SEV_RET_INVALID_PAGE_STATE         = 0x001A,
-+	SEV_RET_INVALID_MDATA_ENTRY        = 0x001B,
-+	SEV_RET_INVALID_PAGE_OWNER         = 0x001C,
-+	SEV_RET_AEAD_OFLOW                 = 0x001D,
-+	SEV_RET_EXIT_RING_BUFFER           = 0x001F,
-+	SEV_RET_RMP_INIT_REQUIRED          = 0x0020,
-+	SEV_RET_BAD_SVN                    = 0x0021,
-+	SEV_RET_BAD_VERSION                = 0x0022,
-+	SEV_RET_SHUTDOWN_REQUIRED          = 0x0023,
-+	SEV_RET_UPDATE_FAILED              = 0x0024,
-+	SEV_RET_RESTORE_REQUIRED           = 0x0025,
-+	SEV_RET_RMP_INITIALIZATION_FAILED  = 0x0026,
-+	SEV_RET_INVALID_KEY                = 0x0027,
- 	SEV_RET_MAX,
- } sev_ret_code;
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -784,6 +784,7 @@ static int find_rsb_dir(struct dlm_ls *l
+ 		}
+ 	} else {
+ 		write_unlock_bh(&ls->ls_rsbtbl_lock);
++		error = -EBADR;
+ 		goto do_new;
+ 	}
  
 
 
