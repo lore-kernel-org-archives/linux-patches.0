@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF67A3594D;
-	Thu, 17 Apr 2025 18:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF16B25742C;
+	Thu, 17 Apr 2025 18:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915962; cv=none; b=kxXoTd/QUXHWqaz8Y8l5ML9GGLFkzqqcJhZ3P3HHAYJaCc2MRUYRkPDSzlJxebn8mvM21pyQr+HR9Qsaa8yFL9DAx57lQsae4Za+wsBumWrZeep3X2XRfoy51wVo+WJdduLqC7++yG9sM64DREM91cqujpZtIy4+spoSvbnj+DE=
+	t=1744915964; cv=none; b=KV75r5oLOFNsW5PN6oJUIc/bkaieaFBRCdcyFmFYFMC1bhg+BwQD/dBwl0jR7hcT96Ts+ax78qXxSWFidHO9ojXtHbswiGioNez+GUswfmz0wIBOcpiiDsR13nhMyuPXn8p+vqzjA0wfqpnR1Y42fe+lARzcpDgnyNNZI+Xn20U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915962; c=relaxed/simple;
-	bh=Wt3csYGsv6qCmfACA8VIOI6LyROYe5YkETWeAs2rMkc=;
+	s=arc-20240116; t=1744915964; c=relaxed/simple;
+	bh=hm5osy8C38ZyqBJe6fOS4VWIpZm9R1Dizxy7D+lQ5O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODO4CUAlWPdzf33AqHDvuesnzxKislRnOxrK0DPGTjPDPVDQsYAJFMhp9dcUVxSKg3CjhW44e4e0duBplEYNreKKDvH7Xe3o5+B2FerlyHc4ald81Q6Kfn3ahFTrWB24wvjnWm/5AFMrx1U71qVwc6rZedNkAzar4VGvCOEWKeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpDZ9bpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQ+u0biAa9JSpAXjYVUEeAYUN6cVo2ELvDyzOvPjOcYcrIRlCay+Oxsaxz2XWpfv3pG0i1h9DVgzNTGkTi91p2mcg+efiaTqswUTdL/RNq+p2r3xr0FQTrNNGSvhLuSnWOUYzjqYf0ZXH9/63dS4I9isS4tetYNyMD9rThbDDqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XG979p5b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpDZ9bpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599B1C4CEE4;
-	Thu, 17 Apr 2025 18:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XG979p5b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57094C4CEE4;
+	Thu, 17 Apr 2025 18:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915961;
-	bh=Wt3csYGsv6qCmfACA8VIOI6LyROYe5YkETWeAs2rMkc=;
+	s=korg; t=1744915964;
+	bh=hm5osy8C38ZyqBJe6fOS4VWIpZm9R1Dizxy7D+lQ5O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpDZ9bpaEdeuM3T7x3yqAnAnn5L2KwhSOZWeewxMz7KcbggjemJUre+a91wYcQJ1c
-	 BzjoIH8ZSU+K6z+QPxDHS5czR5g746VnLEE2yfz6SOASve7FtGhCR861zpTwiMGmcB
-	 2PHWPu+2cmJgvu4vQ5a7jM9irVbfz7avJJQyt8+Y=
+	b=XG979p5bYSBgPmi/o7DgEb+rfblRCLrVmyMV/NF5/AoyFg9NxRyS7cBcaPVRHxCyi
+	 75FDVt4Ukmdw7bxcWEtIOWKOamJpLUAphLCFvoPerXysqtN4lqcdVFiLl2WDmJS+SG
+	 +hai44rq0dAWnVUv9wYZLsWTlaOpge7PiSUFxnW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Robert Lippert <rlippert@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Wentao Yang <wentaoyang@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.12 298/393] iommu/vt-d: Fix possible circular locking dependency
-Date: Thu, 17 Apr 2025 19:51:47 +0200
-Message-ID: <20250417175119.599888454@linuxfoundation.org>
+Subject: [PATCH 6.12 299/393] iommu/vt-d: Wire up irq_ack() to irq_move_irq() for posted MSIs
+Date: Thu, 17 Apr 2025 19:51:48 +0200
+Message-ID: <20250417175119.639014255@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,185 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 93ae6e68b6d6b62d92b3a89d1c253d4a1721a1d3 upstream.
+commit 548183ea388c12b6d76d6982f3d72df3887af0da upstream.
 
-We have recently seen report of lockdep circular lock dependency warnings
-on platforms like Skylake and Kabylake:
+Set the posted MSI irq_chip's irq_ack() hook to irq_move_irq() instead of
+a dummy/empty callback so that posted MSIs process pending changes to the
+IRQ's SMP affinity.  Failure to honor a pending set-affinity results in
+userspace being unable to change the effective affinity of the IRQ, as
+IRQD_SETAFFINITY_PENDING is never cleared and so irq_set_affinity_locked()
+always defers moving the IRQ.
 
- ======================================================
- WARNING: possible circular locking dependency detected
- 6.14.0-rc6-CI_DRM_16276-gca2c04fe76e8+ #1 Not tainted
- ------------------------------------------------------
- swapper/0/1 is trying to acquire lock:
- ffffffff8360ee48 (iommu_probe_device_lock){+.+.}-{3:3},
-   at: iommu_probe_device+0x1d/0x70
+The issue is most easily reproducible by setting /proc/irq/xx/smp_affinity
+multiple times in quick succession, as only the first update is likely to
+be handled in process context.
 
- but task is already holding lock:
- ffff888102c7efa8 (&device->physical_node_lock){+.+.}-{3:3},
-   at: intel_iommu_init+0xe75/0x11f0
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
-
- -> #6 (&device->physical_node_lock){+.+.}-{3:3}:
-        __mutex_lock+0xb4/0xe40
-        mutex_lock_nested+0x1b/0x30
-        intel_iommu_init+0xe75/0x11f0
-        pci_iommu_init+0x13/0x70
-        do_one_initcall+0x62/0x3f0
-        kernel_init_freeable+0x3da/0x6a0
-        kernel_init+0x1b/0x200
-        ret_from_fork+0x44/0x70
-        ret_from_fork_asm+0x1a/0x30
-
- -> #5 (dmar_global_lock){++++}-{3:3}:
-        down_read+0x43/0x1d0
-        enable_drhd_fault_handling+0x21/0x110
-        cpuhp_invoke_callback+0x4c6/0x870
-        cpuhp_issue_call+0xbf/0x1f0
-        __cpuhp_setup_state_cpuslocked+0x111/0x320
-        __cpuhp_setup_state+0xb0/0x220
-        irq_remap_enable_fault_handling+0x3f/0xa0
-        apic_intr_mode_init+0x5c/0x110
-        x86_late_time_init+0x24/0x40
-        start_kernel+0x895/0xbd0
-        x86_64_start_reservations+0x18/0x30
-        x86_64_start_kernel+0xbf/0x110
-        common_startup_64+0x13e/0x141
-
- -> #4 (cpuhp_state_mutex){+.+.}-{3:3}:
-        __mutex_lock+0xb4/0xe40
-        mutex_lock_nested+0x1b/0x30
-        __cpuhp_setup_state_cpuslocked+0x67/0x320
-        __cpuhp_setup_state+0xb0/0x220
-        page_alloc_init_cpuhp+0x2d/0x60
-        mm_core_init+0x18/0x2c0
-        start_kernel+0x576/0xbd0
-        x86_64_start_reservations+0x18/0x30
-        x86_64_start_kernel+0xbf/0x110
-        common_startup_64+0x13e/0x141
-
- -> #3 (cpu_hotplug_lock){++++}-{0:0}:
-        __cpuhp_state_add_instance+0x4f/0x220
-        iova_domain_init_rcaches+0x214/0x280
-        iommu_setup_dma_ops+0x1a4/0x710
-        iommu_device_register+0x17d/0x260
-        intel_iommu_init+0xda4/0x11f0
-        pci_iommu_init+0x13/0x70
-        do_one_initcall+0x62/0x3f0
-        kernel_init_freeable+0x3da/0x6a0
-        kernel_init+0x1b/0x200
-        ret_from_fork+0x44/0x70
-        ret_from_fork_asm+0x1a/0x30
-
- -> #2 (&domain->iova_cookie->mutex){+.+.}-{3:3}:
-        __mutex_lock+0xb4/0xe40
-        mutex_lock_nested+0x1b/0x30
-        iommu_setup_dma_ops+0x16b/0x710
-        iommu_device_register+0x17d/0x260
-        intel_iommu_init+0xda4/0x11f0
-        pci_iommu_init+0x13/0x70
-        do_one_initcall+0x62/0x3f0
-        kernel_init_freeable+0x3da/0x6a0
-        kernel_init+0x1b/0x200
-        ret_from_fork+0x44/0x70
-        ret_from_fork_asm+0x1a/0x30
-
- -> #1 (&group->mutex){+.+.}-{3:3}:
-        __mutex_lock+0xb4/0xe40
-        mutex_lock_nested+0x1b/0x30
-        __iommu_probe_device+0x24c/0x4e0
-        probe_iommu_group+0x2b/0x50
-        bus_for_each_dev+0x7d/0xe0
-        iommu_device_register+0xe1/0x260
-        intel_iommu_init+0xda4/0x11f0
-        pci_iommu_init+0x13/0x70
-        do_one_initcall+0x62/0x3f0
-        kernel_init_freeable+0x3da/0x6a0
-        kernel_init+0x1b/0x200
-        ret_from_fork+0x44/0x70
-        ret_from_fork_asm+0x1a/0x30
-
- -> #0 (iommu_probe_device_lock){+.+.}-{3:3}:
-        __lock_acquire+0x1637/0x2810
-        lock_acquire+0xc9/0x300
-        __mutex_lock+0xb4/0xe40
-        mutex_lock_nested+0x1b/0x30
-        iommu_probe_device+0x1d/0x70
-        intel_iommu_init+0xe90/0x11f0
-        pci_iommu_init+0x13/0x70
-        do_one_initcall+0x62/0x3f0
-        kernel_init_freeable+0x3da/0x6a0
-        kernel_init+0x1b/0x200
-        ret_from_fork+0x44/0x70
-        ret_from_fork_asm+0x1a/0x30
-
- other info that might help us debug this:
-
- Chain exists of:
-   iommu_probe_device_lock --> dmar_global_lock -->
-     &device->physical_node_lock
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&device->physical_node_lock);
-                                lock(dmar_global_lock);
-                                lock(&device->physical_node_lock);
-   lock(iommu_probe_device_lock);
-
-  *** DEADLOCK ***
-
-This driver uses a global lock to protect the list of enumerated DMA
-remapping units. It is necessary due to the driver's support for dynamic
-addition and removal of remapping units at runtime.
-
-Two distinct code paths require iteration over this remapping unit list:
-
-- Device registration and probing: the driver iterates the list to
-  register each remapping unit with the upper layer IOMMU framework
-  and subsequently probe the devices managed by that unit.
-- Global configuration: Upper layer components may also iterate the list
-  to apply configuration changes.
-
-The lock acquisition order between these two code paths was reversed. This
-caused lockdep warnings, indicating a risk of deadlock. Fix this warning
-by releasing the global lock before invoking upper layer interfaces for
-device registration.
-
-Fixes: b150654f74bf ("iommu/vt-d: Fix suspicious RCU usage")
-Closes: https://lore.kernel.org/linux-iommu/SJ1PR11MB612953431F94F18C954C4A9CB9D32@SJ1PR11MB6129.namprd11.prod.outlook.com/
-Tested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Fixes: ed1e48ea4370 ("iommu/vt-d: Enable posted mode for device MSIs")
+Cc: Robert Lippert <rlippert@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Reported-by: Wentao Yang <wentaoyang@google.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250321194249.1217961-1-seanjc@google.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250317035714.1041549-1-baolu.lu@linux.intel.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/intel/irq_remapping.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3174,6 +3174,7 @@ static int __init probe_acpi_namespace_d
- 			if (dev->bus != &acpi_bus_type)
- 				continue;
+--- a/drivers/iommu/intel/irq_remapping.c
++++ b/drivers/iommu/intel/irq_remapping.c
+@@ -1291,43 +1291,44 @@ static struct irq_chip intel_ir_chip = {
+ };
  
-+			up_read(&dmar_global_lock);
- 			adev = to_acpi_device(dev);
- 			mutex_lock(&adev->physical_node_lock);
- 			list_for_each_entry(pn,
-@@ -3183,6 +3184,7 @@ static int __init probe_acpi_namespace_d
- 					break;
- 			}
- 			mutex_unlock(&adev->physical_node_lock);
-+			down_read(&dmar_global_lock);
- 
- 			if (ret)
- 				return ret;
+ /*
+- * With posted MSIs, all vectors are multiplexed into a single notification
+- * vector. Devices MSIs are then dispatched in a demux loop where
+- * EOIs can be coalesced as well.
++ * With posted MSIs, the MSI vectors are multiplexed into a single notification
++ * vector, and only the notification vector is sent to the APIC IRR.  Device
++ * MSIs are then dispatched in a demux loop that harvests the MSIs from the
++ * CPU's Posted Interrupt Request bitmap.  I.e. Posted MSIs never get sent to
++ * the APIC IRR, and thus do not need an EOI.  The notification handler instead
++ * performs a single EOI after processing the PIR.
+  *
+- * "INTEL-IR-POST" IRQ chip does not do EOI on ACK, thus the dummy irq_ack()
+- * function. Instead EOI is performed by the posted interrupt notification
+- * handler.
++ * Note!  Pending SMP/CPU affinity changes, which are per MSI, must still be
++ * honored, only the APIC EOI is omitted.
+  *
+  * For the example below, 3 MSIs are coalesced into one CPU notification. Only
+- * one apic_eoi() is needed.
++ * one apic_eoi() is needed, but each MSI needs to process pending changes to
++ * its CPU affinity.
+  *
+  * __sysvec_posted_msi_notification()
+  *	irq_enter();
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				dummy(); // No EOI
++ *				irq_move_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				dummy(); // No EOI
++ *				irq_move_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				dummy(); // No EOI
++ *				irq_move_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *	apic_eoi()
+  *	irq_exit()
++ *
+  */
+-
+-static void dummy_ack(struct irq_data *d) { }
+-
+ static struct irq_chip intel_ir_chip_post_msi = {
+ 	.name			= "INTEL-IR-POST",
+-	.irq_ack		= dummy_ack,
++	.irq_ack		= irq_move_irq,
+ 	.irq_set_affinity	= intel_ir_set_affinity,
+ 	.irq_compose_msi_msg	= intel_ir_compose_msi_msg,
+ 	.irq_set_vcpu_affinity	= intel_ir_set_vcpu_affinity,
 
 
