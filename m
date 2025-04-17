@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640EA256C9F;
-	Thu, 17 Apr 2025 18:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929AC253F23;
+	Thu, 17 Apr 2025 18:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913019; cv=none; b=AiDZ+C41u6JcLQIaO0t5WmoMZgoTG7KUesf7C8WuiYfyqqML5theWEibE8k00yfOz6YbSXKar/PMKhrav4hsfaow86mNRUUuQdMFGkHaUo7iecoXKX4IDtg6r4Fj+VM+9fbUR2wQWJuSVLoAX9rKJghKuG4AO0ljypmIw1PVLAY=
+	t=1744913022; cv=none; b=ZC7Er3Nfv0EBuDadU5hASYTFKGGtyToHVswm6dXNKa3hbV0QukBPmBVmT2CAxuErUiumJL+AxJs/on3Pi2RsSdvm3jQj8yRPc/p0xXBHdSUNntlMCe4fo9+qS1X+q0ZnhswFfWm2idC8jzTfHydQzD9HVerC+8TA2d+xF1IDvoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913019; c=relaxed/simple;
-	bh=L3ZrZ0a4pVR4ZN2q7Sgjufdnqu9ZfGsye4TBh1phpQA=;
+	s=arc-20240116; t=1744913022; c=relaxed/simple;
+	bh=LOl9ajlj6sMGqFLB6i/48htgPbKgGzowIwX0N/Zhz9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHOdZGOYfQYoYe5/lMbKVMrJvqW22JfElhcTU7eYvZC9EtjMRwxCLz5y5KXGR9xe1ps7qowdJiEDi+rec8gSboFlDa6WsEsD3ZRB5IeTGD+ed3+GoNHacGyx4z1LFMLYtipHGqGb5U6NCQHBkEKpH1iVHRTwexQD1Y4fo1QKolw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELIjGaef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JdfFgbo72cJRE2Y1rhyiANeRqTBiLjRd9V6pcw6nXi5eoURyxRAquwH/AxjodRSIyWolwuJOdpBrMMp2xH+0y7QYrMZ0ld7IQ7oRB98fKS5+chdb9yQ5Bs+IpltjaQedR5QAHWFal193xeOEsvLhd25Walrco7hS7XFHEDdOkgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rezvw9L9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELIjGaef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A35C4CEE4;
-	Thu, 17 Apr 2025 18:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rezvw9L9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E294C4CEE4;
+	Thu, 17 Apr 2025 18:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913019;
-	bh=L3ZrZ0a4pVR4ZN2q7Sgjufdnqu9ZfGsye4TBh1phpQA=;
+	s=korg; t=1744913022;
+	bh=LOl9ajlj6sMGqFLB6i/48htgPbKgGzowIwX0N/Zhz9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELIjGaefWh2AM8MiHbq4U87mbpcWC5Fcmbb9YlgVb1lW7+gbkIPA6lrb8uXWohyXZ
-	 HDCMOZ0hUKIrIt4NHpkJTSSbfF3xZFEau+Xpk54lWA+YMH0u1YtXdDD4M0oQv7d9oq
-	 SxQrVm7OpmwGUiWI4rqe+GF4B8AzRZ8jSm+vHg7g=
+	b=Rezvw9L9YiU4KBQ3dQpUJYHO767oCVa1wSYQrZbPMWo7zwH/YXy7QAB7zJ1EhI2Fl
+	 9CVg556VAzG/xsblQxTCJ3UDZNHlUQOUtk+fRUirBKutzrh70JnaefDC2YTw5l/7Mz
+	 OCJz9H16U0pDJ9+ON4zGgBsiO+1j4hcTS+Abu9WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 171/449] drm/mediatek: mtk_dpi: Explicitly manage TVD clock in power on/off
-Date: Thu, 17 Apr 2025 19:47:39 +0200
-Message-ID: <20250417175124.867372313@linuxfoundation.org>
+Subject: [PATCH 6.14 162/449] drm/amd/display: Update FIXED_VS Link Rate Toggle Workaround Usage
+Date: Thu, 17 Apr 2025 19:47:30 +0200
+Message-ID: <20250417175124.507410505@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,67 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 473c33f5ce651365468503c76f33158aaa1c7dd2 ]
+[ Upstream commit 7c6518c1c73199a230b5fc55ddfed3e5b9dc3290 ]
 
-In preparation for adding support for MT8195's HDMI reserved
-DPI, add calls to clk_prepare_enable() / clk_disable_unprepare()
-for the TVD clock: in this particular case, the aforementioned
-clock is not (and cannot be) parented to neither pixel or engine
-clocks hence it won't get enabled automatically by the clock
-framework.
+[WHY]
+Previously the 128b/132b LTTPR support DPCD field was used to decide if
+FIXED_VS training sequence required a rate toggle before initiating LT.
 
-Please note that on all of the currently supported MediaTek
-platforms, the TVD clock is always a parent of either pixel or
-engine clocks, and this means that the common clock framework
-is already enabling this clock before the children.
-On such platforms, this commit will only increase the refcount
-of the TVD clock without any functional change.
+When running DP2.1 4.9.x.x compliance tests, emulated LTTPRs can report
+no-128b/132b support which is then forwarded by the FIXED_VS retimer.
+As a result this test exposes the rate toggle again, erroneously causing
+failures as certain compliance sinks don't expect this behaviour.
 
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-10-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+[HOW]
+Add new DPCD register defines/reads to read LTTPR IEEE OUI and device ID.
+
+Decide whether to perform the rate toggle based on the LTTPR's IEEE OUI
+which guarantees that we only perform the toggle on affected retimers.
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h         |  8 ++++++++
+ .../display/dc/link/protocols/link_dp_capability.c   | 12 ++++++++++--
+ .../protocols/link_dp_training_fixed_vs_pe_retimer.c |  3 ++-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index c3fc85764c973..a12ef24c77423 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -471,6 +471,7 @@ static void mtk_dpi_power_off(struct mtk_dpi *dpi)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+index 94ce8fe744810..cc005da75ce4c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -1119,6 +1119,8 @@ struct dc_lttpr_caps {
+ 	union dp_main_link_channel_coding_lttpr_cap main_link_channel_coding;
+ 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
+ 	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
++	uint8_t lttpr_ieee_oui[3];
++	uint8_t lttpr_device_id[6];
+ };
  
- 	mtk_dpi_disable(dpi);
- 	clk_disable_unprepare(dpi->pixel_clk);
-+	clk_disable_unprepare(dpi->tvd_clk);
- 	clk_disable_unprepare(dpi->engine_clk);
- }
+ struct dc_dongle_dfp_cap_ext {
+@@ -1379,6 +1381,12 @@ struct dp_trace {
+ #ifndef DP_BRANCH_VENDOR_SPECIFIC_START
+ #define DP_BRANCH_VENDOR_SPECIFIC_START     0x50C
+ #endif
++#ifndef DP_LTTPR_IEEE_OUI
++#define DP_LTTPR_IEEE_OUI 0xF003D
++#endif
++#ifndef DP_LTTPR_DEVICE_ID
++#define DP_LTTPR_DEVICE_ID 0xF0040
++#endif
+ /** USB4 DPCD BW Allocation Registers Chapter 10.7 **/
+ #ifndef DP_TUNNELING_CAPABILITIES
+ #define DP_TUNNELING_CAPABILITIES			0xE000D /* 1.4a */
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index 44c3023a77318..44f33e3bc1c59 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -1568,10 +1568,18 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ 	/* Attempt to train in LTTPR transparent mode if repeater count exceeds 8. */
+ 	is_lttpr_present = dp_is_lttpr_present(link);
  
-@@ -487,6 +488,12 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 		goto err_refcount;
- 	}
+-	if (is_lttpr_present)
++	DC_LOG_DC("is_lttpr_present = %d\n", is_lttpr_present);
++
++	if (is_lttpr_present) {
+ 		CONN_DATA_DETECT(link, lttpr_dpcd_data, sizeof(lttpr_dpcd_data), "LTTPR Caps: ");
  
-+	ret = clk_prepare_enable(dpi->tvd_clk);
-+	if (ret) {
-+		dev_err(dpi->dev, "Failed to enable tvd pll: %d\n", ret);
-+		goto err_engine;
+-	DC_LOG_DC("is_lttpr_present = %d\n", is_lttpr_present);
++		core_link_read_dpcd(link, DP_LTTPR_IEEE_OUI, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui));
++		CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui), "LTTPR IEEE OUI: ");
++
++		core_link_read_dpcd(link, DP_LTTPR_DEVICE_ID, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id));
++		CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id), "LTTPR Device ID: ");
 +	}
 +
- 	ret = clk_prepare_enable(dpi->pixel_clk);
- 	if (ret) {
- 		dev_err(dpi->dev, "Failed to enable pixel clock: %d\n", ret);
-@@ -496,6 +503,8 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 	return 0;
+ 	return status;
+ }
  
- err_pixel:
-+	clk_disable_unprepare(dpi->tvd_clk);
-+err_engine:
- 	clk_disable_unprepare(dpi->engine_clk);
- err_refcount:
- 	dpi->refcount--;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
+index ccf8096dde290..ce174ce5579c0 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
+@@ -270,7 +270,8 @@ enum link_training_result dp_perform_fixed_vs_pe_training_sequence(
+ 
+ 	rate = get_dpcd_link_rate(&lt_settings->link_settings);
+ 
+-	if (!link->dpcd_caps.lttpr_caps.main_link_channel_coding.bits.DP_128b_132b_SUPPORTED) {
++	// Only perform toggle if FIXED_VS LTTPR reports no IEEE OUI
++	if (memcmp("\x0,\x0,\x0", &link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
+ 		/* Vendor specific: Toggle link rate */
+ 		toggle_rate = (rate == 0x6) ? 0xA : 0x6;
+ 
 -- 
 2.39.5
 
