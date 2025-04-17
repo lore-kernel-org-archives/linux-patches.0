@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C5B18C034;
-	Thu, 17 Apr 2025 18:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8E618C034;
+	Thu, 17 Apr 2025 18:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916234; cv=none; b=ZkSucB1iW3BV5tfsYiPnNavB3kB5wDM391rVXJc6rwhZ2R0BOJwvYX0CnmcaeqazUItrbTLCIFKTMUmnU9FVV/oH0SImOTJNySopWLMQrsE47NX9UV6iwtiZXXuVlXGuG5Sf2gWu88DrCa71XtBkDru4i8vn7629cBZscL9GEjc=
+	t=1744916237; cv=none; b=eMlvxl+2kjbuVAAyvq36sTAWdrRLkQaf4VCasm4pvR4sBWypAkkxFutCTlAykcgubQME3rJSxgYCX4q97GMrb6E55eexoz2vUitJJggqiypYXzG0QZKqkA3ZiqibvNHEMdsFaqXPZkuxk79afjQFLFfQguAUTmFxs020YYoW/Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916234; c=relaxed/simple;
-	bh=Rf/PKusgWEe9f1n47I8d3vI/e4IorQVrj1aO3ii29Hg=;
+	s=arc-20240116; t=1744916237; c=relaxed/simple;
+	bh=svF0g+qxZQ6xlq9nHu7o89DsWxUlfeTQM5vPtOLI4+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgTBh0NHsiYcpfls8CHebSSzHWmzDrkrAXaj7YGLClzfJISFWBrhPN/+xZkJuXfe2T8XRHGwYBnk6zA6lUCLWrfGN6LRck5JVggbtLYbBmds/+zAsYXDxxT2I3j2aPz0jxPBS8Q1mOPSp5IG861bHyaGa94hoYEAKbb3NvHE9xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dn1DNepy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GSKhsnhufhgLbROXpED1f9VbxY6uMcIOs+y6hKmBbRKXiMoY9+iQWdtCgU0lVo3IpaCDv0l+iI0a7h6n6p+XG17paLulb4jpeUO2Z3yfewO6usHHkLqB+58lXRhqSqobmyL91lCnZdMN1emX6c1pyWV6cWDOYiy2auejxLHwZp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n50Vcws2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dn1DNepy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5494C4CEE4;
-	Thu, 17 Apr 2025 18:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n50Vcws2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF03EC4CEE4;
+	Thu, 17 Apr 2025 18:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916234;
-	bh=Rf/PKusgWEe9f1n47I8d3vI/e4IorQVrj1aO3ii29Hg=;
+	s=korg; t=1744916237;
+	bh=svF0g+qxZQ6xlq9nHu7o89DsWxUlfeTQM5vPtOLI4+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dn1DNepyJuC7b5M7PJG6Q3e7X797GkLdJuI2GMp8TVqR38Ub/BVqsoM/s6FMlOg4X
-	 /TaGoTsWo1zwcoEh6C6vbcvZBHs4ZmSjSXCKFVWwMUAI15jndeF6uSmMmWWggaebht
-	 ILqvJlPbW3aYgxd+T9bYwf6cFfEsiuQIvysVe7Vg=
+	b=n50Vcws2NngCVO/3fNXiIEZRQRh/4MUQ3GezCn/GkM1xKlMRCIN2hnUcsBsnCi5GS
+	 b9T9dQ/q+A1ry5bt4zvWKWqdXTbnduDCOB+hI6uTnFjlIoQDuviHzWk+Ig30Qw7TXn
+	 rpyHKmZljtZklqBCnuJNA1uZRSHVAXtaNyfmEUOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Ricci <io@r-ricci.it>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Len Brown <len.brown@intel.com>
-Subject: [PATCH 6.12 388/393] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
-Date: Thu, 17 Apr 2025 19:53:17 +0200
-Message-ID: <20250417175123.213005409@linuxfoundation.org>
+	Eder Zulian <ezulian@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	He Zhe <zhe.he@windriver.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.12 389/393] libbpf: Prevent compiler warnings/errors
+Date: Thu, 17 Apr 2025 19:53:18 +0200
+Message-ID: <20250417175123.251218127@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,95 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Eder Zulian <ezulian@redhat.com>
 
-commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
+commit 7f4ec77f3fee41dd6a41f03a40703889e6e8f7b2 upstream.
 
-While debugging kexec/hibernation hangs and crashes, it turned out that
-the current implementation of e820__register_nosave_regions() suffers from
-multiple serious issues:
+Initialize 'new_off' and 'pad_bits' to 0 and 'pad_type' to  NULL in
+btf_dump_emit_bit_padding to prevent compiler warnings/errors which are
+observed when compiling with 'EXTRA_CFLAGS=-g -Og' options, but do not
+happen when compiling with current default options.
 
- - The end of last region is tracked by PFN, causing it to find holes
-   that aren't there if two consecutive subpage regions are present
+For example, when compiling libbpf with
 
- - The nosave PFN ranges derived from holes are rounded out (instead of
-   rounded in) which makes it inconsistent with how explicitly reserved
-   regions are handled
+  $ make "EXTRA_CFLAGS=-g -Og" -C tools/lib/bpf/ clean all
 
-Fix this by:
+Clang version 17.0.6 and GCC 13.3.1 fail to compile btf_dump.c due to
+following errors:
 
- - Treating reserved regions as if they were holes, to ensure consistent
-   handling (rounding out nosave PFN ranges is more correct as the
-   kernel does not use partial pages)
+  btf_dump.c: In function ‘btf_dump_emit_bit_padding’:
+  btf_dump.c:903:42: error: ‘new_off’ may be used uninitialized [-Werror=maybe-uninitialized]
+    903 |         if (new_off > cur_off && new_off <= next_off) {
+        |                                  ~~~~~~~~^~~~~~~~~~~
+  btf_dump.c:870:13: note: ‘new_off’ was declared here
+    870 |         int new_off, pad_bits, bits, i;
+        |             ^~~~~~~
+  btf_dump.c:917:25: error: ‘pad_type’ may be used uninitialized [-Werror=maybe-uninitialized]
+    917 |                         btf_dump_printf(d, "\n%s%s: %d;", pfx(lvl), pad_type,
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    918 |                                         in_bitfield ? new_off - cur_off : 0);
+        |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  btf_dump.c:871:21: note: ‘pad_type’ was declared here
+    871 |         const char *pad_type;
+        |                     ^~~~~~~~
+  btf_dump.c:930:20: error: ‘pad_bits’ may be used uninitialized [-Werror=maybe-uninitialized]
+    930 |                 if (bits == pad_bits) {
+        |                    ^
+  btf_dump.c:870:22: note: ‘pad_bits’ was declared here
+    870 |         int new_off, pad_bits, bits, i;
+        |                      ^~~~~~~~
+  cc1: all warnings being treated as errors
 
- - Tracking the end of the last RAM region by address instead of pages
-   to detect holes more precisely
-
-These bugs appear to have been introduced about ~18 years ago with the very
-first version of e820_mark_nosave_regions(), and its flawed assumptions were
-carried forward uninterrupted through various waves of rewrites and renames.
-
-[ mingo: Added Git archeology details, for kicks and giggles. ]
-
-Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
-Reported-by: Roberto Ricci <io@r-ricci.it>
-Tested-by: Roberto Ricci <io@r-ricci.it>
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Len Brown <len.brown@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
-Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Eder Zulian <ezulian@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20241022172329.3871958-3-ezulian@redhat.com
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/e820.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ tools/lib/bpf/btf_dump.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/e820.c
-+++ b/arch/x86/kernel/e820.c
-@@ -754,22 +754,21 @@ void __init e820__memory_setup_extended(
- void __init e820__register_nosave_regions(unsigned long limit_pfn)
- {
- 	int i;
--	unsigned long pfn = 0;
-+	u64 last_addr = 0;
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -867,8 +867,8 @@ static void btf_dump_emit_bit_padding(co
+ 	} pads[] = {
+ 		{"long", d->ptr_sz * 8}, {"int", 32}, {"short", 16}, {"char", 8}
+ 	};
+-	int new_off, pad_bits, bits, i;
+-	const char *pad_type;
++	int new_off = 0, pad_bits = 0, bits, i;
++	const char *pad_type = NULL;
  
- 	for (i = 0; i < e820_table->nr_entries; i++) {
- 		struct e820_entry *entry = &e820_table->entries[i];
- 
--		if (pfn < PFN_UP(entry->addr))
--			register_nosave_region(pfn, PFN_UP(entry->addr));
--
--		pfn = PFN_DOWN(entry->addr + entry->size);
--
- 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
--			register_nosave_region(PFN_UP(entry->addr), pfn);
-+			continue;
- 
--		if (pfn >= limit_pfn)
--			break;
-+		if (last_addr < entry->addr)
-+			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
-+
-+		last_addr = entry->addr + entry->size;
- 	}
-+
-+	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
- }
- 
- #ifdef CONFIG_ACPI
+ 	if (cur_off >= next_off)
+ 		return; /* no gap */
 
 
