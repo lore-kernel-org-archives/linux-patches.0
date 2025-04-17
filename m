@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6C8256C80;
-	Thu, 17 Apr 2025 18:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F53B256C80;
+	Thu, 17 Apr 2025 18:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916135; cv=none; b=Qgw/gAHSnE+tEVWt579jxpPB34lljrStBKK+7bTEC2e6uoM9K6BVd38Y+HObhbPJTD+L5maBExm+9DsWuBXSoPqlXnYJwdfTiC+lhKaZ4LeK7gdX7PWnAlX/jBmKe24H5m7CUtStUPfxRgjV28jMFaiz8w0sfaEWPRzlI/n67Nc=
+	t=1744916138; cv=none; b=MlC48K+/d8EmpcCnDltDY9HwHS19HdHG1UfNTYJj+MJG6y400AfNsjQ7KQ69jMEmeNWGK0B+TSZZ5GcxkOMiOhvQyuDsvnsAv0tUkQSX3+kTrdGOXDgL1qLH/9x1PFr7IS9d3o+QBe0p8V7FtCIPf3+Ub+w291uPFaemvf1edIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916135; c=relaxed/simple;
-	bh=U9AftH/FfblJgHwmfnDT8f2pK2Cb3nZXYMB7dvznl9I=;
+	s=arc-20240116; t=1744916138; c=relaxed/simple;
+	bh=9xPU8lsogb+zT0nhxu7LcgngvOsSVYT0jT6kPKCHiPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDCLYFImgiB+T+29os2+bNiU0JE8SKTdaYTq46kRptV0lELAcOYAanGgqZRZFlos3i9PbYfligndTwBuFcA57xrcHP4vAH1HXsNMJo8ICrPZCAYzUPi7HZMXli/J9mEh7CUCt9c4FpWEQt15MEQ/oBPChLU/WKN2PyrH5TswUQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gi5AnYce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=upc1uGS8s33CKpsuRBl2OY/VNmDa9uXTEYevzV3YTF5xNaQPnyDiRRcogJiozLpqfkw89NoDiRE2jZb73Rktg/aKNnGLeQHwBDhhYvqMX7V5iu7oSc3xJa+dh1+PqPnsEKUJNEKef2aO9C+IYjGliGyBNaVAEEGS7ON5dC+DEn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W96kuyWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gi5AnYce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3286C4CEE4;
-	Thu, 17 Apr 2025 18:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W96kuyWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E58C4CEE4;
+	Thu, 17 Apr 2025 18:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916135;
-	bh=U9AftH/FfblJgHwmfnDT8f2pK2Cb3nZXYMB7dvznl9I=;
+	s=korg; t=1744916138;
+	bh=9xPU8lsogb+zT0nhxu7LcgngvOsSVYT0jT6kPKCHiPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gi5AnYcesgmONX4AVSZH6ODwYah4ENDY0wBY9gpnGnmg6N5XKTEXX9LypqgtCAd4D
-	 vCmQJarRwde/FsQg7KhY0p5AEElZSvVrY+l3hqHLVr7xFNLeu+GngL/c2L5FUcLceT
-	 WRd6bLqigykVYb4gZ0dIiwgWAYPHmktWB0HfphDU=
+	b=W96kuyWEjN5p17pZlRkGDe87AOFsrr81fhSlQvoNjImyctZOmbS1cUiVSamheJrdt
+	 bzkVvcL6rOwz1UkgbMmdXByNJBzamq8vXUwLBs7m4mXd2AqbZ/0fpaIpfZKr3zZTay
+	 /ZZ8+0f3Gy6PvSxG07zBnAoKJxqy1eRiFz1DALJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 315/393] tracing: fprobe events: Fix possible UAF on modules
-Date: Thu, 17 Apr 2025 19:52:04 +0200
-Message-ID: <20250417175120.276195339@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.12 348/393] landlock: Add the errata interface
+Date: Thu, 17 Apr 2025 19:52:37 +0200
+Message-ID: <20250417175121.597686656@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -43,92 +44,341 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit dd941507a9486252d6fcf11814387666792020f3 upstream.
+commit 15383a0d63dbcd63dc7e8d9ec1bf3a0f7ebf64ac upstream.
 
-Commit ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module
-refcount") moved try_module_get() from __find_tracepoint_module_cb()
-to find_tracepoint() caller, but that introduced a possible UAF
-because the module can be unloaded before try_module_get(). In this
-case, the module object should be freed too. Thus, try_module_get()
-does not only fail but may access to the freed object.
+Some fixes may require user space to check if they are applied on the
+running kernel before using a specific feature.  For instance, this
+applies when a restriction was previously too restrictive and is now
+getting relaxed (e.g. for compatibility reasons).  However, non-visible
+changes for legitimate use (e.g. security fixes) do not require an
+erratum.
 
-To avoid that, try_module_get() in __find_tracepoint_module_cb()
-again.
+Because fixes are backported down to a specific Landlock ABI, we need a
+way to avoid cherry-pick conflicts.  The solution is to only update a
+file related to the lower ABI impacted by this issue.  All the ABI files
+are then used to create a bitmask of fixes.
 
-Link: https://lore.kernel.org/all/174342990779.781946.9138388479067729366.stgit@devnote2/
+The new errata interface is similar to the one used to get the supported
+Landlock ABI version, but it returns a bitmask instead because the order
+of fixes may not match the order of versions, and not all fixes may
+apply to all versions.
 
-Fixes: ac91052f0ae5 ("tracing: tprobe-events: Fix leakage of module refcount")
+The actual errata will come with dedicated commits.  The description is
+not actually used in the code but serves as documentation.
+
+Create the landlock_abi_version symbol and use its value to check errata
+consistency.
+
+Update test_base's create_ruleset_checks_ordering tests and add errata
+tests.
+
+This commit is backportable down to the first version of Landlock.
+
+Fixes: 3532b0b4352c ("landlock: Enable user space to infer supported features")
+Cc: Günther Noack <gnoack@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20250318161443.279194-3-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_fprobe.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ include/uapi/linux/landlock.h                |    2 
+ security/landlock/errata.h                   |   87 +++++++++++++++++++++++++++
+ security/landlock/setup.c                    |   30 +++++++++
+ security/landlock/setup.h                    |    3 
+ security/landlock/syscalls.c                 |   22 +++++-
+ tools/testing/selftests/landlock/base_test.c |   46 +++++++++++++-
+ 6 files changed, 185 insertions(+), 5 deletions(-)
+ create mode 100644 security/landlock/errata.h
 
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -888,9 +888,15 @@ static void __find_tracepoint_module_cb(
- 	struct __find_tracepoint_cb_data *data = priv;
+--- a/include/uapi/linux/landlock.h
++++ b/include/uapi/linux/landlock.h
+@@ -57,9 +57,11 @@ struct landlock_ruleset_attr {
+  *
+  * - %LANDLOCK_CREATE_RULESET_VERSION: Get the highest supported Landlock ABI
+  *   version.
++ * - %LANDLOCK_CREATE_RULESET_ERRATA: Get a bitmask of fixed issues.
+  */
+ /* clang-format off */
+ #define LANDLOCK_CREATE_RULESET_VERSION			(1U << 0)
++#define LANDLOCK_CREATE_RULESET_ERRATA			(1U << 1)
+ /* clang-format on */
  
- 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
--		data->tpoint = tp;
--		if (!data->mod)
-+		/* If module is not specified, try getting module refcount. */
-+		if (!data->mod && mod) {
-+			/* If failed to get refcount, ignore this tracepoint. */
-+			if (!try_module_get(mod))
-+				return;
+ /**
+--- /dev/null
++++ b/security/landlock/errata.h
+@@ -0,0 +1,87 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Landlock - Errata information
++ *
++ * Copyright © 2025 Microsoft Corporation
++ */
 +
- 			data->mod = mod;
-+		}
-+		data->tpoint = tp;
- 	}
- }
- 
-@@ -902,7 +908,11 @@ static void __find_tracepoint_cb(struct
- 		data->tpoint = tp;
- }
- 
--/* Find a tracepoint from kernel and module. */
++#ifndef _SECURITY_LANDLOCK_ERRATA_H
++#define _SECURITY_LANDLOCK_ERRATA_H
++
++#include <linux/init.h>
++
++struct landlock_erratum {
++	const int abi;
++	const u8 number;
++};
++
++/* clang-format off */
++#define LANDLOCK_ERRATUM(NUMBER) \
++	{ \
++		.abi = LANDLOCK_ERRATA_ABI, \
++		.number = NUMBER, \
++	},
++/* clang-format on */
++
 +/*
-+ * Find a tracepoint from kernel and module. If the tracepoint is on the module,
-+ * the module's refcount is incremented and returned as *@tp_mod. Thus, if it is
-+ * not NULL, caller must call module_put(*tp_mod) after used the tracepoint.
++ * Some fixes may require user space to check if they are applied on the running
++ * kernel before using a specific feature.  For instance, this applies when a
++ * restriction was previously too restrictive and is now getting relaxed (for
++ * compatibility or semantic reasons).  However, non-visible changes for
++ * legitimate use (e.g. security fixes) do not require an erratum.
 + */
- static struct tracepoint *find_tracepoint(const char *tp_name,
- 					  struct module **tp_mod)
++static const struct landlock_erratum landlock_errata_init[] __initconst = {
++
++/*
++ * Only Sparse may not implement __has_include.  If a compiler does not
++ * implement __has_include, a warning will be printed at boot time (see
++ * setup.c).
++ */
++#ifdef __has_include
++
++#define LANDLOCK_ERRATA_ABI 1
++#if __has_include("errata/abi-1.h")
++#include "errata/abi-1.h"
++#endif
++#undef LANDLOCK_ERRATA_ABI
++
++#define LANDLOCK_ERRATA_ABI 2
++#if __has_include("errata/abi-2.h")
++#include "errata/abi-2.h"
++#endif
++#undef LANDLOCK_ERRATA_ABI
++
++#define LANDLOCK_ERRATA_ABI 3
++#if __has_include("errata/abi-3.h")
++#include "errata/abi-3.h"
++#endif
++#undef LANDLOCK_ERRATA_ABI
++
++#define LANDLOCK_ERRATA_ABI 4
++#if __has_include("errata/abi-4.h")
++#include "errata/abi-4.h"
++#endif
++#undef LANDLOCK_ERRATA_ABI
++
++/*
++ * For each new erratum, we need to include all the ABI files up to the impacted
++ * ABI to make all potential future intermediate errata easy to backport.
++ *
++ * If such change involves more than one ABI addition, then it must be in a
++ * dedicated commit with the same Fixes tag as used for the actual fix.
++ *
++ * Each commit creating a new security/landlock/errata/abi-*.h file must have a
++ * Depends-on tag to reference the commit that previously added the line to
++ * include this new file, except if the original Fixes tag is enough.
++ *
++ * Each erratum must be documented in its related ABI file, and a dedicated
++ * commit must update Documentation/userspace-api/landlock.rst to include this
++ * erratum.  This commit will not be backported.
++ */
++
++#endif
++
++	{}
++};
++
++#endif /* _SECURITY_LANDLOCK_ERRATA_H */
+--- a/security/landlock/setup.c
++++ b/security/landlock/setup.c
+@@ -6,12 +6,14 @@
+  * Copyright © 2018-2020 ANSSI
+  */
+ 
++#include <linux/bits.h>
+ #include <linux/init.h>
+ #include <linux/lsm_hooks.h>
+ #include <uapi/linux/lsm.h>
+ 
+ #include "common.h"
+ #include "cred.h"
++#include "errata.h"
+ #include "fs.h"
+ #include "net.h"
+ #include "setup.h"
+@@ -31,8 +33,36 @@ struct lsm_blob_sizes landlock_blob_size
+ 	.lbs_superblock = sizeof(struct landlock_superblock_security),
+ };
+ 
++int landlock_errata __ro_after_init;
++
++static void __init compute_errata(void)
++{
++	size_t i;
++
++#ifndef __has_include
++	/*
++	 * This is a safeguard to make sure the compiler implements
++	 * __has_include (see errata.h).
++	 */
++	WARN_ON_ONCE(1);
++	return;
++#endif
++
++	for (i = 0; landlock_errata_init[i].number; i++) {
++		const int prev_errata = landlock_errata;
++
++		if (WARN_ON_ONCE(landlock_errata_init[i].abi >
++				 landlock_abi_version))
++			continue;
++
++		landlock_errata |= BIT(landlock_errata_init[i].number - 1);
++		WARN_ON_ONCE(prev_errata == landlock_errata);
++	}
++}
++
+ static int __init landlock_init(void)
  {
-@@ -931,7 +941,10 @@ static void reenable_trace_fprobe(struct
++	compute_errata();
+ 	landlock_add_cred_hooks();
+ 	landlock_add_task_hooks();
+ 	landlock_add_fs_hooks();
+--- a/security/landlock/setup.h
++++ b/security/landlock/setup.h
+@@ -11,7 +11,10 @@
+ 
+ #include <linux/lsm_hooks.h>
+ 
++extern const int landlock_abi_version;
++
+ extern bool landlock_initialized;
++extern int landlock_errata;
+ 
+ extern struct lsm_blob_sizes landlock_blob_sizes;
+ extern const struct lsm_id landlock_lsmid;
+--- a/security/landlock/syscalls.c
++++ b/security/landlock/syscalls.c
+@@ -159,7 +159,9 @@ static const struct file_operations rule
+  *        the new ruleset.
+  * @size: Size of the pointed &struct landlock_ruleset_attr (needed for
+  *        backward and forward compatibility).
+- * @flags: Supported value: %LANDLOCK_CREATE_RULESET_VERSION.
++ * @flags: Supported value:
++ *         - %LANDLOCK_CREATE_RULESET_VERSION
++ *         - %LANDLOCK_CREATE_RULESET_ERRATA
+  *
+  * This system call enables to create a new Landlock ruleset, and returns the
+  * related file descriptor on success.
+@@ -168,6 +170,10 @@ static const struct file_operations rule
+  * 0, then the returned value is the highest supported Landlock ABI version
+  * (starting at 1).
+  *
++ * If @flags is %LANDLOCK_CREATE_RULESET_ERRATA and @attr is NULL and @size is
++ * 0, then the returned value is a bitmask of fixed issues for the current
++ * Landlock ABI version.
++ *
+  * Possible returned errors are:
+  *
+  * - %EOPNOTSUPP: Landlock is supported by the kernel but disabled at boot time;
+@@ -191,9 +197,15 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
+ 		return -EOPNOTSUPP;
+ 
+ 	if (flags) {
+-		if ((flags == LANDLOCK_CREATE_RULESET_VERSION) && !attr &&
+-		    !size)
+-			return LANDLOCK_ABI_VERSION;
++		if (attr || size)
++			return -EINVAL;
++
++		if (flags == LANDLOCK_CREATE_RULESET_VERSION)
++			return landlock_abi_version;
++
++		if (flags == LANDLOCK_CREATE_RULESET_ERRATA)
++			return landlock_errata;
++
+ 		return -EINVAL;
  	}
+ 
+@@ -234,6 +246,8 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
+ 	return ruleset_fd;
  }
  
--/* Find a tracepoint from specified module. */
++const int landlock_abi_version = LANDLOCK_ABI_VERSION;
++
+ /*
+  * Returns an owned ruleset from a FD. It is thus needed to call
+  * landlock_put_ruleset() on the return value.
+--- a/tools/testing/selftests/landlock/base_test.c
++++ b/tools/testing/selftests/landlock/base_test.c
+@@ -98,10 +98,54 @@ TEST(abi_version)
+ 	ASSERT_EQ(EINVAL, errno);
+ }
+ 
 +/*
-+ * Find a tracepoint from specified module. In this case, this does not get the
-+ * module's refcount. The caller must ensure the module is not freed.
++ * Old source trees might not have the set of Kselftest fixes related to kernel
++ * UAPI headers.
 + */
- static struct tracepoint *find_tracepoint_in_module(struct module *mod,
- 						    const char *tp_name)
++#ifndef LANDLOCK_CREATE_RULESET_ERRATA
++#define LANDLOCK_CREATE_RULESET_ERRATA (1U << 1)
++#endif
++
++TEST(errata)
++{
++	const struct landlock_ruleset_attr ruleset_attr = {
++		.handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE,
++	};
++	int errata;
++
++	errata = landlock_create_ruleset(NULL, 0,
++					 LANDLOCK_CREATE_RULESET_ERRATA);
++	/* The errata bitmask will not be backported to tests. */
++	ASSERT_LE(0, errata);
++	TH_LOG("errata: 0x%x", errata);
++
++	ASSERT_EQ(-1, landlock_create_ruleset(&ruleset_attr, 0,
++					      LANDLOCK_CREATE_RULESET_ERRATA));
++	ASSERT_EQ(EINVAL, errno);
++
++	ASSERT_EQ(-1, landlock_create_ruleset(NULL, sizeof(ruleset_attr),
++					      LANDLOCK_CREATE_RULESET_ERRATA));
++	ASSERT_EQ(EINVAL, errno);
++
++	ASSERT_EQ(-1,
++		  landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr),
++					  LANDLOCK_CREATE_RULESET_ERRATA));
++	ASSERT_EQ(EINVAL, errno);
++
++	ASSERT_EQ(-1, landlock_create_ruleset(
++			      NULL, 0,
++			      LANDLOCK_CREATE_RULESET_VERSION |
++				      LANDLOCK_CREATE_RULESET_ERRATA));
++	ASSERT_EQ(-1, landlock_create_ruleset(NULL, 0,
++					      LANDLOCK_CREATE_RULESET_ERRATA |
++						      1 << 31));
++	ASSERT_EQ(EINVAL, errno);
++}
++
+ /* Tests ordering of syscall argument checks. */
+ TEST(create_ruleset_checks_ordering)
  {
-@@ -1167,11 +1180,6 @@ static int __trace_fprobe_create(int arg
- 	if (is_tracepoint) {
- 		ctx.flags |= TPARG_FL_TPOINT;
- 		tpoint = find_tracepoint(symbol, &tp_mod);
--		/* lock module until register this tprobe. */
--		if (tp_mod && !try_module_get(tp_mod)) {
--			tpoint = NULL;
--			tp_mod = NULL;
--		}
- 		if (tpoint) {
- 			ctx.funcname = kallsyms_lookup(
- 				(unsigned long)tpoint->probestub,
+-	const int last_flag = LANDLOCK_CREATE_RULESET_VERSION;
++	const int last_flag = LANDLOCK_CREATE_RULESET_ERRATA;
+ 	const int invalid_flag = last_flag << 1;
+ 	int ruleset_fd;
+ 	const struct landlock_ruleset_attr ruleset_attr = {
 
 
