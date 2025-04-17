@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A15725B67A;
-	Thu, 17 Apr 2025 18:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB01825B665;
+	Thu, 17 Apr 2025 18:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914920; cv=none; b=RUmi/xbIYbWWrSNX89+nlQe2H+UPZj9qKzDAw0bwvFaxZNYh5/3Jiaq3we7TiDNcjtBpv3ecabPEG9gc0g+HpQbcKVnB9Lt3CU1XSDd/P5dBvlWfUkp7DvW67yqNLkx0Tkqn8uJ0kQR/BIyOK6WMnzgC9ON21WMon3Fz+tVRug4=
+	t=1744914923; cv=none; b=VGhkbYiRp25ZjMG0FKAof5XyD4h4FqRnx1Rlq+1VzRtkt4PJvlzlMvnEPGH/3JlpPKTXdmn6jX8zsEqmyRtmYphdl+PwOsTJw6mlENjGIkXXkmyXS6KGSXWhGo6uYHpcpQqjJjYkz+T1ghRB2r2wyHLU+CY2b8Hpj8A7boT3uqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914920; c=relaxed/simple;
-	bh=hjdChA63qo8qNkIBXq0+jLPCW3+MN02wZ21kRtyYOao=;
+	s=arc-20240116; t=1744914923; c=relaxed/simple;
+	bh=QmW2HTWn9EbinXeNu1dKMkrjRYpHs5u1DheJU6p+wQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HTY3Wbq0pzBzoo8c5TNC9Cs5IddW+04ki3HDJEO/sv4hwdLxxUPvAP0499viAt28QvfRDEAG+O8qA2zXymCi75K+7xsqJg2kCUywy8Oo9C1V8XiRaJ6f4W9t9xQJDXb2SecrCm3I1rJC8/TV86RTugQMolWNxjH72Bg5z07ZEQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yj7CrXJs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSRa7ne4dvGUo0GRIyGSCeRnNJpOI0kng9SWDsYGRLcjlXLm4eRdEFW9YeQglJ1LBt2+aXsxYKGrv1c12SeprmVd2uPZyor5Y0nH0doIgwnrzA7O8oF2KQFHX4Uf29NzvALCPAOV5poO1KvLUNsJXHge7BMDaEfIPAYGNDgJ4o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2Hnhqqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj7CrXJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB0C4CEEA;
-	Thu, 17 Apr 2025 18:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2Hnhqqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9E7C4CEE4;
+	Thu, 17 Apr 2025 18:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914919;
-	bh=hjdChA63qo8qNkIBXq0+jLPCW3+MN02wZ21kRtyYOao=;
+	s=korg; t=1744914922;
+	bh=QmW2HTWn9EbinXeNu1dKMkrjRYpHs5u1DheJU6p+wQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yj7CrXJs0JAtOJ89wky7FhTI/mdLiEqsmSKXx8Ygcl0WPcdG2K/tLnfwrBciL02Hh
-	 kA0ehz0a8Rn2PseHPGe2kyZLZWK6QIJcsH1jIXGWEIjwM46PFVIxmRD/bu1Pud2Vm6
-	 Qfox+2N3TMi+sv8k/JB6s8fRf3ELgxOLlwTzy8MY=
+	b=f2HnhqqtUD4VdnpgV4HVgDL/fqBDVexqE/ngl0Wm/kgLOCxZ3viZszFoMZu0O1D41
+	 mtp1paYVG8U7nePIcAaxsM28ul1Jy7zXR62RB0iLVpOeZ9rZwu87OAqVZzeU85IsjE
+	 rgtJxeG+wDLe3Ytpwc871PuljdIn7X2wgZbIIy+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junwen Sun <sunjw8888@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 343/414] cifs: Ensure that all non-client-specific reparse points are processed by the server
-Date: Thu, 17 Apr 2025 19:51:41 +0200
-Message-ID: <20250417175125.223629647@linuxfoundation.org>
+	Hien Huynh <hien.huynh.px@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 6.13 344/414] clk: renesas: r9a07g043: Fix HP clock source for RZ/Five
+Date: Thu, 17 Apr 2025 19:51:42 +0200
+Message-ID: <20250417175125.265861877@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -45,89 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 6f8a394aa952257575910d57cf0a63627fa949a2 upstream.
+commit 7f22a298d926664b51fcfe2f8ea5feb7f8b79952 upstream.
 
-Fix regression in mounts to e.g. onedrive shares.
+According to the Rev.1.20 hardware manual for the RZ/Five SoC, the clock
+source for HP is derived from PLL6 divided by 2.  Correct the
+implementation by configuring HP as a fixed clock source instead of a
+MUX.
 
-Generally, reparse points are processed by the SMB server during the
-SMB OPEN request, but there are few reparse points which do not have
-OPEN-like meaning for the SMB server and has to be processed by the SMB
-client. Those are symlinks and special files (fifo, socket, block, char).
+The `CPG_PL6_ETH_SSEL' register, which is available on the RZ/G2UL SoC,
+is not present on the RZ/Five SoC, necessitating this change.
 
-For Linux SMB client, it is required to process also name surrogate reparse
-points as they represent another entity on the SMB server system. Linux
-client will mark them as separate mount points. Examples of name surrogate
-reparse points are NTFS junction points (e.g. created by the "mklink" tool
-on Windows servers).
-
-So after processing the name surrogate reparse points, clear the
--EOPNOTSUPP error code returned from the parse_reparse_point() to let SMB
-server to process reparse points.
-
-And remove printing misleading error message "unhandled reparse tag:" as
-reparse points are handled by SMB server and hence unhandled fact is normal
-operation.
-
-Fixes: cad3fc0a4c8c ("cifs: Throw -EOPNOTSUPP error on unsupported reparse point type from parse_reparse_point()")
-Fixes: b587fd128660 ("cifs: Treat unhandled directory name surrogate reparse points as mount directory nodes")
+Fixes: 95d48d270305ad2c ("clk: renesas: r9a07g043: Add support for RZ/Five SoC")
 Cc: stable@vger.kernel.org
-Reported-by: Junwen Sun <sunjw8888@gmail.com>
-Tested-by: Junwen Sun <sunjw8888@gmail.com>
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250127173159.34572-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c   |   10 ++++++++++
- fs/smb/client/reparse.c |    4 ----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/clk/renesas/r9a07g043-cpg.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1228,6 +1228,16 @@ static int reparse_info_to_fattr(struct
- 				cifs_create_junction_fattr(fattr, sb);
- 				goto out;
- 			}
-+			/*
-+			 * If the reparse point is unsupported by the Linux SMB
-+			 * client then let it process by the SMB server. So mask
-+			 * the -EOPNOTSUPP error code. This will allow Linux SMB
-+			 * client to send SMB OPEN request to server. If server
-+			 * does not support this reparse point too then server
-+			 * will return error during open the path.
-+			 */
-+			if (rc == -EOPNOTSUPP)
-+				rc = 0;
- 		}
- 		break;
- 	}
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -698,8 +698,6 @@ int parse_reparse_point(struct reparse_d
- 			const char *full_path,
- 			bool unicode, struct cifs_open_info_data *data)
- {
--	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
--
- 	data->reparse.buf = buf;
+--- a/drivers/clk/renesas/r9a07g043-cpg.c
++++ b/drivers/clk/renesas/r9a07g043-cpg.c
+@@ -89,7 +89,9 @@ static const struct clk_div_table dtable
  
- 	/* See MS-FSCC 2.1.2 */
-@@ -726,8 +724,6 @@ int parse_reparse_point(struct reparse_d
- 		}
- 		return 0;
- 	default:
--		cifs_tcon_dbg(VFS | ONCE, "unhandled reparse tag: 0x%08x\n",
--			      le32_to_cpu(buf->ReparseTag));
- 		return -EOPNOTSUPP;
- 	}
- }
+ /* Mux clock tables */
+ static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
++#ifdef CONFIG_ARM64
+ static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
++#endif
+ static const char * const sel_sdhi[] = { ".clk_533", ".clk_400", ".clk_266" };
+ 
+ static const u32 mtable_sdhi[] = { 1, 2, 3 };
+@@ -137,7 +139,12 @@ static const struct cpg_core_clk r9a07g0
+ 	DEF_DIV("P2", R9A07G043_CLK_P2, CLK_PLL3_DIV2_4_2, DIVPL3A, dtable_1_32),
+ 	DEF_FIXED("M0", R9A07G043_CLK_M0, CLK_PLL3_DIV2_4, 1, 1),
+ 	DEF_FIXED("ZT", R9A07G043_CLK_ZT, CLK_PLL3_DIV2_4_2, 1, 1),
++#ifdef CONFIG_ARM64
+ 	DEF_MUX("HP", R9A07G043_CLK_HP, SEL_PLL6_2, sel_pll6_2),
++#endif
++#ifdef CONFIG_RISCV
++	DEF_FIXED("HP", R9A07G043_CLK_HP, CLK_PLL6_250, 1, 1),
++#endif
+ 	DEF_FIXED("SPI0", R9A07G043_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
+ 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
+ 	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_sdhi,
 
 
