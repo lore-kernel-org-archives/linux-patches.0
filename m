@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9E22580C4;
-	Thu, 17 Apr 2025 18:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E94D1DEFC5;
+	Thu, 17 Apr 2025 18:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913141; cv=none; b=nWnaRzvwhAwY8AJItFP5u75dgybGD9aZumNKxrbR9IAVEfS5XXjzif05LnDNA65Um5zVb2rxXMWUaaosGGyjPMxXdhMjIHaiTcF2MzHe8ASZAera/mJCAg9zb6HG+1NCrMqWGxWCo064GSPpjOxmMfL5sYVmWNT4WkbdfnE+x1s=
+	t=1744913144; cv=none; b=lhdJGD5oGXP3BA8sXlFf9FCeE+XJvYhPWxWUOLc3Yidme/5a1wtyIt1mCXH80sUYB6Eg8Kich3hM6gyWsQfwu9GF9O+Yuaw4RXdz31WvbyO/RBrINzuS2YlniBAuazihk02tk4v7p+rU7yirp9/kZPh1q9GWkpGMN+kv2zTikCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913141; c=relaxed/simple;
-	bh=35NX7QTC7QVshmajE/uAG10fze/qRVtMRKUmte2B5+Y=;
+	s=arc-20240116; t=1744913144; c=relaxed/simple;
+	bh=6mwbK38xGyhg0to12xSJou4htn4bLzT7V9TkejpFn1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQa1Tqfid49eyV4iTXGtNxyy3BfqyN41bVP7l1yZOW5c63hxM9AXAgxXZcAi9XXMO6Xa73kRHpa6EhrtOqDHzD0UkaCzqJHc577kLk8Vxov8w+ymNbR6CFW7cePi2oOXFRLssR1L1AyX5SQ8oMT8G7GGfY50rfuKlj78UBAwv/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh+NyHiM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNj4dAQfBcb05f4KKOEmPSBXqDOiDC18rrnAIocwj3DhwZ9NWIQnkp/w9xzkKbgzUxcJQONm4f/JswDdc6vdZuIKwFAAU98xXen+0BuzvHp1TllWPn9prPKq9ElZKpY9oLoN43Ov8+kD5bWHNnpxAWrCYs5GjVRZGe/1VKyU8go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTaJUNdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh+NyHiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC5AC4CEE4;
-	Thu, 17 Apr 2025 18:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTaJUNdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C6AC4CEE4;
+	Thu, 17 Apr 2025 18:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913141;
-	bh=35NX7QTC7QVshmajE/uAG10fze/qRVtMRKUmte2B5+Y=;
+	s=korg; t=1744913144;
+	bh=6mwbK38xGyhg0to12xSJou4htn4bLzT7V9TkejpFn1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wh+NyHiMHBz0+79xEJoBHNWGPmWB3QvvNcnyIhNagd5amlfoQLKnOFf1YcJLOpzw8
-	 Cz6L1Qy/u0VWOvS/aY/F/9SKtUvVgOA43DT0933IbLuZwqqoHvx9nw5zyY1uj8Yd48
-	 /1sndUl+sBPLRpJYrI2CE+c41Y/M9Csp1DAJXF8g=
+	b=ZTaJUNdAaJFd793yRH8JWV0J+ee7+cvnXSsgmAkZdUeGauDaIkNNnVu6gcWAnaXlh
+	 0qv9Jg0sXJLgwfCeyDmMCtNBlzaxvLSDwrmDmTP/yd2M3st9KjO7A0waTS+i0iMK5w
+	 T4vJyBjI+u2aXPnl32RjBnd0JzwqlO0hDJw3qd2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@meta.com>,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.14 241/449] tpm, tpm_tis: Fix timeout handling when waiting for TPM status
-Date: Thu, 17 Apr 2025 19:48:49 +0200
-Message-ID: <20250417175127.695789131@linuxfoundation.org>
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.14 242/449] accel/ivpu: Fix PM related deadlocks in MS IOCTLs
+Date: Thu, 17 Apr 2025 19:48:50 +0200
+Message-ID: <20250417175127.738229991@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -46,53 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan McDowell <noodles@meta.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-commit 7146dffa875cd00e7a7f918e1fce79c7593ac1fa upstream.
+commit d893da85e06edf54737bb80648bb58ba8fd56d9f upstream.
 
-The change to only use interrupts to handle supported status changes
-introduced an issue when it is necessary to poll for the status. Rather
-than checking for the status after sleeping the code now sleeps after
-the check. This means a correct, but slower, status change on the part
-of the TPM can be missed, resulting in a spurious timeout error,
-especially on a more loaded system. Switch back to sleeping *then*
-checking. An up front check of the status has been done at the start of
-the function, so this does not cause an additional delay when the status
-is already what we're looking for.
+Prevent runtime resume/suspend while MS IOCTLs are in progress.
+Failed suspend will call ivpu_ms_cleanup() that would try to acquire
+file_priv->ms_lock, which is already held by the IOCTLs.
 
-Cc: stable@vger.kernel.org # v6.4+
-Fixes: e87fcf0dc2b4 ("tpm, tpm_tis: Only handle supported interrupts")
-Signed-off-by: Jonathan McDowell <noodles@meta.com>
-Reviewed-by: Michal Suchánek <msuchanek@suse.de>
-Reviewed-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
+Cc: stable@vger.kernel.org # v6.11+
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://lore.kernel.org/r/20250325114306.3740022-3-maciej.falkowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_debugfs.c |    4 ++--
+ drivers/accel/ivpu/ivpu_ms.c      |   18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -114,11 +114,10 @@ again:
- 		return 0;
- 	/* process status changes without irq support */
- 	do {
-+		usleep_range(priv->timeout_min, priv->timeout_max);
- 		status = chip->ops->status(chip);
- 		if ((status & mask) == mask)
- 			return 0;
--		usleep_range(priv->timeout_min,
--			     priv->timeout_max);
- 	} while (time_before(jiffies, stop));
- 	return -ETIME;
+--- a/drivers/accel/ivpu/ivpu_debugfs.c
++++ b/drivers/accel/ivpu/ivpu_debugfs.c
+@@ -331,7 +331,7 @@ ivpu_force_recovery_fn(struct file *file
+ 		return -EINVAL;
+ 
+ 	ret = ivpu_rpm_get(vdev);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 
+ 	ivpu_pm_trigger_recovery(vdev, "debugfs");
+@@ -382,7 +382,7 @@ static int dct_active_set(void *data, u6
+ 		return -EINVAL;
+ 
+ 	ret = ivpu_rpm_get(vdev);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 
+ 	if (active_percent)
+--- a/drivers/accel/ivpu/ivpu_ms.c
++++ b/drivers/accel/ivpu/ivpu_ms.c
+@@ -44,6 +44,10 @@ int ivpu_ms_start_ioctl(struct drm_devic
+ 	    args->sampling_period_ns < MS_MIN_SAMPLE_PERIOD_NS)
+ 		return -EINVAL;
+ 
++	ret = ivpu_rpm_get(vdev);
++	if (ret < 0)
++		return ret;
++
+ 	mutex_lock(&file_priv->ms_lock);
+ 
+ 	if (get_instance_by_mask(file_priv, args->metric_group_mask)) {
+@@ -96,6 +100,8 @@ err_free_ms:
+ 	kfree(ms);
+ unlock:
+ 	mutex_unlock(&file_priv->ms_lock);
++
++	ivpu_rpm_put(vdev);
+ 	return ret;
  }
+ 
+@@ -160,6 +166,10 @@ int ivpu_ms_get_data_ioctl(struct drm_de
+ 	if (!args->metric_group_mask)
+ 		return -EINVAL;
+ 
++	ret = ivpu_rpm_get(vdev);
++	if (ret < 0)
++		return ret;
++
+ 	mutex_lock(&file_priv->ms_lock);
+ 
+ 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
+@@ -187,6 +197,7 @@ int ivpu_ms_get_data_ioctl(struct drm_de
+ unlock:
+ 	mutex_unlock(&file_priv->ms_lock);
+ 
++	ivpu_rpm_put(vdev);
+ 	return ret;
+ }
+ 
+@@ -204,11 +215,17 @@ int ivpu_ms_stop_ioctl(struct drm_device
+ {
+ 	struct ivpu_file_priv *file_priv = file->driver_priv;
+ 	struct drm_ivpu_metric_streamer_stop *args = data;
++	struct ivpu_device *vdev = file_priv->vdev;
+ 	struct ivpu_ms_instance *ms;
++	int ret;
+ 
+ 	if (!args->metric_group_mask)
+ 		return -EINVAL;
+ 
++	ret = ivpu_rpm_get(vdev);
++	if (ret < 0)
++		return ret;
++
+ 	mutex_lock(&file_priv->ms_lock);
+ 
+ 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
+@@ -217,6 +234,7 @@ int ivpu_ms_stop_ioctl(struct drm_device
+ 
+ 	mutex_unlock(&file_priv->ms_lock);
+ 
++	ivpu_rpm_put(vdev);
+ 	return ms ? 0 : -EINVAL;
+ }
+ 
 
 
