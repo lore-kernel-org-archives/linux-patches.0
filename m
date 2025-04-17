@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C0725742B;
-	Thu, 17 Apr 2025 18:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6C125742A;
+	Thu, 17 Apr 2025 18:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916267; cv=none; b=T5vUCx7Z1qs2ZSlAPyxmlA0tvMgZqHmGqVr3TEwErb+fcM4rSBWJkM7kAZbQFw6Iclze9JzRm49cUvegsgWSkfhxudKo4F+ICE57+KwM5/d46dB6hyeziDSAQjaqzdUw2iCxzRQ8MjyAYBX/XdkOFZrv3NPtIFnx4G9LKy7nDrY=
+	t=1744916270; cv=none; b=AHxk93/6e8NjpAogAdLd+j0JRu9TfqAuYKPyxsZZVUujbbtp0bkM8JX3J9T0OOeqaNEK4LHDisaJxl+IleYCDSPi+CnWHK0W7VMSyfT5q1ipdPNZTp8xclKH0TR5joLjnd8pCbGLp0XbDhu4e+ECFSR39Cm8waFMPDdDKiwLL3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916267; c=relaxed/simple;
-	bh=sXGDHxFHLeBKnp0TZ0m0cAV57ZdmbpIp1uy0A31ftgw=;
+	s=arc-20240116; t=1744916270; c=relaxed/simple;
+	bh=0hlPnt1FQkfIx9z3vHgZM7v9joLe+5DvS1zH5Jmv9BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnOnjWeAeRQvUIMAFwz+HQOD8E9UvfpH1HfczlghdpPfUuHhSL8w9BmFR/xjdV3kP5ChtCJEqHYlNximhc+enE9DveDYIH043iAhWCzKO7dVmvMeBBQ816/m+VaPDv31UvN+lnqMbYfdLRie3pUOPsXyfyTE4BbDBqjn2URMZaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMQ+7p3D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgkCtNlOHCKDx7xkZSzgoPq4Nh6jqaassnFBAifJG2nEFKEnoZYjuO/d/9mxULzIktT9OymEqrWHa8qIYm2mXPRQ9uyQ1Qi4jIWJ6b6fhH97PQHBlaZWKPKuxp45J4aIZAAC/Rghh+9RG6KJDoik/EP784aFHCmaX1Elt7TUYNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCeNNaXL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMQ+7p3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F204DC4CEE4;
-	Thu, 17 Apr 2025 18:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCeNNaXL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADC5C4CEE4;
+	Thu, 17 Apr 2025 18:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916267;
-	bh=sXGDHxFHLeBKnp0TZ0m0cAV57ZdmbpIp1uy0A31ftgw=;
+	s=korg; t=1744916270;
+	bh=0hlPnt1FQkfIx9z3vHgZM7v9joLe+5DvS1zH5Jmv9BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMQ+7p3DZhuW6j1SGlvOdAB+AA263DWeFPbwU3PYB8wVaVTZyEX+3PeJGIq5ufZd9
-	 Qkh+OoWHpI/+wehMssbV4m9rxTzno17SetSAc8uZxvpsJgf5RCEhIQ5S4mpaMhZkf7
-	 QyQeyx1UI2aEIE9MWrm9N1kI6+QwZ/hO9NEMSxjg=
+	b=UCeNNaXLahm9/uBajIj4zNWLMkkw1you+4HS2UK1Zo3DE6rg4qS9u3x7xEdRFfJEU
+	 X2M03GB7kTKZI5MODoknoNHQTIEtUv96wDd45BlTmDg+JuU2ulprDDsmTZ670EgD3S
+	 3I+AJDh6+hWS/f8ZA44RjJFbjCDiWeekVqsh3IQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 385/393] NFSD: fix decoding in nfs4_xdr_dec_cb_getattr
-Date: Thu, 17 Apr 2025 19:53:14 +0200
-Message-ID: <20250417175123.096196131@linuxfoundation.org>
+Subject: [PATCH 6.12 386/393] NFSD: Fix CB_GETATTR status fix
+Date: Thu, 17 Apr 2025 19:53:15 +0200
+Message-ID: <20250417175123.133926282@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,19 +50,28 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 1b3e26a5ccbfc2f85bda1930cc278e313165e353 upstream.
+commit 4990d098433db18c854e75fb0f90d941eb7d479e upstream.
 
-If a client were to send an error to a CB_GETATTR call, the code
-erronously continues to try decode past the error code. It ends
-up returning BAD_XDR error to the rpc layer and then in turn
-trigger a WARN_ONCE in nfsd4_cb_done() function.
+Jeff says:
 
-Fixes: 6487a13b5c6b ("NFSD: add support for CB_GETATTR callback")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Now that I look, 1b3e26a5ccbf is wrong. The patch on the ml was correct, but
+the one that got committed is different. It should be:
+
+    status = decode_cb_op_status(xdr, OP_CB_GETATTR, &cb->cb_status);
+    if (unlikely(status || cb->cb_status))
+
+If "status" is non-zero, decoding failed (usu. BADXDR), but we also want to
+bail out and not decode the rest of the call if the decoded cb_status is
+non-zero. That's not happening here, cb_seq_status has already been checked and
+is non-zero, so this ends up trying to decode the rest of the CB_GETATTR reply
+when it doesn't exist.
+
+Reported-by: Jeff Layton <jlayton@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219737
+Fixes: 1b3e26a5ccbf ("NFSD: fix decoding in nfs4_xdr_dec_cb_getattr")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -77,8 +84,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		return status;
  
  	status = decode_cb_op_status(xdr, OP_CB_GETATTR, &cb->cb_status);
--	if (status)
-+	if (unlikely(status || cb->cb_seq_status))
+-	if (unlikely(status || cb->cb_seq_status))
++	if (unlikely(status || cb->cb_status))
  		return status;
  	if (xdr_stream_decode_uint32_array(xdr, bitmap, 3) < 0)
  		return -NFSERR_BAD_XDR;
