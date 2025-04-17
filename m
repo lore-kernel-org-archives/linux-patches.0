@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70FC2641EC;
-	Thu, 17 Apr 2025 18:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF846254B18;
+	Thu, 17 Apr 2025 18:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914821; cv=none; b=k1sFrFLRiZRefe7F8YtqBRphS1MFEm/8XPP2b9XtkYthqTPPH1BlCJNxRumsBr2PuFTPfhiTnazBbbqdfE0qj8af2Wb6jiXG28aPiAAd44TccU5uPVU97vMXWMbxQlofYqCvKypRjWjKvyP1xevpgh7HlUwjCRiFLRi1lzM3PKM=
+	t=1744914824; cv=none; b=M9vITN4jGKvxrmRt9UnoZgaL5kevhsssbCziqQqEucfUT1twO+ixB6SffKlKuMPeavs+IWGcb6maOM0MpL+xa7peoIku9GaOy0KhAUH8krbGBTJIQxbOkVBY0HMhscWAbAYTyW77OA7i6g2z/7EGhrV84gMZcrlApXzDGwQF+yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914821; c=relaxed/simple;
-	bh=Tdix3TNh8I1qdnZSSuqRSSW0KAJqRt9WqGhOiiuEaGA=;
+	s=arc-20240116; t=1744914824; c=relaxed/simple;
+	bh=NuyAaFu5/1XdbCjDlmyjweW3C+nR0vejL8e/yy4d1nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7DNJuPdkU0OVI6lAKqWM3j+EPrgXt/NA9Pn4IDN/P1WkAEGFWtwyTDKVvH8lLlvIRLylTZDNbtPm0hVQPFdHKLpLScOPGvW+kSAJ6sXo4GE92zIQeGQw5lUw2ualYKI20ZgShorxHbuNnVgxuijhIBr4WQpkRGcOOl4FXyRMjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIXwacvT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STSfNJFEaR5sZFCKV8XYaoc7EEG5mkBrggXNBv23tlsqtYSwCOzFqdTmYtYhkiXiDqvMx7aMRgKRLBYo2GlXaoy6rQzZvCoMCZ2PPNTxuAlhkN8qNImt6YTrnHVngHkOuEV5G6z1kPbierAudcwQQ+F0OoCu0CStOfaNJfV+3Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G60B3Q9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIXwacvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAB8C4CEE4;
-	Thu, 17 Apr 2025 18:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G60B3Q9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5DDC4CEE4;
+	Thu, 17 Apr 2025 18:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914821;
-	bh=Tdix3TNh8I1qdnZSSuqRSSW0KAJqRt9WqGhOiiuEaGA=;
+	s=korg; t=1744914824;
+	bh=NuyAaFu5/1XdbCjDlmyjweW3C+nR0vejL8e/yy4d1nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIXwacvTP90SrVoOwEbUAAwiqck0YryqyDBoWXFQ6T8BnbvhAtjWF6DX5ZQh33W/t
-	 tZA37BGZZiX4nm++iQS3HVf3gPT5kWVLjqVwnp+aMwpbDeHMvMmbwjPmYCk6k7mQ6a
-	 DQ8X7IO/qOcBhEx14pN15DCGa1WNmwCKE7sTj22w=
+	b=G60B3Q9hjI2R4yq/2SBhaKUJNqaUZzemVQvyGHEFgMYHtsKZqEpPSQ+YU93PmkQCn
+	 ekO9rWB74e+hUQuCpq3RJemmyrqlTJ11+vteaymiRHJG3gMRoOjqcWrinWCny+G9d6
+	 9SREsO58TUGJ5pvqiXb/DOIJeq3hj5rxVNUV8Mpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.13 313/414] btrfs: tests: fix chunk map leak after failure to add it to the tree
-Date: Thu, 17 Apr 2025 19:51:11 +0200
-Message-ID: <20250417175124.021405901@linuxfoundation.org>
+Subject: [PATCH 6.13 314/414] btrfs: zoned: fix zone activation with missing devices
+Date: Thu, 17 Apr 2025 19:51:12 +0200
+Message-ID: <20250417175124.061870123@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 009ca358486ded9b4822eddb924009b6848d7271 upstream.
+commit 2bbc4a45e5eb6b868357c1045bf6f38f6ba576e0 upstream.
 
-If we fail to add the chunk map to the fs mapping tree we exit
-test_rmap_block() without freeing the chunk map. Fix this by adding a
-call to btrfs_free_chunk_map() before exiting the test function if the
-call to btrfs_add_chunk_map() failed.
+If btrfs_zone_activate() is called with a filesystem that has missing
+devices (e.g. a RAID file system mounted in degraded mode) it is accessing
+the btrfs_device::zone_info pointer, which will not be set if the device in
+question is missing.
 
-Fixes: 7dc66abb5a47 ("btrfs: use a dedicated data structure for chunk maps")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Check if the device is present (by checking if it has a valid block
+device pointer associated) and if not, skip zone activation for it.
+
+Fixes: f9a912a3c45f ("btrfs: zoned: make zone activation multi stripe capable")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tests/extent-map-tests.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/zoned.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/tests/extent-map-tests.c
-+++ b/fs/btrfs/tests/extent-map-tests.c
-@@ -1045,6 +1045,7 @@ static int test_rmap_block(struct btrfs_
- 	ret = btrfs_add_chunk_map(fs_info, map);
- 	if (ret) {
- 		test_err("error adding chunk map to mapping tree");
-+		btrfs_free_chunk_map(map);
- 		goto out_free;
- 	}
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2111,6 +2111,9 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 		physical = map->stripes[i].physical;
+ 		zinfo = device->zone_info;
+ 
++		if (!device->bdev)
++			continue;
++
+ 		if (zinfo->max_active_zones == 0)
+ 			continue;
  
 
 
