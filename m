@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304EB1B4153;
-	Thu, 17 Apr 2025 18:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B1B2586EC;
+	Thu, 17 Apr 2025 18:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915835; cv=none; b=f30a0QDicI1trc6rodIR0kC2fXoX8UsIDREhQoO5ixNl7BwhVzalqD92BQYuPy/QNH9Btt/1S1PCwLkHt9OfQfV4cDbq/TtEDr9/N4IRTzUGv0D5IV4t7YWAdS/8W5Ng4kpT1Z4245lJ36iBIQx1We/UEsnP5y2Pp5qZzgDZ3hU=
+	t=1744915837; cv=none; b=tTaeDr6zjgl2P10z4/s8g1vK79Y6nwAOBifL3r4XD9+D0kmSYPntQyPYoVDqrwJSKKMLSgaThIyVxqNHJrpuk6lTqky2RgkUv3XhvdZjOnarF9MI9CdFScjH/nfgGvIVLXf4ansfAzpBwqGGm+QRi/LNDZaOgdzcy4qNGbtwZoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915835; c=relaxed/simple;
-	bh=RU2t0Zk5C1sanvOiGGMZndT42gkOieE6ywG5VypPzUY=;
+	s=arc-20240116; t=1744915837; c=relaxed/simple;
+	bh=R8zSC7fPvg9NWYhQEcqCjtkDHmSCjotqSI7x9EGcLTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcCfGxJBUfD82E2dMKtNK3FdGQ/Q50VI4mA9D0rugKFm6Ie4XvFgZp1VTOjtjAtlU1wzjvkAR29/Px3oN+CScAIgCjHxDEPPwecGm14gKwu+CugtdGQAH66mjZSEbpFPETJQg4+o1xCHY2S84LDban+Kl2MhxrFKg1tVKPudqdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaN67WHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZ8tXdm0+ywjlDNri48QtMTFw5y4N3ItqoW/k5VkPtKCYwdtJsNiOfi61OoiKydGdrG4u13xd/UafDBDoWYkh/4Zuawr0q7XP2k1qKtWJ0QpY/L5T0xd6NNs1ymDWPS7ZUpNxXwjhvJhUL7h/j31R1J0gi86CbVj3j687L3r/m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzXHymW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaN67WHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49889C4CEE4;
-	Thu, 17 Apr 2025 18:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzXHymW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DE4C4CEE4;
+	Thu, 17 Apr 2025 18:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915834;
-	bh=RU2t0Zk5C1sanvOiGGMZndT42gkOieE6ywG5VypPzUY=;
+	s=korg; t=1744915837;
+	bh=R8zSC7fPvg9NWYhQEcqCjtkDHmSCjotqSI7x9EGcLTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaN67WHOdSaP/DoF8fBxwwO9TC4B/XglypQY6wj+k23Sb8vZzwrkq9Yom67xIyOPM
-	 Or5o3hfvbUxyToIGq3hiWHS0+R83nNDoQO36AeQe3ZPgkCEqL2fuHB4mVGMoNNmhv4
-	 KPmUWV7ltZ+H5GV/6l6ZYd9m75IINAeZCGk7zAyw=
+	b=UzXHymW6KZnfjnEYkfbR9vpTCuudPhEyJe0iQqLdTK7Q8wefhuFdh5jyYcbQaLy6+
+	 Q+p78yWxD4tusIFrBdf9P4enoQIq3dkXvri0hx4Zkel1jAuNwRiZ+nOSer22oOLb7S
+	 +Dil/2HSLK6z7ziiEihTrPUfrIZ8N6ISTBTw6lW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bingbu Cao <bingbu.cao@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 226/393] media: i2c: imx319: Rectify runtime PM handling probe and remove
-Date: Thu, 17 Apr 2025 19:50:35 +0200
-Message-ID: <20250417175116.675723552@linuxfoundation.org>
+Subject: [PATCH 6.12 227/393] media: i2c: imx219: Rectify runtime PM handling in probe and remove
+Date: Thu, 17 Apr 2025 19:50:36 +0200
+Message-ID: <20250417175116.718256671@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,57 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 5f5ffd3bc62b2e6c478061918b10473d8b90ac2d upstream.
+commit 42eceae9793566d0df53d509be3e416465c347f5 upstream.
 
-Idle the device only after the async sub-device has been successfully
-registered. In error handling, set the device's runtime PM status to
-suspended only if it has been set to active previously in probe.
+Set the device's runtime PM status and enable runtime PM before
+registering the async sub-device. This is needed to avoid the case where
+the device is runtime PM resumed while runtime PM has not been enabled
+yet.
 
 Also set the device's runtime PM status to suspended in remove only if it
 wasn't so already.
 
-Fixes: 8a89dc62f28c ("media: add imx319 camera sensor driver")
-Cc: stable@vger.kernel.org # for >= v6.12
+Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+Cc: stable@vger.kernel.org # for >= v6.6
+Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx319.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/media/i2c/imx219.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/media/i2c/imx319.c
-+++ b/drivers/media/i2c/imx319.c
-@@ -2442,17 +2442,19 @@ static int imx319_probe(struct i2c_clien
- 	if (full_power)
- 		pm_runtime_set_active(&client->dev);
- 	pm_runtime_enable(&client->dev);
--	pm_runtime_idle(&client->dev);
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -1231,6 +1231,9 @@ static int imx219_probe(struct i2c_clien
+ 		goto error_media_entity;
+ 	}
  
- 	ret = v4l2_async_register_subdev_sensor(&imx319->sd);
- 	if (ret < 0)
- 		goto error_media_entity_pm;
- 
-+	pm_runtime_idle(&client->dev);
++	pm_runtime_set_active(dev);
++	pm_runtime_enable(dev);
 +
+ 	ret = v4l2_async_register_subdev_sensor(&imx219->sd);
+ 	if (ret < 0) {
+ 		dev_err_probe(dev, ret,
+@@ -1238,15 +1241,14 @@ static int imx219_probe(struct i2c_clien
+ 		goto error_subdev_cleanup;
+ 	}
+ 
+-	/* Enable runtime PM and turn off the device */
+-	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
+ 	pm_runtime_idle(dev);
+ 
  	return 0;
  
- error_media_entity_pm:
+ error_subdev_cleanup:
+ 	v4l2_subdev_cleanup(&imx219->sd);
++	pm_runtime_disable(dev);
++	pm_runtime_set_suspended(dev);
+ 
+ error_media_entity:
+ 	media_entity_cleanup(&imx219->sd.entity);
+@@ -1271,9 +1273,10 @@ static void imx219_remove(struct i2c_cli
+ 	imx219_free_controls(imx219);
+ 
  	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
++	if (!pm_runtime_status_suspended(&client->dev)) {
+ 		imx219_power_off(&client->dev);
 -	pm_runtime_set_suspended(&client->dev);
-+	if (full_power)
 +		pm_runtime_set_suspended(&client->dev);
- 	media_entity_cleanup(&imx319->sd.entity);
- 
- error_handler_free:
-@@ -2474,7 +2476,8 @@ static void imx319_remove(struct i2c_cli
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 
- 	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev))
-+		pm_runtime_set_suspended(&client->dev);
- 
- 	mutex_destroy(&imx319->mutex);
++	}
  }
+ 
+ static const struct of_device_id imx219_dt_ids[] = {
 
 
