@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F21418C034;
-	Thu, 17 Apr 2025 18:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7829255E23;
+	Thu, 17 Apr 2025 18:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912961; cv=none; b=YEYgSgfkk+LN1sgKfxH5mWzkNXi4Y4E9t1cNvyDOJds1LOQ5Su42SaWuopqG1lyCr4AwHzdcIcvkWdVn0G81LGBPPjKT21d4ab2ug8uG7akKM3yhh5wjY5nd+ChuLe6ytnCZcjKrOjVKeT3fsHKnUIFxmhgCcDmelv3wuA92bIg=
+	t=1744912964; cv=none; b=uD/ttGgOM9E0ZTLKVVpzqrXqZjvbqNJ6X+K729N0jnHGKEvehYcYFzuFmSUM/nxY5Yb6oL6Y6jL2uXEXtnnIq4nHJ625Hq1maLvXjGuSVJy1ENxz4SIE5HLnRSa8Uan+KZYWfAHMkMdgayBJtLEG0QcHT650zQ1kL1D/nb/m0Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912961; c=relaxed/simple;
-	bh=BRfRKjqMdGJfOvG34foWPIfmSFaGtFdp/ZbvEjaWWX8=;
+	s=arc-20240116; t=1744912964; c=relaxed/simple;
+	bh=MQ/iIl3D3vySEFX1/I7RqBJ0hM++uIhzt9pBQBPF72k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6hjjObO1HKxK1URFfor5aOiht1yGPlGl9oegMhldBTyJdEmnJHz/T/P8yk+qgqv+iprRefYyHMsKOF46x53QKZyFJ4SAQ9LK9w2HOl1DQcaGzAEi28Uip12o8cAH2wgt6NN020DaicUpzEm3cH1SPqljLQ9Um9EHxwLG5ciPLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPyUKH7V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4D2I2jJAie5SebGCSF7HMZk/T1UX7Dxqm+e+1ZgBJSd8kat9laTScUAAuG+Dsj+odUJ/jUdtX3O8vR09AAU8KcORhE7Rq287FfyaJxfyiPMUOWA9yGsqUOWzodrw/l4sgllQFVUHohMi0V21mM+9z0j/rwU2ECSe2v6INXcJo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6XZWUUV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPyUKH7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C53C4CEE4;
-	Thu, 17 Apr 2025 18:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6XZWUUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F65C4CEE4;
+	Thu, 17 Apr 2025 18:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912961;
-	bh=BRfRKjqMdGJfOvG34foWPIfmSFaGtFdp/ZbvEjaWWX8=;
+	s=korg; t=1744912964;
+	bh=MQ/iIl3D3vySEFX1/I7RqBJ0hM++uIhzt9pBQBPF72k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPyUKH7VRnSGbIwjMIQS17S8YZx2QGs6xFUAt59hHS0xUXwIwDQO6gEOOvw5i4a6t
-	 kFEQ5DXZ9nci8703SvvAcUajBO65LOm76Rd1mz1qDvzqjoeHoKbAEqpJecRBYsfn+r
-	 NfHIoFYt/psskKwcGYzOotb6msG+Coy96LBP5D0s=
+	b=H6XZWUUVoGuItnE/XN3pjclx2T9X30EdUAsNjbEuqsdCs6ek7LULyX/+b2q2xB5yQ
+	 +RXrkNPqLdT4gZWvQLEoPsLVGedMFGAb68dcWPMXvyM+iNLCuBHEuQzGPWdhUZ9kh0
+	 xU9iWmbph+DiXxXdvA3Rugm5wzS1lgAD1L5PywBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Leonid Arapov <arapovl839@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 164/449] drivers: base: devres: Allow to release group on device release
-Date: Thu, 17 Apr 2025 19:47:32 +0200
-Message-ID: <20250417175124.586267403@linuxfoundation.org>
+Subject: [PATCH 6.14 182/449] fbdev: omapfb: Add plane value check
+Date: Thu, 17 Apr 2025 19:47:50 +0200
+Message-ID: <20250417175125.302899372@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,74 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Leonid Arapov <arapovl839@gmail.com>
 
-[ Upstream commit 8e1ddfada4530939a8cb64ee9251aef780474274 ]
+[ Upstream commit 3e411827f31db7f938a30a3c7a7599839401ec30 ]
 
-When releasing a device, if the release action causes a group to be
-released, a warning is emitted because it can't find the group. This
-happens because devres_release_all() moves the entire list to a todo
-list and also move the group markers. Considering r* normal resource
-nodes and g1 a group resource node:
+Function dispc_ovl_setup is not intended to work with the value OMAP_DSS_WB
+of the enum parameter plane.
 
-		    g1 -----------.
-		    v		  v
-	r1 -> r2 -> g1[0] -> r3-> g[1] -> r4
+The value of this parameter is initialized in dss_init_overlays and in the
+current state of the code it cannot take this value so it's not a real
+problem.
 
-After devres_release_all(), dev->devres_head becomes empty and the todo
-list it iterates on becomes:
+For the purposes of defensive coding it wouldn't be superfluous to check
+the parameter value, because some functions down the call stack process
+this value correctly and some not.
 
-			       g1
-			       v
-	r1 -> r2 -> r3-> r4 -> g1[0]
+For example, in dispc_ovl_setup_global_alpha it may lead to buffer
+overflow.
 
-When a call to component_del() is made and takes down the aggregate
-device, a warning like this happen:
+Add check for this value.
 
-	RIP: 0010:devres_release_group+0x362/0x530
-	...
-	Call Trace:
-	 <TASK>
-	 component_unbind+0x156/0x380
-	 component_unbind_all+0x1d0/0x270
-	 mei_component_master_unbind+0x28/0x80 [mei_hdcp]
-	 take_down_aggregate_device+0xc1/0x160
-	 component_del+0x1c6/0x3e0
-	 intel_hdcp_component_fini+0xf1/0x170 [xe]
-	 xe_display_fini+0x1e/0x40 [xe]
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
 
-Because the devres group corresponding to the hdcp component cannot be
-found. Just ignore this corner case: if the dev->devres_head is empty
-and the caller is trying to remove a group, it's likely in the process
-of device cleanup so just ignore it instead of warning.
-
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250222001051.3012936-2-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Leonid Arapov <arapovl839@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/devres.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/video/fbdev/omap2/omapfb/dss/dispc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/devres.c b/drivers/base/devres.c
-index 93e7779ef21e8..b955a2f9520bf 100644
---- a/drivers/base/devres.c
-+++ b/drivers/base/devres.c
-@@ -687,6 +687,13 @@ int devres_release_group(struct device *dev, void *id)
- 		spin_unlock_irqrestore(&dev->devres_lock, flags);
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
+index ccb96a5be07e4..139476f9d9189 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
+@@ -2738,9 +2738,13 @@ int dispc_ovl_setup(enum omap_plane plane, const struct omap_overlay_info *oi,
+ 		bool mem_to_mem)
+ {
+ 	int r;
+-	enum omap_overlay_caps caps = dss_feat_get_overlay_caps(plane);
++	enum omap_overlay_caps caps;
+ 	enum omap_channel channel;
  
- 		release_nodes(dev, &todo);
-+	} else if (list_empty(&dev->devres_head)) {
-+		/*
-+		 * dev is probably dying via devres_release_all(): groups
-+		 * have already been removed and are on the process of
-+		 * being released - don't touch and don't warn.
-+		 */
-+		spin_unlock_irqrestore(&dev->devres_lock, flags);
- 	} else {
- 		WARN_ON(1);
- 		spin_unlock_irqrestore(&dev->devres_lock, flags);
++	if (plane == OMAP_DSS_WB)
++		return -EINVAL;
++
++	caps = dss_feat_get_overlay_caps(plane);
+ 	channel = dispc_ovl_get_channel_out(plane);
+ 
+ 	DSSDBG("dispc_ovl_setup %d, pa %pad, pa_uv %pad, sw %d, %d,%d, %dx%d ->"
 -- 
 2.39.5
 
