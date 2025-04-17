@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167162571CF;
-	Thu, 17 Apr 2025 18:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D9C2571CF;
+	Thu, 17 Apr 2025 18:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915040; cv=none; b=onLcv7uXSFUkdSWt7MzdlyRj20MU2OEZLS+vSnDWgiqOZPzkAAVbN5pyVoJF/jKGZm+JR4rrnKDQaRiS+IBI1EmJ+3PN2leEsGT8GTVFqKMQLBntumiy3HhJtp/qHgoPQlgSKbuwI6CnAqKlSmMg3p7ftraFkX/SyKhU0G4r0TY=
+	t=1744915043; cv=none; b=tU0bT0cWoBcE6j1KwSXQJD+GgwfTDxCz55o8t+08VffMVLVvcqAZCljKVgZmVZnRapn7xzTVlfSpMZcZ2iMpfTmMUIGn2YoO8w7mtnwY2IIsyhgGV17Y5Rj98V5sV7ys7h6OFeWLWzzHo+35exDCWFa7AM0AcXjIFRsSuUlDAN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915040; c=relaxed/simple;
-	bh=GQ7GhfViYU97pSutEyqTfYQ27UCFaKIDCY8Upi7tM2E=;
+	s=arc-20240116; t=1744915043; c=relaxed/simple;
+	bh=yz7uD3dVWR1XK+Rb8S1V0d7k3RdZ8SWaKvUr6mYinjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZnxL7zbNEy6MRcyxiuKDcJjwwS3xyzfec/iQSlc71JzwIahc3+YKFR8m3CmXlZB/12w+eo8TcsFF2wMgFNqKtxzJQDeFfEnTXZJhpsqpuDZXXj5oWrvbDsYNo4z61TuVLa9bLzc9eB8f7/h+tY3GHkocBZouoQZVt4/S0q6B/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEAWwY6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syAKe9xosTkf4TuisWKBayTDlxScEUpXJCcBqFqj/jf5Z6eGTtpjcBiTAKkBlqkhBgL/7WAfxiQCehjyWJXn1qeIJYUq4SUvf0sQDsFED5aOeEMpUWHfTRRGUmw7j8WbWD4ZdHr/xt4UKp5dlDXi+Cexq55HsIqHIyqpksbf76I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhrvGgex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEAWwY6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94516C4CEE7;
-	Thu, 17 Apr 2025 18:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhrvGgex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11F5C4CEEA;
+	Thu, 17 Apr 2025 18:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915040;
-	bh=GQ7GhfViYU97pSutEyqTfYQ27UCFaKIDCY8Upi7tM2E=;
+	s=korg; t=1744915043;
+	bh=yz7uD3dVWR1XK+Rb8S1V0d7k3RdZ8SWaKvUr6mYinjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uEAWwY6qEXUNs5ubueT2x3SsCMGrj33/2rOlCY5QlRAPvTCm/XpjjPRc7CXXUB3jO
-	 UDS3eHNsAPWuPIOrQXy43jitCsHWq1BBuUjhbh3kGf+5cn38APA0a4DwT7Pm1ksiZ4
-	 doXbhNaNI0Uz+atA9yKyyB+3E9zi7JnD8jvhuHN8=
+	b=HhrvGgexpj9YXzAoxLxSpIJ5ClpobkgSC3GpTbsC+h2ALIv7wkCii7xLoRRtSVzA8
+	 /hcDpFzgJ9HarjMVYqA1jfOMp4NuvXEtHM0gxd1wvjkPIyph2OVKhHs4WRA++tNklO
+	 YWLARk4TJgkbIntMx+OY8HFMV5CYmcM8SO5OU3bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.13 414/414] s390/cpumf: Fix double free on error in cpumf_pmu_event_init()
-Date: Thu, 17 Apr 2025 19:52:52 +0200
-Message-ID: <20250417175128.137880077@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.13 405/414] iommufd: Make attach_handle generic than fault specific
+Date: Thu, 17 Apr 2025 19:52:43 +0200
+Message-ID: <20250417175127.771220332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,119 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit aa1ac98268cd1f380c713f07e39b1fa1d5c7650c upstream.
+commit fb21b1568adaa76af7a8c853f37c60fba8b28661 upstream.
 
-In PMU event initialization functions
- - cpumsf_pmu_event_init()
- - cpumf_pmu_event_init()
- - cfdiag_event_init()
-the partially created event had to be removed when an error was detected.
-The event::event_init() member function had to release all resources
-it allocated in case of error. event::destroy() had to be called
-on freeing an event after it was successfully created and
-event::event_init() returned success.
+"attach_handle" was added exclusively for the iommufd_fault_iopf_handler()
+used by IOPF/PRI use cases. Now, both the MSI and PASID series require to
+reuse the attach_handle for non-fault cases.
 
-With
+Add a set of new attach/detach/replace helpers that does the attach_handle
+allocation/releasing/replacement in the common path and also handles those
+fault specific routines such as iopf enabling/disabling and auto response.
 
-commit c70ca298036c ("perf/core: Simplify the perf_event_alloc() error path")
+This covers both non-fault and fault cases in a clean way, replacing those
+inline helpers in the header. The following patch will clean up those old
+helpers in the fault.c file.
 
-this is not necessary anymore. The performance subsystem common
-code now always calls event::destroy() to clean up the allocated
-resources created during event initialization.
-
-Remove the event::destroy() invocation in PMU event initialization
-or that function is called twice for each event that runs into an
-error condition in event creation.
-
-This is the kernel log entry which shows up without the fix:
-
-------------[ cut here ]------------
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 0 PID: 43388 at lib/refcount.c:87	refcount_dec_not_one+0x74/0x90
-CPU: 0 UID: 0 PID: 43388 Comm: perf Not tainted 6.15.0-20250407.rc1.git0.300.fc41.s390x+git #1 NONE
-Hardware name: IBM 3931 A01 704 (LPAR)
-Krnl PSW : 0704c00180000000 00000209cb2c1b88 (refcount_dec_not_one+0x78/0x90)
-           R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
-Krnl GPRS: 0000020900000027 0000020900000023 0000000000000026 0000018900000000
-           00000004a2200a00 0000000000000000 0000000000000057 ffffffffffffffea
-           00000002b386c600 00000002b3f5b3e0 00000209cc51f140 00000209cc7fc550
-           0000000001449d38 ffffffffffffffff 00000209cb2c1b84 00000189d67dfb80
-Krnl Code: 00000209cb2c1b78: c02000506727	larl	%r2,00000209cbcce9c6
-           00000209cb2c1b7e: c0e5ffbd4431	brasl	%r14,00000209caa6a3e0
-          #00000209cb2c1b84: af000000		mc	0,0
-          >00000209cb2c1b88: a7480001		lhi	%r4,1
-           00000209cb2c1b8c: ebeff0a00004	lmg	%r14,%r15,160(%r15)
-           00000209cb2c1b92: ec243fbf0055	risbg	%r2,%r4,63,191,0
-           00000209cb2c1b98: 07fe		bcr	15,%r14
-           00000209cb2c1b9a: 47000700		bc	0,1792
-Call Trace:
- [<00000209cb2c1b88>] refcount_dec_not_one+0x78/0x90
- [<00000209cb2c1dc4>] refcount_dec_and_mutex_lock+0x24/0x90
- [<00000209caa3c29e>] hw_perf_event_destroy+0x2e/0x80
- [<00000209cacaf8b4>] __free_event+0x74/0x270
- [<00000209cacb47c4>] perf_event_alloc.part.0+0x4a4/0x730
- [<00000209cacbf3e8>] __do_sys_perf_event_open+0x248/0xc20
- [<00000209cacc14a4>] __s390x_sys_perf_event_open+0x44/0x50
- [<00000209cb8114de>] __do_syscall+0x12e/0x260
- [<00000209cb81ce34>] system_call+0x74/0x98
-Last Breaking-Event-Address:
- [<00000209caa6a4d2>] __warn_printk+0xf2/0x100
----[ end trace 0000000000000000 ]---
-
-Fixes: c70ca298036c ("perf/core: Simplify the perf_event_alloc() error path")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Reviewed-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://patch.msgid.link/r/32687df01c02291d89986a9fca897bbbe2b10987.1738645017.git.nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c |    9 +--------
- arch/s390/kernel/perf_cpum_sf.c |    3 ---
- 2 files changed, 1 insertion(+), 11 deletions(-)
+ drivers/iommu/iommufd/device.c          |  105 ++++++++++++++++++++++++++++++++
+ drivers/iommu/iommufd/fault.c           |    8 +-
+ drivers/iommu/iommufd/iommufd_private.h |   33 +---------
+ 3 files changed, 113 insertions(+), 33 deletions(-)
 
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -858,18 +858,13 @@ static int cpumf_pmu_event_type(struct p
- static int cpumf_pmu_event_init(struct perf_event *event)
+--- a/drivers/iommu/iommufd/device.c
++++ b/drivers/iommu/iommufd/device.c
+@@ -352,6 +352,111 @@ iommufd_device_attach_reserved_iova(stru
+ 	return 0;
+ }
+ 
++/* The device attach/detach/replace helpers for attach_handle */
++
++static int iommufd_hwpt_attach_device(struct iommufd_hw_pagetable *hwpt,
++				      struct iommufd_device *idev)
++{
++	struct iommufd_attach_handle *handle;
++	int rc;
++
++	lockdep_assert_held(&idev->igroup->lock);
++
++	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
++	if (!handle)
++		return -ENOMEM;
++
++	if (hwpt->fault) {
++		rc = iommufd_fault_iopf_enable(idev);
++		if (rc)
++			goto out_free_handle;
++	}
++
++	handle->idev = idev;
++	rc = iommu_attach_group_handle(hwpt->domain, idev->igroup->group,
++				       &handle->handle);
++	if (rc)
++		goto out_disable_iopf;
++
++	return 0;
++
++out_disable_iopf:
++	if (hwpt->fault)
++		iommufd_fault_iopf_disable(idev);
++out_free_handle:
++	kfree(handle);
++	return rc;
++}
++
++static struct iommufd_attach_handle *
++iommufd_device_get_attach_handle(struct iommufd_device *idev)
++{
++	struct iommu_attach_handle *handle;
++
++	lockdep_assert_held(&idev->igroup->lock);
++
++	handle =
++		iommu_attach_handle_get(idev->igroup->group, IOMMU_NO_PASID, 0);
++	if (IS_ERR(handle))
++		return NULL;
++	return to_iommufd_handle(handle);
++}
++
++static void iommufd_hwpt_detach_device(struct iommufd_hw_pagetable *hwpt,
++				       struct iommufd_device *idev)
++{
++	struct iommufd_attach_handle *handle;
++
++	handle = iommufd_device_get_attach_handle(idev);
++	iommu_detach_group_handle(hwpt->domain, idev->igroup->group);
++	if (hwpt->fault) {
++		iommufd_auto_response_faults(hwpt, handle);
++		iommufd_fault_iopf_disable(idev);
++	}
++	kfree(handle);
++}
++
++static int iommufd_hwpt_replace_device(struct iommufd_device *idev,
++				       struct iommufd_hw_pagetable *hwpt,
++				       struct iommufd_hw_pagetable *old)
++{
++	struct iommufd_attach_handle *handle, *old_handle =
++		iommufd_device_get_attach_handle(idev);
++	int rc;
++
++	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
++	if (!handle)
++		return -ENOMEM;
++
++	if (hwpt->fault && !old->fault) {
++		rc = iommufd_fault_iopf_enable(idev);
++		if (rc)
++			goto out_free_handle;
++	}
++
++	handle->idev = idev;
++	rc = iommu_replace_group_handle(idev->igroup->group, hwpt->domain,
++					&handle->handle);
++	if (rc)
++		goto out_disable_iopf;
++
++	if (old->fault) {
++		iommufd_auto_response_faults(hwpt, old_handle);
++		if (!hwpt->fault)
++			iommufd_fault_iopf_disable(idev);
++	}
++	kfree(old_handle);
++
++	return 0;
++
++out_disable_iopf:
++	if (hwpt->fault && !old->fault)
++		iommufd_fault_iopf_disable(idev);
++out_free_handle:
++	kfree(handle);
++	return rc;
++}
++
+ int iommufd_hw_pagetable_attach(struct iommufd_hw_pagetable *hwpt,
+ 				struct iommufd_device *idev)
  {
- 	unsigned int type = event->attr.type;
--	int err;
-+	int err = -ENOENT;
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -17,7 +17,7 @@
+ #include "../iommu-priv.h"
+ #include "iommufd_private.h"
  
- 	if (type == PERF_TYPE_HARDWARE || type == PERF_TYPE_RAW)
- 		err = __hw_perf_event_init(event, type);
- 	else if (event->pmu->type == type)
- 		/* Registered as unknown PMU */
- 		err = __hw_perf_event_init(event, cpumf_pmu_event_type(event));
--	else
--		return -ENOENT;
+-static int iommufd_fault_iopf_enable(struct iommufd_device *idev)
++int iommufd_fault_iopf_enable(struct iommufd_device *idev)
+ {
+ 	struct device *dev = idev->dev;
+ 	int ret;
+@@ -50,7 +50,7 @@ static int iommufd_fault_iopf_enable(str
+ 	return ret;
+ }
+ 
+-static void iommufd_fault_iopf_disable(struct iommufd_device *idev)
++void iommufd_fault_iopf_disable(struct iommufd_device *idev)
+ {
+ 	mutex_lock(&idev->iopf_lock);
+ 	if (!WARN_ON(idev->iopf_enabled == 0)) {
+@@ -98,8 +98,8 @@ int iommufd_fault_domain_attach_dev(stru
+ 	return ret;
+ }
+ 
+-static void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
+-					 struct iommufd_attach_handle *handle)
++void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
++				  struct iommufd_attach_handle *handle)
+ {
+ 	struct iommufd_fault *fault = hwpt->fault;
+ 	struct iopf_group *group, *next;
+--- a/drivers/iommu/iommufd/iommufd_private.h
++++ b/drivers/iommu/iommufd/iommufd_private.h
+@@ -504,35 +504,10 @@ int iommufd_fault_domain_replace_dev(str
+ 				     struct iommufd_hw_pagetable *hwpt,
+ 				     struct iommufd_hw_pagetable *old);
+ 
+-static inline int iommufd_hwpt_attach_device(struct iommufd_hw_pagetable *hwpt,
+-					     struct iommufd_device *idev)
+-{
+-	if (hwpt->fault)
+-		return iommufd_fault_domain_attach_dev(hwpt, idev);
 -
--	if (unlikely(err) && event->destroy)
--		event->destroy(event);
+-	return iommu_attach_group(hwpt->domain, idev->igroup->group);
+-}
+-
+-static inline void iommufd_hwpt_detach_device(struct iommufd_hw_pagetable *hwpt,
+-					      struct iommufd_device *idev)
+-{
+-	if (hwpt->fault) {
+-		iommufd_fault_domain_detach_dev(hwpt, idev);
+-		return;
+-	}
+-
+-	iommu_detach_group(hwpt->domain, idev->igroup->group);
+-}
+-
+-static inline int iommufd_hwpt_replace_device(struct iommufd_device *idev,
+-					      struct iommufd_hw_pagetable *hwpt,
+-					      struct iommufd_hw_pagetable *old)
+-{
+-	if (old->fault || hwpt->fault)
+-		return iommufd_fault_domain_replace_dev(idev, hwpt, old);
+-
+-	return iommu_group_replace_domain(idev->igroup->group, hwpt->domain);
+-}
++int iommufd_fault_iopf_enable(struct iommufd_device *idev);
++void iommufd_fault_iopf_disable(struct iommufd_device *idev);
++void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
++				  struct iommufd_attach_handle *handle);
  
- 	return err;
- }
-@@ -1819,8 +1814,6 @@ static int cfdiag_event_init(struct perf
- 	event->destroy = hw_perf_event_destroy;
- 
- 	err = cfdiag_event_init2(event);
--	if (unlikely(err))
--		event->destroy(event);
- out:
- 	return err;
- }
---- a/arch/s390/kernel/perf_cpum_sf.c
-+++ b/arch/s390/kernel/perf_cpum_sf.c
-@@ -885,9 +885,6 @@ static int cpumsf_pmu_event_init(struct
- 		event->attr.exclude_idle = 0;
- 
- 	err = __hw_perf_event_init(event);
--	if (unlikely(err))
--		if (event->destroy)
--			event->destroy(event);
- 	return err;
- }
- 
+ static inline struct iommufd_viommu *
+ iommufd_get_viommu(struct iommufd_ucmd *ucmd, u32 id)
 
 
