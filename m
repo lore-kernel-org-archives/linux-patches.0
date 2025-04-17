@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786C9253333;
-	Thu, 17 Apr 2025 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ACF253333;
+	Thu, 17 Apr 2025 18:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914634; cv=none; b=SPt6BC1+JzwRKA8PhxLqoZeKweQWioOneyf/gEjDChOyEeD/rCs/4jK0HaZxYvmnLAZWBnEynE0PTgW/Ev5TPEufhsnvAMEvzMLhwJ+D3+ycwi+Kl9fz39O4jhoMvh9iiU4r8yJU11VwvHRgy3ZCXaUx48JeFX3/KW+JbaE7ys0=
+	t=1744914637; cv=none; b=vEE/MHUGugABEIE/3AeCubk0cMj4nB7Hpm7e8OKlvas3PfpXszaYpzbpjqOB/J/0yljHycuOYtmkLU4H9OhqWeA5lrHGQcAv+3cXZuBB4f0TTMfh7Z7a8idENdNwJvNEpjTQFHt4C5fsbX5WwDT2PxE0Lt5tChq2DqJ6Psdd22I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914634; c=relaxed/simple;
-	bh=bdOSsFAk9Z+6LIfofYlRggDgF1Au7ZCHAo12hFoHLko=;
+	s=arc-20240116; t=1744914637; c=relaxed/simple;
+	bh=jro/e9qEAn8B8vnP658cJ3DaqIRVtT+RaRwRWT1/UAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGDOB4pTR3/tLAhd4BJZ/v9S6Hkuma0XV7cirAdlHirZyKHh7e+KRxA1DZPbDc8Q3xSbs87ALJHvGHmStx9uMkFcT86g01fHSGJmf0GFR3nBEoiAtxz013jBqXtn28NcxyBo34fDZGj3DDGo6xvh3zyxhAUZR06xUC1INbUWZa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPPICO1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aE/poIeD9qzVnO6s2c1ocK+8QqLfP0P7iKtZdP30qDzqtSPPhjCfF8EB+W6owjckSktKpnaOnXPEuDSfi9JeOU+Oz398L0T87HSDOoRjdLXk2R5qKXpFeOAi3csww/J4eHSSduA8tqbTQt40CBIXZP4ndpXPFabXDIFzNp3bwT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMrS1tf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPPICO1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA698C4CEE4;
-	Thu, 17 Apr 2025 18:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMrS1tf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23E6C4CEE4;
+	Thu, 17 Apr 2025 18:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914634;
-	bh=bdOSsFAk9Z+6LIfofYlRggDgF1Au7ZCHAo12hFoHLko=;
+	s=korg; t=1744914637;
+	bh=jro/e9qEAn8B8vnP658cJ3DaqIRVtT+RaRwRWT1/UAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPPICO1sV5VZIvp4Wp70HyPu7ygI4eOWnGTpJMHYiQWWrrF+pkp/k4x1eCOr2c0SP
-	 XAE6n/6bS7HEy+QFUxjAsIHJMVyI4LIdmBAwwGvB5WCaGAbE02sYLAmooKBCDZy/lR
-	 0hQm2BNeWtd9/oLNnuRIiVdPa7cZMmaSex+FbfQ4=
+	b=uMrS1tf19q9hHE7xKXegr1uV1Ui3fW3/llAi8HlGMJL3rkd7T1Y6S8jMCaawDO4LD
+	 6O907mo+SOxugsrVMqSiD8qcQoBXoQJajWGNRosIv/AQsD+iFbQuSuLPJ7cL7CaV2A
+	 OXP6lbGPIOaOgmZxfhbCOCpckdkUxYEVAAKdp5Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.13 250/414] mtd: Add check for devm_kcalloc()
-Date: Thu, 17 Apr 2025 19:50:08 +0200
-Message-ID: <20250417175121.475046227@linuxfoundation.org>
+	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.13 241/414] media: chips-media: wave5: Fix gray color on screen
+Date: Thu, 17 Apr 2025 19:49:59 +0200
+Message-ID: <20250417175121.118451967@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,32 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Jackson.lee <jackson.lee@chipsnmedia.com>
 
-commit 2aee30bb10d7bad0a60255059c9ce1b84cf0130e upstream.
+commit 6bae4d5053da634eecb611118e7cd91a677a4bbf upstream.
 
-Add a check for devm_kcalloc() to ensure successful allocation.
+When a decoder instance is created, the W5_CMD_ERR_CONCEAL register
+should be initialized to 0. Otherwise, gray color is occasionally
+displayed on the screen while decoding.
 
-Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 45d1a2b93277 ("media: chips-media: wave5: Add vpuapi layer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdpstore.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-hw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/mtdpstore.c
-+++ b/drivers/mtd/mtdpstore.c
-@@ -423,6 +423,9 @@ static void mtdpstore_notify_add(struct
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
- 	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
- 
-+	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
-+		return;
-+
- 	/* just support dmesg right now */
- 	cxt->dev.flags = PSTORE_FLAGS_DMESG;
- 	cxt->dev.zone.read = mtdpstore_read;
+--- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
+@@ -585,7 +585,7 @@ int wave5_vpu_build_up_dec_param(struct
+ 		vpu_write_reg(inst->dev, W5_CMD_NUM_CQ_DEPTH_M1,
+ 			      WAVE521_COMMAND_QUEUE_DEPTH - 1);
+ 	}
+-
++	vpu_write_reg(inst->dev, W5_CMD_ERR_CONCEAL, 0);
+ 	ret = send_firmware_command(inst, W5_CREATE_INSTANCE, true, NULL, NULL);
+ 	if (ret) {
+ 		wave5_vdi_free_dma_memory(vpu_dev, &p_dec_info->vb_work);
 
 
