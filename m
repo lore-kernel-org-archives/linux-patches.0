@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84633594D;
-	Thu, 17 Apr 2025 18:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7FA1E98ED;
+	Thu, 17 Apr 2025 18:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913823; cv=none; b=nOPLxAcjcjYjRA4ar/HnWcxhn/AS7C3Q1kO92pg+wnmZVd/tGO2NxtV81eidvEIxsCZcowHoE72x8E3JPOXxxlOxfg6qIocgzRnD5psiRTfNXbz8AzdpK4ClkNgHTzH2WIJUZ9bMNUeUSvywlmKVLGuoGrDfnZV0DV6qEUj5UDI=
+	t=1744913827; cv=none; b=krJ/T4Naqilxl4OkGjmwDvv4luiG/MxT4Eeee37CDSbW5xLV1CL1gkfOt0P4tkKPpB103lb4S0fGP5OXKRP0PtC7MhOh1R0GJAB6tJG9WufP1/DikVHvzm6CtI9jaMvfMiqBWnSpfW5K8ris+IRjdStu7PkUSV9F/dc/JDMdn14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913823; c=relaxed/simple;
-	bh=qKlU7U1MCZgT97bAXtG80JgRNQJyjAB/V00sAKa/xMc=;
+	s=arc-20240116; t=1744913827; c=relaxed/simple;
+	bh=544cW1jjPY2COgYb9RaXV4l1WJ0/aHzIJeCrpsjBx7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OInB9B4lFhgJXe9/L1NSnaUDBVRNno5+WWI0QPQLgLtaiMgS45KEpUpr4jCcBb37P6Hw487hw6hNbQ6clRVs+CzlE7YW5LBpMdYdbtIyoAoV/gt4qS4NRo4U4sCauJkmivA8LKWt9rJ1cKmdjJnm4IlDc/ulWFKy1OKT+ecp3gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HXi/Dl9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ehfI6Rsrkm1DpfDHmQiB8KDNPZUMQq141PG0IFLdpF4sqjFqgVBnmZ6DIgVq7BeQZaVmsIsNeejTul/3aF4guhiS6uJyNCxkmWmcNiFuYou0WrvI4PKayeanfnU4v8fmKbdQJ619jXcs2KRn5H9kg5S30IIC+nUc0BHkim1SHDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4pOQux1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HXi/Dl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58682C4CEE7;
-	Thu, 17 Apr 2025 18:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4pOQux1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2530CC4CEE7;
+	Thu, 17 Apr 2025 18:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913823;
-	bh=qKlU7U1MCZgT97bAXtG80JgRNQJyjAB/V00sAKa/xMc=;
+	s=korg; t=1744913826;
+	bh=544cW1jjPY2COgYb9RaXV4l1WJ0/aHzIJeCrpsjBx7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HXi/Dl9u9pMdRZKYvcouOfGogR9K9QBZHTUZLtpbEQyZZ7zCUykelJ3eQhXdZvqs
-	 PPR/+DIcEVzFlYy2f3FXxk+PnaMx00AJhFSTFbHH4FbKLcVWW82pY6fJqllqhlw0xv
-	 3X4pfFewe9yViUaGKOYRTd9cAaAk/VdliGBCOafw=
+	b=p4pOQux1DcObPhJTHuiJP2xHoGLp/K0Py88KdnWsveAdokemsmrsac8lvyCTlqS3p
+	 puXh8jcsch1TOxy6nl8JQEa+n0dHMUH/vekzgQkxwVaouesHKqDsM1xEb92UBzo+jN
+	 +kEVpKjvHGQQQHxCNhWanxtSyjC2kmBs9COEJNME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Edward Liaw <edliaw@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 005/414] gpiolib: of: Fix the choice for Ingenic NAND quirk
-Date: Thu, 17 Apr 2025 19:46:03 +0200
-Message-ID: <20250417175111.614959828@linuxfoundation.org>
+Subject: [PATCH 6.13 006/414] selftests/futex: futex_waitv wouldblock test should fail
+Date: Thu, 17 Apr 2025 19:46:04 +0200
+Message-ID: <20250417175111.655835427@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -45,42 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Edward Liaw <edliaw@google.com>
 
-[ Upstream commit 2b9c536430126c233552cdcd6ec9d5077454ece4 ]
+[ Upstream commit 7d50e00fef2832e98d7e06bbfc85c1d66ee110ca ]
 
-The Ingenic NAND quirk has been added under CONFIG_LCD_HX8357 ifdeffery
-which sounds quite wrong. Fix the choice for Ingenic NAND quirk
-by wrapping it into own ifdeffery related to the respective driver.
+Testcase should fail if -EWOULDBLOCK is not returned when expected value
+differs from actual value from the waiter.
 
-Fixes: 3a7fd473bd5d ("mtd: rawnand: ingenic: move the GPIO quirk to gpiolib-of.c")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250402122058.1517393-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20250404221225.1596324-1-edliaw@google.com
+Fixes: 9d57f7c79748920636f8293d2f01192d702fe390 ("selftests: futex: Test sys_futex_waitv() wouldblock")
+Signed-off-by: Edward Liaw <edliaw@google.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: André Almeida <andrealmeid@igalia.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-of.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../testing/selftests/futex/functional/futex_wait_wouldblock.c  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 2e537ee979f3e..176e9142fd8f8 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -193,6 +193,8 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 */
- 		{ "himax,hx8357",	"gpios-reset",	false },
- 		{ "himax,hx8369",	"gpios-reset",	false },
-+#endif
-+#if IS_ENABLED(CONFIG_MTD_NAND_JZ4780)
- 		/*
- 		 * The rb-gpios semantics was undocumented and qi,lb60 (along with
- 		 * the ingenic driver) got it wrong. The active state encodes the
+diff --git a/tools/testing/selftests/futex/functional/futex_wait_wouldblock.c b/tools/testing/selftests/futex/functional/futex_wait_wouldblock.c
+index 7d7a6a06cdb75..2d8230da90642 100644
+--- a/tools/testing/selftests/futex/functional/futex_wait_wouldblock.c
++++ b/tools/testing/selftests/futex/functional/futex_wait_wouldblock.c
+@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
+ 	info("Calling futex_waitv on f1: %u @ %p with val=%u\n", f1, &f1, f1+1);
+ 	res = futex_waitv(&waitv, 1, 0, &to, CLOCK_MONOTONIC);
+ 	if (!res || errno != EWOULDBLOCK) {
+-		ksft_test_result_pass("futex_waitv returned: %d %s\n",
++		ksft_test_result_fail("futex_waitv returned: %d %s\n",
+ 				      res ? errno : res,
+ 				      res ? strerror(errno) : "");
+ 		ret = RET_FAIL;
 -- 
 2.39.5
 
