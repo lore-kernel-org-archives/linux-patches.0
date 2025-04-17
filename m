@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55841C84D4;
-	Thu, 17 Apr 2025 18:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE3D14B092;
+	Thu, 17 Apr 2025 18:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915375; cv=none; b=VzJMolRpM9PjVJ6FiSfOHxVgJ0jK6HsAFG3I+uLVZBMlU2gZUgzao2qDEnPihO1G3jk4NXPa7Ohf9iODqz0pYdmU8sl6XrSoyUcvuajiUD8FrkEGyEplVIeFrq+qE9Djg1bza9Sp+5LCoQDGREmWLWNWdHGOxcYvIYkST6D5Yw4=
+	t=1744915378; cv=none; b=VwxV1OxgE73XOya6JpnqoMQbXTx+V/9QwAwyZkNfD+RPxxjpbpRj+JN4ZYzST7qC9Rx0TBc8o4egb/JNV+ONDHTSsPK4AMYNkHJLqAI2yLilkXavs0ZA77lVuOpLOfqnbQyXWFQfPHEKp8wpf744hHV4E+SmyMqN1J0Zuu4Jc9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915375; c=relaxed/simple;
-	bh=MiR6FdoBqFbBqUY3aSFOCkmkwBq4oLSGEwGe1Iz9Rkk=;
+	s=arc-20240116; t=1744915378; c=relaxed/simple;
+	bh=K4l+SPIe+BdKsqsK/A/Q//CN6tf7/2RuF0bhBbpoI60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+kbdi3opDOnwIAXfj9w6EDZttCzxP9fbu+KOtij1E7xxo97YHoKffv5CQsYItfk8quq+ksqGJ3oDVbFErGBGLGQWbeuUNnH+AEfLXSo0AgrJAPLGHnGfMJh5hdh4Kz+umQfXz5Vr+W0QyqJ9ElM9LnNpXfFkeI1vdecySA61W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPNaXJeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcRPTCtQN34aFkwVzf8hF/6CpF7qNqrYULvz/7YHtcDxaZsZuHSkWJfLs8/HQeMAj/ApLPbYLG9gZk4nehLpgLyGJIvBwFZMbjxYqHoJ6+HqYLXqWfjuWiPYmK60s+ous1mtZ/r84FAmCb7BJoFgisezNuRJaunKDPLS14D8Fgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDBDA5jT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPNaXJeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257BEC4CEE4;
-	Thu, 17 Apr 2025 18:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDBDA5jT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D40C4CEE7;
+	Thu, 17 Apr 2025 18:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915375;
-	bh=MiR6FdoBqFbBqUY3aSFOCkmkwBq4oLSGEwGe1Iz9Rkk=;
+	s=korg; t=1744915378;
+	bh=K4l+SPIe+BdKsqsK/A/Q//CN6tf7/2RuF0bhBbpoI60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPNaXJeHuLxhWDUHFbtUlZW/RykWANKtnrL1qF0Y8czQUK4TbAZ0uHf9yh4TbcCRW
-	 WLD+hXl0kNfXUt/uY5KAUVHPawjqj+Mx3hmmbMo6pEogt4rOwKee4Nmwg5OrQyf8+L
-	 bwAkRRMNiUzNCAfhBwn42HZal9OwLGijGJ+r3to0=
+	b=xDBDA5jTk5KzuUw0Cthsy8WPER2WKmpSCUVNUXv0gs/O0qoDBjNVygcUGlYf6kR/2
+	 0iW9p6BQpK5tvtjO0f5g//erwJSw3b+25oYqDIr8pzo+htEJy0B4hAIMdmIeStGT/k
+	 HUEMBsXuLVmPAb2vEMK6Dbet3qFr++evjcnZ6GTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Daniel Kral <d.kral@proxmox.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/393] f2fs: dont retry IO for corrupted data scenario
-Date: Thu, 17 Apr 2025 19:48:19 +0200
-Message-ID: <20250417175111.213277366@linuxfoundation.org>
+Subject: [PATCH 6.12 108/393] ahci: add PCI ID for Marvell 88SE9215 SATA Controller
+Date: Thu, 17 Apr 2025 19:48:37 +0200
+Message-ID: <20250417175111.934968601@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Daniel Kral <d.kral@proxmox.com>
 
-[ Upstream commit 1534747d3170646ddeb9ea5f7caaac90359707cf ]
+[ Upstream commit 885251dc35767b1c992f6909532ca366c830814a ]
 
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
+Add support for Marvell Technology Group Ltd. 88SE9215 SATA 6 Gb/s
+controller, which is e.g. used in the DAWICONTROL DC-614e RAID bus
+controller and was not automatically recognized before.
 
-If node block is loaded successfully, but its content is inconsistent, it
-doesn't need to retry IO.
+Tested with a DAWICONTROL DC-614e RAID bus controller.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Daniel Kral <d.kral@proxmox.com>
+Link: https://lore.kernel.org/r/20250304092030.37108-1-d.kral@proxmox.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/ahci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 10780e37fc7b6..6135eee771cc9 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -751,8 +751,12 @@ void f2fs_update_inode_page(struct inode *inode)
- 		if (err == -ENOENT)
- 			return;
- 
-+		if (err == -EFSCORRUPTED)
-+			goto stop_checkpoint;
-+
- 		if (err == -ENOMEM || ++count <= DEFAULT_RETRY_IO_COUNT)
- 			goto retry;
-+stop_checkpoint:
- 		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_UPDATE_INODE);
- 		return;
- 	}
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 45f63b09828a1..14dd1b432ac34 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -589,6 +589,8 @@ static const struct pci_device_id ahci_pci_tbl[] = {
+ 	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x91a3),
+ 	  .driver_data = board_ahci_yes_fbs },
++	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9215),
++	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9230),
+ 	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9235),
 -- 
 2.39.5
 
