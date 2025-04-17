@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39CB24169C;
-	Thu, 17 Apr 2025 18:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BC225335A;
+	Thu, 17 Apr 2025 18:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915346; cv=none; b=CD8WN+NU9oFRby71Wm9QMqD6kjCQHrn/mHC76bp7/o0+o9WggoW7dnELJKqURZmoqC3NKk1SZ9szigrNmVlNwuM8sHm0xT0UBdLhfZT3rPKAQP7w6Fr5a8ywTVEx/ZXUPGv+lc3q/jxPerwaX3Gi0VGD5l/hFT05EZXf9BvgGno=
+	t=1744915349; cv=none; b=gNhFG6QjzxgrZAC3ajReKbi9vxzCjuRUzcxm91eA5YGyd7G/BINmuWQWSHqVgceF3gvLixBImQf012yN6kXGxyodx8LBIRquIkL5JapG95odkrU2iijaUbih0rVc0WgXgq68fbFts3+NLP2cMESC7fBPPbjDtu2JDzKoWplJe80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915346; c=relaxed/simple;
-	bh=AHHmT4MNanPseVVB2cNxbpGA37SxpfoyuBlNrrEVF1o=;
+	s=arc-20240116; t=1744915349; c=relaxed/simple;
+	bh=gBIbbDX2Uf3LMPerbUmGBX4Z55yhEirJsCJBz6OAZ8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKFtN2TdTiZ4y6ScARjAPEIki94dg2PaENZzWNI57zZaVWs8EYCi2wEnpJiOGqO9Qw2mHyoJF6sN82kvQHdPBNfXlJCwo/97V4Ewyma8mawzaYDHjDDRh7WDBqJUqZuV5ESAyk4LS0IcSWBwyYlIh/pS+5zGd4ptv9qaZGdwAW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7tiEIt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2iRI3u9GHOLf1RArjzDEYZuL5VTGaMGEvDyLzdEcIGxAHOrgtU7o8SIzvgExSFMRY4tArfKW7bk/QWvtImz3Q+qs6M8j/OhJBN5P1JJ6Ky6rG3JoWdBlnzdGSQVYl+89U5fYMG8qcUWED9ulykxtRYD25cNIhGJqjV5lGUKy4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9RswXnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7tiEIt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49109C4CEE4;
-	Thu, 17 Apr 2025 18:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9RswXnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521B7C4CEE4;
+	Thu, 17 Apr 2025 18:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915346;
-	bh=AHHmT4MNanPseVVB2cNxbpGA37SxpfoyuBlNrrEVF1o=;
+	s=korg; t=1744915349;
+	bh=gBIbbDX2Uf3LMPerbUmGBX4Z55yhEirJsCJBz6OAZ8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7tiEIt27DKbgxK0zsQF7R8gEoPUh9piklUjOQH6WbEYPJyYBvRZ6hMDzW0hlcOgQ
-	 0ZglXEw/9cLepqPsH0IIfz33pOb7aojmkQExQc0qmbnx50zIN2SiX6Vm6BK6jV9+lL
-	 Xd+WRBb2fJILJY+a/M4u4byyi1rT0LiFMiuGbqL0=
+	b=R9RswXnBbUz/UOzTfmx3vGbMWpHylVHT6tmatCTbZQnLSwnPs2vmCmmZcCtPXyMd2
+	 l5WSr0Ifs9Fdvp1BakAz4JmAUVFtiVyhgS0FYIWPg/GakMHkBdwVRfZXbVe26nkKbU
+	 +mkpTB/rA504YE80KGBVrsCsYwv97wHGcdJQO82I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rand Deeb <rand.sec96@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/393] fs/jfs: cast inactags to s64 to prevent potential overflow
-Date: Thu, 17 Apr 2025 19:48:28 +0200
-Message-ID: <20250417175111.573246044@linuxfoundation.org>
+Subject: [PATCH 6.12 100/393] fs/jfs: Prevent integer overflow in AG size calculation
+Date: Thu, 17 Apr 2025 19:48:29 +0200
+Message-ID: <20250417175111.619908655@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,22 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Rand Deeb <rand.sec96@gmail.com>
 
-[ Upstream commit 70ca3246ad201b53a9f09380b3f29d8bac320383 ]
+[ Upstream commit 7fcbf789629cdb9fbf4e2172ce31136cfed11e5e ]
 
-The expression "inactags << bmp->db_agl2size" in the function
-dbFinalizeBmap() is computed using int operands. Although the
-values (inactags and db_agl2size) are derived from filesystem
-parameters and are usually small, there is a theoretical risk that
-the shift could overflow a 32-bit int if extreme values occur.
+The JFS filesystem calculates allocation group (AG) size using 1 <<
+l2agsize in dbExtendFS(). When l2agsize exceeds 31 (possible with >2TB
+aggregates on 32-bit systems), this 32-bit shift operation causes undefined
+behavior and improper AG sizing.
 
-According to the C standard, shifting a signed 32-bit int can lead
-to undefined behavior if the result exceeds its range. In our
-case, an overflow could miscalculate free blocks, potentially
-leading to erroneous filesystem accounting.
+On 32-bit architectures:
+- Left-shifting 1 by 32+ bits results in 0 due to integer overflow
+- This creates invalid AG sizes (0 or garbage values) in
+sbi->bmap->db_agsize
+- Subsequent block allocations would reference invalid AG structures
+- Could lead to:
+  - Filesystem corruption during extend operations
+  - Kernel crashes due to invalid memory accesses
+  - Security vulnerabilities via malformed on-disk structures
 
-To ensure the arithmetic is performed in 64-bit space, we cast
-"inactags" to s64 before shifting. This defensive fix prevents any
-risk of overflow and complies with kernel coding best practices.
+Fix by casting to s64 before shifting:
+bmp->db_agsize = (s64)1 << l2agsize;
+
+This ensures 64-bit arithmetic even on 32-bit architectures. The cast
+matches the data type of db_agsize (s64) and follows similar patterns in
+JFS block calculation code.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
@@ -76,24 +83,22 @@ Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/jfs/jfs_dmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index f9009e4f9ffd8..f89f07c9580ea 100644
+index f89f07c9580ea..9ac1fc2ed05bc 100644
 --- a/fs/jfs/jfs_dmap.c
 +++ b/fs/jfs/jfs_dmap.c
-@@ -3666,8 +3666,8 @@ void dbFinalizeBmap(struct inode *ipbmap)
- 	 * system size is not a multiple of the group size).
- 	 */
- 	inactfree = (inactags && ag_rem) ?
--	    ((inactags - 1) << bmp->db_agl2size) + ag_rem
--	    : inactags << bmp->db_agl2size;
-+	    (((s64)inactags - 1) << bmp->db_agl2size) + ag_rem
-+	    : ((s64)inactags << bmp->db_agl2size);
+@@ -3403,7 +3403,7 @@ int dbExtendFS(struct inode *ipbmap, s64 blkno,	s64 nblocks)
+ 	oldl2agsize = bmp->db_agl2size;
  
- 	/* determine how many free blocks are in the active
- 	 * allocation groups plus the average number of free blocks
+ 	bmp->db_agl2size = l2agsize;
+-	bmp->db_agsize = 1 << l2agsize;
++	bmp->db_agsize = (s64)1 << l2agsize;
+ 
+ 	/* compute new number of AG */
+ 	agno = bmp->db_numag;
 -- 
 2.39.5
 
