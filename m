@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C0C1D07BA;
-	Thu, 17 Apr 2025 18:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347872528FA;
+	Thu, 17 Apr 2025 18:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915467; cv=none; b=rmTWZEelu3TKiR8B6MJSW4y5C7Qdw1GE6zjIbA7hwgEtKsU1pDqCr+TrPT63ZgJRwH4D4AU1eiiXIc8KZmqmHXoE2EhOTLsHOGQ/gER5a71M2rbBdhzvrUlxx9Pqagqy9WnODjtGzVNztTlOjr5JuRrd1YTlP1ZIKYMZ8NwOa30=
+	t=1744915470; cv=none; b=CdC2ZW6d1Py27WWqmooYmabBWYEm6V7Z6hsxuCWsA15OKCBQY9ZJcS6QtVoI8Cge7cHH3etPyETBM3mRxMtD5cRrrOY3GjYAcqfR+F1famWXJ6fnp7FZoUgW5MjCVqzGpvpBxwdDK8pP1VA7PBISMoJoXCSoW8dnVKc3vNw8IKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915467; c=relaxed/simple;
-	bh=YZFeUeo8uyNDUxZhj29D1jLUIwLfZAEhx1ugkNVRMfg=;
+	s=arc-20240116; t=1744915470; c=relaxed/simple;
+	bh=nl7LZmtqiBUmONXaY2OxTyjqYnNRPAZjJMq3XOWKJME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVUgxCLGYekUmIUgGD+zl5POEGwx9WHUadn1KofyUIREN4j29MHMnUzR563Eqe4xW85u7t8SBaj2IRxMGny5l1KqXM/Zprjv+8Dga8satdHYGIR9qn6c/IhTUbDSmZ5qxTkcUPm+1kyyIWOPwumUnZHGzmDOmsKF6+R8cPf7A3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jd2dTiyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePPLVghDOm62CNlEuCrk8MrXUlBYuPPNpvoNnvxMyWrDwuRhxyq3Hrem70Sm7vpmJdMQ/u+AYHCqVqGwCvCDF5UqAmt+B6+BmqmUtTg2WrFpIfxUOJ/WuXZj9vLghJN/45CmaZhRGaNBGgHg4rfRhF0jeSNr1X5tKw/edn57770=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USMvGUzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jd2dTiyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22590C4CEE4;
-	Thu, 17 Apr 2025 18:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USMvGUzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908E0C4CEEA;
+	Thu, 17 Apr 2025 18:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915466;
-	bh=YZFeUeo8uyNDUxZhj29D1jLUIwLfZAEhx1ugkNVRMfg=;
+	s=korg; t=1744915470;
+	bh=nl7LZmtqiBUmONXaY2OxTyjqYnNRPAZjJMq3XOWKJME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jd2dTiyPoVSOoaDimL1ToHUbmC9yqBjwoE34SWlv6yuUQINb/aRrQTm1dkSzIuG6+
-	 edIobqAE+i0dMBOIsHB9NatoxbTArFBzlB2052Oa5oIycgCuteP5OxtxlTB5NksciR
-	 0nolszsxJMnvOMzKpBh+7tjmnaEDGja7yLpFfHew=
+	b=USMvGUzTPjGzXK7PaaHFcx9hQ0Wvgp88JCrOJKk0Zfg8HTAx7DhKKNt9eG67aZVln
+	 676sPICEMsoeFAMXh7GHwG4gckijdnFGgm9a31gTQXdOa0C8XLIA8Wwjz03Whk+bAN
+	 QrFCA4yaOpLkz97LpnyZzkSiceOq9NiM4tJ62VoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Ovidiu Bunea <ovidiu.bunea@amd.com>,
+	Mike Katsnelson <mike.katsnelson@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/393] drm/bridge: panel: forbid initializing a panel with unknown connector type
-Date: Thu, 17 Apr 2025 19:49:06 +0200
-Message-ID: <20250417175113.095468941@linuxfoundation.org>
+Subject: [PATCH 6.12 138/393] drm/amd/display: stop DML2 from removing pipes based on planes
+Date: Thu, 17 Apr 2025 19:49:07 +0200
+Message-ID: <20250417175113.138238369@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,54 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Mike Katsnelson <mike.katsnelson@amd.com>
 
-[ Upstream commit b296955b3a740ecc8b3b08e34fd64f1ceabb8fb4 ]
+[ Upstream commit 8adeff83a3b07fa6d0958ed51e1b38ba7469e448 ]
 
-Having an DRM_MODE_CONNECTOR_Unknown connector type is considered bad, and
-drm_panel_bridge_add_typed() and derivatives are deprecated for this.
+[Why]
+Transitioning from low to high resolutions at high refresh rates caused grey corruption.
+During the transition state, there is a period where plane size is based on low resultion
+state and ODM slices are based on high resoultion state, causing the entire plane to be
+contained in one ODM slice. DML2 would turn off the pipe for the ODM slice with no plane,
+causing an underflow since the pixel rate for the higher resolution cannot be supported on
+one pipe. This change stops DML2 from turning off pipes that are mapped to an ODM slice
+with no plane. This is possible to do without negative consequences because pipes can now
+take the minimum viewport and draw with zero recout size, removing the need to have the
+pipe turned off.
 
-drm_panel_init() won't prevent initializing a panel with a
-DRM_MODE_CONNECTOR_Unknown connector type. Luckily there are no in-tree
-users doing it, so take this as an opportinuty to document a valid
-connector type must be passed.
+[How]
+In map_pipes_from_plane(), remove "check" that skips ODM slices that are not covered by
+the plane. This prevents the pipes for those ODM slices from being freed.
 
-Returning an error if this rule is violated is not possible because
-drm_panel_init() is a void function. Add at least a warning to make any
-violations noticeable, especially to non-upstream drivers.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-5-88ca5827d7af@bootlin.com
+Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: Mike Katsnelson <mike.katsnelson@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../display/dc/dml2/dml2_dc_resource_mgmt.c   | 26 -------------------
+ 1 file changed, 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index 19ab0a794add3..fd8fa2e0ef6fa 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -49,7 +49,7 @@ static LIST_HEAD(panel_list);
-  * @dev: parent device of the panel
-  * @funcs: panel operations
-  * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
-- *	the panel interface
-+ *	the panel interface (must NOT be DRM_MODE_CONNECTOR_Unknown)
-  *
-  * Initialize the panel structure for subsequent registration with
-  * drm_panel_add().
-@@ -57,6 +57,9 @@ static LIST_HEAD(panel_list);
- void drm_panel_init(struct drm_panel *panel, struct device *dev,
- 		    const struct drm_panel_funcs *funcs, int connector_type)
- {
-+	if (connector_type == DRM_MODE_CONNECTOR_Unknown)
-+		DRM_WARN("%s: %s: a valid connector type is required!\n", __func__, dev_name(dev));
-+
- 	INIT_LIST_HEAD(&panel->list);
- 	INIT_LIST_HEAD(&panel->followers);
- 	mutex_init(&panel->follower_lock);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
+index 1ed21c1b86a5b..a966abd407881 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
+@@ -532,26 +532,6 @@ static void calculate_odm_slices(const struct dc_stream_state *stream, unsigned
+ 	odm_slice_end_x[odm_factor - 1] = stream->src.width - 1;
+ }
+ 
+-static bool is_plane_in_odm_slice(const struct dc_plane_state *plane, unsigned int slice_index, unsigned int *odm_slice_end_x, unsigned int num_slices)
+-{
+-	unsigned int slice_start_x, slice_end_x;
+-
+-	if (slice_index == 0)
+-		slice_start_x = 0;
+-	else
+-		slice_start_x = odm_slice_end_x[slice_index - 1] + 1;
+-
+-	slice_end_x = odm_slice_end_x[slice_index];
+-
+-	if (plane->clip_rect.x + plane->clip_rect.width < slice_start_x)
+-		return false;
+-
+-	if (plane->clip_rect.x > slice_end_x)
+-		return false;
+-
+-	return true;
+-}
+-
+ static void add_odm_slice_to_odm_tree(struct dml2_context *ctx,
+ 		struct dc_state *state,
+ 		struct dc_pipe_mapping_scratch *scratch,
+@@ -791,12 +771,6 @@ static void map_pipes_for_plane(struct dml2_context *ctx, struct dc_state *state
+ 	sort_pipes_for_splitting(&scratch->pipe_pool);
+ 
+ 	for (odm_slice_index = 0; odm_slice_index < scratch->odm_info.odm_factor; odm_slice_index++) {
+-		// We build the tree for one ODM slice at a time.
+-		// Each ODM slice shares a common OPP
+-		if (!is_plane_in_odm_slice(plane, odm_slice_index, scratch->odm_info.odm_slice_end_x, scratch->odm_info.odm_factor)) {
+-			continue;
+-		}
+-
+ 		// Now we have a list of all pipes to be used for this plane/stream, now setup the tree.
+ 		scratch->odm_info.next_higher_pipe_for_odm_slice[odm_slice_index] = add_plane_to_blend_tree(ctx, state,
+ 				plane,
 -- 
 2.39.5
 
