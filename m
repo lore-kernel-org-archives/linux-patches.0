@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2F9259C8D;
-	Thu, 17 Apr 2025 18:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60771259CB9;
+	Thu, 17 Apr 2025 18:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914416; cv=none; b=eXO9m5Cjk48/+Y8tyoHqLB/Q+XTxPzQxe/vO5nb9lvX2pYwoZ6qGJ9VpYcGcc05dkURqZFQij4xcREFCUmDTA6YcMVnx5EnKzL/bmHKhE0X72+pieQj6KzFwUZa/7/OxUySRAU+LcDHcmb3jWberdYEyA4JjBEJS6+Xy9zu0HEE=
+	t=1744914419; cv=none; b=PAhMx7Cv9I8O662vqF5Xz4zD0ZT7nV0vs+Wjn3E8RmUTuYxUv6Ab2smC2IwtxJ2WjsRQNhFeIji0ke8KHZhv4duzH4DR9s7N0FBk5JBJYPDLLSJa4aBYPYyxk+dutAvjR07zmqjR5fNvBQAYneIs1Of0GqVJq3mgTqa7G4llm/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914416; c=relaxed/simple;
-	bh=1XclEZB8O/6+UvvfPvFRjV5N51AWffIFR1odE26T0Ow=;
+	s=arc-20240116; t=1744914419; c=relaxed/simple;
+	bh=6h3Ryq5t1owW6Uz1VRNlxnM+obhOlRmC/dASEmUP9SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcEgXHBsW+6p0TsnUKXI/5EGn6NPPGI6sG7VbYzoj84u2KL8o3He7aJ8429XGwEDcouv0c4ZdV+HQdlByioKpJNx/rAtMMZ7fphlyOSrnQebUGpmrZPh5Wr5ij8A0DhhUeS+jTmCyDuwmS/sPG7U9eJr0ncrvD7PatOUv0VAbeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK68MhVh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q9nUr/l8QTElPd/NjpTPhLwa0XbrIVwGAsSHlqpjCQ1WwDWc7NWV7/Cypi87fc/nUY71fTfM9qXAi6SLJUFsc2kH5zKBa+zaFhaUwTteMrLInopUBDW577J87fDhQcINSZU4YEZCr51S5cARsqzGV6+CXrlwRVV+YDeIptxoF7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlKl7rL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK68MhVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15220C4CEE4;
-	Thu, 17 Apr 2025 18:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlKl7rL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D600EC4CEE4;
+	Thu, 17 Apr 2025 18:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914416;
-	bh=1XclEZB8O/6+UvvfPvFRjV5N51AWffIFR1odE26T0Ow=;
+	s=korg; t=1744914419;
+	bh=6h3Ryq5t1owW6Uz1VRNlxnM+obhOlRmC/dASEmUP9SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yK68MhVhyJyv5yB7/LyHVEAtuq2h3AuUMY4NlzdgXQgnvOuW62t8tonkJzDTrHoWZ
-	 6REz5nV9So4IG52Uf/WMrtcEumBn3hFnvEvkyeOcOSvNy4ieB3Pihswvsg0QDEhG7M
-	 vZfKwfaTzsJLvQxos4XR+dJnxP5UHjRzyti8S0sE=
+	b=ZlKl7rL0NDeiF5nvsYlCp9FHsn3+17cOBSSRhnaormPNE4+SyzjKpjoUC6qROIflR
+	 7LnGBsMp8D4wG6CWE1Qn/yowRyPoMy/mpY+EVjv+AzNoGKa5Q12h660lwWcZUq2jee
+	 KAHMkxQoqA6dxGda1/0tz4M6L7ARTP4Mvv9WVQ1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 207/414] media: siano: Fix error handling in smsdvb_module_init()
-Date: Thu, 17 Apr 2025 19:49:25 +0200
-Message-ID: <20250417175119.769181414@linuxfoundation.org>
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Paul Dino Jones <paul@spacefreak18.xyz>,
+	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
+	Pablo Cisneros <patchkez@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 180/414] HID: pidff: Factor out code for setting gain
+Date: Thu, 17 Apr 2025 19:48:58 +0200
+Message-ID: <20250417175118.682245456@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -45,41 +49,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-commit 734ac57e47b3bdd140a1119e2c4e8e6f8ef8b33d upstream.
+[ Upstream commit f7ebf0b11b9e04bf59c438ad14f0115b12aa2f44 ]
 
-The smsdvb_module_init() returns without checking the retval from
-smscore_register_hotplug().
-If the smscore_register_hotplug() failed, the module failed to install,
-leaving the smsdvb_debugfs not unregistered.
+Makes it possible to easily set gain from inside hid-pidff.c
 
-Fixes: 3f6b87cff66b ("[media] siano: allow showing the complete statistics via debugfs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Changes in v7:
+- Check if device gain field exists before setting device gain
+
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Michał Kopeć <michal@nozomi.space>
+Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
+Tested-by: Pablo Cisneros <patchkez@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/siano/smsdvb-main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/usbhid/hid-pidff.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/media/common/siano/smsdvb-main.c
-+++ b/drivers/media/common/siano/smsdvb-main.c
-@@ -1243,6 +1243,8 @@ static int __init smsdvb_module_init(voi
- 	smsdvb_debugfs_register();
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 180b2cf66e4c7..ac6f940abd901 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -539,6 +539,19 @@ static int pidff_needs_set_ramp(struct ff_effect *effect, struct ff_effect *old)
+ 	       effect->u.ramp.end_level != old->u.ramp.end_level;
+ }
  
- 	rc = smscore_register_hotplug(smsdvb_hotplug);
-+	if (rc)
-+		smsdvb_debugfs_unregister();
++/*
++ * Set device gain
++ */
++static void pidff_set_gain_report(struct pidff_device *pidff, u16 gain)
++{
++	if (!pidff->device_gain[PID_DEVICE_GAIN_FIELD].field)
++		return;
++
++	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
++	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
++			HID_REQ_SET_REPORT);
++}
++
+ /*
+  * Clear device control report
+  */
+@@ -865,11 +878,7 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
+  */
+ static void pidff_set_gain(struct input_dev *dev, u16 gain)
+ {
+-	struct pidff_device *pidff = dev->ff->private;
+-
+-	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
+-	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
+-			HID_REQ_SET_REPORT);
++	pidff_set_gain_report(dev->ff->private, gain);
+ }
  
- 	pr_debug("\n");
+ static void pidff_autocenter(struct pidff_device *pidff, u16 magnitude)
+@@ -1414,12 +1423,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
+ 	if (error)
+ 		goto fail;
  
+-	if (test_bit(FF_GAIN, dev->ffbit)) {
+-		pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], 0xffff);
+-		hid_hw_request(hid, pidff->reports[PID_DEVICE_GAIN],
+-				     HID_REQ_SET_REPORT);
+-	}
+-
++	pidff_set_gain_report(pidff, 0xffff);
+ 	error = pidff_check_autocenter(pidff, dev);
+ 	if (error)
+ 		goto fail;
+-- 
+2.39.5
+
 
 
