@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D9C2571CF;
-	Thu, 17 Apr 2025 18:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CE725744A;
+	Thu, 17 Apr 2025 18:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915043; cv=none; b=tU0bT0cWoBcE6j1KwSXQJD+GgwfTDxCz55o8t+08VffMVLVvcqAZCljKVgZmVZnRapn7xzTVlfSpMZcZ2iMpfTmMUIGn2YoO8w7mtnwY2IIsyhgGV17Y5Rj98V5sV7ys7h6OFeWLWzzHo+35exDCWFa7AM0AcXjIFRsSuUlDAN4=
+	t=1744915046; cv=none; b=ZziE3Zjl74NVaaIUfwx6qTrBXync2kD4IVbdpbbag573FMakUmy+hfjo7cdUSJiQGcqNnw56PWgnfWMOyqIq9cZEvJy8AOZMiq2pUhxOcjql4wzz87lt36c+C+gLQDz+FliV+skGyHhq2tybOeONU9jFSDo9Zb5pBg+EYnc3lxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915043; c=relaxed/simple;
-	bh=yz7uD3dVWR1XK+Rb8S1V0d7k3RdZ8SWaKvUr6mYinjw=;
+	s=arc-20240116; t=1744915046; c=relaxed/simple;
+	bh=VhRqcnmhwyGJQShJA92tOJn3FVtBi2BCVpmpQGgug5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=syAKe9xosTkf4TuisWKBayTDlxScEUpXJCcBqFqj/jf5Z6eGTtpjcBiTAKkBlqkhBgL/7WAfxiQCehjyWJXn1qeIJYUq4SUvf0sQDsFED5aOeEMpUWHfTRRGUmw7j8WbWD4ZdHr/xt4UKp5dlDXi+Cexq55HsIqHIyqpksbf76I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhrvGgex; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JuCbB3jj1NICXkXrB4rhw+sBZlxctRidUddzgT19WEB5W7WEBje1Eh3DvZOTSW99hEQPk8Osai2VLj2bQz/e6QiLqJ+fFMDaK2E+ONtnoF1Ak7YvsiNKzreGIkc82HMGhz0hjXv95dbx6cg2i0dJbjXFDzW/fvdEsEiy4t+0ye8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X6obe7O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhrvGgex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11F5C4CEEA;
-	Thu, 17 Apr 2025 18:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X6obe7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9666C4CEE4;
+	Thu, 17 Apr 2025 18:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915043;
-	bh=yz7uD3dVWR1XK+Rb8S1V0d7k3RdZ8SWaKvUr6mYinjw=;
+	s=korg; t=1744915046;
+	bh=VhRqcnmhwyGJQShJA92tOJn3FVtBi2BCVpmpQGgug5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhrvGgexpj9YXzAoxLxSpIJ5ClpobkgSC3GpTbsC+h2ALIv7wkCii7xLoRRtSVzA8
-	 /hcDpFzgJ9HarjMVYqA1jfOMp4NuvXEtHM0gxd1wvjkPIyph2OVKhHs4WRA++tNklO
-	 YWLARk4TJgkbIntMx+OY8HFMV5CYmcM8SO5OU3bY=
+	b=1X6obe7OctrzNgn/W8ULZFZN4/PzWdJYVl0uIo8Ownk+p0kZScbgjmpe9+pAMIkg7
+	 pQICyQC2Od1pdpAHtY8rnQnjHEdEG6yFurwZMUKi7Xf46ch19VoeEMlUvjfVt1s8ST
+	 Uj6IwPAeoB+uRmjuf6pBubnSNIJYokvdc7KWBmPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Yi Liu <yi.l.liu@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.13 405/414] iommufd: Make attach_handle generic than fault specific
-Date: Thu, 17 Apr 2025 19:52:43 +0200
-Message-ID: <20250417175127.771220332@linuxfoundation.org>
+Subject: [PATCH 6.13 406/414] iommufd: Fail replace if device has not been attached
+Date: Thu, 17 Apr 2025 19:52:44 +0200
+Message-ID: <20250417175127.811055369@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,219 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-commit fb21b1568adaa76af7a8c853f37c60fba8b28661 upstream.
+commit 55c85fa7579dc2e3f5399ef5bad67a44257c1a48 upstream.
 
-"attach_handle" was added exclusively for the iommufd_fault_iopf_handler()
-used by IOPF/PRI use cases. Now, both the MSI and PASID series require to
-reuse the attach_handle for non-fault cases.
+The current implementation of iommufd_device_do_replace() implicitly
+assumes that the input device has already been attached. However, there
+is no explicit check to verify this assumption. If another device within
+the same group has been attached, the replace operation might succeed,
+but the input device itself may not have been attached yet.
 
-Add a set of new attach/detach/replace helpers that does the attach_handle
-allocation/releasing/replacement in the common path and also handles those
-fault specific routines such as iopf enabling/disabling and auto response.
+As a result, the input device might not be tracked in the
+igroup->device_list, and its reserved IOVA might not be added. Despite
+this, the caller might incorrectly assume that the device has been
+successfully replaced, which could lead to unexpected behavior or errors.
 
-This covers both non-fault and fault cases in a clean way, replacing those
-inline helpers in the header. The following patch will clean up those old
-helpers in the fault.c file.
+To address this issue, add a check to ensure that the input device has
+been attached before proceeding with the replace operation. This check
+will help maintain the integrity of the device tracking system and prevent
+potential issues arising from incorrect assumptions about the device's
+attachment status.
 
-Link: https://patch.msgid.link/r/32687df01c02291d89986a9fca897bbbe2b10987.1738645017.git.nicolinc@nvidia.com
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Fixes: e88d4ec154a8 ("iommufd: Add iommufd_device_replace()")
+Link: https://patch.msgid.link/r/20250306034842.5950-1-yi.l.liu@intel.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/device.c          |  105 ++++++++++++++++++++++++++++++++
- drivers/iommu/iommufd/fault.c           |    8 +-
- drivers/iommu/iommufd/iommufd_private.h |   33 +---------
- 3 files changed, 113 insertions(+), 33 deletions(-)
+ drivers/iommu/iommufd/device.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 --- a/drivers/iommu/iommufd/device.c
 +++ b/drivers/iommu/iommufd/device.c
-@@ -352,6 +352,111 @@ iommufd_device_attach_reserved_iova(stru
- 	return 0;
- }
+@@ -354,6 +354,17 @@ iommufd_device_attach_reserved_iova(stru
  
-+/* The device attach/detach/replace helpers for attach_handle */
-+
-+static int iommufd_hwpt_attach_device(struct iommufd_hw_pagetable *hwpt,
-+				      struct iommufd_device *idev)
+ /* The device attach/detach/replace helpers for attach_handle */
+ 
++/* Check if idev is attached to igroup->hwpt */
++static bool iommufd_device_is_attached(struct iommufd_device *idev)
 +{
-+	struct iommufd_attach_handle *handle;
-+	int rc;
++	struct iommufd_device *cur;
 +
-+	lockdep_assert_held(&idev->igroup->lock);
-+
-+	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
-+	if (!handle)
-+		return -ENOMEM;
-+
-+	if (hwpt->fault) {
-+		rc = iommufd_fault_iopf_enable(idev);
-+		if (rc)
-+			goto out_free_handle;
-+	}
-+
-+	handle->idev = idev;
-+	rc = iommu_attach_group_handle(hwpt->domain, idev->igroup->group,
-+				       &handle->handle);
-+	if (rc)
-+		goto out_disable_iopf;
-+
-+	return 0;
-+
-+out_disable_iopf:
-+	if (hwpt->fault)
-+		iommufd_fault_iopf_disable(idev);
-+out_free_handle:
-+	kfree(handle);
-+	return rc;
++	list_for_each_entry(cur, &idev->igroup->device_list, group_item)
++		if (cur == idev)
++			return true;
++	return false;
 +}
 +
-+static struct iommufd_attach_handle *
-+iommufd_device_get_attach_handle(struct iommufd_device *idev)
-+{
-+	struct iommu_attach_handle *handle;
+ static int iommufd_hwpt_attach_device(struct iommufd_hw_pagetable *hwpt,
+ 				      struct iommufd_device *idev)
+ {
+@@ -592,6 +603,11 @@ iommufd_device_do_replace(struct iommufd
+ 		rc = -EINVAL;
+ 		goto err_unlock;
+ 	}
 +
-+	lockdep_assert_held(&idev->igroup->lock);
-+
-+	handle =
-+		iommu_attach_handle_get(idev->igroup->group, IOMMU_NO_PASID, 0);
-+	if (IS_ERR(handle))
-+		return NULL;
-+	return to_iommufd_handle(handle);
-+}
-+
-+static void iommufd_hwpt_detach_device(struct iommufd_hw_pagetable *hwpt,
-+				       struct iommufd_device *idev)
-+{
-+	struct iommufd_attach_handle *handle;
-+
-+	handle = iommufd_device_get_attach_handle(idev);
-+	iommu_detach_group_handle(hwpt->domain, idev->igroup->group);
-+	if (hwpt->fault) {
-+		iommufd_auto_response_faults(hwpt, handle);
-+		iommufd_fault_iopf_disable(idev);
++	if (!iommufd_device_is_attached(idev)) {
++		rc = -EINVAL;
++		goto err_unlock;
 +	}
-+	kfree(handle);
-+}
-+
-+static int iommufd_hwpt_replace_device(struct iommufd_device *idev,
-+				       struct iommufd_hw_pagetable *hwpt,
-+				       struct iommufd_hw_pagetable *old)
-+{
-+	struct iommufd_attach_handle *handle, *old_handle =
-+		iommufd_device_get_attach_handle(idev);
-+	int rc;
-+
-+	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
-+	if (!handle)
-+		return -ENOMEM;
-+
-+	if (hwpt->fault && !old->fault) {
-+		rc = iommufd_fault_iopf_enable(idev);
-+		if (rc)
-+			goto out_free_handle;
-+	}
-+
-+	handle->idev = idev;
-+	rc = iommu_replace_group_handle(idev->igroup->group, hwpt->domain,
-+					&handle->handle);
-+	if (rc)
-+		goto out_disable_iopf;
-+
-+	if (old->fault) {
-+		iommufd_auto_response_faults(hwpt, old_handle);
-+		if (!hwpt->fault)
-+			iommufd_fault_iopf_disable(idev);
-+	}
-+	kfree(old_handle);
-+
-+	return 0;
-+
-+out_disable_iopf:
-+	if (hwpt->fault && !old->fault)
-+		iommufd_fault_iopf_disable(idev);
-+out_free_handle:
-+	kfree(handle);
-+	return rc;
-+}
-+
- int iommufd_hw_pagetable_attach(struct iommufd_hw_pagetable *hwpt,
- 				struct iommufd_device *idev)
- {
---- a/drivers/iommu/iommufd/fault.c
-+++ b/drivers/iommu/iommufd/fault.c
-@@ -17,7 +17,7 @@
- #include "../iommu-priv.h"
- #include "iommufd_private.h"
  
--static int iommufd_fault_iopf_enable(struct iommufd_device *idev)
-+int iommufd_fault_iopf_enable(struct iommufd_device *idev)
- {
- 	struct device *dev = idev->dev;
- 	int ret;
-@@ -50,7 +50,7 @@ static int iommufd_fault_iopf_enable(str
- 	return ret;
- }
- 
--static void iommufd_fault_iopf_disable(struct iommufd_device *idev)
-+void iommufd_fault_iopf_disable(struct iommufd_device *idev)
- {
- 	mutex_lock(&idev->iopf_lock);
- 	if (!WARN_ON(idev->iopf_enabled == 0)) {
-@@ -98,8 +98,8 @@ int iommufd_fault_domain_attach_dev(stru
- 	return ret;
- }
- 
--static void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
--					 struct iommufd_attach_handle *handle)
-+void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
-+				  struct iommufd_attach_handle *handle)
- {
- 	struct iommufd_fault *fault = hwpt->fault;
- 	struct iopf_group *group, *next;
---- a/drivers/iommu/iommufd/iommufd_private.h
-+++ b/drivers/iommu/iommufd/iommufd_private.h
-@@ -504,35 +504,10 @@ int iommufd_fault_domain_replace_dev(str
- 				     struct iommufd_hw_pagetable *hwpt,
- 				     struct iommufd_hw_pagetable *old);
- 
--static inline int iommufd_hwpt_attach_device(struct iommufd_hw_pagetable *hwpt,
--					     struct iommufd_device *idev)
--{
--	if (hwpt->fault)
--		return iommufd_fault_domain_attach_dev(hwpt, idev);
--
--	return iommu_attach_group(hwpt->domain, idev->igroup->group);
--}
--
--static inline void iommufd_hwpt_detach_device(struct iommufd_hw_pagetable *hwpt,
--					      struct iommufd_device *idev)
--{
--	if (hwpt->fault) {
--		iommufd_fault_domain_detach_dev(hwpt, idev);
--		return;
--	}
--
--	iommu_detach_group(hwpt->domain, idev->igroup->group);
--}
--
--static inline int iommufd_hwpt_replace_device(struct iommufd_device *idev,
--					      struct iommufd_hw_pagetable *hwpt,
--					      struct iommufd_hw_pagetable *old)
--{
--	if (old->fault || hwpt->fault)
--		return iommufd_fault_domain_replace_dev(idev, hwpt, old);
--
--	return iommu_group_replace_domain(idev->igroup->group, hwpt->domain);
--}
-+int iommufd_fault_iopf_enable(struct iommufd_device *idev);
-+void iommufd_fault_iopf_disable(struct iommufd_device *idev);
-+void iommufd_auto_response_faults(struct iommufd_hw_pagetable *hwpt,
-+				  struct iommufd_attach_handle *handle);
- 
- static inline struct iommufd_viommu *
- iommufd_get_viommu(struct iommufd_ucmd *ucmd, u32 id)
+ 	if (hwpt == igroup->hwpt) {
+ 		mutex_unlock(&idev->igroup->lock);
 
 
