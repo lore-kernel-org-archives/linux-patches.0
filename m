@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCD218C034;
-	Thu, 17 Apr 2025 18:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399518C034;
+	Thu, 17 Apr 2025 18:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913301; cv=none; b=eQw4nc+er+eDsUMk2lqtsByR7nsSE0S33QHqENLPkSvdKEfpQkNwE09dR2y9uVuwa9DiFGjsrglssOVeor9V/nYW+k1i3OUeZYyw1gGpTtrgCYePmBp05ea3rqlnppyhc2z2vLuoMzilfAkxPrEAYWeLtvf/Zv7ZrL2zLIn2ydg=
+	t=1744913304; cv=none; b=gMmH8hdxgmRn2slAYVYWdACYoe+9WXJK4/2lV1a1qxm1i7e9HUC4A9/dlpFXRbC6T2guJGh0r/401C+uAyMX/DHmfta0H4hzGiiEpbHvNYSBseLQrAdHqayuJEesJq6TCnaXNjd2URcbJCq+aB5Vv9UfG+eJlu/K1M6eO+S2+P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913301; c=relaxed/simple;
-	bh=5sKGFIES6P5xYXtmahnoPL1jZpGMDfg74nIG4wg/dM0=;
+	s=arc-20240116; t=1744913304; c=relaxed/simple;
+	bh=KNOaL+LT/s5yrmf9dq0zMiWl7mvGJKI383C1LGeibgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvAZF9ugCiJdErvpP/LZounrdBF75mla5/ne/kHx7BCDL9ihdUvXNDBq8VgaEcEOdUJ+Y6HTDaSEafSySn6ZfzSjBtU7ZyaJZPhP2iclRFz4hf8LWFIBcfBgI1j5Sn5fNA4jaaD0V60LUYdE+TQnTuD4dyIGW2jS2XxhRd5wc7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjFm7+Ry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gF0kOlBmjYOzxnJeQGCFfn3Hcgngzi7FIQMfQJsz/aWZl8RZ9S0p3nasURtaqPvhvzAJ7GaMOcyii52sngurJjzX20Wts5C5R21xUjEVlkkvOMKtvm0qRlbXjNAz9Uckntm4MW8d8Usa1VQu4ZeWISJSj9MaT1ClX0eZtIGludM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtSxTw/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjFm7+Ry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67382C4CEE4;
-	Thu, 17 Apr 2025 18:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtSxTw/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1125AC4CEE4;
+	Thu, 17 Apr 2025 18:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913300;
-	bh=5sKGFIES6P5xYXtmahnoPL1jZpGMDfg74nIG4wg/dM0=;
+	s=korg; t=1744913304;
+	bh=KNOaL+LT/s5yrmf9dq0zMiWl7mvGJKI383C1LGeibgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjFm7+Ry8azQS75d/Kwbc0GpmTj2WdH/WHlViTVXJB/iIDPbOSilQii7z6/U/3Npw
-	 IJIDTyHAWL/NrKXxy9aDatNj+cg/9PFNe11QBXOP7BsaDsRFs4CuEmRhPcZAhhUM+Q
-	 UMCHRsDn7CuC1PneRa4jnZiAV8wiU75AOorwEOeg=
+	b=MtSxTw/DGPWBeSuuEjwfM2qX+FDPdnxD3265ZgzFfo75tdZG5CBIqDoWnFWT5x3sn
+	 Au4fVk5cDISBQjuppFilhgnQvmMGn+pSDCBnRZt0oPzows9+SVSA0XdEuJH+o5fVMZ
+	 vB/+bxo7ue4jw3jP3DNpZlz+nxUWldN0rlv3AevU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+58928048fd1416f1457c@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 292/449] io_uring/kbuf: reject zero sized provided buffers
-Date: Thu, 17 Apr 2025 19:49:40 +0200
-Message-ID: <20250417175129.833022963@linuxfoundation.org>
+	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.14 264/449] media: chips-media: wave5: Avoid race condition in the interrupt handler
+Date: Thu, 17 Apr 2025 19:49:12 +0200
+Message-ID: <20250417175128.646306824@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,32 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Jackson.lee <jackson.lee@chipsnmedia.com>
 
-commit cf960726eb65e8d0bfecbcce6cf95f47b1ffa6cc upstream.
+commit ac35f768986610480a1c01323d9cf9f5eaf3ee9b upstream.
 
-This isn't fixing a real issue, but there's also zero point in going
-through group and buffer setup, when the buffers are going to be
-rejected once attempted to get used.
+In case of multiple active instances, new interrupts can occur as soon
+as the current interrupt is cleared. If the driver reads the
+instance_info after clearing the interrupt, then there is no guarantee,
+that the instance_info is still valid for the current interrupt.
 
+Read the instance_info register for each interrupt before clearing the
+interrupt.
+
+Fixes: ed7276ed2fd0 ("media: chips-media: wave5: Add hrtimer based polling support")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+58928048fd1416f1457c@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -480,6 +480,8 @@ int io_provide_buffers_prep(struct io_ki
- 	p->nbufs = tmp;
- 	p->addr = READ_ONCE(sqe->addr);
- 	p->len = READ_ONCE(sqe->len);
-+	if (!p->len)
-+		return -EINVAL;
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+@@ -55,12 +55,12 @@ static void wave5_vpu_handle_irq(void *d
+ 	struct vpu_device *dev = dev_id;
  
- 	if (check_mul_overflow((unsigned long)p->len, (unsigned long)p->nbufs,
- 				&size))
+ 	irq_reason = wave5_vdi_read_register(dev, W5_VPU_VINT_REASON);
++	seq_done = wave5_vdi_read_register(dev, W5_RET_SEQ_DONE_INSTANCE_INFO);
++	cmd_done = wave5_vdi_read_register(dev, W5_RET_QUEUE_CMD_DONE_INST);
+ 	wave5_vdi_write_register(dev, W5_VPU_VINT_REASON_CLR, irq_reason);
+ 	wave5_vdi_write_register(dev, W5_VPU_VINT_CLEAR, 0x1);
+ 
+ 	list_for_each_entry(inst, &dev->instances, list) {
+-		seq_done = wave5_vdi_read_register(dev, W5_RET_SEQ_DONE_INSTANCE_INFO);
+-		cmd_done = wave5_vdi_read_register(dev, W5_RET_QUEUE_CMD_DONE_INST);
+ 
+ 		if (irq_reason & BIT(INT_WAVE5_INIT_SEQ) ||
+ 		    irq_reason & BIT(INT_WAVE5_ENC_SET_PARAM)) {
 
 
