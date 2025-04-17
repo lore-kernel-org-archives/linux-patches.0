@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ACF253333;
-	Thu, 17 Apr 2025 18:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67658253333;
+	Thu, 17 Apr 2025 18:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914637; cv=none; b=vEE/MHUGugABEIE/3AeCubk0cMj4nB7Hpm7e8OKlvas3PfpXszaYpzbpjqOB/J/0yljHycuOYtmkLU4H9OhqWeA5lrHGQcAv+3cXZuBB4f0TTMfh7Z7a8idENdNwJvNEpjTQFHt4C5fsbX5WwDT2PxE0Lt5tChq2DqJ6Psdd22I=
+	t=1744914640; cv=none; b=m3kk5bN8Lqg5HzsFbsm42yhrXy57BYiWxx89EG/N5oJGzqv35JsYEJN/4R6FMKqqxVuYr73qQE8JPrFZmYBKaw0jNNb3moIDFr0miGLvEqSdqjM9xzCjsoDBDxolqmKqFP5dt0XiiSzuvBaNWsgyce6ZAvgq13zsy6j1h+yrEmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914637; c=relaxed/simple;
-	bh=jro/e9qEAn8B8vnP658cJ3DaqIRVtT+RaRwRWT1/UAg=;
+	s=arc-20240116; t=1744914640; c=relaxed/simple;
+	bh=072dxLg2gPRsWzBQAdyeYcva16yJo1ji1kS/Tg3kltM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aE/poIeD9qzVnO6s2c1ocK+8QqLfP0P7iKtZdP30qDzqtSPPhjCfF8EB+W6owjckSktKpnaOnXPEuDSfi9JeOU+Oz398L0T87HSDOoRjdLXk2R5qKXpFeOAi3csww/J4eHSSduA8tqbTQt40CBIXZP4ndpXPFabXDIFzNp3bwT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMrS1tf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DMS42T0kvSiE6WOlQNfmofFTeMa1o85ftKwIt/1Hlcd3j1aCd5Jz6ATSqvseG74wGpbRb+LEE2lPUmucmUnI1XkPaEefAolu1Rclg0MLEbb4peTmSyYnJcCCzu62k50bdlST+wO4chcjkw1OmbI5e5KrLLLK0ojMRPd5/Dtcxgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzEU2qG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMrS1tf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23E6C4CEE4;
-	Thu, 17 Apr 2025 18:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzEU2qG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AEFC4CEE7;
+	Thu, 17 Apr 2025 18:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914637;
-	bh=jro/e9qEAn8B8vnP658cJ3DaqIRVtT+RaRwRWT1/UAg=;
+	s=korg; t=1744914640;
+	bh=072dxLg2gPRsWzBQAdyeYcva16yJo1ji1kS/Tg3kltM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMrS1tf19q9hHE7xKXegr1uV1Ui3fW3/llAi8HlGMJL3rkd7T1Y6S8jMCaawDO4LD
-	 6O907mo+SOxugsrVMqSiD8qcQoBXoQJajWGNRosIv/AQsD+iFbQuSuLPJ7cL7CaV2A
-	 OXP6lbGPIOaOgmZxfhbCOCpckdkUxYEVAAKdp5Q8=
+	b=XzEU2qG9W3RokhaQfJzX1qRSbqa3TwyfISJi1zK38ujRvzknJt9pT+/B3Ta7hYwZF
+	 KID4TxIg2+pGjGTI9oJC8NZ56jOiyvpeYv24SE0nU+LQtQY9yP+xkqeF74tb3GCXdU
+	 jTwrqrMukRiybsC4OO196XLJ3H72o+6NNssY+HTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jackson.lee" <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 241/414] media: chips-media: wave5: Fix gray color on screen
-Date: Thu, 17 Apr 2025 19:49:59 +0200
-Message-ID: <20250417175121.118451967@linuxfoundation.org>
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.13 275/414] accel/ivpu: Fix deadlock in ivpu_ms_cleanup()
+Date: Thu, 17 Apr 2025 19:50:33 +0200
+Message-ID: <20250417175122.486449826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -53,36 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson.lee <jackson.lee@chipsnmedia.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-commit 6bae4d5053da634eecb611118e7cd91a677a4bbf upstream.
+commit 9a6f56762d23a1f3af15e67901493c927caaf882 upstream.
 
-When a decoder instance is created, the W5_CMD_ERR_CONCEAL register
-should be initialized to 0. Otherwise, gray color is occasionally
-displayed on the screen while decoding.
+Fix deadlock in ivpu_ms_cleanup() by preventing runtime resume after
+file_priv->ms_lock is acquired.
 
-Fixes: 45d1a2b93277 ("media: chips-media: wave5: Add vpuapi layer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jackson.lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+During a failure in runtime resume, a cold boot is executed, which
+calls ivpu_ms_cleanup_all(). This function calls ivpu_ms_cleanup()
+that acquires file_priv->ms_lock and causes the deadlock.
+
+Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
+Cc: stable@vger.kernel.org # v6.11+
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://lore.kernel.org/r/20250325114306.3740022-2-maciej.falkowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-hw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/ivpu/ivpu_ms.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
-@@ -585,7 +585,7 @@ int wave5_vpu_build_up_dec_param(struct
- 		vpu_write_reg(inst->dev, W5_CMD_NUM_CQ_DEPTH_M1,
- 			      WAVE521_COMMAND_QUEUE_DEPTH - 1);
- 	}
--
-+	vpu_write_reg(inst->dev, W5_CMD_ERR_CONCEAL, 0);
- 	ret = send_firmware_command(inst, W5_CREATE_INSTANCE, true, NULL, NULL);
- 	if (ret) {
- 		wave5_vdi_free_dma_memory(vpu_dev, &p_dec_info->vb_work);
+--- a/drivers/accel/ivpu/ivpu_ms.c
++++ b/drivers/accel/ivpu/ivpu_ms.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <drm/drm_file.h>
++#include <linux/pm_runtime.h>
+ 
+ #include "ivpu_drv.h"
+ #include "ivpu_gem.h"
+@@ -299,6 +300,9 @@ unlock:
+ void ivpu_ms_cleanup(struct ivpu_file_priv *file_priv)
+ {
+ 	struct ivpu_ms_instance *ms, *tmp;
++	struct ivpu_device *vdev = file_priv->vdev;
++
++	pm_runtime_get_sync(vdev->drm.dev);
+ 
+ 	mutex_lock(&file_priv->ms_lock);
+ 
+@@ -311,6 +315,8 @@ void ivpu_ms_cleanup(struct ivpu_file_pr
+ 		free_instance(file_priv, ms);
+ 
+ 	mutex_unlock(&file_priv->ms_lock);
++
++	pm_runtime_put_autosuspend(vdev->drm.dev);
+ }
+ 
+ void ivpu_ms_cleanup_all(struct ivpu_device *vdev)
 
 
