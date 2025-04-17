@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEE61DF246;
-	Thu, 17 Apr 2025 18:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E19C2550C2;
+	Thu, 17 Apr 2025 18:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915073; cv=none; b=SODm0nC7TP2XZFrEcwdxNS5lEe5eO58XwjE8gWQj3XW2JR6ZecvAA+JJZLaYZT98Ir2Dt2bHEFrCub9YpmwEiozpfrueHmMs83OJ6ruD2UWs4/e/xRd7p+haL+nadGp4LytSth90ZfrPeSkTFOm4YvdTRl1ME4UsE94jrPmXzFI=
+	t=1744915076; cv=none; b=Hsbcwj0x0z5Q+tyv18Ylqgt+vL3PUxh69S0BlEdAePgsZQ2wsCb4VKTbOKJceN36N1BS61FI6q5lAx+gbFOcVKZ+XRnG474V63aXSHPNdRzFNDU35NbUA8KFgM/8+3PnkzyfoduS8JJTmxvfH/oiYo1it6ffDtDAMPOpX2vMpMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915073; c=relaxed/simple;
-	bh=9qDmeIVQf7rOqxZp5e+oqHlEpSJIUsy8XJEy0zhVon4=;
+	s=arc-20240116; t=1744915076; c=relaxed/simple;
+	bh=XsRMaTsUBAeIxgWOnT2y4Sacw9f992us87dMQx1FtQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQrnbTiaa3C8Gdlu7yoYDopMJdqF6PGWCkZpTQn8R8+I7nxKQXJVHiKWLp9zJfiUUSFVesJ47VGEZ7JNI/iNQTFkFv6uJ+D6fGJbO9T8k2FZv/FTd8DggQ/Fv5UaBc1WvbXzAvSmxvhZ9OB1k6H/YKUk/5il2CaqOZE5Pk5Q/7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPNIcvR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uh93SmxBEx4I+QBmWs2YWPyHoOtxVphJed4ESNIaZMD0Zq0gvUBhkUk5lC1oKce3OAtbGsUgiffH3lOkeDeBTpZlnL2kBwtJfkG+ouoQfyDpx2VmWevzvgFlvDJKcVvHeTT35fIpa6e0xqEdijLOIj+yqnr6/wvA/CbFi7Jc1Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXkSc1nv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPNIcvR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A93C4CEE4;
-	Thu, 17 Apr 2025 18:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXkSc1nv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F43C4CEE4;
+	Thu, 17 Apr 2025 18:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915073;
-	bh=9qDmeIVQf7rOqxZp5e+oqHlEpSJIUsy8XJEy0zhVon4=;
+	s=korg; t=1744915076;
+	bh=XsRMaTsUBAeIxgWOnT2y4Sacw9f992us87dMQx1FtQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cPNIcvR7WINNlKLSj9IzSdDjegZORqP2gqw3EPQCe11aYy1IAE6e2T3NXlqABvxPC
-	 7+IcZLOKWNpDJneYhpCyKv6XsuHTaqtg/jEWtD4IzPegNSd9TMnV5tyNO/goFf4AD/
-	 U2jAm9gqehWKBw7x7rrlC5ziWQoeDOyiembZZueE=
+	b=YXkSc1nv0Gx27/ZVLa1hcwfji3VqfbYcs+m9rh1jO2qiZuMN5l0WwVOF/0hIyeITk
+	 6kNhIe2/xG5d+FMQ6xuI9WjV/GohcKWBkxCbgNnmWp+xEs/kb+kIPDAYHlsbvs/V4w
+	 pa+Ip7yjKL6iMnPa3RAb8QEujbk/HT10whszp6OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/393] ublk: refactor recovery configuration flag helpers
-Date: Thu, 17 Apr 2025 19:46:59 +0200
-Message-ID: <20250417175107.992794917@linuxfoundation.org>
+Subject: [PATCH 6.12 011/393] ublk: fix handling recovery & reissue in ublk_abort_queue()
+Date: Thu, 17 Apr 2025 19:47:00 +0200
+Message-ID: <20250417175108.032872142@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,187 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 3b939b8f715e014adcc48f7827fe9417252f0833 ]
+[ Upstream commit 6ee6bd5d4fce502a5b5a2ea805e9ff16e6aa890f ]
 
-ublk currently supports the following behaviors on ublk server exit:
+Commit 8284066946e6 ("ublk: grab request reference when the request is handled
+by userspace") doesn't grab request reference in case of recovery reissue.
+Then the request can be requeued & re-dispatch & failed when canceling
+uring command.
 
-A: outstanding I/Os get errors, subsequently issued I/Os get errors
-B: outstanding I/Os get errors, subsequently issued I/Os queue
-C: outstanding I/Os get reissued, subsequently issued I/Os queue
+If it is one zc request, the request can be freed before io_uring
+returns the zc buffer back, then cause kernel panic:
 
-and the following behaviors for recovery of preexisting block devices by
-a future incarnation of the ublk server:
+[  126.773061] BUG: kernel NULL pointer dereference, address: 00000000000000c8
+[  126.773657] #PF: supervisor read access in kernel mode
+[  126.774052] #PF: error_code(0x0000) - not-present page
+[  126.774455] PGD 0 P4D 0
+[  126.774698] Oops: Oops: 0000 [#1] SMP NOPTI
+[  126.775034] CPU: 13 UID: 0 PID: 1612 Comm: kworker/u64:55 Not tainted 6.14.0_blk+ #182 PREEMPT(full)
+[  126.775676] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39 04/01/2014
+[  126.776275] Workqueue: iou_exit io_ring_exit_work
+[  126.776651] RIP: 0010:ublk_io_release+0x14/0x130 [ublk_drv]
 
-1: ublk devices stopped on ublk server exit (no recovery possible)
-2: ublk devices are recoverable using start/end_recovery commands
+Fixes it by always grabbing request reference for aborting the request.
 
-The userspace interface allows selection of combinations of these
-behaviors using flags specified at device creation time, namely:
-
-default behavior: A + 1
-UBLK_F_USER_RECOVERY: B + 2
-UBLK_F_USER_RECOVERY|UBLK_F_USER_RECOVERY_REISSUE: C + 2
-
-We can't easily change the userspace interface to allow independent
-selection of one of {A, B, C} and one of {1, 2}, but we can refactor the
-internal helpers which test for the flags. Replace the existing helpers
-with the following set:
-
-ublk_nosrv_should_reissue_outstanding: tests for behavior C
-ublk_nosrv_[dev_]should_queue_io: tests for behavior B
-ublk_nosrv_should_stop_dev: tests for behavior 1
-
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241007182419.3263186-3-ushankar@purestorage.com
+Reported-by: Caleb Sander Mateos <csander@purestorage.com>
+Closes: https://lore.kernel.org/linux-block/CADUfDZodKfOGUeWrnAxcZiLT+puaZX8jDHoj_sfHZCOZwhzz6A@mail.gmail.com/
+Fixes: 8284066946e6 ("ublk: grab request reference when the request is handled by userspace")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250409011444.2142010-2-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 6ee6bd5d4fce ("ublk: fix handling recovery & reissue in ublk_abort_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 62 +++++++++++++++++++++++++++-------------
- 1 file changed, 42 insertions(+), 20 deletions(-)
+ drivers/block/ublk_drv.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 79b7bd8bfd458..dd328d40c7de5 100644
+index dd328d40c7de5..38b9e485e520d 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -681,22 +681,44 @@ static int ublk_max_cmd_buf_size(void)
- 	return __ublk_queue_cmd_buf_size(UBLK_MAX_QUEUE_DEPTH);
+@@ -1081,6 +1081,25 @@ static void ublk_complete_rq(struct kref *ref)
+ 	__ublk_complete_rq(req);
  }
  
--static inline bool ublk_queue_can_use_recovery_reissue(
--		struct ublk_queue *ubq)
-+/*
-+ * Should I/O outstanding to the ublk server when it exits be reissued?
-+ * If not, outstanding I/O will get errors.
-+ */
-+static inline bool ublk_nosrv_should_reissue_outstanding(struct ublk_device *ub)
- {
--	return (ubq->flags & UBLK_F_USER_RECOVERY) &&
--			(ubq->flags & UBLK_F_USER_RECOVERY_REISSUE);
-+	return (ub->dev_info.flags & UBLK_F_USER_RECOVERY) &&
-+	       (ub->dev_info.flags & UBLK_F_USER_RECOVERY_REISSUE);
- }
- 
--static inline bool ublk_queue_can_use_recovery(
--		struct ublk_queue *ubq)
-+/*
-+ * Should I/O issued while there is no ublk server queue? If not, I/O
-+ * issued while there is no ublk server will get errors.
-+ */
-+static inline bool ublk_nosrv_dev_should_queue_io(struct ublk_device *ub)
++static void ublk_do_fail_rq(struct request *req)
 +{
-+	return ub->dev_info.flags & UBLK_F_USER_RECOVERY;
++	struct ublk_queue *ubq = req->mq_hctx->driver_data;
++
++	if (ublk_nosrv_should_reissue_outstanding(ubq->dev))
++		blk_mq_requeue_request(req, false);
++	else
++		__ublk_complete_rq(req);
 +}
 +
-+/*
-+ * Same as ublk_nosrv_dev_should_queue_io, but uses a queue-local copy
-+ * of the device flags for smaller cache footprint - better for fast
-+ * paths.
-+ */
-+static inline bool ublk_nosrv_should_queue_io(struct ublk_queue *ubq)
- {
- 	return ubq->flags & UBLK_F_USER_RECOVERY;
- }
- 
--static inline bool ublk_can_use_recovery(struct ublk_device *ub)
-+/*
-+ * Should ublk devices be stopped (i.e. no recovery possible) when the
-+ * ublk server exits? If not, devices can be used again by a future
-+ * incarnation of a ublk server via the start_recovery/end_recovery
-+ * commands.
-+ */
-+static inline bool ublk_nosrv_should_stop_dev(struct ublk_device *ub)
- {
--	return ub->dev_info.flags & UBLK_F_USER_RECOVERY;
-+	return !(ub->dev_info.flags & UBLK_F_USER_RECOVERY);
- }
- 
- static void ublk_free_disk(struct gendisk *disk)
-@@ -1072,7 +1094,7 @@ static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
++static void ublk_fail_rq_fn(struct kref *ref)
++{
++	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
++			ref);
++	struct request *req = blk_mq_rq_from_pdu(data);
++
++	ublk_do_fail_rq(req);
++}
++
+ /*
+  * Since __ublk_rq_task_work always fails requests immediately during
+  * exiting, __ublk_fail_req() is only called from abort context during
+@@ -1094,10 +1113,13 @@ static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
  {
  	WARN_ON_ONCE(io->flags & UBLK_IO_FLAG_ACTIVE);
  
--	if (ublk_queue_can_use_recovery_reissue(ubq))
-+	if (ublk_nosrv_should_reissue_outstanding(ubq->dev))
- 		blk_mq_requeue_request(req, false);
- 	else
- 		ublk_put_req_ref(ubq, req);
-@@ -1100,7 +1122,7 @@ static inline void __ublk_abort_rq(struct ublk_queue *ubq,
- 		struct request *rq)
- {
- 	/* We cannot process this rq so just requeue it. */
--	if (ublk_queue_can_use_recovery(ubq))
-+	if (ublk_nosrv_dev_should_queue_io(ubq->dev))
- 		blk_mq_requeue_request(rq, false);
- 	else
- 		blk_mq_end_request(rq, BLK_STS_IOERR);
-@@ -1245,10 +1267,10 @@ static enum blk_eh_timer_return ublk_timeout(struct request *rq)
- 		struct ublk_device *ub = ubq->dev;
- 
- 		if (ublk_abort_requests(ub, ubq)) {
--			if (ublk_can_use_recovery(ub))
--				schedule_work(&ub->quiesce_work);
--			else
-+			if (ublk_nosrv_should_stop_dev(ub))
- 				schedule_work(&ub->stop_work);
-+			else
-+				schedule_work(&ub->quiesce_work);
- 		}
- 		return BLK_EH_DONE;
- 	}
-@@ -1277,7 +1299,7 @@ static blk_status_t ublk_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	 * Note: force_abort is guaranteed to be seen because it is set
- 	 * before request queue is unqiuesced.
- 	 */
--	if (ublk_queue_can_use_recovery(ubq) && unlikely(ubq->force_abort))
-+	if (ublk_nosrv_should_queue_io(ubq) && unlikely(ubq->force_abort))
- 		return BLK_STS_IOERR;
- 
- 	if (unlikely(ubq->canceling)) {
-@@ -1517,10 +1539,10 @@ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
- 	ublk_cancel_cmd(ubq, io, issue_flags);
- 
- 	if (need_schedule) {
--		if (ublk_can_use_recovery(ub))
--			schedule_work(&ub->quiesce_work);
--		else
-+		if (ublk_nosrv_should_stop_dev(ub))
- 			schedule_work(&ub->stop_work);
-+		else
-+			schedule_work(&ub->quiesce_work);
- 	}
+-	if (ublk_nosrv_should_reissue_outstanding(ubq->dev))
+-		blk_mq_requeue_request(req, false);
+-	else
+-		ublk_put_req_ref(ubq, req);
++	if (ublk_need_req_ref(ubq)) {
++		struct ublk_rq_data *data = blk_mq_rq_to_pdu(req);
++
++		kref_put(&data->ref, ublk_fail_rq_fn);
++	} else {
++		ublk_do_fail_rq(req);
++	}
  }
  
-@@ -1640,7 +1662,7 @@ static void ublk_stop_dev(struct ublk_device *ub)
- 	mutex_lock(&ub->mutex);
- 	if (ub->dev_info.state == UBLK_S_DEV_DEAD)
- 		goto unlock;
--	if (ublk_can_use_recovery(ub)) {
-+	if (ublk_nosrv_dev_should_queue_io(ub)) {
- 		if (ub->dev_info.state == UBLK_S_DEV_LIVE)
- 			__ublk_quiesce_dev(ub);
- 		ublk_unquiesce_dev(ub);
-@@ -2738,7 +2760,7 @@ static int ublk_ctrl_start_recovery(struct ublk_device *ub,
- 	int i;
- 
- 	mutex_lock(&ub->mutex);
--	if (!ublk_can_use_recovery(ub))
-+	if (ublk_nosrv_should_stop_dev(ub))
- 		goto out_unlock;
- 	if (!ub->nr_queues_ready)
- 		goto out_unlock;
-@@ -2791,7 +2813,7 @@ static int ublk_ctrl_end_recovery(struct ublk_device *ub,
- 			__func__, ub->dev_info.nr_hw_queues, header->dev_id);
- 
- 	mutex_lock(&ub->mutex);
--	if (!ublk_can_use_recovery(ub))
-+	if (ublk_nosrv_should_stop_dev(ub))
- 		goto out_unlock;
- 
- 	if (ub->dev_info.state != UBLK_S_DEV_QUIESCED) {
+ static void ubq_complete_io_cmd(struct ublk_io *io, int res,
 -- 
 2.39.5
 
