@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97931DE3A8;
-	Thu, 17 Apr 2025 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D491CAA7D;
+	Thu, 17 Apr 2025 18:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913372; cv=none; b=BZi1Xt5fvGkQccM+0baRDEcSHjod//ZJRN1FVEIKeohGLLIqJYUmk2/qO8fIezLHGMvOtrZRcJXqx0jTV64n46zFVMwSXQrDrA4CTHNTzh7Qg2Zkd8RhGl2lWUXCJxusPUsUlLVCQTyEN4KQpPTwL08bkP0uHjyU+17ZG/ubp58=
+	t=1744913376; cv=none; b=dBTyOgsYOWZHiVCkpNpWS3SDOVFEK8lzQpj0OaxYiDQWyEPtH65KrhLWtDdWepEE5epvvvbAWsCM5JqdSv4+9kPNBX5RgyVhEQd2Uw4P++PyZq71Yxvps+7ombTmorxEg/lX/e6qMGWGArjAXEHnxdos5e0qhs5/n0lUYNAXHio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913372; c=relaxed/simple;
-	bh=Fz21OXs7qgx2Efx6FoGLasL+wCjNGTSlS2lsRFOY7+U=;
+	s=arc-20240116; t=1744913376; c=relaxed/simple;
+	bh=JSAWCUTukdjnqySd/4D+IcQNpto2lUZE2lXaOoD8XeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vo4xykY1YOu7SpxnE3DQdWK5fXkaozIpI7avn9LpEBSqw2Uw7MAOwIrYYOZk3YJb0bI69giXSq5iWwSca5xfe1dPsP32bW+rCe8vGsBzBHLgLvgD6q9HBnlHIynGqIANnZmIvslRp2xIB+njuElFl19tZnC8a0eP3h4ghB0AczQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLmaRsDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKLVzen4fHP0iVwBrlRVS9iyW7/XdJZq2kPIArOaZVf+BZSoFRspBbJGEUgp6meKRM9cFFDJ/upAruXgDSuEj4G/HXPEu2hZlNFKsi8Nc5MJ5j9D/sBqW5iFLm16GLpAKP5c1a5Mt3Y9w6uw+yI54lGmDNb4OIZQGBcnsg1ZUNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGAXMeFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLmaRsDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB1DC4CEE4;
-	Thu, 17 Apr 2025 18:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGAXMeFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C38AC4CEE4;
+	Thu, 17 Apr 2025 18:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913372;
-	bh=Fz21OXs7qgx2Efx6FoGLasL+wCjNGTSlS2lsRFOY7+U=;
+	s=korg; t=1744913375;
+	bh=JSAWCUTukdjnqySd/4D+IcQNpto2lUZE2lXaOoD8XeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLmaRsDZe22p0u1oJn8w9Qw0MJ+0WiTpjQR+Zh/8zA1qQiARaRmCC6C7xd8Z4tfdV
-	 RXLw7n3kemy4p4NdnumZRRQjSFfyBEn+R1u1/aSmH8Nx5ZQQoEVdeDif9sNYfl9HXc
-	 bXC09XaEYCSRtN6xkmW0cK5uhTBe+LJKGppbrnjA=
+	b=GGAXMeFu5edDNMBmOGl+ZNlrOo9NixnyLFlPDTmJkkURoBEgkYKelvDblDKgmogYv
+	 TjKnC9rR4drTGGkH2nvBlUcF2ebMpM5VH03zJs8btQ/4t2Frf9vjYunz5ZkyyO+fNe
+	 EBpM9uilcV5dhlxMJepo+MlN9Jd4bu7pJJLBM0lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.14 317/449] igc: Fix XSK queue NAPI ID mapping
-Date: Thu, 17 Apr 2025 19:50:05 +0200
-Message-ID: <20250417175130.874073676@linuxfoundation.org>
+	stable@kernel.org,
+	Stanley Chu <yschu@nuvoton.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.14 318/449] i3c: master: svc: Use readsb helper for reading MDB
+Date: Thu, 17 Apr 2025 19:50:06 +0200
+Message-ID: <20250417175130.915997278@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,84 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Stanley Chu <yschu@nuvoton.com>
 
-commit dddeeaa16ce9d163ccf3b681715512d338afa541 upstream.
+commit c06acf7143bddaa3c0f7bedd8b99e48f6acb85c3 upstream.
 
-In commit b65969856d4f ("igc: Link queues to NAPI instances"), the XSK
-queues were incorrectly unmapped from their NAPI instances. After
-discussion on the mailing list and the introduction of a test to codify
-the expected behavior, we can see that the unmapping causes the
-check_xsk test to fail:
+The target can send the MDB byte followed by additional data bytes.
+The readl on MRDATAB reads one actual byte, but the readsl advances
+the destination pointer by 4 bytes. This causes the subsequent payload
+to be copied to wrong position in the destination buffer.
 
-NETIF=enp86s0 ./tools/testing/selftests/drivers/net/queues.py
-
-[...]
-  # Check|     ksft_eq(q.get('xsk', None), {},
-  # Check failed None != {} xsk attr on queue we configured
-  not ok 4 queues.check_xsk
-
-After this commit, the test passes:
-
-  ok 4 queues.check_xsk
-
-Note that the test itself is only in net-next, so I tested this change
-by applying it to my local net-next tree, booting, and running the test.
-
-Cc: stable@vger.kernel.org
-Fixes: b65969856d4f ("igc: Link queues to NAPI instances")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: stable@kernel.org
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250318053606.3087121-3-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      |    2 --
- drivers/net/ethernet/intel/igc/igc_main.c |    4 ++--
- drivers/net/ethernet/intel/igc/igc_xdp.c  |    2 --
- 3 files changed, 2 insertions(+), 6 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -337,8 +337,6 @@ struct igc_adapter {
- 	struct igc_led_classdev *leds;
- };
- 
--void igc_set_queue_napi(struct igc_adapter *adapter, int q_idx,
--			struct napi_struct *napi);
- void igc_up(struct igc_adapter *adapter);
- void igc_down(struct igc_adapter *adapter);
- int igc_open(struct net_device *netdev);
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5021,8 +5021,8 @@ static int igc_sw_init(struct igc_adapte
- 	return 0;
- }
- 
--void igc_set_queue_napi(struct igc_adapter *adapter, int vector,
--			struct napi_struct *napi)
-+static void igc_set_queue_napi(struct igc_adapter *adapter, int vector,
-+			       struct napi_struct *napi)
- {
- 	struct igc_q_vector *q_vector = adapter->q_vector[vector];
- 
---- a/drivers/net/ethernet/intel/igc/igc_xdp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_xdp.c
-@@ -86,7 +86,6 @@ static int igc_xdp_enable_pool(struct ig
- 		napi_disable(napi);
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -378,7 +378,7 @@ static int svc_i3c_master_handle_ibi(str
+ 	       slot->len < SVC_I3C_FIFO_SIZE) {
+ 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
+ 		count = SVC_I3C_MDATACTRL_RXCOUNT(mdatactrl);
+-		readsl(master->regs + SVC_I3C_MRDATAB, buf, count);
++		readsb(master->regs + SVC_I3C_MRDATAB, buf, count);
+ 		slot->len += count;
+ 		buf += count;
  	}
- 
--	igc_set_queue_napi(adapter, queue_id, NULL);
- 	set_bit(IGC_RING_FLAG_AF_XDP_ZC, &rx_ring->flags);
- 	set_bit(IGC_RING_FLAG_AF_XDP_ZC, &tx_ring->flags);
- 
-@@ -136,7 +135,6 @@ static int igc_xdp_disable_pool(struct i
- 	xsk_pool_dma_unmap(pool, IGC_RX_DMA_ATTR);
- 	clear_bit(IGC_RING_FLAG_AF_XDP_ZC, &rx_ring->flags);
- 	clear_bit(IGC_RING_FLAG_AF_XDP_ZC, &tx_ring->flags);
--	igc_set_queue_napi(adapter, queue_id, napi);
- 
- 	if (needs_reset) {
- 		napi_enable(napi);
 
 
