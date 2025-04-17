@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CC1223710;
-	Thu, 17 Apr 2025 18:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215681E1DEF;
+	Thu, 17 Apr 2025 18:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912917; cv=none; b=D4xRR4kce5zRvmeNtJkwB49EWNK9lMli7qX++2Z2BF2g2VkYceebydqnvJGLzwyMl9sAq7AncvvnZtwDNi14s6mDgimEb9f1QFd8B1uChVjiIQAsPZVqUOnQEXblDfL/N3/YKzJa6Qmafvby8zLJiZS+NGUar8hzntbDJl+kKGQ=
+	t=1744912921; cv=none; b=iwOrb+5pqzY1U+H7iuoWyKqqsPay80L3y7V6ECbaj0MnwS8rwpLJGfbIZ09OoH2LqCBUxf5W+m+UFEiu9Fst6hsVffsvU4TnnvVKjjcwq7owJqciL9vctwuHnsWx9p84XdWHslq7pPJlWxc6MEv66yFKI2dDJEwZAsS0qHrDKQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912917; c=relaxed/simple;
-	bh=TI3f4AgLtCfQY0fykiFLQiDD8ialei5FKev2/47sqbc=;
+	s=arc-20240116; t=1744912921; c=relaxed/simple;
+	bh=pBBFYe/K3OjW2wgkuasMeNxUE9W1ef0nLaNRow61o2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cn31K5AUEJd3Vdfbz34jgUfAhXGoy4mcbCW9XZzTeA+w5e+R042RgkakrQLKI5XgLxanbVPHWYkWwlbvBvxg4M4p01oK2LP8MnrKt3eGSjOOO0AAE76a/UusN2op63iWMXg5K3Nl7x+VgMZ8OZMwbSlc9tPREQ7+c11fSeEhl7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w14ws++h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKSv2eBf3YHM29H6l6Wz+5htey+eeGrOefRJRV36azYRrnijLl0iFPqphuq+PkcYotyNpP+72yFLCTjYlipc0wDUp3ckdnp7jFWki2vv8o2TzcXEz33DCr6mECr6HiRQgSJK233lmuCCzuiB9q8Okl6Mg5/qgKE8HRmK+CUNNTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0ZBf5tJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w14ws++h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A73C4CEE4;
-	Thu, 17 Apr 2025 18:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0ZBf5tJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A150C4CEE4;
+	Thu, 17 Apr 2025 18:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912917;
-	bh=TI3f4AgLtCfQY0fykiFLQiDD8ialei5FKev2/47sqbc=;
+	s=korg; t=1744912920;
+	bh=pBBFYe/K3OjW2wgkuasMeNxUE9W1ef0nLaNRow61o2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w14ws++hpxUamsNKAYt6CBwekdrnqeRrD04VYuMfvt66dyfTAyt3TiRq6jrhRQX++
-	 LtFxhvEnGJgBBwGVIfWSruuwkH5m3sQO/t1kCLjcw41zMv+poyxR9nS+U1vgyJFKhS
-	 uPlz5V3vQVF3/iq+WI01NGmjkZKjYQAxegWZ/YMY=
+	b=E0ZBf5tJZW8+bCzWc6UjI5TGNBYEnw3LhQ8ROY/akw7ILxkIARj+eCGWuEgEtFmsN
+	 1cN5K0g4wljK5N3GFPIWyiWru46wEM6t2Hrs4yB5/HboG98EQPFcUZ5NX3NExq5wni
+	 qm5Ejy6iJ/0uq7GQgxIN2PqQaIGqNmVAGWAKiZwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 138/449] Bluetooth: btusb: Add 13 USB device IDs for Qualcomm WCN785x
-Date: Thu, 17 Apr 2025 19:47:06 +0200
-Message-ID: <20250417175123.521147070@linuxfoundation.org>
+Subject: [PATCH 6.14 139/449] Bluetooth: hci_uart: fix race during initialization
+Date: Thu, 17 Apr 2025 19:47:07 +0200
+Message-ID: <20250417175123.562648536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,64 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 2dd1c1eee3e496fcc16971be4db5bb792a36025c ]
+[ Upstream commit 366ceff495f902182d42b6f41525c2474caf3f9a ]
 
-Add 13 USB device IDs for Qualcomm WCN785x, and these IDs are
-extracted from Windows driver inf file for various types of
-WoS (Windows on Snapdragon) laptop.
+'hci_register_dev()' calls power up function, which is executed by
+kworker - 'hci_power_on()'. This function does access to bluetooth chip
+using callbacks from 'hci_ldisc.c', for example 'hci_uart_send_frame()'.
+Now 'hci_uart_send_frame()' checks 'HCI_UART_PROTO_READY' bit set, and
+if not - it fails. Problem is that 'HCI_UART_PROTO_READY' is set after
+'hci_register_dev()', and there is tiny chance that 'hci_power_on()' will
+be executed before setting this bit. In that case HCI init logic fails.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Patch moves setting of 'HCI_UART_PROTO_READY' before calling function
+'hci_uart_register_dev()'.
+
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/bluetooth/hci_ldisc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 5c93d974130f0..1295a979a3264 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -376,12 +376,38 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe100), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe103), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe10a), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe10d), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11b), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11c), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11f), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe141), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14a), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14b), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14d), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3624), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2c7c, 0x0131), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2c7c, 0x0132), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+index d2d6ba8d2f8b1..b955dc96b483a 100644
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -707,12 +707,13 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
  
- 	/* Broadcom BCM2035 */
- 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+ 	hu->proto = p;
+ 
++	set_bit(HCI_UART_PROTO_READY, &hu->flags);
++
+ 	err = hci_uart_register_dev(hu);
+ 	if (err) {
+ 		return err;
+ 	}
+ 
+-	set_bit(HCI_UART_PROTO_READY, &hu->flags);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
