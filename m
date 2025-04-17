@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2291EB1BF;
-	Thu, 17 Apr 2025 18:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E285A1EB1BF;
+	Thu, 17 Apr 2025 18:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913286; cv=none; b=A8AXWWVM6SO6zjQsn2mufxhDw4OllOSvb1F0rKfSJqJxv9lYLAUXDiAxR7vDKBi/eo1yrnjDmqHpvE5GCT6dcP8ubikD+Jo5fEYntnBKjZM6HGznvJsxB4Jy1mrlFP1NcUGsGhckYuo4o4DQ4DngdCjLVAuO1rVGv7DxQ3ocbXE=
+	t=1744913289; cv=none; b=m+ObDNoZHUGSMH2Rf/W1dGi8BRpFvmcPWwjUSZZuo+oV7SEIMb2c0ax0QaxbmBifyYtlIyoag+bwMQA4VXR0o3Osnc1nFwOV35fFLyLE2d5dIc7jMqqArOcGX+rxF98Ay8xMMu6OL2fmG8z5KZWoALzw24AxbWR11NH/gVqXWhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913286; c=relaxed/simple;
-	bh=29pCH2AzR/n1fJLegB096NaN8zzAiwSiQFlNH2BD57w=;
+	s=arc-20240116; t=1744913289; c=relaxed/simple;
+	bh=oDe70kJuNOtQymgUC7ztH1LhtjeYXtT7rO7Vqxz1/GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCcfFSm5xI7XBJlFbfFHldbo3p+bOhOqZF5txVlT/po8fTS9UMedJbHoeZnxQDiXMm65VsnFaNfOte2ngs8KApJkpVMxtapvchqeut2MchLh/I0F0eNG7PM8fCHEcwdZd/MAW4W/fdLQk6uoa6s84sE6J9n+Oc1LbG7bTrwcqdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoDl3tm9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IUpXneb3C4WYF2kaV9a1hnYpFn8nqRsfZiDLhP2nqf5dVS5rvbt654QMIvCwecbgrWlxM/G04X4dBYWy0KdmKUXzdrumoR0KEf+icn3GGbEnJAubANONVFqgmjqkEVKc01g6dxcC/ZlaZkf8aqkYGQSTGpEFMcMC5eEwp5gVdH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfSOsK4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoDl3tm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D50C4CEE4;
-	Thu, 17 Apr 2025 18:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfSOsK4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB07C4CEE4;
+	Thu, 17 Apr 2025 18:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913285;
-	bh=29pCH2AzR/n1fJLegB096NaN8zzAiwSiQFlNH2BD57w=;
+	s=korg; t=1744913288;
+	bh=oDe70kJuNOtQymgUC7ztH1LhtjeYXtT7rO7Vqxz1/GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoDl3tm9HGAjpEGAF0oRpWfB9HalQiFT/XgGIohhaXAew06pRonN8ADRK5BWERC10
-	 uy6z2Q6upJJi0tV2veqWfRyKg7OAUCEsxAyTrZJyC/EcXwI7T3c3KgHEY1xi3G8shl
-	 YliwekqIAy3a5wAcKxFHKNlouY2U0NSxBB6DxZGk=
+	b=PfSOsK4ERleyPpotua3vivDO7PPGmL5Dqe4tW3r9kNHZxBP+icueBV1UqjMpaiHIt
+	 +AhHgkkkbqKuxK+oMXapBBi4J1clw1R8zbpgqxBieWg4FfNYlEvDXwcFQC5fUFnG6f
+	 kzLzWAky7LNr4Nh2xcQSDSSMqGgoHRMv9oLaZuqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Patalano <mpatalan@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.14 288/449] scsi: lpfc: Restore clearing of NLP_UNREG_INP in ndlp->nlp_flag
-Date: Thu, 17 Apr 2025 19:49:36 +0200
-Message-ID: <20250417175129.673250930@linuxfoundation.org>
+	Qingfang Deng <dqfext@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 289/449] net: stmmac: Fix accessing freed irq affinity_hint
+Date: Thu, 17 Apr 2025 19:49:37 +0200
+Message-ID: <20250417175129.713165055@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,54 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-commit 040492ac2578b66d3ff4dcefb4f56811634de53d upstream.
+commit c60d101a226f18e9a8f01bb4c6ca2b47dfcb15ef upstream.
 
-Commit 32566a6f1ae5 ("scsi: lpfc: Remove NLP_RELEASE_RPI flag from nodelist
-structure") introduced a regression with SLI-3 adapters (e.g. LPe12000 8Gb)
-where a Link Down / Link Up such as caused by disabling an host FC switch
-port would result in the devices remaining in the transport-offline state
-and multipath reporting them as failed.  This problem was not seen with
-newer SLI-4 adapters.
+The cpumask should not be a local variable, since its pointer is saved
+to irq_desc and may be accessed from procfs.
+To fix it, use the persistent mask cpumask_of(cpu#).
 
-The problem was caused by portions of the patch which removed the functions
-__lpfc_sli_rpi_release() and lpfc_sli_rpi_release() and all their callers.
-This was presumably because with the removal of the NLP_RELEASE_RPI flag
-there was no need to free the rpi.
-
-However, __lpfc_sli_rpi_release() and lpfc_sli_rpi_release() which calls it
-reset the NLP_UNREG_INP flag. And, lpfc_sli_def_mbox_cmpl() has a path
-where __lpfc_sli_rpi_release() was called in a particular case where
-NLP_UNREG_INP was not otherwise cleared because of other conditions.
-
-Restoring the else clause of this conditional and simply clearing the
-NLP_UNREG_INP flag appears to resolve the problem with SLI-3 adapters.  It
-should be noted that the code path in question is not specific to SLI-3,
-but there are other SLI-4 code paths which may have masked the issue.
-
-Fixes: 32566a6f1ae5 ("scsi: lpfc: Remove NLP_RELEASE_RPI flag from nodelist structure")
 Cc: stable@vger.kernel.org
-Tested-by: Marco Patalano <mpatalan@redhat.com>
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Link: https://lore.kernel.org/r/20250317163731.356873-1-emilne@redhat.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 8deec94c6040 ("net: stmmac: set IRQ affinity hint for multi MSI vectors")
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250318032424.112067-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -2923,6 +2923,8 @@ lpfc_sli_def_mbox_cmpl(struct lpfc_hba *
- 				clear_bit(NLP_UNREG_INP, &ndlp->nlp_flag);
- 				ndlp->nlp_defer_did = NLP_EVT_NOTHING_PENDING;
- 				lpfc_issue_els_plogi(vport, ndlp->nlp_DID, 0);
-+			} else {
-+				clear_bit(NLP_UNREG_INP, &ndlp->nlp_flag);
- 			}
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3640,7 +3640,6 @@ static int stmmac_request_irq_multi_msi(
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	enum request_irq_err irq_err;
+-	cpumask_t cpu_mask;
+ 	int irq_idx = 0;
+ 	char *int_name;
+ 	int ret;
+@@ -3769,9 +3768,8 @@ static int stmmac_request_irq_multi_msi(
+ 			irq_idx = i;
+ 			goto irq_error;
+ 		}
+-		cpumask_clear(&cpu_mask);
+-		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+-		irq_set_affinity_hint(priv->rx_irq[i], &cpu_mask);
++		irq_set_affinity_hint(priv->rx_irq[i],
++				      cpumask_of(i % num_online_cpus()));
+ 	}
  
- 			/* The unreg_login mailbox is complete and had a
+ 	/* Request Tx MSI irq */
+@@ -3794,9 +3792,8 @@ static int stmmac_request_irq_multi_msi(
+ 			irq_idx = i;
+ 			goto irq_error;
+ 		}
+-		cpumask_clear(&cpu_mask);
+-		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+-		irq_set_affinity_hint(priv->tx_irq[i], &cpu_mask);
++		irq_set_affinity_hint(priv->tx_irq[i],
++				      cpumask_of(i % num_online_cpus()));
+ 	}
+ 
+ 	return 0;
 
 
