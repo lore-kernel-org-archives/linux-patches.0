@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499B78462;
-	Thu, 17 Apr 2025 18:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1831D07BA;
+	Thu, 17 Apr 2025 18:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915488; cv=none; b=CoJ5u5OuEBkKztPpRAzmZ7Xd5q8AGGDZjuHh8uxvAJvmxZ+Oexr9RSDAT3FvsdQ8K85rYMSP8pTGt0PxDxmS7ANN6VWmXccTmMzA8CSZmT3Zkr2S5hOlJ0VUUbAdnGVTD3GvbUFQ+mU4m+OUG0TcZ9Eg8BaabgDaYNnnW8QhOV8=
+	t=1744915491; cv=none; b=lVNQ4Ejnm7H+8NUY6l0k8O68MayNca0SRI9NKZIeuHByKbwkbFxyKV9+bIVzNMNrLahavy9RWVM6qEvZsss5MvxwLoq6OnlQ7+HCE9IoT9vPkdvwgPu233tqy8JpOerdLAmIhqrTy1bK5wjZLnxKrldfqKO/a702klcikG51GRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915488; c=relaxed/simple;
-	bh=N4+hZZd4TugklM3QatZpTSrnhhyYOXK/BFs+QkPFuXM=;
+	s=arc-20240116; t=1744915491; c=relaxed/simple;
+	bh=R4HztuqWS2E70tfHESD/fBT511NEWFg8LSqwD/Xmqhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5Ogq2JufZ+SZ573HY+7S3p6X1MD3CPPaWpJgmh3vkmOoI4VtDLoU3ee+xtjbi4zAVicPo841X1O74errqdcq3Fjol51N2cJ04FNVlFPFGuYc3MG9G+beooQqOgYtrlYB+QPTYbiQoiI4/GdpU9evLbR0mDvDrmiI8d6IbDuH+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vw5XBQES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BvTGe4HYo6uKCMHK5MeQDwNhdzwA8NyGyjMSLXPIrKyuMJKo0YNvKweH+XFSOhAkWZ88qxm58EjVUjVj5rRzeoYsMX9aOoEtOtgTyJ66b7RcmW8wqZhiFtVjFeQ7C7ZvzFocANDI0SmRs7kmKI3rQuWLLomzdh/yMUHr7dv+X3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vcjrbrsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vw5XBQES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5192C4CEE7;
-	Thu, 17 Apr 2025 18:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vcjrbrsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDF9C4CEE4;
+	Thu, 17 Apr 2025 18:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915488;
-	bh=N4+hZZd4TugklM3QatZpTSrnhhyYOXK/BFs+QkPFuXM=;
+	s=korg; t=1744915491;
+	bh=R4HztuqWS2E70tfHESD/fBT511NEWFg8LSqwD/Xmqhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vw5XBQESil3x/EtzFHPQ5ujZ8s2t+zaCvlW3B37hngqpTVwEBqaHfyXjOSZpQQ+F/
-	 NXczUujumdSgQNssucLU8okIANsStS1OHeF5MZ0DgQVg1xT/yLjep8HiQHzbegrLFT
-	 1Y6/5v18MMrIDjuB0IT58QxyKWJMIviZaeML+WcU=
+	b=VcjrbrsalgkShIXeoRrm5/iQ//KPdkamlfz3rPmRhlhbe8TrVTKJGU+9VCsPct+f4
+	 fRmc645HbsPxRNFwPp6g1kXtlg5xG4hAdmpa+AavSwkd6UHDcGjwSRC2WWkc+3Y7eO
+	 ROi71i5CoZQvvZ9njuhBQJIhTQUA594t/Fk6MhpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/393] drm/amdkfd: debugfs hang_hws skip GPU with MES
-Date: Thu, 17 Apr 2025 19:49:12 +0200
-Message-ID: <20250417175113.337135082@linuxfoundation.org>
+Subject: [PATCH 6.12 144/393] drm/xe/xelp: Move Wa_16011163337 from tunings to workarounds
+Date: Thu, 17 Apr 2025 19:49:13 +0200
+Message-ID: <20250417175113.376967388@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,42 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit fe9d0061c413f8fb8c529b18b592b04170850ded ]
+[ Upstream commit d9b5d83c5a4d720af6ddbefe2825c78f0325a3fd ]
 
-debugfs hang_hws is used by GPU reset test with HWS, for MES this crash
-the kernel with NULL pointer access because dqm->packet_mgr is not setup
-for MES path.
+Workaround database specifies 16011163337 as a workaround so lets move it
+there.
 
-Skip GPU with MES for now, MES hang_hws debugfs interface will be
-supported later.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250227101304.46660-3-tvrtko.ursulin@igalia.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_tuning.c | 8 --------
+ drivers/gpu/drm/xe/xe_wa.c     | 7 +++++++
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index d350c7ce35b3d..9186ef0bd2a32 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -1493,6 +1493,11 @@ int kfd_debugfs_hang_hws(struct kfd_node *dev)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_tuning.c b/drivers/gpu/drm/xe/xe_tuning.c
+index 0d5e04158917b..1fb12da21c9e4 100644
+--- a/drivers/gpu/drm/xe/xe_tuning.c
++++ b/drivers/gpu/drm/xe/xe_tuning.c
+@@ -97,14 +97,6 @@ static const struct xe_rtp_entry_sr engine_tunings[] = {
+ };
  
-+	if (dev->kfd->shared_resources.enable_mes) {
-+		dev_err(dev->adev->dev, "Inducing MES hang is not supported\n");
-+		return -EINVAL;
-+	}
-+
- 	return dqm_debugfs_hang_hws(dev->dqm);
- }
+ static const struct xe_rtp_entry_sr lrc_tunings[] = {
+-	{ XE_RTP_NAME("Tuning: ganged timer, also known as 16011163337"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210), ENGINE_CLASS(RENDER)),
+-	  /* read verification is ignored due to 1608008084. */
+-	  XE_RTP_ACTIONS(FIELD_SET_NO_READ_MASK(FF_MODE2,
+-						FF_MODE2_GS_TIMER_MASK,
+-						FF_MODE2_GS_TIMER_224))
+-	},
+-
+ 	/* DG2 */
  
+ 	{ XE_RTP_NAME("Tuning: L3 cache"),
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index 37e592b2bf062..0a1905f8d380a 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -606,6 +606,13 @@ static const struct xe_rtp_entry_sr engine_was[] = {
+ };
+ 
+ static const struct xe_rtp_entry_sr lrc_was[] = {
++	{ XE_RTP_NAME("16011163337"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210), ENGINE_CLASS(RENDER)),
++	  /* read verification is ignored due to 1608008084. */
++	  XE_RTP_ACTIONS(FIELD_SET_NO_READ_MASK(FF_MODE2,
++						FF_MODE2_GS_TIMER_MASK,
++						FF_MODE2_GS_TIMER_224))
++	},
+ 	{ XE_RTP_NAME("1409342910, 14010698770, 14010443199, 1408979724, 1409178076, 1409207793, 1409217633, 1409252684, 1409347922, 1409142259"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, 1210)),
+ 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN3,
 -- 
 2.39.5
 
