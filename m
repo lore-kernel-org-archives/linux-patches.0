@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF723594D;
-	Thu, 17 Apr 2025 18:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F61B3934;
+	Thu, 17 Apr 2025 18:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916099; cv=none; b=bAgyAWf7A+nmJLNmgt583/8T6BX8lRhTLOFbauu7kds50EBUHYEudyzCPPgz1nl0oQbXisU2n2mi4r3qkZPjHB0wFi2xgRLd4bH8IgP94B/KLnrtI/Uw0Oj0vhub/gczEKKZbZfJptYCnqp64hWKRLprIU12fbnYPz9r4WQywcA=
+	t=1744916102; cv=none; b=XWqtHoYw+ROGM5aaTa19udoZFq1m8weF+2EsAZeb2v5x7ctorDKVDya/vfJOjrBPfTUZK/xiwJTSiQuNqOVxoFIDPbT0C2p3/QvVcesHYUDiIcA8qQSk4TeCs4YoNqZUbLjYB/S9lz8aCtLCPG5GCnsWBbDMdIrqsYRzcZA1xu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916099; c=relaxed/simple;
-	bh=p9SZJLBu/G1uHNLVsMtaNvIFkSp3wdza3jcvjCdUVfk=;
+	s=arc-20240116; t=1744916102; c=relaxed/simple;
+	bh=B0ksyNnILsJsR9k568QpaOgnACgTkFFCQf6Y/UoTmao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYvv703KVrdP7veF1jEGvOh7iY+JgWImPyq+JnZAuu+j9ZEV9dya1gnKBi451RxXQwDRHClLZ+j4JmswXDwGxCD6l7Y5RnImTrN4sjpXobv93f1G3zQQx2ZD1sBQdtuR5ueT9wlNF2bGjr7uEr7pHQ1OYQKNqBRYwOo8YJzH3MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDGpcctC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gO+qw/CS2vi+WOmfCcDJoctM9TQZUkKsb/nppGyZ7VPCbv5tlEMfmiCFIWkLpVwGp4v0Fn8WyGG1yeYUP+COWML4i2IzbbJGBb3V7BcvLo5bH8KRyjeQC6ynTEXfyi+6jH+B51YrkCQ/RQVdfUcbyRxsCnBYnsRBE+vmoRoT51Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VW5slLBL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDGpcctC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF61FC4CEE7;
-	Thu, 17 Apr 2025 18:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VW5slLBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED6EC4CEE4;
+	Thu, 17 Apr 2025 18:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916099;
-	bh=p9SZJLBu/G1uHNLVsMtaNvIFkSp3wdza3jcvjCdUVfk=;
+	s=korg; t=1744916102;
+	bh=B0ksyNnILsJsR9k568QpaOgnACgTkFFCQf6Y/UoTmao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDGpcctCnI6wxzvR8GElQ4vqCLRJlTUS5CmXUVzekBy2SL89nhof3Z7rFd4CnUCWp
-	 Npt5BEzE5bm0FxWbRoLPFk7pcQZ1xv5teZKSVknAzpBTaxG2d2tluObzs63ipozAzC
-	 uepJoicfIvql7GOvVgdZFemyKIac0fwOlqHLjveQ=
+	b=VW5slLBLlRyXXYCUbQ0NUdRMeChd9vMJKKfjtXZHJnkfDKw3ywzJrVjxvhzLIfQeu
+	 zFLmI63atvHrbOiQkkUKQcsHKOH2dCAzNee51RmedX9Q1aBiqokqJaVHaaZHVSaaoI
+	 /PXcXbG0hLpXAXlMYU0zlaQCk4ODt6YuEegVbKr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 342/393] KVM: Allow building irqbypass.ko as as module when kvm.ko is a module
-Date: Thu, 17 Apr 2025 19:52:31 +0200
-Message-ID: <20250417175121.356480502@linuxfoundation.org>
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.12 343/393] KVM: PPC: Enable CAP_SPAPR_TCE_VFIO on pSeries KVM guests
+Date: Thu, 17 Apr 2025 19:52:32 +0200
+Message-ID: <20250417175121.395486884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -50,97 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 459a35111b0a890172a78d51c01b204e13a34a18 upstream.
+commit b4392813bbc3b05fc01a33c64d8b8c6c62c32cfa upstream.
 
-Convert HAVE_KVM_IRQ_BYPASS into a tristate so that selecting
-IRQ_BYPASS_MANAGER follows KVM={m,y}, i.e. doesn't force irqbypass.ko to
-be built-in.
+Currently on book3s-hv, the capability KVM_CAP_SPAPR_TCE_VFIO is only
+available for KVM Guests running on PowerNV and not for the KVM guests
+running on pSeries hypervisors. This prevents a pSeries L2 guest from
+leveraging the in-kernel acceleration for H_PUT_TCE_INDIRECT and
+H_STUFF_TCE hcalls that results in slow startup times for large memory
+guests.
 
-Note, PPC allows building KVM as a module, but selects HAVE_KVM_IRQ_BYPASS
-from a boolean Kconfig, i.e. KVM PPC unnecessarily forces irqbpass.ko to
-be built-in.  But that flaw is a longstanding PPC specific issue.
+Support for VFIO on pSeries was restored in commit f431a8cde7f1
+("powerpc/iommu: Reimplement the iommu_table_group_ops for pSeries"),
+making it possible to re-enable this capability on pSeries hosts.
 
-Fixes: 61df71ee992d ("kvm: move "select IRQ_BYPASS_MANAGER" to common code")
+This change enables KVM_CAP_SPAPR_TCE_VFIO for nested PAPR guests on
+pSeries, while maintaining the existing behavior on PowerNV. Booting an
+L2 guest with 128GB of memory shows an average 11% improvement in
+startup time.
+
+Fixes: f431a8cde7f1 ("powerpc/iommu: Reimplement the iommu_table_group_ops for pSeries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20250315024623.2363994-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250220070002.1478849-1-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kvm_host.h |    2 +-
- virt/kvm/Kconfig         |    2 +-
- virt/kvm/eventfd.c       |   10 +++++-----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ arch/powerpc/kvm/powerpc.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2330,7 +2330,7 @@ static inline bool kvm_is_visible_memslo
- struct kvm_vcpu *kvm_get_running_vcpu(void);
- struct kvm_vcpu * __percpu *kvm_get_running_vcpus(void);
+--- a/arch/powerpc/kvm/powerpc.c
++++ b/arch/powerpc/kvm/powerpc.c
+@@ -550,12 +550,9 @@ int kvm_vm_ioctl_check_extension(struct
  
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- bool kvm_arch_has_irq_bypass(void);
- int kvm_arch_irq_bypass_add_producer(struct irq_bypass_consumer *,
- 			   struct irq_bypass_producer *);
---- a/virt/kvm/Kconfig
-+++ b/virt/kvm/Kconfig
-@@ -75,7 +75,7 @@ config KVM_COMPAT
-        depends on KVM && COMPAT && !(S390 || ARM64 || RISCV)
- 
- config HAVE_KVM_IRQ_BYPASS
--       bool
-+       tristate
-        select IRQ_BYPASS_MANAGER
- 
- config HAVE_KVM_VCPU_ASYNC_IOCTL
---- a/virt/kvm/eventfd.c
-+++ b/virt/kvm/eventfd.c
-@@ -149,7 +149,7 @@ irqfd_shutdown(struct work_struct *work)
- 	/*
- 	 * It is now safe to release the object's resources
- 	 */
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- 	irq_bypass_unregister_consumer(&irqfd->consumer);
- #endif
- 	eventfd_ctx_put(irqfd->eventfd);
-@@ -274,7 +274,7 @@ static void irqfd_update(struct kvm *kvm
- 	write_seqcount_end(&irqfd->irq_entry_sc);
- }
- 
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- void __attribute__((weak)) kvm_arch_irq_bypass_stop(
- 				struct irq_bypass_consumer *cons)
- {
-@@ -425,7 +425,7 @@ kvm_irqfd_assign(struct kvm *kvm, struct
- 	if (events & EPOLLIN)
- 		schedule_work(&irqfd->inject);
- 
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- 	if (kvm_arch_has_irq_bypass()) {
- 		irqfd->consumer.token = (void *)irqfd->eventfd;
- 		irqfd->consumer.add_producer = kvm_arch_irq_bypass_add_producer;
-@@ -618,14 +618,14 @@ void kvm_irq_routing_update(struct kvm *
- 	spin_lock_irq(&kvm->irqfds.lock);
- 
- 	list_for_each_entry(irqfd, &kvm->irqfds.items, list) {
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- 		/* Under irqfds.lock, so can read irq_entry safely */
- 		struct kvm_kernel_irq_routing_entry old = irqfd->irq_entry;
- #endif
- 
- 		irqfd_update(kvm, irqfd);
- 
--#ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
-+#if IS_ENABLED(CONFIG_HAVE_KVM_IRQ_BYPASS)
- 		if (irqfd->producer &&
- 		    kvm_arch_irqfd_route_changed(&old, &irqfd->irq_entry)) {
- 			int ret = kvm_arch_update_irqfd_routing(
+ #ifdef CONFIG_PPC_BOOK3S_64
+ 	case KVM_CAP_SPAPR_TCE:
++		fallthrough;
+ 	case KVM_CAP_SPAPR_TCE_64:
+-		r = 1;
+-		break;
+ 	case KVM_CAP_SPAPR_TCE_VFIO:
+-		r = !!cpu_has_feature(CPU_FTR_HVMODE);
+-		break;
+ 	case KVM_CAP_PPC_RTAS:
+ 	case KVM_CAP_PPC_FIXUP_HCALL:
+ 	case KVM_CAP_PPC_ENABLE_HCALL:
 
 
