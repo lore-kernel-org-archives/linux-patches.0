@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259972566CE;
-	Thu, 17 Apr 2025 18:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBCF433A5;
+	Thu, 17 Apr 2025 18:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915541; cv=none; b=UT+u8CjUA+/z5LuutaX3uKVJ/XyVT92yWYzp7FYLhdpW11qE3+vgsnTOt6k2lRGXxL/vUtPm4JNCc+0bF9Jr/J3EQug2F64EQYMyXDfAZ/TLppDlJRMYFZVHal7Mbr4Xx8exdUoDuIq+WFYU5O96RrzJ5vwMvKa7HZBDgzRsDQU=
+	t=1744915543; cv=none; b=kLlPpt37Pp0GE2XVBDilytupieb7rHFucXWS9bHLec7mv0d42R8hK+8JvQNx6/tVJmXVsdCjR3PVNQP/tVcZFAo7s7ir9NsMjyN2o9lzT78m43Sb19pgOBd/JdctaiRL36vLFh16YvvzJXCMbEnk4KBHq4tQ9GDHvC7aCQA/L7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915541; c=relaxed/simple;
-	bh=BQG94n+IjYgNdf+RV3CqwVZdvDOxQIHe1dEwDGVmDq4=;
+	s=arc-20240116; t=1744915543; c=relaxed/simple;
+	bh=sFVCq1NtoLOvYEhfs7zwiJBFjya/dEz7jjmxY7riRH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByN0NPDzQ4h2cnPLLnwpf7LMcu4Wzuh3D9TR/t3x9myDauObFdq0aXEHGAppjAf7NflsGcS7BL1fuDNKdT2l0aRqhCPHM4Eg1hLzHANHQFKhpvZm4XBMtx6dUnffO48+x/3Tfu1xWY8oYNSeB9TGl/u1LR9SpYHKDGX2FVSErrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPQPCbiu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wopf+Nzw25AId3TDazdD5DLT9srtSFT/pGhwXYI7KekTUi+G6wtUaQ0hog1pmWbb2uWuXfennGYcJ27vJD+r3sGgYv2KBfkniKj0UPGNe7kWR3zrEfF0DfYSmUDn2rm5HvQV78Vp9vcdlyik2vjmVwIbSf7+2wMPKwc/v+Td8PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DXUZE25; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPQPCbiu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A4DC4CEEF;
-	Thu, 17 Apr 2025 18:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DXUZE25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35839C4CEE7;
+	Thu, 17 Apr 2025 18:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915540;
-	bh=BQG94n+IjYgNdf+RV3CqwVZdvDOxQIHe1dEwDGVmDq4=;
+	s=korg; t=1744915543;
+	bh=sFVCq1NtoLOvYEhfs7zwiJBFjya/dEz7jjmxY7riRH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPQPCbiuS33XGbwdEiMxzl6wicwINrKwihbl4viG1skVnup3Z47oQltjhY4X/MpBh
-	 ZVpq7wtLp+0TCvNiZF9gp4DllTjP+JkWqY8xgwfNvZQwkocMxD7mmpnAhssKwoH/+o
-	 kUmn0iuUxRc3rUfd8idWPYUDrEwBTus6+QosLek0=
+	b=1DXUZE255Ic5DFLAgxlfXaIrtAxAi5Bs6gnNph0XHILVmfShq1/MMy13HB/UuDk4K
+	 /7GoCyeMMRLyKBe5HKPRA2yclNw7LCSbMTCco+tzcPt+qQcUYGJ+O6noH/oUz3xgxL
+	 LvcWuw6B7P9OOHf0LoIxrCIDUQnL6cFF8QkLXEz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Zhikai Zhai <zhikai.zhai@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/393] drm/amd/display: Update Cursor request mode to the beginning prefetch always
-Date: Thu, 17 Apr 2025 19:48:58 +0200
-Message-ID: <20250417175112.777630024@linuxfoundation.org>
+Subject: [PATCH 6.12 120/393] Bluetooth: hci_uart: fix race during initialization
+Date: Thu, 17 Apr 2025 19:48:49 +0200
+Message-ID: <20250417175112.427395262@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -54,93 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhikai Zhai <zhikai.zhai@amd.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 4a4077b4b63a8404efd6d37fc2926f03fb25bace ]
+[ Upstream commit 366ceff495f902182d42b6f41525c2474caf3f9a ]
 
-[Why]
-The double buffer cursor registers is updated by the cursor
-vupdate event. There is a gap between vupdate and cursor data
-fetch if cursor fetch data reletive to cursor position.
-Cursor corruption will happen if we update the cursor surface
-in this gap.
+'hci_register_dev()' calls power up function, which is executed by
+kworker - 'hci_power_on()'. This function does access to bluetooth chip
+using callbacks from 'hci_ldisc.c', for example 'hci_uart_send_frame()'.
+Now 'hci_uart_send_frame()' checks 'HCI_UART_PROTO_READY' bit set, and
+if not - it fails. Problem is that 'HCI_UART_PROTO_READY' is set after
+'hci_register_dev()', and there is tiny chance that 'hci_power_on()' will
+be executed before setting this bit. In that case HCI init logic fails.
 
-[How]
-Modify the cursor request mode to the beginning prefetch always
-and avoid wraparound calculation issues.
+Patch moves setting of 'HCI_UART_PROTO_READY' before calling function
+'hci_uart_register_dev()'.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hubp/dcn31/dcn31_hubp.c    |  2 +-
- .../amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 22 ++++++++-----------
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ drivers/bluetooth/hci_ldisc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-index a65a0ddee6467..c671908ba7d06 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn31/dcn31_hubp.c
-@@ -44,7 +44,7 @@ void hubp31_set_unbounded_requesting(struct hubp *hubp, bool enable)
- 	struct dcn20_hubp *hubp2 = TO_DCN20_HUBP(hubp);
+diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+index 395d66e32a2ea..2651e2e33f2a1 100644
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -707,12 +707,13 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
  
- 	REG_UPDATE(DCHUBP_CNTL, HUBP_UNBOUNDED_REQ_MODE, enable);
--	REG_UPDATE(CURSOR_CONTROL, CURSOR_REQ_MODE, enable);
-+	REG_UPDATE(CURSOR_CONTROL, CURSOR_REQ_MODE, 1);
- }
+ 	hu->proto = p;
  
- void hubp31_soft_reset(struct hubp *hubp, bool reset)
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index fd0530251c6e5..d725af14af371 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -1992,20 +1992,11 @@ static void delay_cursor_until_vupdate(struct dc *dc, struct pipe_ctx *pipe_ctx)
- 	dc->hwss.get_position(&pipe_ctx, 1, &position);
- 	vpos = position.vertical_count;
- 
--	/* Avoid wraparound calculation issues */
--	vupdate_start += stream->timing.v_total;
--	vupdate_end += stream->timing.v_total;
--	vpos += stream->timing.v_total;
--
- 	if (vpos <= vupdate_start) {
- 		/* VPOS is in VACTIVE or back porch. */
- 		lines_to_vupdate = vupdate_start - vpos;
--	} else if (vpos > vupdate_end) {
--		/* VPOS is in the front porch. */
--		return;
- 	} else {
--		/* VPOS is in VUPDATE. */
--		lines_to_vupdate = 0;
-+		lines_to_vupdate = stream->timing.v_total - vpos + vupdate_start;
++	set_bit(HCI_UART_PROTO_READY, &hu->flags);
++
+ 	err = hci_uart_register_dev(hu);
+ 	if (err) {
+ 		return err;
  	}
  
- 	/* Calculate time until VUPDATE in microseconds. */
-@@ -2013,13 +2004,18 @@ static void delay_cursor_until_vupdate(struct dc *dc, struct pipe_ctx *pipe_ctx)
- 		stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz;
- 	us_to_vupdate = lines_to_vupdate * us_per_line;
- 
-+	/* Stall out until the cursor update completes. */
-+	if (vupdate_end < vupdate_start)
-+		vupdate_end += stream->timing.v_total;
-+
-+	/* Position is in the range of vupdate start and end*/
-+	if (lines_to_vupdate > stream->timing.v_total - vupdate_end + vupdate_start)
-+		us_to_vupdate = 0;
-+
- 	/* 70 us is a conservative estimate of cursor update time*/
- 	if (us_to_vupdate > 70)
- 		return;
- 
--	/* Stall out until the cursor update completes. */
--	if (vupdate_end < vupdate_start)
--		vupdate_end += stream->timing.v_total;
- 	us_vupdate = (vupdate_end - vupdate_start + 1) * us_per_line;
- 	udelay(us_to_vupdate + us_vupdate);
+-	set_bit(HCI_UART_PROTO_READY, &hu->flags);
+ 	return 0;
  }
+ 
 -- 
 2.39.5
 
