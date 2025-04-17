@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4953B1CAA7D;
-	Thu, 17 Apr 2025 18:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408471CAA7D;
+	Thu, 17 Apr 2025 18:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913172; cv=none; b=W4sAxiVXNl25W8HLCJet7lUAyellc+ziv7LwbEPPq5S2SFwd1lqJrXrwzmHk084v+0cZz4XV3r5cbMf7mWbT78/+MwzajgHEzRyr4f7pHUzMo/yOWr1MZN7vsjjcUTZFIEBYAzKn51LNGzKYZ0X3C92NbL82UyNIXoi5sz7zlDg=
+	t=1744913175; cv=none; b=E6MYb6ZCbO300CgKal+NH53p9bmYwyLgkcwsKTmzz9vQZLcMoXZMsOSaqFbUXPYI6G/cZlSfNPEW8fm6hojn1AZ1BXbWkOULL6XD+23y7yCJv9CODYqf4XRYu7iNxeWTjGOkcl6zHKvSWqdN4V40U1MhepDT1sYvcBSciKns8ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913172; c=relaxed/simple;
-	bh=bdI7dXIQ45/GJIs1njcqlJdfhAe/slx6BInSPIGh7L8=;
+	s=arc-20240116; t=1744913175; c=relaxed/simple;
+	bh=sBNRPGcjLmrl7As3ynyaC5yMlVlzM7DaKE9UIo/kwI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LB7Xzm0IC/5VywISp800hujdQzs9tGgGFP/rOOfCNpLx5mfdmVK16EiANnb1iMQO7pjACir5awI4qQyIFD0TYGSarKyWrbxsFWO5WfpzIm1hlsh+2MIzOpVFjiXIcjzva4hY+4P/mbRrgEL0+zdBnBIXpUSBKtlwVgzJI2e2R+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGhtbJ6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWYhiDC2AKP8Je2q2wkprvTGislKzfPhsScCVbqI3ac46CdrNvlJLCZ7mCl6v8aEPVNKGZ5AVPjy46jb/7cfv2618zW1x3o4RBo0oygexfGTKBM5+CHpIPOqcAyt5i1V3V0vZqfofjlTtzjnK7YcVmB7AESkvZP6WUN5lKbVZyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3HuCemi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGhtbJ6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AACC4CEE4;
-	Thu, 17 Apr 2025 18:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3HuCemi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D31C4CEE4;
+	Thu, 17 Apr 2025 18:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913172;
-	bh=bdI7dXIQ45/GJIs1njcqlJdfhAe/slx6BInSPIGh7L8=;
+	s=korg; t=1744913175;
+	bh=sBNRPGcjLmrl7As3ynyaC5yMlVlzM7DaKE9UIo/kwI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGhtbJ6whAw59RLrUV7+KTIMFRqjZps9pkLBuveIgvrHdE/ZU4+8+VtBZlCwkzt/+
-	 xA0glSijz6w4/TJzrqlOgoJpcq9GJ4diOS380VpR432JeB49J6YHdq5d2TM0KjsbF0
-	 cbMgd7JLqi9F1pu/W9n5fMYJD4j99KO5qGvdcGWM=
+	b=M3HuCemiusI5Hl+cOj+mtPobjZOx/IlZ4xXAAHzOwyU6iK+ol+KLjd+K34yARYXqe
+	 352jxKUIZv3okvbu2vtRo4u1X758moLYG3HO62J+nXyNxzFq+66a6ADcTJfCnH+4IP
+	 TDc9pAc41gwFbN3RA35L8+UdWN2M0t1I2b+AUezk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karina Yankevich <k.yankevich@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 250/449] media: v4l2-dv-timings: prevent possible overflow in v4l2_detect_gtf()
-Date: Thu, 17 Apr 2025 19:48:58 +0200
-Message-ID: <20250417175128.057281010@linuxfoundation.org>
+Subject: [PATCH 6.14 251/449] Revert "media: imx214: Fix the error handling in imx214_probe()"
+Date: Thu, 17 Apr 2025 19:48:59 +0200
+Message-ID: <20250417175128.098169070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -51,48 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karina Yankevich <k.yankevich@omp.ru>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 3edd1fc48d2c045e8259561797c89fe78f01717e upstream.
+commit abd88757252c2a2cea7909f3922de1f0e9e04002 upstream.
 
-In v4l2_detect_gtf(), it seems safer to cast the 32-bit image_width
-variable to the 64-bit type u64 before multiplying to avoid
-a possible overflow. The resulting object code even seems to
-look better, at least on x86_64.
+This reverts commit 9bc92332cc3f06fda3c6e2423995ca2da0a7ec9a.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Revert this "fix" as it's not really helpful but makes backporting a
+proper fix harder.
 
-[Sergey: rewrote the patch subject/descripition]
-
-Fixes: c9bc9f50753d ("[media] v4l2-dv-timings: fix overflow in gtf timings calculation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karina Yankevich <k.yankevich@omp.ru>
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Fixes: 9bc92332cc3f ("media: imx214: Fix the error handling in imx214_probe()")
+Cc: stable@vger.kernel.org # for >= v6.12
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dv-timings.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/imx214.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-dv-timings.c
-+++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
-@@ -764,7 +764,7 @@ bool v4l2_detect_gtf(unsigned int frame_
- 		u64 num;
- 		u32 den;
+--- a/drivers/media/i2c/imx214.c
++++ b/drivers/media/i2c/imx214.c
+@@ -1114,7 +1114,6 @@ free_ctrl:
+ 	v4l2_ctrl_handler_free(&imx214->ctrls);
+ error_power_off:
+ 	pm_runtime_disable(imx214->dev);
+-	regulator_bulk_disable(IMX214_NUM_SUPPLIES, imx214->supplies);
  
--		num = ((image_width * GTF_D_C_PRIME * (u64)hfreq) -
-+		num = (((u64)image_width * GTF_D_C_PRIME * hfreq) -
- 		      ((u64)image_width * GTF_D_M_PRIME * 1000));
- 		den = (hfreq * (100 - GTF_D_C_PRIME) + GTF_D_M_PRIME * 1000) *
- 		      (2 * GTF_CELL_GRAN);
-@@ -774,7 +774,7 @@ bool v4l2_detect_gtf(unsigned int frame_
- 		u64 num;
- 		u32 den;
- 
--		num = ((image_width * GTF_S_C_PRIME * (u64)hfreq) -
-+		num = (((u64)image_width * GTF_S_C_PRIME * hfreq) -
- 		      ((u64)image_width * GTF_S_M_PRIME * 1000));
- 		den = (hfreq * (100 - GTF_S_C_PRIME) + GTF_S_M_PRIME * 1000) *
- 		      (2 * GTF_CELL_GRAN);
+ 	return ret;
+ }
 
 
