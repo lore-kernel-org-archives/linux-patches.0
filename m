@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BD92620C3;
-	Thu, 17 Apr 2025 18:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71C725335D;
+	Thu, 17 Apr 2025 18:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914393; cv=none; b=Q+t/ML8rmUzQVCXTADhyCrU5EoUN5q2McPaBePDwAqTQj89/SV8FAysF/Z57/Y3Y691I/X5zPCAS8ioIhgDVBOVpHSbTkNGHFcbPXzyf57RRuy5Ho1p0tzYQ7MTf13RPujaaR+nlghBGTTCAnx5mqkFeboQS0HX8kTqG6Pf8stw=
+	t=1744914396; cv=none; b=mHSxjEZoQS3l3g5Qvz1cCpLSoXm0F9GcAaDOxBIIDL3Wi0ya+U/GnJUPCx8i6LWa5TLoLqqjLBS8wgCdpFnoz71Ww8Ijwo/pVkiYtx+5z0A+7S9/4aC5IaWqlxYhEwf7az2v4YFfg3l/IOVpUQdl0xeUiRA9NZgQS4To4Vr4cPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914393; c=relaxed/simple;
-	bh=y8QZjQ2bUrK27WG1FkUkYy4TrKUfntWSJnUjuSTauFQ=;
+	s=arc-20240116; t=1744914396; c=relaxed/simple;
+	bh=Z5DZ5NwE2OBLxKOYB9VZLqz04vCbXHCl/7Cyg6Qbml0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hQ3+VpiCxGdHe/Wzzyk8ORTsDss2zdiz3pFQfO8oXOdsBjEO8KslQuI5+XhdIuy5SCTjJMQ29yt1f1HpEts1Ly55oy5oFcT+n1hLQ2IbQbXPABSLY7CW4j5cjLZHXzikCmZE9YbXHmH0C0rLF2X04v6eSg6khRT1FlbHU9EAmOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3QmjUpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M5Yn0d5qzw2/3RAg4kKbNTQEO1Ymxs8Os/O6aZmUQEe0PbQt/DEcZY8dxRwGXm0lYGLlVZOFEAwQUxX6CArzv/SEmv0NkLVG4OMgCSTVpWTTCT9RhsZqxnr9+hlc9OX59jCn6MMSC3LPlb6x/G2mAKUD4DJWCqCKphMIAHJd8GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEaZmYSZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3QmjUpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C824C4CEE4;
-	Thu, 17 Apr 2025 18:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEaZmYSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6118C4CEE4;
+	Thu, 17 Apr 2025 18:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914393;
-	bh=y8QZjQ2bUrK27WG1FkUkYy4TrKUfntWSJnUjuSTauFQ=;
+	s=korg; t=1744914396;
+	bh=Z5DZ5NwE2OBLxKOYB9VZLqz04vCbXHCl/7Cyg6Qbml0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3QmjUpxkHERWqBVa/d8kcr7bo5N5OSHpj7+P/lFXsMrqrNTZBRF398ztNLD5ETqj
-	 sxf7muJaGHyMkYr+PqpKR5uZuImvxx+HD216v0qm4VsfrfU6eIgTdr0mFmEPwASsgm
-	 Ujk8Ssgv2G65/TOheD7ko4PEPXVpHJ82waJxrwcY=
+	b=rEaZmYSZT9TskZiaxjAY5Rv1V/26MpvsmnOa33/J1LW8RBajbrZpQuwNcHAfRBUh5
+	 2ynXoWrlL73ufwJ+tlnpWunGBwcZUou4yyi9icHK6AQNrSEBLmeW6NHEeJB3aBtlcE
+	 DG1DOyMTH2fzWhVFWDAX45c/ne/sBfeUEbc4LKqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 200/414] media: mgb4: Fix CMT registers update logic
-Date: Thu, 17 Apr 2025 19:49:18 +0200
-Message-ID: <20250417175119.487146430@linuxfoundation.org>
+Subject: [PATCH 6.13 201/414] media: i2c: adv748x: Fix test pattern selection mask
+Date: Thu, 17 Apr 2025 19:49:19 +0200
+Message-ID: <20250417175119.527837420@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Tůma <martin.tuma@digiteqautomotive.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-commit dd05443189f9ae175dd806594b67bf55ddb6539e upstream.
+commit 9e38acacb9d809b97a0bdc5c76e725355a47158a upstream.
 
-The CMT "magic values" registers must be updated while the CMT reset
-registers are active.
+The mask to select the test-pattern in register ADV748X_SDP_FRP is
+incorrect, it's the lower 3 bits which controls the pattern. The
+GENMASK() macro is used incorrectly and the generated mask is 0x0e
+instead of 0x07.
 
-Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
+The result is that not all test patterns are selectable, and that in
+some cases the wrong test pattern is activated. Fix this by correcting
+the GENMASK().
+
+Fixes: 3e89586a64df ("media: i2c: adv748x: add adv748x driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[hverkuil: fixed tiny typo in commit log: my -> by]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/mgb4/mgb4_cmt.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/i2c/adv748x/adv748x.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/pci/mgb4/mgb4_cmt.c
-+++ b/drivers/media/pci/mgb4/mgb4_cmt.c
-@@ -206,10 +206,11 @@ u32 mgb4_cmt_set_vout_freq(struct mgb4_v
+--- a/drivers/media/i2c/adv748x/adv748x.h
++++ b/drivers/media/i2c/adv748x/adv748x.h
+@@ -320,7 +320,7 @@ struct adv748x_state {
  
- 	mgb4_write_reg(video, regs->config, 0x1 | (config & ~0x3));
+ /* Free run pattern select */
+ #define ADV748X_SDP_FRP			0x14
+-#define ADV748X_SDP_FRP_MASK		GENMASK(3, 1)
++#define ADV748X_SDP_FRP_MASK		GENMASK(2, 0)
  
-+	mgb4_mask_reg(video, regs->config, 0x100, 0x100);
-+
- 	for (i = 0; i < ARRAY_SIZE(cmt_addrs_out[0]); i++)
- 		mgb4_write_reg(&voutdev->mgbdev->cmt, addr[i], reg_set[i]);
- 
--	mgb4_mask_reg(video, regs->config, 0x100, 0x100);
- 	mgb4_mask_reg(video, regs->config, 0x100, 0x0);
- 
- 	mgb4_write_reg(video, regs->config, config & ~0x1);
-@@ -236,10 +237,11 @@ void mgb4_cmt_set_vin_freq_range(struct
- 
- 	mgb4_write_reg(video, regs->config, 0x1 | (config & ~0x3));
- 
-+	mgb4_mask_reg(video, regs->config, 0x1000, 0x1000);
-+
- 	for (i = 0; i < ARRAY_SIZE(cmt_addrs_in[0]); i++)
- 		mgb4_write_reg(&vindev->mgbdev->cmt, addr[i], reg_set[i]);
- 
--	mgb4_mask_reg(video, regs->config, 0x1000, 0x1000);
- 	mgb4_mask_reg(video, regs->config, 0x1000, 0x0);
- 
- 	mgb4_write_reg(video, regs->config, config & ~0x1);
+ /* Saturation */
+ #define ADV748X_SDP_SD_SAT_U		0xe3	/* user_map_rw_reg_e3 */
 
 
