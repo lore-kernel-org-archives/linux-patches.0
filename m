@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB5E2566F7;
-	Thu, 17 Apr 2025 18:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F39254B12;
+	Thu, 17 Apr 2025 18:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915305; cv=none; b=T+nzDuA/dy7kj0YXCjmUgrNa48UE37GxEKWZnHERYWrDzTTqgos19z7Sf3+MMx1pySUz7F+HpU7/yV9wD40Od7Ljk8yBAU7o/6Vq0BQlI2W5VFRzbgGQ0c1umbP3qsjZ8ZD8H7qVrtohVCUDEa0/QH6tv7JRm2GYru4+27JziiQ=
+	t=1744915309; cv=none; b=JnHxSSVtEiAwsVolS5tZ6sMMaMVNveWRiDoRTBh0o6y2joqrtIEj2Jpf05Z0GJ17RUlP7WAi1FrUtZ/pZY13UUbGTBxmeZfr9xjkMx9AFxOy8HzwoQcRMBl/BkXtJ2w3/GDHKC/OQgwR+airmrByI8gZ8EO06eGH2k/eT9yPZx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915305; c=relaxed/simple;
-	bh=r9uKmoj5HvGkWQHRAEikIhT+mEv1DaErW0v73I4QXKU=;
+	s=arc-20240116; t=1744915309; c=relaxed/simple;
+	bh=OsvkAwksqZzVKmy+tBjOHWiDw4KBtpfs3WmDliXnlVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WiiNWjbsYl2XsmVVpJtKfnJl6yT+J29OcN29Po6H64spPEv/AFQg2uMLBCnzcrI/QrNSIXmWn4sO7Mb0bDHyCqzFy3/FMHu6sUsohS/6RhBvu1PXpUD/WSBqxUvmyZfWtfvLWcVX3edQRY22FwpLjtJI4ICQ6wIyOa0sXkvVn7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpmCrAIj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWdSZDm1SOIGby9eHU5VSNXlrTuFfeshtWZVuDfX74oUjHVXfOgfbnPyr0R01h4J62cxrimLVty80LFOOVFMvmCh7+52kFmR6h8kYaIaQuTIADNv66H97r7JoMBIVg0XLpIBm277jMrxJpLaj/DIfzWT19LyuHl40aCvhsf6gQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNP02n5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpmCrAIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C387C4CEE4;
-	Thu, 17 Apr 2025 18:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNP02n5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335DCC4CEE4;
+	Thu, 17 Apr 2025 18:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915305;
-	bh=r9uKmoj5HvGkWQHRAEikIhT+mEv1DaErW0v73I4QXKU=;
+	s=korg; t=1744915308;
+	bh=OsvkAwksqZzVKmy+tBjOHWiDw4KBtpfs3WmDliXnlVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VpmCrAIjeJenpGQMDeWl7UKqtIG3vCZbXJ7PZCHFTlt00JkDKz2DjtpERhpAqY2/b
-	 SXHXq7PlwEp2t01wEYW/8KT45x8b+R+buHfiDL67rxCbbgbn2CKsuRTTmIxIp5AquL
-	 N0rxCK1oRhQ1BJIUm5jFdKadVpjUeVIWAvyy97fw=
+	b=QNP02n5qsFb1gZFydrUywICGCANzZm22pBldZ5mehQMpoZMkvZsssm5slr7VTJv1C
+	 UH0yvXsdn5eU13fuHOmWl68wU8CYV77vUAQPwyIlGNU5rYbUUJ8nAnKbCUoMpq9Gxo
+	 EgFAGLg4x8FdAnxuSj8BdhHnBq4cojnkjgtslZN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
-Subject: [PATCH 6.12 058/393] zstd: Increase DYNAMIC_BMI2 GCC version cutoff from 4.8 to 11.0 to work around compiler segfault
-Date: Thu, 17 Apr 2025 19:47:47 +0200
-Message-ID: <20250417175109.922533357@linuxfoundation.org>
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 085/393] wifi: ath12k: Fix invalid entry fetch in ath12k_dp_mon_srng_process
+Date: Thu, 17 Apr 2025 19:48:14 +0200
+Message-ID: <20250417175111.019326590@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -54,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 1400c87e6cac47eb243f260352c854474d9a9073 ]
+[ Upstream commit 63fdc4509bcf483e79548de6bc08bf3c8e504bb3 ]
 
-Due to pending percpu improvements in -next, GCC9 and GCC10 are
-crashing during the build with:
+Currently, ath12k_dp_mon_srng_process uses ath12k_hal_srng_src_get_next_entry
+to fetch the next entry from the destination ring. This is incorrect because
+ath12k_hal_srng_src_get_next_entry is intended for source rings, not destination
+rings. This leads to invalid entry fetches, causing potential data corruption or
+crashes due to accessing incorrect memory locations. This happens because the
+source ring and destination ring have different handling mechanisms and using
+the wrong function results in incorrect pointer arithmetic and ring management.
 
-    lib/zstd/compress/huf_compress.c:1033:1: internal compiler error: Segmentation fault
-     1033 | {
-          | ^
-    Please submit a full bug report,
-    with preprocessed source if appropriate.
-    See <file:///usr/share/doc/gcc-9/README.Bugs> for instructions.
+To fix this issue, replace the call to ath12k_hal_srng_src_get_next_entry with
+ath12k_hal_srng_dst_get_next_entry in ath12k_dp_mon_srng_process. This ensures
+that the correct function is used for fetching entries from the destination
+ring, preventing invalid memory accesses.
 
-The DYNAMIC_BMI2 feature is a known-challenging feature of
-the ZSTD library, with an existing GCC quirk turning it off
-for GCC versions below 4.8.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Increase the DYNAMIC_BMI2 version cutoff to GCC 11.0 - GCC 10.5
-is the last version known to crash.
-
-Reported-by: Michael Kelley <mhklinux@outlook.com>
-Debugged-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-7-quic_ppranees@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/zstd/common/portability_macros.h | 2 +-
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/zstd/common/portability_macros.h b/lib/zstd/common/portability_macros.h
-index 0e3b2c0a527db..0dde8bf56595e 100644
---- a/lib/zstd/common/portability_macros.h
-+++ b/lib/zstd/common/portability_macros.h
-@@ -55,7 +55,7 @@
- #ifndef DYNAMIC_BMI2
-   #if ((defined(__clang__) && __has_attribute(__target__)) \
-       || (defined(__GNUC__) \
--          && (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)))) \
-+          && (__GNUC__ >= 11))) \
-       && (defined(__x86_64__) || defined(_M_X64)) \
-       && !defined(__BMI2__)
-   #  define DYNAMIC_BMI2 1
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index 5c6749bc4039d..1706ec27eb9c0 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -2533,7 +2533,7 @@ int ath12k_dp_mon_rx_process_stats(struct ath12k *ar, int mac_id,
+ 		dest_idx = 0;
+ move_next:
+ 		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
+-		ath12k_hal_srng_src_get_next_entry(ab, srng);
++		ath12k_hal_srng_dst_get_next_entry(ab, srng);
+ 		num_buffs_reaped++;
+ 	}
+ 
 -- 
 2.39.5
 
