@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42CB253B57;
-	Thu, 17 Apr 2025 18:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB925742B;
+	Thu, 17 Apr 2025 18:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915237; cv=none; b=QJEuyk0DutsQGQqOC9J8fiyEI2h6emxg8a1Znq8ZiNm562KtTKVCNQTEnuKvdhrmha/hznWovGI/zoWJRxVEr+3Rim2QMXj7qX6DjcA+Uqt4U8MKAxa/94DfdAWIxoM07z7HOPHLh/R6RrlUDReGJgmyKlhK+yj9nbLoKGkxQ7c=
+	t=1744915241; cv=none; b=kEU6qihble51BDsMncw8sH1Ag20oSFQLIxfGYCLezLWsE3AaVqGfcle+OoIk1hE7fHofjK5htab0sGyY8mp2BWsAyjSxzKeRtoTS3YCbJLBmGGAtzMuBKpX0mn+1HwOSmC7ToUJNyyT8pdMk3jl/OLKV4ki/ySXApEbQI/X7OQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915237; c=relaxed/simple;
-	bh=6gcVLLn75hDHoZEsqKvfhukLoCx0taUxTzcRI3fzmUk=;
+	s=arc-20240116; t=1744915241; c=relaxed/simple;
+	bh=MeG7iVKjHhNh56tUyqx8mlmOQpJcDQL7f2wlSDd6iEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc3T6mn8aiKpA9mLkTh0A7E/ahVo0Axa8HKQp3E26cCZnnzmhUbVoXo0BG0kXMExJL0uQvt2yGiQy1Rj6v99ZGlqhrxAPpL+2jA2gV/kiWLjkWQZ7k/UY1okxMOD+Fk8RxebVkxt4xJem4eS9mD8mrFiZ0xqlZ9WllF6ePS4+Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXyLMale; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzTjMnrOtD99uKfJLB7QYVl3gmc/z/W6TktaKMj/YJfIwHcy1Q1bPqfyn9jCZ7puWwHu1qKPbuQxPtl1J5z+IZ3yBat1ID7pCl/XiR4W+itKKlIcl24uSSdMNKnuiBnzH4br3QlPTZGykxezDnaBhNFS/DUa0xyAViY8Xh5phkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/gxqEHk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXyLMale"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B354C4CEE4;
-	Thu, 17 Apr 2025 18:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/gxqEHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B63FC4CEE4;
+	Thu, 17 Apr 2025 18:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915237;
-	bh=6gcVLLn75hDHoZEsqKvfhukLoCx0taUxTzcRI3fzmUk=;
+	s=korg; t=1744915240;
+	bh=MeG7iVKjHhNh56tUyqx8mlmOQpJcDQL7f2wlSDd6iEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXyLMale01vUYjFbpF6ADwZJtkWrH9WCr+T97e1bhFsrL4tYeVBdm6EGBwO4Ej2q7
-	 BY01IbetW6ss9/VUXw0ky6H4r7W1bvCnXJJTpyDk494ks0tTlGthwZponpiSuBtWSs
-	 Q1G79MaIYQSfWnC2oWOMzq3vVkJ7blbpE+pL172E=
+	b=w/gxqEHkmPyba+geVm0b9t869U8UepvIsaWm2d4jhK42JFNCGr+mbsvcMsV2t/xtS
+	 j02plxhcSdoDeQ3OFKLnN9JS/TO2JL5LHXY9cTRqFgYjpig+RNJIANOg1ESOad+nzd
+	 JQCYXqB/QwSelkXdrSB3zB8G2kj+R8KDfEw1FdEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@mailbox.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/393] drm/tests: modeset: Fix drm_display_mode memory leak
-Date: Thu, 17 Apr 2025 19:47:12 +0200
-Message-ID: <20250417175108.523048528@linuxfoundation.org>
+Subject: [PATCH 6.12 056/393] arm64: cputype: Add QCOM_CPU_PART_KRYO_3XX_GOLD
+Date: Thu, 17 Apr 2025 19:47:45 +0200
+Message-ID: <20250417175109.841953700@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,41 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit dacafdcc7789cfeb0f0552716db56f210238225d ]
+[ Upstream commit 401c3333bb2396aa52e4121887a6f6a6e2f040bc ]
 
-drm_mode_find_dmt() returns a drm_display_mode that needs to be
-destroyed later one. The drm_test_pick_cmdline_res_1920_1080_60() test
-never does however, which leads to a memory leak.
+Add a definition for the Qualcomm Kryo 300-series Gold cores.
 
-Let's make sure it's freed.
-
-Reported-by: Philipp Stanner <phasta@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
-Fixes: 8fc0380f6ba7 ("drm/client: Add some tests for drm_connector_pick_cmdline_mode()")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-2-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
+Link: https://lore.kernel.org/r/20241219131107.v3.1.I18e0288742871393228249a768e5d56ea65d93dc@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_client_modeset_test.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/tests/drm_client_modeset_test.c b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-index 7516f6cb36e4e..3e9518d7b8b7e 100644
---- a/drivers/gpu/drm/tests/drm_client_modeset_test.c
-+++ b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-@@ -95,6 +95,9 @@ static void drm_test_pick_cmdline_res_1920_1080_60(struct kunit *test)
- 	expected_mode = drm_mode_find_dmt(priv->drm, 1920, 1080, 60, false);
- 	KUNIT_ASSERT_NOT_NULL(test, expected_mode);
- 
-+	ret = drm_kunit_add_mode_destroy_action(test, expected_mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_ASSERT_TRUE(test,
- 			  drm_mode_parse_command_line_for_connector(cmdline,
- 								    connector,
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 488f8e7513495..c8058f91a5bd3 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -119,6 +119,7 @@
+ #define QCOM_CPU_PART_KRYO		0x200
+ #define QCOM_CPU_PART_KRYO_2XX_GOLD	0x800
+ #define QCOM_CPU_PART_KRYO_2XX_SILVER	0x801
++#define QCOM_CPU_PART_KRYO_3XX_GOLD	0x802
+ #define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
+ #define QCOM_CPU_PART_KRYO_4XX_GOLD	0x804
+ #define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
+@@ -195,6 +196,7 @@
+ #define MIDR_QCOM_KRYO MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO)
+ #define MIDR_QCOM_KRYO_2XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_2XX_GOLD)
+ #define MIDR_QCOM_KRYO_2XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_2XX_SILVER)
++#define MIDR_QCOM_KRYO_3XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_GOLD)
+ #define MIDR_QCOM_KRYO_3XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_SILVER)
+ #define MIDR_QCOM_KRYO_4XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_GOLD)
+ #define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
 -- 
 2.39.5
 
