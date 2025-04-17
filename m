@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2882566FE;
-	Thu, 17 Apr 2025 18:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D8D256C63;
+	Thu, 17 Apr 2025 18:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913855; cv=none; b=W54YHEsGDGskCE71wIp5f9UUTICDX+c+ILGugSxRfnMvAUJVnXipvDVrFNmgJKVZN05WG+ySkEtKN5FhsinJyUw4vyzsXmctmLC448wDQ7OItA0IrRpKTMTbfTb8Q3Dg0KsWjYowtKkqwdKa2MoDWT1/AnzrMceXCSq0y86g44Q=
+	t=1744913859; cv=none; b=Afw4PZi+R3gpxBVb8Bud6fbW66XVF+qJTb404y1MQl3YIUavKSWBYdGDFlKSSqLmcmCcEfK6/JH0SgZrYqtM1C4E9yiKiWcMAbKj0fQ+CdTs6Cy8YtI85To6w/P2Djadqi4xbpumXO0vB/g4PbH3i7sclh44M42pepRpVybtyRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913855; c=relaxed/simple;
-	bh=Znoz0Qo9cxrpxJcu0tKYv6/xCIwqQg+WVqXH94AaP78=;
+	s=arc-20240116; t=1744913859; c=relaxed/simple;
+	bh=UXMkzbiVLM/p8U61aWwnrlrTB+2cUCjQ0/p/Lt8bDYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSqMRY8OIMx/oMxGXUcLCrsKVMt7WgFfXKwjvm+AjpEu5tiOr3zelc+3Sg/6azo+0Mxd+3sNFE3U5nMRkDvFfRorcKxpkjqGBbELqkx/EQAdX1c8ptKHAVu/laC4Tw4vdq61T2dv8s4soN557zpG357dLba/l+uHQjJbtUoc27g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCXWo3pk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eY/ssxe1GYv+ZuUaaMiVpJ0tPRjHyp42B4h8BYKPa7YtwUuT+A7m3GqBanZ0INfSNCUFh4NGEjMNtqeEpUQWdlaLkjFs7FTMiW3//B1OmFSaHAGmwSAeIMzDNSLaTfYMkPYbruocmmiEhlKmhjpwxvHhFR1Gy5/tkF5y0ZAek9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHIgcDTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCXWo3pk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA25AC4CEE4;
-	Thu, 17 Apr 2025 18:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHIgcDTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95885C4CEE4;
+	Thu, 17 Apr 2025 18:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913855;
-	bh=Znoz0Qo9cxrpxJcu0tKYv6/xCIwqQg+WVqXH94AaP78=;
+	s=korg; t=1744913858;
+	bh=UXMkzbiVLM/p8U61aWwnrlrTB+2cUCjQ0/p/Lt8bDYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCXWo3pkDcwVGxUhhSknTaMig+qYWnFjCtt5NrG70ke5iDJPvuMwDzP5aVh//j7NR
-	 3luxTNZbWyyPDgveye+r8vskK0lNEgE3uQLgXF0EXL7nt0B+ka1C4oNmfxTfV3L8wT
-	 msk3shKUS8dz/BBpdLyDSGrGgEP6k62s3yxQJkqw=
+	b=HHIgcDTLmei/gfDidTmwkahRfo5oduPfBu9X18HZPzFYawk0Nli8NJnERjb55TABL
+	 d1FmyXncT3QK/6zfFVNtcm3asGDy5GD2ioDNwBu35SemAqN4LJnrKvQBVLIDxa5Rnk
+	 OuW+IK4mevE78Yrop4vNA3pT3MQS+LDzZEGKxb10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 025/414] net: libwx: handle page_pool_dev_alloc_pages error
-Date: Thu, 17 Apr 2025 19:46:23 +0200
-Message-ID: <20250417175112.431195297@linuxfoundation.org>
+Subject: [PATCH 6.13 026/414] ata: sata_sx4: Add error handling in pdc20621_i2c_read()
+Date: Thu, 17 Apr 2025 19:46:24 +0200
+Message-ID: <20250417175112.470653356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,42 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7f1ff1b38a7c8b872382b796023419d87d78c47e ]
+[ Upstream commit 8d46a27085039158eb5e253ab8a35a0e33b5e864 ]
 
-page_pool_dev_alloc_pages could return NULL. There was a WARN_ON(!page)
-but it would still proceed to use the NULL pointer and then crash.
+The function pdc20621_prog_dimm0() calls the function pdc20621_i2c_read()
+but does not handle the error if the read fails. This could lead to
+process with invalid data. A proper implementation can be found in
+/source/drivers/ata/sata_sx4.c, pdc20621_prog_dimm_global(). As mentioned
+in its commit: bb44e154e25125bef31fa956785e90fccd24610b, the variable spd0
+might be used uninitialized when pdc20621_i2c_read() fails.
 
-This is similar to commit 001ba0902046
-("net: fec: handle page_pool_dev_alloc_pages error").
+Add error handling to pdc20621_i2c_read(). If a read operation fails,
+an error message is logged via dev_err(), and return a negative error
+code.
 
-This is found by our static analysis tool KNighter.
+Add error handling to pdc20621_prog_dimm0() in pdc20621_dimm_init(), and
+return a negative error code if pdc20621_prog_dimm0() fails.
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20250407184952.2111299-1-chenyuan0y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4447d3515616 ("libata: convert the remaining SATA drivers to new init model")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/sata_sx4.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 2b3d6586f44a5..71c891d14fb62 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -309,7 +309,8 @@ static bool wx_alloc_mapped_page(struct wx_ring *rx_ring,
- 		return true;
+diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
+index a482741eb181f..c3042eca6332d 100644
+--- a/drivers/ata/sata_sx4.c
++++ b/drivers/ata/sata_sx4.c
+@@ -1117,9 +1117,14 @@ static int pdc20621_prog_dimm0(struct ata_host *host)
+ 	mmio += PDC_CHIP0_OFS;
  
- 	page = page_pool_dev_alloc_pages(rx_ring->page_pool);
--	WARN_ON(!page);
-+	if (unlikely(!page))
-+		return false;
- 	dma = page_pool_get_dma_addr(page);
+ 	for (i = 0; i < ARRAY_SIZE(pdc_i2c_read_data); i++)
+-		pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
+-				  pdc_i2c_read_data[i].reg,
+-				  &spd0[pdc_i2c_read_data[i].ofs]);
++		if (!pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
++				       pdc_i2c_read_data[i].reg,
++				       &spd0[pdc_i2c_read_data[i].ofs])) {
++			dev_err(host->dev,
++				"Failed in i2c read at index %d: device=%#x, reg=%#x\n",
++				i, PDC_DIMM0_SPD_DEV_ADDRESS, pdc_i2c_read_data[i].reg);
++			return -EIO;
++		}
  
- 	bi->page_dma = dma;
+ 	data |= (spd0[4] - 8) | ((spd0[21] != 0) << 3) | ((spd0[3]-11) << 4);
+ 	data |= ((spd0[17] / 4) << 6) | ((spd0[5] / 2) << 7) |
+@@ -1284,6 +1289,8 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 
+ 	/* Programming DIMM0 Module Control Register (index_CID0:80h) */
+ 	size = pdc20621_prog_dimm0(host);
++	if (size < 0)
++		return size;
+ 	dev_dbg(host->dev, "Local DIMM Size = %dMB\n", size);
+ 
+ 	/* Programming DIMM Module Global Control Register (index_CID0:88h) */
 -- 
 2.39.5
 
