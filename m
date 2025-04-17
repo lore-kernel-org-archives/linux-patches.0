@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2381E256C84;
-	Thu, 17 Apr 2025 18:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF02257AE7;
+	Thu, 17 Apr 2025 18:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914356; cv=none; b=shXtgQH4MsBzKWKoFypEt+/eFqAnkjsaVcT2G/XGyrAAO8xD8ElCsHEdI+NdsWcByXtabJCU/vRUxmspS9qP+j5ZaFtwCJf8FMJ3b0kdDewffJ1ATseLytSid7lEHG6FUkY0Q3e41Ck40zXoHomnk2MiSvfJSGhVZSO8mybMadM=
+	t=1744914359; cv=none; b=bSGQ90maNkhgyR7C897fyNyJOsTx0XlfqTaD+RxJxE+X20f5bBA0pjJ9rz3fmPGOUfgMGVdwLP8C970Ng+ldnhRLl4ZqES+CDMPoB2cRHGByuBamwOmuSMXl1Tur77Ya67Ai5qNTOd0mNLt0tXuvPPXPNrx1sVBcdDn8BAOYRM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914356; c=relaxed/simple;
-	bh=ZC/jZvJIcdFJRDdFPmA01X0PuOoXw2e1EQ04oqPIRXI=;
+	s=arc-20240116; t=1744914359; c=relaxed/simple;
+	bh=f2hogrH2SJrLNBFWo0MLa+U5CzP2UMVOMTDQP1oG9FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oVuarkoXBnWrtv4QjNiI9A1oiveUND8QiArm5AQDqB8P2iVggso+c+m3KhMnlLsleCqMzJ/zA3+EnZxjNYnRr8YL6JZFB4mgPrjldNPnIYRPcZfiuD9A05cF4aTv1TMi/fjOGBhm4mGxgxrxzZNBDYgrPWOe+CFOTMcl67hHFsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3wFeygJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K8gHmnlgfDZdMFnNkszkZ+3rNr03tt+wXH7ES068LETu6PYbroRMQ/3p888OKVzle8HMOP0T34nhfKhr1mB+sfBXC75Vf3kfAHqU7Deso/DwcEtJhQVhfKdIXpFFFdgOPE2ifIdYS6BXTNqxNBS0C7C6pTfyRayW8kINA/EWYH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Egp/5W36; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3wFeygJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3F5C4CEE7;
-	Thu, 17 Apr 2025 18:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Egp/5W36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D141C4CEFD;
+	Thu, 17 Apr 2025 18:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914355;
-	bh=ZC/jZvJIcdFJRDdFPmA01X0PuOoXw2e1EQ04oqPIRXI=;
+	s=korg; t=1744914358;
+	bh=f2hogrH2SJrLNBFWo0MLa+U5CzP2UMVOMTDQP1oG9FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3wFeygJJWRMQ4OduIS1YXE28MVMAuzu9hkMTC0cKgg/pSwZOaIDCwpQjtYYwkI0O
-	 bYOfPagmWX/MzeDEWH8jNam+RP2qBBYATUeiChIFN5RLHQe3gk8weFGkI/+jlGgh2n
-	 +mFUqeMCy6MqJ5KqoTJQn65eBGXwUvU2y4fjlY+4=
+	b=Egp/5W36DeO0+0RtzgrbofQ1lMNuRMlgiG7t1Purq30rlsTJtkZQc4VM17xVl+cvY
+	 y9VUzHdxupOUVxArdigaYCBJuX4QOybXWWYMUgIVxxmEGRtZsOLtnmBCRYw5EBHewF
+	 jWKpJVxkS7tobxb9REuxt6DLyU6l0E7Cho2l8LR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 188/414] HID: pidff: Support device error response from PID_BLOCK_LOAD
-Date: Thu, 17 Apr 2025 19:49:06 +0200
-Message-ID: <20250417175119.006029533@linuxfoundation.org>
+Subject: [PATCH 6.13 189/414] HID: pidff: Remove redundant call to pidff_find_special_keys
+Date: Thu, 17 Apr 2025 19:49:07 +0200
+Message-ID: <20250417175119.044526958@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -54,47 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 9d4174dc4a234408d91fd83725e1899766cd1731 ]
+[ Upstream commit 1bd55e79cbc0ea2d6a65f51e06c891806359c2f2 ]
 
-If an error happens on the device, the driver will no longer fall
-into the trap of reading this status 60 times before it decides that
-this reply won't change to success/memory full.
-
-Greatly reduces communication overhead during device error situation.
+Probably left out as a mistake after Anssi created the helper macro
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hid/usbhid/hid-pidff.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index e2508a4d754d3..d5734cbf745d1 100644
+index d5734cbf745d1..6f6c47bd57eaa 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -138,7 +138,8 @@ static const u8 pidff_effect_types[] = {
- 
- #define PID_BLOCK_LOAD_SUCCESS	0
- #define PID_BLOCK_LOAD_FULL	1
--static const u8 pidff_block_load_status[] = { 0x8c, 0x8d };
-+#define PID_BLOCK_LOAD_ERROR	2
-+static const u8 pidff_block_load_status[] = { 0x8c, 0x8d, 0x8e};
- 
- #define PID_EFFECT_START	0
- #define PID_EFFECT_STOP		1
-@@ -666,6 +667,11 @@ static int pidff_request_effect_upload(struct pidff_device *pidff, int efnum)
- 				pidff->block_load[PID_RAM_POOL_AVAILABLE].value[0] : -1);
- 			return -ENOSPC;
- 		}
-+		if (pidff->block_load_status->value[0] ==
-+		    pidff->status_id[PID_BLOCK_LOAD_ERROR]) {
-+			hid_dbg(pidff->hid, "device error during effect creation\n");
-+			return -EREMOTEIO;
-+		}
+@@ -1159,10 +1159,6 @@ static int pidff_find_special_fields(struct pidff_device *pidff)
+ 		return -1;
  	}
- 	hid_err(pidff->hid, "pid_block_load failed 60 times\n");
- 	return -EIO;
+ 
+-	pidff_find_special_keys(pidff->control_id, pidff->device_control,
+-				pidff_device_control,
+-				sizeof(pidff_device_control));
+-
+ 	PIDFF_FIND_SPECIAL_KEYS(control_id, device_control, device_control);
+ 
+ 	if (!PIDFF_FIND_SPECIAL_KEYS(type_id, create_new_effect_type,
 -- 
 2.39.5
 
