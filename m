@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6A11B3934;
-	Thu, 17 Apr 2025 18:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F0C1B3934;
+	Thu, 17 Apr 2025 18:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915696; cv=none; b=RHCma3oet3y8ykzmy2tR89BG0HDA5rqvUuDx4+OLMSnBB2TGpnIURuyytw+jcao/dlYmnfgaqY6bEDGqFMhqjB0uHPyduFZce5UiBKa8iOOuKKBab+PA6/0iaRxY2PiT8TmHY86OQG+YJeAbbqA6I/U0Q2DxOOElDs67yvBGpeQ=
+	t=1744915699; cv=none; b=Z63hJVRDi6hX+flIW4lxQF+jK0ALyi4LZzz/tkXb5JMUcEsCJ+1JkMmS9LvQp19p43qkDQJaveHN1M3mWRSLvr2BYrlC47iJwE5L/fltA/un/4+Okfv/ouXCYghRyH6y0EuA5+rXOyk28edTjZUty87h+FzmBYkIJnvVFrkoQLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915696; c=relaxed/simple;
-	bh=v8qn1jFbKij4WBzRnQKo4ZRnlF0BbStZwaCAy2b1N48=;
+	s=arc-20240116; t=1744915699; c=relaxed/simple;
+	bh=5UBnL2jxgU48Eu/rlgLRBhKsTtEPRWTcKJUQS9H10WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRa7WqAoJ3PTbVrcIBh6Lk5v9CxP6uTrtlM+vBddgpdN/WOi7Q541+9fLMJfGwN/znHd7DRiQx3/EnqlTvDu1UPg2fm4WA66rlrBoqp6Uba7B91gNsG4Dmr0LFXPhLpaVlNGJsCFRI345Ddqx5AeNA2hbcq1HOIU7NKCRUjAoFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz3wI9WX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JUyQTNQflWS+dRj0sP8IOH/Nda2Gjr1QWyGNObrHLozbkRRR/JdVLaPBIQ9HH4NipRQXXd3vpyCeMmDtXgoGk7GIG2PP5YdLO2hraKI/c4aF92etfcVKVc0ZGrdjxWjxkNhiZsYnlF1C31Xx4JcnkJC0muNtQQN7PeKFeXFNeWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/8JDFDI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz3wI9WX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E9FC4CEE4;
-	Thu, 17 Apr 2025 18:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/8JDFDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4025C4CEE4;
+	Thu, 17 Apr 2025 18:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915696;
-	bh=v8qn1jFbKij4WBzRnQKo4ZRnlF0BbStZwaCAy2b1N48=;
+	s=korg; t=1744915699;
+	bh=5UBnL2jxgU48Eu/rlgLRBhKsTtEPRWTcKJUQS9H10WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tz3wI9WXQOncv3AlL9mmYoDUSMWBOnv1NJDgcJbC5STQrd1azYyvwtp1aZ0FKixG6
-	 gylWC5S89ISrmsDlEOsS8XoC/nQmGp46EK0z6hHlVWMAwMqFKXkRKduXheOK9GqxXd
-	 xwQO6FK3foejfOQCxop4APeB25ez4Uw2zWgVHWHE=
+	b=f/8JDFDIW8KHC8rWzNbHi3M7ci9l7m2709RzcmuTNnauO+am9qdgDuY57uwcCBSf+
+	 AL2qQfE38nRbjYuLEBBOmLYDYXV0oDnoSScpHtHeiFeGI6K1dfJd870jFjJFJP4sy/
+	 YWDA4NbfiwHzsZedjyWXycMpPGYiRjyQADTlZv74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.12 210/393] accel/ivpu: Fix PM related deadlocks in MS IOCTLs
-Date: Thu, 17 Apr 2025 19:50:19 +0200
-Message-ID: <20250417175116.025992601@linuxfoundation.org>
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 211/393] media: streamzap: prevent processing IR data on URB failure
+Date: Thu, 17 Apr 2025 19:50:20 +0200
+Message-ID: <20250417175116.065920407@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -51,111 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit d893da85e06edf54737bb80648bb58ba8fd56d9f upstream.
+commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
 
-Prevent runtime resume/suspend while MS IOCTLs are in progress.
-Failed suspend will call ivpu_ms_cleanup() that would try to acquire
-file_priv->ms_lock, which is already held by the IOCTLs.
+If streamzap_callback() receives an urb with any non-critical error
+status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
+it will try to process IR data, ignoring a possible transfer failure.
 
-Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250325114306.3740022-3-maciej.falkowski@linux.intel.com
+Make streamzap_callback() process IR data only when urb->status is 0.
+Move processing logic to a separate function to make code cleaner and
+more similar to the URB completion handlers in other RC drivers.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_debugfs.c |    4 ++--
- drivers/accel/ivpu/ivpu_ms.c      |   18 ++++++++++++++++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_debugfs.c
-+++ b/drivers/accel/ivpu/ivpu_debugfs.c
-@@ -331,7 +331,7 @@ ivpu_force_recovery_fn(struct file *file
- 		return -EINVAL;
- 
- 	ret = ivpu_rpm_get(vdev);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
- 
- 	ivpu_pm_trigger_recovery(vdev, "debugfs");
-@@ -408,7 +408,7 @@ static int dct_active_set(void *data, u6
- 		return -EINVAL;
- 
- 	ret = ivpu_rpm_get(vdev);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
- 
- 	if (active_percent)
---- a/drivers/accel/ivpu/ivpu_ms.c
-+++ b/drivers/accel/ivpu/ivpu_ms.c
-@@ -44,6 +44,10 @@ int ivpu_ms_start_ioctl(struct drm_devic
- 	    args->sampling_period_ns < MS_MIN_SAMPLE_PERIOD_NS)
- 		return -EINVAL;
- 
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
-+
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	if (get_instance_by_mask(file_priv, args->metric_group_mask)) {
-@@ -96,6 +100,8 @@ err_free_ms:
- 	kfree(ms);
- unlock:
- 	mutex_unlock(&file_priv->ms_lock);
-+
-+	ivpu_rpm_put(vdev);
- 	return ret;
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -138,39 +138,10 @@ static void sz_push_half_space(struct st
+ 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
  }
  
-@@ -160,6 +166,10 @@ int ivpu_ms_get_data_ioctl(struct drm_de
- 	if (!args->metric_group_mask)
- 		return -EINVAL;
- 
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
-+
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
-@@ -187,6 +197,7 @@ int ivpu_ms_get_data_ioctl(struct drm_de
- unlock:
- 	mutex_unlock(&file_priv->ms_lock);
- 
-+	ivpu_rpm_put(vdev);
- 	return ret;
- }
- 
-@@ -204,11 +215,17 @@ int ivpu_ms_stop_ioctl(struct drm_device
+-/*
+- * streamzap_callback - usb IRQ handler callback
+- *
+- * This procedure is invoked on reception of data from
+- * the usb remote.
+- */
+-static void streamzap_callback(struct urb *urb)
++static void sz_process_ir_data(struct streamzap_ir *sz, int len)
  {
- 	struct ivpu_file_priv *file_priv = file->driver_priv;
- 	struct drm_ivpu_metric_streamer_stop *args = data;
-+	struct ivpu_device *vdev = file_priv->vdev;
- 	struct ivpu_ms_instance *ms;
-+	int ret;
+-	struct streamzap_ir *sz;
+ 	unsigned int i;
+-	int len;
+-
+-	if (!urb)
+-		return;
+-
+-	sz = urb->context;
+-	len = urb->actual_length;
+-
+-	switch (urb->status) {
+-	case -ECONNRESET:
+-	case -ENOENT:
+-	case -ESHUTDOWN:
+-		/*
+-		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+-		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
+-		return;
+-	default:
+-		break;
+-	}
  
- 	if (!args->metric_group_mask)
- 		return -EINVAL;
+-	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
+ 	for (i = 0; i < len; i++) {
+ 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
+ 			i, (unsigned char)sz->buf_in[i]);
+@@ -219,6 +190,43 @@ static void streamzap_callback(struct ur
+ 	}
  
-+	ret = ivpu_rpm_get(vdev);
-+	if (ret < 0)
-+		return ret;
+ 	ir_raw_event_handle(sz->rdev);
++}
 +
- 	mutex_lock(&file_priv->ms_lock);
- 
- 	ms = get_instance_by_mask(file_priv, args->metric_group_mask);
-@@ -217,6 +234,7 @@ int ivpu_ms_stop_ioctl(struct drm_device
- 
- 	mutex_unlock(&file_priv->ms_lock);
- 
-+	ivpu_rpm_put(vdev);
- 	return ms ? 0 : -EINVAL;
++/*
++ * streamzap_callback - usb IRQ handler callback
++ *
++ * This procedure is invoked on reception of data from
++ * the usb remote.
++ */
++static void streamzap_callback(struct urb *urb)
++{
++	struct streamzap_ir *sz;
++	int len;
++
++	if (!urb)
++		return;
++
++	sz = urb->context;
++	len = urb->actual_length;
++
++	switch (urb->status) {
++	case 0:
++		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
++		sz_process_ir_data(sz, len);
++		break;
++	case -ECONNRESET:
++	case -ENOENT:
++	case -ESHUTDOWN:
++		/*
++		 * this urb is terminated, clean up.
++		 * sz might already be invalid at this point
++		 */
++		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		return;
++	default:
++		break;
++	}
++
+ 	usb_submit_urb(urb, GFP_ATOMIC);
  }
  
 
