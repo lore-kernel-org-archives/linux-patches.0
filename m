@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1C52566ED;
-	Thu, 17 Apr 2025 18:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119AC257436;
+	Thu, 17 Apr 2025 18:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913271; cv=none; b=MEQShfvNb2YisPjKLkkuRY0s0rOdZyY2ZgOHiLVjiYZ9aecFy2Hm7oasUkYNytPgz5UGM51Aqugt9FHjqJbhmB2k7WEYadTD76iXM3axVOI7PU91ISJ/x6QnG7o40Td/tzJmR6el6pmvpqWt4Wqd2Jlks3TNBnKkCzaF6TFu/WE=
+	t=1744913274; cv=none; b=ZlWxai5S/YQ+SuhMQrTbscH+3wCEohJPS8i7FfY8wgD4BsQa2cxQrv/ZbHHTjc4hQY2FzJJpA79NqqixBTALDn2OedlJGE+qg5O3nEBPWRsG3C/xu3/yFA+N1KoPrD0aP48RmtAiBAa4nPvcYKASXxxRO3dM3oWuyQ8AWQt6f8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913271; c=relaxed/simple;
-	bh=RsrxNxI4uc74s9aOBVjLzossG8tjHeypawBtr9aI1a4=;
+	s=arc-20240116; t=1744913274; c=relaxed/simple;
+	bh=0p/LzmlXRTtIznQJt/XC255h7vFSdIGRvT/2oEhmTaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R85TQi1BJBmC5SePvbJ8pLYQIs8U6SlvFLYH6zeMT7PmfWH+JbqfjKlnnSQCNJjJcHpvyzMpFBZLp9XneEeygsi8hNrCG2XTmAd2+AIueRhKvK6gdAvfQc34TcBqxXtUW2F/beTlDp6il07zPTyp4LyFR6bTUvg8gmmUeZlRNtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J2PRno4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnsGc1Pt3EHRJ37/RyL8iQVT62YimqGt53oDtXS8+HP68g9EKo97gdcFWyAlrdzxCNULhf3MXbcPsYYUkUYaikvXpZlAVds1vFfWxPV7VsICza0CprC/rDrtrLAc+ThJTAka5PFqWzk6/ak1hf4ESXFt1kuuOBxP1a6Qv4bXz9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FOhH0Pu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J2PRno4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82230C4CEE4;
-	Thu, 17 Apr 2025 18:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FOhH0Pu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913CDC4CEE4;
+	Thu, 17 Apr 2025 18:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913271;
-	bh=RsrxNxI4uc74s9aOBVjLzossG8tjHeypawBtr9aI1a4=;
+	s=korg; t=1744913274;
+	bh=0p/LzmlXRTtIznQJt/XC255h7vFSdIGRvT/2oEhmTaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1J2PRno4ozyZrP+2agFlcXsiSWQHGr9feFsZmf/c9Q8Y2jqCNciCjUeoy5lUMo+43
-	 OtUnpZA6GH+YoZb21NUF7c/ry2mn8f80yRYXWWUnueCh//uMyke5/RnkbzaI0eeS9I
-	 UUe1QuXKEvPJWGT8e3s0v93eADhx0DxFvzrMGplg=
+	b=2FOhH0Pu9KD/T6W1FfQ0rZngILdmP452Px2492Uk+Slx6WZ5f24aEHlMZsqwPmEYR
+	 YR7EsIM6k/mRwacQj24yGI7UymG70jt6xxfUDme4it9spcSZqOjteWE2C5Y5RcJo2t
+	 w9Jt2Lua9O/9vmzwhOs/VJzkF2X0kUWTK9JMgtmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Caleb Jorden <cjorden@gmail.com>,
 	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.14 283/449] wifi: mt76: mt7925: fix the wrong link_idx when a p2p_device is present
-Date: Thu, 17 Apr 2025 19:49:31 +0200
-Message-ID: <20250417175129.463398688@linuxfoundation.org>
+Subject: [PATCH 6.14 284/449] wifi: mt76: mt7925: fix the wrong simultaneous cap for MLO
+Date: Thu, 17 Apr 2025 19:49:32 +0200
+Message-ID: <20250417175129.506244235@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,85 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-commit 4bada9b0a29c185d45cc9512509edd6069fbfa79 upstream.
+commit 7dcea6fe33ee3d7cbb65baee0dd7adc76d1c9ddc upstream.
 
-When the p2p device and MLO station are running concurrently, the p2p device
-will occupy the wrong link_idx when the MLO secondary link is added.
+The mt7925 chip is only support a single radio, so the maximum
+number of simultaneous should be 0.
 
-Fixes: 9e4c3a007f01 ("wifi: mt76: connac: Extend mt76_connac_mcu_uni_add_dev for MLO")
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
 Cc: stable@vger.kernel.org
 Co-developed-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Tested-by: Caleb Jorden <cjorden@gmail.com>
 Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250305000851.493671-2-sean.wang@kernel.org
+Link: https://patch.msgid.link/20250305000851.493671-3-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h            |    1 +
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c |    4 ++--
- drivers/net/wireless/mediatek/mt76/mt7925/main.c     |   14 ++++++++++----
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -769,6 +769,7 @@ struct mt76_testmode_data {
- 
- struct mt76_vif_link {
- 	u8 idx;
-+	u8 link_idx;
- 	u8 omac_idx;
- 	u8 band_idx;
- 	u8 wmm_idx;
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1168,7 +1168,7 @@ int mt76_connac_mcu_uni_add_dev(struct m
- 			.tag = cpu_to_le16(DEV_INFO_ACTIVE),
- 			.len = cpu_to_le16(sizeof(struct req_tlv)),
- 			.active = enable,
--			.link_idx = mvif->idx,
-+			.link_idx = mvif->link_idx,
- 		},
- 	};
- 	struct {
-@@ -1191,7 +1191,7 @@ int mt76_connac_mcu_uni_add_dev(struct m
- 			.bmc_tx_wlan_idx = cpu_to_le16(wcid->idx),
- 			.sta_idx = cpu_to_le16(wcid->idx),
- 			.conn_state = 1,
--			.link_idx = mvif->idx,
-+			.link_idx = mvif->link_idx,
- 		},
- 	};
- 	int err, idx, cmd, len;
 --- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -360,10 +360,15 @@ static int mt7925_mac_link_bss_add(struc
- 	struct mt76_txq *mtxq;
- 	int idx, ret = 0;
+@@ -256,7 +256,7 @@ int mt7925_init_mlo_caps(struct mt792x_p
  
--	mconf->mt76.idx = __ffs64(~dev->mt76.vif_mask);
--	if (mconf->mt76.idx >= MT792x_MAX_INTERFACES) {
--		ret = -ENOSPC;
--		goto out;
-+	if (vif->type == NL80211_IFTYPE_P2P_DEVICE) {
-+		mconf->mt76.idx = MT792x_MAX_INTERFACES;
-+	} else {
-+		mconf->mt76.idx = __ffs64(~dev->mt76.vif_mask);
-+
-+		if (mconf->mt76.idx >= MT792x_MAX_INTERFACES) {
-+			ret = -ENOSPC;
-+			goto out;
-+		}
- 	}
+ 	ext_capab[0].eml_capabilities = phy->eml_cap;
+ 	ext_capab[0].mld_capa_and_ops =
+-		u16_encode_bits(1, IEEE80211_MLD_CAP_OP_MAX_SIMUL_LINKS);
++		u16_encode_bits(0, IEEE80211_MLD_CAP_OP_MAX_SIMUL_LINKS);
  
- 	mconf->mt76.omac_idx = ieee80211_vif_is_mld(vif) ?
-@@ -371,6 +376,7 @@ static int mt7925_mac_link_bss_add(struc
- 	mconf->mt76.band_idx = 0xff;
- 	mconf->mt76.wmm_idx = ieee80211_vif_is_mld(vif) ?
- 			      0 : mconf->mt76.idx % MT76_CONNAC_MAX_WMM_SETS;
-+	mconf->mt76.link_idx = hweight16(mvif->valid_links);
- 
- 	if (mvif->phy->mt76->chandef.chan->band != NL80211_BAND_2GHZ)
- 		mconf->mt76.basic_rates_idx = MT792x_BASIC_RATES_TBL + 4;
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_MLO;
+ 	wiphy->iftype_ext_capab = ext_capab;
 
 
