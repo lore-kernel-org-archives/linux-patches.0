@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421641DB148;
-	Thu, 17 Apr 2025 18:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0233594D;
+	Thu, 17 Apr 2025 18:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913818; cv=none; b=lZ86ZtndT331WsroxBekvjL9LUiU839LDd+Vf82fq+mihHxrQhf2ShzHj2ppH1y5yUAwRxPzP2K0OIPbHkM/nbmW949QjAPDo3rLS+4mSf9LtyP+QbC5I+gEMhm/UAxQvIophDnr0tGZMvyJTZuzRxnj9u2K5qWh/dZNS0pYSDw=
+	t=1744913821; cv=none; b=fWtRmMjQONOkL/nKacGStB4nrmGl+Icz175lVl9Z4zGB0WP7or0WXMRlEtqVoNihAP95GN0oJxl0s3zqxjEML9HhGQ7iqagUI3Rv+o8Ll+lrdGcVBQ6CTesfC2ODfMW3jtz4kiuAfZEaawFVVFJnoCltV0mqYRZbOxteFgCHeo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913818; c=relaxed/simple;
-	bh=MulGWxLhCuoiIu3xqBZwygKLU0twDAcJ6IZRiXWYxn8=;
+	s=arc-20240116; t=1744913821; c=relaxed/simple;
+	bh=Gz0onp/4i6eLdmBgeyCJVOWJ1I0eRhQJYvmBKYuTuUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdTWE3j323qGXvCBW7LzDr6I0Jhyxce3WiWAWkGrXk9hJB5AORsA/uH3ylUmqoGOF9TpVhdCqXbk81LHJaxY9diEzggeTcgw8y1eu76Fo0s7z5onz0TMGFqE9iwb1wMT0PxDNNUTIfKE84laWLZIb9d0t9QdZ5GJ1NCDqGBuLaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/S0PYDF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c8eFvfBcYGbQYFYXN6QuX7yYKOIQDx9DW1SRrJvrPiGAYKADm0MTERYMt7Dl31KPy3UZCNK7U13TIt5y/BDHUoBTEvPIoMJON7PxN6bWkKi+ffrlAG0jjVY83pFWhXSgxbSAmEwrqKcoMW6XLznuhycWBT+rDLosaYxKBUuKHEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1A+jtADJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/S0PYDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86385C4CEEA;
-	Thu, 17 Apr 2025 18:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1A+jtADJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5D5C4CEE4;
+	Thu, 17 Apr 2025 18:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913818;
-	bh=MulGWxLhCuoiIu3xqBZwygKLU0twDAcJ6IZRiXWYxn8=;
+	s=korg; t=1744913820;
+	bh=Gz0onp/4i6eLdmBgeyCJVOWJ1I0eRhQJYvmBKYuTuUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/S0PYDFUHn6uqEpkk4Ck4ZpZ24qIcnU46NiYYFFH+ol2RuwoIeBTleEDj+KNx6M+
-	 EckoVE93zjlwY6cH5Zp+NCg78FLdTH2dhgWY5D+oaQcYBOcYMLj/YTiA7NNjDeL77F
-	 dOLUgNUbj0UkiuiHABYZlqDmK8dEbrA73r0GFMCI=
+	b=1A+jtADJ7vvNcgDzPHu6G4VrSwXw+6AIqenDzZyGwF4TbVlmb+kdiDw+I4jbJGMA6
+	 txo5fYOM/+3r18dhCz2golIXp9Lyljy/GhXFUBgjEumO5wZHEHGbEt61pp1NI52+zR
+	 kTkmV4k/lCH9X6ua4FtU1eJllaMuWnzGdHI1rGJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waiman Long <longman@redhat.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 003/414] cgroup/cpuset: Fix error handling in remote_partition_disable()
-Date: Thu, 17 Apr 2025 19:46:01 +0200
-Message-ID: <20250417175111.535259306@linuxfoundation.org>
+Subject: [PATCH 6.13 004/414] cgroup/cpuset: Fix race between newly created partition and dying one
+Date: Thu, 17 Apr 2025 19:46:02 +0200
+Message-ID: <20250417175111.575545729@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -53,98 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 8bf450f3aec3d1bbd725d179502c64b8992588e4 ]
+[ Upstream commit a22b3d54de94f82ca057cc2ebf9496fa91ebf698 ]
 
-When remote_partition_disable() is called to disable a remote partition,
-it always sets the partition to an invalid partition state. It should
-only do so if an error code (prs_err) has been set. Correct that and
-add proper error code in places where remote_partition_disable() is
-called due to error.
+There is a possible race between removing a cgroup diectory that is
+a partition root and the creation of a new partition.  The partition
+to be removed can be dying but still online, it doesn't not currently
+participate in checking for exclusive CPUs conflict, but the exclusive
+CPUs are still there in subpartitions_cpus and isolated_cpus. These
+two cpumasks are global states that affect the operation of cpuset
+partitions. The exclusive CPUs in dying cpusets will only be removed
+when cpuset_css_offline() function is called after an RCU delay.
 
-Fixes: 181c8e091aae ("cgroup/cpuset: Introduce remote partition")
+As a result, it is possible that a new partition can be created with
+exclusive CPUs that overlap with those of a dying one. When that dying
+partition is finally offlined, it removes those overlapping exclusive
+CPUs from subpartitions_cpus and maybe isolated_cpus resulting in an
+incorrect CPU configuration.
+
+This bug was found when a warning was triggered in
+remote_partition_disable() during testing because the subpartitions_cpus
+mask was empty.
+
+One possible way to fix this is to iterate the dying cpusets as well and
+avoid using the exclusive CPUs in those dying cpusets. However, this
+can still cause random partition creation failures or other anomalies
+due to racing. A better way to fix this race is to reset the partition
+state at the moment when a cpuset is being killed.
+
+Introduce a new css_killed() CSS function pointer and call it, if
+defined, before setting CSS_DYING flag in kill_css(). Also update the
+css_is_dying() helper to use the CSS_DYING flag introduced by commit
+33c35aa48178 ("cgroup: Prevent kill_css() from being called more than
+once") for proper synchronization.
+
+Add a new cpuset_css_killed() function to reset the partition state of
+a valid partition root if it is being killed.
+
+Fixes: ee8dde0cd2ce ("cpuset: Add new v2 cpuset.sched.partition flag")
 Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ include/linux/cgroup-defs.h |  1 +
+ include/linux/cgroup.h      |  2 +-
+ kernel/cgroup/cgroup.c      |  6 ++++++
+ kernel/cgroup/cpuset.c      | 20 +++++++++++++++++---
+ 4 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 02f3e9d076894..6c41968bcf4b0 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1407,6 +1407,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
- 	list_add(&cs->remote_sibling, &remote_children);
- 	spin_unlock_irq(&callback_lock);
- 	update_unbound_workqueue_cpumask(isolcpus_updated);
-+	cs->prs_err = 0;
+diff --git a/include/linux/cgroup-defs.h b/include/linux/cgroup-defs.h
+index 17960a1e858db..d1aee2d3e189e 100644
+--- a/include/linux/cgroup-defs.h
++++ b/include/linux/cgroup-defs.h
+@@ -711,6 +711,7 @@ struct cgroup_subsys {
+ 	void (*css_released)(struct cgroup_subsys_state *css);
+ 	void (*css_free)(struct cgroup_subsys_state *css);
+ 	void (*css_reset)(struct cgroup_subsys_state *css);
++	void (*css_killed)(struct cgroup_subsys_state *css);
+ 	void (*css_rstat_flush)(struct cgroup_subsys_state *css, int cpu);
+ 	int (*css_extra_stat_show)(struct seq_file *seq,
+ 				   struct cgroup_subsys_state *css);
+diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
+index f8ef47f8a634d..fc1324ed597d6 100644
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -343,7 +343,7 @@ static inline u64 cgroup_id(const struct cgroup *cgrp)
+  */
+ static inline bool css_is_dying(struct cgroup_subsys_state *css)
+ {
+-	return !(css->flags & CSS_NO_REF) && percpu_ref_is_dying(&css->refcnt);
++	return css->flags & CSS_DYING;
+ }
+ 
+ static inline void cgroup_get(struct cgroup *cgrp)
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index afc665b7b1fe5..81f078c059e86 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5909,6 +5909,12 @@ static void kill_css(struct cgroup_subsys_state *css)
+ 	if (css->flags & CSS_DYING)
+ 		return;
+ 
++	/*
++	 * Call css_killed(), if defined, before setting the CSS_DYING flag
++	 */
++	if (css->ss->css_killed)
++		css->ss->css_killed(css);
++
+ 	css->flags |= CSS_DYING;
  
  	/*
- 	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
-@@ -1437,9 +1438,11 @@ static void remote_partition_disable(struct cpuset *cs, struct tmpmasks *tmp)
- 	list_del_init(&cs->remote_sibling);
- 	isolcpus_updated = partition_xcpus_del(cs->partition_root_state,
- 					       NULL, tmp->new_cpus);
--	cs->partition_root_state = -cs->partition_root_state;
--	if (!cs->prs_err)
--		cs->prs_err = PERR_INVCPUS;
-+	if (cs->prs_err)
-+		cs->partition_root_state = -cs->partition_root_state;
-+	else
-+		cs->partition_root_state = PRS_MEMBER;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 6c41968bcf4b0..a74df43f77f8f 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -3486,9 +3486,6 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
+ 	cpus_read_lock();
+ 	mutex_lock(&cpuset_mutex);
+ 
+-	if (is_partition_valid(cs))
+-		update_prstate(cs, 0);
+-
+ 	if (!cpuset_v2() && is_sched_load_balance(cs))
+ 		cpuset_update_flag(CS_SCHED_LOAD_BALANCE, cs, 0);
+ 
+@@ -3499,6 +3496,22 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
+ 	cpus_read_unlock();
+ }
+ 
++static void cpuset_css_killed(struct cgroup_subsys_state *css)
++{
++	struct cpuset *cs = css_cs(css);
 +
- 	reset_partition_data(cs);
- 	spin_unlock_irq(&callback_lock);
- 	update_unbound_workqueue_cpumask(isolcpus_updated);
-@@ -1472,8 +1475,10 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
- 
- 	WARN_ON_ONCE(!cpumask_subset(cs->effective_xcpus, subpartitions_cpus));
- 
--	if (cpumask_empty(newmask))
-+	if (cpumask_empty(newmask)) {
-+		cs->prs_err = PERR_CPUSEMPTY;
- 		goto invalidate;
-+	}
- 
- 	adding   = cpumask_andnot(tmp->addmask, newmask, cs->effective_xcpus);
- 	deleting = cpumask_andnot(tmp->delmask, cs->effective_xcpus, newmask);
-@@ -1483,10 +1488,15 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
- 	 * not allocated to other partitions and there are effective_cpus
- 	 * left in the top cpuset.
- 	 */
--	if (adding && (!capable(CAP_SYS_ADMIN) ||
--		       cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
--		       cpumask_subset(top_cpuset.effective_cpus, tmp->addmask)))
--		goto invalidate;
-+	if (adding) {
-+		if (!capable(CAP_SYS_ADMIN))
-+			cs->prs_err = PERR_ACCESS;
-+		else if (cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
-+			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
-+			cs->prs_err = PERR_NOCPUS;
-+		if (cs->prs_err)
-+			goto invalidate;
-+	}
- 
- 	spin_lock_irq(&callback_lock);
- 	if (adding)
-@@ -1602,7 +1612,7 @@ static bool prstate_housekeeping_conflict(int prstate, struct cpumask *new_cpus)
-  * The partcmd_update command is used by update_cpumasks_hier() with newmask
-  * NULL and update_cpumask() with newmask set. The partcmd_invalidate is used
-  * by update_cpumask() with NULL newmask. In both cases, the callers won't
-- * check for error and so partition_root_state and prs_error will be updated
-+ * check for error and so partition_root_state and prs_err will be updated
-  * directly.
-  */
- static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
-@@ -3740,6 +3750,7 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
- 
- 	if (remote && cpumask_empty(&new_cpus) &&
- 	    partition_is_populated(cs, NULL)) {
-+		cs->prs_err = PERR_HOTPLUG;
- 		remote_partition_disable(cs, tmp);
- 		compute_effective_cpumask(&new_cpus, cs, parent);
- 		remote = false;
++	cpus_read_lock();
++	mutex_lock(&cpuset_mutex);
++
++	/* Reset valid partition back to member */
++	if (is_partition_valid(cs))
++		update_prstate(cs, PRS_MEMBER);
++
++	mutex_unlock(&cpuset_mutex);
++	cpus_read_unlock();
++
++}
++
+ static void cpuset_css_free(struct cgroup_subsys_state *css)
+ {
+ 	struct cpuset *cs = css_cs(css);
+@@ -3620,6 +3633,7 @@ struct cgroup_subsys cpuset_cgrp_subsys = {
+ 	.css_alloc	= cpuset_css_alloc,
+ 	.css_online	= cpuset_css_online,
+ 	.css_offline	= cpuset_css_offline,
++	.css_killed	= cpuset_css_killed,
+ 	.css_free	= cpuset_css_free,
+ 	.can_attach	= cpuset_can_attach,
+ 	.cancel_attach	= cpuset_cancel_attach,
 -- 
 2.39.5
 
