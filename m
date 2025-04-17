@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67658253333;
-	Thu, 17 Apr 2025 18:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E98725F962;
+	Thu, 17 Apr 2025 18:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914640; cv=none; b=m3kk5bN8Lqg5HzsFbsm42yhrXy57BYiWxx89EG/N5oJGzqv35JsYEJN/4R6FMKqqxVuYr73qQE8JPrFZmYBKaw0jNNb3moIDFr0miGLvEqSdqjM9xzCjsoDBDxolqmKqFP5dt0XiiSzuvBaNWsgyce6ZAvgq13zsy6j1h+yrEmc=
+	t=1744914644; cv=none; b=s+EuwQnDPYU/a+CvY0OnqMk29eDxMedOnBCLv/doTEgycWGGYfzqZ2c6l7VXUXu4b4nK4xLFMdfTGR5/XBshEU4asnJHloWTq3gHheTn1oG72V3I1fywUZ3DI+MG4ATWyPwP+2D6QnMwf4d/bAzNFfqQZ95wRaAtPpaMrtizCDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914640; c=relaxed/simple;
-	bh=072dxLg2gPRsWzBQAdyeYcva16yJo1ji1kS/Tg3kltM=;
+	s=arc-20240116; t=1744914644; c=relaxed/simple;
+	bh=pCEsjaM8TZOiEUDakTtyf8wGY5W5pVFOgwOZjDY1dPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMS42T0kvSiE6WOlQNfmofFTeMa1o85ftKwIt/1Hlcd3j1aCd5Jz6ATSqvseG74wGpbRb+LEE2lPUmucmUnI1XkPaEefAolu1Rclg0MLEbb4peTmSyYnJcCCzu62k50bdlST+wO4chcjkw1OmbI5e5KrLLLK0ojMRPd5/Dtcxgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzEU2qG9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puXrj8aleiz1W4+zCBWuAY5a9JNSbq8wgbENN83agSKXJsbsqNmm/tDbvXlxRy6vz+9ohtG7nDYOYtB54V+GMHl6HHxNLtrTnok94JRCsq3kqewrtIrbzPGF9DqgYkpJqC8mM9Yjs3d6vZ5pDSd2w13Tkn8ml6531kPbrPHTOGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b649+cE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzEU2qG9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AEFC4CEE7;
-	Thu, 17 Apr 2025 18:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b649+cE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DFFC4CEE4;
+	Thu, 17 Apr 2025 18:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914640;
-	bh=072dxLg2gPRsWzBQAdyeYcva16yJo1ji1kS/Tg3kltM=;
+	s=korg; t=1744914644;
+	bh=pCEsjaM8TZOiEUDakTtyf8wGY5W5pVFOgwOZjDY1dPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzEU2qG9W3RokhaQfJzX1qRSbqa3TwyfISJi1zK38ujRvzknJt9pT+/B3Ta7hYwZF
-	 KID4TxIg2+pGjGTI9oJC8NZ56jOiyvpeYv24SE0nU+LQtQY9yP+xkqeF74tb3GCXdU
-	 jTwrqrMukRiybsC4OO196XLJ3H72o+6NNssY+HTU=
+	b=b649+cE25tMKB1ZuwRBjdKZXOieWgUWZzNQ3LmCl1UC0zH7rPczzxGxcJElaXXmgA
+	 ZjCOdgZeg/NZkrT+gkx+K+Y0P7BnuyjwZaI4iV37kRXeKJRmp+3nr5p4Q9kMN5QrUN
+	 zONCJvm0JcwCKkAuH3HOWPgMZJc74KrnbmJXh42M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.13 275/414] accel/ivpu: Fix deadlock in ivpu_ms_cleanup()
-Date: Thu, 17 Apr 2025 19:50:33 +0200
-Message-ID: <20250417175122.486449826@linuxfoundation.org>
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.13 284/414] soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()
+Date: Thu, 17 Apr 2025 19:50:42 +0200
+Message-ID: <20250417175122.851471230@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,56 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-commit 9a6f56762d23a1f3af15e67901493c927caaf882 upstream.
+commit c8222ef6cf29dd7cad21643228f96535cc02b327 upstream.
 
-Fix deadlock in ivpu_ms_cleanup() by preventing runtime resume after
-file_priv->ms_lock is acquired.
+soc_dev_attr->revision could be NULL, thus,
+a pointer check is added to prevent potential NULL pointer dereference.
+This is similar to the fix in commit 3027e7b15b02
+("ice: Fix some null pointer dereference issues in ice_ptp.c").
 
-During a failure in runtime resume, a cold boot is executed, which
-calls ivpu_ms_cleanup_all(). This function calls ivpu_ms_cleanup()
-that acquires file_priv->ms_lock and causes the deadlock.
+This issue is found by our static analysis tool.
 
-Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250325114306.3740022-2-maciej.falkowski@linux.intel.com
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250212213518.69432-1-chenyuan0y@gmail.com
+Fixes: 3253b7b7cd44 ("soc: samsung: Add exynos chipid driver support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_ms.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/soc/samsung/exynos-chipid.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/accel/ivpu/ivpu_ms.c
-+++ b/drivers/accel/ivpu/ivpu_ms.c
-@@ -4,6 +4,7 @@
-  */
+--- a/drivers/soc/samsung/exynos-chipid.c
++++ b/drivers/soc/samsung/exynos-chipid.c
+@@ -134,6 +134,8 @@ static int exynos_chipid_probe(struct pl
  
- #include <drm/drm_file.h>
-+#include <linux/pm_runtime.h>
- 
- #include "ivpu_drv.h"
- #include "ivpu_gem.h"
-@@ -299,6 +300,9 @@ unlock:
- void ivpu_ms_cleanup(struct ivpu_file_priv *file_priv)
- {
- 	struct ivpu_ms_instance *ms, *tmp;
-+	struct ivpu_device *vdev = file_priv->vdev;
-+
-+	pm_runtime_get_sync(vdev->drm.dev);
- 
- 	mutex_lock(&file_priv->ms_lock);
- 
-@@ -311,6 +315,8 @@ void ivpu_ms_cleanup(struct ivpu_file_pr
- 		free_instance(file_priv, ms);
- 
- 	mutex_unlock(&file_priv->ms_lock);
-+
-+	pm_runtime_put_autosuspend(vdev->drm.dev);
- }
- 
- void ivpu_ms_cleanup_all(struct ivpu_device *vdev)
+ 	soc_dev_attr->revision = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 						"%x", soc_info.revision);
++	if (!soc_dev_attr->revision)
++		return -ENOMEM;
+ 	soc_dev_attr->soc_id = product_id_to_soc_id(soc_info.product_id);
+ 	if (!soc_dev_attr->soc_id) {
+ 		pr_err("Unknown SoC\n");
 
 
