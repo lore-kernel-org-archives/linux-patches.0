@@ -1,64 +1,72 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE08D946F
-	for <patches@lists.linux.dev>; Wed, 16 Apr 2025 22:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1C9EAE7
+	for <patches@lists.linux.dev>; Thu, 17 Apr 2025 03:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744841115; cv=none; b=NFvuSpOvYjHrjMddSZItF5DuGFeDbQJP0HwTDsbzRyIkh9ypQ+gTBREcw2FQmq7Y1LhD9jzPGw4I8+Jx4PBon5NW3iZ3Z7s/eIV7t8qaYkGq0OOFn+70KFxFYqeFym7VvQfsGlRqgeuGbOx/BuOa3kaHyuq2x9tAd/3+LMVC+MU=
+	t=1744859438; cv=none; b=d+cfbaQE94Nhv4a4LrnyQM1Q1zKtNREYxDsSh1kqmYin+RAMMyoE3gesjskRBstn4i7g6v2f8DAP4Q3N8xu+w15voxCU9V2cO29b3owYVMPqFyHHRWwNMPATvw8W0Q8fx3gjmT4V6MelE2OivYFFCfIC81TSjARVdD+MeiWXR08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744841115; c=relaxed/simple;
-	bh=qCD1vFXSI3zBOXBAJ1SOeNHV87e7EHRpPPWphDyj5AM=;
+	s=arc-20240116; t=1744859438; c=relaxed/simple;
+	bh=o9y4FA3aNLZbyWWDp7aV1XEs6zzKYLSHjLT7Bv4PQUU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D7bdJKxo7LGF4T4upPcoV6Aq4+r1ji5lz4+G68V4LCON4SlwYYzHd4vE+KF2mEzkgpJD4qRtSlC3v7ye0OqsXIDwrjbF8/Fq+onTtgQGyPOpSHioUJSFVngf7p31HAxWp3c+zdk601uPfNxaRW2miCx0Zg7y8UMZVUfZqQ/YTEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GHFOX2nY; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=q5DEYHBuJctF9KwtTueIeOGyo8RVkcGnvD8HoUgy5QWOI3ziRLxZeJViNC67pSJZH9dEeYly0EJiHEpddpZikdAddXK3kP0xn0uUEGc26YvsgOm2atqLeiIHSvzPbeCrXc555ZPxsHckBQ7r1JADj4xuxZ8WKTBmb1VOhODOsgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UTfdMA9g; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHFOX2nY"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3913d129c1aso105194f8f.0
-        for <patches@lists.linux.dev>; Wed, 16 Apr 2025 15:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744841105; x=1745445905; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oHayVKFFsJNmr2sjJkndFwEOAkhvbxML2QrMhdj9R5Y=;
-        b=GHFOX2nYJHIFGlYgfAb/vF6dtkews205121vkKSKK5/xU62I76hDj5V5ytixAX/F4p
-         mepZsjgIbdijLJvhYHoaXIOrOj4URRPvvxFktnh9Dizt6Cpxnlc7ETlPQCh8+tthVWlJ
-         cuut5dBJoCeD+Qfl3QnOyTTBgvTdNb+9B3U6a/wJfyWdRT3s1JMPheNUFI6cUpWYSN8R
-         fDIWKFLxQOwhBmQy1dWGapB1SFB5QFv1EAmAq02mPicRV1TxESMGmNRfKkd/713U0sw7
-         dtrr5s6Di1yt2h3x11c9+h9INA3Hl0zi1n1HYSH6UgK1Ly/uZsdfq1hbKey0C6iyh1mW
-         +oiw==
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UTfdMA9g"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53GMCWZC007028
+	for <patches@lists.linux.dev>; Thu, 17 Apr 2025 03:10:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	B06cmnmKQ/e4lBuzsfgMOX3tkGNEqZOKRqnJxUEVdDQ=; b=UTfdMA9gYYxNVvnp
+	j+VtBxs1trH5eaLlmwBM+bUo93KQ+UuA2hvlz94sf4jKlYyDxg7Mu0C/P2JBe/8w
+	XfLrm7tYJ5PAqdHuOtJ7Jse5DVij6Bpe0/ag/G+pCs6rtQw31QP87ZXF3hPpHSkw
+	fd3CQ0a0qAXmKIiP9Jo/XlSskr1e61bkY4NdNGuvj/Z2YpUuOjAPn+v/cKKPsHBM
+	RozflIWv9DAeH3sITiZf7oGOjnuxe/x/1OC9HyS+VlEmc/kThbc6teX+R1QN8/xH
+	fy5ND06gNXH1mOUZPbbPgJb7ShL/cfO0YuLTay/cE2eOhKsXDH+pnyxNcwDlAYpB
+	qLah4w==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgjndxe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <patches@lists.linux.dev>; Thu, 17 Apr 2025 03:10:35 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-73c09e99069so373000b3a.0
+        for <patches@lists.linux.dev>; Wed, 16 Apr 2025 20:10:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744841105; x=1745445905;
+        d=1e100.net; s=20230601; t=1744859434; x=1745464234;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oHayVKFFsJNmr2sjJkndFwEOAkhvbxML2QrMhdj9R5Y=;
-        b=QVQ0J/xJNDQnuSAF9rVTFYOo7kg6VuEMOdLW7bmsSPNuIi3E2lWyBG3Derl5hbhnVz
-         pBfcR/1N/t0S2YcJnmhXsJyqgrfVA3f2loYe033JTYxbH65jMRH6Tj7CWkTG43RJmjuW
-         MectfnRurzpheKRXlerS/3p5N2tw2I9ILdOLb0ekRUwAjiEApaGlIoo1Q2+ARyaBHpjM
-         XgD2CjPIXpC99VNtFYFT7jEv24yDxLNVg0sDctKdWQbNs4xrBKU5/OqEr7MzkeGara/4
-         pLVud9OSus2tx1g4WwJCYS15deLmuumzP2aPfInwSSxyg0FjJjqOMzqiZGEZ1JYV52nd
-         Wa5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWWSph9SyRjJFGuQYTbcvoGz0ccHXXjbT55lRjsOsLyxT65wpGoUZAnw0CAEnxELE6B+RtoE0Eg@lists.linux.dev
-X-Gm-Message-State: AOJu0YwgjChm3c5EJqxOohln+UntWM9pzu6IOb4zh7VmPk6OjEhrQWPH
-	i9Glf+OlbaRbUS/YVzd6NEaPwhunQean8aADYYgu8eo7JBYn235E
-X-Gm-Gg: ASbGncvQundAeaDVfqD6T7ZmErbzsukB1Mk92Fw4iZC8rEX447qXCNz/cNbnpy6QEWl
-	WJ8DYvyVFlyS/q4/rjJ7Vtd5LhpnKYToDNjibCLpYM8NNsQruu+VuBSTQhk3FRiuioI3Pl3Uxhn
-	atBn1nz4FNVX4SSdcst2w0TAH2i1q4lhhbNMnIzf9e3+Y1952GRykLvg+aTCVulGXs2gAEoFtc/
-	9A/eZLbOADzqTjv27uQMr3a2kae59MiJM0CEuWVpyChiO2zBMc+tYCF9XVpHisgqsOtMhWRlbXL
-	eubAnybxjoR1YgavBV2ZxWMsxJlBCe3zvFgZP7Amrz/yMnNw9Y/0sw==
-X-Google-Smtp-Source: AGHT+IGC46S4S5h4Q5ailbC5feqlplYAzWogcdOjZfAGKxveTGmXYrJirUpLbhifwMOyo43pOFOhPw==
-X-Received: by 2002:a05:6000:2509:b0:38d:ba8e:7327 with SMTP id ffacd0b85a97d-39eea37a7b1mr334295f8f.8.1744841105179;
-        Wed, 16 Apr 2025 15:05:05 -0700 (PDT)
-Received: from ?IPV6:2001:871:22a:99c5::1ad1? ([2001:871:22a:99c5::1ad1])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf43ce3bsm18546012f8f.66.2025.04.16.15.05.02
+        bh=B06cmnmKQ/e4lBuzsfgMOX3tkGNEqZOKRqnJxUEVdDQ=;
+        b=cH7gdNp5bBhPx6kdxt7iqTQalpnAa3KLdA3KuOkmVLEnlc3QDHiDGVq91HSwzexmL1
+         ot5yzjHSIQ2skN9hxoHsNOnjMa0mg6/tw7kQ46hJypng3JuksDSaVAnKW487x+j7jc5i
+         Dlsk9Ewk0ijgb1+VnNJf7zodxP19rqj/ovgFoabQPTOq661G+lldigXG6l+ybPstwyPg
+         pDjJGBwebFsgpOACfex2qeCMMYdSPcBW/68SUXZjT0plJyzZZZEcu7tzDX2wrjSsAvH/
+         fRW61fDh7NbIING/7e5QREVrPo+dES9R0PLrs+HJANOZ6AO+ZWasOkI1RCbxeDyKYEK5
+         TkyQ==
+X-Gm-Message-State: AOJu0YyK6auTfhB9fHl6rZ8tCwvQMWoSyJugjkczm0NKNvf1YxZ58itD
+	kilHiBnsmiOBUjQYwlcbgeUK0D+qyGyi0fOdyJMXZIqP+zFg5m7cdah270QDjdtfh2a10Rqs1Zh
+	OPbwQKjCSVfwZQHjmDTEJuyR5MPdYiIpnHFhGhQh8tEUnopu10wOP0Ftd
+X-Gm-Gg: ASbGncvdqVhlvlMz5jlSsgC24+LfGqtJd458l6lzyX50IomgzwOMNb5WVMdLVGwnHw5
+	ZvgcxGP8rOdaAWgMaGfAHzETznWUirm/ZtM7gY0KURFG93XB80Fa7/iXHmAzAVrK5HLmOsmrhj+
+	9FlCUO4HU5ghGPBIZg3XCx0AAr9qgHIDwK9+ZdB1Vr/nOYT6yLpPVJdofBFgBff/t+re0+1A1kw
+	DkmLpfQ84kb+ckYei/tEjFLCZhd+mdDnLh4nZUXZ2uG+Uw6euuAIyqd1x+hkBvl1kzZy6Ifrpiw
+	VSzPnR9OwSWVtzNawlnYt55Am7l7p0xtcIOfCMU8h+Qd4apJw3KbpBNcuoM2USYbCTjPzl0yyeM
+	=
+X-Received: by 2002:a05:6a00:aa8d:b0:736:5dc6:a14f with SMTP id d2e1a72fcca58-73c267f5570mr6280116b3a.23.1744859434522;
+        Wed, 16 Apr 2025 20:10:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+DXP8JMSvGrHZjJsmoeGenB3qJ6DAEmao0itPYYQeugkAmnDao/XushMt4kTACYRmrh9dMw==
+X-Received: by 2002:a05:6a00:aa8d:b0:736:5dc6:a14f with SMTP id d2e1a72fcca58-73c267f5570mr6280079b3a.23.1744859434064;
+        Wed, 16 Apr 2025 20:10:34 -0700 (PDT)
+Received: from [10.133.33.156] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd230ea65sm11240920b3a.154.2025.04.16.20.10.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 15:05:04 -0700 (PDT)
-Message-ID: <f801975c-a796-417c-a7b2-be493b32068f@gmail.com>
-Date: Thu, 17 Apr 2025 00:05:01 +0200
+        Wed, 16 Apr 2025 20:10:33 -0700 (PDT)
+Message-ID: <bb3248f1-3a7d-4a60-8e3a-68c0595ea50a@oss.qualcomm.com>
+Date: Thu, 17 Apr 2025 11:10:30 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,36 +74,71 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/panic: use `///` for private items too
-To: Miguel Ojeda <ojeda@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Alex Gaynor <alex.gaynor@gmail.com>, Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20250416122106.2554208-1-ojeda@kernel.org>
-Content-Language: en-US, de-DE
-From: Christian Schrefl <chrisi.schrefl@gmail.com>
-In-Reply-To: <20250416122106.2554208-1-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 6.14 084/731] wifi: ath11k: update channel list in reg
+ notifier instead reg worker
+To: Jiri Slaby <jirislaby@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Aditya Kumar Singh <quic_adisi@quicinc.com>,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+        Sasha Levin
+ <sashal@kernel.org>, quic_bqiang@quicinc.com
+References: <20250408104914.247897328@linuxfoundation.org>
+ <20250408104916.224926328@linuxfoundation.org>
+ <5cd9db3f-4abf-4b66-b401-633508e905ac@kernel.org>
+ <49b98882-6a69-48b8-af0c-01f78373d0ef@quicinc.com>
+ <4c5f9d38-ae5d-4599-bd9d-785f6eff48f9@oss.qualcomm.com>
+ <ff6d7143-33e3-4df5-ada2-df8c99d1993d@kernel.org>
+Content-Language: en-US
+From: Kang Yang <kang.yang@oss.qualcomm.com>
+In-Reply-To: <ff6d7143-33e3-4df5-ada2-df8c99d1993d@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: bCECExzkpqAwI25iVVpr_8K2M8HiAOT2
+X-Proofpoint-ORIG-GUID: bCECExzkpqAwI25iVVpr_8K2M8HiAOT2
+X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=6800712c cx=c_pps a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=71oygjJcY_BwH7B_oqQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_01,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170023
 
-On 16.04.25 2:21 PM, Miguel Ojeda wrote:
-> `///` should still be used for private items [1]. Some of the items in
-> this file do so already, so do it for a few other clear candidates in
-> the file.
-> 
-> Link: https://lore.kernel.org/rust-for-linux/20250416112454.2503872-1-ojeda@kernel.org/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> Not sure if you would consider it a fix, but please feel free to add Fixes: etc.
-> if so. Thanks!
-> 
 
-Reviewed-by: Christian Schrefl <chrisi.schrefl@gmail.com>
+On 4/16/2025 4:03 PM, Jiri Slaby wrote:
+> On 16. 04. 25, 9:31, Kang Yang wrote:
+>>>> Ah, what about:
+>>>> commit 02aae8e2f957adc1b15b6b8055316f8a154ac3f5
+>>>> Author: Wen Gong <quic_wgong@quicinc.com>
+>>>> Date:   Fri Jan 17 14:17:37 2025 +0800
+>>>>
+>>>>      wifi: ath11k: update channel list in worker when wait flag is set
+>>>>
+>>>> ?
+>>>
+>>>
+>>> Yes, please add this patch. It will minimize the occupation time of 
+>>> rtnl_lock.
+>>>
+>>> You can retry and check if this warning will show again.
+>>>
+>>>
+>>
+>> Hi, Jiri, Greg:
+>>
+>>      Have you added this patch and verified it?
+>
+> Yes, it works for me for a couple of days already.
+
+
+Got it. So do you know when they will backport this patch into 6.14?
+
+Do we need to do something?
+
+
+
+
