@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047601E25E1;
-	Thu, 17 Apr 2025 18:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A4578F20;
+	Thu, 17 Apr 2025 18:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912902; cv=none; b=MAYTVa/h8CQZbV6FSVZ8Je10j4hkdk+50vUMiAljVIKbRuxdL7rCHwoHQ5Y2OTyljs1vIY3+GYyHH9GLmbcX1wMb06vTnu0JOV1Kk0v4yZmARlpHBDmPK40odkL6ZIfPId+cq6+6gYIvpyekAkw3MF+gLCDWfiHj9NUFV42GSDw=
+	t=1744912905; cv=none; b=AHesLMcJpw9ik+DUJI116CyiI0mYcfIEQUDLk4QAPseJnrHCbkwJ07f5Y1+/afxPHFGKgCRNql6JudstEKA6TTcuCAKWLBUw+lTwQ1JyVljzI+P1n3RTjJhi+rFea3JtVz5yiOoJuRRX9qGz+AdVTDFxfGWHRm2wFOoBdZ3CEI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912902; c=relaxed/simple;
-	bh=rPzFcXGxWtNF33LNRHmjFnHf/phpyFt/r3dWH3Mrnns=;
+	s=arc-20240116; t=1744912905; c=relaxed/simple;
+	bh=tyJKMqncWordUoOFqcync/UFJB6wUzLJj23y1Q6f2bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY/HuT5arUqMgf9c6dH926VOlD4nYmIoUa7TInyO+KtsbiU6ilOmZkn74f7DLCm1qtYEyBGuP/dB/7RCMX0H+zM1UBvFoeIPph5byVTsjEQkVFbm/vzX6F2wn9PaY0OJ7GLeOAvJ8FK+pBRJX4ridgA746gP8YhiqarHOv0QZ08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUiyfOcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pN3Z1tuziJkdYtkz/PvU5G8nA2/qsHhfuV37Geb0PsPJzhgnCjnnfUMkvT/YogmFYUQmewF2kI7ouT97eTZt0YYVkPqiV77otXGeSTfE1kbl8mz8k8bt9KS1g/dTeouAgMTcwnHGVa3XZLdv68F+QTZmNBd4bRQ3CvdnIa5c7NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTTznn3k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUiyfOcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBE1C4CEE4;
-	Thu, 17 Apr 2025 18:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTTznn3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54448C4CEE4;
+	Thu, 17 Apr 2025 18:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912901;
-	bh=rPzFcXGxWtNF33LNRHmjFnHf/phpyFt/r3dWH3Mrnns=;
+	s=korg; t=1744912904;
+	bh=tyJKMqncWordUoOFqcync/UFJB6wUzLJj23y1Q6f2bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUiyfOccatYo8Y64llQDSQGDLbdPH8b0aV+J6sm7JDJt+L71meYCs0VxYbPGzbLey
-	 goXaMXw9RvZOm7xucd3DWuQVZMrH4Y4xCJkES7frdXSKPn/1eMrw9wUqXbZca70p9E
-	 3vroMtdYjiISMcFbNK22LXjmuWDgRoLhIOst8mx8=
+	b=DTTznn3kwDq+fkA5qazgZy1XbKFNQrfT0mpfm6i05dsAubxS6ALY7x6h+/0hRJkx1
+	 HlE5v+NGJLyJTWfmHt/xSY+WLNYWZvZ3UomDI6e0XNc3JFf7qg/8zXwkbvAFYTaQ+s
+	 m3s1ok7fheMwrsnCm/FM8Zkj8HOFQqFFuOxqilF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Robert Foss <rfoss@kernel.org>,
+	syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 161/449] drm/bridge: panel: forbid initializing a panel with unknown connector type
-Date: Thu, 17 Apr 2025 19:47:29 +0200
-Message-ID: <20250417175124.468222144@linuxfoundation.org>
+Subject: [PATCH 6.14 134/449] net: vlan: dont propagate flags on open
+Date: Thu, 17 Apr 2025 19:47:02 +0200
+Message-ID: <20250417175123.359424960@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,54 +53,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit b296955b3a740ecc8b3b08e34fd64f1ceabb8fb4 ]
+[ Upstream commit 27b918007d96402aba10ed52a6af8015230f1793 ]
 
-Having an DRM_MODE_CONNECTOR_Unknown connector type is considered bad, and
-drm_panel_bridge_add_typed() and derivatives are deprecated for this.
+With the device instance lock, there is now a possibility of a deadlock:
 
-drm_panel_init() won't prevent initializing a panel with a
-DRM_MODE_CONNECTOR_Unknown connector type. Luckily there are no in-tree
-users doing it, so take this as an opportinuty to document a valid
-connector type must be passed.
+[    1.211455] ============================================
+[    1.211571] WARNING: possible recursive locking detected
+[    1.211687] 6.14.0-rc5-01215-g032756b4ca7a-dirty #5 Not tainted
+[    1.211823] --------------------------------------------
+[    1.211936] ip/184 is trying to acquire lock:
+[    1.212032] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_set_allmulti+0x4e/0xb0
+[    1.212207]
+[    1.212207] but task is already holding lock:
+[    1.212332] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
+[    1.212487]
+[    1.212487] other info that might help us debug this:
+[    1.212626]  Possible unsafe locking scenario:
+[    1.212626]
+[    1.212751]        CPU0
+[    1.212815]        ----
+[    1.212871]   lock(&dev->lock);
+[    1.212944]   lock(&dev->lock);
+[    1.213016]
+[    1.213016]  *** DEADLOCK ***
+[    1.213016]
+[    1.213143]  May be due to missing lock nesting notation
+[    1.213143]
+[    1.213294] 3 locks held by ip/184:
+[    1.213371]  #0: ffffffff838b53e0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x1b/0xa0
+[    1.213543]  #1: ffffffff84e5fc70 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x37/0xa0
+[    1.213727]  #2: ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
+[    1.213895]
+[    1.213895] stack backtrace:
+[    1.213991] CPU: 0 UID: 0 PID: 184 Comm: ip Not tainted 6.14.0-rc5-01215-g032756b4ca7a-dirty #5
+[    1.213993] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+[    1.213994] Call Trace:
+[    1.213995]  <TASK>
+[    1.213996]  dump_stack_lvl+0x8e/0xd0
+[    1.214000]  print_deadlock_bug+0x28b/0x2a0
+[    1.214020]  lock_acquire+0xea/0x2a0
+[    1.214027]  __mutex_lock+0xbf/0xd40
+[    1.214038]  dev_set_allmulti+0x4e/0xb0 # real_dev->flags & IFF_ALLMULTI
+[    1.214040]  vlan_dev_open+0xa5/0x170 # ndo_open on vlandev
+[    1.214042]  __dev_open+0x145/0x270
+[    1.214046]  __dev_change_flags+0xb0/0x1e0
+[    1.214051]  netif_change_flags+0x22/0x60 # IFF_UP vlandev
+[    1.214053]  dev_change_flags+0x61/0xb0 # for each device in group from dev->vlan_info
+[    1.214055]  vlan_device_event+0x766/0x7c0 # on netdevsim0
+[    1.214058]  notifier_call_chain+0x78/0x120
+[    1.214062]  netif_open+0x6d/0x90
+[    1.214064]  dev_open+0x5b/0xb0 # locks netdevsim0
+[    1.214066]  bond_enslave+0x64c/0x1230
+[    1.214075]  do_set_master+0x175/0x1e0 # on netdevsim0
+[    1.214077]  do_setlink+0x516/0x13b0
+[    1.214094]  rtnl_newlink+0xaba/0xb80
+[    1.214132]  rtnetlink_rcv_msg+0x440/0x490
+[    1.214144]  netlink_rcv_skb+0xeb/0x120
+[    1.214150]  netlink_unicast+0x1f9/0x320
+[    1.214153]  netlink_sendmsg+0x346/0x3f0
+[    1.214157]  __sock_sendmsg+0x86/0xb0
+[    1.214160]  ____sys_sendmsg+0x1c8/0x220
+[    1.214164]  ___sys_sendmsg+0x28f/0x2d0
+[    1.214179]  __x64_sys_sendmsg+0xef/0x140
+[    1.214184]  do_syscall_64+0xec/0x1d0
+[    1.214190]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    1.214191] RIP: 0033:0x7f2d1b4a7e56
 
-Returning an error if this rule is violated is not possible because
-drm_panel_init() is a void function. Add at least a warning to make any
-violations noticeable, especially to non-upstream drivers.
+Device setup:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-5-88ca5827d7af@bootlin.com
+     netdevsim0 (down)
+     ^        ^
+  bond        netdevsim1.100@netdevsim1 allmulticast=on (down)
+
+When we enslave the lower device (netdevsim0) which has a vlan, we
+propagate vlan's allmuti/promisc flags during ndo_open. This causes
+(re)locking on of the real_dev.
+
+Propagate allmulti/promisc on flags change, not on the open. There
+is a slight semantics change that vlans that are down now propagate
+the flags, but this seems unlikely to result in the real issues.
+
+Reproducer:
+
+  echo 0 1 > /sys/bus/netdevsim/new_device
+
+  dev_path=$(ls -d /sys/bus/netdevsim/devices/netdevsim0/net/*)
+  dev=$(echo $dev_path | rev | cut -d/ -f1 | rev)
+
+  ip link set dev $dev name netdevsim0
+  ip link set dev netdevsim0 up
+
+  ip link add link netdevsim0 name netdevsim0.100 type vlan id 100
+  ip link set dev netdevsim0.100 allmulticast on down
+  ip link add name bond1 type bond mode 802.3ad
+  ip link set dev netdevsim0 down
+  ip link set dev netdevsim0 master bond1
+  ip link set dev bond1 up
+  ip link show
+
+Reported-by: syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/Z9CfXjLMKn6VLG5d@mini-arch/T/#m15ba130f53227c883e79fb969687d69d670337a0
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250313100657.2287455-1-sdf@fomichev.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/8021q/vlan_dev.c | 31 ++++---------------------------
+ 1 file changed, 4 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index 9940e96d35e30..c627e42a7ce70 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -50,7 +50,7 @@ static LIST_HEAD(panel_list);
-  * @dev: parent device of the panel
-  * @funcs: panel operations
-  * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
-- *	the panel interface
-+ *	the panel interface (must NOT be DRM_MODE_CONNECTOR_Unknown)
-  *
-  * Initialize the panel structure for subsequent registration with
-  * drm_panel_add().
-@@ -58,6 +58,9 @@ static LIST_HEAD(panel_list);
- void drm_panel_init(struct drm_panel *panel, struct device *dev,
- 		    const struct drm_panel_funcs *funcs, int connector_type)
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index 91d134961357c..ee7186e4d353b 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -273,17 +273,6 @@ static int vlan_dev_open(struct net_device *dev)
+ 			goto out;
+ 	}
+ 
+-	if (dev->flags & IFF_ALLMULTI) {
+-		err = dev_set_allmulti(real_dev, 1);
+-		if (err < 0)
+-			goto del_unicast;
+-	}
+-	if (dev->flags & IFF_PROMISC) {
+-		err = dev_set_promiscuity(real_dev, 1);
+-		if (err < 0)
+-			goto clear_allmulti;
+-	}
+-
+ 	ether_addr_copy(vlan->real_dev_addr, real_dev->dev_addr);
+ 
+ 	if (vlan->flags & VLAN_FLAG_GVRP)
+@@ -297,12 +286,6 @@ static int vlan_dev_open(struct net_device *dev)
+ 		netif_carrier_on(dev);
+ 	return 0;
+ 
+-clear_allmulti:
+-	if (dev->flags & IFF_ALLMULTI)
+-		dev_set_allmulti(real_dev, -1);
+-del_unicast:
+-	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
+-		dev_uc_del(real_dev, dev->dev_addr);
+ out:
+ 	netif_carrier_off(dev);
+ 	return err;
+@@ -315,10 +298,6 @@ static int vlan_dev_stop(struct net_device *dev)
+ 
+ 	dev_mc_unsync(real_dev, dev);
+ 	dev_uc_unsync(real_dev, dev);
+-	if (dev->flags & IFF_ALLMULTI)
+-		dev_set_allmulti(real_dev, -1);
+-	if (dev->flags & IFF_PROMISC)
+-		dev_set_promiscuity(real_dev, -1);
+ 
+ 	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
+ 		dev_uc_del(real_dev, dev->dev_addr);
+@@ -490,12 +469,10 @@ static void vlan_dev_change_rx_flags(struct net_device *dev, int change)
  {
-+	if (connector_type == DRM_MODE_CONNECTOR_Unknown)
-+		DRM_WARN("%s: %s: a valid connector type is required!\n", __func__, dev_name(dev));
-+
- 	INIT_LIST_HEAD(&panel->list);
- 	INIT_LIST_HEAD(&panel->followers);
- 	mutex_init(&panel->follower_lock);
+ 	struct net_device *real_dev = vlan_dev_priv(dev)->real_dev;
+ 
+-	if (dev->flags & IFF_UP) {
+-		if (change & IFF_ALLMULTI)
+-			dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
+-		if (change & IFF_PROMISC)
+-			dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
+-	}
++	if (change & IFF_ALLMULTI)
++		dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
++	if (change & IFF_PROMISC)
++		dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
+ }
+ 
+ static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
 -- 
 2.39.5
 
