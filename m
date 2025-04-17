@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6035125C6FF;
-	Thu, 17 Apr 2025 18:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB75256C9B;
+	Thu, 17 Apr 2025 18:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916204; cv=none; b=oYoo9iVG1f5kHncr719aK9afbp7D2nneC9rzek0H7q6C7sJWCvodf5vB3b0ZrfI6bFpCpDNdtliuOCL1EBbkp0HjwgCY7IFHl24i12lPvcQN1JtuzuznK9ZvNFcR4/DDiYMKVv6HkkwRNYWdYWIZNmfdVWORVMfzjcpQQTzKXC0=
+	t=1744916207; cv=none; b=AxHoUcqh8woYI4fWboFdJNWy4YJtJqX1LkJUh+Rqu32Kf0bv5egv232sMWaFJhznLgYUZAf39JY/08JEJNRc8uaRCKyvpDmTb7Pz3T4IjJeYq6ltLLInA39vBQlcxSux+s3uDUD3YHMfxb7N9tP/U9EOojgfzcKl+P3gxZH/COg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916204; c=relaxed/simple;
-	bh=6HOlBu10PtM2ppdhmwVaaZBLn9nOdoVp50GWp+iMj+c=;
+	s=arc-20240116; t=1744916207; c=relaxed/simple;
+	bh=AwnjlmJ7zULTLVeoPHJg+00t28iEblvQBIGmrMkys+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iNUH/7NepSyTimJD5/17y1khSZjvK/71iQfj5eAh6b3L35PPfg19LEDjI6P7VZRqRWfH3QOZLJc/STgXg9J3YzU18PVRe1VUL2XWvN9NsZeASVLbIpayPkMbQEPTRSrTz5aAN+L3AxOyRQRiZ9wGMyEkOWnp3EcbBvwJMgPOlVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbIvi6iE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmtKObhtTFiEehEmE//5LY2036K+S6/EUvUeUKgJI7bTTzYr0PlxezMdo1lNUJvPzOZj7qcNlid8GauhbFwoRrTYGg5FzchMQ8jwCLdesnMzu6CTjQ8EgILe3Fy8O4xIYtgm4O+z62sPrYjryOBI0nWUWfTrjpC1ZgNKJuooSC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EplMnYqc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbIvi6iE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5353C4CEE4;
-	Thu, 17 Apr 2025 18:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EplMnYqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2E6C4CEE7;
+	Thu, 17 Apr 2025 18:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916204;
-	bh=6HOlBu10PtM2ppdhmwVaaZBLn9nOdoVp50GWp+iMj+c=;
+	s=korg; t=1744916207;
+	bh=AwnjlmJ7zULTLVeoPHJg+00t28iEblvQBIGmrMkys+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbIvi6iEfqSLu0/xIAdD9hjdD1QM3z6MDBcfaYgYERAL3aN3Efa+cRO5cBVpzo0a0
-	 z+4Fumvn7ELrPEjbzeAs5JoRJXkNbp/Q6ckHEn9o9jVDNw58TnjKYXVRSz8IdxFagc
-	 Ab1yiLVTOgR33jd0evsp8Kq9j3zEBtiv+CIByxgg=
+	b=EplMnYqcf7zsJ9CNMvu7D8/QlMmXBscIJpF1Y9XRb1SecgRIY823nDkjmQXG942Vw
+	 NOXdPI9aPfq3A06+eyLYjrAK7iaJHtFSdzjm/3oA0DPNEG7t16SvmRipo4EkLSvyVG
+	 ogwfoV4zTdv8kjRYfx7IlItonKIRDi0+nrkB0V+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Tahera Fahimi <fahimitahera@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.12 350/393] landlock: Always allow signals between threads of the same process
-Date: Thu, 17 Apr 2025 19:52:39 +0200
-Message-ID: <20250417175121.676075657@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	Cong Liu <liucong2@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 377/393] selftests: mptcp: fix incorrect fd checks in main_loop
+Date: Thu, 17 Apr 2025 19:53:06 +0200
+Message-ID: <20250417175122.766417184@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -48,197 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Cong Liu <liucong2@kylinos.cn>
 
-commit 18eb75f3af40be1f0fc2025d4ff821711222a2fd upstream.
+commit 7335d4ac812917c16e04958775826d12d481c92d upstream.
 
-Because Linux credentials are managed per thread, user space relies on
-some hack to synchronize credential update across threads from the same
-process.  This is required by the Native POSIX Threads Library and
-implemented by set*id(2) wrappers and libcap(3) to use tgkill(2) to
-synchronize threads.  See nptl(7) and libpsx(3).  Furthermore, some
-runtimes like Go do not enable developers to have control over threads
-[1].
+Fix a bug where the code was checking the wrong file descriptors
+when opening the input files. The code was checking 'fd' instead
+of 'fd_in', which could lead to incorrect error handling.
 
-To avoid potential issues, and because threads are not security
-boundaries, let's relax the Landlock (optional) signal scoping to always
-allow signals sent between threads of the same process.  This exception
-is similar to the __ptrace_may_access() one.
-
-hook_file_set_fowner() now checks if the target task is part of the same
-process as the caller.  If this is the case, then the related signal
-triggered by the socket will always be allowed.
-
-Scoping of abstract UNIX sockets is not changed because kernel objects
-(e.g. sockets) should be tied to their creator's domain at creation
-time.
-
-Note that creating one Landlock domain per thread puts each of these
-threads (and their future children) in their own scope, which is
-probably not what users expect, especially in Go where we do not control
-threads.  However, being able to drop permissions on all threads should
-not be restricted by signal scoping.  We are working on a way to make it
-possible to atomically restrict all threads of a process with the same
-domain [2].
-
-Add erratum for signal scoping.
-
-Closes: https://github.com/landlock-lsm/go-landlock/issues/36
-Fixes: 54a6e6bbf3be ("landlock: Add signal scoping")
-Fixes: c8994965013e ("selftests/landlock: Test signal scoping for threads")
-Depends-on: 26f204380a3c ("fs: Fix file_set_fowner LSM hook inconsistencies")
-Link: https://pkg.go.dev/kernel.org/pub/linux/libs/security/libcap/psx [1]
-Link: https://github.com/landlock-lsm/linux/issues/2 [2]
-Cc: Günther Noack <gnoack@google.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: Serge Hallyn <serge@hallyn.com>
-Cc: Tahera Fahimi <fahimitahera@gmail.com>
+Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
 Cc: stable@vger.kernel.org
-Acked-by: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20250318161443.279194-6-mic@digikod.net
-[mic: Add extra pointer check and RCU guard, and ease backport]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: ca7ae8916043 ("selftests: mptcp: mptfo Initiator/Listener")
+Co-developed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Cong Liu <liucong2@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-2-34161a482a7f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/errata/abi-6.h                      |   19 ++++++++
- security/landlock/fs.c                                |   39 +++++++++++++++---
- security/landlock/task.c                              |   12 +++++
- tools/testing/selftests/landlock/scoped_signal_test.c |    2 
- 4 files changed, 65 insertions(+), 7 deletions(-)
- create mode 100644 security/landlock/errata/abi-6.h
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- /dev/null
-+++ b/security/landlock/errata/abi-6.h
-@@ -0,0 +1,19 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+/**
-+ * DOC: erratum_2
-+ *
-+ * Erratum 2: Scoped signal handling
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix addresses an issue where signal scoping was overly restrictive,
-+ * preventing sandboxed threads from signaling other threads within the same
-+ * process if they belonged to different domains.  Because threads are not
-+ * security boundaries, user space might assume that any thread within the same
-+ * process can send signals between themselves (see :manpage:`nptl(7)` and
-+ * :manpage:`libpsx(3)`).  Consistent with :manpage:`ptrace(2)` behavior, direct
-+ * interaction between threads of the same process should always be allowed.
-+ * This change ensures that any thread is allowed to send signals to any other
-+ * thread within the same process, regardless of their domain.
-+ */
-+LANDLOCK_ERRATUM(2)
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -27,7 +27,9 @@
- #include <linux/mount.h>
- #include <linux/namei.h>
- #include <linux/path.h>
-+#include <linux/pid.h>
- #include <linux/rcupdate.h>
-+#include <linux/sched/signal.h>
- #include <linux/spinlock.h>
- #include <linux/stat.h>
- #include <linux/types.h>
-@@ -1623,21 +1625,46 @@ static int hook_file_ioctl_compat(struct
- 	return -EACCES;
- }
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1270,7 +1270,7 @@ int main_loop(void)
  
--static void hook_file_set_fowner(struct file *file)
-+/*
-+ * Always allow sending signals between threads of the same process.  This
-+ * ensures consistency with hook_task_kill().
-+ */
-+static bool control_current_fowner(struct fown_struct *const fown)
- {
--	struct landlock_ruleset *new_dom, *prev_dom;
-+	struct task_struct *p;
- 
- 	/*
- 	 * Lock already held by __f_setown(), see commit 26f204380a3c ("fs: Fix
- 	 * file_set_fowner LSM hook inconsistencies").
- 	 */
--	lockdep_assert_held(&file_f_owner(file)->lock);
--	new_dom = landlock_get_current_domain();
--	landlock_get_ruleset(new_dom);
-+	lockdep_assert_held(&fown->lock);
-+
-+	/*
-+	 * Some callers (e.g. fcntl_dirnotify) may not be in an RCU read-side
-+	 * critical section.
-+	 */
-+	guard(rcu)();
-+	p = pid_task(fown->pid, fown->pid_type);
-+	if (!p)
-+		return true;
-+
-+	return !same_thread_group(p, current);
-+}
-+
-+static void hook_file_set_fowner(struct file *file)
-+{
-+	struct landlock_ruleset *prev_dom;
-+	struct landlock_ruleset *new_dom = NULL;
-+
-+	if (control_current_fowner(file_f_owner(file))) {
-+		new_dom = landlock_get_current_domain();
-+		landlock_get_ruleset(new_dom);
-+	}
-+
- 	prev_dom = landlock_file(file)->fown_domain;
- 	landlock_file(file)->fown_domain = new_dom;
- 
--	/* Called in an RCU read-side critical section. */
-+	/* May be called in an RCU read-side critical section. */
- 	landlock_put_ruleset_deferred(prev_dom);
- }
- 
---- a/security/landlock/task.c
-+++ b/security/landlock/task.c
-@@ -13,6 +13,7 @@
- #include <linux/lsm_hooks.h>
- #include <linux/rcupdate.h>
- #include <linux/sched.h>
-+#include <linux/sched/signal.h>
- #include <net/af_unix.h>
- #include <net/sock.h>
- 
-@@ -264,6 +265,17 @@ static int hook_task_kill(struct task_st
- 		/* Dealing with USB IO. */
- 		dom = landlock_cred(cred)->domain;
- 	} else {
-+		/*
-+		 * Always allow sending signals between threads of the same process.
-+		 * This is required for process credential changes by the Native POSIX
-+		 * Threads Library and implemented by the set*id(2) wrappers and
-+		 * libcap(3) with tgkill(2).  See nptl(7) and libpsx(3).
-+		 *
-+		 * This exception is similar to the __ptrace_may_access() one.
-+		 */
-+		if (same_thread_group(p, current))
-+			return 0;
-+
- 		dom = landlock_get_current_domain();
+ 	if (cfg_input && cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
  	}
- 	dom = landlock_get_applicable_domain(dom, signal_scope);
---- a/tools/testing/selftests/landlock/scoped_signal_test.c
-+++ b/tools/testing/selftests/landlock/scoped_signal_test.c
-@@ -281,7 +281,7 @@ TEST(signal_scoping_threads)
- 	/* Restricts the domain after creating the first thread. */
- 	create_scoped_domain(_metadata, LANDLOCK_SCOPE_SIGNAL);
  
--	ASSERT_EQ(EPERM, pthread_kill(no_sandbox_thread, 0));
-+	ASSERT_EQ(0, pthread_kill(no_sandbox_thread, 0));
- 	ASSERT_EQ(1, write(thread_pipe[1], ".", 1));
+@@ -1293,7 +1293,7 @@ again:
  
- 	ASSERT_EQ(0, pthread_create(&scoped_thread, NULL, thread_func, NULL));
+ 	if (cfg_input && !cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
+ 	}
+ 
 
 
