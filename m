@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E2B264600;
-	Thu, 17 Apr 2025 18:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEA52641F6;
+	Thu, 17 Apr 2025 18:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914834; cv=none; b=DH5JqxHLQHL/t3JadtPevvESmOAkpoF/Yb6fOiyXvaOhIGDCWfKDmFqE0Ovo8Xvj1lez2eJ8xQ5qc07cP2uhB5AulMiwWW5/vQAJUhNGQ7jZlLkcw45BXgD5WeXxlYV4LvVi9E80M40NHFS2txSdnWX4CtnvphB1DJHGYhWLmyQ=
+	t=1744914837; cv=none; b=WFrHvhqlDGDN3UPhOZH0HrRhCwNfkERn/dzznq+q3+KoZLRWoOX0N2mvM6YOz3LXIE/KFRzTkkZWPJG0svk2hDP0a/ebAs5FCfABWeW2nwvCsAENLwxEUg7u38dZirzmj+M2cWexQY2dWWegMmSGET4Dk22p7/C2nuTmICqHMNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914834; c=relaxed/simple;
-	bh=lcd4zo8lOK36pCVSw7GMs9dlFzjjhH1NOTIM+tYQ3yM=;
+	s=arc-20240116; t=1744914837; c=relaxed/simple;
+	bh=uWljd9yY2jO1xB9Zb9t8RpTtlDBjeGpyGvYdkCm8w1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIjT5vMLGzS+hE/fIrOJpnrst7oxrrEZ7Ln8BdLajxHxQ8Y/0/RKnkvxPofvf0ZaMbHWdmk/H0JXUQbgFskh/QiX1hby/sdL5W1ZgcFap6bLkr1H+xeM9yatDAQBqTHejJlP6ArCxbH3v/tSRuveVSJl8Z1oQ1DiJqMWwZK1JPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihhbsmaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LfJ5ZB+9FUByCAK/Wg8i0HZxxGSfD+aIj9O/TxjpQL8ifFvatODqtG+jkYBuOmASOgC1Zjy1C95OTakP0fcWkX1+kxCCCoFSaM77LdTXygQx09j053k9hsuFX9FeINyno5ZIuKczzwYiHOlVUJBWD66cvuVGdU09O1Ft79jJM6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ip57VXo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihhbsmaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66AFC4CEE4;
-	Thu, 17 Apr 2025 18:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ip57VXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7549CC4CEE4;
+	Thu, 17 Apr 2025 18:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914834;
-	bh=lcd4zo8lOK36pCVSw7GMs9dlFzjjhH1NOTIM+tYQ3yM=;
+	s=korg; t=1744914836;
+	bh=uWljd9yY2jO1xB9Zb9t8RpTtlDBjeGpyGvYdkCm8w1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ihhbsmaLqHEqO2iVE9SKfTvqQqVv3eDO+sI3QpbMO/BpW6U9Khbqxoen1AmwH01vk
-	 g9XheVgYoi14z19dFrszsr15v0JAqemL74v++RYY55RMdV3P6B6NbhW2QxRLbNuLHp
-	 EJ4HGPEweBxhe8eAw9QXxFJdu97uLxFUbQdrZmJ8=
+	b=2ip57VXo/N2d6Vi3cn1qWroFd96fXYn2I6EwVqA6PkXzBl/Dzujqd2nUXn0ESs1Mv
+	 5/mL5CFGJyYuWuDLxSuRxc0lRuPOAA/BzFAb7K0raIKzJzeMdWI2mdmljZZNaeEdQm
+	 DkaAuH5PkeYcEjviCt0ajS/VwJySjE8kGJC+2NI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.13 307/414] arm64: dts: ti: k3-j784s4-j742s2-main-common: Fix serdes_ln_ctrl reg-masks
-Date: Thu, 17 Apr 2025 19:51:05 +0200
-Message-ID: <20250417175123.783839663@linuxfoundation.org>
+	Trevor Woerner <twoerner@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.13 339/414] thermal/drivers/rockchip: Add missing rk3328 mapping entry
+Date: Thu, 17 Apr 2025 19:51:37 +0200
+Message-ID: <20250417175125.066351217@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,38 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Trevor Woerner <twoerner@gmail.com>
 
-commit 38e7f9092efbbf2a4a67e4410b55b797f8d1e184 upstream.
+commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
 
-Commit under Fixes added the 'idle-states' property for SERDES4 lane muxes
-without defining the corresponding register offsets and masks for it in the
-'mux-reg-masks' property within the 'serdes_ln_ctrl' node.
+The mapping table for the rk3328 is missing the entry for -25C which is
+found in the TRM section 9.5.2 "Temperature-to-code mapping".
 
-Fix this.
+NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
+      4096-<code in table>. Whereas the table in the TRM gives the code
+      "3774" for -25C, the kernel uses 4096-3774=322.
 
-Fixes: 7287d423f138 ("arm64: dts: ti: k3-j784s4-main: Add system controller and SERDES lane mux")
+[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
+  well as through the downstream kernel code, it seems we may have
+  some troubles at our hands.  Let me explain, please.
+
+  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
+  the equation for the output when tsadc_q_sel equals 1 is (4096 -
+  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
+  equation is (1024 - tsadc_q) in that case.
+
+  The downstream kernel code, however, treats the RK3308 and RK3328
+  tables and their values as being the same.  It even mentions 1024 as
+  the "offset" value in a comment block for the rk_tsadcv3_control()
+  function, just like the upstream code does, which is obviously wrong
+  "offset" value when correlated with the table on page 544 of part 1
+  of the RK3308 TRM v1.1.
+
+  With all this in mind, it's obvious that more work is needed to make
+  it clear where's the actual mistake (it could be that the TRM is
+  wrong), which I'll volunteer for as part of the SoC binning project.
+  In the meantime, this patch looks fine as-is to me, by offering
+  what's a clear improvement to the current state of the upstream
+  code"
+
+Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
 Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://lore.kernel.org/r/20250228053850.506028-1-s-vadapalli@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
+Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/thermal/rockchip_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-@@ -84,7 +84,9 @@
- 					<0x10 0x3>, <0x14 0x3>, /* SERDES1 lane0/1 select */
- 					<0x18 0x3>, <0x1c 0x3>, /* SERDES1 lane2/3 select */
- 					<0x20 0x3>, <0x24 0x3>, /* SERDES2 lane0/1 select */
--					<0x28 0x3>, <0x2c 0x3>; /* SERDES2 lane2/3 select */
-+					<0x28 0x3>, <0x2c 0x3>, /* SERDES2 lane2/3 select */
-+					<0x40 0x3>, <0x44 0x3>, /* SERDES4 lane0/1 select */
-+					<0x48 0x3>, <0x4c 0x3>; /* SERDES4 lane2/3 select */
- 			idle-states = <J784S4_SERDES0_LANE0_PCIE1_LANE0>,
- 				      <J784S4_SERDES0_LANE1_PCIE1_LANE1>,
- 				      <J784S4_SERDES0_LANE2_IP3_UNUSED>,
+--- a/drivers/thermal/rockchip_thermal.c
++++ b/drivers/thermal/rockchip_thermal.c
+@@ -386,6 +386,7 @@ static const struct tsadc_table rk3328_c
+ 	{296, -40000},
+ 	{304, -35000},
+ 	{313, -30000},
++	{322, -25000},
+ 	{331, -20000},
+ 	{340, -15000},
+ 	{349, -10000},
 
 
