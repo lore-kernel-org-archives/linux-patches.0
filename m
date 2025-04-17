@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C90018C034;
-	Thu, 17 Apr 2025 18:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FBC18C034;
+	Thu, 17 Apr 2025 18:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914987; cv=none; b=MKlRMRIad9jzWNVUGIh+Aqe8lbaQnQ/CYPQPL1PrHndrU01Oi4y3P2NR1XB9Gum2NG0JC0Jheac79O6SZT56rNuUuc+Pp92be/I1x4BRlLJtYwAGESYahaZtka2qlorzmfTmStPxgn0IcZ+aqG36z/t208vGHgc+zqy5kzA6sgs=
+	t=1744914990; cv=none; b=KeOj/Atc6PSsjK5HZ3Swqg9W6i5uFk0p2yCOI8MHqTS32dK0oiXR63BxFzTABzwBtvDxyh8OzjjiNOkGsPHzZLIJ3QwiFbISKXwjyB4oCTrbct0VdoVY/R15BsT3Od4cCTkcbEFZ+w5TONWXUPgyLZNCIPBv5G4cGn7WcmkiuAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914987; c=relaxed/simple;
-	bh=gOZkvJpGp+vJ0PQAtOFQdYxwQfDAvPPF6u1lh2kdXag=;
+	s=arc-20240116; t=1744914990; c=relaxed/simple;
+	bh=Gy9vpjrhmM17bvs1eiv1tdzXVcND9uGbrbEoZpLi7kA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkaapE7akqYgrze6mjNF0jRqRQ6hX6wurkl+iiSEDw7GLDs53gnkoguPAtS54kXLW7zlhbYBRSKxq+boc8DUJdTn7Axu0XCSx/nn4jgYiPNvT/CudQN1W5tVRhZsAKtM5ieYoPGlVhv6yOTdDOqjo3YegeMNjewdh5k7s46uVPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqa1pJnH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQne29mkJOPq2y5YHFAxQWGVpXilrwEZoGiSZn/rAGsFCk20m0VESBy9EUl7jFa64dF8cjI9nxLwbh1v2hbusl4VIwH2yD1SVv6V7h2j7HtQEMBR0bRNzi8qtXfJFLwQgRkrWHBtdm2cChvLkaCCb2AjRo+UJJ86fQP8gB8k+9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nu1Wh9hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqa1pJnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CB5C4CEE4;
-	Thu, 17 Apr 2025 18:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nu1Wh9hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A034DC4CEE4;
+	Thu, 17 Apr 2025 18:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914987;
-	bh=gOZkvJpGp+vJ0PQAtOFQdYxwQfDAvPPF6u1lh2kdXag=;
+	s=korg; t=1744914990;
+	bh=Gy9vpjrhmM17bvs1eiv1tdzXVcND9uGbrbEoZpLi7kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqa1pJnHeTOAYH9nSSly/1atQOTYKYj8NQUeWPzYs31q81UDPsUiiTc8Isz8TutyW
-	 mfxDD6eN91vzdDikrQV6eOxtk1xwyOLUC6m9jvhQUE03LqO/a1uSmCraHf27fruI8f
-	 hmv8gQveZyOvrPy3HTq1jwSTGnP0ALc5j2AIbXMc=
+	b=nu1Wh9hn/mcweXjDdeddOnTUyaBxRUIRfmK8KElff5u8dKtj1py34kw2evkIemj8s
+	 wst9t2I4kGO6fK7TUc3ZnuMesVdWFqUGbk3JE0cTmT3SubMK56UQZz8AzKzpMifKkI
+	 fkQ98pjM1JXh0hLIVdxD8XXjp6DmWsjihuq0O1ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jens Remus <jremus@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.13 396/414] s390: Fix linker error when -no-pie option is unavailable
-Date: Thu, 17 Apr 2025 19:52:34 +0200
-Message-ID: <20250417175127.413854366@linuxfoundation.org>
+	Jake Hillion <jake@hillion.co.uk>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.13 397/414] sched_ext: create_dsq: Return -EEXIST on duplicate request
+Date: Thu, 17 Apr 2025 19:52:35 +0200
+Message-ID: <20250417175127.452200803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Jake Hillion <jake@hillion.co.uk>
 
-commit 991a20173a1fbafd9fc0df0c7e17bb62d44a4deb upstream.
+commit a8897ed8523d4c9d782e282b18005a3779c92714 upstream.
 
-The kernel build may fail if the linker does not support -no-pie option,
-as it always included in LDFLAGS_vmlinux.
+create_dsq and therefore the scx_bpf_create_dsq kfunc currently silently
+ignore duplicate entries. As a sched_ext scheduler is creating each DSQ
+for a different purpose this is surprising behaviour.
 
-Error log:
-s390-linux-ld: unable to disambiguate: -no-pie (did you mean --no-pie ?)
+Replace rhashtable_insert_fast which ignores duplicates with
+rhashtable_lookup_insert_fast that reports duplicates (though doesn't
+return their value). The rest of the code is structured correctly and
+this now returns -EEXIST.
 
-Although the GNU linker defaults to -no-pie, the ability to explicitly
-specify this option was introduced in binutils 2.36.
+Tested by adding an extra scx_bpf_create_dsq to scx_simple. Previously
+this was ignored, now init fails with a -17 code. Also ran scx_lavd
+which continued to work well.
 
-Hence, fix it by adding -no-pie to LDFLAGS_vmlinux only when it is
-available.
-
-Cc: stable@vger.kernel.org
-Fixes: 00cda11d3b2e ("s390: Compile kernel with -fPIC and link with -no-pie")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503220342.T3fElO9L-lkp@intel.com/
-Suggested-by: Jens Remus <jremus@linux.ibm.com>
-Reviewed-by: Jens Remus <jremus@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Jake Hillion <jake@hillion.co.uk>
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -15,7 +15,7 @@ KBUILD_CFLAGS_MODULE += -fPIC
- KBUILD_AFLAGS	+= -m64
- KBUILD_CFLAGS	+= -m64
- KBUILD_CFLAGS	+= -fPIC
--LDFLAGS_vmlinux	:= -no-pie --emit-relocs --discard-none
-+LDFLAGS_vmlinux	:= $(call ld-option,-no-pie) --emit-relocs --discard-none
- extra_tools	:= relocs
- aflags_dwarf	:= -Wa,-gdwarf-2
- KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4501,8 +4501,8 @@ static struct scx_dispatch_q *create_dsq
+ 
+ 	init_dsq(dsq, dsq_id);
+ 
+-	ret = rhashtable_insert_fast(&dsq_hash, &dsq->hash_node,
+-				     dsq_hash_params);
++	ret = rhashtable_lookup_insert_fast(&dsq_hash, &dsq->hash_node,
++					    dsq_hash_params);
+ 	if (ret) {
+ 		kfree(dsq);
+ 		return ERR_PTR(ret);
 
 
