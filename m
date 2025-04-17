@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB43A2550C2;
-	Thu, 17 Apr 2025 18:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50861DE3A8;
+	Thu, 17 Apr 2025 18:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913870; cv=none; b=jSTHvDY1KuEgs5oNlwktumdXGWkyRG6NAJECJGTLoY5UIViwEmGCuqRVIVbQUrIOfJ/WknsUS5wvrJ59eXhzx40sJ0NPAHKYfOCLVC4m0o31FdxiSWIE3e1vpg4bshfTtSkz9Kx8pqxaoQS8rqtcvIk6m7gEqSdJvuXiE7gZ1Sw=
+	t=1744913873; cv=none; b=ta3sUNdx9B85yG/xXiYlKClZ008jyDOmXfiOFvux+6wJtH+/ablhOpwRDSeIpaIO+yZAQ/4Yh3NUuERoH2cQEQOBYW4iIg5JcO6tRJWFsGT/BxdzvZQOqNQGtvT4smw/5JIFLB5J/J1C+LhJQqxsszpFhHNoXfqQxsrLqXRKx5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913870; c=relaxed/simple;
-	bh=6qzRIwI6tkmYU5o3qZKPJLBGd8Wezso8ThYIvN5GRN8=;
+	s=arc-20240116; t=1744913873; c=relaxed/simple;
+	bh=tcxN/Njlgz0N789H7BuI053ntva65RX/aQRPY2Gjn2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NW5uQI8Wp0KzvUMj1wEP6XRAtCm378YMqEY+7mNbHW69ofaZBVQXn6z08HjMViTvWxus0a2poIYbF4wQn77qe+larx+liOHm28YZ4QDTmI4YBY7w1FSK5+GSL2hLsTBd3TA1/B6bX60TabTcjkUaZhLkz6dr5dnnZyoHgZ7a47s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bj4OZuPh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=diiuFQ4SYqmFuv7UpV8agwy1q6930bL0EaLLWaaYSvqQRt4a5aRqO+4uBrMg8d6wYNBp5U7S3AMKCLq2U0dh0N/8oUdg/yf3les6RF2ZBZKNEwIV0ocJhz3wy0RIfUdLro13Z0tOOQsZbHc1APRGmqPq35mzEMe1gzZ7THMiS/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wv+5gO+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bj4OZuPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3FEC4CEE4;
-	Thu, 17 Apr 2025 18:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wv+5gO+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1D9C4CEE4;
+	Thu, 17 Apr 2025 18:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913870;
-	bh=6qzRIwI6tkmYU5o3qZKPJLBGd8Wezso8ThYIvN5GRN8=;
+	s=korg; t=1744913873;
+	bh=tcxN/Njlgz0N789H7BuI053ntva65RX/aQRPY2Gjn2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bj4OZuPhfNu1burHgJQHNUpjGB0pxa023C3pGa/M1abzXwV8nl2Fp4cs/GAhI/g1y
-	 DR/GjNJg25JNxWLoKShSPSXTUzftzAUmIgB0tZhDwDXRielt3+6plp5MUGGnQVMRcd
-	 FIZfSn/CA0WdVyGdK4lGQsiuX3NQUFltHl7TQ7Bk=
+	b=Wv+5gO+ynFkSGRz8AB3LIZZDvvSHbgKaqi+eNeMPQuKvX26tRkvT8xhCtd27njN9V
+	 5PxRkNFCS31a3S9yZ8V1j+p0TnEKE++C/hI677gtlZ24lXlg9U0Jdw2v37f+Ojxe7O
+	 0zGlywdz7ZRnnoGdCL5GTlbKCKQ/ccUCPBElsr/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 030/414] net_sched: sch_sfq: move the limit validation
-Date: Thu, 17 Apr 2025 19:46:28 +0200
-Message-ID: <20250417175112.626521284@linuxfoundation.org>
+Subject: [PATCH 6.13 031/414] smb: client: fix UAF in decryption with multichannel
+Date: Thu, 17 Apr 2025 19:46:29 +0200
+Message-ID: <20250417175112.667473473@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -53,83 +52,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit b3bf8f63e6179076b57c9de660c9f80b5abefe70 ]
+[ Upstream commit 9502dd5c7029902f4a425bf959917a5a9e7c0e50 ]
 
-It is not sufficient to directly validate the limit on the data that
-the user passes as it can be updated based on how the other parameters
-are changed.
+After commit f7025d861694 ("smb: client: allocate crypto only for
+primary server") and commit b0abcd65ec54 ("smb: client: fix UAF in
+async decryption"), the channels started reusing AEAD TFM from primary
+channel to perform synchronous decryption, but that can't done as
+there could be multiple cifsd threads (one per channel) simultaneously
+accessing it to perform decryption.
 
-Move the check at the end of the configuration update process to also
-catch scenarios where the limit is indirectly updated, for example
-with the following configurations:
+This fixes the following KASAN splat when running fstest generic/249
+with 'vers=3.1.1,multichannel,max_channels=4,seal' against Windows
+Server 2022:
 
-tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 depth 1
-tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 divisor 1
-
-This fixes the following syzkaller reported crash:
-
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:203:6
-index 65535 is out of range for type 'struct sfq_head[128]'
-CPU: 1 UID: 0 PID: 3037 Comm: syz.2.16 Not tainted 6.14.0-rc2-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xba/0x110
+Read of size 8 at addr ffff8881046c18a0 by task cifsd/986
+CPU: 3 UID: 0 PID: 986 Comm: cifsd Not tainted 6.15.0-rc1 #1
+PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
 Call Trace:
  <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x201/0x300 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_out_of_bounds+0xf5/0x120 lib/ubsan.c:429
- sfq_link net/sched/sch_sfq.c:203 [inline]
- sfq_dec+0x53c/0x610 net/sched/sch_sfq.c:231
- sfq_dequeue+0x34e/0x8c0 net/sched/sch_sfq.c:493
- sfq_reset+0x17/0x60 net/sched/sch_sfq.c:518
- qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
- tbf_reset+0x41/0x110 net/sched/sch_tbf.c:339
- qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
- dev_reset_queue+0x100/0x1b0 net/sched/sch_generic.c:1311
- netdev_for_each_tx_queue include/linux/netdevice.h:2590 [inline]
- dev_deactivate_many+0x7e5/0xe70 net/sched/sch_generic.c:1375
+ dump_stack_lvl+0x5d/0x80
+ print_report+0x156/0x528
+ ? gf128mul_4k_lle+0xba/0x110
+ ? __virt_addr_valid+0x145/0x300
+ ? __phys_addr+0x46/0x90
+ ? gf128mul_4k_lle+0xba/0x110
+ kasan_report+0xdf/0x1a0
+ ? gf128mul_4k_lle+0xba/0x110
+ gf128mul_4k_lle+0xba/0x110
+ ghash_update+0x189/0x210
+ shash_ahash_update+0x295/0x370
+ ? __pfx_shash_ahash_update+0x10/0x10
+ ? __pfx_shash_ahash_update+0x10/0x10
+ ? __pfx_extract_iter_to_sg+0x10/0x10
+ ? ___kmalloc_large_node+0x10e/0x180
+ ? __asan_memset+0x23/0x50
+ crypto_ahash_update+0x3c/0xc0
+ gcm_hash_assoc_remain_continue+0x93/0xc0
+ crypt_message+0xe09/0xec0 [cifs]
+ ? __pfx_crypt_message+0x10/0x10 [cifs]
+ ? _raw_spin_unlock+0x23/0x40
+ ? __pfx_cifs_readv_from_socket+0x10/0x10 [cifs]
+ decrypt_raw_data+0x229/0x380 [cifs]
+ ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
+ ? __pfx_cifs_read_iter_from_socket+0x10/0x10 [cifs]
+ smb3_receive_transform+0x837/0xc80 [cifs]
+ ? __pfx_smb3_receive_transform+0x10/0x10 [cifs]
+ ? __pfx___might_resched+0x10/0x10
+ ? __pfx_smb3_is_transform_hdr+0x10/0x10 [cifs]
+ cifs_demultiplex_thread+0x692/0x1570 [cifs]
+ ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
+ ? rcu_is_watching+0x20/0x50
+ ? rcu_lockdep_current_cpu_online+0x62/0xb0
+ ? find_held_lock+0x32/0x90
+ ? kvm_sched_clock_read+0x11/0x20
+ ? local_clock_noinstr+0xd/0xd0
+ ? trace_irq_enable.constprop.0+0xa8/0xe0
+ ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
+ kthread+0x1fe/0x380
+ ? kthread+0x10f/0x380
+ ? __pfx_kthread+0x10/0x10
+ ? local_clock_noinstr+0xd/0xd0
+ ? ret_from_fork+0x1b/0x60
+ ? local_clock+0x15/0x30
+ ? lock_release+0x29b/0x390
+ ? rcu_is_watching+0x20/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x31/0x60
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Tested-by: David Howells <dhowells@redhat.com>
+Reported-by: Steve French <stfrench@microsoft.com>
+Closes: https://lore.kernel.org/r/CAH2r5mu6Yc0-RJXM3kFyBYUB09XmXBrNodOiCVR4EDrmxq5Szg@mail.gmail.com
+Fixes: f7025d861694 ("smb: client: allocate crypto only for primary server")
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/smb/client/cifsencrypt.c | 16 +++++-----------
+ fs/smb/client/smb2ops.c     |  6 +++---
+ fs/smb/client/smb2pdu.c     | 11 ++---------
+ 3 files changed, 10 insertions(+), 23 deletions(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 7714ae94e0521..58b42dcf8f201 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -661,10 +661,6 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		if (!p)
- 			return -ENOMEM;
- 	}
--	if (ctl->limit == 1) {
--		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
--		return -EINVAL;
--	}
+diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
+index 7a43daacc8159..7c61c1e944c7a 100644
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -702,18 +702,12 @@ cifs_crypto_secmech_release(struct TCP_Server_Info *server)
+ 	cifs_free_hash(&server->secmech.md5);
+ 	cifs_free_hash(&server->secmech.sha512);
  
- 	sch_tree_lock(sch);
- 
-@@ -705,6 +701,12 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
- 		maxflows = min_t(u32, maxflows, limit);
- 	}
-+	if (limit == 1) {
-+		sch_tree_unlock(sch);
-+		kfree(p);
-+		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
-+		return -EINVAL;
+-	if (!SERVER_IS_CHAN(server)) {
+-		if (server->secmech.enc) {
+-			crypto_free_aead(server->secmech.enc);
+-			server->secmech.enc = NULL;
+-		}
+-
+-		if (server->secmech.dec) {
+-			crypto_free_aead(server->secmech.dec);
+-			server->secmech.dec = NULL;
+-		}
+-	} else {
++	if (server->secmech.enc) {
++		crypto_free_aead(server->secmech.enc);
+ 		server->secmech.enc = NULL;
 +	}
++	if (server->secmech.dec) {
++		crypto_free_aead(server->secmech.dec);
+ 		server->secmech.dec = NULL;
+ 	}
+ }
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 17c3063a9ca5b..9bf0f498be19f 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4549,9 +4549,9 @@ decrypt_raw_data(struct TCP_Server_Info *server, char *buf,
+ 			return rc;
+ 		}
+ 	} else {
+-		if (unlikely(!server->secmech.dec))
+-			return -EIO;
+-
++		rc = smb3_crypto_aead_allocate(server);
++		if (unlikely(rc))
++			return rc;
+ 		tfm = server->secmech.dec;
+ 	}
  
- 	/* commit configuration */
- 	q->limit = limit;
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 23ae73c9c5e97..7b27acd94864d 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1251,15 +1251,8 @@ SMB2_negotiate(const unsigned int xid,
+ 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
+ 	}
+ 
+-	if (server->cipher_type && !rc) {
+-		if (!SERVER_IS_CHAN(server)) {
+-			rc = smb3_crypto_aead_allocate(server);
+-		} else {
+-			/* For channels, just reuse the primary server crypto secmech. */
+-			server->secmech.enc = server->primary_server->secmech.enc;
+-			server->secmech.dec = server->primary_server->secmech.dec;
+-		}
+-	}
++	if (server->cipher_type && !rc)
++		rc = smb3_crypto_aead_allocate(server);
+ neg_exit:
+ 	free_rsp_buf(resp_buftype, rsp);
+ 	return rc;
 -- 
 2.39.5
 
