@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844212571B4;
-	Thu, 17 Apr 2025 18:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF6A25E808;
+	Thu, 17 Apr 2025 18:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914155; cv=none; b=QK1A9yEsuSve0+7LxUdgQET+Nf8D+5U0PblHz2z4ooGNIiiuo4CQ1+u+JL3rxmSpcMBp3zwKJmbRky2wdIRM0X5tvAWI+0Ddkfix4hAfMw80n7uRyg4ZaRbbFdbUz0jEPtLNFbDyqpKxQqRnHear9ssyPKi3vqTx2Qj5f3G61UE=
+	t=1744914159; cv=none; b=QiP8xVBEG+dCeTF9GPRz+o0WUxqkPxWMwgnaDAsaFzle2+RQf7YfoqoTOHRQrFChH8cdhwVz7sIvpb5RY/4CHHWOoidKqhB2+eQUumTEwgaXDIm8OqPLYP4aVuTUwIYGzT9LZCbxWv5datzdAtdNDK+jukN8rsCKVNChZ5gZKek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914155; c=relaxed/simple;
-	bh=ydNd/ph/h9Mzo0jX3gVLmP8/9oyv4g/W+8DI73D2SdM=;
+	s=arc-20240116; t=1744914159; c=relaxed/simple;
+	bh=CD+AW2c3k/Oi2qMRrh/mc2Q0c/eG1YBHPr7YcK0RgL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyF1fWd+jmL3RTlXgojuQmS4+3ORP8H2vvlP4UjW0n4BS+adxvwqM73hRlpv/Gs9eFLmjLySWrOyDFQHckChdyF4feQJW1WxxIYK6JrnDcvjC51qK0r+QO+5cbs7XSTBdyQ5N4astp0+CiXBJmuiwiTDGhb+7MYvZgG7Q1NNve0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8/qN4Zd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfpjv8GNE6g5cM6R1SjAMxwtfvcOBzkRpXa4fvOoX/XtZosz0dzs5Gf3tVVTdnSbXkeH3dvyJP+pBGd8KWDbOVxPfXiXOqtcaxHETjKVGotxUZjLQtoveYNU/zCmQstg8hAy2irNfDSRJ6wN7MFwcm972R3rVBwSrRgHNmYo7b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV1qT+zb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8/qN4Zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1093FC4CEE4;
-	Thu, 17 Apr 2025 18:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV1qT+zb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FCEC4CEE7;
+	Thu, 17 Apr 2025 18:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914155;
-	bh=ydNd/ph/h9Mzo0jX3gVLmP8/9oyv4g/W+8DI73D2SdM=;
+	s=korg; t=1744914158;
+	bh=CD+AW2c3k/Oi2qMRrh/mc2Q0c/eG1YBHPr7YcK0RgL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8/qN4Zd6Ra1Cr+Rx/jlDpJ5QzpE85sqhgpE5wjoUQdWPwc/PVPkyKTrte/0g/TeE
-	 L3Wc54hyH9xVPGqLZxPeSuep4ncM/ZGgTHqXnjV/PTRHSS2JBnDwlY8yJeqD+a5QxE
-	 Va74HEXhoHoccELDoyV6mla8VoKIqzXfCcr8FTZQ=
+	b=wV1qT+zb4+4lxx9OFd4o+qNFe3yQNHCpoK7OofNgNIpjkJn0UVQhcNj+wui7Rqmwq
+	 R4zhw+6kLRy4s+MVwFcW8ZpMcKBrT9Z0BNWjphdFL4M32MDEAnEYY/eabKlbEq+Dim
+	 Z+bKiCtK4qG5qqkeyug5rI35rfdw9MOLVX7sCO5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 125/414] Bluetooth: hci_qca: use the power sequencer for wcn6750
-Date: Thu, 17 Apr 2025 19:48:03 +0200
-Message-ID: <20250417175116.462313484@linuxfoundation.org>
+Subject: [PATCH 6.13 126/414] Bluetooth: qca: simplify WCN399x NVM loading
+Date: Thu, 17 Apr 2025 19:48:04 +0200
+Message-ID: <20250417175116.502106700@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 852cfdc7a5a5af54358325c1e0f490cc178d9664 ]
+[ Upstream commit 1cc41b5092e3aa511454ec882c525af311bee631 ]
 
-Older boards are having entry "enable-gpios" in dts, we can safely assume
-latest boards which are supporting PMU node enrty will support power
-sequencer.
+The WCN399x code has two separate cases for loading the NVM data. In
+preparation to adding support for WCN3950, which also requires similar
+quirk, split the "variant" to be specified explicitly and merge two
+snprintfs into a single one.
 
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btqca.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 37129e6cb0eb1..fbf8840fa534e 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2346,6 +2346,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	switch (qcadev->btsoc_type) {
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_WCN6750:
- 		if (!device_property_present(&serdev->dev, "enable-gpios")) {
- 			/*
- 			 * Backward compatibility with old DT sources. If the
-@@ -2365,7 +2366,6 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
- 	case QCA_WCN3998:
--	case QCA_WCN6750:
- 		qcadev->bt_power->dev = &serdev->dev;
- 		err = qca_init_regulators(qcadev->bt_power, data->vregs,
- 					  data->num_vregs);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 04d02c746ec0f..dd2c0485b9848 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -785,6 +785,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   const char *firmware_name)
+ {
+ 	struct qca_fw_config config = {};
++	const char *variant = "";
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
+@@ -879,13 +880,11 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		case QCA_WCN3990:
+ 		case QCA_WCN3991:
+ 		case QCA_WCN3998:
+-			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID) {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02xu.bin", rom_ver);
+-			} else {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02x.bin", rom_ver);
+-			}
++			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID)
++				variant = "u";
++
++			snprintf(config.fwname, sizeof(config.fwname),
++				 "qca/crnv%02x%s.bin", rom_ver, variant);
+ 			break;
+ 		case QCA_WCN3988:
+ 			snprintf(config.fwname, sizeof(config.fwname),
 -- 
 2.39.5
 
