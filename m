@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F885253B57;
-	Thu, 17 Apr 2025 17:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6262566FF;
+	Thu, 17 Apr 2025 17:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912465; cv=none; b=FQWH+PjixB7B8oqdeRajWs30Qf5+YnIxPOsG4zVMubZnkiAHq13fiEr6fbR54cTsUvt/WyhooAP7kcQeIzBymmzoyZzcP6pjz19bDmDfldXzmGm7o/e3ya9FKR4eVtC4MJDJql83wnbFOXoie7m0yMGVlCLJLf9emiXV7FVN1OQ=
+	t=1744912469; cv=none; b=PgU4x9WGXWaTgJdCf59GPmvYSL5f5Lftef/cnCNZ+kOO2bICXPRvQO/oOOMDOItV+fkxmpQV8EPUFFWirwXXcWd28TyS67Jjycwk1ihR2YzR4SJV8cAzOwLnAhmIZvbQ+SnJymdyIdmAMCmio+YDgiGCnQlCAN7hDIG66hi5vZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912465; c=relaxed/simple;
-	bh=fQ9wvu1OWQUsW2txfrTpCqDpGNjxGnmxIdmWv/56dGw=;
+	s=arc-20240116; t=1744912469; c=relaxed/simple;
+	bh=gn5TKsOrcpELs0m0ViO9ydeVp1ts1fx1uJTu7GvOW28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENAioIlHhBA4r6ZrgSdVWV0zCUIAcsbUJIuo0F3lVPjZe32xX834Alnqs5guI8hCv1le/u0FlpYSpKVC6tFZATCAnM5/qJ5KOJmd4GDbpKh0a4PF8IqUQNrZMppU6Y8NVDS5rGq++n1qWVYgUKyKMWzAgv+to3YY4g5XpFLngyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/ZFbICw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCxma0Kfl1U970oMirkZhkV3mg6kdlOUj2tzD+gk/jFGK3HwROfdw5m7wczkQ//OtnQDl5Xr1bcc6DVwmtyLYJnUI+DTuwwCrsQk50v+5qkoTBQYAuDN8a3hgx/kWc3yfNb0rAecXsVUQHAf6+FnhAX/QWu4UAYDClhg3j4aoZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CklcZR0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/ZFbICw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA914C4CEEA;
-	Thu, 17 Apr 2025 17:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CklcZR0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5CDC4CEE4;
+	Thu, 17 Apr 2025 17:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912465;
-	bh=fQ9wvu1OWQUsW2txfrTpCqDpGNjxGnmxIdmWv/56dGw=;
+	s=korg; t=1744912468;
+	bh=gn5TKsOrcpELs0m0ViO9ydeVp1ts1fx1uJTu7GvOW28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/ZFbICwGJDHiUkZCXqP7lT2Q8VVQZSHVRsn5VEhdK3/0ZLdYol6k+6CLAintipfU
-	 TtsmRsqRlKQ58QHm/k3yWOOU2PvvjqVPAuVqQsKQr9Ey2YXbP4hOPW2qkGVI2VOP8z
-	 juz3JxOzkk4fEtMJm9FGa9q1JkQcqSXWL0PgziSI=
+	b=CklcZR0xPPiiRPSVQNRX1lxraR0+ztKlGZXA/57T3UWomFw2DNlCTKRTEzLGo989I
+	 NI6iVcWIe9j9ak980I3MRfIoD8Ml4f3pgAk5+dOuzhjkKZALihJxHimDedxrctWHXE
+	 TGHLS++b6a0r2kdU93nIiZvjhg5BWUP/22++RoK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 020/449] octeontx2-pf: qos: fix VF root node parent queue index
-Date: Thu, 17 Apr 2025 19:45:08 +0200
-Message-ID: <20250417175118.803021826@linuxfoundation.org>
+Subject: [PATCH 6.14 003/449] cgroup/cpuset: Fix error handling in remote_partition_disable()
+Date: Thu, 17 Apr 2025 19:44:51 +0200
+Message-ID: <20250417175118.119050962@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -52,55 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit b7db94734e785e380b0db0f9295e07024f4d42a0 ]
+[ Upstream commit 8bf450f3aec3d1bbd725d179502c64b8992588e4 ]
 
-The current code configures the Physical Function (PF) root node at TL1
-and the Virtual Function (VF) root node at TL2.
+When remote_partition_disable() is called to disable a remote partition,
+it always sets the partition to an invalid partition state. It should
+only do so if an error code (prs_err) has been set. Correct that and
+add proper error code in places where remote_partition_disable() is
+called due to error.
 
-This ensure at any given point of time PF traffic gets more priority.
-
-                    PF root node
-                      TL1
-                     /  \
-                    TL2  TL2 VF root node
-                    /     \
-                   TL3    TL3
-                   /       \
-                  TL4      TL4
-                  /         \
-                 SMQ        SMQ
-
-Due to a bug in the current code, the TL2 parent queue index on the
-VF interface is not being configured, leading to 'SMQ Flush' errors
-
-Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250407070341.2765426-1-hkelam@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 181c8e091aae ("cgroup/cpuset: Introduce remote partition")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/cgroup/cpuset.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-index 0f844c14485a0..35acc07bd9648 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-@@ -165,6 +165,11 @@ static void __otx2_qos_txschq_cfg(struct otx2_nic *pfvf,
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 0a7ec0f1ce4e7..e8ab1a16076fb 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1416,6 +1416,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
+ 	list_add(&cs->remote_sibling, &remote_children);
+ 	spin_unlock_irq(&callback_lock);
+ 	update_unbound_workqueue_cpumask(isolcpus_updated);
++	cs->prs_err = 0;
  
- 		otx2_config_sched_shaping(pfvf, node, cfg, &num_regs);
- 	} else if (level == NIX_TXSCH_LVL_TL2) {
-+		/* configure parent txschq */
-+		cfg->reg[num_regs] = NIX_AF_TL2X_PARENT(node->schq);
-+		cfg->regval[num_regs] = (u64)hw->tx_link << 16;
-+		num_regs++;
+ 	/*
+ 	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
+@@ -1446,9 +1447,11 @@ static void remote_partition_disable(struct cpuset *cs, struct tmpmasks *tmp)
+ 	list_del_init(&cs->remote_sibling);
+ 	isolcpus_updated = partition_xcpus_del(cs->partition_root_state,
+ 					       NULL, tmp->new_cpus);
+-	cs->partition_root_state = -cs->partition_root_state;
+-	if (!cs->prs_err)
+-		cs->prs_err = PERR_INVCPUS;
++	if (cs->prs_err)
++		cs->partition_root_state = -cs->partition_root_state;
++	else
++		cs->partition_root_state = PRS_MEMBER;
 +
- 		/* configure link cfg */
- 		if (level == pfvf->qos.link_cfg_lvl) {
- 			cfg->reg[num_regs] = NIX_AF_TL3_TL2X_LINKX_CFG(node->schq, hw->tx_link);
+ 	reset_partition_data(cs);
+ 	spin_unlock_irq(&callback_lock);
+ 	update_unbound_workqueue_cpumask(isolcpus_updated);
+@@ -1481,8 +1484,10 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
+ 
+ 	WARN_ON_ONCE(!cpumask_subset(cs->effective_xcpus, subpartitions_cpus));
+ 
+-	if (cpumask_empty(newmask))
++	if (cpumask_empty(newmask)) {
++		cs->prs_err = PERR_CPUSEMPTY;
+ 		goto invalidate;
++	}
+ 
+ 	adding   = cpumask_andnot(tmp->addmask, newmask, cs->effective_xcpus);
+ 	deleting = cpumask_andnot(tmp->delmask, cs->effective_xcpus, newmask);
+@@ -1492,10 +1497,15 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
+ 	 * not allocated to other partitions and there are effective_cpus
+ 	 * left in the top cpuset.
+ 	 */
+-	if (adding && (!capable(CAP_SYS_ADMIN) ||
+-		       cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
+-		       cpumask_subset(top_cpuset.effective_cpus, tmp->addmask)))
+-		goto invalidate;
++	if (adding) {
++		if (!capable(CAP_SYS_ADMIN))
++			cs->prs_err = PERR_ACCESS;
++		else if (cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
++			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
++			cs->prs_err = PERR_NOCPUS;
++		if (cs->prs_err)
++			goto invalidate;
++	}
+ 
+ 	spin_lock_irq(&callback_lock);
+ 	if (adding)
+@@ -1611,7 +1621,7 @@ static bool prstate_housekeeping_conflict(int prstate, struct cpumask *new_cpus)
+  * The partcmd_update command is used by update_cpumasks_hier() with newmask
+  * NULL and update_cpumask() with newmask set. The partcmd_invalidate is used
+  * by update_cpumask() with NULL newmask. In both cases, the callers won't
+- * check for error and so partition_root_state and prs_error will be updated
++ * check for error and so partition_root_state and prs_err will be updated
+  * directly.
+  */
+ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+@@ -3749,6 +3759,7 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
+ 
+ 	if (remote && cpumask_empty(&new_cpus) &&
+ 	    partition_is_populated(cs, NULL)) {
++		cs->prs_err = PERR_HOTPLUG;
+ 		remote_partition_disable(cs, tmp);
+ 		compute_effective_cpumask(&new_cpus, cs, parent);
+ 		remote = false;
 -- 
 2.39.5
 
