@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A572571A2;
-	Thu, 17 Apr 2025 18:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9542571A2;
+	Thu, 17 Apr 2025 18:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914776; cv=none; b=hDMbfV93L7ezQctFVlvI8aU9EbiouuCfsDT0I3lA4E7uw/5nbq9ZRaICp8fqZjBPV8fd0B3JbzltbtI03KVDDrJvY4vbpF8Ekf8c8g7IkfrXA57eWvhBUHMGzQ92z0axXctqKeA6xpNgWE8y0K7yHTMs3rFxPU1NlV4x5Bx7OUY=
+	t=1744914779; cv=none; b=sW3Zx9dVC4Q9gq31xpjUv6e9friMCM0zBVyRoPm6N6EthRFm4DaWAIOr6NJSEfKnySm+POoaHtWT+6V48P8qrMOIjFvsduiAmCQyT7ufITzfEWKK4Q26AAIK7AeQ/1gE55q80s09n/QnotRZGDl7UjqqTtmTTRYb/mJ6NcsOZmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914776; c=relaxed/simple;
-	bh=MDbk0M7TciQ7isi3HWbeSwMSOhagaxF62jdP5skGhwU=;
+	s=arc-20240116; t=1744914779; c=relaxed/simple;
+	bh=G9PB5d/FD2t3H2hIS13UsesXoO6YJq/RFaJN5lXh2es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElC+M2+EjZ1GTNnW521INHz2Q1FhWcRWzsHcvbihzOKTIExJEJQX31qYzoksslv34SpkZcVaeT2VVZjG54dDDDBUz/MnwoDsz9eEoy7YLDyS2mMo8vXexprsU4guZPOWXO3MpBq/couKUWgrvjKoQSHjWR5OOMAzRueer88N9bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agT02btu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVC5F/B8TkTZJwMgPBVYrj5+jXIfyL75XPz8DTEDZrL5SlpVc2zph2Cur9ESewcSLI3POD6f8P3XbITr9iRmwdxbSDBflE/xnO6ttjeQFqV5DB2WRMSipG+3h698t74pxbI7NL1kJmSbXs+XmPd0BjwG+oqVVH90sX+RcqZ3fiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJo9f0hT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agT02btu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC047C4CEE4;
-	Thu, 17 Apr 2025 18:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJo9f0hT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D6CC4CEE4;
+	Thu, 17 Apr 2025 18:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914776;
-	bh=MDbk0M7TciQ7isi3HWbeSwMSOhagaxF62jdP5skGhwU=;
+	s=korg; t=1744914779;
+	bh=G9PB5d/FD2t3H2hIS13UsesXoO6YJq/RFaJN5lXh2es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agT02btuWl/Q2X1kUduUQdLxvX8ITgLnyddanQEJ2VJZVt93aeuRPXLPgPJYnlCEo
-	 vFfLozDmU4pbXnN5XXfmhs8vAIGeNEFtVs/sGSemur2N3hawL+RONz/uM1C1x+shgS
-	 bPuqhhLOvYGhDGhYiU+PFrOrJnF8fGYKfHzKMxpM=
+	b=lJo9f0hTwJyZ/gWHikfoaBOPYpxeP4lVWoQjWbZfW88TXK9v8zM0SNkE5OvZkx9T7
+	 HPHFcS4UIhzxSwP7Tz1DJTaJ6Wo5dsugCYq1R0GHEEUdzCeaYbHMV2ysswSUwsjcFK
+	 WoiH329PBT2JkqtWs9K8G8Gy9tEjq5J1HfGOg8FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YH Huang <yh.huang@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.13 309/414] arm64: dts: mediatek: mt8173: Fix disp-pwm compatible string
-Date: Thu, 17 Apr 2025 19:51:07 +0200
-Message-ID: <20250417175123.863651924@linuxfoundation.org>
+	Jane Chu <jane.chu@oracle.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
+	linmiaohe <linmiaohe@huawei.com>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 327/414] mm: make page_mapped_in_vma() hugetlb walk aware
+Date: Thu, 17 Apr 2025 19:51:25 +0200
+Message-ID: <20250417175124.585701477@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -51,63 +55,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Jane Chu <jane.chu@oracle.com>
 
-commit 46ad36002088eff8fc5cae200aa42ae9f9310ddd upstream.
+commit 442b1eca223b4860cc85ef970ae602d125aec5a4 upstream.
 
-The MT8173 disp-pwm device should have only one compatible string, based
-on the following DT validation error:
+When a process consumes a UE in a page, the memory failure handler
+attempts to collect information for a potential SIGBUS.  If the page is an
+anonymous page, page_mapped_in_vma(page, vma) is invoked in order to
 
-    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401e000: compatible: 'oneOf' conditional failed, one must be fixed:
-	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' was expected
-	    'mediatek,mt8183-disp-pwm' was expected
-	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
-    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401f000: compatible: 'oneOf' conditional failed, one must be fixed:
-	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' was expected
-	    'mediatek,mt8183-disp-pwm' was expected
-	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
+  1. retrieve the vaddr from the process' address space,
 
-Drop the extra "mediatek,mt6595-disp-pwm" compatible string.
+  2. verify that the vaddr is indeed mapped to the poisoned page,
+     where 'page' is the precise small page with UE.
 
-Fixes: 61aee9342514 ("arm64: dts: mt8173: add MT8173 display PWM driver support node")
-Cc: YH Huang <yh.huang@mediatek.com>
-Cc: stable@vger.kernel.org # v4.5+
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250108083424.2732375-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+It's been observed that when injecting poison to a non-head subpage of an
+anonymous hugetlb page, no SIGBUS shows up, while injecting to the head
+page produces a SIGBUS.  The cause is that, though hugetlb_walk() returns
+a valid pmd entry (on x86), but check_pte() detects mismatch between the
+head page per the pmd and the input subpage.  Thus the vaddr is considered
+not mapped to the subpage and the process is not collected for SIGBUS
+purpose.  This is the calling stack:
+
+      collect_procs_anon
+        page_mapped_in_vma
+          page_vma_mapped_walk
+            hugetlb_walk
+              huge_pte_lock
+                check_pte
+
+check_pte() header says that it
+"check if [pvmw->pfn, @pvmw->pfn + @pvmw->nr_pages) is mapped at the @pvmw->pte"
+but practically works only if pvmw->pfn is the head page pfn at pvmw->pte.
+Hindsight acknowledging that some pvmw->pte could point to a hugepage of
+some sort such that it makes sense to make check_pte() work for hugepage.
+
+Link: https://lkml.kernel.org/r/20250224211445.2663312-1-jane.chu@oracle.com
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
+Cc: linmiaohe <linmiaohe@huawei.com>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173.dtsi |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ mm/page_vma_mapped.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-@@ -1255,8 +1255,7 @@
- 		};
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -84,6 +84,7 @@ again:
+  * mapped at the @pvmw->pte
+  * @pvmw: page_vma_mapped_walk struct, includes a pair pte and pfn range
+  * for checking
++ * @pte_nr: the number of small pages described by @pvmw->pte.
+  *
+  * page_vma_mapped_walk() found a place where pfn range is *potentially*
+  * mapped. check_pte() has to validate this.
+@@ -100,7 +101,7 @@ again:
+  * Otherwise, return false.
+  *
+  */
+-static bool check_pte(struct page_vma_mapped_walk *pvmw)
++static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
+ {
+ 	unsigned long pfn;
+ 	pte_t ptent = ptep_get(pvmw->pte);
+@@ -133,7 +134,11 @@ static bool check_pte(struct page_vma_ma
+ 		pfn = pte_pfn(ptent);
+ 	}
  
- 		pwm0: pwm@1401e000 {
--			compatible = "mediatek,mt8173-disp-pwm",
--				     "mediatek,mt6595-disp-pwm";
-+			compatible = "mediatek,mt8173-disp-pwm";
- 			reg = <0 0x1401e000 0 0x1000>;
- 			#pwm-cells = <2>;
- 			clocks = <&mmsys CLK_MM_DISP_PWM026M>,
-@@ -1266,8 +1265,7 @@
- 		};
+-	return (pfn - pvmw->pfn) < pvmw->nr_pages;
++	if ((pfn + pte_nr - 1) < pvmw->pfn)
++		return false;
++	if (pfn > (pvmw->pfn + pvmw->nr_pages - 1))
++		return false;
++	return true;
+ }
  
- 		pwm1: pwm@1401f000 {
--			compatible = "mediatek,mt8173-disp-pwm",
--				     "mediatek,mt6595-disp-pwm";
-+			compatible = "mediatek,mt8173-disp-pwm";
- 			reg = <0 0x1401f000 0 0x1000>;
- 			#pwm-cells = <2>;
- 			clocks = <&mmsys CLK_MM_DISP_PWM126M>,
+ /* Returns true if the two ranges overlap.  Careful to not overflow. */
+@@ -208,7 +213,7 @@ bool page_vma_mapped_walk(struct page_vm
+ 			return false;
+ 
+ 		pvmw->ptl = huge_pte_lock(hstate, mm, pvmw->pte);
+-		if (!check_pte(pvmw))
++		if (!check_pte(pvmw, pages_per_huge_page(hstate)))
+ 			return not_found(pvmw);
+ 		return true;
+ 	}
+@@ -291,7 +296,7 @@ restart:
+ 			goto next_pte;
+ 		}
+ this_pte:
+-		if (check_pte(pvmw))
++		if (check_pte(pvmw, 1))
+ 			return true;
+ next_pte:
+ 		do {
 
 
