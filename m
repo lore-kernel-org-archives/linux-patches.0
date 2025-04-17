@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D838F25DAF9;
-	Thu, 17 Apr 2025 18:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7565D2566DF;
+	Thu, 17 Apr 2025 18:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915124; cv=none; b=UZlaDp3446AY81ekfHUWkYZn5vsUWB3yWxxG8sOyDhZft+mhSFRwh+TVKMXfluIfOyJb8FvAdd3M9s186VFIsg4+R/MaNZVjm93w+Z3G1/NnqwHo/2hdE2O4Nv0zNHv01rQm1qhA88ZR0UtnqEpSUlNr5Kt1K1p3vQrxHjPaOVc=
+	t=1744915128; cv=none; b=sySp8Rh4WxqHqvNw7D0oHfyCLfu47nnWYHrbhAG47Yotp2nBSpfpuK21VbhU74yGSbfFwF0hzXFfUNHhqkMc94YkQdH1XMdZkEB9MYftV943X6O6YlI0aICr/xkO31pkVYBtjr9BiOeV2FlsIb8049bWwhvT4qik1dwo1HQo9+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915124; c=relaxed/simple;
-	bh=EJb0wmuMkzoPnle7+K0Sl7kjRqlCLHI+W5ELIz15Ufs=;
+	s=arc-20240116; t=1744915128; c=relaxed/simple;
+	bh=kBjkSqS4I3W5CKK1ZUNWUpKztVA7rNz+1pLIq32WkqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItiJv/TIfSJy3rL6Tqp2TCYykmi93EnGTrvOksYUoisgIzv2qgMuBAV7SOpYUoHF5l5E1rj0dfx5G0Y3u6/KuROvgqs6mqNFg8QsnZi4yD/mw4xt75B7FFcGed1iq7d0U5f75CUucirWWG0cWuGXArO/8KqTRjpgH0E/3fnKmB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPJ9fRLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwDwgl6RNpsdQZtPqqcC89Q5fKaKqzmA9vgq/hOMBfyqHOxteuqVSftEf4coZOwXG9HuU57kEHlCxlKUfeeurvgFU+eiKZKQ5Dqefpy/oQx7beLKwpephpwHOJ3kaUm3udWfjE6I6+in8mLWK/l8VJZ29yt2CGBaNTi84VAlkQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkUtKELA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPJ9fRLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1D2C4CEE4;
-	Thu, 17 Apr 2025 18:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkUtKELA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E8FC4CEE4;
+	Thu, 17 Apr 2025 18:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915124;
-	bh=EJb0wmuMkzoPnle7+K0Sl7kjRqlCLHI+W5ELIz15Ufs=;
+	s=korg; t=1744915127;
+	bh=kBjkSqS4I3W5CKK1ZUNWUpKztVA7rNz+1pLIq32WkqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPJ9fRLwNbWY1da0D9OZ401vg9BnCK/2vRJeNlQQjzKdCukcmZZKgbpyaYfFDnho/
-	 PRMGSys6hiSKyLHQdsJmkyv/xO1HqPFStDa9fLNPw+X4cMV/6P51iZEbrBQx6gnCYn
-	 blEgJMe+zr1NzNU5g/dx1lxp0VK3F5DK/v4Z7Eog=
+	b=BkUtKELA+AJSwzZLuxf/jVJymm4RzBqkuRZJzUFfd5ohqXalOeohsQ/kUxsNO6JPm
+	 XDWLD+3y3aNJiX05FyOoAj8NKX1uY6YkDIiyCx2QH91hb0KtMQjuYpAkaeuU6AmSDw
+	 T99849BXKLk4/mqIgGMu13/2MpHtUf/FTBub81qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waiman Long <longman@redhat.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/393] cgroup/cpuset: Further optimize code if CONFIG_CPUSETS_V1 not set
-Date: Thu, 17 Apr 2025 19:46:55 +0200
-Message-ID: <20250417175107.825490364@linuxfoundation.org>
+Subject: [PATCH 6.12 007/393] cgroup/cpuset: Fix race between newly created partition and dying one
+Date: Thu, 17 Apr 2025 19:46:56 +0200
+Message-ID: <20250417175107.865000223@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -53,164 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit c4c9cebe2fb9cdc73e55513de7af7a4f50260e88 ]
+[ Upstream commit a22b3d54de94f82ca057cc2ebf9496fa91ebf698 ]
 
-Currently the cpuset code uses group_subsys_on_dfl() to check if we
-are running with cgroup v2. If CONFIG_CPUSETS_V1 isn't set, there is
-really no need to do this check and we can optimize out some of the
-unneeded v1 specific code paths. Introduce a new cpuset_v2() and use it
-to replace the cgroup_subsys_on_dfl() check to further optimize the
-code.
+There is a possible race between removing a cgroup diectory that is
+a partition root and the creation of a new partition.  The partition
+to be removed can be dying but still online, it doesn't not currently
+participate in checking for exclusive CPUs conflict, but the exclusive
+CPUs are still there in subpartitions_cpus and isolated_cpus. These
+two cpumasks are global states that affect the operation of cpuset
+partitions. The exclusive CPUs in dying cpusets will only be removed
+when cpuset_css_offline() function is called after an RCU delay.
 
+As a result, it is possible that a new partition can be created with
+exclusive CPUs that overlap with those of a dying one. When that dying
+partition is finally offlined, it removes those overlapping exclusive
+CPUs from subpartitions_cpus and maybe isolated_cpus resulting in an
+incorrect CPU configuration.
+
+This bug was found when a warning was triggered in
+remote_partition_disable() during testing because the subpartitions_cpus
+mask was empty.
+
+One possible way to fix this is to iterate the dying cpusets as well and
+avoid using the exclusive CPUs in those dying cpusets. However, this
+can still cause random partition creation failures or other anomalies
+due to racing. A better way to fix this race is to reset the partition
+state at the moment when a cpuset is being killed.
+
+Introduce a new css_killed() CSS function pointer and call it, if
+defined, before setting CSS_DYING flag in kill_css(). Also update the
+css_is_dying() helper to use the CSS_DYING flag introduced by commit
+33c35aa48178 ("cgroup: Prevent kill_css() from being called more than
+once") for proper synchronization.
+
+Add a new cpuset_css_killed() function to reset the partition state of
+a valid partition root if it is being killed.
+
+Fixes: ee8dde0cd2ce ("cpuset: Add new v2 cpuset.sched.partition flag")
 Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: a22b3d54de94 ("cgroup/cpuset: Fix race between newly created partition and dying one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ include/linux/cgroup-defs.h |  1 +
+ include/linux/cgroup.h      |  2 +-
+ kernel/cgroup/cgroup.c      |  6 ++++++
+ kernel/cgroup/cpuset.c      | 20 +++++++++++++++++---
+ 4 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 7ac2a634128b3..07ea3a563150b 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -293,6 +293,12 @@ static inline void dec_attach_in_progress(struct cpuset *cs)
- 	mutex_unlock(&cpuset_mutex);
- }
- 
-+static inline bool cpuset_v2(void)
-+{
-+	return !IS_ENABLED(CONFIG_CPUSETS_V1) ||
-+		cgroup_subsys_on_dfl(cpuset_cgrp_subsys);
-+}
-+
- /*
-  * Cgroup v2 behavior is used on the "cpus" and "mems" control files when
-  * on default hierarchy or when the cpuset_v2_mode flag is set by mounting
-@@ -303,7 +309,7 @@ static inline void dec_attach_in_progress(struct cpuset *cs)
+diff --git a/include/linux/cgroup-defs.h b/include/linux/cgroup-defs.h
+index 38b2af336e4a0..252eed781a6e9 100644
+--- a/include/linux/cgroup-defs.h
++++ b/include/linux/cgroup-defs.h
+@@ -711,6 +711,7 @@ struct cgroup_subsys {
+ 	void (*css_released)(struct cgroup_subsys_state *css);
+ 	void (*css_free)(struct cgroup_subsys_state *css);
+ 	void (*css_reset)(struct cgroup_subsys_state *css);
++	void (*css_killed)(struct cgroup_subsys_state *css);
+ 	void (*css_rstat_flush)(struct cgroup_subsys_state *css, int cpu);
+ 	int (*css_extra_stat_show)(struct seq_file *seq,
+ 				   struct cgroup_subsys_state *css);
+diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
+index f8ef47f8a634d..fc1324ed597d6 100644
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -343,7 +343,7 @@ static inline u64 cgroup_id(const struct cgroup *cgrp)
   */
- static inline bool is_in_v2_mode(void)
+ static inline bool css_is_dying(struct cgroup_subsys_state *css)
  {
--	return cgroup_subsys_on_dfl(cpuset_cgrp_subsys) ||
-+	return cpuset_v2() ||
- 	      (cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE);
+-	return !(css->flags & CSS_NO_REF) && percpu_ref_is_dying(&css->refcnt);
++	return css->flags & CSS_DYING;
  }
  
-@@ -738,7 +744,7 @@ static int generate_sched_domains(cpumask_var_t **domains,
- 	int nslot;		/* next empty doms[] struct cpumask slot */
- 	struct cgroup_subsys_state *pos_css;
- 	bool root_load_balance = is_sched_load_balance(&top_cpuset);
--	bool cgrpv2 = cgroup_subsys_on_dfl(cpuset_cgrp_subsys);
-+	bool cgrpv2 = cpuset_v2();
- 	int nslot_update;
- 
- 	doms = NULL;
-@@ -1206,7 +1212,7 @@ static void reset_partition_data(struct cpuset *cs)
- {
- 	struct cpuset *parent = parent_cs(cs);
- 
--	if (!cgroup_subsys_on_dfl(cpuset_cgrp_subsys))
-+	if (!cpuset_v2())
+ static inline void cgroup_get(struct cgroup *cgrp)
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 216535e055e11..4378f3eff25d2 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5909,6 +5909,12 @@ static void kill_css(struct cgroup_subsys_state *css)
+ 	if (css->flags & CSS_DYING)
  		return;
  
- 	lockdep_assert_held(&callback_lock);
-@@ -2035,7 +2041,7 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 		 */
- 		if (!cp->partition_root_state && !force &&
- 		    cpumask_equal(tmp->new_cpus, cp->effective_cpus) &&
--		    (!cgroup_subsys_on_dfl(cpuset_cgrp_subsys) ||
-+		    (!cpuset_v2() ||
- 		    (is_sched_load_balance(parent) == is_sched_load_balance(cp)))) {
- 			pos_css = css_rightmost_descendant(pos_css);
- 			continue;
-@@ -2109,8 +2115,7 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 		 * from parent if current cpuset isn't a valid partition root
- 		 * and their load balance states differ.
- 		 */
--		if (cgroup_subsys_on_dfl(cpuset_cgrp_subsys) &&
--		    !is_partition_valid(cp) &&
-+		if (cpuset_v2() && !is_partition_valid(cp) &&
- 		    (is_sched_load_balance(parent) != is_sched_load_balance(cp))) {
- 			if (is_sched_load_balance(parent))
- 				set_bit(CS_SCHED_LOAD_BALANCE, &cp->flags);
-@@ -2126,8 +2131,7 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 		 */
- 		if (!cpumask_empty(cp->cpus_allowed) &&
- 		    is_sched_load_balance(cp) &&
--		   (!cgroup_subsys_on_dfl(cpuset_cgrp_subsys) ||
--		    is_partition_valid(cp)))
-+		   (!cpuset_v2() || is_partition_valid(cp)))
- 			need_rebuild_sched_domains = true;
++	/*
++	 * Call css_killed(), if defined, before setting the CSS_DYING flag
++	 */
++	if (css->ss->css_killed)
++		css->ss->css_killed(css);
++
+ 	css->flags |= CSS_DYING;
  
- 		rcu_read_lock();
-@@ -2264,7 +2268,7 @@ static int update_cpumask(struct cpuset *cs, struct cpuset *trialcs,
- 
- 	retval = validate_change(cs, trialcs);
- 
--	if ((retval == -EINVAL) && cgroup_subsys_on_dfl(cpuset_cgrp_subsys)) {
-+	if ((retval == -EINVAL) && cpuset_v2()) {
- 		struct cgroup_subsys_state *css;
- 		struct cpuset *cp;
- 
-@@ -2756,8 +2760,7 @@ int cpuset_update_flag(cpuset_flagbits_t bit, struct cpuset *cs,
- 	spin_unlock_irq(&callback_lock);
- 
- 	if (!cpumask_empty(trialcs->cpus_allowed) && balance_flag_changed) {
--		if (!IS_ENABLED(CONFIG_CPUSETS_V1) ||
--		    cgroup_subsys_on_dfl(cpuset_cgrp_subsys))
-+		if (cpuset_v2())
- 			cpuset_force_rebuild();
- 		else
- 			rebuild_sched_domains_locked();
-@@ -2943,8 +2946,7 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
- 		 * migration permission derives from hierarchy ownership in
- 		 * cgroup_procs_write_permission()).
- 		 */
--		if (!cgroup_subsys_on_dfl(cpuset_cgrp_subsys) ||
--		    (cpus_updated || mems_updated)) {
-+		if (!cpuset_v2() || (cpus_updated || mems_updated)) {
- 			ret = security_task_setscheduler(task);
- 			if (ret)
- 				goto out_unlock;
-@@ -3058,8 +3060,7 @@ static void cpuset_attach(struct cgroup_taskset *tset)
- 	 * in effective cpus and mems. In that case, we can optimize out
- 	 * by skipping the task iteration and update.
- 	 */
--	if (cgroup_subsys_on_dfl(cpuset_cgrp_subsys) &&
--	    !cpus_updated && !mems_updated) {
-+	if (cpuset_v2() && !cpus_updated && !mems_updated) {
- 		cpuset_attach_nodemask_to = cs->effective_mems;
- 		goto out;
- 	}
-@@ -3384,7 +3385,7 @@ cpuset_css_alloc(struct cgroup_subsys_state *parent_css)
- 	INIT_LIST_HEAD(&cs->remote_sibling);
- 
- 	/* Set CS_MEMORY_MIGRATE for default hierarchy */
--	if (cgroup_subsys_on_dfl(cpuset_cgrp_subsys))
-+	if (cpuset_v2())
- 		__set_bit(CS_MEMORY_MIGRATE, &cs->flags);
- 
- 	return &cs->css;
-@@ -3411,8 +3412,7 @@ static int cpuset_css_online(struct cgroup_subsys_state *css)
  	/*
- 	 * For v2, clear CS_SCHED_LOAD_BALANCE if parent is isolated
- 	 */
--	if (cgroup_subsys_on_dfl(cpuset_cgrp_subsys) &&
--	    !is_sched_load_balance(parent))
-+	if (cpuset_v2() && !is_sched_load_balance(parent))
- 		clear_bit(CS_SCHED_LOAD_BALANCE, &cs->flags);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 07ea3a563150b..839f88ba17f7d 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -3479,9 +3479,6 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
+ 	cpus_read_lock();
+ 	mutex_lock(&cpuset_mutex);
  
- 	cpuset_inc();
-@@ -3482,8 +3482,7 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
- 	if (is_partition_valid(cs))
- 		update_prstate(cs, 0);
- 
--	if (!cgroup_subsys_on_dfl(cpuset_cgrp_subsys) &&
--	    is_sched_load_balance(cs))
-+	if (!cpuset_v2() && is_sched_load_balance(cs))
+-	if (is_partition_valid(cs))
+-		update_prstate(cs, 0);
+-
+ 	if (!cpuset_v2() && is_sched_load_balance(cs))
  		cpuset_update_flag(CS_SCHED_LOAD_BALANCE, cs, 0);
  
- 	cpuset_dec();
+@@ -3492,6 +3489,22 @@ static void cpuset_css_offline(struct cgroup_subsys_state *css)
+ 	cpus_read_unlock();
+ }
+ 
++static void cpuset_css_killed(struct cgroup_subsys_state *css)
++{
++	struct cpuset *cs = css_cs(css);
++
++	cpus_read_lock();
++	mutex_lock(&cpuset_mutex);
++
++	/* Reset valid partition back to member */
++	if (is_partition_valid(cs))
++		update_prstate(cs, PRS_MEMBER);
++
++	mutex_unlock(&cpuset_mutex);
++	cpus_read_unlock();
++
++}
++
+ static void cpuset_css_free(struct cgroup_subsys_state *css)
+ {
+ 	struct cpuset *cs = css_cs(css);
+@@ -3613,6 +3626,7 @@ struct cgroup_subsys cpuset_cgrp_subsys = {
+ 	.css_alloc	= cpuset_css_alloc,
+ 	.css_online	= cpuset_css_online,
+ 	.css_offline	= cpuset_css_offline,
++	.css_killed	= cpuset_css_killed,
+ 	.css_free	= cpuset_css_free,
+ 	.can_attach	= cpuset_can_attach,
+ 	.cancel_attach	= cpuset_cancel_attach,
 -- 
 2.39.5
 
