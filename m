@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF4A8462;
-	Thu, 17 Apr 2025 18:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B4214B092;
+	Thu, 17 Apr 2025 18:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914999; cv=none; b=tGvL9JczhPP4wH2QDBDUkkDzXcMUpnmCTaKxV2w7tGtiE56yEhddLcyl+xWmjW+1g/VMEEioHUWgkIpwD6zSF0Z855F4fAGBWRs/b6/bYiPLPnoK0gVQvNJzoFI9kg1+uuxF3XDcVeGeeDnkTDeI26aEhO2UVlS0NOAe+iua+2s=
+	t=1744915002; cv=none; b=EKc7wB4ulkKjYZRCXDPibsr3FGPEaGa+WC7UJorvHHDf/GMdquAuCCn1Z2Tjl7ftxqkOy2hl1DAQJtINFCHCYg6orAQk+3dZrJI5EwFiWyUveKevPKBlagDav0liLUMHfPf96COmgfTNwxen1metnHdJAZpBQNyiBGe2SbO1MMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914999; c=relaxed/simple;
-	bh=QWwYg10vtWwmP7+MescVksk0RxQGo2IdVp96FK8bE/0=;
+	s=arc-20240116; t=1744915002; c=relaxed/simple;
+	bh=U/d5VJpQ/XSRF4AZmEOh6vMH93ffrbrO1GYx3j36+LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYKhKJueZkcGAcybqzmeppTXrgvmqL/bnfNYySqUrJfgc0wjBxYiI88I6qtQfBWKPmTAxoHoxOpQqwWiTRcXUDiWho1imwKoZx2SbcCZxNFbdJBbpYgtFgHgzy4/PPiXNM7qHUYzZQEmQ7kLva1HRfTkUB1nWXfJAflAKx/HIjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LB/tZn4Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BoUzFPShkrDT8b46f/gWb2BA7u8AnqFNh3+2jvXgQ5nt9Xdf3JWVoRfpRGsKqSuH2cxZ1rzGLi+kC8xOBz0QLKPx9DBR2HTQ9WsYn8TRPnPxUiVksB+L1h631wWV6eDG4p/JVJLSJYAWER6MV88dRQ7cTGfiHLt3RHiUBGQdnyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5NY8SUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LB/tZn4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A688C4CEE4;
-	Thu, 17 Apr 2025 18:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5NY8SUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B911C4CEE4;
+	Thu, 17 Apr 2025 18:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914998;
-	bh=QWwYg10vtWwmP7+MescVksk0RxQGo2IdVp96FK8bE/0=;
+	s=korg; t=1744915001;
+	bh=U/d5VJpQ/XSRF4AZmEOh6vMH93ffrbrO1GYx3j36+LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LB/tZn4ZpKlovMmwjJdnk72gbednE2Tcupsj55qvHheSzciA6VOWnh2Y28kNHdaPa
-	 AJMSeBS3clcokCnEl9BI0TD+JQ+o4YTVat4GZSrMjeCAi2f0Nw1A7zcf01MapLGXmo
-	 uf+AEsa+35KiJLBymQAPJs62IBzjWj5rSMxq2bNc=
+	b=L5NY8SUFvTiuH1RhsrScHxFmonsx0lJMwG4gn7tw0LXrNfdeZW8eSxcsOMEKVgJBg
+	 BT1z9gd3prl5XjZcLo7bmIC6mU6B00DcG+CvA0bIZplCEJ01LAFjwcvCtKpEkIOnbE
+	 Iei3xlJzQ+Ff/UhX1Mhb3LKg3wKQJglPR+SybiIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Han Xu <han.xu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.13 400/414] spi: fsl-qspi: use devm function instead of driver remove
-Date: Thu, 17 Apr 2025 19:52:38 +0200
-Message-ID: <20250417175127.569946604@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Tahera Fahimi <fahimitahera@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.13 374/414] selftests/landlock: Split signal_scoping_threads tests
+Date: Thu, 17 Apr 2025 19:52:12 +0200
+Message-ID: <20250417175126.503449640@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -46,97 +45,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Han Xu <han.xu@nxp.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 40369bfe717e96e26650eeecfa5a6363563df6e4 upstream.
+commit bbe72274035a83159c8fff7d553b4a0b3c473690 upstream.
 
-Driver use devm APIs to manage clk/irq/resources and register the spi
-controller, but the legacy remove function will be called first during
-device detach and trigger kernel panic. Drop the remove function and use
-devm_add_action_or_reset() for driver cleanup to ensure the release
-sequence.
+Split signal_scoping_threads tests into signal_scoping_thread_before
+and signal_scoping_thread_after.
 
-Trigger kernel panic on i.MX8MQ by
-echo 30bb0000.spi >/sys/bus/platform/drivers/fsl-quadspi/unbind
+Use local variables for thread synchronization.  Fix exported function.
+Replace some asserts with expects.
 
+Fixes: c8994965013e ("selftests/landlock: Test signal scoping for threads")
+Cc: Günther Noack <gnoack@google.com>
+Cc: Tahera Fahimi <fahimitahera@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 8fcb830a00f0 ("spi: spi-fsl-qspi: use devm_spi_register_controller")
-Reported-by: Kevin Hao <haokexin@gmail.com>
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250326224152.2147099-1-han.xu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250318161443.279194-7-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-qspi.c |   31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ tools/testing/selftests/landlock/scoped_signal_test.c |   49 ++++++++++++------
+ 1 file changed, 34 insertions(+), 15 deletions(-)
 
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -839,6 +839,19 @@ static const struct spi_controller_mem_o
- 	.get_name = fsl_qspi_get_name,
- };
- 
-+static void fsl_qspi_cleanup(void *data)
-+{
-+	struct fsl_qspi *q = data;
-+
-+	/* disable the hardware */
-+	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
-+	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
-+
-+	fsl_qspi_clk_disable_unprep(q);
-+
-+	mutex_destroy(&q->lock);
-+}
-+
- static int fsl_qspi_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *ctlr;
-@@ -928,6 +941,10 @@ static int fsl_qspi_probe(struct platfor
- 
- 	ctlr->dev.of_node = np;
- 
-+	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
-+	if (ret)
-+		goto err_destroy_mutex;
-+
- 	ret = devm_spi_register_controller(dev, ctlr);
- 	if (ret)
- 		goto err_destroy_mutex;
-@@ -947,19 +964,6 @@ err_put_ctrl:
- 	return ret;
+--- a/tools/testing/selftests/landlock/scoped_signal_test.c
++++ b/tools/testing/selftests/landlock/scoped_signal_test.c
+@@ -249,47 +249,66 @@ TEST_F(scoped_domains, check_access_sign
+ 		_metadata->exit_code = KSFT_FAIL;
  }
  
--static void fsl_qspi_remove(struct platform_device *pdev)
--{
--	struct fsl_qspi *q = platform_get_drvdata(pdev);
+-static int thread_pipe[2];
 -
--	/* disable the hardware */
--	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
--	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
--
--	fsl_qspi_clk_disable_unprep(q);
--
--	mutex_destroy(&q->lock);
--}
--
- static int fsl_qspi_suspend(struct device *dev)
- {
- 	return 0;
-@@ -997,7 +1001,6 @@ static struct platform_driver fsl_qspi_d
- 		.pm =   &fsl_qspi_pm_ops,
- 	},
- 	.probe          = fsl_qspi_probe,
--	.remove		= fsl_qspi_remove,
+ enum thread_return {
+ 	THREAD_INVALID = 0,
+ 	THREAD_SUCCESS = 1,
+ 	THREAD_ERROR = 2,
  };
- module_platform_driver(fsl_qspi_driver);
+ 
+-void *thread_func(void *arg)
++static void *thread_sync(void *arg)
+ {
++	const int pipe_read = *(int *)arg;
+ 	char buf;
+ 
+-	if (read(thread_pipe[0], &buf, 1) != 1)
++	if (read(pipe_read, &buf, 1) != 1)
+ 		return (void *)THREAD_ERROR;
+ 
+ 	return (void *)THREAD_SUCCESS;
+ }
+ 
+-TEST(signal_scoping_threads)
++TEST(signal_scoping_thread_before)
+ {
+-	pthread_t no_sandbox_thread, scoped_thread;
++	pthread_t no_sandbox_thread;
+ 	enum thread_return ret = THREAD_INVALID;
++	int thread_pipe[2];
+ 
+ 	drop_caps(_metadata);
+ 	ASSERT_EQ(0, pipe2(thread_pipe, O_CLOEXEC));
+ 
+-	ASSERT_EQ(0,
+-		  pthread_create(&no_sandbox_thread, NULL, thread_func, NULL));
++	ASSERT_EQ(0, pthread_create(&no_sandbox_thread, NULL, thread_sync,
++				    &thread_pipe[0]));
+ 
+-	/* Restricts the domain after creating the first thread. */
++	/* Enforces restriction after creating the thread. */
+ 	create_scoped_domain(_metadata, LANDLOCK_SCOPE_SIGNAL);
+ 
+-	ASSERT_EQ(0, pthread_kill(no_sandbox_thread, 0));
+-	ASSERT_EQ(1, write(thread_pipe[1], ".", 1));
+-
+-	ASSERT_EQ(0, pthread_create(&scoped_thread, NULL, thread_func, NULL));
+-	ASSERT_EQ(0, pthread_kill(scoped_thread, 0));
+-	ASSERT_EQ(1, write(thread_pipe[1], ".", 1));
++	EXPECT_EQ(0, pthread_kill(no_sandbox_thread, 0));
++	EXPECT_EQ(1, write(thread_pipe[1], ".", 1));
+ 
+ 	EXPECT_EQ(0, pthread_join(no_sandbox_thread, (void **)&ret));
+ 	EXPECT_EQ(THREAD_SUCCESS, ret);
++
++	EXPECT_EQ(0, close(thread_pipe[0]));
++	EXPECT_EQ(0, close(thread_pipe[1]));
++}
++
++TEST(signal_scoping_thread_after)
++{
++	pthread_t scoped_thread;
++	enum thread_return ret = THREAD_INVALID;
++	int thread_pipe[2];
++
++	drop_caps(_metadata);
++	ASSERT_EQ(0, pipe2(thread_pipe, O_CLOEXEC));
++
++	/* Enforces restriction before creating the thread. */
++	create_scoped_domain(_metadata, LANDLOCK_SCOPE_SIGNAL);
++
++	ASSERT_EQ(0, pthread_create(&scoped_thread, NULL, thread_sync,
++				    &thread_pipe[0]));
++
++	EXPECT_EQ(0, pthread_kill(scoped_thread, 0));
++	EXPECT_EQ(1, write(thread_pipe[1], ".", 1));
++
+ 	EXPECT_EQ(0, pthread_join(scoped_thread, (void **)&ret));
+ 	EXPECT_EQ(THREAD_SUCCESS, ret);
  
 
 
