@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8E618C034;
-	Thu, 17 Apr 2025 18:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E298B1A9B5D;
+	Thu, 17 Apr 2025 18:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744916237; cv=none; b=eMlvxl+2kjbuVAAyvq36sTAWdrRLkQaf4VCasm4pvR4sBWypAkkxFutCTlAykcgubQME3rJSxgYCX4q97GMrb6E55eexoz2vUitJJggqiypYXzG0QZKqkA3ZiqibvNHEMdsFaqXPZkuxk79afjQFLFfQguAUTmFxs020YYoW/Ug=
+	t=1744916241; cv=none; b=GNxf2/MynZHO0pPe+gGQXfJG3l9xbQRfNGVpliS6YSwQDf+PX8yaPsxVWW3hklqc/zb7ZIdOa7AqstZZOw9HfmQTfyDz1cUtpB2R7TyrZKws5BULXtp46iaHlSnGBgR8kolN+KVJvOoY/9utVrDZ4kp1z1cZW/Eyv7frQycgaUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744916237; c=relaxed/simple;
-	bh=svF0g+qxZQ6xlq9nHu7o89DsWxUlfeTQM5vPtOLI4+k=;
+	s=arc-20240116; t=1744916241; c=relaxed/simple;
+	bh=ozhf0Y8WSrvZgFvvkK9NupXKOw6p01Xhv1qFmss/Kvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GSKhsnhufhgLbROXpED1f9VbxY6uMcIOs+y6hKmBbRKXiMoY9+iQWdtCgU0lVo3IpaCDv0l+iI0a7h6n6p+XG17paLulb4jpeUO2Z3yfewO6usHHkLqB+58lXRhqSqobmyL91lCnZdMN1emX6c1pyWV6cWDOYiy2auejxLHwZp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n50Vcws2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7ZK+KRD1z82vaDTNUZPx469xrzyYu9V0EsXh8aJL15o1VzHvPPhf3syoi7mRxu9TuV8fHiWjBjEX2qkvMnRhWQiB9S0mM/5+Qqph2Ok/YU9N9QQPVoLg3c/TZ6cTOfoGdSwUW1r0xprbQlJTzA2aa+/mY0mvZVSdKZu45asT04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUlUsBGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n50Vcws2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF03EC4CEE4;
-	Thu, 17 Apr 2025 18:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUlUsBGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1494C4CEE4;
+	Thu, 17 Apr 2025 18:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744916237;
-	bh=svF0g+qxZQ6xlq9nHu7o89DsWxUlfeTQM5vPtOLI4+k=;
+	s=korg; t=1744916240;
+	bh=ozhf0Y8WSrvZgFvvkK9NupXKOw6p01Xhv1qFmss/Kvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n50Vcws2NngCVO/3fNXiIEZRQRh/4MUQ3GezCn/GkM1xKlMRCIN2hnUcsBsnCi5GS
-	 b9T9dQ/q+A1ry5bt4zvWKWqdXTbnduDCOB+hI6uTnFjlIoQDuviHzWk+Ig30Qw7TXn
-	 rpyHKmZljtZklqBCnuJNA1uZRSHVAXtaNyfmEUOU=
+	b=QUlUsBGHQjcKeUjkbg9fdja2PG2PgIIZECgY4BdHVK9QwXQHxprz8biqcqR0tvRfI
+	 u+fJSNrBOQjfEb6Fer+2quvrLD4GfzeBbvM2rkPHcmJPRTGoxCgV8e7vfkeLV3J+Kk
+	 RBHP5o9U67cj+ayzFErcmgoNHcbbll+JvyVdtuvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eder Zulian <ezulian@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	He Zhe <zhe.he@windriver.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.12 389/393] libbpf: Prevent compiler warnings/errors
-Date: Thu, 17 Apr 2025 19:53:18 +0200
-Message-ID: <20250417175123.251218127@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 390/393] kbuild: Add -fno-builtin-wcslen
+Date: Thu, 17 Apr 2025 19:53:19 +0200
+Message-ID: <20250417175123.290197719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -47,75 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eder Zulian <ezulian@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 7f4ec77f3fee41dd6a41f03a40703889e6e8f7b2 upstream.
+commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
 
-Initialize 'new_off' and 'pad_bits' to 0 and 'pad_type' to  NULL in
-btf_dump_emit_bit_padding to prevent compiler warnings/errors which are
-observed when compiling with 'EXTRA_CFLAGS=-g -Og' options, but do not
-happen when compiling with current default options.
+A recent optimization change in LLVM [1] aims to transform certain loop
+idioms into calls to strlen() or wcslen(). This change transforms the
+first while loop in UniStrcat() into a call to wcslen(), breaking the
+build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
 
-For example, when compiling libbpf with
+  ld.lld: error: undefined symbol: wcslen
+  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
+  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
+  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
 
-  $ make "EXTRA_CFLAGS=-g -Og" -C tools/lib/bpf/ clean all
+Disable this optimization with '-fno-builtin-wcslen', which prevents the
+compiler from assuming that wcslen() is available in the kernel's C
+library.
 
-Clang version 17.0.6 and GCC 13.3.1 fail to compile btf_dump.c due to
-following errors:
+[ More to the point - it's not that we couldn't implement wcslen(), it's
+  that this isn't an optimization at all in the context of the kernel.
 
-  btf_dump.c: In function ‘btf_dump_emit_bit_padding’:
-  btf_dump.c:903:42: error: ‘new_off’ may be used uninitialized [-Werror=maybe-uninitialized]
-    903 |         if (new_off > cur_off && new_off <= next_off) {
-        |                                  ~~~~~~~~^~~~~~~~~~~
-  btf_dump.c:870:13: note: ‘new_off’ was declared here
-    870 |         int new_off, pad_bits, bits, i;
-        |             ^~~~~~~
-  btf_dump.c:917:25: error: ‘pad_type’ may be used uninitialized [-Werror=maybe-uninitialized]
-    917 |                         btf_dump_printf(d, "\n%s%s: %d;", pfx(lvl), pad_type,
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    918 |                                         in_bitfield ? new_off - cur_off : 0);
-        |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  btf_dump.c:871:21: note: ‘pad_type’ was declared here
-    871 |         const char *pad_type;
-        |                     ^~~~~~~~
-  btf_dump.c:930:20: error: ‘pad_bits’ may be used uninitialized [-Werror=maybe-uninitialized]
-    930 |                 if (bits == pad_bits) {
-        |                    ^
-  btf_dump.c:870:22: note: ‘pad_bits’ was declared here
-    870 |         int new_off, pad_bits, bits, i;
-        |                      ^~~~~~~~
-  cc1: all warnings being treated as errors
+  Replacing a simple inlined loop with a function call to the same loop
+  is just stupid and pointless if you don't have long strings and fancy
+  libraries with vectorization support etc.
 
-Signed-off-by: Eder Zulian <ezulian@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20241022172329.3871958-3-ezulian@redhat.com
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+  For the regular 'strlen()' cases, we want the compiler to do this in
+  order to handle the trivial case of constant strings. And we do have
+  optimized versions of 'strlen()' on some architectures. But for
+  wcslen? Just no.    - Linus ]
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+[nathan: Resolve small conflict in older trees]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf_dump.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Makefile |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -867,8 +867,8 @@ static void btf_dump_emit_bit_padding(co
- 	} pads[] = {
- 		{"long", d->ptr_sz * 8}, {"int", 32}, {"short", 16}, {"char", 8}
- 	};
--	int new_off, pad_bits, bits, i;
--	const char *pad_type;
-+	int new_off = 0, pad_bits = 0, bits, i;
-+	const char *pad_type = NULL;
+--- a/Makefile
++++ b/Makefile
+@@ -1013,6 +1013,9 @@ ifdef CONFIG_CC_IS_GCC
+ KBUILD_CFLAGS   += -fconserve-stack
+ endif
  
- 	if (cur_off >= next_off)
- 		return; /* no gap */
++# Ensure compilers do not transform certain loops into calls to wcslen()
++KBUILD_CFLAGS += -fno-builtin-wcslen
++
+ # change __FILE__ to the relative path from the srctree
+ KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
+ 
 
 
