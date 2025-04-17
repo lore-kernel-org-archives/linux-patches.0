@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852FD223710;
-	Thu, 17 Apr 2025 18:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662162561DA;
+	Thu, 17 Apr 2025 18:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913252; cv=none; b=uVnFLJ3HmreruPzW7JGUCpOWjJ1tP85iK2TbYcAQbNxE60jxpUqALu8f2ivikhO+Pb5ivwEirDLrvvoPC7ZY5wAK83m0JWJ6YNO1biyg02chzPoUOlmF9ugOYVAxp4dHP9ZguiPTk2L4zDnkBF4mLHyK2aRHEDVbcTwiTvIUrCM=
+	t=1744913255; cv=none; b=F+z2cBksaDsHh43ud60JDJTRYaDJ3p4966hzeYT22Po7w1WYUh1izr4TBuW3UhnAQqfMKV60cfgoqotdvOKt3WzHgoQEL81lu3zkSRUUl04i4h9YkR3nsriMD6lieBzPaj/UfsSvA08abGBm+CQrsqCchshI2hkiASe/NK9P1es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913252; c=relaxed/simple;
-	bh=YBfHONti5YJblOwD8/7wiDFzhr6NNu3pEnXKME9IHjo=;
+	s=arc-20240116; t=1744913255; c=relaxed/simple;
+	bh=aDKtB1Yt7J31a3TmgFNWNv3gENugMK0Ha0a0NMCwIj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VnmQpW4Z/aJ+Mzj32cUDIamTPICdBiy7Dfur+gSLaDMwbdo6JZeqaI2wbu2XARaVSbUv3QsDP4rnJ5IdsxnDm/U5SeGfeeXHNJeuJIf6aXGVjZPHEv3HAQQOs1Wdrrkqo+YxSXceDPkRLt9tK5sl81/VZwQDm/SV8S5QBobqy94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+km1Lxj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eEuZVPPeNISAhKPwotA3vwGu4CY5MHM/Ul9Uapjap743X4aikSDSXJ9XRKBGl72+c2Gq4NXbSl6sJZEj8wJWKOk9N4CzdFAOPybN1ddBDGh5NWfXzl5R5r7lq4EVddoE5VyR24tGeh3k/MCSlXDgFf2xt1YXzpm/ypAkWul4VM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7WHnqHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+km1Lxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1677FC4CEE7;
-	Thu, 17 Apr 2025 18:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7WHnqHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4AFC4CEE4;
+	Thu, 17 Apr 2025 18:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913252;
-	bh=YBfHONti5YJblOwD8/7wiDFzhr6NNu3pEnXKME9IHjo=;
+	s=korg; t=1744913255;
+	bh=aDKtB1Yt7J31a3TmgFNWNv3gENugMK0Ha0a0NMCwIj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+km1LxjsYd6vSpgLa7IL5z59v03z+pSMf6VdPQ5Nu9MOkfbcewywT3lf3osbUT1D
-	 BlJHO4tzn7yLEAuPXGiRydUL1JVt8795tzyp3jDBU4ClE9Jj9uT/HSv3MaWbqjJv7k
-	 yfiuDezBAuQau6uKDR7vYuQsR+Ob89FvWYFLNdc8=
+	b=Z7WHnqHTajPQWoBhmNTBKqwrdJ97lYn2SDbCLEpOfVFKgndn6SW4IhRSO5JuHJvmU
+	 qQ2DyVjwyvLJ0bZqPNa1sf/Q5LaLv4VgjuqSlrCuTZ7WOl7n7Qa1wuO1SBv27W8Gv9
+	 Nn//cU0Pl7/ggMjODYYWRGSZbYNyPZLWMjARi1zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.14 278/449] wifi: mt76: Add check for devm_kstrdup()
-Date: Thu, 17 Apr 2025 19:49:26 +0200
-Message-ID: <20250417175129.250311268@linuxfoundation.org>
+Subject: [PATCH 6.14 279/449] wifi: mt76: mt792x: re-register CHANCTX_STA_CSA only for the mt7921 series
+Date: Thu, 17 Apr 2025 19:49:27 +0200
+Message-ID: <20250417175129.295008672@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -50,35 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-commit 4bc1da524b502999da28d287de4286c986a1af57 upstream.
+commit 06e70003d88218675c566584dd76867fcb39706d upstream.
 
-Add check for the return value of devm_kstrdup() in
-mt76_get_of_data_from_mtd() to catch potential exception.
+CSA is currently not supported on mt7925, so CSA is only registered for
+the mt7921 series
 
-Fixes: e7a6a044f9b9 ("mt76: testmode: move mtd part to mt76_dev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20250219033645.2594753-1-haoxiang_li2024@163.com
+Fixes: 8aa2f59260eb ("wifi: mt76: mt7921: introduce CSA support")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250313054044.2638837-1-mingyen.hsieh@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -95,6 +95,10 @@ int mt76_get_of_data_from_mtd(struct mt7
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -665,7 +665,8 @@ int mt792x_init_wiphy(struct ieee80211_h
+ 	ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
+ 	ieee80211_hw_set(hw, SUPPORTS_VHT_EXT_NSS_BW);
+ 	ieee80211_hw_set(hw, CONNECTION_MONITOR);
+-	ieee80211_hw_set(hw, CHANCTX_STA_CSA);
++	if (is_mt7921(&dev->mt76))
++		ieee80211_hw_set(hw, CHANCTX_STA_CSA);
  
- #ifdef CONFIG_NL80211_TESTMODE
- 	dev->test_mtd.name = devm_kstrdup(dev->dev, part, GFP_KERNEL);
-+	if (!dev->test_mtd.name) {
-+		ret = -ENOMEM;
-+		goto out_put_node;
-+	}
- 	dev->test_mtd.offset = offset;
- #endif
- 
+ 	if (dev->pm.enable)
+ 		ieee80211_hw_set(hw, CONNECTION_MONITOR);
 
 
