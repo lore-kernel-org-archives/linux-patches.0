@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A561D1A3178;
-	Thu, 17 Apr 2025 18:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7FB1DE3A8;
+	Thu, 17 Apr 2025 18:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744913876; cv=none; b=j9Q7PdFkE/GdaOnmm7G3j8Ym0abMkyUn6zfmoROAC3vRFrb+dGFiRL9TgRaJ75fWHl/xRxKJ2+gVQ1jmq2kOTmB64YxFDvVcsU4oQmiZaHJjHBWh46fsQWQMjGGEdoDMbQO79wGFrMFoFjP/B8o7rWqeRe4N4rmxxLgvs9X1W5g=
+	t=1744913879; cv=none; b=qhkasYfo6TDJkwSCeMU1DeE9HdMLFYNst3Slbv8Uj/Qumw+vV5Vobz64wbb1F/R2giVIwS7oKGC99LvzgYF1mhw3KKk6mctD8Yc1ragUPVLuoZkSEEQX8/LoyVwp03eV9zW3rW82nxDewY1JhB/hQYoRj3Yhcpw9/yKL5eRP0og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744913876; c=relaxed/simple;
-	bh=U04kvesKdo/8Y7xN8jrLTaRoRs5L3RMbQCxO1dSjNUc=;
+	s=arc-20240116; t=1744913879; c=relaxed/simple;
+	bh=H5igFX3l0Dgk3wwrOmZ2uZ0RFPDDyRPV6T3vLKXlhsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgiNtwrlMd/imvRZkKs3URZAMx9QZvWW38AyGg4pUELAgnVpyI4N9qK1bZ69w17CfBfE4WBmi/cVprm3NOKT6hZue4WtnWAUvXJ/3dmO8Qwss6/MAFnBf9rbpc21hFj+befym6O7cpGX5tqR5gx06mxpBeE4CL6BaFwTRK0jFyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lM6AWGQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGeBguQfu/S4xRBiQj/44UdzEI6YYq6S94M/4L7HRu0Br3VMSdqZga7RIftI9/SOnC5+kzt3W/HTTegyv7LqsANzjHX96tApDjMFS3gnvoIsPsB5QBwy/otLkZdeIsmyWBuY1qMPPHepBGg6fmmxn1x6Eg8QvKgdlqaXZNZ9npA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNnOuHq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lM6AWGQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D85CC4CEE7;
-	Thu, 17 Apr 2025 18:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNnOuHq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30066C4CEE4;
+	Thu, 17 Apr 2025 18:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744913876;
-	bh=U04kvesKdo/8Y7xN8jrLTaRoRs5L3RMbQCxO1dSjNUc=;
+	s=korg; t=1744913879;
+	bh=H5igFX3l0Dgk3wwrOmZ2uZ0RFPDDyRPV6T3vLKXlhsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lM6AWGQyZ8gRedGw7CAzZMilVNWFaENwq3fY96QJXxkSX1Hs4uru051zLlaLvNJo7
-	 xItVFCieYr61YKopdNwCPC9qrN8kvvl316LgYPxTqI7ohYespERMPfaKX6A/C5Cu+L
-	 4A5WGhdYdI75BUNhlww3hkHu5KG8WuR7T/EoWqGY=
+	b=NNnOuHq/7V/P5Hd933mbIK5tNPIwzwFg6pTnC/R7W3fkuPK5psAGyUC9oWBF8/rB3
+	 B12qOaedCoMpI46kWh8WVngsvbxcqZBw0t1e2X1iVzsv+k+yCBeghs/Ifv1lxJtEAl
+	 gjWwvshf6gDfeqZE/BNVVVUNlbEQ7FCk1KPspbas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 032/414] net: phy: move phy_link_change() prior to mdio_bus_phy_may_suspend()
-Date: Thu, 17 Apr 2025 19:46:30 +0200
-Message-ID: <20250417175112.707639528@linuxfoundation.org>
+Subject: [PATCH 6.13 015/414] codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()
+Date: Thu, 17 Apr 2025 19:46:13 +0200
+Message-ID: <20250417175112.018057070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -52,74 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit f40a673d6b4a128fe95dd9b8c3ed02da50a6a862 ]
+[ Upstream commit 342debc12183b51773b3345ba267e9263bdfaaef ]
 
-In an upcoming change, mdio_bus_phy_may_suspend() will need to
-distinguish a phylib-based PHY client from a phylink PHY client.
-For that, it will need to compare the phydev->phy_link_change() function
-pointer with the eponymous phy_link_change() provided by phylib.
+After making all ->qlen_notify() callbacks idempotent, now it is safe to
+remove the check of qlen!=0 from both fq_codel_dequeue() and
+codel_qdisc_dequeue().
 
-To avoid forward function declarations, the default PHY link state
-change method should be moved upwards. There is no functional change
-associated with this patch, it is only to reduce the noise from a real
-bug fix.
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20250407093900.2155112-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: fc75ea20ffb4 ("net: phy: allow MDIO bus PM ops to start/stop state machine for phylink-controlled PHY")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211636.166257-1-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ net/sched/sch_codel.c    | 5 +----
+ net/sched/sch_fq_codel.c | 6 ++----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 5f1ad0c7fb534..eedcdae883982 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -289,6 +289,19 @@ static bool phy_drv_wol_enabled(struct phy_device *phydev)
- 	return wol.wolopts != 0;
- }
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 3e8d4fe4d91e3..e1f6e7618debd 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -65,10 +65,7 @@ static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
+ 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
+ 			    drop_func, dequeue_func);
  
-+static void phy_link_change(struct phy_device *phydev, bool up)
-+{
-+	struct net_device *netdev = phydev->attached_dev;
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->stats.drop_count && sch->q.qlen) {
++	if (q->stats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
+ 		q->stats.drop_count = 0;
+ 		q->stats.drop_len = 0;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 4f908c11ba952..778f6e5966be8 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -314,10 +314,8 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
+ 	}
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->cstats.drop_count && sch->q.qlen) {
 +
-+	if (up)
-+		netif_carrier_on(netdev);
-+	else
-+		netif_carrier_off(netdev);
-+	phydev->adjust_link(netdev);
-+	if (phydev->mii_ts && phydev->mii_ts->link_state)
-+		phydev->mii_ts->link_state(phydev->mii_ts, phydev);
-+}
-+
- static bool mdio_bus_phy_may_suspend(struct phy_device *phydev)
- {
- 	struct device_driver *drv = phydev->mdio.dev.driver;
-@@ -1101,19 +1114,6 @@ struct phy_device *phy_find_first(struct mii_bus *bus)
- }
- EXPORT_SYMBOL(phy_find_first);
- 
--static void phy_link_change(struct phy_device *phydev, bool up)
--{
--	struct net_device *netdev = phydev->attached_dev;
--
--	if (up)
--		netif_carrier_on(netdev);
--	else
--		netif_carrier_off(netdev);
--	phydev->adjust_link(netdev);
--	if (phydev->mii_ts && phydev->mii_ts->link_state)
--		phydev->mii_ts->link_state(phydev->mii_ts, phydev);
--}
--
- /**
-  * phy_prepare_link - prepares the PHY layer to monitor link status
-  * @phydev: target phy_device struct
++	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
 -- 
 2.39.5
 
