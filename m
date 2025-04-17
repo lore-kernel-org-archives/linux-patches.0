@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F1252915;
-	Thu, 17 Apr 2025 18:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2411225F997;
+	Thu, 17 Apr 2025 18:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914715; cv=none; b=FESCTU6GEZCe3Wyf01+oXhyxQVwVsHXvRswuNiXgr5xt9Ispy5AeUMjOZTTo6+CGTkdsJv3OGy4YWXlXbrW3GO12OIGGU4I6JVps/nIBN8XxGj9/Nny/rfn+l6qjelM9Xu7Qxa9uIWLWMs/3wAlmUTlyP/wxqT+FzKRu5k8KmS0=
+	t=1744914718; cv=none; b=uNNVo0dGkBYjUqhA7dTvkMTaZ7+Pxon4BUfXcrLEjqeOFaUu4O496yJT7QBW6QO3shXup60PsZg7MmGIIiNXVltJ9VvXfpBfIIYA6DYSJxETEVbIIIRGSRu7QhN2ed/sNYrvLJMDUajjl6L3QFVwKk8wuo+3f8LPYsZU1RwJo5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914715; c=relaxed/simple;
-	bh=aQQkbhzmIlP2TkSlBpxQZ8thyQ2Nx1qfvkp4fPMby1c=;
+	s=arc-20240116; t=1744914718; c=relaxed/simple;
+	bh=7YW5/AcXe6vJllZWmqrpxaGVTRf7m0Ak6KLMp/SktLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSEH78JrECPxSj5IN2vegqTLyPZTQIhscLxECTSSP2AJAzApzKhLkJoQ7tqGekYWm6s89yD9XjkT/TaGcrxVlTmkfeJ0TQ5hnVSS7ra4VHXwc/IX69rfvOoUfI2nYLLlRjc1OhMm6NhpoRlT194ZTZ3hgtFUCVO4F6EibpyP9Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXXwQtdh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mn08pvAreBZpMrL3zXB3mEQ3ZXheVyO8ZLUB3jtFEYjnA1xB1xybJtdOp/woCXkw9Kxa5CZIDv1VjOb25yj7W5Pc7L0r0aDRSdL0NkDqLpI/Zu4Xwl+we2tSi+oNzZIYd0oxlIdLeimiO3sKdk/u3zuU6LnP6MoXxlzyZxsLZTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrAhWTFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXXwQtdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C5AC4CEE4;
-	Thu, 17 Apr 2025 18:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrAhWTFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E5C4CEE4;
+	Thu, 17 Apr 2025 18:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914714;
-	bh=aQQkbhzmIlP2TkSlBpxQZ8thyQ2Nx1qfvkp4fPMby1c=;
+	s=korg; t=1744914718;
+	bh=7YW5/AcXe6vJllZWmqrpxaGVTRf7m0Ak6KLMp/SktLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXXwQtdhuVRGcZoeut1VFn/cWSnzJrvWGZ66B0VAG7NoHGVkkc7XqRLj/M31GN1Mw
-	 LA+tVQQ3o2oEcDjCQ7Rb0ENItY7b2sn1po80Uee3a3RTK92uTRtmDBbLEJhuz31I1w
-	 CLEgrqRb8ztbSBPMKXfYfGnerlXRZO56vHbuZSng=
+	b=UrAhWTFX6WpefHZiGw/wYAV+eVYI8U15dWpgImOzer74EHRgLCX8O2QdPBL28cx+8
+	 oTHBCkyk2J9NxNWhNP/XLCnyIRETKFjhaBUltfZ4tzJDLOtrZBT9JP/giJExYZL0el
+	 QhZ/1o9s2HHD3mfIOjfOQiCs08UZH3ODWH3JjTh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keerthy <j-keerthy@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.13 306/414] arm64: dts: ti: k3-j784s4-j742s2-main-common: Correct the GICD size
-Date: Thu, 17 Apr 2025 19:51:04 +0200
-Message-ID: <20250417175123.739025829@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.13 278/414] f2fs: fix the missing write pointer correction
+Date: Thu, 17 Apr 2025 19:50:36 +0200
+Message-ID: <20250417175122.611276920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -50,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keerthy <j-keerthy@ti.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 398898f9cca1a19a83184430c675562680e57c7b upstream.
+commit 201e07aec617b10360df09090651dea9d0d4f7d3 upstream.
 
-Currently we get the warning:
+If checkpoint was disabled, we missed to fix the write pointers.
 
-"GICv3: [Firmware Bug]: GICR region 0x0000000001900000 has
-overlapping address"
-
-As per TRM GICD is 64 KB. Fix it by correcting the size of GICD.
-
-Cc: stable@vger.kernel.org
-Fixes: 9cc161a4509c ("arm64: dts: ti: Refactor J784s4 SoC files to a common file")
-Link: https://lore.kernel.org/r/20250218052248.4734-1-j-keerthy@ti.com
-Signed-off-by: Keerthy <j-keerthy@ti.com>
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 1015035609e4 ("f2fs: fix changing cursegs if recovery fails on zoned device")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-index 83bbf94b58d1..3b72fca158ad 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-@@ -193,7 +193,7 @@ gic500: interrupt-controller@1800000 {
- 		ranges;
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
--		reg = <0x00 0x01800000 0x00 0x200000>, /* GICD */
-+		reg = <0x00 0x01800000 0x00 0x10000>, /* GICD */
- 		      <0x00 0x01900000 0x00 0x100000>, /* GICR */
- 		      <0x00 0x6f000000 0x00 0x2000>,   /* GICC */
- 		      <0x00 0x6f010000 0x00 0x1000>,   /* GICH */
--- 
-2.49.0
-
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4729,8 +4729,10 @@ try_onemore:
+ 	if (err)
+ 		goto free_meta;
+ 
+-	if (unlikely(is_set_ckpt_flags(sbi, CP_DISABLED_FLAG)))
++	if (unlikely(is_set_ckpt_flags(sbi, CP_DISABLED_FLAG))) {
++		skip_recovery = true;
+ 		goto reset_checkpoint;
++	}
+ 
+ 	/* recover fsynced data */
+ 	if (!test_opt(sbi, DISABLE_ROLL_FORWARD) &&
 
 
