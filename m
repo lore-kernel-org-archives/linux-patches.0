@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60771259CB9;
-	Thu, 17 Apr 2025 18:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E92B25A344;
+	Thu, 17 Apr 2025 18:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744914419; cv=none; b=PAhMx7Cv9I8O662vqF5Xz4zD0ZT7nV0vs+Wjn3E8RmUTuYxUv6Ab2smC2IwtxJ2WjsRQNhFeIji0ke8KHZhv4duzH4DR9s7N0FBk5JBJYPDLLSJa4aBYPYyxk+dutAvjR07zmqjR5fNvBQAYneIs1Of0GqVJq3mgTqa7G4llm/E=
+	t=1744914422; cv=none; b=Xm9j3KhPifU660WNlgt3h6NzNXRw/7ZHzRxHN4wfaLrilTRuUs0jxYRVsZMCFW45acnbgoHn0gI6gVKpKLGTdgFNVz6TMeuFS7gzNa5yyoS/yJhr7USTQfy9q8vLu5x1isD08AF5E6jJQrCQfV68SN3eVr1Jn2x1w1h23FB091Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744914419; c=relaxed/simple;
-	bh=6h3Ryq5t1owW6Uz1VRNlxnM+obhOlRmC/dASEmUP9SM=;
+	s=arc-20240116; t=1744914422; c=relaxed/simple;
+	bh=X9inGHsI0uVM8QY2RkavPOIhQmcjges1Zb9BPdBcdzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q9nUr/l8QTElPd/NjpTPhLwa0XbrIVwGAsSHlqpjCQ1WwDWc7NWV7/Cypi87fc/nUY71fTfM9qXAi6SLJUFsc2kH5zKBa+zaFhaUwTteMrLInopUBDW577J87fDhQcINSZU4YEZCr51S5cARsqzGV6+CXrlwRVV+YDeIptxoF7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlKl7rL0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CvE12dON7kPexfID4BKavZ2tVXu5Pk932ZQVSNsBT98WvxsAUxGBVCF8IaFTIs1ZmKbaLWxyysw+TT8omL1GZ0LKSYRNqkf5z+8pjflvNLz2TVfLEni9o1lwWb5KZT/VR9jRTV73raDCQRObqSdQmjPxWVCsoFgjyjeT7bI6sVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSM8n4pW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlKl7rL0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D600EC4CEE4;
-	Thu, 17 Apr 2025 18:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSM8n4pW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A91C4CEE4;
+	Thu, 17 Apr 2025 18:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744914419;
-	bh=6h3Ryq5t1owW6Uz1VRNlxnM+obhOlRmC/dASEmUP9SM=;
+	s=korg; t=1744914422;
+	bh=X9inGHsI0uVM8QY2RkavPOIhQmcjges1Zb9BPdBcdzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlKl7rL0NDeiF5nvsYlCp9FHsn3+17cOBSSRhnaormPNE4+SyzjKpjoUC6qROIflR
-	 7LnGBsMp8D4wG6CWE1Qn/yowRyPoMy/mpY+EVjv+AzNoGKa5Q12h660lwWcZUq2jee
-	 KAHMkxQoqA6dxGda1/0tz4M6L7ARTP4Mvv9WVQ1g=
+	b=mSM8n4pWa7VUStkXvC9ieCnDrTIxbWJihhb4oCIXz4T7GIK9orC16PKLvTohrhjNt
+	 cZ6khJbuC7v0MVt37W+o8IZysxVaXY0q/7gw55rs1hyNLsbAyjz1aHsvPzvC6yTFwu
+	 k7ubpaJEONWbK3JC9s7eDAS5VjuaEq9zQMLbCXpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Cisneros <patchkez@protonmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 180/414] HID: pidff: Factor out code for setting gain
-Date: Thu, 17 Apr 2025 19:48:58 +0200
-Message-ID: <20250417175118.682245456@linuxfoundation.org>
+Subject: [PATCH 6.13 181/414] HID: pidff: Move all hid-pidff definitions to a dedicated header
+Date: Thu, 17 Apr 2025 19:48:59 +0200
+Message-ID: <20250417175118.731974227@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175111.386381660@linuxfoundation.org>
 References: <20250417175111.386381660@linuxfoundation.org>
@@ -58,12 +58,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit f7ebf0b11b9e04bf59c438ad14f0115b12aa2f44 ]
+[ Upstream commit 0d24d4b1da96df9fc5ff36966f40f980ef864d46 ]
 
-Makes it possible to easily set gain from inside hid-pidff.c
-
-Changes in v7:
-- Check if device gain field exists before setting device gain
+Do not clutter hid includes with stuff not needed outside of
+the kernel.
 
 Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 Reviewed-by: Michał Kopeć <michal@nozomi.space>
@@ -74,60 +72,133 @@ Tested-by: Pablo Cisneros <patchkez@protonmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/hid/hid-universal-pidff.c |  3 ++-
+ drivers/hid/usbhid/hid-core.c     |  1 +
+ drivers/hid/usbhid/hid-pidff.c    |  3 ++-
+ drivers/hid/usbhid/hid-pidff.h    | 33 +++++++++++++++++++++++++++++++
+ include/linux/hid.h               | 15 --------------
+ 5 files changed, 38 insertions(+), 17 deletions(-)
+ create mode 100644 drivers/hid/usbhid/hid-pidff.h
 
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 7ef5ab9146b1c..1b713b741d192 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/input-event-codes.h>
+ #include "hid-ids.h"
++#include "usbhid/hid-pidff.h"
+ 
+ #define JOY_RANGE (BTN_DEAD - BTN_JOYSTICK + 1)
+ 
+@@ -89,7 +90,7 @@ static int universal_pidff_probe(struct hid_device *hdev,
+ 	}
+ 
+ 	/* Check if HID_PID support is enabled */
+-	int (*init_function)(struct hid_device *, __u32);
++	int (*init_function)(struct hid_device *, u32);
+ 	init_function = hid_pidff_init_with_quirks;
+ 
+ 	if (!init_function) {
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index a6eb6fe6130d1..44c2351b870fa 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -35,6 +35,7 @@
+ #include <linux/hid-debug.h>
+ #include <linux/hidraw.h>
+ #include "usbhid.h"
++#include "hid-pidff.h"
+ 
+ /*
+  * Version Information
 diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 180b2cf66e4c7..ac6f940abd901 100644
+index ac6f940abd901..a8eaa77e80be3 100644
 --- a/drivers/hid/usbhid/hid-pidff.c
 +++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -539,6 +539,19 @@ static int pidff_needs_set_ramp(struct ff_effect *effect, struct ff_effect *old)
- 	       effect->u.ramp.end_level != old->u.ramp.end_level;
- }
+@@ -12,6 +12,7 @@
  
-+/*
-+ * Set device gain
-+ */
-+static void pidff_set_gain_report(struct pidff_device *pidff, u16 gain)
-+{
-+	if (!pidff->device_gain[PID_DEVICE_GAIN_FIELD].field)
-+		return;
-+
-+	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
-+	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
-+			HID_REQ_SET_REPORT);
-+}
-+
- /*
-  * Clear device control report
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include "hid-pidff.h"
+ #include <linux/input.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
+@@ -1383,7 +1384,7 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
+  * Check if the device is PID and initialize it
+  * Set initial quirks
   */
-@@ -865,11 +878,7 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
-  */
- static void pidff_set_gain(struct input_dev *dev, u16 gain)
+-int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
++int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
  {
--	struct pidff_device *pidff = dev->ff->private;
--
--	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
--	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
--			HID_REQ_SET_REPORT);
-+	pidff_set_gain_report(dev->ff->private, gain);
- }
+ 	struct pidff_device *pidff;
+ 	struct hid_input *hidinput = list_entry(hid->inputs.next,
+diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
+new file mode 100644
+index 0000000000000..dda571e0a5bd3
+--- /dev/null
++++ b/drivers/hid/usbhid/hid-pidff.h
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef __HID_PIDFF_H
++#define __HID_PIDFF_H
++
++#include <linux/hid.h>
++
++/* HID PIDFF quirks */
++
++/* Delay field (0xA7) missing. Skip it during set effect report upload */
++#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
++
++/* Missing Paramter block offset (0x23). Skip it during SET_CONDITION
++   report upload */
++#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
++
++/* Initialise device control field even if logical_minimum != 1 */
++#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
++
++/* Use fixed 0x4000 direction during SET_EFFECT report upload */
++#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
++
++/* Force all periodic effects to be uploaded as SINE */
++#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
++
++#ifdef CONFIG_HID_PID
++int hid_pidff_init(struct hid_device *hid);
++int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks);
++#else
++#define hid_pidff_init NULL
++#define hid_pidff_init_with_quirks NULL
++#endif
++
++#endif
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index e180679ab284c..9ca7e26ac4e92 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -1222,21 +1222,6 @@ unsigned long hid_lookup_quirk(const struct hid_device *hdev);
+ int hid_quirks_init(char **quirks_param, __u16 bus, int count);
+ void hid_quirks_exit(__u16 bus);
  
- static void pidff_autocenter(struct pidff_device *pidff, u16 magnitude)
-@@ -1414,12 +1423,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
- 	if (error)
- 		goto fail;
- 
--	if (test_bit(FF_GAIN, dev->ffbit)) {
--		pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], 0xffff);
--		hid_hw_request(hid, pidff->reports[PID_DEVICE_GAIN],
--				     HID_REQ_SET_REPORT);
--	}
+-#ifdef CONFIG_HID_PID
+-int hid_pidff_init(struct hid_device *hid);
+-int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
+-#else
+-#define hid_pidff_init NULL
+-#define hid_pidff_init_with_quirks NULL
+-#endif
 -
-+	pidff_set_gain_report(pidff, 0xffff);
- 	error = pidff_check_autocenter(pidff, dev);
- 	if (error)
- 		goto fail;
+-/* HID PIDFF quirks */
+-#define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
+-#define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
+-#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
+-#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
+-#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
+-
+ #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
+ 
+ #define hid_err(hid, fmt, ...)				\
 -- 
 2.39.5
 
