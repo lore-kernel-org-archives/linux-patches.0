@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BD82571A0;
-	Thu, 17 Apr 2025 18:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB623433A5;
+	Thu, 17 Apr 2025 18:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744915553; cv=none; b=K57A8AEtMVx7YDnuT3RU3oQd55OxA4rXLja1dNDu7QX0FFVmRM823eOZmhBLBZhciOaPMU7u+sgrX7UrRD6w+DEYVafKgv1lYJDK4dS/KfQymTwQ2Ne4ZL5kHKeFW/lPaHX5H9T2ziZKPOjBi3RtJjQ7OosworyKhpLZyUun5rA=
+	t=1744915555; cv=none; b=LO1ztORvz++HvTKgszU0KgDoClavkHCpxG+/AH8nasUd5HyP3WGgbRb2knkk1Do75luHtDFareCSZf+KEM+1VQ0/Cbeq+JwdA/EMeK/1mdT8MhOigN/dLAym8RKpyqvK1A4kV1ctMvOT/W+rEgCz3zmJ/oPl/5H4/XyWk6O/om0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744915553; c=relaxed/simple;
-	bh=RPpjemuun+7ScjQcc51XyRQK5dy6yakreaV/uDbtDnc=;
+	s=arc-20240116; t=1744915555; c=relaxed/simple;
+	bh=rPQUb4tktoGOFaJ/D4/uLGicL7f0jZB0ERG/f+weYr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NNj1awqjrCWgNpsUxdQcTWU9DMgEgayQiZ51qiDlmqlbPuxM8tGERkDWjHDNIEyUjTLWQYS7+kt8H+YBpONGPUixtL6TFnwj+PHKVNSI7SLQjASfwPYHQbgODa6sZq134bbX7RAIUUMiU2qLA0dfQnNvJg/vps7uGH2g2eT6LyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms3JjnZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn4C2U8Yo4MrfGsGVNa/h2K/j7OXKrqBhVUZ1HKaMUHYdlSE743ZR7xrJHE6IW37uNY9WicW4t8LwwuNFop76/Lu1cVX+aPuqfqVf4kiZnskrljAl4GKi3KBMjlUPAPAJ6JtikI8f07I8ZcZNEp+OCQI88Rg47CiWEkmDa3iYCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wH97ZuXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms3JjnZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5941DC4CEEA;
-	Thu, 17 Apr 2025 18:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wH97ZuXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED90C4CEEA;
+	Thu, 17 Apr 2025 18:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744915552;
-	bh=RPpjemuun+7ScjQcc51XyRQK5dy6yakreaV/uDbtDnc=;
+	s=korg; t=1744915555;
+	bh=rPQUb4tktoGOFaJ/D4/uLGicL7f0jZB0ERG/f+weYr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ms3JjnZutCXupwh8yvSQWWxtcWsFbqWCDkmQ9PygO8UK9h9NrHWgXdJ2SQlZtSEdb
-	 xpM2nC8g+HXMgH5c3J6CgMoYRBb57dEtmFSNq5Qm2Rze3o5JvJnQp9LsQcA3N/5AQz
-	 K7fYV09l6leaZIIECuCCDz3Bw6PjVdirA6cnCbrE=
+	b=wH97ZuXeCtTpRk3YPxHYNZpgIiu3VPd+FwZzNJVqq3NF3kl0VAwoor9+gfiPukU0A
+	 WJQjTcthDS5ZufQ+Zr6oDpRgHvUPupj8D8ZxqDiUGRqUREi3Jn+Ki/PdR7TTlyAACR
+	 yXteqg0M5TKP7G/yNxD7xXUuzUgnOU3IkN1b1mb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/393] ext4: dont treat fhandle lookup of ea_inode as FS corruption
-Date: Thu, 17 Apr 2025 19:49:33 +0200
-Message-ID: <20250417175114.179040751@linuxfoundation.org>
+Subject: [PATCH 6.12 165/393] s390/pci: Fix s390_mmio_read/write syscall page fault handling
+Date: Thu, 17 Apr 2025 19:49:34 +0200
+Message-ID: <20250417175114.224779329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175107.546547190@linuxfoundation.org>
 References: <20250417175107.546547190@linuxfoundation.org>
@@ -52,142 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 642335f3ea2b3fd6dba03e57e01fa9587843a497 ]
+[ Upstream commit 41a0926e82f4963046876ed9a1b5f681be8087a8 ]
 
-A file handle that userspace provides to open_by_handle_at() can
-legitimately contain an outdated inode number that has since been reused
-for another purpose - that's why the file handle also contains a generation
-number.
+The s390 MMIO syscalls when using the classic PCI instructions do not
+cause a page fault when follow_pfnmap_start() fails due to the page not
+being present. Besides being a general deficiency this breaks vfio-pci's
+mmap() handling once VFIO_PCI_MMAP gets enabled as this lazily maps on
+first access. Fix this by following a failed follow_pfnmap_start() with
+fixup_user_page() and retrying the follow_pfnmap_start(). Also fix
+a VM_READ vs VM_WRITE mixup in the read syscall.
 
-But if the inode number has been reused for an ea_inode, check_igot_inode()
-will notice, __ext4_iget() will go through ext4_error_inode(), and if the
-inode was newly created, it will also be marked as bad by iget_failed().
-This all happens before the point where the inode generation is checked.
-
-ext4_error_inode() is supposed to only be used on filesystem corruption; it
-should not be used when userspace just got unlucky with a stale file
-handle. So when this happens, let __ext4_iget() just return an error.
-
-Fixes: b3e6bcb94590 ("ext4: add EA_INODE checking to ext4_iget()")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241129-ext4-ignore-ea-fhandle-v1-1-e532c0d1cee0@google.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-1-c5c0f1d26efd@linux.ibm.com
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 68 ++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 48 insertions(+), 20 deletions(-)
+ arch/s390/pci/pci_mmio.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 67a5b937f5a92..ffa6aa55a1a7a 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4681,22 +4681,43 @@ static inline void ext4_inode_set_iversion_queried(struct inode *inode, u64 val)
- 		inode_set_iversion_queried(inode, val);
- }
- 
--static const char *check_igot_inode(struct inode *inode, ext4_iget_flags flags)
--
-+static int check_igot_inode(struct inode *inode, ext4_iget_flags flags,
-+			    const char *function, unsigned int line)
- {
-+	const char *err_str;
-+
- 	if (flags & EXT4_IGET_EA_INODE) {
--		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
--			return "missing EA_INODE flag";
-+		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
-+			err_str = "missing EA_INODE flag";
-+			goto error;
-+		}
- 		if (ext4_test_inode_state(inode, EXT4_STATE_XATTR) ||
--		    EXT4_I(inode)->i_file_acl)
--			return "ea_inode with extended attributes";
-+		    EXT4_I(inode)->i_file_acl) {
-+			err_str = "ea_inode with extended attributes";
-+			goto error;
-+		}
- 	} else {
--		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
--			return "unexpected EA_INODE flag";
-+		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
-+			/*
-+			 * open_by_handle_at() could provide an old inode number
-+			 * that has since been reused for an ea_inode; this does
-+			 * not indicate filesystem corruption
-+			 */
-+			if (flags & EXT4_IGET_HANDLE)
-+				return -ESTALE;
-+			err_str = "unexpected EA_INODE flag";
-+			goto error;
-+		}
+diff --git a/arch/s390/pci/pci_mmio.c b/arch/s390/pci/pci_mmio.c
+index de5c0b389a3ec..4779c3cb6cfab 100644
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -171,8 +171,12 @@ SYSCALL_DEFINE3(s390_pci_mmio_write, unsigned long, mmio_addr,
+ 	args.address = mmio_addr;
+ 	args.vma = vma;
+ 	ret = follow_pfnmap_start(&args);
+-	if (ret)
+-		goto out_unlock_mmap;
++	if (ret) {
++		fixup_user_fault(current->mm, mmio_addr, FAULT_FLAG_WRITE, NULL);
++		ret = follow_pfnmap_start(&args);
++		if (ret)
++			goto out_unlock_mmap;
 +	}
-+	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
-+		err_str = "unexpected bad inode w/o EXT4_IGET_BAD";
-+		goto error;
- 	}
--	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD))
--		return "unexpected bad inode w/o EXT4_IGET_BAD";
--	return NULL;
-+	return 0;
-+
-+error:
-+	ext4_error_inode(inode, function, line, 0, err_str);
-+	return -EFSCORRUPTED;
- }
  
- struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
-@@ -4708,7 +4729,6 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 	struct ext4_inode_info *ei;
- 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
- 	struct inode *inode;
--	const char *err_str;
- 	journal_t *journal = EXT4_SB(sb)->s_journal;
- 	long ret;
- 	loff_t size;
-@@ -4737,10 +4757,10 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 	if (!inode)
- 		return ERR_PTR(-ENOMEM);
- 	if (!(inode->i_state & I_NEW)) {
--		if ((err_str = check_igot_inode(inode, flags)) != NULL) {
--			ext4_error_inode(inode, function, line, 0, err_str);
-+		ret = check_igot_inode(inode, flags, function, line);
-+		if (ret) {
- 			iput(inode);
--			return ERR_PTR(-EFSCORRUPTED);
-+			return ERR_PTR(ret);
- 		}
- 		return inode;
- 	}
-@@ -5012,13 +5032,21 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 		ret = -EFSCORRUPTED;
- 		goto bad_inode;
- 	}
--	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
--		ext4_error_inode(inode, function, line, 0, err_str);
--		ret = -EFSCORRUPTED;
--		goto bad_inode;
-+	ret = check_igot_inode(inode, flags, function, line);
-+	/*
-+	 * -ESTALE here means there is nothing inherently wrong with the inode,
-+	 * it's just not an inode we can return for an fhandle lookup.
-+	 */
-+	if (ret == -ESTALE) {
-+		brelse(iloc.bh);
-+		unlock_new_inode(inode);
-+		iput(inode);
-+		return ERR_PTR(-ESTALE);
- 	}
--
-+	if (ret)
-+		goto bad_inode;
- 	brelse(iloc.bh);
-+
- 	unlock_new_inode(inode);
- 	return inode;
+ 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
+ 			(mmio_addr & ~PAGE_MASK));
+@@ -305,14 +309,18 @@ SYSCALL_DEFINE3(s390_pci_mmio_read, unsigned long, mmio_addr,
+ 	if (!(vma->vm_flags & (VM_IO | VM_PFNMAP)))
+ 		goto out_unlock_mmap;
+ 	ret = -EACCES;
+-	if (!(vma->vm_flags & VM_WRITE))
++	if (!(vma->vm_flags & VM_READ))
+ 		goto out_unlock_mmap;
  
+ 	args.vma = vma;
+ 	args.address = mmio_addr;
+ 	ret = follow_pfnmap_start(&args);
+-	if (ret)
+-		goto out_unlock_mmap;
++	if (ret) {
++		fixup_user_fault(current->mm, mmio_addr, 0, NULL);
++		ret = follow_pfnmap_start(&args);
++		if (ret)
++			goto out_unlock_mmap;
++	}
+ 
+ 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
+ 			(mmio_addr & ~PAGE_MASK));
 -- 
 2.39.5
 
