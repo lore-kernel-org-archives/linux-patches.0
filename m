@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3824257427;
-	Thu, 17 Apr 2025 17:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F885253B57;
+	Thu, 17 Apr 2025 17:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912462; cv=none; b=t97+mLTjCVLTnASDargaaRq1ZmTaPCSL7SBRHc8aJq/nIKuSlVOZrT0WUIeqSy1kPjS67DzvayKwwIUxpaGM/t/9wuWOhRKsiTEwIRi7dGfsPD7eJWa37SEqoaT5QckYD4BY5JGIQz3eluis1EKU09IMT4U8vIsueSqAgt1asbg=
+	t=1744912465; cv=none; b=FQWH+PjixB7B8oqdeRajWs30Qf5+YnIxPOsG4zVMubZnkiAHq13fiEr6fbR54cTsUvt/WyhooAP7kcQeIzBymmzoyZzcP6pjz19bDmDfldXzmGm7o/e3ya9FKR4eVtC4MJDJql83wnbFOXoie7m0yMGVlCLJLf9emiXV7FVN1OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912462; c=relaxed/simple;
-	bh=f9gDD3FrU4YP6pNbIUCyZfYD35FHrcQcKHGpCJ2CY60=;
+	s=arc-20240116; t=1744912465; c=relaxed/simple;
+	bh=fQ9wvu1OWQUsW2txfrTpCqDpGNjxGnmxIdmWv/56dGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXpC6sG768CPTMOPgNJ/5D4lF/4FK6bRoVsOKKXlfI+PmnMXJSc65Z2FEVYOhd5kcPY4h9Jv89Bhl23ceIj+Df/3S62FeBcZpIrddSDtRL63kGM4jmRA7rUPimL8QHaFso+cnssmBWFfDIaUBFaJL2PCaKuhh3Jw/6XpqAsHnR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Twzu4BUS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ENAioIlHhBA4r6ZrgSdVWV0zCUIAcsbUJIuo0F3lVPjZe32xX834Alnqs5guI8hCv1le/u0FlpYSpKVC6tFZATCAnM5/qJ5KOJmd4GDbpKh0a4PF8IqUQNrZMppU6Y8NVDS5rGq++n1qWVYgUKyKMWzAgv+to3YY4g5XpFLngyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/ZFbICw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Twzu4BUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F99C4CEE4;
-	Thu, 17 Apr 2025 17:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/ZFbICw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA914C4CEEA;
+	Thu, 17 Apr 2025 17:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912462;
-	bh=f9gDD3FrU4YP6pNbIUCyZfYD35FHrcQcKHGpCJ2CY60=;
+	s=korg; t=1744912465;
+	bh=fQ9wvu1OWQUsW2txfrTpCqDpGNjxGnmxIdmWv/56dGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Twzu4BUSO7dxy+Tbj9Q/RDk7wS79lzvzLNHjGSq3HIKMjZEUt11XTI25avrIHw5z+
-	 JFbxEto1yEiztDiZQI+R2gYJP4kcgdXtZIA3jMhZVEKlHeCPj42WMZ8VHmz7izAnjL
-	 CtTBRkaDCMIsLgFKUSNa2FqHmh5+GBUS2TI5mIcI=
+	b=B/ZFbICwGJDHiUkZCXqP7lT2Q8VVQZSHVRsn5VEhdK3/0ZLdYol6k+6CLAintipfU
+	 TtsmRsqRlKQ58QHm/k3yWOOU2PvvjqVPAuVqQsKQr9Ey2YXbP4hOPW2qkGVI2VOP8z
+	 juz3JxOzkk4fEtMJm9FGa9q1JkQcqSXWL0PgziSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 019/449] net: tls: explicitly disallow disconnect
-Date: Thu, 17 Apr 2025 19:45:07 +0200
-Message-ID: <20250417175118.763163370@linuxfoundation.org>
+Subject: [PATCH 6.14 020/449] octeontx2-pf: qos: fix VF root node parent queue index
+Date: Thu, 17 Apr 2025 19:45:08 +0200
+Message-ID: <20250417175118.803021826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,67 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 5071a1e606b30c0c11278d3c6620cd6a24724cf6 ]
+[ Upstream commit b7db94734e785e380b0db0f9295e07024f4d42a0 ]
 
-syzbot discovered that it can disconnect a TLS socket and then
-run into all sort of unexpected corner cases. I have a vague
-recollection of Eric pointing this out to us a long time ago.
-Supporting disconnect is really hard, for one thing if offload
-is enabled we'd need to wait for all packets to be _acked_.
-Disconnect is not commonly used, disallow it.
+The current code configures the Physical Function (PF) root node at TL1
+and the Virtual Function (VF) root node at TL2.
 
-The immediate problem syzbot run into is the warning in the strp,
-but that's just the easiest bug to trigger:
+This ensure at any given point of time PF traffic gets more priority.
 
-  WARNING: CPU: 0 PID: 5834 at net/tls/tls_strp.c:486 tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  RIP: 0010:tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  Call Trace:
-   <TASK>
-   tls_rx_rec_wait+0x280/0xa60 net/tls/tls_sw.c:1363
-   tls_sw_recvmsg+0x85c/0x1c30 net/tls/tls_sw.c:2043
-   inet6_recvmsg+0x2c9/0x730 net/ipv6/af_inet6.c:678
-   sock_recvmsg_nosec net/socket.c:1023 [inline]
-   sock_recvmsg+0x109/0x280 net/socket.c:1045
-   __sys_recvfrom+0x202/0x380 net/socket.c:2237
+                    PF root node
+                      TL1
+                     /  \
+                    TL2  TL2 VF root node
+                    /     \
+                   TL3    TL3
+                   /       \
+                  TL4      TL4
+                  /         \
+                 SMQ        SMQ
 
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Reported-by: syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250404180334.3224206-1-kuba@kernel.org
+Due to a bug in the current code, the TL2 parent queue index on the
+VF interface is not being configured, leading to 'SMQ Flush' errors
+
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250407070341.2765426-1-hkelam@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 99ca4465f7021..4d7702ce17c06 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -852,6 +852,11 @@ static int tls_setsockopt(struct sock *sk, int level, int optname,
- 	return do_tls_setsockopt(sk, optname, optval, optlen);
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index 0f844c14485a0..35acc07bd9648 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -165,6 +165,11 @@ static void __otx2_qos_txschq_cfg(struct otx2_nic *pfvf,
  
-+static int tls_disconnect(struct sock *sk, int flags)
-+{
-+	return -EOPNOTSUPP;
-+}
+ 		otx2_config_sched_shaping(pfvf, node, cfg, &num_regs);
+ 	} else if (level == NIX_TXSCH_LVL_TL2) {
++		/* configure parent txschq */
++		cfg->reg[num_regs] = NIX_AF_TL2X_PARENT(node->schq);
++		cfg->regval[num_regs] = (u64)hw->tx_link << 16;
++		num_regs++;
 +
- struct tls_context *tls_ctx_create(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
-@@ -947,6 +952,7 @@ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
- 	prot[TLS_BASE][TLS_BASE] = *base;
- 	prot[TLS_BASE][TLS_BASE].setsockopt	= tls_setsockopt;
- 	prot[TLS_BASE][TLS_BASE].getsockopt	= tls_getsockopt;
-+	prot[TLS_BASE][TLS_BASE].disconnect	= tls_disconnect;
- 	prot[TLS_BASE][TLS_BASE].close		= tls_sk_proto_close;
- 
- 	prot[TLS_SW][TLS_BASE] = prot[TLS_BASE][TLS_BASE];
+ 		/* configure link cfg */
+ 		if (level == pfvf->qos.link_cfg_lvl) {
+ 			cfg->reg[num_regs] = NIX_AF_TL3_TL2X_LINKX_CFG(node->schq, hw->tx_link);
 -- 
 2.39.5
 
