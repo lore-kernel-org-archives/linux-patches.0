@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4AA1DE8A0;
-	Thu, 17 Apr 2025 17:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821F1DE8A0;
+	Thu, 17 Apr 2025 17:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912666; cv=none; b=S4RDN6KgejbvrSm3/D7kBn/kI2Rd2JEALV4AAdEG89/2JbzUSrFlvlwsBf5PG72Wg8k6wJATdCXzKApmRMf/IXrJyWE5nR86edf1cFpSiWRIqcmHcYs6ZjSi1niqmHe5LZEwUhn1R5xMDvib7izgqpX5iVpk4RSgy9/fJBLk9Hc=
+	t=1744912668; cv=none; b=gy7A0anYtLZn1R9x1x6nhWgqyWDZtX7LE/sPAKiHp+EBuHlngiynvSzotZh57czByRGYuPNeze3Os50XJ8E3kUQHlHYvGJREtgSWmKABbKDGFqABJbxSqrL1wqz3WJ2DpvLxS/Od1zSOvTfIY8FNrUAtGqgZ5Yv8aLOUwPBucEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912666; c=relaxed/simple;
-	bh=T8HYXzLZb6oZbK/9F4TLjXixC2tT3TPf0Cqcg3F5Q6Q=;
+	s=arc-20240116; t=1744912668; c=relaxed/simple;
+	bh=rOCyrwrlq9FmClgInGYLQqzq48Tv3xtEnwRg5tUCKeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+euL6TQDYOWa2FRs0UU0lhrXMdALINQFV09weCPqgxN/itJDX+I/YzSixwhzmMhnPJUw1MJsTXqZt5/eN/+w3CxSKKdGMVou7nMDD3J37LnMf1MQMXy55SGq1olf8YVBiYutz+j8VfOF/3DTVv9eaJJ1C45PufjWXfNbipF5FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8Wp1S8X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJCRjcMrXwEh84GcYR03SyAHLHWu1rGjO+J9Kzd9SWxZmpO2TvZz647vsZyhYq6qnOYG5+YgnH213OBJ3UDs8W9qD0ILi1EqrEkb/9BltUVhW7Fbw198Hu71T0mmXlyboBQrq5BmO0FzmfdyvNy7sho14yBCawom4fhH4pQ6G2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11PJx7Vg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8Wp1S8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3863AC4CEE4;
-	Thu, 17 Apr 2025 17:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11PJx7Vg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DC3C4CEE4;
+	Thu, 17 Apr 2025 17:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744912665;
-	bh=T8HYXzLZb6oZbK/9F4TLjXixC2tT3TPf0Cqcg3F5Q6Q=;
+	s=korg; t=1744912668;
+	bh=rOCyrwrlq9FmClgInGYLQqzq48Tv3xtEnwRg5tUCKeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8Wp1S8XYIXzd3wB69D3VqK7RnHp+l4sTmEzxPH/D5FHgqxk9pwSE9G0F97FPdb02
-	 AtKOQS8dDO3ZYeGAi4hnJ4cV+TbAz336+/O9zmLDygaVNDywmfT3UmcddJBuXgYo67
-	 o38HSf727+c5D6H/NUVD8XCQb0x1wEQG0wFjuAhY=
+	b=11PJx7Vg+3aPil1SdXDowo2k7K7HZMiXVYAX3blgLOUFW548D7SAywPQR8eowTrBl
+	 d+R50Xo+hRf9KghgQrk8iUB8+h9zHDda8zO1OE0OpRaeMB3E9kYvFDXi7pk7c3WZ/4
+	 7LTqR5M4Ah5SxQxcJXwjHkmpn5yxOnZuzrB8X7D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 067/449] tracing: Disable branch profiling in noinstr code
-Date: Thu, 17 Apr 2025 19:45:55 +0200
-Message-ID: <20250417175120.681682787@linuxfoundation.org>
+Subject: [PATCH 6.14 085/449] media: uvcvideo: Add quirk for Actions UVC05
+Date: Thu, 17 Apr 2025 19:46:13 +0200
+Message-ID: <20250417175121.391609200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250417175117.964400335@linuxfoundation.org>
 References: <20250417175117.964400335@linuxfoundation.org>
@@ -54,248 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 2cbb20b008dba39893f0e296dc8ca312f40a9a0e ]
+[ Upstream commit 8c54e58f94ed3ff28643aefd2c0c2c98313ee770 ]
 
-CONFIG_TRACE_BRANCH_PROFILING inserts a call to ftrace_likely_update()
-for each use of likely() or unlikely().  That breaks noinstr rules if
-the affected function is annotated as noinstr.
+Actions UVC05 is a HDMI to USB dongle that implements the UVC protocol.
 
-Disable branch profiling for files with noinstr functions.  In addition
-to some individual files, this also includes the entire arch/x86
-subtree, as well as the kernel/entry, drivers/cpuidle, and drivers/idle
-directories, all of which are noinstr-heavy.
+When the device suspends, its firmware seems to enter a weird mode when it
+does not produce more frames.
 
-Due to the nature of how sched binaries are built by combining multiple
-.c files into one, branch profiling is disabled more broadly across the
-sched code than would otherwise be needed.
+Add the device to the quirk list to disable autosuspend.
 
-This fixes many warnings like the following:
+Bus 001 Device 007: ID 1de1:f105 Actions Microelectronics Co. Display
+ capture-UVC05
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass          239 Miscellaneous Device
+  bDeviceSubClass         2 [unknown]
+  bDeviceProtocol         1 Interface Association
+  bMaxPacketSize0        64
+  idVendor           0x1de1 Actions Microelectronics Co.
+  idProduct          0xf105 Display capture-UVC05
+  bcdDevice            4.09
+  iManufacturer           1 Actions Micro
+  iProduct                2 Display capture-UVC05
+  iSerial                 3 -1005308387
+  bNumConfigurations      1
 
-  vmlinux.o: warning: objtool: do_syscall_64+0x40: call to ftrace_likely_update() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: __rdgsbase_inactive+0x33: call to ftrace_likely_update() leaves .noinstr.text section
-  vmlinux.o: warning: objtool: handle_bug.isra.0+0x198: call to ftrace_likely_update() leaves .noinstr.text section
-  ...
-
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/fb94fc9303d48a5ed370498f54500cc4c338eb6d.1742586676.git.jpoimboe@kernel.org
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20241210-uvc-hdmi-suspend-v1-1-01f5dec023ea@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kbuild                    | 4 ++++
- arch/x86/coco/sev/core.c           | 2 --
- arch/x86/kernel/head64.c           | 2 --
- arch/x86/mm/kasan_init_64.c        | 1 -
- arch/x86/mm/mem_encrypt_amd.c      | 2 --
- arch/x86/mm/mem_encrypt_identity.c | 2 --
- drivers/acpi/Makefile              | 4 ++++
- drivers/cpuidle/Makefile           | 3 +++
- drivers/idle/Makefile              | 5 ++++-
- kernel/Makefile                    | 5 +++++
- kernel/entry/Makefile              | 3 +++
- kernel/sched/Makefile              | 5 +++++
- kernel/time/Makefile               | 6 ++++++
- lib/Makefile                       | 5 +++++
- 14 files changed, 39 insertions(+), 10 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/x86/Kbuild b/arch/x86/Kbuild
-index cf0ad89f5639d..f7fb3d88c57bd 100644
---- a/arch/x86/Kbuild
-+++ b/arch/x86/Kbuild
-@@ -1,4 +1,8 @@
- # SPDX-License-Identifier: GPL-2.0
-+
-+# Branch profiling isn't noinstr-safe.  Disable it for arch/x86/*
-+subdir-ccflags-$(CONFIG_TRACE_BRANCH_PROFILING) += -DDISABLE_BRANCH_PROFILING
-+
- obj-$(CONFIG_ARCH_HAS_CC_PLATFORM) += coco/
- 
- obj-y += entry/
-diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
-index 96c7bc698e6b6..d14bce0f82cc5 100644
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -9,8 +9,6 @@
- 
- #define pr_fmt(fmt)	"SEV: " fmt
- 
--#define DISABLE_BRANCH_PROFILING
--
- #include <linux/sched/debug.h>	/* For show_regs() */
- #include <linux/percpu-defs.h>
- #include <linux/cc_platform.h>
-diff --git a/arch/x86/kernel/head64.c b/arch/x86/kernel/head64.c
-index 22c9ba305ac17..368157a7f6d21 100644
---- a/arch/x86/kernel/head64.c
-+++ b/arch/x86/kernel/head64.c
-@@ -5,8 +5,6 @@
-  *  Copyright (C) 2000 Andrea Arcangeli <andrea@suse.de> SuSE
-  */
- 
--#define DISABLE_BRANCH_PROFILING
--
- /* cpu_feature_enabled() cannot be used this early */
- #define USE_EARLY_PGTABLE_L5
- 
-diff --git a/arch/x86/mm/kasan_init_64.c b/arch/x86/mm/kasan_init_64.c
-index 9dddf19a55716..0539efd0d216b 100644
---- a/arch/x86/mm/kasan_init_64.c
-+++ b/arch/x86/mm/kasan_init_64.c
-@@ -1,5 +1,4 @@
- // SPDX-License-Identifier: GPL-2.0
--#define DISABLE_BRANCH_PROFILING
- #define pr_fmt(fmt) "kasan: " fmt
- 
- /* cpu_feature_enabled() cannot be used this early */
-diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
-index b56c5c073003d..7490ff6d83b1b 100644
---- a/arch/x86/mm/mem_encrypt_amd.c
-+++ b/arch/x86/mm/mem_encrypt_amd.c
-@@ -7,8 +7,6 @@
-  * Author: Tom Lendacky <thomas.lendacky@amd.com>
-  */
- 
--#define DISABLE_BRANCH_PROFILING
--
- #include <linux/linkage.h>
- #include <linux/init.h>
- #include <linux/mm.h>
-diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
-index 9fce5b87b8c50..5eecdd92da105 100644
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -7,8 +7,6 @@
-  * Author: Tom Lendacky <thomas.lendacky@amd.com>
-  */
- 
--#define DISABLE_BRANCH_PROFILING
--
- /*
-  * Since we're dealing with identity mappings, physical and virtual
-  * addresses are the same, so override these defines which are ultimately
-diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-index 40208a0f5dfb5..797070fc9a3f4 100644
---- a/drivers/acpi/Makefile
-+++ b/drivers/acpi/Makefile
-@@ -5,6 +5,10 @@
- 
- ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
- 
-+ifdef CONFIG_TRACE_BRANCH_PROFILING
-+CFLAGS_processor_idle.o += -DDISABLE_BRANCH_PROFILING
-+endif
-+
- #
- # ACPI Boot-Time Table Parsing
- #
-diff --git a/drivers/cpuidle/Makefile b/drivers/cpuidle/Makefile
-index d103342b7cfc2..1de9e92c5b0fc 100644
---- a/drivers/cpuidle/Makefile
-+++ b/drivers/cpuidle/Makefile
-@@ -3,6 +3,9 @@
- # Makefile for cpuidle.
- #
- 
-+# Branch profiling isn't noinstr-safe
-+ccflags-$(CONFIG_TRACE_BRANCH_PROFILING) += -DDISABLE_BRANCH_PROFILING
-+
- obj-y += cpuidle.o driver.o governor.o sysfs.o governors/
- obj-$(CONFIG_ARCH_NEEDS_CPU_IDLE_COUPLED) += coupled.o
- obj-$(CONFIG_DT_IDLE_STATES)		  += dt_idle_states.o
-diff --git a/drivers/idle/Makefile b/drivers/idle/Makefile
-index 0a3c375100797..a34af1ba09bdb 100644
---- a/drivers/idle/Makefile
-+++ b/drivers/idle/Makefile
-@@ -1,3 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
--obj-$(CONFIG_INTEL_IDLE)			+= intel_idle.o
- 
-+# Branch profiling isn't noinstr-safe
-+ccflags-$(CONFIG_TRACE_BRANCH_PROFILING) += -DDISABLE_BRANCH_PROFILING
-+
-+obj-$(CONFIG_INTEL_IDLE)			+= intel_idle.o
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 87866b037fbed..434929de17ef2 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -21,6 +21,11 @@ ifdef CONFIG_FUNCTION_TRACER
- CFLAGS_REMOVE_irq_work.o = $(CC_FLAGS_FTRACE)
- endif
- 
-+# Branch profiling isn't noinstr-safe
-+ifdef CONFIG_TRACE_BRANCH_PROFILING
-+CFLAGS_context_tracking.o += -DDISABLE_BRANCH_PROFILING
-+endif
-+
- # Prevents flicker of uninteresting __do_softirq()/__local_bh_disable_ip()
- # in coverage traces.
- KCOV_INSTRUMENT_softirq.o := n
-diff --git a/kernel/entry/Makefile b/kernel/entry/Makefile
-index 095c775e001e2..d4b8bd0af79b0 100644
---- a/kernel/entry/Makefile
-+++ b/kernel/entry/Makefile
-@@ -6,6 +6,9 @@ KASAN_SANITIZE := n
- UBSAN_SANITIZE := n
- KCOV_INSTRUMENT := n
- 
-+# Branch profiling isn't noinstr-safe
-+ccflags-$(CONFIG_TRACE_BRANCH_PROFILING) += -DDISABLE_BRANCH_PROFILING
-+
- CFLAGS_REMOVE_common.o	 = -fstack-protector -fstack-protector-strong
- CFLAGS_common.o		+= -fno-stack-protector
- 
-diff --git a/kernel/sched/Makefile b/kernel/sched/Makefile
-index 976092b7bd452..8ae86371ddcdd 100644
---- a/kernel/sched/Makefile
-+++ b/kernel/sched/Makefile
-@@ -22,6 +22,11 @@ ifneq ($(CONFIG_SCHED_OMIT_FRAME_POINTER),y)
- CFLAGS_core.o := $(PROFILING) -fno-omit-frame-pointer
- endif
- 
-+# Branch profiling isn't noinstr-safe
-+ifdef CONFIG_TRACE_BRANCH_PROFILING
-+CFLAGS_build_policy.o += -DDISABLE_BRANCH_PROFILING
-+CFLAGS_build_utility.o += -DDISABLE_BRANCH_PROFILING
-+endif
- #
- # Build efficiency:
- #
-diff --git a/kernel/time/Makefile b/kernel/time/Makefile
-index fe0ae82124fe7..e6e9b85d4db5f 100644
---- a/kernel/time/Makefile
-+++ b/kernel/time/Makefile
-@@ -1,4 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
-+
-+# Branch profiling isn't noinstr-safe
-+ifdef CONFIG_TRACE_BRANCH_PROFILING
-+CFLAGS_sched_clock.o += -DDISABLE_BRANCH_PROFILING
-+endif
-+
- obj-y += time.o timer.o hrtimer.o sleep_timeout.o
- obj-y += timekeeping.o ntp.o clocksource.o jiffies.o timer_list.o
- obj-y += timeconv.o timecounter.o alarmtimer.o
-diff --git a/lib/Makefile b/lib/Makefile
-index d5cfc7afbbb82..4f3d00a2fd659 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -5,6 +5,11 @@
- 
- ccflags-remove-$(CONFIG_FUNCTION_TRACER) += $(CC_FLAGS_FTRACE)
- 
-+# Branch profiling isn't noinstr-safe
-+ifdef CONFIG_TRACE_BRANCH_PROFILING
-+CFLAGS_smp_processor_id.o += -DDISABLE_BRANCH_PROFILING
-+endif
-+
- # These files are disabled because they produce lots of non-interesting and/or
- # flaky coverage that is not a function of syscall inputs. For example,
- # rbtree can be global and individual rotations don't correlate with inputs.
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index deadbcea5e227..11b04f6f60cd1 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -3062,6 +3062,15 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_PROBE_MINMAX
+ 					| UVC_QUIRK_IGNORE_SELECTOR_UNIT) },
++	/* Actions Microelectronics Co. Display capture-UVC05 */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x1de1,
++	  .idProduct		= 0xf105,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_DISABLE_AUTOSUSPEND) },
+ 	/* NXP Semiconductors IR VIDEO */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
 -- 
 2.39.5
 
