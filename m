@@ -1,107 +1,121 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E48215066
-	for <patches@lists.linux.dev>; Fri, 18 Apr 2025 17:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03112A1C9;
+	Fri, 18 Apr 2025 20:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744995622; cv=none; b=XI39USBpIMTdB8ULx0FtGUddAG2MDcFtZU4XIqg7m/Odyyu2zmawRNnO2A6kBNMW0EP8B7HPiSXI532JHGl76wf9Gf2mXuymcYUbxfwdCND69jRjXBYrPi7eQYfFkysPiAbvl7xwjoj9onHShH0UPUfw/tZLxrfTO9F6l0coOt0=
+	t=1745007428; cv=none; b=r+QIwasZT49mOGMPjmDo532hTnOyYzSkeMoVn14PcxdtWV/wlACDaXI0RRcyxvMa+EUUPT4PfCbqsKNaB3YWltQg5caQ76WCO2TkOd2+EoqjbA0klZupv/Sxws4U6dOuIQz1KSj4MeOeG6MLM+vkYMZSIli4G9R/GVjC7gD02L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744995622; c=relaxed/simple;
-	bh=Q+BDfiFW+VoaSQMQ8aLv84jJcRC/wcDH4vCfEdzdhsw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hiFG4V0hp/UkYVPE9/Hf2XgUoYfmJbWUz8W8rE5FF1BTfGbnm/erMxSZrjKYs3BsARQ26I0nw30c1jK7P/6BgntmThFgKRvYg0WBwtI3CM92mMqWFh737qnZG2KbBnexa+lpam4L5NLxuGK0l//CthTQbLSLqjLULXMeBMVzNf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eE1O5wJo; arc=none smtp.client-ip=209.85.166.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1745007428; c=relaxed/simple;
+	bh=LqBBrDYSFPq7qwiPArMtIpRUwFr+ehgmwr9qj6TRhMc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VYTZVsznxH9FAzyCfEHl0rQ8w7/Bs+RQkRdsS30CZkyQv704mp+j8AzmeB0ui41IeHE5PCzwhmUbIvHNY93i8EctA2UOKVbsAxGVxQlvxWTLlmSqmjXeZ5kQls1LZ1lEM8GFq8AdEQiHFNjo98cfhGurv5BzACoxn/3khhmOVAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DTiQDuMA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eE1O5wJo"
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-86142446f3fso49618439f.2
-        for <patches@lists.linux.dev>; Fri, 18 Apr 2025 10:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1744995618; x=1745600418; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=61d/sKYxMGCNUNhoeDAO2XryMeoJdihIOmj+N3+Z7lM=;
-        b=eE1O5wJomlHft/KgQt3SNohoH+J7994gGAKxc+Str6u5U5kd0TkvopdkqaQ01jByFd
-         in4jta1MQzM4G4U3KiwFzS9t7g7ncC1dkH+75ZkGMmjzRDTGEDeoTLlPvajV3pagUXFw
-         pcca1MfX3cEgXtLQOAj8MLFXyHDRzr8Lr3+ZM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744995618; x=1745600418;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=61d/sKYxMGCNUNhoeDAO2XryMeoJdihIOmj+N3+Z7lM=;
-        b=NBPeimpKlKQHLPH6UmKmG6do457n7Tt3tFQGb1w9uws+nnfCBY+BhBbwm5Gajvf1Cd
-         NdADRr8VMPrOUZbQVj3hGw4bBJ/keVtC6Fxh1Uon74yBuZVOjsT8UiBFv+XtC86B31aH
-         U39u6jCpF7EyjlMO8Qa6UuDYthWN3laRwgjRnITs6BIzN7L5qoBT+2sxY6el9CvDlTP3
-         oJwbfOjqjIHxA1OBznCgYff3hejfmVeNdbI26PALNdHhm0iUR48XhVU4qm1I7ntTpzE3
-         rLnG5Io01h92FeoXpVRWfkrRZ3ipJNnqJk4XABhbMCXGDSsGOh5+j59dx46qCzPETjlc
-         HNaQ==
-X-Gm-Message-State: AOJu0YzydIUFYUd6MSFk6tm8zNv0FuXekwWStMcsHCKtAr5tcoFy63sV
-	0XBuRc18mpFIrOJ6ZJWtwo75ybbKSGbxOW8K0gvayKe+wfRHYP5FSqtRTLcCKYLhwi7qJcYBnXP
-	N
-X-Gm-Gg: ASbGncuNtauEImkIf1TDwbs7YSR0eomjF5PumT7ClZlZ52hVial7tUBVUZCCpvBSlU+
-	Llyqwok9/BScx8id3FLTP2RVAg2QL42c3hxQWyoB1QqwIVcPoopA+SaMirVrKpSmnIh2LGr4EkT
-	suAe2o7XC11HhASjcr93vaMM7spJ1bpwMmuGxWcKS0PWJLg/WRaaMKl1xDvdrECv5MN708Cr1GC
-	SiT5Ss7KpU1I91YfFtlG1aJjy6ca5cQ7LP937QgcQwj2NyrYS8LM0OqDQpou5UnCqnAGhpVSdGs
-	uIV0QZiGQ5fm3NkRTZgFGHD1nUqFJOGzRgB4ffktSv9Rg12V1QBmrL+tdFo+CA==
-X-Google-Smtp-Source: AGHT+IEyIUcHLda0Oi5Dxfiv38uolw830VjeERY0b9n6LCLvY8kI6O/HApmGqXlxMWs/ME3XOMIDvQ==
-X-Received: by 2002:a05:6e02:216d:b0:3d4:3ab3:5574 with SMTP id e9e14a558f8ab-3d88ed654ddmr36402815ab.3.1744995618252;
-        Fri, 18 Apr 2025 10:00:18 -0700 (PDT)
-Received: from [192.168.1.14] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f6a37cb87fsm528003173.14.2025.04.18.10.00.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Apr 2025 10:00:17 -0700 (PDT)
-Message-ID: <d1a6d53a-21c7-4500-a060-26c15c4f32c3@linuxfoundation.org>
-Date: Fri, 18 Apr 2025 11:00:16 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DTiQDuMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E248C4CEE2;
+	Fri, 18 Apr 2025 20:17:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745007427;
+	bh=LqBBrDYSFPq7qwiPArMtIpRUwFr+ehgmwr9qj6TRhMc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DTiQDuMAKi3pUPVSuJvtIMOuY0Kh5OBPqSPql57cZBMkDWWEFIH0OqH1tNvfm5HqW
+	 FWfPqP2bXoHHwa6X4nnRacdG2ecEBOYvghqqJqgh+flyGf6h/IuSsawtX5kSp4rQWK
+	 24GgwvUmkyGT3w2c3rojHJ8X6qlrWVnCyNzsLkScHG8xuovvnbl2VFqBINWWNONPGX
+	 O6bxwSzqM83Pu+iRxuEEOfLT1Y+4Xz8bFoCk4Gwqn3oh+nbM0zJ6ZBTMcwj4H+q77H
+	 LvlArFYPOPpCjzl9P2nnN8cN5R1fkipZ1NiRvJvjR7OMx2Mda1nvnCRS2ny7vUN9V/
+	 QpT8hhHkjcp0g==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.14 000/447] 6.14.3-rc2 review
+Date: Fri, 18 Apr 2025 13:17:04 -0700
+Message-Id: <20250418201704.68961-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250418110423.925580973@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 000/413] 6.13.12-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20250418110411.049004302@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20250418110411.049004302@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4/18/25 05:05, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.13.12 release.
-> There are 413 patches in this series, all will be posted as a response
+Hello,
+
+On Fri, 18 Apr 2025 13:05:27 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.14.3 release.
+> There are 447 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Sun, 20 Apr 2025 11:02:49 +0000.
+> Responses should be made by Sun, 20 Apr 2025 11:02:55 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.12-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-thanks,
--- Shuah
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
+[2] fc253f3d7070 ("Linux 6.14.3-rc2")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: sysfs.sh
+ok 2 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
+ok 3 selftests: damon: damos_quota.py
+ok 4 selftests: damon: damos_quota_goal.py
+ok 5 selftests: damon: damos_apply_interval.py
+ok 6 selftests: damon: damos_tried_regions.py
+ok 7 selftests: damon: damon_nr_regions.py
+ok 8 selftests: damon: reclaim.sh
+ok 9 selftests: damon: lru_sort.sh
+ok 10 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 11 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh # SKIP
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh # SKIP
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh # SKIP
+ok 12 selftests: damon-tests: build_m68k.sh # SKIP
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
