@@ -1,128 +1,82 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C96213E71
-	for <patches@lists.linux.dev>; Fri, 18 Apr 2025 15:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A572AE66;
+	Fri, 18 Apr 2025 15:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744991557; cv=none; b=am4Dn0EXjMvsIBPZaVN7oRTZe2qBuszV6LaDSoDCk+0264s/xDpjJsc6JesHFpGea6jrRshv6LwdGDVxNShySkgQOlf8fiKwvWFyhjeH3VJv1uWczmPMhmw3KX3bUxJ64AjK0S3RsTyjwZQ0an6NBI6cHgpgsPMCYNhkVCEVTqM=
+	t=1744991735; cv=none; b=EvW2nLCxlAV6NC808pVqlCBItyQXFf0SeDJZNyNW+8aKRAOxklB91wzTZm3UGpUCQPQuWakfJjHqA/6kMnXiT3sKcj4DpKR8kRFS29D5ELHSUBPYxPUEs/OSL+bfQPbKzGIFGJdx3/fpaDDftHgIvXr4yJtuvtNv7UDp43JyWFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744991557; c=relaxed/simple;
-	bh=F/FqzNZ9qlnPa1jemkgvzEU/JpEsiXoIVKP/J4XS9H0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lw/SQfHjSe64GGNhVFQG6ABE1tW5yMlrQCo7CLIN1/5xvwJ67vUc68VPHUAhxx+UYFTZA4h7LxzR7usXY+ReJOFrPDrxunA21SPW5eHorfqlU4qzmpsjCjNm1d0ExZnngVqPUoF6OXfnSKnkPTX8JikVDigs2yaL4Q2cPphSYRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=N0u+B/TN; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1744991735; c=relaxed/simple;
+	bh=KC8U+EgHKuXEEq/nPLm55QGBSam0ptXIegEJfrfd08U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jEmZQFR5wr9ddJ+lMUFXq6fd7drxjVq62Az9zggDOzDu620olEJ1OJwoe6acNjyw6+YLuSB5o95h4N7ap+6wwssmeDfjVFCpt6KbNnADRioVBCMyf5nBKKu2vF2wE/uvL84U90NxsLYiufaHo3NE5W8IpWCioSVXdFAbCDoAZ8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2b+Sfbz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="N0u+B/TN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1744991554;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1wc26qQbycqhuxkUDZ6Sh+SUpqvdXJSaAUblqosEd3s=;
-	b=N0u+B/TNvBR/ightFvb3CU7X9BRk+DW3HNHhWi4gxkgmKSAodKpLR5lgaehXM6CWr3KHSh
-	PrGBbtEdCISPgF7MZNMGCQkJ69G6INYuGrOeji+jnsBCPgK5uW2CSFvoW7ec3XmXPnNggc
-	WyiwlIDhawP8Mzt1a3e3nBIy3f+ct/E=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-OHPxO60gM66tvkWwDkNWSw-1; Fri, 18 Apr 2025 11:52:33 -0400
-X-MC-Unique: OHPxO60gM66tvkWwDkNWSw-1
-X-Mimecast-MFC-AGG-ID: OHPxO60gM66tvkWwDkNWSw_1744991552
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-39135d31ca4so880702f8f.1
-        for <patches@lists.linux.dev>; Fri, 18 Apr 2025 08:52:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744991552; x=1745596352;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1wc26qQbycqhuxkUDZ6Sh+SUpqvdXJSaAUblqosEd3s=;
-        b=XmwohKJwwX0qLoCvHYf37QJFR2bneGgVoV2su+4YlcQeFfFXQdDLhLsB4zejgVsDDO
-         Elj87DekBlXQ8VTgkkOSqxZLe9gURI3Eh0kYp8hZg2bi5yPkSnuAufYYTwGoGnB8lJ6W
-         AJaKqDBzkM9l/Bn5JZzLTDThyBYrqRuOSMtfOJAh4rtuuREHbvud9VdXaasOvLR/uVSG
-         FkICLFysBa0vmM38Z5JFqkV4p+1GDN6UNUpwM5YgkfFieA+9cMCg9weqOvu6k/bx640X
-         ADS+njuPd4ePCInOR4m97P0ScdQxb5sC229PfMjitoOsGnELPdABVM6uPKmPO/cpm/1u
-         rQXw==
-X-Forwarded-Encrypted: i=1; AJvYcCVI60v5HwSjPXCNK4KqEwV3Sjx86UUU9b/ndI+pwJeNOLa5DDXECsx5uAtxX173Dg20kQJvFCAJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YyjNHOeUYu81e0r0ENOJj1jh3NXyUlxOUocNVUzXgv426uRHXMq
-	tBbhKOGs62YDfmXdQlyWwVjcu35J+2hsTQFKOYm+B5/ySVIUI7EV3gWPilN7SzV/99dO81dS9nF
-	EKp4meikP5gct1ZGJtknzaC36aQQQ2AezF8iR2xViL9a+CPjXBsOX6Hg=
-X-Gm-Gg: ASbGncuPKSLc+RbWHxnUH96jEq+aJpC1s3fJDI95UtzlsmaAXEEEKBAIIaaEHDLdnbj
-	NUM1x2AnTmVmQKiqvpVONusg+Z+WvlcdZuixyqB8P0DonyuQrfCZva+MmtyNvacgks9l64yav29
-	pHyF7Ehga8wI2qxYCUo13lZoGqW4GZJc3VuvH0Z71+se7Ri/tp6lqSi5pjhU08OeosTAN6ErVjM
-	ldIs6UTLfaDwHdtwggt+zJONoDQRKqLVFwVsvcwM5H2oZXmLZZuWZ7TN2VuJdYcdxHhNWcQT9Pb
-	lBOpP394ZpVtxF6DNDGf/nvU8YZ+L27R/DEho1rUasCd1xXg4J4=
-X-Received: by 2002:a05:6000:1886:b0:38d:e3da:8b4f with SMTP id ffacd0b85a97d-39efbd007c0mr2568840f8f.0.1744991551745;
-        Fri, 18 Apr 2025 08:52:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8hJOtqgZKvHmMFX8Sr5+SXl0HJhOYBEusxbHJ4Nl8XaJ3wP71Jpwu6vFmp9aQLWT50/PDaw==
-X-Received: by 2002:a05:6000:1886:b0:38d:e3da:8b4f with SMTP id ffacd0b85a97d-39efbd007c0mr2568820f8f.0.1744991551365;
-        Fri, 18 Apr 2025 08:52:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:c:37e0:ced3:55bd:f454:e722? ([2a01:e0a:c:37e0:ced3:55bd:f454:e722])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa433191sm3168492f8f.31.2025.04.18.08.52.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Apr 2025 08:52:30 -0700 (PDT)
-Message-ID: <7be276bc-4c55-4144-ac29-b734b1f44667@redhat.com>
-Date: Fri, 18 Apr 2025 17:52:29 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2b+Sfbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60901C4CEE2;
+	Fri, 18 Apr 2025 15:55:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744991734;
+	bh=KC8U+EgHKuXEEq/nPLm55QGBSam0ptXIegEJfrfd08U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c2b+SfbzfUHyxhapE7H0Jp2yvH5s1oL4/7BgHTQ7lJfGhxDejfF4TpQVHYuzY+oIb
+	 L7I42SBcF23upQc9XWXsXaIts+Gqxgj4XZUDj9thAYjTok32ee8UEvXuc8wSX8IiPP
+	 oYFFDiWBVzpARI7oSTLq0tdsK01LhMkiA9YjT0ctObB5feINEKL5yY3KOXheC/dLvK
+	 qiA1CuLX4zbOwjlQbP/NUSM0V56IFX6VTq7EagBGh7d3JTWf6UDtFpWLBO4Q0IGX8E
+	 JyEl6r/MdkmWlKOrudLBITuan9QZ5fXosVG1HuO94c4+gt7zdP86HgvjBEaYhWgPzH
+	 52zrEOmgM3JTg==
+Date: Fri, 18 Apr 2025 16:55:31 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.14 000/447] 6.14.3-rc2 review
+Message-ID: <aAJ188XG4BwiHQcR@finisterre.sirena.org.uk>
+References: <20250418110423.925580973@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/panic: use `///` for private items too
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
- Miguel Ojeda <ojeda@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Alex Gaynor <alex.gaynor@gmail.com>, dri-devel@lists.freedesktop.org,
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20250416122106.2554208-1-ojeda@kernel.org>
- <CANiq72msZ7FUo0=KXQjMkXjfm3jVaNhhVDCu_BFXRTL_xC0vog@mail.gmail.com>
-From: Jocelyn Falempe <jfalempe@redhat.com>
-In-Reply-To: <CANiq72msZ7FUo0=KXQjMkXjfm3jVaNhhVDCu_BFXRTL_xC0vog@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: -cSeb2VuvBrT-iVW6O8aLiOf5TqyBZ6OhRzQrQ3TCXM_1744991552
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, fr
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-On 16/04/2025 14:24, Miguel Ojeda wrote:
-> On Wed, Apr 16, 2025 at 2:21 PM Miguel Ojeda <ojeda@kernel.org> wrote:
->>
->> `///` should still be used for private items [1]. Some of the items in
->> this file do so already, so do it for a few other clear candidates in
->> the file.
-
-I just pushed it to drm-misc-next
-
-Thanks,
-
--- 
-
-Jocelyn
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="i4Req4ojKD5TEP2K"
+Content-Disposition: inline
+In-Reply-To: <20250418110423.925580973@linuxfoundation.org>
+X-Cookie: Well begun is half done.
 
 
+--i4Req4ojKD5TEP2K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->>
->> Link: https://lore.kernel.org/rust-for-linux/20250416112454.2503872-1-ojeda@kernel.org/ [1]
->> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> 
-> Sorry, I forgot the Cc: Jocelyn (it could be nice to have a
-> `MAINTAINERS` entry for this one).
-> 
-> Cheers,
-> Miguel
-> 
+On Fri, Apr 18, 2025 at 01:05:27PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.3 release.
+> There are 447 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--i4Req4ojKD5TEP2K
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmgCdfIACgkQJNaLcl1U
+h9Cjwwf/SavWGz1fW5rauh9ndW5ILbK2oBEk5LIAiIPXXRwzCUwBFejV3I6ASpB9
+Oym/oViPck2cZruGWmi+7emwmaU7YYIvlQ0deGjeDzW61oh9uDPck+YdGE3CHX6Z
+wDX/eD0aSx8vVNEgzOpY8+ys6upq2iC68CCyQSnPCOU55N8Otmwy5FAOEe5qDwuG
+iuvO1pXV0D4k7jPLeQqmju3fmjDMTQSJyU5rjiSuepLasijtYTi8/ofi4SbIpNqH
+kWJCz9qtEHVHnZLeJvpcVrdlGfH1BA/I9bf5luGvtwqVrSwiVu6rvJTQla3Afipf
+Oz5gVxFk3Ensu1TAYIin6xwaiWU+qQ==
+=ZLab
+-----END PGP SIGNATURE-----
+
+--i4Req4ojKD5TEP2K--
