@@ -1,162 +1,242 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2072.outbound.protection.outlook.com [40.107.220.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D55C1EB5E9
-	for <patches@lists.linux.dev>; Mon, 21 Apr 2025 18:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745261859; cv=none; b=BRL2Jr6V4FxnbezOjogwt95zDC6wonyhfBd1MbHb/pSp8fS7mU2zvuYcS450ROczNab5uEUHAjH0n2mvy8wSpXipOnQ3Cl55heLSBU3h4LtmY82nloeUvH9kp+KxSmkIsVWzaNRP40qKEdnnUCWl9DM4Oqd2QBq3wldHQaBkzzE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745261859; c=relaxed/simple;
-	bh=4WHKX4vaIsBShOzVYvS1137NxE73/Gd16QlxKgPn6UQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UZjkT+S2NAsczYG3DeeibmhZu7wNEcxf+UePpT78Vzm/pgsFgw+pDgEQLWStn7QnaspDLS4LQ0wv47FPKDnOqmmSmvPqtB6ZJauVm+cppVAV6+Wdst9Bm8bjOm1aZeOKNFOfTzcfGrGYzRLqG/Zi5To9KAiuEVbeV+qmmbqXb6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Z+yjLW3D; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDEC1EA7C6;
+	Mon, 21 Apr 2025 19:14:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.72
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745262870; cv=fail; b=ZPrVmvkFkVjhHEOaR3KIcPzAEb442rTWVDExAqBUOObZQNRtsGHlD8kQ2K66tMsQtn8YR6fjAOLaxXzF7kQrYt1LzHze6YWOdZjrioAudanq4HCRv0pPTPLs9gwKc6TgbCFy+fcgt/OAx641MXBcb0YX89uNqnOavBxdv/E/4TU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745262870; c=relaxed/simple;
+	bh=Z2NxxHGlS7nRnIy49Rx2mBaVPpFR+HgNi3x7UFlItGU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DGJhxZiGagYJyE8kf9TW35AvCCxqAuWwVN/SiHG43Z8JbYX3+hwdUH1+/QdyExeKmrcrOt4dBdAByz+2GqWlgONhNP1zPuMMe0hpnFC6+fbmcDDUCfuw1whdzZVoUEdkdfm50WY5bmylIAqpi1uXSV4cHw0Bo/Ajh28764zGH2s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XH+ccU7c; arc=fail smtp.client-ip=40.107.220.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z+yjLW3D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745261858; x=1776797858;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4WHKX4vaIsBShOzVYvS1137NxE73/Gd16QlxKgPn6UQ=;
-  b=Z+yjLW3DXTxQ9wexySRFjZWGHVJulkkq6afKQ+3K8C02Q+QDcJN/UIJ8
-   xEgDzFujvdV5Asgshojfa17TpicOvLn4tmDoktVy6TwEdLgQyTMdVuGzy
-   4hMZiyscXSAsdr+6eSjvTcJ/8vRlAsIVX4d/EOf6aVnlQuKAGJSBTFjqp
-   9iEtFBF/m79t66h605kxPihUj+EPjcYYRcbO/N3kcqFiw+28lnOyJ34nx
-   vZtDHD4W2dv0eos8uxxO35GFo26f0j9VKp+5Wh/NA9Dq7XmTZHSv2U0HD
-   waZgLZQDNt7FN2+RE3/rekdB0hFJbdyPnPZcFFbyVnnlUi91jl+/SYCEB
-   Q==;
-X-CSE-ConnectionGUID: 6uO/LEQgTAG/U67PBeEQRA==
-X-CSE-MsgGUID: F9+dze/cT32Jk9IJjVbW1A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11410"; a="58171056"
-X-IronPort-AV: E=Sophos;i="6.15,229,1739865600"; 
-   d="scan'208";a="58171056"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2025 11:57:38 -0700
-X-CSE-ConnectionGUID: 8TYnZeZDRqCJ1tXzEnnOlg==
-X-CSE-MsgGUID: 3CrmwYFTT8K3Aceq0v2wFQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,229,1739865600"; 
-   d="scan'208";a="136946619"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2025 11:57:36 -0700
-Date: Mon, 21 Apr 2025 11:57:35 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghuay@nvidia.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v3 00/26] x86/resctrl telemetry monitoring
-Message-ID: <aAaVH4W72fOzQhnh@agluck-desk3>
-References: <20250407234032.241215-1-tony.luck@intel.com>
- <53dcb55c-f5b6-4cb8-96b6-07aa1ba1d4d4@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XH+ccU7c"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PaklUj3aL/h3EZmrZJsDNRy79bClwZdpIP0inr+ykoP56r6o+Czis4htbomOmAnUdU9SV3BznFQZ+284dXaTbM8O8Oy+5czrkSxqE0vH0NWEkvGwhIcMzO+QmmSHXefXfqey0moLSWCEM+Drvkk/eU1jnA7JmN5jrWG3B4qWS+EZK++MLaVATIu7srURS0NdSwCbp31BLDGYXwhQn+ndI0on33WI9Maq5ofbo6HItYIFwzlH+pNdgPKNK14x+ma7yx4yIuy19ufpKn5lcWJxRKMuoYvczBJe3R/6ylvF7xnF6GN7RyBOHFme3cJUNJZ0jMLaCkexbE7VEMJVyVhvIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ijM6CkkdbQSEcyFX9EYG9G/0MO8q4W0XbCWQhsXdgYc=;
+ b=Tecv6FUg9TJ6ltezEASLyokPNacbUSSmdFReqa6ARqAs0uar0b0l4SEXWV+hxAUaZ3+u4mlt+X9Q/eMF//w/IIhgOr+IhgyFPD5jAcmbkoHfexhWqsk1rQuAV2o28SmOrFPV8VyBwUSzimYhCK4fWGPyZJ6Bw+Ygv6xBc5C0iOoFFNgDk9ROQQtOn+D3J9EGsEQi4ORD1ShS62/WCmvEv3VzsaJHzZA9R6pVsTTn4G2zUmoJDqqd8XEhQ6ZMr4Zq4Xms9zow8t8qAGXd61NTAHiBToRLQ4jxI+82m2gARB1KS79pwrfKG3BZKMx7DKbcj94BMnsqEdzbuMDDtnKLrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ijM6CkkdbQSEcyFX9EYG9G/0MO8q4W0XbCWQhsXdgYc=;
+ b=XH+ccU7cvwNAFZs99wAR/kYiO5HzbuMEAmy/zJn5BdzyvRxahWeXSKlrAoaKJJyuQOstWPgCWIGdpt/QPw5+G1vIU1cKQXNMw1sgoYO95qDdeHgcIYg6Dkh0uYhzcIi+XWBsV39TrW4+jrr9fDyIDCDC2nxt4aE+wJZNwZWUXCe++m5uUaxZeGKQzjV++QDu2EKtAKfbwror5inAcLczQQDsa6TC8kjIJ/5CSVtBfrbz9JIySOGx/uFWm4XUWR7FPJ/TFhsfa0ESyT3Go+S4l51cudNidgvuIQur666E8JfqauJTjFSAYuGqLcxxTRjT4YwQvudkXVEiFA5Ytrbg4Q==
+Received: from CH0P223CA0013.NAMP223.PROD.OUTLOOK.COM (2603:10b6:610:116::30)
+ by IA0PR12MB7651.namprd12.prod.outlook.com (2603:10b6:208:435::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8655.35; Mon, 21 Apr
+ 2025 19:14:21 +0000
+Received: from DS3PEPF000099DD.namprd04.prod.outlook.com
+ (2603:10b6:610:116:cafe::82) by CH0P223CA0013.outlook.office365.com
+ (2603:10b6:610:116::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.35 via Frontend Transport; Mon,
+ 21 Apr 2025 19:14:20 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS3PEPF000099DD.mail.protection.outlook.com (10.167.17.199) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8655.12 via Frontend Transport; Mon, 21 Apr 2025 19:14:19 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 21 Apr
+ 2025 12:14:05 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 21 Apr
+ 2025 12:14:05 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 21 Apr 2025 12:14:03 -0700
+Date: Mon, 21 Apr 2025 12:14:01 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+CC: "jgg@nvidia.com" <jgg@nvidia.com>, "corbet@lwn.net" <corbet@lwn.net>,
+	"will@kernel.org" <will@kernel.org>, "robin.murphy@arm.com"
+	<robin.murphy@arm.com>, "joro@8bytes.org" <joro@8bytes.org>,
+	"thierry.reding@gmail.com" <thierry.reding@gmail.com>, "vdumpa@nvidia.com"
+	<vdumpa@nvidia.com>, "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+	"shuah@kernel.org" <shuah@kernel.org>, "praan@google.com" <praan@google.com>,
+	"nathan@kernel.org" <nathan@kernel.org>, "peterz@infradead.org"
+	<peterz@infradead.org>, "Liu, Yi L" <yi.l.liu@intel.com>,
+	"jsnitsel@redhat.com" <jsnitsel@redhat.com>, "mshavit@google.com"
+	<mshavit@google.com>, "zhangzekun11@huawei.com" <zhangzekun11@huawei.com>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-tegra@vger.kernel.org"
+	<linux-tegra@vger.kernel.org>, "linux-kselftest@vger.kernel.org"
+	<linux-kselftest@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: Re: [PATCH v1 15/16] iommu/tegra241-cmdqv: Add user-space use support
+Message-ID: <aAaY+f2/jw9NaIWF@Asurada-Nvidia>
+References: <cover.1744353300.git.nicolinc@nvidia.com>
+ <30c7aff68c35040ee637629cb9fc2b6e7f83f76c.1744353300.git.nicolinc@nvidia.com>
+ <BN9PR11MB52768197516FB895146A12078CB82@BN9PR11MB5276.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <53dcb55c-f5b6-4cb8-96b6-07aa1ba1d4d4@intel.com>
+In-Reply-To: <BN9PR11MB52768197516FB895146A12078CB82@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DD:EE_|IA0PR12MB7651:EE_
+X-MS-Office365-Filtering-Correlation-Id: 51a25ce8-7251-4e52-1d6e-08dd8108b7dc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|1800799024|82310400026|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?l5jq0Y/wEgFj3V3DtVSBFK9NZX7CUK8vkcC+k2f3dp0Xv0KzgZKjIdGFBNZ5?=
+ =?us-ascii?Q?yDCHqxhfgBdVoL6rF3vkdBRi9LvECqrEBTjhtAJ6rd4eSkXoS1HL7UleedvK?=
+ =?us-ascii?Q?HRJIeOdxv9Q3yWPInXOmzJY9O/r6M7Wte8k7sZEqb9/3xRgqlBnKcFWcoMrR?=
+ =?us-ascii?Q?f2Is1cNW3mB5B0iJ94BTEHQwHFe8YH3JN/BaHSQFhfooZ45V9BVhft7kb7y8?=
+ =?us-ascii?Q?DYU59ffyJ4hUd6OC1K+N9DhpWR6dFl47gq3A6on9fmXbef/44JUwp8mmXj1c?=
+ =?us-ascii?Q?BI1+lEYGsAlAYZLP8Q5KWsR/JOIbqhxFgdyxzX/Z7EuasWuMJdxPLJZRinO4?=
+ =?us-ascii?Q?KsayH37vyXb4ZOic25+nCFfFRiD4nZ4QOVemuj0wlO8Ku1+cXiQOBcURZIrE?=
+ =?us-ascii?Q?sfyvohaalf707SZeQziWzPKKST41f/Rp0kc05coKRhIUN87czz+/aF39JSQQ?=
+ =?us-ascii?Q?m7fOTKgxxunGdrKBIan74kLLzvH0tORpwsC4zoOmCJpKS6AqVEHdLG0C5V+A?=
+ =?us-ascii?Q?fZm1UiG9/VgnAKD89NT9TLnc5HmIIP5j2W71VF1uA6Wp9FxiNbH7Heby5yIa?=
+ =?us-ascii?Q?Rrx+NAoYoIxusyPLlAVUnRFBVMrFEsaQRUpEtBLAF9P6rw8EKxF5dC4yEUYp?=
+ =?us-ascii?Q?goH95zR8yHfa5fBFhFMBDQOTqOaDZKHwZZt3Lafwq3h0rZNSlNfyeoJW74Bi?=
+ =?us-ascii?Q?7DtzAz6St1o0xDa+lB6MTZDU4k5lAMZu8qnxFEFxZgCTiRIlhAlfIS/HVcY7?=
+ =?us-ascii?Q?cME/xqmDSY1nJ4LrK/zRJYu2RNelWQVl29RGBqgEnqMU2dErqWeH+09rG1kI?=
+ =?us-ascii?Q?DcgLO1gL98J/PqtR4a47o1xaLJY1Xbi0GQaBzHIaYs0ifp3Q++bqssWX7em0?=
+ =?us-ascii?Q?0bw2n3AQcruzf4wiSKl2sAgGDWWjHGdH7KKdwim0y32zVyqJA/NTW6iSzHHJ?=
+ =?us-ascii?Q?l4UQGR47sNxdKQC6JLGk/vS5UXtwDA2kkWg4aQ1C9ooS+bTUrk/IAoMK1T0E?=
+ =?us-ascii?Q?FsD1swx2mKBwZZ3rJpmYo1y4xqpgteAG1cGgngxH4Mtp+f78p1FsD1/gBwNX?=
+ =?us-ascii?Q?gYFhjF7PzyTvF/L13/Z6d+TZ1moDsTW9SnrqDWwlhL5DGIP4ypHSscT/95Kf?=
+ =?us-ascii?Q?jmlbKDylnMLIYTFaW95x86tcjDHkgOA7+pbhhaRV/9gD3dahciWhRfGCOBQW?=
+ =?us-ascii?Q?GjJwLXuCeL9xhNVlj2FHIojnj45J4o1G9J2ZrRWGrNLJMw/P5P+ju4JL9Y8d?=
+ =?us-ascii?Q?LTfD5h0WrdSDrGsCrHKsFVGusTQRBy7zI9XFEswIALxeVFrBQYLCJejDLYb7?=
+ =?us-ascii?Q?/o+HQM60jZtdungAUhsZCxdqKkt+nwR9TYJSiJiZ52DBj9GpOlTC2CQZLygv?=
+ =?us-ascii?Q?y1UI3mOK4DlatVit80J3Eoye/PYmvG+Hcuux+7PDtaHBGRqk0ADx1luOWkk0?=
+ =?us-ascii?Q?z2wulaORuG4Ulu3k1cisjGUuoy9Gs3qj7sc1ZlRH7YK+AwN5+eMIpJGCbT2a?=
+ =?us-ascii?Q?rBLchaSK09AYoKEztlQRQEasGDMcaW3FnuEh?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Apr 2025 19:14:19.9293
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51a25ce8-7251-4e52-1d6e-08dd8108b7dc
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS3PEPF000099DD.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7651
 
-On Fri, Apr 18, 2025 at 02:13:39PM -0700, Reinette Chatre wrote:
-> One aspect that is only hinted to in the final documentation patch is
-> how users are expected to use this feature. As I understand the number of
-> monitor groups supported by resctrl is still guided by the number of RMIDs
-> supported by L3 monitoring. This work hints that the telemetry feature may
-> not match that number of RMIDs and a monitor group may thus exist but
-> when a user attempts to ready any of these perf files it will return
-> "unavailable".
+On Mon, Apr 21, 2025 at 08:37:40AM +0000, Tian, Kevin wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: Friday, April 11, 2025 2:38 PM
+> > 
+> > Add the support via vIOMMU infrastructure for virtualization use case.
+> > 
+> > This basically allows VMM to allocate VINTFs (as a vIOMMU object) and
+> > assign VCMDQs (vCMDQ objects) to it. A VINTF's MMIO page0 can be
+> > mmap'd
+> > to user space for VM to access directly without VMEXIT and corresponding
+> > hypercall.
 > 
-> The series attempts to address it by placing the number of RMIDs available
-> for this feature in a "num_rmids" file, but since the RMID assigned to a monitor
-> group is not exposed to user space (unless debugging enabled) the user does
-> not know if a monitor group will support this feature or not. This seems awkward
-> to me. Why not limit the number of monitor groups that can be created to the
-> minimum number of RMIDs across these resources like what is done for CLOSid?
+> it'd be helpful to add a bit more context, e.g. what page0 contains, sid
+> slots, vcmdq_base (mapped in s2), etc. so it's easier for one to understand
+> it from start instead of by reading the code.
 
-Reinette,
+Will do. It basically has all the control/status bits for direct
+vCMDQ controls.
 
-The mismatch between number of RMIDs supported by different components
-is a thorny one, and may keep repeating since it feels like systems are
-composed of a bunch of lego-like bricks snapped together from a box of
-parts available to the h/w architect.
-
-In this case we have three meanings for "number of RMIDs":
-
-1) The number for legacy features enumerated by CPUID leaf 0xF.
-
-2) The number of registers in MMIO space for each event. This is
-enumerated in the XML files and is the value I placed into telem_entry::num_rmids.
-
-3) The number of "h/w counters" (this isn't a strictly accurate
-description of how things work, but serves as a useful analogy that
-does describe the limitations) feeding to those MMIO registers. This is
-enumerated in telemetry_region::num_rmids returned from the call to
-intel_pmt_get_regions_by_feature()
-
-If "1" is the smallest of these values, the OS will be limited in
-which values can be written to the IA32_PQR_ASSOC MSR. Existing
-code will do the right thing by limiting RMID allocation to this
-value.
-
-If "2" is greater than "1", then the extra MMIO registers will
-sit unused.
-
-If "2" is less than "1" my v3 returns the (problematic) -ENOENT
-This can't happen in the CPU that debuts this feature, but the check
-is there to prevent running past the end of the MMIO space in case
-this does occur some day. I'll fix error path in next version to
-make sure this end up with "Unavailable".
-
-If "3" is less than "2" then the system will attach "h/w counters" to
-MMIO registers in a "most recently used" algorithm. So if the number
-of active RMIDs in some time interval is less than "3" the user will
-get good values. But if the number of active RMIDs rises above "3"
-then the user will see "Unavailable" returns as "h/w counters" are
-reassigned to different RMIDs (making the feature really hard to use).
-
-In the debut CPU the "energy" feature has sufficient "energy" counters
-to avoid this. But not enough "perf" counters. I've pushed and the
-next CPU with the feature will have enough "h/w counters".
-
-My proposal for v4:
-
-Add new options to the "rdt=" kernel boot parameter for "energy"
-and "perf".
-
-Treat the case where there are not enough "h/w counters" as an erratum
-and do not enable the feature. User can override with "rdt=perf"
-if they want the counters for some special case where they limit
-the number of simultaneous active RMIDs.
-
-User can use "rdt=!energy,!perf" if they don't want to see the
-clutter of all the new files in each mon_data directory.
-
-I'll maybe look at moving resctrl_mon_resource_init() to rdt_get_tree()
-and add a "take min of all RMID limits". But since this is a "can't
-happen" scenario I may skip this if it starts to get complicated.
-
-Which leaves what should be in info/PERF_PKG_MON/num_rmids? It's
-possible that some CPU implementation will have different MMIO
-register counts for "perf" and "energy". It's more than possible
-that number of "h/w counters" will be different. But they share the
-same info file. My v3 code reports the minimum of the number
-of "h/w counters" which is the most conservative option. It tells
-the user not to make more mon_data directories than this if they
-want usable counters across *both* perf and energy. Though they
-will actually keep getting good "energy" results even if then
-go past this limit.
-
--Tony
-
+> > As an initial version, the number of VCMDQs per VINTF is fixed to two.
 > 
+> so an user could map both VCMDQs of an VINTF even when only one
+> VCMDQ is created, given the entire 64K page0 is legible for mmap once
+> the VINTF is associated to a viommu?
+
+Oh, that's a good point!
+
+If a guest OS ignores the total number of VCMDQs emulated by the
+VMM and tries to enable the VCMDQ via the "reserved" MMIO region
+in the mmap'd VINTF page0, the host system would be spammed with
+vCMDQ TIMEOUTs that aren't supposed to happen nor be forwarded
+back to the guest.
+
+It looks like we need some dynamic VCMDQ mapping to a VINTF v.s.
+static allocation, though we can still set the max number to 2.
+ 
+> no security issue given the VINTF is not shared, but conceptually if
+> feasible (e.g. two CMDQ's MMIO ranges sits in different 4k pages of
+> VINTF page0) does it make sense to do per-VCMDQ mmap control
+> and return mmap info at VCMDQ alloc?
+
+Page size can be 64K on ARM. And each additional logical VCMDQ
+(in a VINTF page0) has only an offset of 0x80. So, vCMDQ cannot
+be mmap'd individually.
+
+> > +	if (vintf->lvcmdqs[arg.vcmdq_id]) {
+> > +		vcmdq = vintf->lvcmdqs[arg.vcmdq_id];
+> > +
+> > +		/* deinit the previous setting as a reset, before re-init */
+> > +		tegra241_vcmdq_hw_deinit(vcmdq);
+> > +
+> > +		vcmdq->cmdq.q.q_base = q_base & VCMDQ_ADDR;
+> > +		vcmdq->cmdq.q.q_base |= arg.vcmdq_log2size;
+> > +		tegra241_vcmdq_hw_init_user(vcmdq);
+> > +
+> > +		return &vcmdq->core;
+> > +	}
+> 
+> why not returning -EBUSY here?
+
+Hmm, this seems to a WAR that I forgot to drop! Will check and
+remove this.
+
+> > +
+> > +	vcmdq = iommufd_vcmdq_alloc(viommu, struct tegra241_vcmdq,
+> > core);
+> > +	if (!vcmdq)
+> > +		return ERR_PTR(-ENOMEM);
+> > +
+> > +	ret = tegra241_vintf_init_lvcmdq(vintf, arg.vcmdq_id, vcmdq);
+> > +	if (ret)
+> > +		goto free_vcmdq;
+> > +	dev_dbg(cmdqv->dev, "%sallocated\n",
+> > +		lvcmdq_error_header(vcmdq, header, 64));
+> > +
+> > +	vcmdq->cmdq.q.q_base = q_base & VCMDQ_ADDR;
+> > +	vcmdq->cmdq.q.q_base |= arg.vcmdq_log2size;
+> 
+> could the queue size be multiple pages? there is no guarantee
+> that the HPA of guest queue would be contiguous :/
+
+It certainly can. VMM must make sure the guest PA are contiguous
+by using huge pages to back the guest RAM space. Kernel has no
+control of this but only has to trust the VMM.
+
+I'm adding a note here:
+	/* User space ensures that the queue memory is physically contiguous */
+
+And likely something similar in the uAPI header too.
+
+Thanks!
+Nicolin
