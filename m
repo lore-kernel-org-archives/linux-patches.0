@@ -1,99 +1,208 @@
-Received: from puleglot.ru (puleglot.ru [195.201.32.202])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F319322E3F9;
-	Tue, 22 Apr 2025 12:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.32.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E0F27CCCF;
+	Tue, 22 Apr 2025 12:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745323432; cv=none; b=P4Sc1Z31a6Suaz2UID1OvaNIt3iDjfCW6ek8Q1OBpHI4M/XrG7BK1TeAWHFRkjlZ/BL7QzQRnssKvly9Vk8Zn1b9K0pbT8iZOQ1Gx4F7nBH+vb0Aj6AbbxXWHq1w5Sj3BP9xXWa/Mr6emOZuMpY9mEyXhm5MxX25x/ygm+26OtE=
+	t=1745324320; cv=none; b=AqUE9vEKei/gmQJsBt93BauW2rr9vOO8km3wuZ4Nqp7fFUM4aUa9rNA8R8QDICHoGQCp2HT1kpkx4DkGfCphIp9iJvSXKHewzwFi7Zs877tK6GCvf9S30kvpQMQIHRN4mTXTAOPXf8IO0i0OjYf14jjW2TyXIk98Rg2INPpZnWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745323432; c=relaxed/simple;
-	bh=wKicEuSBQ3qD9eofDowWMF7Jx2qZyO6UTU6kHcJelro=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+iZ+9MH+/fjqO5wt1SVG/mqpBUFGIurSkAwIlEAXSAQgYMK15KdyON4N0OwBaZuVIjCXmxpxZs5+fh2udhlXsFGIMt++euK63tknPIbxKYEQ1fTjm/TqIgDZJbKm6LYhQ7gOgd1WnTAuLWuXcQRvVbKwcDs5yp4F4uTIjDOPR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tsoy.me; spf=pass smtp.mailfrom=puleglot.ru; dkim=pass (1024-bit key) header.d=tsoy.me header.i=@tsoy.me header.b=LNgbY5ac; arc=none smtp.client-ip=195.201.32.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tsoy.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=puleglot.ru
+	s=arc-20240116; t=1745324320; c=relaxed/simple;
+	bh=zGIA3giuG78kc+j93vXPJJvT30mzAC2qUyglKlcVYtw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wg8z9UDn11CEQfnbQ1YKuZ0HyZo+wAnbfuES5XIbPVaoV58jsZarDc4tZr2s9nrK/SsRFK/vR8Yuv6rZ14UGMRAclNKT+TqS0bQ+hdp+VEviLvbdYVplfHxx2nLtON0R68WAG4O+RIsdssWHyx8g5tVEe9ujj/hWVlHRo5csnVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eo39yckB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tsoy.me header.i=@tsoy.me header.b="LNgbY5ac"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tsoy.me;
-	s=mymail; h=Sender:Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=CtPR+cVenJCr9mJ2PZxBh1nwbH+SGndF+rQFIsfRNKg=; b=LNgbY5acjwJVZB9ObKBmppatep
-	fFuOvL/HoQ4fmWtFSNva43m7AXGYNekZ1CIkbVik+worYXqX4ZuXc1k/R5b1VTmoM/AvW+x7OUYEL
-	8i3Y1E/u2/y7Tc2xIqwGI+y3Y5gORMmY9Ybkx0IyTz6KGt8yaYdiDJJMOQsf1QuRQl1U=;
-Received: from [62.217.191.235] (helo=home.puleglot.ru)
-	by puleglot.ru with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <puleglot@puleglot.ru>)
-	id 1u7CLs-00000000DlW-0Qjn;
-	Tue, 22 Apr 2025 15:03:48 +0300
-From: Alexander Tsoy <alexander@tsoy.me>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12.y v2 2/2] wifi: ath12k: Fix invalid entry fetch in ath12k_dp_mon_srng_process
-Date: Tue, 22 Apr 2025 15:03:38 +0300
-Message-ID: <20250422120338.229099-2-alexander@tsoy.me>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250422120338.229099-1-alexander@tsoy.me>
-References: <20250422120338.229099-1-alexander@tsoy.me>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eo39yckB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E36C4CEEA;
+	Tue, 22 Apr 2025 12:18:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745324319;
+	bh=zGIA3giuG78kc+j93vXPJJvT30mzAC2qUyglKlcVYtw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Eo39yckBjPwIQKtznL+1UvdBuAwI3WYn9qkWSEGBzf/uOatdo1uzcddLl8R/KTPbu
+	 Hu6saBCpgnunIaquZiDtlofgwbJO3Rej8YmuzNHdcWMgdQIt0uFRM6lEQZcMK6+7SL
+	 n9RUYeOA8njFMuSbjvX8/STWX/1z7rC+xDwOaxxAZYxS1eF1yhs8WPX0CEDqpa2phe
+	 07mCC0N6FtdHcxrPQ0aPs3MNsp0EI8tmTOsMI4IB1vtDSAglnbtUVLui7coW4LBFVU
+	 UoNulww5GYTMdWOzoCO4AryDvq4s20kLwcqxpWQrnx2mMchmuJEbC8udqFL5D+eeaN
+	 iRTYyVO1wgTxQ==
+Date: Tue, 22 Apr 2025 07:18:37 -0500
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev,
+	Pin-yen Lin <treapking@chromium.org>,
+	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+	=?utf-8?Q?=C5=81ukasz?= Bartosik <ukaszb@chromium.org>,
+	Jameson Thies <jthies@google.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>
+Subject: Re: [PATCH 5/7] dt-bindings: usb: google,cros-ec-typec: Add ports
+ for DP altmode
+Message-ID: <20250422121837.GA734359-robh@kernel.org>
+References: <20250416000208.3568635-1-swboyd@chromium.org>
+ <20250416000208.3568635-6-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Sender: puleglot@puleglot.ru
+In-Reply-To: <20250416000208.3568635-6-swboyd@chromium.org>
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+On Tue, Apr 15, 2025 at 05:02:05PM -0700, Stephen Boyd wrote:
+> Add a DT graph binding to google,cros-ec-typec so that it can combine
+> DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoint
+> that is connected to the usb-c-connector node's SS endpoint. Allow there
+> to be multiple 'typec' nodes underneath the EC node so that one DT graph
+> exists per DP bridge. The EC is actually controlling TCPCs and redrivers
+> that combine the DP and USB signals together so this more accurately
+> reflects the hardware design without introducing yet another DT node
+> underneath the EC for USB type-c "stuff".
+> 
+> If the type-c ports are being shared between a single DP controller then
+> the ports need to know about each other and determine a policy to drive
+> DP to one type-c port or the other. If the type-c ports each have their
+> own dedicated DP controller then they're able to operate independently
+> and enter/exit DP altmode independently as well. We can't connect the DP
+> controller's endpoint to one usb-c-connector port@1 endpoint and the USB
+> controller's endpoint to another usb-c-connector port@1 endpoint either
+> because the DP muxing case would have DP connected to two
+> usb-c-connector endpoints which the graph binding doesn't support.
+> 
+> Therefore, one typec node is required per the capabilities of the type-c
+> port(s) being managed. Add a port to the DisplayPort altmode as well, so
+> that we can show the connection between the DP controller and the DP
+> altmode. This lets us indicate which type-c ports the DP controller is
+> wired to. For example, if DP was connected to ports 0 and 2, while port
+> 1 was connected to another DP controller we wouldn't be able to
+> implement that without having some other DT property to indicate which
+> output ports are connected to the DP endpoint.
+> 
+> Furthermore, this supports ChromeOS designs like Corsola where a DP
+> controller/PHY is split with two lanes going to one connector and the
+> other two lanes going to another connector. In this case, we wouldn't
+> have the graph binding under the cros-ec-typec node, but we would have
+> the graph binding in the DP altmode directly connected to the DP
+> controller's two output endpoints.
+> 
+> Cc: Rob Herring (Arm) <robh@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: Conor Dooley <conor+dt@kernel.org>
+> Acked-by: Lee Jones <lee@kernel.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: <chrome-platform@lists.linux.dev>
+> Cc: Pin-yen Lin <treapking@chromium.org>
+> Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> Cc: Łukasz Bartosik <ukaszb@chromium.org>
+> Cc: Jameson Thies <jthies@google.com>
+> Cc: Andrei Kuchynski <akuchynski@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../bindings/connector/usb-connector.yaml     |   6 +
+>  .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+>  .../bindings/usb/google,cros-ec-typec.yaml    | 165 ++++++++++++++++++
+>  3 files changed, 175 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> index 11e40d225b9f..e3d60997c03e 100644
+> --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> @@ -179,6 +179,12 @@ properties:
+>              $ref: /schemas/types.yaml#/definitions/uint32
+>              description: VDO returned by Discover Modes USB PD command.
+>  
+> +          port:
+> +            $ref: /schemas/graph.yaml#/properties/port
+> +            description: OF graph bindings modeling a data bus to the
+> +              DisplayPort altmode from the DisplayPort controller. Used when
+> +              the altmode switch is part of the port manager.
+> +
 
-[ Upstream commit 63fdc4509bcf483e79548de6bc08bf3c8e504bb3 ]
+Why can't this connection be another endpoint on port@1 as that is the 
+port for the SS signals.
 
-Currently, ath12k_dp_mon_srng_process uses ath12k_hal_srng_src_get_next_entry
-to fetch the next entry from the destination ring. This is incorrect because
-ath12k_hal_srng_src_get_next_entry is intended for source rings, not destination
-rings. This leads to invalid entry fetches, causing potential data corruption or
-crashes due to accessing incorrect memory locations. This happens because the
-source ring and destination ring have different handling mechanisms and using
-the wrong function results in incorrect pointer arithmetic and ring management.
+>    port:
+>      $ref: /schemas/graph.yaml#/properties/port
+>      description: OF graph bindings modeling a data bus to the connector, e.g.
+> diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> index ac89696fa649..63d506e88abb 100644
+> --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> @@ -98,9 +98,6 @@ properties:
+>  
+>    gpio-controller: true
+>  
+> -  typec:
+> -    $ref: /schemas/usb/google,cros-ec-typec.yaml#
+> -
+>    ec-pwm:
+>      $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
+>      deprecated: true
+> @@ -163,6 +160,10 @@ patternProperties:
+>      type: object
+>      $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
+>  
+> +  "^typec(-[0-9])*$":
+> +    type: object
+> +    $ref: /schemas/usb/google,cros-ec-typec.yaml#
+> +
+>  required:
+>    - compatible
+>  
+> diff --git a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> index 3272d0e01f7e..611345bbe884 100644
+> --- a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> +++ b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> @@ -26,6 +26,55 @@ properties:
+>    '#size-cells':
+>      const: 0
+>  
+> +  mux-gpios:
+> +    description: GPIOs indicating which way the DisplayPort mux is steered
+> +    minItems: 1
+> +    maxItems: 3
+> +
+> +  no-hpd:
+> +    description: Indicates this device doesn't signal HPD for DisplayPort
+> +    type: boolean
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +        description:
+> +          Port for DisplayPort (DP) data
+> +
+> +        properties:
+> +          endpoint@0:
+> +            $ref: /schemas/graph.yaml#/properties/endpoint
+> +            description: Input DP port
+> +
+> +        patternProperties:
+> +          '^endpoint@[1-8]$':
+> +            $ref: /schemas/graph.yaml#/properties/endpoint
+> +            description: Output to the usb-c connector's DP altmode
 
-To fix this issue, replace the call to ath12k_hal_srng_src_get_next_entry with
-ath12k_hal_srng_dst_get_next_entry in ath12k_dp_mon_srng_process. This ensures
-that the correct function is used for fetching entries from the destination
-ring, preventing invalid memory accesses.
+This is odd. Generally (or always?) a port is 1 direction.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Other bindings IIRC have 3 ports in the device doing the muxing: 1 
+output for connector port@1, 1 USB SS input, and 1 DP input.
 
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Link: https://patch.msgid.link/20241223060132.3506372-7-quic_ppranees@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/ath/ath12k/dp_mon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 5c6749bc4039..4c98b9de1e58 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -2118,7 +2118,7 @@ int ath12k_dp_mon_srng_process(struct ath12k *ar, int mac_id, int *budget,
- 		dest_idx = 0;
- move_next:
- 		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
--		ath12k_hal_srng_src_get_next_entry(ab, srng);
-+		ath12k_hal_srng_dst_get_next_entry(ab, srng);
- 		num_buffs_reaped++;
- 	}
- 
--- 
-2.49.0
-
+Rob
