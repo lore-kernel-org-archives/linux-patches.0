@@ -1,83 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CE82638A9;
-	Tue, 22 Apr 2025 08:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F5D1EFFB0;
+	Tue, 22 Apr 2025 08:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745311491; cv=none; b=O8+VOCt1vLk+FuMlTw+lVgI1W53sGm5WAJRHzxWkxBt1ogvfJhiOLEocHpGCibL7zozTuCoD/yJzvqqHKEGyyuI4ieZ3B/nzLk6A29gW54YjMBbqjLEgVbodtlsOhwjK7jgS/Ai63uDrOoyjZ++MegSrysLaXuhiWlsDLDz5EHk=
+	t=1745311906; cv=none; b=a/XTTlWgUfRG9uXgRoMF3JzWoAFpC0gZ09wVhz6oGAQk4QeID7h6u/mBn6sIyPevH1qYtwvHYhBl3TFb5e9DZpzoZNXmc+hahv0tywrqVyLgr+k8dbchxQ43xcBfWWQiQt8Swc0Ol3PbNYFmzCvx6ZI28w0EkOvBRf03BqcsXHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745311491; c=relaxed/simple;
-	bh=YfYBYPoaL0jjj0LpzBYwTuA5lcq4ryN+A1gm/3RclHs=;
+	s=arc-20240116; t=1745311906; c=relaxed/simple;
+	bh=xPNfdAgaEW5nPRdCDrfF7RY71YYTB3w3AcKN8iIfMkk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BLaO+yB8YfN3s6SzI6Kk5fhrT+2k1i5REmwr1xkBTBUeCcGnGGzZ113wR5/sNDXiyMo4p7cHLQyciq7NBVyyJu6G6odukF4Cjzm4oS6s9wp8zYPr1HJ6yoSnn8MlVitpzWbZak982o4wdOTLdFsV6fL/fxZVkOvlygraS4qbEDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=den9oPcc; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=TDpuiLFew/7VTFLNrl2rX/r89gZe+aequLG48D4NI3CZdycvLEsL2D6J/5E3Hpo3Ch5SWKCewQDVgPMvcQn19dqhYI0wkKOYgQMJrLXpfizeBHtKZCjPYDu4xdBDFqtEfbdLnw6AbKouj20Y3rXSnZxit5CiKD/rm3bDE5je5Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vidqjDRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="den9oPcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C538AC4CEEA;
-	Tue, 22 Apr 2025 08:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vidqjDRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CB8C4CEE9;
+	Tue, 22 Apr 2025 08:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745311490;
-	bh=YfYBYPoaL0jjj0LpzBYwTuA5lcq4ryN+A1gm/3RclHs=;
+	s=korg; t=1745311905;
+	bh=xPNfdAgaEW5nPRdCDrfF7RY71YYTB3w3AcKN8iIfMkk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=den9oPccglKzGh9MsHBbJtdXIjE0OcF2hpyRWv/A924Y0iMwxhgfTs7G+ULXs3lTU
-	 CeUnQuDHNUNeNB2pa0xxUD+7J0kyZ3I9UFlH32B6WvVUaiBE/2WkdHiybHMtjQIHDy
-	 wB5/KSpS5pn++yvBh95sei5cFwyGQxGT9bZfcy08=
-Date: Tue, 22 Apr 2025 10:44:47 +0200
+	b=vidqjDRQNUN4ioPdYeru/dBlENvAXzjWWzlEskIZDHWCGUL2k/ka3sDIDnv4+rr0+
+	 9I8oYJ6/RV/ldOlMoSCqbGtdgaiLmGVN9+PJJj4Wkcl50HWDeTDpUNGG26voorJW/O
+	 shva/5r5ozN0NlT5q1fJPYmwSI9TQ68VlNPbTMk4=
+Date: Tue, 22 Apr 2025 10:51:43 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: =?iso-8859-1?Q?J=FCrgen_Gro=DF?= <jgross@suse.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Jan Beulich <jbeulich@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 051/198] Xen/swiotlb: mark xen_swiotlb_fixup() __init
-Message-ID: <2025042235-disown-gopher-01a1@gregkh>
-References: <20250325122156.633329074@linuxfoundation.org>
- <20250325122157.975417185@linuxfoundation.org>
- <20250407181218.GA737271@ax162>
- <59eb2546-98c8-47e6-95e3-c7b4825cd86a@suse.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/205] 6.1.134-rc2 review
+Message-ID: <2025042236-endeared-mobile-3fb8@gregkh>
+References: <20250409115832.610030955@linuxfoundation.org>
+ <90288944-3f5b-45b7-ae7d-c7a54398db55@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <59eb2546-98c8-47e6-95e3-c7b4825cd86a@suse.com>
+In-Reply-To: <90288944-3f5b-45b7-ae7d-c7a54398db55@roeck-us.net>
 
-On Tue, Apr 15, 2025 at 08:38:14AM +0200, Jürgen Groß wrote:
-> On 07.04.25 20:12, Nathan Chancellor wrote:
-> > Hi Greg,
+On Fri, Apr 11, 2025 at 07:29:38AM -0700, Guenter Roeck wrote:
+> On 4/9/25 05:02, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.134 release.
+> > There are 205 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > On Tue, Mar 25, 2025 at 08:20:13AM -0400, Greg Kroah-Hartman wrote:
-> > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Jan Beulich <jbeulich@suse.com>
-> > > 
-> > > [ Upstream commit 75ad02318af2e4ae669e26a79f001bd5e1f97472 ]
-> > > 
-> > > It's sole user (pci_xen_swiotlb_init()) is __init, too.
+> > Responses should be made by Fri, 11 Apr 2025 11:58:02 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > This is not true in 6.1 though... which results in:
-> > 
-> >    WARNING: modpost: vmlinux.o: section mismatch in reference: pci_xen_swiotlb_init_late (section: .text) -> xen_swiotlb_fixup (section: .init.text)
-> > 
-> > Perhaps commit f9a38ea5172a ("x86: always initialize xen-swiotlb when
-> > xen-pcifront is enabling") and its dependency 358cd9afd069 ("xen/pci:
-> > add flag for PCI passthrough being possible") should be added (I did not
-> > test if they applied cleanly though) but it seems like a revert would be
-> > more appropriate. I don't see this change as a dependency of another one
-> > and the reason it exists upstream does not apply in this tree so why
-> > should it be here?
 > 
-> Right.
+> Building loongarch:defconfig ... failed
+> --------------
+> Error log:
+> In file included from arch/loongarch/net/bpf_jit.c:7:
+> arch/loongarch/net/bpf_jit.h: In function 'emit_nop':
+> arch/loongarch/net/bpf_jit.h:30:22: error: 'INSN_NOP' undeclared
 > 
-> Greg, could you please remove this patch from the stable trees again?
+> Caused by commit e9ccb262b39a ("LoongArch: BPF: Fix off-by-one error
+> in build_prologue()"). INSN_NOP was introduced with commit 19e5eb15b00c5
+> in v6.2.
+> 
+> Also, the description of e9ccb262b39a says "With BPF progs mixing bpf2bpf
+> and tailcalls...". Support for that was introduced in v6.4 with commit
+> bb035ef0cc91 ("LoongArch: BPF: Support mixing bpf2bpf and tailcalls"),
+> so I do wonder if e9ccb262b39a was really needed in 6.1.
 
-Ick.  Now reverted, sorry about that.
+Thanks for letting me know, now reverted.
 
 greg k-h
