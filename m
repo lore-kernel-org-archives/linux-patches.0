@@ -1,79 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F5D1EFFB0;
-	Tue, 22 Apr 2025 08:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463C31F151E
+	for <patches@lists.linux.dev>; Tue, 22 Apr 2025 09:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745311906; cv=none; b=a/XTTlWgUfRG9uXgRoMF3JzWoAFpC0gZ09wVhz6oGAQk4QeID7h6u/mBn6sIyPevH1qYtwvHYhBl3TFb5e9DZpzoZNXmc+hahv0tywrqVyLgr+k8dbchxQ43xcBfWWQiQt8Swc0Ol3PbNYFmzCvx6ZI28w0EkOvBRf03BqcsXHU=
+	t=1745313693; cv=none; b=nWiBp1TXIeG05fFT4OsMp2V6Av7seKrDL7YjgiwXNDwgwZJCEjImv0qRbReuDW449xY0Ay7AEKUoQmW6QqskeOOr3acAh11wm+FrwWFMTTWcVbykA/M2SCgk1B8do7sF2exFFxSqKEHY2DEZCFYguhYLEITpN3Tv3mZBzPMDZ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745311906; c=relaxed/simple;
-	bh=xPNfdAgaEW5nPRdCDrfF7RY71YYTB3w3AcKN8iIfMkk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TDpuiLFew/7VTFLNrl2rX/r89gZe+aequLG48D4NI3CZdycvLEsL2D6J/5E3Hpo3Ch5SWKCewQDVgPMvcQn19dqhYI0wkKOYgQMJrLXpfizeBHtKZCjPYDu4xdBDFqtEfbdLnw6AbKouj20Y3rXSnZxit5CiKD/rm3bDE5je5Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vidqjDRQ; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vidqjDRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CB8C4CEE9;
-	Tue, 22 Apr 2025 08:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745311905;
-	bh=xPNfdAgaEW5nPRdCDrfF7RY71YYTB3w3AcKN8iIfMkk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vidqjDRQNUN4ioPdYeru/dBlENvAXzjWWzlEskIZDHWCGUL2k/ka3sDIDnv4+rr0+
-	 9I8oYJ6/RV/ldOlMoSCqbGtdgaiLmGVN9+PJJj4Wkcl50HWDeTDpUNGG26voorJW/O
-	 shva/5r5ozN0NlT5q1fJPYmwSI9TQ68VlNPbTMk4=
-Date: Tue, 22 Apr 2025 10:51:43 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/205] 6.1.134-rc2 review
-Message-ID: <2025042236-endeared-mobile-3fb8@gregkh>
-References: <20250409115832.610030955@linuxfoundation.org>
- <90288944-3f5b-45b7-ae7d-c7a54398db55@roeck-us.net>
+	s=arc-20240116; t=1745313693; c=relaxed/simple;
+	bh=h4t9k9MoPtCmhq7TWMfc+sz/zcEwKZGcekccOzuWkas=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Gbkfbf6jBgpnIKiPYHqCeRyc8YHgUbtLDVQ3aL6CN9GVxan0UbmL5dLaT9mKP/2BgaFp9alFxenB6KklertN8rJ9rw+rj5PrC7VG7bdJD6NqVo8u6QXVq+bQrLmt81+Uapl2aET3e6ExY8eFE0fcJcCGJ8IcVuKH0Fewr4zrWnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4eFSS023531;
+	Tue, 22 Apr 2025 02:21:29 -0700
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4647442kkq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Tue, 22 Apr 2025 02:21:29 -0700 (PDT)
+Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Tue, 22 Apr 2025 02:21:28 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Tue, 22 Apr 2025 02:21:25 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <tom@talpey.com>, <jiyin@redhat.com>, <pc@manguebit.com>,
+        <stfrench@microsoft.com>, <sfrench@samba.org>,
+        <linux-cifs@vger.kernel.org>, <samba-technical@lists.samba.org>,
+        <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <jianqi.ren.cn@windriver.com>
+Subject: [PATCH 5.10.y 2/2] smb: client: fix NULL ptr deref in crypto_aead_setkey()
+Date: Tue, 22 Apr 2025 17:21:25 +0800
+Message-ID: <20250422092125.3645917-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <90288944-3f5b-45b7-ae7d-c7a54398db55@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-ORIG-GUID: e51QhKt27oMCDyplDEHLah-XBUi7vEG0
+X-Authority-Analysis: v=2.4 cv=UpNjN/wB c=1 sm=1 tr=0 ts=68075f99 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=Li1AiuEPAAAA:8 a=SEc3moZ4AAAA:8 a=20KFwNOVAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8
+ a=riu9DmvwmDMTBw3IfOsA:9 a=qGKPP_lnpMOaqR3bcYHU:22 a=5oRCH6oROnRZc2VpWJZ3:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: e51QhKt27oMCDyplDEHLah-XBUi7vEG0
+X-Sensitive_Customer_Information: Yes
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-22_04,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 clxscore=1015
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504220070
 
-On Fri, Apr 11, 2025 at 07:29:38AM -0700, Guenter Roeck wrote:
-> On 4/9/25 05:02, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.134 release.
-> > There are 205 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Fri, 11 Apr 2025 11:58:02 +0000.
-> > Anything received after that time might be too late.
-> > 
-> 
-> Building loongarch:defconfig ... failed
-> --------------
-> Error log:
-> In file included from arch/loongarch/net/bpf_jit.c:7:
-> arch/loongarch/net/bpf_jit.h: In function 'emit_nop':
-> arch/loongarch/net/bpf_jit.h:30:22: error: 'INSN_NOP' undeclared
-> 
-> Caused by commit e9ccb262b39a ("LoongArch: BPF: Fix off-by-one error
-> in build_prologue()"). INSN_NOP was introduced with commit 19e5eb15b00c5
-> in v6.2.
-> 
-> Also, the description of e9ccb262b39a says "With BPF progs mixing bpf2bpf
-> and tailcalls...". Support for that was introduced in v6.4 with commit
-> bb035ef0cc91 ("LoongArch: BPF: Support mixing bpf2bpf and tailcalls"),
-> so I do wonder if e9ccb262b39a was really needed in 6.1.
+From: Paulo Alcantara <pc@manguebit.com>
 
-Thanks for letting me know, now reverted.
+commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
 
-greg k-h
+Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
+when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
+the client uses AES-128-CCM as the default cipher.  See MS-SMB2
+3.3.5.4.
+
+Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
+a @server->cipher_type check to conditionally call
+smb3_crypto_aead_allocate(), but that check would always be false as
+@server->cipher_type is unset for SMB3.02.
+
+Fix the following KASAN splat by setting @server->cipher_type for
+SMB3.02 as well.
+
+mount.cifs //srv/share /mnt -o vers=3.02,seal,...
+
+BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
+Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
+CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ ? crypto_aead_setkey+0x2c/0x130
+ kasan_report+0xda/0x110
+ ? crypto_aead_setkey+0x2c/0x130
+ crypto_aead_setkey+0x2c/0x130
+ crypt_message+0x258/0xec0 [cifs]
+ ? __asan_memset+0x23/0x50
+ ? __pfx_crypt_message+0x10/0x10 [cifs]
+ ? mark_lock+0xb0/0x6a0
+ ? hlock_class+0x32/0xb0
+ ? mark_lock+0xb0/0x6a0
+ smb3_init_transform_rq+0x352/0x3f0 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ smb_send_rqst+0x144/0x230 [cifs]
+ ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
+ ? hlock_class+0x32/0xb0
+ ? smb2_setup_request+0x225/0x3a0 [cifs]
+ ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
+ compound_send_recv+0x59b/0x1140 [cifs]
+ ? __pfx_compound_send_recv+0x10/0x10 [cifs]
+ ? __create_object+0x5e/0x90
+ ? hlock_class+0x32/0xb0
+ ? do_raw_spin_unlock+0x9a/0xf0
+ cifs_send_recv+0x23/0x30 [cifs]
+ SMB2_tcon+0x3ec/0xb30 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? __pfx_lock_release+0x10/0x10
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? lock_acquire+0x3f/0x90
+ ? _get_xid+0x16/0xd0 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
+ ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
+ cifs_mount_get_session+0x8a/0x210 [cifs]
+ dfs_mount_share+0x1b0/0x11d0 [cifs]
+ ? __pfx___lock_acquire+0x10/0x10
+ ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? find_held_lock+0x8a/0xa0
+ ? hlock_class+0x32/0xb0
+ ? lock_release+0x203/0x5d0
+ cifs_mount+0xb3/0x3d0 [cifs]
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? __pfx_cifs_mount+0x10/0x10 [cifs]
+ ? lock_acquire+0x3f/0x90
+ ? find_nls+0x16/0xa0
+ ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
+ cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
+ ? __pfx_vfs_parse_fs_string+0x10/0x10
+ ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
+ smb3_get_tree+0x1bf/0x330 [cifs]
+ vfs_get_tree+0x4a/0x160
+ path_mount+0x3c1/0xfb0
+ ? kasan_quarantine_put+0xc7/0x1d0
+ ? __pfx_path_mount+0x10/0x10
+ ? kmem_cache_free+0x118/0x3e0
+ ? user_path_at+0x74/0xa0
+ __x64_sys_mount+0x1a6/0x1e0
+ ? __pfx___x64_sys_mount+0x10/0x10
+ ? mark_held_locks+0x1a/0x90
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Cc: Tom Talpey <tom@talpey.com>
+Reported-by: Jianhong Yin <jiyin@redhat.com>
+Cc: stable@vger.kernel.org # v6.12
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+fixes CVE-2024-50047 but brings NULL-pointer dereferebce. So
+commit 4bdec0d1f658 ("smb: client: fix NULL ptr deref in crypto_aead_setkey()")
+should be backported too.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ fs/cifs/smb2pdu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
+index 245e2dd5a194..4197096e7fdb 100644
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -963,7 +963,9 @@ SMB2_negotiate(const unsigned int xid, struct cifs_ses *ses)
+ 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
+ 	 * Set the cipher type manually.
+ 	 */
+-	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
++	if ((server->dialect == SMB30_PROT_ID ||
++	     server->dialect == SMB302_PROT_ID) &&
++	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
+ 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
+ 
+ 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
+-- 
+2.34.1
+
