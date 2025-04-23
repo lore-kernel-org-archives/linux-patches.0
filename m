@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483A0263F2D;
-	Wed, 23 Apr 2025 15:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9572263F2D;
+	Wed, 23 Apr 2025 15:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420593; cv=none; b=nf1IsLnE6ugFH3+vUTemXx56kO8wgQwuwTWrzFDyACRlydBpmFyQMzb1zh4bnX3dHdQZ4XlLvh6eKPUWVSs5pzdZSx8VyfM91p76kr52u8/tA5sMMdZ2p6XkdJvq+yJSy6Lipajb6/9ylmAPR7H/2oXLPVTxt9Uggm2PMlxzoN8=
+	t=1745420595; cv=none; b=K54SSLNtYX8Ww2qLP311x6lQBj8FJAMLOtVprDuz6dILm7cEMw99oYPDmvX/mLpJpxaxezrYTlQwzJkkjmwhze2hwDZhuiyOeCd79vwD78nK3iyf736W1BB11Wbc0V67bIAE4Hee9AxDruiTMka3YqUMuWzuj1DDZQibsfF6tbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420593; c=relaxed/simple;
-	bh=+to4sGxpEoFDow8++EZUSW5eSA7gdP2rXjTsApVqA0M=;
+	s=arc-20240116; t=1745420595; c=relaxed/simple;
+	bh=gK8UK+op43tznwkW8uu8WkrT74XMhooNM5n9/1Ukr70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRvL/jdDhfnvs0BmpNaSdTaZhmdYHeR/GjY4nOyCq5QXlh5qz68/PlHSAzXFYyD2V5QjV3wkzDtB9RIjpScPNA+xxYjc9O1c9tfiJhxs23mfXG9Qc5lHcv8alXs15E5Y658EngrrTN2nFplE7sl8V5iLXTX1uj/JTxyoTosJejk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03hy2l+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VOHs9BZYlnh6t4zQc9YAlpJM1SZA0coWT1w+ZgHkGuOZ+uwNtTryz/YTlZtwX8AbWNMNHQ3io6DQDFdxutwZSkePTmpdh2YO/vcChVkPmBPiXlPQNnGusKLvX2SkVA+pIwvNd7mcIXaWYpe1bdAf0QtahaNj30+YOO2AJL/pkmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLi7a2di; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03hy2l+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEBF5C4CEE3;
-	Wed, 23 Apr 2025 15:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLi7a2di"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658A1C4CEE3;
+	Wed, 23 Apr 2025 15:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420593;
-	bh=+to4sGxpEoFDow8++EZUSW5eSA7gdP2rXjTsApVqA0M=;
+	s=korg; t=1745420595;
+	bh=gK8UK+op43tznwkW8uu8WkrT74XMhooNM5n9/1Ukr70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03hy2l+E5SydbNFD+UMJv5VUv3lg/y8wGeatJb4q4sDlS47944QzIME9fo2ilyRTe
-	 J/hG1C85uZNoTSfq009b7cOBU2SC51m4TvFFZVqodChCxrfFvug0FyoQWRMS4vmvcj
-	 huikFoIv2xVdj+DRJud/eSzlqnrrIB7qr/gowjh8=
+	b=pLi7a2dicf+yi0X6CHs9vSlOrfXY7stz1DsZKoK5LdbloVDUZ70iXwpUAJ0l2jhsh
+	 nqU1Cj2lhKuTvSBOAPxBPBQ18sPeckUSyrbvwatjgOH4oU9C944eQlJj2Cu6YbX6nH
+	 bWV8bg46kbYRnYYfzFOjwOBdvObqax3/lTOVOahg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.12 144/223] perf/x86/intel: Allow to update user space GPRs from PEBS records
-Date: Wed, 23 Apr 2025 16:43:36 +0200
-Message-ID: <20250423142623.050773701@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 063/291] drm/amdkfd: Fix mode1 reset crash issue
+Date: Wed, 23 Apr 2025 16:40:52 +0200
+Message-ID: <20250423142626.952948222@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,82 +49,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 71dcc11c2cd9e434c34a63154ecadca21c135ddd upstream.
+[ Upstream commit f0b4440cdc1807bb6ec3dce0d6de81170803569b ]
 
-Currently when a user samples user space GPRs (--user-regs option) with
-PEBS, the user space GPRs actually always come from software PMI
-instead of from PEBS hardware. This leads to the sampled GPRs to
-possibly be inaccurate for single PEBS record case because of the
-skid between counter overflow and GPRs sampling on PMI.
+If HW scheduler hangs and mode1 reset is used to recover GPU, KFD signal
+user space to abort the processes. After process abort exit, user queues
+still use the GPU to access system memory before h/w is reset while KFD
+cleanup worker free system memory and free VRAM.
 
-For the large PEBS case, it is even worse. If user sets the
-exclude_kernel attribute, large PEBS would be used to sample user space
-GPRs, but since PEBS GPRs group is not really enabled, it leads to all
-samples in the large PEBS record to share the same piece of user space
-GPRs, like this reproducer shows:
+There is use-after-free race bug that KFD allocate and reuse the freed
+system memory, and user queue write to the same system memory to corrupt
+the data structure and cause driver crash.
 
-  $ perf record -e branches:pu --user-regs=ip,ax -c 100000 ./foo
-  $ perf report -D | grep "AX"
+To fix this race, KFD cleanup worker terminate user queues, then flush
+reset_domain wq to wait for any GPU ongoing reset complete, and then
+free outstanding BOs.
 
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-
-So enable GPRs group for user space GPRs sampling and prioritize reading
-GPRs from PEBS. If the PEBS sampled GPRs is not user space GPRs (single
-PEBS record case), perf_sample_regs_user() modifies them to user space
-GPRs.
-
-[ mingo: Clarified the changelog. ]
-
-Fixes: c22497f5838c ("perf/x86/intel: Support adaptive PEBS v4")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250415104135.318169-2-dapeng1.mi@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/ds.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -1317,8 +1317,10 @@ static u64 pebs_update_adaptive_cfg(stru
- 	 * + precise_ip < 2 for the non event IP
- 	 * + For RTM TSX weight we need GPRs for the abort code.
- 	 */
--	gprs = (sample_type & PERF_SAMPLE_REGS_INTR) &&
--	       (attr->sample_regs_intr & PEBS_GP_REGS);
-+	gprs = ((sample_type & PERF_SAMPLE_REGS_INTR) &&
-+		(attr->sample_regs_intr & PEBS_GP_REGS)) ||
-+	       ((sample_type & PERF_SAMPLE_REGS_USER) &&
-+		(attr->sample_regs_user & PEBS_GP_REGS));
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 99e2aef52ef26..bc01c5173ab9a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -36,6 +36,7 @@
+ #include <linux/pm_runtime.h>
+ #include "amdgpu_amdkfd.h"
+ #include "amdgpu.h"
++#include "amdgpu_reset.h"
  
- 	tsx_weight = (sample_type & PERF_SAMPLE_WEIGHT_TYPE) &&
- 		     ((attr->config & INTEL_ARCH_EVENT_MASK) ==
-@@ -1970,7 +1972,7 @@ static void setup_pebs_adaptive_sample_d
- 			regs->flags &= ~PERF_EFLAGS_EXACT;
- 		}
+ struct mm_struct;
  
--		if (sample_type & PERF_SAMPLE_REGS_INTR)
-+		if (sample_type & (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER))
- 			adaptive_pebs_save_regs(regs, gprs);
- 	}
+@@ -1114,6 +1115,17 @@ static void kfd_process_remove_sysfs(struct kfd_process *p)
+ 	p->kobj = NULL;
+ }
  
++/*
++ * If any GPU is ongoing reset, wait for reset complete.
++ */
++static void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
++{
++	int i;
++
++	for (i = 0; i < p->n_pdds; i++)
++		flush_workqueue(p->pdds[i]->dev->adev->reset_domain->wq);
++}
++
+ /* No process locking is needed in this function, because the process
+  * is not findable any more. We must assume that no other thread is
+  * using it any more, otherwise we couldn't safely free the process
+@@ -1127,6 +1139,11 @@ static void kfd_process_wq_release(struct work_struct *work)
+ 	kfd_process_dequeue_from_all_devices(p);
+ 	pqm_uninit(&p->pqm);
+ 
++	/*
++	 * If GPU in reset, user queues may still running, wait for reset complete.
++	 */
++	kfd_process_wait_gpu_reset_complete(p);
++
+ 	/* Signal the eviction fence after user mode queues are
+ 	 * destroyed. This allows any BOs to be freed without
+ 	 * triggering pointless evictions or waiting for fences.
+-- 
+2.39.5
+
 
 
