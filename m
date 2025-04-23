@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127C326A082;
-	Wed, 23 Apr 2025 14:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A713E26A082;
+	Wed, 23 Apr 2025 14:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420274; cv=none; b=n8YyUtV6MTsprwhxg7Ue02m3r1PsLQ1eqzV6TMXX0GC+33Clq5n1vqq9WWQODWAUrod11pFnSUBawkdr50TQvWhzZO6ETLJFDTr5iUZtLYfnPHim9b9b/zWZHS8cPTFNDYEBjs0fvMCi40QQUvm/L6Dy8twlvAx6eNgW8DJL9Bk=
+	t=1745420276; cv=none; b=WbSE1QJ1p4p8BJtXT0woD3EamWUIe9ovrmjYxOUZLewI/N26VmujCNS+MuHihNLP9YMJX7px2enRvP4AMbdwzOIOV9mFCu7w+5hk+VpYZikcgXvbW+qmx+A7zrdqnhyuVIuDnq0Hb62reba4ys2oSviOjRCwlcHeC+OBp6NQtUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420274; c=relaxed/simple;
-	bh=Xl6S0asFeU6k0cOMZfS4zAG/ix3ixYLB/1MT82N7UPk=;
+	s=arc-20240116; t=1745420276; c=relaxed/simple;
+	bh=p+IelbYYNc+T0fInxWlk1P31FB3fw6NCCJ4LUff2Iuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aMqnGfoRTr1YL4lZ6zHEvQiCYEnjNeE62r1q0sCMk66Uo9044BeHA/5Ikp5mQdtLUZxO43avZDrC40h++bRbPJ/Ohxaio6FmIocRrilCEpF0BJ29DkdzhbpvPKBArhaprNYdhXmYB5g0T4OiFcEzh0spVmgvWz6oi7FJLlVKtQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si+zHhl/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FUxSTzBRmzEMF1dZWPjJFxuTfJ5gXxL/y4rT/DFV/k9aOBxXatYZvq1sLFG9L7Oxmp2PEly/vEmmux6j6d+uYLpiwiSn238++QqhCvxODb8JV47rslgwSSxgosGVeImHJ1mSMFq7vEZA3CVdqMLNYJwMbOvkAZTtl0ytI1Zs07w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2Jg4aMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si+zHhl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99280C4CEE2;
-	Wed, 23 Apr 2025 14:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2Jg4aMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39942C4CEE8;
+	Wed, 23 Apr 2025 14:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420273;
-	bh=Xl6S0asFeU6k0cOMZfS4zAG/ix3ixYLB/1MT82N7UPk=;
+	s=korg; t=1745420276;
+	bh=p+IelbYYNc+T0fInxWlk1P31FB3fw6NCCJ4LUff2Iuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Si+zHhl/ueDIjjK37ZpXKNscjPQzMiLDqRA8T/vepTb0Y+JyzfoXpH0bEso8SjeQr
-	 9nNQu2D5vYE2Kc42Ze06lMNYDX12KWf0kRVdQrsvOtPbgTqVIgmS302Cptv07Ylxaf
-	 Ipr/8nciRcjGNIKGSLAqsHgYgZx42ZKRtfG9nUGg=
+	b=f2Jg4aMvGpU0gd83nEIMGSITDW3Wo1J5pGDJhPn7BPRdR3M9XuMvr+NxPTaQ4f0ED
+	 hsxdMxQiZP8FMxGJCCANKHEnqTnXE82FuWSi6xAWs3t/420sJHuJMpLnSOctXroqgX
+	 Ge6JpAzE4sIcrtJIzOjJDo/fvUCuJ9y6JUcvBbiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nolan Nicholson <nolananicholson@gmail.com>,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/393] HID: pidff: Fix null pointer dereference in pidff_find_fields
-Date: Wed, 23 Apr 2025 16:39:13 +0200
-Message-ID: <20250423142645.656450073@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 115/223] loop: properly send KOBJ_CHANGED uevent for disk device
+Date: Wed, 23 Apr 2025 16:43:07 +0200
+Message-ID: <20250423142621.794983088@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,69 +47,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <forest10pl@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 22a05462c3d0eee15154faf8d13c49e6295270a5 ]
+commit e7bc0010ceb403d025100698586c8e760921d471 upstream.
 
-This function triggered a null pointer dereference if used to search for
-a report that isn't implemented on the device. This happened both for
-optional and required reports alike.
+The original commit message and the wording "uncork" in the code comment
+indicate that it is expected that the suppressed event instances are
+automatically sent after unsuppressing.
+This is not the case, instead they are discarded.
+In effect this means that no "changed" events are emitted on the device
+itself by default.
+While each discovered partition does trigger a changed event on the
+device, devices without partitions don't have any event emitted.
 
-The same logic was applied to pidff_find_special_field and although
-pidff_init_fields should return an error earlier if one of the required
-reports is missing, future modifications could change this logic and
-resurface this possible null pointer dereference again.
+This makes udev miss the device creation and prompted workarounds in
+userspace. See the linked util-linux/losetup bug.
 
-LKML bug report:
-https://lore.kernel.org/all/CAL-gK7f5=R0nrrQdPtaZZr1fd-cdAMbDMuZ_NLA8vM0SX+nGSw@mail.gmail.com
+Explicitly emit the events and drop the confusingly worded comments.
 
-Reported-by: Nolan Nicholson <nolananicholson@gmail.com>
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://github.com/util-linux/util-linux/issues/2434
+Fixes: 498ef5c777d9 ("loop: suppress uevents while reconfiguring the device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20250415-loop-uevent-changed-v2-1-0c4e6a923b2a@linutronix.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/block/loop.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 4c94d8cbac43a..25dbed076f530 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -793,6 +793,11 @@ static void pidff_set_autocenter(struct input_dev *dev, u16 magnitude)
- static int pidff_find_fields(struct pidff_usage *usage, const u8 *table,
- 			     struct hid_report *report, int count, int strict)
- {
-+	if (!report) {
-+		pr_debug("pidff_find_fields, null report\n");
-+		return -1;
-+	}
-+
- 	int i, j, k, found;
- 	int return_value = 0;
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -573,8 +573,8 @@ static int loop_change_fd(struct loop_de
  
-@@ -917,6 +922,11 @@ static int pidff_reports_ok(struct pidff_device *pidff)
- static struct hid_field *pidff_find_special_field(struct hid_report *report,
- 						  int usage, int enforce_min)
- {
-+	if (!report) {
-+		pr_debug("pidff_find_special_field, null report\n");
-+		return NULL;
-+	}
-+
- 	int i;
+ 	error = 0;
+ done:
+-	/* enable and uncork uevent now that we are done */
+ 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
++	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
+ 	return error;
  
- 	for (i = 0; i < report->maxfield; i++) {
--- 
-2.39.5
-
+ out_err:
+@@ -1034,8 +1034,8 @@ static int loop_configure(struct loop_de
+ 	if (partscan)
+ 		clear_bit(GD_SUPPRESS_PART_SCAN, &lo->lo_disk->state);
+ 
+-	/* enable and uncork uevent now that we are done */
+ 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
++	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
+ 
+ 	loop_global_unlock(lo, is_loop);
+ 	if (partscan)
 
 
