@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CF9284B4F;
-	Wed, 23 Apr 2025 15:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A0A27EC73;
+	Wed, 23 Apr 2025 15:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420635; cv=none; b=LGNGAr7GeCWG/Dtdd6DbOXwhJarN2vuxxx6P+jB//BolLeUUF26H7LK00zQVQ6wGHEX0jj/rZ+2pnzHGwyP3Zr3a6y5hdHGyWFHdja0urWKmBdNwv2oKuHvOwNnXxT4E8PMOXmj3ts5uB0wan4S0SjfvMT8m1FXHR9bE+RdI4TI=
+	t=1745420637; cv=none; b=fVlMTqFPjSSE7j34mA4020hN5eROPAj2f0l3EfsmklUofRGBnvhzazlYrp7OPFdc4IQeN8tUxUc8l2DoSYX9qrJqiOW93fZ0W/9a68qd5IZ60F6ioHtV8m0jFEL8n0V8Nm65d9OATLufFbak5W4PZXSbRTNs4p54UrhaSwRvd/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420635; c=relaxed/simple;
-	bh=mFw8M7VgUpDfY+gO20+r0x57pOpcpLh/3KC71WDTEtE=;
+	s=arc-20240116; t=1745420637; c=relaxed/simple;
+	bh=+IiZMHPNJ5ju+QjCOVx8GcDAl3S9VyLX5vDLKMwe3nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsFsTWm4HU9qERAFBK9UUyFwYDKX6QTkgrmXZD3OVjvJK0UYZUR4kuAeK1VaYgAAnWgBGsiIwB/IsBlEYD+TygBpY8nZXOgT4EJMAy0m/qqO5RaGehG+YCXyl46Sw15eTMLDIWv5CBj8sSKIDHETwle/gahfaH5yjsV6VZDH5E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoAuQ6SB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqjS8HdzWA7rNKPB33K+R/E8P6L7/yz95Lpm1IJk0LGhoJHwY25oQcLoGVBmYKHyFMvxVbL2DaTzxTy0iIpJcB8/pI0Ib7aYH8wwJvr01tE16uxkLSmlLquFyUBz2SBpFrR0cf6fGsI4Osd//YHIrgr5n75PO3qvR8OOojXNcm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p//IxJIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoAuQ6SB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B8BC4CEE2;
-	Wed, 23 Apr 2025 15:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p//IxJIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D83C4CEE2;
+	Wed, 23 Apr 2025 15:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420635;
-	bh=mFw8M7VgUpDfY+gO20+r0x57pOpcpLh/3KC71WDTEtE=;
+	s=korg; t=1745420637;
+	bh=+IiZMHPNJ5ju+QjCOVx8GcDAl3S9VyLX5vDLKMwe3nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RoAuQ6SBAm7NkcJD9b/sTW4VcPmd8RVhrn03T1Mwwpd2GwiR8/hOEHeCIXje/2pjw
-	 9q554y1Kf4eHxkIGpqMLPywmuQxVUxa4olfPkHCe3NAeu3/LIRnJdvYM08XxXvtnkO
-	 SB2wKCJ7YvBacpB/tH0EihyzKctFRTW/IHb+TGM4=
+	b=p//IxJIeKpQZexzNRJd3Yd4lpx3nlav0Zp4Y0M8RGh5z/EHgy2qHKwWMPi2GW8eO1
+	 BSbJSlZ9XF27lMO58j1oXl3+tF4mcj0ZPrEJBphsCXLW7mkuAbstCNIBd6e5HnQq1Q
+	 8c+bIO8Q3vaqPDFoRr3QQ/9IhO+GpsbdfzEF6m24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Wyatt <fewtarius@steamfork.org>,
-	John Edwards <uejji@uejji.net>,
-	Paco Avelar <pacoavelar@hotmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/393] drm: panel-orientation-quirks: Add quirks for AYA NEO Flip DS and KB
-Date: Wed, 23 Apr 2025 16:39:51 +0200
-Message-ID: <20250423142647.214321523@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Lanzano <lanzano.alex@gmail.com>
+Subject: [PATCH 6.12 148/223] drm/repaper: fix integer overflows in repeat functions
+Date: Wed, 23 Apr 2025 16:43:40 +0200
+Message-ID: <20250423142623.206371477@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,70 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Wyatt <fewtarius@steamfork.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 529741c331da1fbf54f86c6ec3a4558b9b0b16dc ]
+commit 4d098000ac193f359e6b8ca4801dbdbd6a27b41f upstream.
 
-The AYA NEO Flip DS and KB both use a 1080x1920 portrait LCD panel.  The
-Flip DS additionally uses a 640x960 portrait LCD panel as a second display.
+There are conditions, albeit somewhat unlikely, under which right hand
+expressions, calculating the end of time period in functions like
+repaper_frame_fixed_repeat(), may overflow.
 
-Add DMI matches to correctly rotate these panels.
+For instance, if 'factor10x' in repaper_get_temperature() is high
+enough (170), as is 'epd->stage_time' in repaper_probe(), then the
+resulting value of 'end' will not fit in unsigned int expression.
 
-Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Co-developed-by: John Edwards <uejji@uejji.net>
-Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: Paco Avelar <pacoavelar@hotmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-3-uejji@uejji.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Mitigate this by casting 'epd->factored_stage_time' to wider type before
+any multiplication is done.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 3589211e9b03 ("drm/tinydrm: Add RePaper e-ink driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Lanzano <lanzano.alex@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250116134801.22067-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/tiny/repaper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 7bf096ddeb06d..d9ed6214cf28b 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -93,6 +93,12 @@ static const struct drm_dmi_panel_orientation_data onegx1_pro = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
- };
+--- a/drivers/gpu/drm/tiny/repaper.c
++++ b/drivers/gpu/drm/tiny/repaper.c
+@@ -455,7 +455,7 @@ static void repaper_frame_fixed_repeat(s
+ 				       enum repaper_stage stage)
+ {
+ 	u64 start = local_clock();
+-	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
++	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
  
-+static const struct drm_dmi_panel_orientation_data lcd640x960_leftside_up = {
-+	.width = 640,
-+	.height = 960,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
-+};
-+
- static const struct drm_dmi_panel_orientation_data lcd720x1280_rightside_up = {
- 	.width = 720,
- 	.height = 1280,
-@@ -202,6 +208,18 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
- 		},
- 		.driver_data = (void *)&lcd1080x1920_leftside_up,
-+	}, {    /* AYA NEO Flip DS Bottom Screen */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "FLIP DS"),
-+		},
-+		.driver_data = (void *)&lcd640x960_leftside_up,
-+	}, {    /* AYA NEO Flip KB/DS Top Screen */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "FLIP"),
-+		},
-+		.driver_data = (void *)&lcd1080x1920_leftside_up,
- 	}, {	/* AYA NEO Founder */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYA NEO"),
--- 
-2.39.5
-
+ 	do {
+ 		repaper_frame_fixed(epd, fixed_value, stage);
+@@ -466,7 +466,7 @@ static void repaper_frame_data_repeat(st
+ 				      const u8 *mask, enum repaper_stage stage)
+ {
+ 	u64 start = local_clock();
+-	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
++	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
+ 
+ 	do {
+ 		repaper_frame_data(epd, image, mask, stage);
 
 
