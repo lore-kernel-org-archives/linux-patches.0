@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5412527055F;
-	Wed, 23 Apr 2025 15:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90AF28A1F1;
+	Wed, 23 Apr 2025 15:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420955; cv=none; b=n1AS024EraBgga2QuelMNpsZ9XvIhrTosQJPzaoG91698oPyP08Si6V2xgbcOP6VNW17Kg+TP2B3lXb8bDJ2ETjdaFamvhdef5QBKfZA+joBG82a1mnXofgCdV2x+ojFuV6VHincla8/puXanDhBlvlpZNvdDUFiT5SERm5RhCQ=
+	t=1745420958; cv=none; b=NTiPL7DMwu5XfPhSqRom/5nQ89G/drs0PtU9Rqiuk+nu8ptIK2E0ctJUhEUP+uZFi7NTNSieIe41/6aIVJ7IVdUCkKDn1ZBsNAf7ve2Y5qFc83sW40QYmcuOeFssLrX2VGNU3U61ELl4goiS1ruZ1kXyip+nYAVffz6KVlLP0m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420955; c=relaxed/simple;
-	bh=F5t2kHw44PmkjDfPgBRfQRwiIaXP+NE5AP6B4I22Uyg=;
+	s=arc-20240116; t=1745420958; c=relaxed/simple;
+	bh=0KSJMyjxZrbq1DpLzPTzhyr5Jh+TvUKKDx09ekXXkyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PbYBD1MUOfNWAqwtlYGJNP4J6krUX0oYD/yx0aGXwI2DxFtVwT7JmGX0H+1GvsXyy8r7yPndlJmK6XR8elGauX8Kw3jPgZyUJIrt2aHGyxC7wThsdcgd/uwx7pJRhBTA9ylsI7wRtFx9DRGjzrbPeoVbBMuB5ebrXXWU6wOE8/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJkdcwSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qL6aIGWTkDHKcoCyOzlu7JSG/DBcO7agosRYYO7aPJnWE4V19oPaVxo4wsftddQUxLbfhrgPnYfdN23NYgfgaqtz7U9Lf7LKvZVkZxpoNK7g/IJwe5jDNpU3lNhfyVLPi/nM2+LWuSmRIonlokEWsP9vkPd6T4B8FBZ28FleDFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYxDf+RF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJkdcwSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A78C4CEE2;
-	Wed, 23 Apr 2025 15:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYxDf+RF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4F1C4CEE2;
+	Wed, 23 Apr 2025 15:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420955;
-	bh=F5t2kHw44PmkjDfPgBRfQRwiIaXP+NE5AP6B4I22Uyg=;
+	s=korg; t=1745420957;
+	bh=0KSJMyjxZrbq1DpLzPTzhyr5Jh+TvUKKDx09ekXXkyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJkdcwSnUHZjka1UYGf6LWhvG/n6k0BxBHo/v32tLvxdgwiIxX7whVcSbeA3U8CKc
-	 Su1nQUJ9CAC4mo6V+EuB/ey3r0+dOmI9S4VC1mFCBbX8bADycXgn1gGbIyecyF/RPN
-	 fSyS3emrTaFamnW5IqXSDrgZ/5HbTV3nQiwPc78Y=
+	b=VYxDf+RF2DhPpfbmME7SBDvhPxF9EmcQxv69RXRNle3oHepbjKyY8mJizRlYLb3ib
+	 swFIHNZr/bBUJ5zNh9DJgC47J/A3cuqh/w0LiGROHMA3+U4vpsTrHRO/U7Y0e/JwEp
+	 L9WTlWg2hy+9yXGVQHrC3aACFV2W6t4WofwItvAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 177/223] drm/amdgpu: immediately use GTT for new allocations
-Date: Wed, 23 Apr 2025 16:44:09 +0200
-Message-ID: <20250423142624.381396878@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 139/241] mm/gup: fix wrongly calculated returned value in fault_in_safe_writeable()
+Date: Wed, 23 Apr 2025 16:43:23 +0200
+Message-ID: <20250423142626.237969108@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,46 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Baoquan He <bhe@redhat.com>
 
-commit a755906fb2b8370c43e91ba437ae1b3e228e8b02 upstream.
+commit 8c03ebd7cdc06bd0d2fecb4d1a609ef1dbb7d0aa upstream.
 
-Only use GTT as a fallback if we already have a backing store. This
-prevents evictions when an application constantly allocates and frees new
-memory.
+Not like fault_in_readable() or fault_in_writeable(), in
+fault_in_safe_writeable() local variable 'start' is increased page by page
+to loop till the whole address range is handled.  However, it mistakenly
+calculates the size of the handled range with 'uaddr - start'.
 
-Partially fixes
-https://gitlab.freedesktop.org/drm/amd/-/issues/3844#note_2833985.
+Fix it here.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 216c1282dde3 ("drm/amdgpu: use GTT only as fallback for VRAM|GTT")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Andreas said:
+
+: In gfs2, fault_in_iov_iter_writeable() is used in
+: gfs2_file_direct_read() and gfs2_file_read_iter(), so this potentially
+: affects buffered as well as direct reads.  This bug could cause those
+: gfs2 functions to spin in a loop.
+
+Link: https://lkml.kernel.org/r/20250410035717.473207-1-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20250410035717.473207-2-bhe@redhat.com
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Fixes: fe673d3f5bf1 ("mm: gup: make fault_in_safe_writeable() use fixup_user_fault()")
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Yanjun.Zhu <yanjun.zhu@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |    4 ++--
+ mm/gup.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -161,8 +161,8 @@ void amdgpu_bo_placement_from_domain(str
- 		 * When GTT is just an alternative to VRAM make sure that we
- 		 * only use it as fallback and still try to fill up VRAM first.
- 		 */
--		if (domain & abo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM &&
--		    !(adev->flags & AMD_IS_APU))
-+		if (abo->tbo.resource && !(adev->flags & AMD_IS_APU) &&
-+		    domain & abo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM)
- 			places[c].flags |= TTM_PL_FLAG_FALLBACK;
- 		c++;
- 	}
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2210,8 +2210,8 @@ size_t fault_in_safe_writeable(const cha
+ 	} while (start != end);
+ 	mmap_read_unlock(mm);
+ 
+-	if (size > (unsigned long)uaddr - start)
+-		return size - ((unsigned long)uaddr - start);
++	if (size > start - (unsigned long)uaddr)
++		return size - (start - (unsigned long)uaddr);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(fault_in_safe_writeable);
 
 
