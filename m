@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9998629B76C;
-	Wed, 23 Apr 2025 15:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B348128B4F4;
+	Wed, 23 Apr 2025 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421837; cv=none; b=dS8qkzU3GK7woeWf7rl7kZsWZO23AwpbRHZ549eszN2BIwnw+lUeyqQBpnikimXEPQs+fM8XltEZqTXrsh3NUo0As2JDuVXuHDLlASzUFFersoKdfUmF/vKkXOgVXx26OTB/+3UEBzz4xK8Ld2B4k04a8GEBRxzXQ/CVx0cMD5o=
+	t=1745421839; cv=none; b=px6l85k63qn1p2YzAR8rvR+Wf/C0nDW87+22bWRpda5OlN4i0v3k9xtisV0XXUKtLqy1UAmbljUFXDeM1NMtGU1T0ADwlcvMKLHoVjnqe3144K4J+J9fwFVHWZMNjJY2SwRH5SiNWGZXSBgZIgNz8olUoN9FdFTLIFW3QG1Sntw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421837; c=relaxed/simple;
-	bh=C7K6FuLfJAuMZWLv5vIgPYUIBXr2N2AJ+FtIrE5zrzk=;
+	s=arc-20240116; t=1745421839; c=relaxed/simple;
+	bh=9z7vzb3ByT3Zt7OnlXRfBB9niJSHcIHDDg7+v8PlEIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apSrPerXrnxXAOJJ65i77BTdvO/XByUMr693MrMHurZRSxusOqkNUC9/x/5yumUy2mD/ghmUnInGZLGyjPDsKoH00qPDMa0voedMZUHG7YUiAwhhHRkxduJNEMKEvp0ULgcb1sd1NOGIrRLZEh58QQUgv9maCfon1DUbvlfN7HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMXfBdIb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETsaO8KmJHcCnseYzF4PKtPAgjth/JTZf70KyoRKAVQUXM420U8zXZf9VcXx7YfUo5JF5mXJ5SjzURURFMmmuD0EOo7FhzEp70BDFWyDEsZS0Y5uJ1W7QCQQZfw5wslNDYHONA1CH0cmwT4tO+drUAFjDOtLFDcLKX2sD3fwvV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Liu7+qz+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMXfBdIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960D5C4CEE2;
-	Wed, 23 Apr 2025 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Liu7+qz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B0EC4CEE2;
+	Wed, 23 Apr 2025 15:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421836;
-	bh=C7K6FuLfJAuMZWLv5vIgPYUIBXr2N2AJ+FtIrE5zrzk=;
+	s=korg; t=1745421839;
+	bh=9z7vzb3ByT3Zt7OnlXRfBB9niJSHcIHDDg7+v8PlEIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMXfBdIbUrW5+eqVX5cJXMTgRStnE5KOlGblFfR5YAybOq527D34glScgRBV/9XuY
-	 UlBG2ckuie/bsamNC9W1+eEMICe9kM5yuP/eHa4Vm9RoRkOd2s0sCtMZDP2WUHyHxV
-	 4Sjel6aD5iV77n5d5BUGQ0wJgalPNpiW6L8g2PBk=
+	b=Liu7+qz+QD0Di9tfKugX4/FcbodtDlKHf7AzTCqHUQDP20lcbauBwOQQc08WDHmaj
+	 yi3tZYDuuywL9ZPJZq5rcQUGpBGhMCcBOmTIbmNqJsrKhdvXj7SFNzD58vTir+Xy2C
+	 v0Mshev2+So+zOFj9AFtRHhNzu3zAlOzhzcMbbqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.6 229/393] pinctrl: qcom: Clear latched interrupt status when changing IRQ type
-Date: Wed, 23 Apr 2025 16:42:05 +0200
-Message-ID: <20250423142652.844719426@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 184/291] test suite: use %zu to print size_t
+Date: Wed, 23 Apr 2025 16:42:53 +0200
+Message-ID: <20250423142631.899032496@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit e225128c3f8be879e7d4eb71a25949e188b420ae upstream.
+[ Upstream commit a30951d09c33c899f0e4aca80eb87fad5f10ecfa ]
 
-When submitting the TLMM test driver, Bjorn reported that some of the test
-cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
-GPIOs that are handled directly in pinctrl-msm). Basically, lingering
-latched interrupt state is still being delivered at IRQ request time, e.g.:
+On 32-bit, we can't use %lu to print a size_t variable and gcc warns us
+about it.  Shame it doesn't warn about it on 64-bit.
 
-  ok 1 tlmm_test_silent_rising
-  tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 2 tlmm_test_silent_falling
-  tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 3 tlmm_test_silent_low
-  ok 4 tlmm_test_silent_high
-
-Whether to report interrupts that came in while the IRQ was unclaimed
-doesn't seem to be well-defined in the Linux IRQ API. However, looking
-closer at these specific cases, we're actually reporting events that do not
-match the interrupt type requested by the driver:
-
- 1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
-    configured for IRQF_TRIGGER_RISING.
-
- 2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
-        to high state. The rising interrupt gets latched.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
-        interrupt isn't cleared.
-    (c) The IRQ handler is called for the latched interrupt, but there
-        wasn't any falling edge.
-
- 3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
-        result in a phantom interrupt that gets latched.
-    (c) The IRQ handler is called for the latched interrupt, but the GPIO
-        isn't in low state.
-
- 4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
-    (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
-        was cleared when masking the level-triggered interrupt.
-
-Fix this by clearing the interrupt state whenever making any changes to the
-interrupt configuration. This includes previously disabled interrupts, but
-also any changes to interrupt polarity or detection type.
-
-With this change, all 16 test cases are now passing for the non-wakeup
-GPIOs in the TLMM.
-
-Cc: stable@vger.kernel.org
-Fixes: cf9d052aa600 ("pinctrl: qcom: Don't clear pending interrupts when enabling")
-Reported-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Closes: https://lore.kernel.org/r/20250227-tlmm-test-v1-1-d18877b4a5db@oss.qualcomm.com/
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20250403003311.359917-1-Liam.Howlett@oracle.com
+Fixes: cc86e0c2f306 ("radix tree test suite: add support for slab bulk APIs")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/radix-tree/linux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1040,8 +1040,7 @@ static int msm_gpio_irq_set_type(struct
- 	const struct msm_pingroup *g;
- 	u32 intr_target_mask = GENMASK(2, 0);
- 	unsigned long flags;
--	bool was_enabled;
--	u32 val;
-+	u32 val, oldval;
+diff --git a/tools/testing/radix-tree/linux.c b/tools/testing/radix-tree/linux.c
+index d587a558997f8..11149bd12a1f7 100644
+--- a/tools/testing/radix-tree/linux.c
++++ b/tools/testing/radix-tree/linux.c
+@@ -121,7 +121,7 @@ void kmem_cache_free(struct kmem_cache *cachep, void *objp)
+ void kmem_cache_free_bulk(struct kmem_cache *cachep, size_t size, void **list)
+ {
+ 	if (kmalloc_verbose)
+-		pr_debug("Bulk free %p[0-%lu]\n", list, size - 1);
++		pr_debug("Bulk free %p[0-%zu]\n", list, size - 1);
  
- 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
- 		set_bit(d->hwirq, pctrl->dual_edge_irqs);
-@@ -1103,8 +1102,7 @@ static int msm_gpio_irq_set_type(struct
- 	 * internal circuitry of TLMM, toggling the RAW_STATUS
- 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
- 	 */
--	val = msm_readl_intr_cfg(pctrl, g);
--	was_enabled = val & BIT(g->intr_raw_status_bit);
-+	val = oldval = msm_readl_intr_cfg(pctrl, g);
- 	val |= BIT(g->intr_raw_status_bit);
- 	if (g->intr_detection_width == 2) {
- 		val &= ~(3 << g->intr_detection_bit);
-@@ -1157,9 +1155,11 @@ static int msm_gpio_irq_set_type(struct
- 	/*
- 	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
- 	 * Clear the interrupt.  This is safe because we have
--	 * IRQCHIP_SET_TYPE_MASKED.
-+	 * IRQCHIP_SET_TYPE_MASKED. When changing the interrupt type, we could
-+	 * also still have a non-matching interrupt latched, so clear whenever
-+	 * making changes to the interrupt configuration.
- 	 */
--	if (!was_enabled)
-+	if (val != oldval)
- 		msm_ack_intr_status(pctrl, g);
+ 	pthread_mutex_lock(&cachep->lock);
+ 	for (int i = 0; i < size; i++)
+@@ -139,7 +139,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *cachep, gfp_t gfp, size_t size,
+ 	size_t i;
  
- 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+ 	if (kmalloc_verbose)
+-		pr_debug("Bulk alloc %lu\n", size);
++		pr_debug("Bulk alloc %zu\n", size);
+ 
+ 	if (!(gfp & __GFP_DIRECT_RECLAIM)) {
+ 		if (cachep->non_kernel < size)
+-- 
+2.39.5
+
 
 
