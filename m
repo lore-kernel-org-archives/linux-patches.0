@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4672F27FD7A;
-	Wed, 23 Apr 2025 15:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA2428EA59;
+	Wed, 23 Apr 2025 15:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420840; cv=none; b=HoE/Nck2Xr3/juWT6Pw6LU0NQtHbk3lWDC3IvDCMmwvz81+Tn96Ezeo/ibpM7Ys4UkQ5dF75ACJFspctt4aZN4HD1fOvJbFUaWHDYvZv3dBdC58BpyXnF4ZlkSKF9OTzNx4MtuNJuSysHtswEJSADhYaDZ8SUxN+XmAUvgZceTc=
+	t=1745420843; cv=none; b=oack2yOZahhnDyPtfgzAJ3LCRpPn0y146noQiiApKW+QDIg5e7hAmQ2/p76gkC75lKWBloHuHZ+Cfva/0WV/JaHop0/HSCJv4sZH4SkDLwYOsK8f9JreWiz3rcjqpeSg6PqTadCtexuOXnLzA7qfprg1OPaU2BOpnIaZM06QVQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420840; c=relaxed/simple;
-	bh=o12A9tWAH/VZmvQBd6xh7Krj/buu+7aQeX75BLCCwzE=;
+	s=arc-20240116; t=1745420843; c=relaxed/simple;
+	bh=TphMF7AkjUGabbO97uaQOWlYgNA3XoFQxsDJp1+Znlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geWywjnu71mVTGooZsdObTxGRVdRAWkKyH7izNlvhtxfrBLxLdnWupS1XsWrRW2A/+hoibfMrU4V+ldOw5w8XNsoPf1bPihWT3sluOyGNnxtSpHwfzEHbRHB9f/S+q2ZH+RGJxetcLKXRq9DPZgZnP1A97a9HnfqqcLHhAqVmyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxZJFbRD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fF3fLLZRPa79rrhU78XpShARaWpIpH1uZTFjNIJRddQAcExj+ON3vKGeFUJtYJmBYIrVoo2bx8ldP7v3QVMD4feZyS03XT4GPgdY9lkj3zYGctul+GoQLvoPHcy2dCX7bFqn47tcpgh5oP1AewpiP82OkZHthKnHMM3ULCth3Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O616+EMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxZJFbRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1E8C4CEE2;
-	Wed, 23 Apr 2025 15:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O616+EMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD5DC4CEE2;
+	Wed, 23 Apr 2025 15:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420840;
-	bh=o12A9tWAH/VZmvQBd6xh7Krj/buu+7aQeX75BLCCwzE=;
+	s=korg; t=1745420842;
+	bh=TphMF7AkjUGabbO97uaQOWlYgNA3XoFQxsDJp1+Znlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxZJFbRDuXRPRdMZLmLtdQ0iC62LZsUFvHBM5qjosZHVvk6UazRJg6fqyNmHM2ifv
-	 FnKqzbUyo1ASRlUtDZDEmydKeF01WHGRcVwIXLrqDEKQeRkuz3lsVBsee/wkofHunb
-	 3tc0dUz1rNTiiMm4e8ZyhSCIH7gRq985nRqXY+wY=
+	b=O616+EMzSbRv5fVjVA4785myDqsLBoH/jperaMZfM0uXGwgQdlinURBDNolOrjggv
+	 oA2pNk52EPAcpdwuX7L+dbAUay9t79U7t4ZCOlFv8UIpaAQDnUbn2m5Qv2SgUQvRit
+	 HvOLad/rfniQAklDgqMPRJGvCmzi9atj+u2b+jnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Dongyan Qian <qiandongyan@loongson.cn>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 167/223] drm/amd/display: Protect FPU in dml2_validate()/dml21_validate()
-Date: Wed, 23 Apr 2025 16:43:59 +0200
-Message-ID: <20250423142623.970768914@linuxfoundation.org>
+	Matt Moeller <moeller.matt@gmail.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 117/393] bpf: support SKF_NET_OFF and SKF_LL_OFF on skb frags
+Date: Wed, 23 Apr 2025 16:40:13 +0200
+Message-ID: <20250423142648.191165856@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,128 +48,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 366e77cd4923c3aa45341e15dcaf3377af9b042f upstream.
+[ Upstream commit d4bac0288a2b444e468e6df9cb4ed69479ddf14a ]
 
-Commit 7da55c27e76749b9 ("drm/amd/display: Remove incorrect FP context
-start") removes the FP context protection of dml2_create(), and it said
-"All the DC_FP_START/END should be used before call anything from DML2".
+Classic BPF socket filters with SKB_NET_OFF and SKB_LL_OFF fail to
+read when these offsets extend into frags.
 
-However, dml2_validate()/dml21_validate() are not protected from their
-callers, causing such errors:
+This has been observed with iwlwifi and reproduced with tun with
+IFF_NAPI_FRAGS. The below straightforward socket filter on UDP port,
+applied to a RAW socket, will silently miss matching packets.
 
- do_fpu invoked from kernel context![#1]:
- CPU: 10 UID: 0 PID: 331 Comm: kworker/10:1H Not tainted 6.14.0-rc6+ #4
- Workqueue: events_highpri dm_irq_work_func [amdgpu]
- pc ffff800003191eb0 ra ffff800003191e60 tp 9000000107a94000 sp 9000000107a975b0
- a0 9000000140ce4910 a1 0000000000000000 a2 9000000140ce49b0 a3 9000000140ce49a8
- a4 9000000140ce49a8 a5 0000000100000000 a6 0000000000000001 a7 9000000107a97660
- t0 ffff800003790000 t1 9000000140ce5000 t2 0000000000000001 t3 0000000000000000
- t4 0000000000000004 t5 0000000000000000 t6 0000000000000000 t7 0000000000000000
- t8 0000000100000000 u0 ffff8000031a3b9c s9 9000000130bc0000 s0 9000000132400000
- s1 9000000140ec0000 s2 9000000132400000 s3 9000000140ce0000 s4 90000000057f8b88
- s5 9000000140ec0000 s6 9000000140ce4910 s7 0000000000000001 s8 9000000130d45010
- ra: ffff800003191e60 dml21_map_dc_state_into_dml_display_cfg+0x40/0x1140 [amdgpu]
-   ERA: ffff800003191eb0 dml21_map_dc_state_into_dml_display_cfg+0x90/0x1140 [amdgpu]
-  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-  PRMD: 00000004 (PPLV0 +PIE -PWE)
-  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
-  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
- ESTAT: 000f0000 [FPD] (IS= ECode=15 EsubCode=0)
-  PRID: 0014d010 (Loongson-64bit, Loongson-3C6000/S)
- Process kworker/10:1H (pid: 331, threadinfo=000000007bf9ddb0, task=00000000cc4ab9f3)
- Stack : 0000000100000000 0000043800000780 0000000100000001 0000000100000001
-         0000000000000000 0000078000000000 0000000000000438 0000078000000000
-         0000000000000438 0000078000000000 0000000000000438 0000000100000000
-         0000000100000000 0000000100000000 0000000100000000 0000000100000000
-         0000000000000001 9000000140ec0000 9000000132400000 9000000132400000
-         ffff800003408000 ffff800003408000 9000000132400000 9000000140ce0000
-         9000000140ce0000 ffff800003193850 0000000000000001 9000000140ec0000
-         9000000132400000 9000000140ec0860 9000000140ec0738 0000000000000001
-         90000001405e8000 9000000130bc0000 9000000140ec02a8 ffff8000031b5db8
-         0000000000000000 0000043800000780 0000000000000003 ffff8000031b79cc
-         ...
- Call Trace:
- [<ffff800003191eb0>] dml21_map_dc_state_into_dml_display_cfg+0x90/0x1140 [amdgpu]
- [<ffff80000319384c>] dml21_validate+0xcc/0x520 [amdgpu]
- [<ffff8000031b8948>] dc_validate_global_state+0x2e8/0x460 [amdgpu]
- [<ffff800002e94034>] create_validate_stream_for_sink+0x3d4/0x420 [amdgpu]
- [<ffff800002e940e4>] amdgpu_dm_connector_mode_valid+0x64/0x240 [amdgpu]
- [<900000000441d6b8>] drm_connector_mode_valid+0x38/0x80
- [<900000000441d824>] __drm_helper_update_and_validate+0x124/0x3e0
- [<900000000441ddc0>] drm_helper_probe_single_connector_modes+0x2e0/0x620
- [<90000000044050dc>] drm_client_modeset_probe+0x23c/0x1780
- [<9000000004420384>] __drm_fb_helper_initial_config_and_unlock+0x44/0x5a0
- [<9000000004403acc>] drm_client_dev_hotplug+0xcc/0x140
- [<ffff800002e9ab50>] handle_hpd_irq_helper+0x1b0/0x1e0 [amdgpu]
- [<90000000038f5da0>] process_one_work+0x160/0x300
- [<90000000038f6718>] worker_thread+0x318/0x440
- [<9000000003901b8c>] kthread+0x12c/0x220
- [<90000000038b1484>] ret_from_kernel_thread+0x8/0xa4
+    const int offset_proto = offsetof(struct ip6_hdr, ip6_nxt);
+    const int offset_dport = sizeof(struct ip6_hdr) + offsetof(struct udphdr, dest);
+    struct sock_filter filter_code[] = {
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_AD_OFF + SKF_AD_PKTTYPE),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, PACKET_HOST, 0, 4),
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_NET_OFF + offset_proto),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_UDP, 0, 2),
+            BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, SKF_NET_OFF + offset_dport),
 
-Unfortunately, protecting dml2_validate()/dml21_validate() out of DML2
-causes "sleeping function called from invalid context", so protect them
-with DC_FP_START() and DC_FP_END() inside.
+This is unexpected behavior. Socket filter programs should be
+consistent regardless of environment. Silent misses are
+particularly concerning as hard to detect.
 
-Fixes: 7da55c27e767 ("drm/amd/display: Remove incorrect FP context start")
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Tested-by: Dongyan Qian <qiandongyan@loongson.cn>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use skb_copy_bits for offsets outside linear, same as done for
+non-SKF_(LL|NET) offsets.
+
+Offset is always positive after subtracting the reference threshold
+SKB_(LL|NET)_OFF, so is always >= skb_(mac|network)_offset. The sum of
+the two is an offset against skb->data, and may be negative, but it
+cannot point before skb->head, as skb_(mac|network)_offset would too.
+
+This appears to go back to when frag support was introduced to
+sk_run_filter in linux-2.4.4, before the introduction of git.
+
+The amount of code change and 8/16/32 bit duplication are unfortunate.
+But any attempt I made to be smarter saved very few LoC while
+complicating the code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/20250122200402.3461154-1-maze@google.com/
+Link: https://elixir.bootlin.com/linux/2.4.4/source/net/core/filter.c#L244
+Reported-by: Matt Moeller <moeller.matt@gmail.com>
+Co-developed-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://lore.kernel.org/r/20250408132833.195491-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c |    9 +++++++--
- drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c        |    5 +++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ net/core/filter.c | 80 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 44 insertions(+), 36 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -277,11 +277,16 @@ bool dml21_validate(const struct dc *in_
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 84992279f4b10..39eef3370d800 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -211,24 +211,36 @@ BPF_CALL_3(bpf_skb_get_nlattr_nest, struct sk_buff *, skb, u32, a, u32, x)
+ 	return 0;
+ }
+ 
++static int bpf_skb_load_helper_convert_offset(const struct sk_buff *skb, int offset)
++{
++	if (likely(offset >= 0))
++		return offset;
++
++	if (offset >= SKF_NET_OFF)
++		return offset - SKF_NET_OFF + skb_network_offset(skb);
++
++	if (offset >= SKF_LL_OFF && skb_mac_header_was_set(skb))
++		return offset - SKF_LL_OFF + skb_mac_offset(skb);
++
++	return INT_MIN;
++}
++
+ BPF_CALL_4(bpf_skb_load_helper_8, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
  {
- 	bool out = false;
+-	u8 tmp, *ptr;
++	u8 tmp;
+ 	const int len = sizeof(tmp);
  
-+	DC_FP_START();
-+
- 	/* Use dml_validate_only for fast_validate path */
--	if (fast_validate) {
-+	if (fast_validate)
- 		out = dml21_check_mode_support(in_dc, context, dml_ctx);
--	} else
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return *(u8 *)(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return tmp;
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return *(u8 *)ptr;
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return *(u8 *)(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return tmp;
 +	else
- 		out = dml21_mode_check_and_programming(in_dc, context, dml_ctx);
-+
-+	DC_FP_END();
-+
- 	return out;
++		return -EFAULT;
  }
  
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-@@ -734,11 +734,16 @@ bool dml2_validate(const struct dc *in_d
- 		return out;
- 	}
+ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+@@ -241,21 +253,19 @@ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_16, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be16 tmp, *ptr;
++	__be16 tmp;
+ 	const int len = sizeof(tmp);
  
-+	DC_FP_START();
-+
- 	/* Use dml_validate_only for fast_validate path */
- 	if (fast_validate)
- 		out = dml2_validate_only(context);
- 	else
- 		out = dml2_validate_and_build_resource(in_dc, context);
-+
-+	DC_FP_END();
-+
- 	return out;
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be16(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be16_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be16(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be16(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be16_to_cpu(tmp);
++	else
++		return -EFAULT;
  }
  
+ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+@@ -268,21 +278,19 @@ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_32, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be32 tmp, *ptr;
++	__be32 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (likely(offset >= 0)) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be32(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be32_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be32(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be32(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be32_to_cpu(tmp);
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_32_no_cache, const struct sk_buff *, skb,
+-- 
+2.39.5
+
 
 
