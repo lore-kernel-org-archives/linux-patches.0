@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C1719DF4C;
-	Wed, 23 Apr 2025 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7EA27F755;
+	Wed, 23 Apr 2025 14:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419887; cv=none; b=ApXOUudEetpY7YFeGvraBR+QxpqRm9NNviVIa1txUubhwt4U5KGVHpDQdFA75szDwXzySF3OWVqQJh43w5zoNvqd0zRKbo0quP6gqZU2I+CgfsuSc1PHChcjfdpvE2ToV0Zu9jiju78tsp6X9IS/IHYAgsuhIpMOdcXawHlMY1E=
+	t=1745419889; cv=none; b=oXpvlFdw2KFt/k4N1UbhujBDoS2AR2JFTuCSI/RBIah58aybhEwAa64ExWWlrV+JzgTcxdqlje2hP1TFH47VRL17hQbM4wUqljO1wY9yWHwnjeXrTQEbtYRZe4turC5OHRMG4fBDYeUSVcDyPdcbrKEqzwcXFZsszr0W4XgvwsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419887; c=relaxed/simple;
-	bh=WLoMfyowHOjZYcNh7ABO1tdAtw34kpfvCtg2y2VWHYU=;
+	s=arc-20240116; t=1745419889; c=relaxed/simple;
+	bh=1dPfMqFpBXjbgqvsh3oh+v8nRefXwjriw6JNyPu91aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKOU/ZUv06AWDkY6PGn+HhgMNxh3zK7FI6nLa39jau6fgq1vnq0QYaRNojVqRFZDItyQCyVbhZuz0lHvKt/tNJOkTV3adBfA3J02eGl6MqgiB0FpBeAV1Du/Z7xDtkp6MCWQVQ0k5a2XUn6TnD0ocnjPx+uddKoTt/4NHomKLuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQB5PVjS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DOAt+l1cA3u84ye+nbV2QE5ZVAQeqpMSpWeC86I/2l7v54mE7OQzbQUafA6fqx7s8F+E1iYzhLfr9NTy5/kakw1lWwZmrNJJr5dd0FwEfe/LF09CHoZ7XIM12jye7gim72/Zk7M7pl5WMaenFeuSh9ky518+gY4XfLna1b70PqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SVSoPs5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQB5PVjS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F07C4CEE2;
-	Wed, 23 Apr 2025 14:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SVSoPs5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F912C4CEE8;
+	Wed, 23 Apr 2025 14:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419887;
-	bh=WLoMfyowHOjZYcNh7ABO1tdAtw34kpfvCtg2y2VWHYU=;
+	s=korg; t=1745419889;
+	bh=1dPfMqFpBXjbgqvsh3oh+v8nRefXwjriw6JNyPu91aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQB5PVjSGLuuu+mb7Hb9q+5UiALHN6kL7QljKtPVqWCGnpa7Qhfz2FoOMDPii4nHQ
-	 LN908rHkWH8TX4v1qa6qaP1kKv3vVHOsFoc3lSvIyAWvizdXwu3yBHITGMnVTToqGw
-	 s/S1+UtqEStqMkrVlXgRSxjKVHcWcN4HI0ZRZWv4=
+	b=0SVSoPs5n5vflrX5au3Gj93Y+kgdT7PCG4kMyGnsCM1L0BkfsbsgLFEdr0QtlndMD
+	 1F+FZqAHjr12AGcH3sRGnCfIo1ze8kKnHdUdJoZVJFy6NyaYBUP00mrlk5Gd26lBxq
+	 Yx70slJDAkx7yAhKKVejIvdwQIf0QYfpx9nFd6c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chun-Tse Shao <ctshao@google.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 039/241] perf tools: Remove evsel__handle_error_quirks()
-Date: Wed, 23 Apr 2025 16:41:43 +0200
-Message-ID: <20250423142622.110255163@linuxfoundation.org>
+Subject: [PATCH 6.12 076/223] riscv: Properly export reserved regions in /proc/iomem
+Date: Wed, 23 Apr 2025 16:42:28 +0200
+Message-ID: <20250423142620.221159222@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,112 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 2b70702917337a8d6d07f03eed961e0119091647 ]
+[ Upstream commit e94eb7ea6f206e229791761a5fdf9389f8dbd183 ]
 
-The evsel__handle_error_quirks() is to fixup invalid event attributes on
-some architecture based on the error code.  Currently it's only used for
-AMD to disable precise_ip not to use IBS which has more restrictions.
+The /proc/iomem represents the kernel's memory map. Regions marked
+with "Reserved" tells the user that the range should not be tampered
+with. Kexec-tools, when using the older kexec_load syscall relies on
+the "Reserved" regions to build the memory segments, that will be the
+target of the new kexec'd kernel.
 
-But the commit c33aea446bf555ab changed call evsel__precise_ip_fallback
-for any errors so there's no difference with the above function.  To
-make matter worse, it caused a problem with branch stack on Zen3.
+The RISC-V port tries to expose all reserved regions to userland, but
+some regions were not properly exposed: Regions that resided in both
+the "regular" and reserved memory block, e.g. the EFI Memory Map. A
+missing entry could result in reserved memory being overwritten.
 
-The IBS doesn't support branch stack so it should use a regular core
-PMU event.  The default event is set precise_max and it starts with 3.
-And evsel__precise_ip_fallback() tries with it and reduces the level one
-by one.  At last it tries with 0 but it also failed on Zen3 since the
-branch stack is not supported for the cycles event.
+It turns out, that arm64, and loongarch had a similar issue a while
+back:
 
-At this point, evsel__precise_ip_fallback() restores the original
-precise_ip value (3) in the hope that it can succeed with other modifier
-(like exclude_kernel).  Then evsel__handle_error_quirks() see it has
-precise_ip != 0 and make it retry with 0.  This created an infinite
-loop.
+  commit d91680e687f4 ("arm64: Fix /proc/iomem for reserved but not memory regions")
+  commit 50d7ba36b916 ("arm64: export memblock_reserve()d regions via /proc/iomem")
 
-Before:
+Similar to the other ports, resolve the issue by splitting the regions
+in an arch initcall, since we need a working allocator.
 
-  $ perf record -b -vv |& grep removing
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  removing precise_ip on AMD
-  ...
-
-After:
-
-  $ perf record -b true
-  Error:
-  Failure to open event 'cycles:P' on PMU 'cpu' which will be removed.
-  Invalid event (cycles:P) in per-thread mode, enable system wide with '-a'.
-  Error:
-  Failure to open any events for recording.
-
-Fixes: c33aea446bf555ab ("perf tools: Fix precise_ip fallback logic")
-Tested-by: Chun-Tse Shao <ctshao@google.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250410010252.402221-1-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: ffe0e5261268 ("RISC-V: Improve init_resources()")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250409182129.634415-1-bjorn@kernel.org
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ arch/riscv/kernel/setup.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 9cd78cdee6282..c99eb9ff17ed6 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2556,25 +2556,6 @@ static bool evsel__detect_missing_features(struct evsel *evsel, struct perf_cpu
- 	return false;
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index 7934613a98c88..194bda6d74ce7 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -66,6 +66,9 @@ static struct resource bss_res = { .name = "Kernel bss", };
+ static struct resource elfcorehdr_res = { .name = "ELF Core hdr", };
+ #endif
+ 
++static int num_standard_resources;
++static struct resource *standard_resources;
++
+ static int __init add_resource(struct resource *parent,
+ 				struct resource *res)
+ {
+@@ -139,7 +142,7 @@ static void __init init_resources(void)
+ 	struct resource *res = NULL;
+ 	struct resource *mem_res = NULL;
+ 	size_t mem_res_sz = 0;
+-	int num_resources = 0, res_idx = 0;
++	int num_resources = 0, res_idx = 0, non_resv_res = 0;
+ 	int ret = 0;
+ 
+ 	/* + 1 as memblock_alloc() might increase memblock.reserved.cnt */
+@@ -195,6 +198,7 @@ static void __init init_resources(void)
+ 	/* Add /memory regions to the resource tree */
+ 	for_each_mem_region(region) {
+ 		res = &mem_res[res_idx--];
++		non_resv_res++;
+ 
+ 		if (unlikely(memblock_is_nomap(region))) {
+ 			res->name = "Reserved";
+@@ -212,6 +216,9 @@ static void __init init_resources(void)
+ 			goto error;
+ 	}
+ 
++	num_standard_resources = non_resv_res;
++	standard_resources = &mem_res[res_idx + 1];
++
+ 	/* Clean-up any unused pre-allocated resources */
+ 	if (res_idx >= 0)
+ 		memblock_free(mem_res, (res_idx + 1) * sizeof(*mem_res));
+@@ -223,6 +230,33 @@ static void __init init_resources(void)
+ 	memblock_free(mem_res, mem_res_sz);
  }
  
--static bool evsel__handle_error_quirks(struct evsel *evsel, int error)
--{
--	/*
--	 * AMD core PMU tries to forward events with precise_ip to IBS PMU
--	 * implicitly.  But IBS PMU has more restrictions so it can fail with
--	 * supported event attributes.  Let's forward it back to the core PMU
--	 * by clearing precise_ip only if it's from precise_max (:P).
--	 */
--	if ((error == -EINVAL || error == -ENOENT) && x86__is_amd_cpu() &&
--	    evsel->core.attr.precise_ip && evsel->precise_max) {
--		evsel->core.attr.precise_ip = 0;
--		pr_debug2_peo("removing precise_ip on AMD\n");
--		display_attr(&evsel->core.attr);
--		return true;
--	}
--
--	return false;
--}
--
- static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 		struct perf_thread_map *threads,
- 		int start_cpu_map_idx, int end_cpu_map_idx)
-@@ -2720,9 +2701,6 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 	if (evsel__precise_ip_fallback(evsel))
- 		goto retry_open;
++static int __init reserve_memblock_reserved_regions(void)
++{
++	u64 i, j;
++
++	for (i = 0; i < num_standard_resources; i++) {
++		struct resource *mem = &standard_resources[i];
++		phys_addr_t r_start, r_end, mem_size = resource_size(mem);
++
++		if (!memblock_is_region_reserved(mem->start, mem_size))
++			continue;
++
++		for_each_reserved_mem_range(j, &r_start, &r_end) {
++			resource_size_t start, end;
++
++			start = max(PFN_PHYS(PFN_DOWN(r_start)), mem->start);
++			end = min(PFN_PHYS(PFN_UP(r_end)) - 1, mem->end);
++
++			if (start > mem->end || end < mem->start)
++				continue;
++
++			reserve_region_with_split(mem, start, end, "Reserved");
++		}
++	}
++
++	return 0;
++}
++arch_initcall(reserve_memblock_reserved_regions);
  
--	if (evsel__handle_error_quirks(evsel, err))
--		goto retry_open;
--
- out_close:
- 	if (err)
- 		threads->err_thread = thread;
+ static void __init parse_dtb(void)
+ {
 -- 
 2.39.5
 
