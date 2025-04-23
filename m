@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F14428B4FF;
-	Wed, 23 Apr 2025 15:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF7928BA81;
+	Wed, 23 Apr 2025 15:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421322; cv=none; b=omk9OycR9Tmf4JwHyeDaqQqg47UfrGYt/y55owOcGsVP4jEvDSRsQQrMsz40idbpxypPIvA1VY9cuLJYYHAkqY5FIfXdU94pz5OLD9nFiVpbA5GGUQm4SeXOqqZ/aN3C2fprTuuhkUSoeZbl6B2M7Lyu3Qwtlf2CAUOCyT6b4fw=
+	t=1745421325; cv=none; b=gNkgdPiww7bhe+Vp+Q7UZqh2dDdCegsIe3UH6wwhyqfmMxvoGWAWoFsHVqdXHCGO03AD3fwgTyJTULN0xTxtd4m5L/t3aGLIuFUokhFEpg4FTfmYFs0Wv0vZ9QtBknCFglDzruxsqSEEHgipB4OrYVoxVwItFIX0OOveg4sO+mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421322; c=relaxed/simple;
-	bh=NmKO6G51xM2C+OdH12Iwex6ZfzqOU77hep4X4MAq6WE=;
+	s=arc-20240116; t=1745421325; c=relaxed/simple;
+	bh=cZ0/QOGEFnSthNfnTgq9Fu6mXmE32WXE5RmGGKZFJ/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cDZVE38cfIvKL5BGUGml1x9N2fSMMAd+mXO9ZtnT9mIElhE0ot/UK2Ob45wQFIaXjebfwKpFAy1DvNag3HazOx8kJmWQhtSo1CXQd0Ws2t3PyJF5/nmDPPYas9ATfBPwrIWr+DWDQQN44JWpnqympmKer3xiMcUgZB544N3UP+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jp3eOiam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlOAnHsl1r7nfyOOb6BLmcx8FtvnTM8rp76j3wgrH1GlC8IfG5q7QHavTyqASJAIwpiXiiR2LB5E52yYElz7w7z2i7Mlmw+aujm1EJ09f7Eu50Lnn4vhi8lXBhyvCpZ1TSvmBS6AhHSH9WuoVI1HktPIWNuxSbGY99M3o2GhYwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGCKB6GG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jp3eOiam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57EAC4CEE2;
-	Wed, 23 Apr 2025 15:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGCKB6GG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63667C4CEE2;
+	Wed, 23 Apr 2025 15:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421322;
-	bh=NmKO6G51xM2C+OdH12Iwex6ZfzqOU77hep4X4MAq6WE=;
+	s=korg; t=1745421324;
+	bh=cZ0/QOGEFnSthNfnTgq9Fu6mXmE32WXE5RmGGKZFJ/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jp3eOiamPd5ONXkFpXlhMObUK20Hu06fSg0UtGC9PfOar/nFmGYzdC0BUERYNl7ww
-	 Ur4TX8GAi+ZfxshBlPsl06gnqULuxIazNNX2YMf9lQ+u6+/4oL5WTUs3yFCrBqVIXM
-	 L+Sx++gPtbrH83rw1qRTjh+8zUeBYidEn2jz/VBA=
+	b=aGCKB6GGnyRH63fLuc8U6HKgrA0swZqCCgARuRyzX3nmyz3p+XCIap20OCwTyw9br
+	 yFssVF3ZbtVS3VzRxXw8Ekfk2vGqiLoDSdodBKtXL151azSPw/vCKOlhHiWslM5hSl
+	 cSgKm2uT7jVateuX9i6gr15zska6H/FHbpZwT24o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 211/223] MIPS: dec: Declare which_prom() as static
-Date: Wed, 23 Apr 2025 16:44:43 +0200
-Message-ID: <20250423142625.756577752@linuxfoundation.org>
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.14 175/241] drm/msm/a6xx: Fix stale rpmh votes from GPU
+Date: Wed, 23 Apr 2025 16:43:59 +0200
+Message-ID: <20250423142627.680506318@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,48 +44,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-commit 55fa5868519bc48a7344a4c070efa2f4468f2167 upstream.
+commit f561db72a663f8a73c2250bf3244ce1ce221bed7 upstream.
 
-Declare which_prom() as static to suppress gcc compiler warning that
-'missing-prototypes'. This function is not intended to be called
-from other parts.
+It was observed on sc7180 (A618 gpu) that GPU votes for GX rail and CNOC
+BCM nodes were not removed after GPU suspend. This was because we
+skipped sending 'prepare-slumber' request to gmu during suspend sequence
+in some cases. So, make sure we always call prepare-slumber hfi during
+suspend. Also, calling prepare-slumber without a prior oob-gpu handshake
+messes up gmu firmware's internal state. So, do that when required.
 
-Fix follow error with gcc-14 when -Werror:
-
-arch/mips/dec/prom/init.c:45:13: error: no previous prototype for ‘which_prom’ [-Werror=missing-prototypes]
-   45 | void __init which_prom(s32 magic, s32 *prom_vec)
-      |             ^~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:207: arch/mips/dec/prom/init.o] Error 1
-make[5]: *** [scripts/Makefile.build:465: arch/mips/dec/prom] Error 2
-make[5]: *** Waiting for unfinished jobs....
-
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/639569/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/dec/prom/init.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c |   82 ++++++++++++++++++----------------
+ 1 file changed, 44 insertions(+), 38 deletions(-)
 
---- a/arch/mips/dec/prom/init.c
-+++ b/arch/mips/dec/prom/init.c
-@@ -42,7 +42,7 @@ int (*__pmax_close)(int);
-  * Detect which PROM the DECSTATION has, and set the callback vectors
-  * appropriately.
-  */
--void __init which_prom(s32 magic, s32 *prom_vec)
-+static void __init which_prom(s32 magic, s32 *prom_vec)
- {
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1169,50 +1169,51 @@ static void a6xx_gmu_shutdown(struct a6x
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	u32 val;
++	int ret;
+ 
  	/*
- 	 * No sign of the REX PROM's magic number means we assume a non-REX
+-	 * The GMU may still be in slumber unless the GPU started so check and
+-	 * skip putting it back into slumber if so
++	 * GMU firmware's internal power state gets messed up if we send "prepare_slumber" hfi when
++	 * oob_gpu handshake wasn't done after the last wake up. So do a dummy handshake here when
++	 * required
+ 	 */
+-	val = gmu_read(gmu, REG_A6XX_GPU_GMU_CX_GMU_RPMH_POWER_STATE);
++	if (adreno_gpu->base.needs_hw_init) {
++		if (a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET))
++			goto force_off;
+ 
+-	if (val != 0xf) {
+-		int ret = a6xx_gmu_wait_for_idle(gmu);
+-
+-		/* If the GMU isn't responding assume it is hung */
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
+-
+-		/* tell the GMU we want to slumber */
+-		ret = a6xx_gmu_notify_slumber(gmu);
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		ret = gmu_poll_timeout(gmu,
+-			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
+-			!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
+-			100, 10000);
+-
+-		/*
+-		 * Let the user know we failed to slumber but don't worry too
+-		 * much because we are powering down anyway
+-		 */
+-
+-		if (ret)
+-			DRM_DEV_ERROR(gmu->dev,
+-				"Unable to slumber GMU: status = 0%x/0%x\n",
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+ 	}
+ 
++	ret = a6xx_gmu_wait_for_idle(gmu);
++
++	/* If the GMU isn't responding assume it is hung */
++	if (ret)
++		goto force_off;
++
++	a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
++
++	/* tell the GMU we want to slumber */
++	ret = a6xx_gmu_notify_slumber(gmu);
++	if (ret)
++		goto force_off;
++
++	ret = gmu_poll_timeout(gmu,
++		REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
++		!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
++		100, 10000);
++
++	/*
++	 * Let the user know we failed to slumber but don't worry too
++	 * much because we are powering down anyway
++	 */
++
++	if (ret)
++		DRM_DEV_ERROR(gmu->dev,
++			"Unable to slumber GMU: status = 0%x/0%x\n",
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++
+ 	/* Turn off HFI */
+ 	a6xx_hfi_stop(gmu);
+ 
+@@ -1221,6 +1222,11 @@ static void a6xx_gmu_shutdown(struct a6x
+ 
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
++
++	return;
++
++force_off:
++	a6xx_gmu_force_off(gmu);
+ }
+ 
+ 
 
 
