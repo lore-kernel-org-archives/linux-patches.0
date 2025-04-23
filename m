@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503351A0711;
-	Wed, 23 Apr 2025 14:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D38EC8EB;
+	Wed, 23 Apr 2025 14:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419596; cv=none; b=LT7eNiGRh8Ewmv3dOGPWKiro5nrWhJukfjKjVwSTKmeO7GnMJto4koDj1qAvkpT2Tv25CfwgipX1wzuwMvnSB0nMir9h8RypSzzQYjzvGHAspzaYAVYGSW/AjWS4UdW5kOT5My859rWGb8ZoaXPAKukzD+2UCz+okWG3Zi9hX6g=
+	t=1745419599; cv=none; b=klNRPks09FBBNA630+nDyqdECCQsU/zz9LtiTO5TCpgmZyuiHBM/OupIIqSfgNP3v8C8TgAPC16SKNKOJAkvoUC7pO/cqJ+b2Uj//i9g2TwaLUzFSzI2VtkZCwXZ86tLBspCbN/gqxJ32A+1hnXgc7CIk6/MpbMxSOXwhCml1Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419596; c=relaxed/simple;
-	bh=sdbgRCrfAWavg5Acj0RP2PflrlFz3uVbJs3vNTS2F9c=;
+	s=arc-20240116; t=1745419599; c=relaxed/simple;
+	bh=2heZO1M83XAwHDe+P8Rjf958t2yCjlc2hYr6cdldgAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/Dt2QRxrCT948Q/LHmCagqjAGbbSDaCfNxK9Xr/41BtOYO2a2G1SAPPT8NTrKrjtH7ZWL/C1vuvXZBB/bnS7IgpD7Nn1FC+L1VP8ohZ0ESJ4CcELU+QMlYBS7zS60IK9sas2tXPpqnM4t2FoeUfTk7jikpxbwjNaiv3l6up59I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jc+YjS70; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P98A06d+wmMrVhPez0M9q1ZbSyhaA4ujDzhy38EaSLUKbVfXNN7bF7wLwBoRdgSJIlssc7GoAPbA/N49xgll2VD4NSK696bRBbh7rXh/TUH80AnRfJR1lMdOTfHf1dAMyEtcKxPA9CEAc0Z0TlIN3N32uWU/N0ueNQUgc7FpvN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWh/XO/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jc+YjS70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A1EC4CEE2;
-	Wed, 23 Apr 2025 14:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWh/XO/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BCAC4CEE2;
+	Wed, 23 Apr 2025 14:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419596;
-	bh=sdbgRCrfAWavg5Acj0RP2PflrlFz3uVbJs3vNTS2F9c=;
+	s=korg; t=1745419599;
+	bh=2heZO1M83XAwHDe+P8Rjf958t2yCjlc2hYr6cdldgAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jc+YjS70Ek3jdCctj1RpyL0omV/OY3AtxJbtmoKaHj7POOYCYDeJHXgHl6EvbcOhm
-	 AMqlQNaJIkPIVNwx4SWV3wSb79X489ObnfXV53B+vaGU0bQkEjmPqTKdrlOlX1jBoi
-	 /2lNCAcCanuouEvvgnWqGOFdcYbwXhIs8K8SZ9rY=
+	b=qWh/XO/JPNb9xlgyTOvs8YdgGLKPaoo/EJDVFsdbzi0Y8L2oUnbUMCeMeggfRShog
+	 s8VuWUkWq/mlDyPabQNetME9DJjQiFrIx3Qgq1e0R8xkbCe0ivY1HR/cA7+O6cH3e7
+	 0QDBt0oDMzS3XN3O1PY0XeXo8durABQ1HJKaU8wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Daniel Wagner <wagi@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/223] scsi: iscsi: Fix missing scsi_host_put() in error path
-Date: Wed, 23 Apr 2025 16:41:18 +0200
-Message-ID: <20250423142617.379747114@linuxfoundation.org>
+Subject: [PATCH 6.12 007/223] driver core: bus: add irq_get_affinity callback to bus_type
+Date: Wed, 23 Apr 2025 16:41:19 +0200
+Message-ID: <20250423142617.420331149@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -52,45 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
+[ Upstream commit fea4952df0eeec4e1a295ebaac9f61c0065fae87 ]
 
-Add goto to ensure scsi_host_put() is called in all error paths of
-iscsi_set_host_param() function. This fixes a potential memory leak when
-strlen() check fails.
+Introducing a callback in struct bus_type so that a subsystem
+can hook up the getters directly. This approach avoids exposing
+random getters in any subsystems APIs.
 
-Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Link: https://lore.kernel.org/r/20241202-refactor-blk-affinity-helpers-v6-1-27211e9c2cd5@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: a2d5a0072235 ("scsi: smartpqi: Use is_kdump_kernel() to check for kdump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/device/bus.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index 9b47f91c5b972..8274fe0ec7146 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -3209,11 +3209,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
- 	}
+diff --git a/include/linux/device/bus.h b/include/linux/device/bus.h
+index cdc4757217f9b..b18658bce2c38 100644
+--- a/include/linux/device/bus.h
++++ b/include/linux/device/bus.h
+@@ -48,6 +48,7 @@ struct fwnode_handle;
+  *		will never get called until they do.
+  * @remove:	Called when a device removed from this bus.
+  * @shutdown:	Called at shut-down time to quiesce the device.
++ * @irq_get_affinity:	Get IRQ affinity mask for the device on this bus.
+  *
+  * @online:	Called to put the device back online (after offlining it).
+  * @offline:	Called to put the device offline for hot-removal. May fail.
+@@ -87,6 +88,8 @@ struct bus_type {
+ 	void (*sync_state)(struct device *dev);
+ 	void (*remove)(struct device *dev);
+ 	void (*shutdown)(struct device *dev);
++	const struct cpumask *(*irq_get_affinity)(struct device *dev,
++			unsigned int irq_vec);
  
- 	/* see similar check in iscsi_if_set_param() */
--	if (strlen(data) > ev->u.set_host_param.len)
--		return -EINVAL;
-+	if (strlen(data) > ev->u.set_host_param.len) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 
- 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
- 					data, ev->u.set_host_param.len);
-+out:
- 	scsi_host_put(shost);
- 	return err;
- }
+ 	int (*online)(struct device *dev);
+ 	int (*offline)(struct device *dev);
 -- 
 2.39.5
 
