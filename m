@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8AD28B500;
-	Wed, 23 Apr 2025 15:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9086628B4FD;
+	Wed, 23 Apr 2025 15:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421724; cv=none; b=dI5fjppsctszu51w6og7ERRcp2IJs+vnm3PqCyohHhVmV3jCjazSFS0kW1jvy8NjQLrYhPZLisTwIT4odFC9J77pPle+EwymZalFmJQoIoBTJplqKptpHPEnlEFRXp8lGW7fxBKrMahJTrGeCxqP+x2xYtariEGiTfyEdQLGrj0=
+	t=1745421726; cv=none; b=R3Y0BcxMk/P4FcfUumAbKQuV0nwHltTez+bRrzjMVkNsBwXq65w3KEpcRZKRNBL5kI0QOPRwJk7/M92cq5Q9iEhrm2RI2UNjWsuJtyh1XF915PT1JAS/oTfgPS7G8AYKg7UpPpx8OnDS8EzJF1SoWwpQmh/A7SuLjQTIjRZw0ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421724; c=relaxed/simple;
-	bh=B/+RI7UQcvTyJe1ikhISTQ4pssbx/vLuLeSajZ2JJEQ=;
+	s=arc-20240116; t=1745421726; c=relaxed/simple;
+	bh=+Vh13KHVnNVKTaZlDjGaJUeg4Q5Pfyjha+jDOrzr7MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBBx1T2X3EAYLdPiYp8Rp6+x0J9lNbVfXiMZzn1Rwjmxa4lTnACkMRgPouQm0ma2nl5sIDPrfYwR3fc65YFUve2cd2BIvHhAjlcF3sPVQabbopoG/yMk45UIWVgQ/OEKGqscPpBm4FB6g2tU7MMiYK/V7lYfhtHCm1VHzdrEQp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azwJ+VBF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmYSZWsn/FGa3u8v7dyhZVbVjkcFPagPJcNqarDa70Z5vN4yZIFgN8iZzDrGNxzIzR1x25Gh0GJh0Xa6AtWvyFvoAIncoYh6j4oj/+G8pO7lXDlVpGDXt5xGknoFdc64MJDdEbGnFUJLX9vKW5QMbSPakDsKKccF8KOCN/5xWOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpD685b7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azwJ+VBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E15BC4CEE2;
-	Wed, 23 Apr 2025 15:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpD685b7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22862C4CEE3;
+	Wed, 23 Apr 2025 15:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421723;
-	bh=B/+RI7UQcvTyJe1ikhISTQ4pssbx/vLuLeSajZ2JJEQ=;
+	s=korg; t=1745421726;
+	bh=+Vh13KHVnNVKTaZlDjGaJUeg4Q5Pfyjha+jDOrzr7MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azwJ+VBFmkbQSu5ycnfvb/7EiOxGDuCoS8XG9oZOkMvpe05aetHz4qSiveiiSmziA
-	 yHW+jN7Pfuv8pZrKqKA2G9GEDBGM47lZhIEdpHnWQ8sVUTpm1FXe3hm86F5j4E7YQV
-	 aO/08VJuxlMZFCIFxc27zwqQX1mu9mgB9Pzhyn1w=
+	b=GpD685b7uXff14y7rea4lGlBqnBStdk1A4b02jAOwdn+arEmEM7CKNkvQ6tYwFaD+
+	 j8SRz8N9o22y3Mr6pzVrk3mC/pxqaHtmB1olCeqlw6JAQ6Zm9kQ8qkr2HPdnz5yXfS
+	 VamPRlRJQa4a0w/9Ns9CUG9qde6DhJPjoicT2bSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Coly Li <colyli@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/291] md/raid10: fix missing discard IO accounting
-Date: Wed, 23 Apr 2025 16:42:40 +0200
-Message-ID: <20250423142631.371533244@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Eric Auger <eric.auger@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.14 226/241] arm64/sysreg: Add register fields for HFGWTR2_EL2
+Date: Wed, 23 Apr 2025 16:44:50 +0200
+Message-ID: <20250423142629.798275722@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +51,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit d05af90d6218e9c8f1c2026990c3f53c1b41bfb0 ]
+commit ea37be0773f04420515b8db49e50abedbaa97e23 upstream.
 
-md_account_bio() is not called from raid10_handle_discard(), now that we
-handle bitmap inside md_account_bio(), also fix missing
-bitmap_startwrite for discard.
+This adds register fields for HFGWTR2_EL2 as per the definitions based
+on DDI0601 2024-12.
 
-Test whole disk discard for 20G raid10:
-
-Before:
-Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
-md0    48.00     16.00     0.00   0.00    5.42   341.33
-
-After:
-Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
-md0    68.00  20462.00     0.00   0.00    2.65 308133.65
-
-Link: https://lore.kernel.org/linux-raid/20250325015746.3195035-1-yukuai1@huaweicloud.com
-Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Coly Li <colyli@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250203050828.1049370-7-anshuman.khandual@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/tools/sysreg |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index f608f30c7d6a6..24427eddf61bc 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1772,6 +1772,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	 * The discard bio returns only first r10bio finishes
- 	 */
- 	if (first_copy) {
-+		md_account_bio(mddev, &bio);
- 		r10_bio->master_bio = bio;
- 		set_bit(R10BIO_Discard, &r10_bio->state);
- 		first_copy = false;
--- 
-2.39.5
-
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -2719,6 +2719,25 @@ Field	1	nERXGSR_EL1
+ Field	0	nPFAR_EL1
+ EndSysreg
+ 
++Sysreg	HFGWTR2_EL2	3	4	3	1	3
++Res0	63:15
++Field	14	nACTLRALIAS_EL1
++Field	13	nACTLRMASK_EL1
++Field	12	nTCR2ALIAS_EL1
++Field	11	nTCRALIAS_EL1
++Field	10	nSCTLRALIAS2_EL1
++Field	9	nSCTLRALIAS_EL1
++Field	8	nCPACRALIAS_EL1
++Field	7	nTCR2MASK_EL1
++Field	6	nTCRMASK_EL1
++Field	5	nSCTLR2MASK_EL1
++Field	4	nSCTLRMASK_EL1
++Field	3	nCPACRMASK_EL1
++Field	2	nRCWSMASK_EL1
++Res0	1
++Field	0	nPFAR_EL1
++EndSysreg
++
+ Sysreg HDFGRTR_EL2	3	4	3	1	4
+ Field	63	PMBIDR_EL1
+ Field	62	nPMSNEVFR_EL1
 
 
