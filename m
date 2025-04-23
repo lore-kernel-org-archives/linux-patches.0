@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1732127FD7A;
-	Wed, 23 Apr 2025 15:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D47E1F193C;
+	Wed, 23 Apr 2025 15:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420456; cv=none; b=uQJC7SmwQJK6wvlZ5ZOTuF8MNOdPz58mzV/wu5JB2lnPS/hJM/Ccd80Jo+1HwtcopNjUghPXcY4QMf1w/IbQ/2BMt1MNGg1uhi91LD/MkRYspILjSWBpcY2TZLzhqkE7lBjm8dKpUWCF359Qc69+NQQSQ0u/kqLMBzZFPfj0cL8=
+	t=1745420459; cv=none; b=Q2w8ETIpqFzleFgRIaaDfIGEJWOnqNo8FwhX6rRlUXqydMk1uy90geA828BrirJ1BPlvuipxLhpSm+rGs2giJjR/saF1nabXSxozvqeLcelctkHH7liSY7tBRUBdR//pBmsccLiT4VdyMjG2ZAPpzZK9gVYJRuQLeltoHerQYPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420456; c=relaxed/simple;
-	bh=18xYFtwhXwqYSje0wMT4he8NIMPtPWldlsJh0E+U3wI=;
+	s=arc-20240116; t=1745420459; c=relaxed/simple;
+	bh=/OJrhaULIEQCjaYvSSsye8hUB5WDk90rp1dSDq3i6C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dg4nIGcsX1nkQi4A0od88yH/+5oArD8F5wCaLZQpY2QxLE9A9uXu2V469aatoafP1Alp3glOI+t2BF5U9WNgBHWzEINPGg6vkobIYeymEYcwWHscHkxEmejTDiXJYsYHr7SLCr+Q/d6qEpc2QanEdLWQt77wlXnzG2MQI+V41kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEsRyPaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JuEXt4EjRrMZnJTp+nVpfHxgwPzIXVZEkL4CyBw52+lVCMqLVCmI1LCg3pVj8eUlg1ub5NzloF/WHwXsTndr808m1QZK5qrHUyIccGwzP42TZ+Xt+Vnjy/XyRoF5pWMcIS1gA6UISUU9yQv4H1wu+xqra3bI+Eqx6fF1i1PeGqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjQyu+Kk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEsRyPaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9788FC4CEE2;
-	Wed, 23 Apr 2025 15:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjQyu+Kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3615FC4CEE2;
+	Wed, 23 Apr 2025 15:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420455;
-	bh=18xYFtwhXwqYSje0wMT4he8NIMPtPWldlsJh0E+U3wI=;
+	s=korg; t=1745420458;
+	bh=/OJrhaULIEQCjaYvSSsye8hUB5WDk90rp1dSDq3i6C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEsRyPaW+eGPkSU/RFZIcWIUcaLMWcXLuTEi0ZeYm7uQYduDd4+SaTXfjy2sM0JBF
-	 wN75Dn/DkU99iKxdPs8QmK/gJauVZz2pGGlzJhnjF+k43PO6O6G93jGsw4jSAKSS/N
-	 GCaXA2+niu5qSqIbsKd0+5jFq+y5btJLyi0QXcis=
+	b=AjQyu+Kko6hojzPxeF8KnHZAFNALSWWQ7Pbxk8zwM7e81v/NZBY8+7Dud4pHeqdhq
+	 gXCyhXSGJa563lQdT9r6zmW/Kg0e+UjIAUhWunS5ioTEJT4hxHQ+eYVWyxB4Oc94b4
+	 Ck8c9E2o8WV/kPeTYqnuYv6rp4vhNP7Ta7rMsFwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
-	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 133/223] tracing: Fix filter string testing
-Date: Wed, 23 Apr 2025 16:43:25 +0200
-Message-ID: <20250423142622.509138169@linuxfoundation.org>
+	Philip Pemberton <lists@philpem.me.uk>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 076/393] ata: libata-eh: Do not use ATAPI DMA for a device limited to PIO mode
+Date: Wed, 23 Apr 2025 16:39:32 +0200
+Message-ID: <20250423142646.445807074@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,66 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit a8c5b0ed89a3f2c81c6ae0b041394e6eea0e7024 upstream.
+[ Upstream commit 91ec84f8eaddbc93d7c62e363d68aeb7b89879c7 ]
 
-The filter string testing uses strncpy_from_kernel/user_nofault() to
-retrieve the string to test the filter against. The if() statement was
-incorrect as it considered 0 as a fault, when it is only negative that it
-faulted.
+atapi_eh_request_sense() currently uses ATAPI DMA if the SATA controller
+has ATA_FLAG_PIO_DMA (PIO cmds via DMA) set.
 
-Running the following commands:
+However, ATA_FLAG_PIO_DMA is a flag that can be set by a low-level driver
+on a port at initialization time, before any devices are scanned.
 
-  # cd /sys/kernel/tracing
-  # echo "filename.ustring ~ \"/proc*\"" > events/syscalls/sys_enter_openat/filter
-  # echo 1 > events/syscalls/sys_enter_openat/enable
-  # ls /proc/$$/maps
-  # cat trace
+If a controller detects a connected device that only supports PIO, we set
+the flag ATA_DFLAG_PIO.
 
-Would produce nothing, but with the fix it will produce something like:
+Modify atapi_eh_request_sense() to not use ATAPI DMA if the connected
+device only supports PIO.
 
-      ls-1192    [007] .....  8169.828333: sys_openat(dfd: ffffffffffffff9c, filename: 7efc18359904, flags: 80000, mode: 0)
-
-Link: https://lore.kernel.org/all/CAEf4BzbVPQ=BjWztmEwBPRKHUwNfKBkS3kce-Rzka6zvbQeVpg@mail.gmail.com/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/20250417183003.505835fb@gandalf.local.home
-Fixes: 77360f9bbc7e5 ("tracing: Add test for user space strings when filtering on string pointers")
-Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Reported-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Philip Pemberton <lists@philpem.me.uk>
+Closes: https://lore.kernel.org/linux-ide/c6722ee8-5e21-4169-af59-cbbae9edc02f@philpem.me.uk/
+Tested-by: Philip Pemberton <lists@philpem.me.uk>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250221015422.20687-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_filter.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/libata-eh.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -808,7 +808,7 @@ static __always_inline char *test_string
- 	kstr = ubuf->buffer;
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 9cc0225221849..3263fc13491e1 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -1496,8 +1496,15 @@ unsigned int atapi_eh_request_sense(struct ata_device *dev,
+ 	tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	tf.command = ATA_CMD_PACKET;
  
- 	/* For safety, do not trust the string pointer */
--	if (!strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE))
-+	if (strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE) < 0)
- 		return NULL;
- 	return kstr;
- }
-@@ -827,7 +827,7 @@ static __always_inline char *test_ustrin
- 
- 	/* user space address? */
- 	ustr = (char __user *)str;
--	if (!strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE))
-+	if (strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE) < 0)
- 		return NULL;
- 
- 	return kstr;
+-	/* is it pointless to prefer PIO for "safety reasons"? */
+-	if (ap->flags & ATA_FLAG_PIO_DMA) {
++	/*
++	 * Do not use DMA if the connected device only supports PIO, even if the
++	 * port prefers PIO commands via DMA.
++	 *
++	 * Ideally, we should call atapi_check_dma() to check if it is safe for
++	 * the LLD to use DMA for REQUEST_SENSE, but we don't have a qc.
++	 * Since we can't check the command, perhaps we should only use pio?
++	 */
++	if ((ap->flags & ATA_FLAG_PIO_DMA) && !(dev->flags & ATA_DFLAG_PIO)) {
+ 		tf.protocol = ATAPI_PROT_DMA;
+ 		tf.feature |= ATAPI_PKT_DMA;
+ 	} else {
+-- 
+2.39.5
+
 
 
