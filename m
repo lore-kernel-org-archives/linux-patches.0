@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950A428CF52;
-	Wed, 23 Apr 2025 15:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE90328CF52;
+	Wed, 23 Apr 2025 15:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421422; cv=none; b=H5eq0a6g+q2Wiei4op3mCSNFx96qWwrYXKpRdOSvNTxRvkaSy74DsvRWvZrukW0jJkqdxuhFG/iXNNkqwLYXUoeYiOdeNRvXifvz/jFpI4vihKy5BMx5W+w8iMLNDjo5jDDV4LrVi+FTii+1mEaKJYU7S+zTmRWDnHzCkSNlxMg=
+	t=1745421424; cv=none; b=ocoRQhGrVWRcEl+Qfkh5ltDg0JfCJWaPaIuYknf2j3fGYXuDJc1TwuXOY92EDCcZH8SWBPC4Bb7aLiAKMgWyXiC9a6KhV9wNraAgjyYiMn5hfWyuAtuedJi7IROA7Q46Etlu5Xje4dcDWWj6kxzR4ykuZ0eG+hTPu62fdCHpHfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421422; c=relaxed/simple;
-	bh=GxCRJM/nGm1Auv3K60Lz6L3E9jf6jK69X5sJCbSB5HI=;
+	s=arc-20240116; t=1745421424; c=relaxed/simple;
+	bh=i4VwiWjkx2TTEqzUlCXgoWa2B0w6ls5EAK+tLQ/BkdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FO2ijOq+XjRrsoSmKvHhlV4TfSFPS/iLOWcTPNF9DA5Kl0P12sAsPDwRTgbyiwDoA71yQid0vWi/BWRWRpkirQna0t8HFvcwzrULPkJix8FS1a69apGDENGqJXnvxUPmD2aYMU7cxMKco4kvZYViG6dli0g3OxhRW15Dj/MYvoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZ65GTh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uV8JLslSMVzCVRpNmXsw+IfMPaPZ6WLrWfP47nxKqZ7aae7dSbFTaXCPXlIEeTTqZZelrTxxn3UvHjnW2CSS8awMufSI79c8g63S+nUJeOBrR8GgD7PEMKEPcH/2CgDZ1CHXRIeY9eRyr7Mj/P8xNAodzBhtXG+1BI38RmqtXAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQe1hTtx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ65GTh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C173AC4CEE2;
-	Wed, 23 Apr 2025 15:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQe1hTtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56872C4CEE2;
+	Wed, 23 Apr 2025 15:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421421;
-	bh=GxCRJM/nGm1Auv3K60Lz6L3E9jf6jK69X5sJCbSB5HI=;
+	s=korg; t=1745421423;
+	bh=i4VwiWjkx2TTEqzUlCXgoWa2B0w6ls5EAK+tLQ/BkdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZ65GTh4lYghvTElYTRy1gnefGf15SQKe+0Tv5cg3/BXDbCgRXtCwMuwC4hj6xhwa
-	 84CALXnVToPUMO2Y1x3P4gjQEtBF7wH3PtEAk6O6ePrBTA+esRALyUD9GoZQ2nuorO
-	 Vk0TyX83GOAzRZyYxKJZS0OZ0tngdN9MuK8Y9SkI=
+	b=eQe1hTtxABm63bDxn7bdHIXTnU2ychHP0j8F4dK5NwaadczxrUYastHezhdUxUnEm
+	 Ih1vwkb7YpywpDCchIW6xFmUzx3/ejnX1LnQYc4Mx1oADSgJNBR+GcIiTVevY8UZuV
+	 UKsxeeZ5667EHTBgaQRX9QrGWN/Movd2v9/yzhgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Shaoyun.liu" <Shaoyun.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 188/241] drm/amdgpu/mes12: optimize MES pipe FW version fetching
-Date: Wed, 23 Apr 2025 16:44:12 +0200
-Message-ID: <20250423142628.202294010@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 220/223] selftests/bpf: validate that tail call invalidates packet pointers
+Date: Wed, 23 Apr 2025 16:44:52 +0200
+Message-ID: <20250423142626.126458422@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit 34779e14461cf715238dec5fd43a1e11977ec115 upstream.
+commit d9706b56e13b7916461ca6b4b731e169ed44ed09 upstream.
 
-Don't fetch it again if we already have it.  It seems the
-registers don't reliably have the value at resume in some
-cases.
+Add a test case with a tail call done from a global sub-program. Such
+tails calls should be considered as invalidating packet pointers.
 
-Fixes: 785f0f9fe742 ("drm/amdgpu: Add mes v12_0 ip block support (v4)")
-Reviewed-by: Shaoyun.liu <Shaoyun.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9e7b08d239c2f21e8f417854f81e5ff40edbebff)
-Cc: stable@vger.kernel.org # 6.12.x
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20241210041100.1898468-9-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ tools/testing/selftests/bpf/progs/verifier_sock.c |   28 ++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -1390,17 +1390,20 @@ static int mes_v12_0_queue_init(struct a
- 		mes_v12_0_queue_init_register(ring);
- 	}
+--- a/tools/testing/selftests/bpf/progs/verifier_sock.c
++++ b/tools/testing/selftests/bpf/progs/verifier_sock.c
+@@ -50,6 +50,13 @@ struct {
+ 	__uint(map_flags, BPF_F_NO_PREALLOC);
+ } sk_storage_map SEC(".maps");
  
--	/* get MES scheduler/KIQ versions */
--	mutex_lock(&adev->srbm_mutex);
--	soc21_grbm_select(adev, 3, pipe, 0, 0);
-+	if (((pipe == AMDGPU_MES_SCHED_PIPE) && !adev->mes.sched_version) ||
-+	    ((pipe == AMDGPU_MES_KIQ_PIPE) && !adev->mes.kiq_version)) {
-+		/* get MES scheduler/KIQ versions */
-+		mutex_lock(&adev->srbm_mutex);
-+		soc21_grbm_select(adev, 3, pipe, 0, 0);
- 
--	if (pipe == AMDGPU_MES_SCHED_PIPE)
--		adev->mes.sched_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
--	else if (pipe == AMDGPU_MES_KIQ_PIPE && adev->enable_mes_kiq)
--		adev->mes.kiq_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
-+		if (pipe == AMDGPU_MES_SCHED_PIPE)
-+			adev->mes.sched_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
-+		else if (pipe == AMDGPU_MES_KIQ_PIPE && adev->enable_mes_kiq)
-+			adev->mes.kiq_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
- 
--	soc21_grbm_select(adev, 0, 0, 0, 0);
--	mutex_unlock(&adev->srbm_mutex);
-+		soc21_grbm_select(adev, 0, 0, 0, 0);
-+		mutex_unlock(&adev->srbm_mutex);
-+	}
- 
- 	return 0;
++struct {
++	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
++	__uint(max_entries, 1);
++	__uint(key_size, sizeof(__u32));
++	__uint(value_size, sizeof(__u32));
++} jmp_table SEC(".maps");
++
+ SEC("cgroup/skb")
+ __description("skb->sk: no NULL check")
+ __failure __msg("invalid mem access 'sock_common_or_null'")
+@@ -1004,5 +1011,26 @@ int invalidate_pkt_pointers_from_global_
+ 	*p = 42; /* this is unsafe */
+ 	return TCX_PASS;
  }
++
++__noinline
++int tail_call(struct __sk_buff *sk)
++{
++	bpf_tail_call_static(sk, &jmp_table, 0);
++	return 0;
++}
++
++/* Tail calls invalidate packet pointers. */
++SEC("tc")
++__failure __msg("invalid mem access")
++int invalidate_pkt_pointers_by_tail_call(struct __sk_buff *sk)
++{
++	int *p = (void *)(long)sk->data;
++
++	if ((void *)(p + 1) > (void *)(long)sk->data_end)
++		return TCX_DROP;
++	tail_call(sk);
++	*p = 42; /* this is unsafe */
++	return TCX_PASS;
++}
+ 
+ char _license[] SEC("license") = "GPL";
 
 
