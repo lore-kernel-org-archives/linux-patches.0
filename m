@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C2C269B07;
-	Wed, 23 Apr 2025 15:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE192F2E;
+	Wed, 23 Apr 2025 15:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420432; cv=none; b=axaBYxxjtavJDEX07eEy9j8EcQ8VVXP7pDebSW82RZbRoNBlr3DtQUQOXqFtTqH3ms3YcUyqJ7BVKZfgXhdoY6NWtoWn5tNW8L3GfVJJCe1nEOhKipAf4/AOPrU0D1t8GmuntOBtZX0DPP91PYchCgAF3GPANbX1NAj3lwhGsC8=
+	t=1745420434; cv=none; b=EXx2fN5O+pwkww0ChidllYMtYRFWb+sV2zLrMUUUEsuzpze9Lb2RLEv6opTwzqk0sr1gz8ekvMIy12YclrEP3eUCt68T58tSG5zCl5sT2KYqJ+RiymMq4X4qVIyzqkXDNPPgNkm3WxQDS3J4ustdlwtuDBV+skU3MBCJN6RKpuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420432; c=relaxed/simple;
-	bh=s7Fy4eXXXDuPR829HR9mpWTeRpTULyHbMq/rU+RAfkM=;
+	s=arc-20240116; t=1745420434; c=relaxed/simple;
+	bh=usZ/asmQNexPZsjXnrV236linPmVueoOFDajLnY4ItE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ait3ZAxc8sEUIaUzBjS5XHR9rz+86TPuOwyQIKGIHgcLX3U0TZt90H/kNbeOLXpXKz+QIZ0j9VlZZzb6ouN/A95n7XzM7/yjQFDoWIg50Jy6l9JR0XyOH6ZpSGTbhABiNzxtfcpwspUuKD9Y9kD+53zhwu0bKi6NHOucWyamu+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZy2W5JU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOPqK3OeX/7kknolWqOK2Ln7/CdOfLI4cjJxv76aHnCfE5ZNeA8XCC448WFBzHY4R6u0PUqmra9d7j6/GYzaG0gnAQMKtIf+wWKrRgr1637LPaWen5S+oZ9mV1RWbWnbCwI9geceR933MiF4hhAFyGf5qPUhzUtJdHFK1pA1vPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wt/OFDJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZy2W5JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7B7C4CEE2;
-	Wed, 23 Apr 2025 15:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wt/OFDJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522ACC4CEE2;
+	Wed, 23 Apr 2025 15:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420432;
-	bh=s7Fy4eXXXDuPR829HR9mpWTeRpTULyHbMq/rU+RAfkM=;
+	s=korg; t=1745420434;
+	bh=usZ/asmQNexPZsjXnrV236linPmVueoOFDajLnY4ItE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZy2W5JUMzUat0Sy4ItTA6IZg50AFVEa1VZxN6prV858ZXgIpe2YEwCa96R5hyrcD
-	 SPQqIjixNunqBSyVZWFFp/n9OCc8ecMoLwkHDrvtk5aIN0vbZ4AfvyqlOwovyBfaH7
-	 28caIcW2LfbiSIuM66aHfQnzAfzL2zDBlxQJRTF4=
+	b=Wt/OFDJKeKw0usIbb5ZTt9xWj75vqGGcvTlL6Lc+UqYvOQkOIBtFGu1SyDV6GqgTz
+	 tDCXEgawG7O/OgzNziqTjXj2U2hCjMOtygV1CZjwwvWybAHF9RaxruXmCuCO24WLjg
+	 h4aiK6QAttPCMBYD/ueInt7b+rtt5JvoxJTW9MD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunjie Zhu <chunjie.zhu@cloud.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 131/223] smb3 client: fix open hardlink on deferred close file error
-Date: Wed, 23 Apr 2025 16:43:23 +0200
-Message-ID: <20250423142622.429409369@linuxfoundation.org>
+	syzbot+355da3b3a74881008e8f@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 074/393] jfs: Prevent copying of nlink with value 0 from disk inode
+Date: Wed, 23 Apr 2025 16:39:30 +0200
+Message-ID: <20250423142646.364614285@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,111 +48,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chunjie Zhu <chunjie.zhu@cloud.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 262b73ef442e68e53220b9d6fc5a0d08b557fa42 upstream.
+[ Upstream commit b61e69bb1c049cf507e3c654fa3dc1568231bd07 ]
 
-The following Python script results in unexpected behaviour when run on
-a CIFS filesystem against a Windows Server:
+syzbot report a deadlock in diFree. [1]
 
-    # Create file
-    fd = os.open('test', os.O_WRONLY|os.O_CREAT)
-    os.write(fd, b'foo')
-    os.close(fd)
+When calling "ioctl$LOOP_SET_STATUS64", the offset value passed in is 4,
+which does not match the mounted loop device, causing the mapping of the
+mounted loop device to be invalidated.
 
-    # Open and close the file to leave a pending deferred close
-    fd = os.open('test', os.O_RDONLY|os.O_DIRECT)
-    os.close(fd)
+When creating the directory and creating the inode of iag in diReadSpecial(),
+read the page of fixed disk inode (AIT) in raw mode in read_metapage(), the
+metapage data it returns is corrupted, which causes the nlink value of 0 to be
+assigned to the iag inode when executing copy_from_dinode(), which ultimately
+causes a deadlock when entering diFree().
 
-    # Try to open the file via a hard link
-    os.link('test', 'new')
-    newfd = os.open('new', os.O_RDONLY|os.O_DIRECT)
+To avoid this, first check the nlink value of dinode before setting iag inode.
 
-The final open returns EINVAL due to the server returning
-STATUS_INVALID_PARAMETER. The root cause of this is that the client
-caches lease keys per inode, but the spec requires them to be related to
-the filename which causes problems when hard links are involved:
+[1]
+WARNING: possible recursive locking detected
+6.12.0-rc7-syzkaller-00212-g4a5df3796467 #0 Not tainted
+--------------------------------------------
+syz-executor301/5309 is trying to acquire lock:
+ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diFree+0x37c/0x2fb0 fs/jfs/jfs_imap.c:889
 
->From MS-SMB2 section 3.3.5.9.11:
+but task is already holding lock:
+ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diAlloc+0x1b6/0x1630
 
-"The server MUST attempt to locate a Lease by performing a lookup in the
-LeaseTable.LeaseList using the LeaseKey in the
-SMB2_CREATE_REQUEST_LEASE_V2 as the lookup key. If a lease is found,
-Lease.FileDeleteOnClose is FALSE, and Lease.Filename does not match the
-file name for the incoming request, the request MUST be failed with
-STATUS_INVALID_PARAMETER"
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-On client side, we first check the context of file open, if it hits above
-conditions, we first close all opening files which are belong to the same
-inode, then we do open the hard link file.
+       CPU0
+       ----
+  lock(&(imap->im_aglock[index]));
+  lock(&(imap->im_aglock[index]));
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Chunjie Zhu <chunjie.zhu@cloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+5 locks held by syz-executor301/5309:
+ #0: ffff8880422a4420 (sb_writers#9){.+.+}-{0:0}, at: mnt_want_write+0x3f/0x90 fs/namespace.c:515
+ #1: ffff88804755b390 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}, at: inode_lock_nested include/linux/fs.h:850 [inline]
+ #1: ffff88804755b390 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}, at: filename_create+0x260/0x540 fs/namei.c:4026
+ #2: ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diAlloc+0x1b6/0x1630
+ #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diNewIAG fs/jfs/jfs_imap.c:2460 [inline]
+ #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
+ #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diAllocAG+0x4b7/0x1e50 fs/jfs/jfs_imap.c:1669
+ #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diNewIAG fs/jfs/jfs_imap.c:2477 [inline]
+ #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
+ #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diAllocAG+0x869/0x1e50 fs/jfs/jfs_imap.c:1669
+
+stack backtrace:
+CPU: 0 UID: 0 PID: 5309 Comm: syz-executor301 Not tainted 6.12.0-rc7-syzkaller-00212-g4a5df3796467 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_deadlock_bug+0x483/0x620 kernel/locking/lockdep.c:3037
+ check_deadlock kernel/locking/lockdep.c:3089 [inline]
+ validate_chain+0x15e2/0x5920 kernel/locking/lockdep.c:3891
+ __lock_acquire+0x1384/0x2050 kernel/locking/lockdep.c:5202
+ lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5825
+ __mutex_lock_common kernel/locking/mutex.c:608 [inline]
+ __mutex_lock+0x136/0xd70 kernel/locking/mutex.c:752
+ diFree+0x37c/0x2fb0 fs/jfs/jfs_imap.c:889
+ jfs_evict_inode+0x32d/0x440 fs/jfs/inode.c:156
+ evict+0x4e8/0x9b0 fs/inode.c:725
+ diFreeSpecial fs/jfs/jfs_imap.c:552 [inline]
+ duplicateIXtree+0x3c6/0x550 fs/jfs/jfs_imap.c:3022
+ diNewIAG fs/jfs/jfs_imap.c:2597 [inline]
+ diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
+ diAllocAG+0x17dc/0x1e50 fs/jfs/jfs_imap.c:1669
+ diAlloc+0x1d2/0x1630 fs/jfs/jfs_imap.c:1590
+ ialloc+0x8f/0x900 fs/jfs/jfs_inode.c:56
+ jfs_mkdir+0x1c5/0xba0 fs/jfs/namei.c:225
+ vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+ do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+ __do_sys_mkdirat fs/namei.c:4295 [inline]
+ __se_sys_mkdirat fs/namei.c:4293 [inline]
+ __x64_sys_mkdirat+0x87/0xa0 fs/namei.c:4293
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported-by: syzbot+355da3b3a74881008e8f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=355da3b3a74881008e8f
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsproto.h |    2 ++
- fs/smb/client/file.c      |   28 ++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ fs/jfs/jfs_imap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -160,6 +160,8 @@ extern int cifs_get_writable_path(struct
- extern struct cifsFileInfo *find_readable_file(struct cifsInodeInfo *, bool);
- extern int cifs_get_readable_path(struct cifs_tcon *tcon, const char *name,
- 				  struct cifsFileInfo **ret_file);
-+extern int cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
-+				  struct file *file);
- extern unsigned int smbCalcSize(void *buf);
- extern int decode_negTokenInit(unsigned char *security_blob, int length,
- 			struct TCP_Server_Info *server);
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1002,6 +1002,11 @@ int cifs_open(struct inode *inode, struc
- 		} else {
- 			_cifsFileInfo_put(cfile, true, false);
- 		}
-+	} else {
-+		/* hard link on the defeered close file */
-+		rc = cifs_get_hardlink_path(tcon, inode, file);
-+		if (rc)
-+			cifs_close_deferred_file(CIFS_I(inode));
- 	}
+diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
+index 8b876e2db8c60..9a6d504228e7c 100644
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -456,7 +456,7 @@ struct inode *diReadSpecial(struct super_block *sb, ino_t inum, int secondary)
+ 	dp += inum % 8;		/* 8 inodes per 4K page */
  
- 	if (server->oplocks)
-@@ -2066,6 +2071,29 @@ cifs_move_llist(struct list_head *source
- 		list_move(li, dest);
- }
- 
-+int
-+cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
-+				struct file *file)
-+{
-+	struct cifsFileInfo *open_file = NULL;
-+	struct cifsInodeInfo *cinode = CIFS_I(inode);
-+	int rc = 0;
-+
-+	spin_lock(&tcon->open_file_lock);
-+	spin_lock(&cinode->open_file_lock);
-+
-+	list_for_each_entry(open_file, &cinode->openFileList, flist) {
-+		if (file->f_flags == open_file->f_flags) {
-+			rc = -EINVAL;
-+			break;
-+		}
-+	}
-+
-+	spin_unlock(&cinode->open_file_lock);
-+	spin_unlock(&tcon->open_file_lock);
-+	return rc;
-+}
-+
- void
- cifs_free_llist(struct list_head *llist)
- {
+ 	/* copy on-disk inode to in-memory inode */
+-	if ((copy_from_dinode(dp, ip)) != 0) {
++	if ((copy_from_dinode(dp, ip) != 0) || (ip->i_nlink == 0)) {
+ 		/* handle bad return by returning NULL for ip */
+ 		set_nlink(ip, 1);	/* Don't want iput() deleting it */
+ 		iput(ip);
+-- 
+2.39.5
+
 
 
