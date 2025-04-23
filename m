@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDEF239085;
-	Wed, 23 Apr 2025 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3681239085;
+	Wed, 23 Apr 2025 15:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420783; cv=none; b=FrE9bhXywwx6HUf5GQAH6n7d5qJWjgewynedDe/tKlB3qRfoaSN786QgSA6S3/WH5CHV26T0dk32TN2e8UnxBZanztVCSe4DhBdWfQX++oVV3UmN/3FiYRjwmtcZFmF2IbU1moXDqtLpGe+i2GsIqt8vKpYWogsLwnIxdNk4mzc=
+	t=1745420786; cv=none; b=BP2qkbc/UEBJVIYVHbYQ2Zq1Xu61B1pfGgSH/ME6sziWphCMRr2Ctb1lwNAwe3yJeZhne0vqkDaYEjtLXnqtCionfmNShZ/8/XLBjk/IUYkhxdPmZ2dSb5AUCe6ebVYOy8EBWhrF6unmE/4cRfPOA/rAHmhBrAGHiYXU2lcZs0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420783; c=relaxed/simple;
-	bh=7iNR0lGjnr6rFgC7Qw4Bz75+XhbgjSamWyikW6B01yo=;
+	s=arc-20240116; t=1745420786; c=relaxed/simple;
+	bh=U6qB1DNDlpP9ieprBJPfApkoWiVDcTQ6jDa1L95D+IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMcq2wbVs2M69efbI0rU/pDOt1MTLQ96dXy6ZGH9NeAkx8/kjo6PHZGtTGP2RDGIrczpFvlyIEytGns7ZaUs9Og27QGgS2sT2gGFDS9fHJGSca/llvtytbA9m+xZAAP6nwLpswr/2qncJ4tyQfQ+IcilQgIyWu05RLSYkh5Wzas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utpIB1uV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HB+guixpe8EtxwwIPe6yRNdw6ql0Bd7TlpYjtjHl/R4ONUC5tDGprY4WLTNgokYZUuJiN61LlyR4l3Uk18AmLhNZJmVomfW7N+tGbRh3Z2tNCaL6HqAE+CvsHH7v+bcI43AbQbe66UHBDyEC3XrGkMjzd9QAMdMPmXAAxFyLZO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dONZHjGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utpIB1uV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76732C4CEE2;
-	Wed, 23 Apr 2025 15:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dONZHjGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AA5C4CEE2;
+	Wed, 23 Apr 2025 15:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420782;
-	bh=7iNR0lGjnr6rFgC7Qw4Bz75+XhbgjSamWyikW6B01yo=;
+	s=korg; t=1745420785;
+	bh=U6qB1DNDlpP9ieprBJPfApkoWiVDcTQ6jDa1L95D+IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utpIB1uVDJ2XrSJ82Lx1qa0L+fhymUraZAnrtFR7jAgYiJ5CjUKNaLGh9Rq/B96S2
-	 L8DrrPweS5pHOGC2fk64OOswDOBm//1DrpFS67jcvjBXSm6nS5T3zXNMXNlH9WnCTx
-	 6o/wALPahWR1EPBNnQsvyUiEYx7057K9vhUpBTjU=
+	b=dONZHjGHnuva051V91ncvQh4T/onAszsTtIUfH7Blk5URFcWaefOXSycOIjI5PViM
+	 j8HIKn8fVILisEIpUoP4JdKLNBRvC0Svb1ap4KsrxnkwGwvRX9j9Bvp1ak6hhr1YWS
+	 Y4a26COPtvu8oe9qFNhvOB/FMOCYFGTmOWcxS1+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 162/223] drm/amd/pm/powerplay/hwmgr/vega20_thermal: Prevent division by zero
-Date: Wed, 23 Apr 2025 16:43:54 +0200
-Message-ID: <20250423142623.767645702@linuxfoundation.org>
+	warthog9@eaglescrag.net,
+	Ayush Jain <Ayush.jain3@amd.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 112/393] ktest: Fix Test Failures Due to Missing LOG_FILE Directories
+Date: Wed, 23 Apr 2025 16:40:08 +0200
+Message-ID: <20250423142647.992084415@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Ayush Jain <Ayush.jain3@amd.com>
 
-commit 4e3d9508c056d7e0a56b58d5c81253e2a0d22b6c upstream.
+[ Upstream commit 5a1bed232781d356f842576daacc260f0d0c8d2e ]
 
-The user can set any speed value.
-If speed is greater than UINT_MAX/8, division by zero is possible.
+Handle missing parent directories for LOG_FILE path to prevent test
+failures. If the parent directories don't exist, create them to ensure
+the tests proceed successfully.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 031db09017da ("drm/amd/powerplay/vega20: enable fan RPM and pwm settings V2")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <warthog9@eaglescrag.net>
+Link: https://lore.kernel.org/20250307043854.2518539-1-Ayush.jain3@amd.com
+Signed-off-by: Ayush Jain <Ayush.jain3@amd.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c
-@@ -191,7 +191,7 @@ int vega20_fan_ctrl_set_fan_speed_rpm(st
- 	uint32_t tach_period, crystal_clock_freq;
- 	int result = 0;
- 
--	if (!speed)
-+	if (!speed || speed > UINT_MAX/8)
- 		return -EINVAL;
- 
- 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl)) {
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 83d65c2abaf01..3316015757433 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -4289,6 +4289,14 @@ if (defined($opt{"LOG_FILE"})) {
+     if ($opt{"CLEAR_LOG"}) {
+ 	unlink $opt{"LOG_FILE"};
+     }
++
++    if (! -e $opt{"LOG_FILE"} && $opt{"LOG_FILE"} =~ m,^(.*/),) {
++        my $dir = $1;
++        if (! -d $dir) {
++            mkpath($dir) or die "Failed to create directories '$dir': $!";
++            print "\nThe log directory $dir did not exist, so it was created.\n";
++        }
++    }
+     open(LOG, ">> $opt{LOG_FILE}") or die "Can't write to $opt{LOG_FILE}";
+     LOG->autoflush(1);
+ }
+-- 
+2.39.5
+
 
 
