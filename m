@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291CD29DB9D;
-	Wed, 23 Apr 2025 15:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502BB29E069;
+	Wed, 23 Apr 2025 15:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422079; cv=none; b=i89s1e8cYZ15X4Ju6nBUZFSTp4DKpxieW9FXCmhTqx6nYMkpqvdbmi5czUOTjyP1mCyDB25Af8qxrp7ElZFNVMeFfGoKONtFRzsHTtVws6VzA0gOZSFDtbvW9RwmbKUAVbZ4KJo/DCtohhqRLnxMeGYy7QIgK/KewjpZmafSOGU=
+	t=1745422081; cv=none; b=po8n7Lm/ITAxIC2dTeWGL6Yl7kcpdHS4XtOVP/0ufKbT6BL7dlG1N3m1EJ3/aiie/iqP31UP316QEjQZsDVej6IRpHtCrNiGPRQwx3AbcJY5EFBWD6oS1SlpeuK92L5LGbQ2XCp3ZEOs+eY1T4D/IqXCIuTOvvhsBKpSbFGGvp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422079; c=relaxed/simple;
-	bh=X+xTr1K14pnexeOaRPs7gESKXMKjERmbV2ZWYAPezIc=;
+	s=arc-20240116; t=1745422081; c=relaxed/simple;
+	bh=IIaoCVDZU8FBwIbOyUd/Yx/bXbrHYHmgU8P1OI6Gu4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5JhbpZohKo+qFWOkotKPuPVeR7olQVv7pN+6+ht7F7KKiekWMzfvanoLnmN1Wrcq//H3RiQrYSHpqB8TG3oSfKfY+Uwbw5xLSmKerLOLBMjkoY+34eUiItN0J6H/wZ6WVvP9+MCoiQCcp+BGHnuauTV+kXpU9VwNqphQngYCeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2/2BdGy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GN3iZZnH4jHmYssPTk4QSWq6kLhE/qioWp2pfhhv2EZry0hgjml03u52kKhpL0kwrv3I0dsqy5ztFh2S/1B0+nCM6U4z/aRm1RXjCfXFEpSP39pkEAJLQNgd2dSibjHvy5lgiWQXwrfdICNe8kJsDHWDisbnSCeLRejWzJYzGBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVQ5CjhP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2/2BdGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B00C4CEE2;
-	Wed, 23 Apr 2025 15:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVQ5CjhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62B0C4CEE2;
+	Wed, 23 Apr 2025 15:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422078;
-	bh=X+xTr1K14pnexeOaRPs7gESKXMKjERmbV2ZWYAPezIc=;
+	s=korg; t=1745422081;
+	bh=IIaoCVDZU8FBwIbOyUd/Yx/bXbrHYHmgU8P1OI6Gu4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h2/2BdGyTkC3Qerfl4jrdUq4j7CLDfqim4km0PfWXizIRW3Op9woqZdJJQUNw+Nmy
-	 U/LjaajugeNNlM+E6oQVeKAirDV2qE/Dr4i23drTlnWIVOq8CJsfgZ00rQwOAVzS1Z
-	 AtCHzuYYJmG4iCs1AuFZLweX90xt4GhzIqY8zaKw=
+	b=uVQ5CjhPK21p/WqkrNPuT6QRA1dkNwUSSzqIr1UmyNggCIrTAGhiJqD3/YBnUzzla
+	 FhobD1+sF+J/vC6mOFVjDEYwnq9cK5/xPmdGy7971Hadw+Au/swQbJNaiHXoOU4LR4
+	 BCUebdMxrMqkflW4rGim7vF/UiDBpulAm4omu9M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 274/393] cxgb4: fix memory leak in cxgb4_init_ethtool_filters() error path
-Date: Wed, 23 Apr 2025 16:42:50 +0200
-Message-ID: <20250423142654.672125801@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 212/291] loop: properly send KOBJ_CHANGED uevent for disk device
+Date: Wed, 23 Apr 2025 16:43:21 +0200
+Message-ID: <20250423142633.048628295@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 00ffb3724ce743578163f5ade2884374554ca021 ]
+commit e7bc0010ceb403d025100698586c8e760921d471 upstream.
 
-In the for loop used to allocate the loc_array and bmap for each port, a
-memory leak is possible when the allocation for loc_array succeeds,
-but the allocation for bmap fails. This is because when the control flow
-goes to the label free_eth_finfo, only the allocations starting from
-(i-1)th iteration are freed.
+The original commit message and the wording "uncork" in the code comment
+indicate that it is expected that the suppressed event instances are
+automatically sent after unsuppressing.
+This is not the case, instead they are discarded.
+In effect this means that no "changed" events are emitted on the device
+itself by default.
+While each discovered partition does trigger a changed event on the
+device, devices without partitions don't have any event emitted.
 
-Fix that by freeing the loc_array in the bmap allocation error path.
+This makes udev miss the device creation and prompted workarounds in
+userspace. See the linked util-linux/losetup bug.
 
-Fixes: d915c299f1da ("cxgb4: add skeleton for ethtool n-tuple filters")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250414170649.89156-1-abdun.nihaal@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Explicitly emit the events and drop the confusingly worded comments.
+
+Link: https://github.com/util-linux/util-linux/issues/2434
+Fixes: 498ef5c777d9 ("loop: suppress uevents while reconfiguring the device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20250415-loop-uevent-changed-v2-1-0c4e6a923b2a@linutronix.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/loop.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_ethtool.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_ethtool.c
-index 8477a93cee6bd..b77897aa06c4f 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_ethtool.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_ethtool.c
-@@ -2273,6 +2273,7 @@ int cxgb4_init_ethtool_filters(struct adapter *adap)
- 		eth_filter->port[i].bmap = bitmap_zalloc(nentries, GFP_KERNEL);
- 		if (!eth_filter->port[i].bmap) {
- 			ret = -ENOMEM;
-+			kvfree(eth_filter->port[i].loc_array);
- 			goto free_eth_finfo;
- 		}
- 	}
--- 
-2.39.5
-
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -629,8 +629,8 @@ static int loop_change_fd(struct loop_de
+ 
+ 	error = 0;
+ done:
+-	/* enable and uncork uevent now that we are done */
+ 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
++	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
+ 	return error;
+ 
+ out_err:
+@@ -1104,8 +1104,8 @@ static int loop_configure(struct loop_de
+ 	if (partscan)
+ 		clear_bit(GD_SUPPRESS_PART_SCAN, &lo->lo_disk->state);
+ 
+-	/* enable and uncork uevent now that we are done */
+ 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
++	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
+ 
+ 	loop_global_unlock(lo, is_loop);
+ 	if (partscan)
 
 
