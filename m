@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9086628B4FD;
-	Wed, 23 Apr 2025 15:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FAA2BE7D0;
+	Wed, 23 Apr 2025 15:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421726; cv=none; b=R3Y0BcxMk/P4FcfUumAbKQuV0nwHltTez+bRrzjMVkNsBwXq65w3KEpcRZKRNBL5kI0QOPRwJk7/M92cq5Q9iEhrm2RI2UNjWsuJtyh1XF915PT1JAS/oTfgPS7G8AYKg7UpPpx8OnDS8EzJF1SoWwpQmh/A7SuLjQTIjRZw0ls=
+	t=1745421729; cv=none; b=rElojfN6j+pxIpk9aKqgUchRK1gc1Dl1xbAuyUSj1uMsJcVlKxkE0Xxl0DGHs89Wxpb/5uciFJL9ticONykUXS+Tv/zztW5remWuBIXPflrLgbcFLwt+p/psCr4cs5VblTHmdg99PHT0sAQRLdudIry8sEIcbEMTomdq8Q7N//s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421726; c=relaxed/simple;
-	bh=+Vh13KHVnNVKTaZlDjGaJUeg4Q5Pfyjha+jDOrzr7MA=;
+	s=arc-20240116; t=1745421729; c=relaxed/simple;
+	bh=67mYhkQyEyqtlVggTvJ69w0a+h5pS80PyENqXdA56ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmYSZWsn/FGa3u8v7dyhZVbVjkcFPagPJcNqarDa70Z5vN4yZIFgN8iZzDrGNxzIzR1x25Gh0GJh0Xa6AtWvyFvoAIncoYh6j4oj/+G8pO7lXDlVpGDXt5xGknoFdc64MJDdEbGnFUJLX9vKW5QMbSPakDsKKccF8KOCN/5xWOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpD685b7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMh4RBvVsgmAjrAirwOWNeiXPwVLn52EkKg8o2fDG4VMkixtElrEpGdYu2UYxaID7s/ssBNj7qbE7Zkiarj6sMTx0ScTuQM1jMB52BUkigEFwiXObYpLVUDajWGn7PMSEOtBo+zMvVg6FjWczHecbcmF5nP5jZh589Vi+QzmkBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dpd/MIqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpD685b7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22862C4CEE3;
-	Wed, 23 Apr 2025 15:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dpd/MIqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3573C4CEE2;
+	Wed, 23 Apr 2025 15:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421726;
-	bh=+Vh13KHVnNVKTaZlDjGaJUeg4Q5Pfyjha+jDOrzr7MA=;
+	s=korg; t=1745421729;
+	bh=67mYhkQyEyqtlVggTvJ69w0a+h5pS80PyENqXdA56ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpD685b7uXff14y7rea4lGlBqnBStdk1A4b02jAOwdn+arEmEM7CKNkvQ6tYwFaD+
-	 j8SRz8N9o22y3Mr6pzVrk3mC/pxqaHtmB1olCeqlw6JAQ6Zm9kQ8qkr2HPdnz5yXfS
-	 VamPRlRJQa4a0w/9Ns9CUG9qde6DhJPjoicT2bSY=
+	b=Dpd/MIqpxFBWjBWE6ajXf97SBBNFHJwfq/vIKtDkn2E3gnjnxykg7Rmv0Yq+jyO1y
+	 H8nMJGmH5XfQFwNVdVqcVj7/BNTA7xmd+RKXZKB+PvZQtPMk9zK95z8SJnAcMqD2M6
+	 yD4GZUH2w//0RZU344uxvoJGKeig86heU/5NLw2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Eric Auger <eric.auger@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.14 226/241] arm64/sysreg: Add register fields for HFGWTR2_EL2
-Date: Wed, 23 Apr 2025 16:44:50 +0200
-Message-ID: <20250423142629.798275722@linuxfoundation.org>
+	Joshua Washington <joshwash@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 217/393] gve: handle overflow when reporting TX consumed descriptors
+Date: Wed, 23 Apr 2025 16:41:53 +0200
+Message-ID: <20250423142652.343284541@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,59 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Joshua Washington <joshwash@google.com>
 
-commit ea37be0773f04420515b8db49e50abedbaa97e23 upstream.
+commit 15970e1b23f5c25db88c613fddf9131de086f28e upstream.
 
-This adds register fields for HFGWTR2_EL2 as per the definitions based
-on DDI0601 2024-12.
+When the tx tail is less than the head (in cases of wraparound), the TX
+consumed descriptor statistic in DQ will be reported as
+UINT32_MAX - head + tail, which is incorrect. Mask the difference of
+head and tail according to the ring size when reporting the statistic.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250203050828.1049370-7-anshuman.khandual@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: 2c9198356d56 ("gve: Add consumed counts to ethtool stats")
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250402001037.2717315-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/tools/sysreg |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/ethernet/google/gve/gve_ethtool.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -2719,6 +2719,25 @@ Field	1	nERXGSR_EL1
- Field	0	nPFAR_EL1
- EndSysreg
- 
-+Sysreg	HFGWTR2_EL2	3	4	3	1	3
-+Res0	63:15
-+Field	14	nACTLRALIAS_EL1
-+Field	13	nACTLRMASK_EL1
-+Field	12	nTCR2ALIAS_EL1
-+Field	11	nTCRALIAS_EL1
-+Field	10	nSCTLRALIAS2_EL1
-+Field	9	nSCTLRALIAS_EL1
-+Field	8	nCPACRALIAS_EL1
-+Field	7	nTCR2MASK_EL1
-+Field	6	nTCRMASK_EL1
-+Field	5	nSCTLR2MASK_EL1
-+Field	4	nSCTLRMASK_EL1
-+Field	3	nCPACRMASK_EL1
-+Field	2	nRCWSMASK_EL1
-+Res0	1
-+Field	0	nPFAR_EL1
-+EndSysreg
-+
- Sysreg HDFGRTR_EL2	3	4	3	1	4
- Field	63	PMBIDR_EL1
- Field	62	nPMSNEVFR_EL1
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -356,7 +356,9 @@ gve_get_ethtool_stats(struct net_device
+ 				 */
+ 				data[i++] = 0;
+ 				data[i++] = 0;
+-				data[i++] = tx->dqo_tx.tail - tx->dqo_tx.head;
++				data[i++] =
++					(tx->dqo_tx.tail - tx->dqo_tx.head) &
++					tx->mask;
+ 			}
+ 			do {
+ 				start =
 
 
