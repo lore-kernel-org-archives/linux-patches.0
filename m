@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B416A28DEEA;
-	Wed, 23 Apr 2025 15:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8CB296163;
+	Wed, 23 Apr 2025 15:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421086; cv=none; b=pwnXqDzH6KIzGm9cr0zrzlXvqAwWzU7YubPw4yjDYJBw4baZw0tF1iVvWiq180Oi78ggu0uEYW94jjinoaw1nbwWfj/SsINZ4X3FcMSE3BeolYhBSneWKZEvKk9Mubcm6ejyfkXOyyIzQR4K0ERrR9DbPRnw9FJJuu4le0TcF8I=
+	t=1745421089; cv=none; b=MN2k1M3UsVgoxSZYDVLLzb2pG2weXOvKVj6+OtZgsC3SKRmoZswCKfK1iAXDb6pSCxUsyVne9aFvLfLmMDom4pYYfRyPq2+WhGNOlSxspA3AvptoRmmhS21GqeWMw/CinaLh3kXeVSnX8mOLHgp7eQ8vaPpeupaqfsLCyVv0YME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421086; c=relaxed/simple;
-	bh=XA3avwAMHv6u/gfRCESZLEguhQ26c60iiY1K4fwewxo=;
+	s=arc-20240116; t=1745421089; c=relaxed/simple;
+	bh=WGgF7U+MoNCdiDbz2mFRXoGg3a6aPY/7mtBwPLELo6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwYHEB1bJx++dOMid7lIgNTBR2u0CtEk/B9zakMyhoAvqOrJbbhYa+SBBts4U2SGk39ga24UvUis8oNHZxr2KYHTy7aoEgCkOZPaanzAr7G5wnAuI0HqCNaQ5aeLOI1M0XXET9Eq/ZNMelcbG3hJu8hHpzwVuMLuaQJtznjQtx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8otyGNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bXT+RuTKUOnpBba1wpYUZxJXrOIt6Zg81xKqBI9XoFNHu9/mMxL0j55AYmt+F46RmiXlIkbJivApjJw1gSUsQoiQCJ6EphFd11Swfr6PvrRXjAvWIG0Syxo/EHXwMZduTxvNTZ8bxwvjmXIVmFHQ8JiUm04OVeKxzfFZqJYyxgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzjDyvVg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8otyGNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4758DC4CEE2;
-	Wed, 23 Apr 2025 15:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzjDyvVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F84C4CEE3;
+	Wed, 23 Apr 2025 15:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421086;
-	bh=XA3avwAMHv6u/gfRCESZLEguhQ26c60iiY1K4fwewxo=;
+	s=korg; t=1745421089;
+	bh=WGgF7U+MoNCdiDbz2mFRXoGg3a6aPY/7mtBwPLELo6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8otyGNMyhTT7IHKGRmi9llkXbSkcysdZy+1ggoeK7JeLPDHPKw2gUVerN+6oeSIH
-	 HI9MQaY87Y1r6pdSlDJJFJrUzM5lQrKTSFkeoXhHFJ5kha5IwXJznG6bR8C7BJx8EE
-	 wx4q+dVlZlQiac4CzKMAs97O38RwUuPKbOssP6bw=
+	b=tzjDyvVgL3xuHK9SfhGtnUH7MSkwI3LNmdH+XOp63so/nBUsxMTejNtq00rrcwhT+
+	 R1bW0eMVs467PFJEZgWmU8iw1gRZj2XWNNlsTUiVsADMs16iKKMPgoptphkwIMXLkO
+	 25CxFdVU2WDJfPxL4Nd94zXBl+tBZ+DuVQKIJvEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Eric Auger <eric.auger@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 190/223] arm64/sysreg: Add register fields for HFGRTR2_EL2
-Date: Wed, 23 Apr 2025 16:44:22 +0200
-Message-ID: <20250423142624.915005587@linuxfoundation.org>
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 107/291] wifi: mac80211: fix integer overflow in hwmp_route_info_get()
+Date: Wed, 23 Apr 2025 16:41:36 +0200
+Message-ID: <20250423142628.742537833@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,59 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-commit 59236089ad5243377b6905d78e39ba4183dc35f5 upstream.
+commit d00c0c4105e5ab8a6a13ed23d701cceb285761fa upstream.
 
-This adds register fields for HFGRTR2_EL2 as per the definitions based
-on DDI0601 2024-12.
+Since the new_metric and last_hop_metric variables can reach
+the MAX_METRIC(0xffffffff) value, an integer overflow may occur
+when multiplying them by 10/9. It can lead to incorrect behavior.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250203050828.1049370-6-anshuman.khandual@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
+
+Fixes: a8d418d9ac25 ("mac80211: mesh: only switch path when new metric is at least 10% better")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Link: https://patch.msgid.link/20250212082124.4078236-1-Ilia.Gavrilov@infotecs.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/tools/sysreg |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/mac80211/mesh_hwmp.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -2522,6 +2522,25 @@ Field	1	nPMIAR_EL1
- Field	0	nPMECR_EL1
- EndSysreg
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -365,6 +365,12 @@ u32 airtime_link_metric_get(struct ieee8
+ 	return (u32)result;
+ }
  
-+Sysreg	HFGRTR2_EL2	3	4	3	1	2
-+Res0	63:15
-+Field	14	nACTLRALIAS_EL1
-+Field	13	nACTLRMASK_EL1
-+Field	12	nTCR2ALIAS_EL1
-+Field	11	nTCRALIAS_EL1
-+Field	10	nSCTLRALIAS2_EL1
-+Field	9	nSCTLRALIAS_EL1
-+Field	8	nCPACRALIAS_EL1
-+Field	7	nTCR2MASK_EL1
-+Field	6	nTCRMASK_EL1
-+Field	5	nSCTLR2MASK_EL1
-+Field	4	nSCTLRMASK_EL1
-+Field	3	nCPACRMASK_EL1
-+Field	2	nRCWSMASK_EL1
-+Field	1	nERXGSR_EL1
-+Field	0	nPFAR_EL1
-+EndSysreg
++/* Check that the first metric is at least 10% better than the second one */
++static bool is_metric_better(u32 x, u32 y)
++{
++	return (x < y) && (x < (y - x / 10));
++}
 +
- Sysreg HDFGRTR_EL2	3	4	3	1	4
- Field	63	PMBIDR_EL1
- Field	62	nPMSNEVFR_EL1
+ /**
+  * hwmp_route_info_get - Update routing info to originator and transmitter
+  *
+@@ -455,8 +461,8 @@ static u32 hwmp_route_info_get(struct ie
+ 				    (mpath->sn == orig_sn &&
+ 				     (rcu_access_pointer(mpath->next_hop) !=
+ 						      sta ?
+-					      mult_frac(new_metric, 10, 9) :
+-					      new_metric) >= mpath->metric)) {
++					      !is_metric_better(new_metric, mpath->metric) :
++					      new_metric >= mpath->metric))) {
+ 					process = false;
+ 					fresh_info = false;
+ 				}
+@@ -526,8 +532,8 @@ static u32 hwmp_route_info_get(struct ie
+ 			if ((mpath->flags & MESH_PATH_FIXED) ||
+ 			    ((mpath->flags & MESH_PATH_ACTIVE) &&
+ 			     ((rcu_access_pointer(mpath->next_hop) != sta ?
+-				       mult_frac(last_hop_metric, 10, 9) :
+-				       last_hop_metric) > mpath->metric)))
++				      !is_metric_better(last_hop_metric, mpath->metric) :
++				       last_hop_metric > mpath->metric))))
+ 				fresh_info = false;
+ 		} else {
+ 			mpath = mesh_path_add(sdata, ta);
 
 
