@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61775266B4B;
-	Wed, 23 Apr 2025 15:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3C9266B4B;
+	Wed, 23 Apr 2025 15:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420732; cv=none; b=IbDnngMuiqkLoPrYB7Uu/owGGaLIJ+OUtWwJZsD1qAU9f3qk7Kt4pBvIZUZkEBvA7WmFa3OPzA9occSSCTpn18KUW5UDoV5PY5DQC7RuDH9wDf0w5KtbC6K4Ze1c3WJtd9fVYVie+5yjAdgR0CP7lUEm3yYHJspPeXfLLJrNTiY=
+	t=1745420735; cv=none; b=g1klO1wkuTHl3swkypsJSBilvHCiOqcyxvjBDZHyhdEYgbyOSkAkNjArLYRR6cZJ6R636ZSP5ZPRETxnvPEU4HOadAmD/ufG06YiDXxvvVnVA99/dLX/Jz4q1Ii4/lGwgCv2bly0KcZAVaZCbpLjVcuL/UbZMM/hwRK4KiTFxXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420732; c=relaxed/simple;
-	bh=Arz0OORay63MkiSUbEfzVlue7cSd0Fcmhum0BGssYaw=;
+	s=arc-20240116; t=1745420735; c=relaxed/simple;
+	bh=GPhrBTNcAXPMIEbSB/bVVawh6bdE+VNdMFoULDob3YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQcySdMny57QeKJboZKlWXlQ1DpdCC7/A/N/g19Sv2W/6FZoq/7CnabJWuTM7Y99dZqLmHkcwCTsxkuCeqnW7Go+kau3CPaTcjLhDH+7vhE1DPyyEpl6yy9EOIgF/06Q8KQli4F0di8xREKRMKwY5+HF+cFW7guAtUNyfX6knJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSmNBUcg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=no58d9RK+bRZFAe7dhgRL2cFo/ilq4Tv+C4uXYdQD3QaXKU+vrL9WnK7MknXLKvYO4lnWBPPrsw+X+GCwR6e1BV/5USSunaXT7M5yJxetXM/IlqCjehu4BF4Kh2W4qQihX414ErNyITtWhfUlkGesBydSBGWyDYoORSChGuFsYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfd5ioA1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSmNBUcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8302C4CEE2;
-	Wed, 23 Apr 2025 15:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfd5ioA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941FAC4CEE2;
+	Wed, 23 Apr 2025 15:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420732;
-	bh=Arz0OORay63MkiSUbEfzVlue7cSd0Fcmhum0BGssYaw=;
+	s=korg; t=1745420734;
+	bh=GPhrBTNcAXPMIEbSB/bVVawh6bdE+VNdMFoULDob3YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSmNBUcgZ/Yvu60ELNeV4VCjlRgPYGsmTGDVCJlJWAMCHImdiKh1ip9ZtptowZ2/b
-	 0zniLXiEEt1DPmsH30cJ6BcxBEd1fsYeQKbjxO6svHcNb5zE+9QvKSUsLnAuLrQOjx
-	 IFG4746T5vJMPVMvbIvGhHWvZGkuzx+gajGcaE+0=
+	b=Bfd5ioA1dpGm7KHzV2owYHO10NwKjjhYwrNA6Wm84fTJnoQb3y+LQ+YjXYzIsiitL
+	 QoGRyrkKaoN1079tw+1U9pDzSehjuz6T9XLtrm0Ci2mZrfsJvEMpkEhfwz60YRCOFW
+	 DMX9WI7b77ftaLeTOlICI4Jrwz/pbUS2l7Opt2oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Matt Moeller <moeller.matt@gmail.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/393] drm/amdkfd: Fix mode1 reset crash issue
-Date: Wed, 23 Apr 2025 16:39:58 +0200
-Message-ID: <20250423142647.498421585@linuxfoundation.org>
+Subject: [PATCH 6.1 076/291] bpf: support SKF_NET_OFF and SKF_LL_OFF on skb frags
+Date: Wed, 23 Apr 2025 16:41:05 +0200
+Message-ID: <20250423142627.477858493@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +48,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit f0b4440cdc1807bb6ec3dce0d6de81170803569b ]
+[ Upstream commit d4bac0288a2b444e468e6df9cb4ed69479ddf14a ]
 
-If HW scheduler hangs and mode1 reset is used to recover GPU, KFD signal
-user space to abort the processes. After process abort exit, user queues
-still use the GPU to access system memory before h/w is reset while KFD
-cleanup worker free system memory and free VRAM.
+Classic BPF socket filters with SKB_NET_OFF and SKB_LL_OFF fail to
+read when these offsets extend into frags.
 
-There is use-after-free race bug that KFD allocate and reuse the freed
-system memory, and user queue write to the same system memory to corrupt
-the data structure and cause driver crash.
+This has been observed with iwlwifi and reproduced with tun with
+IFF_NAPI_FRAGS. The below straightforward socket filter on UDP port,
+applied to a RAW socket, will silently miss matching packets.
 
-To fix this race, KFD cleanup worker terminate user queues, then flush
-reset_domain wq to wait for any GPU ongoing reset complete, and then
-free outstanding BOs.
+    const int offset_proto = offsetof(struct ip6_hdr, ip6_nxt);
+    const int offset_dport = sizeof(struct ip6_hdr) + offsetof(struct udphdr, dest);
+    struct sock_filter filter_code[] = {
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_AD_OFF + SKF_AD_PKTTYPE),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, PACKET_HOST, 0, 4),
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_NET_OFF + offset_proto),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_UDP, 0, 2),
+            BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, SKF_NET_OFF + offset_dport),
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This is unexpected behavior. Socket filter programs should be
+consistent regardless of environment. Silent misses are
+particularly concerning as hard to detect.
+
+Use skb_copy_bits for offsets outside linear, same as done for
+non-SKF_(LL|NET) offsets.
+
+Offset is always positive after subtracting the reference threshold
+SKB_(LL|NET)_OFF, so is always >= skb_(mac|network)_offset. The sum of
+the two is an offset against skb->data, and may be negative, but it
+cannot point before skb->head, as skb_(mac|network)_offset would too.
+
+This appears to go back to when frag support was introduced to
+sk_run_filter in linux-2.4.4, before the introduction of git.
+
+The amount of code change and 8/16/32 bit duplication are unfortunate.
+But any attempt I made to be smarter saved very few LoC while
+complicating the code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/20250122200402.3461154-1-maze@google.com/
+Link: https://elixir.bootlin.com/linux/2.4.4/source/net/core/filter.c#L244
+Reported-by: Matt Moeller <moeller.matt@gmail.com>
+Co-developed-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://lore.kernel.org/r/20250408132833.195491-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/core/filter.c | 80 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 44 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 64346c71c62a3..a6d08dee74f6e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -35,6 +35,7 @@
- #include <linux/pm_runtime.h>
- #include "amdgpu_amdkfd.h"
- #include "amdgpu.h"
-+#include "amdgpu_reset.h"
- 
- struct mm_struct;
- 
-@@ -1110,6 +1111,17 @@ static void kfd_process_remove_sysfs(struct kfd_process *p)
- 	p->kobj = NULL;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 370f61f9bf4ba..d713696d0832a 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -212,24 +212,36 @@ BPF_CALL_3(bpf_skb_get_nlattr_nest, struct sk_buff *, skb, u32, a, u32, x)
+ 	return 0;
  }
  
-+/*
-+ * If any GPU is ongoing reset, wait for reset complete.
-+ */
-+static void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
++static int bpf_skb_load_helper_convert_offset(const struct sk_buff *skb, int offset)
 +{
-+	int i;
++	if (likely(offset >= 0))
++		return offset;
 +
-+	for (i = 0; i < p->n_pdds; i++)
-+		flush_workqueue(p->pdds[i]->dev->adev->reset_domain->wq);
++	if (offset >= SKF_NET_OFF)
++		return offset - SKF_NET_OFF + skb_network_offset(skb);
++
++	if (offset >= SKF_LL_OFF && skb_mac_header_was_set(skb))
++		return offset - SKF_LL_OFF + skb_mac_offset(skb);
++
++	return INT_MIN;
 +}
 +
- /* No process locking is needed in this function, because the process
-  * is not findable any more. We must assume that no other thread is
-  * using it any more, otherwise we couldn't safely free the process
-@@ -1123,6 +1135,11 @@ static void kfd_process_wq_release(struct work_struct *work)
- 	kfd_process_dequeue_from_all_devices(p);
- 	pqm_uninit(&p->pqm);
+ BPF_CALL_4(bpf_skb_load_helper_8, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	u8 tmp, *ptr;
++	u8 tmp;
+ 	const int len = sizeof(tmp);
  
-+	/*
-+	 * If GPU in reset, user queues may still running, wait for reset complete.
-+	 */
-+	kfd_process_wait_gpu_reset_complete(p);
-+
- 	/* Signal the eviction fence after user mode queues are
- 	 * destroyed. This allows any BOs to be freed without
- 	 * triggering pointless evictions or waiting for fences.
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return *(u8 *)(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return tmp;
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return *(u8 *)ptr;
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return *(u8 *)(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return tmp;
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+@@ -242,21 +254,19 @@ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_16, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be16 tmp, *ptr;
++	__be16 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be16(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be16_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be16(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be16(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be16_to_cpu(tmp);
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+@@ -269,21 +279,19 @@ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_32, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be32 tmp, *ptr;
++	__be32 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (likely(offset >= 0)) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be32(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be32_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be32(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be32(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be32_to_cpu(tmp);
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_32_no_cache, const struct sk_buff *, skb,
 -- 
 2.39.5
 
