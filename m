@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C77298985;
-	Wed, 23 Apr 2025 15:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6973189F39;
+	Wed, 23 Apr 2025 15:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421752; cv=none; b=fy8MRq64nYv7lYWJ8eprM4z65t05sliB2mOxz2iMHZTOp/h4ycJSjRYmNabG5DowzG6HPLM2IcqkM4AzC0i5vmROOWP/x7sJrv9MNrvUjGnwz8BMtIQtORAccw5Azuhqb1D1jKIHvKQ6CUoy5B7bXmK8PeV90Hg5IHYkNqJnJ9M=
+	t=1745421755; cv=none; b=uLAQf5r/3tFTgnj0ylKRxsWLWAGpIe3MUzHRWWFQ1ZKepAnSeJQzyx2xHbOjJpI3WOKFUCpyW3mrbnLW95oYWb2Fl5YNAyF83FG/JLuOhA///8vQ5dzAAquF3RGWNCKPvAlVEe1jJsO5z7RIXLpgdHtEuXhLZfZ1jsOej378bak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421752; c=relaxed/simple;
-	bh=SY0SOMH4x3xEXcIVNVFqD5+s54F9EmFql6qhyt3gtik=;
+	s=arc-20240116; t=1745421755; c=relaxed/simple;
+	bh=2S/YBmFH/bN7uerbwVnhh9YvU/G6QWS6S2Ru8zyRsWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhYptYP/2TuiEcz/aVpG0eWGvOxA1RR/LUrk+50zNwL8mY7tvOortmH2mU3za8Y5Tp0ohjEZhoEuKbK6CCAvz9bmcBurcQBUHoDnXLfIo1vzdiF7Kp+5h3bQm7zZnzEWPFWAen/ICsL0gQtXMCGkIQU8lkSg02dHy7xYdyWl2lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6wrtyU+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIfwctHJZclly/zLv2KyuN0hs+w3p8QntEuIp7NSHpcavI+0j6XW7kS14BOP3nriGz3bnD1pmJLjjk5cNt+C6s3TDwchXqJuz9II0pJxuCATc2YcmlQIWou52Nwe2WA4CuIFLCmYTKlQCOhhm5s0+My46aYhmSry738mg7jglhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAF62guO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6wrtyU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40511C4CEE2;
-	Wed, 23 Apr 2025 15:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAF62guO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC082C4CEE2;
+	Wed, 23 Apr 2025 15:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421752;
-	bh=SY0SOMH4x3xEXcIVNVFqD5+s54F9EmFql6qhyt3gtik=;
+	s=korg; t=1745421755;
+	bh=2S/YBmFH/bN7uerbwVnhh9YvU/G6QWS6S2Ru8zyRsWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6wrtyU+wTVy42DZG2Mruw4i3dSeheyLTGKRk2bgTkfsarAnjH+2ZmCzRdgiVxGhm
-	 stTZG+b+DJ+pnJCQc9oIHZ0bf+ZoQff83q31eZqoSLtBj6VX3ooQ09pMO97qFYFuYz
-	 Ftb2t+YY35/n8uchOoaD3sF0KbrhjKl6ODjkq5GY=
+	b=uAF62guO0WACluJDTwTg6MaTJsuBzXMkygdKIMifnpkXup//NoWd3ZkOdNAIKH3Jp
+	 HOla5/5+H8vsDRdDRtP4MxVBvlczFAzTDCNvndwsKaKOcgNF0/PBtBEkbGQwyW7R4Q
+	 A/CSADrrphOK7vhXXMzkYFrZ4yVTHLTrDAmTGZ80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Fischer <kernel@o1oo11oo.de>,
-	Tamir Duberstein <tamird@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.14 229/241] scripts: generate_rust_analyzer: Add ffi crate
-Date: Wed, 23 Apr 2025 16:44:53 +0200
-Message-ID: <20250423142629.930105185@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>
+Subject: [PATCH 6.6 220/393] ntb: use 64-bit arithmetic for the MSI doorbell mask
+Date: Wed, 23 Apr 2025 16:41:56 +0200
+Message-ID: <20250423142652.473904773@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Fischer <kernel@o1oo11oo.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 05a2b0011c4b6cbbc9b577f6abebe4e9333b0cf6 upstream.
+commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
 
-Commit d072acda4862 ("rust: use custom FFI integer types") did not
-update rust-analyzer to include the new crate.
+msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
+performed to compute its value.
 
-To enable rust-analyzer support for these custom ffi types, add the
-`ffi` crate as a dependency to the `bindings`, `uapi` and `kernel`
-crates, which all directly depend on it.
+While most of the ntb_hw drivers actually don't utilize the higher 32
+bits of the doorbell mask now, this may be the case for Switchtec - see
+switchtec_ntb_init_db().
 
-Fixes: d072acda4862 ("rust: use custom FFI integer types")
-Signed-off-by: Lukas Fischer <kernel@o1oo11oo.de>
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
+
+Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250404125150.85783-2-kernel@o1oo11oo.de
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/generate_rust_analyzer.py |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/ntb/ntb_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/generate_rust_analyzer.py
-+++ b/scripts/generate_rust_analyzer.py
-@@ -97,6 +97,12 @@ def generate_crates(srctree, objtree, sy
-         ["core", "compiler_builtins"],
-     )
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1351,7 +1351,7 @@ static int ntb_transport_probe(struct nt
+ 	qp_count = ilog2(qp_bitmap);
+ 	if (nt->use_msi) {
+ 		qp_count -= 1;
+-		nt->msi_db_mask = 1 << qp_count;
++		nt->msi_db_mask = BIT_ULL(qp_count);
+ 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
+ 	}
  
-+    append_crate(
-+        "ffi",
-+        srctree / "rust" / "ffi.rs",
-+        ["core", "compiler_builtins"],
-+    )
-+
-     def append_crate_with_generated(
-         display_name,
-         deps,
-@@ -116,9 +122,9 @@ def generate_crates(srctree, objtree, sy
-             "exclude_dirs": [],
-         }
- 
--    append_crate_with_generated("bindings", ["core"])
--    append_crate_with_generated("uapi", ["core"])
--    append_crate_with_generated("kernel", ["core", "macros", "build_error", "bindings", "uapi"])
-+    append_crate_with_generated("bindings", ["core", "ffi"])
-+    append_crate_with_generated("uapi", ["core", "ffi"])
-+    append_crate_with_generated("kernel", ["core", "macros", "build_error", "ffi", "bindings", "uapi"])
- 
-     def is_root_crate(build_file, target):
-         try:
 
 
