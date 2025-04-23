@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBF728134C;
-	Wed, 23 Apr 2025 15:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B56B1A23B0;
+	Wed, 23 Apr 2025 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422107; cv=none; b=QMK15Dgi46WHbB0Gzkt9pIwsY/+db1XY2WShQAO9bLUCoenRpnsiEL6uSt8V2uy6sK7G5fm5AgT/RuCN9CY1PP7K450ZnIZxx/Ol0OIkuvUMQeGnZVlL8r6QyUH0iBRp6DQoz1lLHu2g9Jkl8+YQvAC/2ByZPMh3FwYGS8iWuc8=
+	t=1745422110; cv=none; b=scvCq4Xw+tTRn1Gqof/Z8HDRjGm+63jZkFAX0ubr/lkcTB01kcwxRvApv8AyugckBj9NizJFcN8r/rGmKkASR+XySOG3BYuUjQtSO7hv2IT26OuKxm+KrsETvwgrLqzhnEjb5PP8rfInLWJAr62E11RMUgT9SQyBE+HPptP5FHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422107; c=relaxed/simple;
-	bh=UrFTf0StQCCH8X4zeOp0vPn5ZobV2klYsv3KSBOYAZw=;
+	s=arc-20240116; t=1745422110; c=relaxed/simple;
+	bh=U4G10Gm/giEhL3U0frOOMxR95yriXI/VRIxlp1bC/Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lRFr02rBLHEO89Ud47TL5QasLs1fIg+vKAOW8llJQ/dqC1ELRpMfubXWLT0uZxHOVgZu8zmOFMU8/0zZRe87yp6oHey5NaxqMAX5kZlyGYzB5P55zE1wS31I1dvJm7cSq0YUYYwf85bFX0c+ehZFSMOczyhpjN9KzfCOgcO7e+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4JAKzro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sx1WTfs9X7BpFxZb4d76x1iQeW/vrpI4OARMHax5u3jmOyX0ODbQvY6RT1Eh1a3jYi2LWz9tZATw3XLPdkFRTXNovO5zxjzRZBHfCG1AUbb0ZH6F7gkYgUYxAw731UaZ/2Gl6ggnC31Jyk3G90zE3C+EfAHFLruuXSHeizCJXdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1B5YcYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4JAKzro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C97DC4CEE2;
-	Wed, 23 Apr 2025 15:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1B5YcYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A587CC4CEE2;
+	Wed, 23 Apr 2025 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422107;
-	bh=UrFTf0StQCCH8X4zeOp0vPn5ZobV2klYsv3KSBOYAZw=;
+	s=korg; t=1745422110;
+	bh=U4G10Gm/giEhL3U0frOOMxR95yriXI/VRIxlp1bC/Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4JAKzroN4ZA6w7C7gezI5/1l/01uQ3Ll8noTEFaGrVRw71RyBzjw70a/lWJTOxwK
-	 iMKQD/ybNYc4L1N88k3+2aRIRHcrw7M7ooc4wgS4UCwIAJQ08ltIe2iXv1oaqzoc5b
-	 eU8gtMDa7NakKmucUGMJK8QLXK7LN/WacYoMvGeQ=
+	b=d1B5YcYyUHImPLHQs2QFvZdkkoD8uVvZ2UIszMnuOqRocPkCX09pKwhQEix29l9qd
+	 GGivwI5z28mymtlDb0aOu8bW33IwLh1D8X+YzCVO38DhrKnD/kz9cWVbQclm7UCuQf
+	 xTaIpENZCFca4UVbhelY+d1j4X83ttWi0GKnEXyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 213/291] loop: LOOP_SET_FD: send uevents for partitions
-Date: Wed, 23 Apr 2025 16:43:22 +0200
-Message-ID: <20250423142633.089296549@linuxfoundation.org>
+	Bert Karwatzki <spasswolf@web.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 258/393] Revert "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
+Date: Wed, 23 Apr 2025 16:42:34 +0200
+Message-ID: <20250423142654.030286803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 0dba7a05b9e47d8b546399117b0ddf2426dc6042 upstream.
+[ Upstream commit 0937cb5f345c79d702b4d0d744e2a2529b551cb2 ]
 
-Remove the suppression of the uevents before scanning for partitions.
-The partitions inherit their suppression settings from their parent device,
-which lead to the uevents being dropped.
+This reverts commit a104042e2bf6528199adb6ca901efe7b60c2c27f.
 
-This is similar to the same changes for LOOP_CONFIGURE done in
-commit bb430b694226 ("loop: LOOP_CONFIGURE: send uevents for partitions").
+Since the original bug seems to have been around for years,
+but a new issue was report with the fix, revert the fix for
+now. We have a couple of weeks to figure it out for this
+release, if needed.
 
-Fixes: 498ef5c777d9 ("loop: suppress uevents while reconfiguring the device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20250415-loop-uevent-changed-v3-1-60ff69ac6088@linutronix.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: a104042e2bf6 ("wifi: mac80211: Update skb's control block key in ieee80211_tx_dequeue()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -624,12 +624,12 @@ static int loop_change_fd(struct loop_de
- 	 * dependency.
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 8c46498152d76..45a093d3f1fa7 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3877,7 +3877,6 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
  	 */
- 	fput(old_file);
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	if (partscan)
- 		loop_reread_partitions(lo);
- 
- 	error = 0;
- done:
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
- 	return error;
- 
-@@ -637,6 +637,7 @@ out_err:
- 	loop_global_unlock(lo, is_loop);
- out_putf:
- 	fput(file);
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	goto done;
- }
- 
+-	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
+-- 
+2.39.5
+
 
 
