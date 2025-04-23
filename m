@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E703293B7C;
-	Wed, 23 Apr 2025 15:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE197284693;
+	Wed, 23 Apr 2025 15:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421653; cv=none; b=b+zwZq/epF7aVz5NI9sNHkqGrIJt27nIzIDXEkUEWZbp17hkOEyu7eunMT4zF3lcQTReEnK5bv6dCNM0ZyrqvBbROtnzYxtipXriTClOE2RBFbmozYHkq0ceHGDiyo8SBLBWsVoZmaTPnmuwmfo3/D+7qoLeJ46Q1kL8qA1+8b4=
+	t=1745421656; cv=none; b=IuzaGyK/IH97XyQSawX/3suKTZ3l4h8PU+ZJAoyNAgJrMH9/fGFjdPbijjjSU6ENrC8aXG2tbxDJxWs644ZoIcEd4SlMMhJst7Kpo5PD25rHt+7EZh05eC7ZCyGdyf+bSf1iNaBmqfuwEvrd7rwr6llOiBQO86BfZyZ8o2Y/DJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421653; c=relaxed/simple;
-	bh=utvS4QWKDf/Z/RyuAu6RXolrlzYufeV9htX67rwNKC0=;
+	s=arc-20240116; t=1745421656; c=relaxed/simple;
+	bh=wGPd+3cV6mWVsVnmAtbyatKzw0uz+6n9PbHT7c/mAlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7oT37NyyG9vBx1VuEnpyQeQyOQoRbVxKsNz2riO5ypoE47rC1z5T0Dcj8zO4jQz6LyjbBeqU1hR6LAQ6yp1hlCU/BMN7Hrv0EwliSks0fnJN0oOk/QJyOwz6dVYssJPWpZ0RKtc3gc7a4vzJKvWbeaEyAPizsO6eL/hhUOHITQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtzMklYG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKX/29VFnD0DwDn/RgF9h5NS2jdICsqqlqMSJGKyDuToOmhb58Nljl+utvNNjR3ynU+wk03Ih6kDbTN3dBRJZbKog8qYt+59IQnTJiXSp9usNKGWGI0ZkxgvK9HF/Jo79t0XsMsgjIhVOORi9XYeykG52U56RBPPuTEJGln/DaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFEBmJCm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtzMklYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172A2C4CEE2;
-	Wed, 23 Apr 2025 15:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFEBmJCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723AFC4CEE2;
+	Wed, 23 Apr 2025 15:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421652;
-	bh=utvS4QWKDf/Z/RyuAu6RXolrlzYufeV9htX67rwNKC0=;
+	s=korg; t=1745421655;
+	bh=wGPd+3cV6mWVsVnmAtbyatKzw0uz+6n9PbHT7c/mAlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtzMklYGKUiXiRYM3Lelj5qi8KWVCjvZaLirw+F1TZzeMcpohr6eSQN5lpSvWkyzO
-	 +8OSd4Cd2nFv88HUxeQOKJS1E0JDG/ODrCcr9ZIilOOyUYNUnP3mgqs7dH3Ug0zuLT
-	 FQSK7l0oWxNXLBvbJLr4tObERKOzSIzby+OBMKj4=
+	b=gFEBmJCmDjRQ/nGB6I6jglWIoLBPWf7n9yyVbe3pKzAIi132Z6LGebsJED7lClgJh
+	 fhHbNaJsuy8RRG+OQHX5t/0N6rBaxjEKNxxm+mBlQIY1wmHJrOrgArSX0K2slj/SYk
+	 +Kw8LqMfn94YUAnpSCpqozCbEvh9714alSIqCS3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 204/393] clk: qcom: clk-branch: Fix invert halt status bit check for votable clocks
-Date: Wed, 23 Apr 2025 16:41:40 +0200
-Message-ID: <20250423142651.813881712@linuxfoundation.org>
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.14 216/241] drm/i915/dp: Check for HAS_DSC_3ENGINES while configuring DSC slices
+Date: Wed, 23 Apr 2025 16:44:40 +0200
+Message-ID: <20250423142629.386620426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ajit Pandey <quic_ajipan@quicinc.com>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-commit 5eac348182d2b5ed1066459abedb7bc6b5466f81 upstream.
+commit 3a47280b768748992ee34bd52c394c60b2845af3 upstream.
 
-BRANCH_HALT_ENABLE and BRANCH_HALT_ENABLE_VOTED flags are used to check
-halt status of branch clocks, which have an inverted logic for the halt
-bit in CBCR register. However, the current logic in the _check_halt()
-method only compares the BRANCH_HALT_ENABLE flags, ignoring the votable
-branch clocks.
+DSC 12 slices configuration is used for some specific cases with
+Ultrajoiner. This can be supported only when each of the 4 joined pipes
+have 3 DSC engines each.
 
-Update the logic to correctly handle the invert logic for votable clocks
-using the BRANCH_HALT_ENABLE_VOTED flags.
+Add the missing check for 3 DSC engines support before using 3 DSC
+slices per pipe.
 
-Fixes: 9092d1083a62 ("clk: qcom: branch: Extend the invert logic for branch2 clocks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250128-push_fix-v1-1-fafec6747881@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: be7f5fcdf4a0 ("drm/i915/dp: Enable 3 DSC engines for 12 slices")
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>
+Cc: <stable@vger.kernel.org> # v6.14+
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://lore.kernel.org/r/20250414024256.2782702-3-ankit.k.nautiyal@intel.com
+(cherry picked from commit da9b1c61e7f7b327dd70c5f073ba04d419a55ef8)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-branch.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/clk/qcom/clk-branch.c
-+++ b/drivers/clk/qcom/clk-branch.c
-@@ -27,7 +27,7 @@ static bool clk_branch_in_hwcg_mode(cons
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -1050,10 +1050,11 @@ u8 intel_dp_dsc_get_slice_count(const st
+ 		u8 test_slice_count = valid_dsc_slicecount[i] * num_joined_pipes;
  
- static bool clk_branch_check_halt(const struct clk_branch *br, bool enabling)
- {
--	bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
-+	bool invert = (br->halt_check & BRANCH_HALT_ENABLE);
- 	u32 val;
+ 		/*
+-		 * 3 DSC Slices per pipe need 3 DSC engines,
+-		 * which is supported only with Ultrajoiner.
++		 * 3 DSC Slices per pipe need 3 DSC engines, which is supported only
++		 * with Ultrajoiner only for some platforms.
+ 		 */
+-		if (valid_dsc_slicecount[i] == 3 && num_joined_pipes != 4)
++		if (valid_dsc_slicecount[i] == 3 &&
++		    (!HAS_DSC_3ENGINES(display) || num_joined_pipes != 4))
+ 			continue;
  
- 	regmap_read(br->clkr.regmap, br->halt_reg, &val);
-@@ -43,7 +43,7 @@ static bool clk_branch2_check_halt(const
- {
- 	u32 val;
- 	u32 mask;
--	bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
-+	bool invert = (br->halt_check & BRANCH_HALT_ENABLE);
- 
- 	mask = CBCR_NOC_FSM_STATUS;
- 	mask |= CBCR_CLK_OFF;
+ 		if (test_slice_count >
 
 
