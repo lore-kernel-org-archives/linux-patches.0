@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912E12BCF56;
-	Wed, 23 Apr 2025 15:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BC92BCF56;
+	Wed, 23 Apr 2025 15:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422091; cv=none; b=ANWDqYQ241SjQLLBtBAAxGXDE16m0tWsGN/fy4sEYGLMHKXyupvNSzFO/OHAkVan+dspfxQsaCz2GzCI+C2B0cBDP4mDnKrXOWoG15ybwd82ghKliTmQNMSsnIwB/meL2+nSPNbH9ro9479c0Z2fqZdPmRmDtGSP+XWknNy+tvc=
+	t=1745422092; cv=none; b=HdwOer5CE9MeD7Chuyf7TLNbKqDa+RD049GZ1DieK7wO7mcmf2EE8wxWX5EbhcfvRQ8FFrjWMuKbVcOPAK9zU1FFIvRowYgtNDqtN7AOmV45JJjWFty4Ip/lBgPG5KN9nOZ3j8HhXCErDSjnONuA6d1G9oX7S1MSWTyN02qFkRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422091; c=relaxed/simple;
-	bh=XTfoQGzovHHwG5acWlaCHrNViDWJPZRn79p43A78yVI=;
+	s=arc-20240116; t=1745422092; c=relaxed/simple;
+	bh=5dpZCSIg4wMcx2qmYewYBrPvHDmrZd1Pmonogtju0Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNlcJxNEb3aN7EOE8oIutW0OZjqUzxLIqbjqlmPJHj8DnwTZJZ5aZC5OH+Rfug2H2EAuxt9OBVRiyoyk/Arflfs3Zcry9NUoPLZieH7fXUhALVL6BfO+epWMlf2sTG7XyrRgwJEIRlB4QRP7o4mbSIOH2pC5S7xD62kD5BQkpGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=on5GxFdp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkh7eUnAaXPwxP10xYhO0E8EHQ7+xAl6sONRVVp287hRQ0ANYPGq8kdGSMMJCV19JBHm6Qz2tQb2nj5gaRdqYC++CAG++UUGJ1RgOwVIEik36VjYmOTqon9F94QnTotE/z2mUq2x8xlgpWJ/VSRxWvqHy84tGhcv4IwCf0VxcCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9SSKt9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="on5GxFdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A643BC4CEE2;
-	Wed, 23 Apr 2025 15:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9SSKt9f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD1AC4CEE3;
+	Wed, 23 Apr 2025 15:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422089;
-	bh=XTfoQGzovHHwG5acWlaCHrNViDWJPZRn79p43A78yVI=;
+	s=korg; t=1745422091;
+	bh=5dpZCSIg4wMcx2qmYewYBrPvHDmrZd1Pmonogtju0Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=on5GxFdpILMnPhvJVXzoPkhSnkzte1/tpF+yZ58o9oTfZbNSTIrFCigjOcHyIfEv/
-	 k3Mwt/7gBRqlcZh9bcp4Tb8le+3YjfNtwbjojx6VSYNOhi5fRrM1wK17m8COgVdZ7K
-	 rrozmdRW4TkpoSarPUsME9Xa7CVMPwdgFoNFlLHU=
+	b=x9SSKt9f3rvSw45dQjV9NPmjXh4utLdOkmj1C60T14jOhECl6Fg56SLhCTyES3wfk
+	 4vPrVsG1NeuIlOVoOx1liBAvAj6JlNupd1ETzVN3ZMlR8Q6fPEI8SPKN2BjgRnVmlE
+	 fAtc8qA0DLrj+KnGvnHfq52LaiNx0RzlEwDsxbMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Lanzano <lanzano.alex@gmail.com>
-Subject: [PATCH 6.1 231/291] drm/repaper: fix integer overflows in repeat functions
-Date: Wed, 23 Apr 2025 16:43:40 +0200
-Message-ID: <20250423142633.856632935@linuxfoundation.org>
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 276/393] tools: ynl-gen: record information about recursive nests
+Date: Wed, 23 Apr 2025 16:42:52 +0200
+Message-ID: <20250423142654.755967631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 4d098000ac193f359e6b8ca4801dbdbd6a27b41f upstream.
+[ Upstream commit 38329fcfb757b8215c07a77b6657721cc7e9530e ]
 
-There are conditions, albeit somewhat unlikely, under which right hand
-expressions, calculating the end of time period in functions like
-repaper_frame_fixed_repeat(), may overflow.
+Track which nests are recursive. Non-recursive nesting gets
+rendered in C as directly nested structs. For recursive
+ones we need to put a pointer in, rather than full struct.
 
-For instance, if 'factor10x' in repaper_get_temperature() is high
-enough (170), as is 'epd->stage_time' in repaper_probe(), then the
-resulting value of 'end' will not fit in unsigned int expression.
+Track this information, no change to generated code, yet.
 
-Mitigate this by casting 'epd->factored_stage_time' to wider type before
-any multiplication is done.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 3589211e9b03 ("drm/tinydrm: Add RePaper e-ink driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Lanzano <lanzano.alex@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250116134801.22067-1-n.zhandarovich@fintech.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://lore.kernel.org/r/20231213231432.2944749-6-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ce6cb8113c84 ("tools: ynl-gen: individually free previous values on double set")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/repaper.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/net/ynl/ynl-gen-c.py | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/tiny/repaper.c
-+++ b/drivers/gpu/drm/tiny/repaper.c
-@@ -455,7 +455,7 @@ static void repaper_frame_fixed_repeat(s
- 				       enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
+diff --git a/tools/net/ynl/ynl-gen-c.py b/tools/net/ynl/ynl-gen-c.py
+index 4c86fe0cd1179..e5a3e0bb5a39d 100755
+--- a/tools/net/ynl/ynl-gen-c.py
++++ b/tools/net/ynl/ynl-gen-c.py
+@@ -80,6 +80,9 @@ class Type(SpecAttr):
+     def is_scalar(self):
+         return self.type in {'u8', 'u16', 'u32', 'u64', 's32', 's64'}
  
- 	do {
- 		repaper_frame_fixed(epd, fixed_value, stage);
-@@ -466,7 +466,7 @@ static void repaper_frame_data_repeat(st
- 				      const u8 *mask, enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
++    def is_recursive(self):
++        return False
++
+     def presence_type(self):
+         return 'bit'
  
- 	do {
- 		repaper_frame_data(epd, image, mask, stage);
+@@ -440,6 +443,9 @@ class TypeBinary(Type):
+ 
+ 
+ class TypeNest(Type):
++    def is_recursive(self):
++        return self.family.pure_nested_structs[self.nested_attrs].recursive
++
+     def _complex_member_type(self, ri):
+         return self.nested_struct_type
+ 
+@@ -615,9 +621,12 @@ class Struct:
+         if self.nested and space_name in family.consts:
+             self.struct_name += '_'
+         self.ptr_name = self.struct_name + ' *'
++        # All attr sets this one contains, directly or multiple levels down
++        self.child_nests = set()
+ 
+         self.request = False
+         self.reply = False
++        self.recursive = False
+ 
+         self.attr_list = []
+         self.attrs = dict()
+@@ -960,14 +969,20 @@ class Family(SpecFamily):
+                 pns_key_seen.add(name)
+             else:
+                 pns_key_list.append(name)
+-        # Propagate the request / reply
++        # Propagate the request / reply / recursive
+         for attr_set, struct in reversed(self.pure_nested_structs.items()):
+             for _, spec in self.attr_sets[attr_set].items():
+                 if 'nested-attributes' in spec:
+-                    child = self.pure_nested_structs.get(spec['nested-attributes'])
++                    child_name = spec['nested-attributes']
++                    struct.child_nests.add(child_name)
++                    child = self.pure_nested_structs.get(child_name)
+                     if child:
++                        if not child.recursive:
++                            struct.child_nests.update(child.child_nests)
+                         child.request |= struct.request
+                         child.reply |= struct.reply
++                if attr_set in struct.child_nests:
++                    struct.recursive = True
+ 
+     def _load_attr_use(self):
+         for _, struct in self.pure_nested_structs.items():
+-- 
+2.39.5
+
 
 
