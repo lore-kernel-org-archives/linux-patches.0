@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE1627CCC7;
-	Wed, 23 Apr 2025 15:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0A528CF62;
+	Wed, 23 Apr 2025 15:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421382; cv=none; b=m7vhHprKrWC2MXweIWtZhBfijvjTKCq4PoeR/Ttqtaqrg0VgioYdScZ0BaeyFV5qFxC1ZLBrtsfGkLiyHa0dvb0Pxayb07rjNFCXqJS5EgZ+akgE5CJ3e0t8I+NpjIy16Jbu4o02trR2uEMteTI8BO+niiQqyXmTGBgNJBcVJNw=
+	t=1745421384; cv=none; b=lop3K9i/DCN3dvBfbb5IvPYQ1TMICT2LxbtwpOzkPkwdYsO5+ZLMY0GHxSilDtx1OWd+nK1oVTo7B0QN4OeFGnheSugtQi11iTv06MpPsrIJwpws+I4DQ+OF69D7jAAjrypyXDS3BoktgBhH3+8owDFY/KT+Z2D+ojYS8iCRge4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421382; c=relaxed/simple;
-	bh=8fg7TNmoO0ppj8v6xntVWLEaZtBCc9+Hbxo84MWEx+o=;
+	s=arc-20240116; t=1745421384; c=relaxed/simple;
+	bh=gkJLNdIPnVXChRB8wY+7/o3W4Hqiy29Cxj1YEIVjlUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpItHyy1sxEh2YjQ50CLfrJycTtTzoGs1wPCnoTH4zMyLA/g8HiqToiINU52IiAj0IH2VcSXH8uO2T6qkpT6Mt5WlfkPvjl4Tf1pObuhQix8S38LYblJbo6gWVw8vgsX68V+kHOTDKuM6POwbBepntOdB0coH1F1dPkvkZMOe74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSLKVu02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIlN6dyoUTX0/uJfnXvdrPOwUKuIiYqqlYRBwc0Dgz9anvQ6lhcnj1Hwe//sBrpirK4lY5rBRpGaH2zNZaHRkNwfC56uzRjbtJiXog9t8J/yWlaIAEwmBOe4bzMkTyq4QWa/5K4sHoHsF2bChG6sBVApTHFsFAscZkSZ9KOia5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofxj5tEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSLKVu02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F173C4CEE3;
-	Wed, 23 Apr 2025 15:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofxj5tEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F42C4CEE2;
+	Wed, 23 Apr 2025 15:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421381;
-	bh=8fg7TNmoO0ppj8v6xntVWLEaZtBCc9+Hbxo84MWEx+o=;
+	s=korg; t=1745421384;
+	bh=gkJLNdIPnVXChRB8wY+7/o3W4Hqiy29Cxj1YEIVjlUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSLKVu020eAiiQPpRS/nSnnMf3BCoUrUnrLCr6SNJZYDJGXzROJZibC6Vti1GqPf7
-	 fFp3M0EeBxbJaofM6uVBs7BcgS50d8mASyYGDOxbqIzalgYBzrQjgfHy1YLZbgucaW
-	 cxV0+3FReuGs/hRi2gU1cYwtw14o1jy/955CjT2s=
+	b=ofxj5tEkmt6x1j3MxnaczfVkVqbWhVFAyeuaXHLx6fJAbIfNjpuCS0Dn4VO0vkEFq
+	 LE+NrS/kPHc1Mzv0wvL97mJ68POlQzv/gHo82Z4nSNWCWrmLhinFh6gY89Pu0LXUTV
+	 h1T6E1HzGedQr6SwSB5r9eLo9ghfxYM+/kDPAWu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Zavaritsky <mejedi@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.12 216/223] bpf: track changes_pkt_data property for global functions
-Date: Wed, 23 Apr 2025 16:44:48 +0200
-Message-ID: <20250423142625.964938108@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.14 180/241] drm/amd/display: Increase vblank offdelay for PSR panels
+Date: Wed, 23 Apr 2025 16:44:04 +0200
+Message-ID: <20250423142627.876024324@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,162 +49,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 51081a3f25c742da5a659d7fc6fd77ebfdd555be upstream.
+commit f21e6d149b49c92f9e68aa0c76033e1e13d9f5da upstream.
 
-When processing calls to certain helpers, verifier invalidates all
-packet pointers in a current state. For example, consider the
-following program:
+[Why]
 
-    __attribute__((__noinline__))
-    long skb_pull_data(struct __sk_buff *sk, __u32 len)
-    {
-        return bpf_skb_pull_data(sk, len);
-    }
+Depending on when the HW latching event (vupdate) of double-buffered
+registers happen relative to the PSR SDP (signals panel psr enter/exit)
+deadline, and how bad the Panel clock has drifted since the last ALPM
+off event, there can be up to 3 frames of delay between sending the PSR
+exit cmd to DMUB fw, and when the panel starts displaying live frames.
+This can manifest as micro-stuttering when userspace commit patterns
+cause rapid toggling of the DRM vblank counter, since PSR enter/exit is
+hooked up to DRM vblank disable/enable respectively.
 
-    SEC("tc")
-    int test_invalidate_checks(struct __sk_buff *sk)
-    {
-        int *p = (void *)(long)sk->data;
-        if ((void *)(p + 1) > (void *)(long)sk->data_end) return TCX_DROP;
-        skb_pull_data(sk, 0);
-        *p = 42;
-        return TCX_PASS;
-    }
+In the ideal world, the panel should present the live frame immediately
+on PSR exit cmd. But due to HW design and PSR limitations, immediate
+exit can only happen by chance, when:
 
-After a call to bpf_skb_pull_data() the pointer 'p' can't be used
-safely. See function filter.c:bpf_helper_changes_pkt_data() for a list
-of such helpers.
+1. PSR exit cmd is ack'd by FW before HW latching (vupdate) event, and
+2. Panel's SDP deadline -- determined by it's PSR Start Delay in DPCD
+  71h -- is after the vupdate event. The PSR exit SDP can then be sent
+  immediately after HW latches. Otherwise, we have to wait 1 frame. And
+3. There is negligible drift between the panel's clock and source clock.
+  Otherwise, there can be up to 1 frame of drift.
 
-At the moment verifier invalidates packet pointers when processing
-helper function calls, and does not traverse global sub-programs when
-processing calls to global sub-programs. This means that calls to
-helpers done from global sub-programs do not invalidate pointers in
-the caller state. E.g. the program above is unsafe, but is not
-rejected by verifier.
+Note that this delay is not expected with Panel Replay.
 
-This commit fixes the omission by computing field
-bpf_subprog_info->changes_pkt_data for each sub-program before main
-verification pass.
-changes_pkt_data should be set if:
-- subprogram calls helper for which bpf_helper_changes_pkt_data
-  returns true;
-- subprogram calls a global function,
-  for which bpf_subprog_info->changes_pkt_data should be set.
+[How]
 
-The verifier.c:check_cfg() pass is modified to compute this
-information. The commit relies on depth first instruction traversal
-done by check_cfg() and absence of recursive function calls:
-- check_cfg() would eventually visit every call to subprogram S in a
-  state when S is fully explored;
-- when S is fully explored:
-  - every direct helper call within S is explored
-    (and thus changes_pkt_data is set if needed);
-  - every call to subprogram S1 called by S was visited with S1 fully
-    explored (and thus S inherits changes_pkt_data from S1).
+Since PSR power savings can be quite substantial, and there are a lot of
+systems in the wild with PSR panels, It'll be nice to have a middle
+ground that balances user experience with power savings.
 
-The downside of such approach is that dead code elimination is not
-taken into account: if a helper call inside global function is dead
-because of current configuration, verifier would conservatively assume
-that the call occurs for the purpose of the changes_pkt_data
-computation.
+A simple way to achieve this is by extending the vblank offdelay, such
+that additional PSR exit delays will be less perceivable.
 
-Reported-by: Nick Zavaritsky <mejedi@gmail.com>
-Closes: https://lore.kernel.org/bpf/0498CA22-5779-4767-9C0C-A9515CEA711F@gmail.com/
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20241210041100.1898468-4-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+We can set:
+
+   20/100 * offdelay_ms = 3_frames_ms
+=> offdelay_ms = 5 * 3_frames_ms
+
+This ensures that `3_frames_ms` will only be experienced as a 20% delay
+on top how long the panel has been static, and thus make the delay
+less perceivable.
+
+If this ends up being too high of a percentage, it can be dropped
+further in a future change.
+
+Fixes: 537ef0f88897 ("drm/amd/display: use new vblank enable policy for DCN35+")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_verifier.h |    1 +
- kernel/bpf/verifier.c        |   32 +++++++++++++++++++++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   39 ++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 7 deletions(-)
 
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -668,6 +668,7 @@ struct bpf_subprog_info {
- 	bool args_cached: 1;
- 	/* true if bpf_fastcall stack region is used by functions that can't be inlined */
- 	bool keep_fastcall_stack: 1;
-+	bool changes_pkt_data: 1;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8577,14 +8577,39 @@ static void manage_dm_interrupts(struct
+ 	int offdelay;
  
- 	u8 arg_cnt;
- 	struct bpf_subprog_arg_info args[MAX_BPF_FUNC_REG_ARGS];
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9831,6 +9831,8 @@ static int check_func_call(struct bpf_ve
+ 	if (acrtc_state) {
+-		if (amdgpu_ip_version(adev, DCE_HWIP, 0) <
+-		    IP_VERSION(3, 5, 0) ||
+-		    acrtc_state->stream->link->psr_settings.psr_version <
+-		    DC_PSR_VERSION_UNSUPPORTED ||
+-		    !(adev->flags & AMD_IS_APU)) {
+-			timing = &acrtc_state->stream->timing;
++		timing = &acrtc_state->stream->timing;
  
- 		verbose(env, "Func#%d ('%s') is global and assumed valid.\n",
- 			subprog, sub_name);
-+		if (env->subprog_info[subprog].changes_pkt_data)
-+			clear_all_pkt_pointers(env);
- 		/* mark global subprog for verifying after main prog */
- 		subprog_aux(env, subprog)->called = true;
- 		clear_caller_saved_regs(env, caller->regs);
-@@ -16021,6 +16023,29 @@ enforce_retval:
- 	return 0;
- }
- 
-+static void mark_subprog_changes_pkt_data(struct bpf_verifier_env *env, int off)
-+{
-+	struct bpf_subprog_info *subprog;
-+
-+	subprog = find_containing_subprog(env, off);
-+	subprog->changes_pkt_data = true;
-+}
-+
-+/* 't' is an index of a call-site.
-+ * 'w' is a callee entry point.
-+ * Eventually this function would be called when env->cfg.insn_state[w] == EXPLORED.
-+ * Rely on DFS traversal order and absence of recursive calls to guarantee that
-+ * callee's change_pkt_data marks would be correct at that moment.
-+ */
-+static void merge_callee_effects(struct bpf_verifier_env *env, int t, int w)
-+{
-+	struct bpf_subprog_info *caller, *callee;
-+
-+	caller = find_containing_subprog(env, t);
-+	callee = find_containing_subprog(env, w);
-+	caller->changes_pkt_data |= callee->changes_pkt_data;
-+}
-+
- /* non-recursive DFS pseudo code
-  * 1  procedure DFS-iterative(G,v):
-  * 2      label v as discovered
-@@ -16154,6 +16179,7 @@ static int visit_func_call_insn(int t, s
- 				bool visit_callee)
- {
- 	int ret, insn_sz;
-+	int w;
- 
- 	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
- 	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env);
-@@ -16165,8 +16191,10 @@ static int visit_func_call_insn(int t, s
- 	mark_jmp_point(env, t + insn_sz);
- 
- 	if (visit_callee) {
-+		w = t + insns[t].imm + 1;
- 		mark_prune_point(env, t);
--		ret = push_insn(t, t + insns[t].imm + 1, BRANCH, env);
-+		merge_callee_effects(env, t, w);
-+		ret = push_insn(t, w, BRANCH, env);
- 	}
- 	return ret;
- }
-@@ -16486,6 +16514,8 @@ static int visit_insn(int t, struct bpf_
- 			mark_prune_point(env, t);
- 			mark_jmp_point(env, t);
- 		}
-+		if (bpf_helper_call(insn) && bpf_helper_changes_pkt_data(insn->imm))
-+			mark_subprog_changes_pkt_data(env, t);
- 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
- 			struct bpf_kfunc_call_arg_meta meta;
- 
+-			/* at least 2 frames */
++		/*
++		 * Depending on when the HW latching event of double-buffered
++		 * registers happen relative to the PSR SDP deadline, and how
++		 * bad the Panel clock has drifted since the last ALPM off
++		 * event, there can be up to 3 frames of delay between sending
++		 * the PSR exit cmd to DMUB fw, and when the panel starts
++		 * displaying live frames.
++		 *
++		 * We can set:
++		 *
++		 * 20/100 * offdelay_ms = 3_frames_ms
++		 * => offdelay_ms = 5 * 3_frames_ms
++		 *
++		 * This ensures that `3_frames_ms` will only be experienced as a
++		 * 20% delay on top how long the display has been static, and
++		 * thus make the delay less perceivable.
++		 */
++		if (acrtc_state->stream->link->psr_settings.psr_version <
++		    DC_PSR_VERSION_UNSUPPORTED) {
++			offdelay = DIV64_U64_ROUND_UP((u64)5 * 3 * 10 *
++						      timing->v_total *
++						      timing->h_total,
++						      timing->pix_clk_100hz);
++			config.offdelay_ms = offdelay ?: 30;
++		} else if (amdgpu_ip_version(adev, DCE_HWIP, 0) <
++			   IP_VERSION(3, 5, 0) ||
++			   !(adev->flags & AMD_IS_APU)) {
++			/*
++			 * Older HW and DGPU have issues with instant off;
++			 * use a 2 frame offdelay.
++			 */
+ 			offdelay = DIV64_U64_ROUND_UP((u64)20 *
+ 						      timing->v_total *
+ 						      timing->h_total,
 
 
