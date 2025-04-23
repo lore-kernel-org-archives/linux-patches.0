@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19115298CB2;
-	Wed, 23 Apr 2025 15:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD50B29A3D1;
+	Wed, 23 Apr 2025 15:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422449; cv=none; b=b78McBSARJ0Z4B9VY+Lw5DUJdpPPOzqforhXbI7fh3750i8Dr0MzKHs+4H2S9jAxg/dCJGsG0d2xos6lEPd4zrBeilbHmw5RJMzR87Lzy3WbUnE+OV2ZWd7URzNfrC2MO1/KkPf0NgtXGznxAfc28eg3F326Fzf+TXkpJCvg/Gg=
+	t=1745422451; cv=none; b=g0tIk3MK5k6VGjdsXLGQKOio66yilzPaZopn9O4PWsz1J157Jgk48k+S0QCsVHk0QRHu4X5qyXNr+alLUsoTIgnVKnTRAXzEpT6YAlYem1FFNbhR3C0UGCxitl+EshbjCV9aRsrxq4iIE/uqwj0vaCfXD5QZrBrEC2m649fowEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422449; c=relaxed/simple;
-	bh=CLeGCFTux6iT/2aXCJ4iS7v4vo4wZfIfwrukjZ6A+80=;
+	s=arc-20240116; t=1745422451; c=relaxed/simple;
+	bh=vCvuENb1ko4Poz1+WRo6EEqm4WcbUq0+vCxijuW2F2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8anOaeoIzQIJBvNS2XC7p4VSk5mzbG4KliwfM21+wM6wOOBAMAa6xCrOMT01CmXg2yaDcIuiYKKc12Z32yfwrhdDuCEVzW7zFy4DHQQiujl8NpFzvs9qzANpSpgUyj/oKLF1PUXalIw8c0V5xakcQ/BvTTDwphX/xxilv11+zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WC7wbHsb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfTv9C4XYuXYJbAiAEvCxCXQiQMpbKHIO2Ebr8ZAVDEkYrc2Xk/ZaeyJrX6e/8C/0xUAMhy4JQIuMv9EqsUev/2xglDcDEDB2/0l0FsGr+trtA5cb4lvZ08sj6kiBJdge6e+AvRRq5tyZOaW6jq0kZ+kDjocxiBPY6olKBRosz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4WMRErj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WC7wbHsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A002FC4CEE3;
-	Wed, 23 Apr 2025 15:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4WMRErj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409D2C4CEE3;
+	Wed, 23 Apr 2025 15:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422449;
-	bh=CLeGCFTux6iT/2aXCJ4iS7v4vo4wZfIfwrukjZ6A+80=;
+	s=korg; t=1745422451;
+	bh=vCvuENb1ko4Poz1+WRo6EEqm4WcbUq0+vCxijuW2F2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WC7wbHsbohgR1RrfknSvPdZa/aBDM9Fr9t1Ed4ES6c27iY7e2VF0fOUkhynFaGNNp
-	 AYu84uqIuZqpxsaB8ijV+c1uG3BB3CngInEOZxPdB2MGmHSJYBiC72YRpmsFt1vMgi
-	 b0XtYLyIA8kIphSHtiYWijUNQKEd+4/LdGwW3oIo=
+	b=X4WMRErjC3fe+goRy16sE4AafCUqG66KRQjMktNn+LqQ4tN1oAOOuv7c2v4wyrCVu
+	 XsNuc1wN6IOLGJtHdDX6FzNc4fjHxgBfoybz5d7NohUgLsBvktP9dwiTw2l6aM27BF
+	 p1zq6lM4ensECG6bgt3yeFMMGFzD0t3Di90hO02s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Daniel Axtens <dja@axtens.net>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 285/291] mm: fix apply_to_existing_page_range()
-Date: Wed, 23 Apr 2025 16:44:34 +0200
-Message-ID: <20250423142636.066552971@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 328/393] Revert "smb: client: Fix netns refcount imbalance causing leaks and use-after-free"
+Date: Wed, 23 Apr 2025 16:43:44 +0200
+Message-ID: <20250423142656.883584756@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +46,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
+commit c707193a17128fae2802d10cbad7239cc57f0c95 upstream.
 
-In the case of apply_to_existing_page_range(), apply_to_pte_range() is
-reached with 'create' set to false.  When !create, the loop over the PTE
-page table is broken.
+This reverts commit 4e7f1644f2ac6d01dc584f6301c3b1d5aac4eaef.
 
-apply_to_pte_range() will only move to the next PTE entry if 'create' is
-true or if the current entry is not pte_none().
+The commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
+rmmod") is not only a bogus fix for LOCKDEP null-ptr-deref but also
+introduces a real issue, TCP sockets leak, which will be explained in
+detail in the next revert.
 
-This means that the user of apply_to_existing_page_range() will not have
-'fn' called for any entries after the first pte_none() in the PTE page
-table.
+Also, CNA assigned CVE-2024-54680 to it but is rejecting it. [0]
 
-Fix the loop logic in apply_to_pte_range().
+Thus, we are reverting the commit and its follow-up commit 4e7f1644f2ac
+("smb: client: Fix netns refcount imbalance causing leaks and
+use-after-free").
 
-There are no known runtime issues from this, but the fix is trivial enough
-for stable@ even without a known buggy user.
-
-Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
-Cc: Daniel Axtens <dja@axtens.net>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Link: https://lore.kernel.org/all/2025040248-tummy-smilingly-4240@gregkh/ #[0]
+Fixes: 4e7f1644f2ac ("smb: client: Fix netns refcount imbalance causing leaks and use-after-free")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2659,11 +2659,11 @@ static int apply_to_pte_range(struct mm_
- 	if (fn) {
- 		do {
- 			if (create || !pte_none(*pte)) {
--				err = fn(pte++, addr, data);
-+				err = fn(pte, addr, data);
- 				if (err)
- 					break;
- 			}
--		} while (addr += PAGE_SIZE, addr != end);
-+		} while (pte++, addr += PAGE_SIZE, addr != end);
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -316,7 +316,6 @@ cifs_abort_connection(struct TCP_Server_
+ 			 server->ssocket->flags);
+ 		sock_release(server->ssocket);
+ 		server->ssocket = NULL;
+-		put_net(cifs_net_ns(server));
  	}
- 	*mask |= PGTBL_PTE_MODIFIED;
+ 	server->sequence_number = 0;
+ 	server->session_estab = false;
+@@ -3150,12 +3149,8 @@ generic_ip_connect(struct TCP_Server_Inf
+ 		/*
+ 		 * Grab netns reference for the socket.
+ 		 *
+-		 * This reference will be released in several situations:
+-		 * - In the failure path before the cifsd thread is started.
+-		 * - In the all place where server->socket is released, it is
+-		 *   also set to NULL.
+-		 * - Ultimately in clean_demultiplex_info(), during the final
+-		 *   teardown.
++		 * It'll be released here, on error, or in clean_demultiplex_info() upon server
++		 * teardown.
+ 		 */
+ 		get_net(net);
+ 
+@@ -3171,8 +3166,10 @@ generic_ip_connect(struct TCP_Server_Inf
+ 	}
+ 
+ 	rc = bind_socket(server);
+-	if (rc < 0)
++	if (rc < 0) {
++		put_net(cifs_net_ns(server));
+ 		return rc;
++	}
+ 
+ 	/*
+ 	 * Eventually check for other socket options to change from
+@@ -3218,6 +3215,9 @@ generic_ip_connect(struct TCP_Server_Inf
+ 	if (sport == htons(RFC1001_PORT))
+ 		rc = ip_rfc1001_connect(server);
+ 
++	if (rc < 0)
++		put_net(cifs_net_ns(server));
++
+ 	return rc;
+ }
  
 
 
