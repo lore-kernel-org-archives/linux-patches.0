@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD71EEA3E;
-	Wed, 23 Apr 2025 15:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955E82918F5;
+	Wed, 23 Apr 2025 15:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421566; cv=none; b=YoemuBGQRD3nKTfswyB0xWbNyb/7dRHQOebok3IAm2R9hBVuUpbYRvjoB814UD22JVQAUDshpS+rZhKMmMMI/8Dn1nKgAMzICF4P4l1yNd6AGze5Gnl0rBR+1KcXnEuiQk/Oa05dJlUmtkPftUg0hXENfz0H86vC+Q+BlQFi/QQ=
+	t=1745421568; cv=none; b=bGxZEOcSq+FJ+rSZTuQhmf4uWsH+DlVJogHJqwfs8IFIFaOgDiZhzdn7D2LbU3V1jKEnv045CTiyjsUOI1iAoDWpN4v46Ry8RcvMLvddS6W4SB+UVKvwRrhwCZcXT+OoMYyt9PpaekIMuCx5nbXw19dnv7Lww8EfXLBQ+NbhRss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421566; c=relaxed/simple;
-	bh=LyhpGiE1d3gDrgYiviMOR0aUBTHHQWqdww2FmAJ9RE8=;
+	s=arc-20240116; t=1745421568; c=relaxed/simple;
+	bh=Fm0jhXmib3qO1+S1Ru5C9IBoXWaweqQNn+hDHhNQ9cU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ex8FBIEKNJw4aDVWuc8yfKWNP1jdC/lnO9cebybQ6FYpeQU1QPMqKWCd0YdfjLPft11SERIRcPWlHAygX4q2oXTJU0Gd86MzcqeNJ583Pkw2MkBHLEdIv7/CiGpj0WwBXt+EHMQRoAWYCUo+Blc7Wsub507lOL+KHftDl0j8ey0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqFWUSSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iIgumjVZL7RIiRsDxWGIkrIL2h6SLX6Y467gzsDWY0E99tzv9FJtxJ6S/t7+EeBYoCIIrqWxIRyRqbM92TIoRitOrdLAdyek62xp7d04Y88JJFWKlV7rsykl7PVJ862d0SNUUsFa5MhcrAXTzbOocrU1qvnfjaWSF161X8kqFgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5qMVGjy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqFWUSSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817B7C4CEE2;
-	Wed, 23 Apr 2025 15:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5qMVGjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E202C4CEE2;
+	Wed, 23 Apr 2025 15:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421565;
-	bh=LyhpGiE1d3gDrgYiviMOR0aUBTHHQWqdww2FmAJ9RE8=;
+	s=korg; t=1745421568;
+	bh=Fm0jhXmib3qO1+S1Ru5C9IBoXWaweqQNn+hDHhNQ9cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqFWUSSCbF1LxXnoghOgEnRPLEjJ803HtDZXNd/8tOP/yC63isWuCyXUrYkYCQc/h
-	 qZiEUKmwM+R6q9lVpxorhSnopV+L1ToaRUnIF4JlzYnSZC5E3arXe+o/g/6YcmeXeI
-	 iUohAZypWyTeFp2KFfPgZd41wVsXMwRWaJhXIpzE=
+	b=H5qMVGjyDVT1GDfwjrnby2Z251oONVunk28jITNl1gjXXw7ROHWxhbHxUs462+R8o
+	 JVMnSKsS2nURKC3LiWe1HdnJFVOEOl1/5K06hLnrDANeo/e9UB91QM9hSxLiIvvbfo
+	 c03F+AW3FEr13OTVjkD3JStBuAaaY1tgXzyUW6bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 194/393] mm/userfaultfd: fix release hang over concurrent GUP
-Date: Wed, 23 Apr 2025 16:41:30 +0200
-Message-ID: <20250423142651.401346991@linuxfoundation.org>
+	Matt Roper <matthew.d.roper@intel.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.14 206/241] drm/i915/xe2hpd: Identify the memory type for SKUs with GDDR + ECC
+Date: Wed, 23 Apr 2025 16:44:30 +0200
+Message-ID: <20250423142628.956945156@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,124 +48,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-commit fe4cdc2c4e248f48de23bc778870fd71e772a274 upstream.
+commit bc1feb8174b7e46c1806a6f684d89a47508f3a53 upstream.
 
-This patch should fix a possible userfaultfd release() hang during
-concurrent GUP.
+Some SKUs of Xe2_HPD platforms (such as BMG) have GDDR memory type
+with ECC enabled. We need to identify this scenario and add a new
+case in xelpdp_get_dram_info() to handle it. In addition, the
+derating value needs to be adjusted accordingly to compensate for
+the limited bandwidth.
 
-This problem was initially reported by Dimitris Siakavaras in July 2023
-[1] in a firecracker use case.  Firecracker has a separate process
-handling page faults remotely, and when the process releases the
-userfaultfd it can race with a concurrent GUP from KVM trying to fault in
-a guest page during the secondary MMU page fault process.
-
-A similar problem was reported recently again by Jinjiang Tu in March 2025
-[2], even though the race happened this time with a mlockall() operation,
-which does GUP in a similar fashion.
-
-In 2017, commit 656710a60e36 ("userfaultfd: non-cooperative: closing the
-uffd without triggering SIGBUS") was trying to fix this issue.  AFAIU,
-that fixes well the fault paths but may not work yet for GUP.  In GUP, the
-issue is NOPAGE will be almost treated the same as "page fault resolved"
-in faultin_page(), then the GUP will follow page again, seeing page
-missing, and it'll keep going into a live lock situation as reported.
-
-This change makes core mm return RETRY instead of NOPAGE for both the GUP
-and fault paths, proactively releasing the mmap read lock.  This should
-guarantee the other release thread make progress on taking the write lock
-and avoid the live lock even for GUP.
-
-When at it, rearrange the comments to make sure it's uptodate.
-
-[1] https://lore.kernel.org/r/79375b71-db2e-3e66-346b-254c90d915e2@cslab.ece.ntua.gr
-[2] https://lore.kernel.org/r/20250307072133.3522652-1-tujinjiang@huawei.com
-
-Link: https://lkml.kernel.org/r/20250312145131.1143062-1-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Dimitris Siakavaras <jimsiak@cslab.ece.ntua.gr>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Bspec: 64602
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Fixes: 3adcf970dc7e ("drm/xe/bmg: Drop force_probe requirement")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Acked-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250324-tip-v2-1-38397de319f8@intel.com
+(cherry picked from commit 327e30123cafcb45c0fc5843da0367b90332999d)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |   51 +++++++++++++++++++++++++--------------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/i915/display/intel_bw.c |   14 +++++++++++++-
+ drivers/gpu/drm/i915/i915_drv.h         |    1 +
+ drivers/gpu/drm/i915/soc/intel_dram.c   |    4 ++++
+ drivers/gpu/drm/xe/xe_device_types.h    |    1 +
+ 4 files changed, 19 insertions(+), 1 deletion(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -452,32 +452,6 @@ vm_fault_t handle_userfault(struct vm_fa
- 		goto out;
+--- a/drivers/gpu/drm/i915/display/intel_bw.c
++++ b/drivers/gpu/drm/i915/display/intel_bw.c
+@@ -244,6 +244,7 @@ static int icl_get_qgv_points(struct drm
+ 			qi->deinterleave = 4;
+ 			break;
+ 		case INTEL_DRAM_GDDR:
++		case INTEL_DRAM_GDDR_ECC:
+ 			qi->channel_width = 32;
+ 			break;
+ 		default:
+@@ -398,6 +399,12 @@ static const struct intel_sa_info xe2_hp
+ 	/* Other values not used by simplified algorithm */
+ };
  
- 	/*
--	 * If it's already released don't get it. This avoids to loop
--	 * in __get_user_pages if userfaultfd_release waits on the
--	 * caller of handle_userfault to release the mmap_lock.
--	 */
--	if (unlikely(READ_ONCE(ctx->released))) {
--		/*
--		 * Don't return VM_FAULT_SIGBUS in this case, so a non
--		 * cooperative manager can close the uffd after the
--		 * last UFFDIO_COPY, without risking to trigger an
--		 * involuntary SIGBUS if the process was starting the
--		 * userfaultfd while the userfaultfd was still armed
--		 * (but after the last UFFDIO_COPY). If the uffd
--		 * wasn't already closed when the userfault reached
--		 * this point, that would normally be solved by
--		 * userfaultfd_must_wait returning 'false'.
--		 *
--		 * If we were to return VM_FAULT_SIGBUS here, the non
--		 * cooperative manager would be instead forced to
--		 * always call UFFDIO_UNREGISTER before it can safely
--		 * close the uffd.
--		 */
--		ret = VM_FAULT_NOPAGE;
--		goto out;
--	}
--
--	/*
- 	 * Check that we can return VM_FAULT_RETRY.
- 	 *
- 	 * NOTE: it should become possible to return VM_FAULT_RETRY
-@@ -513,6 +487,31 @@ vm_fault_t handle_userfault(struct vm_fa
- 	if (vmf->flags & FAULT_FLAG_RETRY_NOWAIT)
- 		goto out;
- 
-+	if (unlikely(READ_ONCE(ctx->released))) {
-+		/*
-+		 * If a concurrent release is detected, do not return
-+		 * VM_FAULT_SIGBUS or VM_FAULT_NOPAGE, but instead always
-+		 * return VM_FAULT_RETRY with lock released proactively.
-+		 *
-+		 * If we were to return VM_FAULT_SIGBUS here, the non
-+		 * cooperative manager would be instead forced to
-+		 * always call UFFDIO_UNREGISTER before it can safely
-+		 * close the uffd, to avoid involuntary SIGBUS triggered.
-+		 *
-+		 * If we were to return VM_FAULT_NOPAGE, it would work for
-+		 * the fault path, in which the lock will be released
-+		 * later.  However for GUP, faultin_page() does nothing
-+		 * special on NOPAGE, so GUP would spin retrying without
-+		 * releasing the mmap read lock, causing possible livelock.
-+		 *
-+		 * Here only VM_FAULT_RETRY would make sure the mmap lock
-+		 * be released immediately, so that the thread concurrently
-+		 * releasing the userfault would always make progress.
-+		 */
-+		release_fault_lock(vmf);
-+		goto out;
-+	}
++static const struct intel_sa_info xe2_hpd_ecc_sa_info = {
++	.derating = 45,
++	.deprogbwlimit = 53,
++	/* Other values not used by simplified algorithm */
++};
 +
- 	/* take the reference before dropping the mmap_lock */
- 	userfaultfd_ctx_get(ctx);
+ static int icl_get_bw_info(struct drm_i915_private *dev_priv, const struct intel_sa_info *sa)
+ {
+ 	struct intel_qgv_info qi = {};
+@@ -740,10 +747,15 @@ static unsigned int icl_qgv_bw(struct dr
  
+ void intel_bw_init_hw(struct drm_i915_private *dev_priv)
+ {
++	const struct dram_info *dram_info = &dev_priv->dram_info;
++
+ 	if (!HAS_DISPLAY(dev_priv))
+ 		return;
+ 
+-	if (DISPLAY_VERx100(dev_priv) >= 1401 && IS_DGFX(dev_priv))
++	if (DISPLAY_VERx100(dev_priv) >= 1401 && IS_DGFX(dev_priv) &&
++		 dram_info->type == INTEL_DRAM_GDDR_ECC)
++		xe2_hpd_get_bw_info(dev_priv, &xe2_hpd_ecc_sa_info);
++	else if (DISPLAY_VERx100(dev_priv) >= 1401 && IS_DGFX(dev_priv))
+ 		xe2_hpd_get_bw_info(dev_priv, &xe2_hpd_sa_info);
+ 	else if (DISPLAY_VER(dev_priv) >= 14)
+ 		tgl_get_bw_info(dev_priv, &mtl_sa_info);
+--- a/drivers/gpu/drm/i915/i915_drv.h
++++ b/drivers/gpu/drm/i915/i915_drv.h
+@@ -306,6 +306,7 @@ struct drm_i915_private {
+ 			INTEL_DRAM_DDR5,
+ 			INTEL_DRAM_LPDDR5,
+ 			INTEL_DRAM_GDDR,
++			INTEL_DRAM_GDDR_ECC,
+ 		} type;
+ 		u8 num_qgv_points;
+ 		u8 num_psf_gv_points;
+--- a/drivers/gpu/drm/i915/soc/intel_dram.c
++++ b/drivers/gpu/drm/i915/soc/intel_dram.c
+@@ -687,6 +687,10 @@ static int xelpdp_get_dram_info(struct d
+ 		drm_WARN_ON(&i915->drm, !IS_DGFX(i915));
+ 		dram_info->type = INTEL_DRAM_GDDR;
+ 		break;
++	case 9:
++		drm_WARN_ON(&i915->drm, !IS_DGFX(i915));
++		dram_info->type = INTEL_DRAM_GDDR_ECC;
++		break;
+ 	default:
+ 		MISSING_CASE(val);
+ 		return -EINVAL;
+--- a/drivers/gpu/drm/xe/xe_device_types.h
++++ b/drivers/gpu/drm/xe/xe_device_types.h
+@@ -559,6 +559,7 @@ struct xe_device {
+ 			INTEL_DRAM_DDR5,
+ 			INTEL_DRAM_LPDDR5,
+ 			INTEL_DRAM_GDDR,
++			INTEL_DRAM_GDDR_ECC,
+ 		} type;
+ 		u8 num_qgv_points;
+ 		u8 num_psf_gv_points;
 
 
