@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BCE29CB3D;
-	Wed, 23 Apr 2025 15:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E8029CB3D;
+	Wed, 23 Apr 2025 15:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422023; cv=none; b=DDuwJvSlIHSPN0SuiWRHNTRM/GiKtdMg/rOPEsJoeb41MGC5lU6VG6R8BLUwg6IUjXCHTD3Lshd/THm/XQpDYA7sGcpiywr6QiDK2sd0km2p8yjEXhfqSTttLpZke3H5cHkwCpcV2RdBue+sbaarBQVFp4eJzDBq+ixJrrUWpzo=
+	t=1745422026; cv=none; b=YwGIos3ZNvFc4kDEN6ZXnTjEYDwwzaW+uuOKIAOZzHeiC1VLO5thjkzh7OzE7fU+8qStVXKGH73y8lJ+1S6H1VKn4opAKZDVDMMRrsjmB0U/hXEZmNH1Ge1Fzl2tTiSpR4SmG5SHourSyDXHyOegtQlBCKy097YGztM6d81hQOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422023; c=relaxed/simple;
-	bh=Aqbi9QN5w1isQ6dFpTYC0XeezC4qh69VbdKuGVX58SA=;
+	s=arc-20240116; t=1745422026; c=relaxed/simple;
+	bh=zjV5rZ0C6gr86CiJrRJq2mzkmoF63x3XDgrREQHw9Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWHBC6PCIdzJVsjVF1ui5SE0yafTcHEx89SJiuqLRg2aubUfOeR2aSpY6nkET7Vn1kH6q7GG6MePN4VMjKGgRrkyz2TVXBsVJ/vLvdLhq9Mpid+8hKg7NFQ8N2apdUzDNavrUYypYv4Th76JUmFi6tRrAh0mfgqWnEi9k5yInL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2HQ3Naq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kP6CeBdF0tgFAOACH3QCfmH0EMAtymZ6Q+q7vVZ97cbn7TvK+0NfcapYRgIpeEQr+rHoANBW8Nz7H0yQIAbZwh08f4tDq2hNmoEt11YdyNv3hdVhm4vIohUyM/UToF+gHIQLdGDfI1p8CFHM7NuTZjkB1Scp13UASMonbJ4FUeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJS/7sQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2HQ3Naq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B83BC4CEE8;
-	Wed, 23 Apr 2025 15:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJS/7sQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2B7C4CEEB;
+	Wed, 23 Apr 2025 15:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422023;
-	bh=Aqbi9QN5w1isQ6dFpTYC0XeezC4qh69VbdKuGVX58SA=;
+	s=korg; t=1745422026;
+	bh=zjV5rZ0C6gr86CiJrRJq2mzkmoF63x3XDgrREQHw9Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2HQ3NaqCOx/LctkwEsfitzKnXRasPvNP6zX6jwfnFt+Vjai4khnU2JFu24Q2+VjJ
-	 jaiESclC8UuKlPwCCKJ0H0khonqpk5NgBCZcFK3F0zTNhcjwWbX+j1lVokqy5PxCi1
-	 1A6mhXP2KNNtqW4Sfcojf8mIYIZ6zPo1cVD4HAQw=
+	b=CJS/7sQyiky7wm/afHQ+kb5Y/37i3I09xx8kLvBb+C1WGQARF+c/ExzZCej/qK8n3
+	 u8INqdoek54e/UO5Ju6ZrAHkL3wb2xCV2/auOpS07HPF6ZxKIIBuYJAc4i3XsD3QMu
+	 KPGpDkliP5UE7NtY5Hz3UNBVjESFHfdW00Lzg2IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 211/291] isofs: Prevent the use of too small fid
-Date: Wed, 23 Apr 2025 16:43:20 +0200
-Message-ID: <20250423142633.009390371@linuxfoundation.org>
+	Chunjie Zhu <chunjie.zhu@cloud.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 220/291] smb3 client: fix open hardlink on deferred close file error
+Date: Wed, 23 Apr 2025 16:43:29 +0200
+Message-ID: <20250423142633.394280386@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -51,95 +50,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Chunjie Zhu <chunjie.zhu@cloud.com>
 
-commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
+commit 262b73ef442e68e53220b9d6fc5a0d08b557fa42 upstream.
 
-syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
+The following Python script results in unexpected behaviour when run on
+a CIFS filesystem against a Windows Server:
 
-The handle_bytes value passed in by the reproducing program is equal to 12.
-In handle_to_path(), only 12 bytes of memory are allocated for the structure
-file_handle->f_handle member, which causes an out-of-bounds access when
-accessing the member parent_block of the structure isofs_fid in isofs,
-because accessing parent_block requires at least 16 bytes of f_handle.
-Here, fh_len is used to indirectly confirm that the value of handle_bytes
-is greater than 3 before accessing parent_block.
+    # Create file
+    fd = os.open('test', os.O_WRONLY|os.O_CREAT)
+    os.write(fd, b'foo')
+    os.close(fd)
 
-[1]
-BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
-Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
-CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0x198/0x550 mm/kasan/report.c:521
- kasan_report+0xd8/0x138 mm/kasan/report.c:634
- __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
- isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
- exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
- do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
- handle_to_path fs/fhandle.c:385 [inline]
- do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+    # Open and close the file to leave a pending deferred close
+    fd = os.open('test', os.O_RDONLY|os.O_DIRECT)
+    os.close(fd)
 
-Allocated by task 6466:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4294 [inline]
- __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
- kmalloc_noprof include/linux/slab.h:905 [inline]
- handle_to_path fs/fhandle.c:357 [inline]
- do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+    # Try to open the file via a hard link
+    os.link('test', 'new')
+    newfd = os.open('new', os.O_RDONLY|os.O_DIRECT)
 
-Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
-Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
+The final open returns EINVAL due to the server returning
+STATUS_INVALID_PARAMETER. The root cause of this is that the client
+caches lease keys per inode, but the spec requires them to be related to
+the filename which causes problems when hard links are involved:
+
+>From MS-SMB2 section 3.3.5.9.11:
+
+"The server MUST attempt to locate a Lease by performing a lookup in the
+LeaseTable.LeaseList using the LeaseKey in the
+SMB2_CREATE_REQUEST_LEASE_V2 as the lookup key. If a lease is found,
+Lease.FileDeleteOnClose is FALSE, and Lease.Filename does not match the
+file name for the incoming request, the request MUST be failed with
+STATUS_INVALID_PARAMETER"
+
+On client side, we first check the context of file open, if it hits above
+conditions, we first close all opening files which are belong to the same
+inode, then we do open the hard link file.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunjie Zhu <chunjie.zhu@cloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsproto.h |    2 ++
+ fs/smb/client/file.c      |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
- 		return NULL;
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -152,6 +152,8 @@ extern int cifs_get_writable_path(struct
+ extern struct cifsFileInfo *find_readable_file(struct cifsInodeInfo *, bool);
+ extern int cifs_get_readable_path(struct cifs_tcon *tcon, const char *name,
+ 				  struct cifsFileInfo **ret_file);
++extern int cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
++				  struct file *file);
+ extern unsigned int smbCalcSize(void *buf);
+ extern int decode_negTokenInit(unsigned char *security_blob, int length,
+ 			struct TCP_Server_Info *server);
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -687,6 +687,11 @@ int cifs_open(struct inode *inode, struc
+ 		} else {
+ 			_cifsFileInfo_put(cfile, true, false);
+ 		}
++	} else {
++		/* hard link on the defeered close file */
++		rc = cifs_get_hardlink_path(tcon, inode, file);
++		if (rc)
++			cifs_close_deferred_file(CIFS_I(inode));
+ 	}
  
- 	return isofs_export_iget(sb,
--			fh_len > 2 ? ifid->parent_block : 0,
-+			fh_len > 3 ? ifid->parent_block : 0,
- 			ifid->parent_offset,
- 			fh_len > 4 ? ifid->parent_generation : 0);
+ 	if (server->oplocks)
+@@ -1735,6 +1740,29 @@ cifs_move_llist(struct list_head *source
+ 		list_move(li, dest);
  }
+ 
++int
++cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
++				struct file *file)
++{
++	struct cifsFileInfo *open_file = NULL;
++	struct cifsInodeInfo *cinode = CIFS_I(inode);
++	int rc = 0;
++
++	spin_lock(&tcon->open_file_lock);
++	spin_lock(&cinode->open_file_lock);
++
++	list_for_each_entry(open_file, &cinode->openFileList, flist) {
++		if (file->f_flags == open_file->f_flags) {
++			rc = -EINVAL;
++			break;
++		}
++	}
++
++	spin_unlock(&cinode->open_file_lock);
++	spin_unlock(&tcon->open_file_lock);
++	return rc;
++}
++
+ void
+ cifs_free_llist(struct list_head *llist)
+ {
 
 
