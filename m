@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FC2280CE0;
-	Wed, 23 Apr 2025 15:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAA5283C81;
+	Wed, 23 Apr 2025 15:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420472; cv=none; b=gdCB0vUNyNZA2Nwk8TtpkrMFSe8ifzhpSPW23v0MMKhkBWNwI2YwdfrmeLoBrl/KFGj11u6d5wQavMiboXa3lPwnOEk9FGl0Wzg0nhH0aEBVr9rKnninDusrJMkWaW9hhWDKWCag7rSFkOtcyIpypXIiUNd0S+SecjsB84wHxXY=
+	t=1745420474; cv=none; b=UNUk9X2X8CiMxyUhFmQE10gEmB76h+7IMWWIlGhvavZ3qqDPTDsugeVKpvEpZ+6Q36pNaAb8DpSKZ7/S7IxCqoiWJS3BBpEYIDy5t1OxeFINm6t98V7jAfRL5hli9G038jCpLODM/CY20UpQQ60vt/RFKpG0zOt+FEmK70V6hEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420472; c=relaxed/simple;
-	bh=4uETPo3gOGrdzlm2skROmZw2vRj/oooqSGyvWrS/mF4=;
+	s=arc-20240116; t=1745420474; c=relaxed/simple;
+	bh=KSIbZKPc3SCj9Kni3nqpTZ7j/oixb7MFxA6sFWqR4WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cecjp3TvXS5+SY5P04tnDxNDtOkZZFn89JowUwPteqLeMFPcnV2KNQwVvfbo/Jj3isMz9Yf5eVZd8Fd3j/UmRPSU0x/n9IT6BT0Rb0kBTFoMFIgZCFS/tEJGZZEnnbCSwoxpCdeT/ll0l+GcgJ1FWhS+AP9Lz8FukSDDfj2hxv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zqt1W8z7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y028t0z5X0hb9dQaaM48Y4EzkU+b9JhSnNsE4oWMkDl1QQFlSqxhCERDL0DAdFRFXPf9c6Kuryjn711fyFmFe3As+ndJP1uOwgCr/pMNVVU2JWoRqYdcLpUp4ZFW5gquZsoJ1FvHczQi6Gekj62hiZArNybvRBQ85U/RsDz2dbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGf7JiIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zqt1W8z7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876B9C4CEE2;
-	Wed, 23 Apr 2025 15:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGf7JiIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5FEC4CEE3;
+	Wed, 23 Apr 2025 15:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420471;
-	bh=4uETPo3gOGrdzlm2skROmZw2vRj/oooqSGyvWrS/mF4=;
+	s=korg; t=1745420474;
+	bh=KSIbZKPc3SCj9Kni3nqpTZ7j/oixb7MFxA6sFWqR4WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zqt1W8z7fokmBk6hiiWTbnmB1YTE0w2qNKx3Jmt7VFb9+K5LXipJ48EfXRNvmUUWH
-	 UPykVeFahHNt4d4NW7z1/zlPVzzfDpGBftRO12H73NUk/qgsothT7byWsi7dHbaYZP
-	 LSV3MSggwvWbxH3Al46NwP5GXjMK4AKlVTlj+6gU=
+	b=mGf7JiIq8o54Qpi/1TDVbiy+l9WXsoKeG9bkzH0esciVnL0ayLC5uNQJzFlzgpH1X
+	 LwESW+8vp78RkSJ+huMXSjAhVHAi25vCxrwET1HLeGrPqGtMdnYxU+B8Ynx214gIFK
+	 YNbJ6Kix7Tt0Qp4IIq9QGb/sJGrpNLfnkrkWf4WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Birger Koblitz <mail@birger-koblitz.de>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/393] net: sfp: add quirk for 2.5G OEM BX SFP
-Date: Wed, 23 Apr 2025 16:39:33 +0200
-Message-ID: <20250423142646.484550602@linuxfoundation.org>
+Subject: [PATCH 6.1 050/291] tracing: fix return value in __ftrace_event_enable_disable for TRACE_REG_UNREGISTER
+Date: Wed, 23 Apr 2025 16:40:39 +0200
+Message-ID: <20250423142626.433965070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Birger Koblitz <mail@birger-koblitz.de>
+From: Gabriele Paoloni <gpaoloni@redhat.com>
 
-[ Upstream commit a85035561025063125f81090e4f2bd65da368c83 ]
+[ Upstream commit 0c588ac0ca6c22b774d9ad4a6594681fdfa57d9d ]
 
-The OEM SFP-2.5G-BX10-D/U SFP module pair is meant to operate with
-2500Base-X. However, in their EEPROM they incorrectly specify:
-Transceiver codes   : 0x00 0x12 0x00 0x00 0x12 0x00 0x01 0x05 0x00
-BR, Nominal         : 2500MBd
+When __ftrace_event_enable_disable invokes the class callback to
+unregister the event, the return value is not reported up to the
+caller, hence leading to event unregister failures being silently
+ignored.
 
-Use sfp_quirk_2500basex for this module to allow 2500Base-X mode anyway.
-Tested on BananaPi R3.
+This patch assigns the ret variable to the invocation of the
+event unregister callback, so that its return value is stored
+and reported to the caller, and it raises a warning in case
+of error.
 
-Signed-off-by: Birger Koblitz <mail@birger-koblitz.de>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/20250218-b4-lkmsub-v1-1-1e51dcabed90@birger-koblitz.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20250321170821.101403-1-gpaoloni@redhat.com
+Signed-off-by: Gabriele Paoloni <gpaoloni@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_events.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index e0e4a68cda3ea..dc62f141f4038 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -488,6 +488,8 @@ static const struct sfp_quirk sfp_quirks[] = {
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 94bb5f9251b13..ed0d0c8a2b4bb 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -776,7 +776,9 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
+ 				clear_bit(EVENT_FILE_FL_RECORDED_TGID_BIT, &file->flags);
+ 			}
  
- 	SFP_QUIRK_F("OEM", "SFP-10G-T", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_M("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
-+	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
-+	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
- 	SFP_QUIRK_F("OEM", "RTSFP-10", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("OEM", "RTSFP-10G", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("Turris", "RTSFP-10", sfp_fixup_rollball),
+-			call->class->reg(call, TRACE_REG_UNREGISTER, file);
++			ret = call->class->reg(call, TRACE_REG_UNREGISTER, file);
++
++			WARN_ON_ONCE(ret);
+ 		}
+ 		/* If in SOFT_MODE, just set the SOFT_DISABLE_BIT, else clear it */
+ 		if (file->flags & EVENT_FILE_FL_SOFT_MODE)
 -- 
 2.39.5
 
