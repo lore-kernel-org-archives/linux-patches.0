@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC21819DF4C;
-	Wed, 23 Apr 2025 14:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D921269B07;
+	Wed, 23 Apr 2025 14:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420261; cv=none; b=BLCc1fuyHysbQwuMeq1N+CcyJl736Az/AIj3sGK63OLrYBhBtW/3xoDHTXG7B8RMSxYyE07wjVQ95aEqUpnc7Bcp2rMMloLM25BHYeLIUNLao+QrXVtCgdTt2G0fXN+7/B91JalhGw6kFP90Ve8sQiBePrMe6SlYjCPwSCHsgLM=
+	t=1745420263; cv=none; b=kMhYXV2BJ9rHUxfzJskEe9naIL9wDQ/grEVibPyU9eEdT8wwC2N6OHcXntAo04PVOpG+IqxrpIRyYez5ZHdhRDjRW2jS3E6yxEt2LpGhrY5L2dDIR6+8eGayhWFymp0cPNWRu4pv0kCUjXkvJEVapjTnySzZRVhT6Vn7dgONPzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420261; c=relaxed/simple;
-	bh=xW2yKJU9Loqc4wDTgmoTNTXD4sZ1UA4uV+59ReUIzKk=;
+	s=arc-20240116; t=1745420263; c=relaxed/simple;
+	bh=axNaMpf0KKZvbhf309aZuAZOSchNI/tzL9GFhN/AAeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mKha6hXtjAOmz7nvhMcBN2hUiuzWa/aITDbjwO4qtWEpLAYG1bmV+D2te6qpG1nj8VKHJice18kZoBV6fSaHrWH4qhSOT9NVJAZ2EHYu2YySK0Cy0WtTJpeXTTS3qHtI4TCpz2uhntqLy+4q2hg8Q2xi5bgdMop9w42VsxD89P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtODlUck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jGlKWpvR+XOEeOu5LlvM5NWWdmoc4qxW1svpaWF3YiB7+8+onNhRVJIpH4XYnRu89t9AhNyv6OHfXHFjJjCuakbysWFkHDJHmU7WYBo7Vsf8kIe7VO5dGeUexo3FE33qeGruYLX1l8JJQZDaas2wxsxRgB3cIt9AOQHpVo5UdwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltoD0c04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtODlUck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBD6C4CEE2;
-	Wed, 23 Apr 2025 14:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltoD0c04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAE7C4CEE2;
+	Wed, 23 Apr 2025 14:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420260;
-	bh=xW2yKJU9Loqc4wDTgmoTNTXD4sZ1UA4uV+59ReUIzKk=;
+	s=korg; t=1745420263;
+	bh=axNaMpf0KKZvbhf309aZuAZOSchNI/tzL9GFhN/AAeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtODlUckolYDDCc6DmFB4rIDr/RQT2B8iX1ZBbqIv7d/iNQIBbPGQOq0TGrsCHx5h
-	 MgD5wrYPpd+WOywtV+z/j1Tp+JKse6xqNl+fe+uAzJouL5/yiHGkq3xxW5l7FVncJQ
-	 8yvh2rVsdG8fC6lCJFMdBqqGK3eTCSQjHE1H6cyw=
+	b=ltoD0c04LTJE8yRH3rybXJIE+A4p0KyTdo/Vln16GqMYwFUjNAFOufC2JeKv7aeZP
+	 AoCTEJWIvwOcydZ4G/3iP6ogVGT8jyXCPv7+/hK9A+WNN+HgD0aRa/umBikg0TPK9l
+	 zuryPU6h32gwgH006xjCKM2IxlWQRRTxznn+KWuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/393] HID: pidff: Add PERIODIC_SINE_ONLY quirk
-Date: Wed, 23 Apr 2025 16:39:12 +0200
-Message-ID: <20250423142645.614463707@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Subject: [PATCH 6.6 046/393] zstd: Increase DYNAMIC_BMI2 GCC version cutoff from 4.8 to 11.0 to work around compiler segfault
+Date: Wed, 23 Apr 2025 16:39:02 +0200
+Message-ID: <20250423142645.188625951@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -48,93 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Ingo Molnar <mingo@kernel.org>
 
-[ Upstream commit abdbf8764f4962af2a910abb3a213ecf304a73d3 ]
+[ Upstream commit 1400c87e6cac47eb243f260352c854474d9a9073 ]
 
-Some devices only support SINE periodic effect although they advertise
-support for all PERIODIC effect in their HID descriptor. Some just do
-nothing when trying to play such an effect (upload goes fine), some express
-undefined behavior like turning to one side.
+Due to pending percpu improvements in -next, GCC9 and GCC10 are
+crashing during the build with:
 
-This quirk forces all the periodic effects to be uploaded as SINE. This is
-acceptable as all these effects are similar in nature and are mostly used as
-rumble. SINE is the most popular with others seldom used (especially SAW_UP
-and SAW_DOWN).
+    lib/zstd/compress/huf_compress.c:1033:1: internal compiler error: Segmentation fault
+     1033 | {
+          | ^
+    Please submit a full bug report,
+    with preprocessed source if appropriate.
+    See <file:///usr/share/doc/gcc-9/README.Bugs> for instructions.
 
-Fixes periodic effects for PXN and LITE STAR wheels
+The DYNAMIC_BMI2 feature is a known-challenging feature of
+the ZSTD library, with an existing GCC quirk turning it off
+for GCC versions below 4.8.
 
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Increase the DYNAMIC_BMI2 version cutoff to GCC 11.0 - GCC 10.5
+is the last version known to crash.
+
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Debugged-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-universal-pidff.c | 15 ++++++++++-----
- drivers/hid/usbhid/hid-pidff.c    |  3 +++
- include/linux/hid.h               |  1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ lib/zstd/common/portability_macros.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
-index 55aad2e4ac1b8..7ef5ab9146b1c 100644
---- a/drivers/hid/hid-universal-pidff.c
-+++ b/drivers/hid/hid-universal-pidff.c
-@@ -168,11 +168,16 @@ static const struct hid_device_id universal_pidff_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_JOYSTICK), },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_RUDDER), },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_WHEEL) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V10) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE_2) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_LITE_STAR_GT987_FF) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V10),
-+		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12),
-+		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE),
-+		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE_2),
-+		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_LITE_STAR_GT987_FF),
-+		.driver_data = HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index a37cf852a2836..4c94d8cbac43a 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -637,6 +637,9 @@ static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
- 				return -EINVAL;
- 			}
- 
-+			if (pidff->quirks & HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY)
-+				type_id = PID_SINE;
-+
- 			error = pidff_request_effect_upload(pidff,
- 					pidff->type_id[type_id]);
- 			if (error)
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index e3a55fd4e9fc4..38e161a827bde 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1225,6 +1225,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
- #define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
- #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
- #define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
-+#define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
- 
- #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
+diff --git a/lib/zstd/common/portability_macros.h b/lib/zstd/common/portability_macros.h
+index 0e3b2c0a527db..0dde8bf56595e 100644
+--- a/lib/zstd/common/portability_macros.h
++++ b/lib/zstd/common/portability_macros.h
+@@ -55,7 +55,7 @@
+ #ifndef DYNAMIC_BMI2
+   #if ((defined(__clang__) && __has_attribute(__target__)) \
+       || (defined(__GNUC__) \
+-          && (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)))) \
++          && (__GNUC__ >= 11))) \
+       && (defined(__x86_64__) || defined(_M_X64)) \
+       && !defined(__BMI2__)
+   #  define DYNAMIC_BMI2 1
 -- 
 2.39.5
 
