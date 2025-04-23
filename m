@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5978527D76E;
-	Wed, 23 Apr 2025 14:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74472836A4;
+	Wed, 23 Apr 2025 14:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419892; cv=none; b=rxLQW+Rg1/WN2bu5+h1Bgsj2GPzuorCmXdM8Pl+mVSwifh/65xkWXE8UYJ1V+tds6QKKx6Kt/bSFhK8cC2Py0uMq9I8Ev9yq69jPktc7zulAV7VpF4aERKK5rkpHE40iAvzUEpOwrvmO2BdSAkKEnTQjJk+rDYITKr3EQJWbh0A=
+	t=1745419895; cv=none; b=FrUklyLWVDrjR8hSWjS/ksr4NHO/4QybLaYjG9ou0e3lngMpP0pRv/H9x+tGL3uxF0PGiehUL/qAovQZKqHgdwfoSOskpEr2Q9z7wmbQ2VxYbYErL6H418yFyHzwPTxueKxSLMc2/pC+rjOZpFlPK5fGczWNgmAI+TTWzOWgyUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419892; c=relaxed/simple;
-	bh=PHvSiq/0Bk2A0VHSNe3c+vUIhr09VnW57XidyaCDgr4=;
+	s=arc-20240116; t=1745419895; c=relaxed/simple;
+	bh=HMGjflM6JY/2cpOk8NwWWQXP+xcaAFpDX3i3PUjLUbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxUSPaXGWvykEFlQveCN1CuXX+Xrt5RnmvY52mABdCGnvgDkwnaH5PKfBHL3UbubiAiTATnh7fJeyvNSI6vIZthMRtC2z9OnqbqYElNb+4sVn9sBKRNHoQV4XTr4/cUf28Mf+nQekZ+F8h8nEciwLlEVHGpuIWT8UCk8kkavs7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPav4sMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gB9s7Je1lKnMTA0ZBwR6Zv0FBX0qG8lcVdPccVNBT3lgP3idbYy4ey7d122ak3/FQJRZEZs1Pz76x4vsObjivMEmzXnfRcjnrhbNWLKMmu6ErNEgsCfTCpnZsZjR1rcVIljFls0x5T+ZAvGPrFcppfKtmSQ8zsawLm1HJAFgjt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ax5sW8d2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPav4sMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D30C4CEE2;
-	Wed, 23 Apr 2025 14:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ax5sW8d2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC47C4CEE8;
+	Wed, 23 Apr 2025 14:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419892;
-	bh=PHvSiq/0Bk2A0VHSNe3c+vUIhr09VnW57XidyaCDgr4=;
+	s=korg; t=1745419894;
+	bh=HMGjflM6JY/2cpOk8NwWWQXP+xcaAFpDX3i3PUjLUbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPav4sMfpd5hiOE1PzEXZoO3RI1DSTFuCWVMIXaagifmzJVq9jFE/W5qroE1wS0t0
-	 NQQwoUT1ke3huJTbwRN40mZg9KbJ/frNZdvIkfJ1JKcwJPxw/OhpImTSiytiRPp6sl
-	 JywjqZREBp00z9xVzkoatSBcqw/gNrBPLVlJPL/A=
+	b=ax5sW8d2aszj4WYIxwjEi+/n/DObBqoJ2n4Xr37Qn+b3H/pdFmIoZC4YibspD0cq+
+	 4riKlM5PgqC1kTGqlXpxqbTs1lQU37b5j+RkmxqYxddJeR+ktP/ceMoy4NhZyGVwKf
+	 4j8qLjlzuUjCLxUWfx4CA/47cXSyz0RQqktCgxYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@mailbox.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/393] drm/tests: modeset: Fix drm_display_mode memory leak
-Date: Wed, 23 Apr 2025 16:38:33 +0200
-Message-ID: <20250423142643.979814998@linuxfoundation.org>
+Subject: [PATCH 6.6 008/393] tipc: fix memory leak in tipc_link_xmit
+Date: Wed, 23 Apr 2025 16:38:24 +0200
+Message-ID: <20250423142643.607741703@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -52,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit dacafdcc7789cfeb0f0552716db56f210238225d ]
+[ Upstream commit 69ae94725f4fc9e75219d2d69022029c5b24bc9a ]
 
-drm_mode_find_dmt() returns a drm_display_mode that needs to be
-destroyed later one. The drm_test_pick_cmdline_res_1920_1080_60() test
-never does however, which leads to a memory leak.
+In case the backlog transmit queue for system-importance messages is overloaded,
+tipc_link_xmit() returns -ENOBUFS but the skb list is not purged. This leads to
+memory leak and failure when a skb is allocated.
 
-Let's make sure it's freed.
+This commit fixes this issue by purging the skb list before tipc_link_xmit()
+returns.
 
-Reported-by: Philipp Stanner <phasta@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/a7655158a6367ac46194d57f4b7433ef0772a73e.camel@mailbox.org/
-Fixes: 8fc0380f6ba7 ("drm/client: Add some tests for drm_connector_pick_cmdline_mode()")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-2-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Fixes: 365ad353c256 ("tipc: reduce risk of user starvation during link congestion")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250403092431.514063-1-tung.quang.nguyen@est.tech
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_client_modeset_test.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/tipc/link.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/tests/drm_client_modeset_test.c b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-index 7516f6cb36e4e..3e9518d7b8b7e 100644
---- a/drivers/gpu/drm/tests/drm_client_modeset_test.c
-+++ b/drivers/gpu/drm/tests/drm_client_modeset_test.c
-@@ -95,6 +95,9 @@ static void drm_test_pick_cmdline_res_1920_1080_60(struct kunit *test)
- 	expected_mode = drm_mode_find_dmt(priv->drm, 1920, 1080, 60, false);
- 	KUNIT_ASSERT_NOT_NULL(test, expected_mode);
- 
-+	ret = drm_kunit_add_mode_destroy_action(test, expected_mode);
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	KUNIT_ASSERT_TRUE(test,
- 			  drm_mode_parse_command_line_for_connector(cmdline,
- 								    connector,
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index d0143823658d5..6c6d8546c5786 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -1068,6 +1068,7 @@ int tipc_link_xmit(struct tipc_link *l, struct sk_buff_head *list,
+ 	if (unlikely(l->backlog[imp].len >= l->backlog[imp].limit)) {
+ 		if (imp == TIPC_SYSTEM_IMPORTANCE) {
+ 			pr_warn("%s<%s>, link overflow", link_rst_msg, l->name);
++			__skb_queue_purge(list);
+ 			return -ENOBUFS;
+ 		}
+ 		rc = link_schedule_user(l, hdr);
 -- 
 2.39.5
 
