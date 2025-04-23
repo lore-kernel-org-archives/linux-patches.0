@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69473266F1E;
-	Wed, 23 Apr 2025 15:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B92266F1E;
+	Wed, 23 Apr 2025 15:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422216; cv=none; b=cqYELvPO5+posqB7tMzurEBHqsbd7uoa9UZaR1a8FcXSzBMVz2fSoCuP+qF1mJuX3a4zU3b/exnGGlTREoynXTUyzWutsU78zGiHuqxvgBuOa2qM8ffELW5K+IxNLhMAk5sE3ZGbECxyAMZjVD4JQ5w04ERXvF7ZqNmAQTx4TRs=
+	t=1745422220; cv=none; b=r4QdkC6EKo1Ql3ke0SQJo2z20xP80AA9MCaYEonRcChJp/5jv6IFj7vuGCrfaQPSYZzOvP5qnH3u65wfJpDKXN7qQoW7gJgwzwo7cy9vmHSLkRhTAl7I5RZHvj69vIdv3wvQbcWWVPdAJMI0xaC7XjHk+nrU7zxWI63jl7j9VFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422216; c=relaxed/simple;
-	bh=otv3cBRSA/znqyOXFOxDBG5W1Gq7+0XN9eG3yvpOrqI=;
+	s=arc-20240116; t=1745422220; c=relaxed/simple;
+	bh=y/sJc+yQfMtkLYyzdS7TSf6VPrAodI6yd5d3jqW+ZnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijSWz+BcqoFJoSj5i4Erph3fzl4lrFFgtPXb0R43xNew5cdIsbg33JogJ5pCj3ybI9fE7KrAA4iWGSg372uVH3FCGeXyQCprm8itEvVRQqyK2+p9bCH4vNG0FuKwdRUYZ8sOfhR/pb9lN9gUjn2GJS+b2EGzIev/fUoNvVyXx7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqmu6fhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9J2b07nkVsTte81g1b294pAoPKKP90TJDgtGK80+kg05xLo6BgoeKtMGUEs+JZDN4H/lQt9BhdTKVsQ0a9ZxBoQXY13YYHfLwikgPw64FMY8/a6b6m+XE953/FWUFIMuYyt04DpAMOZG4nNUkUz+kA4hGrCO6yDZ/Pg0lOseHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmt2S3Fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqmu6fhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEBFC4CEE2;
-	Wed, 23 Apr 2025 15:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmt2S3Fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95E5C4CEE3;
+	Wed, 23 Apr 2025 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422214;
-	bh=otv3cBRSA/znqyOXFOxDBG5W1Gq7+0XN9eG3yvpOrqI=;
+	s=korg; t=1745422220;
+	bh=y/sJc+yQfMtkLYyzdS7TSf6VPrAodI6yd5d3jqW+ZnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqmu6fhDUSyVuxv04/1dEwSK8wbKNhuLmS9kKUt3Lo5jSW2vAOaKDCgtFDGNtoKbH
-	 PzZQm5Yf9CI0iz+bRU95/Bt+dFFFTUYIx+yQg6FBBxevyLnq7Gi2h2LcC20wAlLx/j
-	 tH+aBZfqrFLX5Ljax2OSFfLdKGqfucbXkeYsoVzU=
+	b=nmt2S3Fu9G+u9Yiako3BKxlw5gDN+XIPUe9TLeEXTDuO4xtK1QEAdOQxDtXWtHab8
+	 7CTo0zoi7ADREvNkshW0scEnj4EZaVMT2wnl6pbJAx7SuHoUm4q+R6kiUR4McVMvWe
+	 EyR/u7lHYcu6aTzRdd+HYTuGUkwyNVnoX3cMcalw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 298/393] riscv: KGDB: Remove ".option norvc/.option rvc" for kgdb_compiled_break
-Date: Wed, 23 Apr 2025 16:43:14 +0200
-Message-ID: <20250423142655.650319876@linuxfoundation.org>
+Subject: [PATCH 6.6 299/393] cpufreq/sched: Fix the usage of CPUFREQ_NEED_UPDATE_LIMITS
+Date: Wed, 23 Apr 2025 16:43:15 +0200
+Message-ID: <20250423142655.689461340@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -54,61 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 550c2aa787d1b06efcb11de1877354502a1237f2 ]
+[ Upstream commit cfde542df7dd51d26cf667f4af497878ddffd85a ]
 
-[ Quoting Samuel Holland: ]
+Commit 8e461a1cb43d ("cpufreq: schedutil: Fix superfluous updates caused
+by need_freq_update") modified sugov_should_update_freq() to set the
+need_freq_update flag only for drivers with CPUFREQ_NEED_UPDATE_LIMITS
+set, but that flag generally needs to be set when the policy limits
+change because the driver callback may need to be invoked for the new
+limits to take effect.
 
-  This is a separate issue, but using ".option rvc" here is a bug.
-  It will unconditionally enable the C extension for the rest of
-  the file, even if the kernel is being built with CONFIG_RISCV_ISA_C=n.
+However, if the return value of cpufreq_driver_resolve_freq() after
+applying the new limits is still equal to the previously selected
+frequency, the driver callback needs to be invoked only in the case
+when CPUFREQ_NEED_UPDATE_LIMITS is set (which means that the driver
+specifically wants its callback to be invoked every time the policy
+limits change).
 
-[ Quoting Palmer Dabbelt: ]
+Update the code accordingly to avoid missing policy limits changes for
+drivers without CPUFREQ_NEED_UPDATE_LIMITS.
 
-  We're just looking at the address of kgdb_compiled_break, so it's
-  fine if it ends up as a c.ebreak.
-
-[ Quoting Alexandre Ghiti: ]
-
-  .option norvc is used to prevent the assembler from using compressed
-  instructions, but it's generally used when we need to ensure the
-  size of the instructions that are used, which is not the case here
-  as noted by Palmer since we only care about the address. So yes
-  it will work fine with C enabled :)
-
-So let's just remove them all.
-
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/mhng-69513841-5068-441d-be8f-2aeebdc56a08@palmer-ri-x1c9a/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/8B431C6A4626225C+20250411073222.56820-2-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 8e461a1cb43d ("cpufreq: schedutil: Fix superfluous updates caused by need_freq_update")
+Closes: https://lore.kernel.org/lkml/Z_Tlc6Qs-tYpxWYb@linaro.org/
+Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/3010358.e9J7NaK4W3@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/kgdb.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/sched/cpufreq_schedutil.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 5d1ce8dacaf58..9f3db3503dabd 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -257,9 +257,7 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- noinline void arch_kgdb_breakpoint(void)
- {
- 	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
-+	    "kgdb_compiled_break: ebreak\n");
- }
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index a49f136014ce6..259521b179aa1 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -83,7 +83,7 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
  
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
+ 	if (unlikely(sg_policy->limits_changed)) {
+ 		sg_policy->limits_changed = false;
+-		sg_policy->need_freq_update = cpufreq_driver_test_flags(CPUFREQ_NEED_UPDATE_LIMITS);
++		sg_policy->need_freq_update = true;
+ 		return true;
+ 	}
+ 
+@@ -95,10 +95,22 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
+ 				   unsigned int next_freq)
+ {
+-	if (sg_policy->need_freq_update)
++	if (sg_policy->need_freq_update) {
+ 		sg_policy->need_freq_update = false;
+-	else if (sg_policy->next_freq == next_freq)
++		/*
++		 * The policy limits have changed, but if the return value of
++		 * cpufreq_driver_resolve_freq() after applying the new limits
++		 * is still equal to the previously selected frequency, the
++		 * driver callback need not be invoked unless the driver
++		 * specifically wants that to happen on every update of the
++		 * policy limits.
++		 */
++		if (sg_policy->next_freq == next_freq &&
++		    !cpufreq_driver_test_flags(CPUFREQ_NEED_UPDATE_LIMITS))
++			return false;
++	} else if (sg_policy->next_freq == next_freq) {
+ 		return false;
++	}
+ 
+ 	sg_policy->next_freq = next_freq;
+ 	sg_policy->last_freq_update_time = time;
 -- 
 2.39.5
 
