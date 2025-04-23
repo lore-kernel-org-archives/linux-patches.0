@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0132281375;
-	Wed, 23 Apr 2025 14:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4125280CF6;
+	Wed, 23 Apr 2025 14:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419705; cv=none; b=OLKfkUz+4icgwML1kI+EPALI96xHgM+Z0WNnLzq4jSd7X6K9ZfvLo6k+rfJkiHCgzeIQBZXx/nDWNzdPq9cVCiFNjkJExAwpITGqPeLOYquNZevMUIajaXky7tRTvhi5DVUZkl4PKxDZTcFj/R08zCpNHrJ/xGYDoXQXuuxnt7g=
+	t=1745419708; cv=none; b=EnOQUBUQd0xrn/bgO+Z0H5K5o8xjsEXWUyeLNNll32OoxICMUm08El+jKDiJ55Lb+2e5IvvUrxTDVFzjv+rGqqIYGMu0nrFJqmI3IsIexQwSSA2vLuNMnsljMnCGcobXz5q8+3dNyrnQdhnGzDw8DgJRWmqy1lOytHe5FmfD95k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419705; c=relaxed/simple;
-	bh=W8l/Ytjc9E9+l2avAOghmqYU+SffGc9Ck/gAT2eOqKI=;
+	s=arc-20240116; t=1745419708; c=relaxed/simple;
+	bh=6XySZfHaMNW5XUp1TTt8p9B6xV/NwIMWNBYi6rsh2nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3zZIgJjb+Tl9DiM4KS/mExVFOmTF5Tsz5p/LCBDeyR3183CPSvJN/hoOWH9eWI8/bKA8ZwVNfuvrjvE3QRxCO2kM7YrPZyP6Tqn4PAUoMvfxhQpCYr8CB9hrEVOLstkOIGAUl1MVJXgzoj/FEp2dtcItYbgzoelzWXYRXrdPhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FixuVrhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXBTvFfjlCn2koyV/0fbF2rSUvMW/1Z6k4Ibo8vOdRxDVihKlbtDA76meuTonmvuz9zZ3L+7WIG2WHjQVycNcWkhZJyla06CR3ZDNVU62Lm/TZU2rALPakJzDfwkSajCZbkQtm0TP73Do2KmmoGj3UnFdq1n/2oZZ0ke2yL8hH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbJr7NGb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FixuVrhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD828C4CEE2;
-	Wed, 23 Apr 2025 14:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbJr7NGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78293C4CEE2;
+	Wed, 23 Apr 2025 14:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419705;
-	bh=W8l/Ytjc9E9+l2avAOghmqYU+SffGc9Ck/gAT2eOqKI=;
+	s=korg; t=1745419707;
+	bh=6XySZfHaMNW5XUp1TTt8p9B6xV/NwIMWNBYi6rsh2nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FixuVrhVQsHVPopZR4h/hZ9PWjnB35ZDL0PnJPraq1EMLb4LNOcwhhp4IMddwIChP
-	 FEfjnJVs24e95quecVzyV1nv814N0JYFCArTlIzGajkTGiKeqHE5wE13HD+XAlxc0J
-	 OuN+oQ3KMH0lfWyZIO0RhBwRtwlKsn/d7l3l2B8M=
+	b=AbJr7NGbmbAVYjd48LooHz4fVnculOHmvnyIbdua3SsGI87tR+lA57a3ZT35SBayI
+	 KcI4XRW1R/z8mNnqKhKZZKZREr+XicgGwhGGprHHxlsczYdYiHp+DHNdMMLJ4HXCtk
+	 dBDZJZJAKtQz6cO6DfqztwdR4tF5t/KD+52htQQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/223] ethtool: cmis_cdb: use correct rpl size in ethtool_cmis_module_poll()
-Date: Wed, 23 Apr 2025 16:41:55 +0200
-Message-ID: <20250423142618.881766286@linuxfoundation.org>
+Subject: [PATCH 6.14 013/241] crypto: tegra - Fix IV usage for AES ECB
+Date: Wed, 23 Apr 2025 16:41:17 +0200
+Message-ID: <20250423142621.062894755@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,73 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit f3fdd4fba16c74697d8bc730b82fb7c1eff7fab3 ]
+[ Upstream commit 1ddaff40c08abb926be5ba713c5efc412d0836c5 ]
 
-rpl is passed as a pointer to ethtool_cmis_module_poll(), so the correct
-size of rpl is sizeof(*rpl) which should be just 1 byte.  Using the
-pointer size instead can cause stack corruption:
+Modifying the crypto_request turns out to be not the right way to handle
+the stale value issue with the IV. Though the IV is not used for AES ECB,
+it eventually get used in algorithms like LRW in the next step after
+AES ECB encryption/decryption. Setting req->iv to NULL breaks the
+implementation of such algorithms. Hence modify only the local reqctx
+to check for IV.
 
-Kernel panic - not syncing: stack-protector: Kernel stack is corrupted in: ethtool_cmis_wait_for_cond+0xf4/0x100
-CPU: 72 UID: 0 PID: 4440 Comm: kworker/72:2 Kdump: loaded Tainted: G           OE      6.11.0 #24
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: Dell Inc. PowerEdge R760/04GWWM, BIOS 1.6.6 09/20/2023
-Workqueue: events module_flash_fw_work
-Call Trace:
- <TASK>
- panic+0x339/0x360
- ? ethtool_cmis_wait_for_cond+0xf4/0x100
- ? __pfx_status_success+0x10/0x10
- ? __pfx_status_fail+0x10/0x10
- __stack_chk_fail+0x10/0x10
- ethtool_cmis_wait_for_cond+0xf4/0x100
- ethtool_cmis_cdb_execute_cmd+0x1fc/0x330
- ? __pfx_status_fail+0x10/0x10
- cmis_cdb_module_features_get+0x6d/0xd0
- ethtool_cmis_cdb_init+0x8a/0xd0
- ethtool_cmis_fw_update+0x46/0x1d0
- module_flash_fw_work+0x17/0xa0
- process_one_work+0x179/0x390
- worker_thread+0x239/0x340
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xcc/0x100
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2d/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Fixes: a39c84d79625 ("ethtool: cmis_cdb: Add a layer for supporting CDB commands")
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250409173312.733012-1-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bde558220866 ("crypto: tegra - Set IV to NULL explicitly for AES ECB")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis_cdb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/tegra/tegra-se-aes.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
-index 4d55811479520..8bf99295bfbe9 100644
---- a/net/ethtool/cmis_cdb.c
-+++ b/net/ethtool/cmis_cdb.c
-@@ -346,7 +346,7 @@ ethtool_cmis_module_poll(struct net_device *dev,
- 	struct netlink_ext_ack extack = {};
- 	int err;
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index ca9d0cca1f748..0e07d0523291a 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -269,7 +269,7 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
+ 	unsigned int cmdlen, key1_id, key2_id;
+ 	int ret;
  
--	ethtool_cmis_page_init(&page_data, 0, offset, sizeof(rpl));
-+	ethtool_cmis_page_init(&page_data, 0, offset, sizeof(*rpl));
- 	page_data.data = (u8 *)rpl;
+-	rctx->iv = (u32 *)req->iv;
++	rctx->iv = (ctx->alg == SE_ALG_ECB) ? NULL : (u32 *)req->iv;
+ 	rctx->len = req->cryptlen;
+ 	key1_id = ctx->key1_id;
+ 	key2_id = ctx->key2_id;
+@@ -498,9 +498,6 @@ static int tegra_aes_crypt(struct skcipher_request *req, bool encrypt)
+ 	if (!req->cryptlen)
+ 		return 0;
  
- 	err = ops->get_module_eeprom_by_page(dev, &page_data, &extack);
+-	if (ctx->alg == SE_ALG_ECB)
+-		req->iv = NULL;
+-
+ 	rctx->encrypt = encrypt;
+ 
+ 	return crypto_transfer_skcipher_request_to_engine(ctx->se->engine, req);
 -- 
 2.39.5
 
