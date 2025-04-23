@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305DD2820DE;
-	Wed, 23 Apr 2025 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB915266B4B;
+	Wed, 23 Apr 2025 14:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420308; cv=none; b=Mp0CvbWaRxaetT55RQ7oRKIf81lPz9BAouYwOoq1gt5xZCSiUwUUtQnJZirNrQWeptnmSvxldbKXI27D0gAvQbYyfzhcGtKHhMUyxsYWnNBxyfMUUv3K6kmf+3YQYI6vqg1FJHk2Fw6HfMlWiOLR3hTXyF+drzgLpsfDOHTomYY=
+	t=1745420310; cv=none; b=hmbtaaR8TBDV9bEKBTbe1gVnezliMjtH0GPe36bjPkqPnps9ny9q41CyT12YyX5LyVro1xP/6gxORP6yUaZw2sPMUXkXoAVBVojseKQ5cD3Dkw0tUTHMPnZPZwKE620zCIiDZsIgCLuSUk98BYwmMCh/El/ja+mVyQwR6sO2Ah4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420308; c=relaxed/simple;
-	bh=QvtunvrmlwAuPml8K4ifvr9+G4QYDcWnMT+Wm1kCR3E=;
+	s=arc-20240116; t=1745420310; c=relaxed/simple;
+	bh=x5PRVn07n64MUNLdznUj5gQc8nUWubvmC2QuHsYjU4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7nUQBwHBimXfvZiJPl9CueX689Rfabql+DxgNaplc9rl25XTZZI0SRwmKcAogmUdgGI9EY23iie7dGB7+KkRAIMrRMP0S4GfB3BKD6iGxQDESOZWTKr/DiCDtwpDZV4u/WkA5pmz8FGlz+Vqm0Kjvuktuo6lo2prll4eoC6wRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXjCcWxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZaI01eE2S3ClSjrbzyDxtTPj0g4A286cevuRGWv6YaDC2aV1L7PjWSFvnedd3KCQDzhr3ZGIFNXdBVhsIlUU0u0Dnd6XOiNznQNzgyuJm9cIA9FFpMffpxkYQE0162yQL124qRnctDHqrZ7s5pi7iUDGrkhd2NW8DTUaEOC8yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVqGI0zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXjCcWxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DBFC4CEE2;
-	Wed, 23 Apr 2025 14:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVqGI0zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7CDC4CEE2;
+	Wed, 23 Apr 2025 14:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420308;
-	bh=QvtunvrmlwAuPml8K4ifvr9+G4QYDcWnMT+Wm1kCR3E=;
+	s=korg; t=1745420310;
+	bh=x5PRVn07n64MUNLdznUj5gQc8nUWubvmC2QuHsYjU4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXjCcWxEhZRTNXEECD5fuhlxiuCXTY53GstrcztkSAGwL8hQwWc2kypHiFMLl63vm
-	 qiBREj8PLnpAzTdQ3PlvAyeh8k30eEu8HWZ/yxjFTHlKATz6VkLcaHcLvJ0iJpsiE8
-	 nmBWn5Em/b4GKp9FrSOj/W6qvFk2E23HgPCOSBGo=
+	b=DVqGI0zzLVzwxz1qlqsPPKK/SJG7C7UjQB9PFplCMY4DME3UAeR+UbkJObBpvGZsk
+	 6RPkX2v/23hU5iciNszCrK79bdMX4IPVdtx0bpJIHVDYrM/wJ2u4PtsqASfW/0Jl8p
+	 mjVQncazK6xb1lJOGQMxCWTOpSEekIawalPKrIp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/393] ASoC: fsl_audmix: register card device depends on dais property
-Date: Wed, 23 Apr 2025 16:39:16 +0200
-Message-ID: <20250423142645.781109896@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 118/223] mm/gup: fix wrongly calculated returned value in fault_in_safe_writeable()
+Date: Wed, 23 Apr 2025 16:43:10 +0200
+Message-ID: <20250423142621.918473291@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +50,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit 294a60e5e9830045c161181286d44ce669f88833 ]
+commit 8c03ebd7cdc06bd0d2fecb4d1a609ef1dbb7d0aa upstream.
 
-In order to make the audmix device linked by audio graph card, make
-'dais' property to be optional.
+Not like fault_in_readable() or fault_in_writeable(), in
+fault_in_safe_writeable() local variable 'start' is increased page by page
+to loop till the whole address range is handled.  However, it mistakenly
+calculates the size of the handled range with 'uaddr - start'.
 
-If 'dais' property exists, then register the imx-audmix card driver.
-otherwise, it should be linked by audio graph card.
+Fix it here.
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250226100508.2352568-5-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Andreas said:
+
+: In gfs2, fault_in_iov_iter_writeable() is used in
+: gfs2_file_direct_read() and gfs2_file_read_iter(), so this potentially
+: affects buffered as well as direct reads.  This bug could cause those
+: gfs2 functions to spin in a loop.
+
+Link: https://lkml.kernel.org/r/20250410035717.473207-1-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20250410035717.473207-2-bhe@redhat.com
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Fixes: fe673d3f5bf1 ("mm: gup: make fault_in_safe_writeable() use fixup_user_fault()")
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Yanjun.Zhu <yanjun.zhu@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_audmix.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ mm/gup.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
-index 0ab2c19621175..d8e44470f501e 100644
---- a/sound/soc/fsl/fsl_audmix.c
-+++ b/sound/soc/fsl/fsl_audmix.c
-@@ -492,11 +492,17 @@ static int fsl_audmix_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
- 	}
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2213,8 +2213,8 @@ size_t fault_in_safe_writeable(const cha
+ 	} while (start != end);
+ 	mmap_read_unlock(mm);
  
--	priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
--	if (IS_ERR(priv->pdev)) {
--		ret = PTR_ERR(priv->pdev);
--		dev_err(dev, "failed to register platform: %d\n", ret);
--		goto err_disable_pm;
-+	/*
-+	 * If dais property exist, then register the imx-audmix card driver.
-+	 * otherwise, it should be linked by audio graph card.
-+	 */
-+	if (of_find_property(pdev->dev.of_node, "dais", NULL)) {
-+		priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
-+		if (IS_ERR(priv->pdev)) {
-+			ret = PTR_ERR(priv->pdev);
-+			dev_err(dev, "failed to register platform: %d\n", ret);
-+			goto err_disable_pm;
-+		}
- 	}
- 
+-	if (size > (unsigned long)uaddr - start)
+-		return size - ((unsigned long)uaddr - start);
++	if (size > start - (unsigned long)uaddr)
++		return size - (start - (unsigned long)uaddr);
  	return 0;
--- 
-2.39.5
-
+ }
+ EXPORT_SYMBOL(fault_in_safe_writeable);
 
 
