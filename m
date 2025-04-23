@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25E22918CE;
-	Wed, 23 Apr 2025 15:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB3928D83D;
+	Wed, 23 Apr 2025 15:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422063; cv=none; b=IXVw6pYhINdKE4FrNDLnw6cOU/yuxOkRCsLY8rsEclsHrXDD+KUjdYJJ1I/Bh12SA6qKMa6rzmiZD7DWvDd71k2toR3FDEQV4CzKYZkCBagWCZfhOYzCc7wRhaBlw6FA/3yd+2gwOW34TQD1L2pDMPvw5Ilq9HBdvmkx8n/FWw8=
+	t=1745422067; cv=none; b=nDsTXoHrCqR0ajrQm4vbqt/WX5924x/PqAtD4uyhAgoEyXgsN59f6cS2TPh0tJy8Iawrqi5JivIJGGeTh4JWcjTsf7BBQxhxAi/PMr8a8O96fCWnEdbjvARwTuagkambvAH/uGwErfzH+8Y0JtXuoiTw982Geyy66txGhyzi+YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422063; c=relaxed/simple;
-	bh=jx7nKo2v7Q4mHjBec5nf73HmK37Gj7u95S6uF5FDfMg=;
+	s=arc-20240116; t=1745422067; c=relaxed/simple;
+	bh=VdJo9PwceBR5kFw5XlHGWjHTNWneS1Jjuj9Y6vDHP5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8YKQiVKYrZpH3pPUTe4385c+sUO5IFbNvRpqmpPlSJj12bkSLPfyr8FTIuNhPLbw3s6j/SYNWQz9ZDZRzYu+KIeMJ3T/3aupCiVJYUPTUogAFO41ycLSprMgYfBc9Lw2qIEJyzoruat4tRafjFGgbIdlc0oIam+/8zuw9ktEXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLQeFvT7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0gquNCVlnbTNFDtPqhTK6AvdKIZGZJSt9GfKkkG5upJ+4HN8l2XshTSyFO5fS9rIupscPtywFyyaHo7cD/fvAGgvBDJt3SW4WQpltZJH0i8P7Urec/ns9a9OTJbvXoJN1+9tHIvednTKX+lAViW1cIg0U3loohHvJ2cs2mgOqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyBmb3Sf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLQeFvT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822DFC4CEE2;
-	Wed, 23 Apr 2025 15:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyBmb3Sf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECF4C4CEE2;
+	Wed, 23 Apr 2025 15:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422062;
-	bh=jx7nKo2v7Q4mHjBec5nf73HmK37Gj7u95S6uF5FDfMg=;
+	s=korg; t=1745422065;
+	bh=VdJo9PwceBR5kFw5XlHGWjHTNWneS1Jjuj9Y6vDHP5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLQeFvT76SuM6wMtwmMOj+mICxxrstKlYNqbtYZNLW6Tes5r1GRaaxgP0sCdgC/cU
-	 35bdBqyth2tFLTOoJZ/bireTA0zB5a8gfgDD1I2rcDwX5Am/DLImkuXqPuNtC9X3BZ
-	 EgJKB/h9s57qpkrNwr7b5CQBXmsbSc0t0VJjK5KE=
+	b=jyBmb3Sf1DZRvGoldBlTeSdIzC5OhZpUNywbrveCQ4A43XRAbSfNCkCzAZT5kS0IP
+	 ML1sWRmcY6yRCMme8w7dAbX4Am51hTUD4TJ3yj3TVveoD7YgR8k3JKTfIh9/kb6FnX
+	 7t0E7ZygyGoldjTyQs2c7e0Weh8GEQmV5XmRZosk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 271/393] net: ethernet: ti: am65-cpsw-nuss: rename phy_node -> port_np
-Date: Wed, 23 Apr 2025 16:42:47 +0200
-Message-ID: <20250423142654.552452012@linuxfoundation.org>
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 227/291] perf/x86/intel: Allow to update user space GPRs from PEBS records
+Date: Wed, 23 Apr 2025 16:43:36 +0200
+Message-ID: <20250423142633.703144414@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 78269025e192ec8122ddd87a1ec2805598d8a1ab ]
+commit 71dcc11c2cd9e434c34a63154ecadca21c135ddd upstream.
 
-Rename phy_node to port_np to better reflect what it actually is,
-because the new phylink API takes netdev node (or DSA port node),
-and resolves the phandle internally.
+Currently when a user samples user space GPRs (--user-regs option) with
+PEBS, the user space GPRs actually always come from software PMI
+instead of from PEBS hardware. This leads to the sampled GPRs to
+possibly be inaccurate for single PEBS record case because of the
+skid between counter overflow and GPRs sampling on PMI.
 
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20240528075954.3608118-2-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 903d2b9f9efc ("net: ethernet: ti: am65-cpsw: fix port_np reference counting")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For the large PEBS case, it is even worse. If user sets the
+exclude_kernel attribute, large PEBS would be used to sample user space
+GPRs, but since PEBS GPRs group is not really enabled, it leads to all
+samples in the large PEBS record to share the same piece of user space
+GPRs, like this reproducer shows:
+
+  $ perf record -e branches:pu --user-regs=ip,ax -c 100000 ./foo
+  $ perf report -D | grep "AX"
+
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+
+So enable GPRs group for user space GPRs sampling and prioritize reading
+GPRs from PEBS. If the PEBS sampled GPRs is not user space GPRs (single
+PEBS record case), perf_sample_regs_user() modifies them to user space
+GPRs.
+
+[ mingo: Clarified the changelog. ]
+
+Fixes: c22497f5838c ("perf/x86/intel: Support adaptive PEBS v4")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250415104135.318169-2-dapeng1.mi@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 6 +++---
- drivers/net/ethernet/ti/am65-cpsw-nuss.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/events/intel/ds.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 8ffc1fbb036f9..dbca0b2889bc5 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -626,7 +626,7 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
- 	/* mac_sl should be configured via phy-link interface */
- 	am65_cpsw_sl_ctl_reset(port);
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -1149,8 +1149,10 @@ static u64 pebs_update_adaptive_cfg(stru
+ 	 * + precise_ip < 2 for the non event IP
+ 	 * + For RTM TSX weight we need GPRs for the abort code.
+ 	 */
+-	gprs = (sample_type & PERF_SAMPLE_REGS_INTR) &&
+-	       (attr->sample_regs_intr & PEBS_GP_REGS);
++	gprs = ((sample_type & PERF_SAMPLE_REGS_INTR) &&
++		(attr->sample_regs_intr & PEBS_GP_REGS)) ||
++	       ((sample_type & PERF_SAMPLE_REGS_USER) &&
++		(attr->sample_regs_user & PEBS_GP_REGS));
  
--	ret = phylink_of_phy_connect(port->slave.phylink, port->slave.phy_node, 0);
-+	ret = phylink_of_phy_connect(port->slave.phylink, port->slave.port_np, 0);
- 	if (ret)
- 		goto error_cleanup;
+ 	tsx_weight = (sample_type & PERF_SAMPLE_WEIGHT_TYPE) &&
+ 		     ((attr->config & INTEL_ARCH_EVENT_MASK) ==
+@@ -1792,7 +1794,7 @@ static void setup_pebs_adaptive_sample_d
+ 			regs->flags &= ~PERF_EFLAGS_EXACT;
+ 		}
  
-@@ -2076,7 +2076,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 				of_property_read_bool(port_np, "ti,mac-only");
- 
- 		/* get phy/link info */
--		port->slave.phy_node = port_np;
-+		port->slave.port_np = port_np;
- 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
- 		if (ret) {
- 			dev_err(dev, "%pOF read phy-mode err %d\n",
-@@ -2217,7 +2217,7 @@ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+-		if (sample_type & PERF_SAMPLE_REGS_INTR)
++		if (sample_type & (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER))
+ 			adaptive_pebs_save_regs(regs, gprs);
  	}
  
- 	phylink = phylink_create(&port->slave.phylink_config,
--				 of_node_to_fwnode(port->slave.phy_node),
-+				 of_node_to_fwnode(port->slave.port_np),
- 				 port->slave.phy_if,
- 				 &am65_cpsw_phylink_mac_ops);
- 	if (IS_ERR(phylink))
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.h b/drivers/net/ethernet/ti/am65-cpsw-nuss.h
-index f3dad2ab9828b..f107198e25721 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.h
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.h
-@@ -29,7 +29,7 @@ struct am65_cpts;
- struct am65_cpsw_slave_data {
- 	bool				mac_only;
- 	struct cpsw_sl			*mac_sl;
--	struct device_node		*phy_node;
-+	struct device_node		*port_np;
- 	phy_interface_t			phy_if;
- 	struct phy			*ifphy;
- 	struct phy			*serdes_phy;
--- 
-2.39.5
-
 
 
