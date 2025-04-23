@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8CB296163;
-	Wed, 23 Apr 2025 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA52519E966;
+	Wed, 23 Apr 2025 15:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421089; cv=none; b=MN2k1M3UsVgoxSZYDVLLzb2pG2weXOvKVj6+OtZgsC3SKRmoZswCKfK1iAXDb6pSCxUsyVne9aFvLfLmMDom4pYYfRyPq2+WhGNOlSxspA3AvptoRmmhS21GqeWMw/CinaLh3kXeVSnX8mOLHgp7eQ8vaPpeupaqfsLCyVv0YME=
+	t=1745421091; cv=none; b=QQiIx/JVJkqwCBi8LBuP3pPfGy/IOwZEdtDK8Xei/dCN0Yp7/oyL5lqlqijTLEg8elSPqhKLmOMgrx5lYEF/207/PTS57K6FWwqHvbCRs+O2Nz1wWsZz1/bWoSiONXZw79hRpnBM4TUEgxpH9FUFC+ArIpibJGl5L7nRLamxmls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421089; c=relaxed/simple;
-	bh=WGgF7U+MoNCdiDbz2mFRXoGg3a6aPY/7mtBwPLELo6U=;
+	s=arc-20240116; t=1745421091; c=relaxed/simple;
+	bh=y3L0iDXdc1Yz0P2d/jW9n0mKkw+vgD7SHC3fgsQNkYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXT+RuTKUOnpBba1wpYUZxJXrOIt6Zg81xKqBI9XoFNHu9/mMxL0j55AYmt+F46RmiXlIkbJivApjJw1gSUsQoiQCJ6EphFd11Swfr6PvrRXjAvWIG0Syxo/EHXwMZduTxvNTZ8bxwvjmXIVmFHQ8JiUm04OVeKxzfFZqJYyxgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzjDyvVg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/BL5iOGAIsWQQ2Iyl1FP9HXBLl4vEIDE8cLiqpt/CChZzpk3jTT6xycsEbGtteRyBSGxSuY5H4ojFDUtVLqxJOiIpS52DiFfzRAU7eRGQNVuODkgZAlVUkdKyWKSSp1u1AsaFZ7baNzaoaOhjQ/kEHJyDTuhEDYPGFP0vQFBZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZYn9l1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzjDyvVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F84C4CEE3;
-	Wed, 23 Apr 2025 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZYn9l1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E16AC4CEE2;
+	Wed, 23 Apr 2025 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421089;
-	bh=WGgF7U+MoNCdiDbz2mFRXoGg3a6aPY/7mtBwPLELo6U=;
+	s=korg; t=1745421091;
+	bh=y3L0iDXdc1Yz0P2d/jW9n0mKkw+vgD7SHC3fgsQNkYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzjDyvVgL3xuHK9SfhGtnUH7MSkwI3LNmdH+XOp63so/nBUsxMTejNtq00rrcwhT+
-	 R1bW0eMVs467PFJEZgWmU8iw1gRZj2XWNNlsTUiVsADMs16iKKMPgoptphkwIMXLkO
-	 25CxFdVU2WDJfPxL4Nd94zXBl+tBZ+DuVQKIJvEg=
+	b=JZYn9l1YhvFX6kHncdRSLqHt3EipCjDk2jTeeiIoAtCFLUFPXEXEXJKq3dTpvKqTQ
+	 IvJyGS81C0hjkGU6HV4xKYhJ7HnOlyrdIVnleOYaCcX0fFZUqtM3f0J2sNdHBC84nO
+	 PxyFatYOoVAs0F2uewZIJ3PZlzLCjAvBvL5nrBgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 107/291] wifi: mac80211: fix integer overflow in hwmp_route_info_get()
-Date: Wed, 23 Apr 2025 16:41:36 +0200
-Message-ID: <20250423142628.742537833@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 151/241] selftests/mm: generate a temporary mountpoint for cgroup filesystem
+Date: Wed, 23 Apr 2025 16:43:35 +0200
+Message-ID: <20250423142626.713189737@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,67 +50,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Mark Brown <broonie@kernel.org>
 
-commit d00c0c4105e5ab8a6a13ed23d701cceb285761fa upstream.
+commit 9c02223e2d9df5cb37c51aedb78f3960294e09b5 upstream.
 
-Since the new_metric and last_hop_metric variables can reach
-the MAX_METRIC(0xffffffff) value, an integer overflow may occur
-when multiplying them by 10/9. It can lead to incorrect behavior.
+Currently if the filesystem for the cgroups version it wants to use is not
+mounted charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh tests
+will attempt to mount it on the hard coded path /dev/cgroup/memory,
+deleting that directory when the test finishes.  This will fail if there
+is not a preexisting directory at that path, and since the directory is
+deleted subsequent runs of the test will fail.  Instead of relying on this
+hard coded directory name use mktemp to generate a temporary directory to
+use as a mountpoint, fixing both the assumption and the disruption caused
+by deleting a preexisting directory.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+This means that if the relevant cgroup filesystem is not already mounted
+then we rely on having coreutils (which provides mktemp) installed.  I
+suspect that many current users are relying on having things automounted
+by default, and given that the script relies on bash it's probably not an
+unreasonable requirement.
 
-Fixes: a8d418d9ac25 ("mac80211: mesh: only switch path when new metric is at least 10% better")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Link: https://patch.msgid.link/20250212082124.4078236-1-Ilia.Gavrilov@infotecs.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lkml.kernel.org/r/20250404-kselftest-mm-cgroup2-detection-v1-1-3dba6d32ba8c@kernel.org
+Fixes: 209376ed2a84 ("selftests/vm: make charge_reserved_hugetlb.sh work with existing cgroup setting")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Aishwarya TCV <aishwarya.tcv@arm.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_hwmp.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh  |    4 ++--
+ tools/testing/selftests/mm/hugetlb_reparenting_test.sh |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -365,6 +365,12 @@ u32 airtime_link_metric_get(struct ieee8
- 	return (u32)result;
- }
- 
-+/* Check that the first metric is at least 10% better than the second one */
-+static bool is_metric_better(u32 x, u32 y)
-+{
-+	return (x < y) && (x < (y - x / 10));
-+}
-+
- /**
-  * hwmp_route_info_get - Update routing info to originator and transmitter
-  *
-@@ -455,8 +461,8 @@ static u32 hwmp_route_info_get(struct ie
- 				    (mpath->sn == orig_sn &&
- 				     (rcu_access_pointer(mpath->next_hop) !=
- 						      sta ?
--					      mult_frac(new_metric, 10, 9) :
--					      new_metric) >= mpath->metric)) {
-+					      !is_metric_better(new_metric, mpath->metric) :
-+					      new_metric >= mpath->metric))) {
- 					process = false;
- 					fresh_info = false;
- 				}
-@@ -526,8 +532,8 @@ static u32 hwmp_route_info_get(struct ie
- 			if ((mpath->flags & MESH_PATH_FIXED) ||
- 			    ((mpath->flags & MESH_PATH_ACTIVE) &&
- 			     ((rcu_access_pointer(mpath->next_hop) != sta ?
--				       mult_frac(last_hop_metric, 10, 9) :
--				       last_hop_metric) > mpath->metric)))
-+				      !is_metric_better(last_hop_metric, mpath->metric) :
-+				       last_hop_metric > mpath->metric))))
- 				fresh_info = false;
- 		} else {
- 			mpath = mesh_path_add(sdata, ta);
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -29,7 +29,7 @@ fi
+ if [[ $cgroup2 ]]; then
+   cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+-    cgroup_path=/dev/cgroup/memory
++    cgroup_path=$(mktemp -d)
+     mount -t cgroup2 none $cgroup_path
+     do_umount=1
+   fi
+@@ -37,7 +37,7 @@ if [[ $cgroup2 ]]; then
+ else
+   cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+-    cgroup_path=/dev/cgroup/memory
++    cgroup_path=$(mktemp -d)
+     mount -t cgroup memory,hugetlb $cgroup_path
+     do_umount=1
+   fi
+--- a/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
++++ b/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
+@@ -23,7 +23,7 @@ fi
+ if [[ $cgroup2 ]]; then
+   CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+-    CGROUP_ROOT=/dev/cgroup/memory
++    CGROUP_ROOT=$(mktemp -d)
+     mount -t cgroup2 none $CGROUP_ROOT
+     do_umount=1
+   fi
 
 
