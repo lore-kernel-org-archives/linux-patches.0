@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D921269B07;
-	Wed, 23 Apr 2025 14:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC127FD5B;
+	Wed, 23 Apr 2025 14:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420263; cv=none; b=kMhYXV2BJ9rHUxfzJskEe9naIL9wDQ/grEVibPyU9eEdT8wwC2N6OHcXntAo04PVOpG+IqxrpIRyYez5ZHdhRDjRW2jS3E6yxEt2LpGhrY5L2dDIR6+8eGayhWFymp0cPNWRu4pv0kCUjXkvJEVapjTnySzZRVhT6Vn7dgONPzo=
+	t=1745420266; cv=none; b=F8OhUcUOJMpn4RV3uPjT4CtwormAS7LXq5WHzyzObj+MTYPoZlgPJRRdmz5g2YB3OTVTT9OSCr+RAKVFsIjwwhWK+gmbLUati27OSSj/xaPikupvgWF4l0iHeFzFSC/NUOOqFufbRSJD8m/QCZCajX8Qu5OMVUUO6IbG/czlydI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420263; c=relaxed/simple;
-	bh=axNaMpf0KKZvbhf309aZuAZOSchNI/tzL9GFhN/AAeM=;
+	s=arc-20240116; t=1745420266; c=relaxed/simple;
+	bh=Yo832697sqJs7kWAxwSRpFTENjg5Xtc89s/7CqvYR5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGlKWpvR+XOEeOu5LlvM5NWWdmoc4qxW1svpaWF3YiB7+8+onNhRVJIpH4XYnRu89t9AhNyv6OHfXHFjJjCuakbysWFkHDJHmU7WYBo7Vsf8kIe7VO5dGeUexo3FE33qeGruYLX1l8JJQZDaas2wxsxRgB3cIt9AOQHpVo5UdwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltoD0c04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2hBvXLNcneIllIZicpcRkmtCR8D7Zl4qDUseyckjwks1Tl/OLE3docmhnAxwLSl4gz2Cx0j3L+CX1eiiWZ8RKC838PVubgJPZwIe0yNQCol8lZlYfC2tv37c9u4MAYYUUdLb6RjY/Xb7faiBWXrQ4ViEY64RE2FsKxyoMWCAFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT/z4Fsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltoD0c04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAE7C4CEE2;
-	Wed, 23 Apr 2025 14:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT/z4Fsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74F2C4CEE3;
+	Wed, 23 Apr 2025 14:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420263;
-	bh=axNaMpf0KKZvbhf309aZuAZOSchNI/tzL9GFhN/AAeM=;
+	s=korg; t=1745420266;
+	bh=Yo832697sqJs7kWAxwSRpFTENjg5Xtc89s/7CqvYR5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltoD0c04LTJE8yRH3rybXJIE+A4p0KyTdo/Vln16GqMYwFUjNAFOufC2JeKv7aeZP
-	 AoCTEJWIvwOcydZ4G/3iP6ogVGT8jyXCPv7+/hK9A+WNN+HgD0aRa/umBikg0TPK9l
-	 zuryPU6h32gwgH006xjCKM2IxlWQRRTxznn+KWuM=
+	b=WT/z4Fsc17XIvtKnxUTlp4Mz6i7Pvc7R3J5QZ2ZoeqdolMCQoD8WRsfzfC4HJn7en
+	 ++wNEqtwzWr7xfPAf3ZHuYTHunNLBcuHqDStxMJbEGck66u/oc0MxGMPuEknBilWcl
+	 FVrzYej4c9jVQCorUXtv8ns7PuD7BWOmkJksgOmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
-Subject: [PATCH 6.6 046/393] zstd: Increase DYNAMIC_BMI2 GCC version cutoff from 4.8 to 11.0 to work around compiler segfault
-Date: Wed, 23 Apr 2025 16:39:02 +0200
-Message-ID: <20250423142645.188625951@linuxfoundation.org>
+	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.12 114/223] isofs: Prevent the use of too small fid
+Date: Wed, 23 Apr 2025 16:43:06 +0200
+Message-ID: <20250423142621.752391818@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,56 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 1400c87e6cac47eb243f260352c854474d9a9073 ]
+commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
 
-Due to pending percpu improvements in -next, GCC9 and GCC10 are
-crashing during the build with:
+syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
 
-    lib/zstd/compress/huf_compress.c:1033:1: internal compiler error: Segmentation fault
-     1033 | {
-          | ^
-    Please submit a full bug report,
-    with preprocessed source if appropriate.
-    See <file:///usr/share/doc/gcc-9/README.Bugs> for instructions.
+The handle_bytes value passed in by the reproducing program is equal to 12.
+In handle_to_path(), only 12 bytes of memory are allocated for the structure
+file_handle->f_handle member, which causes an out-of-bounds access when
+accessing the member parent_block of the structure isofs_fid in isofs,
+because accessing parent_block requires at least 16 bytes of f_handle.
+Here, fh_len is used to indirectly confirm that the value of handle_bytes
+is greater than 3 before accessing parent_block.
 
-The DYNAMIC_BMI2 feature is a known-challenging feature of
-the ZSTD library, with an existing GCC quirk turning it off
-for GCC versions below 4.8.
+[1]
+BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
+CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0x198/0x550 mm/kasan/report.c:521
+ kasan_report+0xd8/0x138 mm/kasan/report.c:634
+ __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
+ isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+ exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
+ do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
+ handle_to_path fs/fhandle.c:385 [inline]
+ do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-Increase the DYNAMIC_BMI2 version cutoff to GCC 11.0 - GCC 10.5
-is the last version known to crash.
+Allocated by task 6466:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4294 [inline]
+ __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ handle_to_path fs/fhandle.c:357 [inline]
+ do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-Reported-by: Michael Kelley <mhklinux@outlook.com>
-Debugged-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: https://lore.kernel.org/r/SN6PR02MB415723FBCD79365E8D72CA5FD4D82@SN6PR02MB4157.namprd02.prod.outlook.com
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
+Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/zstd/common/portability_macros.h | 2 +-
+ fs/isofs/export.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/zstd/common/portability_macros.h b/lib/zstd/common/portability_macros.h
-index 0e3b2c0a527db..0dde8bf56595e 100644
---- a/lib/zstd/common/portability_macros.h
-+++ b/lib/zstd/common/portability_macros.h
-@@ -55,7 +55,7 @@
- #ifndef DYNAMIC_BMI2
-   #if ((defined(__clang__) && __has_attribute(__target__)) \
-       || (defined(__GNUC__) \
--          && (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)))) \
-+          && (__GNUC__ >= 11))) \
-       && (defined(__x86_64__) || defined(_M_X64)) \
-       && !defined(__BMI2__)
-   #  define DYNAMIC_BMI2 1
--- 
-2.39.5
-
+--- a/fs/isofs/export.c
++++ b/fs/isofs/export.c
+@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
+ 		return NULL;
+ 
+ 	return isofs_export_iget(sb,
+-			fh_len > 2 ? ifid->parent_block : 0,
++			fh_len > 3 ? ifid->parent_block : 0,
+ 			ifid->parent_offset,
+ 			fh_len > 4 ? ifid->parent_generation : 0);
+ }
 
 
