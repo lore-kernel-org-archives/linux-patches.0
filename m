@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E042281364;
-	Wed, 23 Apr 2025 14:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABEA2820A7;
+	Wed, 23 Apr 2025 14:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420242; cv=none; b=cQQoi1DNn3aAHRLOccpgaayNSAqmnU4/kZcbhjdMQiFyBlS2XtMp/DHxmiV9fCkFj2ah7CxT9L/huO6VcPBCsqwn/gYGN/ytuHkzVhPVk8PFVjoBNWfFc9+XHGsC5TWoHBqKvASLIk9h2yiDPBMkkdvqHOM6DPvlInMj652iPHs=
+	t=1745420244; cv=none; b=Fpo+9rLbd1HGt2PKCHYyfiA5pHyOcPEeIQ1mkFq1g4zsLw4+hVW7aos/oigL7SaeEO3zqM0napluePM8hVgAKSyW0W/tyvLj/Bc4p1lWDI2qECNb99adp1GyHr7vQC+gTowHZcMyzSuk+KBj4wKUJznTheZcdgR2743ikI6fNXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420242; c=relaxed/simple;
-	bh=a9JP65e3dEU1uxkpvXI+lcCh8Ms+5c/QSL9IFPnYH9E=;
+	s=arc-20240116; t=1745420244; c=relaxed/simple;
+	bh=rOq8RU/qySFhzEnGPQC9u/SwbO2giNbUaJeYFOjDx+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YamhkQF+iWPl9uQlTdgQfghlkAEfwZYfrrcO2IFwAIm64xpEFszzHSiZTL4FoDPeb+hvApMkgZ4gY1OkMS3kGR4pVxGtehoK/AJB3quOiAiXSbQpqTsNoc4flV6AJqaPkrHheH7mUfdxWXv+eppaxD/VBYttPm/y1W9wWb0yZKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mnv5uhIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUO1nGhoqADziPIj/2wfyFGvVuUOswyzXSRUx67eoAJCdIaMeH1Re1vQK5MgYxc26BH4WqA1+QCMT3qla0Asz4hDG8mlesP2OrN/Vjle8cpUnPspmYMsoKQdRkv5SLuS5a+IuHWOh8o/PaIiwnvSUQTFm/2lAS41n6nC72r6g0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F96UMUX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mnv5uhIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93481C4CEE2;
-	Wed, 23 Apr 2025 14:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F96UMUX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CCC4CEE2;
+	Wed, 23 Apr 2025 14:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420241;
-	bh=a9JP65e3dEU1uxkpvXI+lcCh8Ms+5c/QSL9IFPnYH9E=;
+	s=korg; t=1745420244;
+	bh=rOq8RU/qySFhzEnGPQC9u/SwbO2giNbUaJeYFOjDx+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mnv5uhIKmIz81mEyZDHpqyCzIxOvDLzfA3kkz8Fld/HaL76fLP97uwf+uSCVqiExw
-	 P0zCi/c9RxYpXZN8akbumbvYsp+N+O3PGnmN+XzPDfxnIsLqDkNA3pDpvEzY6fnHVk
-	 PJBFiXHc8W43YpSOk5o9IjMaezgnbFOupyayRswc=
+	b=F96UMUX6ehvl/2fET/Y02KZSp9Rl1yaHLgHAN/iOHA4NOGl0xWjq/kmyTs4xzmkBe
+	 ZomJP0GIQGxgF2g+70EL5xtRMGqTXF9snlzHv6tMCAon2Xt9qUg73xwzcX/eueZhp5
+	 u1W142A4B6UM5Q4cuf6qj/x3nAiHXup7GxfQV4mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/393] HID: pidff: Add FIX_WHEEL_DIRECTION quirk
-Date: Wed, 23 Apr 2025 16:39:10 +0200
-Message-ID: <20250423142645.531741339@linuxfoundation.org>
+	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 112/223] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
+Date: Wed, 23 Apr 2025 16:43:04 +0200
+Message-ID: <20250423142621.671111499@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 3051bf5ec773b803c474ea556b57d678a8885be3 ]
+commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
 
-Most steering wheels simply ignore DIRECTION field, but some try to be
-compliant with the PID standard and use it in force calculations. Games
-often ignore setting this field properly and/or there can be issues with
-dinput8 -> wine -> SDL -> Linux API translation, and this value can be
-incorrect. This can lead to partial/complete loss of Force Feedback or
-even unexpected force reversal.
+Syzbot reported an issue in hfs subsystem:
 
-Sadly, this quirk can't be detected automatically without sending out
-effects that would move an axis.
+BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
 
-This fixes FFB on Moza Racing devices and others where effect direction
-is not simply ignored.
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ memcpy_from_page include/linux/highmem.h:423 [inline]
+ hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+ hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+ hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
+ hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
+ hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
+ vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+ do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+ __do_sys_mkdir fs/namei.c:4300 [inline]
+ __se_sys_mkdir fs/namei.c:4298 [inline]
+ __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fbdd6057a99
 
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a check for key length in hfs_bnode_read_key to prevent
+out-of-bounds memory access. If the key length is invalid, the
+key buffer is cleared, improving stability and reliability.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 12 +++++++++---
- include/linux/hid.h            |  1 +
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ fs/hfs/bnode.c     |    6 ++++++
+ fs/hfsplus/bnode.c |    6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index b8c2ba0a930c2..a37cf852a2836 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -137,6 +137,9 @@ static const u8 pidff_block_load_status[] = { 0x8c, 0x8d };
- #define PID_EFFECT_STOP		1
- static const u8 pidff_effect_operation_status[] = { 0x79, 0x7b };
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -67,6 +67,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 1;
  
-+/* Polar direction 90 degrees (North) */
-+#define PIDFF_FIXED_WHEEL_DIRECTION	0x4000
++	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfs_btree_key));
++		pr_err("hfs: Invalid key length: %d\n", key_len);
++		return;
++	}
 +
- struct pidff_usage {
- 	struct hid_field *field;
- 	s32 *value;
-@@ -328,9 +331,12 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 	pidff->set_effect[PID_GAIN].value[0] =
- 		pidff->set_effect[PID_GAIN].field->logical_maximum;
- 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
--	pidff->effect_direction->value[0] =
--		pidff_rescale(effect->direction, 0xffff,
--				pidff->effect_direction);
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -67,6 +67,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 2;
+ 
++	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfsplus_btree_key));
++		pr_err("hfsplus: Invalid key length: %d\n", key_len);
++		return;
++	}
 +
-+	/* Use fixed direction if needed */
-+	pidff->effect_direction->value[0] = pidff_rescale(
-+		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
-+		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
-+		0xffff, pidff->effect_direction);
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
  
- 	/* Omit setting delay field if it's missing */
- 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 3f776ab47e27d..e3a55fd4e9fc4 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1224,6 +1224,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
- #define HID_PIDFF_QUIRK_MISSING_DELAY		BIT(0)
- #define HID_PIDFF_QUIRK_MISSING_PBO		BIT(1)
- #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
-+#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
- 
- #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
--- 
-2.39.5
-
 
 
