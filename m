@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E441D1EFFB9;
-	Wed, 23 Apr 2025 15:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D361EEA3E;
+	Wed, 23 Apr 2025 15:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421545; cv=none; b=tvxLGXuxA5iRxsflA509YVCnyFZKxX31e2Kz7tm8MgY2zNWKA1hD4tECv5iXAT3wkjMjfE+D/Jm2iy6Pev62yS0eU897b3woSnAgCK81+ezIWxz/PCZFxJB6uRqZjNuQbxeeAF2bHTU3tawgCmmq1p3tnRvX0tBV2cTbHdRI8H4=
+	t=1745421548; cv=none; b=JRQUwZs1gWi32fKuOLHct97M40wLEABZa5XPA1bMo+/idmh94LpZr/2rM0DASNPXx1EC848Up75U0v77t6seHjEbML+715WHuzZe4v972vW4xDI8TISZpq1X3dwyGYKXTvRycwiu0bHVXRPRjV5mQ7rWR/hBkZz0CAxoauhlCHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421545; c=relaxed/simple;
-	bh=10sMYugoKCKXgKWZgUAx0m2PwSi04HEsbjzBhyRVf30=;
+	s=arc-20240116; t=1745421548; c=relaxed/simple;
+	bh=fcMEmJo+lwuH8w9A8k70p0ZdMHZ5J5AS2fnyfcsIyRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BC1Yz2XgXTrT09Db54tUuY9eOB/VL/vcWrhA11JSpRgIlfDJl7DkqPqP8cO3Jo1Nj6Sb4Y/BZYjw+9pPohA52Emhtv0QT1PSBBGCJ91rccmcDz77++RhJxuQV9Vt9+VblekBvBKtz9H5Mt3Sse3jAxhIHNbf0sW/aVvXTT4Hk/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0piyLWg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUJeXb4ZQigkLY1lGfjlqp14v6Z//VFdYVssI2oby3sIDMoFLJiNCzIiGZr/eGnaOmTJfKoPBQe/hWnVf4g37CRcbeh7IgzD9me5h36M9TdcJsHAkOT9/R8FUxRexIlAqq4Rimc86i45T/7+DpNnncbH2VkdQX8SsJH+kRibbjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2k0TqZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0piyLWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751F1C4CEE2;
-	Wed, 23 Apr 2025 15:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2k0TqZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F44C4CEE2;
+	Wed, 23 Apr 2025 15:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421544;
-	bh=10sMYugoKCKXgKWZgUAx0m2PwSi04HEsbjzBhyRVf30=;
+	s=korg; t=1745421547;
+	bh=fcMEmJo+lwuH8w9A8k70p0ZdMHZ5J5AS2fnyfcsIyRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0piyLWgj4SB72RtHS5YfhnIURrlu4ePcZUmB7iSP3vqwHWBECtBmFRMAN9FyBmuf
-	 sqvYn9ih7bRHWMp2r9xn9qMslKbEStXKciepLN9lQ4TRyabA8hEJdtM8uO/8E8RxaE
-	 XsWVG96kkjS3WpboRjxoaO+jNgVBrKQIQyAlVWgM=
+	b=b2k0TqZklc8MM7d07tvD3EBVZLlHEEh4qv/IDsNFIE+dQzNE373qMode5IFoATniw
+	 JBTwWuspGqkSkkmbEhGl6cX+JrjfjYdpp8nbbRzH5U0PZlAZ3KUWCz6bmgCxB23pu6
+	 Ew+GGSapEn5mHSzMIpeBc2moZKiEAbaRXLjrDew8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Rolf Eike Beer <eb@emlix.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 6.14 201/241] drm/sti: remove duplicate object names
-Date: Wed, 23 Apr 2025 16:44:25 +0200
-Message-ID: <20250423142628.725858210@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 149/291] KVM: x86: Acquire SRCU in KVM_GET_MP_STATE to protect guest memory accesses
+Date: Wed, 23 Apr 2025 16:42:18 +0200
+Message-ID: <20250423142630.489009217@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,37 +46,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rolf Eike Beer <eb@emlix.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 7fb6afa9125fc111478615e24231943c4f76cc2e upstream.
+commit ef01cac401f18647d62720cf773d7bb0541827da upstream.
 
-When merging 2 drivers common object files were not deduplicated.
+Acquire a lock on kvm->srcu when userspace is getting MP state to handle a
+rather extreme edge case where "accepting" APIC events, i.e. processing
+pending INIT or SIPI, can trigger accesses to guest memory.  If the vCPU
+is in L2 with INIT *and* a TRIPLE_FAULT request pending, then getting MP
+state will trigger a nested VM-Exit by way of ->check_nested_events(), and
+emuating the nested VM-Exit can access guest memory.
 
-Fixes: dcec16efd677 ("drm/sti: Build monolithic driver")
-Cc: stable@kernel.org
-Signed-off-by: Rolf Eike Beer <eb@emlix.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/1920148.tdWV9SEqCh@devpool47.emlix.com
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+The splat was originally hit by syzkaller on a Google-internal kernel, and
+reproduced on an upstream kernel by hacking the triple_fault_event_test
+selftest to stuff a pending INIT, store an MSR on VM-Exit (to generate a
+memory access on VMX), and do vcpu_mp_state_get() to trigger the scenario.
+
+  =============================
+  WARNING: suspicious RCU usage
+  6.14.0-rc3-b112d356288b-vmx/pi_lockdep_false_pos-lock #3 Not tainted
+  -----------------------------
+  include/linux/kvm_host.h:1058 suspicious rcu_dereference_check() usage!
+
+  other info that might help us debug this:
+
+  rcu_scheduler_active = 2, debug_locks = 1
+  1 lock held by triple_fault_ev/1256:
+   #0: ffff88810df5a330 (&vcpu->mutex){+.+.}-{4:4}, at: kvm_vcpu_ioctl+0x8b/0x9a0 [kvm]
+
+  stack backtrace:
+  CPU: 11 UID: 1000 PID: 1256 Comm: triple_fault_ev Not tainted 6.14.0-rc3-b112d356288b-vmx #3
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x7f/0x90
+   lockdep_rcu_suspicious+0x144/0x190
+   kvm_vcpu_gfn_to_memslot+0x156/0x180 [kvm]
+   kvm_vcpu_read_guest+0x3e/0x90 [kvm]
+   read_and_check_msr_entry+0x2e/0x180 [kvm_intel]
+   __nested_vmx_vmexit+0x550/0xde0 [kvm_intel]
+   kvm_check_nested_events+0x1b/0x30 [kvm]
+   kvm_apic_accept_events+0x33/0x100 [kvm]
+   kvm_arch_vcpu_ioctl_get_mpstate+0x30/0x1d0 [kvm]
+   kvm_vcpu_ioctl+0x33e/0x9a0 [kvm]
+   __x64_sys_ioctl+0x8b/0xb0
+   do_syscall_64+0x6c/0x170
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250401150504.829812-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/Makefile |    2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/kvm/x86.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/sti/Makefile
-+++ b/drivers/gpu/drm/sti/Makefile
-@@ -7,8 +7,6 @@ sti-drm-y := \
- 	sti_compositor.o \
- 	sti_crtc.o \
- 	sti_plane.o \
--	sti_crtc.o \
--	sti_plane.o \
- 	sti_hdmi.o \
- 	sti_hdmi_tx3g4c28phy.o \
- 	sti_dvo.o \
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11460,6 +11460,8 @@ int kvm_arch_vcpu_ioctl_get_mpstate(stru
+ 	if (kvm_mpx_supported())
+ 		kvm_load_guest_fpu(vcpu);
+ 
++	kvm_vcpu_srcu_read_lock(vcpu);
++
+ 	r = kvm_apic_accept_events(vcpu);
+ 	if (r < 0)
+ 		goto out;
+@@ -11473,6 +11475,8 @@ int kvm_arch_vcpu_ioctl_get_mpstate(stru
+ 		mp_state->mp_state = vcpu->arch.mp_state;
+ 
+ out:
++	kvm_vcpu_srcu_read_unlock(vcpu);
++
+ 	if (kvm_mpx_supported())
+ 		kvm_put_guest_fpu(vcpu);
+ 	vcpu_put(vcpu);
 
 
