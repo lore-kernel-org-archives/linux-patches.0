@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB39284696;
-	Wed, 23 Apr 2025 14:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4A627CCFA;
+	Wed, 23 Apr 2025 14:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419645; cv=none; b=MD5Zk7qeh4NWR+chyV6cMioO2F2zfXwkRduvNzGij+1WvlmngFFjHLJmUf1QQScPJJsP4qhNMKwwKGTwoxjUO3OSHz8+Y7b483AhJ/fmaju/7fOT0bmANRjMQzKqb4w81apJ2ylOAmcS+c1OLklBWP9XtSL5xR8TbAOJ2fiGR6I=
+	t=1745419647; cv=none; b=BEXF33pyU7+KW2aEcqm/vjlatui0JMNrw8khNuTSrr74DwNR2uQswfr4LGx2kaJqbOEu5Iar2PUOGSItGMdF7/TwPNtrDL5aDBui+0NHAwperbHi4PQ0YuIe+pBsMS/tZnX5caxm3xkP+WAaW9oMw/XdDuQdzmRYOX2SUotst0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419645; c=relaxed/simple;
-	bh=B7fIaIyJjcypiNPWO2naV0JMFOtELoj0eEO6EMSc9dw=;
+	s=arc-20240116; t=1745419647; c=relaxed/simple;
+	bh=4QFva8CgyIACQba/f5c92WyVxVN9rrPQP1oysdcjBTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iU8jNmAnGt53vxT6Qn1PqSS1uhdnKP3N9y8qqxxZmEQ/OUX2wPHqrMKLgjtDQxQoDeKvbFxvBxCQojSycPmmKlr9eyUcvjP+8Aef1FSMYjdoSuR6KmWTXVrMNn9CDbvml9M2Umj+IWGzZd89Phwp8/70Shvs0nq5SUGY+dnyMhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyq3Kski; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pobVaqAaBf4Ajwij2YmoRzbkv36tpU8gFkD/fWm5X8mVgkOrFYdMsUP7np47NLr0BjW+cSuC1kM/xb5Q5Ib3ilQPObuI+CzEsDXUK8uBIf/6d3f7+JcPkFfBQ0J9bJuoG1lT0CXlwBDRtbckwy5A5Rwyr/Y7SKbwKaC4IaX3RN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/VFKRQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyq3Kski"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4925CC4CEE3;
-	Wed, 23 Apr 2025 14:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/VFKRQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0DFC4CEE2;
+	Wed, 23 Apr 2025 14:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419644;
-	bh=B7fIaIyJjcypiNPWO2naV0JMFOtELoj0eEO6EMSc9dw=;
+	s=korg; t=1745419647;
+	bh=4QFva8CgyIACQba/f5c92WyVxVN9rrPQP1oysdcjBTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyq3Kski+pOveOTY2w+rJ5rH5gKP8dBWJRbKXJVg7/U86aZIDpLxvnEsBcTg8xhV7
-	 DbIWgg704bsXLHWEZ1o03AdZgFwntL6qp1+zzaxozoyQOtbOWB9CYIrKiCEOcbGACs
-	 9V38RkNozAydyYBvaQK+2At/jAHMScdDCQ91XXaw=
+	b=e/VFKRQnYDb72qa2cc0YnMzyaBQTkkAw83Q5uNMyxDt0GFFtvgIaHHrMpj0UxbsM1
+	 T8+J+faocZy8jpaY3aOAZ1flW+PLjB20aLesXBb5i3JRcc1wc3Ji55nJKqrjmr5nob
+	 CqAz6TWcfgvQbmTXVUa05lG+1WjTSVogYBhiJork=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/223] xen: fix multicall debug feature
-Date: Wed, 23 Apr 2025 16:41:43 +0200
-Message-ID: <20250423142618.380739469@linuxfoundation.org>
+Subject: [PATCH 6.12 032/223] Revert "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
+Date: Wed, 23 Apr 2025 16:41:44 +0200
+Message-ID: <20250423142618.420011832@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -52,136 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 715ad3e0ec2b13c27335749f27a5c9f0c0e84064 ]
+[ Upstream commit 0937cb5f345c79d702b4d0d744e2a2529b551cb2 ]
 
-Initializing a percpu variable with the address of a struct tagged as
-.initdata is breaking the build with CONFIG_SECTION_MISMATCH_WARN_ONLY
-not set to "y".
+This reverts commit a104042e2bf6528199adb6ca901efe7b60c2c27f.
 
-Fix that by using an access function instead returning the .initdata
-struct address if the percpu space of the struct hasn't been
-allocated yet.
+Since the original bug seems to have been around for years,
+but a new issue was report with the fix, revert the fix for
+now. We have a couple of weeks to figure it out for this
+release, if needed.
 
-Fixes: 368990a7fe30 ("xen: fix multicall debug data referencing")
-Reported-by: Borislav Petkov <bp@alien8.de>
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Acked-by: "Borislav Petkov (AMD)" <bp@alien8.de>
-Tested-by: "Borislav Petkov (AMD)" <bp@alien8.de>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250327190602.26015-1-jgross@suse.com>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: a104042e2bf6 ("wifi: mac80211: Update skb's control block key in ieee80211_tx_dequeue()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/multicalls.c | 26 ++++++++++++++------------
- arch/x86/xen/smp_pv.c     |  1 -
- arch/x86/xen/xen-ops.h    |  3 ---
- 3 files changed, 14 insertions(+), 16 deletions(-)
+ net/mac80211/tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/xen/multicalls.c b/arch/x86/xen/multicalls.c
-index 10c660fae8b30..7237d56a9d3f0 100644
---- a/arch/x86/xen/multicalls.c
-+++ b/arch/x86/xen/multicalls.c
-@@ -54,14 +54,20 @@ struct mc_debug_data {
- 
- static DEFINE_PER_CPU(struct mc_buffer, mc_buffer);
- static struct mc_debug_data mc_debug_data_early __initdata;
--static DEFINE_PER_CPU(struct mc_debug_data *, mc_debug_data) =
--	&mc_debug_data_early;
- static struct mc_debug_data __percpu *mc_debug_data_ptr;
- DEFINE_PER_CPU(unsigned long, xen_mc_irq_flags);
- 
- static struct static_key mc_debug __ro_after_init;
- static bool mc_debug_enabled __initdata;
- 
-+static struct mc_debug_data * __ref get_mc_debug(void)
-+{
-+	if (!mc_debug_data_ptr)
-+		return &mc_debug_data_early;
-+
-+	return this_cpu_ptr(mc_debug_data_ptr);
-+}
-+
- static int __init xen_parse_mc_debug(char *arg)
- {
- 	mc_debug_enabled = true;
-@@ -71,20 +77,16 @@ static int __init xen_parse_mc_debug(char *arg)
- }
- early_param("xen_mc_debug", xen_parse_mc_debug);
- 
--void mc_percpu_init(unsigned int cpu)
--{
--	per_cpu(mc_debug_data, cpu) = per_cpu_ptr(mc_debug_data_ptr, cpu);
--}
--
- static int __init mc_debug_enable(void)
- {
- 	unsigned long flags;
-+	struct mc_debug_data __percpu *mcdb;
- 
- 	if (!mc_debug_enabled)
- 		return 0;
- 
--	mc_debug_data_ptr = alloc_percpu(struct mc_debug_data);
--	if (!mc_debug_data_ptr) {
-+	mcdb = alloc_percpu(struct mc_debug_data);
-+	if (!mcdb) {
- 		pr_err("xen_mc_debug inactive\n");
- 		static_key_slow_dec(&mc_debug);
- 		return -ENOMEM;
-@@ -93,7 +95,7 @@ static int __init mc_debug_enable(void)
- 	/* Be careful when switching to percpu debug data. */
- 	local_irq_save(flags);
- 	xen_mc_flush();
--	mc_percpu_init(0);
-+	mc_debug_data_ptr = mcdb;
- 	local_irq_restore(flags);
- 
- 	pr_info("xen_mc_debug active\n");
-@@ -155,7 +157,7 @@ void xen_mc_flush(void)
- 	trace_xen_mc_flush(b->mcidx, b->argidx, b->cbidx);
- 
- 	if (static_key_false(&mc_debug)) {
--		mcdb = __this_cpu_read(mc_debug_data);
-+		mcdb = get_mc_debug();
- 		memcpy(mcdb->entries, b->entries,
- 		       b->mcidx * sizeof(struct multicall_entry));
- 	}
-@@ -235,7 +237,7 @@ struct multicall_space __xen_mc_entry(size_t args)
- 
- 	ret.mc = &b->entries[b->mcidx];
- 	if (static_key_false(&mc_debug)) {
--		struct mc_debug_data *mcdb = __this_cpu_read(mc_debug_data);
-+		struct mc_debug_data *mcdb = get_mc_debug();
- 
- 		mcdb->caller[b->mcidx] = __builtin_return_address(0);
- 		mcdb->argsz[b->mcidx] = args;
-diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
-index 6863d3da7decf..7ea57f728b89d 100644
---- a/arch/x86/xen/smp_pv.c
-+++ b/arch/x86/xen/smp_pv.c
-@@ -305,7 +305,6 @@ static int xen_pv_kick_ap(unsigned int cpu, struct task_struct *idle)
- 		return rc;
- 
- 	xen_pmu_init(cpu);
--	mc_percpu_init(cpu);
- 
- 	/*
- 	 * Why is this a BUG? If the hypercall fails then everything can be
-diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
-index 63c13a2ccf556..25e318ef27d6b 100644
---- a/arch/x86/xen/xen-ops.h
-+++ b/arch/x86/xen/xen-ops.h
-@@ -261,9 +261,6 @@ void xen_mc_callback(void (*fn)(void *), void *data);
-  */
- struct multicall_space xen_mc_extend_args(unsigned long op, size_t arg_size);
- 
--/* Do percpu data initialization for multicalls. */
--void mc_percpu_init(unsigned int cpu);
--
- extern bool is_xen_pmu;
- 
- irqreturn_t xen_pmu_irq_handler(int irq, void *dev_id);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 9b3a5ef20f29e..0ff8b56f58070 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3892,7 +3892,6 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
+-	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
 -- 
 2.39.5
 
