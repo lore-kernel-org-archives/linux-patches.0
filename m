@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7837280A2B;
-	Wed, 23 Apr 2025 14:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD3C2820B4;
+	Wed, 23 Apr 2025 14:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419723; cv=none; b=TJYyvmAO0jsbNwpR+GJLvMLeDlptEQhN1ip+X3FgcIqYXrBjWXlyypXcE9mLTAu3+fHe3jFEm55Kpc63UnswUtpEaZk6PlOmQTXGNYMJG6vxK7OCRbX064JtEWHqgmfEAfaGKOHX0nytw/SghLMLkuk0VXIKRAi/cGrzr/PkcHc=
+	t=1745419728; cv=none; b=EDu5Rv37Q9nWSaWHQybYmZwDV5LR2jQwlcD0PWW0/x2gx68KpNgxQDAnCZ1Etv57x860sJ+l1Q2pJBnw9w5lQ3FTLXP6CzxwjfEo7hgEFEc3YIBB//jgcJ54gk/JWXd6R5U52NyKSgtM9WSdX0vKsdBdBXYpn2lLWm/QvdQO5M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419723; c=relaxed/simple;
-	bh=tS0iPh+mts0BKhQNPqxV9iqQoe27MvmY3rvqUMWFDng=;
+	s=arc-20240116; t=1745419728; c=relaxed/simple;
+	bh=F1BuUm+W59FuG010QQpKVt0+t4AG8t+Z4uF7mApuMQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arv+fULzsTjfcqrtDxEFVmpYzYbsoYT9aq2Cn4MRMJOPjRcCC1wRZhx47+qjr3XlaI65d9petvNmoTRhZC80uyTxDMHBm0Ng4viabpIwSThOpOGgtujbTqLo2/mYrwbxqb4FnPeoCDm5Bwhbfpzx9QuEy+/XCyd/1TQ+Aiqv2hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Th89FqTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XQGJbCYyPaM2f2PEHYZYXBpl/tQOxc2enIiTZDGmaUFRT/awFJcbnDxN8FWW27lSM08wRXHnRrwbkWlkAUgmIkJN6/bF6bWsNLd1jZiP4SzvrLAtFqANjs5C+VQY6kue2qDA61DWMofxGicm4WL88nVCTDxIV6oPjA8/IA7AX2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olk1saQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Th89FqTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326C7C4CEE2;
-	Wed, 23 Apr 2025 14:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olk1saQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81E6C4CEE2;
+	Wed, 23 Apr 2025 14:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419723;
-	bh=tS0iPh+mts0BKhQNPqxV9iqQoe27MvmY3rvqUMWFDng=;
+	s=korg; t=1745419726;
+	bh=F1BuUm+W59FuG010QQpKVt0+t4AG8t+Z4uF7mApuMQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Th89FqTEDBsyxhfqeXMyBNt0Ov0srhBd5xH6V0VXaWu6Il6GpgsCjCibGvLfDBMuq
-	 Jxn/TvlJrtXbRGtp/qmXe3nPf9dgw3m8ZmlbQKg7MExcch5YSPK/oTEoMU6P53cVFv
-	 AXrCTPz7f04eBDPChNNBncXX2Gv6ozVZT9g1TyVA=
+	b=olk1saQ5B8mHyGmlDGjqwAtqsH/jY9VlpDydM7pDiWYLk09i2L7jzKeKzsIJ9ewfF
+	 JllrkNYUiDwd0XlXT9uX291kQ3HOAhDD93UHeBuTQXiZeBvn4Nd/NGcJ/Z6pse81KO
+	 7efnMrEx257DRfyTQho9rKZK+t87WuUmZOFI8+0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 016/241] RDMA/usnic: Fix passing zero to PTR_ERR in usnic_ib_pci_probe()
-Date: Wed, 23 Apr 2025 16:41:20 +0200
-Message-ID: <20250423142621.181248563@linuxfoundation.org>
+Subject: [PATCH 6.12 051/223] eth: bnxt: fix missing ring index trim on error path
+Date: Wed, 23 Apr 2025 16:42:03 +0200
+Message-ID: <20250423142619.212984078@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 95ba3850fed03e01b422ab5d7943aeba130c9723 ]
+[ Upstream commit 12f2d033fae957d84c2c0ce604d2a077e61fa2c0 ]
 
-drivers/infiniband/hw/usnic/usnic_ib_main.c:590
- usnic_ib_pci_probe() warn: passing zero to 'PTR_ERR'
+Commit under Fixes converted tx_prod to be free running but missed
+masking it on the Tx error path. This crashes on error conditions,
+for example when DMA mapping fails.
 
-Make usnic_ib_device_add() return NULL on fail path, also remove
-useless NULL check for usnic_ib_discover_pf()
-
-Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
-Link: https://patch.msgid.link/r/20250324123132.2392077-1-yuehaibing@huawei.com
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 6d1add95536b ("bnxt_en: Modify TX ring indexing logic.")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250414143210.458625-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_ib_main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_ib_main.c b/drivers/infiniband/hw/usnic/usnic_ib_main.c
-index 4ddcd5860e0fa..11eca39b73a93 100644
---- a/drivers/infiniband/hw/usnic/usnic_ib_main.c
-+++ b/drivers/infiniband/hw/usnic/usnic_ib_main.c
-@@ -397,7 +397,7 @@ static void *usnic_ib_device_add(struct pci_dev *dev)
- 	if (!us_ibdev) {
- 		usnic_err("Device %s context alloc failed\n",
- 				netdev_name(pci_get_drvdata(dev)));
--		return ERR_PTR(-EFAULT);
-+		return NULL;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index e7580df13229a..016dcfec8d496 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -758,7 +758,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	dev_kfree_skb_any(skb);
+ tx_kick_pending:
+ 	if (BNXT_TX_PTP_IS_SET(lflags)) {
+-		txr->tx_buf_ring[txr->tx_prod].is_ts_pkt = 0;
++		txr->tx_buf_ring[RING_TX(bp, txr->tx_prod)].is_ts_pkt = 0;
+ 		atomic64_inc(&bp->ptp_cfg->stats.ts_err);
+ 		if (!(bp->fw_cap & BNXT_FW_CAP_TX_TS_CMP))
+ 			/* set SKB to err so PTP worker will clean up */
+@@ -766,7 +766,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
  	}
- 
- 	us_ibdev->ufdev = usnic_fwd_dev_alloc(dev);
-@@ -517,8 +517,8 @@ static struct usnic_ib_dev *usnic_ib_discover_pf(struct usnic_vnic *vnic)
- 	}
- 
- 	us_ibdev = usnic_ib_device_add(parent_pci);
--	if (IS_ERR_OR_NULL(us_ibdev)) {
--		us_ibdev = us_ibdev ? us_ibdev : ERR_PTR(-EFAULT);
-+	if (!us_ibdev) {
-+		us_ibdev = ERR_PTR(-EFAULT);
- 		goto out;
- 	}
- 
-@@ -586,10 +586,10 @@ static int usnic_ib_pci_probe(struct pci_dev *pdev,
- 	}
- 
- 	pf = usnic_ib_discover_pf(vf->vnic);
--	if (IS_ERR_OR_NULL(pf)) {
--		usnic_err("Failed to discover pf of vnic %s with err%ld\n",
--				pci_name(pdev), PTR_ERR(pf));
--		err = pf ? PTR_ERR(pf) : -EFAULT;
-+	if (IS_ERR(pf)) {
-+		err = PTR_ERR(pf);
-+		usnic_err("Failed to discover pf of vnic %s with err%d\n",
-+				pci_name(pdev), err);
- 		goto out_clean_vnic;
- 	}
- 
+ 	if (txr->kick_pending)
+ 		bnxt_txr_db_kick(bp, txr, txr->tx_prod);
+-	txr->tx_buf_ring[txr->tx_prod].skb = NULL;
++	txr->tx_buf_ring[RING_TX(bp, txr->tx_prod)].skb = NULL;
+ 	dev_core_stats_tx_dropped_inc(dev);
+ 	return NETDEV_TX_OK;
+ }
 -- 
 2.39.5
 
