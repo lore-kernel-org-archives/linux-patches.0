@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B553C8EB;
-	Wed, 23 Apr 2025 14:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF1C2522B9;
+	Wed, 23 Apr 2025 14:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419531; cv=none; b=bzu+WJXwW8nE+tmTRULLn3mviZCOosb4nbzpwsgPQ/pjZnQnqVrML3n+jvHBWVvpL/HW0iib+hcGQNmALOuayrgCfCBxQY2YlV5V5eKIxJEbX/OpnMwjBSYFLTndaIM9fZ9ft2waeK0+oiJ0ldAZcid45wEIq6zmVWW3X8Ru5o0=
+	t=1745419534; cv=none; b=NA2XdpE+yGpyAB6onljezSnYBXN3VkZcdrl0hgrLzYBjTXdOFThgg5fFMM0uysVWQHX1sImXqmZT773Qx+jv4SAyB9Hsme1mQf2c2AIlUyEckuKXE5KThyXUMhJwdMBXh39JQa8iF5bI7cn5VN7zQI/uTfDroDECY+GtiQzHK3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419531; c=relaxed/simple;
-	bh=ikYO6zViixwqyymGoEl3MfoX19yJjoY1TCh2T6ZZgnc=;
+	s=arc-20240116; t=1745419534; c=relaxed/simple;
+	bh=linE5WJJ3i5g7PNRFRgyoVVMUV9vBG1Mh9kNYrl/u3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6rhJBNOVn47am45kPAW1O07wLej/wIpljdjV9vq6f4bsPqjZTlXYIpMTLz3RfgS69HV99aSgYLhFy5E4lYzX/vvlMbKzWXkkrGaEP7FXc+wvmALJA4iEljwJmH+8Ka0aHxN471D5yfm6JFjVuW+gUVMPAm40iDc+B02PPk/u9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeD6lEbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0VqknjP7RXfEKYeECANxebLtBAWZfBSAk0n5dTLO3YO9HfVZ1xng560Xns/pXLsZCYmUIlMSDyKEDp9PeIj0NpZuLeblT+zUuNsLV5/dp641ULlwg0NglT5KhrKdWKyKDKohu3PkJsLOgTwgMcgyhMQnXXuCRL/C01YCZ6V4t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlDNcmnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeD6lEbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FDFC4CEE2;
-	Wed, 23 Apr 2025 14:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlDNcmnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D72C4CEE2;
+	Wed, 23 Apr 2025 14:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419531;
-	bh=ikYO6zViixwqyymGoEl3MfoX19yJjoY1TCh2T6ZZgnc=;
+	s=korg; t=1745419533;
+	bh=linE5WJJ3i5g7PNRFRgyoVVMUV9vBG1Mh9kNYrl/u3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UeD6lEbYn8A853sQZ97rZ85usAjYkftjIjw52sZNtDYY6a+0P/3DbB+F4nxWoBAqO
-	 cPyzSWnKr/A4MIZb6XXNL024Hn/xLNEPXXyxPyxXTW0IoyiH6TKz+J55CUyiY59BUn
-	 pkgUeP9LJx2oWeGhPJIQcgyM1rUIaV6rkw9388C0=
+	b=YlDNcmnjwjag/XKkqenb8yhRbT3Om7XqO5KRIdjs1ZIgWI8PmyHCeQVNEoyzHMRf6
+	 poZGqlT+Vjn/v4g2qhKO7GL8Rfb0OgZZgNC0fELCXKgJbHihSCfBmJj0+3jA7xgMOe
+	 IAtkrApJuNUbfa4nYPjGg+A0Eovm3rqCkBSmGScw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Yihang Li <liyihang9@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/223] scsi: hisi_sas: Enable force phy when SATA disk directly connected
-Date: Wed, 23 Apr 2025 16:41:13 +0200
-Message-ID: <20250423142617.184125840@linuxfoundation.org>
+Subject: [PATCH 6.12 002/223] wifi: at76c50x: fix use after free access in at76_disconnect
+Date: Wed, 23 Apr 2025 16:41:14 +0200
+Message-ID: <20250423142617.222528839@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -52,100 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 8aa580cd92843b60d4d6331f3b0a9e8409bb70eb ]
+[ Upstream commit 27c7e63b3cb1a20bb78ed4a36c561ea4579fd7da ]
 
-when a SATA disk is directly connected the SAS controller determines the
-disk to which I/Os are delivered based on the port ID in the DQ entry.
+The memory pointed to by priv is freed at the end of at76_delete_device
+function (using ieee80211_free_hw). But the code then accesses the udev
+field of the freed object to put the USB device. This may also lead to a
+memory leak of the usb device. Fix this by using udev from interface.
 
-When many phys are disconnected and reconnect, the port ID of phys were
-changed and used by other link, resulting in I/O being sent to incorrect
-disk. Data inconsistency on the SATA disk may occur during I/O retries
-using the old port ID. So enable force phy, then force the command to be
-executed in a certain phy, and if the actual phy ID of the port does not
-match the phy configured in the command, the chip will stop delivering the
-I/O to disk.
-
-Fixes: ce60689e12dd ("scsi: hisi_sas: add v3 code to send ATA frame")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://lore.kernel.org/r/20250312095135.3048379-2-yangxingui@huawei.com
-Reviewed-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 29e20aa6c6af ("at76c50x-usb: fix use after free on failure path in at76_probe()")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20250330103110.44080-1-abdun.nihaal@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  9 +++++++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 14 ++++++++++++--
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/net/wireless/atmel/at76c50x-usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index 342d75f12051d..89ff33daba404 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2501,6 +2501,7 @@ static void prep_ata_v2_hw(struct hisi_hba *hisi_hba,
- 	struct hisi_sas_port *port = to_hisi_sas_port(sas_port);
- 	struct sas_ata_task *ata_task = &task->ata_task;
- 	struct sas_tmf_task *tmf = slot->tmf;
-+	int phy_id;
- 	u8 *buf_cmd;
- 	int has_data = 0, hdr_tag = 0;
- 	u32 dw0, dw1 = 0, dw2 = 0;
-@@ -2508,10 +2509,14 @@ static void prep_ata_v2_hw(struct hisi_hba *hisi_hba,
- 	/* create header */
- 	/* dw0 */
- 	dw0 = port->id << CMD_HDR_PORT_OFF;
--	if (parent_dev && dev_is_expander(parent_dev->dev_type))
-+	if (parent_dev && dev_is_expander(parent_dev->dev_type)) {
- 		dw0 |= 3 << CMD_HDR_CMD_OFF;
--	else
-+	} else {
-+		phy_id = device->phy->identify.phy_identifier;
-+		dw0 |= (1U << phy_id) << CMD_HDR_PHY_ID_OFF;
-+		dw0 |= CMD_HDR_FORCE_PHY_MSK;
- 		dw0 |= 4 << CMD_HDR_CMD_OFF;
-+	}
+diff --git a/drivers/net/wireless/atmel/at76c50x-usb.c b/drivers/net/wireless/atmel/at76c50x-usb.c
+index 504e05ea30f29..97ea7ab0f4910 100644
+--- a/drivers/net/wireless/atmel/at76c50x-usb.c
++++ b/drivers/net/wireless/atmel/at76c50x-usb.c
+@@ -2552,7 +2552,7 @@ static void at76_disconnect(struct usb_interface *interface)
  
- 	if (tmf && ata_task->force_phy) {
- 		dw0 |= CMD_HDR_FORCE_PHY_MSK;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index cd394d8c9f07f..6b4cb560ff304 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -358,6 +358,10 @@
- #define CMD_HDR_RESP_REPORT_MSK		(0x1 << CMD_HDR_RESP_REPORT_OFF)
- #define CMD_HDR_TLR_CTRL_OFF		6
- #define CMD_HDR_TLR_CTRL_MSK		(0x3 << CMD_HDR_TLR_CTRL_OFF)
-+#define CMD_HDR_PHY_ID_OFF		8
-+#define CMD_HDR_PHY_ID_MSK		(0x1ff << CMD_HDR_PHY_ID_OFF)
-+#define CMD_HDR_FORCE_PHY_OFF		17
-+#define CMD_HDR_FORCE_PHY_MSK		(0x1U << CMD_HDR_FORCE_PHY_OFF)
- #define CMD_HDR_PORT_OFF		18
- #define CMD_HDR_PORT_MSK		(0xf << CMD_HDR_PORT_OFF)
- #define CMD_HDR_PRIORITY_OFF		27
-@@ -1425,15 +1429,21 @@ static void prep_ata_v3_hw(struct hisi_hba *hisi_hba,
- 	struct hisi_sas_cmd_hdr *hdr = slot->cmd_hdr;
- 	struct asd_sas_port *sas_port = device->port;
- 	struct hisi_sas_port *port = to_hisi_sas_port(sas_port);
-+	int phy_id;
- 	u8 *buf_cmd;
- 	int has_data = 0, hdr_tag = 0;
- 	u32 dw1 = 0, dw2 = 0;
+ 	wiphy_info(priv->hw->wiphy, "disconnecting\n");
+ 	at76_delete_device(priv);
+-	usb_put_dev(priv->udev);
++	usb_put_dev(interface_to_usbdev(interface));
+ 	dev_info(&interface->dev, "disconnected\n");
+ }
  
- 	hdr->dw0 = cpu_to_le32(port->id << CMD_HDR_PORT_OFF);
--	if (parent_dev && dev_is_expander(parent_dev->dev_type))
-+	if (parent_dev && dev_is_expander(parent_dev->dev_type)) {
- 		hdr->dw0 |= cpu_to_le32(3 << CMD_HDR_CMD_OFF);
--	else
-+	} else {
-+		phy_id = device->phy->identify.phy_identifier;
-+		hdr->dw0 |= cpu_to_le32((1U << phy_id)
-+				<< CMD_HDR_PHY_ID_OFF);
-+		hdr->dw0 |= CMD_HDR_FORCE_PHY_MSK;
- 		hdr->dw0 |= cpu_to_le32(4U << CMD_HDR_CMD_OFF);
-+	}
- 
- 	switch (task->data_dir) {
- 	case DMA_TO_DEVICE:
 -- 
 2.39.5
 
