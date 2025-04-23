@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB3227FD49;
-	Wed, 23 Apr 2025 14:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6A21A9B39;
+	Wed, 23 Apr 2025 14:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419621; cv=none; b=Lqv/L6UveQcX/PPIxQyeS0Y9IwjMLkxxDE6kcKsX1rdSr+YEqt2YdufSTIJgKJSf2u3iTuGOk5PN2/BiENpiP0ZhGFx5P779t3bhG5eNyRbTxZzUtwL/E9GXzgowS/rWl4W8MUiEiP7HnWqBMttMp0lyGesgua5i/9yJVe25j1M=
+	t=1745419623; cv=none; b=FYPA/ZGjuAYGwkt+GrsFVE8uLh34s8VpPJppMVrnWNNntMEMIW92UDiRkuXT8Uy+eN6GPnHd7yiJrDlHp4gNmZaz2CVyBSyshT9j6n7NO6Aa+7E13M6NniWRYc3X1gLHG7R240z+7NqCk1Z9pyT/9UupIkmUPzObtH0ZVVDxrj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419621; c=relaxed/simple;
-	bh=d7ydaI9PKSELcpVrR0K4JutRTBxfU0T3R1NOS2rKnSM=;
+	s=arc-20240116; t=1745419623; c=relaxed/simple;
+	bh=DrVNhr77YpxdqZSu3bmJzyuy0wfyZlTslwRq4YE3dZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrFV60V7B8KEJNzyo/VDow0JD1Nehkx/2HU5XW6KQbdVIlBxAYzBMMWxiM9MK8nRtEJqQZ0ISnXrxv6bal5UUaY4Z1P4nXk0etq7SbApj3mH3k6/B61GdL7AZA1g6zEmFcrAjwA+2bFMfqChRF1lanDEyCIMKqjFLs2ByBbFloI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlOv3maH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qtG2QI1HjngXpM95G+fs4RVsr/1xvWT6ddXfDFIMWKeFAFGUew50jFrl1eQa6X7b7ZR0kgJFypFgpa1s1iNDilxQUAD9WWPHAAOCpxiGnwJ8c5GPeMg1Tozh/t71h3M+aUobKjvePX8AdIJ0BDE7FxbFtcfUTlKqjuJBcwJG2UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cN87owDQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlOv3maH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C370C4CEE2;
-	Wed, 23 Apr 2025 14:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cN87owDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E22C4CEE2;
+	Wed, 23 Apr 2025 14:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419620;
-	bh=d7ydaI9PKSELcpVrR0K4JutRTBxfU0T3R1NOS2rKnSM=;
+	s=korg; t=1745419623;
+	bh=DrVNhr77YpxdqZSu3bmJzyuy0wfyZlTslwRq4YE3dZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlOv3maHhnR11mQh1DWLjL8edGY7J/bUg1Zrb2IaIqHabG2NaVrt7I+Bik8hfrRLe
-	 5ehb69a1cgG3JRbGgY3tmSzC2Ph21vgjdYqa8nsiMRMDyERiGICmHt5AE6s7/gWJrM
-	 3l8iPq1vlF07nVZr8qSZZV6qbf3Da4uQIz4tX/Y8=
+	b=cN87owDQ7z83HVMuO4TTJU5ZZOwIfX+dhfFFtmJ768abue1KESdSzO41q+P0lvm4G
+	 kvOMVQtOAshYh0V5tu5P9J5uxToN2GvAkPbPCAxeP5d7k2xAVNu3YiTmwf6pmqFacg
+	 eBZ8kD6jOngKf+iC5K7ieg7E8xqohDJoMao1K3Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/223] ALSA: hda/realtek: Workaround for resume on Dell Venue 11 Pro 7130
-Date: Wed, 23 Apr 2025 16:41:35 +0200
-Message-ID: <20250423142618.060842327@linuxfoundation.org>
+Subject: [PATCH 6.12 024/223] ALSA: hda/realtek - Fixed ASUS platform headset Mic issue
+Date: Wed, 23 Apr 2025 16:41:36 +0200
+Message-ID: <20250423142618.101175233@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -50,76 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 8c2fa44132e8cd1b05c77a705adb8d1f5a5daf3f ]
+[ Upstream commit b5458fcabd96ce29adbf7225c1741ecdfff70a91 ]
 
-It was reported that the headphone output on Dell Venue 11 Pro 7130
-becomes mono after PM resume.  The cause seems to be the BIOS setting
-up the codec COEF 0x0d bit 0x40 wrongly by some reason, and restoring
-the original value 0x2800 fixes the problem.
+ASUS platform Headset Mic was disable by default.
+Assigned verb table for Mic pin will enable it.
 
-This patch adds the quirk entry to perform the COEF restore.
-
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219697
-Link: https://bugzilla.opensuse.org/show_bug.cgi?id=1235686
-Link: https://patch.msgid.link/20250130123301.8996-1-tiwai@suse.de
+Fixes: 7ab61d0a9a35 ("ALSA: hda/realtek: Add support for ASUS B3405 and B3605 Laptops using CS35L41 HDA")
+Fixes: c86dd79a7c33 ("ALSA: hda/realtek: Add support for ASUS B5405 and B5605 Laptops using CS35L41 HDA")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/0fe3421a6850461fb0b7012cb28ef71d@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: b5458fcabd96 ("ALSA: hda/realtek - Fixed ASUS platform headset Mic issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/pci/hda/patch_realtek.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 4ae987731a152..b660bbfc6b0cc 100644
+index b660bbfc6b0cc..4171aa22747c3 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -7597,6 +7597,16 @@ static void alc287_fixup_lenovo_thinkpad_with_alc1318(struct hda_codec *codec,
- 	spec->gen.pcm_playback_hook = alc287_alc1318_playback_pcm_hook;
- }
- 
-+/*
-+ * Clear COEF 0x0d (PCBEEP passthrough) bit 0x40 where BIOS sets it wrongly
-+ * at PM resume
-+ */
-+static void alc283_fixup_dell_hp_resume(struct hda_codec *codec,
-+					const struct hda_fixup *fix, int action)
-+{
-+	if (action == HDA_FIXUP_ACT_INIT)
-+		alc_write_coef_idx(codec, 0xd, 0x2800);
-+}
- 
- enum {
- 	ALC269_FIXUP_GPIO2,
-@@ -7899,6 +7909,7 @@ enum {
- 	ALC269_FIXUP_VAIO_VJFH52_MIC_NO_PRESENCE,
+@@ -7910,6 +7910,7 @@ enum {
  	ALC233_FIXUP_MEDION_MTL_SPK,
  	ALC294_FIXUP_BASS_SPEAKER_15,
-+	ALC283_FIXUP_DELL_HP_RESUME,
+ 	ALC283_FIXUP_DELL_HP_RESUME,
++	ALC294_FIXUP_ASUS_CS35L41_SPI_2,
  };
  
  /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -10237,6 +10248,10 @@ static const struct hda_fixup alc269_fixups[] = {
+@@ -10252,6 +10253,12 @@ static const struct hda_fixup alc269_fixups[] = {
  		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc294_fixup_bass_speaker_15,
+ 		.v.func = alc283_fixup_dell_hp_resume,
  	},
-+	[ALC283_FIXUP_DELL_HP_RESUME] = {
++	[ALC294_FIXUP_ASUS_CS35L41_SPI_2] = {
 +		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc283_fixup_dell_hp_resume,
++		.v.func = cs35l41_fixup_spi_two,
++		.chained = true,
++		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC,
 +	},
  };
  
  static const struct hda_quirk alc269_fixup_tbl[] = {
-@@ -10297,6 +10312,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1028, 0x05f4, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x05f5, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x05f6, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0604, "Dell Venue 11 Pro 7130", ALC283_FIXUP_DELL_HP_RESUME),
- 	SND_PCI_QUIRK(0x1028, 0x0615, "Dell Vostro 5470", ALC290_FIXUP_SUBWOOFER_HSJACK),
- 	SND_PCI_QUIRK(0x1028, 0x0616, "Dell Vostro 5470", ALC290_FIXUP_SUBWOOFER_HSJACK),
- 	SND_PCI_QUIRK(0x1028, 0x062c, "Dell Latitude E5550", ALC292_FIXUP_DELL_E7X),
+@@ -10715,7 +10722,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x12a0, "ASUS X441UV", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x12a3, "Asus N7691ZM", ALC269_FIXUP_ASUS_N7601ZM),
+ 	SND_PCI_QUIRK(0x1043, 0x12af, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
+@@ -10804,14 +10811,14 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1fb3, "ASUS ROG Flow Z13 GZ302EA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3011, "ASUS B5605CVA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
+-	SND_PCI_QUIRK(0x1043, 0x3061, "ASUS B3405CCA", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x3071, "ASUS B5405CCA", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x30c1, "ASUS B3605CCA / P3605CCA", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x30d1, "ASUS B5405CCA", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x30e1, "ASUS B5605CCA", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x3061, "ASUS B3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x3071, "ASUS B5405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x30c1, "ASUS B3605CCA / P3605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x30d1, "ASUS B5405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x30e1, "ASUS B5605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x31d0, "ASUS Zen AIO 27 Z272SD_A272SD", ALC274_FIXUP_ASUS_ZEN_AIO_27),
+-	SND_PCI_QUIRK(0x1043, 0x31e1, "ASUS B5605CCA", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x31f1, "ASUS B3605CCA", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x31e1, "ASUS B5605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x31f1, "ASUS B3605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
 -- 
 2.39.5
 
