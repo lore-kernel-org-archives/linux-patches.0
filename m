@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D437F281375;
-	Wed, 23 Apr 2025 14:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC0A28134C;
+	Wed, 23 Apr 2025 14:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419697; cv=none; b=t1urjFJWvUrOWuUeNluKXH0ctPYli3wsv+mxPIMlxvR7tb+YtTj3GBho7XmhdZifm7//m5R5SJtFfMdDneGQp4J3lZ0IZtTrvR+BJjMrSbWygnbHxy2aVU3l7fcX97tUWk0PwkHqdWnU78hE2bYZF3zhXNWu7CcUSplOP4PAjrI=
+	t=1745419701; cv=none; b=RFqwuG4b2LF1yNUxInHkO5j4JyK35TR41Q6UjxfZCvqsGZpECsC5eTU+PJyKV+IBeedDgIwOOlGvCPHLrqNi8AJ/rqFKZG5UA7N2k0IYs7uC0X2V+v2euzW2R5Upp/2fUEfmO1Rjf2d5xuoCVvh6lMoA99NISi0Iqjc8mhpE4iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419697; c=relaxed/simple;
-	bh=fhhBOYAMPuiZMjjrF5oe/ltfxgZ8RV96mlrm43RqO8Y=;
+	s=arc-20240116; t=1745419701; c=relaxed/simple;
+	bh=i0qBAteUto6QpFzZvDK6pCEZKWst6tw2OLOhCEHaW4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+1QESTRRN4yccKfndK5Z11Xa+RYZZpu6jNOtIzQLGMwbKai6S8DTL+pCYIbl4tr3TCqIdZZj1NtujLDLqMMQ3d6n8GrgzTPM2QrBjIkT8Z9LtVQcFzGT1P90DMpoDTqV0zLSFhF0saHcL0pG4cpWCc8NMJ1roEXmtyR3rNuxhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJUVN3Vm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JaYKF2IUdR/hYc6Y8TpvZhB9AvRA6JObnHQ51fYRt/kyPa5mB/sdiO6tf3uwoiIo58shb5fJMlNtK3cJ3Sj6s77fDOXl+CFE+cOTo0dDw/XRHVCEAcbj6K7HWVwVM0TUDZgVK5yh8d0rOLtmpR+Q/d9kBXuDRvj5Kd8Fzqs5rS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6u/vmu7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJUVN3Vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE6EC4CEE3;
-	Wed, 23 Apr 2025 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6u/vmu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF178C4CEE2;
+	Wed, 23 Apr 2025 14:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419697;
-	bh=fhhBOYAMPuiZMjjrF5oe/ltfxgZ8RV96mlrm43RqO8Y=;
+	s=korg; t=1745419700;
+	bh=i0qBAteUto6QpFzZvDK6pCEZKWst6tw2OLOhCEHaW4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJUVN3VmkOGyNw1YCMRFMR0WT+STr+PDzeW323k6lN9nsWhRIjnh708D1c+dHlBJw
-	 XVKThq3Bo/YAHEHS74YzoyXg6LyJiKAT4F9hwacWQr01B5+Pgn5sE2APYq1lMt6CkZ
-	 alt3pSqfKVpMyqQf5aG0imUSzKW116o/aEwbXmAo=
+	b=A6u/vmu7lgIfnUK1X6+rAZ6YlMhiycKvgjfrW9FghQtElX36YI7fF3RNWJlGn0+Ey
+	 THSxFWugC0PgkkUSXYgc+o0cdtpSULSRwk6VaCiG2hcSQGg3pnFV3jww3GhP5Flt1V
+	 JXLmHtYr4VaeyZhIoNogMBQm1e8/b33wdFRdjF40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Scrivano <gscrivan@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Alexander Larsson <alexl@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/223] ovl: remove unused forward declaration
-Date: Wed, 23 Apr 2025 16:41:30 +0200
-Message-ID: <20250423142617.860217477@linuxfoundation.org>
+Subject: [PATCH 6.12 019/223] RDMA/usnic: Fix passing zero to PTR_ERR in usnic_ib_pci_probe()
+Date: Wed, 23 Apr 2025 16:41:31 +0200
+Message-ID: <20250423142617.901405427@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -54,36 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Scrivano <gscrivan@redhat.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit a6eb9a4a69cc360b930dad9dc8513f8fd9b3577f ]
+[ Upstream commit 95ba3850fed03e01b422ab5d7943aeba130c9723 ]
 
-The ovl_get_verity_xattr() function was never added, only its declaration.
+drivers/infiniband/hw/usnic/usnic_ib_main.c:590
+ usnic_ib_pci_probe() warn: passing zero to 'PTR_ERR'
 
-Signed-off-by: Giuseppe Scrivano <gscrivan@redhat.com>
-Fixes: 184996e92e86 ("ovl: Validate verity xattr when resolving lowerdata")
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Alexander Larsson <alexl@redhat.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Make usnic_ib_device_add() return NULL on fail path, also remove
+useless NULL check for usnic_ib_discover_pf()
+
+Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
+Link: https://patch.msgid.link/r/20250324123132.2392077-1-yuehaibing@huawei.com
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/infiniband/hw/usnic/usnic_ib_main.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index 844874b4a91a9..500a9634ad533 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -547,8 +547,6 @@ int ovl_set_metacopy_xattr(struct ovl_fs *ofs, struct dentry *d,
- bool ovl_is_metacopy_dentry(struct dentry *dentry);
- char *ovl_get_redirect_xattr(struct ovl_fs *ofs, const struct path *path, int padding);
- int ovl_ensure_verity_loaded(struct path *path);
--int ovl_get_verity_xattr(struct ovl_fs *ofs, const struct path *path,
--			 u8 *digest_buf, int *buf_length);
- int ovl_validate_verity(struct ovl_fs *ofs,
- 			struct path *metapath,
- 			struct path *datapath);
+diff --git a/drivers/infiniband/hw/usnic/usnic_ib_main.c b/drivers/infiniband/hw/usnic/usnic_ib_main.c
+index 13b654ddd3cc8..bcf7d8607d56e 100644
+--- a/drivers/infiniband/hw/usnic/usnic_ib_main.c
++++ b/drivers/infiniband/hw/usnic/usnic_ib_main.c
+@@ -380,7 +380,7 @@ static void *usnic_ib_device_add(struct pci_dev *dev)
+ 	if (!us_ibdev) {
+ 		usnic_err("Device %s context alloc failed\n",
+ 				netdev_name(pci_get_drvdata(dev)));
+-		return ERR_PTR(-EFAULT);
++		return NULL;
+ 	}
+ 
+ 	us_ibdev->ufdev = usnic_fwd_dev_alloc(dev);
+@@ -500,8 +500,8 @@ static struct usnic_ib_dev *usnic_ib_discover_pf(struct usnic_vnic *vnic)
+ 	}
+ 
+ 	us_ibdev = usnic_ib_device_add(parent_pci);
+-	if (IS_ERR_OR_NULL(us_ibdev)) {
+-		us_ibdev = us_ibdev ? us_ibdev : ERR_PTR(-EFAULT);
++	if (!us_ibdev) {
++		us_ibdev = ERR_PTR(-EFAULT);
+ 		goto out;
+ 	}
+ 
+@@ -569,10 +569,10 @@ static int usnic_ib_pci_probe(struct pci_dev *pdev,
+ 	}
+ 
+ 	pf = usnic_ib_discover_pf(vf->vnic);
+-	if (IS_ERR_OR_NULL(pf)) {
+-		usnic_err("Failed to discover pf of vnic %s with err%ld\n",
+-				pci_name(pdev), PTR_ERR(pf));
+-		err = pf ? PTR_ERR(pf) : -EFAULT;
++	if (IS_ERR(pf)) {
++		err = PTR_ERR(pf);
++		usnic_err("Failed to discover pf of vnic %s with err%d\n",
++				pci_name(pdev), err);
+ 		goto out_clean_vnic;
+ 	}
+ 
 -- 
 2.39.5
 
