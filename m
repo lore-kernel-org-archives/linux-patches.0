@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D128152D;
-	Wed, 23 Apr 2025 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E43828152D;
+	Wed, 23 Apr 2025 15:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422175; cv=none; b=Ptb5mJIejI8bzxkMoJpGv8cRyPCOEKPbzeJyvZUhJXySDio9NO0Xqqg0IyrMxS2XGENxvXaIIwhBsLPMXgMSAGz0vZ/ZCtO0M+y716V+19ZOpNHh1xp/rSFW1WttxT+Bs91d/jAMfnMwAD1QplGTJPrZNG5tgRr6mEeKtt5Kv3E=
+	t=1745422178; cv=none; b=AHBr6IFky3MSp3vL1aptkWwkb4SC32n799TO1WCwYGN962wCffqjse+iiRhXaemSmKg3ALkBPGcI8ienoE09CIZ2/Codc54syZT/m2ex0A8Zjs6Ztvp/3rXG6WHbPv2XQgD77r+AYLl+Dpw3TaBomKohAc1t7xNpKfkHWYQz+LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422175; c=relaxed/simple;
-	bh=KzS8Suj0ApsMWf6eQZ+dD7NmKNotmYkubPF4grzKEus=;
+	s=arc-20240116; t=1745422178; c=relaxed/simple;
+	bh=LPqZ5Q7hUUJV0bBkrP8H0xLU5zpoCqI/YJXzeaFe1Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DE9xt65diCb4se4IRJWvjKRjTAVBwB9wiLPTtuwDoB6hmcZb8NFVwJCX4iayvIK2sT79BNiJhacbVA6T0V1UZKnYd0IcunqDq/2JFDXBW4PbG6yNNZsxTMHy89n3NQg0ixiC+ZFOrDy/gdJzdLovo21jm4ZHUMVXGOPvR5fvWKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZrKLBCa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6NXVpp5qbvPyc6pxuMZhQCCigGZ1c1zHgSYjm/fFrUTdIlWQVd/SoaX2G7WR59ANMsbtQtN2NgxR0WSupw4WsJxjLO9Umixc+Hyh90MPxA30yXzC9ePxltqqmelLZcrDaQsgIWiAn6YFLSmn1cwvJedz3CrNLB4y5opBVXQXT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6uDJbb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZrKLBCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F8DC4CEE2;
-	Wed, 23 Apr 2025 15:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6uDJbb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DF2C4CEE3;
+	Wed, 23 Apr 2025 15:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422175;
-	bh=KzS8Suj0ApsMWf6eQZ+dD7NmKNotmYkubPF4grzKEus=;
+	s=korg; t=1745422177;
+	bh=LPqZ5Q7hUUJV0bBkrP8H0xLU5zpoCqI/YJXzeaFe1Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZrKLBCaR/hlRPp0jigj4yGW4e9PoMkRP+CvycT+4CcbrqiHEhOZtrwbsWTxczZ4M
-	 WoXtRsJvvazfIqLJO2RhINJsRqz4NJoRIltithsRvCrxtaL+09RbDWC179pNd5klte
-	 1jDBX3OiTU17taS64Gb6JxGykHhD+tcd3jLxQFB4=
+	b=d6uDJbb7yZakaLgQCR20ydGTF2POEQFW1HJv9g50PvkvjI5yF64KlTp/+mAeagEJI
+	 Xvpv0qKgyGGUogGEVE6/Bv/GrVtET5igLQO+Xcx1brzvxzCeuYMbzbtajFvliZYXDP
+	 gKylFm3zYN1I5axo5WdkYwRGCVDYKizcepszwZok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.1 250/291] KVM: arm64: Remove host FPSIMD saving for non-protected KVM
-Date: Wed, 23 Apr 2025 16:43:59 +0200
-Message-ID: <20250423142634.642902378@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 237/291] drm/amd/pm/powerplay/hwmgr/smu7_thermal: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:43:46 +0200
+Message-ID: <20250423142634.100748840@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -55,75 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 8eca7f6d5100b6997df4f532090bc3f7e0203bef ]
+commit 7c246a05df51c52fe0852ce56ba10c41e6ed1f39 upstream.
 
-Now that the host eagerly saves its own FPSIMD/SVE/SME state,
-non-protected KVM never needs to save the host FPSIMD/SVE/SME state,
-and the code to do this is never used. Protected KVM still needs to
-save/restore the host FPSIMD/SVE state to avoid leaking guest state to
-the host (and to avoid revealing to the host whether the guest used
-FPSIMD/SVE/SME), and that code needs to be retained.
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
-Remove the unused code and data structures.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-To avoid the need for a stub copy of kvm_hyp_save_fpsimd_host() in the
-VHE hyp code, the nVHE/hVHE version is moved into the shared switch
-header, where it is only invoked when KVM is in protected mode.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Tested-by: Mark Brown <broonie@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Fuad Tabba <tabba@google.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20250210195226.1215254-3-mark.rutland@arm.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c52dcf49195d ("drm/amd/pp: Avoid divide-by-zero in fan_ctrl_set_fan_speed_rpm")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h       |    1 -
- arch/arm64/kvm/fpsimd.c                 |    2 --
- arch/arm64/kvm/hyp/include/hyp/switch.h |    4 ----
- 3 files changed, 7 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -380,7 +380,6 @@ struct kvm_vcpu_arch {
- 	struct kvm_guest_debug_arch vcpu_debug_state;
- 	struct kvm_guest_debug_arch external_debug_state;
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c
+@@ -267,10 +267,10 @@ int smu7_fan_ctrl_set_fan_speed_rpm(stru
+ 	if (hwmgr->thermal_controller.fanInfo.bNoFan ||
+ 			(hwmgr->thermal_controller.fanInfo.
+ 			ucTachometerPulsesPerRevolution == 0) ||
+-			speed == 0 ||
++			(!speed || speed > UINT_MAX/8) ||
+ 			(speed < hwmgr->thermal_controller.fanInfo.ulMinRPM) ||
+ 			(speed > hwmgr->thermal_controller.fanInfo.ulMaxRPM))
+-		return 0;
++		return -EINVAL;
  
--	struct user_fpsimd_state *host_fpsimd_state;	/* hyp VA */
- 	struct task_struct *parent_task;
- 
- 	struct {
---- a/arch/arm64/kvm/fpsimd.c
-+++ b/arch/arm64/kvm/fpsimd.c
-@@ -49,8 +49,6 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_
- 	if (ret)
- 		return ret;
- 
--	vcpu->arch.host_fpsimd_state = kern_hyp_va(fpsimd);
--
- 	/*
- 	 * We need to keep current's task_struct pinned until its data has been
- 	 * unshared with the hypervisor to make sure it is not re-used by the
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -207,10 +207,6 @@ static bool kvm_hyp_handle_fpsimd(struct
- 	}
- 	isb();
- 
--	/* Write out the host state if it's in the registers */
--	if (vcpu->arch.fp_state == FP_STATE_HOST_OWNED)
--		__fpsimd_save_state(vcpu->arch.host_fpsimd_state);
--
- 	/* Restore the guest state */
- 	if (sve_guest)
- 		__hyp_sve_restore_guest(vcpu);
+ 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl))
+ 		smu7_fan_ctrl_stop_smc_fan_control(hwmgr);
 
 
