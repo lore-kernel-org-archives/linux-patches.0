@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470C9279906;
-	Wed, 23 Apr 2025 15:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8172B26A082;
+	Wed, 23 Apr 2025 15:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422131; cv=none; b=Vc3SqtiDo2iKnI4THWyhJLwtkirM1LWbcppalo2sa4ZXesWGvtl1jWsSvb0YxNVEGuGwpo2tkbXiol0BaNy0+nmm7tvXDBffPLdeg1ACg3qJQLqVVB3jaVwjP5mlIKgHp0sxC2mfFKVgKAtY+0q96TnRpWbFe9SynoD0sNdF7No=
+	t=1745422133; cv=none; b=hBrnY1G+I6Pi/dpzh2qho194ilH1A5gxVILir1Y1cyuPN6gDQEGJzF81EF04DLeCV86cmMkoVX1dMowsY3GQUM3vOXqAtghse8I9QCWirMkeqS28CdNB2Khqvkp62f4C6L1GTVVltJrAeYHeYH4oPaxAuqgurE+eTzhvgGWPhZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422131; c=relaxed/simple;
-	bh=SVbWkhcbnOKIGR/RCMItJDWvmz0RnfPLzBwO6X2DhSQ=;
+	s=arc-20240116; t=1745422133; c=relaxed/simple;
+	bh=7o2noUH7fVOMAwUY9i2GAPvok+5TNrxvWXu8NzID/9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDK6jfs0rFLtv2JVhBXcXCdj17FFO0zFKpIasrGNHkbaN6cUMc+9G4OjcW+9zq2tzW96Z5/tif+9tLVOrGKFQPRvsTdb/x0c489iIob7JUqjo4oZjh3zcXCP/6V80wLYaclSbcBhGmO2Gr2BlYQ1mTxeQ2wnjcNJE+SgD579nUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vacl8u09; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTqrGZI4wwws+A8APCH8YaAhdd7dDb17SwkPoNy1aEw62NbN0yjJFucE9svhEesAF2RKSM1WwVHfsdTHBVCDyTBSYC2RZ69oMA+aBFKqOMIy+sAStPrJBIHA37AeGP5a6JXafCTTBzi2NOhC0+Wm36CXVur/Y1syyavbanTJBj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skoI6Aqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vacl8u09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75336C4CEE2;
-	Wed, 23 Apr 2025 15:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skoI6Aqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1408CC4CEED;
+	Wed, 23 Apr 2025 15:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422130;
-	bh=SVbWkhcbnOKIGR/RCMItJDWvmz0RnfPLzBwO6X2DhSQ=;
+	s=korg; t=1745422133;
+	bh=7o2noUH7fVOMAwUY9i2GAPvok+5TNrxvWXu8NzID/9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vacl8u09ATrEONWWernQhb7HPp7TVDgheEuCXmp7Fg/hxgO/r/EP85RXVtyWPMucT
-	 AoQvSmOqwbHvdUJrzCK6wUa9rMJtXCpaaeKGs6ivEqNCIG5UC8hs3erfuvjGrW+ETc
-	 sQHRbO1ysoqwGfins5xyOzbRxe9dZEDAV6Y/LVn8=
+	b=skoI6Aqf1OgF/2H8otIHVbXLeO6Q7TmB4vTsQbHRtf3266PFOhRTkgtSRs6Bn/Kvy
+	 tV5cZD6w2OjrWBD6akBa1xuTZqtZWeY4KTQDYM6SVh7c09NJLOYrRQaJXPOdvVV9Qd
+	 ffnP0cFcNEsV+pVVoCfLZu5/nV9Pq1dSDVqmX17Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Rolf Eike Beer <eb@emlix.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 6.1 242/291] drm/sti: remove duplicate object names
-Date: Wed, 23 Apr 2025 16:43:51 +0200
-Message-ID: <20250423142634.308079982@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 284/393] net: dsa: mv88e6xxx: avoid unregistering devlink regions which were never registered
+Date: Wed, 23 Apr 2025 16:43:00 +0200
+Message-ID: <20250423142655.074885010@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,37 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rolf Eike Beer <eb@emlix.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 7fb6afa9125fc111478615e24231943c4f76cc2e upstream.
+[ Upstream commit c84f6ce918a9e6f4996597cbc62536bbf2247c96 ]
 
-When merging 2 drivers common object files were not deduplicated.
+Russell King reports that a system with mv88e6xxx dereferences a NULL
+pointer when unbinding this driver:
+https://lore.kernel.org/netdev/Z_lRkMlTJ1KQ0kVX@shell.armlinux.org.uk/
 
-Fixes: dcec16efd677 ("drm/sti: Build monolithic driver")
-Cc: stable@kernel.org
-Signed-off-by: Rolf Eike Beer <eb@emlix.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/1920148.tdWV9SEqCh@devpool47.emlix.com
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The crash seems to be in devlink_region_destroy(), which is not NULL
+tolerant but is given a NULL devlink global region pointer.
+
+At least on some chips, some devlink regions are conditionally registered
+since the blamed commit, see mv88e6xxx_setup_devlink_regions_global():
+
+		if (cond && !cond(chip))
+			continue;
+
+These are MV88E6XXX_REGION_STU and MV88E6XXX_REGION_PVT. If the chip
+does not have an STU or PVT, it should crash like this.
+
+To fix the issue, avoid unregistering those regions which are NULL, i.e.
+were skipped at mv88e6xxx_setup_devlink_regions_global() time.
+
+Fixes: 836021a2d0e0 ("net: dsa: mv88e6xxx: Export cross-chip PVT as devlink region")
+Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250414212850.2953957-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sti/Makefile |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/devlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/sti/Makefile
-+++ b/drivers/gpu/drm/sti/Makefile
-@@ -7,8 +7,6 @@ sti-drm-y := \
- 	sti_compositor.o \
- 	sti_crtc.o \
- 	sti_plane.o \
--	sti_crtc.o \
--	sti_plane.o \
- 	sti_hdmi.o \
- 	sti_hdmi_tx3g4c28phy.o \
- 	sti_dvo.o \
+diff --git a/drivers/net/dsa/mv88e6xxx/devlink.c b/drivers/net/dsa/mv88e6xxx/devlink.c
+index a08dab75e0c0c..f57fde02077d2 100644
+--- a/drivers/net/dsa/mv88e6xxx/devlink.c
++++ b/drivers/net/dsa/mv88e6xxx/devlink.c
+@@ -743,7 +743,8 @@ void mv88e6xxx_teardown_devlink_regions_global(struct dsa_switch *ds)
+ 	int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(mv88e6xxx_regions); i++)
+-		dsa_devlink_region_destroy(chip->regions[i]);
++		if (chip->regions[i])
++			dsa_devlink_region_destroy(chip->regions[i]);
+ }
+ 
+ void mv88e6xxx_teardown_devlink_regions_port(struct dsa_switch *ds, int port)
+-- 
+2.39.5
+
 
 
