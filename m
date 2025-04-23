@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABD127A12D;
-	Wed, 23 Apr 2025 14:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E48819DF4C;
+	Wed, 23 Apr 2025 14:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420196; cv=none; b=el7AWT7Au+PqDQ9aj1ZEEYD1eGwm8x/GjZLCJH/oRrQgj/Xf1yG8qhNAaxv1WLnGsD8LxWTz4A56PqLEAqd3sIm5oOaxY7KugDH/izRCgisUG14sRv7eJD4RrNp3Zx457ABbYLbOE+3W6oGUSzfDsxRPz58/IRgLfRxqXdC/Iq0=
+	t=1745420197; cv=none; b=Hr371HeJ1JFg8xS+B8Vm72AHkCfXnPAdsVw+WWO8Zms7AGH/NGNp35LRDHBleJvFML1byR2PhRDf8gx/XYoOEY0Hh9k6PZ9NqjJMRHQLJDBpw0TYsR+OtSCcREcAFQF3J5I4oW+XBCRpVBGYbfvXPR05Wj4SShCK0zdQPYZH7DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420196; c=relaxed/simple;
-	bh=nNywJ6ruJTI4Vt570s2Au550I1AU+2ihV+2hcLd/eNU=;
+	s=arc-20240116; t=1745420197; c=relaxed/simple;
+	bh=72NMWS7FNd70dGYm+inwnKQvwfnQqOUOXjtHJEaqIDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GplUdZPWyCf3tncMnrJNyDx4Fw0YngCNdoxojnqeN2TZW+L8kuCTcw9dTGqYRPzxSTUfFQf8pizjV+Yeg5iftimxztqb9C3fdOz5DmP0DdjwIR/gNu8YkQvSVQ8q8przrB9sq3KRFIdiBHYqPCls5U09WzP9FU57RtQzGMgmdTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmJgj9vK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EGt/OXunQ+EumcYrL3anLXN3lgDaTd1dwUurCtQZw/yXtz9FQtECH2ceYtHMdEXvmzgfASc6LJmJWUcKCz7eJaniQ6vkpqjnCmDrCusx2b+Bu9u++a3NN6NggBhULK1SmckDwuaBvu5c9OxbNne2GkESkxWoaWeJNLt8bhMVlbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSmmlJ0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmJgj9vK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE91C4CEE3;
-	Wed, 23 Apr 2025 14:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSmmlJ0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E40C4CEE2;
+	Wed, 23 Apr 2025 14:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420194;
-	bh=nNywJ6ruJTI4Vt570s2Au550I1AU+2ihV+2hcLd/eNU=;
+	s=korg; t=1745420197;
+	bh=72NMWS7FNd70dGYm+inwnKQvwfnQqOUOXjtHJEaqIDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmJgj9vKqM132ozynoobpDhxSfYIMUuxfCkqMsdhrifoHSVRPOOJ/mRpu/MH9QnAr
-	 LxucM6AxIG231C23LYDYHazZEAIJk8OR6yLUXODerIUK9iAimFI+fqEwUVW8ExAFRJ
-	 8L+GipaFXLlLmTYDmBf6IMDKkyQW9Z+6NgO983ts=
+	b=fSmmlJ0PmKqhj3MpB5tJmyFpoejRO9LjDS8tpAm8JrQmYgxV6uChZNAeVAaknijk1
+	 +DHBmJWc3+TifyHwbfkvbr+Cw3B/e6PsTX4WaxE0oYiG+NTfFWRd2uXteTuFIv7tyj
+	 23OjTw3fJ9VOLVuveGWC4cA8R9S41E2abH2jBwp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Makarenko Oleg <oleg@makarenk.ooo>,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/393] HID: pidff: Add MISSING_DELAY quirk and its detection
-Date: Wed, 23 Apr 2025 16:39:06 +0200
-Message-ID: <20250423142645.365571717@linuxfoundation.org>
+	Calvin Walton <calvin.walton@kepstin.ca>,
+	Johannes Kimmel <kernel@bareminimum.eu>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 108/223] btrfs: correctly escape subvol in btrfs_show_options()
+Date: Wed, 23 Apr 2025 16:43:00 +0200
+Message-ID: <20250423142621.512668233@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,150 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Johannes Kimmel <kernel@bareminimum.eu>
 
-[ Upstream commit 2d5c7ce5bf4cc27db41632f357f682d0ee4518e7 ]
+commit dc08c58696f8555e4a802f1f23c894a330d80ab7 upstream.
 
-A lot of devices do not include this field, and it's seldom used in force
-feedback implementations. I tested about three dozen applications and
-none of them make use of the delay.
+Currently, displaying the btrfs subvol mount option doesn't escape ','.
+This makes parsing /proc/self/mounts and /proc/self/mountinfo
+ambiguous for subvolume names that contain commas. The text after the
+comma could be mistaken for another option (think "subvol=foo,ro", where
+ro is actually part of the subvolumes name).
 
-This fixes initialization of a lot of PID wheels like Cammus, VRS, FFBeast
+Replace the manual escape characters list with a call to
+seq_show_option(). Thanks to Calvin Walton for suggesting this approach.
 
-This change has no effect on fully compliant devices
-
-Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c8d3fe028f64 ("Btrfs: show subvol= and subvolid= in /proc/mounts")
+CC: stable@vger.kernel.org # 5.4+
+Suggested-by: Calvin Walton <calvin.walton@kepstin.ca>
+Signed-off-by: Johannes Kimmel <kernel@bareminimum.eu>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 33 ++++++++++++++++++++++++++++-----
- include/linux/hid.h            |  3 +++
- 2 files changed, 31 insertions(+), 5 deletions(-)
+ fs/btrfs/super.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index a01c1b2ab2f4c..929f5967e7cb1 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -185,6 +185,8 @@ struct pidff_device {
- 	int operation_id[sizeof(pidff_effect_operation_status)];
- 
- 	int pid_id[PID_EFFECTS_MAX];
-+
-+	u32 quirks;
- };
- 
- /*
-@@ -329,7 +331,10 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 	pidff->effect_direction->value[0] =
- 		pidff_rescale(effect->direction, 0xffff,
- 				pidff->effect_direction);
--	pidff->set_effect[PID_START_DELAY].value[0] = effect->replay.delay;
-+
-+	/* Omit setting delay field if it's missing */
-+	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
-+		pidff->set_effect[PID_START_DELAY].value[0] = effect->replay.delay;
- 
- 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
- 			HID_REQ_SET_REPORT);
-@@ -748,7 +753,10 @@ static void pidff_autocenter(struct pidff_device *pidff, u16 magnitude)
- 	pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] = 0;
- 	pidff_set(&pidff->set_effect[PID_GAIN], magnitude);
- 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
--	pidff->set_effect[PID_START_DELAY].value[0] = 0;
-+
-+	/* Omit setting delay field if it's missing */
-+	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
-+		pidff->set_effect[PID_START_DELAY].value[0] = 0;
- 
- 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
- 			HID_REQ_SET_REPORT);
-@@ -771,6 +779,7 @@ static int pidff_find_fields(struct pidff_usage *usage, const u8 *table,
- 			     struct hid_report *report, int count, int strict)
- {
- 	int i, j, k, found;
-+	int return_value = 0;
- 
- 	for (k = 0; k < count; k++) {
- 		found = 0;
-@@ -795,12 +804,17 @@ static int pidff_find_fields(struct pidff_usage *usage, const u8 *table,
- 			if (found)
- 				break;
- 		}
--		if (!found && strict) {
-+		if (!found && table[k] == pidff_set_effect[PID_START_DELAY]) {
-+			pr_debug("Delay field not found, but that's OK\n");
-+			pr_debug("Setting MISSING_DELAY quirk\n");
-+			return_value |= HID_PIDFF_QUIRK_MISSING_DELAY;
-+		}
-+		else if (!found && strict) {
- 			pr_debug("failed to locate %d\n", k);
- 			return -1;
- 		}
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1140,8 +1140,7 @@ static int btrfs_show_options(struct seq
+ 	subvol_name = btrfs_get_subvol_name_from_objectid(info,
+ 			btrfs_root_id(BTRFS_I(d_inode(dentry))->root));
+ 	if (!IS_ERR(subvol_name)) {
+-		seq_puts(seq, ",subvol=");
+-		seq_escape(seq, subvol_name, " \t\n\\");
++		seq_show_option(seq, "subvol", subvol_name);
+ 		kfree(subvol_name);
  	}
--	return 0;
-+	return return_value;
- }
- 
- /*
-@@ -1075,11 +1089,19 @@ static int pidff_find_effects(struct pidff_device *pidff,
- static int pidff_init_fields(struct pidff_device *pidff, struct input_dev *dev)
- {
- 	int envelope_ok = 0;
-+	int status = 0;
- 
--	if (PIDFF_FIND_FIELDS(set_effect, PID_SET_EFFECT, 1)) {
-+	/* Save info about the device not having the DELAY ffb field. */
-+	status = PIDFF_FIND_FIELDS(set_effect, PID_SET_EFFECT, 1);
-+	if (status == -1) {
- 		hid_err(pidff->hid, "unknown set_effect report layout\n");
- 		return -ENODEV;
- 	}
-+	pidff->quirks |= status;
-+
-+	if (status & HID_PIDFF_QUIRK_MISSING_DELAY)
-+		hid_dbg(pidff->hid, "Adding MISSING_DELAY quirk\n");
-+
- 
- 	PIDFF_FIND_FIELDS(block_load, PID_BLOCK_LOAD, 0);
- 	if (!pidff->block_load[PID_EFFECT_BLOCK_INDEX].value) {
-@@ -1323,6 +1345,7 @@ int hid_pidff_init(struct hid_device *hid)
- 	ff->playback = pidff_playback;
- 
- 	hid_info(dev, "Force feedback for USB HID PID devices by Anssi Hannula <anssi.hannula@gmail.com>\n");
-+	hid_dbg(dev, "Active quirks mask: 0x%x\n", pidff->quirks);
- 
- 	hid_device_io_stop(hid);
- 
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 774cb25dec34c..744a498462cec 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1218,6 +1218,9 @@ int hid_pidff_init(struct hid_device *hid);
- #define hid_pidff_init NULL
- #endif
- 
-+/* HID PIDFF quirks */
-+#define HID_PIDFF_QUIRK_MISSING_DELAY	BIT(0)
-+
- #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
- #define hid_err(hid, fmt, ...)				\
--- 
-2.39.5
-
+ 	return 0;
 
 
