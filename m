@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEF128935C;
-	Wed, 23 Apr 2025 15:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC8429B201;
+	Wed, 23 Apr 2025 15:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422480; cv=none; b=KDRjkTvexG5+U+wcOr35RxyxJZfdm1WlLyxY0jZGM/lhNvMUfJxTqNhMtivHFwJw5vQ5hJYQoB8ZvqczM8PUwbzsWYLyylgEmy9xVagUwOpRZQWoR5OhnkIYYpccIl3LINr9Ja/ejTomWa6n5ppdKDkiV+2Jnsisx1KSWh1JfuA=
+	t=1745422483; cv=none; b=gSCzgUHDTHiLDEFeHHmmY5NoipEECSD/8Mq0/1RtXwzGoHhh0XMoLvyPI1g4M6Q7SJs5x9t0YRDg11+PGG6S4ShMaKaC+MPIwbl5K1b+ReebZyFa4D4yS2RTP6DXZrQjM+yabRIsaDTbIV/3hDkMCxXN+ipk5+xEl46lT6b/rlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422480; c=relaxed/simple;
-	bh=naX5RoI9zupu7UzJMEBsvXfDyp21nytj+DIazYbZ3fI=;
+	s=arc-20240116; t=1745422483; c=relaxed/simple;
+	bh=nBOB2RB8Gi5Quj2lV/zQhImxicJWnB8a6mxXg5tyIMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dChuv9b3AKhHlh2PA9MyknTRinjHQI/SdAOxA+wOkrxY4Qne+bebdja2uRv+9DsuPlevPuN5vy5jqxVKT94jAo/pZneML7tRhY4ksuk8WzMGnu5CxEEKJttNOTSS6OH/V+mDfyYt4kXaGsKeTkr/EpNVUpxToqCogC8DVolN7mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVoRaEFP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYyV4a+nJwZaB0ZMwgAyN9SLw1ge5ecmi2rgbwCv0hK1a3AVDYjppDbgCHGa27iJktDZkDq3HrwjvvSes5Y2plkBtiWKBMkYvFrNGrWBWvj/AI1Y7C8tWGTymAFERTsJmyP0+OI0kTeDXbqI6t6z8VjmEQKvPtXdYUjP4072o6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIcD5TDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVoRaEFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F2AC4CEE2;
-	Wed, 23 Apr 2025 15:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIcD5TDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E9FC4CEE2;
+	Wed, 23 Apr 2025 15:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422480;
-	bh=naX5RoI9zupu7UzJMEBsvXfDyp21nytj+DIazYbZ3fI=;
+	s=korg; t=1745422482;
+	bh=nBOB2RB8Gi5Quj2lV/zQhImxicJWnB8a6mxXg5tyIMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVoRaEFPx2yX6Muw5gA8yCh02tSkNT0TNAXZOxgEyU/98BIggzUkvR2Ebr1rJ5Jh3
-	 ijuCeab1gMZW5JCE65J8EwZrYAXb/81tpCvmTcl9H794J1XwSQCxeSGU9JYZWcRHhN
-	 XHHgFOAnEs3nIsCV8s/+gVaTsV3dVYYobU7qwL+w=
+	b=dIcD5TDHhqBmF7mynXS0s154aZje1oXFoYvt+BMgnI5+k4NsBz5saoD1U97fSmagk
+	 cF/RJbPuC1CTzA4ZIWwEYs4Y52OW9+x0kSByrrMYqpsMC8T5x9v1JmjCZTAorsOR/D
+	 NXli8K9j/5+ePp3iQcFe+lsymhiNY+RO1yljxl6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 367/393] misc: pci_endpoint_test: Fix irq_type to convey the correct type
-Date: Wed, 23 Apr 2025 16:44:23 +0200
-Message-ID: <20250423142658.499399619@linuxfoundation.org>
+	Piotr Jaroszynski <pjaroszynski@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	SeongJae Park <sj@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.6 368/393] Fix mmu notifiers for range-based invalidates
+Date: Wed, 23 Apr 2025 16:44:24 +0200
+Message-ID: <20250423142658.539422318@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -46,69 +56,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Piotr Jaroszynski <pjaroszynski@nvidia.com>
 
-commit baaef0a274cfb75f9b50eab3ef93205e604f662c upstream.
+commit f7edb07ad7c66eab3dce57384f33b9799d579133 upstream.
 
-There are two variables that indicate the interrupt type to be used
-in the next test execution, "irq_type" as global and "test->irq_type".
+Update the __flush_tlb_range_op macro not to modify its parameters as
+these are unexepcted semantics. In practice, this fixes the call to
+mmu_notifier_arch_invalidate_secondary_tlbs() in
+__flush_tlb_range_nosync() to use the correct range instead of an empty
+range with start=end. The empty range was (un)lucky as it results in
+taking the invalidate-all path that doesn't cause correctness issues,
+but can certainly result in suboptimal perf.
 
-The global is referenced from pci_endpoint_test_get_irq() to preserve
-the current type for ioctl(PCITEST_GET_IRQTYPE).
+This has been broken since commit 6bbd42e2df8f ("mmu_notifiers: call
+invalidate_range() when invalidating TLBs") when the call to the
+notifiers was added to __flush_tlb_range(). It predates the addition of
+the __flush_tlb_range_op() macro from commit 360839027a6e ("arm64: tlb:
+Refactor the core flush algorithm of __flush_tlb_range") that made the
+bug hard to spot.
 
-The type set in this function isn't reflected in the global "irq_type",
-so ioctl(PCITEST_GET_IRQTYPE) returns the previous type.
+Fixes: 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when invalidating TLBs")
 
-As a result, the wrong type is displayed in old version of "pcitest"
-as follows:
-
-  - Result of running "pcitest -i 0"
-
-      SET IRQ TYPE TO LEGACY:         OKAY
-
-  - Result of running "pcitest -I"
-
-      GET IRQ TYPE:           MSI
-
-Whereas running the new version of "pcitest" in kselftest results in an
-error as follows:
-
-  #  RUN           pci_ep_basic.LEGACY_IRQ_TEST ...
-  # pci_endpoint_test.c:104:LEGACY_IRQ_TEST:Expected 0 (0) == ret (1)
-  # pci_endpoint_test.c:104:LEGACY_IRQ_TEST:Can't get Legacy IRQ type
-
-Fix this issue by propagating the current type to the global "irq_type".
-
-Fixes: b2ba9225e031 ("misc: pci_endpoint_test: Avoid using module parameter to determine irqtype")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Piotr Jaroszynski <pjaroszynski@nvidia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: iommu@lists.linux.dev
+Cc: linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250225110252.28866-5-hayashi.kunihiko@socionext.com
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Link: https://lore.kernel.org/r/20250304085127.2238030-1-pjaroszynski@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[will: Resolve conflicts due to lack of LPA2 support]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/tlbflush.h |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -711,6 +711,7 @@ static bool pci_endpoint_test_set_irq(st
- 	if (!pci_endpoint_test_request_irq(test))
- 		goto err;
- 
-+	irq_type = test->irq_type;
- 	return true;
- 
- err:
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -369,31 +369,33 @@ static inline void arch_tlbbatch_flush(s
+ #define __flush_tlb_range_op(op, start, pages, stride,			\
+ 				asid, tlb_level, tlbi_user)		\
+ do {									\
++	typeof(start) __flush_start = start;				\
++	typeof(pages) __flush_pages = pages;				\
+ 	int num = 0;							\
+ 	int scale = 3;							\
+ 	unsigned long addr;						\
+ 									\
+-	while (pages > 0) {						\
++	while (__flush_pages > 0) {					\
+ 		if (!system_supports_tlb_range() ||			\
+-		    pages == 1) {					\
+-			addr = __TLBI_VADDR(start, asid);		\
++		    __flush_pages == 1) {				\
++			addr = __TLBI_VADDR(__flush_start, asid);	\
+ 			__tlbi_level(op, addr, tlb_level);		\
+ 			if (tlbi_user)					\
+ 				__tlbi_user_level(op, addr, tlb_level);	\
+-			start += stride;				\
+-			pages -= stride >> PAGE_SHIFT;			\
++			__flush_start += stride;			\
++			__flush_pages -= stride >> PAGE_SHIFT;		\
+ 			continue;					\
+ 		}							\
+ 									\
+-		num = __TLBI_RANGE_NUM(pages, scale);			\
++		num = __TLBI_RANGE_NUM(__flush_pages, scale);		\
+ 		if (num >= 0) {						\
+-			addr = __TLBI_VADDR_RANGE(start, asid, scale,	\
+-						  num, tlb_level);	\
++			addr = __TLBI_VADDR_RANGE(__flush_start, asid,	\
++						scale, num, tlb_level);	\
+ 			__tlbi(r##op, addr);				\
+ 			if (tlbi_user)					\
+ 				__tlbi_user(r##op, addr);		\
+-			start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
+-			pages -= __TLBI_RANGE_PAGES(num, scale);	\
++			__flush_start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
++			__flush_pages -= __TLBI_RANGE_PAGES(num, scale);\
+ 		}							\
+ 		scale--;						\
+ 	}								\
 
 
