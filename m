@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B8280A52;
-	Wed, 23 Apr 2025 15:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F64293460;
+	Wed, 23 Apr 2025 15:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421600; cv=none; b=SJo3BZEmmNCVfTA5hwMgzto5z6P/uQILNZ513Z8FQWu+FLi/VyYQzTQaPtO5OmzHxtnRw6V2eRmYStri0ZfIgmXO7i+srbt3PFJdgpPImZ5CYHctCzyMvJipv6QuRnV9+DhaU0aQtnKz6UTt17TnEEhlJKFidQq3EA1EJOICtDw=
+	t=1745421602; cv=none; b=nhagAoaQtqRuo0MVQ+naVovVTpjEGdLjuG5NuwHVD6uAqIdsk2x15oUaJzrqTf0jOFzYNT8F3iZRmCSF9gqFjeM9+lX/h814FrQWgsTrFvO/60TcQHa1yOO7aHtXQH7WYL3Rddhx897LgqAXwJ0yvjB5+mijZvKKHf4TBofpMR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421600; c=relaxed/simple;
-	bh=CpPMyflzQ+mkDeSwYUT5Qx4UPqfRTWxT92DhoBXQwyA=;
+	s=arc-20240116; t=1745421602; c=relaxed/simple;
+	bh=DOkFIa6JRizkW9ejA9Z22ugmXUArjO8+CRX1yrbzGsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hx6Z8KDDn9g17RXfcjuwLFqG7XNfbxaBNKo56inP9FRk24nMJ9+zoP0pJnt3Os1XjGm6mgi1eQLXn/F/L1elbzEKuYoer7C9lVNSws3IOd4L6xyJF+z0HUTjTN/b4TwH6ebFk7DFtRKovXhI1trmwzf5PjydiKTd2EOG0zkyrFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osv01vbK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JpdjAYSkFkemX+4tuvci+duz3v7zbnn2OfIxj966DLp/f/fsrM5lBXdBligLzAT4EJJcvM5WUAHUJRmnrxNmrR3C9DfVlMZkZlr/9WaFwqcxHYIgAXJaISW9mjWBMzGCKtNN3/TXF9YSuMMzuOU/ccVENnDWTrs+UBSDB1K6Mpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6sJ8GtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osv01vbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECB0C4CEE2;
-	Wed, 23 Apr 2025 15:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6sJ8GtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47256C4CEE2;
+	Wed, 23 Apr 2025 15:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421599;
-	bh=CpPMyflzQ+mkDeSwYUT5Qx4UPqfRTWxT92DhoBXQwyA=;
+	s=korg; t=1745421602;
+	bh=DOkFIa6JRizkW9ejA9Z22ugmXUArjO8+CRX1yrbzGsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osv01vbKqWlTfhI2JhFcRyENN19B/aTSDZ9Cl4bc1KFeZKkWciXDFoixDffURldw/
-	 E2AUabqo34LzHyNLXhJJrcIbxXX/FAsLvuAGzsYhh1lyWEhAyR/eISsdwIhWwjn0xS
-	 RGC5ABW+gwW0xB0JqhqIdqdRRVHpbW2Z5aOj+CXQ=
+	b=F6sJ8GtHWZryG+SEpTCvQId5izp6HRxLUZFFttVz5tMiTMngQrLPMxew9jSAu4zGM
+	 L+3kBFcqMP8FcxveT1cHNbw3CUEWZbZl2kiQ+bw9Fy0UrR7UvAbzdah0AeAUUqH4nD
+	 wRcuncVEX/NMMXVng5NYj00fWPzZ/5Qxi9Ltbg6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 198/393] x86/xen: fix balloon target initialization for PVH dom0
-Date: Wed, 23 Apr 2025 16:41:34 +0200
-Message-ID: <20250423142651.566091814@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.14 210/241] drm/amd/display: Protect FPU in dml2_init()/dml21_init()
+Date: Wed, 23 Apr 2025 16:44:34 +0200
+Message-ID: <20250423142629.121550549@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,166 +46,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 87af633689ce16ddb166c80f32b120e50b1295de upstream.
+commit afcdf51d97cd58dd7a2e0aa8acbaea5108fa6826 upstream.
 
-PVH dom0 re-uses logic from PV dom0, in which RAM ranges not assigned to
-dom0 are re-used as scratch memory to map foreign and grant pages.  Such
-logic relies on reporting those unpopulated ranges as RAM to Linux, and
-mark them as reserved.  This way Linux creates the underlying page
-structures required for metadata management.
+Commit 7da55c27e76749b9 ("drm/amd/display: Remove incorrect FP context
+start") removes the FP context protection of dml2_create(), and it said
+"All the DC_FP_START/END should be used before call anything from DML2".
 
-Such approach works fine on PV because the initial balloon target is
-calculated using specific Xen data, that doesn't take into account the
-memory type changes described above.  However on HVM and PVH the initial
-balloon target is calculated using get_num_physpages(), and that function
-does take into account the unpopulated RAM regions used as scratch space
-for remote domain mappings.
+However, dml2_init()/dml21_init() are not protected from their callers,
+causing such errors:
 
-This leads to PVH dom0 having an incorrect initial balloon target, which
-causes malfunction (excessive memory freeing) of the balloon driver if the
-dom0 memory target is later adjusted from the toolstack.
+ do_fpu invoked from kernel context![#1]:
+ CPU: 0 UID: 0 PID: 239 Comm: kworker/0:5 Not tainted 6.14.0-rc6+ #2
+ Workqueue: events work_for_cpu_fn
+ pc ffff80000319de80 ra ffff80000319de5c tp 900000010575c000 sp 900000010575f840
+ a0 0000000000000000 a1 900000012f210130 a2 900000012f000000 a3 ffff80000357e268
+ a4 ffff80000357e260 a5 900000012ea52cf0 a6 0000000400000004 a7 0000012c00001388
+ t0 00001900000015e0 t1 ffff80000379d000 t2 0000000010624dd3 t3 0000006400000014
+ t4 00000000000003e8 t5 0000005000000018 t6 0000000000000020 t7 0000000f00000064
+ t8 000000000000002f u0 5f5e9200f8901912 s9 900000012d380010 s0 900000012ea51fd8
+ s1 900000012f000000 s2 9000000109296000 s3 0000000000000001 s4 0000000000001fd8
+ s5 0000000000000001 s6 ffff800003415000 s7 900000012d390000 s8 ffff800003211f80
+    ra: ffff80000319de5c dml21_apply_soc_bb_overrides+0x3c/0x960 [amdgpu]
+   ERA: ffff80000319de80 dml21_apply_soc_bb_overrides+0x60/0x960 [amdgpu]
+  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+  PRMD: 00000004 (PPLV0 +PIE -PWE)
+  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+ ESTAT: 000f0000 [FPD] (IS= ECode=15 EsubCode=0)
+  PRID: 0014d010 (Loongson-64bit, Loongson-3C6000/S)
+ Process kworker/0:5 (pid: 239, threadinfo=00000000927eadc6, task=000000008fd31682)
+ Stack : 00040dc000003164 0000000000000001 900000012f210130 900000012eabeeb8
+         900000012f000000 ffff80000319fe48 900000012f210000 900000012f210130
+         900000012f000000 900000012eabeeb8 0000000000000001 ffff8000031a0064
+         900000010575f9f0 900000012f210130 900000012eac0000 900000012ea80000
+         900000012f000000 ffff8000031cefc4 900000010575f9f0 ffff8000035859c0
+         ffff800003414000 900000010575fa78 900000012f000000 ffff8000031b4c50
+         0000000000000000 9000000101c9d700 9000000109c40000 5f5e9200f8901912
+         900000012d3c4bd0 900000012d3c5000 ffff8000034aed18 900000012d380010
+         900000012d3c4bd0 ffff800003414000 900000012d380000 ffff800002ea49dc
+         0000000000000001 900000012d3c6000 00000000ffffe423 0000000000010000
+         ...
+ Call Trace:
+ [<ffff80000319de80>] dml21_apply_soc_bb_overrides+0x60/0x960 [amdgpu]
+ [<ffff80000319fe44>] dml21_init+0xa4/0x280 [amdgpu]
+ [<ffff8000031a0060>] dml21_create+0x40/0x80 [amdgpu]
+ [<ffff8000031cefc0>] dc_state_create+0x100/0x160 [amdgpu]
+ [<ffff8000031b4c4c>] dc_create+0x44c/0x640 [amdgpu]
+ [<ffff800002ea49d8>] amdgpu_dm_init+0x3f8/0x2060 [amdgpu]
+ [<ffff800002ea6658>] dm_hw_init+0x18/0x60 [amdgpu]
+ [<ffff800002b16738>] amdgpu_device_init+0x1938/0x27e0 [amdgpu]
+ [<ffff800002b18e80>] amdgpu_driver_load_kms+0x20/0xa0 [amdgpu]
+ [<ffff800002b0c8f0>] amdgpu_pci_probe+0x1b0/0x580 [amdgpu]
+ [<900000000448eae4>] local_pci_probe+0x44/0xc0
+ [<9000000003b02b18>] work_for_cpu_fn+0x18/0x40
+ [<9000000003b05da0>] process_one_work+0x160/0x300
+ [<9000000003b06718>] worker_thread+0x318/0x440
+ [<9000000003b11b8c>] kthread+0x12c/0x220
+ [<9000000003ac1484>] ret_from_kernel_thread+0x8/0xa4
 
-Fix this by using xen_released_pages to account for any pages that are part
-of the memory map, but are already unpopulated when the balloon driver is
-initialized.  This accounts for any regions used for scratch remote
-mappings.  Note on x86 xen_released_pages definition is moved to
-enlighten.c so it's uniformly available for all Xen-enabled builds.
+Unfortunately, protecting dml2_init()/dml21_init() out of DML2 causes
+"sleeping function called from invalid context", so protect them with
+DC_FP_START() and DC_FP_END() inside.
 
-Take the opportunity to unify PV with PVH/HVM guests regarding the usage of
-get_num_physpages(), as that avoids having to add different logic for PV vs
-PVH in both balloon_add_regions() and arch_xen_unpopulated_init().
-
-Much like a6aa4eb994ee, the code in this changeset should have been part of
-38620fc4e893.
-
-Fixes: a6aa4eb994ee ('xen/x86: add extra pages to unpopulated-alloc if available')
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+Fixes: 7da55c27e767 ("drm/amd/display: Remove incorrect FP context start")
 Cc: stable@vger.kernel.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250407082838.65495-1-roger.pau@citrix.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/enlighten.c |   10 ++++++++++
- arch/x86/xen/setup.c     |    3 ---
- drivers/xen/balloon.c    |   34 ++++++++++++++++++++++++----------
- 3 files changed, 34 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c |    4 ++++
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c        |    4 ++++
+ 2 files changed, 8 insertions(+)
 
---- a/arch/x86/xen/enlighten.c
-+++ b/arch/x86/xen/enlighten.c
-@@ -75,6 +75,9 @@ EXPORT_SYMBOL(xen_start_flags);
-  */
- struct shared_info *HYPERVISOR_shared_info = &xen_dummy_shared_info;
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+@@ -86,6 +86,8 @@ static void dml21_init(const struct dc *
+ 	/* Store configuration options */
+ 	(*dml_ctx)->config = *config;
  
-+/* Number of pages released from the initial allocation. */
-+unsigned long xen_released_pages;
++	DC_FP_START();
 +
- static __ref void xen_get_vendor(void)
- {
- 	init_cpu_devs();
-@@ -471,6 +474,13 @@ int __init arch_xen_unpopulated_init(str
- 			xen_free_unpopulated_pages(1, &pg);
- 		}
+ 	/*Initialize SOCBB and DCNIP params */
+ 	dml21_initialize_soc_bb_params(&(*dml_ctx)->v21.dml_init, config, in_dc);
+ 	dml21_initialize_ip_params(&(*dml_ctx)->v21.dml_init, config, in_dc);
+@@ -96,6 +98,8 @@ static void dml21_init(const struct dc *
  
-+		/*
-+		 * Account for the region being in the physmap but unpopulated.
-+		 * The value in xen_released_pages is used by the balloon
-+		 * driver to know how much of the physmap is unpopulated and
-+		 * set an accurate initial memory target.
-+		 */
-+		xen_released_pages += xen_extra_mem[i].n_pfns;
- 		/* Zero so region is not also added to the balloon driver. */
- 		xen_extra_mem[i].n_pfns = 0;
- 	}
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -38,9 +38,6 @@
- 
- #define GB(x) ((uint64_t)(x) * 1024 * 1024 * 1024)
- 
--/* Number of pages released from the initial allocation. */
--unsigned long xen_released_pages;
--
- /* Memory map would allow PCI passthrough. */
- bool xen_pv_pci_possible;
- 
---- a/drivers/xen/balloon.c
-+++ b/drivers/xen/balloon.c
-@@ -671,7 +671,7 @@ void xen_free_ballooned_pages(unsigned i
- }
- EXPORT_SYMBOL(xen_free_ballooned_pages);
- 
--static void __init balloon_add_regions(void)
-+static int __init balloon_add_regions(void)
- {
- 	unsigned long start_pfn, pages;
- 	unsigned long pfn, extra_pfn_end;
-@@ -694,26 +694,38 @@ static void __init balloon_add_regions(v
- 		for (pfn = start_pfn; pfn < extra_pfn_end; pfn++)
- 			balloon_append(pfn_to_page(pfn));
- 
--		balloon_stats.total_pages += extra_pfn_end - start_pfn;
-+		/*
-+		 * Extra regions are accounted for in the physmap, but need
-+		 * decreasing from current_pages to balloon down the initial
-+		 * allocation, because they are already accounted for in
-+		 * total_pages.
-+		 */
-+		if (extra_pfn_end - start_pfn >= balloon_stats.current_pages) {
-+			WARN(1, "Extra pages underflow current target");
-+			return -ERANGE;
-+		}
-+		balloon_stats.current_pages -= extra_pfn_end - start_pfn;
- 	}
+ 	/*Initialize DML21 instance */
+ 	dml2_initialize_instance(&(*dml_ctx)->v21.dml_init);
 +
-+	return 0;
++	DC_FP_END();
  }
  
- static int __init balloon_init(void)
- {
- 	struct task_struct *task;
-+	int rc;
+ bool dml21_create(const struct dc *in_dc, struct dml2_context **dml_ctx, const struct dml2_configuration_options *config)
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+@@ -781,11 +781,15 @@ static void dml2_init(const struct dc *i
+ 		break;
+ 	}
  
- 	if (!xen_domain())
- 		return -ENODEV;
- 
- 	pr_info("Initialising balloon driver\n");
- 
--#ifdef CONFIG_XEN_PV
--	balloon_stats.current_pages = xen_pv_domain()
--		? min(xen_start_info->nr_pages - xen_released_pages, max_pfn)
--		: get_num_physpages();
--#else
--	balloon_stats.current_pages = get_num_physpages();
--#endif
-+	if (xen_released_pages >= get_num_physpages()) {
-+		WARN(1, "Released pages underflow current target");
-+		return -ERANGE;
-+	}
++	DC_FP_START();
 +
-+	balloon_stats.current_pages = get_num_physpages() - xen_released_pages;
- 	balloon_stats.target_pages  = balloon_stats.current_pages;
- 	balloon_stats.balloon_low   = 0;
- 	balloon_stats.balloon_high  = 0;
-@@ -730,7 +742,9 @@ static int __init balloon_init(void)
- 	register_sysctl_init("xen/balloon", balloon_table);
- #endif
+ 	initialize_dml2_ip_params(*dml2, in_dc, &(*dml2)->v20.dml_core_ctx.ip);
  
--	balloon_add_regions();
-+	rc = balloon_add_regions();
-+	if (rc)
-+		return rc;
+ 	initialize_dml2_soc_bbox(*dml2, in_dc, &(*dml2)->v20.dml_core_ctx.soc);
  
- 	task = kthread_run(balloon_thread, NULL, "xen-balloon");
- 	if (IS_ERR(task)) {
+ 	initialize_dml2_soc_states(*dml2, in_dc, &(*dml2)->v20.dml_core_ctx.soc, &(*dml2)->v20.dml_core_ctx.states);
++
++	DC_FP_END();
+ }
+ 
+ bool dml2_create(const struct dc *in_dc, const struct dml2_configuration_options *config, struct dml2_context **dml2)
 
 
