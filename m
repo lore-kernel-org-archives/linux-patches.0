@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B9F280CF6;
-	Wed, 23 Apr 2025 14:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD9027F4D9;
+	Wed, 23 Apr 2025 14:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419776; cv=none; b=OljqYBWiwOFQR2CKw4VbXXC7HzRQ3NuD+roo9Ttlb+OwoXdN0tEQV8Xf/tzQQ4h5S66+eAzZoLy8szZK3zHE2gIeIsIpOHDfGRRn3V7eCruTg5s98GD94PmOMiDY0/plkTSU1V+bq/7I0YHzcgi5sZ23/MryORLUtTDtZdELV90=
+	t=1745419780; cv=none; b=fY/5Ql4MCaJpQeAEX258AJ6LvvbZBtB/R+8fDzZD/Wnl7Ifu4b1lsRSCJjBVDy5T/MmsgvTJBbt/OdvJrRw3uYZrPTwmIe3xznA42Qq9rSe9hIcN3VMpY8PyWVBrJQMBcHUf6y02rMcyRGJv7vuT5R6AwxdwqLMrXJtMCqB283U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419776; c=relaxed/simple;
-	bh=eRyOv8W6lHlNvKezpGFqA03EeIZUGSbEvVmAhgb30Os=;
+	s=arc-20240116; t=1745419780; c=relaxed/simple;
+	bh=sRYqjM4NHKh1QfUmJbCqYy8nRLSo42sWSc02gnSB9mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2eRx2dHVlr3fFJ1K21kzp76hL2VZbknjekrQjaL2snxumJlZNJgkX7TIa1AacZMZl3oDAyjChrU07Q38Uz0oU5OpV0ETCd//mvJFdRxLhFnxsloS/DiY+Gz9iRSXlkhQA38uMpLJdGrY9i1JXXpZM20+qjIvyd3bIM546O1SEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrDMtIPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SD1SR8ln7d58LT8LemploHcz+kCwVjMRDwqkAG5XeDTTIsc8mvexAw5faK3MrkJMn5pmGRw10mUH5j5CQWWpZpLecj/twtlwqUM3+Sm4/NChCU30holUi8/q7AGeNhUJxcw0X38yM4FqcAnXysDVZDwmO4uCkZSUFiQAjt8Y3kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mnemu3Jq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrDMtIPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C33C4CEE2;
-	Wed, 23 Apr 2025 14:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mnemu3Jq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AF2C4CEE2;
+	Wed, 23 Apr 2025 14:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419776;
-	bh=eRyOv8W6lHlNvKezpGFqA03EeIZUGSbEvVmAhgb30Os=;
+	s=korg; t=1745419779;
+	bh=sRYqjM4NHKh1QfUmJbCqYy8nRLSo42sWSc02gnSB9mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrDMtIPNkpYLL8XP+NUwMnlixXPygL5rQSCBuSppTzZmdtRDLZUmLzWC/gHS2I8Zq
-	 QtihwS/xzPg4v8hHD2He8gGBfUdCzWYgiCysTQn4x1C17SIOqeKcaFJyx2CfLmEpfP
-	 HMENmXg/PWNei/2Pf9A97yh7NkqBwljmL1CbWtOg=
+	b=Mnemu3Jq657QRCuzyj4aVv39k4KIbVTOxuHkbLBukdSrTfZW4IU5uxKcJwbNzPaQG
+	 cp5JlZczrQTSe0X60A0tCtyjrdh3OD+hmqiyFdtuThXQu/UC2sUKkI9PCACFvMpBg1
+	 pPKRPnBMVfDqKLaeWbdrULnNtIMQ+NAGeZ359hyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Slenska <wsl@trackunit.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 025/241] Bluetooth: qca: fix NV variant for one of WCN3950 SoCs
-Date: Wed, 23 Apr 2025 16:41:29 +0200
-Message-ID: <20250423142621.547134861@linuxfoundation.org>
+Subject: [PATCH 6.12 060/223] net: b53: enable BPDU reception for management port
+Date: Wed, 23 Apr 2025 16:42:12 +0200
+Message-ID: <20250423142619.581103180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit e92900c9803fb35ad6cf599cb268b8ddd9f91940 ]
+[ Upstream commit 36355ddfe8955f226a88a543ed354b9f6b84cd70 ]
 
-The QCA_WCN3950_SOC_ID_S should be using qca/cmnv13s.bin, rather than
-qca/cmnv13u.bin file. Correct the variant suffix to be used for this SoC
-ID.
+For STP to work, receiving BPDUs is essential, but the appropriate bit
+was never set. Without GC_RX_BPDU_EN, the switch chip will filter all
+BPDUs, even if an appropriate PVID VLAN was setup.
 
-Fixes: d5712c511cb3 ("Bluetooth: qca: add WCN3950 support")
-Reported-by: Wojciech Slenska <wsl@trackunit.com>
-Closes: https://github.com/qualcomm-linux/meta-qcom/pull/817#discussion_r2022866431
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ff39c2d68679 ("net: dsa: b53: Add bridge support")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20250414200434.194422-1-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 3d6778b95e005..edefb9dc76aa1 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -889,7 +889,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			if (le32_to_cpu(ver.soc_id) == QCA_WCN3950_SOC_ID_T)
- 				variant = "t";
- 			else if (le32_to_cpu(ver.soc_id) == QCA_WCN3950_SOC_ID_S)
--				variant = "u";
-+				variant = "s";
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index c39cb119e760d..d4600ab0b70b3 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -737,6 +737,15 @@ static void b53_enable_mib(struct b53_device *dev)
+ 	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
+ }
  
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/cmnv%02x%s.bin", rom_ver, variant);
++static void b53_enable_stp(struct b53_device *dev)
++{
++	u8 gc;
++
++	b53_read8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, &gc);
++	gc |= GC_RX_BPDU_EN;
++	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
++}
++
+ static u16 b53_default_pvid(struct b53_device *dev)
+ {
+ 	if (is5325(dev) || is5365(dev))
+@@ -876,6 +885,7 @@ static int b53_switch_reset(struct b53_device *dev)
+ 	}
+ 
+ 	b53_enable_mib(dev);
++	b53_enable_stp(dev);
+ 
+ 	return b53_flush_arl(dev, FAST_AGE_STATIC);
+ }
 -- 
 2.39.5
 
