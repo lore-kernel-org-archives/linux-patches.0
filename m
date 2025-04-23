@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9EB28CF6C;
-	Wed, 23 Apr 2025 15:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE8028D822;
+	Wed, 23 Apr 2025 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421044; cv=none; b=r9MDQVs9gbkiFJu4ARwXB7TQ45QIfYOi2mKWHWLp4vQ2OkBVbDzdc3+nUHqgLm5XqrDO5+fNgoFpVyD5ybQouArhoSAC01WDylkFf+rdPkB9Txaw/A7yKHmOV1znm8jAuZqSqwJRzVoHxYDL8p6bXB/llnTlIUfqYUNfvlE2tCQ=
+	t=1745421047; cv=none; b=iEDJR2CoUtrIuYhvtN1SSUVULv42NJ34AesiBfc81oIEM7FJ62keWr2hp1kUZrLdX6x24cdCxJ4vo1qQ4DMzKwwwaBnaFLQmVSsWiM4L3ZTUT50UJV/77t69gW3ksTGoo89lA8VAtfgwGTocRnKMyyqifeQUxPRMYolKrunzA94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421044; c=relaxed/simple;
-	bh=P15eP17d98fbJ7o2DmPT+Mkxx6u5uPLbSsb3j+p2sE0=;
+	s=arc-20240116; t=1745421047; c=relaxed/simple;
+	bh=jQls2b7GK1yBlkkRMHVaauZJzBOaegY+AeYLXQwlMaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4zQBcE59sJexFah3dmphLZzKQV6fp0F+EJ1RiKPP5R6w1PXEE9+2/mKX9YOXRAndOh3O1B/8zUrAi3p6T6SfIrP+56xv8/LUTOc03JdYR8DM8mZqB/ET9Yx9Me1qlvX9Yj3oJ/hn4soT0Tz1gzrcPPwRJt2O5sb2wWgwgW3bmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha6LeBsM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PblhXpKv1BYfZ/Q2hbgADuguB+x66JkxVDVHPQ83x3u/K1dutel+e8NRUyUFMMXO33x3iKhgzCO6+/B/7V7HCtOR6QfbcfcqPVDn4+t9QfxMjzUc+QIHo8HZiW4FEdtakmDW8TE3PBh1cWdhGSKS824n9gRPUjNdCskoRjJBEIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRd4ptTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha6LeBsM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE22C4CEE2;
-	Wed, 23 Apr 2025 15:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRd4ptTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B0C4CEE2;
+	Wed, 23 Apr 2025 15:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421044;
-	bh=P15eP17d98fbJ7o2DmPT+Mkxx6u5uPLbSsb3j+p2sE0=;
+	s=korg; t=1745421046;
+	bh=jQls2b7GK1yBlkkRMHVaauZJzBOaegY+AeYLXQwlMaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ha6LeBsMlk4YikJmtskq2pL1OYWve1qChJldpktV8MKxrZxd0fEvUUMbqBj2mGWO0
-	 zuorMvoe0YMVoTTjzMfJBWC3HvOkMyM7xmJBMhyt4TGmomHUDq2P+Whl3rPZ937dBy
-	 9q0W4HlehcNjotfXsyAUk6fM/P6LkK7/HvJ5RQzM=
+	b=aRd4ptTTI+vW89Ip4EfbgSQr47shfcwcs8eiEtxSloII5nnRaLyuKvvdksRsmKbkn
+	 RRCUzy7DrOuA+9MGuLSp7OzBalc7Xpdtw6LkHS39T0Fq/HJ32+AgrTaNuTvT/Z4tVr
+	 OcWwph1bohhZ+NHOyQmSpqBMcPyLEAhRS5ABZAmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Quentin Perret <qperret@google.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 088/291] KVM: arm64: Tear down vGIC on failed vCPU creation
-Date: Wed, 23 Apr 2025 16:41:17 +0200
-Message-ID: <20250423142627.957196114@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	amd-gfx@lists.freedesktop.org,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 170/223] drm/amdgpu/dma_buf: fix page_link check
+Date: Wed, 23 Apr 2025 16:44:02 +0200
+Message-ID: <20250423142624.088310148@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 250f25367b58d8c65a1b060a2dda037eea09a672 upstream.
+commit c0dd8a9253fadfb8e5357217d085f1989da4ef0a upstream.
 
-If kvm_arch_vcpu_create() fails to share the vCPU page with the
-hypervisor, we propagate the error back to the ioctl but leave the
-vGIC vCPU data initialised. Note only does this leak the corresponding
-memory when the vCPU is destroyed but it can also lead to use-after-free
-if the redistributor device handling tries to walk into the vCPU.
+The page_link lower bits of the first sg could contain something like
+SG_END, if we are mapping a single VRAM page or contiguous blob which
+fits into one sg entry. Rather pull out the struct page, and use that in
+our check to know if we mapped struct pages vs VRAM.
 
-Add the missing cleanup to kvm_arch_vcpu_create(), ensuring that the
-vGIC vCPU structures are destroyed on error.
-
-Cc: <stable@vger.kernel.org>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Quentin Perret <qperret@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20250314133409.9123-1-will@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Fixes: f44ffd677fb3 ("drm/amdgpu: add support for exporting VRAM using DMA-buf v3")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -371,7 +371,11 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
- 	if (err)
- 		return err;
- 
--	return kvm_share_hyp(vcpu, vcpu + 1);
-+	err = kvm_share_hyp(vcpu, vcpu + 1);
-+	if (err)
-+		kvm_vgic_vcpu_destroy(vcpu);
-+
-+	return err;
- }
- 
- void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -181,7 +181,7 @@ static void amdgpu_dma_buf_unmap(struct
+ 				 struct sg_table *sgt,
+ 				 enum dma_data_direction dir)
+ {
+-	if (sgt->sgl->page_link) {
++	if (sg_page(sgt->sgl)) {
+ 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
+ 		sg_free_table(sgt);
+ 		kfree(sgt);
 
 
