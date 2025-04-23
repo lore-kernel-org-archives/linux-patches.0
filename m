@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DA62957DA;
-	Wed, 23 Apr 2025 15:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E173829C35B;
+	Wed, 23 Apr 2025 15:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422008; cv=none; b=TM9++tB5RFbuytlopkQrZ1qxXQ/Lp3wzrwEZflKuWbstlfAwpXoJukbieyQTkGMcZfiTPdNc/etN2XY9OYB5G4I3R+7Md/xCb2UOj5KBdGAaD9gCkTMCCoiHLaqYf4NEkzYG/HXJmvfy7pemorXiw649Vjf4rSh/GMabGpzEF5A=
+	t=1745422011; cv=none; b=pjOPJn7t6b7jE1Kl6LbLvdsMf8uOa3Fw+bc/629UUelKWwKtmmst8XU5Bw3vuzp/8kOHnnFl3NtQlFk8Wxe8oz6axKPH8LB6aZ15VZndcDDPXUBCHv1SvNnMtdzHdPSFrhfLApzHxeBYTBgg3OQ99K1fp1w+/GoYWMDZkIe23Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422008; c=relaxed/simple;
-	bh=GddF6ptcG98HOuCwqocGgxFcSd7d7aklD1NAqUyB75o=;
+	s=arc-20240116; t=1745422011; c=relaxed/simple;
+	bh=reJfm/CqDHFFZ12zaOxi7tglSlWOY3jDDUJOCtJlt7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwwZj7AgNtkpHf01nsGeKJtlufpcryyEv2Lkw4UPZAPjy76gMVf+k1ucXIGtyE3awWwV5pZF1bF6prqUS0Vpukumuu4OKExuTE8loGJ+d2gLBjiO1i8pcLP1q15VQkPWIRl0ro09MLicWtBNT5iB3SD+MJ973UM+VHQW5Cu64h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3TzTVG4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6Z9BqCWvq5G0lZevzmvwiaaD05uFb03TZZK77NxwGzYzvDUq4pkOfmzj/XtrvWBUk6CjQ1hMx30OK++4z8kM9e6gUzAYCgWxw2XaatDcDM8IX2CyfvvD6SeS9xbfsya+i2TNvm3zigNBifb1vtYo3SNGprZU8DJLozpwRRVmGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOsLPhvb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3TzTVG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728E5C4CEE8;
-	Wed, 23 Apr 2025 15:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOsLPhvb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B99C4CEE2;
+	Wed, 23 Apr 2025 15:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422007;
-	bh=GddF6ptcG98HOuCwqocGgxFcSd7d7aklD1NAqUyB75o=;
+	s=korg; t=1745422010;
+	bh=reJfm/CqDHFFZ12zaOxi7tglSlWOY3jDDUJOCtJlt7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3TzTVG48+oApilwugFwN9xoPZhJIbkDXcMZiWMgWp7EI8K0Vk/JLcMJUdTZ1xieZ
-	 R1wLSEi3IdDaDvm2u2FESiFrjWO9ZKJihivdu9AA2gbIh8kqZ48/lGXtbAjVdJ2d9L
-	 JQr0sgtdiMdtem/xH/Mh1rGCepR3C6Sx99X+QJCs=
+	b=EOsLPhvbzsFcSIPmZImdAo/X67bM/W6mIQShNRfKyHMpyAauUs/IO5/6JQWjgq9WT
+	 9yRHQ7cAEU3PNa91iJudmqEYhWwooFQ4Vnp0oB+z6aK/mi1mH0wFyy1NcqhjH/9znK
+	 /EdOeSXI9E5A6QzwoA0Aaq9MGjE9bpkOJAK9I4Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 217/291] ksmbd: Prevent integer overflow in calculation of deadtime
-Date: Wed, 23 Apr 2025 16:43:26 +0200
-Message-ID: <20250423142633.270981302@linuxfoundation.org>
+	Christopher S M Hall <christopher.s.hall@intel.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 262/393] igc: handle the IGC_PTP_ENABLED flag correctly
+Date: Wed, 23 Apr 2025 16:42:38 +0200
+Message-ID: <20250423142654.191156592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +51,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Christopher S M Hall <christopher.s.hall@intel.com>
 
-commit a93ff742820f75bf8bb3fcf21d9f25ca6eb3d4c6 upstream.
+[ Upstream commit 26a3910afd111f7c1a96dace6dc02f3225063896 ]
 
-The user can set any value for 'deadtime'. This affects the arithmetic
-expression 'req->deadtime * SMB_ECHO_INTERVAL', which is subject to
-overflow. The added check makes the server behavior more predictable.
+All functions in igc_ptp.c called from igc_main.c should check the
+IGC_PTP_ENABLED flag. Adding check for this flag to stop and reset
+functions.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5f2958052c58 ("igc: Add basic skeleton for PTP")
+Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
+Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_ipc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -296,7 +296,11 @@ static int ipc_server_config_on_startup(
- 	server_conf.signing = req->signing;
- 	server_conf.tcp_port = req->tcp_port;
- 	server_conf.ipc_timeout = req->ipc_timeout * HZ;
--	server_conf.deadtime = req->deadtime * SMB_ECHO_INTERVAL;
-+	if (check_mul_overflow(req->deadtime, SMB_ECHO_INTERVAL,
-+					&server_conf.deadtime)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 	server_conf.share_fake_fscaps = req->share_fake_fscaps;
- 	ksmbd_init_domain(req->sub_auth);
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index adb31cccaf9a5..c5387610ca3df 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -1191,8 +1191,12 @@ void igc_ptp_suspend(struct igc_adapter *adapter)
+  **/
+ void igc_ptp_stop(struct igc_adapter *adapter)
+ {
++	if (!(adapter->ptp_flags & IGC_PTP_ENABLED))
++		return;
++
+ 	igc_ptp_suspend(adapter);
  
-@@ -319,6 +323,7 @@ static int ipc_server_config_on_startup(
- 	ret |= ksmbd_set_work_group(req->work_group);
- 	ret |= ksmbd_tcp_set_interfaces(KSMBD_STARTUP_CONFIG_INTERFACES(req),
- 					req->ifc_list_sz);
-+out:
- 	if (ret) {
- 		pr_err("Server configuration error: %s %s %s\n",
- 		       req->netbios_name, req->server_string,
++	adapter->ptp_flags &= ~IGC_PTP_ENABLED;
+ 	if (adapter->ptp_clock) {
+ 		ptp_clock_unregister(adapter->ptp_clock);
+ 		netdev_info(adapter->netdev, "PHC removed\n");
+@@ -1213,6 +1217,9 @@ void igc_ptp_reset(struct igc_adapter *adapter)
+ 	unsigned long flags;
+ 	u32 timadj;
+ 
++	if (!(adapter->ptp_flags & IGC_PTP_ENABLED))
++		return;
++
+ 	/* reset the tstamp_config */
+ 	igc_ptp_set_timestamp_mode(adapter, &adapter->tstamp_config);
+ 
+-- 
+2.39.5
+
 
 
