@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DEA26A08C;
-	Wed, 23 Apr 2025 15:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C57E26A08C;
+	Wed, 23 Apr 2025 15:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422225; cv=none; b=WkLhwdpkUAix8OdmfHdIqZEGC3HcWtx2ZazzgjNrTBfNS9WVRVK7EkIs2zG9tfIwH+gGcUr/yjf23cmLcJBAoMW29bsHOqLbJkL4UPt2nR1vtvOTu/RnW7FjH8BT6tgHxD8wEQ9MjQg7oD/7vqA/BHR3TgGUwbD60nWcgvNdOT0=
+	t=1745422228; cv=none; b=pRlqXyT4GTgo4m52Z1/unQmo05WlOFUjRpKDvA+G3dqjYvgV9Vyhw7EG/e/SB5c5PSvvuNShkd48kbcRy/Ff9HO8kACfJwXWdS2/y2h0IAAyCeLBDD5g5KwIlhUGtrD7s7RzN+kkUUSXfJGNV3lKplRGl2+S0SIExggLGdt5rQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422225; c=relaxed/simple;
-	bh=yJV96ou52T7t2FdpsOBOocReJkF7ZvLRfa6mDwRQP4U=;
+	s=arc-20240116; t=1745422228; c=relaxed/simple;
+	bh=FfJFaiVEPJ/dzHZTHwATBslQEYpvrYj+Sd9NBzU2sy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOb5tV7qARUmpJ/L7iMR07JC+ZK/TlYPd35hltCTO5pkdqwh22Joi6hfNcHU3KlZV1JgunshueW6tTcWwrFALcMoNdOw03MoiXwdVcznv85NGSyry28YEuPKpzj5ORFbH/R9UIHP0V4bg8ioQ4EJzuVJSjdbYbGZRjAiOpMJyxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hp+/leKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRTgAvQGO43N1csH4WTe6M6cYQ/s9wJqXZAh0/SYKc3k7NGT97WuC+5oNNX6DGadCRCeqJjhuxjeLwIc1DBakkLbtCdWlX8f3lFciK8Hck3QKFdlCn1U4I0tV69gtFnTcJ2RqEtKJTBl05ZoBGaTEb/K60yxiZfJivjhV4KgVQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZ06pl6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hp+/leKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D29C4CEE2;
-	Wed, 23 Apr 2025 15:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZ06pl6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DE8C4CEE2;
+	Wed, 23 Apr 2025 15:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422225;
-	bh=yJV96ou52T7t2FdpsOBOocReJkF7ZvLRfa6mDwRQP4U=;
+	s=korg; t=1745422228;
+	bh=FfJFaiVEPJ/dzHZTHwATBslQEYpvrYj+Sd9NBzU2sy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hp+/leKtmRCDIb1HJHpvYwpiLDaOI5fCHp/NG3k6t8L5crKn6pSw9NfMoajvSswct
-	 AEyLM+FKGttxZ/A3eowQGlePjiB9sKLszv08129uZjcxIRFGjj6h8ZAcO2nnutdjve
-	 Asxdrjl5KGiclpOmKFsoAG6vgFuUwdfP3ynmcVfA=
+	b=kZ06pl6vF/btfqZs4z8JkQdX6DFW4+M1yrLE5aWyCLyxGvIzeov5shRJYNehcewOc
+	 3SaGwAvbQJkT/cevL+d1FnJzPAlINOfjb+a46cHw29EOMRntFj7mU/yvO473/gLiJ1
+	 vQN5rkoIUEnbnyXtC5vtS7OmMga/n7XtmU8JTtxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 300/393] writeback: fix false warning in inode_to_wb()
-Date: Wed, 23 Apr 2025 16:43:16 +0200
-Message-ID: <20250423142655.728663935@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.1 259/291] media: mediatek: vcodec: mark vdec_vp9_slice_map_counts_eob_coef noinline
+Date: Wed, 23 Apr 2025 16:44:08 +0200
+Message-ID: <20250423142635.012030134@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 9e888998ea4d22257b07ce911576509486fa0667 upstream.
+commit 8b55f8818900c99dd4f55a59a103f5b29e41eb2c upstream.
 
-inode_to_wb() is used also for filesystems that don't support cgroup
-writeback.  For these filesystems inode->i_wb is stable during the
-lifetime of the inode (it points to bdi->wb) and there's no need to hold
-locks protecting the inode->i_wb dereference.  Improve the warning in
-inode_to_wb() to not trigger for these filesystems.
+With KASAN enabled, clang fails to optimize the inline version of
+vdec_vp9_slice_map_counts_eob_coef() properly, leading to kilobytes
+of temporary values spilled to the stack:
 
-Link: https://lkml.kernel.org/r/20250412163914.3773459-3-agruenba@redhat.com
-Fixes: aaa2cacf8184 ("writeback: add lockdep annotation to inode_to_wb()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Reviewed-by: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c:1526:12: error: stack frame size (2160) exceeds limit (2048) in 'vdec_vp9_slice_update_prob' [-Werror,-Wframe-larger-than]
+
+This seems to affect all versions of clang including the latest (clang-20),
+but the degree of stack overhead is different per release.
+
+Marking the function as noinline_for_stack is harmless here and avoids
+the problem completely.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+[nathan: Handle file location change in older trees]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/backing-dev.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/backing-dev.h
-+++ b/include/linux/backing-dev.h
-@@ -250,6 +250,7 @@ static inline struct bdi_writeback *inod
- {
- #ifdef CONFIG_LOCKDEP
- 	WARN_ON_ONCE(debug_locks &&
-+		     (inode->i_sb->s_iflags & SB_I_CGROUPWB) &&
- 		     (!lockdep_is_held(&inode->i_lock) &&
- 		      !lockdep_is_held(&inode->i_mapping->i_pages.xa_lock) &&
- 		      !lockdep_is_held(&inode->i_wb->list_lock)));
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+@@ -1192,7 +1192,8 @@ err:
+ 	return ret;
+ }
+ 
+-static
++/* clang stack usage explodes if this is inlined */
++static noinline_for_stack
+ void vdec_vp9_slice_map_counts_eob_coef(unsigned int i, unsigned int j, unsigned int k,
+ 					struct vdec_vp9_slice_frame_counts *counts,
+ 					struct v4l2_vp9_frame_symbol_counts *counts_helper)
 
 
