@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA03328E5EA;
-	Wed, 23 Apr 2025 15:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F151528E5EA;
+	Wed, 23 Apr 2025 15:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422095; cv=none; b=FIL1eml5cuC6PidsBaERovrGigJxDfIryehj+s9sI6A1TqQiq7U0facj/JKG3Ptw3NLuYz41b1E2JvQtsaYLtvkdWl1YNtGG55mHNVMPPxIr4YAHx0m1Bt6K6knQAaxj9bgrYR1RtNrr7kYUoiNfRxGrtWDUoUDFyhY6KQnhEVo=
+	t=1745422097; cv=none; b=uVp6EHXGQaigZuXP7Cc8ICZrO72WFqxBWqDFGOZ1TfBk+owfSMMWpGGMzVMffT7Ugvg9Xwr+qSWHIMAEkohR3b6o6I4Ip744dz9ebgZY1JmKCNBQdM+R5z0KCrYsdMVgSM9MD16nqrXA6HseOScyz/efuwt/sQvQIRCT/pit2H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422095; c=relaxed/simple;
-	bh=uXgZiHqQklyfQczMMPT8hgaZHQOnaa1n6nDDIWjhQZc=;
+	s=arc-20240116; t=1745422097; c=relaxed/simple;
+	bh=Tpz9skYqOhXz+Jwx5rxIPcVaZVudSW+BcFQK/lX5Dfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxmFfjk/nJgWYudwnHXCCht0VnrGn/WU3ddbZAbLMLRiMZ2eKwXThHgwz3ounjz8x5Rij7GXXNZIJp0VrqdZv771FX9ETL7zXJJRU/WBgULbDpbzjW4Q8LoNYDnydmP4CNn15Afkkc5HN6HTvNF8iru9h21nP5Vo1Ot/FfABKzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyDrHCh8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PxqRJYuZttwZHc2E4ZpNJfXE0KeZ2u/D4O00FPbQEMYAeQfpiDotuSRXf85m9tg89n7GXcWrmTeCnNFbo/Xt/wd1P6Zt9ocHVrT+utvIE1/jByZy+TeyHw4OZZg7GeP9pa8U/F+elCEWKTXjWLTfuhlJRIK/p/3ctsj63x6kp1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYMZJkLn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyDrHCh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB218C4CEE2;
-	Wed, 23 Apr 2025 15:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYMZJkLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D95C4CEE2;
+	Wed, 23 Apr 2025 15:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422094;
-	bh=uXgZiHqQklyfQczMMPT8hgaZHQOnaa1n6nDDIWjhQZc=;
+	s=korg; t=1745422096;
+	bh=Tpz9skYqOhXz+Jwx5rxIPcVaZVudSW+BcFQK/lX5Dfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iyDrHCh8O59a/DqA02ed1EIPM1rJpYfQpQL3ghD5+F0ACifDDUYh4tXWHOgGm2eT+
-	 39mM8BvLjJA2/7VRu24z9hPCqKbors6MFoQsPYCbykks/+bDnzeUSAxgrmeIsptqwa
-	 CJWkAsTL9UdBdm7Uq6lmDbTTwc7ZbTMEScO1//nc=
+	b=HYMZJkLn5zhxyZweM0s2q9ncB+y9ROHldnsJGnfZQZBSBwlkpwOC5BfC9tLfFtDSI
+	 tp5XuSrW1xhRRE1Xa9d+nh2RZEkXVP6kF/17ukd7ACiyXl/FNJLTgI1ETpTxBvO7wJ
+	 ct88qe7OT9pGZSbOFc4Dl/FX51ahdxkgImiH0ozU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.1 232/291] drm/msm/a6xx: Fix stale rpmh votes from GPU
-Date: Wed, 23 Apr 2025 16:43:41 +0200
-Message-ID: <20250423142633.895956549@linuxfoundation.org>
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 277/393] tools: ynl-gen: re-sort ignoring recursive nests
+Date: Wed, 23 Apr 2025 16:42:53 +0200
+Message-ID: <20250423142654.795883611@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,134 +47,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit f561db72a663f8a73c2250bf3244ce1ce221bed7 upstream.
+[ Upstream commit aa75783b95a1e7fc09129f5364476e6effe47392 ]
 
-It was observed on sc7180 (A618 gpu) that GPU votes for GX rail and CNOC
-BCM nodes were not removed after GPU suspend. This was because we
-skipped sending 'prepare-slumber' request to gmu during suspend sequence
-in some cases. So, make sure we always call prepare-slumber hfi during
-suspend. Also, calling prepare-slumber without a prior oob-gpu handshake
-messes up gmu firmware's internal state. So, do that when required.
+We try to keep the structures and helpers "topologically sorted",
+to avoid forward declarations. When recursive nests are at play
+we need to sort twice, because structs which end up being marked
+as recursive will get a full set of forward declarations, so we
+should ignore them for the purpose of sorting.
 
-Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/639569/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://lore.kernel.org/r/20231213231432.2944749-7-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ce6cb8113c84 ("tools: ynl-gen: individually free previous values on double set")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c |   82 ++++++++++++++++++----------------
- 1 file changed, 44 insertions(+), 38 deletions(-)
+ tools/net/ynl/ynl-gen-c.py | 52 +++++++++++++++++++++++---------------
+ 1 file changed, 31 insertions(+), 21 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1070,50 +1070,51 @@ static void a6xx_gmu_shutdown(struct a6x
- 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 	u32 val;
-+	int ret;
+diff --git a/tools/net/ynl/ynl-gen-c.py b/tools/net/ynl/ynl-gen-c.py
+index e5a3e0bb5a39d..502d03b8a758a 100755
+--- a/tools/net/ynl/ynl-gen-c.py
++++ b/tools/net/ynl/ynl-gen-c.py
+@@ -909,6 +909,33 @@ class Family(SpecFamily):
+                 self.root_sets[op['attribute-set']]['request'].update(req_attrs)
+                 self.root_sets[op['attribute-set']]['reply'].update(rsp_attrs)
  
- 	/*
--	 * The GMU may still be in slumber unless the GPU started so check and
--	 * skip putting it back into slumber if so
-+	 * GMU firmware's internal power state gets messed up if we send "prepare_slumber" hfi when
-+	 * oob_gpu handshake wasn't done after the last wake up. So do a dummy handshake here when
-+	 * required
- 	 */
--	val = gmu_read(gmu, REG_A6XX_GPU_GMU_CX_GMU_RPMH_POWER_STATE);
-+	if (adreno_gpu->base.needs_hw_init) {
-+		if (a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET))
-+			goto force_off;
++    def _sort_pure_types(self):
++        # Try to reorder according to dependencies
++        pns_key_list = list(self.pure_nested_structs.keys())
++        pns_key_seen = set()
++        rounds = len(pns_key_list) ** 2  # it's basically bubble sort
++        for _ in range(rounds):
++            if len(pns_key_list) == 0:
++                break
++            name = pns_key_list.pop(0)
++            finished = True
++            for _, spec in self.attr_sets[name].items():
++                if 'nested-attributes' in spec:
++                    nested = spec['nested-attributes']
++                    # If the unknown nest we hit is recursive it's fine, it'll be a pointer
++                    if self.pure_nested_structs[nested].recursive:
++                        continue
++                    if nested not in pns_key_seen:
++                        # Dicts are sorted, this will make struct last
++                        struct = self.pure_nested_structs.pop(name)
++                        self.pure_nested_structs[name] = struct
++                        finished = False
++                        break
++            if finished:
++                pns_key_seen.add(name)
++            else:
++                pns_key_list.append(name)
++
+     def _load_nested_sets(self):
+         attr_set_queue = list(self.root_sets.keys())
+         attr_set_seen = set(self.root_sets.keys())
+@@ -948,27 +975,8 @@ class Family(SpecFamily):
+                     if attr in rs_members['reply']:
+                         self.pure_nested_structs[nested].reply = True
  
--	if (val != 0xf) {
--		int ret = a6xx_gmu_wait_for_idle(gmu);
--
--		/* If the GMU isn't responding assume it is hung */
--		if (ret) {
--			a6xx_gmu_force_off(gmu);
--			return;
--		}
--
--		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
--
--		/* tell the GMU we want to slumber */
--		ret = a6xx_gmu_notify_slumber(gmu);
--		if (ret) {
--			a6xx_gmu_force_off(gmu);
--			return;
--		}
--
--		ret = gmu_poll_timeout(gmu,
--			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
--			!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
--			100, 10000);
--
--		/*
--		 * Let the user know we failed to slumber but don't worry too
--		 * much because we are powering down anyway
--		 */
--
--		if (ret)
--			DRM_DEV_ERROR(gmu->dev,
--				"Unable to slumber GMU: status = 0%x/0%x\n",
--				gmu_read(gmu,
--					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
--				gmu_read(gmu,
--					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
-+		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
- 	}
+-        # Try to reorder according to dependencies
+-        pns_key_list = list(self.pure_nested_structs.keys())
+-        pns_key_seen = set()
+-        rounds = len(pns_key_list)**2  # it's basically bubble sort
+-        for _ in range(rounds):
+-            if len(pns_key_list) == 0:
+-                break
+-            name = pns_key_list.pop(0)
+-            finished = True
+-            for _, spec in self.attr_sets[name].items():
+-                if 'nested-attributes' in spec:
+-                    if spec['nested-attributes'] not in pns_key_seen:
+-                        # Dicts are sorted, this will make struct last
+-                        struct = self.pure_nested_structs.pop(name)
+-                        self.pure_nested_structs[name] = struct
+-                        finished = False
+-                        break
+-            if finished:
+-                pns_key_seen.add(name)
+-            else:
+-                pns_key_list.append(name)
++        self._sort_pure_types()
++
+         # Propagate the request / reply / recursive
+         for attr_set, struct in reversed(self.pure_nested_structs.items()):
+             for _, spec in self.attr_sets[attr_set].items():
+@@ -984,6 +992,8 @@ class Family(SpecFamily):
+                 if attr_set in struct.child_nests:
+                     struct.recursive = True
  
-+	ret = a6xx_gmu_wait_for_idle(gmu);
++        self._sort_pure_types()
 +
-+	/* If the GMU isn't responding assume it is hung */
-+	if (ret)
-+		goto force_off;
-+
-+	a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
-+
-+	/* tell the GMU we want to slumber */
-+	ret = a6xx_gmu_notify_slumber(gmu);
-+	if (ret)
-+		goto force_off;
-+
-+	ret = gmu_poll_timeout(gmu,
-+		REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
-+		!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
-+		100, 10000);
-+
-+	/*
-+	 * Let the user know we failed to slumber but don't worry too
-+	 * much because we are powering down anyway
-+	 */
-+
-+	if (ret)
-+		DRM_DEV_ERROR(gmu->dev,
-+			"Unable to slumber GMU: status = 0%x/0%x\n",
-+			gmu_read(gmu,
-+				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
-+			gmu_read(gmu,
-+				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
-+
- 	/* Turn off HFI */
- 	a6xx_hfi_stop(gmu);
- 
-@@ -1122,6 +1123,11 @@ static void a6xx_gmu_shutdown(struct a6x
- 
- 	/* Tell RPMh to power off the GPU */
- 	a6xx_rpmh_stop(gmu);
-+
-+	return;
-+
-+force_off:
-+	a6xx_gmu_force_off(gmu);
- }
- 
- 
+     def _load_attr_use(self):
+         for _, struct in self.pure_nested_structs.items():
+             if struct.request:
+-- 
+2.39.5
+
 
 
