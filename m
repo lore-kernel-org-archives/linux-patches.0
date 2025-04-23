@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720B92820AE;
-	Wed, 23 Apr 2025 15:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4672820AC;
+	Wed, 23 Apr 2025 15:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422162; cv=none; b=g3b/YvfeW0v4MHve2PSaKY4+A8NSPO4ENrCPojd2tylpigvYrSvmFZj1bKJkRt6uMbAmoCKm/8ssrImfCn/XLE67kZehsMD9e3A3yFu22HCqJdkAVVj2s6iN9ldBao/9/Ixo0N9/5PMfxsQtLrUN+hKTt/W15k4RZFuYZidpyjc=
+	t=1745422165; cv=none; b=EpBH5DHx3NLkaZVgwna4hA9h60BQciylNvBbkmPvBfwY6XTijuMZGOXsBRByIkbukuvzmsfkaFEu8UwypfMlMKQTCvvpup7W+dzfMm/uEhsJozGDlmgq20xeHG8JexRg3wY4ZB7BsXXe69kRyw5w79wVPV3cHn+JNrrihDwMk+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422162; c=relaxed/simple;
-	bh=w563MhAKs28ebAe7LBAInPROAJelIXZ5ogRpuGyGFFU=;
+	s=arc-20240116; t=1745422165; c=relaxed/simple;
+	bh=+Y1yKls/L5V92Y8GJu8oyksDhZRkzqh6pOONKfFLIT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmZdFA2mdslFabeeCI1utcLPQzvVhTkGMHpV9wRG6B6BfKBxj/0ZawNT4krgqoVCy0/J4cdraavYbraSoQuEz9D9w7OAWOQIiKRH3p5b3kDyk4jQ8u69JLbEGywML0ig0QnRx4/MgBEIOhCSz69IlMwG0a4LhhNJXjxgxjDtQoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbK35Jnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nngjpg3ixxA46n1FadKX8TK7EzavtipDurVUNZh/pC4Ea2tVUkBDTsVnPImKFOmFnXAgG/8TjOsM5Mh8uo0RK6RcITp/FtwHt0vzK+AIz36GS69bUHgy1LXWUyj4AaKeHPf6YmcARwVsSNFn2a35S61Fzj6vstV4xmzDG1zKo1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2wolQtu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbK35Jnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E87C4CEE2;
-	Wed, 23 Apr 2025 15:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2wolQtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947FBC4CEE2;
+	Wed, 23 Apr 2025 15:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422162;
-	bh=w563MhAKs28ebAe7LBAInPROAJelIXZ5ogRpuGyGFFU=;
+	s=korg; t=1745422164;
+	bh=+Y1yKls/L5V92Y8GJu8oyksDhZRkzqh6pOONKfFLIT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbK35JnlIsvrzrQJIHli/snP63hVKyAEmtc5YZeEfq0UmRHwrn3/K0q2TWErt9TR3
-	 sWNYKn/C2aRz58qIEhGrrg+9/ycfZ5cbhU9KvTrVL1KiVWye1m5+XwP5SJ4jtJ592A
-	 AV0YGcQnjlTjg6YnhDJEVgaPkQ8gU4EcQ2ukGCxg=
+	b=j2wolQtuk+RU17roevU6IQs4tG9lJQUoti2cYfpTmvPcSshN5pFHuF3g5F6ZbkG26
+	 LJXhgE8xKkZRUVlZiQ8R55oNxeE7Tm/lSr3zPE+uPlzNWLDL0oK5zW/qvuHQeFuoIf
+	 37GxomSFNnW8mxVG7+jPRG9WcOaatfSKNqcMxaxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 289/393] ptp: ocp: fix start time alignment in ptp_ocp_signal_set
-Date: Wed, 23 Apr 2025 16:43:05 +0200
-Message-ID: <20250423142655.277779114@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 6.1 248/291] arm64/fpsimd: Stop using TIF_SVE to manage register saving in KVM
+Date: Wed, 23 Apr 2025 16:43:57 +0200
+Message-ID: <20250423142634.551972488@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +49,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 2a5970d5aaff8f3e33ce3bfaa403ae88c40de40d ]
+[ Upstream commit 62021cc36add7b2c015b837f7893f2fb4b8c2586 ]
 
-In ptp_ocp_signal_set, the start time for periodic signals is not
-aligned to the next period boundary. The current code rounds up the
-start time and divides by the period but fails to multiply back by
-the period, causing misaligned signal starts. Fix this by multiplying
-the rounded-up value by the period to ensure the start time is the
-closest next period.
+Now that we are explicitly telling the host FP code which register state
+it needs to save we can remove the manipulation of TIF_SVE from the KVM
+code, simplifying it and allowing us to optimise our handling of normal
+tasks. Remove the manipulation of TIF_SVE from KVM and instead rely on
+to_save to ensure we save the correct data for it.
 
-Fixes: 4bd46bb037f8e ("ptp: ocp: Use DIV64_U64_ROUND_UP for rounding.")
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250415053131.129413-1-maimon.sagi@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+There should be no functional or performance impact from this change.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221115094640.112848-5-broonie@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_ocp.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/fpsimd.c |   22 ++++------------------
+ arch/arm64/kvm/fpsimd.c    |    3 ---
+ 2 files changed, 4 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 13343c3198770..4899fdf9bdf7a 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -1842,6 +1842,7 @@ ptp_ocp_signal_set(struct ptp_ocp *bp, int gen, struct ptp_ocp_signal *s)
- 	if (!s->start) {
- 		/* roundup() does not work on 32-bit systems */
- 		s->start = DIV64_U64_ROUND_UP(start_ns, s->period);
-+		s->start *= s->period;
- 		s->start = ktime_add(s->start, s->phase);
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -439,8 +439,8 @@ static void task_fpsimd_load(void)
+  * last, if KVM is involved this may be the guest VM context rather
+  * than the host thread for the VM pointed to by current. This means
+  * that we must always reference the state storage via last rather
+- * than via current, other than the TIF_ flags which KVM will
+- * carefully maintain for us.
++ * than via current, if we are saving KVM state then it will have
++ * ensured that the type of registers to save is set in last->to_save.
+  */
+ static void fpsimd_save(void)
+ {
+@@ -457,27 +457,13 @@ static void fpsimd_save(void)
+ 	if (test_thread_flag(TIF_FOREIGN_FPSTATE))
+ 		return;
+ 
+-	if (test_thread_flag(TIF_SVE)) {
++	if ((last->to_save == FP_STATE_CURRENT && test_thread_flag(TIF_SVE)) ||
++	    last->to_save == FP_STATE_SVE) {
+ 		save_sve_regs = true;
+ 		save_ffr = true;
+ 		vl = last->sve_vl;
  	}
  
--- 
-2.39.5
-
+-	/*
+-	 * Validate that an explicitly specified state to save is
+-	 * consistent with the task state.
+-	 */
+-	switch (last->to_save) {
+-	case FP_STATE_CURRENT:
+-		break;
+-	case FP_STATE_FPSIMD:
+-		WARN_ON_ONCE(save_sve_regs);
+-		break;
+-	case FP_STATE_SVE:
+-		WARN_ON_ONCE(!save_sve_regs);
+-		break;
+-	}
+-
+ 	if (system_supports_sme()) {
+ 		u64 *svcr = last->svcr;
+ 
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -151,7 +151,6 @@ void kvm_arch_vcpu_ctxsync_fp(struct kvm
+ 					 &vcpu->arch.fp_type, fp_type);
+ 
+ 		clear_thread_flag(TIF_FOREIGN_FPSTATE);
+-		update_thread_flag(TIF_SVE, vcpu_has_sve(vcpu));
+ 	}
+ }
+ 
+@@ -208,7 +207,5 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcp
+ 			sysreg_clear_set(CPACR_EL1, CPACR_EL1_ZEN_EL0EN, 0);
+ 	}
+ 
+-	update_thread_flag(TIF_SVE, 0);
+-
+ 	local_irq_restore(flags);
+ }
 
 
