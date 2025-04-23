@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0D127FD7A;
-	Wed, 23 Apr 2025 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C8280CE0;
+	Wed, 23 Apr 2025 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419827; cv=none; b=jg3TMdjRS46KcJ48w7H6ErbR68oqkplWEYqmSr0pHzXlzV8RjPwpCUMCCkWLxNxd8EFmFdOK8uZK7VrQfJY4wYftKvv8hHlmGRDe7N6u3cDx5QE8RAmcymiJcWh/Y52uGFPsXREmKs6r761GgN/pkRJMOHNa3dZiKC21CgTwNWU=
+	t=1745419829; cv=none; b=BfloI8/VOVgV2JhBylPWTVOImyzvr0wflRkO8RI7asGa8ajvv6k98+8R6L0KOTAiuPmB30J1iURKMcG3ahUYbwIxz1wS1KZAMMaZeilLa6vsnbg/Rx8ykwiujsoI7naNY7EQ2h/+wUg1+Lej66wUk09OR4bNr5Q4rRvCAER7NB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419827; c=relaxed/simple;
-	bh=oWa4vu39wJpmQTMskEITDtkBgroq5P+Qlv4QjbN7XL8=;
+	s=arc-20240116; t=1745419829; c=relaxed/simple;
+	bh=KAR+DyQbVlZ4ipOs8idwH/vENfu+12D1xxnNheKMwLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjtF812BASkCvz5VTDtaSpFyiBe1X9UGwPzqA4+wgKeYCiZfU8qjDKSEHyxvpgtSX6YEMao6lqFlJ/q1BpXqTP7T+Kh43Duz+QWrLgrOsbd5sbUPaDK5ntFHoziqbNsOGgf0azcpMQroFZV2ZOwWIGhjxy3BORj6unIW7wxZtYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUWu+1d+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kVCWIRHJ3NK2NHtwUYxLp8ZjStyXzJjWKs7ReyoQhZx26fyyKQbZi8X62uJGKQ+owuHQictQJE/81nZ1AsxT9Z2ozxGjuexhpfcemGvXD1RxlRC4gRlJ1Om8dhSpXUdgO7CG2eCqYK9gkVD4ZmkA4xTh8io3Ghw15bUm0m4BHi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQV7V+ci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUWu+1d+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2D9C4CEE2;
-	Wed, 23 Apr 2025 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQV7V+ci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA65DC4CEE2;
+	Wed, 23 Apr 2025 14:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419826;
-	bh=oWa4vu39wJpmQTMskEITDtkBgroq5P+Qlv4QjbN7XL8=;
+	s=korg; t=1745419829;
+	bh=KAR+DyQbVlZ4ipOs8idwH/vENfu+12D1xxnNheKMwLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUWu+1d+YrqLggVsFE61ga8aSJ1LYxA14LCkmMc6T9SKsMWyArwmSh9ZTonaLI9Ki
-	 APNIAjhCbNwOJfV2ya0ucf8bMeauBp8sbZi4xkri2PMsIhKN/XpCEU8JXpQV26IJiN
-	 XbSmQRfmsUwUWAf6DJXrxVaVSLAdMp1VGuDenNzE=
+	b=PQV7V+cik5hX5QXwl2fJpBKr5z8UUE49SDQxgbXuu/sRuBnGKLTzC9dU/6hIOar0Y
+	 SavkBSwo91PVqnjrQHR2KIQd5iuH3TLzOPv4dVycQgEwaThIdG7cb5G4BxzaVL2HLO
+	 sD7KeSfTjCuTRWZ5LY5x7MILimqSzc6wXXwbCO1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Ethan Carter Edwards <ethan@ethancedwards.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/223] netlink: specs: ovs_vport: align with C codegen capabilities
-Date: Wed, 23 Apr 2025 16:41:58 +0200
-Message-ID: <20250423142619.009771107@linuxfoundation.org>
+Subject: [PATCH 6.14 012/241] ASoC: Intel: avs: Fix null-ptr-deref in avs_component_probe()
+Date: Wed, 23 Apr 2025 16:41:16 +0200
+Message-ID: <20250423142621.023774380@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,71 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 747fb8413aaa36e4c988d45c4fe20d4c2b0778cd ]
+[ Upstream commit 95f723cf141b95e3b3a5b92cf2ea98a863fe7275 ]
 
-We started generating C code for OvS a while back, but actually
-C codegen only supports fixed headers specified at the family
-level right now (schema also allows specifying them per op).
-ovs_flow and ovs_datapath already specify the fixed header
-at the family level but ovs_vport does it per op.
-Move the property, all ops use the same header.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+avs_component_probe() does not check for this case, which results in a
+NULL pointer dereference.
 
-This ensures YNL C sees the correct hdr_len:
-
-   const struct ynl_family ynl_ovs_vport_family =  {
-          .name           = "ovs_vport",
-  -       .hdr_len        = sizeof(struct genlmsghdr),
-  +       .hdr_len        = sizeof(struct genlmsghdr) + sizeof(struct ovs_header),
-   };
-
-Fixes: 7c59c9c8f202 ("tools: ynl: generate code for ovs families")
-Link: https://patch.msgid.link/20250409145541.580674-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Ethan Carter Edwards <ethan@ethancedwards.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250402141411.44972-1-bsdhenrymartin@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/ovs_vport.yaml | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/intel/avs/pcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/ovs_vport.yaml b/Documentation/netlink/specs/ovs_vport.yaml
-index 86ba9ac2a5210..b538bb99ee9b5 100644
---- a/Documentation/netlink/specs/ovs_vport.yaml
-+++ b/Documentation/netlink/specs/ovs_vport.yaml
-@@ -123,12 +123,12 @@ attribute-sets:
- 
- operations:
-   name-prefix: ovs-vport-cmd-
-+  fixed-header: ovs-header
-   list:
-     -
-       name: new
-       doc: Create a new OVS vport
-       attribute-set: vport
--      fixed-header: ovs-header
-       do:
-         request:
-           attributes:
-@@ -141,7 +141,6 @@ operations:
-       name: del
-       doc: Delete existing OVS vport from a data path
-       attribute-set: vport
--      fixed-header: ovs-header
-       do:
-         request:
-           attributes:
-@@ -152,7 +151,6 @@ operations:
-       name: get
-       doc: Get / dump OVS vport configuration and state
-       attribute-set: vport
--      fixed-header: ovs-header
-       do: &vport-get-op
-         request:
-           attributes:
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 4bfbcb5a5ae8a..f7dd17849e97b 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -927,7 +927,8 @@ static int avs_component_probe(struct snd_soc_component *component)
+ 		else
+ 			mach->tplg_filename = devm_kasprintf(adev->dev, GFP_KERNEL,
+ 							     "hda-generic-tplg.bin");
+-
++		if (!mach->tplg_filename)
++			return -ENOMEM;
+ 		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
+ 				     mach->tplg_filename);
+ 		if (!filename)
 -- 
 2.39.5
 
