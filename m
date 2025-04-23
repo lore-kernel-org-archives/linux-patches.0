@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46482853ED;
-	Wed, 23 Apr 2025 15:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510D829B76A;
+	Wed, 23 Apr 2025 15:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422548; cv=none; b=gzlJB0V/feekioOMVfdPbrOuXbqC6G7DlB6OGN3B1PlrsCFN004sCFBpxvy7qSkkMWv4LOUILg9n2KkEd/lauLYJsmI8WICcmwV3h7k16htE+k9kvyv+bZIvH+KbOO0oeVCvKqwsLWdLuVMGw+aMJR4JXovEuvtzxw46iE413Yg=
+	t=1745422551; cv=none; b=sffy4PZS1yQbUtumfyomcRCz7ZMCKiwvbw1fEuynT1HvmqqbqTXDAXk+sFUMqOEqHnrDb2k8OA6zg9uxqoIlmkoU3Ncq0kN0CRxJBAS5zWJ+G+gjaofLIOmz4p4GeO5ljvYAIyvZ6EG1Ifm6goT7kUT5xIVCdxP3UtfwvdHlCf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422548; c=relaxed/simple;
-	bh=TerNogXoomZ7A/9kUarVOD+VstC9Tjf2+5QB7mUtecA=;
+	s=arc-20240116; t=1745422551; c=relaxed/simple;
+	bh=NcAp+v54+vdMUXC4vYLJd3nJskzjzKvG3sKAkTAH90E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHSF4Z9vJUIvf3wm0JGnBpol1DfpL556HK88ApSQN2kpB57QOnDhbhC3Bbl0PqgUNlq0dbCopc86AhcapGFdBYkUT4qQZWvnnIhg4DuKRLn3KHc87zoaL0CjlDr5zi5fZgThjbTlWPw/yT+hJM395dD6yegekTs3hUkRBkUdOsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhuZbGwx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwSUNR6QC1MxJqYDdmIR9jaGi7y/0l72RyrI+fM3FNbvjOJQ5hNBKXtx7z9Zko+P5fVE+wTNK45+q/SL4gLk6AGzEXcLl1oc7dya5ngONow41YAq0tsr347lK8KgLy19tHsrO2gILk4LcDn65/Br5XErzZrfCHqtwiJ0mP2CEu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLEF/QOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhuZbGwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8030C4CEE3;
-	Wed, 23 Apr 2025 15:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLEF/QOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BB5C4CEE3;
+	Wed, 23 Apr 2025 15:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422548;
-	bh=TerNogXoomZ7A/9kUarVOD+VstC9Tjf2+5QB7mUtecA=;
+	s=korg; t=1745422550;
+	bh=NcAp+v54+vdMUXC4vYLJd3nJskzjzKvG3sKAkTAH90E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhuZbGwx+SsG3MGtWJaXaMYPoLtNJS1JrzhXVIbDL4a1LcJzkBYqVfH37lumqD93V
-	 ZUnszIEXIT6aCcOelV3+hBJSvvwvqwaGQFFY56VWVZuoVNPvR9U8eK/imX3BSzKxbh
-	 kQFxO1A/mU1iJBmkiCPKNe7wlJtxq5yV/fkVaSVQ=
+	b=pLEF/QOQKMYBGPL8PJli4HtQncT+A3dV4F03R6UUkDmjnkPHSMVbfRuOzMXVOs1/m
+	 1EGOKpaXIrv+W9+qEUz/7gUZU5NrLLmRgimmh3VzXU3PzWXse/6WC4vh5UH+87jj0r
+	 dd84oql+J12lWGFUS5MQJk2hc+OSfDVUj9/TKEYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 361/393] kbuild: Add -fno-builtin-wcslen
-Date: Wed, 23 Apr 2025 16:44:17 +0200
-Message-ID: <20250423142658.251329963@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 352/393] drm/amd/pm/powerplay/hwmgr/smu7_thermal: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:44:08 +0200
+Message-ID: <20250423142657.874273883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -50,59 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
+commit 7c246a05df51c52fe0852ce56ba10c41e6ed1f39 upstream.
 
-A recent optimization change in LLVM [1] aims to transform certain loop
-idioms into calls to strlen() or wcslen(). This change transforms the
-first while loop in UniStrcat() into a call to wcslen(), breaking the
-build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
-  ld.lld: error: undefined symbol: wcslen
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Disable this optimization with '-fno-builtin-wcslen', which prevents the
-compiler from assuming that wcslen() is available in the kernel's C
-library.
-
-[ More to the point - it's not that we couldn't implement wcslen(), it's
-  that this isn't an optimization at all in the context of the kernel.
-
-  Replacing a simple inlined loop with a function call to the same loop
-  is just stupid and pointless if you don't have long strings and fancy
-  libraries with vectorization support etc.
-
-  For the regular 'strlen()' cases, we want the compiler to do this in
-  order to handle the trivial case of constant strings. And we do have
-  optimized versions of 'strlen()' on some architectures. But for
-  wcslen? Just no.    - Linus ]
-
+Fixes: c52dcf49195d ("drm/amd/pp: Avoid divide-by-zero in fan_ctrl_set_fan_speed_rpm")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nathan: Resolve small conflict in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1004,6 +1004,9 @@ ifdef CONFIG_CC_IS_GCC
- KBUILD_CFLAGS   += -fconserve-stack
- endif
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_thermal.c
+@@ -267,10 +267,10 @@ int smu7_fan_ctrl_set_fan_speed_rpm(stru
+ 	if (hwmgr->thermal_controller.fanInfo.bNoFan ||
+ 			(hwmgr->thermal_controller.fanInfo.
+ 			ucTachometerPulsesPerRevolution == 0) ||
+-			speed == 0 ||
++			(!speed || speed > UINT_MAX/8) ||
+ 			(speed < hwmgr->thermal_controller.fanInfo.ulMinRPM) ||
+ 			(speed > hwmgr->thermal_controller.fanInfo.ulMaxRPM))
+-		return 0;
++		return -EINVAL;
  
-+# Ensure compilers do not transform certain loops into calls to wcslen()
-+KBUILD_CFLAGS += -fno-builtin-wcslen
-+
- # change __FILE__ to the relative path from the srctree
- KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
- 
+ 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl))
+ 		smu7_fan_ctrl_stop_smc_fan_control(hwmgr);
 
 
