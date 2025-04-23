@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6A628B516;
-	Wed, 23 Apr 2025 15:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1A828BA9C;
+	Wed, 23 Apr 2025 15:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420686; cv=none; b=dvbtgXPoy3u4uS6nkEGhDxzb65Y/htkkChRh4NwTAICmA8OlwEmj4cE0rGc88msnKDUQJ60txTmviWAVKkyzgdJNxeH3s19t3iKx9xYlEyx91LGa4cY47WTzXdMBQfmr7+aZmMMNVGFAJ+xEreJf6Kg8IFxnwVthgO/j6nFoqCQ=
+	t=1745420688; cv=none; b=H87hQeEl3u+TD4gA6NHV1tg9bXnRlk9APCV4uyOwHjm5gS177zzAzbt+ODEPvekyvH5FcHJrmE6ZP8zASjsxmitfWM88wDY2fN6Ba7nZIYqkkrHeoleeaOAAg7m0BDf1SsyZCPgayvfFbDbVgkm2lY3Jl5DVNl9ji1yz05GMAZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420686; c=relaxed/simple;
-	bh=W4rtfKov8uLMlMRia0GTBb7yuA7p2T8sILfh7xfyj0Y=;
+	s=arc-20240116; t=1745420688; c=relaxed/simple;
+	bh=z8ucmXlZdXNeToTrdFqxMLd0284wTNrqVjcppoF3Pgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElbUuZssDJfxrJROSMZ6ZMdOmgmhhRi7Tms4TcX9qI+WSwn0BFUBufLYJSivgyooKe7bIN4JG4NzdfbrvXW2/QlCpd/4rh9a6FbHQkvHSnut/8cklwijPVGv+TU8SSn7U0IvvQ29gBGEYZedOknhhuzTMxug4NiV0ciXmWHXrK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHN0t47z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6CLt9FPW3yx7aMINMDZy2lsuSeVAIhaS6RqYyh7uecQLP9Ti+nQKQmOORpZ/3IYCLR5A6unDG9sLK2QDAbZMjoMUFYLJ1vnJwZNYVG/1Mdqe3XMS1Ey3OohUQKKmdCyKzXwQqUY845AdccMDQ1S/AckNrP4Gw8axKMt98wMRkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPHqM3SJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHN0t47z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA68C4CEE2;
-	Wed, 23 Apr 2025 15:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPHqM3SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDFCC4CEE2;
+	Wed, 23 Apr 2025 15:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420685;
-	bh=W4rtfKov8uLMlMRia0GTBb7yuA7p2T8sILfh7xfyj0Y=;
+	s=korg; t=1745420687;
+	bh=z8ucmXlZdXNeToTrdFqxMLd0284wTNrqVjcppoF3Pgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IHN0t47zN8FgECYDQNGRIqg+bS13mglQ+sW+IByQnr1st6bz3mYauIgBfsqVdtGTh
-	 9TaN0x4/ix4DQiZfg7aFhWEBvyxgNxYq1bYg2uyHz5Q4kdxwEJK4lLoUc5tERrWhRG
-	 WUldRSyC/fpBqDQYsvluck7Axs6x0aC3RPehDM8I=
+	b=LPHqM3SJ7H1oZCj9Afuk4Yz8poetx+eKEeeqKbMcuncvX+Cap2v69ybvXxEkqhsTo
+	 38Vzl1BfIUw9Nyz//ikPuPAnt11bm6KHc4Yw/olT7wOIsOj0Gck2iOum+T0nORJ9my
+	 gsQYQ01PZ0wfJmuFYm7pQYHf6BXbHv6Tld5EYp/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 152/223] drm/amdgpu: Prefer shadow rom when available
-Date: Wed, 23 Apr 2025 16:43:44 +0200
-Message-ID: <20250423142623.369772719@linuxfoundation.org>
+	warthog9@eaglescrag.net,
+	Ayush Jain <Ayush.jain3@amd.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 071/291] ktest: Fix Test Failures Due to Missing LOG_FILE Directories
+Date: Wed, 23 Apr 2025 16:41:00 +0200
+Message-ID: <20250423142627.274242294@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,79 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Ayush Jain <Ayush.jain3@amd.com>
 
-commit 27145f78f56a3178c4f9ffe51c4406d8dd0ca90c upstream.
+[ Upstream commit 5a1bed232781d356f842576daacc260f0d0c8d2e ]
 
-Fetch VBIOS from shadow ROM when available before trying other methods
-like EFI method.
+Handle missing parent directories for LOG_FILE path to prevent test
+failures. If the parent directories don't exist, create them to ensure
+the tests proceed successfully.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Fixes: 9c081c11c621 ("drm/amdgpu: Reorder to read EFI exported ROM first")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4066
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <warthog9@eaglescrag.net>
+Link: https://lore.kernel.org/20250307043854.2518539-1-Ayush.jain3@amd.com
+Signed-off-by: Ayush Jain <Ayush.jain3@amd.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |   36 ++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ tools/testing/ktest/ktest.pl | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -437,6 +437,13 @@ success:
- 	return true;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index aecea16cbd02f..2109bd42c144a 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -4282,6 +4282,14 @@ if (defined($opt{"LOG_FILE"})) {
+     if ($opt{"CLEAR_LOG"}) {
+ 	unlink $opt{"LOG_FILE"};
+     }
++
++    if (! -e $opt{"LOG_FILE"} && $opt{"LOG_FILE"} =~ m,^(.*/),) {
++        my $dir = $1;
++        if (! -d $dir) {
++            mkpath($dir) or die "Failed to create directories '$dir': $!";
++            print "\nThe log directory $dir did not exist, so it was created.\n";
++        }
++    }
+     open(LOG, ">> $opt{LOG_FILE}") or die "Can't write to $opt{LOG_FILE}";
+     LOG->autoflush(1);
  }
- 
-+static bool amdgpu_prefer_rom_resource(struct amdgpu_device *adev)
-+{
-+	struct resource *res = &adev->pdev->resource[PCI_ROM_RESOURCE];
-+
-+	return (res->flags & IORESOURCE_ROM_SHADOW);
-+}
-+
- static bool amdgpu_get_bios_dgpu(struct amdgpu_device *adev)
- {
- 	if (amdgpu_atrm_get_bios(adev)) {
-@@ -455,14 +462,27 @@ static bool amdgpu_get_bios_dgpu(struct
- 		goto success;
- 	}
- 
--	if (amdgpu_read_platform_bios(adev)) {
--		dev_info(adev->dev, "Fetched VBIOS from platform\n");
--		goto success;
--	}
--
--	if (amdgpu_read_bios(adev)) {
--		dev_info(adev->dev, "Fetched VBIOS from ROM BAR\n");
--		goto success;
-+	if (amdgpu_prefer_rom_resource(adev)) {
-+		if (amdgpu_read_bios(adev)) {
-+			dev_info(adev->dev, "Fetched VBIOS from ROM BAR\n");
-+			goto success;
-+		}
-+
-+		if (amdgpu_read_platform_bios(adev)) {
-+			dev_info(adev->dev, "Fetched VBIOS from platform\n");
-+			goto success;
-+		}
-+
-+	} else {
-+		if (amdgpu_read_platform_bios(adev)) {
-+			dev_info(adev->dev, "Fetched VBIOS from platform\n");
-+			goto success;
-+		}
-+
-+		if (amdgpu_read_bios(adev)) {
-+			dev_info(adev->dev, "Fetched VBIOS from ROM BAR\n");
-+			goto success;
-+		}
- 	}
- 
- 	if (amdgpu_read_bios_from_rom(adev)) {
+-- 
+2.39.5
+
 
 
