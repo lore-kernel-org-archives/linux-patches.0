@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB3928D83D;
-	Wed, 23 Apr 2025 15:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9F229DB8D;
+	Wed, 23 Apr 2025 15:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422067; cv=none; b=nDsTXoHrCqR0ajrQm4vbqt/WX5924x/PqAtD4uyhAgoEyXgsN59f6cS2TPh0tJy8Iawrqi5JivIJGGeTh4JWcjTsf7BBQxhxAi/PMr8a8O96fCWnEdbjvARwTuagkambvAH/uGwErfzH+8Y0JtXuoiTw982Geyy66txGhyzi+YE=
+	t=1745422068; cv=none; b=l2jcJQxLUzXwtStMs5U8fro0iN4RVH7Jp664Snc4AJGEiPzUI8wxeeZAZivgYr3+2Mj2dPmvotBSRVv1P7z5URXK8B3uH3sdzyfacjHiR+z3mC5mWFuaeUIH67fSf8U02zVdXyMIoxWH5kuputIxumVwVtKTHw/Ne+Cg7442ndk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422067; c=relaxed/simple;
-	bh=VdJo9PwceBR5kFw5XlHGWjHTNWneS1Jjuj9Y6vDHP5k=;
+	s=arc-20240116; t=1745422068; c=relaxed/simple;
+	bh=PY8gioSIeKewWwBYZcQpXb7Tfi3W1lxlEkU5R09Shwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0gquNCVlnbTNFDtPqhTK6AvdKIZGZJSt9GfKkkG5upJ+4HN8l2XshTSyFO5fS9rIupscPtywFyyaHo7cD/fvAGgvBDJt3SW4WQpltZJH0i8P7Urec/ns9a9OTJbvXoJN1+9tHIvednTKX+lAViW1cIg0U3loohHvJ2cs2mgOqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyBmb3Sf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=frclFqttqogh8qnHUsfA8l1qOxJtnJsyUkprIq8GalzN8fLUv0+CbmNX9rBtBH1eMNVv+i1XJE3ZK4jVwb1f+11gxAi+eR9c5g9mIH8V1ouOJswEMVchgKpmFDj+8RhK8JMlF6P3cZAdxvpz3ATofZZAD15XnB73kbQWtIhHepA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBSeyH+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyBmb3Sf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECF4C4CEE2;
-	Wed, 23 Apr 2025 15:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBSeyH+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B620BC4CEE2;
+	Wed, 23 Apr 2025 15:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422065;
-	bh=VdJo9PwceBR5kFw5XlHGWjHTNWneS1Jjuj9Y6vDHP5k=;
+	s=korg; t=1745422068;
+	bh=PY8gioSIeKewWwBYZcQpXb7Tfi3W1lxlEkU5R09Shwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyBmb3Sf1DZRvGoldBlTeSdIzC5OhZpUNywbrveCQ4A43XRAbSfNCkCzAZT5kS0IP
-	 ML1sWRmcY6yRCMme8w7dAbX4Am51hTUD4TJ3yj3TVveoD7YgR8k3JKTfIh9/kb6FnX
-	 7t0E7ZygyGoldjTyQs2c7e0Weh8GEQmV5XmRZosk=
+	b=kBSeyH+igYKa52FYEgj+eLsibgnh9QooDEnVvjGtdEdPNIUTZaYpUOy8Fz/OtjCwr
+	 pzLkA3cDt4kbOHrN9iZEMXaD3cLoHqKXDcNlLRpww6t+mjMlajDiK94dLI6EI/VAZB
+	 l3jamInShXqfPtu0VoznLR19fSdJz2cp+9EFSWs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 227/291] perf/x86/intel: Allow to update user space GPRs from PEBS records
-Date: Wed, 23 Apr 2025 16:43:36 +0200
-Message-ID: <20250423142633.703144414@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 272/393] net: ethernet: ti: am65-cpsw: fix port_np reference counting
+Date: Wed, 23 Apr 2025 16:42:48 +0200
+Message-ID: <20250423142654.591016872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,82 +48,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Michael Walle <mwalle@kernel.org>
 
-commit 71dcc11c2cd9e434c34a63154ecadca21c135ddd upstream.
+[ Upstream commit 903d2b9f9efc5b3339d74015fcfc0d9fff276c4c ]
 
-Currently when a user samples user space GPRs (--user-regs option) with
-PEBS, the user space GPRs actually always come from software PMI
-instead of from PEBS hardware. This leads to the sampled GPRs to
-possibly be inaccurate for single PEBS record case because of the
-skid between counter overflow and GPRs sampling on PMI.
+A reference to the device tree node is stored in a private struct, thus
+the reference count has to be incremented. Also, decrement the count on
+device removal and in the error path.
 
-For the large PEBS case, it is even worse. If user sets the
-exclude_kernel attribute, large PEBS would be used to sample user space
-GPRs, but since PEBS GPRs group is not really enabled, it leads to all
-samples in the large PEBS record to share the same piece of user space
-GPRs, like this reproducer shows:
-
-  $ perf record -e branches:pu --user-regs=ip,ax -c 100000 ./foo
-  $ perf report -D | grep "AX"
-
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-  .... AX    0x000000003a0d4ead
-
-So enable GPRs group for user space GPRs sampling and prioritize reading
-GPRs from PEBS. If the PEBS sampled GPRs is not user space GPRs (single
-PEBS record case), perf_sample_regs_user() modifies them to user space
-GPRs.
-
-[ mingo: Clarified the changelog. ]
-
-Fixes: c22497f5838c ("perf/x86/intel: Support adaptive PEBS v4")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250415104135.318169-2-dapeng1.mi@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250414083942.4015060-1-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/ds.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -1149,8 +1149,10 @@ static u64 pebs_update_adaptive_cfg(stru
- 	 * + precise_ip < 2 for the non event IP
- 	 * + For RTM TSX weight we need GPRs for the abort code.
- 	 */
--	gprs = (sample_type & PERF_SAMPLE_REGS_INTR) &&
--	       (attr->sample_regs_intr & PEBS_GP_REGS);
-+	gprs = ((sample_type & PERF_SAMPLE_REGS_INTR) &&
-+		(attr->sample_regs_intr & PEBS_GP_REGS)) ||
-+	       ((sample_type & PERF_SAMPLE_REGS_USER) &&
-+		(attr->sample_regs_user & PEBS_GP_REGS));
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index dbca0b2889bc5..9c8376b271891 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2076,7 +2076,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 				of_property_read_bool(port_np, "ti,mac-only");
  
- 	tsx_weight = (sample_type & PERF_SAMPLE_WEIGHT_TYPE) &&
- 		     ((attr->config & INTEL_ARCH_EVENT_MASK) ==
-@@ -1792,7 +1794,7 @@ static void setup_pebs_adaptive_sample_d
- 			regs->flags &= ~PERF_EFLAGS_EXACT;
- 		}
- 
--		if (sample_type & PERF_SAMPLE_REGS_INTR)
-+		if (sample_type & (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER))
- 			adaptive_pebs_save_regs(regs, gprs);
+ 		/* get phy/link info */
+-		port->slave.port_np = port_np;
++		port->slave.port_np = of_node_get(port_np);
+ 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
+ 		if (ret) {
+ 			dev_err(dev, "%pOF read phy-mode err %d\n",
+@@ -2134,6 +2134,17 @@ static void am65_cpsw_nuss_phylink_cleanup(struct am65_cpsw_common *common)
  	}
+ }
  
++static void am65_cpsw_remove_dt(struct am65_cpsw_common *common)
++{
++	struct am65_cpsw_port *port;
++	int i;
++
++	for (i = 0; i < common->port_num; i++) {
++		port = &common->ports[i];
++		of_node_put(port->slave.port_np);
++	}
++}
++
+ static int
+ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+ {
+@@ -3009,6 +3020,7 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ err_free_phylink:
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
++	am65_cpsw_remove_dt(common);
+ err_of_clear:
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
+@@ -3040,6 +3052,7 @@ static int am65_cpsw_nuss_remove(struct platform_device *pdev)
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
+ 	am65_cpsw_disable_serdes_phy(common);
++	am65_cpsw_remove_dt(common);
+ 
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
+-- 
+2.39.5
+
 
 
