@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2C72BCF7F;
-	Wed, 23 Apr 2025 15:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFEB2BD580;
+	Wed, 23 Apr 2025 15:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421500; cv=none; b=cpdybnOp4PMAZT/7JVXSjVUiyCvdrNO7WO32vMn/NRZZsUTuvdKINvyN56x43e8nhKRDOGxnQSnawAqiU8JkRs2ULFaBZj7H3KQTPQDhIOVrPT9QPOMJOk87yATXc7IdLfQVJQfGvmh0EQa9GbMv10p8kWyZ5B19OTSCk2P3yF4=
+	t=1745421501; cv=none; b=C8uEFrxaxvrp7OsnwTLAnNFPshT/yfgtnDNRJrpRgzQKfaV/cgtQkWkFmtAnvnq9Gx6psZBbs6E3kbMMZcoCJ2322RTGa37xpQz4vWDjX2MxQB7OBjPAtq2lyj6+bvuZ1LWEhgnkpeYckp318dNvi2WXK/czW0NycMxPlNuGOI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421500; c=relaxed/simple;
-	bh=Y2OeIHOClCJsou7Cq8lcAddAUk2qAkJ7jIpDs9hwdPY=;
+	s=arc-20240116; t=1745421501; c=relaxed/simple;
+	bh=6BQ3Kyyvvrd/i/fSW9VSkAsWA4QTtMhq4nMlgPF+VBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8mhoeTLGzgHLfLGr7VWsibZ1e9OtHwxlJx0nIo/br98lg1tJ19ANLpYGCfmoa4I8HhoQr+6XGr7kmowEcV8zdBiG6igbcfalhZpjBjyzs62hGrTcry3X3Y31MpqnCxKX/FS+5wV+I/HXQdpT5crqyVbS4mG+024IjMlWiB+x2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2X2z/jAn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rqgTg5V5hAX6WLujJrA3ZN2+4is96nlEtCtnCQc0RgbBSNjmu6ZvtfwTmjp1OTk0M/JOXlUiu0RclPs12tULKlvpeQKNGRH/0LDsZGf/Xm0VCDHW/g8KP3nxbsigcHrWtYhmTcEwIiTo38QJhoQtw4WWilhxkSRCsiK1yR0Xr1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaCwFlqw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2X2z/jAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2848C4CEE3;
-	Wed, 23 Apr 2025 15:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaCwFlqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F0CC4CEE2;
+	Wed, 23 Apr 2025 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421500;
-	bh=Y2OeIHOClCJsou7Cq8lcAddAUk2qAkJ7jIpDs9hwdPY=;
+	s=korg; t=1745421497;
+	bh=6BQ3Kyyvvrd/i/fSW9VSkAsWA4QTtMhq4nMlgPF+VBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2X2z/jAnkqBrNmzhRquDE4Yly1X2LOG6iCI+rQUBTk3SIo8ttHW6rb3xtYei2PWBF
-	 gebpnPmHnasr82zAhpRGIcYpoDHkh5XvOq74lNR8gFWQnOsU/dkBSiMneoSXUOfDD7
-	 OGIJSBpaGwistyHZrndgm6zTr+ocNVucRQvr8HUE=
+	b=XaCwFlqwyO8F/q/8l8MtmsNtcDtWh21FSCTRj57gr6YgtOzDQptVugL1RtSg9Plre
+	 7e+PPuW8hqx4c9PPGKqqG3fU8AkgBiCBiWglpDRwTpUU++GyGj7lAxHCkqwn2AFqm6
+	 US5aQbZbiEf+URDdkwi1d0G1uCRnKp7mJ8Z5O8HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 185/393] btrfs: zoned: fix zone finishing with missing devices
-Date: Wed, 23 Apr 2025 16:41:21 +0200
-Message-ID: <20250423142651.022134777@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 143/291] dm-integrity: set ti->error on memory allocation failure
+Date: Wed, 23 Apr 2025 16:42:12 +0200
+Message-ID: <20250423142630.251045439@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +45,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 35fec1089ebb5617f85884d3fa6a699ce6337a75 upstream.
+commit 00204ae3d6712ee053353920e3ce2b00c35ef75b upstream.
 
-If do_zone_finish() is called with a filesystem that has missing devices
-(e.g. a RAID file system mounted in degraded mode) it is accessing the
-btrfs_device::zone_info pointer, which will not be set if the device
-in question is missing.
+The dm-integrity target didn't set the error string when memory
+allocation failed. This patch fixes it.
 
-Check if the device is present (by checking if it has a valid block device
-pointer associated) and if not, skip zone finishing for it.
-
-Fixes: 4dcbb8ab31c1 ("btrfs: zoned: make zone finishing multi stripe capable")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    3 +++
+ drivers/md/dm-integrity.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2168,6 +2168,9 @@ static int do_zone_finish(struct btrfs_b
- 		const u64 physical = map->stripes[i].physical;
- 		struct btrfs_zoned_device_info *zinfo = device->zone_info;
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -4546,16 +4546,19 @@ try_smaller_buffer:
  
-+		if (!device->bdev)
-+			continue;
-+
- 		if (zinfo->max_active_zones == 0)
- 			continue;
- 
+ 		ic->recalc_bitmap = dm_integrity_alloc_page_list(n_bitmap_pages);
+ 		if (!ic->recalc_bitmap) {
++			ti->error = "Could not allocate memory for bitmap";
+ 			r = -ENOMEM;
+ 			goto bad;
+ 		}
+ 		ic->may_write_bitmap = dm_integrity_alloc_page_list(n_bitmap_pages);
+ 		if (!ic->may_write_bitmap) {
++			ti->error = "Could not allocate memory for bitmap";
+ 			r = -ENOMEM;
+ 			goto bad;
+ 		}
+ 		ic->bbs = kvmalloc_array(ic->n_bitmap_blocks, sizeof(struct bitmap_block_status), GFP_KERNEL);
+ 		if (!ic->bbs) {
++			ti->error = "Could not allocate memory for bitmap";
+ 			r = -ENOMEM;
+ 			goto bad;
+ 		}
 
 
