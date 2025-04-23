@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B24B27CB12;
-	Wed, 23 Apr 2025 15:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E7726F442;
+	Wed, 23 Apr 2025 15:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420495; cv=none; b=fj8zbKDFLFbD4CeenjkaBnTMOqmh/owx665YhJOhBuYy5kx9S+Z/NCAwzHh5gnsfeB+oN3cNbVjs+pU/u8GVMQxkuPXuWKpX+QnQtoM4Q+h0oBDg40I6hGJSv5Mo8HyT6Af57SQ/j7fYG0WyPiy4Bq31NnIx8JZ+fZqG361rpFc=
+	t=1745420498; cv=none; b=aGtVx7/rT1/l7ZyYf7Nyjip85ui03gE6iTlhWaeroOaNZM+HwyUHYdLEUALibht8QCOzXV6gMHcE5TcCe2yrfnQcUCFEEGNvh83V8Bfq4j9T2BjyFkHar6cb2QW/UtO3OdM3xkvJe7lWbIVft1WqCa4MZ/5gAyE4/hB6Z2i2xsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420495; c=relaxed/simple;
-	bh=fFyRXWEhV1odPhixUuv+JTA4avgIyjPVqvD8vQU7/JE=;
+	s=arc-20240116; t=1745420498; c=relaxed/simple;
+	bh=AD3bxZx1ClOaZB5AlzE3n7H2zGIfpO9n862h0u7Fhic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXkI1DV9+Ljz0mJTAQEzPmlJmCOAQ93q85W61nw+M8yvToMCmODMCGLfr9YeWyeLfQGn0YHgdxS1b49YtBZc/xfdQHqvxMrKx4zGHCy1xCJYROlc+qlfgrRFZaTzay1uL61Yly3ceqKbuVJ24O7wh4SgE2STL3PW6tBY+8Ij6Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlp0TUxv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdlGMvjhzfbE/xUaFEPJFnAFE+DmkBGLn5pwScqGr//NH3bkPsCi2EUUMOSmNxOwfnx1h+V4tSlDRliuV7MSMnQNQeMp5528inVpBeRLr8pbghwQmcLCirIyeSnHOTVIHU/wRdTF7UVuLNEkq56464XcITs7eqFAawSSCTXQrLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZuxYFSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlp0TUxv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8F4C4CEE2;
-	Wed, 23 Apr 2025 15:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZuxYFSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CCDC4CEE2;
+	Wed, 23 Apr 2025 15:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420495;
-	bh=fFyRXWEhV1odPhixUuv+JTA4avgIyjPVqvD8vQU7/JE=;
+	s=korg; t=1745420498;
+	bh=AD3bxZx1ClOaZB5AlzE3n7H2zGIfpO9n862h0u7Fhic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tlp0TUxvAEVYUOUxCaWOcPOIIagjwuDbm/q3tDLZC64ZwFUPY1rKSVh4fNnl6zfY7
-	 noNnhl5/T/8M+HlZRQ7l+NSSJyqparjsEpOlZ9XOQlSgBBvLy9j0A0l/+HxMAXRKnz
-	 SV9VpFI7ezzHMzXPVN+MPnJf6PpujB6cPzpfDfB0=
+	b=iZuxYFSbeodyAeGK/Hic7aghpf0/AT0Q9kzjUWFiQen5SlboYlbBzVu0YVNnzAtD0
+	 DT/K2TaagffXv53CJYu+A11XMzKeqGZz3SkYoqzk7QCmTBafUVTfeG/+mPG54gprDD
+	 De4N1zSBBV/nYonH6Lg4w6oQhrozgXf0adUnmU6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/291] Bluetooth: qca: simplify WCN399x NVM loading
-Date: Wed, 23 Apr 2025 16:40:41 +0200
-Message-ID: <20250423142626.511946882@linuxfoundation.org>
+Subject: [PATCH 6.6 066/393] wifi: ath12k: Fix invalid entry fetch in ath12k_dp_mon_srng_process
+Date: Wed, 23 Apr 2025 16:39:22 +0200
+Message-ID: <20250423142646.031168129@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 1cc41b5092e3aa511454ec882c525af311bee631 ]
+[ Upstream commit 63fdc4509bcf483e79548de6bc08bf3c8e504bb3 ]
 
-The WCN399x code has two separate cases for loading the NVM data. In
-preparation to adding support for WCN3950, which also requires similar
-quirk, split the "variant" to be specified explicitly and merge two
-snprintfs into a single one.
+Currently, ath12k_dp_mon_srng_process uses ath12k_hal_srng_src_get_next_entry
+to fetch the next entry from the destination ring. This is incorrect because
+ath12k_hal_srng_src_get_next_entry is intended for source rings, not destination
+rings. This leads to invalid entry fetches, causing potential data corruption or
+crashes due to accessing incorrect memory locations. This happens because the
+source ring and destination ring have different handling mechanisms and using
+the wrong function results in incorrect pointer arithmetic and ring management.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+To fix this issue, replace the call to ath12k_hal_srng_src_get_next_entry with
+ath12k_hal_srng_dst_get_next_entry in ath12k_dp_mon_srng_process. This ensures
+that the correct function is used for fetching entries from the destination
+ring, preventing invalid memory accesses.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-7-quic_ppranees@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 892e2540f008a..5651f40db1736 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -807,6 +807,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		   const char *firmware_name)
- {
- 	struct qca_fw_config config = {};
-+	const char *variant = "";
- 	int err;
- 	u8 rom_ver = 0;
- 	u32 soc_ver;
-@@ -901,13 +902,11 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		case QCA_WCN3990:
- 		case QCA_WCN3991:
- 		case QCA_WCN3998:
--			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID) {
--				snprintf(config.fwname, sizeof(config.fwname),
--					 "qca/crnv%02xu.bin", rom_ver);
--			} else {
--				snprintf(config.fwname, sizeof(config.fwname),
--					 "qca/crnv%02x.bin", rom_ver);
--			}
-+			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID)
-+				variant = "u";
-+
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/crnv%02x%s.bin", rom_ver, variant);
- 			break;
- 		case QCA_WCN3988:
- 			snprintf(config.fwname, sizeof(config.fwname),
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index f1e57e98bdc60..35f22a4a16cf2 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -2571,7 +2571,7 @@ int ath12k_dp_mon_rx_process_stats(struct ath12k *ar, int mac_id,
+ 		dest_idx = 0;
+ move_next:
+ 		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
+-		ath12k_hal_srng_src_get_next_entry(ab, srng);
++		ath12k_hal_srng_dst_get_next_entry(ab, srng);
+ 		num_buffs_reaped++;
+ 	}
+ 
 -- 
 2.39.5
 
