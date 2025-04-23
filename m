@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEB727FD7A;
-	Wed, 23 Apr 2025 14:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A7727FD7A;
+	Wed, 23 Apr 2025 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419819; cv=none; b=XkpfpVDxcIfG50/dRplSksS7EzCaLisDjdsO5LtP8ELOoqxB3Wt+rCgKzdQ77lA5wMKKuHSueq1eSyQmnsRjXpBr7u95P+T386rHpLh2iRPbc0SDc/sHDx26qbdpno25WhHLqyVUfghoJvMEgZyk5ExuqsHTvFTJVMjsSYRACA8=
+	t=1745419821; cv=none; b=jznZpA92Upllzh3sTI0sFWCFHNBEcXTsvURNQcf7rTKVovdkiuNSuXqcMnEJkW850xs6jflfrULgpRldcg0hGsmwGm3TfeCbqbMdMhgzjqWsKREG4vE4Ab5e02g3siVWsKxumYjr58SyHZkIlE5eKzMByrx3WReiELWVAU4BO/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419819; c=relaxed/simple;
-	bh=ZpwS87rFwsTAG+2fn+5/tGaa9DK3m37uTl9uP3kEUTY=;
+	s=arc-20240116; t=1745419821; c=relaxed/simple;
+	bh=hrw0lWoRmNfgGUM4taXDz4rEaVUrgy+psqi0CdN2SQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijfL/PFRDSJcfM89sg5Z57vRvzpSHmfn/pU7bJkDsbNgeHL2WvF/0k6OQm0/CWWl+U5zDOOpz+w7dzcGMpTCkta1chwiUVhBYYnP5TUCZcufRVN7JtNqVQAJdec/vrIl8PJS3nGdNIFVI+T0tFuaCze+uuypCI60CWiSItBxYfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inKMKsGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyL344v+lAK2QEnDUUnqq+arBZjxY5V01OZ4i/b2jELQkI7z2/NWiHeJkPkGr+3oPZNaF1VCd21EZFPm9RHuNHnEPPytRUPu3xesr/ix4/mc7UaV2d7RkGJj7Sl8lFz6MKbYEkzaCmNaT72QpBjnx1AkamDWrwI0NPYpT77HvG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbdAHWeL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inKMKsGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7005CC4CEE2;
-	Wed, 23 Apr 2025 14:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbdAHWeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C336C4CEE2;
+	Wed, 23 Apr 2025 14:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419818;
-	bh=ZpwS87rFwsTAG+2fn+5/tGaa9DK3m37uTl9uP3kEUTY=;
+	s=korg; t=1745419821;
+	bh=hrw0lWoRmNfgGUM4taXDz4rEaVUrgy+psqi0CdN2SQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inKMKsGneVCSIGhDgw8flpNBraTKCV2t71hW1cU05mMWkDNWm6a4FYenaXQaImjvy
-	 Z0pCaNx3/u/7fzkjbB1gS8862CxpqTn+9HtZeTAFWP7vsLATAx4KlNAJXiw6vNvgd5
-	 4XpvJVyl86wvN/Lpm6UJoCcKCZXMLhuRu96bSXU0=
+	b=WbdAHWeLQcZ8G4xBPugOpgdkndH+tDRx9dBgFJdYdTEgR3sALcMYGIg9sS3/58Zmk
+	 2Hvj/hcEEhsrY5PGHDgwYtMT82OZssrX6N4NAdtALxVM6EDJnXVrXmypHHDPgVA5CJ
+	 7YoBVhRP0UjvKZ7B76k0Mz4HRtLwMkDxKnFQASwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 031/241] wifi: iwlwifi: pcie: set state to no-FW before reset handshake
-Date: Wed, 23 Apr 2025 16:41:35 +0200
-Message-ID: <20250423142621.790032153@linuxfoundation.org>
+Subject: [PATCH 6.12 045/223] block: fix resource leak in blk_register_queue() error path
+Date: Wed, 23 Apr 2025 16:41:57 +0200
+Message-ID: <20250423142618.969086093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 5f05c14e7c198415abe936514a6905f8b545b63b ]
+[ Upstream commit 40f2eb9b531475dd01b683fdaf61ca3cfd03a51e ]
 
-The reset handshake attempts to kill the firmware, and it'll go
-into a pretty much dead state once we do that. However, if it
-times out, then we'll attempt to dump the firmware to be able
-to see why it didn't respond. During this dump, we cannot treat
-it as if it was still running, since we just tried to kill it,
-otherwise dumping will attempt to send a DBGC stop command. As
-this command will time out, we'll go into a reset loop.
+When registering a queue fails after blk_mq_sysfs_register() is
+successful but the function later encounters an error, we need
+to clean up the blk_mq_sysfs resources.
 
-For now, fix this by setting the trans->state to say firmware
-isn't running before doing the reset handshake. In the longer
-term, we should clean up the way this state is handled.
+Add the missing blk_mq_sysfs_unregister() call in the error path
+to properly clean up these resources and prevent a memory leak.
 
-It's not entirely clear but it seems likely that this issue was
-introduced by my rework of the error handling, prior to that it
-would've been synchronous at that point and (I think) not have
-attempted to reset since it was already doing down.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219967
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219968
-Fixes: 7391b2a4f7db ("wifi: iwlwifi: rework firmware error handling")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250411104054.63aa4f56894d.Ife70cfe997db03f0d07fdef2b164695739a05a63@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250412092554.475218-1-zhengqixing@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ block/blk-sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-index 793514a1852a3..e37fa5ae97f64 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
-@@ -147,8 +147,14 @@ static void _iwl_trans_pcie_gen2_stop_device(struct iwl_trans *trans)
- 		return;
- 
- 	if (trans->state >= IWL_TRANS_FW_STARTED &&
--	    trans_pcie->fw_reset_handshake)
-+	    trans_pcie->fw_reset_handshake) {
-+		/*
-+		 * Reset handshake can dump firmware on timeout, but that
-+		 * should assume that the firmware is already dead.
-+		 */
-+		trans->state = IWL_TRANS_NO_FW;
- 		iwl_trans_pcie_fw_reset_handshake(trans);
-+	}
- 
- 	trans_pcie->is_down = true;
- 
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 692b27266220f..0e2520d929e1d 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -813,6 +813,8 @@ int blk_register_queue(struct gendisk *disk)
+ out_debugfs_remove:
+ 	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
++	if (queue_is_mq(q))
++		blk_mq_sysfs_unregister(disk);
+ out_put_queue_kobj:
+ 	kobject_put(&disk->queue_kobj);
+ 	mutex_unlock(&q->sysfs_dir_lock);
 -- 
 2.39.5
 
