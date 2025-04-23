@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978F829B233;
-	Wed, 23 Apr 2025 15:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61462C2AB4;
+	Wed, 23 Apr 2025 15:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422497; cv=none; b=KjMZet21H6vhfFVa5L5ujMvIydjAFJeNtc8BVJfyAb+j6HdXfSCgoxZALPgBJULwwSze80Nm4nRdaziipdfO8WoejhFSm+76XXJJQJKzWscFgcZEZiNiDoV3pPUK2q0E8PLDHdXS0iKIhCofMaEM/jJOGdvA8RcfcNkXKEOTS3Q=
+	t=1745422498; cv=none; b=IeAP5C7WeHYZa5Izy5mqYDLiMvJkFKsftCvHaYaL81HCWTWbyZjbuYtuV+JZBswAI2KcOZglDy13g+TwKVliTmqq1AJz1nUggqrjlcTiDyvBwFRYF11ljJOWfIbR744d8QkWDB8LALw4FaF7LHT6H+p9lNOLo9VWL2QAYXahmiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422497; c=relaxed/simple;
-	bh=eCHqPvxtV5LMqR34gpBbWaMHFywvFpIiRF/ESgqALFc=;
+	s=arc-20240116; t=1745422498; c=relaxed/simple;
+	bh=xBDkHk55wiKPRyQnhyovj1InKvK31PUNLvis8i6m9eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sgdTV/5eC8AeHqrQJ33LYMf9q08CV6CgLWTww0Lc0pd1oGLPhW3q2omUcx+RRIbv6TWuSpqJJ9YJtY0L7KXZ8i2TwRwGNCxMrFFbFGgWyf7sddWibX/KBh025or2O1bjo9+hFBhd+pUSeMmSh1AzzAZQ04PcBEeiHwEQF4Bqj7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kui44Xpr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LZX9wIU3W//rDCMSzmqtME62oUoK0uG9IQJ9Tj25ep0tkUBbXW+OCZ5B3sUubn8GhV1lD3OjdBtrkJvjBObbiwtvwxrudq6ioNSnpDUCEP98PW1o5ym982+trMuRr5H+gN7tJB26LXmrSai8gPxzs95I3gXnaDi6OMf/iCBYNZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orOloaFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kui44Xpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC926C4CEE3;
-	Wed, 23 Apr 2025 15:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orOloaFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE6DC4CEE2;
+	Wed, 23 Apr 2025 15:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422496;
-	bh=eCHqPvxtV5LMqR34gpBbWaMHFywvFpIiRF/ESgqALFc=;
+	s=korg; t=1745422498;
+	bh=xBDkHk55wiKPRyQnhyovj1InKvK31PUNLvis8i6m9eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kui44XprlTz2OcQiKWADSa5JCzhcnT1hOURVY2IHA8mzX+UxAFE3oGAz9WUlznCkO
-	 0/UzgDULQN3CJlN9NIh1r8dn/mL2Kd8p+L+JWB4KTMhkU+vwq2Ef0wCYZ1nwCLPEgo
-	 tqL6wm7kgKvd0LHG5dAtthjgaDH/ay4VErEoZ7SU=
+	b=orOloaFWVYT+W85ohYnTCgsdWkLVWp96/Xo/hWRbL49Mm5jFUeBa+aOv1CL5AC88I
+	 L5CkbIMw69mPMYosOuz9ppgzN9AJi0oXcfNoYpZYMRNJiMxFpVfs5ls/CfVnEZxYiB
+	 HlIjr5P7rC7NsvFXO6dH9nKq7cjwirOFa+j4vGoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Annapurve <vannapurve@google.com>,
+	Maksim Davydov <davydov-max@yandex-team.ru>,
 	Ingo Molnar <mingo@kernel.org>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ryan Afranji <afranji@google.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: [PATCH 6.6 372/393] x86/tdx: Fix arch_safe_halt() execution for TDX VMs
-Date: Wed, 23 Apr 2025 16:44:28 +0200
-Message-ID: <20250423142658.697380417@linuxfoundation.org>
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PATCH 6.6 373/393] x86/split_lock: Fix the delayed detection logic
+Date: Wed, 23 Apr 2025 16:44:29 +0200
+Message-ID: <20250423142658.739160224@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -58,159 +54,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Annapurve <vannapurve@google.com>
+From: Maksim Davydov <davydov-max@yandex-team.ru>
 
-commit 9f98a4f4e7216dbe366010b4cdcab6b220f229c4 upstream.
+commit c929d08df8bee855528b9d15b853c892c54e1eee upstream.
 
-Direct HLT instruction execution causes #VEs for TDX VMs which is routed
-to hypervisor via TDCALL. If HLT is executed in STI-shadow, resulting #VE
-handler will enable interrupts before TDCALL is routed to hypervisor
-leading to missed wakeup events, as current TDX spec doesn't expose
-interruptibility state information to allow #VE handler to selectively
-enable interrupts.
+If the warning mode with disabled mitigation mode is used, then on each
+CPU where the split lock occurred detection will be disabled in order to
+make progress and delayed work will be scheduled, which then will enable
+detection back.
 
-Commit bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-prevented the idle routines from executing HLT instruction in STI-shadow.
-But it missed the paravirt routine which can be reached via this path
-as an example:
+Now it turns out that all CPUs use one global delayed work structure.
+This leads to the fact that if a split lock occurs on several CPUs
+at the same time (within 2 jiffies), only one CPU will schedule delayed
+work, but the rest will not.
 
-	kvm_wait()       =>
-        safe_halt()      =>
-        raw_safe_halt()  =>
-        arch_safe_halt() =>
-        irq.safe_halt()  =>
-        pv_native_safe_halt()
+The return value of schedule_delayed_work_on() would have shown this,
+but it is not checked in the code.
 
-To reliably handle arch_safe_halt() for TDX VMs, introduce explicit
-dependency on CONFIG_PARAVIRT and override paravirt halt()/safe_halt()
-routines with TDX-safe versions that execute direct TDCALL and needed
-interrupt flag updates. Executing direct TDCALL brings in additional
-benefit of avoiding HLT related #VEs altogether.
+A diagram that can help to understand the bug reproduction:
 
-As tested by Ryan Afranji:
+ - sld_update_msr() enables/disables SLD on both CPUs on the same core
 
-  "Tested with the specjbb2015 benchmark. It has heavy lock contention which leads
-   to many halt calls. TDX VMs suffered a poor score before this patchset.
+ - schedule_delayed_work_on() internally checks WORK_STRUCT_PENDING_BIT.
+   If a work has the 'pending' status, then schedule_delayed_work_on()
+   will return an error code and, most importantly, the work will not
+   be placed in the workqueue.
 
-   Verified the major performance improvement with this patchset applied."
+Let's say we have a multicore system on which split_lock_mitigate=0 and
+a multithreaded application is running that calls splitlock in multiple
+threads. Due to the fact that sld_update_msr() affects the entire core
+(both CPUs), we will consider 2 CPUs from different cores. Let the 2
+threads of this application schedule to CPU0 (core 0) and to CPU 2
+(core 1), then:
 
-Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-Signed-off-by: Vishal Annapurve <vannapurve@google.com>
+|                                 ||                                   |
+|             CPU 0 (core 0)      ||          CPU 2 (core 1)           |
+|_________________________________||___________________________________|
+|                                 ||                                   |
+| 1) SPLIT LOCK occured           ||                                   |
+|                                 ||                                   |
+| 2) split_lock_warn()            ||                                   |
+|                                 ||                                   |
+| 3) sysctl_sld_mitigate == 0     ||                                   |
+|    (work = &sl_reenable)        ||                                   |
+|                                 ||                                   |
+| 4) schedule_delayed_work_on()   ||                                   |
+|    (reenable will be called     ||                                   |
+|     after 2 jiffies on CPU 0)   ||                                   |
+|                                 ||                                   |
+| 5) disable SLD for core 0       ||                                   |
+|                                 ||                                   |
+|    -------------------------    ||                                   |
+|                                 ||                                   |
+|                                 || 6) SPLIT LOCK occured             |
+|                                 ||                                   |
+|                                 || 7) split_lock_warn()              |
+|                                 ||                                   |
+|                                 || 8) sysctl_sld_mitigate == 0       |
+|                                 ||    (work = &sl_reenable,          |
+|                                 ||     the same address as in 3) )   |
+|                                 ||                                   |
+|            2 jiffies            || 9) schedule_delayed_work_on()     |
+|                                 ||    fials because the work is in   |
+|                                 ||    the pending state since 4).    |
+|                                 ||    The work wasn't placed to the  |
+|                                 ||    workqueue. reenable won't be   |
+|                                 ||    called on CPU 2                |
+|                                 ||                                   |
+|                                 || 10) disable SLD for core 0        |
+|                                 ||                                   |
+|                                 ||     From now on SLD will          |
+|                                 ||     never be reenabled on core 1  |
+|                                 ||                                   |
+|    -------------------------    ||                                   |
+|                                 ||                                   |
+|    11) enable SLD for core 0 by ||                                   |
+|        __split_lock_reenable    ||                                   |
+|                                 ||                                   |
+
+If the application threads can be scheduled to all processor cores,
+then over time there will be only one core left, on which SLD will be
+enabled and split lock will be able to be detected; and on all other
+cores SLD will be disabled all the time.
+
+Most likely, this bug has not been noticed for so long because
+sysctl_sld_mitigate default value is 1, and in this case a semaphore
+is used that does not allow 2 different cores to have SLD disabled at
+the same time, that is, strictly only one work is placed in the
+workqueue.
+
+In order to fix the warning mode with disabled mitigation mode,
+delayed work has to be per-CPU. Implement it.
+
+Fixes: 727209376f49 ("x86/split_lock: Add sysctl to control the misery mode")
+Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Tested-by: Ryan Afranji <afranji@google.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250228014416.3925664-3-vannapurve@google.com
+Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250115131704.132609-1-davydov-max@yandex-team.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig           |    1 +
- arch/x86/coco/tdx/tdx.c    |   26 +++++++++++++++++++++++++-
- arch/x86/include/asm/tdx.h |    4 ++--
- arch/x86/kernel/process.c  |    2 +-
- 4 files changed, 29 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/intel.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -881,6 +881,7 @@ config INTEL_TDX_GUEST
- 	depends on X86_64 && CPU_SUP_INTEL
- 	depends on X86_X2APIC
- 	depends on EFI_STUB
-+	depends on PARAVIRT
- 	select ARCH_HAS_CC_PLATFORM
- 	select X86_MEM_ENCRYPT
- 	select X86_MCE
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -13,6 +13,7 @@
- #include <asm/ia32.h>
- #include <asm/insn.h>
- #include <asm/insn-eval.h>
-+#include <asm/paravirt_types.h>
- #include <asm/pgtable.h>
- #include <asm/traps.h>
- 
-@@ -334,7 +335,7 @@ static int handle_halt(struct ve_info *v
- 	return ve_instr_len(ve);
- }
- 
--void __cpuidle tdx_safe_halt(void)
-+void __cpuidle tdx_halt(void)
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -1168,7 +1168,13 @@ static void __split_lock_reenable(struct
  {
- 	const bool irq_disabled = false;
- 
-@@ -345,6 +346,16 @@ void __cpuidle tdx_safe_halt(void)
- 		WARN_ONCE(1, "HLT instruction emulation failed\n");
+ 	sld_update_msr(true);
  }
+-static DECLARE_DELAYED_WORK(sl_reenable, __split_lock_reenable);
++/*
++ * In order for each CPU to schedule its delayed work independently of the
++ * others, delayed work struct must be per-CPU. This is not required when
++ * sysctl_sld_mitigate is enabled because of the semaphore that limits
++ * the number of simultaneously scheduled delayed works to 1.
++ */
++static DEFINE_PER_CPU(struct delayed_work, sl_reenable);
  
-+static void __cpuidle tdx_safe_halt(void)
-+{
-+	tdx_halt();
-+	/*
-+	 * "__cpuidle" section doesn't support instrumentation, so stick
-+	 * with raw_* variant that avoids tracing hooks.
-+	 */
-+	raw_local_irq_enable();
-+}
-+
- static int read_msr(struct pt_regs *regs, struct ve_info *ve)
+ /*
+  * If a CPU goes offline with pending delayed work to re-enable split lock
+@@ -1189,7 +1195,7 @@ static int splitlock_cpu_offline(unsigne
+ 
+ static void split_lock_warn(unsigned long ip)
  {
- 	struct tdx_hypercall_args args = {
-@@ -889,6 +900,19 @@ void __init tdx_early_init(void)
- 	x86_platform.guest.enc_tlb_flush_required    = tdx_tlb_flush_required;
+-	struct delayed_work *work;
++	struct delayed_work *work = NULL;
+ 	int cpu;
  
- 	/*
-+	 * Avoid "sti;hlt" execution in TDX guests as HLT induces a #VE that
-+	 * will enable interrupts before HLT TDCALL invocation if executed
-+	 * in STI-shadow, possibly resulting in missed wakeup events.
-+	 *
-+	 * Modify all possible HLT execution paths to use TDX specific routines
-+	 * that directly execute TDCALL and toggle the interrupt state as
-+	 * needed after TDCALL completion. This also reduces HLT related #VEs
-+	 * in addition to having a reliable halt logic execution.
-+	 */
-+	pv_ops.irq.safe_halt = tdx_safe_halt;
-+	pv_ops.irq.halt = tdx_halt;
+ 	if (!current->reported_split_lock)
+@@ -1211,11 +1217,17 @@ static void split_lock_warn(unsigned lon
+ 		if (down_interruptible(&buslock_sem) == -EINTR)
+ 			return;
+ 		work = &sl_reenable_unlock;
+-	} else {
+-		work = &sl_reenable;
+ 	}
+ 
+ 	cpu = get_cpu();
 +
-+	/*
- 	 * TDX intercepts the RDMSR to read the X2APIC ID in the parallel
- 	 * bringup low level code. That raises #VE which cannot be handled
- 	 * there.
---- a/arch/x86/include/asm/tdx.h
-+++ b/arch/x86/include/asm/tdx.h
-@@ -46,7 +46,7 @@ void tdx_get_ve_info(struct ve_info *ve)
++	if (!work) {
++		work = this_cpu_ptr(&sl_reenable);
++		/* Deferred initialization of per-CPU struct */
++		if (!work->work.func)
++			INIT_DELAYED_WORK(work, __split_lock_reenable);
++	}
++
+ 	schedule_delayed_work_on(cpu, work, 2);
  
- bool tdx_handle_virt_exception(struct pt_regs *regs, struct ve_info *ve);
- 
--void tdx_safe_halt(void);
-+void tdx_halt(void);
- 
- bool tdx_early_handle_ve(struct pt_regs *regs);
- 
-@@ -55,7 +55,7 @@ int tdx_mcall_get_report0(u8 *reportdata
- #else
- 
- static inline void tdx_early_init(void) { };
--static inline void tdx_safe_halt(void) { };
-+static inline void tdx_halt(void) { };
- 
- static inline bool tdx_early_handle_ve(struct pt_regs *regs) { return false; }
- 
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -955,7 +955,7 @@ void select_idle_routine(const struct cp
- 		static_call_update(x86_idle, mwait_idle);
- 	} else if (cpu_feature_enabled(X86_FEATURE_TDX_GUEST)) {
- 		pr_info("using TDX aware idle routine\n");
--		static_call_update(x86_idle, tdx_safe_halt);
-+		static_call_update(x86_idle, tdx_halt);
- 	} else
- 		static_call_update(x86_idle, default_idle);
- }
+ 	/* Disable split lock detection on this CPU to make progress */
 
 
