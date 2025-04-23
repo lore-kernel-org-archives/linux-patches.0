@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D24C27EC9C;
-	Wed, 23 Apr 2025 15:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C2C269B07;
+	Wed, 23 Apr 2025 15:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420429; cv=none; b=fFA0FhM2C3Q8+hfpFGScRhSFl2u9M8Ug8gzY2s4z6UJ7Mv0c8l6wRKRJY0cE50xM0Bpg5upIs/d3txQzO8o3DB+xu13TNNtQfUcyNPO6RS3PXdYBvmMmWxELTFXXwBvJ2AEbyFd2ydfkH3CfmmfroewpYsRuSvCN1fweKy3SJuk=
+	t=1745420432; cv=none; b=axaBYxxjtavJDEX07eEy9j8EcQ8VVXP7pDebSW82RZbRoNBlr3DtQUQOXqFtTqH3ms3YcUyqJ7BVKZfgXhdoY6NWtoWn5tNW8L3GfVJJCe1nEOhKipAf4/AOPrU0D1t8GmuntOBtZX0DPP91PYchCgAF3GPANbX1NAj3lwhGsC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420429; c=relaxed/simple;
-	bh=Xj0XWpiLKsobEbOfQz3Q1REPWZOl+EOLSvD3ei7ACOs=;
+	s=arc-20240116; t=1745420432; c=relaxed/simple;
+	bh=s7Fy4eXXXDuPR829HR9mpWTeRpTULyHbMq/rU+RAfkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PueyNHKiU5ef1XnWFZrGQeGwhSMTS10dPo8kf28dl6d085lUUfbSkeP8wRUkcfMQL1vlQIJ648v3mqrnrtFEs6FuG6oPJyhM6ViqK3hPmuE4lxSpkJyrMOcFZ4kPyLFHpm0U55b55Wcj6PrqsO5aJBdnCCycm2fZfcor+uR1CJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBzG7Den; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ait3ZAxc8sEUIaUzBjS5XHR9rz+86TPuOwyQIKGIHgcLX3U0TZt90H/kNbeOLXpXKz+QIZ0j9VlZZzb6ouN/A95n7XzM7/yjQFDoWIg50Jy6l9JR0XyOH6ZpSGTbhABiNzxtfcpwspUuKD9Y9kD+53zhwu0bKi6NHOucWyamu+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZy2W5JU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBzG7Den"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BBBC4CEE2;
-	Wed, 23 Apr 2025 15:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZy2W5JU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7B7C4CEE2;
+	Wed, 23 Apr 2025 15:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420429;
-	bh=Xj0XWpiLKsobEbOfQz3Q1REPWZOl+EOLSvD3ei7ACOs=;
+	s=korg; t=1745420432;
+	bh=s7Fy4eXXXDuPR829HR9mpWTeRpTULyHbMq/rU+RAfkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBzG7DenBv8yz0Y5Fckj10D8HAw9k0+rPMNC7ChlhOOq9je3sVr2nKjzfp7AO1lHF
-	 2aClDc6s46esRRzy9Zq28OBaFCuptqznOP1K2gTkhYG+r+Tu8xkOtNuk36s+6Sh5Vb
-	 BWPZ1tF01qtsnAwfge9mlKkL+5waGy79GS/MGtyo=
+	b=UZy2W5JUMzUat0Sy4ItTA6IZg50AFVEa1VZxN6prV858ZXgIpe2YEwCa96R5hyrcD
+	 SPQqIjixNunqBSyVZWFFp/n9OCc8ecMoLwkHDrvtk5aIN0vbZ4AfvyqlOwovyBfaH7
+	 28caIcW2LfbiSIuM66aHfQnzAfzL2zDBlxQJRTF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 091/241] kunit: qemu_configs: SH: Respect kunit cmdline
-Date: Wed, 23 Apr 2025 16:42:35 +0200
-Message-ID: <20250423142624.299053617@linuxfoundation.org>
+	Chunjie Zhu <chunjie.zhu@cloud.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 131/223] smb3 client: fix open hardlink on deferred close file error
+Date: Wed, 23 Apr 2025 16:43:23 +0200
+Message-ID: <20250423142622.429409369@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +44,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Chunjie Zhu <chunjie.zhu@cloud.com>
 
-[ Upstream commit b26c1a85f3fc3cc749380ff94199377fc2d0c203 ]
+commit 262b73ef442e68e53220b9d6fc5a0d08b557fa42 upstream.
 
-The default SH kunit configuration sets CONFIG_CMDLINE_OVERWRITE which
-completely disregards the cmdline passed from the bootloader/QEMU in favor
-of the builtin CONFIG_CMDLINE.
-However the kunit tool needs to pass arguments to the in-kernel kunit core,
-for filters and other runtime parameters.
+The following Python script results in unexpected behaviour when run on
+a CIFS filesystem against a Windows Server:
 
-Enable CONFIG_CMDLINE_EXTEND instead, so kunit arguments are respected.
+    # Create file
+    fd = os.open('test', os.O_WRONLY|os.O_CREAT)
+    os.write(fd, b'foo')
+    os.close(fd)
 
-Link: https://lore.kernel.org/r/20250407-kunit-sh-v1-1-f5432a54cf2f@linutronix.de
-Fixes: 8110a3cab05e ("kunit: tool: Add support for SH under QEMU")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    # Open and close the file to leave a pending deferred close
+    fd = os.open('test', os.O_RDONLY|os.O_DIRECT)
+    os.close(fd)
+
+    # Try to open the file via a hard link
+    os.link('test', 'new')
+    newfd = os.open('new', os.O_RDONLY|os.O_DIRECT)
+
+The final open returns EINVAL due to the server returning
+STATUS_INVALID_PARAMETER. The root cause of this is that the client
+caches lease keys per inode, but the spec requires them to be related to
+the filename which causes problems when hard links are involved:
+
+>From MS-SMB2 section 3.3.5.9.11:
+
+"The server MUST attempt to locate a Lease by performing a lookup in the
+LeaseTable.LeaseList using the LeaseKey in the
+SMB2_CREATE_REQUEST_LEASE_V2 as the lookup key. If a lease is found,
+Lease.FileDeleteOnClose is FALSE, and Lease.Filename does not match the
+file name for the incoming request, the request MUST be failed with
+STATUS_INVALID_PARAMETER"
+
+On client side, we first check the context of file open, if it hits above
+conditions, we first close all opening files which are belong to the same
+inode, then we do open the hard link file.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunjie Zhu <chunjie.zhu@cloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/kunit/qemu_configs/sh.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/cifsproto.h |    2 ++
+ fs/smb/client/file.c      |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/tools/testing/kunit/qemu_configs/sh.py b/tools/testing/kunit/qemu_configs/sh.py
-index 78a474a5b95f3..f00cb89fdef6a 100644
---- a/tools/testing/kunit/qemu_configs/sh.py
-+++ b/tools/testing/kunit/qemu_configs/sh.py
-@@ -7,7 +7,9 @@ CONFIG_CPU_SUBTYPE_SH7751R=y
- CONFIG_MEMORY_START=0x0c000000
- CONFIG_SH_RTS7751R2D=y
- CONFIG_RTS7751R2D_PLUS=y
--CONFIG_SERIAL_SH_SCI=y''',
-+CONFIG_SERIAL_SH_SCI=y
-+CONFIG_CMDLINE_EXTEND=y
-+''',
- 			   qemu_arch='sh4',
- 			   kernel_path='arch/sh/boot/zImage',
- 			   kernel_command_line='console=ttySC1',
--- 
-2.39.5
-
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -160,6 +160,8 @@ extern int cifs_get_writable_path(struct
+ extern struct cifsFileInfo *find_readable_file(struct cifsInodeInfo *, bool);
+ extern int cifs_get_readable_path(struct cifs_tcon *tcon, const char *name,
+ 				  struct cifsFileInfo **ret_file);
++extern int cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
++				  struct file *file);
+ extern unsigned int smbCalcSize(void *buf);
+ extern int decode_negTokenInit(unsigned char *security_blob, int length,
+ 			struct TCP_Server_Info *server);
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -1002,6 +1002,11 @@ int cifs_open(struct inode *inode, struc
+ 		} else {
+ 			_cifsFileInfo_put(cfile, true, false);
+ 		}
++	} else {
++		/* hard link on the defeered close file */
++		rc = cifs_get_hardlink_path(tcon, inode, file);
++		if (rc)
++			cifs_close_deferred_file(CIFS_I(inode));
+ 	}
+ 
+ 	if (server->oplocks)
+@@ -2066,6 +2071,29 @@ cifs_move_llist(struct list_head *source
+ 		list_move(li, dest);
+ }
+ 
++int
++cifs_get_hardlink_path(struct cifs_tcon *tcon, struct inode *inode,
++				struct file *file)
++{
++	struct cifsFileInfo *open_file = NULL;
++	struct cifsInodeInfo *cinode = CIFS_I(inode);
++	int rc = 0;
++
++	spin_lock(&tcon->open_file_lock);
++	spin_lock(&cinode->open_file_lock);
++
++	list_for_each_entry(open_file, &cinode->openFileList, flist) {
++		if (file->f_flags == open_file->f_flags) {
++			rc = -EINVAL;
++			break;
++		}
++	}
++
++	spin_unlock(&cinode->open_file_lock);
++	spin_unlock(&tcon->open_file_lock);
++	return rc;
++}
++
+ void
+ cifs_free_llist(struct list_head *llist)
+ {
 
 
