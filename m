@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7BE2F2E;
-	Wed, 23 Apr 2025 15:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BBE17B421;
+	Wed, 23 Apr 2025 15:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420445; cv=none; b=L+OmbADbOKkmcbTiaue6PT8xbblODQuwvcRVGHJWcMZrhSQ8ivl1JHGZQXj+cayrIp1+6zRzxV49J1LulAMef++XTP18CqFBu9WPkaQAqwp64hyD4Lhil6jZUDFQYVzDey+h/UUmU7SHpJ01/NulovTZDWc/B4x8FWXxfXWvx1A=
+	t=1745420448; cv=none; b=odrY5RepCmcs3choRhJeVefSbFIEPdw47Po84iSOaa8mD1oHLeaMhOYz9NZ7PsHateBk78KF6923cHkvtToe9n4+LIFrQp8Z9TZtZPiE6fC2n6OXWUR69jfFwUuh6UxEWYjPmmfIW7q8yYbFm+NlGfO/7BzZfHoOhuuQP6T+euw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420445; c=relaxed/simple;
-	bh=zJam47IZXdD1LlLyIiAd1raicCt/BNMFp6WjP5qEMYk=;
+	s=arc-20240116; t=1745420448; c=relaxed/simple;
+	bh=E8AvPaZ/7QPQkllcwERMhVetYumi/PwMi7T/gEsQTe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4eV1/iUQtTcQuIQGPxItzo6ZXQzrxXGs78UAetct2YmB6wy6Mto09lO3ovKfT/6n+n6i1soeVgrDN/ubZDqpIuRVG8F5gJqMMjUZMIf8CvIIjenau2mb2wtuB2RjiaT0Hk+Vn1OMqK/kUJaB3H73U+JtEDKWCmFw9zNqoHpG3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhL5RIYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAD/jdsl6ceY6FQTLXZxkOSemp9QPoqxjoh3MHWG1i+nzbObUE0rNg9CcX822rcJHMRF3RerMo3JS0Gq+M+ntWWnYPOW1h9Eqp9TvbQE5N/kMCxwxumxz/qFLovWEVWenYL2BWB3owdCBPNrbGWcXwFr1ctsA9t0vS18llNwwXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUBcC6D3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhL5RIYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC89C4CEED;
-	Wed, 23 Apr 2025 15:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUBcC6D3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B678AC4CEE2;
+	Wed, 23 Apr 2025 15:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420445;
-	bh=zJam47IZXdD1LlLyIiAd1raicCt/BNMFp6WjP5qEMYk=;
+	s=korg; t=1745420448;
+	bh=E8AvPaZ/7QPQkllcwERMhVetYumi/PwMi7T/gEsQTe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhL5RIYYcfQSYP0Rtpt7BReV+3WyCnsIcUEvEH/C3QvjVArTZtJoh2Px5/F0P1MWT
-	 kvp6ObMjyH5PnQ9MLPayE8U0zUYdFF+zUZTFF2a2CRme47grAIef95zjyC2oYZ/Aw1
-	 j4Ip3VceW3Cg/ODY4FqDR2umVgx4XNGW/YhmdYpU=
+	b=dUBcC6D3k1SL0rwMBdZde61nuVUVHjS08ybTqg4/mFOZdraJEM3rvE0sLEW86VgF/
+	 qVDmO2PmO4vZWb83UwXWAURqTmqcKnAimtedmH6kwpDbDXrxGqSFFIYNHyFDb/yU1k
+	 ZbizGKnv6RzUH/ozx18O0UCP2jq93AycJAFMsBe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.12 132/223] string: Add load_unaligned_zeropad() code path to sized_strscpy()
-Date: Wed, 23 Apr 2025 16:43:24 +0200
-Message-ID: <20250423142622.469328139@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+7c808908291a569281a9@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 075/393] jfs: add sanity check for agwidth in dbMount
+Date: Wed, 23 Apr 2025 16:39:31 +0200
+Message-ID: <20250423142646.404969772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Collingbourne <pcc@google.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit d94c12bd97d567de342fd32599e7cd9e50bfa140 upstream.
+[ Upstream commit ddf2846f22e8575d6b4b6a66f2100f168b8cd73d ]
 
-The call to read_word_at_a_time() in sized_strscpy() is problematic
-with MTE because it may trigger a tag check fault when reading
-across a tag granule (16 bytes) boundary. To make this code
-MTE compatible, let's start using load_unaligned_zeropad()
-on architectures where it is available (i.e. architectures that
-define CONFIG_DCACHE_WORD_ACCESS). Because load_unaligned_zeropad()
-takes care of page boundaries as well as tag granule boundaries,
-also disable the code preventing crossing page boundaries when using
-load_unaligned_zeropad().
+The width in dmapctl of the AG is zero, it trigger a divide error when
+calculating the control page level in dbAllocAG.
 
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Link: https://linux-review.googlesource.com/id/If4b22e43b5a4ca49726b4bf98ada827fdf755548
-Fixes: 94ab5b61ee16 ("kasan, arm64: enable CONFIG_KASAN_HW_TAGS")
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20250403000703.2584581-2-pcc@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To avoid this issue, add a check for agwidth in dbAllocAG.
+
+Reported-and-tested-by: syzbot+7c808908291a569281a9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7c808908291a569281a9
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/string.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/jfs/jfs_dmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/lib/string.c
-+++ b/lib/string.c
-@@ -113,6 +113,7 @@ ssize_t sized_strscpy(char *dest, const
- 	if (count == 0 || WARN_ON_ONCE(count > INT_MAX))
- 		return -E2BIG;
- 
-+#ifndef CONFIG_DCACHE_WORD_ACCESS
- #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
- 	/*
- 	 * If src is unaligned, don't cross a page boundary,
-@@ -128,11 +129,13 @@ ssize_t sized_strscpy(char *dest, const
- 	if (((long) dest | (long) src) & (sizeof(long) - 1))
- 		max = 0;
- #endif
-+#endif
- 
- 	/*
--	 * read_word_at_a_time() below may read uninitialized bytes after the
--	 * trailing zero and use them in comparisons. Disable this optimization
--	 * under KMSAN to prevent false positive reports.
-+	 * load_unaligned_zeropad() or read_word_at_a_time() below may read
-+	 * uninitialized bytes after the trailing zero and use them in
-+	 * comparisons. Disable this optimization under KMSAN to prevent
-+	 * false positive reports.
- 	 */
- 	if (IS_ENABLED(CONFIG_KMSAN))
- 		max = 0;
-@@ -140,7 +143,11 @@ ssize_t sized_strscpy(char *dest, const
- 	while (max >= sizeof(unsigned long)) {
- 		unsigned long c, data;
- 
-+#ifdef CONFIG_DCACHE_WORD_ACCESS
-+		c = load_unaligned_zeropad(src+res);
-+#else
- 		c = read_word_at_a_time(src+res);
-+#endif
- 		if (has_zero(c, &data, &constants)) {
- 			data = prep_zero_mask(c, data, &constants);
- 			data = create_zero_mask(data);
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 9ac1fc2ed05bc..0e1019382cf51 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -204,6 +204,10 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
++	if (!bmp->db_agwidth) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+ 	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
+-- 
+2.39.5
+
 
 
