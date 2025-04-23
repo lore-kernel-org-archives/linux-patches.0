@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8657028BA93;
-	Wed, 23 Apr 2025 15:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DEF28B516;
+	Wed, 23 Apr 2025 15:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421850; cv=none; b=WTdX1i1U+LWQMxHu3c9Kt8xELj/RFUdLdvw8E5EFpErw8bhhYX/OQ1Pl+QY42bnr9ajDoS14Ii3jzf00C09ZrooYC59tfvWn+QwERFYTNFq3ye7/IYr0qeFXDjPi3w+5nlaGxXzDZfT/neqwxyE7AhreXPWT+BdUq99/rkcj6dE=
+	t=1745421853; cv=none; b=hysuyYY4fQQeFBUUfrT2GByuSs5m97XsO0uxFCiI62EtSb+2ezBDFgmwqiL93JS4xRXyLG9Pj3JmtiNxi3avHp5C0u/f9MMOjZpx2Ed1dTp+gmk3KdKhgv6CoGR7dJzUI2zFzTvm4rB/f1Ajhfv3YZm24yW37CpLN/XckbuommY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421850; c=relaxed/simple;
-	bh=2FNdk2trqr2MlSaSlPn4A259p4wtN4tNFvNtxz1Rmdc=;
+	s=arc-20240116; t=1745421853; c=relaxed/simple;
+	bh=DRFFGN768/Ehb0OqI5nYnZo7xbuv3pmSfHo731DTfak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkMNrI7s5vDKsnTStGYgoFz26fHdme3n5RxSL5AII7o38nZfEdVPJAZEogYK3ivYSew2B96Pg75Gpm+bjmaCNXBzOzhEicWmeVZrQl2NH1gp2p1k0IO4fCjoUZJHgnb9WlJyHkikYIcyuAOkO6w5iIl5ddKpDp67u1/x2wS6rXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5YBl66i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2pZzEA0FBOCJ90lOwnfdBbdLPCp6/AyQT8cBlLCVbOSyYY0nXJJ0r/sVeDdZ+qL2K0i1kkhd7fBhF2SA850GbJLG0FlF+E6r3p5rMBEuOJ3mxpnJIN9PyJ54JzFg0PkUne7yvA7FHBH54ODeCAHv0BWRG2LkaLVfJoneOAOtVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBXpCCq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5YBl66i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CD7C4CEE2;
-	Wed, 23 Apr 2025 15:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBXpCCq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46677C4CEE2;
+	Wed, 23 Apr 2025 15:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421850;
-	bh=2FNdk2trqr2MlSaSlPn4A259p4wtN4tNFvNtxz1Rmdc=;
+	s=korg; t=1745421852;
+	bh=DRFFGN768/Ehb0OqI5nYnZo7xbuv3pmSfHo731DTfak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5YBl66i8yieppnviLDOXc/u17BG3uYHZeNIxjGfjtBBlSo3U3fXMsYdAFQAU5QiZ
-	 vobbe86i6zbVfoGhiLdmUBEBX9qv1ck6103JgDgwKk2QDQmQEXgqoxYOOqGLYCQwLb
-	 Zyr44CxqoZtgRt+9gq6nIhigi/+Z0qgFM8RLmLQ0=
+	b=UBXpCCq0MPY1XQHco4VQj0MfM3JyF+8oIMJIco7SM0oM7TUrnQa6GfP9WpExLVogj
+	 jfMJL55DrFLzjV0w0okt16ppKRsEl2h32iiNlZBpgl8HK8nO8r3m6X1GJLeB9z8WIU
+	 khfsgEP86sYRNetH/393qNZqiSZTX/hLV/dn8yoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.14 240/241] MIPS: ds1287: Match ds1287_set_base_clock() function types
-Date: Wed, 23 Apr 2025 16:45:04 +0200
-Message-ID: <20250423142630.374848750@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	Cong Liu <liucong2@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 231/393] selftests: mptcp: fix incorrect fd checks in main_loop
+Date: Wed, 23 Apr 2025 16:42:07 +0200
+Message-ID: <20250423142652.933697780@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Cong Liu <liucong2@kylinos.cn>
 
-commit a759109b234385b74d2f5f4c86b5f59b3201ec12 upstream.
+commit 7335d4ac812917c16e04958775826d12d481c92d upstream.
 
-Synchronize the declaration of ds1287_set_base_clock() between
-cevt-ds1287.c and ds1287.h.
+Fix a bug where the code was checking the wrong file descriptors
+when opening the input files. The code was checking 'fd' instead
+of 'fd_in', which could lead to incorrect error handling.
 
-Fix follow error with gcc-14 when -Werror:
-
-arch/mips/kernel/cevt-ds1287.c:21:5: error: conflicting types for ‘ds1287_set_base_clock’; have ‘int(unsigned int)’
-   21 | int ds1287_set_base_clock(unsigned int hz)
-      |     ^~~~~~~~~~~~~~~~~~~~~
-In file included from arch/mips/kernel/cevt-ds1287.c:13:
-./arch/mips/include/asm/ds1287.h:11:13: note: previous declaration of ‘ds1287_set_base_clock’ with type ‘void(unsigned int)’
-   11 | extern void ds1287_set_base_clock(unsigned int clock);
-      |             ^~~~~~~~~~~~~~~~~~~~~
-make[7]: *** [scripts/Makefile.build:207: arch/mips/kernel/cevt-ds1287.o] Error 1
-make[6]: *** [scripts/Makefile.build:465: arch/mips/kernel] Error 2
-make[6]: *** Waiting for unfinished jobs....
-
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
+Cc: stable@vger.kernel.org
+Fixes: ca7ae8916043 ("selftests: mptcp: mptfo Initiator/Listener")
+Co-developed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Cong Liu <liucong2@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-2-34161a482a7f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/ds1287.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/mips/include/asm/ds1287.h
-+++ b/arch/mips/include/asm/ds1287.h
-@@ -8,7 +8,7 @@
- #define __ASM_DS1287_H
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1270,7 +1270,7 @@ int main_loop(void)
  
- extern int ds1287_timer_state(void);
--extern void ds1287_set_base_clock(unsigned int clock);
-+extern int ds1287_set_base_clock(unsigned int hz);
- extern int ds1287_clockevent_init(int irq);
+ 	if (cfg_input && cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
+ 	}
  
- #endif
+@@ -1293,7 +1293,7 @@ again:
+ 
+ 	if (cfg_input && !cfg_sockopt_types.mptfo) {
+ 		fd_in = open(cfg_input, O_RDONLY);
+-		if (fd < 0)
++		if (fd_in < 0)
+ 			xerror("can't open %s:%d", cfg_input, errno);
+ 	}
+ 
 
 
