@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C709627055F;
-	Wed, 23 Apr 2025 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0614B27F4CA;
+	Wed, 23 Apr 2025 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420026; cv=none; b=G2A0Mw12zFQstlm1iE0zcsM4YLdzfPktvCq9jm0IcqNC1BWAZZO+QJu/8b2xWL81Tr0o/92JKNs5XwyXe8rZez/NNtptSjZNUVmVT7NNWIPQaYiQ9HlxUeZVNmS0oWCDeDZ2mOhmrrVHLwyz7G/DcZxSLy/mFgiaPNTP7TFzDpo=
+	t=1745420029; cv=none; b=LNtan/YneZK9xZ+5vLhg84rj3XA733R2GKCKrbb6LMiYTdxE9Nqg+u70wb361IrrnILIOX37GQPtk1CV878BWQCaz55FfzQT6IGSgrRw5j6q2xPznr6thLY3CpfOoewV9iqACdgf5aVlVd13JJOnhSVICs6bA+MOB5xg442Rjl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420026; c=relaxed/simple;
-	bh=gwRyLtFK+Ut2AaUFQAQOJUM3nFoRJVRJ3AiZ14P/CoA=;
+	s=arc-20240116; t=1745420029; c=relaxed/simple;
+	bh=cWkKMHpDR5uokjuUVUvYJj/tPXLMzKIvvF361MjhLm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfCdIUCy/RtVwvXXQBBrhGt/MXBszsxwL6odwH5u2Y9WTKx/wK2ETzCBBSziOPsOLbThUtMt+2/tSm1l5vxDkBSJuYH5w1ylk5vCHby605MKfrF7YxJek0MC9d95zGuFuHO4wX6ayBDl8zN5dB5/OMXGb1tH9Tq1QwYB1DuqwO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v08kL6ak; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4IHZ1JkM/tS9Z6UyY78Lxp2tqiLVsA5SoL8QBzvJ2CYmpYR11xT4zpIHgSnWUdS/WO0NpcB5pVqoeG198mMoP39QqRXBouTAjcJsJjUn8w4OoeODi0MzOezbniBvIGtO2VDcgqtkyq3g/dUQRU6G7bOnX474KE5L2336II2UWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz5cFEY0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v08kL6ak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFCCC4CEE3;
-	Wed, 23 Apr 2025 14:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz5cFEY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1F5C4CEE3;
+	Wed, 23 Apr 2025 14:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420026;
-	bh=gwRyLtFK+Ut2AaUFQAQOJUM3nFoRJVRJ3AiZ14P/CoA=;
+	s=korg; t=1745420028;
+	bh=cWkKMHpDR5uokjuUVUvYJj/tPXLMzKIvvF361MjhLm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v08kL6ak/OnWI4WmNMByVDju6HaDvfZ0w1/8LgzN3wDH2JK6FiJ668pFxXhFCy2ZH
-	 B7DTN8m5jxI5RhVBDA4p1QxcnwT8jhqGw708hmR+1/nxbwRVRtTfqJpbCcX/F+Yikq
-	 Dx4Qk58NlUF9RTDCtRs1Alsyv6ABL8FDubSX65mQ=
+	b=Pz5cFEY0Y3fJgzmhrc4TQdcz73TJiJoCDV5jFQDNPvvI9dxEcSOHNj4Pf8qYCUqY2
+	 oTihwZD2QFVPMeORhxU97hqOGLSoZ4o1po78C+oV15/VCPZy4YDGMFAgqxEOtud8F8
+	 29cAXz7wWFqmvNtWm48b06KVbeO+LG2xAl+Q9ikg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 053/241] net: openvswitch: fix nested key length validation in the set() action
-Date: Wed, 23 Apr 2025 16:41:57 +0200
-Message-ID: <20250423142622.674250578@linuxfoundation.org>
+	Cal Peake <cp@absolutedigital.net>,
+	Athul Krishna <athul.krishna.kr@protonmail.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.12 088/223] Revert "PCI: Avoid reset when disabled via sysfs"
+Date: Wed, 23 Apr 2025 16:42:40 +0200
+Message-ID: <20250423142620.706750578@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,47 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
+commit bc0b828ef6e561081ebc4c758d0c4d166bb9829c upstream.
 
-It's not safe to access nla_len(ovs_key) if the data is smaller than
-the netlink header.  Check that the attribute is OK first.
+This reverts commit 479380efe1625e251008d24b2810283db60d6fcd.
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
-Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The reset_method attribute on a PCI device is only intended to manage the
+availability of function scoped resets for a device.  It was never intended
+to restrict resets targeting the bus or slot.
+
+In introducing a restriction that each device must support function level
+reset by testing pci_reset_supported(), we essentially create a catch-22,
+that a device must have a function scope reset in order to support bus/slot
+reset, when we use bus/slot reset to effect a reset of a device that does
+not support a function scoped reset, especially multi-function devices.
+
+This breaks the majority of uses cases where vfio-pci uses bus/slot resets
+to manage multifunction devices that do not support function scoped resets.
+
+Fixes: 479380efe162 ("PCI: Avoid reset when disabled via sysfs")
+Reported-by: Cal Peake <cp@absolutedigital.net>
+Closes: https://lore.kernel.org/all/808e1111-27b7-f35b-6d5c-5b275e73677b@absolutedigital.net
+Reported-by: Athul Krishna <athul.krishna.kr@protonmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220010
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250414211828.3530741-1-alex.williamson@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 95e0dd14dc1a3..518be23e48ea9 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2876,7 +2876,8 @@ static int validate_set(const struct nlattr *a,
- 	size_t key_len;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5534,8 +5534,6 @@ static bool pci_bus_resettable(struct pc
+ 		return false;
  
- 	/* There can be only one key in a action */
--	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
-+	if (!nla_ok(ovs_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
- 		return -EINVAL;
- 
- 	key_len = nla_len(ovs_key);
--- 
-2.39.5
-
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		if (!pci_reset_supported(dev))
+-			return false;
+ 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
+ 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
+ 			return false;
+@@ -5612,8 +5610,6 @@ static bool pci_slot_resettable(struct p
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		if (!pci_reset_supported(dev))
+-			return false;
+ 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
+ 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
+ 			return false;
 
 
