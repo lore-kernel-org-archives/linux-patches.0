@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812681EFFB9;
-	Wed, 23 Apr 2025 14:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BAF1EFFB9;
+	Wed, 23 Apr 2025 14:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420379; cv=none; b=McdtBYNhidBTvjMAmpBfIxFoN652ZtnIsQwXZijfVXYUAvJtbvWOpFHX5Vh4Vucq/fO6sV2oiusBbFeIomfAsJz0aYOtT6s54WH0z+gSLECHFKL1nk0WwBI6YBlHBiZ2EbeOikneUDB9ob7wwhszZpYccaLcL5fWEhW8JhU+u+w=
+	t=1745420382; cv=none; b=LmCGWVP78uWp3rG/JvZ9ciAoAH33IKGcQGaASLhYgXf5MLNcnd6oj6NHGrNR5vUN6/xQeYfywC81izuM3To+VAkVZtWJIbH350DI18Es3SbBP1MIwD1IiVe/H2HFjzHM+C08k33SlSOWwpw7cq2gXiMFVCSwE6AsrAWzjO68dG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420379; c=relaxed/simple;
-	bh=8ZdBhYOImJchWBIJRjnf6IZNwZEpV3v+Zf4z8jwGjBY=;
+	s=arc-20240116; t=1745420382; c=relaxed/simple;
+	bh=1BZTpMheOYrUVJc/o0s2PGtoln0RnELjtH9oii2TQgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rINx23iAY0Q7i4u407WH1qRPUb4lI2nQIPtAlN2ODi7rp+nKbKW5b59TzbgAcxvJDJzCNfzPLJTdScQFNSeyD1T6gHZ89L8G6pdKO3lnlPo1NHjh2ZZESs2kxLve4Vpdbeu5AAHksfc0XEIrAtENEoCcCRzre9mmrs5/j+FK87Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3SMdPSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAAFOyl/dIcp0g2ir6gO8hWwcVzFbTnooAwtSxibU0FnNbkFwPO8sTyc5hSvCSLtEzckEcoEKIWiR7PXglOP8Ms3uKq1KSYJifgQ7ajWuBrsbVNJnpij4q06LjyGd1fpR2vaCXMvx23Eonk4FimBvlgtpY49xQeRrlx7jvfTuEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdzQSZT2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3SMdPSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BAFC4CEE2;
-	Wed, 23 Apr 2025 14:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdzQSZT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90DC4CEE2;
+	Wed, 23 Apr 2025 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420379;
-	bh=8ZdBhYOImJchWBIJRjnf6IZNwZEpV3v+Zf4z8jwGjBY=;
+	s=korg; t=1745420382;
+	bh=1BZTpMheOYrUVJc/o0s2PGtoln0RnELjtH9oii2TQgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3SMdPSom6pDj5d2apycCDYSln+fISgv81qYOQd5qMfp/8z7yKkRf3pGhIKVNkWEG
-	 4JAkW1ndruhSf5UIboDtiymSfCftOAskI3quQMQrWV9dSTew8xH5tPMTHAvE5npLT0
-	 2xqP1r/hc3f9zfdnJmIm+5rtp7DpwvBhbQcgqKDI=
+	b=gdzQSZT2YWggn4qJFYKHnKUZyZQUz1s0Vzc8SyoJSrTAflnVpdSVCOVT86AuR8HC+
+	 ZDx7MBCQ4iBo2ITrT/o1I7On0TJmVAo07IgRaZcBLK49lYNzZdMr7+YKLbwrT5oMwG
+	 7nq8HDzBw5qblR8tWCm/duHFKkpeHwW5IyVmjzpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Pemberton <lists@philpem.me.uk>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	keenplify <keenplify@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/291] ata: libata-eh: Do not use ATAPI DMA for a device limited to PIO mode
-Date: Wed, 23 Apr 2025 16:40:31 +0200
-Message-ID: <20250423142626.114923213@linuxfoundation.org>
+Subject: [PATCH 6.6 064/393] ASoC: amd: Add DMI quirk for ACP6X mic support
+Date: Wed, 23 Apr 2025 16:39:20 +0200
+Message-ID: <20250423142645.950335287@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: keenplify <keenplify@gmail.com>
 
-[ Upstream commit 91ec84f8eaddbc93d7c62e363d68aeb7b89879c7 ]
+[ Upstream commit 309b367eafc8e162603cd29189da6db770411fea ]
 
-atapi_eh_request_sense() currently uses ATAPI DMA if the SATA controller
-has ATA_FLAG_PIO_DMA (PIO cmds via DMA) set.
+Some AMD laptops with ACP6X do not expose the DMIC properly on Linux.
+Adding a DMI quirk enables mic functionality.
 
-However, ATA_FLAG_PIO_DMA is a flag that can be set by a low-level driver
-on a port at initialization time, before any devices are scanned.
+Similar to Bugzilla #218402, this issue affects multiple users.
 
-If a controller detects a connected device that only supports PIO, we set
-the flag ATA_DFLAG_PIO.
-
-Modify atapi_eh_request_sense() to not use ATAPI DMA if the connected
-device only supports PIO.
-
-Reported-by: Philip Pemberton <lists@philpem.me.uk>
-Closes: https://lore.kernel.org/linux-ide/c6722ee8-5e21-4169-af59-cbbae9edc02f@philpem.me.uk/
-Tested-by: Philip Pemberton <lists@philpem.me.uk>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250221015422.20687-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219853
+Signed-off-by: keenplify <keenplify@gmail.com>
+Link: https://patch.msgid.link/20250315111617.12194-1-keenplify@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 3f327ba759fd9..586982a2a61ff 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -1510,8 +1510,15 @@ unsigned int atapi_eh_request_sense(struct ata_device *dev,
- 	tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	tf.command = ATA_CMD_PACKET;
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 2981bd1c3530d..2536bd3d59464 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -584,6 +584,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang13"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7UCX"),
++		}
++	},
+ 	{}
+ };
  
--	/* is it pointless to prefer PIO for "safety reasons"? */
--	if (ap->flags & ATA_FLAG_PIO_DMA) {
-+	/*
-+	 * Do not use DMA if the connected device only supports PIO, even if the
-+	 * port prefers PIO commands via DMA.
-+	 *
-+	 * Ideally, we should call atapi_check_dma() to check if it is safe for
-+	 * the LLD to use DMA for REQUEST_SENSE, but we don't have a qc.
-+	 * Since we can't check the command, perhaps we should only use pio?
-+	 */
-+	if ((ap->flags & ATA_FLAG_PIO_DMA) && !(dev->flags & ATA_DFLAG_PIO)) {
- 		tf.protocol = ATAPI_PROT_DMA;
- 		tf.feature |= ATAPI_PKT_DMA;
- 	} else {
 -- 
 2.39.5
 
