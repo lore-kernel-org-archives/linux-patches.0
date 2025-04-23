@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F552284B48;
-	Wed, 23 Apr 2025 15:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9556C284B57;
+	Wed, 23 Apr 2025 15:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420400; cv=none; b=C22SYbhQgtTHkhzSLFD5opsVVBC0knk8BIEgIiPgueNjOWe/upt6J0BEZGGVha8Wajulyvp7vJ9zASQmNYDdgKw+i1Ny0r2PnXhH5eqbtzO2olc4bE4ecJoRyiZ74yYsOAgPzZjJ7Whlsl9LMCiLe6Ec+58dhXmVbki+2njhmWs=
+	t=1745420403; cv=none; b=pbiuTGWf2JSHerT2ZQBnNfhz+y1/FahjrE2i0keKGqb9HzUV3HbrsJRwKLULuF8m9VlLJekXlJgfngbJMFOsrBdzrXQ8vdKRzFKQkG1m9s1K/xhQI1d4WyP2vpYvT9h/swwLm5fJAVJ+G8k6nhK9VGbGJ4YdTdnlwL27xtwjlds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420400; c=relaxed/simple;
-	bh=FEsyoKeEyEGdtwetEGzM96PQIIYVrcjRzDzkSAvufc4=;
+	s=arc-20240116; t=1745420403; c=relaxed/simple;
+	bh=F9Jgx7BWN/GSaDlzONRxPt0gFKo2g+VcEsA8DehYX4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnivJUZtdOfaov3DHMwgUS97moX4PAAcCqKTkJ/FkoqLEqciO/yos9VtVbrvxg/JHkeWMyz6YsiPL6q2sv1Am0pXwz4YH8xZGEpKagzbLAWYvvuXiLJBvrYPukSmVuMLqQ/jSV9+vJIco0DrMGsNe1s5tJR0F40cU6LvpjXLBfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LB81vZBS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MA4mPhVvV7wpXy9ZfwioUL6aauUHvNauq9OGNZVnIkdOWCofi4//oaF/6ZXe5O2zz2W/3XFxhn6G5HSXoDwd/kWJnTDAcwxy/+VMuBhWs5vEN+Bkjg5vW0plT3HU6itLSVeioKNTaY3MOAKxdAfJ8vdofv9kqpAPEhdBg6ADVTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJ/BkQcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LB81vZBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356B2C4CEEB;
-	Wed, 23 Apr 2025 15:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ/BkQcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6677C4CEE2;
+	Wed, 23 Apr 2025 15:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420400;
-	bh=FEsyoKeEyEGdtwetEGzM96PQIIYVrcjRzDzkSAvufc4=;
+	s=korg; t=1745420403;
+	bh=F9Jgx7BWN/GSaDlzONRxPt0gFKo2g+VcEsA8DehYX4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LB81vZBSsIGX8+riSS/R00iegxAvuL0ZF+anIqQu9kLJTa7K9REd7ZcXU9ydwI+hB
-	 ksapgMfL68T9DhIhmRlaxknJRV52IvGquV/wqBrP/eIDRwdZmLUSfyXLHcBUal4Gei
-	 KvGeYARhtiet4iLEbmnjGClrVyWcSSLjeTteTlCY=
+	b=CJ/BkQcG1bsuuchV9th3MjqceyoWgtfu5Bi63guc4O8l8Cg3qgWwa/1xa9UOwvDG/
+	 w5oLXexM2zNigCjZkNYv+sD7cbXCxCStM5gkgD3PZz2sCAkBzJhX3ItW6KYU5/Rb3c
+	 pxc7+dmqvt+pPNhtWi47HUEVYTUO3U6oi8J+FvcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Daniel Kral <d.kral@proxmox.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/393] jfs: Fix uninit-value access of imap allocated in the diMount() function
-Date: Wed, 23 Apr 2025 16:39:27 +0200
-Message-ID: <20250423142646.235121496@linuxfoundation.org>
+Subject: [PATCH 6.1 044/291] ahci: add PCI ID for Marvell 88SE9215 SATA Controller
+Date: Wed, 23 Apr 2025 16:40:33 +0200
+Message-ID: <20250423142626.195859584@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Daniel Kral <d.kral@proxmox.com>
 
-[ Upstream commit 9629d7d66c621671d9a47afe27ca9336bfc8a9ea ]
+[ Upstream commit 885251dc35767b1c992f6909532ca366c830814a ]
 
-syzbot reports that hex_dump_to_buffer is using uninit-value:
+Add support for Marvell Technology Group Ltd. 88SE9215 SATA 6 Gb/s
+controller, which is e.g. used in the DAWICONTROL DC-614e RAID bus
+controller and was not automatically recognized before.
 
-=====================================================
-BUG: KMSAN: uninit-value in hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
-hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
-print_hex_dump+0x13d/0x3e0 lib/hexdump.c:276
-diFree+0x5ba/0x4350 fs/jfs/jfs_imap.c:876
-jfs_evict_inode+0x510/0x550 fs/jfs/inode.c:156
-evict+0x723/0xd10 fs/inode.c:796
-iput_final fs/inode.c:1946 [inline]
-iput+0x97b/0xdb0 fs/inode.c:1972
-txUpdateMap+0xf3e/0x1150 fs/jfs/jfs_txnmgr.c:2367
-txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
-jfs_lazycommit+0x627/0x11d0 fs/jfs/jfs_txnmgr.c:2733
-kthread+0x6b9/0xef0 kernel/kthread.c:464
-ret_from_fork+0x6d/0x90 arch/x86/kernel/process.c:148
-ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+Tested with a DAWICONTROL DC-614e RAID bus controller.
 
-Uninit was created at:
-slab_post_alloc_hook mm/slub.c:4121 [inline]
-slab_alloc_node mm/slub.c:4164 [inline]
-__kmalloc_cache_noprof+0x8e3/0xdf0 mm/slub.c:4320
-kmalloc_noprof include/linux/slab.h:901 [inline]
-diMount+0x61/0x7f0 fs/jfs/jfs_imap.c:105
-jfs_mount+0xa8e/0x11d0 fs/jfs/jfs_mount.c:176
-jfs_fill_super+0xa47/0x17c0 fs/jfs/super.c:523
-get_tree_bdev_flags+0x6ec/0x910 fs/super.c:1636
-get_tree_bdev+0x37/0x50 fs/super.c:1659
-jfs_get_tree+0x34/0x40 fs/jfs/super.c:635
-vfs_get_tree+0xb1/0x5a0 fs/super.c:1814
-do_new_mount+0x71f/0x15e0 fs/namespace.c:3560
-path_mount+0x742/0x1f10 fs/namespace.c:3887
-do_mount fs/namespace.c:3900 [inline]
-__do_sys_mount fs/namespace.c:4111 [inline]
-__se_sys_mount+0x71f/0x800 fs/namespace.c:4088
-__x64_sys_mount+0xe4/0x150 fs/namespace.c:4088
-x64_sys_call+0x39bf/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:166
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-=====================================================
-
-The reason is that imap is not properly initialized after memory
-allocation. It will cause the snprintf() function to write uninitialized
-data into linebuf within hex_dump_to_buffer().
-
-Fix this by using kzalloc instead of kmalloc to clear its content at the
-beginning in diMount().
-
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Reported-by: syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/67b5d07e.050a0220.14d86d.00e6.GAE@google.com/
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Daniel Kral <d.kral@proxmox.com>
+Link: https://lore.kernel.org/r/20250304092030.37108-1-d.kral@proxmox.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/ahci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index b30e4cf2f5794..8b876e2db8c60 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -102,7 +102,7 @@ int diMount(struct inode *ipimap)
- 	 * allocate/initialize the in-memory inode map control structure
- 	 */
- 	/* allocate the in-memory inode map control structure. */
--	imap = kmalloc(sizeof(struct inomap), GFP_KERNEL);
-+	imap = kzalloc(sizeof(struct inomap), GFP_KERNEL);
- 	if (imap == NULL)
- 		return -ENOMEM;
- 
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 20f53ae4d204e..a4b0a499b67d4 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -592,6 +592,8 @@ static const struct pci_device_id ahci_pci_tbl[] = {
+ 	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x91a3),
+ 	  .driver_data = board_ahci_yes_fbs },
++	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9215),
++	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9230),
+ 	  .driver_data = board_ahci_yes_fbs },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9235),
 -- 
 2.39.5
 
