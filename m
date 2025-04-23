@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EBB2957B6;
-	Wed, 23 Apr 2025 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD9B46447;
+	Wed, 23 Apr 2025 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421981; cv=none; b=HJeqj7o6a1DYBfqw76eQ8iLGRoIz87DtPjz0kriUnaXT9dx3ESKk5gIylkD6zo5sqbQBxWrakfQt0UBA4vySrgLVSDfbK+OojC8v9Z2uROOKUr0tgumPP7QtGg/gw9ELotQ0sIF8gSRA89SeHy5mryB76ryOC9JMSsY28QPzebQ=
+	t=1745421985; cv=none; b=JhRdmOZysBF14a9Pxn/xpVrumhNcsUTzxzKChmSnlfk5uYlcK3Scau4g8U2VM/12fkUX3K1mtMpJl6cxjHqhaz/wQ3PXfdxqo8WVbOxQjgmunQRlP4aZcwVuZv9OcKcOmp3kZ7/KgfDF4CptgJLs96JDJgEZBEc8PxcMnSgQRfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421981; c=relaxed/simple;
-	bh=LPDkn8s2EHSpX2fOGMSVNcEOK0ESIyNtrmMkZCJJlVs=;
+	s=arc-20240116; t=1745421985; c=relaxed/simple;
+	bh=w1lBleTQuTFmxNuXwx2T4jqYEQmxXedGMFyeiWy5xvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMtwClrZNt4O6CqyNarAdAaMq+6dNzznjkPaBBNdX2BBohBVZnptqKcu+3K3VXL+j54ilw3+r4+FIFKzjpeBkMne3t3zt9C1YryKsWVxPDMP6mkVBZElqkLsI/7BmnlwBobHDRl9X73kdTiU3VmRspAHJUo84NIvx0eidSRzE3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1d7vaHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fNXy9FsrdPbvvByO9dFObkG+htRhagAG1EznHtlzAds3y6n2ZNBGQw4d/Fi5SVNuevsIT+0BgNUtmMCeVl1qxC4mlsiOfZkNNJp/6TGsw/G9QlKhC40RMzZK+qnuZ/aDmmz6r7YtsfUbaQlOOJxrSgh1QueVw4U8x9pyb8mJ8No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN2Jzvl0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1d7vaHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BAC4CEE2;
-	Wed, 23 Apr 2025 15:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN2Jzvl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7B8C4CEE3;
+	Wed, 23 Apr 2025 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421981;
-	bh=LPDkn8s2EHSpX2fOGMSVNcEOK0ESIyNtrmMkZCJJlVs=;
+	s=korg; t=1745421984;
+	bh=w1lBleTQuTFmxNuXwx2T4jqYEQmxXedGMFyeiWy5xvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1d7vaHaKPrg+SQM97cX2e8Sbf9pnfLho7FPgp7QEMDgWNTq2YjzD3gvuCFa7PJLS
-	 /CEOIRGlmh/Wz8VFbTk2uMxI3Teoh6VGyoZFYynyfd+KbVK111CUGNw8jPUd21rYyC
-	 AiS1cA1HywbNZRvy3qigV+Lmowbx2TO3ef6glnfg=
+	b=EN2Jzvl0lhogvsYRFLjyW2Skajqy4rrAOgdxkAQtn3BFHKVcuficQEr5aAi4mWujx
+	 3j4Aer4B4I0ofIzO+hPU0t6fLaN3mRnpRZ2lKpvIHVtROWZDF36rKteWfuPOHKvgAT
+	 /bcuDN/dVlE1UfrbDlxhxkezPxm4I+Sa4moFR6HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.6 235/393] iommufd: Fail replace if device has not been attached
-Date: Wed, 23 Apr 2025 16:42:11 +0200
-Message-ID: <20250423142653.095384134@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 189/291] net: bridge: switchdev: do not notify new brentries as changed
+Date: Wed, 23 Apr 2025 16:42:58 +0200
+Message-ID: <20250423142632.105780872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +50,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-commit 55c85fa7579dc2e3f5399ef5bad67a44257c1a48 upstream.
+[ Upstream commit eb25de13bd9cf025413a04f25e715d0e99847e30 ]
 
-The current implementation of iommufd_device_do_replace() implicitly
-assumes that the input device has already been attached. However, there
-is no explicit check to verify this assumption. If another device within
-the same group has been attached, the replace operation might succeed,
-but the input device itself may not have been attached yet.
+When adding a bridge vlan that is pvid or untagged after the vlan has
+already been added to any other switchdev backed port, the vlan change
+will be propagated as changed, since the flags change.
 
-As a result, the input device might not be tracked in the
-igroup->device_list, and its reserved IOVA might not be added. Despite
-this, the caller might incorrectly assume that the device has been
-successfully replaced, which could lead to unexpected behavior or errors.
+This causes the vlan to not be added to the hardware for DSA switches,
+since the DSA handler ignores any vlans for the CPU or DSA ports that
+are changed.
 
-To address this issue, add a check to ensure that the input device has
-been attached before proceeding with the replace operation. This check
-will help maintain the integrity of the device tracking system and prevent
-potential issues arising from incorrect assumptions about the device's
-attachment status.
+E.g. the following order of operations would work:
 
-Fixes: e88d4ec154a8 ("iommufd: Add iommufd_device_replace()")
-Link: https://patch.msgid.link/r/20250306034842.5950-1-yi.l.liu@intel.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
+$ ip link set lan1 master swbridge
+$ bridge vlan add dev swbridge vid 1 pvid untagged self
+$ bridge vlan add dev lan1 vid 1 pvid untagged
+
+but this order would break:
+
+$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
+$ ip link set lan1 master swbridge
+$ bridge vlan add dev lan1 vid 1 pvid untagged
+$ bridge vlan add dev swbridge vid 1 pvid untagged self
+
+Additionally, the vlan on the bridge itself would become undeletable:
+
+$ bridge vlan
+port              vlan-id
+lan1              1 PVID Egress Untagged
+swbridge          1 PVID Egress Untagged
+$ bridge vlan del dev swbridge vid 1 self
+$ bridge vlan
+port              vlan-id
+lan1              1 PVID Egress Untagged
+swbridge          1 Egress Untagged
+
+since the vlan was never added to DSA's vlan list, so deleting it will
+cause an error, causing the bridge code to not remove it.
+
+Fix this by checking if flags changed only for vlans that are already
+brentry and pass changed as false for those that become brentries, as
+these are a new vlan (member) from the switchdev point of view.
+
+Since *changed is set to true for becomes_brentry = true regardless of
+would_change's value, this will not change any rtnetlink notification
+delivery, just the value passed on to switchdev in vlan->changed.
+
+Fixes: 8d23a54f5bee ("net: bridge: switchdev: differentiate new VLANs from changed ones")
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250414200020.192715-1-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/bridge/br_vlan.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -407,6 +407,17 @@ iommufd_device_do_attach(struct iommufd_
- 	return NULL;
- }
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 9ffd40b8270c1..23a82567fe624 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -715,8 +715,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
+ 				u16 flags, bool *changed,
+ 				struct netlink_ext_ack *extack)
+ {
+-	bool would_change = __vlan_flags_would_change(vlan, flags);
+ 	bool becomes_brentry = false;
++	bool would_change = false;
+ 	int err;
  
-+/* Check if idev is attached to igroup->hwpt */
-+static bool iommufd_device_is_attached(struct iommufd_device *idev)
-+{
-+	struct iommufd_device *cur;
-+
-+	list_for_each_entry(cur, &idev->igroup->device_list, group_item)
-+		if (cur == idev)
-+			return true;
-+	return false;
-+}
-+
- static struct iommufd_hw_pagetable *
- iommufd_device_do_replace(struct iommufd_device *idev,
- 			  struct iommufd_hw_pagetable *hwpt)
-@@ -423,6 +434,11 @@ iommufd_device_do_replace(struct iommufd
- 		rc = -EINVAL;
- 		goto err_unlock;
+ 	if (!br_vlan_is_brentry(vlan)) {
+@@ -725,6 +725,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
+ 			return -EINVAL;
+ 
+ 		becomes_brentry = true;
++	} else {
++		would_change = __vlan_flags_would_change(vlan, flags);
  	}
-+
-+	if (!iommufd_device_is_attached(idev)) {
-+		rc = -EINVAL;
-+		goto err_unlock;
-+	}
  
- 	if (hwpt == igroup->hwpt) {
- 		mutex_unlock(&idev->igroup->lock);
+ 	/* Master VLANs that aren't brentries weren't notified before,
+-- 
+2.39.5
+
 
 
