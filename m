@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A2F27D76E;
-	Wed, 23 Apr 2025 14:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D437F281375;
+	Wed, 23 Apr 2025 14:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419694; cv=none; b=Ppn1K884JbyUTQp2S2U/QnXL5EQ/JQSnqpanDWYePnaigH1eWz+MyXjQ80lyzxp5zLFv70GyKW5+qhAjx8CC3NExQ63z2oFfYrje1J9jGHw2lq04nTg4hAoIky+AMF3bGScyrOaFXp4sRsGH48FN9LgdSZr/NAcAuTanGJnE1vQ=
+	t=1745419697; cv=none; b=t1urjFJWvUrOWuUeNluKXH0ctPYli3wsv+mxPIMlxvR7tb+YtTj3GBho7XmhdZifm7//m5R5SJtFfMdDneGQp4J3lZ0IZtTrvR+BJjMrSbWygnbHxy2aVU3l7fcX97tUWk0PwkHqdWnU78hE2bYZF3zhXNWu7CcUSplOP4PAjrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419694; c=relaxed/simple;
-	bh=SatHcYa2FZgkrCvRUHQU37nWIIQYlc+Nr9q0dQZuhRo=;
+	s=arc-20240116; t=1745419697; c=relaxed/simple;
+	bh=fhhBOYAMPuiZMjjrF5oe/ltfxgZ8RV96mlrm43RqO8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rz21y21NEumTLe7FV1S8FdAGhs0PBFlsnC/kKEYlwt978Wl2ni3Cbxyov+B7/hjswISfouLG/+O0QmrOQozIXagYy8Eccin2GWJiwT0wylODH3P0OypSgpLIfpyPXhena5+cU0OTs93mkH1VRQrweX2O24jFONxPinaeZdjLI68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=in/AOwdr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+1QESTRRN4yccKfndK5Z11Xa+RYZZpu6jNOtIzQLGMwbKai6S8DTL+pCYIbl4tr3TCqIdZZj1NtujLDLqMMQ3d6n8GrgzTPM2QrBjIkT8Z9LtVQcFzGT1P90DMpoDTqV0zLSFhF0saHcL0pG4cpWCc8NMJ1roEXmtyR3rNuxhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJUVN3Vm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="in/AOwdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637ADC4CEE2;
-	Wed, 23 Apr 2025 14:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJUVN3Vm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE6EC4CEE3;
+	Wed, 23 Apr 2025 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419694;
-	bh=SatHcYa2FZgkrCvRUHQU37nWIIQYlc+Nr9q0dQZuhRo=;
+	s=korg; t=1745419697;
+	bh=fhhBOYAMPuiZMjjrF5oe/ltfxgZ8RV96mlrm43RqO8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=in/AOwdrGD3XlzLq4lkxPeQBS5xaHUkH6R3J5KOY003fJdxPzDrmslV+AEURV4jI8
-	 matlMQuXGp3oB+GZ1UUWJ6w1rqttDR0Gz9R0nnZz2rHPFUzPI7WQVEFWWn6sBZFAiN
-	 cZzX+dEVZJXMfRXUKks/gWDeAXzyviSZtfIkx+RQ=
+	b=fJUVN3VmkOGyNw1YCMRFMR0WT+STr+PDzeW323k6lN9nsWhRIjnh708D1c+dHlBJw
+	 XVKThq3Bo/YAHEHS74YzoyXg6LyJiKAT4F9hwacWQr01B5+Pgn5sE2APYq1lMt6CkZ
+	 alt3pSqfKVpMyqQf5aG0imUSzKW116o/aEwbXmAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Giuseppe Scrivano <gscrivan@redhat.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Alexander Larsson <alexl@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/223] crypto: tegra - Fix IV usage for AES ECB
-Date: Wed, 23 Apr 2025 16:41:29 +0200
-Message-ID: <20250423142617.820974343@linuxfoundation.org>
+Subject: [PATCH 6.12 018/223] ovl: remove unused forward declaration
+Date: Wed, 23 Apr 2025 16:41:30 +0200
+Message-ID: <20250423142617.860217477@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -51,48 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Giuseppe Scrivano <gscrivan@redhat.com>
 
-[ Upstream commit 1ddaff40c08abb926be5ba713c5efc412d0836c5 ]
+[ Upstream commit a6eb9a4a69cc360b930dad9dc8513f8fd9b3577f ]
 
-Modifying the crypto_request turns out to be not the right way to handle
-the stale value issue with the IV. Though the IV is not used for AES ECB,
-it eventually get used in algorithms like LRW in the next step after
-AES ECB encryption/decryption. Setting req->iv to NULL breaks the
-implementation of such algorithms. Hence modify only the local reqctx
-to check for IV.
+The ovl_get_verity_xattr() function was never added, only its declaration.
 
-Fixes: bde558220866 ("crypto: tegra - Set IV to NULL explicitly for AES ECB")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Giuseppe Scrivano <gscrivan@redhat.com>
+Fixes: 184996e92e86 ("ovl: Validate verity xattr when resolving lowerdata")
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Alexander Larsson <alexl@redhat.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/overlayfs/overlayfs.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index 46c4dac92dd7a..cd52807e76afd 100644
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -263,7 +263,7 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
- 	unsigned int cmdlen;
- 	int ret;
- 
--	rctx->iv = (u32 *)req->iv;
-+	rctx->iv = (ctx->alg == SE_ALG_ECB) ? NULL : (u32 *)req->iv;
- 	rctx->len = req->cryptlen;
- 
- 	/* Pad input to AES Block size */
-@@ -443,9 +443,6 @@ static int tegra_aes_crypt(struct skcipher_request *req, bool encrypt)
- 	if (!req->cryptlen)
- 		return 0;
- 
--	if (ctx->alg == SE_ALG_ECB)
--		req->iv = NULL;
--
- 	rctx->encrypt = encrypt;
- 	rctx->config = tegra234_aes_cfg(ctx->alg, encrypt);
- 	rctx->crypto_config = tegra234_aes_crypto_cfg(ctx->alg, encrypt);
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index 844874b4a91a9..500a9634ad533 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -547,8 +547,6 @@ int ovl_set_metacopy_xattr(struct ovl_fs *ofs, struct dentry *d,
+ bool ovl_is_metacopy_dentry(struct dentry *dentry);
+ char *ovl_get_redirect_xattr(struct ovl_fs *ofs, const struct path *path, int padding);
+ int ovl_ensure_verity_loaded(struct path *path);
+-int ovl_get_verity_xattr(struct ovl_fs *ofs, const struct path *path,
+-			 u8 *digest_buf, int *buf_length);
+ int ovl_validate_verity(struct ovl_fs *ofs,
+ 			struct path *metapath,
+ 			struct path *datapath);
 -- 
 2.39.5
 
