@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23864280A32;
-	Wed, 23 Apr 2025 14:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0D127FD7A;
+	Wed, 23 Apr 2025 14:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419824; cv=none; b=c0XW468DbJ9d+1AH7A3p9a5NbemS7kc5xpgumNX8uT3Mr3XG9l26e+QcweITlrlQNxRZEuu+rmEpF7xcsRminRGeWq3mAYPeYsF7+u1e8oRnJl7x4mLuOd0z/AM/M0At8f8oh4pWx3nRr6EGhzBxr+y1V7PrnlE4dQD1K6H2pws=
+	t=1745419827; cv=none; b=jg3TMdjRS46KcJ48w7H6ErbR68oqkplWEYqmSr0pHzXlzV8RjPwpCUMCCkWLxNxd8EFmFdOK8uZK7VrQfJY4wYftKvv8hHlmGRDe7N6u3cDx5QE8RAmcymiJcWh/Y52uGFPsXREmKs6r761GgN/pkRJMOHNa3dZiKC21CgTwNWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419824; c=relaxed/simple;
-	bh=qQC7OByffDQhkAMh2sHcGmWSbath0c+at8BawLMvFSE=;
+	s=arc-20240116; t=1745419827; c=relaxed/simple;
+	bh=oWa4vu39wJpmQTMskEITDtkBgroq5P+Qlv4QjbN7XL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRK/xpy7kSRMbu85hlmNc8bt+2/MWDmkzsvdQF+8Tu2jCrtOEyr3oZpv1i9bfVxUN62LMAH0vqGm8RM2pdW/rskzrToeKBc187oO2LWFeyO1r+PF7djOenG5peJ6v/BK4YfI3ih6DqX/ZKn9mhcMybid932VAheMK3hlyXOyTPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mu3DQF7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjtF812BASkCvz5VTDtaSpFyiBe1X9UGwPzqA4+wgKeYCiZfU8qjDKSEHyxvpgtSX6YEMao6lqFlJ/q1BpXqTP7T+Kh43Duz+QWrLgrOsbd5sbUPaDK5ntFHoziqbNsOGgf0azcpMQroFZV2ZOwWIGhjxy3BORj6unIW7wxZtYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUWu+1d+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mu3DQF7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2F2C4CEE2;
-	Wed, 23 Apr 2025 14:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUWu+1d+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2D9C4CEE2;
+	Wed, 23 Apr 2025 14:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419824;
-	bh=qQC7OByffDQhkAMh2sHcGmWSbath0c+at8BawLMvFSE=;
+	s=korg; t=1745419826;
+	bh=oWa4vu39wJpmQTMskEITDtkBgroq5P+Qlv4QjbN7XL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mu3DQF7A2qj9MVaQbVCsgJdTXBjYVD9MlfJsW+ZT00P89b0QiIyBLziLP3ymloSmg
-	 Ea8NbUQsG/0CLNV4Mnke7pzZokum5GO4Q1P8yRjVU6U+PfF4ovUBnd0JWsO/fGLr6f
-	 pRERQcoLyOK3X5a1QyxSfianiXfe04hLoNjvgeu0=
+	b=uUWu+1d+YrqLggVsFE61ga8aSJ1LYxA14LCkmMc6T9SKsMWyArwmSh9ZTonaLI9Ki
+	 APNIAjhCbNwOJfV2ya0ucf8bMeauBp8sbZi4xkri2PMsIhKN/XpCEU8JXpQV26IJiN
+	 XbSmQRfmsUwUWAf6DJXrxVaVSLAdMp1VGuDenNzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brady Norander <bradynorander@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 011/241] ASoC: dwc: always enable/disable i2s irqs
-Date: Wed, 23 Apr 2025 16:41:15 +0200
-Message-ID: <20250423142620.985402960@linuxfoundation.org>
+Subject: [PATCH 6.12 046/223] netlink: specs: ovs_vport: align with C codegen capabilities
+Date: Wed, 23 Apr 2025 16:41:58 +0200
+Message-ID: <20250423142619.009771107@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +46,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brady Norander <bradynorander@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2b727b3f8a04fe52f55316ccb8792cfd9b2dd05d ]
+[ Upstream commit 747fb8413aaa36e4c988d45c4fe20d4c2b0778cd ]
 
-Commit a42e988 ("ASoC: dwc: add DMA handshake control") changed the
-behavior of the driver to not enable or disable i2s irqs if using DMA. This
-breaks platforms such as AMD ACP. Audio playback appears to work but no
-audio can be heard. Revert to the old behavior by always enabling and
-disabling i2s irqs while keeping DMA handshake control.
+We started generating C code for OvS a while back, but actually
+C codegen only supports fixed headers specified at the family
+level right now (schema also allows specifying them per op).
+ovs_flow and ovs_datapath already specify the fixed header
+at the family level but ovs_vport does it per op.
+Move the property, all ops use the same header.
 
-Fixes: a42e988b626 ("ASoC: dwc: add DMA handshake control")
-Signed-off-by: Brady Norander <bradynorander@gmail.com>
-Link: https://patch.msgid.link/20250330130852.37881-3-bradynorander@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This ensures YNL C sees the correct hdr_len:
+
+   const struct ynl_family ynl_ovs_vport_family =  {
+          .name           = "ovs_vport",
+  -       .hdr_len        = sizeof(struct genlmsghdr),
+  +       .hdr_len        = sizeof(struct genlmsghdr) + sizeof(struct ovs_header),
+   };
+
+Fixes: 7c59c9c8f202 ("tools: ynl: generate code for ovs families")
+Link: https://patch.msgid.link/20250409145541.580674-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/dwc/dwc-i2s.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ Documentation/netlink/specs/ovs_vport.yaml | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index 57b789d7fbedd..5b4f20dbf7bba 100644
---- a/sound/soc/dwc/dwc-i2s.c
-+++ b/sound/soc/dwc/dwc-i2s.c
-@@ -199,12 +199,10 @@ static void i2s_start(struct dw_i2s_dev *dev,
- 	else
- 		i2s_write_reg(dev->i2s_base, IRER, 1);
+diff --git a/Documentation/netlink/specs/ovs_vport.yaml b/Documentation/netlink/specs/ovs_vport.yaml
+index 86ba9ac2a5210..b538bb99ee9b5 100644
+--- a/Documentation/netlink/specs/ovs_vport.yaml
++++ b/Documentation/netlink/specs/ovs_vport.yaml
+@@ -123,12 +123,12 @@ attribute-sets:
  
--	/* I2S needs to enable IRQ to make a handshake with DMAC on the JH7110 SoC */
--	if (dev->use_pio || dev->is_jh7110)
--		i2s_enable_irqs(dev, substream->stream, config->chan_nr);
--	else
-+	if (!(dev->use_pio || dev->is_jh7110))
- 		i2s_enable_dma(dev, substream->stream);
- 
-+	i2s_enable_irqs(dev, substream->stream, config->chan_nr);
- 	i2s_write_reg(dev->i2s_base, CER, 1);
- }
- 
-@@ -218,11 +216,12 @@ static void i2s_stop(struct dw_i2s_dev *dev,
- 	else
- 		i2s_write_reg(dev->i2s_base, IRER, 0);
- 
--	if (dev->use_pio || dev->is_jh7110)
--		i2s_disable_irqs(dev, substream->stream, 8);
--	else
-+	if (!(dev->use_pio || dev->is_jh7110))
- 		i2s_disable_dma(dev, substream->stream);
- 
-+	i2s_disable_irqs(dev, substream->stream, 8);
-+
-+
- 	if (!dev->active) {
- 		i2s_write_reg(dev->i2s_base, CER, 0);
- 		i2s_write_reg(dev->i2s_base, IER, 0);
+ operations:
+   name-prefix: ovs-vport-cmd-
++  fixed-header: ovs-header
+   list:
+     -
+       name: new
+       doc: Create a new OVS vport
+       attribute-set: vport
+-      fixed-header: ovs-header
+       do:
+         request:
+           attributes:
+@@ -141,7 +141,6 @@ operations:
+       name: del
+       doc: Delete existing OVS vport from a data path
+       attribute-set: vport
+-      fixed-header: ovs-header
+       do:
+         request:
+           attributes:
+@@ -152,7 +151,6 @@ operations:
+       name: get
+       doc: Get / dump OVS vport configuration and state
+       attribute-set: vport
+-      fixed-header: ovs-header
+       do: &vport-get-op
+         request:
+           attributes:
 -- 
 2.39.5
 
