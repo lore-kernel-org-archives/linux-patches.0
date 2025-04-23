@@ -1,52 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD2F27FD42;
-	Wed, 23 Apr 2025 15:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39464289351;
+	Wed, 23 Apr 2025 15:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421706; cv=none; b=q+7zjYIfQCgJE95pbeZM6s0phRl71Y+lV11MOU3OGdN5fvgOal9bPKwglgtMOGwNrxBOYa95c4dpsNKlBIS7EIw57DjKEoxCd/UW4ZlnWXQpNe9ixCczaQDsUFrDm5+CF3z5v20DsE4a2C3GhKeZvf+YwYBjqq1ZsEuN/VD7JiY=
+	t=1745421708; cv=none; b=GO4LLhwFc1YvgVHFT1NV95nsTHyRdDzlekZKZ2KyCIHO2hDf8r25Ebh2YmTnwVtWYEFU0fJ2SNssyOUGubgZdw0+l0sCBBGT5Eh+JboYJKmjVdtlEvataAeZQd7wG2H1ABC0Tuj+rVZZo18DVIKeif52E2XW5ljSiCJ+Xrc+iWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421706; c=relaxed/simple;
-	bh=v5IvUSzEGUQ/wZAj6+QxV3fRzzjyRTSU1yyjUs2nFEI=;
+	s=arc-20240116; t=1745421708; c=relaxed/simple;
+	bh=WSp06tm0ahuBHnK0Fk+dVRCM0p17YkEJE+aNR+fosZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViCwj7d/rG/AwgGolqBim15U4TSkApI0muexnsfoZeC8X2k6wALcDm9ZC0AAjeQrUSvm9GzC1il2XFNEVZwHY9E/YrH/G0g3SRVe3gOKg4HzNRmEPRB/YCOUICArjYf+NfDAQwosQC5OapxeP6PQK+7tXrnvN0HdFRv/rTN+3vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwi7xanq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXAqJLZ1hi2dzAMWK3HEuFNEh9+SyoWD8hyB8WTFN4ddG6EoBpQE/bO/R1JlxcSvO7OyeYgZWvt4dTa5gssRGmTFKm9rUnS3M+sFojj5QXNBsBOpgIM0fT4iBJQJlpqOXQGCl75L9f6daMHDbdEQCgj5rJ5xpV+YTjUK4+Huuno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlXkvxos; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwi7xanq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EA1C4CEE2;
-	Wed, 23 Apr 2025 15:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlXkvxos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9FEC4CEE2;
+	Wed, 23 Apr 2025 15:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421705;
-	bh=v5IvUSzEGUQ/wZAj6+QxV3fRzzjyRTSU1yyjUs2nFEI=;
+	s=korg; t=1745421708;
+	bh=WSp06tm0ahuBHnK0Fk+dVRCM0p17YkEJE+aNR+fosZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwi7xanqaxx1l9DEPX5XrTtRrZcuCV8Gl09je+mcUmvnbZj3k6UCCHlyQkE6/mwZF
-	 rE1pqiQkWPQ0RMPhU+Yudqa6GE0abnO3OdS1zSKtyHXK18REBs4NCDOJqoN3Oh4PWj
-	 PTZBB29D4bPgLDxBLGyQ8Zx2twp8RIEiZD7za7ek=
+	b=hlXkvxosvPVEvCpfFKY1VEtLmtCKMbX4hxMFN2LdnqThxfHOFFqbnxOxZpaqi1HKH
+	 yCuO833pMcWzgbDqqwRXTmU71a1jSG/gBFQ/UA9o9Sz5dD1mLa7SopZFFeTXGa7ngj
+	 a6S+2DrRtoyEnROX6hvGMzHU7gzYNLTKHmA2fqLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 193/393] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
-Date: Wed, 23 Apr 2025 16:41:29 +0200
-Message-ID: <20250423142651.362162877@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Nicolas Chauvet <kwizart@gmail.com>,
+	Damian Tometzki <damian@riscv-rocks.de>,
+	Zhenyu Wang <zhenyuw.linux@gmail.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.14 205/241] drm/i915/gvt: fix unterminated-string-initialization warning
+Date: Wed, 23 Apr 2025 16:44:29 +0200
+Message-ID: <20250423142628.917877180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,66 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
+commit 2e43ae7dd71cd9bb0d1bce1d3306bf77523feb81 upstream.
 
-The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
-reclaim for struct pglist_data using a single bit.
+Initializing const char opregion_signature[16] = OPREGION_SIGNATURE
+(which is "IntelGraphicsMem") drops the NUL termination of the
+string. This is intentional, but the compiler doesn't know this.
 
-It is "locked" with a test_and_set_bit (similarly to a try lock) which
-provides full ordering with respect to loads and stores done within
-__node_reclaim().
+Switch to initializing header->signature directly from the string
+litaral, with sizeof destination rather than source. We don't treat the
+signature as a string other than for initialization; it's really just a
+blob of binary data.
 
-It is "unlocked" with clear_bit(), which does not provide any ordering
-with respect to loads and stores done before clearing the bit.
+Add a static assert for good measure to cross-check the sizes.
 
-The lack of clear_bit() memory ordering with respect to stores within
-__node_reclaim() can cause a subsequent CPU to fail to observe stores from
-a prior node reclaim.  This is not an issue in practice on TSO (e.g.
-x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
-
-Fix this by using clear_bit_unlock rather than clear_bit to clear
-PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
-
-This provides stronger memory ordering (release rather than relaxed).
-
-Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
-Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Andrea Parri <parri.andrea@gmail.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jade Alglave <j.alglave@ucl.ac.uk>
-Cc: Luc Maranget <luc.maranget@inria.fr>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kees Cook <kees@kernel.org>
+Closes: https://lore.kernel.org/r/20250310222355.work.417-kees@kernel.org
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13934
+Tested-by: Nicolas Chauvet <kwizart@gmail.com>
+Tested-by: Damian Tometzki <damian@riscv-rocks.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Zhenyu Wang <zhenyuw.linux@gmail.com>
+Link: https://lore.kernel.org/r/20250327124739.2609656-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 4f8207469094bd04aad952258ceb9ff4c77b6bfa)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gvt/opregion.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -8115,7 +8115,7 @@ int node_reclaim(struct pglist_data *pgd
- 		return NODE_RECLAIM_NOSCAN;
+--- a/drivers/gpu/drm/i915/gvt/opregion.c
++++ b/drivers/gpu/drm/i915/gvt/opregion.c
+@@ -222,7 +222,6 @@ int intel_vgpu_init_opregion(struct inte
+ 	u8 *buf;
+ 	struct opregion_header *header;
+ 	struct vbt v;
+-	const char opregion_signature[16] = OPREGION_SIGNATURE;
  
- 	ret = __node_reclaim(pgdat, gfp_mask, order);
--	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
-+	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
- 
- 	if (!ret)
- 		count_vm_event(PGSCAN_ZONE_RECLAIM_FAILED);
+ 	gvt_dbg_core("init vgpu%d opregion\n", vgpu->id);
+ 	vgpu_opregion(vgpu)->va = (void *)__get_free_pages(GFP_KERNEL |
+@@ -236,8 +235,10 @@ int intel_vgpu_init_opregion(struct inte
+ 	/* emulated opregion with VBT mailbox only */
+ 	buf = (u8 *)vgpu_opregion(vgpu)->va;
+ 	header = (struct opregion_header *)buf;
+-	memcpy(header->signature, opregion_signature,
+-	       sizeof(opregion_signature));
++
++	static_assert(sizeof(header->signature) == sizeof(OPREGION_SIGNATURE) - 1);
++	memcpy(header->signature, OPREGION_SIGNATURE, sizeof(header->signature));
++
+ 	header->size = 0x8;
+ 	header->opregion_ver = 0x02000000;
+ 	header->mboxes = MBOX_VBT;
 
 
