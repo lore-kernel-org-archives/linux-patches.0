@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01D0280CD9;
-	Wed, 23 Apr 2025 15:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD40280A3C;
+	Wed, 23 Apr 2025 15:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420897; cv=none; b=pOH6JnTPT9kpHavLNIBen5x/0fpwivQ4VDh55w8ZscBeUrRKlI42w5JZJoE+5EY/qlDZrCtm7FwewLg/Nk/6u9CGsC3JWt6wCe+N55WN+iblj/w5NSTVt3ill6H9a2sDa4W+aVLhyzRCby0M/e/f7uHa0D/Cu0Kd1HFokyyPAes=
+	t=1745420900; cv=none; b=WmFNR2ZJDF+XxqwhLGIbZp+aVJrOW7Yleh8xwufxiJCwuiHWMXXKhIUoQekRsZUWNCLj5GYW/94o82pkzOrNxS92zt5yCBhb8byBOXCcJ2+yGSgx4/Ki+HIp0VOH7RahQXI/nxufe03P/1nAV06ihB7T5M++zCGB0BcocD6OR1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420897; c=relaxed/simple;
-	bh=iYAnQrsN+07OA7hv09PzDyfeWO8+Xi+wYledjE21/0I=;
+	s=arc-20240116; t=1745420900; c=relaxed/simple;
+	bh=kiINfWDG73vhL8nOxUuw7loHYnG85OjGCluAvQqrymM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSLf8wWaV8sG/AbxDXO8w2S+bHdr65nc+9+SwywiuzuvkK3+W5FgxXFPIXDraJGW7wDjSEwZYvrbwf7xeWZImFnTOGSv0n+ooNBHlo2Wfk/XrsDFS/FPdi1QwyJP6Qp0l+9n5RG/wD1Z/HhuO7m3J2zan6D9hjZ8eosO/azMbRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQUtvpb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ToeJggZKY3FBEWsKggjwAUsztZoHHwO56T5e5gXfzfj6a3rZuqmZO/o4zQ6UdCi4wc8t/bpjeYGpcbS0SizWc+fTdmKqVdjg2bHhdg2j7jmmAuH4GOSCwu/rMTayjd+OvbEXUt0XiUlnZVaLP6A/mTd7oOb/WYmyhoxYY4VXG3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScjtKvf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQUtvpb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E83C4CEE2;
-	Wed, 23 Apr 2025 15:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScjtKvf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36CBC4CEE2;
+	Wed, 23 Apr 2025 15:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420897;
-	bh=iYAnQrsN+07OA7hv09PzDyfeWO8+Xi+wYledjE21/0I=;
+	s=korg; t=1745420900;
+	bh=kiINfWDG73vhL8nOxUuw7loHYnG85OjGCluAvQqrymM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQUtvpb13nn9YJAdbphoUNQ9iwUGO29WJ5wfo+kNIcliO0mEtwJV2Od4ODKezjwCa
-	 +kvDKpvZF/rfnXZ1076MEJAwKfHpUs2qL5HlXPZ09JTHqVBTu1wOCijCy2B/hIjG8i
-	 tMjCwTtBQloKJWucLOwjwjgBWkviV0AXMeeh8Jrk=
+	b=ScjtKvf0liC0kUIK8DV3mD9aA0yBeJGwK7VMq+R+QtJwVv0UdMfRYnKcrXO3APpdo
+	 7D6sQtHPTK7eZPfEljxH8l4QYrQPpic3nLcHxbEgHpNT1eX2lG8pXlE6U7fSH95qot
+	 5J/FznIhfIMN/Ps6aSbqiR4tkQcpz44qSq9cEIsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan King <brendan.king@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>
-Subject: [PATCH 6.12 172/223] drm/imagination: fix firmware memory leaks
-Date: Wed, 23 Apr 2025 16:44:04 +0200
-Message-ID: <20250423142624.169363468@linuxfoundation.org>
+	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.14 134/241] isofs: Prevent the use of too small fid
+Date: Wed, 23 Apr 2025 16:43:18 +0200
+Message-ID: <20250423142626.040054849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,129 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brendan King <Brendan.King@imgtec.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit a5b230e7f3a55bd8bd8d012eec75a4b7baa671d5 upstream.
+commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
 
-Free the memory used to hold the results of firmware image processing
-when the module is unloaded.
+syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
 
-Fix the related issue of the same memory being leaked if processing
-of the firmware image fails during module load.
+The handle_bytes value passed in by the reproducing program is equal to 12.
+In handle_to_path(), only 12 bytes of memory are allocated for the structure
+file_handle->f_handle member, which causes an out-of-bounds access when
+accessing the member parent_block of the structure isofs_fid in isofs,
+because accessing parent_block requires at least 16 bytes of f_handle.
+Here, fh_len is used to indirectly confirm that the value of handle_bytes
+is greater than 3 before accessing parent_block.
 
-Ensure all firmware GEM objects are destroyed if firmware image
-processing fails.
+[1]
+BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
+CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0x198/0x550 mm/kasan/report.c:521
+ kasan_report+0xd8/0x138 mm/kasan/report.c:634
+ __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
+ isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+ exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
+ do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
+ handle_to_path fs/fhandle.c:385 [inline]
+ do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-Fixes memory leaks on powervr module unload detected by Kmemleak:
+Allocated by task 6466:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4294 [inline]
+ __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ handle_to_path fs/fhandle.c:357 [inline]
+ do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-unreferenced object 0xffff000042e20000 (size 94208):
-  comm "modprobe", pid 470, jiffies 4295277154
-  hex dump (first 32 bytes):
-    02 ae 7f ed bf 45 84 00 3c 5b 1f ed 9f 45 45 05  .....E..<[...EE.
-    d5 4f 5d 14 6c 00 3d 23 30 d0 3a 4a 66 0e 48 c8  .O].l.=#0.:Jf.H.
-  backtrace (crc dd329dec):
-    kmemleak_alloc+0x30/0x40
-    ___kmalloc_large_node+0x140/0x188
-    __kmalloc_large_node_noprof+0x2c/0x13c
-    __kmalloc_noprof+0x48/0x4c0
-    pvr_fw_init+0xaa4/0x1f50 [powervr]
-
-unreferenced object 0xffff000042d20000 (size 20480):
-  comm "modprobe", pid 470, jiffies 4295277154
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 09 00 00 00 0b 00 00 00  ................
-    00 00 00 00 00 00 00 00 07 00 00 00 08 00 00 00  ................
-  backtrace (crc 395b02e3):
-    kmemleak_alloc+0x30/0x40
-    ___kmalloc_large_node+0x140/0x188
-    __kmalloc_large_node_noprof+0x2c/0x13c
-    __kmalloc_noprof+0x48/0x4c0
-    pvr_fw_init+0xb0c/0x1f50 [powervr]
-
-Cc: stable@vger.kernel.org
-Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
-Signed-off-by: Brendan King <brendan.king@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://lore.kernel.org/r/20250318-ddkopsrc-1339-firmware-related-memory-leak-on-module-unload-v1-1-155337c57bb4@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
+Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_fw.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ fs/isofs/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/imagination/pvr_fw.c
-+++ b/drivers/gpu/drm/imagination/pvr_fw.c
-@@ -732,7 +732,7 @@ pvr_fw_process(struct pvr_device *pvr_de
- 					       fw_mem->core_data, fw_mem->core_code_alloc_size);
+--- a/fs/isofs/export.c
++++ b/fs/isofs/export.c
+@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
+ 		return NULL;
  
- 	if (err)
--		goto err_free_fw_core_data_obj;
-+		goto err_free_kdata;
- 
- 	memcpy(fw_code_ptr, fw_mem->code, fw_mem->code_alloc_size);
- 	memcpy(fw_data_ptr, fw_mem->data, fw_mem->data_alloc_size);
-@@ -742,10 +742,14 @@ pvr_fw_process(struct pvr_device *pvr_de
- 		memcpy(fw_core_data_ptr, fw_mem->core_data, fw_mem->core_data_alloc_size);
- 
- 	/* We're finished with the firmware section memory on the CPU, unmap. */
--	if (fw_core_data_ptr)
-+	if (fw_core_data_ptr) {
- 		pvr_fw_object_vunmap(fw_mem->core_data_obj);
--	if (fw_core_code_ptr)
-+		fw_core_data_ptr = NULL;
-+	}
-+	if (fw_core_code_ptr) {
- 		pvr_fw_object_vunmap(fw_mem->core_code_obj);
-+		fw_core_code_ptr = NULL;
-+	}
- 	pvr_fw_object_vunmap(fw_mem->data_obj);
- 	fw_data_ptr = NULL;
- 	pvr_fw_object_vunmap(fw_mem->code_obj);
-@@ -753,7 +757,7 @@ pvr_fw_process(struct pvr_device *pvr_de
- 
- 	err = pvr_fw_create_fwif_connection_ctl(pvr_dev);
- 	if (err)
--		goto err_free_fw_core_data_obj;
-+		goto err_free_kdata;
- 
- 	return 0;
- 
-@@ -763,13 +767,16 @@ err_free_kdata:
- 	kfree(fw_mem->data);
- 	kfree(fw_mem->code);
- 
--err_free_fw_core_data_obj:
- 	if (fw_core_data_ptr)
--		pvr_fw_object_unmap_and_destroy(fw_mem->core_data_obj);
-+		pvr_fw_object_vunmap(fw_mem->core_data_obj);
-+	if (fw_mem->core_data_obj)
-+		pvr_fw_object_destroy(fw_mem->core_data_obj);
- 
- err_free_fw_core_code_obj:
- 	if (fw_core_code_ptr)
--		pvr_fw_object_unmap_and_destroy(fw_mem->core_code_obj);
-+		pvr_fw_object_vunmap(fw_mem->core_code_obj);
-+	if (fw_mem->core_code_obj)
-+		pvr_fw_object_destroy(fw_mem->core_code_obj);
- 
- err_free_fw_data_obj:
- 	if (fw_data_ptr)
-@@ -836,6 +843,12 @@ pvr_fw_cleanup(struct pvr_device *pvr_de
- 	struct pvr_fw_mem *fw_mem = &pvr_dev->fw_dev.mem;
- 
- 	pvr_fw_fini_fwif_connection_ctl(pvr_dev);
-+
-+	kfree(fw_mem->core_data);
-+	kfree(fw_mem->core_code);
-+	kfree(fw_mem->data);
-+	kfree(fw_mem->code);
-+
- 	if (fw_mem->core_code_obj)
- 		pvr_fw_object_destroy(fw_mem->core_code_obj);
- 	if (fw_mem->core_data_obj)
+ 	return isofs_export_iget(sb,
+-			fh_len > 2 ? ifid->parent_block : 0,
++			fh_len > 3 ? ifid->parent_block : 0,
+ 			ifid->parent_offset,
+ 			fh_len > 4 ? ifid->parent_generation : 0);
+ }
 
 
