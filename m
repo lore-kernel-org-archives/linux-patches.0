@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E5528F933;
-	Wed, 23 Apr 2025 15:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00132853ED;
+	Wed, 23 Apr 2025 15:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422538; cv=none; b=n0wX4wJ1XK/8etQs5I6xfMHRl4T8HwMaoncYvsSVfDYR694+WUrAs9OSS4E6oA2sy4lmqfUfLibxesInlHRqiT1XZuiGvZbtsygfOGBVA3BJCOSHUtZ4U/UqQlXW90mqdNrr20LaDrlEf6wqnwuYzv3PST4KuYBe5H3bDISI9nc=
+	t=1745422544; cv=none; b=UzOQsQ6tkW8yt4z1V2Xlpea+BpXP8eNQ/suM7rUXE72B2RlCdAL8kxhXZnMyYeZnbQh61Ymw+T4xEpdu/hAa2o+dtXc1RmA/Bd15g+f2HsYVOzeOF95iA1pshZ8sDbqbyPy0n59xtkCb1lVmmKvmFsWeOTvFZhunOK0/9jNrTDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422538; c=relaxed/simple;
-	bh=oNpnBbM9V3bCOb15p7DdmMaWOVcSAwBWxkQUNSar+tU=;
+	s=arc-20240116; t=1745422544; c=relaxed/simple;
+	bh=9jPSKLSs7AKzoEYvn0j/AaHPorMKCX5mn2kIZo3hYH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qmd0QOk8c9b1wKc9GDp76eqdZVJdedVwfZIXE5ox8hD6UY+PqekSrVN8qNJAxz9JwJ66/W1EGRbCXbX0hlLxSvj2cnYDqkzO46CmQgn7gyDTBuNZDDEr6aA+vez5yc3QmZcS+0A72/aZQsDurgLBJ2MdWOAqfVfPxSLTLWNTkIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeDNgFHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anAjf17UfL3HXV8H0kBHe0i7XfLvljgfMnJwf3U8HFVYYMOb/XjAmmuiiRTLR/6djLTRNbBnZOTuTpQFiLD4iG6dIh0JfrmBGUb9c/y9WPTdxqppCGdfjqdzQlKgrPvPau7OyyJEDt6Nff+jxoFfUnUad7sZvV+zoqs3z+JFznY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xp+A8yqe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeDNgFHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0F7C4CEE2;
-	Wed, 23 Apr 2025 15:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xp+A8yqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07A5C4CEE3;
+	Wed, 23 Apr 2025 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422538;
-	bh=oNpnBbM9V3bCOb15p7DdmMaWOVcSAwBWxkQUNSar+tU=;
+	s=korg; t=1745422543;
+	bh=9jPSKLSs7AKzoEYvn0j/AaHPorMKCX5mn2kIZo3hYH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeDNgFHEOUeST3nbH1s9fXjXcoQcdoBRHNPfnRwCtq3FsKJ6BVs4IAqFZcEWPLUe1
-	 JkERQlFYji3O/KE6okAHndEvJS2tapiEOdLf/Xm1CfzPEUgJqQolZmGvF8IFXvZ1Qe
-	 ZDalI/AlIUE2GHM4rqJJlxYPdpUmKqVpICtU0x68=
+	b=Xp+A8yqeTHXR9B7MT8fnxZ0CZ5l36vuNLuK2DutdTtUYTDH3wZ9WXJYXIZt505zzn
+	 p8qfZ3VDC3pKST8Ec1gVFAx8ijJNaz9dt5uvIquhVCSW/Sy6LDmhlMCVVmjULuo63a
+	 FhE2g90ne7O4owjIgpvlpBZ2dEA6OJMUYPRAgwEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Nicolas Chauvet <kwizart@gmail.com>,
-	Damian Tometzki <damian@riscv-rocks.de>,
-	Zhenyu Wang <zhenyuw.linux@gmail.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 358/393] drm/i915/gvt: fix unterminated-string-initialization warning
-Date: Wed, 23 Apr 2025 16:44:14 +0200
-Message-ID: <20250423142658.123030115@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 359/393] io_uring/net: fix accept multishot handling
+Date: Wed, 23 Apr 2025 16:44:15 +0200
+Message-ID: <20250423142658.170389982@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -53,59 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 2e43ae7dd71cd9bb0d1bce1d3306bf77523feb81 upstream.
+Commit f6a89bf5278d6e15016a736db67043560d1b50d5 upstream.
 
-Initializing const char opregion_signature[16] = OPREGION_SIGNATURE
-(which is "IntelGraphicsMem") drops the NUL termination of the
-string. This is intentional, but the compiler doesn't know this.
+REQ_F_APOLL_MULTISHOT doesn't guarantee it's executed from the multishot
+context, so a multishot accept may get executed inline, fail
+io_req_post_cqe(), and ask the core code to kill the request with
+-ECANCELED by returning IOU_STOP_MULTISHOT even when a socket has been
+accepted and installed.
 
-Switch to initializing header->signature directly from the string
-litaral, with sizeof destination rather than source. We don't treat the
-signature as a string other than for initialization; it's really just a
-blob of binary data.
-
-Add a static assert for good measure to cross-check the sizes.
-
-Reported-by: Kees Cook <kees@kernel.org>
-Closes: https://lore.kernel.org/r/20250310222355.work.417-kees@kernel.org
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13934
-Tested-by: Nicolas Chauvet <kwizart@gmail.com>
-Tested-by: Damian Tometzki <damian@riscv-rocks.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Zhenyu Wang <zhenyuw.linux@gmail.com>
-Link: https://lore.kernel.org/r/20250327124739.2609656-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 4f8207469094bd04aad952258ceb9ff4c77b6bfa)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 390ed29b5e425 ("io_uring: add IORING_ACCEPT_MULTISHOT for accept")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/51c6deb01feaa78b08565ca8f24843c017f5bc80.1740331076.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gvt/opregion.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ io_uring/net.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/gvt/opregion.c
-+++ b/drivers/gpu/drm/i915/gvt/opregion.c
-@@ -222,7 +222,6 @@ int intel_vgpu_init_opregion(struct inte
- 	u8 *buf;
- 	struct opregion_header *header;
- 	struct vbt v;
--	const char opregion_signature[16] = OPREGION_SIGNATURE;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1438,6 +1438,8 @@ retry:
+ 		goto retry;
  
- 	gvt_dbg_core("init vgpu%d opregion\n", vgpu->id);
- 	vgpu_opregion(vgpu)->va = (void *)__get_free_pages(GFP_KERNEL |
-@@ -236,8 +235,10 @@ int intel_vgpu_init_opregion(struct inte
- 	/* emulated opregion with VBT mailbox only */
- 	buf = (u8 *)vgpu_opregion(vgpu)->va;
- 	header = (struct opregion_header *)buf;
--	memcpy(header->signature, opregion_signature,
--	       sizeof(opregion_signature));
-+
-+	static_assert(sizeof(header->signature) == sizeof(OPREGION_SIGNATURE) - 1);
-+	memcpy(header->signature, OPREGION_SIGNATURE, sizeof(header->signature));
-+
- 	header->size = 0x8;
- 	header->opregion_ver = 0x02000000;
- 	header->mboxes = MBOX_VBT;
+ 	io_req_set_res(req, ret, 0);
++	if (!(issue_flags & IO_URING_F_MULTISHOT))
++		return IOU_OK;
+ 	return IOU_STOP_MULTISHOT;
+ }
+ 
 
 
