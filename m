@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D8227F755;
-	Wed, 23 Apr 2025 15:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDACC8EB;
+	Wed, 23 Apr 2025 15:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420652; cv=none; b=SQSoUTyESNAtUZUOpbAUy3Z28NHEa9yZQJqWZPcqdC5UW3QJUxeopGi3LsgoF6xYLIa30EiKfP6/mVArXrnOFpJFoqf/ISlWmyGL3azZPw41GoZyqCNgZzIu1Oz+6bDOBzAA2lU967js81uuxfgS1tTe2RedpojeVH56+8SLyGI=
+	t=1745420654; cv=none; b=UqMknopLZOQmQkCO4bEbSYOW1wGaK7vPII2VgMR5ZPwN+GZZ6T8QJ8aYIxnRDR22hoK70S7RNx4gRDgf6LAi1IxC2nD32PVNx05IIKB2Iu8KICemfx6bPrWBvtAOXCe/JZkguAdGqWkwmGJPYX06I1HME/kLH/HK3e+Bh1ggwNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420652; c=relaxed/simple;
-	bh=sKitR6gJOaJO9GdmcJigpdI4xJqqgrf+Z96bcERjt3Y=;
+	s=arc-20240116; t=1745420654; c=relaxed/simple;
+	bh=IKoYqb4RnSm/Y/bi5SEKlf0Xr6FkVsXHtsby7QPP3m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTiuf9MCcTH4Pvby29pGg1wjw13A+G3ug08yE+G1WFt7xhtRIxvnOC1klw2Gpt/B7dSjqbCaIT9KJw26xeyS/soEhnpketrmM1mrDiA2elrmUB8b0ajGWFELmzJFSC/ohwZIzoMhWMzrf4/Fvo9SJj/HXarj1BuAfAeavUu5lps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okGMgR0s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aSNNZHO4PSNSe/BJRp12hgZ8XEFcgWj/craB2DTrsoZ1VYnarUYDrVRy3hn9TtPHsdi1L/zadKSvqrETXAryjpUcu+BPkQcWz5YVtohZBKzIMlip+vEFGUvKuEB6yh5jIkX2qj8cMMoQzGaIl4Ew5KfDVzBbQGsysji4nKd1d/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENEeqoBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okGMgR0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3D9C4CEE2;
-	Wed, 23 Apr 2025 15:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENEeqoBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89B6C4CEE2;
+	Wed, 23 Apr 2025 15:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420650;
-	bh=sKitR6gJOaJO9GdmcJigpdI4xJqqgrf+Z96bcERjt3Y=;
+	s=korg; t=1745420653;
+	bh=IKoYqb4RnSm/Y/bi5SEKlf0Xr6FkVsXHtsby7QPP3m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okGMgR0smDU/TzlMbHvhHeHlAQim0ll0mwhxDdwLFo6GPPCVFU6cjY8G46ero0KAZ
-	 Z1R4COrkvzbsTY8InA++Udm0yMV7yesEumhAaM6iHLQOP3GL2pTa8QWmJtIhQbYjSA
-	 uKQga08Enpy2puFsl4qJ/rBbGJSD9M+2OIIQuzlQ=
+	b=ENEeqoBjLXRPvJrMVY4N3ai/yxJSj1KjCkQZU85kURM0Ti7HqExtrLSi1hMNnPzov
+	 eR0fZJ2zq6Zq+QxWVajPIZSfrCwe5Jlx54VCPBn09dKbOubuAub8Ydcrw93Os8G/tp
+	 KDJs0Jx1kcmr4ZYZpIgsP0YCYQOx76wohWD/6JXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Jerry Hoemann <jerry.hoemann@hpe.com>,
-	Jose Lopez <jose.lopez@hpe.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.12 149/223] drm/ast: Fix ast_dp connection status
-Date: Wed, 23 Apr 2025 16:43:41 +0200
-Message-ID: <20250423142623.245905709@linuxfoundation.org>
+	Ryo Takakura <ryotkkr98@gmail.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 068/291] PCI: vmd: Make vmd_dev::cfg_lock a raw_spinlock_t type
+Date: Wed, 23 Apr 2025 16:40:57 +0200
+Message-ID: <20250423142627.151646345@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Ryo Takakura <ryotkkr98@gmail.com>
 
-commit c28f72c6ca98e039c2aa5aac6752c416bc31dbab upstream.
+[ Upstream commit 18056a48669a040bef491e63b25896561ee14d90 ]
 
-ast_dp_is_connected() used to also check for link training success
-to report the DP connector as connected. Without this check, the
-physical_status is always connected. So if no monitor is present, it
-will fail to read the EDID and set the default resolution to 640x480
-instead of 1024x768.
+The access to the PCI config space via pci_ops::read and pci_ops::write is
+a low-level hardware access. The functions can be accessed with disabled
+interrupts even on PREEMPT_RT. The pci_lock is a raw_spinlock_t for this
+purpose.
 
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Fixes: 2281475168d2 ("drm/ast: astdp: Perform link training during atomic_enable")
-Reported-by: Jerry Hoemann <jerry.hoemann@hpe.com>
-Tested-by: Jose Lopez <jose.lopez@hpe.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.12+
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250124141142.2434138-1-jfalempe@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
+acquired with disabled interrupts. The vmd_dev::cfg_lock is accessed in
+the same context as the pci_lock.
+
+Make vmd_dev::cfg_lock a raw_spinlock_t type so it can be used with
+interrupts disabled.
+
+This was reported as:
+
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+  Call Trace:
+   rt_spin_lock+0x4e/0x130
+   vmd_pci_read+0x8d/0x100 [vmd]
+   pci_user_read_config_byte+0x6f/0xe0
+   pci_read_config+0xfe/0x290
+   sysfs_kf_bin_read+0x68/0x90
+
+Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Acked-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+[bigeasy: reword commit message]
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-off-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Link: https://lore.kernel.org/r/20250218080830.ufw3IgyX@linutronix.de
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: add back report info from
+https://lore.kernel.org/lkml/20241218115951.83062-1-ryotkkr98@gmail.com/]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_dp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/controller/vmd.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_dp.c b/drivers/gpu/drm/ast/ast_dp.c
-index 0e282b7b167c..30aad5c0112a 100644
---- a/drivers/gpu/drm/ast/ast_dp.c
-+++ b/drivers/gpu/drm/ast/ast_dp.c
-@@ -17,6 +17,12 @@ static bool ast_astdp_is_connected(struct ast_device *ast)
- {
- 	if (!ast_get_index_reg_mask(ast, AST_IO_VGACRI, 0xDF, AST_IO_VGACRDF_HPD))
- 		return false;
-+	/*
-+	 * HPD might be set even if no monitor is connected, so also check that
-+	 * the link training was successful.
-+	 */
-+	if (!ast_get_index_reg_mask(ast, AST_IO_VGACRI, 0xDC, AST_IO_VGACRDC_LINK_SUCCESS))
-+		return false;
- 	return true;
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index a1dd614bdc324..09995b6e73bcc 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -110,7 +110,7 @@ struct vmd_irq_list {
+ struct vmd_dev {
+ 	struct pci_dev		*dev;
+ 
+-	spinlock_t		cfg_lock;
++	raw_spinlock_t		cfg_lock;
+ 	void __iomem		*cfgbar;
+ 
+ 	int msix_count;
+@@ -387,7 +387,7 @@ static int vmd_pci_read(struct pci_bus *bus, unsigned int devfn, int reg,
+ 	if (!addr)
+ 		return -EFAULT;
+ 
+-	spin_lock_irqsave(&vmd->cfg_lock, flags);
++	raw_spin_lock_irqsave(&vmd->cfg_lock, flags);
+ 	switch (len) {
+ 	case 1:
+ 		*value = readb(addr);
+@@ -402,7 +402,7 @@ static int vmd_pci_read(struct pci_bus *bus, unsigned int devfn, int reg,
+ 		ret = -EINVAL;
+ 		break;
+ 	}
+-	spin_unlock_irqrestore(&vmd->cfg_lock, flags);
++	raw_spin_unlock_irqrestore(&vmd->cfg_lock, flags);
+ 	return ret;
  }
  
+@@ -422,7 +422,7 @@ static int vmd_pci_write(struct pci_bus *bus, unsigned int devfn, int reg,
+ 	if (!addr)
+ 		return -EFAULT;
+ 
+-	spin_lock_irqsave(&vmd->cfg_lock, flags);
++	raw_spin_lock_irqsave(&vmd->cfg_lock, flags);
+ 	switch (len) {
+ 	case 1:
+ 		writeb(value, addr);
+@@ -440,7 +440,7 @@ static int vmd_pci_write(struct pci_bus *bus, unsigned int devfn, int reg,
+ 		ret = -EINVAL;
+ 		break;
+ 	}
+-	spin_unlock_irqrestore(&vmd->cfg_lock, flags);
++	raw_spin_unlock_irqrestore(&vmd->cfg_lock, flags);
+ 	return ret;
+ }
+ 
+@@ -958,7 +958,7 @@ static int vmd_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	if (features & VMD_FEAT_OFFSET_FIRST_VECTOR)
+ 		vmd->first_vec = 1;
+ 
+-	spin_lock_init(&vmd->cfg_lock);
++	raw_spin_lock_init(&vmd->cfg_lock);
+ 	pci_set_drvdata(dev, vmd);
+ 	err = vmd_enable_domain(vmd, features);
+ 	if (err)
 -- 
-2.49.0
+2.39.5
 
 
 
