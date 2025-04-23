@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1527F280A52;
-	Wed, 23 Apr 2025 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4DD1F193C;
+	Wed, 23 Apr 2025 15:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420464; cv=none; b=KQzrxv3aSxyRWLG82xRPwLN+F7Fqi30bBFmrKVnKJW1vJAZcpaHHeSgPq4js2ugokEMv9DhUif1ZbQLrYgrkMofomZpitr4I8QpuOD3Bffo6tiT4Ot5Y3ji2/5+4CZrpVuF6CVwhcdN+9jfIVhgshRZAoGXVHfU6h9MAy5WGfPI=
+	t=1745420466; cv=none; b=BDGdcIi7H07BVozBTQcPDqUxw2fvKcWjJAdBmHQp/DVdhyR4QkRdRi1upuYWkfQ+dZY0LcLMoZ36/IiZSv8jzL+7FG00+4dOkWeJ1cA9llD5OMuMaJK6AGtGUs4pQ+fpLlhI+Cp+uBxpF9spAQ4t+djn6V52KIUYiy6oeLTGBHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420464; c=relaxed/simple;
-	bh=oDGwC/AdcWxK3ichHF3hr/l0sIZ834/4Wc+CFdFRFLQ=;
+	s=arc-20240116; t=1745420466; c=relaxed/simple;
+	bh=DZzMKOD+Adys665PKV175Zi8jxMKGgCr5tcmLvVnY9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIPzrz9pXArngDUpvySj+JHcv+Z/8sfLGUuTbyW/JGuq1M3SWicrovR30Aq3pKv1nsO4mMk2HGZycXG45LicredIAU0nxOU22dqqh6KKcvDwC5Yt22SeDFsUtzD2Ir7KxD38D48+uCOryOuWOQH6d18DlzrOojxedWI5b+N0taM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/ojZg/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1cNyBMnVCK/Ck9ISCv9uuj4iIvMw/2RcmpypCS6fV3CbFlS/PYHYMzuoxA+BkWnvzm/papizGRhnumUYwlcz0PTteU2BUVNpJqklpgAoaf2MLJrnYfTw3ReG7/devyOQuUJB0IJyYCBU+YMeEkkgee8e2exVcx5sj1y4pUko9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGE3hDOM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/ojZg/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D126C4CEE2;
-	Wed, 23 Apr 2025 15:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGE3hDOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4216EC4CEE2;
+	Wed, 23 Apr 2025 15:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420464;
-	bh=oDGwC/AdcWxK3ichHF3hr/l0sIZ834/4Wc+CFdFRFLQ=;
+	s=korg; t=1745420466;
+	bh=DZzMKOD+Adys665PKV175Zi8jxMKGgCr5tcmLvVnY9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/ojZg/rryHdrpLLgKnxtoNNrkaCQXzX6DBM0mIGnG0MhQEjJlOFIMwxbY5fKXUlv
-	 hypqSvEEH4KMT+krx44WQm8Oq6WXGwo+kVCFsox1s+nkijEbRR7+xuMnY76s/tR6Dy
-	 pFRmgznub7yK8kSjK69dlLJfLpT19n6Lv1+iTzjI=
+	b=CGE3hDOMTx1bKQ8dvFofAptqiKetXpXGDUl5r1Bxstzma1ToK08kbkO7XkumtDq8c
+	 BZp7zHAhg6S5QIGxEyZ+XQI8glvvKkmWwtaKqNQttJ5OipWUNUwskADzB1kFwCwRbU
+	 U0d0RmZfceIutYtgZh9VYjkqbU7SjwwHpKtaVCT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 094/241] riscv: KGDB: Remove ".option norvc/.option rvc" for kgdb_compiled_break
-Date: Wed, 23 Apr 2025 16:42:38 +0200
-Message-ID: <20250423142624.420219545@linuxfoundation.org>
+	Xiangsheng Hou <xiangsheng.hou@mediatek.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 134/223] virtiofs: add filesystem context source name check
+Date: Wed, 23 Apr 2025 16:43:26 +0200
+Message-ID: <20250423142622.550126221@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,67 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
 
-[ Upstream commit 550c2aa787d1b06efcb11de1877354502a1237f2 ]
+commit a94fd938df2b1628da66b498aa0eeb89593bc7a2 upstream.
 
-[ Quoting Samuel Holland: ]
+In certain scenarios, for example, during fuzz testing, the source
+name may be NULL, which could lead to a kernel panic. Therefore, an
+extra check for the source name should be added.
 
-  This is a separate issue, but using ".option rvc" here is a bug.
-  It will unconditionally enable the C extension for the rest of
-  the file, even if the kernel is being built with CONFIG_RISCV_ISA_C=n.
-
-[ Quoting Palmer Dabbelt: ]
-
-  We're just looking at the address of kgdb_compiled_break, so it's
-  fine if it ends up as a c.ebreak.
-
-[ Quoting Alexandre Ghiti: ]
-
-  .option norvc is used to prevent the assembler from using compressed
-  instructions, but it's generally used when we need to ensure the
-  size of the instructions that are used, which is not the case here
-  as noted by Palmer since we only care about the address. So yes
-  it will work fine with C enabled :)
-
-So let's just remove them all.
-
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/mhng-69513841-5068-441d-be8f-2aeebdc56a08@palmer-ri-x1c9a/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/8B431C6A4626225C+20250411073222.56820-2-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
+Cc: <stable@vger.kernel.org> # all LTS kernels
+Signed-off-by: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
+Link: https://lore.kernel.org/20250407115111.25535-1-xiangsheng.hou@mediatek.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/kgdb.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/fuse/virtio_fs.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 5d1ce8dacaf58..9f3db3503dabd 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -257,9 +257,7 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- noinline void arch_kgdb_breakpoint(void)
- {
- 	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
-+	    "kgdb_compiled_break: ebreak\n");
- }
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -1663,6 +1663,9 @@ static int virtio_fs_get_tree(struct fs_
+ 	unsigned int virtqueue_size;
+ 	int err = -EIO;
  
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
--- 
-2.39.5
-
++	if (!fsc->source)
++		return invalf(fsc, "No source specified");
++
+ 	/* This gets a reference on virtio_fs object. This ptr gets installed
+ 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
+ 	 * to drop the reference to this object.
 
 
