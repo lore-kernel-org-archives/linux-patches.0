@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6F3175BF;
-	Wed, 23 Apr 2025 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DF9175BF;
+	Wed, 23 Apr 2025 14:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420071; cv=none; b=k/twwD+Ml1yFwIuE7z0PmGv8uWPdmRQWeq8XRZs+wFYMe5/LszG7HJ5VEjMEqjQwxsYIINT3vgTqf7USViiRzHJEr2vZty+8BnD/E8/SWitQq9Hwae7WJUNJaRqQOjjKgbihC1lAlUe3IjiCfQnYzBnVhhX18YUAeATE0VnyK9A=
+	t=1745420073; cv=none; b=idkjtWBBgYrdnf4Tm1zBUdq6xWodHIK3g52VsG+SHjxeos9RcENkrXB9g+aGR1z2IsJzpIbzYsLNOcttdCTeQI6/KpLPi3mLV19LoTnj8rIpZY6AJopQm/EejeaT2me1HIJ5NWuQ6gUKjtRRhXk1vk0as2w3rrwwWbFmmbS2AWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420071; c=relaxed/simple;
-	bh=zu2VGz1rcJtPXoXXLZlaMCaFjZO4ly2M2heWvx6n2eI=;
+	s=arc-20240116; t=1745420073; c=relaxed/simple;
+	bh=+uiZoT4UOS2wvRgP9L1bYKwM5wQccnRXlOgmmennzq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MJr/mu+LL4uI+ySHGw3Lae3LJjdSasms0XFlIA5uCn/MxThmqgzXZCqQr0V8olGirUsVke7I3thUiGYE4DD+nNcPknIJJL7WhWZGK5/rFUtSY/6GEGCjfWcgYFeTpVdZXldfpajeLpb2lf0AOiy/nue89srVFW9QpK6RjDUfqII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuxxxUvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=coESweJJWTD6DT1CCtijBtzV4uqRop3SXECQuQAcExDfrAOQ9+fJMTQl7ySiH9x0X/6BmxYKHL2DFkuxjq49PCr+iiSAYugmpVws9Xk2GFLYp/Kly+r4WlYUwxX1yANbM/tqe0kl0nD+dIoXRvRjefxrtv4QGfCpPWJb0Yt5zds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGwx2vc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuxxxUvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DC8C4CEE2;
-	Wed, 23 Apr 2025 14:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGwx2vc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DA7C4CEE2;
+	Wed, 23 Apr 2025 14:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420071;
-	bh=zu2VGz1rcJtPXoXXLZlaMCaFjZO4ly2M2heWvx6n2eI=;
+	s=korg; t=1745420073;
+	bh=+uiZoT4UOS2wvRgP9L1bYKwM5wQccnRXlOgmmennzq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuxxxUvEq8daG9rHCl5azPFwhdykxJ++g7ni1/irHTEpOpHMtP63XpdTGbp6cnTP9
-	 uLtcTSoTh2S7767nYPQVrjA7yXOPYtq6yig3j7SRTbLz6AFb2SFDQr7Md7eEhqepsm
-	 krxEPtEr5/9uTNFG/q6l7L5gODU0uO5bSYLdgJak=
+	b=YGwx2vc5OxkRcSCC1l8FxNOd6qs7qNaUNw0+9H161LMCotGGkZ9pe9nu5h4yAyvt0
+	 W0umYM0zuCN5caaoCjNifb6+oyD9C0YW1yIi6UcCDmwUB2VrIPyS37wHPu/9kCXnUq
+	 mcF/xaoG4ME0VjPBJhiIt5u8eVxO0xgorsJ50vmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/223] dma-buf/sw_sync: Decrement refcount on error in sw_sync_ioctl_get_deadline()
-Date: Wed, 23 Apr 2025 16:42:49 +0200
-Message-ID: <20250423142621.067945029@linuxfoundation.org>
+Subject: [PATCH 6.14 057/241] net: ethernet: ti: am65-cpsw: fix port_np reference counting
+Date: Wed, 23 Apr 2025 16:42:01 +0200
+Message-ID: <20250423142622.933654904@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,72 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit d27326a9999286fa45ad063f760e63329254f130 ]
+[ Upstream commit 903d2b9f9efc5b3339d74015fcfc0d9fff276c4c ]
 
-Call dma_fence_put(fence) before returning an error if
-dma_fence_to_sync_pt() fails.  Use an unwind ladder at the
-end of the function to do the cleanup.
+A reference to the device tree node is stored in a private struct, thus
+the reference count has to be incremented. Also, decrement the count on
+device removal and in the error path.
 
-Fixes: 70e67aaec2f4 ("dma-buf/sw_sync: Add fence deadline support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/a010a1ac-107b-4fc0-a052-9fd3706ad690@stanley.mountain
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250414083942.4015060-1-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index c353029789cf1..1290886f065e3 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -444,15 +444,17 @@ static int sw_sync_ioctl_get_deadline(struct sync_timeline *obj, unsigned long a
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index bef734c6e5c2b..afe8127fd32be 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2756,7 +2756,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 				of_property_read_bool(port_np, "ti,mac-only");
  
- 	pt = dma_fence_to_sync_pt(fence);
--	if (!pt)
--		return -EINVAL;
-+	if (!pt) {
-+		ret = -EINVAL;
-+		goto put_fence;
-+	}
- 
- 	spin_lock_irqsave(fence->lock, flags);
--	if (test_bit(SW_SYNC_HAS_DEADLINE_BIT, &fence->flags)) {
--		data.deadline_ns = ktime_to_ns(pt->deadline);
--	} else {
-+	if (!test_bit(SW_SYNC_HAS_DEADLINE_BIT, &fence->flags)) {
- 		ret = -ENOENT;
-+		goto unlock;
+ 		/* get phy/link info */
+-		port->slave.port_np = port_np;
++		port->slave.port_np = of_node_get(port_np);
+ 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
+ 		if (ret) {
+ 			dev_err(dev, "%pOF read phy-mode err %d\n",
+@@ -2810,6 +2810,17 @@ static void am65_cpsw_nuss_phylink_cleanup(struct am65_cpsw_common *common)
  	}
-+	data.deadline_ns = ktime_to_ns(pt->deadline);
- 	spin_unlock_irqrestore(fence->lock, flags);
- 
- 	dma_fence_put(fence);
-@@ -464,6 +466,13 @@ static int sw_sync_ioctl_get_deadline(struct sync_timeline *obj, unsigned long a
- 		return -EFAULT;
- 
- 	return 0;
-+
-+unlock:
-+	spin_unlock_irqrestore(fence->lock, flags);
-+put_fence:
-+	dma_fence_put(fence);
-+
-+	return ret;
  }
  
- static long sw_sync_ioctl(struct file *file, unsigned int cmd,
++static void am65_cpsw_remove_dt(struct am65_cpsw_common *common)
++{
++	struct am65_cpsw_port *port;
++	int i;
++
++	for (i = 0; i < common->port_num; i++) {
++		port = &common->ports[i];
++		of_node_put(port->slave.port_np);
++	}
++}
++
+ static int
+ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+ {
+@@ -3708,6 +3719,7 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	am65_cpsw_nuss_cleanup_ndev(common);
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
++	am65_cpsw_remove_dt(common);
+ err_of_clear:
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
+@@ -3747,6 +3759,7 @@ static void am65_cpsw_nuss_remove(struct platform_device *pdev)
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
+ 	am65_cpsw_disable_serdes_phy(common);
++	am65_cpsw_remove_dt(common);
+ 
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
 -- 
 2.39.5
 
