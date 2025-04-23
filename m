@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB7928D851;
-	Wed, 23 Apr 2025 15:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52428CF52;
+	Wed, 23 Apr 2025 15:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421429; cv=none; b=UKRsELpDA7lKNJyLuDZeg7kbCvS2iBVS2aK1xDzsIuj4JcVa55qykVBp5kA09mjqkTOhN7DqjGXv6JBZiAN8s53/rHFl4QeW6J8SyKz8RY3tGkKBrB3++w89m2G47bfuMRfKrswzIWwQlt2w+F5VxJlD9RoPls2I298gplfJ/BA=
+	t=1745421431; cv=none; b=Hqcjxg/SBfMAvJqeNIncWR8RvHJ3sjGmbTYVCp8kPw7CpyKmnDrsokUpDhxdPlx3HWTQL4uPpCRfJJwRKVLyzRFsB4JwpIGuAX8pHUsoJiCbMcHnnHtz52AeCT1DQ5LyCrY7DWPBzrbArTo22Yq/i82iaWGhRrFD376I8bNc74M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421429; c=relaxed/simple;
-	bh=9tnOemIL/+kKY914uM0OGYWJxquWYmFYtTnK8s5/erc=;
+	s=arc-20240116; t=1745421431; c=relaxed/simple;
+	bh=iSP0vdqPofBRmBIoNOS1hN7vIbKjdUS9iR4dBMzqERg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCbs3H1kLAaOOmJbuw0J9kLxttN4PUsGl22lRjpLdpeP9rWz5wKYkj3oqH0+6PkMQQD2gPp/sx3L1d0kMAFzP/IapgCHl3KFZEpbwZstv80g89RzlZvS5+CgPwbBmWBbc71+g8FLBbQJ1ireGhBNvlkru+tG4SsxJIbrSv0Re8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaNQe1bK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S+VrDaK0lr0k0WKbgT8+6mWzvfIqP3TR8ChEI/yCMX9Ow2Z/v2U6e6T8/VrvHKJpJZ/88Zanewg4fnzZphZbCKfVZho4rBAIl7ZDSSLyW1H1o7phfvjFJFam1LBMHDNkG4GmgnfD8zNPChQBgU7Rvp9OX1eRxC+nWpUa4rKFrI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akgYJeud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaNQe1bK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC638C4CEE2;
-	Wed, 23 Apr 2025 15:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akgYJeud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D306C4CEE2;
+	Wed, 23 Apr 2025 15:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421429;
-	bh=9tnOemIL/+kKY914uM0OGYWJxquWYmFYtTnK8s5/erc=;
+	s=korg; t=1745421431;
+	bh=iSP0vdqPofBRmBIoNOS1hN7vIbKjdUS9iR4dBMzqERg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GaNQe1bKT4rGrBvH/Rgk3obm146BQt+w3vBlTw7b9mRw4IrN3NxXjZhXzTBV4Gl0B
-	 7ooTDfc4qJ/6mIU9t6btkOcZO6zDoY3G6BBhpuGP/NfvkJl1tBNwgW25+TWLsYKYFx
-	 9q6PVVLqJWvPdBfgwD4l85nNCVJJKcr9berkuTd4=
+	b=akgYJeudqHN1+zlgB7jntfdFlTdibEyGcm7oQ1cycjc6bv9iCx5/0nd2nCnQCRyS0
+	 Oy/TGk1wQB/iXULPf7mrk2wJT923X+QsruLbV7lP9MA1GvezNKdwCPEgCPoCwPzy+M
+	 go9ay+hb+GIiG/du0SRjR8oy+SVgTex9QilJkLgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 178/393] mtd: inftlcore: Add error check for inftl_read_oob()
-Date: Wed, 23 Apr 2025 16:41:14 +0200
-Message-ID: <20250423142650.726813562@linuxfoundation.org>
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Arun R Murthy <arun.r.murthy@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.14 189/241] drm/i915/vrr: Add vrr.vsync_{start, end} in vrr_params_changed
+Date: Wed, 23 Apr 2025 16:44:13 +0200
+Message-ID: <20250423142628.242347639@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,48 +48,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-commit d027951dc85cb2e15924c980dc22a6754d100c7c upstream.
+commit a421f5033c82990d795f8fcd30d5b835f8975508 upstream.
 
-In INFTL_findwriteunit(), the return value of inftl_read_oob()
-need to be checked. A proper implementation can be
-found in INFTL_deleteblock(). The status will be set as
-SECTOR_IGNORE to break from the while-loop correctly
-if the inftl_read_oob() fails.
+Add the missing vrr parameters in vrr_params_changed() helper.
+This ensures that changes in vrr.vsync_{start,end} trigger a call to
+appropriate helpers to update the VRR registers.
 
-Fixes: 8593fbc68b0d ("[MTD] Rework the out of band handling completely")
-Cc: stable@vger.kernel.org # v2.6+
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: e8cd188e91bb ("drm/i915/display: Compute vrr_vsync params")
+Cc: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Cc: Arun R Murthy <arun.r.murthy@intel.com>
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.10+
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://lore.kernel.org/r/20250404080540.2059511-1-ankit.k.nautiyal@intel.com
+(cherry picked from commit ced5e64f011cb5cd541988442997ceaa7385827e)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/inftlcore.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/inftlcore.c
-+++ b/drivers/mtd/inftlcore.c
-@@ -482,10 +482,11 @@ static inline u16 INFTL_findwriteunit(st
- 		silly = MAX_LOOPS;
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -1109,7 +1109,9 @@ static bool vrr_params_changed(const str
+ 		old_crtc_state->vrr.vmin != new_crtc_state->vrr.vmin ||
+ 		old_crtc_state->vrr.vmax != new_crtc_state->vrr.vmax ||
+ 		old_crtc_state->vrr.guardband != new_crtc_state->vrr.guardband ||
+-		old_crtc_state->vrr.pipeline_full != new_crtc_state->vrr.pipeline_full;
++		old_crtc_state->vrr.pipeline_full != new_crtc_state->vrr.pipeline_full ||
++		old_crtc_state->vrr.vsync_start != new_crtc_state->vrr.vsync_start ||
++		old_crtc_state->vrr.vsync_end != new_crtc_state->vrr.vsync_end;
+ }
  
- 		while (thisEUN <= inftl->lastEUN) {
--			inftl_read_oob(mtd, (thisEUN * inftl->EraseSize) +
--				       blockofs, 8, &retlen, (char *)&bci);
--
--			status = bci.Status | bci.Status1;
-+			if (inftl_read_oob(mtd, (thisEUN * inftl->EraseSize) +
-+				       blockofs, 8, &retlen, (char *)&bci) < 0)
-+				status = SECTOR_IGNORE;
-+			else
-+				status = bci.Status | bci.Status1;
- 			pr_debug("INFTL: status of block %d in EUN %d is %x\n",
- 					block , writeEUN, status);
- 
+ static bool cmrr_params_changed(const struct intel_crtc_state *old_crtc_state,
 
 
