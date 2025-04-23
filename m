@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9572263F2D;
-	Wed, 23 Apr 2025 15:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F7B279345;
+	Wed, 23 Apr 2025 15:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420595; cv=none; b=K54SSLNtYX8Ww2qLP311x6lQBj8FJAMLOtVprDuz6dILm7cEMw99oYPDmvX/mLpJpxaxezrYTlQwzJkkjmwhze2hwDZhuiyOeCd79vwD78nK3iyf736W1BB11Wbc0V67bIAE4Hee9AxDruiTMka3YqUMuWzuj1DDZQibsfF6tbA=
+	t=1745420598; cv=none; b=GTxQnfZcKDSi551XKyTe2/7ZTCHP5iC7e24qDH4lK2AVbv0uWWKE3uraRJbGykYyS7XFGgzhiFxzvS9hA0U+ss6BsFEPfTBzP9e49y/YlUaQ5FU93H2cJTacF2lsOe1tiDtzWXihZdm8stjcjNzY/A+rpcKDgpyP+GsUTtkBizk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420595; c=relaxed/simple;
-	bh=gK8UK+op43tznwkW8uu8WkrT74XMhooNM5n9/1Ukr70=;
+	s=arc-20240116; t=1745420598; c=relaxed/simple;
+	bh=k0D0ps6qVfUEtLu++wEmkG+cAV5PqsuhoEWBBFDLFQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOHs9BZYlnh6t4zQc9YAlpJM1SZA0coWT1w+ZgHkGuOZ+uwNtTryz/YTlZtwX8AbWNMNHQ3io6DQDFdxutwZSkePTmpdh2YO/vcChVkPmBPiXlPQNnGusKLvX2SkVA+pIwvNd7mcIXaWYpe1bdAf0QtahaNj30+YOO2AJL/pkmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLi7a2di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEFBVvjjAqtPoR/bIKz7XndIfADP/eHBbmzM8B4R/SK2H+2BlJp7s6d/7+pIeNLLn0YAUKLahPIJxEgXsQ4vvGGNsaGHHF9je0WUMRKaD+hGz2FTzMSjmY6nLKLwPHNMYwrdzJacoY6tUi+DyJ0zNjfPxrYFgw+6q48SMZrwCm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p42kVhjE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLi7a2di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658A1C4CEE3;
-	Wed, 23 Apr 2025 15:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p42kVhjE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08704C4CEE3;
+	Wed, 23 Apr 2025 15:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420595;
-	bh=gK8UK+op43tznwkW8uu8WkrT74XMhooNM5n9/1Ukr70=;
+	s=korg; t=1745420598;
+	bh=k0D0ps6qVfUEtLu++wEmkG+cAV5PqsuhoEWBBFDLFQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLi7a2dicf+yi0X6CHs9vSlOrfXY7stz1DsZKoK5LdbloVDUZ70iXwpUAJ0l2jhsh
-	 nqU1Cj2lhKuTvSBOAPxBPBQ18sPeckUSyrbvwatjgOH4oU9C944eQlJj2Cu6YbX6nH
-	 bWV8bg46kbYRnYYfzFOjwOBdvObqax3/lTOVOahg=
+	b=p42kVhjEziYzdkgtWvnUI3aWbj8aF7l7+9VOb1FVNYhp44yQYnN20mv46kHynXf6s
+	 P560mxlZPTqmwoks7axi2GbcUP3PRT1Ubef/mjBQ1NtcIuCC5//wD7m/Pqu9yHncvY
+	 F3kBSbeuwAbM3HsEqAS8bRTjApWQ+ji3Sw1WdnKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/291] drm/amdkfd: Fix mode1 reset crash issue
-Date: Wed, 23 Apr 2025 16:40:52 +0200
-Message-ID: <20250423142626.952948222@linuxfoundation.org>
+	Manikantan R <quic_manrav@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 106/241] ASoC: codecs:lpass-wsa-macro: Fix logic of enabling vi channels
+Date: Wed, 23 Apr 2025 16:42:50 +0200
+Message-ID: <20250423142624.907501170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +48,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit f0b4440cdc1807bb6ec3dce0d6de81170803569b ]
+commit 7648beb65600220996ebb2da207610b1ff9b735e upstream.
 
-If HW scheduler hangs and mode1 reset is used to recover GPU, KFD signal
-user space to abort the processes. After process abort exit, user queues
-still use the GPU to access system memory before h/w is reset while KFD
-cleanup worker free system memory and free VRAM.
+Existing code only configures one of WSA_MACRO_TX0 or WSA_MACRO_TX1
+paths eventhough we enable both of them. Fix this bug by adding proper
+checks and rearranging some of the common code to able to allow setting
+both TX0 and TX1 paths
 
-There is use-after-free race bug that KFD allocate and reuse the freed
-system memory, and user queue write to the same system memory to corrupt
-the data structure and cause driver crash.
+Without this patch only one channel gets enabled in VI path instead of 2
+channels. End result would be 1 channel recording instead of 2.
 
-To fix this race, KFD cleanup worker terminate user queues, then flush
-reset_domain wq to wait for any GPU ongoing reset complete, and then
-free outstanding BOs.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+Cc: stable@vger.kernel.org
+Co-developed-by: Manikantan R <quic_manrav@quicinc.com>
+Signed-off-by: Manikantan R <quic_manrav@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250403160209.21613-3-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ sound/soc/codecs/lpass-wsa-macro.c |  108 +++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 99e2aef52ef26..bc01c5173ab9a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -36,6 +36,7 @@
- #include <linux/pm_runtime.h>
- #include "amdgpu_amdkfd.h"
- #include "amdgpu.h"
-+#include "amdgpu_reset.h"
- 
- struct mm_struct;
- 
-@@ -1114,6 +1115,17 @@ static void kfd_process_remove_sysfs(struct kfd_process *p)
- 	p->kobj = NULL;
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -1459,6 +1459,67 @@ static void wsa_macro_mclk_enable(struct
+ 	}
  }
  
-+/*
-+ * If any GPU is ongoing reset, wait for reset complete.
-+ */
-+static void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
++static void wsa_macro_enable_disable_vi_sense(struct snd_soc_component *component, bool enable,
++						u32 tx_reg0, u32 tx_reg1, u32 val)
 +{
-+	int i;
-+
-+	for (i = 0; i < p->n_pdds; i++)
-+		flush_workqueue(p->pdds[i]->dev->adev->reset_domain->wq);
++	if (enable) {
++		/* Enable V&I sensing */
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
++					      val);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
++					      val);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++	} else {
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++	}
 +}
 +
- /* No process locking is needed in this function, because the process
-  * is not findable any more. We must assume that no other thread is
-  * using it any more, otherwise we couldn't safely free the process
-@@ -1127,6 +1139,11 @@ static void kfd_process_wq_release(struct work_struct *work)
- 	kfd_process_dequeue_from_all_devices(p);
- 	pqm_uninit(&p->pqm);
- 
-+	/*
-+	 * If GPU in reset, user queues may still running, wait for reset complete.
-+	 */
-+	kfd_process_wait_gpu_reset_complete(p);
++static void wsa_macro_enable_disable_vi_feedback(struct snd_soc_component *component,
++						 bool enable, u32 rate)
++{
++	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
 +
- 	/* Signal the eviction fence after user mode queues are
- 	 * destroyed. This allows any BOs to be freed without
- 	 * triggering pointless evictions or waiting for fences.
--- 
-2.39.5
-
++	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
++		wsa_macro_enable_disable_vi_sense(component, enable,
++				CDC_WSA_TX0_SPKR_PROT_PATH_CTL,
++				CDC_WSA_TX1_SPKR_PROT_PATH_CTL, rate);
++
++	if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
++		wsa_macro_enable_disable_vi_sense(component, enable,
++				CDC_WSA_TX2_SPKR_PROT_PATH_CTL,
++				CDC_WSA_TX3_SPKR_PROT_PATH_CTL, rate);
++}
++
+ static int wsa_macro_mclk_event(struct snd_soc_dapm_widget *w,
+ 				struct snd_kcontrol *kcontrol, int event)
+ {
+@@ -1475,7 +1536,6 @@ static int wsa_macro_enable_vi_feedback(
+ {
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+-	u32 tx_reg0, tx_reg1;
+ 	u32 rate_val;
+ 
+ 	switch (wsa->pcm_rate_vi) {
+@@ -1499,56 +1559,14 @@ static int wsa_macro_enable_vi_feedback(
+ 		break;
+ 	}
+ 
+-	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+-		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
+-		tx_reg1 = CDC_WSA_TX1_SPKR_PROT_PATH_CTL;
+-	} else if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+-		tx_reg0 = CDC_WSA_TX2_SPKR_PROT_PATH_CTL;
+-		tx_reg1 = CDC_WSA_TX3_SPKR_PROT_PATH_CTL;
+-	}
+-
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+ 		/* Enable V&I sensing */
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      rate_val);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      rate_val);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++		wsa_macro_enable_disable_vi_feedback(component, true, rate_val);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		/* Disable V&I sensing */
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++		wsa_macro_enable_disable_vi_feedback(component, false, rate_val);
+ 		break;
+ 	}
+ 
 
 
