@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D196175BF;
-	Wed, 23 Apr 2025 14:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65BB175BF;
+	Wed, 23 Apr 2025 14:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420092; cv=none; b=tdPHsaM19KxCLTGmO00pJLFovkBlComeEE8hOs1PoZTVs1v4wHesjGip4sYQ/MWXOYQpKlvaHSOcKH+IwP8qfyoCoZrN/kQOPoRltduD4bmdYR5ExDpRps6d+/7fi6tsM8f/zcTa4oKkJBRW+9H3bENoehL9+Gm7/p+rG1CPSZU=
+	t=1745420094; cv=none; b=NFoJ3kwfEAIjUQ+NtzX3Ud/82MxFSTbCNj/wFdKqspm1wk5jk4dUHfTCmJr63xFz0oaK4E7PFJkRt6BXPAU9Pj9AkCVImU+IrhOaBfjxppdW0W0A+Sygx7aO6ZrhTWeoUh3r5EnrXMntj6+/VCuOp6NFsxQR2UtJYBX/BIOpO6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420092; c=relaxed/simple;
-	bh=m6IQi1jidH0qivW3cJGPapwrYm1BZ4Zo2gnF1W00iiI=;
+	s=arc-20240116; t=1745420094; c=relaxed/simple;
+	bh=Bd3XZmNilA0UXR96QzzM9G5V5VT5p2t8hrHzcuSwiXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mwIKK0SGhAoyF30L3fz2HFZYg1IkmtzcKGORbMeJ0voziGw2ssaKW1M2bR6E1N9AicpF9ykz/a5pefsmlqU+/zM5W2aTM7tNETdlSF/lwyaQW2h84aeXw/dfI8uhxP3bPNzQZZCSMIItizjQJdeMZ/1Uv3AyL5UW6eUAfX/4sOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtCF6RZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQIXw8WtDhZf9yBlAy9svYazJo3QqoeXZ25mYq7I8EFHd2sNmgguQse9WJUNwBtGn60f3NdoZhY6+qlujnQKXF/qAkViCSiOG/RIbI4tqvH3AtIk+pWB3XcKSHSyxkeTnic+LUlSbYH70muJY3imY7bWeJal38vewwZypRJZeKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX5GNOTI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtCF6RZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B504DC4CEE2;
-	Wed, 23 Apr 2025 14:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX5GNOTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56172C4CEE2;
+	Wed, 23 Apr 2025 14:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420092;
-	bh=m6IQi1jidH0qivW3cJGPapwrYm1BZ4Zo2gnF1W00iiI=;
+	s=korg; t=1745420094;
+	bh=Bd3XZmNilA0UXR96QzzM9G5V5VT5p2t8hrHzcuSwiXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtCF6RZzLDyqKhr+gHY1zuTDbyymIazxDjE1yqQI0vTvTIBWXRy2cn0yCXx+1qa04
-	 gsg6WSdENpgOUn7tuUykM/tHmp2OOADGFkFsym7evfJF3Ka3F6tEbW9oyv3BzEqm4I
-	 6voD8oaTLf/5QoIqDurQ+KX/N6EhT0XRxbtVDY6I=
+	b=kX5GNOTIpJcBsUK7beuwD8UE6rbiF3bmXwA35EF4a+Y4M1mqyhdGATLBTG443rx7q
+	 DhK4KoskJ7UU6yJhHOITRFOXtajaBuB5XGWTyxpqJel2v3fD+kBDiyK0D1RO+OHXO6
+	 8Gerg3eTdV/2egJKH9CNcs5IcOy6crkyJ5lfIA9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/291] net: ppp: Add bound checking for skb data on ppp_sync_txmung
-Date: Wed, 23 Apr 2025 16:40:05 +0200
-Message-ID: <20250423142625.069033314@linuxfoundation.org>
+Subject: [PATCH 6.12 099/223] nfsd: decrease sc_count directly if fail to queue dl_recall
+Date: Wed, 23 Apr 2025 16:42:51 +0200
+Message-ID: <20250423142621.147776478@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,75 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit aabc6596ffb377c4c9c8f335124b92ea282c9821 ]
+[ Upstream commit a1d14d931bf700c1025db8c46d6731aa5cf440f9 ]
 
-Ensure we have enough data in linear buffer from skb before accessing
-initial bytes. This prevents potential out-of-bounds accesses
-when processing short packets.
+A deadlock warning occurred when invoking nfs4_put_stid following a failed
+dl_recall queue operation:
+            T1                            T2
+                                nfs4_laundromat
+                                 nfs4_get_client_reaplist
+                                  nfs4_anylock_blockers
+__break_lease
+ spin_lock // ctx->flc_lock
+                                   spin_lock // clp->cl_lock
+                                   nfs4_lockowner_has_blockers
+                                    locks_owner_has_blockers
+                                     spin_lock // flctx->flc_lock
+ nfsd_break_deleg_cb
+  nfsd_break_one_deleg
+   nfs4_put_stid
+    refcount_dec_and_lock
+     spin_lock // clp->cl_lock
 
-When ppp_sync_txmung receives an incoming package with an empty
-payload:
-(remote) gef➤  p *(struct pppoe_hdr *) (skb->head + skb->network_header)
-$18 = {
-	type = 0x1,
-	ver = 0x1,
-	code = 0x0,
-	sid = 0x2,
-        length = 0x0,
-	tag = 0xffff8880371cdb96
-}
+When a file is opened, an nfs4_delegation is allocated with sc_count
+initialized to 1, and the file_lease holds a reference to the delegation.
+The file_lease is then associated with the file through kernel_setlease.
 
-from the skb struct (trimmed)
-      tail = 0x16,
-      end = 0x140,
-      head = 0xffff88803346f400 "4",
-      data = 0xffff88803346f416 ":\377",
-      truesize = 0x380,
-      len = 0x0,
-      data_len = 0x0,
-      mac_len = 0xe,
-      hdr_len = 0x0,
+The disassociation is performed in nfsd4_delegreturn via the following
+call chain:
+nfsd4_delegreturn --> destroy_delegation --> destroy_unhashed_deleg -->
+nfs4_unlock_deleg_lease --> kernel_setlease --> generic_delete_lease
+The corresponding sc_count reference will be released after this
+disassociation.
 
-it is not safe to access data[2].
+Since nfsd_break_one_deleg executes while holding the flc_lock, the
+disassociation process becomes blocked when attempting to acquire flc_lock
+in generic_delete_lease. This means:
+1) sc_count in nfsd_break_one_deleg will not be decremented to 0;
+2) The nfs4_put_stid called by nfsd_break_one_deleg will not attempt to
+acquire cl_lock;
+3) Consequently, no deadlock condition is created.
 
-Reported-by: syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=29fc8991b0ecb186cf40
-Tested-by: syzbot+29fc8991b0ecb186cf40@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Link: https://patch.msgid.link/20250408-bound-checking-ppp_txmung-v2-1-94bb6e1b92d0@arnaud-lcm.com
-[pabeni@redhat.com: fixed subj typo]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Given that sc_count in nfsd_break_one_deleg remains non-zero, we can
+safely perform refcount_dec on sc_count directly. This approach
+effectively avoids triggering deadlock warnings.
+
+Fixes: 230ca758453c ("nfsd: put dl_stid if fail to queue dl_recall")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 94ef6f9ca5103..fb533c43deeea 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -515,6 +515,11 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
- 	unsigned char *data;
- 	int islcp;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 5e81c819c3846..c50839a015e94 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5287,7 +5287,7 @@ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ 	queued = nfsd4_run_cb(&dp->dl_recall);
+ 	WARN_ON_ONCE(!queued);
+ 	if (!queued)
+-		nfs4_put_stid(&dp->dl_stid);
++		refcount_dec(&dp->dl_stid.sc_count);
+ }
  
-+	/* Ensure we can safely access protocol field and LCP code */
-+	if (!pskb_may_pull(skb, 3)) {
-+		kfree_skb(skb);
-+		return NULL;
-+	}
- 	data  = skb->data;
- 	proto = get_unaligned_be16(data);
- 
+ /* Called from break_lease() with flc_lock held. */
 -- 
 2.39.5
 
