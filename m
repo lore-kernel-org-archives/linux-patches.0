@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA3F27B4EE;
-	Wed, 23 Apr 2025 15:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7115029114A;
+	Wed, 23 Apr 2025 15:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421452; cv=none; b=tj/+ixDJexRrK3Z1GGq/ur4jbrXhaENjN0ixK2HA5Sp6djRjuiqItnlc/7KzPE7b/TXO/JVPZmnX9Ads6+vzRbggo0f17kBMhxboxGBADaeEsE0xJn6CnGY5K5hyt5To/zBGS0z+cJAyeC21RUW2IispVyyDHI6UBLHfx4GhSVQ=
+	t=1745421455; cv=none; b=nWj6rPyasoLNzm+L06QbZGnj+owpS/aZmDdOqyXzNkQs+6FHgrq8wEC5fVKZdXMiCtqB+h28O9iS+sJwO56ilJez8fSTQkH795Q/ek9eui6PfcWgJTMUgo4focWm7k7z96+2E4AQNnsibMVi8FQ8qKAYZmUlp4gKp6pmUKWw1a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421452; c=relaxed/simple;
-	bh=kCOqSOEofe5kKVeeop2duzrQC9iM67Rh/90otnB0xjw=;
+	s=arc-20240116; t=1745421455; c=relaxed/simple;
+	bh=YfINHVez/PryaHaNSBaxfb6HTkf43eMFWIf4f2JmgaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRf0HhhJK1QrpYHq512Zdqc8gs7KIjOBjljkkUh/4wyr+/vUBJ2uzAMtDB43fv28bUzp/VkvlnziNlOlkVVBWDtiGdCz2n2sECGFiACR4Zx7Ebg7utZ8sF96q87ZF6qW8w8MSHDeRrgnOjeYOQxPa0HOEfq+UQTO03ATbjU94x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fi1XxgCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQsQ3JPJt0oaiDfH8peLs8ioQEkyOYixmv3lhBzQL1pSooXuOVgidyqQjEAOoA2rpYYSyn7c6OFigDfmfmXMHDog1PdSw8YaaxKwFaK7tkihSVo4fajCfV8sEwXNNXu3dG5/PRUQuLjI6+x/aqFOYCT4DuNdCe5q4+DXoqqg5tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC0YlDKI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fi1XxgCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DA9C4CEE2;
-	Wed, 23 Apr 2025 15:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC0YlDKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02295C4CEE2;
+	Wed, 23 Apr 2025 15:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421452;
-	bh=kCOqSOEofe5kKVeeop2duzrQC9iM67Rh/90otnB0xjw=;
+	s=korg; t=1745421455;
+	bh=YfINHVez/PryaHaNSBaxfb6HTkf43eMFWIf4f2JmgaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fi1XxgCkJWIgLKSiinDEL0Kox7/kOrTYrs/VKfQ6pg04qlg5BgfPwUgivifjZCNgd
-	 ycZtgZV53oVD3VYRCjB3oZvJNuVw9Kn+/jILZFdBiQ+31exXRaOmzqQc41VkZEkqvm
-	 Kt8e1aIgSKeFf8x/0S2rNzE/9V98mAbuCbyZmePw=
+	b=EC0YlDKIyuD+if8QXw0ZgI7BWb+aJpEiar5B9vkJ9NZlsD5JpL2LutuI6EMDBf2QC
+	 7Pqn4HPnhG5U4N8pBXel5b5IC7dhgnppuoYbPwgPYrIL68U6hp2WrZLlAJufedGemA
+	 hpIdqHMTd20mD2a5sY4jE6aCv9CntVxYzoCpUDF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
-	David Hildenbrand <david@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 180/393] arm64: mm: Correct the update of max_pfn
-Date: Wed, 23 Apr 2025 16:41:16 +0200
-Message-ID: <20250423142650.811582727@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Rob Clark <robdclark@gmail.com>
+Subject: [PATCH 6.14 191/241] drm/virtio: Dont attach GEM to a non-created context in gem_object_open()
+Date: Wed, 23 Apr 2025 16:44:15 +0200
+Message-ID: <20250423142628.320664688@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit 89f43e1ce6f60d4f44399059595ac47f7a90a393 upstream.
+commit 7cf6dd467e87664f5b3f4ca7be324569464edf0b upstream.
 
-Hotplugged memory can be smaller than the original memory. For example,
-on my target:
+The vfpriv->ctx_id is always initialized to a non-zero value. Check whether
+context was created before attaching GEM to this context ID. This left
+unnoticed previously because host silently skips attachment if context
+doesn't exist, still we shouldn't do that for consistency.
 
-root@genericarmv8:~# cat /sys/kernel/debug/memblock/memory
-   0: 0x0000000064005000..0x0000000064023fff    0 NOMAP
-   1: 0x0000000064400000..0x00000000647fffff    0 NOMAP
-   2: 0x0000000068000000..0x000000006fffffff    0 DRV_MNG
-   3: 0x0000000088800000..0x0000000094ffefff    0 NONE
-   4: 0x0000000094fff000..0x0000000094ffffff    0 NOMAP
-max_pfn will affect read_page_owner. Therefore, it should first compare and
-then select the larger value for max_pfn.
-
-Fixes: 8fac67ca236b ("arm64: mm: update max_pfn after memory hotplug")
-Cc: <stable@vger.kernel.org> # 6.1.x
-Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250321070019.1271859-1-quic_zhenhuah@quicinc.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 086b9f27f0ab ("drm/virtio: Don't create a context with default param if context_init is supported")
+Cc: <stable@vger.kernel.org> # v6.14+
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://lore.kernel.org/r/20250401123842.2232205-1-dmitry.osipenko@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_gem.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1328,7 +1328,8 @@ int arch_add_memory(int nid, u64 start,
- 		__remove_pgd_mapping(swapper_pg_dir,
- 				     __phys_to_virt(start), size);
- 	else {
--		max_pfn = PFN_UP(start + size);
-+		/* Address of hotplugged memory can be smaller */
-+		max_pfn = max(max_pfn, PFN_UP(start + size));
- 		max_low_pfn = max_pfn;
- 	}
+diff --git a/drivers/gpu/drm/virtio/virtgpu_gem.c b/drivers/gpu/drm/virtio/virtgpu_gem.c
+index 5aab588fc400..3d6aa26fdb53 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_gem.c
++++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
+@@ -115,13 +115,14 @@ int virtio_gpu_gem_object_open(struct drm_gem_object *obj,
+ 	if (!vgdev->has_context_init)
+ 		virtio_gpu_create_context(obj->dev, file);
  
+-	objs = virtio_gpu_array_alloc(1);
+-	if (!objs)
+-		return -ENOMEM;
+-	virtio_gpu_array_add_obj(objs, obj);
++	if (vfpriv->context_created) {
++		objs = virtio_gpu_array_alloc(1);
++		if (!objs)
++			return -ENOMEM;
++		virtio_gpu_array_add_obj(objs, obj);
+ 
+-	if (vfpriv->ctx_id)
+ 		virtio_gpu_cmd_context_attach_resource(vgdev, vfpriv->ctx_id, objs);
++	}
+ 
+ out_notify:
+ 	virtio_gpu_notify(vgdev);
+-- 
+2.49.0
+
 
 
