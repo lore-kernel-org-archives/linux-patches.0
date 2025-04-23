@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31BF2367A0;
-	Wed, 23 Apr 2025 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637DC28C5A4;
+	Wed, 23 Apr 2025 15:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421345; cv=none; b=kFjxd9bWd2yBlvti1z4WOlHKWFqwhrt/sIc489o0xjBj4PPjRJYhv0ctMy0xl9eceX4JDsE5QDpAIZ2JMvrnxkkkQ7Hxo1n9Xr36fd4Jrx+imWIr6l/pW6hghyH4UksIZ6g0PZzUemlR3DRp38tuoAV1lcBfET1k5ndhh4sICjM=
+	t=1745421348; cv=none; b=F/03Zr/3CvwMbsr3t/Bt8NGPN7lXVFFCkPT8mhrzrtivods0AJ/DmzECmzwq7N+N1hbTb9ZWwIj4/r5FO28d2M7W0FWllnag96P7czv3COT35IfDxnGhd+m4kZWGAF+NMhEctClmOT0hbhtGki/n/SyJ31mvapNWmPXsxIf7bhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421345; c=relaxed/simple;
-	bh=Br7bXxUiRnXwUKYmkevGa5rGM2tAvcBEsmZtFZ3A55E=;
+	s=arc-20240116; t=1745421348; c=relaxed/simple;
+	bh=EA38VdJovGL3ILlTgZ2ukOUzrMxgNLi3hJCeoGVGxzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ady03NQK+Ihm6kyByP1Ct9KxB6hdTaULrokiIP2Yq9GC4D/NJOEoayOHmFHXIm62Vy6VI4pNgqK+cKU4nLZuxa4C5UpvkIKNQIt2pXOOIeH2gBvMhOd3e1SZcmLQ0O6tVEInKhUdjCN/acXW9tlLzlN94/qqoNc7aeXV5v4LioE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFyjlXk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jBwbjsyeSM1qNNLFiSXc6Yy0zFjwvKYKvp+6qQ/c3HbkQE/3lZk2PBFbDNW1dhD0N/aLn16DHnB5jSc7p+GfKgbjG1PrkeQ+LZ6kMMgv7ueh9uljKxEnuy4j6SvB3fx+XqnFrek5mJpw69758ErcGwOCj7Ffn31J5kR+Tfix4k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUydXMqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFyjlXk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557C3C4CEE2;
-	Wed, 23 Apr 2025 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUydXMqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA916C4CEE2;
+	Wed, 23 Apr 2025 15:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421345;
-	bh=Br7bXxUiRnXwUKYmkevGa5rGM2tAvcBEsmZtFZ3A55E=;
+	s=korg; t=1745421348;
+	bh=EA38VdJovGL3ILlTgZ2ukOUzrMxgNLi3hJCeoGVGxzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFyjlXk/2c++zU88d7Q8spW9V6wZdjndWPDQ3rsejWBMXhV8PODyatKgPYg2PE7z+
-	 c6v658IdqNwklQAlYTQN7folkMCEbvPND3DA/HcN8xRyV9uSv/Ne0ZJVj+gV74iA2P
-	 rebbJXOeSBCohS51EVsPFzn6idK2kAlykE9KZ4S4=
+	b=WUydXMqJzrsS4CXxkzln3ReNYM79qICD4MfVjDs6PfjpRm0zExZDBkXFk6vtiHhTi
+	 7lK+0rhP5rpP5jU+iHjcYr0MrIR/LErbVnZPg0X3EKBRUue9ytCCCDZuRcY6Vbsepq
+	 0OCIIbqeZ+oo5kwS1F/1qNZlKm6UdsW7RsZ7jMNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 213/223] MIPS: ds1287: Match ds1287_set_base_clock() function types
-Date: Wed, 23 Apr 2025 16:44:45 +0200
-Message-ID: <20250423142625.836517720@linuxfoundation.org>
+	Dillon Varone <dillon.varone@amd.com>,
+	Brendan Tam <Brendan.Tam@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.14 177/241] drm/amd/display: prevent hang on link training fail
+Date: Wed, 23 Apr 2025 16:44:01 +0200
+Message-ID: <20250423142627.757707726@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Brendan Tam <Brendan.Tam@amd.com>
 
-commit a759109b234385b74d2f5f4c86b5f59b3201ec12 upstream.
+commit 8058061ed9d6bc259d1e678607b07d259342c08f upstream.
 
-Synchronize the declaration of ds1287_set_base_clock() between
-cevt-ds1287.c and ds1287.h.
+[Why]
+When link training fails, the phy clock will be disabled. However, in
+enable_streams, it is assumed that link training succeeded and the
+mux selects the phy clock, causing a hang when a register write is made.
 
-Fix follow error with gcc-14 when -Werror:
+[How]
+When enable_stream is hit, check if link training failed. If it did, fall
+back to the ref clock to avoid a hang and keep the system in a recoverable
+state.
 
-arch/mips/kernel/cevt-ds1287.c:21:5: error: conflicting types for ‘ds1287_set_base_clock’; have ‘int(unsigned int)’
-   21 | int ds1287_set_base_clock(unsigned int hz)
-      |     ^~~~~~~~~~~~~~~~~~~~~
-In file included from arch/mips/kernel/cevt-ds1287.c:13:
-./arch/mips/include/asm/ds1287.h:11:13: note: previous declaration of ‘ds1287_set_base_clock’ with type ‘void(unsigned int)’
-   11 | extern void ds1287_set_base_clock(unsigned int clock);
-      |             ^~~~~~~~~~~~~~~~~~~~~
-make[7]: *** [scripts/Makefile.build:207: arch/mips/kernel/cevt-ds1287.o] Error 1
-make[6]: *** [scripts/Makefile.build:465: arch/mips/kernel] Error 2
-make[6]: *** Waiting for unfinished jobs....
-
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Brendan Tam <Brendan.Tam@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/ds1287.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c   |    6 +++++-
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    7 +++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/mips/include/asm/ds1287.h
-+++ b/arch/mips/include/asm/ds1287.h
-@@ -8,7 +8,7 @@
- #define __ASM_DS1287_H
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -3027,7 +3027,11 @@ void dcn20_enable_stream(struct pipe_ctx
+ 		dccg->funcs->set_dpstreamclk(dccg, DTBCLK0, tg->inst, dp_hpo_inst);
  
- extern int ds1287_timer_state(void);
--extern void ds1287_set_base_clock(unsigned int clock);
-+extern int ds1287_set_base_clock(unsigned int hz);
- extern int ds1287_clockevent_init(int irq);
- 
- #endif
+ 		phyd32clk = get_phyd32clk_src(link);
+-		dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
++		if (link->cur_link_settings.link_rate == LINK_RATE_UNKNOWN) {
++			dccg->funcs->disable_symclk32_se(dccg, dp_hpo_inst);
++		} else {
++			dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
++		}
+ 	} else {
+ 		if (dccg->funcs->enable_symclk_se)
+ 			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -936,8 +936,11 @@ void dcn401_enable_stream(struct pipe_ct
+ 	if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
+ 		if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx)) {
+ 			dccg->funcs->set_dpstreamclk(dccg, DPREFCLK, tg->inst, dp_hpo_inst);
+-
+-			dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
++			if (link->cur_link_settings.link_rate == LINK_RATE_UNKNOWN) {
++				dccg->funcs->disable_symclk32_se(dccg, dp_hpo_inst);
++			} else {
++				dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
++			}
+ 		} else {
+ 			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
+ 					link_enc->transmitter - TRANSMITTER_UNIPHY_A);
 
 
