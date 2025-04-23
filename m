@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE5C28B4EA;
-	Wed, 23 Apr 2025 15:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06B228BAB7;
+	Wed, 23 Apr 2025 15:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420989; cv=none; b=juvg9l5ow2aC7Cagz3LoRW7ozN85/YDY0QmI2YWyULxwQuRdb9JU3S1+v6T67sDDwi10BBhzm1Ihg1z4yzr1PIQKUHlv7gMKjfKMxWDGOCgWhH69zR1xooPN6t/9gSEqSixtPH4yPBPYQUrfbdKcN/zysrACpV43xv4avQaC0xM=
+	t=1745420992; cv=none; b=W8dIdmbhX975xcecHo6ewDNBwzfCs0PJofMKfYCT93m9gu47rmUPdfP37kdcVuCLA5lJmGPwiJKbv+Jebxkz096xUdSiPfztqxcRJKFSi/i/eDb/XWItYO964zTwAR2rUgwKTRTFQJ2ysLy5uLSj9bO+LXigAtScKs2Q+Qh7sJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420989; c=relaxed/simple;
-	bh=/02+Pcx7QULbou4fzP2IoBFDpbb5B+KUY0Uk8il9WJA=;
+	s=arc-20240116; t=1745420992; c=relaxed/simple;
+	bh=hLBu7WK1WowL/iDw6KsdNpnY/twPdih5pKbgnf15+E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFD3nEXOBhhBflj3lxNniPA4ioXUmtYhuiZl8Vx5rMn1Hue1Pft/V+b+0UNGfNFOGjnIXQuaoyHAsrfJI8v1zganhksy/SKDjyBt5cVA+X0QjDSIPb32V+sns2e3cei3+bPMpZQpGEwF847x9dHOr07bZR1duuXXLTDo84C3bXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkQvmUei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KfvweDBW/zGwfvwgox3tZzBmHQcwy1R2S/1KDa2LnGyCgkrDF2nAN2EeVOc2nqNPdyf9ljkm98u8WsaU2QdqDi9Sn2Zuf7ftjOBaXA9JlYVzuRUPacqH8RTSw3QWrWC2qSHwdbt83UFuYaJPH0AT7+ATr+PsWqVyYz2ksELyOGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WP2nBZ7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkQvmUei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99E7C4CEE2;
-	Wed, 23 Apr 2025 15:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WP2nBZ7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7373DC4CEE2;
+	Wed, 23 Apr 2025 15:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420989;
-	bh=/02+Pcx7QULbou4fzP2IoBFDpbb5B+KUY0Uk8il9WJA=;
+	s=korg; t=1745420991;
+	bh=hLBu7WK1WowL/iDw6KsdNpnY/twPdih5pKbgnf15+E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jkQvmUeiKOhgkXaouybkQtZX8jwOyJrKJ8LHWQWX6SDKDYxxJze8VQRevUJsnZJTS
-	 hdG/frGhtlC1ePfHUQoKqonJrtK/BPWmLowsfPEgY9maF7/O/lq811JWl/0l+oJC7Q
-	 kV5Q+bG2wsTSKLWWIiWGPZ84SUFYgpeBe/wx+qRQ=
+	b=WP2nBZ7pbWWZolYeYnSY0vtJXhsdU5Wgif68HlbrOqmVzIjdT8Cx+9c8wVxHhBPqJ
+	 mUfAhkTVJ0YmCnwmu9iVOPyYS+NnoGQb4OUsD00xq6xtc3S9Mzi+OwxSxbbj7FMRZk
+	 qS70a0Oy7b230asgXyjD01VPelj1HTKrzUGumI8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Anson Tsao <anson.tsao@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 180/223] drm/amd/display: Add HP Probook 445 and 465 to the quirk list for eDP on DP1
-Date: Wed, 23 Apr 2025 16:44:12 +0200
-Message-ID: <20250423142624.501080826@linuxfoundation.org>
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 122/393] media: i2c: adv748x: Fix test pattern selection mask
+Date: Wed, 23 Apr 2025 16:40:18 +0200
+Message-ID: <20250423142648.405168012@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-commit 139e99d58e373bd11f085766e681d21d34d0b097 upstream.
+commit 9e38acacb9d809b97a0bdc5c76e725355a47158a upstream.
 
-[Why]
-HP Probook 445 and 465 has DP0 and DP1 swapped.
+The mask to select the test-pattern in register ADV748X_SDP_FRP is
+incorrect, it's the lower 3 bits which controls the pattern. The
+GENMASK() macro is used incorrectly and the generated mask is 0x0e
+instead of 0x07.
 
-[How]
-Add HP Probook 445 and 465 to DP0/DP1 swap quirk list.
+The result is that not all test patterns are selectable, and that in
+some cases the wrong test pattern is activated. Fix this by correcting
+the GENMASK().
 
+Fixes: 3e89586a64df ("media: i2c: adv748x: add adv748x driver")
 Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3995
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Anson Tsao <anson.tsao@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[hverkuil: fixed tiny typo in commit log: my -> by]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/media/i2c/adv748x/adv748x.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1704,6 +1704,20 @@ static const struct dmi_system_id dmi_qu
- 			DMI_MATCH(DMI_PRODUCT_NAME, "HP EliteBook 665 16 inch G11 Notebook PC"),
- 		},
- 	},
-+	{
-+		.callback = edp0_on_dp1_callback,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook 445 14 inch G11 Notebook PC"),
-+		},
-+	},
-+	{
-+		.callback = edp0_on_dp1_callback,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook 465 16 inch G11 Notebook PC"),
-+		},
-+	},
- 	{}
- 	/* TODO: refactor this from a fixed table to a dynamic option */
- };
+--- a/drivers/media/i2c/adv748x/adv748x.h
++++ b/drivers/media/i2c/adv748x/adv748x.h
+@@ -322,7 +322,7 @@ struct adv748x_state {
+ 
+ /* Free run pattern select */
+ #define ADV748X_SDP_FRP			0x14
+-#define ADV748X_SDP_FRP_MASK		GENMASK(3, 1)
++#define ADV748X_SDP_FRP_MASK		GENMASK(2, 0)
+ 
+ /* Saturation */
+ #define ADV748X_SDP_SD_SAT_U		0xe3	/* user_map_rw_reg_e3 */
 
 
