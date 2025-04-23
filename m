@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2AB285417;
-	Wed, 23 Apr 2025 15:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E782853F3;
+	Wed, 23 Apr 2025 15:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421275; cv=none; b=reV3C4YXT/4Mm7XcGwDc9Z74/r34MdO3ZUZ8KxPS8rdmKXAv/IyyigyU7DiRVLOIxMdukVKeTzUOcJsxnMrpZzdmT9283e5q0po3PQ48T8124Ujv0bCE68Th1xB9oV7S1x+U+34RoZ46zCReYnchebHzc3FN077jJQJd6u0zL7I=
+	t=1745421277; cv=none; b=IYW/PFMYlJE8Bytum3fUwJrC5ApEFB3y5AUR2SwlUH6J6hQ6jf9fUm4usRJAp0J3iN/N0rwIhaT8ioxnu2XVi6uE9Q6v55OT8wCm+fKRyX7dd3ja68jPBT6ClAXNVgKN0VguT3ztcEceo8QngCkqgpvCthc+hnkA2UMdIX6eXQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421275; c=relaxed/simple;
-	bh=+cS6xMgFAIgI5NAVDalKNrzm2v+ie5AQhDGfmjFw8a0=;
+	s=arc-20240116; t=1745421277; c=relaxed/simple;
+	bh=wSPEtEY/PEO5apaB1pM20dt+oHv5NN27mPm/Kz0TID4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hq3WwbhtdFIezkZNsp22WGPxI0qNYlv9mAVqmJF3dAWErdLjD/VxzIl3NWBsORrrpA1nnpwqYm80EHPIgU3K0kFSuq4IXBOm+CUlSb+BGYQVa1tUCVjKLWMhrxnWQHHAFcWoIfa0e6Yp31Jd24Hbysxegq7gS2UBDAIyXiy1HMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1awVTBt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=llH5yNBr3OZqkIkbnBXHhv50E19LBVYJUIjqJLs4Q2NEo8feCVv9Skg6IrEN8K46edqEwnMK9KUOiVcEr7gZnx8AFtm8Ki7B2y50MaeYCKAXGNbuV2+SMQTNJRn9CVTxwwSapeqP34bNzOEkQmzh4+cN2phn1xipTiksQoQUe8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7SaBfOY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1awVTBt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29BEC4CEE2;
-	Wed, 23 Apr 2025 15:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7SaBfOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6110EC4CEE2;
+	Wed, 23 Apr 2025 15:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421275;
-	bh=+cS6xMgFAIgI5NAVDalKNrzm2v+ie5AQhDGfmjFw8a0=;
+	s=korg; t=1745421277;
+	bh=wSPEtEY/PEO5apaB1pM20dt+oHv5NN27mPm/Kz0TID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v1awVTBt1Xo4YrlfQPQYzv0IyYLvXrUEYUd5ZohY/lrJe07mgHKXsBsgPkC8Pvcdv
-	 Lt5Xzi+CatOKBF2lDJRFCyPWihGjaluZoPrbHZDX5lj3lrdnHzGmtlbYsWpJDF7fWD
-	 gaFKca9NURv+Nx4j0yYGw83ylrbX4idueTAXAI4o=
+	b=I7SaBfOY526RYpMIBiZbcL6bKCFdQ3+aLFXcoaMATWe7p7s3alh2nz5/sO9LOKMYB
+	 Es9A0HMNNFzyUKxuJmijfq69+/bQsw+Oy+HpJqh2lUn4dTpTLYvOzqjMmwPJPbm25J
+	 Rc666qVyIuzcmrfsRGlJgVkUiwUYYyzYHNtdQvZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.12 207/223] block: add a rq_list type
-Date: Wed, 23 Apr 2025 16:44:39 +0200
-Message-ID: <20250423142625.598293474@linuxfoundation.org>
+	Tang Jun <dukang.tj@alibaba-inc.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>
+Subject: [PATCH 6.14 171/241] perf/x86/intel/uncore: Fix the scale of IIO free running counters on SPR
+Date: Wed, 23 Apr 2025 16:43:55 +0200
+Message-ID: <20250423142627.517975571@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,537 +48,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit a3396b99990d8b4e5797e7b16fdeb64c15ae97bb upstream.
+commit 506f981ab40f0b03a11a640cfd77f48b09aff330 upstream.
 
-Replace the semi-open coded request list helpers with a proper rq_list
-type that mirrors the bio_list and has head and tail pointers.  Besides
-better type safety this actually allows to insert at the tail of the
-list, which will be useful soon.
+The scale of IIO bandwidth in free running counters is inherited from
+the ICX. The counter increments for every 32 bytes rather than 4 bytes.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241113152050.157179-5-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+The IIO bandwidth out free running counters don't increment with a
+consistent size. The increment depends on the requested size. It's
+impossible to find a fixed increment. Remove it from the event_descs.
+
+Fixes: 0378c93a92e2 ("perf/x86/intel/uncore: Support IIO free-running counters on Sapphire Rapids server")
+Reported-by: Tang Jun <dukang.tj@alibaba-inc.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250416142426.3933977-3-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-core.c              |    6 +-
- block/blk-merge.c             |    2 
- block/blk-mq.c                |   40 +++++++++----------
- block/blk-mq.h                |    2 
- drivers/block/null_blk/main.c |    9 +---
- drivers/block/virtio_blk.c    |   13 ++----
- drivers/nvme/host/apple.c     |    2 
- drivers/nvme/host/pci.c       |   15 +++----
- include/linux/blk-mq.h        |   88 ++++++++++++++++++++++++------------------
- include/linux/blkdev.h        |   11 +++--
- io_uring/rw.c                 |    4 -
- 11 files changed, 104 insertions(+), 88 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c |   58 -----------------------------------
+ 1 file changed, 1 insertion(+), 57 deletions(-)
 
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -1121,8 +1121,8 @@ void blk_start_plug_nr_ios(struct blk_pl
- 		return;
- 
- 	plug->cur_ktime = 0;
--	plug->mq_list = NULL;
--	plug->cached_rq = NULL;
-+	rq_list_init(&plug->mq_list);
-+	rq_list_init(&plug->cached_rqs);
- 	plug->nr_ios = min_t(unsigned short, nr_ios, BLK_MAX_REQUEST_COUNT);
- 	plug->rq_count = 0;
- 	plug->multiple_queues = false;
-@@ -1218,7 +1218,7 @@ void __blk_flush_plug(struct blk_plug *p
- 	 * queue for cached requests, we don't want a blocked task holding
- 	 * up a queue freeze/quiesce event.
- 	 */
--	if (unlikely(!rq_list_empty(plug->cached_rq)))
-+	if (unlikely(!rq_list_empty(&plug->cached_rqs)))
- 		blk_mq_free_plug_rqs(plug);
- 
- 	plug->cur_ktime = 0;
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -1175,7 +1175,7 @@ bool blk_attempt_plug_merge(struct reque
- 	struct blk_plug *plug = current->plug;
- 	struct request *rq;
- 
--	if (!plug || rq_list_empty(plug->mq_list))
-+	if (!plug || rq_list_empty(&plug->mq_list))
- 		return false;
- 
- 	rq_list_for_each(&plug->mq_list, rq) {
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -506,7 +506,7 @@ __blk_mq_alloc_requests_batch(struct blk
- 		prefetch(tags->static_rqs[tag]);
- 		tag_mask &= ~(1UL << i);
- 		rq = blk_mq_rq_ctx_init(data, tags, tag);
--		rq_list_add(data->cached_rq, rq);
-+		rq_list_add_head(data->cached_rqs, rq);
- 		nr++;
- 	}
- 	if (!(data->rq_flags & RQF_SCHED_TAGS))
-@@ -515,7 +515,7 @@ __blk_mq_alloc_requests_batch(struct blk
- 	percpu_ref_get_many(&data->q->q_usage_counter, nr - 1);
- 	data->nr_tags -= nr;
- 
--	return rq_list_pop(data->cached_rq);
-+	return rq_list_pop(data->cached_rqs);
- }
- 
- static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
-@@ -612,7 +612,7 @@ static struct request *blk_mq_rq_cache_f
- 		.flags		= flags,
- 		.cmd_flags	= opf,
- 		.nr_tags	= plug->nr_ios,
--		.cached_rq	= &plug->cached_rq,
-+		.cached_rqs	= &plug->cached_rqs,
- 	};
- 	struct request *rq;
- 
-@@ -637,14 +637,14 @@ static struct request *blk_mq_alloc_cach
- 	if (!plug)
- 		return NULL;
- 
--	if (rq_list_empty(plug->cached_rq)) {
-+	if (rq_list_empty(&plug->cached_rqs)) {
- 		if (plug->nr_ios == 1)
- 			return NULL;
- 		rq = blk_mq_rq_cache_fill(q, plug, opf, flags);
- 		if (!rq)
- 			return NULL;
- 	} else {
--		rq = rq_list_peek(&plug->cached_rq);
-+		rq = rq_list_peek(&plug->cached_rqs);
- 		if (!rq || rq->q != q)
- 			return NULL;
- 
-@@ -653,7 +653,7 @@ static struct request *blk_mq_alloc_cach
- 		if (op_is_flush(rq->cmd_flags) != op_is_flush(opf))
- 			return NULL;
- 
--		plug->cached_rq = rq_list_next(rq);
-+		rq_list_pop(&plug->cached_rqs);
- 		blk_mq_rq_time_init(rq, 0);
- 	}
- 
-@@ -830,7 +830,7 @@ void blk_mq_free_plug_rqs(struct blk_plu
- {
- 	struct request *rq;
- 
--	while ((rq = rq_list_pop(&plug->cached_rq)) != NULL)
-+	while ((rq = rq_list_pop(&plug->cached_rqs)) != NULL)
- 		blk_mq_free_request(rq);
- }
- 
-@@ -1386,8 +1386,7 @@ static void blk_add_rq_to_plug(struct bl
- 	 */
- 	if (!plug->has_elevator && (rq->rq_flags & RQF_SCHED_TAGS))
- 		plug->has_elevator = true;
--	rq->rq_next = NULL;
--	rq_list_add(&plug->mq_list, rq);
-+	rq_list_add_head(&plug->mq_list, rq);
- 	plug->rq_count++;
- }
- 
-@@ -2781,7 +2780,7 @@ static void blk_mq_plug_issue_direct(str
- 	blk_status_t ret = BLK_STS_OK;
- 
- 	while ((rq = rq_list_pop(&plug->mq_list))) {
--		bool last = rq_list_empty(plug->mq_list);
-+		bool last = rq_list_empty(&plug->mq_list);
- 
- 		if (hctx != rq->mq_hctx) {
- 			if (hctx) {
-@@ -2824,8 +2823,7 @@ static void blk_mq_dispatch_plug_list(st
- {
- 	struct blk_mq_hw_ctx *this_hctx = NULL;
- 	struct blk_mq_ctx *this_ctx = NULL;
--	struct request *requeue_list = NULL;
--	struct request **requeue_lastp = &requeue_list;
-+	struct rq_list requeue_list = {};
- 	unsigned int depth = 0;
- 	bool is_passthrough = false;
- 	LIST_HEAD(list);
-@@ -2839,12 +2837,12 @@ static void blk_mq_dispatch_plug_list(st
- 			is_passthrough = blk_rq_is_passthrough(rq);
- 		} else if (this_hctx != rq->mq_hctx || this_ctx != rq->mq_ctx ||
- 			   is_passthrough != blk_rq_is_passthrough(rq)) {
--			rq_list_add_tail(&requeue_lastp, rq);
-+			rq_list_add_tail(&requeue_list, rq);
- 			continue;
- 		}
- 		list_add(&rq->queuelist, &list);
- 		depth++;
--	} while (!rq_list_empty(plug->mq_list));
-+	} while (!rq_list_empty(&plug->mq_list));
- 
- 	plug->mq_list = requeue_list;
- 	trace_block_unplug(this_hctx->queue, depth, !from_sched);
-@@ -2899,19 +2897,19 @@ void blk_mq_flush_plug_list(struct blk_p
- 		if (q->mq_ops->queue_rqs) {
- 			blk_mq_run_dispatch_ops(q,
- 				__blk_mq_flush_plug_list(q, plug));
--			if (rq_list_empty(plug->mq_list))
-+			if (rq_list_empty(&plug->mq_list))
- 				return;
- 		}
- 
- 		blk_mq_run_dispatch_ops(q,
- 				blk_mq_plug_issue_direct(plug));
--		if (rq_list_empty(plug->mq_list))
-+		if (rq_list_empty(&plug->mq_list))
- 			return;
- 	}
- 
- 	do {
- 		blk_mq_dispatch_plug_list(plug, from_schedule);
--	} while (!rq_list_empty(plug->mq_list));
-+	} while (!rq_list_empty(&plug->mq_list));
- }
- 
- static void blk_mq_try_issue_list_directly(struct blk_mq_hw_ctx *hctx,
-@@ -2976,7 +2974,7 @@ static struct request *blk_mq_get_new_re
- 	if (plug) {
- 		data.nr_tags = plug->nr_ios;
- 		plug->nr_ios = 1;
--		data.cached_rq = &plug->cached_rq;
-+		data.cached_rqs = &plug->cached_rqs;
- 	}
- 
- 	rq = __blk_mq_alloc_requests(&data);
-@@ -2999,7 +2997,7 @@ static struct request *blk_mq_peek_cache
- 
- 	if (!plug)
- 		return NULL;
--	rq = rq_list_peek(&plug->cached_rq);
-+	rq = rq_list_peek(&plug->cached_rqs);
- 	if (!rq || rq->q != q)
- 		return NULL;
- 	if (type != rq->mq_hctx->type &&
-@@ -3013,14 +3011,14 @@ static struct request *blk_mq_peek_cache
- static void blk_mq_use_cached_rq(struct request *rq, struct blk_plug *plug,
- 		struct bio *bio)
- {
--	WARN_ON_ONCE(rq_list_peek(&plug->cached_rq) != rq);
-+	if (rq_list_pop(&plug->cached_rqs) != rq)
-+		WARN_ON_ONCE(1);
- 
- 	/*
- 	 * If any qos ->throttle() end up blocking, we will have flushed the
- 	 * plug and hence killed the cached_rq list as well. Pop this entry
- 	 * before we throttle.
- 	 */
--	plug->cached_rq = rq_list_next(rq);
- 	rq_qos_throttle(rq->q, bio);
- 
- 	blk_mq_rq_time_init(rq, 0);
---- a/block/blk-mq.h
-+++ b/block/blk-mq.h
-@@ -155,7 +155,7 @@ struct blk_mq_alloc_data {
- 
- 	/* allocate multiple requests/tags in one go */
- 	unsigned int nr_tags;
--	struct request **cached_rq;
-+	struct rq_list *cached_rqs;
- 
- 	/* input & output parameter */
- 	struct blk_mq_ctx *ctx;
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1638,10 +1638,9 @@ static blk_status_t null_queue_rq(struct
- 	return BLK_STS_OK;
- }
- 
--static void null_queue_rqs(struct request **rqlist)
-+static void null_queue_rqs(struct rq_list *rqlist)
- {
--	struct request *requeue_list = NULL;
--	struct request **requeue_lastp = &requeue_list;
-+	struct rq_list requeue_list = {};
- 	struct blk_mq_queue_data bd = { };
- 	blk_status_t ret;
- 
-@@ -1651,8 +1650,8 @@ static void null_queue_rqs(struct reques
- 		bd.rq = rq;
- 		ret = null_queue_rq(rq->mq_hctx, &bd);
- 		if (ret != BLK_STS_OK)
--			rq_list_add_tail(&requeue_lastp, rq);
--	} while (!rq_list_empty(*rqlist));
-+			rq_list_add_tail(&requeue_list, rq);
-+	} while (!rq_list_empty(rqlist));
- 
- 	*rqlist = requeue_list;
- }
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -472,7 +472,7 @@ static bool virtblk_prep_rq_batch(struct
- }
- 
- static void virtblk_add_req_batch(struct virtio_blk_vq *vq,
--					struct request **rqlist)
-+		struct rq_list *rqlist)
- {
- 	struct request *req;
- 	unsigned long flags;
-@@ -499,11 +499,10 @@ static void virtblk_add_req_batch(struct
- 		virtqueue_notify(vq->vq);
- }
- 
--static void virtio_queue_rqs(struct request **rqlist)
-+static void virtio_queue_rqs(struct rq_list *rqlist)
- {
--	struct request *submit_list = NULL;
--	struct request *requeue_list = NULL;
--	struct request **requeue_lastp = &requeue_list;
-+	struct rq_list submit_list = { };
-+	struct rq_list requeue_list = { };
- 	struct virtio_blk_vq *vq = NULL;
- 	struct request *req;
- 
-@@ -515,9 +514,9 @@ static void virtio_queue_rqs(struct requ
- 		vq = this_vq;
- 
- 		if (virtblk_prep_rq_batch(req))
--			rq_list_add(&submit_list, req); /* reverse order */
-+			rq_list_add_head(&submit_list, req); /* reverse order */
- 		else
--			rq_list_add_tail(&requeue_lastp, req);
-+			rq_list_add_tail(&requeue_list, req);
- 	}
- 
- 	if (vq)
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -650,7 +650,7 @@ static bool apple_nvme_handle_cq(struct
- 
- 	found = apple_nvme_poll_cq(q, &iob);
- 
--	if (!rq_list_empty(iob.req_list))
-+	if (!rq_list_empty(&iob.req_list))
- 		apple_nvme_complete_batch(&iob);
- 
- 	return found;
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -985,7 +985,7 @@ static blk_status_t nvme_queue_rq(struct
- 	return BLK_STS_OK;
- }
- 
--static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct request **rqlist)
-+static void nvme_submit_cmds(struct nvme_queue *nvmeq, struct rq_list *rqlist)
- {
- 	struct request *req;
- 
-@@ -1013,11 +1013,10 @@ static bool nvme_prep_rq_batch(struct nv
- 	return nvme_prep_rq(nvmeq->dev, req) == BLK_STS_OK;
- }
- 
--static void nvme_queue_rqs(struct request **rqlist)
-+static void nvme_queue_rqs(struct rq_list *rqlist)
- {
--	struct request *submit_list = NULL;
--	struct request *requeue_list = NULL;
--	struct request **requeue_lastp = &requeue_list;
-+	struct rq_list submit_list = { };
-+	struct rq_list requeue_list = { };
- 	struct nvme_queue *nvmeq = NULL;
- 	struct request *req;
- 
-@@ -1027,9 +1026,9 @@ static void nvme_queue_rqs(struct reques
- 		nvmeq = req->mq_hctx->driver_data;
- 
- 		if (nvme_prep_rq_batch(nvmeq, req))
--			rq_list_add(&submit_list, req); /* reverse order */
-+			rq_list_add_head(&submit_list, req); /* reverse order */
- 		else
--			rq_list_add_tail(&requeue_lastp, req);
-+			rq_list_add_tail(&requeue_list, req);
- 	}
- 
- 	if (nvmeq)
-@@ -1176,7 +1175,7 @@ static irqreturn_t nvme_irq(int irq, voi
- 	DEFINE_IO_COMP_BATCH(iob);
- 
- 	if (nvme_poll_cq(nvmeq, &iob)) {
--		if (!rq_list_empty(iob.req_list))
-+		if (!rq_list_empty(&iob.req_list))
- 			nvme_pci_complete_batch(&iob);
- 		return IRQ_HANDLED;
- 	}
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -230,44 +230,60 @@ static inline unsigned short req_get_iop
- #define rq_dma_dir(rq) \
- 	(op_is_write(req_op(rq)) ? DMA_TO_DEVICE : DMA_FROM_DEVICE)
- 
--#define rq_list_add(listptr, rq)	do {		\
--	(rq)->rq_next = *(listptr);			\
--	*(listptr) = rq;				\
--} while (0)
--
--#define rq_list_add_tail(lastpptr, rq)	do {		\
--	(rq)->rq_next = NULL;				\
--	**(lastpptr) = rq;				\
--	*(lastpptr) = &rq->rq_next;			\
--} while (0)
--
--#define rq_list_pop(listptr)				\
--({							\
--	struct request *__req = NULL;			\
--	if ((listptr) && *(listptr))	{		\
--		__req = *(listptr);			\
--		*(listptr) = __req->rq_next;		\
--	}						\
--	__req;						\
--})
-+static inline int rq_list_empty(const struct rq_list *rl)
-+{
-+	return rl->head == NULL;
-+}
- 
--#define rq_list_peek(listptr)				\
--({							\
--	struct request *__req = NULL;			\
--	if ((listptr) && *(listptr))			\
--		__req = *(listptr);			\
--	__req;						\
--})
-+static inline void rq_list_init(struct rq_list *rl)
-+{
-+	rl->head = NULL;
-+	rl->tail = NULL;
-+}
-+
-+static inline void rq_list_add_tail(struct rq_list *rl, struct request *rq)
-+{
-+	rq->rq_next = NULL;
-+	if (rl->tail)
-+		rl->tail->rq_next = rq;
-+	else
-+		rl->head = rq;
-+	rl->tail = rq;
-+}
-+
-+static inline void rq_list_add_head(struct rq_list *rl, struct request *rq)
-+{
-+	rq->rq_next = rl->head;
-+	rl->head = rq;
-+	if (!rl->tail)
-+		rl->tail = rq;
-+}
-+
-+static inline struct request *rq_list_pop(struct rq_list *rl)
-+{
-+	struct request *rq = rl->head;
-+
-+	if (rq) {
-+		rl->head = rl->head->rq_next;
-+		if (!rl->head)
-+			rl->tail = NULL;
-+		rq->rq_next = NULL;
-+	}
-+
-+	return rq;
-+}
- 
--#define rq_list_for_each(listptr, pos)			\
--	for (pos = rq_list_peek((listptr)); pos; pos = rq_list_next(pos))
-+static inline struct request *rq_list_peek(struct rq_list *rl)
-+{
-+	return rl->head;
-+}
- 
--#define rq_list_for_each_safe(listptr, pos, nxt)			\
--	for (pos = rq_list_peek((listptr)), nxt = rq_list_next(pos);	\
--		pos; pos = nxt, nxt = pos ? rq_list_next(pos) : NULL)
-+#define rq_list_for_each(rl, pos)					\
-+	for (pos = rq_list_peek((rl)); (pos); pos = pos->rq_next)
- 
--#define rq_list_next(rq)	(rq)->rq_next
--#define rq_list_empty(list)	((list) == (struct request *) NULL)
-+#define rq_list_for_each_safe(rl, pos, nxt)				\
-+	for (pos = rq_list_peek((rl)), nxt = pos->rq_next;		\
-+		pos; pos = nxt, nxt = pos ? pos->rq_next : NULL)
- 
- /**
-  * enum blk_eh_timer_return - How the timeout handler should proceed
-@@ -560,7 +576,7 @@ struct blk_mq_ops {
- 	 * empty the @rqlist completely, then the rest will be queued
- 	 * individually by the block layer upon return.
- 	 */
--	void (*queue_rqs)(struct request **rqlist);
-+	void (*queue_rqs)(struct rq_list *rqlist);
- 
- 	/**
- 	 * @get_budget: Reserve budget before queue request, once .queue_rq is
-@@ -893,7 +909,7 @@ static inline bool blk_mq_add_to_batch(s
- 	else if (iob->complete != complete)
- 		return false;
- 	iob->need_ts |= blk_mq_need_time_stamp(req);
--	rq_list_add(&iob->req_list, req);
-+	rq_list_add_head(&iob->req_list, req);
- 	return true;
- }
- 
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -996,6 +996,11 @@ extern void blk_put_queue(struct request
- void blk_mark_disk_dead(struct gendisk *disk);
- 
- #ifdef CONFIG_BLOCK
-+struct rq_list {
-+	struct request *head;
-+	struct request *tail;
-+};
-+
- /*
-  * blk_plug permits building a queue of related requests by holding the I/O
-  * fragments for a short period. This allows merging of sequential requests
-@@ -1008,10 +1013,10 @@ void blk_mark_disk_dead(struct gendisk *
-  * blk_flush_plug() is called.
-  */
- struct blk_plug {
--	struct request *mq_list; /* blk-mq requests */
-+	struct rq_list mq_list; /* blk-mq requests */
- 
- 	/* if ios_left is > 1, we can batch tag/rq allocations */
--	struct request *cached_rq;
-+	struct rq_list cached_rqs;
- 	u64 cur_ktime;
- 	unsigned short nr_ios;
- 
-@@ -1660,7 +1665,7 @@ int bdev_thaw(struct block_device *bdev)
- void bdev_fput(struct file *bdev_file);
- 
- struct io_comp_batch {
--	struct request *req_list;
-+	struct rq_list req_list;
- 	bool need_ts;
- 	void (*complete)(struct io_comp_batch *);
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -6289,69 +6289,13 @@ static struct freerunning_counters spr_i
+ 	[SPR_IIO_MSR_BW_OUT]	= { 0x3808, 0x1, 0x10, 8, 48 },
  };
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -1190,12 +1190,12 @@ int io_do_iopoll(struct io_ring_ctx *ctx
- 			poll_flags |= BLK_POLL_ONESHOT;
  
- 		/* iopoll may have completed current req */
--		if (!rq_list_empty(iob.req_list) ||
-+		if (!rq_list_empty(&iob.req_list) ||
- 		    READ_ONCE(req->iopoll_completed))
- 			break;
- 	}
+-static struct uncore_event_desc spr_uncore_iio_freerunning_events[] = {
+-	/* Free-Running IIO CLOCKS Counter */
+-	INTEL_UNCORE_EVENT_DESC(ioclk,			"event=0xff,umask=0x10"),
+-	/* Free-Running IIO BANDWIDTH IN Counters */
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0,		"event=0xff,umask=0x20"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1,		"event=0xff,umask=0x21"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2,		"event=0xff,umask=0x22"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3,		"event=0xff,umask=0x23"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4,		"event=0xff,umask=0x24"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5,		"event=0xff,umask=0x25"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6,		"event=0xff,umask=0x26"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7,		"event=0xff,umask=0x27"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7.unit,	"MiB"),
+-	/* Free-Running IIO BANDWIDTH OUT Counters */
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port0,		"event=0xff,umask=0x30"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port0.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port0.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port1,		"event=0xff,umask=0x31"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port1.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port1.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port2,		"event=0xff,umask=0x32"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port2.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port2.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port3,		"event=0xff,umask=0x33"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port3.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port3.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port4,		"event=0xff,umask=0x34"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port4.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port4.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port5,		"event=0xff,umask=0x35"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port5.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port5.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port6,		"event=0xff,umask=0x36"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port6.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port6.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port7,		"event=0xff,umask=0x37"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port7.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_out_port7.unit,	"MiB"),
+-	{ /* end: all zeroes */ },
+-};
+-
+ static struct intel_uncore_type spr_uncore_iio_free_running = {
+ 	.name			= "iio_free_running",
+ 	.num_counters		= 17,
+ 	.num_freerunning_types	= SPR_IIO_FREERUNNING_TYPE_MAX,
+ 	.freerunning		= spr_iio_freerunning,
+ 	.ops			= &skx_uncore_iio_freerunning_ops,
+-	.event_descs		= spr_uncore_iio_freerunning_events,
++	.event_descs		= snr_uncore_iio_freerunning_events,
+ 	.format_group		= &skx_uncore_iio_freerunning_format_group,
+ };
  
--	if (!rq_list_empty(iob.req_list))
-+	if (!rq_list_empty(&iob.req_list))
- 		iob.complete(&iob);
- 	else if (!pos)
- 		return 0;
 
 
