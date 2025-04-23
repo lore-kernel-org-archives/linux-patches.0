@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6973189F39;
-	Wed, 23 Apr 2025 15:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056212989AF;
+	Wed, 23 Apr 2025 15:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421755; cv=none; b=uLAQf5r/3tFTgnj0ylKRxsWLWAGpIe3MUzHRWWFQ1ZKepAnSeJQzyx2xHbOjJpI3WOKFUCpyW3mrbnLW95oYWb2Fl5YNAyF83FG/JLuOhA///8vQ5dzAAquF3RGWNCKPvAlVEe1jJsO5z7RIXLpgdHtEuXhLZfZ1jsOej378bak=
+	t=1745421758; cv=none; b=i2xrw/jMw0npB/vaxas1uE2Mssg9lg6G4WAdzGk5zd//ZQtTjIHhywdYpNPU5BC63ythI0JKl0bWOHZhlJ74+BQLjVezy8AyA7BAFV1fFW4hLdWG7fORJ0uNo4NArgiRnIgSCXZYcPQLUQFnhWOg0IefjCdZxeLH4aMHVjedAf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421755; c=relaxed/simple;
-	bh=2S/YBmFH/bN7uerbwVnhh9YvU/G6QWS6S2Ru8zyRsWg=;
+	s=arc-20240116; t=1745421758; c=relaxed/simple;
+	bh=ZdnIZ1Z5N+JPDMQwp1gTBvMSnnvoQIQNj7a49WvcVik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIfwctHJZclly/zLv2KyuN0hs+w3p8QntEuIp7NSHpcavI+0j6XW7kS14BOP3nriGz3bnD1pmJLjjk5cNt+C6s3TDwchXqJuz9II0pJxuCATc2YcmlQIWou52Nwe2WA4CuIFLCmYTKlQCOhhm5s0+My46aYhmSry738mg7jglhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAF62guO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHhaND87riQdbuqsgZVv67toKaPvAFOasT4xHW0fcqbuMP97kAiQrMOX2TbV24Na37DHrcvrUWLoa43kO953GZSjQA6Fo+czx7vbe41qtr5HpLNzxsllwlno/W5yFE59qUGQatWXFfDFjM5lskZ4pNIQ7oJR0ewcKwtggL/nSAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvwZYoce; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAF62guO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC082C4CEE2;
-	Wed, 23 Apr 2025 15:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvwZYoce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875C6C4CEE3;
+	Wed, 23 Apr 2025 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421755;
-	bh=2S/YBmFH/bN7uerbwVnhh9YvU/G6QWS6S2Ru8zyRsWg=;
+	s=korg; t=1745421757;
+	bh=ZdnIZ1Z5N+JPDMQwp1gTBvMSnnvoQIQNj7a49WvcVik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAF62guO0WACluJDTwTg6MaTJsuBzXMkygdKIMifnpkXup//NoWd3ZkOdNAIKH3Jp
-	 HOla5/5+H8vsDRdDRtP4MxVBvlczFAzTDCNvndwsKaKOcgNF0/PBtBEkbGQwyW7R4Q
-	 A/CSADrrphOK7vhXXMzkYFrZ4yVTHLTrDAmTGZ80=
+	b=JvwZYoceyfCDblDGjlHEdBaYUQ9Zp3fTkZHgKkB26a241pdxNkhNUSpwfVUtXa4KH
+	 Bww7BTabca9YcDjfczSAXTz3J+xznagVzf/g+7Os2OI/OW9s/N29bhk3K8LjmIolpJ
+	 oZBzRKrbgNzLYvWkLvdJXyGUx9sYWu8Z6aSFBLIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 6.6 220/393] ntb: use 64-bit arithmetic for the MSI doorbell mask
-Date: Wed, 23 Apr 2025 16:41:56 +0200
-Message-ID: <20250423142652.473904773@linuxfoundation.org>
+	Shay Drory <shayd@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 175/291] RDMA/core: Silence oversized kvmalloc() warning
+Date: Wed, 23 Apr 2025 16:42:44 +0200
+Message-ID: <20250423142631.534576257@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Shay Drory <shayd@nvidia.com>
 
-commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
+[ Upstream commit 9a0e6f15029e1a8a21e40f06fd05aa52b7f063de ]
 
-msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
-performed to compute its value.
+syzkaller triggered an oversized kvmalloc() warning.
+Silence it by adding __GFP_NOWARN.
 
-While most of the ntb_hw drivers actually don't utilize the higher 32
-bits of the doorbell mask now, this may be the case for Switchtec - see
-switchtec_ntb_init_db().
+syzkaller log:
+ WARNING: CPU: 7 PID: 518 at mm/util.c:665 __kvmalloc_node_noprof+0x175/0x180
+ CPU: 7 UID: 0 PID: 518 Comm: c_repro Not tainted 6.11.0-rc6+ #6
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+ RIP: 0010:__kvmalloc_node_noprof+0x175/0x180
+ RSP: 0018:ffffc90001e67c10 EFLAGS: 00010246
+ RAX: 0000000000000100 RBX: 0000000000000400 RCX: ffffffff8149d46b
+ RDX: 0000000000000000 RSI: ffff8881030fae80 RDI: 0000000000000002
+ RBP: 000000712c800000 R08: 0000000000000100 R09: 0000000000000000
+ R10: ffffc90001e67c10 R11: 0030ae0601000000 R12: 0000000000000000
+ R13: 0000000000000000 R14: 00000000ffffffff R15: 0000000000000000
+ FS:  00007fde79159740(0000) GS:ffff88813bdc0000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000020000180 CR3: 0000000105eb4005 CR4: 00000000003706b0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  ib_umem_odp_get+0x1f6/0x390
+  mlx5_ib_reg_user_mr+0x1e8/0x450
+  ib_uverbs_reg_mr+0x28b/0x440
+  ib_uverbs_write+0x7d3/0xa30
+  vfs_write+0x1ac/0x6c0
+  ksys_write+0x134/0x170
+  ? __sanitizer_cov_trace_pc+0x1c/0x50
+  do_syscall_64+0x50/0x110
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE static
-analysis tool.
-
-Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 37824952dc8f ("RDMA/odp: Use kvcalloc for the dma_list and page_list")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Link: https://patch.msgid.link/c6cb92379de668be94894f49c2cfa40e73f94d56.1742388096.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/umem_odp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1351,7 +1351,7 @@ static int ntb_transport_probe(struct nt
- 	qp_count = ilog2(qp_bitmap);
- 	if (nt->use_msi) {
- 		qp_count -= 1;
--		nt->msi_db_mask = 1 << qp_count;
-+		nt->msi_db_mask = BIT_ULL(qp_count);
- 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
- 	}
+diff --git a/drivers/infiniband/core/umem_odp.c b/drivers/infiniband/core/umem_odp.c
+index e9fa22d31c233..c48ef60830205 100644
+--- a/drivers/infiniband/core/umem_odp.c
++++ b/drivers/infiniband/core/umem_odp.c
+@@ -76,12 +76,14 @@ static inline int ib_init_umem_odp(struct ib_umem_odp *umem_odp,
  
+ 		npfns = (end - start) >> PAGE_SHIFT;
+ 		umem_odp->pfn_list = kvcalloc(
+-			npfns, sizeof(*umem_odp->pfn_list), GFP_KERNEL);
++			npfns, sizeof(*umem_odp->pfn_list),
++			GFP_KERNEL | __GFP_NOWARN);
+ 		if (!umem_odp->pfn_list)
+ 			return -ENOMEM;
+ 
+ 		umem_odp->dma_list = kvcalloc(
+-			ndmas, sizeof(*umem_odp->dma_list), GFP_KERNEL);
++			ndmas, sizeof(*umem_odp->dma_list),
++			GFP_KERNEL | __GFP_NOWARN);
+ 		if (!umem_odp->dma_list) {
+ 			ret = -ENOMEM;
+ 			goto out_pfn_list;
+-- 
+2.39.5
+
 
 
