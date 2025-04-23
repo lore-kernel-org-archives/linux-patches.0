@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B220528C5C5;
-	Wed, 23 Apr 2025 15:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D00F28C5B2;
+	Wed, 23 Apr 2025 15:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421863; cv=none; b=CyTo9z62begOH0XTKCBR/pqXg3/Nvs4y6PFVO3b23ejaxAhgDV126DtM5+OkFx1O9Md4qVEDbNEvGntyFew125oKUO4kSiWsxY6Eo0VnrE3mlX+znuHXmT8HConEVb2RJOPiFN+Tvok/x6UCSc+GRfB2XEYmqebaMGLQh1G3rUM=
+	t=1745421866; cv=none; b=RRlonYaUqfj97NCNrb3mUlFxJCZMA9hy22ffUcOQETVhvuB02+kvYFnEdzhHeKjBJlgzBMjBpLfl4HI86MqWTXklnDytBjLuhdQT1PrwQYjXOB/JnJnjBnk4/PSBLn5WRc1a/KcGRtviZFf1eg/nZsQF6YELsPIWchCfuc1IASs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421863; c=relaxed/simple;
-	bh=MY5nxagZc47Phmra7j5+LaU9slFZZAay/VaXIOQfViY=;
+	s=arc-20240116; t=1745421866; c=relaxed/simple;
+	bh=LQCyjDzI4XJcsikgZvaxnHmtAzvYUZNqAE5FJ288yi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1G3hkYjXQTWzjpfuQIdz6V50L2JF8C3t//xCYM9PelNaZ0JzObW6puKfJ7+qU25dIeQ4NhBlpZnjKJawi1uveEjns/rX7/SZS1gCd/oHOH7gv8rpeXxZsxFh40deYfmxvhh2Z3GWqRcEqAU6i5Up6SWqEyNJJfbjCRE3E7czFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxBn7BGB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NqeTEpqw3y2FiSzo14IRWOFTxBkK8eGjuPBKdkC/cc9RapdAgBWXqkhK7kLCzlawwB6x4CZuxr0Fcj4UFaY8qYW8N6Lr5nZyR1SWVYUZoyFSfrZpHAveI7wcKOfgmsbLuUYo1ukYMw7wWjYhNpfBPro+PRIrLwSdHU4pG7vKmmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQXctAtY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxBn7BGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA916C4AF09;
-	Wed, 23 Apr 2025 15:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQXctAtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2A0C4CEE3;
+	Wed, 23 Apr 2025 15:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421863;
-	bh=MY5nxagZc47Phmra7j5+LaU9slFZZAay/VaXIOQfViY=;
+	s=korg; t=1745421865;
+	bh=LQCyjDzI4XJcsikgZvaxnHmtAzvYUZNqAE5FJ288yi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxBn7BGBCeUsHEuOi+6v2Fb6SwmyfDwpcqkAuybxA7nG8p7BSDyiMuGUQj0LAqGC3
-	 52+k0y8I97X/vKv5d4C49On9swqznI08z602HQkIcMf46FRdI8eIKpAoovmUTwteW6
-	 bgTFxRF4EUSxijWBEffjNc2CYGVLidhsCnb+aeqA=
+	b=OQXctAtYcEuHY7GN5/h2aii5Z+EfJkDYctOsAHasZynnXsydSswYZBiEJ4amKJAVh
+	 Xpw6e4CkgE9zvx/jF+eCO3+fxYUJQgGzMgqYpkLcPj9xJ24r2TL6RlaOqShYM1Lmqp
+	 Bc2m5AlS8/qYe1p4NJQKxTttLUvYUPjwPItVOT74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 215/393] gpio: tegra186: fix resource handling in ACPI probe path
-Date: Wed, 23 Apr 2025 16:41:51 +0200
-Message-ID: <20250423142652.262509588@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 170/291] scsi: iscsi: Fix missing scsi_host_put() in error path
+Date: Wed, 23 Apr 2025 16:42:39 +0200
+Message-ID: <20250423142631.333637260@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 8323f3a69de6f6e96bf22f32dd8e2920766050c2 upstream.
+[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
 
-When the Tegra186 GPIO controller is probed through ACPI matching,
-the driver emits two error messages during probing:
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
+Add goto to ensure scsi_host_put() is called in all error paths of
+iscsi_set_host_param() function. This fixes a potential memory leak when
+strlen() check fails.
 
-Fix this by getting resource first and then do the ioremap.
-
-Fixes: 2606e7c9f5fc ("gpio: tegra186: Add ACPI support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250327032349.78809-1-kanie@linux.alibaba.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tegra186.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -822,6 +822,7 @@ static int tegra186_gpio_probe(struct pl
- 	struct gpio_irq_chip *irq;
- 	struct tegra_gpio *gpio;
- 	struct device_node *np;
-+	struct resource *res;
- 	char **names;
- 	int err;
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index 687487ea4fd3b..7f0fd03dd03bc 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -3207,11 +3207,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
+ 	}
  
-@@ -841,19 +842,19 @@ static int tegra186_gpio_probe(struct pl
- 	gpio->num_banks++;
+ 	/* see similar check in iscsi_if_set_param() */
+-	if (strlen(data) > ev->u.set_host_param.len)
+-		return -EINVAL;
++	if (strlen(data) > ev->u.set_host_param.len) {
++		err = -EINVAL;
++		goto out;
++	}
  
- 	/* get register apertures */
--	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
--	if (IS_ERR(gpio->secure)) {
--		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
--		if (IS_ERR(gpio->secure))
--			return PTR_ERR(gpio->secure);
--	}
--
--	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
--	if (IS_ERR(gpio->base)) {
--		gpio->base = devm_platform_ioremap_resource(pdev, 1);
--		if (IS_ERR(gpio->base))
--			return PTR_ERR(gpio->base);
--	}
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "security");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	gpio->secure = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->secure))
-+		return PTR_ERR(gpio->secure);
-+
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gpio");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	gpio->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->base))
-+		return PTR_ERR(gpio->base);
- 
- 	err = platform_irq_count(pdev);
- 	if (err < 0)
+ 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
+ 					data, ev->u.set_host_param.len);
++out:
+ 	scsi_host_put(shost);
+ 	return err;
+ }
+-- 
+2.39.5
+
 
 
