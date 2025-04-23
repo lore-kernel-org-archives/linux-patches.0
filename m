@@ -1,178 +1,153 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FEE262D0B;
-	Wed, 23 Apr 2025 14:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B553C8EB;
+	Wed, 23 Apr 2025 14:45:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745416890; cv=none; b=sKwcjK7bswFbmWwXrcpFZddWEsG9Mv6/SHS1uZq8CAj1jNVMXXI9DCJaxmX8anW7Ble/EFZ1Sc6nBzOflPimA9RVGUtS0mlC+2/nXaPD2PVFVyMC8M8Pp+buDDAU6gXg+j5PpY60ns5DhKsQVR1fVIew/Y789bj56KPwe9RX0lc=
+	t=1745419531; cv=none; b=bzu+WJXwW8nE+tmTRULLn3mviZCOosb4nbzpwsgPQ/pjZnQnqVrML3n+jvHBWVvpL/HW0iib+hcGQNmALOuayrgCfCBxQY2YlV5V5eKIxJEbX/OpnMwjBSYFLTndaIM9fZ9ft2waeK0+oiJ0ldAZcid45wEIq6zmVWW3X8Ru5o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745416890; c=relaxed/simple;
-	bh=xIVMmyvZfh3hGJ6hzL0vT1Yla3mDQFmjTEfQNN+WN8k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q/bM20Tb/0cy63T8sdrU+2exHrTy/5Tvkpxn/L6NQKONwoBjpYFYZ6OYj4VegG6yXBWlUxsg0JsIXULLFR9yYqOos5jVmsFshEPd88Cz7qsji6egT4wZwMIc4bqxjP7WOq/mxoz9Ylhy97Zk72b245iDz+ZcHnKPVh56f6L3aKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=OjZlLZcD; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1745419531; c=relaxed/simple;
+	bh=ikYO6zViixwqyymGoEl3MfoX19yJjoY1TCh2T6ZZgnc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=E6rhJBNOVn47am45kPAW1O07wLej/wIpljdjV9vq6f4bsPqjZTlXYIpMTLz3RfgS69HV99aSgYLhFy5E4lYzX/vvlMbKzWXkkrGaEP7FXc+wvmALJA4iEljwJmH+8Ka0aHxN471D5yfm6JFjVuW+gUVMPAm40iDc+B02PPk/u9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeD6lEbY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="OjZlLZcD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1745416881;
-	bh=xIVMmyvZfh3hGJ6hzL0vT1Yla3mDQFmjTEfQNN+WN8k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OjZlLZcDL0ESfghrgpABz+tyVK9R+FSUhFn2X5gIvW2ylDbvnTh7fFyynmyHjOhPK
-	 k9BqxygG/CEw3ayjjhxgM3fNIQT6lBrqienJ33XRt0LHQTAywkYjfVIDN/+gmIAWX6
-	 4uSkfLiVSfZ7t6BW6hPA76BKv5aOSI003g+MGabYbo1ktsQeykfHA3sTxHHxKgCJvv
-	 FKHGWXvzLIqPmOu6+JTyQrpBirBLc83cZery7cOOOgOnI140L+3ufkWSSYOA9HsG0p
-	 ex2MjfniDWw+K0T65V7pVBU+rLhyz/UAi6FRTRqVPr5wptAb6qRKYEOkJjjHLGeRhE
-	 uYUV2+zyQF7tQ==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id B206017E014F;
-	Wed, 23 Apr 2025 16:01:20 +0200 (CEST)
-Message-ID: <4cd274f8-85ab-43dc-bef4-41646d43b775@collabora.com>
-Date: Wed, 23 Apr 2025 16:01:20 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeD6lEbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FDFC4CEE2;
+	Wed, 23 Apr 2025 14:45:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1745419531;
+	bh=ikYO6zViixwqyymGoEl3MfoX19yJjoY1TCh2T6ZZgnc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UeD6lEbYn8A853sQZ97rZ85usAjYkftjIjw52sZNtDYY6a+0P/3DbB+F4nxWoBAqO
+	 cPyzSWnKr/A4MIZb6XXNL024Hn/xLNEPXXyxPyxXTW0IoyiH6TKz+J55CUyiY59BUn
+	 pkgUeP9LJx2oWeGhPJIQcgyM1rUIaV6rkw9388C0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Xingui Yang <yangxingui@huawei.com>,
+	Yihang Li <liyihang9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/223] scsi: hisi_sas: Enable force phy when SATA disk directly connected
+Date: Wed, 23 Apr 2025 16:41:13 +0200
+Message-ID: <20250423142617.184125840@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/panel: himax-hx8279: Initialize goa_{even,odd}_valid
- in hx8279_check_goa_config()
-To: neil.armstrong@linaro.org, Nathan Chancellor <nathan@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>,
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
- patches@lists.linux.dev
-References: <20250422-panel-himax-hx8279-fix-sometimes-uninitialized-v1-1-614dba12b30d@kernel.org>
- <a6e47775-33c3-44c2-b6d5-58164e4a0a50@linaro.org>
- <b8d21e46-c50a-4212-ae7a-d292c2ec6ce4@linaro.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <b8d21e46-c50a-4212-ae7a-d292c2ec6ce4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Il 23/04/25 15:50, Neil Armstrong ha scritto:
-> On 23/04/2025 15:45, Neil Armstrong wrote:
->> On 22/04/2025 23:20, Nathan Chancellor wrote:
->>> Clang warns (or errors with CONFIG_WERROR=y):
->>>
->>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 
->>> 'goa_even_valid' is used uninitialized whenever 'if' condition is false [- 
->>> Werror,-Wsometimes-uninitialized]
->>>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->>>          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use 
->>> occurs here
->>>      842 |         if (goa_odd_valid != goa_even_valid)
->>>          |                              ^~~~~~~~~~~~~~
->>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if 
->>> its condition is always true
->>>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->>>          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>      839 |                 goa_even_valid = false;
->>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the 
->>> variable 'goa_even_valid' to silence this warning
->>>      818 |         bool goa_odd_valid, goa_even_valid;
->>>          |                                           ^
->>>          |                                            = 0
->>>
->>> Even though only the even valid variable gets flagged, both valid
->>> variables appear to have the same issue of possibly being used
->>> uninitialized if the if statement initializing them to false is not
->>> taken.
->>>
->>> Initialize both values to true to clear up the warning and remove any
->>> possibility of encountering undefined behavior.
->>>
->>> Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
->>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->>> ---
->>>   drivers/gpu/drm/panel/panel-himax-hx8279.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/panel/panel-himax-hx8279.c b/drivers/gpu/drm/panel/ 
->>> panel-himax-hx8279.c
->>> index b48b350b62da..92f351e66c25 100644
->>> --- a/drivers/gpu/drm/panel/panel-himax-hx8279.c
->>> +++ b/drivers/gpu/drm/panel/panel-himax-hx8279.c
->>> @@ -815,7 +815,7 @@ static int hx8279_check_gmux_config(struct hx8279 *hx, 
->>> struct device *dev)
->>>   static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
->>>   {
->>>       const struct hx8279_panel_desc *desc = hx->desc;
->>> -    bool goa_odd_valid, goa_even_valid;
->>> +    bool goa_odd_valid = true, goa_even_valid = true;
->>>       int i, num_zero, num_clr = 0;
->>>       /* Up to 4 zero values is a valid configuration. Check them all. */
->>>
->>> ---
->>> base-commit: dcbd5dcc956e2331414fd7020b4655df08deeb87
->>> change-id: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
->>>
->>> Best regards,
->>
->> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> I'll wait a few days until AngeloGioacchino Del Regno reviews it to be sure
-> it's the right fix.
-> 
-> Thanks,
-> Neil
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-I would prefer
+------------------
 
-	if (num_zero == ARRAY_SIZE(desc->goa_odd_timing))
-		goa_odd_valid = false;
-	else
-		goa_odd_valid = true;
+From: Xingui Yang <yangxingui@huawei.com>
 
-	/* Up to 3 zeroes is a valid config. Check them all. */
-	num_zero = 1;
-	for (i = 0; i < ARRAY_SIZE(desc->goa_even_timing); i++) {
-		if (desc->goa_even_timing[i])
-			num_zero++;
-	}
+[ Upstream commit 8aa580cd92843b60d4d6331f3b0a9e8409bb70eb ]
 
-	if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
-		goa_even_valid = false;
-	else
-		goa_even_valid = true;
+when a SATA disk is directly connected the SAS controller determines the
+disk to which I/Os are delivered based on the port ID in the DQ entry.
 
-or the shorter form:
+When many phys are disconnected and reconnect, the port ID of phys were
+changed and used by other link, resulting in I/O being sent to incorrect
+disk. Data inconsistency on the SATA disk may occur during I/O retries
+using the old port ID. So enable force phy, then force the command to be
+executed in a certain phy, and if the actual phy ID of the port does not
+match the phy configured in the command, the chip will stop delivering the
+I/O to disk.
 
-	goa_odd_valid = (num_zero != ARRAY_SIZE(desc->goa_odd_timing));
+Fixes: ce60689e12dd ("scsi: hisi_sas: add v3 code to send ATA frame")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20250312095135.3048379-2-yangxingui@huawei.com
+Reviewed-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  9 +++++++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 14 ++++++++++++--
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-	/* Up to 3 zeroes is a valid config. Check them all. */
-	num_zero = 1;
-	for (i = 0; i < ARRAY_SIZE(desc->goa_even_timing); i++) {
-		if (desc->goa_even_timing[i])
-			num_zero++;
-	}
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index 342d75f12051d..89ff33daba404 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2501,6 +2501,7 @@ static void prep_ata_v2_hw(struct hisi_hba *hisi_hba,
+ 	struct hisi_sas_port *port = to_hisi_sas_port(sas_port);
+ 	struct sas_ata_task *ata_task = &task->ata_task;
+ 	struct sas_tmf_task *tmf = slot->tmf;
++	int phy_id;
+ 	u8 *buf_cmd;
+ 	int has_data = 0, hdr_tag = 0;
+ 	u32 dw0, dw1 = 0, dw2 = 0;
+@@ -2508,10 +2509,14 @@ static void prep_ata_v2_hw(struct hisi_hba *hisi_hba,
+ 	/* create header */
+ 	/* dw0 */
+ 	dw0 = port->id << CMD_HDR_PORT_OFF;
+-	if (parent_dev && dev_is_expander(parent_dev->dev_type))
++	if (parent_dev && dev_is_expander(parent_dev->dev_type)) {
+ 		dw0 |= 3 << CMD_HDR_CMD_OFF;
+-	else
++	} else {
++		phy_id = device->phy->identify.phy_identifier;
++		dw0 |= (1U << phy_id) << CMD_HDR_PHY_ID_OFF;
++		dw0 |= CMD_HDR_FORCE_PHY_MSK;
+ 		dw0 |= 4 << CMD_HDR_CMD_OFF;
++	}
+ 
+ 	if (tmf && ata_task->force_phy) {
+ 		dw0 |= CMD_HDR_FORCE_PHY_MSK;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index cd394d8c9f07f..6b4cb560ff304 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -358,6 +358,10 @@
+ #define CMD_HDR_RESP_REPORT_MSK		(0x1 << CMD_HDR_RESP_REPORT_OFF)
+ #define CMD_HDR_TLR_CTRL_OFF		6
+ #define CMD_HDR_TLR_CTRL_MSK		(0x3 << CMD_HDR_TLR_CTRL_OFF)
++#define CMD_HDR_PHY_ID_OFF		8
++#define CMD_HDR_PHY_ID_MSK		(0x1ff << CMD_HDR_PHY_ID_OFF)
++#define CMD_HDR_FORCE_PHY_OFF		17
++#define CMD_HDR_FORCE_PHY_MSK		(0x1U << CMD_HDR_FORCE_PHY_OFF)
+ #define CMD_HDR_PORT_OFF		18
+ #define CMD_HDR_PORT_MSK		(0xf << CMD_HDR_PORT_OFF)
+ #define CMD_HDR_PRIORITY_OFF		27
+@@ -1425,15 +1429,21 @@ static void prep_ata_v3_hw(struct hisi_hba *hisi_hba,
+ 	struct hisi_sas_cmd_hdr *hdr = slot->cmd_hdr;
+ 	struct asd_sas_port *sas_port = device->port;
+ 	struct hisi_sas_port *port = to_hisi_sas_port(sas_port);
++	int phy_id;
+ 	u8 *buf_cmd;
+ 	int has_data = 0, hdr_tag = 0;
+ 	u32 dw1 = 0, dw2 = 0;
+ 
+ 	hdr->dw0 = cpu_to_le32(port->id << CMD_HDR_PORT_OFF);
+-	if (parent_dev && dev_is_expander(parent_dev->dev_type))
++	if (parent_dev && dev_is_expander(parent_dev->dev_type)) {
+ 		hdr->dw0 |= cpu_to_le32(3 << CMD_HDR_CMD_OFF);
+-	else
++	} else {
++		phy_id = device->phy->identify.phy_identifier;
++		hdr->dw0 |= cpu_to_le32((1U << phy_id)
++				<< CMD_HDR_PHY_ID_OFF);
++		hdr->dw0 |= CMD_HDR_FORCE_PHY_MSK;
+ 		hdr->dw0 |= cpu_to_le32(4U << CMD_HDR_CMD_OFF);
++	}
+ 
+ 	switch (task->data_dir) {
+ 	case DMA_TO_DEVICE:
+-- 
+2.39.5
 
-	goa_even_valid = (num_zero != ARRAY_SIZE(desc->goa_even_timing));
 
-...to avoid double initialization.
 
-But anyway, the proposed solution also works just fine, as the sense is, as well
-understood by Nathan, "if it's all zeroes something is wrong, otherwise it's ok".
-
-Btw , I'm sorry about this - not sure how the code ended up being like this,
-probably that last minute cleanup that I did.
-
-Ultimately, whether to avoid the double init or not is Neil's call - so for this
-commit you can get my
-
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-
-And sorry again about the (stupid) mistake.
-
-Cheers,
-Angelo
