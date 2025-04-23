@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554B3284B42;
-	Wed, 23 Apr 2025 15:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1319279345;
+	Wed, 23 Apr 2025 15:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422283; cv=none; b=bMB+p5PewqCPfvv7hsSe0tCz2E/Twj/Gu4LmecAku/iTYF/ojCCPB+auDrpYxD2qz4ecB23q6gXUKjCp9YsSTLOhD4ovjCctsQy/zTF9JoJ3+sCJx/5/V0bNjIxitdq3iKntlbX6PEyoLxzVwUxR10l15TjLJX/kogBGGqV/Zzg=
+	t=1745422286; cv=none; b=MPQJPPdmbGfetWk9dlD5JLZ3f63hahlnptjDxFKoYua40C+N6rmXNc2HEbriywJKbddqqCftlQCgU4uZOUO13/s/PBydDGUUBk1ncIoXe/GkETGs7iFJjk6sdNEYTzEEp1rF+67HI51Sk3FdPyj9IxL8V6jbgNZfhvoAXkNkQKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422283; c=relaxed/simple;
-	bh=3Bp9wozF+n+HgUx8ETjP6IgxpTYm1e0ZCGBsbJFLIP8=;
+	s=arc-20240116; t=1745422286; c=relaxed/simple;
+	bh=m+R5BSm65sBPq3ue3Ykt5l/jHRVU/AaqGpT1wwxAw8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrL4PoFDcAGB04h9QiO4LxAvHhLRJrN4zJfLQ1orMIMMwkfW21T15XPwyEP/Voytg3870eAyERoCLX6cTbevgb+OA2UySPfAZvrHz6UMD7nVE3rfspfkf3n3Ulzxx4Psg4aZzk2qOR8QcIvdgtqfZN1xm0cG+hVyTaIeFygNL/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vab9Z5PF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=trRVMmv5lH4TUXPFN8xM2cl8FvjKXpjE7n/M0H9h8pHFWB1c6pZeP+DAK0R9+xq/ejtmkOe8FM4IWUeN77oPRZ5YS1bB1QPLkSulB87eTI7+e7mSGoRMb6rWfE0h14WEij7lisnZCgnUbUwAR/TheOjJfxcuuSopu+Da88TKJeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PT9ZEbbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vab9Z5PF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC273C4CEE2;
-	Wed, 23 Apr 2025 15:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PT9ZEbbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F3FC4CEE3;
+	Wed, 23 Apr 2025 15:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422283;
-	bh=3Bp9wozF+n+HgUx8ETjP6IgxpTYm1e0ZCGBsbJFLIP8=;
+	s=korg; t=1745422285;
+	bh=m+R5BSm65sBPq3ue3Ykt5l/jHRVU/AaqGpT1wwxAw8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vab9Z5PF8Igbe2T0Rp9VtwQtDfAJsvsjYoJd+fPJql7CMtKmjO4mwFbyCskhsiuBJ
-	 zjVq6XMiXlxN8oCdM5j16m/nBPa8EtZquZOXPVZZW6w0zkBBFUqVSzAejjeZwFpCnv
-	 6sfm3kt+C5bMmrddwVoM3olu0Ni8vRYkiA5sPkH8=
+	b=PT9ZEbbtnGLTFwl0KiGY94KTTyLl/nUrUznO/4tBS10ownTJ8g8pdbvUPyU/XOr00
+	 Aoagc+UCYHZFDVAmCk4zIOtHcUEJybt+FGFLY0PIuk0BfUIS/Q7FDtHRiJf3K0ca1K
+	 YQZSKGY8tp8poTiY57hrBDxO6cCXh7hkNj3uWQ3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.6 313/393] cpufreq: Avoid using inconsistent policy->min and policy->max
-Date: Wed, 23 Apr 2025 16:43:29 +0200
-Message-ID: <20250423142656.256665653@linuxfoundation.org>
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 270/291] btrfs: zoned: fix zone activation with missing devices
+Date: Wed, 23 Apr 2025 16:44:19 +0200
+Message-ID: <20250423142635.453284962@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,110 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 7491cdf46b5cbdf123fc84fbe0a07e9e3d7b7620 upstream.
+commit 2bbc4a45e5eb6b868357c1045bf6f38f6ba576e0 upstream.
 
-Since cpufreq_driver_resolve_freq() can run in parallel with
-cpufreq_set_policy() and there is no synchronization between them,
-the former may access policy->min and policy->max while the latter
-is updating them and it may see intermediate values of them due
-to the way the update is carried out.  Also the compiler is free
-to apply any optimizations it wants both to the stores in
-cpufreq_set_policy() and to the loads in cpufreq_driver_resolve_freq()
-which may result in additional inconsistencies.
+If btrfs_zone_activate() is called with a filesystem that has missing
+devices (e.g. a RAID file system mounted in degraded mode) it is accessing
+the btrfs_device::zone_info pointer, which will not be set if the device in
+question is missing.
 
-To address this, use WRITE_ONCE() when updating policy->min and
-policy->max in cpufreq_set_policy() and use READ_ONCE() for reading
-them in cpufreq_driver_resolve_freq().  Moreover, rearrange the update
-in cpufreq_set_policy() to avoid storing intermediate values in
-policy->min and policy->max with the help of the observation that
-their new values are expected to be properly ordered upfront.
+Check if the device is present (by checking if it has a valid block
+device pointer associated) and if not, skip zone activation for it.
 
-Also modify cpufreq_driver_resolve_freq() to take the possible reverse
-ordering of policy->min and policy->max, which may happen depending on
-the ordering of operations when this function and cpufreq_set_policy()
-run concurrently, into account by always honoring the max when it
-turns out to be less than the min (in case it comes from thermal
-throttling or similar).
-
-Fixes: 151717690694 ("cpufreq: Make policy min/max hard requirements")
-Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/5907080.DvuYhMxLoT@rjwysocki.net
+Fixes: f9a912a3c45f ("btrfs: zoned: make zone activation multi stripe capable")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c |   32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ fs/btrfs/zoned.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -538,8 +538,6 @@ static unsigned int __resolve_freq(struc
- {
- 	unsigned int idx;
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1909,6 +1909,9 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 		device = map->stripes[i].dev;
+ 		physical = map->stripes[i].physical;
  
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
--
- 	if (!policy->freq_table)
- 		return target_freq;
- 
-@@ -563,7 +561,22 @@ static unsigned int __resolve_freq(struc
- unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
- 					 unsigned int target_freq)
- {
--	return __resolve_freq(policy, target_freq, CPUFREQ_RELATION_LE);
-+	unsigned int min = READ_ONCE(policy->min);
-+	unsigned int max = READ_ONCE(policy->max);
++		if (!device->bdev)
++			continue;
 +
-+	/*
-+	 * If this function runs in parallel with cpufreq_set_policy(), it may
-+	 * read policy->min before the update and policy->max after the update
-+	 * or the other way around, so there is no ordering guarantee.
-+	 *
-+	 * Resolve this by always honoring the max (in case it comes from
-+	 * thermal throttling or similar).
-+	 */
-+	if (unlikely(min > max))
-+		min = max;
-+
-+	return __resolve_freq(policy, clamp_val(target_freq, min, max),
-+			      CPUFREQ_RELATION_LE);
- }
- EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+ 		if (device->zone_info->max_active_zones == 0)
+ 			continue;
  
-@@ -2335,6 +2348,7 @@ int __cpufreq_driver_target(struct cpufr
- 	if (cpufreq_disabled())
- 		return -ENODEV;
- 
-+	target_freq = clamp_val(target_freq, policy->min, policy->max);
- 	target_freq = __resolve_freq(policy, target_freq, relation);
- 
- 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
-@@ -2625,11 +2639,15 @@ static int cpufreq_set_policy(struct cpu
- 	 * Resolve policy min/max to available frequencies. It ensures
- 	 * no frequency resolution will neither overshoot the requested maximum
- 	 * nor undershoot the requested minimum.
-+	 *
-+	 * Avoid storing intermediate values in policy->max or policy->min and
-+	 * compiler optimizations around them because they may be accessed
-+	 * concurrently by cpufreq_driver_resolve_freq() during the update.
- 	 */
--	policy->min = new_data.min;
--	policy->max = new_data.max;
--	policy->min = __resolve_freq(policy, policy->min, CPUFREQ_RELATION_L);
--	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
-+	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
-+	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
-+	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
-+
- 	trace_cpu_frequency_limits(policy);
- 
- 	policy->cached_target_freq = UINT_MAX;
 
 
