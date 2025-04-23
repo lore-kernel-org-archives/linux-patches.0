@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB428C5AB;
-	Wed, 23 Apr 2025 15:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B05928D822;
+	Wed, 23 Apr 2025 15:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421900; cv=none; b=osOzKVETAeFv1RdyyjXcwfo+9mGdmroXM57OsRqAmqlTqmBCheYxAXW/pQAqXVaqQwAjb88Er1ALiYDRR0rkW4GXZ2XHbakM+4KYmVPQudq2yJ0oGndLV3nSCW9xY8APzSYFIqD+/QAGhY1qP2lMU0Z5UG7BJ+V9tFO2GoC3ZoU=
+	t=1745421903; cv=none; b=lVH7JVbXpS9XUTbQMFDUt9Q+RHtSJT8CLMOVC9TQJc09zjB1FbiSaSX3XQ1LVgv3ZpqeQo4u5OT0Wd/E49p6nfWwy5PFaw4MyMZRWmdJ2OWnAceV3bN8P3cQGT82MANtJdFrrjVtX8vYp0MruRumxNDU8bV/FGQuBLq5F0mbhtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421900; c=relaxed/simple;
-	bh=oah/ekBZQSHr1KMmd7bg97v5R3bk5xbDZ+FNXImCV3Y=;
+	s=arc-20240116; t=1745421903; c=relaxed/simple;
+	bh=Wgnq+pJMDp8EoqrIqhuSQA1BEBoMTEYjXe1MDhasxAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwHbx5why2I4P3XSU1mfKPqR+5ScK/dQSF6KG/D3HC0SucuLuYK0QEmgVBO1ljlfgINIHWvro+samoL+HErlNU/kfrFTFhZnljnzoMlJMlMuZO4s0sxkP8PYSCQNrNyUlHs7BDLF3qM6WnfKxaKpKEDDyGlS87OLnrTZwwnlVMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSAvGnkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2msZUK2VfqJZyKFlZiWLhlieJub/NHp9mdxGrLRzhBRAmaXkIX/8G9FBhdpYjHYNHtLLeHG8MClLwia4wKtFJKTMxIVSfsBLAWIEmBUnHH625kiwc3j7nYbH+tfcVVUasoV6pSUGRASnAoerRT08AxPzQFLzND/7spUyZROgqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO08qsrt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSAvGnkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66951C4CEE2;
-	Wed, 23 Apr 2025 15:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO08qsrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43459C4CEE3;
+	Wed, 23 Apr 2025 15:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421899;
-	bh=oah/ekBZQSHr1KMmd7bg97v5R3bk5xbDZ+FNXImCV3Y=;
+	s=korg; t=1745421902;
+	bh=Wgnq+pJMDp8EoqrIqhuSQA1BEBoMTEYjXe1MDhasxAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSAvGnkUEQ5bHZ5hn7P6JbLzHcm7uHjWW57sDTv9e/Kax6egiP0vT5xxXJErsw+a8
-	 XmRxJv/+Zku2IBN3pkwAeidP+Vvhfs1VlKFwcWvyf1gDcFvmDcN4Hr7oKcHIH05dkc
-	 4Y8FRodKZN8c5lW9QpAx+vo2HGEla/8bhL4fVeNQ=
+	b=YO08qsrtAcq8eCadGWtwDrrkIZx9p+snd2MyEISIPzt3jd3SU7xqj9mYv1CZjmxLU
+	 AjfMr/XRt1631Qw+DloTx16Fu7drsJOti0WkGUOTf0Goit8J72ykypgjULh1YU0+1d
+	 QjP8tV+rUIbysFDUyroHgNnFzWkkhil4kmpPzHUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Vishal Annapurve <vannapurve@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	Ryan Afranji <afranji@google.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 233/393] x86/paravirt: Move halt paravirt calls under CONFIG_PARAVIRT
-Date: Wed, 23 Apr 2025 16:42:09 +0200
-Message-ID: <20250423142653.014426963@linuxfoundation.org>
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 242/393] wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()
+Date: Wed, 23 Apr 2025 16:42:18 +0200
+Message-ID: <20250423142653.381342914@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -62,196 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-commit 22cc5ca5de52bbfc36a7d4a55323f91fb4492264 upstream.
+[ Upstream commit a104042e2bf6528199adb6ca901efe7b60c2c27f ]
 
-CONFIG_PARAVIRT_XXL is mainly defined/used by XEN PV guests. For
-other VM guest types, features supported under CONFIG_PARAVIRT
-are self sufficient. CONFIG_PARAVIRT mainly provides support for
-TLB flush operations and time related operations.
+The ieee80211 skb control block key (set when skb was queued) could have
+been removed before ieee80211_tx_dequeue() call. ieee80211_tx_dequeue()
+already called ieee80211_tx_h_select_key() to get the current key, but
+the latter do not update the key in skb control block in case it is
+NULL. Because some drivers actually use this key in their TX callbacks
+(e.g. ath1{1,2}k_mac_op_tx()) this could lead to the use after free
+below:
 
-For TDX guest as well, paravirt calls under CONFIG_PARVIRT meets
-most of its requirement except the need of HLT and SAFE_HLT
-paravirt calls, which is currently defined under
-CONFIG_PARAVIRT_XXL.
+  BUG: KASAN: slab-use-after-free in ath11k_mac_op_tx+0x590/0x61c
+  Read of size 4 at addr ffffff803083c248 by task kworker/u16:4/1440
 
-Since enabling CONFIG_PARAVIRT_XXL is too bloated for TDX guest
-like platforms, move HLT and SAFE_HLT paravirt calls under
-CONFIG_PARAVIRT.
+  CPU: 3 UID: 0 PID: 1440 Comm: kworker/u16:4 Not tainted 6.13.0-ge128f627f404 #2
+  Hardware name: HW (DT)
+  Workqueue: bat_events batadv_send_outstanding_bcast_packet
+  Call trace:
+   show_stack+0x14/0x1c (C)
+   dump_stack_lvl+0x58/0x74
+   print_report+0x164/0x4c0
+   kasan_report+0xac/0xe8
+   __asan_report_load4_noabort+0x1c/0x24
+   ath11k_mac_op_tx+0x590/0x61c
+   ieee80211_handle_wake_tx_queue+0x12c/0x1c8
+   ieee80211_queue_skb+0xdcc/0x1b4c
+   ieee80211_tx+0x1ec/0x2bc
+   ieee80211_xmit+0x224/0x324
+   __ieee80211_subif_start_xmit+0x85c/0xcf8
+   ieee80211_subif_start_xmit+0xc0/0xec4
+   dev_hard_start_xmit+0xf4/0x28c
+   __dev_queue_xmit+0x6ac/0x318c
+   batadv_send_skb_packet+0x38c/0x4b0
+   batadv_send_outstanding_bcast_packet+0x110/0x328
+   process_one_work+0x578/0xc10
+   worker_thread+0x4bc/0xc7c
+   kthread+0x2f8/0x380
+   ret_from_fork+0x10/0x20
 
-Moving HLT and SAFE_HLT paravirt calls are not fatal and should not
-break any functionality for current users of CONFIG_PARAVIRT.
+  Allocated by task 1906:
+   kasan_save_stack+0x28/0x4c
+   kasan_save_track+0x1c/0x40
+   kasan_save_alloc_info+0x3c/0x4c
+   __kasan_kmalloc+0xac/0xb0
+   __kmalloc_noprof+0x1b4/0x380
+   ieee80211_key_alloc+0x3c/0xb64
+   ieee80211_add_key+0x1b4/0x71c
+   nl80211_new_key+0x2b4/0x5d8
+   genl_family_rcv_msg_doit+0x198/0x240
+  <...>
 
-Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
-Co-developed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Vishal Annapurve <vannapurve@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Andi Kleen <ak@linux.intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Ryan Afranji <afranji@google.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20250228014416.3925664-2-vannapurve@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Freed by task 1494:
+   kasan_save_stack+0x28/0x4c
+   kasan_save_track+0x1c/0x40
+   kasan_save_free_info+0x48/0x94
+   __kasan_slab_free+0x48/0x60
+   kfree+0xc8/0x31c
+   kfree_sensitive+0x70/0x80
+   ieee80211_key_free_common+0x10c/0x174
+   ieee80211_free_keys+0x188/0x46c
+   ieee80211_stop_mesh+0x70/0x2cc
+   ieee80211_leave_mesh+0x1c/0x60
+   cfg80211_leave_mesh+0xe0/0x280
+   cfg80211_leave+0x1e0/0x244
+  <...>
+
+Reset SKB control block key before calling ieee80211_tx_h_select_key()
+to avoid that.
+
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/06aa507b853ca385ceded81c18b0a6dd0f081bc8.1742833382.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/irqflags.h       |   40 ++++++++++++++++++----------------
- arch/x86/include/asm/paravirt.h       |   20 ++++++++---------
- arch/x86/include/asm/paravirt_types.h |    3 --
- arch/x86/kernel/paravirt.c            |   14 ++++++-----
- 4 files changed, 41 insertions(+), 36 deletions(-)
+ net/mac80211/tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/include/asm/irqflags.h
-+++ b/arch/x86/include/asm/irqflags.h
-@@ -56,6 +56,28 @@ static __always_inline void native_halt(
- 
- #endif
- 
-+#ifndef CONFIG_PARAVIRT
-+#ifndef __ASSEMBLY__
-+/*
-+ * Used in the idle loop; sti takes one instruction cycle
-+ * to complete:
-+ */
-+static __always_inline void arch_safe_halt(void)
-+{
-+	native_safe_halt();
-+}
-+
-+/*
-+ * Used when interrupts are already enabled or to
-+ * shutdown the processor:
-+ */
-+static __always_inline void halt(void)
-+{
-+	native_halt();
-+}
-+#endif /* __ASSEMBLY__ */
-+#endif /* CONFIG_PARAVIRT */
-+
- #ifdef CONFIG_PARAVIRT_XXL
- #include <asm/paravirt.h>
- #else
-@@ -78,24 +100,6 @@ static __always_inline void arch_local_i
- }
- 
- /*
-- * Used in the idle loop; sti takes one instruction cycle
-- * to complete:
-- */
--static __always_inline void arch_safe_halt(void)
--{
--	native_safe_halt();
--}
--
--/*
-- * Used when interrupts are already enabled or to
-- * shutdown the processor:
-- */
--static __always_inline void halt(void)
--{
--	native_halt();
--}
--
--/*
-  * For spinlocks, etc:
-  */
- static __always_inline unsigned long arch_local_irq_save(void)
---- a/arch/x86/include/asm/paravirt.h
-+++ b/arch/x86/include/asm/paravirt.h
-@@ -103,6 +103,16 @@ static inline void notify_page_enc_statu
- 	PVOP_VCALL3(mmu.notify_page_enc_status_changed, pfn, npages, enc);
- }
- 
-+static __always_inline void arch_safe_halt(void)
-+{
-+	PVOP_VCALL0(irq.safe_halt);
-+}
-+
-+static inline void halt(void)
-+{
-+	PVOP_VCALL0(irq.halt);
-+}
-+
- #ifdef CONFIG_PARAVIRT_XXL
- static inline void load_sp0(unsigned long sp0)
- {
-@@ -168,16 +178,6 @@ static inline void __write_cr4(unsigned
- 	PVOP_VCALL1(cpu.write_cr4, x);
- }
- 
--static __always_inline void arch_safe_halt(void)
--{
--	PVOP_VCALL0(irq.safe_halt);
--}
--
--static inline void halt(void)
--{
--	PVOP_VCALL0(irq.halt);
--}
--
- extern noinstr void pv_native_wbinvd(void);
- 
- static __always_inline void wbinvd(void)
---- a/arch/x86/include/asm/paravirt_types.h
-+++ b/arch/x86/include/asm/paravirt_types.h
-@@ -130,10 +130,9 @@ struct pv_irq_ops {
- 	struct paravirt_callee_save save_fl;
- 	struct paravirt_callee_save irq_disable;
- 	struct paravirt_callee_save irq_enable;
--
-+#endif
- 	void (*safe_halt)(void);
- 	void (*halt)(void);
--#endif
- } __no_randomize_layout;
- 
- struct pv_mmu_ops {
---- a/arch/x86/kernel/paravirt.c
-+++ b/arch/x86/kernel/paravirt.c
-@@ -142,6 +142,11 @@ int paravirt_disable_iospace(void)
- 	return request_resource(&ioport_resource, &reserve_ioports);
- }
- 
-+static noinstr void pv_native_safe_halt(void)
-+{
-+	native_safe_halt();
-+}
-+
- #ifdef CONFIG_PARAVIRT_XXL
- static noinstr void pv_native_write_cr2(unsigned long val)
- {
-@@ -162,11 +167,6 @@ noinstr void pv_native_wbinvd(void)
- {
- 	native_wbinvd();
- }
--
--static noinstr void pv_native_safe_halt(void)
--{
--	native_safe_halt();
--}
- #endif
- 
- struct pv_info pv_info = {
-@@ -224,9 +224,11 @@ struct paravirt_patch_template pv_ops =
- 	.irq.save_fl		= __PV_IS_CALLEE_SAVE(pv_native_save_fl),
- 	.irq.irq_disable	= __PV_IS_CALLEE_SAVE(pv_native_irq_disable),
- 	.irq.irq_enable		= __PV_IS_CALLEE_SAVE(pv_native_irq_enable),
-+#endif /* CONFIG_PARAVIRT_XXL */
-+
-+	/* Irq HLT ops. */
- 	.irq.safe_halt		= pv_native_safe_halt,
- 	.irq.halt		= native_halt,
--#endif /* CONFIG_PARAVIRT_XXL */
- 
- 	/* Mmu ops. */
- 	.mmu.flush_tlb_user	= native_flush_tlb_local,
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 45a093d3f1fa7..8c46498152d76 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3877,6 +3877,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
++	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
+-- 
+2.39.5
+
 
 
