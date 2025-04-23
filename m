@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C0E27D763;
-	Wed, 23 Apr 2025 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B559280A20;
+	Wed, 23 Apr 2025 15:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420790; cv=none; b=mKFEAQ9S/8x9ejf1RgLlAON1MhRKUkXL3mOXFe/wsnxwf6snO+7gPytwhtaL7HLvjSwCdVeulcgANGiXuprYFR0L8C+K9lkFnHmdJENFg06V5t0qEingueDFJEPLwPcZNugVw3/PwlPZtEb8kurBni57W4ef8jf0GI88MWTpP10=
+	t=1745420793; cv=none; b=lVtMzXi6MXbN5X03W+Fd+CeXXNtS05TVR92uQ21Z9oF+vr49WrhBsDgI8AP57FMMYwKCOosr9sUsW4LhYdtwDotTz0UBhT+YfxoImjQFpTPUVxC+YBPOGErw0CNlTHDdkWYjeGex/q3lANmlVrhQaKMTg+r6l8ECa3nrJQ5SgxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420790; c=relaxed/simple;
-	bh=AsWVqR1QmoHR8ZIgSDtHtU84ZzsWyA8/Gj07Xb00OLQ=;
+	s=arc-20240116; t=1745420793; c=relaxed/simple;
+	bh=n+9opHuQ8R+DmVz8/M1eQ4tgSITNNdyjVcoU7HZYyKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWrXMswB4ioCN7k2IRGcgRx0KH3HuPaVwCrwDkgWqA1762/Kj1QbTs+iLtJK3uj70VL5Y4acZi1XdNtzfaKaflsKWPJsfqDFRCRJ05Tv5Pzkv++703BM1WQHJu+XRTZCKNSGzRvl58hpLZcmi1aCBiewzDkCtjorim88NtMjQq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXa+HcI5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1NvGppT3jkuGur1hEqvaIY6oUjFLwawQzN+i44bVBD8wAU5e+nDa/Xr1/87BV27IUwcGJzefW90/eUrFs8eM/eW5Bb7sYpKDZJ2hqa3wwWZU4rFpYxHG+Sq3YkRD8oljjtZpPadSrNCCd/9WUkAziAXugihU2Mkh1rzSIm3V6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPPNqLGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXa+HcI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442BCC4CEE2;
-	Wed, 23 Apr 2025 15:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPPNqLGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF86FC4CEE3;
+	Wed, 23 Apr 2025 15:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420790;
-	bh=AsWVqR1QmoHR8ZIgSDtHtU84ZzsWyA8/Gj07Xb00OLQ=;
+	s=korg; t=1745420793;
+	bh=n+9opHuQ8R+DmVz8/M1eQ4tgSITNNdyjVcoU7HZYyKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXa+HcI53EGsSjN1lhawnY+caRdP4Ry2V8Lj6F7Go3VE/gcNHj7GFtJBHPikCMTg5
-	 5Q8Cc0DwZUeJBeQIrkgc9SO02uFgApYDPsIxk6CXZXIx9lX5cFMx/nwFP5siHaf09H
-	 gB5iOppf2VJCjw/FztvA2EpcYrauRpS1S/KPvReQ=
+	b=PPPNqLGUzPYs1tH4+zQ0JJcFDlBzxXvNeE1Z/vknf0cocGWF+MlhY3MFRVqSdDHW2
+	 xhoQhZWO+YjHYswUaxhNZ/lRjaBxyqGDT5EK0alD7mGKZCmx5CtoAb4sUJy8IITBiq
+	 AwHVOZ9CnMfK4i4u8EzdVazUhO4K13j9//l4Gzmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/393] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
-Date: Wed, 23 Apr 2025 16:39:59 +0200
-Message-ID: <20250423142647.543153481@linuxfoundation.org>
+	Matthew Majewski <mattwmajewski@gmail.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 081/291] media: vim2m: print device name after registering device
+Date: Wed, 23 Apr 2025 16:41:10 +0200
+Message-ID: <20250423142627.677661518@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Matthew Majewski <mattwmajewski@gmail.com>
 
-[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
+commit 143d75583f2427f3a97dba62413c4f0604867ebf upstream.
 
-If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
-delete the queue from process_queue_list and free the resource.
+Move the v4l2_info() call displaying the video device name after the
+device is actually registered.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This fixes a bug where the driver was always displaying "/dev/video0"
+since it was reading from the vfd before it was registered.
+
+Fixes: cf7f34777a5b ("media: vim2m: Register video device after setting up internals")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Majewski <mattwmajewski@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vim2m.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index e057c2bc7be42..d11a71e8aa141 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -510,7 +510,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
- 			pr_err("Pasid 0x%x destroy queue %d failed, ret %d\n",
- 				pqm->process->pasid,
- 				pqn->q->properties.queue_id, retval);
--			if (retval != -ETIME)
-+			if (retval != -ETIME && retval != -EIO)
- 				goto err_destroy_queue;
- 		}
+--- a/drivers/media/test-drivers/vim2m.c
++++ b/drivers/media/test-drivers/vim2m.c
+@@ -1316,9 +1316,6 @@ static int vim2m_probe(struct platform_d
+ 	vfd->v4l2_dev = &dev->v4l2_dev;
  
--- 
-2.39.5
-
+ 	video_set_drvdata(vfd, dev);
+-	v4l2_info(&dev->v4l2_dev,
+-		  "Device registered as /dev/video%d\n", vfd->num);
+-
+ 	platform_set_drvdata(pdev, dev);
+ 
+ 	dev->m2m_dev = v4l2_m2m_init(&m2m_ops);
+@@ -1345,6 +1342,9 @@ static int vim2m_probe(struct platform_d
+ 		goto error_m2m;
+ 	}
+ 
++	v4l2_info(&dev->v4l2_dev,
++		  "Device registered as /dev/video%d\n", vfd->num);
++
+ #ifdef CONFIG_MEDIA_CONTROLLER
+ 	ret = v4l2_m2m_register_media_controller(dev->m2m_dev, vfd,
+ 						 MEDIA_ENT_F_PROC_VIDEO_SCALER);
 
 
