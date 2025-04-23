@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C472857CD;
-	Wed, 23 Apr 2025 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76A92853F3;
+	Wed, 23 Apr 2025 15:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421270; cv=none; b=MSsnJcZ4WltRNXickELrb7JBzMZBzgTMFQ7mjSkxiWEnpENUu0cESELRj94Z7SU51J0sVuVpL5275/QH3H5pXhYSrK9hgXRhtsci54nAirqnjptC3llSHc8DXTItbf2ysvO3Mb2rCDkML/9OGK/03ICIWLI5AdPBWj/Xw7zlqSI=
+	t=1745421272; cv=none; b=LysjeMWuvSN47xYrslNOGnfFrfAGK6xir2QGY396LYOmr7mFpZbzDuSPGVdxg+6ECynDc6PCMua81Vf25yDRQprptFMOMbGwo9VfMDD1a9/mWPLilOJXcWMyuvgVvF5G/5NQ+sF21Mlsln4VdlSplACoNK+h/YNNGPNpss3akmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421270; c=relaxed/simple;
-	bh=4QmhWKKi4D9oeLktdPltapr/rzTTUENc5S7FeGkAAxU=;
+	s=arc-20240116; t=1745421272; c=relaxed/simple;
+	bh=xao9+SwzH1vTOZL78nK9FCYWqpwq0oOVAi+6JWdKCRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D57kRg1vQEwvhGxcFbtPtQZ4CCUhJWMRRUkoeIoGZeO1DApRfMntxBLZ8MFo2rTZqlZsDIWCK8hBV9C+jnuBmvf9G2SZKR1fOcv9L66kk7GgOlRwc8J+cnKdzzpYDmXF2c3ztM+Jr9Q/zHm80yssmlpWXAO0Moesw1s4mL+SVSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttkTNz0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3NAzDhlY1IRca/e1zvTY/QNbCsBrxODhPMcVYEgc9cThPCSAMj6NxQ6LObDD93+w8dg1R8Odm5CmMpTuqrP52rVZnku6ilxjt71+iyot/Y7wbBrsEPt52oSpYFjGISss1ULanOTBcjGYN36qlXFGbQ8t1WXCyYffIJY8dnmNis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEu2hk43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttkTNz0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8B7C4CEE2;
-	Wed, 23 Apr 2025 15:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEu2hk43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C13C4CEE2;
+	Wed, 23 Apr 2025 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421270;
-	bh=4QmhWKKi4D9oeLktdPltapr/rzTTUENc5S7FeGkAAxU=;
+	s=korg; t=1745421272;
+	bh=xao9+SwzH1vTOZL78nK9FCYWqpwq0oOVAi+6JWdKCRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttkTNz0pByg1PvyqB5RfJ8ImPEE6V5wSbkQaqROdJSFHxfUca0CF817nMPA4X1DU3
-	 OFWxuOmNjj8rbaI8Ujd/vZlDy3IBC/efiaF8vMsxJrCGCgi8ivL2/NjCgXOg/X12g5
-	 /3U6O9u2lmTRWsBMC7POZRCW6Sptuk7jl5B6vIIY=
+	b=gEu2hk43CfBV1R80UINS9ZKXfGHYHeI3L4gUBjbGN3O463jzJlhyQoQIHSyjH4LBO
+	 Q0apfrboCEheHUHF1twlkgBltiIlnShgK9JbFA5dlvAZbPbLuUxbivOU12Y38PAIax
+	 5JP6TudU6jMY9E8t248ae+G0IjeKt8wUIbqvWp/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kamlesh Gurudasani <kamlesh@ti.com>,
-	Praneeth Bajjuri <praneeth@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 122/291] lib: scatterlist: fix sg_split_phys to preserve original scatterlist offsets
-Date: Wed, 23 Apr 2025 16:41:51 +0200
-Message-ID: <20250423142629.387049423@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Mike Seo <mikeseohyungjin@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 164/393] tpm: do not start chip while suspended
+Date: Wed, 23 Apr 2025 16:41:00 +0200
+Message-ID: <20250423142650.146609121@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,60 +48,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: T Pratham <t-pratham@ti.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 8b46fdaea819a679da176b879e7b0674a1161a5e upstream.
+commit 17d253af4c2c8a2acf84bb55a0c2045f150b7dfd upstream.
 
-The split_sg_phys function was incorrectly setting the offsets of all
-scatterlist entries (except the first) to 0.  Only the first scatterlist
-entry's offset and length needs to be modified to account for the skip.
-Setting the rest entries' offsets to 0 could lead to incorrect data
-access.
+Checking TPM_CHIP_FLAG_SUSPENDED after the call to tpm_find_get_ops() can
+lead to a spurious tpm_chip_start() call:
 
-I am using this function in a crypto driver that I'm currently developing
-(not yet sent to mailing list).  During testing, it was observed that the
-output scatterlists (except the first one) contained incorrect garbage
-data.
+[35985.503771] i2c i2c-1: Transfer while suspended
+[35985.503796] WARNING: CPU: 0 PID: 74 at drivers/i2c/i2c-core.h:56 __i2c_transfer+0xbe/0x810
+[35985.503802] Modules linked in:
+[35985.503808] CPU: 0 UID: 0 PID: 74 Comm: hwrng Tainted: G        W          6.13.0-next-20250203-00005-gfa0cb5642941 #19 9c3d7f78192f2d38e32010ac9c90fdc71109ef6f
+[35985.503814] Tainted: [W]=WARN
+[35985.503817] Hardware name: Google Morphius/Morphius, BIOS Google_Morphius.13434.858.0 10/26/2023
+[35985.503819] RIP: 0010:__i2c_transfer+0xbe/0x810
+[35985.503825] Code: 30 01 00 00 4c 89 f7 e8 40 fe d8 ff 48 8b 93 80 01 00 00 48 85 d2 75 03 49 8b 16 48 c7 c7 0a fb 7c a7 48 89 c6 e8 32 ad b0 fe <0f> 0b b8 94 ff ff ff e9 33 04 00 00 be 02 00 00 00 83 fd 02 0f 5
+[35985.503828] RSP: 0018:ffffa106c0333d30 EFLAGS: 00010246
+[35985.503833] RAX: 074ba64aa20f7000 RBX: ffff8aa4c1167120 RCX: 0000000000000000
+[35985.503836] RDX: 0000000000000000 RSI: ffffffffa77ab0e4 RDI: 0000000000000001
+[35985.503838] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+[35985.503841] R10: 0000000000000004 R11: 00000001000313d5 R12: ffff8aa4c10f1820
+[35985.503843] R13: ffff8aa4c0e243c0 R14: ffff8aa4c1167250 R15: ffff8aa4c1167120
+[35985.503846] FS:  0000000000000000(0000) GS:ffff8aa4eae00000(0000) knlGS:0000000000000000
+[35985.503849] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[35985.503852] CR2: 00007fab0aaf1000 CR3: 0000000105328000 CR4: 00000000003506f0
+[35985.503855] Call Trace:
+[35985.503859]  <TASK>
+[35985.503863]  ? __warn+0xd4/0x260
+[35985.503868]  ? __i2c_transfer+0xbe/0x810
+[35985.503874]  ? report_bug+0xf3/0x210
+[35985.503882]  ? handle_bug+0x63/0xb0
+[35985.503887]  ? exc_invalid_op+0x16/0x50
+[35985.503892]  ? asm_exc_invalid_op+0x16/0x20
+[35985.503904]  ? __i2c_transfer+0xbe/0x810
+[35985.503913]  tpm_cr50_i2c_transfer_message+0x24/0xf0
+[35985.503920]  tpm_cr50_i2c_read+0x8e/0x120
+[35985.503928]  tpm_cr50_request_locality+0x75/0x170
+[35985.503935]  tpm_chip_start+0x116/0x160
+[35985.503942]  tpm_try_get_ops+0x57/0x90
+[35985.503948]  tpm_find_get_ops+0x26/0xd0
+[35985.503955]  tpm_get_random+0x2d/0x80
 
-I narrowed this issue down to the call of sg_split().  Upon debugging
-inside this function, I found that this resetting of offset is the cause
-of the problem, causing the subsequent scatterlists to point to incorrect
-memory locations in a page.  By removing this code, I am obtaining
-expected data in all the split output scatterlists.  Thus, this was indeed
-causing observable runtime effects!
+Don't move forward with tpm_chip_start() inside tpm_try_get_ops(), unless
+TPM_CHIP_FLAG_SUSPENDED is not set. tpm_find_get_ops() will return NULL in
+such a failure case.
 
-This patch removes the offending code, ensuring that the page offsets in
-the input scatterlist are preserved in the output scatterlist.
-
-Link: https://lkml.kernel.org/r/20250319111437.1969903-1-t-pratham@ti.com
-Fixes: f8bcbe62acd0 ("lib: scatterlist: add sg splitting function")
-Signed-off-by: T Pratham <t-pratham@ti.com>
-Cc: Robert Jarzmik <robert.jarzmik@free.fr>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Kamlesh Gurudasani <kamlesh@ti.com>
-Cc: Praneeth Bajjuri <praneeth@ti.com>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9265fed6db60 ("tpm: Lock TPM chip in tpm_pm_suspend() first")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org
+Cc: Jerry Snitselaar <jsnitsel@redhat.com>
+Cc: Mike Seo <mikeseohyungjin@gmail.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/sg_split.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/char/tpm/tpm-chip.c      |    5 +++++
+ drivers/char/tpm/tpm-interface.c |    7 -------
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/lib/sg_split.c
-+++ b/lib/sg_split.c
-@@ -88,8 +88,6 @@ static void sg_split_phys(struct sg_spli
- 			if (!j) {
- 				out_sg->offset += split->skip_sg0;
- 				out_sg->length -= split->skip_sg0;
--			} else {
--				out_sg->offset = 0;
- 			}
- 			sg_dma_address(out_sg) = 0;
- 			sg_dma_len(out_sg) = 0;
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -165,6 +165,11 @@ int tpm_try_get_ops(struct tpm_chip *chi
+ 		goto out_ops;
+ 
+ 	mutex_lock(&chip->tpm_mutex);
++
++	/* tmp_chip_start may issue IO that is denied while suspended */
++	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED)
++		goto out_lock;
++
+ 	rc = tpm_chip_start(chip);
+ 	if (rc)
+ 		goto out_lock;
+--- a/drivers/char/tpm/tpm-interface.c
++++ b/drivers/char/tpm/tpm-interface.c
+@@ -468,18 +468,11 @@ int tpm_get_random(struct tpm_chip *chip
+ 	if (!chip)
+ 		return -ENODEV;
+ 
+-	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
+-	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED) {
+-		rc = 0;
+-		goto out;
+-	}
+-
+ 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 		rc = tpm2_get_random(chip, out, max);
+ 	else
+ 		rc = tpm1_get_random(chip, out, max);
+ 
+-out:
+ 	tpm_put_ops(chip);
+ 	return rc;
+ }
 
 
