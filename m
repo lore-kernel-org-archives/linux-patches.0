@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D614527FD5B;
-	Wed, 23 Apr 2025 14:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED30A27CB12;
+	Wed, 23 Apr 2025 14:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419555; cv=none; b=oqLFOHqxsqnjCYtdXOsP6IMwEovHok/PuP8KCDvh2i07ZAygGTGpNsOnJoc1kOClHTz6hDC/OoNEcsgEdRc4zsNTFHLc2QjC9wf9ovb4u4+eUImQLa4rpq81ixC0wciRT96oDIdvlvT98ImDPqgzD97hXPBcjIWa8GMAfd4MMQI=
+	t=1745419559; cv=none; b=VeltbYtY0C+ykozpmbTWya7yRxL63hhVjVBgZXaw/dwIcKZJkZS+5RoS/5UXQHUobnpdaE/Fka22znA6Jp1BbpDZpkfp20jNbcnGHBsh/vnxjcjPpK7H2hg3y5XoU4vtT5lFwFBkvuuJr5zNyohUaXT7FY4a3HcuUqeRIcFhm9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419555; c=relaxed/simple;
-	bh=w8NXvx+wz5cfTj9mjGwlFxdJtFBPVY1eNZjz9M58bDY=;
+	s=arc-20240116; t=1745419559; c=relaxed/simple;
+	bh=tJ6xMqH/0uPkZckafKJXR9aY5Scui95suLGLxdQS4xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iehFWyrjB5ImxZ/lqK49vsUsTrtVpsHaCXVgPvOacfzegfGl9pNHSluxdvdqCtJ10D2Oeu6r5fCcm5efY1sNuLOI0GEQ60aqneIomT4r6ScPHNrn6b8LeYrdP7oMLAmueOidE9acY4kC5XK5a8HA3iiFtOaWTgPFDyYanMX17PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx5wqGpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmMTfuLFBQoCSf0+gJAqvL3CjaXDsnyz4eIW+d8l86JJHBFYlshrgoJCCc8/zu1FKna8Or8ODdfVFGlsSPio1ZosX+g2VRy7u2S1gU0zSXPmAFAWsJ7hiWgi07T1s7U1zM6GNNiPyqrfLTA8a+AwwYXzW5pz52QJ5HjAqd9upV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXULMPi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx5wqGpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64739C4CEE2;
-	Wed, 23 Apr 2025 14:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXULMPi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120D1C4CEE2;
+	Wed, 23 Apr 2025 14:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419555;
-	bh=w8NXvx+wz5cfTj9mjGwlFxdJtFBPVY1eNZjz9M58bDY=;
+	s=korg; t=1745419558;
+	bh=tJ6xMqH/0uPkZckafKJXR9aY5Scui95suLGLxdQS4xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bx5wqGpMwNyLRnkseZ+w460vLzVT2BDwy2d06DqQ4pZm3RaddSQlTP7Kz+ONNCe5f
-	 DIxhTyqKZvThoJW96h9NqS/2M2/9UC/dgmNFx7LeegbQCLq8RG5Sbv6gonkcp5KnY3
-	 oxA17/w+AURL/Dmdx3/FdWoFuT7SHtX6jLtRZY9c=
+	b=aXULMPi7FAxdcd5bqLYityKN+MOzhrGeqMj6tnK2Ex2FQ+iFSpHmqvLEmS9RmdVIA
+	 c92CzvwnHj7i1IHsnXO7CbJxXYMTdLPTys0HPkFSxpy9uQHEJD7uPO1Jw/H8TWjkDq
+	 n3y35s+xFyIN5t6fKdW+7AfTJwc+9dP7EVU7Qgj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/291] ata: pata_pxa: Fix potential NULL pointer dereference in pxa_ata_probe()
-Date: Wed, 23 Apr 2025 16:39:51 +0200
-Message-ID: <20250423142624.512973093@linuxfoundation.org>
+Subject: [PATCH 6.1 003/291] tipc: fix memory leak in tipc_link_xmit
+Date: Wed, 23 Apr 2025 16:39:52 +0200
+Message-ID: <20250423142624.553617758@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -51,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit ad320e408a8c95a282ab9c05cdf0c9b95e317985 ]
+[ Upstream commit 69ae94725f4fc9e75219d2d69022029c5b24bc9a ]
 
-devm_ioremap() returns NULL on error. Currently, pxa_ata_probe() does
-not check for this case, which can result in a NULL pointer dereference.
+In case the backlog transmit queue for system-importance messages is overloaded,
+tipc_link_xmit() returns -ENOBUFS but the skb list is not purged. This leads to
+memory leak and failure when a skb is allocated.
 
-Add NULL check after devm_ioremap() to prevent this issue.
+This commit fixes this issue by purging the skb list before tipc_link_xmit()
+returns.
 
-Fixes: 2dc6c6f15da9 ("[ARM] pata_pxa: DMA-capable PATA driver")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 365ad353c256 ("tipc: reduce risk of user starvation during link congestion")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250403092431.514063-1-tung.quang.nguyen@est.tech
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_pxa.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/tipc/link.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ata/pata_pxa.c b/drivers/ata/pata_pxa.c
-index 985f42c4fd700..9113b74b2b67d 100644
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -223,10 +223,16 @@ static int pxa_ata_probe(struct platform_device *pdev)
- 
- 	ap->ioaddr.cmd_addr	= devm_ioremap(&pdev->dev, cmd_res->start,
- 						resource_size(cmd_res));
-+	if (!ap->ioaddr.cmd_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.ctl_addr	= devm_ioremap(&pdev->dev, ctl_res->start,
- 						resource_size(ctl_res));
-+	if (!ap->ioaddr.ctl_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.bmdma_addr	= devm_ioremap(&pdev->dev, dma_res->start,
- 						resource_size(dma_res));
-+	if (!ap->ioaddr.bmdma_addr)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Adjust register offsets
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index 8715c9b05f90d..d6a8f0aa531bd 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -1068,6 +1068,7 @@ int tipc_link_xmit(struct tipc_link *l, struct sk_buff_head *list,
+ 	if (unlikely(l->backlog[imp].len >= l->backlog[imp].limit)) {
+ 		if (imp == TIPC_SYSTEM_IMPORTANCE) {
+ 			pr_warn("%s<%s>, link overflow", link_rst_msg, l->name);
++			__skb_queue_purge(list);
+ 			return -ENOBUFS;
+ 		}
+ 		rc = link_schedule_user(l, hdr);
 -- 
 2.39.5
 
