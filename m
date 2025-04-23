@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0178028CF64;
-	Wed, 23 Apr 2025 15:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3C146447;
+	Wed, 23 Apr 2025 15:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421987; cv=none; b=ny0sRdLbcqYQzBmj5cSHmKMYQlmBlEPzRxxqywj9FHLVO0I/28obiBsmGGvhcrc1RSkia4sKPTFW2S1bds9hqyazZlfITThD952v07xC6DOQtVzKRuFYnSlx7WNw3+SWov+MQ2udqQ/uEBBWaU5R8JeCO68rYvvxf3f1MKNYeZs=
+	t=1745421989; cv=none; b=i6ncBXINMmw6J50O7Fi8wvafNiT15w8QN2tZxNEfd+NROyZis4+O6HWvuSX1eb1Co2iChl7TAK779fPOPo1iTSLkbAKTde+3yVDNw8Cu0rJg5+996NB/sngaSUWh2qlBw6F/GRjsND3Jfk2PtSoUayCZ2Ywljn0Z9wckZbdz/YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421987; c=relaxed/simple;
-	bh=AKBrkWGm2AZHx6Br4W7WfvRgLJ1O4Wi4nd75NAvE+0c=;
+	s=arc-20240116; t=1745421989; c=relaxed/simple;
+	bh=j6UdI4IUo4oGgAc60c8nm6h7snqTnaZbY4XovDW6PoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQ6ISqRSk/aFaeZeFzI6JTJxap3F6TcFC/GfUK3syBjLAMAu31NF5o9rqOsmsnreNf2rMYpMZKa2h5DIp9tzPiKwWMPi6HUTmncthyd8XuHA3UelWWx4YlR4BJBYyZQGMH9hTNXZm+HTulgxtGIYTGMHF3r70VSCTXuLfF4a0Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljchWsQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwak3egGBT93wx2tBRrkuqzwxidy9MUmazQtBjGNTdIekw/yVhKOOAQf18XDR2k00CL3EYSlQhexPaDnsDwKKnD/t4D63Bu/YlhNR39pt5J6T5WrihXoS2GI5K3003rUH2ETZRNiqQlL3XfkqywyCmM4ggtM8xAuCXpceyl/nN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5JLFxb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljchWsQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886FDC4CEE2;
-	Wed, 23 Apr 2025 15:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5JLFxb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAE4C4CEE2;
+	Wed, 23 Apr 2025 15:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421986;
-	bh=AKBrkWGm2AZHx6Br4W7WfvRgLJ1O4Wi4nd75NAvE+0c=;
+	s=korg; t=1745421989;
+	bh=j6UdI4IUo4oGgAc60c8nm6h7snqTnaZbY4XovDW6PoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljchWsQC2iOvK4jys3kgj7ppvHhAZsUyJsVYnDvIApnmB4Srekm/7jxJEC5xCo2J8
-	 ZeR5Q6KZTWw4AGV7gxUFalNvHEi1ja54QnPyj5IVuupe35AYIXP78ondYdzNqQlFhm
-	 0x2QTqPCnI2+OlxSc0YkpnA8gwX2iDhXpAscyojA=
+	b=L5JLFxb2lq6DC3n5Q92p6ttyqIn8iuyjXjYVea0EI5O6d7SNNlzI3IQBi+Mu8hnHq
+	 kNXLw6A0TInyEApDbfUdxqs5Vk7ijlTb/LKit/AwYHLxUuscvFf15wqb9+PGTX/tQ6
+	 EEv4SbQvj66wSa+INaxBXNGrWcwkmCyzlvZHk0kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Ricci <io@r-ricci.it>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Len Brown <len.brown@intel.com>
-Subject: [PATCH 6.6 236/393] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
-Date: Wed, 23 Apr 2025 16:42:12 +0200
-Message-ID: <20250423142653.135755841@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 190/291] net: dsa: mv88e6xxx: avoid unregistering devlink regions which were never registered
+Date: Wed, 23 Apr 2025 16:42:59 +0200
+Message-ID: <20250423142632.148287313@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,93 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
+[ Upstream commit c84f6ce918a9e6f4996597cbc62536bbf2247c96 ]
 
-While debugging kexec/hibernation hangs and crashes, it turned out that
-the current implementation of e820__register_nosave_regions() suffers from
-multiple serious issues:
+Russell King reports that a system with mv88e6xxx dereferences a NULL
+pointer when unbinding this driver:
+https://lore.kernel.org/netdev/Z_lRkMlTJ1KQ0kVX@shell.armlinux.org.uk/
 
- - The end of last region is tracked by PFN, causing it to find holes
-   that aren't there if two consecutive subpage regions are present
+The crash seems to be in devlink_region_destroy(), which is not NULL
+tolerant but is given a NULL devlink global region pointer.
 
- - The nosave PFN ranges derived from holes are rounded out (instead of
-   rounded in) which makes it inconsistent with how explicitly reserved
-   regions are handled
+At least on some chips, some devlink regions are conditionally registered
+since the blamed commit, see mv88e6xxx_setup_devlink_regions_global():
 
-Fix this by:
+		if (cond && !cond(chip))
+			continue;
 
- - Treating reserved regions as if they were holes, to ensure consistent
-   handling (rounding out nosave PFN ranges is more correct as the
-   kernel does not use partial pages)
+These are MV88E6XXX_REGION_STU and MV88E6XXX_REGION_PVT. If the chip
+does not have an STU or PVT, it should crash like this.
 
- - Tracking the end of the last RAM region by address instead of pages
-   to detect holes more precisely
+To fix the issue, avoid unregistering those regions which are NULL, i.e.
+were skipped at mv88e6xxx_setup_devlink_regions_global() time.
 
-These bugs appear to have been introduced about ~18 years ago with the very
-first version of e820_mark_nosave_regions(), and its flawed assumptions were
-carried forward uninterrupted through various waves of rewrites and renames.
-
-[ mingo: Added Git archeology details, for kicks and giggles. ]
-
-Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
-Reported-by: Roberto Ricci <io@r-ricci.it>
-Tested-by: Roberto Ricci <io@r-ricci.it>
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Len Brown <len.brown@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
-Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 836021a2d0e0 ("net: dsa: mv88e6xxx: Export cross-chip PVT as devlink region")
+Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250414212850.2953957-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/e820.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/dsa/mv88e6xxx/devlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/e820.c
-+++ b/arch/x86/kernel/e820.c
-@@ -753,22 +753,21 @@ void __init e820__memory_setup_extended(
- void __init e820__register_nosave_regions(unsigned long limit_pfn)
- {
+diff --git a/drivers/net/dsa/mv88e6xxx/devlink.c b/drivers/net/dsa/mv88e6xxx/devlink.c
+index 1266eabee0863..2ab2eb2cb47be 100644
+--- a/drivers/net/dsa/mv88e6xxx/devlink.c
++++ b/drivers/net/dsa/mv88e6xxx/devlink.c
+@@ -743,7 +743,8 @@ void mv88e6xxx_teardown_devlink_regions_global(struct dsa_switch *ds)
  	int i;
--	unsigned long pfn = 0;
-+	u64 last_addr = 0;
  
- 	for (i = 0; i < e820_table->nr_entries; i++) {
- 		struct e820_entry *entry = &e820_table->entries[i];
- 
--		if (pfn < PFN_UP(entry->addr))
--			register_nosave_region(pfn, PFN_UP(entry->addr));
--
--		pfn = PFN_DOWN(entry->addr + entry->size);
--
- 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
--			register_nosave_region(PFN_UP(entry->addr), pfn);
-+			continue;
- 
--		if (pfn >= limit_pfn)
--			break;
-+		if (last_addr < entry->addr)
-+			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
-+
-+		last_addr = entry->addr + entry->size;
- 	}
-+
-+	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
+ 	for (i = 0; i < ARRAY_SIZE(mv88e6xxx_regions); i++)
+-		dsa_devlink_region_destroy(chip->regions[i]);
++		if (chip->regions[i])
++			dsa_devlink_region_destroy(chip->regions[i]);
  }
  
- #ifdef CONFIG_ACPI
+ void mv88e6xxx_teardown_devlink_regions_port(struct dsa_switch *ds, int port)
+-- 
+2.39.5
+
 
 
