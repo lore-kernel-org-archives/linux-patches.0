@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74527D763;
-	Wed, 23 Apr 2025 15:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA62798E3;
+	Wed, 23 Apr 2025 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421526; cv=none; b=m4vpkT1urcclkQaJlrdgq7TkwRBXgd0QbO7AFeo/gf0NcDkygYC92j/DUetnHbiWSdKkjxsqYPyUkP/57/e0sxwahppk6wTvzaL0o22WKyFYMkXhZZGYBvZyMcYqbc10LC7ogSoRva1Vwb72CPkrsjUvgOCcwY/VAnNdaigW/I8=
+	t=1745421529; cv=none; b=ihWv0YSXFqPmjIEJYMjGUoh6Ag23JQRgOIyz3cHpjJXLxOF7DOuQtBMX45dTpVE4DjL4KIjkBd2J/pnlbuaeSKju1BGEKpxBtXw7omjFPMxsDa6vdu181DzELQczIbWLbGGxZTOkUaumprLTK6ZBcV00MZ7UBQwTHEkhSG61Bu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421526; c=relaxed/simple;
-	bh=dcagu0EtLKpOPlSEgZBiJsWLYNitevcJAoBOxmZeyAY=;
+	s=arc-20240116; t=1745421529; c=relaxed/simple;
+	bh=+oagyEdmEdE/sbORug3/124JFuFSFKRxir0J/zqTtH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izLFrBuwhCGXdR6M8tk5WfoSshRiochZ2qOIhMHbDgkRAFBNMKMLHWYnQ5UphA5LFure9vXxCSfq3QZXeqrrPdJ46hiTSURHCLYkSH4WQo/klrPnKln47hbUbhHl2I3q9cCLFEjiw5aZi8X4HpLmB8yjDCbzw35MGxDJ4Bn8ptU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb2RiLzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ddO6J2fIoi/BZ+8aMS0EIUngiYYjfUla4L05wUFxksNUAiMSHXW2W28TTCEzqPEkFTufLyTQjrwadYBV++qaJF1ZN+gFbevhfopjxOD3E6z5Aa/am4C/RsRN71XZ35niF7dpFOWknUnIojRlkH+ptHvuf9qeAh/fL0isxBI9WEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/smgXlN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb2RiLzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F20C4CEE2;
-	Wed, 23 Apr 2025 15:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/smgXlN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB594C4CEE2;
+	Wed, 23 Apr 2025 15:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421526;
-	bh=dcagu0EtLKpOPlSEgZBiJsWLYNitevcJAoBOxmZeyAY=;
+	s=korg; t=1745421529;
+	bh=+oagyEdmEdE/sbORug3/124JFuFSFKRxir0J/zqTtH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pb2RiLzzxiXW72EPNhU4UcS9R0Jb/5onM/DPqNc+NdgVOdBDsC/2LGNM8LfwPproS
-	 1Lu56lkbVQhqcbgcz/6Edm3RfzHxXC56rNJKWsjUfPSuknC79rh7fHc8YMtbMLCmBM
-	 878JN/TjcQAjBjvxJoSpj+LaYzIQOFNRfLJDdtqs=
+	b=Y/smgXlNeEdy7IjnOy93ePb2e3Z5u8w6pbX7GD2Oy3OQLrgrzFKHqz1qOiNPj07AG
+	 ABiO4WWWzO5OjTCo2XbDk0u/fHk4b6QTTfJS552CXdij5/2c/4Z2NdVaievqeLD6lR
+	 jVvE5LQw94xWkbV8lq7ks40ZQSIT9yuPeh8goGgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Juergen Gross <jgross@suse.com>,
-	Borislav Betkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 188/393] sparc/mm: avoid calling arch_enter/leave_lazy_mmu() in set_ptes
-Date: Wed, 23 Apr 2025 16:41:24 +0200
-Message-ID: <20250423142651.149820300@linuxfoundation.org>
+	Brendan King <brendan.king@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.14 199/241] drm/imagination: take paired job reference
+Date: Wed, 23 Apr 2025 16:44:23 +0200
+Message-ID: <20250423142628.638536944@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,74 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Brendan King <Brendan.King@imgtec.com>
 
-commit eb61ad14c459b54f71f76331ca35d12fa3eb8f98 upstream.
+commit 4ba2abe154ef68f9612eee9d6fbfe53a1736b064 upstream.
 
-With commit 1a10a44dfc1d ("sparc64: implement the new page table range
-API") set_ptes was added to the sparc architecture.  The implementation
-included calling arch_enter/leave_lazy_mmu() calls.
+For paired jobs, have the fragment job take a reference on the
+geometry job, so that the geometry job cannot be freed until
+the fragment job has finished with it.
 
-The patch removes the usage of arch_enter/leave_lazy_mmu() since this
-implies nesting of lazy mmu regions which is not supported.  Without this
-fix, lazy mmu mode is effectively disabled because we exit the mode after
-the first set_ptes:
+The geometry job structure is accessed when the fragment job is being
+prepared by the GPU scheduler. Taking the reference prevents the
+geometry job being freed until the fragment job no longer requires it.
 
-remap_pte_range()
-  -> arch_enter_lazy_mmu()
-  -> set_ptes()
-      -> arch_enter_lazy_mmu()
-      -> arch_leave_lazy_mmu()
-  -> arch_leave_lazy_mmu()
+Fixes a use after free bug detected by KASAN:
 
-Powerpc suffered the same problem and fixed it in a corresponding way with
-commit 47b8def9358c ("powerpc/mm: Avoid calling
-arch_enter/leave_lazy_mmu() in set_ptes").
+[  124.256386] BUG: KASAN: slab-use-after-free in pvr_queue_prepare_job+0x108/0x868 [powervr]
+[  124.264893] Read of size 1 at addr ffff0000084cb960 by task kworker/u16:4/63
 
-Link: https://lkml.kernel.org/r/20250303141542.3371656-5-ryan.roberts@arm.com
-Fixes: 1a10a44dfc1d ("sparc64: implement the new page table range API")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Andreas Larsson <andreas@gaisler.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juegren Gross <jgross@suse.com>
-Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
+Signed-off-by: Brendan King <brendan.king@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://lore.kernel.org/r/20250318-ddkopsrc-1337-use-after-free-in-pvr_queue_prepare_job-v1-1-80fb30d044a6@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/include/asm/pgtable_64.h |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_job.c   |    7 +++++++
+ drivers/gpu/drm/imagination/pvr_queue.c |    4 ++++
+ 2 files changed, 11 insertions(+)
 
---- a/arch/sparc/include/asm/pgtable_64.h
-+++ b/arch/sparc/include/asm/pgtable_64.h
-@@ -931,7 +931,6 @@ static inline void __set_pte_at(struct m
- static inline void set_ptes(struct mm_struct *mm, unsigned long addr,
- 		pte_t *ptep, pte_t pte, unsigned int nr)
- {
--	arch_enter_lazy_mmu_mode();
- 	for (;;) {
- 		__set_pte_at(mm, addr, ptep, pte, 0);
- 		if (--nr == 0)
-@@ -940,7 +939,6 @@ static inline void set_ptes(struct mm_st
- 		pte_val(pte) += PAGE_SIZE;
- 		addr += PAGE_SIZE;
- 	}
--	arch_leave_lazy_mmu_mode();
- }
- #define set_ptes set_ptes
+--- a/drivers/gpu/drm/imagination/pvr_job.c
++++ b/drivers/gpu/drm/imagination/pvr_job.c
+@@ -677,6 +677,13 @@ pvr_jobs_link_geom_frag(struct pvr_job_d
+ 		geom_job->paired_job = frag_job;
+ 		frag_job->paired_job = geom_job;
  
++		/* The geometry job pvr_job structure is used when the fragment
++		 * job is being prepared by the GPU scheduler. Have the fragment
++		 * job hold a reference on the geometry job to prevent it being
++		 * freed until the fragment job has finished with it.
++		 */
++		pvr_job_get(geom_job);
++
+ 		/* Skip the fragment job we just paired to the geometry job. */
+ 		i++;
+ 	}
+--- a/drivers/gpu/drm/imagination/pvr_queue.c
++++ b/drivers/gpu/drm/imagination/pvr_queue.c
+@@ -866,6 +866,10 @@ static void pvr_queue_free_job(struct dr
+ 	struct pvr_job *job = container_of(sched_job, struct pvr_job, base);
+ 
+ 	drm_sched_job_cleanup(sched_job);
++
++	if (job->type == DRM_PVR_JOB_TYPE_FRAGMENT && job->paired_job)
++		pvr_job_put(job->paired_job);
++
+ 	job->paired_job = NULL;
+ 	pvr_job_put(job);
+ }
 
 
