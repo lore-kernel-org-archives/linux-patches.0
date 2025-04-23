@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC382263F54;
-	Wed, 23 Apr 2025 14:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC2918DB17;
+	Wed, 23 Apr 2025 14:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419881; cv=none; b=TGUtBX0gfDpHl6y+65mH6jDHte8k2NPjcWggMHOGpBMxmZPNEUlaPHRwPrEjf5/BW52vcgP65mWgnwLYfqobD7RDzoAUcmQsrpPYdng3bu2XKkielz/qWoaNQR61ZXjGI5BmC/ZKuu2jxwUUzM3toZeMaZLYEKFZQbOUm2CiDho=
+	t=1745419884; cv=none; b=GfItdxQGtCK4Cv678BPIWCiYNVz5jY/ewSntJAHPwyK38JhuAhUf5FYa0dkLhYgeeRSM8nLhYYWVrNQBJ3pD8jalpxjCLwC4R2bnpCjkyC0ICHcMg2qPt64T9zCEfJ+13lS8jwlmbWOSChRSzw9VaMj0vwrsGlndfih+7WFBmwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419881; c=relaxed/simple;
-	bh=C72fxhGyFQ0qcDqt9FiVUKq/CCXhPf0cH5oadzxNZ+g=;
+	s=arc-20240116; t=1745419884; c=relaxed/simple;
+	bh=mwydggsPcka7h7b3gqBUwhG2SbibvvpAl8jhPpgDOik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5zlG+/FoyuuKLj5Pjy7cKBvVYZqGiCNhW5RD4flQDBkpYr8t3ZeW/44Fl8JgFOSV+MAJ5WnP4q69mn+lKXM3YM4LiDcPZWwv4NOCMZSwmTa3GoEecFOgMsQi3/QjvgYXTJUD05W3tTsKRNGVS6TJnrGxc/Sh31Ch5HQE7uRzjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWm7jQ4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Du7iqeLoraAyYfATCG+VYcfVMLs8pA/vao9+AeUPLblhshtle61T6Hg1ytJoTxAke+deZ9BNqMDLtF4Yuesqh0lPQAdeZp1LoQ0coDOMYOD4rIstu/4Y0cAzWAHTNm6Eb3J//KaleK6XPMcBZ+JGE4KCmpWF+GSS4mLy2muxiWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuborMD9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWm7jQ4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61961C4CEE2;
-	Wed, 23 Apr 2025 14:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuborMD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0283BC4CEE2;
+	Wed, 23 Apr 2025 14:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419881;
-	bh=C72fxhGyFQ0qcDqt9FiVUKq/CCXhPf0cH5oadzxNZ+g=;
+	s=korg; t=1745419884;
+	bh=mwydggsPcka7h7b3gqBUwhG2SbibvvpAl8jhPpgDOik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWm7jQ4fSP7qL/J96Pavh/zUJr1PQ7Jxc+6fXd5R3XRzirQdY5Ky68gus/yYVqkS1
-	 qrh3Rws9f8ceDNChjh9nxXMbVKRIWHX0ds8btqDBpIsUSEUYmPKZk24HiiThbYWVkO
-	 c6h5Pex7mCcHb6BvhKdStcEp2mEsLXhu9WMmMXNQ=
+	b=DuborMD9Rb2KlK7VDSVMd+Jt6QtHk+7r20mgqfNoDxB0vvrWpfhvWCTbSey15zz6d
+	 fQN8ClYQa7EMiRXr8zH3oc/UahMOsT1aC3t0jziXk5Q7whDNcDyftHMcshle0hwN2r
+	 ierdmnEqU+/dWgmdbSDA9pmJ5ofAWOvV7xzfBlkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Will Pierce <wgpierce17@gmail.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
+	Michal Kubecek <mkubecek@suse.cz>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/223] riscv: Use kvmalloc_array on relocation_hashtable
-Date: Wed, 23 Apr 2025 16:42:27 +0200
-Message-ID: <20250423142620.181031724@linuxfoundation.org>
+Subject: [PATCH 6.6 016/393] net: ethtool: Dont call .cleanup_data when prepare_data fails
+Date: Wed, 23 Apr 2025 16:38:32 +0200
+Message-ID: <20250423142643.940347526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Will Pierce <wgpierce17@gmail.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 8578b2f7e1fb79d4b92b62fbbe913548bb363654 ]
+[ Upstream commit 4f038a6a02d20859a3479293cbf172b0f14cbdd6 ]
 
-The number of relocations may be a huge value that is unallocatable
-by kmalloc. Use kvmalloc instead so that it does not fail.
+There's a consistent pattern where the .cleanup_data() callback is
+called when .prepare_data() fails, when it should really be called to
+clean after a successful .prepare_data() as per the documentation.
 
-Fixes: 8fd6c5142395 ("riscv: Add remaining module relocations")
-Suggested-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Will Pierce <wgpierce17@gmail.com>
-Link: https://lore.kernel.org/r/20250402081426.5197-1-wgpierce17@gmail.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Rewrite the error-handling paths to make sure we don't cleanup
+un-prepared data.
+
+Fixes: c781ff12a2f3 ("ethtool: Allow network drivers to dump arbitrary EEPROM data")
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Michal Kubecek <mkubecek@suse.cz>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250407130511.75621-1-maxime.chevallier@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/module.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ethtool/netlink.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
-index 47d0ebeec93c2..0ae34d79b87bd 100644
---- a/arch/riscv/kernel/module.c
-+++ b/arch/riscv/kernel/module.c
-@@ -648,7 +648,7 @@ process_accumulated_relocations(struct module *me,
- 		kfree(bucket_iter);
- 	}
- 
--	kfree(*relocation_hashtable);
-+	kvfree(*relocation_hashtable);
- }
- 
- static int add_relocation_to_accumulate(struct module *me, int type,
-@@ -752,9 +752,10 @@ initialize_relocation_hashtable(unsigned int num_relocations,
- 
- 	hashtable_size <<= should_double_size;
- 
--	*relocation_hashtable = kmalloc_array(hashtable_size,
--					      sizeof(**relocation_hashtable),
--					      GFP_KERNEL);
-+	/* Number of relocations may be large, so kvmalloc it */
-+	*relocation_hashtable = kvmalloc_array(hashtable_size,
-+					       sizeof(**relocation_hashtable),
-+					       GFP_KERNEL);
- 	if (!*relocation_hashtable)
- 		return 0;
- 
+diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
+index c1ad63bee8ead..7a9d8fe78ae9d 100644
+--- a/net/ethtool/netlink.c
++++ b/net/ethtool/netlink.c
+@@ -402,7 +402,7 @@ static int ethnl_default_doit(struct sk_buff *skb, struct genl_info *info)
+ 	ret = ops->prepare_data(req_info, reply_data, info);
+ 	rtnl_unlock();
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_dev;
+ 	ret = ops->reply_size(req_info, reply_data);
+ 	if (ret < 0)
+ 		goto err_cleanup;
+@@ -460,7 +460,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
+ 	ret = ctx->ops->prepare_data(ctx->req_info, ctx->reply_data, info);
+ 	rtnl_unlock();
+ 	if (ret < 0)
+-		goto out;
++		goto out_cancel;
+ 	ret = ethnl_fill_reply_header(skb, dev, ctx->ops->hdr_attr);
+ 	if (ret < 0)
+ 		goto out;
+@@ -469,6 +469,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
+ out:
+ 	if (ctx->ops->cleanup_data)
+ 		ctx->ops->cleanup_data(ctx->reply_data);
++out_cancel:
+ 	ctx->reply_data->dev = NULL;
+ 	if (ret < 0)
+ 		genlmsg_cancel(skb, ehdr);
+@@ -676,7 +677,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
+ 	ethnl_init_reply_data(reply_data, ops, dev);
+ 	ret = ops->prepare_data(req_info, reply_data, &info);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_rep;
+ 	ret = ops->reply_size(req_info, reply_data);
+ 	if (ret < 0)
+ 		goto err_cleanup;
+@@ -711,6 +712,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
+ err_cleanup:
+ 	if (ops->cleanup_data)
+ 		ops->cleanup_data(reply_data);
++err_rep:
+ 	kfree(reply_data);
+ 	kfree(req_info);
+ 	return;
 -- 
 2.39.5
 
