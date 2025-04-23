@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EF228FFF9;
-	Wed, 23 Apr 2025 15:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8966428D82F;
+	Wed, 23 Apr 2025 15:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421905; cv=none; b=ljs1q3HuqQcd9pCaLUfx3alY9pW3gJUOzay/MQb3kjflGK2JAzHC+KGyDOK78b4mveYzXEXF/4cgZZlOTBiPvn6YWTR8CYtnyxsJsuR1szlZ26JYuyts1JYXkzrbW0B0gLgcnUb2/m8H++2m3wsNm32Xf2EHoM54nU4UN5gpLbY=
+	t=1745421908; cv=none; b=RXJESlFuOriMFZqT5uB5+/KgzsuqjJqurp00kL1nTN49I5bXW+YAdfg6EBwKOh6ZmQ158L7KuYZVQOkXh+jSxeSEdUOsiaThFA96aO60H76vJhWstDe5mk9313M0ypa60xkXXPnzoqSVVRcy1R9IH3H7tZBYE8gSzYDzG7/fp0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421905; c=relaxed/simple;
-	bh=H4thESjUmxL3DwYhxJUF7a/fVplorC+ORmBQHnaxYVY=;
+	s=arc-20240116; t=1745421908; c=relaxed/simple;
+	bh=apnnPc0USRMBgFhUI1EmclJzG903Cx82Dec29QpLN1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5ynIWSg+UvoyK0dzZxSi2X2FeJJ4VuC4eT8MJMqwoSGbE0jKirsbDNtO2L1nvDZU7uWSR6iWECSW8Udy/b7jMsH8Q/7mSy00PKjvySapaXxjrt8jAi6NoZr9LoI19iOc/xy2W7KNgajfEsG1WLchVPRE/6sUL59vgYrRepzGGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/g2IgQH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/gqBi1NwrxB+yFyue3lfdYn/PypVTGDUTZzp52J/U9M/5UGWylcH2nsTbuRnW+oY4VO81WtxX7nPslfX+/qpqwXRcW8/Xf8WAcBD7cleJVVjsN8sd2kx0M1gC+DVIbXNJYtTp7/qHELZEMpctn6hfn4YiY4IUb1iJ/dQyAbXLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjya9oLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/g2IgQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27C6C4CEE8;
-	Wed, 23 Apr 2025 15:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjya9oLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8122EC4CEE2;
+	Wed, 23 Apr 2025 15:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421905;
-	bh=H4thESjUmxL3DwYhxJUF7a/fVplorC+ORmBQHnaxYVY=;
+	s=korg; t=1745421908;
+	bh=apnnPc0USRMBgFhUI1EmclJzG903Cx82Dec29QpLN1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/g2IgQHG2dsIR4xUTvUDBYwublRo/0MQS6CfbXFtP+RzjWTUN4Xmgtb66+BybaWI
-	 weL4KHq3gslAwQZnNfalEHv93Yfi+BYzHVWz1YIE2FWWOppDrDFHwqgjb6+s9iFnak
-	 s5LxGEHhyDD3+6/hyYNtZDx97VAzDJvx8qn3ic4c=
+	b=Rjya9oLj8wIl/YCF1oW97VXQU4lM7KThNSCX0vvm37FIc4JCNyuSuEC6BDWcddNqk
+	 o/lG63NBcPYg+tggnzA5j5+pjXHxeaDY67XSEc0VhnAlhs7AViT4k8Y5jL20Kr+ePd
+	 y4UCDDCkGfbpIx7fJM9gi+KsOy9nLKBkGjmVO7O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/291] riscv: KGDB: Remove ".option norvc/.option rvc" for kgdb_compiled_break
-Date: Wed, 23 Apr 2025 16:43:05 +0200
-Message-ID: <20250423142632.389043791@linuxfoundation.org>
+Subject: [PATCH 6.6 243/393] wifi: mac80211: Purge vif txq in ieee80211_do_stop()
+Date: Wed, 23 Apr 2025 16:42:19 +0200
+Message-ID: <20250423142653.423007731@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,65 +47,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 550c2aa787d1b06efcb11de1877354502a1237f2 ]
+[ Upstream commit 378677eb8f44621ecc9ce659f7af61e5baa94d81 ]
 
-[ Quoting Samuel Holland: ]
+After ieee80211_do_stop() SKB from vif's txq could still be processed.
+Indeed another concurrent vif schedule_and_wake_txq call could cause
+those packets to be dequeued (see ieee80211_handle_wake_tx_queue())
+without checking the sdata current state.
 
-  This is a separate issue, but using ".option rvc" here is a bug.
-  It will unconditionally enable the C extension for the rest of
-  the file, even if the kernel is being built with CONFIG_RISCV_ISA_C=n.
+Because vif.drv_priv is now cleared in this function, this could lead to
+driver crash.
 
-[ Quoting Palmer Dabbelt: ]
+For example in ath12k, ahvif is store in vif.drv_priv. Thus if
+ath12k_mac_op_tx() is called after ieee80211_do_stop(), ahvif->ah can be
+NULL, leading the ath12k_warn(ahvif->ah,...) call in this function to
+trigger the NULL deref below.
 
-  We're just looking at the address of kgdb_compiled_break, so it's
-  fine if it ends up as a c.ebreak.
+  Unable to handle kernel paging request at virtual address dfffffc000000001
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  batman_adv: bat0: Interface deactivated: brbh1337
+  Mem abort info:
+    ESR = 0x0000000096000004
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x04: level 0 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  [dfffffc000000001] address between user and kernel address ranges
+  Internal error: Oops: 0000000096000004 [#1] SMP
+  CPU: 1 UID: 0 PID: 978 Comm: lbd Not tainted 6.13.0-g633f875b8f1e #114
+  Hardware name: HW (DT)
+  pstate: 10000005 (nzcV daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : ath12k_mac_op_tx+0x6cc/0x29b8 [ath12k]
+  lr : ath12k_mac_op_tx+0x174/0x29b8 [ath12k]
+  sp : ffffffc086ace450
+  x29: ffffffc086ace450 x28: 0000000000000000 x27: 1ffffff810d59ca4
+  x26: ffffff801d05f7c0 x25: 0000000000000000 x24: 000000004000001e
+  x23: ffffff8009ce4926 x22: ffffff801f9c0800 x21: ffffff801d05f7f0
+  x20: ffffff8034a19f40 x19: 0000000000000000 x18: ffffff801f9c0958
+  x17: ffffff800bc0a504 x16: dfffffc000000000 x15: ffffffc086ace4f8
+  x14: ffffff801d05f83c x13: 0000000000000000 x12: ffffffb003a0bf03
+  x11: 0000000000000000 x10: ffffffb003a0bf02 x9 : ffffff8034a19f40
+  x8 : ffffff801d05f818 x7 : 1ffffff0069433dc x6 : ffffff8034a19ee0
+  x5 : ffffff801d05f7f0 x4 : 0000000000000000 x3 : 0000000000000001
+  x2 : 0000000000000000 x1 : dfffffc000000000 x0 : 0000000000000008
+  Call trace:
+   ath12k_mac_op_tx+0x6cc/0x29b8 [ath12k] (P)
+   ieee80211_handle_wake_tx_queue+0x16c/0x260
+   ieee80211_queue_skb+0xeec/0x1d20
+   ieee80211_tx+0x200/0x2c8
+   ieee80211_xmit+0x22c/0x338
+   __ieee80211_subif_start_xmit+0x7e8/0xc60
+   ieee80211_subif_start_xmit+0xc4/0xee0
+   __ieee80211_subif_start_xmit_8023.isra.0+0x854/0x17a0
+   ieee80211_subif_start_xmit_8023+0x124/0x488
+   dev_hard_start_xmit+0x160/0x5a8
+   __dev_queue_xmit+0x6f8/0x3120
+   br_dev_queue_push_xmit+0x120/0x4a8
+   __br_forward+0xe4/0x2b0
+   deliver_clone+0x5c/0xd0
+   br_flood+0x398/0x580
+   br_dev_xmit+0x454/0x9f8
+   dev_hard_start_xmit+0x160/0x5a8
+   __dev_queue_xmit+0x6f8/0x3120
+   ip6_finish_output2+0xc28/0x1b60
+   __ip6_finish_output+0x38c/0x638
+   ip6_output+0x1b4/0x338
+   ip6_local_out+0x7c/0xa8
+   ip6_send_skb+0x7c/0x1b0
+   ip6_push_pending_frames+0x94/0xd0
+   rawv6_sendmsg+0x1a98/0x2898
+   inet_sendmsg+0x94/0xe0
+   __sys_sendto+0x1e4/0x308
+   __arm64_sys_sendto+0xc4/0x140
+   do_el0_svc+0x110/0x280
+   el0_svc+0x20/0x60
+   el0t_64_sync_handler+0x104/0x138
+   el0t_64_sync+0x154/0x158
 
-[ Quoting Alexandre Ghiti: ]
+To avoid that, empty vif's txq at ieee80211_do_stop() so no packet could
+be dequeued after ieee80211_do_stop() (new packets cannot be queued
+because SDATA_STATE_RUNNING is cleared at this point).
 
-  .option norvc is used to prevent the assembler from using compressed
-  instructions, but it's generally used when we need to ensure the
-  size of the instructions that are used, which is not the case here
-  as noted by Palmer since we only care about the address. So yes
-  it will work fine with C enabled :)
-
-So let's just remove them all.
-
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/mhng-69513841-5068-441d-be8f-2aeebdc56a08@palmer-ri-x1c9a/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/8B431C6A4626225C+20250411073222.56820-2-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/ff7849e268562456274213c0476e09481a48f489.1742833382.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/kgdb.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/mac80211/iface.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index b0db3350d243b..1d83b36967212 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -276,9 +276,7 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- noinline void arch_kgdb_breakpoint(void)
- {
- 	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
-+	    "kgdb_compiled_break: ebreak\n");
- }
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index fae701248f058..eaa4e5c6a5c3a 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -682,6 +682,9 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		ieee80211_txq_remove_vlan(local, sdata);
  
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
++	if (sdata->vif.txq)
++		ieee80211_txq_purge(sdata->local, to_txq_info(sdata->vif.txq));
++
+ 	sdata->bss = NULL;
+ 
+ 	if (local->open_count == 0)
 -- 
 2.39.5
 
