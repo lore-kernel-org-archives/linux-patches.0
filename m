@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B127CB33;
-	Wed, 23 Apr 2025 14:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072FF19DF4C;
+	Wed, 23 Apr 2025 14:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419787; cv=none; b=SwZ4HRfx7a54MD8zv2GDFtJICt619sHhj5Py3z1NSgkIlc9RLUN8/IUU5nfYX6YRlVo6C8U1mLD6OHJP+fEuuRkaLnphOzRlNeW5gcLog3xdDa53Sgl9sjIe2qsaQDn8qqeljTTCgREkMa7KgRfi/ZqDUawB8/Oqdu7g5sExRAM=
+	t=1745419790; cv=none; b=jILfKP5OQnpbkDtoRUiTSwsJAKYiOKgM4UIGzqkQYwpJTBZu+l7kV0bDEc0v1dbB1MCpRAVuzASIiukL613RECeYLFqyyTNamJEpimaudmTwyttIO9BGBXRLRkIDgrlf9RRGvgywSNGDHCsJrRut2VOVvBlX4O61gQ0HmbaxAsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419787; c=relaxed/simple;
-	bh=IoqrGK5owEgWKsoU9Nv3qSdTsijndyZHDv6avjJyGA4=;
+	s=arc-20240116; t=1745419790; c=relaxed/simple;
+	bh=jU0yfYPthysSIKBXSBN+W+7SztuLXx0weZtcqj9QMmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+I9koa6iZ6QxTaI2xqgIJ3rhOLyTcY0w2T1yTuJ03EwKnNu+Hoi0QLUipTzYV91+uu5tlAceZS1DiOCn4Q0dOCAwo42Q2ApXf7URQO/tfAA3Lfp7HMNUvZ7n/gkfkfz3xJjvHyRc8flmwuSdaGHV7CPPHyvlu+bgFB2ddTvmFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oj7OwLNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syQZ+PqZD9nWqIx1KpCy5T27c1jjraX/EMeYwH3esIXmHV7SFBT/Kg3BdmC55RJSNEAyVVstJEITZX76o+DETH8qB215BC91dNx3d0uAkh+BTCwkLlIHpQHL20PByP8Wp+ZlBvaE5g50NYDhbIosFYC33VzoascprqyMCVCb5IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJp+2jEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oj7OwLNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB88BC4CEE2;
-	Wed, 23 Apr 2025 14:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJp+2jEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898AFC4CEE3;
+	Wed, 23 Apr 2025 14:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419787;
-	bh=IoqrGK5owEgWKsoU9Nv3qSdTsijndyZHDv6avjJyGA4=;
+	s=korg; t=1745419789;
+	bh=jU0yfYPthysSIKBXSBN+W+7SztuLXx0weZtcqj9QMmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oj7OwLNef1opVE+VRSrpM3uEVpOjy3NOlZdfPP+wJlarvmG+5al2mk1WbAU5LKqJz
-	 GGFPTSNTAoTplO9ZAeRNFgS6XOAou6Y2Yu9ppWs8mTlPqxzw2ShxP8GIWNFnM3qlzw
-	 Nykz1/BHhQecWWGCjA7tevp0QK3TkTeoILACZqsU=
+	b=gJp+2jEaOAyEAxNLtdwjeDO2+gw0oL6iACESBzLDTajAfKRu7dCGJwvajoGzKHidy
+	 w+mbYC/sc++aVn/PWFwDqCzDVrUIztdrmKX/uTY4IoBx8i16L731h8zBzm3v485qo+
+	 EEXlbjVU/pXVomH1iA42uFf0+BHNjHFyhaIlrF5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 027/241] RDMA/bnxt_re: Remove unusable nq variable
-Date: Wed, 23 Apr 2025 16:41:31 +0200
-Message-ID: <20250423142621.626894010@linuxfoundation.org>
+Subject: [PATCH 6.12 062/223] net: txgbe: fix memory leak in txgbe_probe() error path
+Date: Wed, 23 Apr 2025 16:42:14 +0200
+Message-ID: <20250423142619.662435088@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +49,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit ffc59e32c67e599cc473d6427a4aa584399d5b3c ]
+[ Upstream commit b2727326d0a53709380aa147018085d71a6d4843 ]
 
-Remove nq variable from bnxt_re_create_srq() and bnxt_re_destroy_srq()
-as it generates the following compilation warnings:
+When txgbe_sw_init() is called, memory is allocated for wx->rss_key
+in wx_init_rss_key(). However, in txgbe_probe() function, the subsequent
+error paths after txgbe_sw_init() don't free the rss_key. Fix that by
+freeing it in error path along with wx->mac_table.
 
->> drivers/infiniband/hw/bnxt_re/ib_verbs.c:1777:24: warning: variable
-'nq' set but not used [-Wunused-but-set-variable]
-    1777 |         struct bnxt_qplib_nq *nq = NULL;
-         |                               ^
-   drivers/infiniband/hw/bnxt_re/ib_verbs.c:1828:24: warning: variable
-'nq' set but not used [-Wunused-but-set-variable]
-    1828 |         struct bnxt_qplib_nq *nq = NULL;
-         |                               ^
-   2 warnings generated.
+Also change the label to which execution jumps when txgbe_sw_init()
+fails, because otherwise, it could lead to a double free for rss_key,
+when the mac_table allocation fails in wx_sw_init().
 
-Fixes: 6b395d31146a ("RDMA/bnxt_re: Fix budget handling of notification queue")
-Link: https://patch.msgid.link/r/8a4343e217d7d1c0a5a786b785c4ac57cb72a2a0.1744288299.git.leonro@nvidia.com
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202504091055.CzgXnk4C-lkp@intel.com/
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 937d46ecc5f9 ("net: wangxun: add ethtool_ops for channel number")
+Reported-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250415032910.13139-1-abdun.nihaal@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index cb9b820c613d6..02b21d484677e 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1773,10 +1773,7 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
- 					       ib_srq);
- 	struct bnxt_re_dev *rdev = srq->rdev;
- 	struct bnxt_qplib_srq *qplib_srq = &srq->qplib_srq;
--	struct bnxt_qplib_nq *nq = NULL;
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+index f774502680364..7e352837184fa 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+@@ -559,7 +559,7 @@ static int txgbe_probe(struct pci_dev *pdev,
+ 	/* setup the private structure */
+ 	err = txgbe_sw_init(wx);
+ 	if (err)
+-		goto err_free_mac_table;
++		goto err_pci_release_regions;
  
--	if (qplib_srq->cq)
--		nq = qplib_srq->cq->nq;
- 	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT) {
- 		free_page((unsigned long)srq->uctx_srq_page);
- 		hash_del(&srq->hash_entry);
-@@ -1824,7 +1821,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 		       struct ib_udata *udata)
- {
- 	struct bnxt_qplib_dev_attr *dev_attr;
--	struct bnxt_qplib_nq *nq = NULL;
- 	struct bnxt_re_ucontext *uctx;
- 	struct bnxt_re_dev *rdev;
- 	struct bnxt_re_srq *srq;
-@@ -1870,7 +1866,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 	srq->qplib_srq.eventq_hw_ring_id = rdev->nqr->nq[0].ring_id;
- 	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
- 	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
--	nq = &rdev->nqr->nq[0];
- 
- 	if (udata) {
- 		rc = bnxt_re_init_user_srq(rdev, pd, srq, udata);
+ 	/* check if flash load is done after hw power up */
+ 	err = wx_check_flash_load(wx, TXGBE_SPI_ILDR_STATUS_PERST);
+@@ -717,6 +717,7 @@ static int txgbe_probe(struct pci_dev *pdev,
+ 	wx_clear_interrupt_scheme(wx);
+ 	wx_control_hw(wx, false);
+ err_free_mac_table:
++	kfree(wx->rss_key);
+ 	kfree(wx->mac_table);
+ err_pci_release_regions:
+ 	pci_release_selected_regions(pdev,
 -- 
 2.39.5
 
