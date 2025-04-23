@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57D4280A22;
-	Wed, 23 Apr 2025 15:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63694288C8D;
+	Wed, 23 Apr 2025 15:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420603; cv=none; b=Iwcsd7owNB/HTfLMRwYAQCugd/3ZFHLFdwtvZviR/VcDFIMi7lU+3/N5XwBxr2SMtLK5bZ2ErEXzdUMJbpBnKlFpaqlVnM53G1pw1Em8/ZyXdraszcu7ylUlI3wcMNS4dpTgaHNTN3fKu4fuDUI5k6C79XzLfmtqbF2LRxUJOzY=
+	t=1745420606; cv=none; b=eDNb79Lk6gAM8Y4htESCcOfV3onuEPhcDiFOSYs1pNLJnL3cBR0llaQ4l5lzCib0Bp8/f50yWC1KF4+TkFLoiPLPjTcyADz2oJAWor2Jfk6/LrYQhGxGmWHqLkXc2v2M/j4ZPH1szCPrH5SobuguUExLl5ea/3qA5o3RZm3Huc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420603; c=relaxed/simple;
-	bh=K+SLxCTlrxFDIbx6UMrTV97HmstD0yGUtzzPkhQFO4o=;
+	s=arc-20240116; t=1745420606; c=relaxed/simple;
+	bh=03Q/jjH3qANNEtI3QsCvdXdkBh/A1xQpm3+11zc7Ao0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrcFaNcu5XcsFVFWj/TwHXCLBE+w17E4Ii4oTR88v7rRUmKVab9SAYKHPwWFNqhy0sSbJoNetuq4CJ8okIScMN5jsKa3WeKOFHqc9r2ia3/wxXuWX24qzXmhbgwR31dJfF2vUUrGRTi9rV7TAbUaEY15q6vQY032ops6sXo4Ecw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjh1I5M9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3EYu4YDrfFspknWdSSRH3HpqP7DMwAMsW3NckmBljkxpQOO3KYzF1J48JSup7Qzo25n+KL+TlcbQ5TcC6j/91T5p9FcBpULj+RvEZ7mF8Itg4u4ENtGUfy75+BDoctD2RLgCIK2811wuw+/3P9hP3RpuirnYd7aa6b87JDfrZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSj03wWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjh1I5M9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D2AC4CEE2;
-	Wed, 23 Apr 2025 15:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSj03wWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6414C4CEE2;
+	Wed, 23 Apr 2025 15:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420603;
-	bh=K+SLxCTlrxFDIbx6UMrTV97HmstD0yGUtzzPkhQFO4o=;
+	s=korg; t=1745420606;
+	bh=03Q/jjH3qANNEtI3QsCvdXdkBh/A1xQpm3+11zc7Ao0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjh1I5M9/QpxTJ08cG38Wq8xitUZ4W50zBfgrfIoo4PKED1E30EnG8U5S5623tMxy
-	 mlgRAoNen+jQ/973P8Rl5p3S16MGvY76xj0FqxojrS3G5kebMd4pWLfZp53cE1iUFx
-	 WSQO489zLV73RBPLlpfDYKdPWIIQd3aaSyO05PBw=
+	b=TSj03wWpcPffwj55w+clQiP2mVHnTjMqihWNFdaKYui3KdaxzCw9dxQz7kgzn7PNl
+	 NoXNDAiDC7c6uue8SKmVS500RoD01iKvJE493EmhXqXsYs1+x9Xh6CGs5WJiOlBPtI
+	 nAMRToMcDnejBaJHd6r3T1GhBRl3zs0QKwpmpvmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>
-Subject: [PATCH 6.12 145/223] perf/x86/intel/uncore: Fix the scale of IIO free running counters on SNR
-Date: Wed, 23 Apr 2025 16:43:37 +0200
-Message-ID: <20250423142623.089212681@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 064/291] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
+Date: Wed, 23 Apr 2025 16:40:53 +0200
+Message-ID: <20250423142626.991708030@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 96a720db59ab330c8562b2437153faa45dac705f upstream.
+[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
 
-There was a mistake in the SNR uncore spec. The counter increments for
-every 32 bytes of data sent from the IO agent to the SOC, not 4 bytes
-which was documented in the spec.
+If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
+delete the queue from process_queue_list and free the resource.
 
-The event list has been updated:
-
-  "EventName": "UNC_IIO_BANDWIDTH_IN.PART0_FREERUN",
-  "BriefDescription": "Free running counter that increments for every 32
-		       bytes of data sent from the IO agent to the SOC",
-
-Update the scale of the IIO bandwidth in free running counters as well.
-
-Fixes: 210cc5f9db7a ("perf/x86/intel/uncore: Add uncore support for Snow Ridge server")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250416142426.3933977-1-kan.liang@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -4891,28 +4891,28 @@ static struct uncore_event_desc snr_unco
- 	INTEL_UNCORE_EVENT_DESC(ioclk,			"event=0xff,umask=0x10"),
- 	/* Free-Running IIO BANDWIDTH IN Counters */
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port0,		"event=0xff,umask=0x20"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port0.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port1,		"event=0xff,umask=0x21"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port1.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port2,		"event=0xff,umask=0x22"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port2.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port3,		"event=0xff,umask=0x23"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port3.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port4,		"event=0xff,umask=0x24"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port4.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port5,		"event=0xff,umask=0x25"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port5.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port6,		"event=0xff,umask=0x26"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port6.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port7,		"event=0xff,umask=0x27"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port7.unit,	"MiB"),
- 	{ /* end: all zeroes */ },
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 1918a3c06ac86..a15bf1e382767 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -429,7 +429,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
+ 			pr_err("Pasid 0x%x destroy queue %d failed, ret %d\n",
+ 				pqm->process->pasid,
+ 				pqn->q->properties.queue_id, retval);
+-			if (retval != -ETIME)
++			if (retval != -ETIME && retval != -EIO)
+ 				goto err_destroy_queue;
+ 		}
+ 
+-- 
+2.39.5
+
 
 
