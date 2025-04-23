@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE7757C9F;
-	Wed, 23 Apr 2025 15:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F22284677;
+	Wed, 23 Apr 2025 15:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420561; cv=none; b=UrT6fvLDHHvIHeyk/TRFslfCJDeLFNw0HiflEEufaL5gIZvZ/t5+V1BE75UftUh1PZiAx/6v/pUL4nOWnO5WQ0A1XUgX94HymOKTmpo04e4y9SdoE45mHbVOrIL6r+dYcC7Q7bRO55UYIMaaFqM0z3cRHhWDsVRK5/sXXungMkc=
+	t=1745420564; cv=none; b=oZJTETEeT47uPHp1pjRcTHJV2pUR0NwI9CrhYlt1bm0uaPqF0OMk5V3a6RCBJzd+jJD/mhzgJdUftnwAHZPvVckD9MW0cP3oKSohvk1Di7ieEgoE3ctUZ6rgbtR1rj8rxzFwWJXZN6od5LlCAHdmybGWj91JLmr6anlNgxnqgRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420561; c=relaxed/simple;
-	bh=uuarIOrZME47UYFhr4NdQYYGXefLM+IhYCoM+ptblXY=;
+	s=arc-20240116; t=1745420564; c=relaxed/simple;
+	bh=6TfROoK9+/ZluI2/nDOXUW7Hz+gczqZZAM7kNBDUWms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSiZ/46sum3wmuaSTvQKCVI5XgmmfXwbFOh1dHK5D6hamMvsQbgTrP5gqDA9gQZEbVkGAMYcpwOEAvLyfaC5h1bS5/ylyUb3yBvzTV5HTPNdkhhNP+HLaIfI9YJWClbA3zmVxt5OTOfywL/6Aj8lG5ZpamQ+ikFJO7aojiYUz2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coiFR7kV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQN/aMWmskNeuMIFwv0ypum4VUtkDLYox1OvUSWJ3wz4opss/PMGD80xggHyCi0qbPMfetTgQm927RvhrokMsLkrtMP5Hod72riiQ9TaVECKna0w3u5HeqkqG32zZGYZQt2Q/9g7gW0h+HhbjkYAblpGaPSxmCTh75CGw5fAtBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAjFw3C7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coiFR7kV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F8CC4CEE2;
-	Wed, 23 Apr 2025 15:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAjFw3C7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF68FC4CEE2;
+	Wed, 23 Apr 2025 15:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420561;
-	bh=uuarIOrZME47UYFhr4NdQYYGXefLM+IhYCoM+ptblXY=;
+	s=korg; t=1745420564;
+	bh=6TfROoK9+/ZluI2/nDOXUW7Hz+gczqZZAM7kNBDUWms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coiFR7kVOBaHXTkReIufl90h42XJjTtFjFYSf9576eurb2GDoWWRXd27ugFFcbQXK
-	 zbVsup7afwKIy2gHEyYFZYUQ3P/uaXZ+9s5edXZ9nCE42trAqqrjVNIbGHssitCbRd
-	 eagfBrZmwFafLcChLv/zIAKFHWLeEX1c8shOIuSY=
+	b=IAjFw3C7cLiPMs4x/xIexpkOTjOBuCncSicQNNeMTW6gC6tBlborqaZzy6wZQAZOl
+	 dOrs1ESj8UwMd7qDDF+GX8I6CG+RYJfnfUnp3GOL8J/dTRUhzuZka1C7j9D03ejJIM
+	 iQ/Wc+ucklpSMNPDZr8YHavEHTJthu7Q3YFdi+14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/291] drm/bridge: panel: forbid initializing a panel with unknown connector type
-Date: Wed, 23 Apr 2025 16:40:49 +0200
-Message-ID: <20250423142626.828326598@linuxfoundation.org>
+	Cal Peake <cp@absolutedigital.net>,
+	Athul Krishna <athul.krishna.kr@protonmail.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.14 103/241] Revert "PCI: Avoid reset when disabled via sysfs"
+Date: Wed, 23 Apr 2025 16:42:47 +0200
+Message-ID: <20250423142624.779156242@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit b296955b3a740ecc8b3b08e34fd64f1ceabb8fb4 ]
+commit bc0b828ef6e561081ebc4c758d0c4d166bb9829c upstream.
 
-Having an DRM_MODE_CONNECTOR_Unknown connector type is considered bad, and
-drm_panel_bridge_add_typed() and derivatives are deprecated for this.
+This reverts commit 479380efe1625e251008d24b2810283db60d6fcd.
 
-drm_panel_init() won't prevent initializing a panel with a
-DRM_MODE_CONNECTOR_Unknown connector type. Luckily there are no in-tree
-users doing it, so take this as an opportinuty to document a valid
-connector type must be passed.
+The reset_method attribute on a PCI device is only intended to manage the
+availability of function scoped resets for a device.  It was never intended
+to restrict resets targeting the bus or slot.
 
-Returning an error if this rule is violated is not possible because
-drm_panel_init() is a void function. Add at least a warning to make any
-violations noticeable, especially to non-upstream drivers.
+In introducing a restriction that each device must support function level
+reset by testing pci_reset_supported(), we essentially create a catch-22,
+that a device must have a function scope reset in order to support bus/slot
+reset, when we use bus/slot reset to effect a reset of a device that does
+not support a function scoped reset, especially multi-function devices.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-5-88ca5827d7af@bootlin.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This breaks the majority of uses cases where vfio-pci uses bus/slot resets
+to manage multifunction devices that do not support function scoped resets.
+
+Fixes: 479380efe162 ("PCI: Avoid reset when disabled via sysfs")
+Reported-by: Cal Peake <cp@absolutedigital.net>
+Closes: https://lore.kernel.org/all/808e1111-27b7-f35b-6d5c-5b275e73677b@absolutedigital.net
+Reported-by: Athul Krishna <athul.krishna.kr@protonmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220010
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250414211828.3530741-1-alex.williamson@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panel.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index 7fd3de89ed079..acd29b4f43f84 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -49,7 +49,7 @@ static LIST_HEAD(panel_list);
-  * @dev: parent device of the panel
-  * @funcs: panel operations
-  * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
-- *	the panel interface
-+ *	the panel interface (must NOT be DRM_MODE_CONNECTOR_Unknown)
-  *
-  * Initialize the panel structure for subsequent registration with
-  * drm_panel_add().
-@@ -57,6 +57,9 @@ static LIST_HEAD(panel_list);
- void drm_panel_init(struct drm_panel *panel, struct device *dev,
- 		    const struct drm_panel_funcs *funcs, int connector_type)
- {
-+	if (connector_type == DRM_MODE_CONNECTOR_Unknown)
-+		DRM_WARN("%s: %s: a valid connector type is required!\n", __func__, dev_name(dev));
-+
- 	INIT_LIST_HEAD(&panel->list);
- 	panel->dev = dev;
- 	panel->funcs = funcs;
--- 
-2.39.5
-
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5419,8 +5419,6 @@ static bool pci_bus_resettable(struct pc
+ 		return false;
+ 
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		if (!pci_reset_supported(dev))
+-			return false;
+ 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
+ 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
+ 			return false;
+@@ -5497,8 +5495,6 @@ static bool pci_slot_resettable(struct p
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		if (!pci_reset_supported(dev))
+-			return false;
+ 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
+ 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
+ 			return false;
 
 
