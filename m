@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C8280CE0;
-	Wed, 23 Apr 2025 14:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CAB27D76E;
+	Wed, 23 Apr 2025 14:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419829; cv=none; b=BfloI8/VOVgV2JhBylPWTVOImyzvr0wflRkO8RI7asGa8ajvv6k98+8R6L0KOTAiuPmB30J1iURKMcG3ahUYbwIxz1wS1KZAMMaZeilLa6vsnbg/Rx8ykwiujsoI7naNY7EQ2h/+wUg1+Lej66wUk09OR4bNr5Q4rRvCAER7NB8=
+	t=1745419832; cv=none; b=t1nJn9dDuNn5CgI1r6zEei4FRwyYMKRJo4V7tzj9hF4fnwJnV8LWg3RxN7bZI0q5aO+a6CR/WlSXJ8QGdxvy9VzEx24DjL4TytBBwnB3pgN/N1q/hIefdpGTyh0WkQydKPgsQ+e27aBl6Sufa7vtduMM6Esp7GrnXqgHHcpziMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419829; c=relaxed/simple;
-	bh=KAR+DyQbVlZ4ipOs8idwH/vENfu+12D1xxnNheKMwLs=;
+	s=arc-20240116; t=1745419832; c=relaxed/simple;
+	bh=9/kre7z2agR/vqILKiP5RRKuHks9L45fFJkCVgfEU6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVCWIRHJ3NK2NHtwUYxLp8ZjStyXzJjWKs7ReyoQhZx26fyyKQbZi8X62uJGKQ+owuHQictQJE/81nZ1AsxT9Z2ozxGjuexhpfcemGvXD1RxlRC4gRlJ1Om8dhSpXUdgO7CG2eCqYK9gkVD4ZmkA4xTh8io3Ghw15bUm0m4BHi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQV7V+ci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7oR4vL5ObgXfKZ4I0Zh83siq5+aJMzetgTAeM03WieUxrEK9e9umR8T+iIWjxp2BPZz9KVWGSVl9AoDIO7YQcFOKj8n1yuTQDYY0NW/Yh5UP6n0mmvz/HualGXzU+R3I+c2a23D/6sOQxnfuhQqq7j9pPuWT7uJhGfV/qTGUZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqCRof0m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQV7V+ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA65DC4CEE2;
-	Wed, 23 Apr 2025 14:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqCRof0m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD58C4CEE2;
+	Wed, 23 Apr 2025 14:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419829;
-	bh=KAR+DyQbVlZ4ipOs8idwH/vENfu+12D1xxnNheKMwLs=;
+	s=korg; t=1745419831;
+	bh=9/kre7z2agR/vqILKiP5RRKuHks9L45fFJkCVgfEU6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQV7V+cik5hX5QXwl2fJpBKr5z8UUE49SDQxgbXuu/sRuBnGKLTzC9dU/6hIOar0Y
-	 SavkBSwo91PVqnjrQHR2KIQd5iuH3TLzOPv4dVycQgEwaThIdG7cb5G4BxzaVL2HLO
-	 sD7KeSfTjCuTRWZ5LY5x7MILimqSzc6wXXwbCO1I=
+	b=MqCRof0m1mhiP6u2g0J8kLejq/filB+DDF9yMFK04vRYgBXtgvHyq5yP0qBEcA1/8
+	 c1t2zlEdaspD45bB5K6Adf8t1QD7PJRWuWU4YykiARkFHgbODrC9rERZJnONmLVxwA
+	 DixP7zQRbdmvPuiIe5TNZMkdfF+RGNeD85ffFFzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Ethan Carter Edwards <ethan@ethancedwards.com>,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 012/241] ASoC: Intel: avs: Fix null-ptr-deref in avs_component_probe()
-Date: Wed, 23 Apr 2025 16:41:16 +0200
-Message-ID: <20250423142621.023774380@linuxfoundation.org>
+Subject: [PATCH 6.12 047/223] net: openvswitch: fix nested key length validation in the set() action
+Date: Wed, 23 Apr 2025 16:41:59 +0200
+Message-ID: <20250423142619.049569797@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +50,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 95f723cf141b95e3b3a5b92cf2ea98a863fe7275 ]
+[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-avs_component_probe() does not check for this case, which results in a
-NULL pointer dereference.
+It's not safe to access nla_len(ovs_key) if the data is smaller than
+the netlink header.  Check that the attribute is OK first.
 
-Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Ethan Carter Edwards <ethan@ethancedwards.com>
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250402141411.44972-1-bsdhenrymartin@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
+Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 3 ++-
+ net/openvswitch/flow_netlink.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 4bfbcb5a5ae8a..f7dd17849e97b 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -927,7 +927,8 @@ static int avs_component_probe(struct snd_soc_component *component)
- 		else
- 			mach->tplg_filename = devm_kasprintf(adev->dev, GFP_KERNEL,
- 							     "hda-generic-tplg.bin");
--
-+		if (!mach->tplg_filename)
-+			return -ENOMEM;
- 		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
- 				     mach->tplg_filename);
- 		if (!filename)
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 0df89240b7336..305daf57a4f9d 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2876,7 +2876,8 @@ static int validate_set(const struct nlattr *a,
+ 	size_t key_len;
+ 
+ 	/* There can be only one key in a action */
+-	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
++	if (!nla_ok(ovs_key, nla_len(a)) ||
++	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
+ 		return -EINVAL;
+ 
+ 	key_len = nla_len(ovs_key);
 -- 
 2.39.5
 
