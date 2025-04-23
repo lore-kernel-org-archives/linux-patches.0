@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB93728B4E6;
-	Wed, 23 Apr 2025 15:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22EF2BEC57;
+	Wed, 23 Apr 2025 15:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422501; cv=none; b=PTBwd75F904MvT+T3SxBPCQxzimPKoQyG0NGqKU+y2/p9ipCutMWyDQ6tRyd0WSeYvC+d65Pr5Jht7FnP2s58Fp3evGa5IT8SKAipRNlKOS5scUkFjshhCcftaNj4t5Q/ofdr6DFsQKZuV474KrUojC1D9jmQZXhlYeG34tcAqE=
+	t=1745422504; cv=none; b=hmO+SIE5QQ72Bk6nY2a+0zSmKYfc3BmTD4mb600+HAzT9QjOAT/X+FyyDr1ecitqY7gPwDyRsB02KxH+IaDVmAJgVXlArWYT4W5UbZnzcXk45ehEQp4AWNi1pqOR9qcux3UcUU6pqA8koRzVsWmH+S6SuzmTD9LyYQBTP4emnEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422501; c=relaxed/simple;
-	bh=4w/SbY7zFNaEQeaa8HfabppZUJCHnM9+x68Pjc8hAPw=;
+	s=arc-20240116; t=1745422504; c=relaxed/simple;
+	bh=1PNNUbFx2wXciHDJ5F4LNqqn7iNP9l8GbN8FbQ9KJpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMc3r9xyH4qEKOjh4YYAjdOlp8NytNe6EKDQhjBI3NeuJRBPBeWYKdo8i0NkQapMe2ED4/M9ssu6CB1kBTvFeOONGGc0R4/wwjT90qY2gGTNvn0L0HYVacwytTjDAOTqUKxozGvWohAftsZSuitavztD5TRv4bZ+DaWlpg8ohco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REwKiyMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8ZwzCcpWC8GzoMJHq+U7ncHTewpRJmPR2jqq+AGq9jeH2t3mtD3o6xl1QcwzJWoMtY3mdfl6qB75YU6LKJ1Gk+NIphvhzNfqqeBS57A9xTfxyIJtLxrOXm/K4L0A05lcc/npVdVnJWc4Pag03FLW/D1jhtoW+U7MP4oqOgiBCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=As01AszD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REwKiyMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD326C4CEE3;
-	Wed, 23 Apr 2025 15:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="As01AszD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8223BC4CEE3;
+	Wed, 23 Apr 2025 15:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422501;
-	bh=4w/SbY7zFNaEQeaa8HfabppZUJCHnM9+x68Pjc8hAPw=;
+	s=korg; t=1745422503;
+	bh=1PNNUbFx2wXciHDJ5F4LNqqn7iNP9l8GbN8FbQ9KJpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REwKiyMZn1j5UMSE3/U0922DSzXvnVbrk8W2WqO9DbNNh7KOst5327khBbIlhrOYm
-	 JrjNg5cQwvcg37X7391m0IaZYcD4h58PuFvI1HYq+PJFLH5dyApZ1syxeMmXUv0XYG
-	 T7xxL7uaW51s/OkV2pKZMvb873cLCu321K4jggBs=
+	b=As01AszDmxaTUap1aKF3hbzbfwl2WLmzYjbJcwQyU+kmrL+iAvrxfDd5/P8tg1Ef3
+	 E9lz7mBPAfWDuzVu7/vE97+QocFrQTxMcVH7ktV8oZfUJGOewOkN93MH1SY3JwjMY9
+	 4XiAZUvDAUgrCvnnb+Dc1ako/3JfU6iBeqNMoUUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yingfu.zhou" <yingfu.zhou@shopee.com>,
-	"Chunguang.xu" <chunguang.xu@shopee.com>,
-	"Yue.zhao" <yue.zhao@shopee.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Feng Liu <Feng.Liu3@windriver.com>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Cliff Liu <donghua.liu@windriver.com>,
 	He Zhe <Zhe.He@windriver.com>
-Subject: [PATCH 6.6 374/393] nvme-rdma: unquiesce admin_q before destroy it
-Date: Wed, 23 Apr 2025 16:44:30 +0200
-Message-ID: <20250423142658.780460334@linuxfoundation.org>
+Subject: [PATCH 6.6 375/393] powerpc/rtas: Prevent Spectre v1 gadget construction in sys_rtas()
+Date: Wed, 23 Apr 2025 16:44:31 +0200
+Message-ID: <20250423142658.821992892@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -56,69 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunguang.xu <chunguang.xu@shopee.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-commit 5858b687559809f05393af745cbadf06dee61295 upstream.
+commit 0974d03eb479384466d828d65637814bee6b26d7 upstream.
 
-Kernel will hang on destroy admin_q while we create ctrl failed, such
-as following calltrace:
+Smatch warns:
 
-PID: 23644    TASK: ff2d52b40f439fc0  CPU: 2    COMMAND: "nvme"
- #0 [ff61d23de260fb78] __schedule at ffffffff8323bc15
- #1 [ff61d23de260fc08] schedule at ffffffff8323c014
- #2 [ff61d23de260fc28] blk_mq_freeze_queue_wait at ffffffff82a3dba1
- #3 [ff61d23de260fc78] blk_freeze_queue at ffffffff82a4113a
- #4 [ff61d23de260fc90] blk_cleanup_queue at ffffffff82a33006
- #5 [ff61d23de260fcb0] nvme_rdma_destroy_admin_queue at ffffffffc12686ce
- #6 [ff61d23de260fcc8] nvme_rdma_setup_ctrl at ffffffffc1268ced
- #7 [ff61d23de260fd28] nvme_rdma_create_ctrl at ffffffffc126919b
- #8 [ff61d23de260fd68] nvmf_dev_write at ffffffffc024f362
- #9 [ff61d23de260fe38] vfs_write at ffffffff827d5f25
-    RIP: 00007fda7891d574  RSP: 00007ffe2ef06958  RFLAGS: 00000202
-    RAX: ffffffffffffffda  RBX: 000055e8122a4d90  RCX: 00007fda7891d574
-    RDX: 000000000000012b  RSI: 000055e8122a4d90  RDI: 0000000000000004
-    RBP: 00007ffe2ef079c0   R8: 000000000000012b   R9: 000055e8122a4d90
-    R10: 0000000000000000  R11: 0000000000000202  R12: 0000000000000004
-    R13: 000055e8122923c0  R14: 000000000000012b  R15: 00007fda78a54500
-    ORIG_RAX: 0000000000000001  CS: 0033  SS: 002b
+  arch/powerpc/kernel/rtas.c:1932 __do_sys_rtas() warn: potential
+  spectre issue 'args.args' [r] (local cap)
 
-This due to we have quiesced admi_q before cancel requests, but forgot
-to unquiesce before destroy it, as a result we fail to drain the
-pending requests, and hang on blk_mq_freeze_queue_wait() forever. Here
-try to reuse nvme_rdma_teardown_admin_queue() to fix this issue and
-simplify the code.
+The 'nargs' and 'nret' locals come directly from a user-supplied
+buffer and are used as indexes into a small stack-based array and as
+inputs to copy_to_user() after they are subject to bounds checks.
 
-Fixes: 958dc1d32c80 ("nvme-rdma: add clean action for failed reconnection")
-Reported-by: Yingfu.zhou <yingfu.zhou@shopee.com>
-Signed-off-by: Chunguang.xu <chunguang.xu@shopee.com>
-Signed-off-by: Yue.zhao <yue.zhao@shopee.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Use array_index_nospec() after the bounds checks to clamp these values
+for speculative execution.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240530-sys_rtas-nargs-nret-v1-1-129acddd4d89@linux.ibm.com
 [Minor context change fixed]
-Signed-off-by: Feng Liu <Feng.Liu3@windriver.com>
+Signed-off-by: Cliff Liu <donghua.liu@windriver.com>
 Signed-off-by: He Zhe <Zhe.He@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/rdma.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ arch/powerpc/kernel/rtas.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1083,13 +1083,7 @@ destroy_io:
- 		nvme_rdma_free_io_queues(ctrl);
- 	}
- destroy_admin:
--	nvme_quiesce_admin_queue(&ctrl->ctrl);
--	blk_sync_queue(ctrl->ctrl.admin_q);
--	nvme_rdma_stop_queue(&ctrl->queues[0]);
--	nvme_cancel_admin_tagset(&ctrl->ctrl);
--	if (new)
--		nvme_remove_admin_tag_set(&ctrl->ctrl);
--	nvme_rdma_destroy_admin_queue(ctrl);
-+	nvme_rdma_teardown_admin_queue(ctrl, new);
- 	return ret;
- }
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -18,6 +18,7 @@
+ #include <linux/kernel.h>
+ #include <linux/lockdep.h>
+ #include <linux/memblock.h>
++#include <linux/nospec.h>
+ #include <linux/of.h>
+ #include <linux/of_fdt.h>
+ #include <linux/reboot.h>
+@@ -1839,6 +1840,9 @@ SYSCALL_DEFINE1(rtas, struct rtas_args _
+ 	    || nargs + nret > ARRAY_SIZE(args.args))
+ 		return -EINVAL;
  
++	nargs = array_index_nospec(nargs, ARRAY_SIZE(args.args));
++	nret = array_index_nospec(nret, ARRAY_SIZE(args.args) - nargs);
++
+ 	/* Copy in args. */
+ 	if (copy_from_user(args.args, uargs->args,
+ 			   nargs * sizeof(rtas_arg_t)) != 0)
 
 
