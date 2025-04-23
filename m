@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0496D283C81;
-	Wed, 23 Apr 2025 15:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE006242D64;
+	Wed, 23 Apr 2025 15:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422265; cv=none; b=lGSb8dG+qileprJ4aESKMNHrq0C2iA/veMrF0TzVrvPFw/EA1V1Lgwv9E1n1MDc93VlrAjJ6CxvHwFKLxk3/CNGdzHNfXqa8RoVRji7LvuHcfA7qPSoDCBjpL/+TV0+aMMNBwdJ1784hd0aMZcuz0DLdg4XcLGd+EpKfNHOMDfo=
+	t=1745422268; cv=none; b=cVg8qvblTn7Q2YtYZWLWn59JOhfJpl7RmEIPx6jlvlUcAxNPgeprlwPz+X/9nXnxUeL6EFmT/0pRgQIOYppV0s+lYrlSLvS7Gfbfug05ECaFcE/Zrh1R0d9g40FYpnls7Sl7pJUzdXxqXGCsBfBiXP3iKpRnBvz98btE9+pr4RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422265; c=relaxed/simple;
-	bh=4ceBUmeJURfUmz1J3HDK3fTMytu+Ku/PHYdZSTOa2sg=;
+	s=arc-20240116; t=1745422268; c=relaxed/simple;
+	bh=CUhL5/O+f79TXrduLbU25qiOQxYtnKun1jL9FBBpjv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rRj7hDWcUr/71m1llW6bXSt/WE3wYd8nS01XuFlOcNbg8EC5NB0ltWzpaHwBDW8BXPkdnLl+BPU6Uvb8GxdEXHMbdFtVUqPQoVC1K5+hwEQ2osznyyHWAOuuSdT7oCOE/8xIW1mr24LK6ExO7xiAQm4hvLu8Wy1MjJgoKO3d1bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpeivcOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qaRAc/vE3CYdTNFdnAcoTnPavRu+EljfurS+psfORKs2oN3PyQPgfxPmBYx+GH3cNwM0WL+2cTPcezGBXX1atvBIT9335P4dTPGFd0x5HQaN01B4iyLobCAFnbSjC2CMQh+li5cArtOfDh5lXhqeF7WycgL4GkXLrbEVSsZ47CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY2PAl9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpeivcOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FC2C4CEE2;
-	Wed, 23 Apr 2025 15:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY2PAl9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE35C4CEE2;
+	Wed, 23 Apr 2025 15:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422264;
-	bh=4ceBUmeJURfUmz1J3HDK3fTMytu+Ku/PHYdZSTOa2sg=;
+	s=korg; t=1745422267;
+	bh=CUhL5/O+f79TXrduLbU25qiOQxYtnKun1jL9FBBpjv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpeivcOPPPhjOI2wDpSUKdtuLrGnewnBGG2n/lcVkNeKCXko9/AuAliGkOE66+05X
-	 wobC/oZ5upPOvC6tHUBE4JnVpSrgLc+aDiHPY3u1Un9gvDZiykIEdwlQ/jJ6s+/ANI
-	 FC6k3C39AYrXyML9McQerHsTIzkER6c2eYC1tI8g=
+	b=uY2PAl9hYUva1VoAtXhQOxAfEiochn0NCc7DEC5qUknj45H7I0ypDXaj+kTCkNmg2
+	 G4wT6f3kpHwhFfC+Abbuf4kuJu8zizCX2v26h0MnLPKQlxmZwX4+8aaUAjFdkYkG3G
+	 y7IFLmGFUJTTbf1r4Db+G6s7EXYx9Yr17oYTYc8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 310/393] Bluetooth: l2cap: Process valid commands in too long frame
-Date: Wed, 23 Apr 2025 16:43:26 +0200
-Message-ID: <20250423142656.134205394@linuxfoundation.org>
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Cliff Liu <donghua.liu@windriver.com>,
+	He Zhe <Zhe.He@windriver.com>
+Subject: [PATCH 6.1 267/291] powerpc/rtas: Prevent Spectre v1 gadget construction in sys_rtas()
+Date: Wed, 23 Apr 2025 16:44:16 +0200
+Message-ID: <20250423142635.333823482@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,110 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frédéric Danis <frederic.danis@collabora.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-commit e2e49e214145a8f6ece6ecd52fec63ebc2b27ce9 upstream.
+commit 0974d03eb479384466d828d65637814bee6b26d7 upstream.
 
-This is required for passing PTS test cases:
-- L2CAP/COS/CED/BI-14-C
-  Multiple Signaling Command in one PDU, Data Truncated, BR/EDR,
-  Connection Request
-- L2CAP/COS/CED/BI-15-C
-  Multiple Signaling Command in one PDU, Data Truncated, BR/EDR,
-  Disconnection Request
+Smatch warns:
 
-The test procedure defined in L2CAP.TS.p39 for both tests is:
-1. The Lower Tester sends a C-frame to the IUT with PDU Length set
-   to 8 and Channel ID set to the correct signaling channel for the
-   logical link. The Information payload contains one L2CAP_ECHO_REQ
-   packet with Data Length set to 0 with 0 octets of echo data and
-   one command packet and Data Length set as specified in Table 4.6
-   and the correct command data.
-2. The IUT sends an L2CAP_ECHO_RSP PDU to the Lower Tester.
-3. Perform alternative 3A, 3B, 3C, or 3D depending on the IUT’s
-   response.
-   Alternative 3A (IUT terminates the link):
-     3A.1 The IUT terminates the link.
-     3A.2 The test ends with a Pass verdict.
-   Alternative 3B (IUT discards the frame):
-     3B.1 The IUT does not send a reply to the Lower Tester.
-   Alternative 3C (IUT rejects PDU):
-     3C.1 The IUT sends an L2CAP_COMMAND_REJECT_RSP PDU to the
-          Lower Tester.
-   Alternative 3D (Any other IUT response):
-     3D.1 The Upper Tester issues a warning and the test ends.
-4. The Lower Tester sends a C-frame to the IUT with PDU Length set
-   to 4 and Channel ID set to the correct signaling channel for the
-   logical link. The Information payload contains Data Length set to
-   0 with an L2CAP_ECHO_REQ packet with 0 octets of echo data.
-5. The IUT sends an L2CAP_ECHO_RSP PDU to the Lower Tester.
+  arch/powerpc/kernel/rtas.c:1932 __do_sys_rtas() warn: potential
+  spectre issue 'args.args' [r] (local cap)
 
-With expected outcome:
-  In Steps 2 and 5, the IUT responds with an L2CAP_ECHO_RSP.
-  In Step 3A.1, the IUT terminates the link.
-  In Step 3B.1, the IUT does not send a reply to the Lower Tester.
-  In Step 3C.1, the IUT rejects the PDU.
-  In Step 3D.1, the IUT sends any valid response.
+The 'nargs' and 'nret' locals come directly from a user-supplied
+buffer and are used as indexes into a small stack-based array and as
+inputs to copy_to_user() after they are subject to bounds checks.
 
-Currently PTS fails with the following logs:
-  Failed to receive ECHO RESPONSE.
+Use array_index_nospec() after the bounds checks to clamp these values
+for speculative execution.
 
-And HCI logs:
-> ACL Data RX: Handle 11 flags 0x02 dlen 20
-      L2CAP: Information Response (0x0b) ident 2 len 12
-        Type: Fixed channels supported (0x0003)
-        Result: Success (0x0000)
-        Channels: 0x000000000000002e
-          L2CAP Signaling (BR/EDR)
-          Connectionless reception
-          AMP Manager Protocol
-          L2CAP Signaling (LE)
-> ACL Data RX: Handle 11 flags 0x02 dlen 13
-        frame too long
-        08 01 00 00 08 02 01 00 aa                       .........
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240530-sys_rtas-nargs-nret-v1-1-129acddd4d89@linux.ibm.com
+[Minor context change fixed]
+Signed-off-by: Cliff Liu <donghua.liu@windriver.com>
+Signed-off-by: He Zhe <Zhe.He@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/rtas.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7510,8 +7510,24 @@ void l2cap_recv_acldata(struct hci_conn
- 		if (skb->len > len) {
- 			BT_ERR("Frame is too long (len %u, expected len %d)",
- 			       skb->len, len);
-+			/* PTS test cases L2CAP/COS/CED/BI-14-C and BI-15-C
-+			 * (Multiple Signaling Command in one PDU, Data
-+			 * Truncated, BR/EDR) send a C-frame to the IUT with
-+			 * PDU Length set to 8 and Channel ID set to the
-+			 * correct signaling channel for the logical link.
-+			 * The Information payload contains one L2CAP_ECHO_REQ
-+			 * packet with Data Length set to 0 with 0 octets of
-+			 * echo data and one invalid command packet due to
-+			 * data truncated in PDU but present in HCI packet.
-+			 *
-+			 * Shorter the socket buffer to the PDU length to
-+			 * allow to process valid commands from the PDU before
-+			 * setting the socket unreliable.
-+			 */
-+			skb->len = len;
-+			l2cap_recv_frame(conn, skb);
- 			l2cap_conn_unreliable(conn, ECOMM);
--			goto drop;
-+			goto unlock;
- 		}
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -25,6 +25,7 @@
+ #include <linux/reboot.h>
+ #include <linux/security.h>
+ #include <linux/syscalls.h>
++#include <linux/nospec.h>
+ #include <linux/of.h>
+ #include <linux/of_fdt.h>
  
- 		/* Append fragment into frame (with header) */
+@@ -1178,6 +1179,9 @@ SYSCALL_DEFINE1(rtas, struct rtas_args _
+ 	    || nargs + nret > ARRAY_SIZE(args.args))
+ 		return -EINVAL;
+ 
++	nargs = array_index_nospec(nargs, ARRAY_SIZE(args.args));
++	nret = array_index_nospec(nret, ARRAY_SIZE(args.args) - nargs);
++
+ 	/* Copy in args. */
+ 	if (copy_from_user(args.args, uargs->args,
+ 			   nargs * sizeof(rtas_arg_t)) != 0)
 
 
