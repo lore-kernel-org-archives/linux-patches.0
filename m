@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85C828F924;
-	Wed, 23 Apr 2025 15:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730B9288CAF;
+	Wed, 23 Apr 2025 15:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420910; cv=none; b=i7gnC+SbqsGZQUGUAMN4UCl6gZ2ERK1yLN9IRui8dBNFP2KZpbfCgwuQ4YuhalL416g9OVAtNGhI7neqSNnfjIKVIBPoFYVlOW1cLHbIE5Fsw8ho+hQ/YLUZ6H2R3YefkpLFepMCz1nospObK9aOPueF8jsQidVjkRwgov5NSBM=
+	t=1745420913; cv=none; b=GZ+3gFibzXXQhCmPtePpP29GFJIIQCYc4H+qHyD+XFZaJec2pnMoVWBLsXf0SAT5S1Lu7i2tTV3mZfxo+1Iyr/WAK+gdjdA0nwHuuEZRmZAoIyOmE8sdBIo2XxwaprHqGpk2CU4vNWDAGx/FHFLNTil30Z4UvURrxpqIXyT8cJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420910; c=relaxed/simple;
-	bh=KyhZhE5dGqhMWH08K+wcXac2IeNyZPvM9BArz5Vsvqg=;
+	s=arc-20240116; t=1745420913; c=relaxed/simple;
+	bh=abeP2Q9HV7NiTBqhmWu8LPKMhVHi9NAh+DN69aByxkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlrHui5W/jwMTDvKxfxlaUVDPHd/0RehBXOMMgxlB9biM9wZsiiPRJprzHkMEouIcRUZsl3fWjCcRigU917Tz5wzNbYH8k0h0kk77SG7s4Qu1W3gMN5G1N/sjW5NTUCqV7kbuwcBNEc1vjQ+/rfrf1c4Wr9pVDja4+0OGJL/OpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwkY40EI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=exRUWZUZeg+yDM7jmpew1GEAm9rl1LO7xpvWtx7JfPKpCJ15VC+eBvZNDRZanRR0jZWGyQMaEPdCRnhQUIh2+0J1e3kNH/bDlQJY5lSKoHEHmJdNBBNBMRCYTSb2o0U8Mdd7n+bzhudoZfhSX2mWCWtnOAVD57xbVl3dzEO//x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJs9DY76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwkY40EI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4F3C4CEE2;
-	Wed, 23 Apr 2025 15:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJs9DY76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE60DC4CEE2;
+	Wed, 23 Apr 2025 15:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420910;
-	bh=KyhZhE5dGqhMWH08K+wcXac2IeNyZPvM9BArz5Vsvqg=;
+	s=korg; t=1745420913;
+	bh=abeP2Q9HV7NiTBqhmWu8LPKMhVHi9NAh+DN69aByxkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CwkY40EIzn2pcyUhLzd9MACd4k3aT6ds/Vlup9XIKI1evzqtUtQoRdDfuY9wY00lv
-	 Z+OBhXxqkPg/lzWlSu7CQbI6CLrVUqO3jG+7Kn3jmp4VfoFwPEbw0Hk51UFxHELT+I
-	 uyrgkeu9pUemMGlp/+dCwIM9+QJOIlDegYrhqdeg=
+	b=zJs9DY76Q1EocVLsmobU2Ke0vYBdiPBLVgDVqAinaX3l3mQkkwATIyMUmcjqH+aFf
+	 sttI9T+PLGQ3NZbFnDeOFF5IOn8k7bfFQp+z6e6Bvi1hoMqXjWn5yCpGb3z8c292LR
+	 8jnxw3TNpPJUEpW6Rw+gnLAepb/H8dcmhspuAZ/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan King <brendan.king@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>
-Subject: [PATCH 6.12 173/223] drm/imagination: take paired job reference
-Date: Wed, 23 Apr 2025 16:44:05 +0200
-Message-ID: <20250423142624.208735912@linuxfoundation.org>
+	Sheng Yong <shengyong1@xiaomi.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 135/241] lib/iov_iter: fix to increase non slab folio refcount
+Date: Wed, 23 Apr 2025 16:43:19 +0200
+Message-ID: <20250423142626.079986918@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,67 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brendan King <Brendan.King@imgtec.com>
+From: Sheng Yong <shengyong1@xiaomi.com>
 
-commit 4ba2abe154ef68f9612eee9d6fbfe53a1736b064 upstream.
+commit 770c8d55c42868239c748a3ebc57c9e37755f842 upstream.
 
-For paired jobs, have the fragment job take a reference on the
-geometry job, so that the geometry job cannot be freed until
-the fragment job has finished with it.
+When testing EROFS file-backed mount over v9fs on qemu, I encountered a
+folio UAF issue.  The page sanity check reports the following call trace.
+The root cause is that pages in bvec are coalesced across a folio bounary.
+The refcount of all non-slab folios should be increased to ensure
+p9_releas_pages can put them correctly.
 
-The geometry job structure is accessed when the fragment job is being
-prepared by the GPU scheduler. Taking the reference prevents the
-geometry job being freed until the fragment job no longer requires it.
+BUG: Bad page state in process md5sum  pfn:18300
+page: refcount:0 mapcount:0 mapping:00000000d5ad8e4e index:0x60 pfn:0x18300
+head: order:0 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+aops:z_erofs_aops ino:30b0f dentry name(?):"GoogleExtServicesCn.apk"
+flags: 0x100000000000041(locked|head|node=0|zone=1)
+raw: 0100000000000041 dead000000000100 dead000000000122 ffff888014b13bd0
+raw: 0000000000000060 0000000000000020 00000000ffffffff 0000000000000000
+head: 0100000000000041 dead000000000100 dead000000000122 ffff888014b13bd0
+head: 0000000000000060 0000000000000020 00000000ffffffff 0000000000000000
+head: 0100000000000000 0000000000000000 ffffffffffffffff 0000000000000000
+head: 0000000000000010 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
+Call Trace:
+ dump_stack_lvl+0x53/0x70
+ bad_page+0xd4/0x220
+ __free_pages_ok+0x76d/0xf30
+ __folio_put+0x230/0x320
+ p9_release_pages+0x179/0x1f0
+ p9_virtio_zc_request+0xa2a/0x1230
+ p9_client_zc_rpc.constprop.0+0x247/0x700
+ p9_client_read_once+0x34d/0x810
+ p9_client_read+0xf3/0x150
+ v9fs_issue_read+0x111/0x360
+ netfs_unbuffered_read_iter_locked+0x927/0x1390
+ netfs_unbuffered_read_iter+0xa2/0xe0
+ vfs_iocb_iter_read+0x2c7/0x460
+ erofs_fileio_rq_submit+0x46b/0x5b0
+ z_erofs_runqueue+0x1203/0x21e0
+ z_erofs_readahead+0x579/0x8b0
+ read_pages+0x19f/0xa70
+ page_cache_ra_order+0x4ad/0xb80
+ filemap_readahead.isra.0+0xe7/0x150
+ filemap_get_pages+0x7aa/0x1890
+ filemap_read+0x320/0xc80
+ vfs_read+0x6c6/0xa30
+ ksys_read+0xf9/0x1c0
+ do_syscall_64+0x9e/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x71/0x79
 
-Fixes a use after free bug detected by KASAN:
-
-[  124.256386] BUG: KASAN: slab-use-after-free in pvr_queue_prepare_job+0x108/0x868 [powervr]
-[  124.264893] Read of size 1 at addr ffff0000084cb960 by task kworker/u16:4/63
-
-Cc: stable@vger.kernel.org
-Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
-Signed-off-by: Brendan King <brendan.king@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://lore.kernel.org/r/20250318-ddkopsrc-1337-use-after-free-in-pvr_queue_prepare_job-v1-1-80fb30d044a6@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://lkml.kernel.org/r/20250401144712.1377719-1-shengyong1@xiaomi.com
+Fixes: b9c0e49abfca ("mm: decline to manipulate the refcount on a slab page")
+Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_job.c   |    7 +++++++
- drivers/gpu/drm/imagination/pvr_queue.c |    4 ++++
- 2 files changed, 11 insertions(+)
+ lib/iov_iter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/imagination/pvr_job.c
-+++ b/drivers/gpu/drm/imagination/pvr_job.c
-@@ -684,6 +684,13 @@ pvr_jobs_link_geom_frag(struct pvr_job_d
- 		geom_job->paired_job = frag_job;
- 		frag_job->paired_job = geom_job;
- 
-+		/* The geometry job pvr_job structure is used when the fragment
-+		 * job is being prepared by the GPU scheduler. Have the fragment
-+		 * job hold a reference on the geometry job to prevent it being
-+		 * freed until the fragment job has finished with it.
-+		 */
-+		pvr_job_get(geom_job);
-+
- 		/* Skip the fragment job we just paired to the geometry job. */
- 		i++;
- 	}
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -866,6 +866,10 @@ static void pvr_queue_free_job(struct dr
- 	struct pvr_job *job = container_of(sched_job, struct pvr_job, base);
- 
- 	drm_sched_job_cleanup(sched_job);
-+
-+	if (job->type == DRM_PVR_JOB_TYPE_FRAGMENT && job->paired_job)
-+		pvr_job_put(job->paired_job);
-+
- 	job->paired_job = NULL;
- 	pvr_job_put(job);
- }
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 8c7fdb7d8c8f..bc9391e55d57 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -1191,7 +1191,7 @@ static ssize_t __iov_iter_get_pages_alloc(struct iov_iter *i,
+ 			return -ENOMEM;
+ 		p = *pages;
+ 		for (int k = 0; k < n; k++) {
+-			struct folio *folio = page_folio(page);
++			struct folio *folio = page_folio(page + k);
+ 			p[k] = page + k;
+ 			if (!folio_test_slab(folio))
+ 				folio_get(folio);
+-- 
+2.49.0
+
 
 
