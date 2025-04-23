@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7399F269826;
-	Wed, 23 Apr 2025 14:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C42820BC;
+	Wed, 23 Apr 2025 14:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419718; cv=none; b=DXTqyN4Gja0jo1GtRgEhLS7ZnNGgHUzTQKnG4ItYn+Iu2yHT3C4y4Nqo4YQ4WUoy3ok2nfrJX3aAvCT1fErZTYKv547TQ7fi7fik6yBpgHKibXQWzoAMP4l9PmQxusJyF7flTcDCFHGxkzeioWPslwMhPnvu/KuHINuMFd+ktbU=
+	t=1745419721; cv=none; b=Qrl3KRFP9xsOff99ch72Fx1Jc89YWyQX0BJKHpk43e6w3BF5QXBZmZjw3AQI+wM9AG/DtojrH/zj+2UO94D7H17fEQx8HU3DgDOHTOc7E0s7PW7U0a86AUIE+0owZENIhDnKT2A51CBeerl+cpfWYML3g94NbZ0rQQuDPSVAAb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419718; c=relaxed/simple;
-	bh=WEnNbO5WFK27nfWZPcLu6JCXCwO1BfFiCC164Lyptso=;
+	s=arc-20240116; t=1745419721; c=relaxed/simple;
+	bh=f9gfa4fQfoLYeEUcqzLAMBS2TEE48HXwYxv0EEqZdmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+rJbAGnnXGL1GeYIiJ6Z+JnqI7Hgv+09X7Pvrj+lm+pF8bjRwYs7ZQNcumZjDOjYJMQPbuQVi5Fp/RHtjMVKSuMGe0ays7Gt+DaXe7nAUMpQeLPy3ZTK9zWXmtJrr2//wpz7f7z1hqGCUNCVUzVkDERwhMxGsTTd03t0UKieWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Be+gymBD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1pU4VkO6WxBOwpk4J8O6ApVx7WpFCDz/gZGkkIi182JnBO2ZvXproXKixyYfH9r83+BaDye++FTOkatZM4lOv4Exo2mb3tKsnlV+FahBQShnZLHmYK1fP+EjgXhznc9wygPfHBj4LLm5KfTYw3ZXeq2XKiucf7OyjhDYzlTp6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LA6SfLvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Be+gymBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06259C4CEE2;
-	Wed, 23 Apr 2025 14:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LA6SfLvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930AAC4CEE2;
+	Wed, 23 Apr 2025 14:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419718;
-	bh=WEnNbO5WFK27nfWZPcLu6JCXCwO1BfFiCC164Lyptso=;
+	s=korg; t=1745419720;
+	bh=f9gfa4fQfoLYeEUcqzLAMBS2TEE48HXwYxv0EEqZdmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Be+gymBDMltT48W9TlC2iDl7FZpASiI9DGuNIOhbd0Qz+3AwvCxTwX6UQmcXyDxra
-	 zoTX/H9Gc+KNjEtNTaH7Ujlp4RIAwbPvdlEaexooiV5QOoE7RQszmlADx/A0fPVpCM
-	 mEMvIfrJ2orhGgx1itCDHfrCDnmJfv5Lf0QY2VNk=
+	b=LA6SfLvAkHDrjpPo75xz7sgHUB7vqANZ1Yf+JKLM06Ui1rbb3zcr7Z9Xhh4cH0EsW
+	 q+f/tMaq3D+uLio4aZsKDx8jENTS5XBd83VL26z0haceIKs1SsvI06uRB+D/4njaI3
+	 G8KlqhIhNWs5HV5/DqJOaSloCZi/i5Ye3VZ9ebpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 015/241] RDMA/bnxt_re: Fix budget handling of notification queue
-Date: Wed, 23 Apr 2025 16:41:19 +0200
-Message-ID: <20250423142621.141849860@linuxfoundation.org>
+Subject: [PATCH 6.12 050/223] net: ethernet: ti: am65-cpsw: fix port_np reference counting
+Date: Wed, 23 Apr 2025 16:42:02 +0200
+Message-ID: <20250423142619.172532772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 6b395d31146a3fae775823ea8570a37b922f6685 ]
+[ Upstream commit 903d2b9f9efc5b3339d74015fcfc0d9fff276c4c ]
 
-The cited commit in Fixes tag introduced a bug which can cause hang
-of completion queue processing because of notification queue budget
-goes to zero.
+A reference to the device tree node is stored in a private struct, thus
+the reference count has to be incremented. Also, decrement the count on
+device removal and in the error path.
 
-Found while doing nfs over rdma mount and umount.
-Below message is noticed because of the existing bug.
-
-kernel: cm_destroy_id_wait_timeout: cm_id=00000000ff6c6cc6 timed out. state 11 -> 0, refcnt=1
-
-Fix to handle this issue -
-Driver will not change nq->budget upon create and destroy of cq and srq
-rdma resources.
-
-Fixes: cb97b377a135 ("RDMA/bnxt_re: Refurbish CQ to NQ hash calculation")
-Link: https://patch.msgid.link/r/20250324040935.90182-1-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250414083942.4015060-1-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 6f5db32082dd7..cb9b820c613d6 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1784,8 +1784,6 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
- 	bnxt_qplib_destroy_srq(&rdev->qplib_res, qplib_srq);
- 	ib_umem_release(srq->umem);
- 	atomic_dec(&rdev->stats.res.srq_count);
--	if (nq)
--		nq->budget--;
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 308a2b72a65de..a21e7c0afbfdc 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2680,7 +2680,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 				of_property_read_bool(port_np, "ti,mac-only");
  
-@@ -1907,8 +1905,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 			goto fail;
- 		}
+ 		/* get phy/link info */
+-		port->slave.port_np = port_np;
++		port->slave.port_np = of_node_get(port_np);
+ 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
+ 		if (ret) {
+ 			dev_err(dev, "%pOF read phy-mode err %d\n",
+@@ -2741,6 +2741,17 @@ static void am65_cpsw_nuss_phylink_cleanup(struct am65_cpsw_common *common)
  	}
--	if (nq)
--		nq->budget++;
- 	active_srqs = atomic_inc_return(&rdev->stats.res.srq_count);
- 	if (active_srqs > rdev->stats.res.srq_watermark)
- 		rdev->stats.res.srq_watermark = active_srqs;
-@@ -3078,7 +3074,6 @@ int bnxt_re_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
- 	ib_umem_release(cq->umem);
- 
- 	atomic_dec(&rdev->stats.res.cq_count);
--	nq->budget--;
- 	kfree(cq->cql);
- 	return 0;
  }
+ 
++static void am65_cpsw_remove_dt(struct am65_cpsw_common *common)
++{
++	struct am65_cpsw_port *port;
++	int i;
++
++	for (i = 0; i < common->port_num; i++) {
++		port = &common->ports[i];
++		of_node_put(port->slave.port_np);
++	}
++}
++
+ static int
+ am65_cpsw_nuss_init_port_ndev(struct am65_cpsw_common *common, u32 port_idx)
+ {
+@@ -3647,6 +3658,7 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	am65_cpsw_nuss_cleanup_ndev(common);
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
++	am65_cpsw_remove_dt(common);
+ err_of_clear:
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
+@@ -3686,6 +3698,7 @@ static void am65_cpsw_nuss_remove(struct platform_device *pdev)
+ 	am65_cpsw_nuss_phylink_cleanup(common);
+ 	am65_cpts_release(common->cpts);
+ 	am65_cpsw_disable_serdes_phy(common);
++	am65_cpsw_remove_dt(common);
+ 
+ 	if (common->mdio_dev)
+ 		of_platform_device_destroy(common->mdio_dev, NULL);
 -- 
 2.39.5
 
