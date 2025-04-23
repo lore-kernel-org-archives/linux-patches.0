@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65BB175BF;
-	Wed, 23 Apr 2025 14:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7818A143736;
+	Wed, 23 Apr 2025 14:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420094; cv=none; b=NFoJ3kwfEAIjUQ+NtzX3Ud/82MxFSTbCNj/wFdKqspm1wk5jk4dUHfTCmJr63xFz0oaK4E7PFJkRt6BXPAU9Pj9AkCVImU+IrhOaBfjxppdW0W0A+Sygx7aO6ZrhTWeoUh3r5EnrXMntj6+/VCuOp6NFsxQR2UtJYBX/BIOpO6w=
+	t=1745420097; cv=none; b=ZWfweRNUNlwDlKhrHn7xItSVD3aNrUUgsgBZ0CvkfWeDG/z9i3bbPk2f9GiZUn+MLdx7rUOIkQGj2YcPufLs0RpZV/G4wYS9aCEN/+XBlSHX7FyeDy+Z3ngRIxpPESbg5MY5GThBaWABzHc0pJCZPDriyDlrLImxS30wCd8Jz1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420094; c=relaxed/simple;
-	bh=Bd3XZmNilA0UXR96QzzM9G5V5VT5p2t8hrHzcuSwiXg=;
+	s=arc-20240116; t=1745420097; c=relaxed/simple;
+	bh=U0gXrbJPDB+zwu8UioTJxG6jvZLctjJMJILmNJ29ynQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQIXw8WtDhZf9yBlAy9svYazJo3QqoeXZ25mYq7I8EFHd2sNmgguQse9WJUNwBtGn60f3NdoZhY6+qlujnQKXF/qAkViCSiOG/RIbI4tqvH3AtIk+pWB3XcKSHSyxkeTnic+LUlSbYH70muJY3imY7bWeJal38vewwZypRJZeKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX5GNOTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPQfQb8pgufQgbEZp6uH4wwzNNvSytGreGFpTdZpz20fYhx9GXAFk3l8ULUqg8zD53ObEioV9SRhkoTECLhc8NvSyP99liCqn0glvOpcwRXLbHYTURCjblZspxG7UZAzMMediWxoswrnseyQjwhXqHFmczFRxI/KC79AbRmIWfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6L4kUhE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX5GNOTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56172C4CEE2;
-	Wed, 23 Apr 2025 14:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6L4kUhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCE6C4CEE3;
+	Wed, 23 Apr 2025 14:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420094;
-	bh=Bd3XZmNilA0UXR96QzzM9G5V5VT5p2t8hrHzcuSwiXg=;
+	s=korg; t=1745420097;
+	bh=U0gXrbJPDB+zwu8UioTJxG6jvZLctjJMJILmNJ29ynQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kX5GNOTIpJcBsUK7beuwD8UE6rbiF3bmXwA35EF4a+Y4M1mqyhdGATLBTG443rx7q
-	 DhK4KoskJ7UU6yJhHOITRFOXtajaBuB5XGWTyxpqJel2v3fD+kBDiyK0D1RO+OHXO6
-	 8Gerg3eTdV/2egJKH9CNcs5IcOy6crkyJ5lfIA9k=
+	b=f6L4kUhEgO8WKEYVRxEpmhbkmRjhpUhmh7rpA4T5KdceQ+sdfYSLTQAz9F8VJtqas
+	 6JATrwCrsEzF/zgoInI/zw6pVuOrVyVRJYAZ3E7xQgQTMJc12gnXpuRM5cUZY2UzLl
+	 lGdomgQ7Wfjtrb7hOlMdXOuiJNHYG/RG8Sp+7T8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/223] nfsd: decrease sc_count directly if fail to queue dl_recall
-Date: Wed, 23 Apr 2025 16:42:51 +0200
-Message-ID: <20250423142621.147776478@linuxfoundation.org>
+Subject: [PATCH 6.14 059/241] loop: aio inherit the ioprio of original request
+Date: Wed, 23 Apr 2025 16:42:03 +0200
+Message-ID: <20250423142623.017042589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +49,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Yunlong Xing <yunlong.xing@unisoc.com>
 
-[ Upstream commit a1d14d931bf700c1025db8c46d6731aa5cf440f9 ]
+[ Upstream commit 1fdb8188c3d505452b40cdb365b1bb32be533a8e ]
 
-A deadlock warning occurred when invoking nfs4_put_stid following a failed
-dl_recall queue operation:
-            T1                            T2
-                                nfs4_laundromat
-                                 nfs4_get_client_reaplist
-                                  nfs4_anylock_blockers
-__break_lease
- spin_lock // ctx->flc_lock
-                                   spin_lock // clp->cl_lock
-                                   nfs4_lockowner_has_blockers
-                                    locks_owner_has_blockers
-                                     spin_lock // flctx->flc_lock
- nfsd_break_deleg_cb
-  nfsd_break_one_deleg
-   nfs4_put_stid
-    refcount_dec_and_lock
-     spin_lock // clp->cl_lock
+Set cmd->iocb.ki_ioprio to the ioprio of loop device's request.
+The purpose is to inherit the original request ioprio in the aio
+flow.
 
-When a file is opened, an nfs4_delegation is allocated with sc_count
-initialized to 1, and the file_lease holds a reference to the delegation.
-The file_lease is then associated with the file through kernel_setlease.
-
-The disassociation is performed in nfsd4_delegreturn via the following
-call chain:
-nfsd4_delegreturn --> destroy_delegation --> destroy_unhashed_deleg -->
-nfs4_unlock_deleg_lease --> kernel_setlease --> generic_delete_lease
-The corresponding sc_count reference will be released after this
-disassociation.
-
-Since nfsd_break_one_deleg executes while holding the flc_lock, the
-disassociation process becomes blocked when attempting to acquire flc_lock
-in generic_delete_lease. This means:
-1) sc_count in nfsd_break_one_deleg will not be decremented to 0;
-2) The nfs4_put_stid called by nfsd_break_one_deleg will not attempt to
-acquire cl_lock;
-3) Consequently, no deadlock condition is created.
-
-Given that sc_count in nfsd_break_one_deleg remains non-zero, we can
-safely perform refcount_dec on sc_count directly. This approach
-effectively avoids triggering deadlock warnings.
-
-Fixes: 230ca758453c ("nfsd: put dl_stid if fail to queue dl_recall")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Yunlong Xing <yunlong.xing@unisoc.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250414030159.501180-1-yunlong.xing@unisoc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: f2fed441c69b ("loop: stop using vfs_iter_{read,write} for buffered I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 2 +-
+ drivers/block/loop.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 5e81c819c3846..c50839a015e94 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5287,7 +5287,7 @@ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
- 	queued = nfsd4_run_cb(&dp->dl_recall);
- 	WARN_ON_ONCE(!queued);
- 	if (!queued)
--		nfs4_put_stid(&dp->dl_stid);
-+		refcount_dec(&dp->dl_stid.sc_count);
- }
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index c05fe27a96b64..1a4dbd4116069 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -471,7 +471,7 @@ static int lo_rw_aio(struct loop_device *lo, struct loop_cmd *cmd,
+ 	cmd->iocb.ki_filp = file;
+ 	cmd->iocb.ki_complete = lo_rw_aio_complete;
+ 	cmd->iocb.ki_flags = IOCB_DIRECT;
+-	cmd->iocb.ki_ioprio = IOPRIO_PRIO_VALUE(IOPRIO_CLASS_NONE, 0);
++	cmd->iocb.ki_ioprio = req_get_ioprio(rq);
  
- /* Called from break_lease() with flc_lock held. */
+ 	if (rw == ITER_SOURCE)
+ 		ret = file->f_op->write_iter(&cmd->iocb, &iter);
 -- 
 2.39.5
 
