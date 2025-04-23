@@ -1,40 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EAB26A082;
-	Wed, 23 Apr 2025 15:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74527D763;
+	Wed, 23 Apr 2025 15:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421525; cv=none; b=o7wHXZUHqR53pZ2/oLgn3fRxYAkEg4s1XQC3z/aTZ6E13DSE3KywFXq9yUYBNlfq3Sr/CnuR1LMc/KUWSnmV8TqpTlV870vF1DkWrvMzFuD57fRKIx8mCUPCnoC2E5YN9219XBW3hGccQw11ljUir5BLWsyuIwjbydvzUhJi/4M=
+	t=1745421526; cv=none; b=m4vpkT1urcclkQaJlrdgq7TkwRBXgd0QbO7AFeo/gf0NcDkygYC92j/DUetnHbiWSdKkjxsqYPyUkP/57/e0sxwahppk6wTvzaL0o22WKyFYMkXhZZGYBvZyMcYqbc10LC7ogSoRva1Vwb72CPkrsjUvgOCcwY/VAnNdaigW/I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421525; c=relaxed/simple;
-	bh=bnE/i8oatafrDrno6rHS3yRWkO/dSW51j2YERNWn/pE=;
+	s=arc-20240116; t=1745421526; c=relaxed/simple;
+	bh=dcagu0EtLKpOPlSEgZBiJsWLYNitevcJAoBOxmZeyAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wxu274Gau7vxp7PXY16id/Mia4SCskjjBHkoahSDmIFwDV20Gya66Np52EQG2PrNefQvHrjIHvhG/ENki6yDgKYGJTk8ffzA5TCMD/g0eYkgg5P1MWF99rCLICO5Y2rFuz9HD634lflEgZw/2r4QjYtFMzxQeG8jeuGgZ07jQ9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ud8ESquO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=izLFrBuwhCGXdR6M8tk5WfoSshRiochZ2qOIhMHbDgkRAFBNMKMLHWYnQ5UphA5LFure9vXxCSfq3QZXeqrrPdJ46hiTSURHCLYkSH4WQo/klrPnKln47hbUbhHl2I3q9cCLFEjiw5aZi8X4HpLmB8yjDCbzw35MGxDJ4Bn8ptU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb2RiLzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ud8ESquO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C508C4CEE2;
-	Wed, 23 Apr 2025 15:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb2RiLzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F20C4CEE2;
+	Wed, 23 Apr 2025 15:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421523;
-	bh=bnE/i8oatafrDrno6rHS3yRWkO/dSW51j2YERNWn/pE=;
+	s=korg; t=1745421526;
+	bh=dcagu0EtLKpOPlSEgZBiJsWLYNitevcJAoBOxmZeyAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ud8ESquO0S2iycUe9bHpYRXJs37hCg42BU+BL/rpsvwzLX2Zvm6WnQcaIt08RCgz7
-	 7Fi15d1bkJqb5h44pNkhr1bjQnyxQsR8eX+PAA06E+qIsxTbNHRx9PKEnI4gaaOUJC
-	 PFYc3UHgvbOb3l8IoHLkaK+GZllWJxYAhpohUPSY=
+	b=Pb2RiLzzxiXW72EPNhU4UcS9R0Jb/5onM/DPqNc+NdgVOdBDsC/2LGNM8LfwPproS
+	 1Lu56lkbVQhqcbgcz/6Edm3RfzHxXC56rNJKWsjUfPSuknC79rh7fHc8YMtbMLCmBM
+	 878JN/TjcQAjBjvxJoSpj+LaYzIQOFNRfLJDdtqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 146/291] gpio: tegra186: fix resource handling in ACPI probe path
-Date: Wed, 23 Apr 2025 16:42:15 +0200
-Message-ID: <20250423142630.370792907@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Juergen Gross <jgross@suse.com>,
+	Borislav Betkov <bp@alien8.de>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 188/393] sparc/mm: avoid calling arch_enter/leave_lazy_mmu() in set_ptes
+Date: Wed, 23 Apr 2025 16:41:24 +0200
+Message-ID: <20250423142651.149820300@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +58,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 8323f3a69de6f6e96bf22f32dd8e2920766050c2 upstream.
+commit eb61ad14c459b54f71f76331ca35d12fa3eb8f98 upstream.
 
-When the Tegra186 GPIO controller is probed through ACPI matching,
-the driver emits two error messages during probing:
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
-  "tegra186-gpio NVDA0508:00: invalid resource (null)"
+With commit 1a10a44dfc1d ("sparc64: implement the new page table range
+API") set_ptes was added to the sparc architecture.  The implementation
+included calling arch_enter/leave_lazy_mmu() calls.
 
-Fix this by getting resource first and then do the ioremap.
+The patch removes the usage of arch_enter/leave_lazy_mmu() since this
+implies nesting of lazy mmu regions which is not supported.  Without this
+fix, lazy mmu mode is effectively disabled because we exit the mode after
+the first set_ptes:
 
-Fixes: 2606e7c9f5fc ("gpio: tegra186: Add ACPI support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250327032349.78809-1-kanie@linux.alibaba.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+remap_pte_range()
+  -> arch_enter_lazy_mmu()
+  -> set_ptes()
+      -> arch_enter_lazy_mmu()
+      -> arch_leave_lazy_mmu()
+  -> arch_leave_lazy_mmu()
+
+Powerpc suffered the same problem and fixed it in a corresponding way with
+commit 47b8def9358c ("powerpc/mm: Avoid calling
+arch_enter/leave_lazy_mmu() in set_ptes").
+
+Link: https://lkml.kernel.org/r/20250303141542.3371656-5-ryan.roberts@arm.com
+Fixes: 1a10a44dfc1d ("sparc64: implement the new page table range API")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Andreas Larsson <andreas@gaisler.com>
+Acked-by: Juergen Gross <jgross@suse.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Juegren Gross <jgross@suse.com>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-tegra186.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ arch/sparc/include/asm/pgtable_64.h |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -753,6 +753,7 @@ static int tegra186_gpio_probe(struct pl
- 	struct gpio_irq_chip *irq;
- 	struct tegra_gpio *gpio;
- 	struct device_node *np;
-+	struct resource *res;
- 	char **names;
- 	int err;
+--- a/arch/sparc/include/asm/pgtable_64.h
++++ b/arch/sparc/include/asm/pgtable_64.h
+@@ -931,7 +931,6 @@ static inline void __set_pte_at(struct m
+ static inline void set_ptes(struct mm_struct *mm, unsigned long addr,
+ 		pte_t *ptep, pte_t pte, unsigned int nr)
+ {
+-	arch_enter_lazy_mmu_mode();
+ 	for (;;) {
+ 		__set_pte_at(mm, addr, ptep, pte, 0);
+ 		if (--nr == 0)
+@@ -940,7 +939,6 @@ static inline void set_ptes(struct mm_st
+ 		pte_val(pte) += PAGE_SIZE;
+ 		addr += PAGE_SIZE;
+ 	}
+-	arch_leave_lazy_mmu_mode();
+ }
+ #define set_ptes set_ptes
  
-@@ -772,19 +773,19 @@ static int tegra186_gpio_probe(struct pl
- 	gpio->num_banks++;
- 
- 	/* get register apertures */
--	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
--	if (IS_ERR(gpio->secure)) {
--		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
--		if (IS_ERR(gpio->secure))
--			return PTR_ERR(gpio->secure);
--	}
--
--	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
--	if (IS_ERR(gpio->base)) {
--		gpio->base = devm_platform_ioremap_resource(pdev, 1);
--		if (IS_ERR(gpio->base))
--			return PTR_ERR(gpio->base);
--	}
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "security");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	gpio->secure = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->secure))
-+		return PTR_ERR(gpio->secure);
-+
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gpio");
-+	if (!res)
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	gpio->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(gpio->base))
-+		return PTR_ERR(gpio->base);
- 
- 	err = platform_irq_count(pdev);
- 	if (err < 0)
 
 
