@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8428D1EFFB9;
-	Wed, 23 Apr 2025 14:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E87280A5F;
+	Wed, 23 Apr 2025 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420390; cv=none; b=JdFd0FWVglSjUCaDSLwqNHEoE8si3yQvXHLurieMj3mvLMY40XOeC/VrR9HkZ6Lcn8aWHByeqSS2mIfeBGS3gAUcV+v2yws+iEXHcwvjnd/Oput14Jf+LXHYCn/uw3kKAQtaGHMSeO62p+kLqv5P4laaufHFiT/vx5JZt81QyaA=
+	t=1745420392; cv=none; b=er2yHcoDx6v+VOThmwyHViGIK0EOuILeb0dtw8aMi/YVoLHsH+4Zfb9SGv5pTSL71cCNOb+1p3CVGsdSaNkWOd1h5KUB1GyZvHAhbaiva+vxXbgQD/G6JSgz9Ctr8hH/CPdvQU0tcOT+nl3vp3KldZet6fteBV28TWiDYSJhu2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420390; c=relaxed/simple;
-	bh=aj1Dg6kR/QOr2uZWwBXueTitkxq3qfh4vRkOgaak1tA=;
+	s=arc-20240116; t=1745420392; c=relaxed/simple;
+	bh=NBko84BXYlO2xgg3kpHHByzRGeyEFr8jIUzARY9xfRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7G7hDCItq7fuHwUIi1o7o2EponTF10hazinhownoQe/YSzWykhdChmlXlzFyoZh/+7oSwyss4bqKSxE6U5ENKboAHxLhvqgPVgtvwpzvMuSiB6rXlKCwknAI1lXniHx3i09k1NGRDlKP94sy+56hWMjNo3YHMGl3EfI76sUznY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq8weSBk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hHZKare8/0x5ItqTNrwXxMFPTKVfUYHO9C5M9y3WOR58+PPhaLmN+VxEssG276Y8JyKCN6wnP88KeZCu3sq7sP9UHtI91eP2pJ333Jfdr84Ey5rV2wUGbhc9Eg9g13lF95iC6CveUlKH1DSzOgXC/HUfhu7MYNrkI23nQ6dP5UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fspFQHfc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq8weSBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F3BC4CEE2;
-	Wed, 23 Apr 2025 14:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fspFQHfc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464D8C4CEE2;
+	Wed, 23 Apr 2025 14:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420390;
-	bh=aj1Dg6kR/QOr2uZWwBXueTitkxq3qfh4vRkOgaak1tA=;
+	s=korg; t=1745420392;
+	bh=NBko84BXYlO2xgg3kpHHByzRGeyEFr8jIUzARY9xfRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq8weSBktpaaG9lnh9dc+6a/K5gQ4j2ecarXnoTWh4KQJumCGzJ5eIofxOP3hwnyh
-	 3na68Ekfa4inzhcdWPtTR7k36RbfaljmZW0xzAHMdtfVl7F9z3Gu+iOtOGiCBbLt2I
-	 SM7lIMq/2Qp4dhXar44lVPOWWzf5t1MkxSpBk3UI=
+	b=fspFQHfcWFgh7mzafUGCk3yK3aWP6RYR6nTWDI3mOaeE+Mt6DpMaGm+BlVOQ2iYJ2
+	 Zkedh7mZ0P2AVCy8U1hGLPczQ24CkBF9o5deR0iZo2YSosKDRLOkTu9gkd/xd2UC9B
+	 l8KAzavl0CwsL3oiyyYYoj2/Wmf5WJP1+0x7g14I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/393] page_pool: avoid infinite loop to schedule delayed worker
-Date: Wed, 23 Apr 2025 16:39:26 +0200
-Message-ID: <20250423142646.194980248@linuxfoundation.org>
+Subject: [PATCH 6.1 043/291] f2fs: fix to avoid out-of-bounds access in f2fs_truncate_inode_blocks()
+Date: Wed, 23 Apr 2025 16:40:32 +0200
+Message-ID: <20250423142626.157063687@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kerneljasonxing@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 43130d02baa137033c25297aaae95fd0edc41654 ]
+[ Upstream commit e6494977bd4a83862118a05f57a8df40256951c0 ]
 
-We noticed the kworker in page_pool_release_retry() was waken
-up repeatedly and infinitely in production because of the
-buggy driver causing the inflight less than 0 and warning
-us in page_pool_inflight()[1].
+syzbot reports an UBSAN issue as below:
 
-Since the inflight value goes negative, it means we should
-not expect the whole page_pool to get back to work normally.
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in fs/f2fs/node.h:381:10
+index 18446744073709550692 is out of range for type '__le32[5]' (aka 'unsigned int[5]')
+CPU: 0 UID: 0 PID: 5318 Comm: syz.0.0 Not tainted 6.14.0-rc3-syzkaller-00060-g6537cfb395f3 #0
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_out_of_bounds+0x121/0x150 lib/ubsan.c:429
+ get_nid fs/f2fs/node.h:381 [inline]
+ f2fs_truncate_inode_blocks+0xa5e/0xf60 fs/f2fs/node.c:1181
+ f2fs_do_truncate_blocks+0x782/0x1030 fs/f2fs/file.c:808
+ f2fs_truncate_blocks+0x10d/0x300 fs/f2fs/file.c:836
+ f2fs_truncate+0x417/0x720 fs/f2fs/file.c:886
+ f2fs_file_write_iter+0x1bdb/0x2550 fs/f2fs/file.c:5093
+ aio_write+0x56b/0x7c0 fs/aio.c:1633
+ io_submit_one+0x8a7/0x18a0 fs/aio.c:2052
+ __do_sys_io_submit fs/aio.c:2111 [inline]
+ __se_sys_io_submit+0x171/0x2e0 fs/aio.c:2081
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f238798cde9
 
-This patch mitigates the adverse effect by not rescheduling
-the kworker when detecting the inflight negative in
-page_pool_release_retry().
+index 18446744073709550692 (decimal, unsigned long long)
+= 0xfffffffffffffc64 (hexadecimal, unsigned long long)
+= -924 (decimal, long long)
 
-[1]
-[Mon Feb 10 20:36:11 2025] ------------[ cut here ]------------
-[Mon Feb 10 20:36:11 2025] Negative(-51446) inflight packet-pages
-...
-[Mon Feb 10 20:36:11 2025] Call Trace:
-[Mon Feb 10 20:36:11 2025]  page_pool_release_retry+0x23/0x70
-[Mon Feb 10 20:36:11 2025]  process_one_work+0x1b1/0x370
-[Mon Feb 10 20:36:11 2025]  worker_thread+0x37/0x3a0
-[Mon Feb 10 20:36:11 2025]  kthread+0x11a/0x140
-[Mon Feb 10 20:36:11 2025]  ? process_one_work+0x370/0x370
-[Mon Feb 10 20:36:11 2025]  ? __kthread_cancel_work+0x40/0x40
-[Mon Feb 10 20:36:11 2025]  ret_from_fork+0x35/0x40
-[Mon Feb 10 20:36:11 2025] ---[ end trace ebffe800f33e7e34 ]---
-Note: before this patch, the above calltrace would flood the
-dmesg due to repeated reschedule of release_dw kworker.
+In f2fs_truncate_inode_blocks(), UBSAN detects that get_nid() tries to
+access .i_nid[-924], it means both offset[0] and level should zero.
 
-Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250214064250.85987-1-kerneljasonxing@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The possible case should be in f2fs_do_truncate_blocks(), we try to
+truncate inode size to zero, however, dn.ofs_in_node is zero and
+dn.node_page is not an inode page, so it fails to truncate inode page,
+and then pass zeroed free_from to f2fs_truncate_inode_blocks(), result
+in this issue.
+
+	if (dn.ofs_in_node || IS_INODE(dn.node_page)) {
+		f2fs_truncate_data_blocks_range(&dn, count);
+		free_from += count;
+	}
+
+I guess the reason why dn.node_page is not an inode page could be: there
+are multiple nat entries share the same node block address, once the node
+block address was reused, f2fs_get_node_page() may load a non-inode block.
+
+Let's add a sanity check for such condition to avoid out-of-bounds access
+issue.
+
+Reported-by: syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/66fdcdf3.050a0220.40bef.0025.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/f2fs/node.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 31f923e7b5c40..2f2f63c8cf4b0 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -865,7 +865,13 @@ static void page_pool_release_retry(struct work_struct *wq)
- 	int inflight;
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 745ecf5523c9b..ccc72781e0c61 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1112,7 +1112,14 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from)
+ 	trace_f2fs_truncate_inode_blocks_enter(inode, from);
  
- 	inflight = page_pool_release(pool);
--	if (!inflight)
-+	/* In rare cases, a driver bug may cause inflight to go negative.
-+	 * Don't reschedule release if inflight is 0 or negative.
-+	 * - If 0, the page_pool has been destroyed
-+	 * - if negative, we will never recover
-+	 * in both cases no reschedule is necessary.
-+	 */
-+	if (inflight <= 0)
- 		return;
- 
- 	/* Periodic warning */
+ 	level = get_node_path(inode, from, offset, noffset);
+-	if (level < 0) {
++	if (level <= 0) {
++		if (!level) {
++			level = -EFSCORRUPTED;
++			f2fs_err(sbi, "%s: inode ino=%lx has corrupted node block, from:%lu addrs:%u",
++					__func__, inode->i_ino,
++					from, ADDRS_PER_INODE(inode));
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++		}
+ 		trace_f2fs_truncate_inode_blocks_exit(inode, level);
+ 		return level;
+ 	}
 -- 
 2.39.5
 
