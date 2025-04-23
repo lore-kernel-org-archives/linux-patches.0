@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD38A279792;
-	Wed, 23 Apr 2025 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4827A238C16;
+	Wed, 23 Apr 2025 15:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422354; cv=none; b=AYOZ5X8TNFoyDdrU7C23r5r5E0N3Me88kJsEAZ3yhwMYCyVL1/nT/MfgFmv4ykFYF6NqGwCXzakgjRvcQOZMgdUT37jMQgokHw5U3e56I783kkvrEjks3esWhYuIb4ngoZ+/n5bh6bUQn4jgCoOOoJrKVI+o/yLrQYATXomtQkE=
+	t=1745422357; cv=none; b=m+U4jKVhXbIzG8Z92ZamN/tC7CxlLpiGL/pg2OpQlXp017mHV7f2aME1B3zmnh0YvP4mxIgT3Zh3RaJVjAR0Hf5RA0jujLhoZ05Z7omNPM36AC/BuJP2/364ZthimcKk53AVVHKSvGyGbTK8gbYB5lBlsiNE4oXXvahHLwsvtZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422354; c=relaxed/simple;
-	bh=ZyKAmf1xJ5xWKOn5gVTEJQioUh7g5svyZq+Q3eQf2nc=;
+	s=arc-20240116; t=1745422357; c=relaxed/simple;
+	bh=y39HUTzubdlAMtXVQqL6MJzHPrXao9Evzvg069lK/vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bIwkIiOGjzTnASUYd86iqXwXBwJ9XaagiTLgLaw+BPTFkkM0Kmi0sLxZT0Eam3l++Kxjjsa7/YL8MLXxnjJS+T59lUa2708dgtnBXubVcHPuL1m2oRswOLpvDEYwnLrn7FL9NUCKNao/okYFqWJnkuytHB8x9EFd/WfxCugeAWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JsZUav2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jy//SRo9IJ2wOt4a/R67N7MQAiOxbkLQPBDMZlQQclyyqy9q8qaQs5bUtK85fpXbacjIJufXNyHtTp0lIjL2pqGU50o/JDEFIPiNlcBb+iCKuSAyON6HE56zN0yptXGIQGq+gPUwY7R5HamP34A63oqr8koBhpsOwXC0039/dV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcVJeg1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JsZUav2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAD4C4CEE2;
-	Wed, 23 Apr 2025 15:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcVJeg1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08E9C4CEE2;
+	Wed, 23 Apr 2025 15:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422354;
-	bh=ZyKAmf1xJ5xWKOn5gVTEJQioUh7g5svyZq+Q3eQf2nc=;
+	s=korg; t=1745422357;
+	bh=y39HUTzubdlAMtXVQqL6MJzHPrXao9Evzvg069lK/vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JsZUav2hMavcfKw703DaQeVR4smhnPdx+4WcTChSdHDczYQ+QTw34qPAnY3iiv1r
-	 pPhh1d6/ts6IegsDMFs03tS3U6tjU3LMVndm2qJGapnei3w1+69lTnSIqXRsxvHhpZ
-	 nbPIDIsUI/0YLGnvSRArlWGcnVn1dZW3VQY3WgaA=
+	b=rcVJeg1uOa19NyQ5Ar9be5NbnhTsJaC51D9quI5U2R/D5eJDDHqA+UmuB1WlCqOXe
+	 67DDsExzmb8+Dty4+ayTzyzMdxKQp3QtHAEk68nSBGZxY+Acv6vslqmdlga53I2qKk
+	 J4MkjdOxhYrdrpQP0xHfohU44IDhF1p7KViIkK3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.1 261/291] misc: pci_endpoint_test: Avoid issue of interrupts remaining after request_irq error
-Date: Wed, 23 Apr 2025 16:44:10 +0200
-Message-ID: <20250423142635.092725996@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 305/393] asus-laptop: Fix an uninitialized variable
+Date: Wed, 23 Apr 2025 16:43:21 +0200
+Message-ID: <20250423142655.934357889@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +47,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit f6cb7828c8e17520d4f5afb416515d3fae1af9a9 upstream.
+commit 6c683c6887e4addcd6bd1ddce08cafccb0a21e32 upstream.
 
-After devm_request_irq() fails with error in pci_endpoint_test_request_irq(),
-the pci_endpoint_test_free_irq_vectors() is called assuming that all IRQs
-have been released.
+The value returned by acpi_evaluate_integer() is not checked,
+but the result is not always successful, so it is necessary to
+add a check of the returned value.
 
-However, some requested IRQs remain unreleased, so there are still
-/proc/irq/* entries remaining, and this results in WARN() with the
-following message:
+If the result remains negative during three iterations of the loop,
+then the uninitialized variable 'val' will be used in the clamp_val()
+macro, so it must be initialized with the current value of the 'curr'
+variable.
 
-  remove_proc_entry: removing non-empty directory 'irq/30', leaking at least 'pci-endpoint-test.0'
-  WARNING: CPU: 0 PID: 202 at fs/proc/generic.c:719 remove_proc_entry +0x190/0x19c
+In this case, the algorithm should be less noisy.
 
-To solve this issue, set the number of remaining IRQs to test->num_irqs,
-and release IRQs in advance by calling pci_endpoint_test_release_irq().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
+Fixes: b23910c2194e ("asus-laptop: Pegatron Lucid accelerometer")
 Cc: stable@vger.kernel.org
-Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Link: https://lore.kernel.org/r/20250225110252.28866-3-hayashi.kunihiko@socionext.com
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Link: https://lore.kernel.org/r/20250403122603.18172-1-arefev@swemel.ru
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/asus-laptop.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -262,6 +262,9 @@ fail:
- 		break;
- 	}
+--- a/drivers/platform/x86/asus-laptop.c
++++ b/drivers/platform/x86/asus-laptop.c
+@@ -427,11 +427,14 @@ static int asus_pega_lucid_set(struct as
  
-+	test->num_irqs = i;
-+	pci_endpoint_test_release_irq(test);
-+
- 	return false;
- }
+ static int pega_acc_axis(struct asus_laptop *asus, int curr, char *method)
+ {
++	unsigned long long val = (unsigned long long)curr;
++	acpi_status status;
+ 	int i, delta;
+-	unsigned long long val;
+-	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
+-		acpi_evaluate_integer(asus->handle, method, NULL, &val);
  
++	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
++		status = acpi_evaluate_integer(asus->handle, method, NULL, &val);
++		if (ACPI_FAILURE(status))
++			continue;
+ 		/* The output is noisy.  From reading the ASL
+ 		 * dissassembly, timeout errors are returned with 1's
+ 		 * in the high word, and the lack of locking around
 
 
