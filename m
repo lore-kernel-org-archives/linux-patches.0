@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D898E280A50;
-	Wed, 23 Apr 2025 14:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF0327D76E;
+	Wed, 23 Apr 2025 14:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419686; cv=none; b=i13zVpix9RY7lCN0hxwn/c+/KbOCeIlZYUWajX5DoWTt7kIGdxq91dpILwC+Ow99yMfPp6BsjjdXh8MXCArodtXMrDa/l4iduVpDABxl+mUAmVnG4yF7xnaKfdpho7QQMB0khGEobL1U7RrDwGlFbpBfHij2HULACnIC3rLWE7I=
+	t=1745419690; cv=none; b=UH35tfA9FgsMcd7Ie/Owc0cnUbjv0LgcMwSjk4Wofx69OqkUrEd9jl8ZASjMZS5WKyNClgsGhu7AMrVkxITtfyYr7o1mVf/h4s/L+agX6rv189N6KkAPZxMvFHSz/DUnuoeKvtGkWfIjeWTNal8qlrG/d9Kz2PTv/xna8qKkVB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419686; c=relaxed/simple;
-	bh=D4aSliOL+n0yJSM+Bl6du42Pz5CsVaR7pBu0zm0omcc=;
+	s=arc-20240116; t=1745419690; c=relaxed/simple;
+	bh=DbXnRRuzUtTHYkyvqGM79BR+cX3eDEVctRBzV2zGiL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YL+P+qCLw4O4bp4VGpk7jQH+1wSAMiu5QbLBoajDX8pvUBxz8ZzrORhu4qnaOG0oHQ6MyUY9PrLMC30alVN1cTKq2Q2843IYlJO8EjR6+vfb+tJnH/mBWKUGUAKyiOvOASLIZBApsKeE+L27lO1fwqrm1cc5zIye3dKXJ0NDnPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFR5xCE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F65d+SgqDxNqp6iIKj1K783amusWI2f7ip9+FuFT2G8c5RQKo4ThMGO/b43GGNEVrkp3/AQCgijJpTyfhFj5wzKJKjI+6AVpaKpjdlYR61qIinZsxl6etqAd9ISMFAbGopfJ3rcyJu1ffeKirEdr01EjmBk3s4GJxGE9vKgFe/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2heig+kg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFR5xCE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C572C4CEE2;
-	Wed, 23 Apr 2025 14:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2heig+kg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC87C4CEE8;
+	Wed, 23 Apr 2025 14:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419686;
-	bh=D4aSliOL+n0yJSM+Bl6du42Pz5CsVaR7pBu0zm0omcc=;
+	s=korg; t=1745419689;
+	bh=DbXnRRuzUtTHYkyvqGM79BR+cX3eDEVctRBzV2zGiL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PFR5xCE9jmVD4qEewZiqjQvUJToKgJmpRElah/MV8USudVw9XWbkJuPb8NJpx7BPP
-	 357CYYmVpFvtT3e3/vMj6E6LjSenkdH+KokLlEz23k2tRO0xmmqSEf+IKOjiBcQT0c
-	 e2cikGnyvGaVUXWRcTEWGvTb/qVATk02vOKkjteE=
+	b=2heig+kg0P7OY/75Z59u6iAG8I9Ru566betyKvhRfukPrpf6/zYnW0CxPm1dnYplI
+	 XihYxxLhJkjliAb55lIGu4P2j+I3D3GpaqIROTTQ2QqrX7n6EQ0EW3oUCmpLHle9hK
+	 1VGvuFFpIYxf2md/y9zMGiIMaDcLwdern2oupDEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Ethan Carter Edwards <ethan@ethancedwards.com>,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/223] ASoC: Intel: avs: Fix null-ptr-deref in avs_component_probe()
-Date: Wed, 23 Apr 2025 16:41:26 +0200
-Message-ID: <20250423142617.700591779@linuxfoundation.org>
+Subject: [PATCH 6.12 015/223] crypto: tegra - remove redundant error check on ret
+Date: Wed, 23 Apr 2025 16:41:27 +0200
+Message-ID: <20250423142617.740037902@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -53,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 95f723cf141b95e3b3a5b92cf2ea98a863fe7275 ]
+[ Upstream commit 7b90df78184de90fe5afcc45393c8ad83b5b18a1 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-avs_component_probe() does not check for this case, which results in a
-NULL pointer dereference.
+Currently there is an unnecessary error check on ret without a proceeding
+assignment to ret that needs checking. The check is redundant and can be
+removed.
 
-Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Ethan Carter Edwards <ethan@ethancedwards.com>
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250402141411.44972-1-bsdhenrymartin@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Acked-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 1ddaff40c08a ("crypto: tegra - Fix IV usage for AES ECB")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/tegra/tegra-se-aes.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 945f9c0a6a545..15defce0f3eb8 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -925,7 +925,8 @@ static int avs_component_probe(struct snd_soc_component *component)
- 		else
- 			mach->tplg_filename = devm_kasprintf(adev->dev, GFP_KERNEL,
- 							     "hda-generic-tplg.bin");
--
-+		if (!mach->tplg_filename)
-+			return -ENOMEM;
- 		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
- 				     mach->tplg_filename);
- 		if (!filename)
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index 0ed0515e1ed54..9ab832bee81a2 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -1183,8 +1183,6 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 			goto out;
+ 	} else {
+ 		rctx->cryptlen = req->cryptlen - ctx->authsize;
+-		if (ret)
+-			goto out;
+ 
+ 		/* CTR operation */
+ 		ret = tegra_ccm_do_ctr(ctx, rctx);
 -- 
 2.39.5
 
