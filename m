@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2BA27FD49;
-	Wed, 23 Apr 2025 15:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2810627FD4F;
+	Wed, 23 Apr 2025 15:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421855; cv=none; b=fiyZJQay4sGuegArPeB7IQvUB4eryzKLLvwviv1OzcpB6eZNLcdGycHLBWYhigkzMvYZnDkl4M6cy9P38ALiKowVGcerWn42i6f/eawbfqgRp+ntSSVJnVJ2NHLHwrT61OR84B3UvKkKhf+AuD9N1/z3xAOGtnlYeBPZduhKAEE=
+	t=1745421858; cv=none; b=uREMfdRRhpvPoj1AWvLGrYKijj5PTRnJ758eh4K7p4oYwrATiSCdyd3eqLkGejx5Zw7SmE+lH8XrCtctsQ0Y7UYsB28YmUWvbxc5bMQefQoww50nPhv4i0bIxzbeC8c9S4SjGFnVh1l0t5eVtJxTgrEmoigg8ZrZBvQ5p8ShAnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421855; c=relaxed/simple;
-	bh=BJGEhW27Lr2TGVKka1wg4aV4wH0+F+J2iUfeHmLHlu8=;
+	s=arc-20240116; t=1745421858; c=relaxed/simple;
+	bh=UOHC1jev8ANNVU5EObjmQn7tzb4wxrDoRzGS5Awaes4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZxkfp2LQ2J4FeHC7dOepNjV+FKxcY+WDCHyebhXTMjpRihvSBhiYut4TldW/P/z/uKNPBDoGQ3BihV6GC8ZPp+VdQ7ByPrQKgGrzF8sneX/GZUmV8EPQw68Bw12vZtRurRyw867+nFP4W99+uut6GBvNVIQwFOoF3qvKH8eShE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro3WMF5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UebjuR7K48mXu7mpxXDdDs03huI50eWled3CGdVG5jS21CI9bdemwwoH4LICh/AacBXaNfHIQzMwa9Y+BypTPqRviLv64Aor+9DpU78bMCauQ016Rr5rLthtzhWHv5aPfFYGIWCmkLFEX+LYcmSghyrOMngFj0i4QuwVWq0dSVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBWPZUdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro3WMF5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB022C4CEE2;
-	Wed, 23 Apr 2025 15:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBWPZUdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFE7C4CEE2;
+	Wed, 23 Apr 2025 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421855;
-	bh=BJGEhW27Lr2TGVKka1wg4aV4wH0+F+J2iUfeHmLHlu8=;
+	s=korg; t=1745421858;
+	bh=UOHC1jev8ANNVU5EObjmQn7tzb4wxrDoRzGS5Awaes4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ro3WMF5nRPAlbq4NwxH+RI/qfIKb4YNfoionyinFxiBTtyjIgsMq5NL26VWtyn+QA
-	 +E/NMROqmtiAaHQ+oVV7t5lL5MqNYR8/ZW5v132bJ9rKFUPGeNMmoWq5t8aKkY3vL9
-	 4/2eFL3N2tDxrFckLwbdUIgqe4QVHxcGl1EBp7RY=
+	b=nBWPZUdAilpkhvsUJKFPc64vZr3M1ZloHY2pupAHhR9M/n3XuXEr0Xntyh1oMR4ro
+	 EEdskoB0NZXpNXbG6RZ0GFx+UNoM9lLasmb+4oOHu83kG7h778z32uCu9+Pu2129xI
+	 DdT1tof3b7ixiW8iAuiZxBocmfOmHSrJ4dS/zjL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Michael Nemanov <michael.nemanov@ti.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/291] net: openvswitch: fix nested key length validation in the set() action
-Date: Wed, 23 Apr 2025 16:42:55 +0200
-Message-ID: <20250423142631.976158633@linuxfoundation.org>
+Subject: [PATCH 6.1 169/291] wifi: wl1251: fix memory leak in wl1251_tx_work
+Date: Wed, 23 Apr 2025 16:42:38 +0200
+Message-ID: <20250423142631.294737333@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -54,41 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
+[ Upstream commit a0f0dc96de03ffeefc2a177b7f8acde565cb77f4 ]
 
-It's not safe to access nla_len(ovs_key) if the data is smaller than
-the netlink header.  Check that the attribute is OK first.
+The skb dequeued from tx_queue is lost when wl1251_ps_elp_wakeup fails
+with a -ETIMEDOUT error. Fix that by queueing the skb back to tx_queue.
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
-Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c5483b719363 ("wl12xx: check if elp wakeup failed")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Michael Nemanov <michael.nemanov@ti.com>
+Link: https://patch.msgid.link/20250330104532.44935-1-abdun.nihaal@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ti/wl1251/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 5ebbec656895e..0ed3953dbe529 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2860,7 +2860,8 @@ static int validate_set(const struct nlattr *a,
- 	size_t key_len;
+diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
+index e9dc3c72bb110..06dc74cc6cb52 100644
+--- a/drivers/net/wireless/ti/wl1251/tx.c
++++ b/drivers/net/wireless/ti/wl1251/tx.c
+@@ -342,8 +342,10 @@ void wl1251_tx_work(struct work_struct *work)
+ 	while ((skb = skb_dequeue(&wl->tx_queue))) {
+ 		if (!woken_up) {
+ 			ret = wl1251_ps_elp_wakeup(wl);
+-			if (ret < 0)
++			if (ret < 0) {
++				skb_queue_head(&wl->tx_queue, skb);
+ 				goto out;
++			}
+ 			woken_up = true;
+ 		}
  
- 	/* There can be only one key in a action */
--	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
-+	if (!nla_ok(ovs_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
- 		return -EINVAL;
- 
- 	key_len = nla_len(ovs_key);
 -- 
 2.39.5
 
