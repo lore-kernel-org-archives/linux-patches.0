@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300C8285417;
-	Wed, 23 Apr 2025 15:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2682B279345;
+	Wed, 23 Apr 2025 15:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422333; cv=none; b=H2aF6+7RNAA0TeqNGUH0znxSYgt6m8lzrM2IRLGqt772Fiex5y35OYvkrncYXjlso8XlF5rU8OJhWSXih2Es8VNuwT3/ZnjySj6WwcWFFbEo4CBwMFVENRoR7e4wSQ06jVxQZB9ZXt1XzYX9vDquGe0N3IFyjYr95eiCOVJWDWo=
+	t=1745422336; cv=none; b=gabjQZhXwa/G1h7sglEfMbPgYwqJ40J1NaCbE1dobJ51V4WULcP44LQZB2zJel8Pae0Ncu8zj8giLDZuks3YOJzsoZgqwI0Ev8s0a3GyQgtqK+jP4/rQal3T60MbcEDXayv9TIFu2kSBW5nWniRAwRLwD+43oyc6Bg18OkkODd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422333; c=relaxed/simple;
-	bh=3UEkPG2inAvztLOd6gr+r2PfSewiDZnHJ3vwUQyN5hU=;
+	s=arc-20240116; t=1745422336; c=relaxed/simple;
+	bh=xIDXTX9qj6ww2vNZidxxNrUZmKGxrHyWB0n6Gpj8VoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kl3wH7zjlOEYLDOHO5JktlWXHfLvaxGU30QGo93FXW6gRkcg+gpO3bYYEgjkSf35Bdiap0b5iY5EWVFZHebtZdiYTOfWslazXz87Whsji6nv4DGrD/qgyjRXOjKsIiX80f1JKuHnowL5+0Y7xDmiPaD8Iu8mkr2trsacKeUBF24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7pxcYN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4SbC+Wa0mxFJ6Wv7vyfII7HMVKkbTkVZYcsa9/rCKHQNvS+YkxwcwSOM5Dika8sOZkSltvZQ3OA6jDUigNnXJiXmnT/83/kdIiw2sLS4wgojW+PBiygT8ETikFiQWP9SLyCLTKSDP6SbIke1pjGu25kSgf9FNq4bGKuiAlAh20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnClrLzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7pxcYN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2314C4CEE2;
-	Wed, 23 Apr 2025 15:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnClrLzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8B6C4CEE2;
+	Wed, 23 Apr 2025 15:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422333;
-	bh=3UEkPG2inAvztLOd6gr+r2PfSewiDZnHJ3vwUQyN5hU=;
+	s=korg; t=1745422336;
+	bh=xIDXTX9qj6ww2vNZidxxNrUZmKGxrHyWB0n6Gpj8VoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7pxcYN2DtZ/1olICc5n8lwU6DRnu+GPnEZ05CLXT9hRNmYy6ukFKZNlK2rPZP13H
-	 A5GFBQ3S7QfNgWDQN5qX+DNg72EetQz6eWKWnwRXkOU77cOQtNl6DN1Esnz0Xyb+jS
-	 MFifC1oCmvv4ZiuHmQfFHXZJJsajlwh56tz1oPZM=
+	b=LnClrLzoqavyZZCo1zViepHdUq9nlPFkZQWSKwqTtNJKdKIZIcBJ8PLbfQi4ujHLJ
+	 0AJiZbpD8OAwYWFbGg4BYo3mErpL+oVJTt7Ni2sEAo0QY4xCVI1jo/soiHR+RcaCps
+	 AGwoIeM3yEp5cgSng762namuRWqyunBvlmY3iV/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Evgeny Pimenov <pimenoveu12@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 304/393] ASoC: qcom: Fix sc7280 lpass potential buffer overflow
-Date: Wed, 23 Apr 2025 16:43:20 +0200
-Message-ID: <20250423142655.893124399@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Daniel Axtens <dja@axtens.net>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 322/393] mm: fix apply_to_existing_page_range()
+Date: Wed, 23 Apr 2025 16:43:38 +0200
+Message-ID: <20250423142656.635453631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -52,46 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgeny Pimenov <pimenoveu12@gmail.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit a31a4934b31faea76e735bab17e63d02fcd8e029 upstream.
+commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
 
-Case values introduced in commit
-5f78e1fb7a3e ("ASoC: qcom: Add driver support for audioreach solution")
-cause out of bounds access in arrays of sc7280 driver data (e.g. in case
-of RX_CODEC_DMA_RX_0 in sc7280_snd_hw_params()).
+In the case of apply_to_existing_page_range(), apply_to_pte_range() is
+reached with 'create' set to false.  When !create, the loop over the PTE
+page table is broken.
 
-Redefine LPASS_MAX_PORTS to consider the maximum possible port id for
-q6dsp as sc7280 driver utilizes some of those values.
+apply_to_pte_range() will only move to the next PTE entry if 'create' is
+true or if the current entry is not pte_none().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This means that the user of apply_to_existing_page_range() will not have
+'fn' called for any entries after the first pte_none() in the PTE page
+table.
 
-Fixes: 77d0ffef793d ("ASoC: qcom: Add macro for lpass DAI id's max limit")
-Cc: stable@vger.kernel.org # v6.0+
-Suggested-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Evgeny Pimenov <pimenoveu12@gmail.com>
-Link: https://patch.msgid.link/20250401204058.32261-1-pimenoveu12@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the loop logic in apply_to_pte_range().
+
+There are no known runtime issues from this, but the fix is trivial enough
+for stable@ even without a known buggy user.
+
+Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
+Cc: Daniel Axtens <dja@axtens.net>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/qcom/lpass.h
-+++ b/sound/soc/qcom/lpass.h
-@@ -13,10 +13,11 @@
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- #include <dt-bindings/sound/qcom,lpass.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
- #include "lpass-hdmi.h"
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2600,11 +2600,11 @@ static int apply_to_pte_range(struct mm_
+ 	if (fn) {
+ 		do {
+ 			if (create || !pte_none(ptep_get(pte))) {
+-				err = fn(pte++, addr, data);
++				err = fn(pte, addr, data);
+ 				if (err)
+ 					break;
+ 			}
+-		} while (addr += PAGE_SIZE, addr != end);
++		} while (pte++, addr += PAGE_SIZE, addr != end);
+ 	}
+ 	*mask |= PGTBL_PTE_MODIFIED;
  
- #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
--#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
-+#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
- #define LPASS_MAX_MI2S_PORTS			(8)
- #define LPASS_MAX_DMA_CHANNELS			(8)
- #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
 
 
