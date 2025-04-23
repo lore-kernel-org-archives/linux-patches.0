@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8D628CF61;
-	Wed, 23 Apr 2025 15:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30B628CF61;
+	Wed, 23 Apr 2025 15:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420737; cv=none; b=L6HhVAFYqQf9Ow44fWJnCGEzr2+jv4rz0LhLNXQI1WLHbNYp/qGJ2zCwOttnk3ujgHMZLtbd9r4rqD2/0KJaXUBuNDls2agbn/meary5I+n85slsR087e3khYrcOEEl9dqImNq6ms4LfPjpnEzQ1f4siq1sFkKKof/m3F+3ekCU=
+	t=1745420741; cv=none; b=H9RJS6ztHS6zBqgLpy/SSB9nSSA8q78TUwvHAHICv1vNIrxsISIzvEN6jL/gvVS/wQnjeaFyl3b/4F87rIKGqYgO9H8J130Pb1VjGU3EU5cvmCV4HktO3Y7lIX7tAngK4mMMft5uXqMxbOacbQVleVJsCBNGkO4E90GjQxq4imE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420737; c=relaxed/simple;
-	bh=bkv/24m11SQBpYpjlkdd14z9jrR8vqq5zrCVOqMQupo=;
+	s=arc-20240116; t=1745420741; c=relaxed/simple;
+	bh=hMunZ6zfNFcGD0eeQ6W8Fyse0jo6T1bZNbVJ3E274KQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4kFEABjmdtdhI6rcYlLuLJBJPHmtTtdkb/Tg3ArGguy9awuzvT1S1J2Fz9/XlfpIyV4F4TUeaJDTr9DYFXInw9GeB1z5WdNcTREn9HY9zMbsv1PUKXwYEuFnElNvs65w2dcCz4eEp5Sh4twP/schhVChIk6vn9tfrrhc8bf4/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7iBL/aS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ufv6j0Ptbp6gLOljYnOjLgShDWuS6pe5oIF63mZhT9AWe3Q327c9K9qlD65W2BQrhMe9c8iAgO1jhZaDNtyjHpASulOqxqE9wiF0GjGDTz43do5MV4JWc6lFAn6AaiYuG73eAG+AscKfaKL5ykyDd8g2HrSsqu+RBa9VM7qyfFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm+JBH2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7iBL/aS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2B5C4CEE2;
-	Wed, 23 Apr 2025 15:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm+JBH2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DB3C4CEE2;
+	Wed, 23 Apr 2025 15:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420737;
-	bh=bkv/24m11SQBpYpjlkdd14z9jrR8vqq5zrCVOqMQupo=;
+	s=korg; t=1745420740;
+	bh=hMunZ6zfNFcGD0eeQ6W8Fyse0jo6T1bZNbVJ3E274KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7iBL/aS9bqtCiAB1QWgtnBJ5YAdcwSKslQXUnisRoDtIrIqbx3E44T5ePA6yBHvL
-	 PwnB/dktStY9/6b01+kG7mmoK84qnfWBQvOiJ12W063L02r7FPclo/QxdP54+K3UbC
-	 3Pba3vGfG8JiGlPhXWIYOhQJ18ZZZItOwVpD533Q=
+	b=mm+JBH2tGUe2TSNWeoL/smj7JAjgIe8HJVZLOVfAdf3ljNy/05g2JAxh+4+vjZuSU
+	 ga2ADpvY/PFn8YIotNhmEaxbxOphsOSMoyYoDu0splpxrwWYvEpPftUn/JqpFVZsVe
+	 ge7C4H2gFE2EvNYQia2jX/Ow9BqZBZpWfvvoVJCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 158/223] drm/amd/pm/powerplay: Prevent division by zero
-Date: Wed, 23 Apr 2025 16:43:50 +0200
-Message-ID: <20250423142623.607770276@linuxfoundation.org>
+	Ryo Takakura <ryotkkr98@gmail.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 108/393] PCI: vmd: Make vmd_dev::cfg_lock a raw_spinlock_t type
+Date: Wed, 23 Apr 2025 16:40:04 +0200
+Message-ID: <20250423142647.742978377@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,44 +48,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Ryo Takakura <ryotkkr98@gmail.com>
 
-commit 4b8c3c0d17c07f301011e2908fecd2ebdcfe3d1c upstream.
+[ Upstream commit 18056a48669a040bef491e63b25896561ee14d90 ]
 
-The user can set any speed value.
-If speed is greater than UINT_MAX/8, division by zero is possible.
+The access to the PCI config space via pci_ops::read and pci_ops::write is
+a low-level hardware access. The functions can be accessed with disabled
+interrupts even on PREEMPT_RT. The pci_lock is a raw_spinlock_t for this
+purpose.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
+acquired with disabled interrupts. The vmd_dev::cfg_lock is accessed in
+the same context as the pci_lock.
 
-Fixes: c52dcf49195d ("drm/amd/pp: Avoid divide-by-zero in fan_ctrl_set_fan_speed_rpm")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Make vmd_dev::cfg_lock a raw_spinlock_t type so it can be used with
+interrupts disabled.
+
+This was reported as:
+
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+  Call Trace:
+   rt_spin_lock+0x4e/0x130
+   vmd_pci_read+0x8d/0x100 [vmd]
+   pci_user_read_config_byte+0x6f/0xe0
+   pci_read_config+0xfe/0x290
+   sysfs_kf_bin_read+0x68/0x90
+
+Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Acked-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+[bigeasy: reword commit message]
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-off-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Link: https://lore.kernel.org/r/20250218080830.ufw3IgyX@linutronix.de
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: add back report info from
+https://lore.kernel.org/lkml/20241218115951.83062-1-ryotkkr98@gmail.com/]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/vmd.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-@@ -307,10 +307,10 @@ int vega10_fan_ctrl_set_fan_speed_rpm(st
- 	int result = 0;
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 5ff2066aa5164..dfa222e02c4da 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -125,7 +125,7 @@ struct vmd_irq_list {
+ struct vmd_dev {
+ 	struct pci_dev		*dev;
  
- 	if (hwmgr->thermal_controller.fanInfo.bNoFan ||
--	    speed == 0 ||
-+	    (!speed || speed > UINT_MAX/8) ||
- 	    (speed < hwmgr->thermal_controller.fanInfo.ulMinRPM) ||
- 	    (speed > hwmgr->thermal_controller.fanInfo.ulMaxRPM))
--		return -1;
-+		return -EINVAL;
+-	spinlock_t		cfg_lock;
++	raw_spinlock_t		cfg_lock;
+ 	void __iomem		*cfgbar;
  
- 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl))
- 		result = vega10_fan_ctrl_stop_smc_fan_control(hwmgr);
+ 	int msix_count;
+@@ -402,7 +402,7 @@ static int vmd_pci_read(struct pci_bus *bus, unsigned int devfn, int reg,
+ 	if (!addr)
+ 		return -EFAULT;
+ 
+-	spin_lock_irqsave(&vmd->cfg_lock, flags);
++	raw_spin_lock_irqsave(&vmd->cfg_lock, flags);
+ 	switch (len) {
+ 	case 1:
+ 		*value = readb(addr);
+@@ -417,7 +417,7 @@ static int vmd_pci_read(struct pci_bus *bus, unsigned int devfn, int reg,
+ 		ret = -EINVAL;
+ 		break;
+ 	}
+-	spin_unlock_irqrestore(&vmd->cfg_lock, flags);
++	raw_spin_unlock_irqrestore(&vmd->cfg_lock, flags);
+ 	return ret;
+ }
+ 
+@@ -437,7 +437,7 @@ static int vmd_pci_write(struct pci_bus *bus, unsigned int devfn, int reg,
+ 	if (!addr)
+ 		return -EFAULT;
+ 
+-	spin_lock_irqsave(&vmd->cfg_lock, flags);
++	raw_spin_lock_irqsave(&vmd->cfg_lock, flags);
+ 	switch (len) {
+ 	case 1:
+ 		writeb(value, addr);
+@@ -455,7 +455,7 @@ static int vmd_pci_write(struct pci_bus *bus, unsigned int devfn, int reg,
+ 		ret = -EINVAL;
+ 		break;
+ 	}
+-	spin_unlock_irqrestore(&vmd->cfg_lock, flags);
++	raw_spin_unlock_irqrestore(&vmd->cfg_lock, flags);
+ 	return ret;
+ }
+ 
+@@ -1020,7 +1020,7 @@ static int vmd_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	if (features & VMD_FEAT_OFFSET_FIRST_VECTOR)
+ 		vmd->first_vec = 1;
+ 
+-	spin_lock_init(&vmd->cfg_lock);
++	raw_spin_lock_init(&vmd->cfg_lock);
+ 	pci_set_drvdata(dev, vmd);
+ 	err = vmd_enable_domain(vmd, features);
+ 	if (err)
+-- 
+2.39.5
+
 
 
