@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A3C27FD75;
-	Wed, 23 Apr 2025 15:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CC929345D;
+	Wed, 23 Apr 2025 15:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422233; cv=none; b=F8tCLes4Gy6E4x3TGNQDO9OU69u3PXM/n10daBJb7jjcmm2109bZd7hFfBtKJC5AzjhgCTjzcYbxsfTyJG18+11sAp0Ypsbxck4ZKJ7fL3mawy7dLW+z31ASS6Bfth78vBn3nyDDP3TFaDlmtWeSe6vd8HRCiaAIYUCZJlfNxTo=
+	t=1745422236; cv=none; b=EPdgE5+OnyCoY4S95MY91h/5ZkHr0d+KljkljLtqh7J0IJjeFQwo1gMJIQQX7K2Skf+NCOwZRR66vknuyjTGqIyofKzDXwdrgBGekbDsiIST/mNvbFgPD9Wf7FZzq/Wy3FtGu4uUb2W8yVgRxCuQEnJAR2ER2LJGzE1XwfPga6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422233; c=relaxed/simple;
-	bh=8bi19nHHi7RMaXH95huB6OuC0pCvrGJBjb05pJVGC44=;
+	s=arc-20240116; t=1745422236; c=relaxed/simple;
+	bh=BnDSPTo5bYdbX2D8jxgq079VLyu5w+ur4un3Yfxn15A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7szCo6qMzWH2TOnEoN37waUklrGKL/SxkwREGSBh1AJaydIYyv/jFDwEo6GszJOWhkLcLhiqG6od5J7hAKt3SHy6jNM+zjNvrY8D9vo5s0bRIMM4VuXqrw1NwDkvkRveVsyNuJLucRRzuI3Yt1H1XGAEkH86YhhyeCV2QZ5IIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ix6/bei2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dPwSgTYA7OHYDtT8xskirRl8EhHcOaFjIKYXWHjQ4NS5isfq89ApZlrCa6Jm/81YiKNs+SE25nIwEJ/BS+Fcf2F+9Uh+vyH6U9DR6Saqtj3/kyt0WJoiL4kOL2kfqR0HjIuaTNS9gi0YEe6HG6a6IX/iq9e7f1mE/qDjFUg4D1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZngrFRB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix6/bei2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA32C4CEE2;
-	Wed, 23 Apr 2025 15:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZngrFRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69803C4CEE2;
+	Wed, 23 Apr 2025 15:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422233;
-	bh=8bi19nHHi7RMaXH95huB6OuC0pCvrGJBjb05pJVGC44=;
+	s=korg; t=1745422235;
+	bh=BnDSPTo5bYdbX2D8jxgq079VLyu5w+ur4un3Yfxn15A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ix6/bei2zUZKw8vtv2IK5aqfyfUHspVikelI80H0h8vTSTMprGbIqVpsX6/YevAsx
-	 TNfSB46Cs2bGOP+Qm5hToRcXb1MVc4Te8Nnts0EtEMtA2TLiqbgozVi2P3wVF9/Lz8
-	 XO/c7+fKenHB2ErSSNdK4gwD76WvjYz0Kn/N2an4=
+	b=wZngrFRBCePErM0bvOXdkStj4no42MaziANQRjr+/oE+ThJdN53Hhh7ClmBsUKhIz
+	 vMgMAW8QO3nQeR3nV9uUs+CHQYP9mkOD6YamByu0DpM0Rd0qt8uSqT/VZqd1HItjNW
+	 +5lqMTaPuiGGzfOYrS4KqSjVf5Q4HXoisjhckjV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 280/393] netlink: specs: rt-link: add an attr layer around alt-ifname
-Date: Wed, 23 Apr 2025 16:42:56 +0200
-Message-ID: <20250423142654.912950959@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 239/291] drm/amd/pm/powerplay/hwmgr/vega20_thermal: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:43:48 +0200
+Message-ID: <20250423142634.180841117@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit acf4da17deada7f8b120e051aa6c9cac40dbd83b ]
+commit 4e3d9508c056d7e0a56b58d5c81253e2a0d22b6c upstream.
 
-alt-ifname attr is directly placed in requests (as an alternative
-to ifname) but in responses its wrapped up in IFLA_PROP_LIST
-and only there is may be multi-attr. See rtnl_fill_prop_list().
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
-Fixes: b2f63d904e72 ("doc/netlink: Add spec for rt link messages")
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250414211851.602096-6-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 031db09017da ("drm/amd/powerplay/vega20: enable fan RPM and pwm settings V2")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/netlink/specs/rt_link.yaml | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/rt_link.yaml b/Documentation/netlink/specs/rt_link.yaml
-index d86a68f8475ca..34f74c451dcdb 100644
---- a/Documentation/netlink/specs/rt_link.yaml
-+++ b/Documentation/netlink/specs/rt_link.yaml
-@@ -892,11 +892,10 @@ attribute-sets:
-       -
-         name: prop-list
-         type: nest
--        nested-attributes: link-attrs
-+        nested-attributes: prop-list-link-attrs
-       -
-         name: alt-ifname
-         type: string
--        multi-attr: true
-       -
-         name: perm-address
-         type: binary
-@@ -931,6 +930,13 @@ attribute-sets:
-       -
-         name: gro-ipv4-max-size
-         type: u32
-+  -
-+    name: prop-list-link-attrs
-+    subset-of: link-attrs
-+    attributes:
-+      -
-+        name: alt-ifname
-+        multi-attr: true
-   -
-     name: af-spec-attrs
-     attributes:
-@@ -1362,7 +1368,6 @@ operations:
-             - min-mtu
-             - max-mtu
-             - prop-list
--            - alt-ifname
-             - perm-address
-             - proto-down-reason
-             - parent-dev-name
--- 
-2.39.5
-
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_thermal.c
+@@ -191,7 +191,7 @@ int vega20_fan_ctrl_set_fan_speed_rpm(st
+ 	uint32_t tach_period, crystal_clock_freq;
+ 	int result = 0;
+ 
+-	if (!speed)
++	if (!speed || speed > UINT_MAX/8)
+ 		return -EINVAL;
+ 
+ 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl)) {
 
 
