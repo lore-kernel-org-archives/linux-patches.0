@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A031F2C45;
-	Wed, 23 Apr 2025 14:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305DD2820DE;
+	Wed, 23 Apr 2025 14:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420305; cv=none; b=OjFZPp6cnDrB8um4qjCO72ffnXofKVViJzLewHcPk5EqfBIzj2CgSOaLDnZE2y+TOpP8F9yLBtKT7fQo8+QCuq6ymdycKJjtBrb3jRxIs6CBQ0weFWZkKcIkolCVb10aUCPRo6W8gSndgGR8MB9UJOokmPnMdu012+w9ioDrgcY=
+	t=1745420308; cv=none; b=Mp0CvbWaRxaetT55RQ7oRKIf81lPz9BAouYwOoq1gt5xZCSiUwUUtQnJZirNrQWeptnmSvxldbKXI27D0gAvQbYyfzhcGtKHhMUyxsYWnNBxyfMUUv3K6kmf+3YQYI6vqg1FJHk2Fw6HfMlWiOLR3hTXyF+drzgLpsfDOHTomYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420305; c=relaxed/simple;
-	bh=oPUNRA4N4jjFfIScXoeHJLFGitr9Abt4g1F6aIr8NZI=;
+	s=arc-20240116; t=1745420308; c=relaxed/simple;
+	bh=QvtunvrmlwAuPml8K4ifvr9+G4QYDcWnMT+Wm1kCR3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcvNE6cObySFy+uqctMjq3HSDXqfO8VOerO+1wpXdi/C0JWzvURpA1wG8zN/0WWb2uYjgFmK74635cYPS7/AtB8ZB3/3AMQuA3VXfMre1cK5Dv8vHeaVhbVs0JDvf/5+3oDeI+APe6WtIxh5tDV9tkSKiBg+o301XE/6e+RnwrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlz37wj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7nUQBwHBimXfvZiJPl9CueX689Rfabql+DxgNaplc9rl25XTZZI0SRwmKcAogmUdgGI9EY23iie7dGB7+KkRAIMrRMP0S4GfB3BKD6iGxQDESOZWTKr/DiCDtwpDZV4u/WkA5pmz8FGlz+Vqm0Kjvuktuo6lo2prll4eoC6wRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXjCcWxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlz37wj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F70FC4CEE2;
-	Wed, 23 Apr 2025 14:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXjCcWxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DBFC4CEE2;
+	Wed, 23 Apr 2025 14:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420305;
-	bh=oPUNRA4N4jjFfIScXoeHJLFGitr9Abt4g1F6aIr8NZI=;
+	s=korg; t=1745420308;
+	bh=QvtunvrmlwAuPml8K4ifvr9+G4QYDcWnMT+Wm1kCR3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlz37wj9njRmph26bOYnPtzYRbWphsUkp4shxiazUGFdE3KxPVU3UOkL1LSu6n7Ei
-	 YE3RBL6ACJj2QyR9g2jrLD5/4KuCGH9N9780tdvyaTB2uUDUxE29QLKRk4UISizQ4e
-	 JdcBF6CGKv0zUPnH40RUoGu/fVYULnfVPYmnghS4=
+	b=FXjCcWxEhZRTNXEECD5fuhlxiuCXTY53GstrcztkSAGwL8hQwWc2kypHiFMLl63vm
+	 qiBREj8PLnpAzTdQ3PlvAyeh8k30eEu8HWZ/yxjFTHlKATz6VkLcaHcLvJ0iJpsiE8
+	 nmBWn5Em/b4GKp9FrSOj/W6qvFk2E23HgPCOSBGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 080/241] netfilter: conntrack: fix erronous removal of offload bit
-Date: Wed, 23 Apr 2025 16:42:24 +0200
-Message-ID: <20250423142623.855270556@linuxfoundation.org>
+Subject: [PATCH 6.6 060/393] ASoC: fsl_audmix: register card device depends on dais property
+Date: Wed, 23 Apr 2025 16:39:16 +0200
+Message-ID: <20250423142645.781109896@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit d2d31ea8cd80b9830cdab624e94f9d41178fc99d ]
+[ Upstream commit 294a60e5e9830045c161181286d44ce669f88833 ]
 
-The blamed commit exposes a possible issue with flow_offload_teardown():
-We might remove the offload bit of a conntrack entry that has been
-offloaded again.
+In order to make the audmix device linked by audio graph card, make
+'dais' property to be optional.
 
-1. conntrack entry c1 is offloaded via flow f1 (f1->ct == c1).
-2. f1 times out and is pushed back to slowpath, c1 offload bit is
-   removed.  Due to bug, f1 is not unlinked from rhashtable right away.
-3. a new packet arrives for the flow and re-offload is triggered, i.e.
-   f2->ct == c1.  This is because lookup in flowtable skip entries with
-   teardown bit set.
-4. Next flowtable gc cycle finds f1 again
-5. flow_offload_teardown() is called again for f1 and c1 offload bit is
-   removed again, even though we have f2 referencing the same entry.
+If 'dais' property exists, then register the imx-audmix card driver.
+otherwise, it should be linked by audio graph card.
 
-This is harmless, but clearly not correct.
-Fix the bug that exposes this: set 'teardown = true' to have the gc
-callback unlink the flowtable entry from the table right away instead of
-the unintentional defer to the next round.
-
-Also prevent flow_offload_teardown() from fixing up the ct state more than
-once: We could also be called from the data path or a notifier, not only
-from the flowtable gc callback.
-
-NF_FLOW_TEARDOWN can never be unset, so we can use it as synchronization
-point: if we observe did not see a 0 -> 1 transition, then another CPU
-is already doing the ct state fixups for us.
-
-Fixes: 03428ca5cee9 ("netfilter: conntrack: rework offload nf_conn timeout extension logic")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250226100508.2352568-5-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_audmix.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 9d8361526f82a..9441ac3d8c1a2 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -383,8 +383,8 @@ static void flow_offload_del(struct nf_flowtable *flow_table,
- void flow_offload_teardown(struct flow_offload *flow)
- {
- 	clear_bit(IPS_OFFLOAD_BIT, &flow->ct->status);
--	set_bit(NF_FLOW_TEARDOWN, &flow->flags);
--	flow_offload_fixup_ct(flow);
-+	if (!test_and_set_bit(NF_FLOW_TEARDOWN, &flow->flags))
-+		flow_offload_fixup_ct(flow);
- }
- EXPORT_SYMBOL_GPL(flow_offload_teardown);
+diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
+index 0ab2c19621175..d8e44470f501e 100644
+--- a/sound/soc/fsl/fsl_audmix.c
++++ b/sound/soc/fsl/fsl_audmix.c
+@@ -492,11 +492,17 @@ static int fsl_audmix_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
+ 	}
  
-@@ -558,10 +558,12 @@ static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
+-	priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
+-	if (IS_ERR(priv->pdev)) {
+-		ret = PTR_ERR(priv->pdev);
+-		dev_err(dev, "failed to register platform: %d\n", ret);
+-		goto err_disable_pm;
++	/*
++	 * If dais property exist, then register the imx-audmix card driver.
++	 * otherwise, it should be linked by audio graph card.
++	 */
++	if (of_find_property(pdev->dev.of_node, "dais", NULL)) {
++		priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
++		if (IS_ERR(priv->pdev)) {
++			ret = PTR_ERR(priv->pdev);
++			dev_err(dev, "failed to register platform: %d\n", ret);
++			goto err_disable_pm;
++		}
+ 	}
  
- 	if (nf_flow_has_expired(flow) ||
- 	    nf_ct_is_dying(flow->ct) ||
--	    nf_flow_custom_gc(flow_table, flow))
-+	    nf_flow_custom_gc(flow_table, flow)) {
- 		flow_offload_teardown(flow);
--	else if (!teardown)
-+		teardown = true;
-+	} else if (!teardown) {
- 		nf_flow_table_extend_ct_timeout(flow->ct);
-+	}
- 
- 	if (teardown) {
- 		if (test_bit(NF_FLOW_HW, &flow->flags)) {
+ 	return 0;
 -- 
 2.39.5
 
