@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6B41EFFB9;
-	Wed, 23 Apr 2025 14:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27C219DF4C;
+	Wed, 23 Apr 2025 14:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420129; cv=none; b=BmTLAJVaEIOMz/qc4T8Ys+82HocpPlfFgXuGD9RlNbQU90EF9/6hEHLbnfJF+IeBiZNJ0aiE0g+vg0W9XxqAFthiwDVJo7fNLx7d3LIyOR1FE3CGoq+siyYL8OV036DuunXXq0sW/IiD8LJlk0oeRobZd6XHPiTQrPc3EwlcExk=
+	t=1745420131; cv=none; b=bwip+P9EJSn1G2HWeFSe3OSD6IxtdY7x5L09FMvTpUSfMn5ZQtukwRdhBO4w5Ebo1VKSYo7qvIfiC4/AhdazMy60hrGl3tPlyxk/7SbdWVfyhtQHE71JQcO8KP11j5lOlhulrnXTOLl3S9XVxzXt6diJSBj2tSZYRiUZpP3GbkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420129; c=relaxed/simple;
-	bh=C7kzoWcXQoWVR0Tei/zS5JFLNPBkC/mJVTRNxIi08wg=;
+	s=arc-20240116; t=1745420131; c=relaxed/simple;
+	bh=THxIKIkrWGatwRPyojoytLmNtZOvZRyENL+l6D/Vbug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WawdIP6dNl6bhzWRXwJ9IVXPWxjNJIhhofEdUR5RZQTkE3Ke8z2jq6AI7hFJxaEjYdEpHo8cIJgDQGg0DI99+Mu1tXPRl1ZvXNSIlDw4OJ3THhyGEQ2vzZG7V0jYpANOorfMMDTqTS+F/ypxeDT6zH0DTU03lhwmtKEAHNf09aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeEeWv+H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPSD6lPbYFNbYk6Tunr5+SunX/n2r3m+LXutttppyMuWwmFaIiCbKSW8Cgv/iVNO12AhMbl8RBkbU6uH1T4xnx25zFlD66JeYMP+nWju1HN6210vRmOSuKkpaeecXWFD1bIuj7ZfAZXtAx29IzR/BQ2+/5qHNv0FIZhYeAhB1z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPDXQP1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeEeWv+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97302C4CEE3;
-	Wed, 23 Apr 2025 14:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPDXQP1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34399C4CEE2;
+	Wed, 23 Apr 2025 14:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420128;
-	bh=C7kzoWcXQoWVR0Tei/zS5JFLNPBkC/mJVTRNxIi08wg=;
+	s=korg; t=1745420131;
+	bh=THxIKIkrWGatwRPyojoytLmNtZOvZRyENL+l6D/Vbug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeEeWv+HBDCSSJwwfTSkUs/ym8UCbfPqxpqyhRFYwJwFTMJb+rwTnynbCUBM+jQjC
-	 Q+9QCy5mmdPAxn4uGmowV9266Z0y9z1LD37UgBJNclHqcoDy2exTEPJg7cesZQMh02
-	 c0gSb8TGNNmvd2XxUon+F7gZcaKCvSsBZT6h47KM=
+	b=JPDXQP1ZghZUXNEUfe3pq1+okZhRF2HNahwd+W7AAFVwbCFb0Rbsq9o9JJYvD+iRg
+	 jZEVTXZGJiNNQrpoz1TpGJ01EP92mxG6nuxwirWqhPUaRkbpzYsP0uRpVdPGfVzCk6
+	 WGLO1TkmiVo/1XhRvjLIiiTKYz/yfoZsWpedFNKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Christian Brauner <brauner@kernel.org>,
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/223] fs/stat.c: avoid harmless garbage value problem in vfs_statx_path()
-Date: Wed, 23 Apr 2025 16:42:54 +0200
-Message-ID: <20250423142621.267815264@linuxfoundation.org>
+Subject: [PATCH 6.6 041/393] x86/ia32: Leave NULL selector values 0~3 unchanged
+Date: Wed, 23 Apr 2025 16:38:57 +0200
+Message-ID: <20250423142644.988193420@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +52,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit 0fac3ed473dd2955053be6671cdd747807f5e488 ]
+[ Upstream commit ad546940b5991d3e141238cd80a6d1894b767184 ]
 
-Clang static checker(scan-build) warning:
-fs/stat.c:287:21: warning: The left expression of the compound assignment is
-an uninitialized value. The computed value will also be garbage.
-  287 |                 stat->result_mask |= STATX_MNT_ID_UNIQUE;
-      |                 ~~~~~~~~~~~~~~~~~ ^
-fs/stat.c:290:21: warning: The left expression of the compound assignment is
-an uninitialized value. The computed value will also be garbage.
-  290 |                 stat->result_mask |= STATX_MNT_ID;
+The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
+and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
+GDT, selector values 0~3 all point to the NULL descriptor, thus values
+0, 1, 2 and 3 are all valid NULL selector values.
 
-When vfs_getattr() failed because of security_inode_getattr(), 'stat' is
-uninitialized. In this case, there is a harmless garbage problem in
-vfs_statx_path(). It's better to return error directly when
-vfs_getattr() failed, avoiding garbage value and more clearly.
+When a NULL selector value is to be loaded into a segment register,
+reload_segments() sets its RPL bits.  Later IRET zeros ES, FS, GS, and
+DS segment registers if any of them is found to have any nonzero NULL
+selector value.  The two operations offset each other to actually effect
+a nop.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20250119025946.1168957-1-suhui@nfschina.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 777d0961ff95 ("fs: move the bdex_statx call to vfs_getattr_nosec")
+Besides, zeroing of RPL in NULL selector values is an information leak
+in pre-FRED systems as userspace can spot any interrupt/exception by
+loading a nonzero NULL selector, and waiting for it to become zero.
+But there is nothing software can do to prevent it before FRED.
+
+ERETU, the only legit instruction to return to userspace from kernel
+under FRED, by design does NOT zero any segment register to avoid this
+problem behavior.
+
+As such, leave NULL selector values 0~3 unchanged and close the leak.
+
+Do the same on 32-bit kernel as well.
+
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241126184529.1607334-1-xin@zytor.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/stat.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/signal_32.c | 62 +++++++++++++++++++++++++------------
+ 1 file changed, 43 insertions(+), 19 deletions(-)
 
-diff --git a/fs/stat.c b/fs/stat.c
-index cbc0fcd4fba39..b399b881bbbf9 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -246,6 +246,8 @@ static int vfs_statx_path(struct path *path, int flags, struct kstat *stat,
- 			  u32 request_mask)
+diff --git a/arch/x86/kernel/signal_32.c b/arch/x86/kernel/signal_32.c
+index c12624bc82a31..983f8f5893a48 100644
+--- a/arch/x86/kernel/signal_32.c
++++ b/arch/x86/kernel/signal_32.c
+@@ -33,25 +33,55 @@
+ #include <asm/smap.h>
+ #include <asm/gsseg.h>
+ 
++/*
++ * The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
++ * and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
++ * GDT, selector values 0~3 all point to the NULL descriptor, thus values
++ * 0, 1, 2 and 3 are all valid NULL selector values.
++ *
++ * However IRET zeros ES, FS, GS, and DS segment registers if any of them
++ * is found to have any nonzero NULL selector value, which can be used by
++ * userspace in pre-FRED systems to spot any interrupt/exception by loading
++ * a nonzero NULL selector and waiting for it to become zero.  Before FRED
++ * there was nothing software could do to prevent such an information leak.
++ *
++ * ERETU, the only legit instruction to return to userspace from kernel
++ * under FRED, by design does NOT zero any segment register to avoid this
++ * problem behavior.
++ *
++ * As such, leave NULL selector values 0~3 unchanged.
++ */
++static inline u16 fixup_rpl(u16 sel)
++{
++	return sel <= 3 ? sel : sel | 3;
++}
++
+ #ifdef CONFIG_IA32_EMULATION
+ #include <asm/ia32_unistd.h>
+ 
+ static inline void reload_segments(struct sigcontext_32 *sc)
  {
- 	int error = vfs_getattr(path, stat, request_mask, flags);
-+	if (error)
-+		return error;
+-	unsigned int cur;
++	u16 cur;
  
- 	if (request_mask & STATX_MNT_ID_UNIQUE) {
- 		stat->mnt_id = real_mount(path->mnt)->mnt_id_unique;
-@@ -267,7 +269,7 @@ static int vfs_statx_path(struct path *path, int flags, struct kstat *stat,
- 	if (S_ISBLK(stat->mode))
- 		bdev_statx(path, stat, request_mask);
- 
--	return error;
-+	return 0;
++	/*
++	 * Reload fs and gs if they have changed in the signal
++	 * handler.  This does not handle long fs/gs base changes in
++	 * the handler, but does not clobber them at least in the
++	 * normal case.
++	 */
+ 	savesegment(gs, cur);
+-	if ((sc->gs | 0x03) != cur)
+-		load_gs_index(sc->gs | 0x03);
++	if (fixup_rpl(sc->gs) != cur)
++		load_gs_index(fixup_rpl(sc->gs));
+ 	savesegment(fs, cur);
+-	if ((sc->fs | 0x03) != cur)
+-		loadsegment(fs, sc->fs | 0x03);
++	if (fixup_rpl(sc->fs) != cur)
++		loadsegment(fs, fixup_rpl(sc->fs));
++
+ 	savesegment(ds, cur);
+-	if ((sc->ds | 0x03) != cur)
+-		loadsegment(ds, sc->ds | 0x03);
++	if (fixup_rpl(sc->ds) != cur)
++		loadsegment(ds, fixup_rpl(sc->ds));
+ 	savesegment(es, cur);
+-	if ((sc->es | 0x03) != cur)
+-		loadsegment(es, sc->es | 0x03);
++	if (fixup_rpl(sc->es) != cur)
++		loadsegment(es, fixup_rpl(sc->es));
  }
  
- static int vfs_statx_fd(int fd, int flags, struct kstat *stat,
+ #define sigset32_t			compat_sigset_t
+@@ -105,18 +135,12 @@ static bool ia32_restore_sigcontext(struct pt_regs *regs,
+ 	regs->orig_ax = -1;
+ 
+ #ifdef CONFIG_IA32_EMULATION
+-	/*
+-	 * Reload fs and gs if they have changed in the signal
+-	 * handler.  This does not handle long fs/gs base changes in
+-	 * the handler, but does not clobber them at least in the
+-	 * normal case.
+-	 */
+ 	reload_segments(&sc);
+ #else
+-	loadsegment(gs, sc.gs);
+-	regs->fs = sc.fs;
+-	regs->es = sc.es;
+-	regs->ds = sc.ds;
++	loadsegment(gs, fixup_rpl(sc.gs));
++	regs->fs = fixup_rpl(sc.fs);
++	regs->es = fixup_rpl(sc.es);
++	regs->ds = fixup_rpl(sc.ds);
+ #endif
+ 
+ 	return fpu__restore_sig(compat_ptr(sc.fpstate), 1);
 -- 
 2.39.5
 
