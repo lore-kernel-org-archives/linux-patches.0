@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F9C27B4EE;
-	Wed, 23 Apr 2025 15:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6A728D858;
+	Wed, 23 Apr 2025 15:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420769; cv=none; b=LY0belmAN3BekVEBTEtEDL+cI4tXITOmkEPwUKkBuPB8fcc/ixWTxhC++d6XaM/iTlQSylwXjbbh39+LnlIb9g371JuHN+4xNf2AfH4IDNrpBmyBl2cMqNv6qVZ7OM6hQpaMbaR57BRGYqWn77Gk9gdP9vQ0UM4gaMOM6aiLScE=
+	t=1745420772; cv=none; b=nznSNASTiLNWmuIyDnC8D/I9h5UXGVWtPahuzxumsw3OP5x7+3OGxYKvsDtFkKoiVpVfh9m2Kj4IT8UEpjjMafpzvLaJmF3Xm3ZLuOXI6zeIlM8ioauDgeUiTAEDMA9LL8rTHxJsNHuwTiohvdLxxZ1YY3nu0WjHuZMTGzMH5CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420769; c=relaxed/simple;
-	bh=K9JFnc4zt0DVBofyexl4HhyxbRpx9nQd091hssKJl6c=;
+	s=arc-20240116; t=1745420772; c=relaxed/simple;
+	bh=vYTh7ccb9P5jX+LqRC2OsxJ36p2ik6lSp4l0zh221xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvXvWMjBjSSUct2BbdbHsdJLxh+K55S4rGCfekNmIHPOX+RiEDB+QldXDSgiwOKx7a3WknNkSwWcInsa56lEIuCUQLCxdIspYyBlJoXHx18YF7d7eTjskBJsYSHp5mAnXsarizwLUpc9deibeUCn3Id3lfait0FfVn3Lm1FaSi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIIRNLTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHqO6S/26wflWBcdxlzacl7WlZOCoLtXNw/BP4ECQOh5QzkWtYMLPs96n6hSJajq4VzorsJJMvcDrFxksDgOOVhPsczxU/51JTiyMjhvxqq+Y2K35kHP7wz7m8E6v/BqAh8VdijmDdJxKOCk5kYLNlVKL+RQOW/W0zfVYwWnRUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZgVsuWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIIRNLTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C334C4CEE2;
-	Wed, 23 Apr 2025 15:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZgVsuWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8899C4CEE2;
+	Wed, 23 Apr 2025 15:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420769;
-	bh=K9JFnc4zt0DVBofyexl4HhyxbRpx9nQd091hssKJl6c=;
+	s=korg; t=1745420772;
+	bh=vYTh7ccb9P5jX+LqRC2OsxJ36p2ik6lSp4l0zh221xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIIRNLTGw+iyu3q1knAfY4KfyE2M/0u318ONeCTW6R1R37aE9+W3xrsoqMDD6D5vk
-	 BqkeWqzOGazM6ppr1viqSeDtWLcjuWPW1kRj73koxBzwk4n+L4qp1oOWEVqm3T6Q5N
-	 b40pKpSVuH2iNkdPk5b/WmxDPymMa2opGUwnnCDE=
+	b=aZgVsuWQPaLPT1GWWP4T/yGsQmpcoj5PVIZwmUMzgA+n1JiEZAxYhLi3YimFsDoTO
+	 6Limj/0W89edgmuZqSshBXILm1vy1a9D/qkjUIyZNdCyQAkvMHQJ2594Ovij8Okuzb
+	 21G3RYxIcUW95n6SliwlKQbtHHIcQrzURLz2eKBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 079/291] media: venus: hfi: add a check to handle OOB in sfr region
-Date: Wed, 23 Apr 2025 16:41:08 +0200
-Message-ID: <20250423142627.598351046@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 161/223] drm/amd/pm/swsmu/smu13/smu_v13_0: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:43:53 +0200
+Message-ID: <20250423142623.727742543@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit f4b211714bcc70effa60c34d9fa613d182e3ef1e upstream.
+commit f23e9116ebb71b63fe9cec0dcac792aa9af30b0c upstream.
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer. Cap the size to allocated size for such cases.
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1053,18 +1053,26 @@ static void venus_sfr_print(struct venus
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1228,7 +1228,7 @@ int smu_v13_0_set_fan_speed_rpm(struct s
+ 	uint32_t tach_period;
+ 	int ret;
  
- 	if (!sfr)
- 		return;
+-	if (!speed)
++	if (!speed || speed > UINT_MAX/8)
+ 		return -EINVAL;
  
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (!size)
-+		return;
-+
-+	if (size > ALIGNED_SFR_SIZE)
-+		size = ALIGNED_SFR_SIZE;
-+
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
+ 	ret = smu_v13_0_auto_fan_control(smu, 0);
 
 
