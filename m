@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5F228152D;
-	Wed, 23 Apr 2025 15:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1932B28150B;
+	Wed, 23 Apr 2025 15:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420819; cv=none; b=PbQKt6NGdV1nk/mRkLipjh09mJF2SmcHNxxNM9UgFci/iK3rhWudllgZXuX+GEEn1RjcqnHLCJ+EGJtm+YuL8Gixn2IQylcUZeyrqcxt4E24dBLKms2eyEpTuCeMuPS0GJgWU4WKsx1kKQhD7GiKOD6aGany9EqeMvl9JxDQCxY=
+	t=1745420822; cv=none; b=HlTOl+IyO8Od3MHb+3PDyqz2SoAtdyAJwykZo7Oi3uFtFLWm/a3NgVr/KF8EgNmrdEgjmVLJAL/FXvah3jeC+k3Ynr+84TEJw3o8n0EybAEWif3QxZbTeaE3q7Tht8gPI6Bib74Wi2DfaXe6V/bOcYM+QQoxl5mkKQgVArzllkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420819; c=relaxed/simple;
-	bh=anVyIcMoCMy//efGweG1bep2zn0moQtcTBtVd8NXJUY=;
+	s=arc-20240116; t=1745420822; c=relaxed/simple;
+	bh=9VHs/pb8lA+9yPRcQcQ8GEw84ipWnBPXE5QCGgCnUEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZBadwPZNw/eckcWEyZW+QKfiR8g/tt4Rg/F/jcBuz5cVUF8z7wyjDsuMBNb9A3ThUT5BKpTsDvVgJHKHNcJP1EfyD2w9sTdwEvgw7wIchTz++vC+k0MEi3t4w73h+36b2WIc1NCiPXllaPVvLvi8+k07l8oda4AeWydQ7hcOR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsBXqiT9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XxzGXdeoJeUfFdSej3u53mheayzkFLnH3inQFlluasKV/IKtYCotdsM8Qvl7oZRizOHUWCZ35nHiKw7WHtH3+IDFy544khNMfAOnnYCMzPrxjp/H1f+Zq0ltG+e9rD39ebHm/f/vht4/WS/c6OpMzhI/knsku70/jP4goiPve9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDkB1tlP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsBXqiT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3CDC4CEE2;
-	Wed, 23 Apr 2025 15:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDkB1tlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E416C4CEE2;
+	Wed, 23 Apr 2025 15:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420819;
-	bh=anVyIcMoCMy//efGweG1bep2zn0moQtcTBtVd8NXJUY=;
+	s=korg; t=1745420822;
+	bh=9VHs/pb8lA+9yPRcQcQ8GEw84ipWnBPXE5QCGgCnUEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsBXqiT9KMKsehVnnfVzx/zzNJG8+z166vK4RAnup0+KRRGmK/6MR4dhhyqA1IdXz
-	 fLOfFJ82Fr6gnqKipHTWmwjtr2wNNprSAc+NuFD1Gthexwx+tSTQfazQ7HSGCUFIfs
-	 Q9UPbI80ahPR5zNt1pUIZONrtYMdVRDPxsYujyBY=
+	b=YDkB1tlP6nFIi3AtXw1v+FlY44FZDtUvkE6czorZ73O4ht8Wy0aoWNjZr4muR1CS0
+	 P2Hag2xFuXv3meJcEdeCNxDpif3y8iQTw+5Ld1NKGfUJlmpGvmhVgBjHoJD9PD3+vY
+	 NGNeLCcbgQEwfe97i1IoogYdjlvEKkM17EryVTKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@meta.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/291] tpm, tpm_tis: Workaround failed command reception on Infineon devices
-Date: Wed, 23 Apr 2025 16:41:01 +0200
-Message-ID: <20250423142627.315849932@linuxfoundation.org>
+Subject: [PATCH 6.6 115/393] pwm: rcar: Improve register calculation
+Date: Wed, 23 Apr 2025 16:40:11 +0200
+Message-ID: <20250423142648.113788920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,119 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan McDowell <noodles@meta.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit de9e33df7762abbfc2a1568291f2c3a3154c6a9d ]
+[ Upstream commit e7327c193014a4d8666e9c1cda09cf2c060518e8 ]
 
-Some Infineon devices have a issue where the status register will get
-stuck with a quick REQUEST_USE / COMMAND_READY sequence. This is not
-simply a matter of requiring a longer timeout; the work around is to
-retry the command submission. Add appropriate logic to do this in the
-send path.
+There were several issues in the function rcar_pwm_set_counter():
 
-This is fixed in later firmware revisions, but those are not always
-available, and cannot generally be easily updated from outside a
-firmware environment.
+ - The u64 values period_ns and duty_ns were cast to int on function
+   call which might loose bits on 32 bit architectures.
+   Fix: Make parameters to rcar_pwm_set_counter() u64
+ - The algorithm divided by the result of a division which looses
+   precision.
+   Fix: Make use of mul_u64_u64_div_u64()
+ - The calculated values were just masked to fit the respective register
+   fields which again might loose bits.
+   Fix: Explicitly check for overlow
 
-Testing has been performed with a simple repeated loop of doing a
-TPM2_CC_GET_CAPABILITY for TPM_CAP_PROP_MANUFACTURER using the Go code
-at:
+Implement the respective fixes.
 
-  https://the.earth.li/~noodles/tpm-stuff/timeout-reproducer-simple.go
+A side effect of fixing the 2nd issue is that there is no division by 0
+if clk_get_rate() returns 0.
 
-It can take several hours to reproduce, and several million operations.
-
-Signed-off-by: Jonathan McDowell <noodles@meta.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: ed6c1476bf7f ("pwm: Add support for R-Car PWM Timer")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/ab3dac794b2216cc1cc56d65c93dd164f8bd461b.1743501688.git.u.kleine-koenig@baylibre.com
+[ukleinek: Added an explicit #include <linux/bitfield.h> to please the
+0day build bot]
+Link: https://lore.kernel.org/oe-kbuild-all/202504031354.VJtxScP5-lkp@intel.com/
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 17 ++++++++++++++---
- drivers/char/tpm/tpm_tis_core.h |  1 +
- include/linux/tpm.h             |  1 +
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/pwm/pwm-rcar.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 5889d9edaf940..4e294a915925b 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -433,7 +433,10 @@ static int tpm_tis_send_data(struct tpm_chip *chip, const u8 *buf, size_t len)
+diff --git a/drivers/pwm/pwm-rcar.c b/drivers/pwm/pwm-rcar.c
+index 5b5f357c44de6..18fa2d40d9365 100644
+--- a/drivers/pwm/pwm-rcar.c
++++ b/drivers/pwm/pwm-rcar.c
+@@ -8,6 +8,7 @@
+  * - The hardware cannot generate a 0% duty cycle.
+  */
  
- 		if (wait_for_tpm_stat(chip, TPM_STS_VALID, chip->timeout_c,
- 					&priv->int_queue, false) < 0) {
--			rc = -ETIME;
-+			if (test_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags))
-+				rc = -EAGAIN;
-+			else
-+				rc = -ETIME;
- 			goto out_err;
- 		}
- 		status = tpm_tis_status(chip);
-@@ -450,7 +453,10 @@ static int tpm_tis_send_data(struct tpm_chip *chip, const u8 *buf, size_t len)
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+@@ -103,23 +104,24 @@ static void rcar_pwm_set_clock_control(struct rcar_pwm_chip *rp,
+ 	rcar_pwm_write(rp, value, RCAR_PWMCR);
+ }
  
- 	if (wait_for_tpm_stat(chip, TPM_STS_VALID, chip->timeout_c,
- 				&priv->int_queue, false) < 0) {
--		rc = -ETIME;
-+		if (test_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags))
-+			rc = -EAGAIN;
-+		else
-+			rc = -ETIME;
- 		goto out_err;
- 	}
- 	status = tpm_tis_status(chip);
-@@ -505,9 +511,11 @@ static int tpm_tis_send_main(struct tpm_chip *chip, const u8 *buf, size_t len)
- 		if (rc >= 0)
- 			/* Data transfer done successfully */
- 			break;
--		else if (rc != -EIO)
-+		else if (rc != -EAGAIN && rc != -EIO)
- 			/* Data transfer failed, not recoverable */
- 			return rc;
-+
-+		usleep_range(priv->timeout_min, priv->timeout_max);
- 	}
+-static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, int duty_ns,
+-				int period_ns)
++static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, u64 duty_ns,
++				u64 period_ns)
+ {
+-	unsigned long long one_cycle, tmp;	/* 0.01 nanoseconds */
++	unsigned long long tmp;
+ 	unsigned long clk_rate = clk_get_rate(rp->clk);
+ 	u32 cyc, ph;
  
- 	rc = tpm_tis_verify_crc(priv, len, buf);
-@@ -1044,6 +1052,9 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 		priv->timeout_max = TIS_TIMEOUT_MAX_ATML;
- 	}
+-	one_cycle = NSEC_PER_SEC * 100ULL << div;
+-	do_div(one_cycle, clk_rate);
++	/* div <= 24 == RCAR_PWM_MAX_DIVISION, so the shift doesn't overflow. */
++	tmp = mul_u64_u64_div_u64(period_ns, clk_rate, (u64)NSEC_PER_SEC << div);
++	if (tmp > FIELD_MAX(RCAR_PWMCNT_CYC0_MASK))
++		tmp = FIELD_MAX(RCAR_PWMCNT_CYC0_MASK);
  
-+	if (priv->manufacturer_id == TPM_VID_IFX)
-+		set_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags);
-+
- 	if (is_bsw()) {
- 		priv->ilb_base_addr = ioremap(INTEL_LEGACY_BLK_BASE_ADDR,
- 					ILB_REMAP_SIZE);
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 610bfadb6acf1..be72681ab8ea2 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -88,6 +88,7 @@ enum tpm_tis_flags {
- 	TPM_TIS_INVALID_STATUS		= 1,
- 	TPM_TIS_DEFAULT_CANCELLATION	= 2,
- 	TPM_TIS_IRQ_TESTED		= 3,
-+	TPM_TIS_STATUS_VALID_RETRY	= 4,
- };
+-	tmp = period_ns * 100ULL;
+-	do_div(tmp, one_cycle);
+-	cyc = (tmp << RCAR_PWMCNT_CYC0_SHIFT) & RCAR_PWMCNT_CYC0_MASK;
++	cyc = FIELD_PREP(RCAR_PWMCNT_CYC0_MASK, tmp);
  
- struct tpm_tis_data {
-diff --git a/include/linux/tpm.h b/include/linux/tpm.h
-index df5cd4245f299..dd0784a6e07d9 100644
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -271,6 +271,7 @@ enum tpm2_cc_attrs {
- #define TPM_VID_WINBOND  0x1050
- #define TPM_VID_STM      0x104A
- #define TPM_VID_ATML     0x1114
-+#define TPM_VID_IFX      0x15D1
+-	tmp = duty_ns * 100ULL;
+-	do_div(tmp, one_cycle);
+-	ph = tmp & RCAR_PWMCNT_PH0_MASK;
++	tmp = mul_u64_u64_div_u64(duty_ns, clk_rate, (u64)NSEC_PER_SEC << div);
++	if (tmp > FIELD_MAX(RCAR_PWMCNT_PH0_MASK))
++		tmp = FIELD_MAX(RCAR_PWMCNT_PH0_MASK);
++	ph = FIELD_PREP(RCAR_PWMCNT_PH0_MASK, tmp);
  
- enum tpm_chip_flags {
- 	TPM_CHIP_FLAG_BOOTSTRAPPED		= BIT(0),
+ 	/* Avoid prohibited setting */
+ 	if (cyc == 0 || ph == 0)
 -- 
 2.39.5
 
