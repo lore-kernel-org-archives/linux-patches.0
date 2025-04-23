@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4C828CF6B;
-	Wed, 23 Apr 2025 15:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DC828CF6B;
+	Wed, 23 Apr 2025 15:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421386; cv=none; b=gxAR0teAZ3IIIo6RyUfRSxxFCFTtBN+G1AS3vMyRqYQ9T/a/zWCDPyfOErUY2WLQiLA6oso4PbdTR6fEwpD5cUl9Cejv9xJ0ea/2XjUe95G57c0qVNorRhO0T4JAxjAMFyNUF9ulEFDvpSnPwtQ5C6MsTyCihxm75pSAAJeotsA=
+	t=1745421389; cv=none; b=pLEk3Guj9qVj+jRVrb0XmpDi3CYOjP74Y/Et0bdaev6hgiPU3kKT6+VOElFpy2S0hFMvwn6frCCPJlpWthZRR4Z+O+jYxTvdRjz+xY/0anDCiyh/QNxsSHiuYVwUyZLhrExqWaKKqa/B7J8a4lY+hYElxAU63bgN+lcm//korao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421386; c=relaxed/simple;
-	bh=idD66FNbxnzWEMPCw8mhG6iVtLNpuzf3kXbJrBQehCY=;
+	s=arc-20240116; t=1745421389; c=relaxed/simple;
+	bh=XMUTozSxSg2oCXA1VlQdOnzOwK2sUCg0maTrksKppCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqHJG37Qt8HbRhcqZx8cBV71Z4AF04NsjqlsFpjz5kE8ey4fUK7PHj81jsyLkeYx7dPvN92vdkLuUpvF7WpsODLRvKt8PwIERbLEezBQ8jauTZnPaK6/x7M5+bTwMtMohprU2oKDkJDH29AAnMYhMamneYtFTBtFGxyxv+e14HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqnItTnM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iV+NEZSkyT42FAglcCcxXH5ymX7sFUBEK++OpkhnjV+O7SEx1abpyx/wlLYm2NB91mLSZkuWlXeu5RGgK1XAFIdK9z5ZLePXImSSqzB9diCpUeP+u8lNxLXnarlXzBN4dVXjxWHgnHT18TqS5z+d4b4Wh8pHqxoqUsHylVXKgrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9qQ4TCW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqnItTnM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A68C4CEE2;
-	Wed, 23 Apr 2025 15:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9qQ4TCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D4C4CEE2;
+	Wed, 23 Apr 2025 15:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421386;
-	bh=idD66FNbxnzWEMPCw8mhG6iVtLNpuzf3kXbJrBQehCY=;
+	s=korg; t=1745421389;
+	bh=XMUTozSxSg2oCXA1VlQdOnzOwK2sUCg0maTrksKppCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqnItTnMBhkcPW3I/R8PjRrGqzSF75LjBTD6oEcVFk3C2oKU1jXziPc9Ik3JEfE7v
-	 vi4mIqXrgoWBhr2VIx4OrowWASi5FP0pdojnQlhFUOjpWKwOsFy1G/aM8jcK4P3njT
-	 /lzYcuhhWrGg2AVV9R2A7hOKGKe9cxaELtrb2s+k=
+	b=Q9qQ4TCWgiHKPRTkVq+0SazGRI26J96qoKDWGHaD33rPGsJUCqP2RAoiJSIsXZQbM
+	 GRD0yd/aFHoiXQgThnAYzSQnfmUiqxNAtCnQwo9xICvZvGJ8pCPGRUXJSyWf1l1apE
+	 S0JwSnF5lPp2gVJf3WJmUZdq9SEtlBqnvo0reEMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 132/291] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
-Date: Wed, 23 Apr 2025 16:42:01 +0200
-Message-ID: <20250423142629.793168397@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 6.6 174/393] locking/lockdep: Decrease nr_unused_locks if lock unused in zap_class()
+Date: Wed, 23 Apr 2025 16:41:10 +0200
+Message-ID: <20250423142650.567657531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,66 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Boqun Feng <boqun.feng@gmail.com>
 
-commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
+commit 495f53d5cca0f939eaed9dca90b67e7e6fb0e30c upstream.
 
-The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
-reclaim for struct pglist_data using a single bit.
+Currently, when a lock class is allocated, nr_unused_locks will be
+increased by 1, until it gets used: nr_unused_locks will be decreased by
+1 in mark_lock(). However, one scenario is missed: a lock class may be
+zapped without even being used once. This could result into a situation
+that nr_unused_locks != 0 but no unused lock class is active in the
+system, and when `cat /proc/lockdep_stats`, a WARN_ON() will
+be triggered in a CONFIG_DEBUG_LOCKDEP=y kernel:
 
-It is "locked" with a test_and_set_bit (similarly to a try lock) which
-provides full ordering with respect to loads and stores done within
-__node_reclaim().
+  [...] DEBUG_LOCKS_WARN_ON(debug_atomic_read(nr_unused_locks) != nr_unused)
+  [...] WARNING: CPU: 41 PID: 1121 at kernel/locking/lockdep_proc.c:283 lockdep_stats_show+0xba9/0xbd0
 
-It is "unlocked" with clear_bit(), which does not provide any ordering
-with respect to loads and stores done before clearing the bit.
+And as a result, lockdep will be disabled after this.
 
-The lack of clear_bit() memory ordering with respect to stores within
-__node_reclaim() can cause a subsequent CPU to fail to observe stores from
-a prior node reclaim.  This is not an issue in practice on TSO (e.g.
-x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
+Therefore, nr_unused_locks needs to be accounted correctly at
+zap_class() time.
 
-Fix this by using clear_bit_unlock rather than clear_bit to clear
-PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
-
-This provides stronger memory ordering (release rather than relaxed).
-
-Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
-Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Andrea Parri <parri.andrea@gmail.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jade Alglave <j.alglave@ucl.ac.uk>
-Cc: Luc Maranget <luc.maranget@inria.fr>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250326180831.510348-1-boqun.feng@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/locking/lockdep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -7729,7 +7729,7 @@ int node_reclaim(struct pglist_data *pgd
- 		return NODE_RECLAIM_NOSCAN;
- 
- 	ret = __node_reclaim(pgdat, gfp_mask, order);
--	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
-+	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
- 
- 	if (!ret)
- 		count_vm_event(PGSCAN_ZONE_RECLAIM_FAILED);
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -6141,6 +6141,9 @@ static void zap_class(struct pending_fre
+ 		hlist_del_rcu(&class->hash_entry);
+ 		WRITE_ONCE(class->key, NULL);
+ 		WRITE_ONCE(class->name, NULL);
++		/* Class allocated but not used, -1 in nr_unused_locks */
++		if (class->usage_mask == 0)
++			debug_atomic_dec(nr_unused_locks);
+ 		nr_lock_classes--;
+ 		__clear_bit(class - lock_classes, lock_classes_in_use);
+ 		if (class - lock_classes == max_lock_class_idx)
 
 
