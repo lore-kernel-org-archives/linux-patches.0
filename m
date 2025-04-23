@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AE517B421;
-	Wed, 23 Apr 2025 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2428E28137A;
+	Wed, 23 Apr 2025 15:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420540; cv=none; b=PjkRICW0uE2z1glFi2w5LtVhpP24LAsQG3fLZXT+T6RMeMBFrzSmsbL1R2AdoLhx82D73jnnGqz3OHNKQEFyOB6vUL5Rmqv3QF9jsFzwhsaFKx8PkFHwpaAj9e0x0uDlw1eA2uYVTMk6CYe/JkZ0IB9DgEv3cVtFtqrheiV/SKs=
+	t=1745420543; cv=none; b=MRgYciNV7deLNhOefn/UW7Zj3ZtE7ueobsTQk8P08PY5sWpFzyIH0ilFvwfivxFuEeZ1fNlG3Ba+fB28ePOxt8sZP7RHHbVj26Y1q7oQbE4MjT6glgSIC8xRVQC3MUBbIcZZbiTudVZ94gfWbLbgQTIE61Ovt1u3V2s2VLO9/90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420540; c=relaxed/simple;
-	bh=CTJItSX9QrAvzJL2ZkOIokO0yNYCIL0CgktLTY4x/PM=;
+	s=arc-20240116; t=1745420543; c=relaxed/simple;
+	bh=lMl2Ei1jEBZuuYwzwYxbg/4zy5HIRTHooVmE8bFf5SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTY15E2vKP6FPhSro/8yLs1pQtpqD0Ni6bMjNI+OoXBOYCfCIf1fp4j7sW9AlakqN2d2e98/IWu2b12vy8UgnYgeCU3EbtjjfQo1abHXMN6ODz4WOv8CZ+d6YFrNxagurMAsCzJDCNC67BurtX6jUi3tnbw51vJPKXJNGtVjRs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoVwufp2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LU1RdB6yRfri7qx16hsKsEVozGwhK9tj+6bhRVke1pf9CJJd4RtlWuE6ZbgXpH17kpmUGYZdVH0buChWABOSQQYX5f8kZsqWG05pUTgIsLAhIM4wMn/qfCJ9BeBN2ZO27lT6loU0jb0j9LVFYuGBlv6b8O0vTRLsEcXy120guNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqOD/0ck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoVwufp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6760C4CEE2;
-	Wed, 23 Apr 2025 15:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqOD/0ck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F2CC4CEE2;
+	Wed, 23 Apr 2025 15:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420540;
-	bh=CTJItSX9QrAvzJL2ZkOIokO0yNYCIL0CgktLTY4x/PM=;
+	s=korg; t=1745420542;
+	bh=lMl2Ei1jEBZuuYwzwYxbg/4zy5HIRTHooVmE8bFf5SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoVwufp2rdti5b3HIwZMl7dyXxKjIuegyCGQmTNWJkZXtanizTHDdT5fTlo3OJfAE
-	 ydrjflHOhCWBaKO9au2d6G9oGLTUErUhnxuObrSYmq6Aaw1Lk22hQ+QHmkyR9WUTg2
-	 a/j4/1K9WMl48HBjCDqTzZ7/TzvuAV37B0gEWcBg=
+	b=XqOD/0ckFFS7+olqutd06rdWgurcm0l2TP1QJvXbN6XB04vtqcD6W30s1fC4juKf9
+	 1hpPx9Om68P2yLhLdQQNujtg+JT+lFNVssJmJhAz8Ima8YxCc49Qav2Upqk8Z0Gooa
+	 eMYknsGXzPJUKsB0qS7CIbHE5djJLH0Z+As2MQwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	moyi geek <1441339168@qq.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.14 101/241] rust: kbuild: use `pound` to support GNU Make < 4.3
-Date: Wed, 23 Apr 2025 16:42:45 +0200
-Message-ID: <20250423142624.699930479@linuxfoundation.org>
+	syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 087/393] net: vlan: dont propagate flags on open
+Date: Wed, 23 Apr 2025 16:39:43 +0200
+Message-ID: <20250423142646.891948618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +49,186 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-commit 1c4494c14b4124f3a13a7f4912b84b633ff4f9ba upstream.
+[ Upstream commit 27b918007d96402aba10ed52a6af8015230f1793 ]
 
-GNU Make 4.3 changed the behavior of `#` inside commands in commit
-c6966b323811 ("[SV 20513] Un-escaped # are not comments in function
-invocations"):
+With the device instance lock, there is now a possibility of a deadlock:
 
-    * WARNING: Backward-incompatibility!
-      Number signs (#) appearing inside a macro reference or function invocation
-      no longer introduce comments and should not be escaped with backslashes:
-      thus a call such as:
-        foo := $(shell echo '#')
-      is legal.  Previously the number sign needed to be escaped, for example:
-        foo := $(shell echo '\#')
-      Now this latter will resolve to "\#".  If you want to write makefiles
-      portable to both versions, assign the number sign to a variable:
-        H := \#
-        foo := $(shell echo '$H')
-      This was claimed to be fixed in 3.81, but wasn't, for some reason.
-      To detect this change search for 'nocomment' in the .FEATURES variable.
+[    1.211455] ============================================
+[    1.211571] WARNING: possible recursive locking detected
+[    1.211687] 6.14.0-rc5-01215-g032756b4ca7a-dirty #5 Not tainted
+[    1.211823] --------------------------------------------
+[    1.211936] ip/184 is trying to acquire lock:
+[    1.212032] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_set_allmulti+0x4e/0xb0
+[    1.212207]
+[    1.212207] but task is already holding lock:
+[    1.212332] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
+[    1.212487]
+[    1.212487] other info that might help us debug this:
+[    1.212626]  Possible unsafe locking scenario:
+[    1.212626]
+[    1.212751]        CPU0
+[    1.212815]        ----
+[    1.212871]   lock(&dev->lock);
+[    1.212944]   lock(&dev->lock);
+[    1.213016]
+[    1.213016]  *** DEADLOCK ***
+[    1.213016]
+[    1.213143]  May be due to missing lock nesting notation
+[    1.213143]
+[    1.213294] 3 locks held by ip/184:
+[    1.213371]  #0: ffffffff838b53e0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x1b/0xa0
+[    1.213543]  #1: ffffffff84e5fc70 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x37/0xa0
+[    1.213727]  #2: ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
+[    1.213895]
+[    1.213895] stack backtrace:
+[    1.213991] CPU: 0 UID: 0 PID: 184 Comm: ip Not tainted 6.14.0-rc5-01215-g032756b4ca7a-dirty #5
+[    1.213993] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+[    1.213994] Call Trace:
+[    1.213995]  <TASK>
+[    1.213996]  dump_stack_lvl+0x8e/0xd0
+[    1.214000]  print_deadlock_bug+0x28b/0x2a0
+[    1.214020]  lock_acquire+0xea/0x2a0
+[    1.214027]  __mutex_lock+0xbf/0xd40
+[    1.214038]  dev_set_allmulti+0x4e/0xb0 # real_dev->flags & IFF_ALLMULTI
+[    1.214040]  vlan_dev_open+0xa5/0x170 # ndo_open on vlandev
+[    1.214042]  __dev_open+0x145/0x270
+[    1.214046]  __dev_change_flags+0xb0/0x1e0
+[    1.214051]  netif_change_flags+0x22/0x60 # IFF_UP vlandev
+[    1.214053]  dev_change_flags+0x61/0xb0 # for each device in group from dev->vlan_info
+[    1.214055]  vlan_device_event+0x766/0x7c0 # on netdevsim0
+[    1.214058]  notifier_call_chain+0x78/0x120
+[    1.214062]  netif_open+0x6d/0x90
+[    1.214064]  dev_open+0x5b/0xb0 # locks netdevsim0
+[    1.214066]  bond_enslave+0x64c/0x1230
+[    1.214075]  do_set_master+0x175/0x1e0 # on netdevsim0
+[    1.214077]  do_setlink+0x516/0x13b0
+[    1.214094]  rtnl_newlink+0xaba/0xb80
+[    1.214132]  rtnetlink_rcv_msg+0x440/0x490
+[    1.214144]  netlink_rcv_skb+0xeb/0x120
+[    1.214150]  netlink_unicast+0x1f9/0x320
+[    1.214153]  netlink_sendmsg+0x346/0x3f0
+[    1.214157]  __sock_sendmsg+0x86/0xb0
+[    1.214160]  ____sys_sendmsg+0x1c8/0x220
+[    1.214164]  ___sys_sendmsg+0x28f/0x2d0
+[    1.214179]  __x64_sys_sendmsg+0xef/0x140
+[    1.214184]  do_syscall_64+0xec/0x1d0
+[    1.214190]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    1.214191] RIP: 0033:0x7f2d1b4a7e56
 
-Unlike other commits in the kernel about this issue, such as commit
-633174a7046e ("lib/raid6/test/Makefile: Use $(pound) instead of \#
-for Make 4.3"), that fixed the issue for newer GNU Makes, in our case
-it was the opposite, i.e. we need to fix it for the older ones: someone
-building with e.g. 4.2.1 gets the following error:
+Device setup:
 
-    scripts/Makefile.compiler:81: *** unterminated call to function 'call': missing ')'.  Stop.
+     netdevsim0 (down)
+     ^        ^
+  bond        netdevsim1.100@netdevsim1 allmulticast=on (down)
 
-Thus use the existing variable to fix it.
+When we enslave the lower device (netdevsim0) which has a vlan, we
+propagate vlan's allmuti/promisc flags during ndo_open. This causes
+(re)locking on of the real_dev.
 
-Reported-by: moyi geek <1441339168@qq.com>
-Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/291565/topic/x/near/512001985
-Cc: stable@vger.kernel.org
-Fixes: e72a076c620f ("kbuild: fix issues with rustc-option")
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250414171241.2126137-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Propagate allmulti/promisc on flags change, not on the open. There
+is a slight semantics change that vlans that are down now propagate
+the flags, but this seems unlikely to result in the real issues.
+
+Reproducer:
+
+  echo 0 1 > /sys/bus/netdevsim/new_device
+
+  dev_path=$(ls -d /sys/bus/netdevsim/devices/netdevsim0/net/*)
+  dev=$(echo $dev_path | rev | cut -d/ -f1 | rev)
+
+  ip link set dev $dev name netdevsim0
+  ip link set dev netdevsim0 up
+
+  ip link add link netdevsim0 name netdevsim0.100 type vlan id 100
+  ip link set dev netdevsim0.100 allmulticast on down
+  ip link add name bond1 type bond mode 802.3ad
+  ip link set dev netdevsim0 down
+  ip link set dev netdevsim0 master bond1
+  ip link set dev bond1 up
+  ip link show
+
+Reported-by: syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/Z9CfXjLMKn6VLG5d@mini-arch/T/#m15ba130f53227c883e79fb969687d69d670337a0
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250313100657.2287455-1-sdf@fomichev.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.compiler |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/8021q/vlan_dev.c | 31 ++++---------------------------
+ 1 file changed, 4 insertions(+), 27 deletions(-)
 
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -75,7 +75,7 @@ ld-option = $(call try-run, $(LD) $(KBUI
- # Usage: MY_RUSTFLAGS += $(call __rustc-option,$(RUSTC),$(MY_RUSTFLAGS),-Cinstrument-coverage,-Zinstrument-coverage)
- # TODO: remove RUSTC_BOOTSTRAP=1 when we raise the minimum GNU Make version to 4.4
- __rustc-option = $(call try-run,\
--	echo '#![allow(missing_docs)]#![feature(no_core)]#![no_core]' | RUSTC_BOOTSTRAP=1\
-+	echo '$(pound)![allow(missing_docs)]$(pound)![feature(no_core)]$(pound)![no_core]' | RUSTC_BOOTSTRAP=1\
- 	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null --target=%,$(2)) $(3)\
- 	--crate-type=rlib --out-dir=$(TMPOUT) --emit=obj=- - >/dev/null,$(3),$(4))
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index 2a7f1b15714ab..e9326f322d7a2 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -273,17 +273,6 @@ static int vlan_dev_open(struct net_device *dev)
+ 			goto out;
+ 	}
  
+-	if (dev->flags & IFF_ALLMULTI) {
+-		err = dev_set_allmulti(real_dev, 1);
+-		if (err < 0)
+-			goto del_unicast;
+-	}
+-	if (dev->flags & IFF_PROMISC) {
+-		err = dev_set_promiscuity(real_dev, 1);
+-		if (err < 0)
+-			goto clear_allmulti;
+-	}
+-
+ 	ether_addr_copy(vlan->real_dev_addr, real_dev->dev_addr);
+ 
+ 	if (vlan->flags & VLAN_FLAG_GVRP)
+@@ -297,12 +286,6 @@ static int vlan_dev_open(struct net_device *dev)
+ 		netif_carrier_on(dev);
+ 	return 0;
+ 
+-clear_allmulti:
+-	if (dev->flags & IFF_ALLMULTI)
+-		dev_set_allmulti(real_dev, -1);
+-del_unicast:
+-	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
+-		dev_uc_del(real_dev, dev->dev_addr);
+ out:
+ 	netif_carrier_off(dev);
+ 	return err;
+@@ -315,10 +298,6 @@ static int vlan_dev_stop(struct net_device *dev)
+ 
+ 	dev_mc_unsync(real_dev, dev);
+ 	dev_uc_unsync(real_dev, dev);
+-	if (dev->flags & IFF_ALLMULTI)
+-		dev_set_allmulti(real_dev, -1);
+-	if (dev->flags & IFF_PROMISC)
+-		dev_set_promiscuity(real_dev, -1);
+ 
+ 	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
+ 		dev_uc_del(real_dev, dev->dev_addr);
+@@ -490,12 +469,10 @@ static void vlan_dev_change_rx_flags(struct net_device *dev, int change)
+ {
+ 	struct net_device *real_dev = vlan_dev_priv(dev)->real_dev;
+ 
+-	if (dev->flags & IFF_UP) {
+-		if (change & IFF_ALLMULTI)
+-			dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
+-		if (change & IFF_PROMISC)
+-			dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
+-	}
++	if (change & IFF_ALLMULTI)
++		dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
++	if (change & IFF_PROMISC)
++		dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
+ }
+ 
+ static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
+-- 
+2.39.5
+
 
 
