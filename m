@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C9B279345;
-	Wed, 23 Apr 2025 15:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8131284B20;
+	Wed, 23 Apr 2025 15:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422278; cv=none; b=d9tyk9u7PF+l2oNgvHdG50KSyxQ9L9dYU8CebVCk3uix+kh8apLYNmHXeqhx4SpaW6zCFYU16L5cg2n31pX97qLI2myijSdp8r14z8WrZby/FWTx4Y/0idtUxwQsn9rrEiLmuN7yeLZZBUZUuYJLKksItpFZsTvhtEkeYXkQCYs=
+	t=1745422280; cv=none; b=COFIwgTzFtPMI9N95YEnrfJUUWjBKcyPUg41e2iZ1tlTrLrfXHQVna0vgHKhgS+Ktey6lQdMIRQd7Er0K5c8Y2EDXF1IUDzsdLDDHPgnI7S2FfNXGUAP9nArOumHtcGLzu7Ut7Idt7zfJSIfFQEcM08cSlTbeRfaBauwlzn8uZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422278; c=relaxed/simple;
-	bh=BwhxDdKebDzI4zqT1zOL0ubjsbZsz0ttEaof8Cq3q1s=;
+	s=arc-20240116; t=1745422280; c=relaxed/simple;
+	bh=2u7AoL9ZG/ZriXhn9VFwYyZT31u1NjLyFZkUKuZ4eQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbaXkVR/6QnpTU9eR7zIc3l2zuf4fxk9nPhSCNNMgU/2xhDN6BVaXcZXiF2xTujFSXWH2g/uEI2jRdkdyJQg7TiNbr/mtDdFckXNfnoIIz9RE2/wW7fiySJ0Vy/EP5FZlB5BLJma313tztZMMhCURUg/nLjIr3t0kSKxKQfYlCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxC/btoL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iMOKJU//Mwi5CBmdLDNupFLa60SWng8hfwaPPqDhGHt6f8X0XlI3vKJN3w22ZueZY4W3py9hFLrWFg3hYRH6JpVVjTzwJBqKrth0I/1bXG2/h9Hvh6PcsBB95gryc08yykYVXUrnuKFeU7PC36nTE8sAYDwC9bRrCvDnwwIU6Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbMVRhpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxC/btoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991DBC4CEE2;
-	Wed, 23 Apr 2025 15:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbMVRhpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4652DC4CEE2;
+	Wed, 23 Apr 2025 15:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422278;
-	bh=BwhxDdKebDzI4zqT1zOL0ubjsbZsz0ttEaof8Cq3q1s=;
+	s=korg; t=1745422280;
+	bh=2u7AoL9ZG/ZriXhn9VFwYyZT31u1NjLyFZkUKuZ4eQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxC/btoLW4YVeS/By4HKWOy/9+6a5J2bDVeiuR3nlt8HE064QIk90PuV0az8h07tB
-	 VNjT2azzBBfmwpwCVitV6Wi0Xm6shEPmMns+NqwyyR+Kr8gfVSuV0REhRK+yjhkJBx
-	 T4GwJF0MH7LuC8gBpbJu7iSGL3MHy/zHjGrYDYjw=
+	b=XbMVRhpQIapNgHtGJ2Z1D3utPnxo9u9Zdg4JHWtB/4l5rngyeh4QspN0T8v0mdotg
+	 Ugb4vdczMEtGLMcXMxH5ttx0JvRzwvrBCkjx6wKfpVwbjAngwk1DTTak+iqwS3IZiR
+	 JBkdkkkYOCDrgsWjM7lfuAsZMC9niKf2X1AFv0o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Walton <calvin.walton@kepstin.ca>,
-	Johannes Kimmel <kernel@bareminimum.eu>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 312/393] btrfs: correctly escape subvol in btrfs_show_options()
-Date: Wed, 23 Apr 2025 16:43:28 +0200
-Message-ID: <20250423142656.214891247@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.1 269/291] btrfs: fix qgroup reserve leaks in cow_file_range
+Date: Wed, 23 Apr 2025 16:44:18 +0200
+Message-ID: <20250423142635.413512902@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +49,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Kimmel <kernel@bareminimum.eu>
+From: Boris Burkov <boris@bur.io>
 
-commit dc08c58696f8555e4a802f1f23c894a330d80ab7 upstream.
+commit 30479f31d44d47ed00ae0c7453d9b253537005b2 upstream.
 
-Currently, displaying the btrfs subvol mount option doesn't escape ','.
-This makes parsing /proc/self/mounts and /proc/self/mountinfo
-ambiguous for subvolume names that contain commas. The text after the
-comma could be mistaken for another option (think "subvol=foo,ro", where
-ro is actually part of the subvolumes name).
+In the buffered write path, the dirty page owns the qgroup reserve until
+it creates an ordered_extent.
 
-Replace the manual escape characters list with a call to
-seq_show_option(). Thanks to Calvin Walton for suggesting this approach.
+Therefore, any errors that occur before the ordered_extent is created
+must free that reservation, or else the space is leaked. The fstest
+generic/475 exercises various IO error paths, and is able to trigger
+errors in cow_file_range where we fail to get to allocating the ordered
+extent. Note that because we *do* clear delalloc, we are likely to
+remove the inode from the delalloc list, so the inodes/pages to not have
+invalidate/launder called on them in the commit abort path.
 
-Fixes: c8d3fe028f64 ("Btrfs: show subvol= and subvolid= in /proc/mounts")
-CC: stable@vger.kernel.org # 5.4+
-Suggested-by: Calvin Walton <calvin.walton@kepstin.ca>
-Signed-off-by: Johannes Kimmel <kernel@bareminimum.eu>
-Reviewed-by: David Sterba <dsterba@suse.com>
+This results in failures at the unmount stage of the test that look like:
+
+  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
+  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
+  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
+  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
+  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
+  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
+  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
+  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
+  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
+  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? __warn.cold+0x8e/0xea
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? report_bug+0xff/0x140
+   ? handle_bug+0x3b/0x70
+   ? exc_invalid_op+0x17/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   generic_shutdown_super+0x70/0x160
+   kill_anon_super+0x11/0x40
+   btrfs_kill_super+0x11/0x20 [btrfs]
+   deactivate_locked_super+0x2e/0xa0
+   cleanup_mnt+0xb5/0x150
+   task_work_run+0x57/0x80
+   syscall_exit_to_user_mode+0x121/0x130
+   do_syscall_64+0xab/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f916847a887
+  ---[ end trace 0000000000000000 ]---
+  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
+
+Cases 2 and 3 in the out_reserve path both pertain to this type of leak
+and must free the reserved qgroup data. Because it is already an error
+path, I opted not to handle the possible errors in
+btrfs_free_qgroup_data.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/inode.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1336,8 +1336,7 @@ static int btrfs_show_options(struct seq
- 	subvol_name = btrfs_get_subvol_name_from_objectid(info,
- 			BTRFS_I(d_inode(dentry))->root->root_key.objectid);
- 	if (!IS_ERR(subvol_name)) {
--		seq_puts(seq, ",subvol=");
--		seq_escape(seq, subvol_name, " \t\n\\");
-+		seq_show_option(seq, "subvol", subvol_name);
- 		kfree(subvol_name);
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1428,6 +1428,7 @@ out_unlock:
+ 					     locked_page,
+ 					     clear_bits,
+ 					     page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 		start += cur_alloc_size;
  	}
- 	return 0;
+ 
+@@ -1441,6 +1442,7 @@ out_unlock:
+ 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
+ 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
+ 					     clear_bits, page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 	}
+ 	return ret;
+ }
+@@ -2168,13 +2170,15 @@ error:
+ 	if (nocow)
+ 		btrfs_dec_nocow_writers(bg);
+ 
+-	if (ret && cur_offset < end)
++	if (ret && cur_offset < end) {
+ 		extent_clear_unlock_delalloc(inode, cur_offset, end,
+ 					     locked_page, EXTENT_LOCKED |
+ 					     EXTENT_DELALLOC | EXTENT_DEFRAG |
+ 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
+ 					     PAGE_START_WRITEBACK |
+ 					     PAGE_END_WRITEBACK);
++		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
++	}
+ 	btrfs_free_path(path);
+ 	return ret;
+ }
 
 
