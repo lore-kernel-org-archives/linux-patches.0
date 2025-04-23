@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E62284B3A;
-	Wed, 23 Apr 2025 15:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F398C284698;
+	Wed, 23 Apr 2025 15:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420890; cv=none; b=rQzdxw/6yrZHsLBVrZTUcuf3LS27Fk5DvQ+o5PY5GjHwOdFrzN6lf3EZ6C4MjfuXvbXbdqh1bTdTEiofwKHX3nB/iazbMdr2L5UAaXwSwVGdVOe79KWaVvuVG8xSrg0CXlE/VWIQuEonSss17V202e3g5z+LgTrbNW57dK+eBZk=
+	t=1745420893; cv=none; b=jvASOjKbWRJ420lqFY2WL0TTFkQyklIo11kRXw5DzJ2eSZQWZC6LxaZm7lAaj4RoDQrm8djjLEJpga94KJ0NVJDfeq5rX77K/CEQniVq2LwxREr5Og1mFsdF8CHfrrtEfH+BRly9faAZc4YBfCYfJbVa0s3wxPbNGXuBdIQeYKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420890; c=relaxed/simple;
-	bh=Pjtz5X0ZbNubMkdBWTjlkX4rFe7F1yanA9a0kFs7IVM=;
+	s=arc-20240116; t=1745420893; c=relaxed/simple;
+	bh=vXtCxqga/G+2aumls3cfw23AwTP1ZRdKD+Y6nVaBi4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ju1lvZvtbNUO0ZOfNHCj6F257REL5Cd0rgXxlrttTeJM96C5WLBNbX9J84y1xmcnJYzu4FGyPg2zqBkz1ySEBHax8UqquaMyzL6yJmbHny+EcypiCzy4uqAOyUCT1nb5JIw4GInlLYPDxtvL4eRVG5pv7Ghlt5xHcDwQMFAzgOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIvUmgZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOkoWP1yHnnNmRFUwiwBCPrOcbzk2OX/7LKhbs1NkJW0+az7mE7Frj7vSbc00FetyJsqUhUSKFVFbK5JioOd8t/1vW6lGiU1uOe7LcOkPkESYxx/STtVdllI4eQNv4GfA3Ehuo2x1E+U8+7uNVN2nlgvVim6NQwtAoPILthMr8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmKKASRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIvUmgZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2C1C4CEE2;
-	Wed, 23 Apr 2025 15:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmKKASRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279F9C4CEE2;
+	Wed, 23 Apr 2025 15:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420889;
-	bh=Pjtz5X0ZbNubMkdBWTjlkX4rFe7F1yanA9a0kFs7IVM=;
+	s=korg; t=1745420892;
+	bh=vXtCxqga/G+2aumls3cfw23AwTP1ZRdKD+Y6nVaBi4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIvUmgZTUUYMA5qs8GzUK//ux884CxuERll7qeGe+rcgXVSQihiyxUNmju0pxHVbU
-	 VUKUVh9SLnFhz9to7ZATb1foNRqEXcBGROwNSaPt4+UGIGY2/GZEUs/rpbVykc3gro
-	 gbDYkZFiEoSdeZ9Wz4j/a3tfQ6lHyI9beZeNhlOI=
+	b=ZmKKASRvW8Gxgpnpr5cz5qFBpNv4MR1mI/uWXyfVkydDxLFj2yr2chCfwGQ3hpQtu
+	 UAhJEpKwjlKC+tR9MA4+p3G6MhTpVK85/HrNA5A63Lg6lruOR9/c//o4bkT726HNc8
+	 0VnouWws0yv+a6/YsgFyPBI2izD6v0NKEF4vKDJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.14 133/241] i2c: cros-ec-tunnel: defer probe if parent EC is not present
-Date: Wed, 23 Apr 2025 16:43:17 +0200
-Message-ID: <20250423142625.999228436@linuxfoundation.org>
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 090/291] mtd: rawnand: brcmnand: fix PM resume warning
+Date: Wed, 23 Apr 2025 16:41:19 +0200
+Message-ID: <20250423142628.036342637@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,110 +47,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-commit 424eafe65647a8d6c690284536e711977153195a upstream.
+commit ddc210cf8b8a8be68051ad958bf3e2cef6b681c2 upstream.
 
-When i2c-cros-ec-tunnel and the EC driver are built-in, the EC parent
-device will not be found, leading to NULL pointer dereference.
+Fixed warning on PM resume as shown below caused due to uninitialized
+struct nand_operation that checks chip select field :
+WARN_ON(op->cs >= nanddev_ntargets(&chip->base)
 
-That can also be reproduced by unbinding the controller driver and then
-loading i2c-cros-ec-tunnel module (or binding the device).
+[   14.588522] ------------[ cut here ]------------
+[   14.588529] WARNING: CPU: 0 PID: 1392 at drivers/mtd/nand/raw/internals.h:139 nand_reset_op+0x1e0/0x1f8
+[   14.588553] Modules linked in: bdc udc_core
+[   14.588579] CPU: 0 UID: 0 PID: 1392 Comm: rtcwake Tainted: G        W          6.14.0-rc4-g5394eea10651 #16
+[   14.588590] Tainted: [W]=WARN
+[   14.588593] Hardware name: Broadcom STB (Flattened Device Tree)
+[   14.588598] Call trace:
+[   14.588604]  dump_backtrace from show_stack+0x18/0x1c
+[   14.588622]  r7:00000009 r6:0000008b r5:60000153 r4:c0fa558c
+[   14.588625]  show_stack from dump_stack_lvl+0x70/0x7c
+[   14.588639]  dump_stack_lvl from dump_stack+0x18/0x1c
+[   14.588653]  r5:c08d40b0 r4:c1003cb0
+[   14.588656]  dump_stack from __warn+0x84/0xe4
+[   14.588668]  __warn from warn_slowpath_fmt+0x18c/0x194
+[   14.588678]  r7:c08d40b0 r6:c1003cb0 r5:00000000 r4:00000000
+[   14.588681]  warn_slowpath_fmt from nand_reset_op+0x1e0/0x1f8
+[   14.588695]  r8:70c40dff r7:89705f41 r6:36b4a597 r5:c26c9444 r4:c26b0048
+[   14.588697]  nand_reset_op from brcmnand_resume+0x13c/0x150
+[   14.588714]  r9:00000000 r8:00000000 r7:c24f8010 r6:c228a3f8 r5:c26c94bc r4:c26b0040
+[   14.588717]  brcmnand_resume from platform_pm_resume+0x34/0x54
+[   14.588735]  r5:00000010 r4:c0840a50
+[   14.588738]  platform_pm_resume from dpm_run_callback+0x5c/0x14c
+[   14.588757]  dpm_run_callback from device_resume+0xc0/0x324
+[   14.588776]  r9:c24f8054 r8:c24f80a0 r7:00000000 r6:00000000 r5:00000010 r4:c24f8010
+[   14.588779]  device_resume from dpm_resume+0x130/0x160
+[   14.588799]  r9:c22539e4 r8:00000010 r7:c22bebb0 r6:c24f8010 r5:c22539dc r4:c22539b0
+[   14.588802]  dpm_resume from dpm_resume_end+0x14/0x20
+[   14.588822]  r10:c2204e40 r9:00000000 r8:c228a3fc r7:00000000 r6:00000003 r5:c228a414
+[   14.588826]  r4:00000010
+[   14.588828]  dpm_resume_end from suspend_devices_and_enter+0x274/0x6f8
+[   14.588848]  r5:c228a414 r4:00000000
+[   14.588851]  suspend_devices_and_enter from pm_suspend+0x228/0x2bc
+[   14.588868]  r10:c3502910 r9:c3501f40 r8:00000004 r7:c228a438 r6:c0f95e18 r5:00000000
+[   14.588871]  r4:00000003
+[   14.588874]  pm_suspend from state_store+0x74/0xd0
+[   14.588889]  r7:c228a438 r6:c0f934c8 r5:00000003 r4:00000003
+[   14.588892]  state_store from kobj_attr_store+0x1c/0x28
+[   14.588913]  r9:00000000 r8:00000000 r7:f09f9f08 r6:00000004 r5:c3502900 r4:c0283250
+[   14.588916]  kobj_attr_store from sysfs_kf_write+0x40/0x4c
+[   14.588936]  r5:c3502900 r4:c0d92a48
+[   14.588939]  sysfs_kf_write from kernfs_fop_write_iter+0x104/0x1f0
+[   14.588956]  r5:c3502900 r4:c3501f40
+[   14.588960]  kernfs_fop_write_iter from vfs_write+0x250/0x420
+[   14.588980]  r10:c0e14b48 r9:00000000 r8:c25f5780 r7:00443398 r6:f09f9f68 r5:c34f7f00
+[   14.588983]  r4:c042a88c
+[   14.588987]  vfs_write from ksys_write+0x74/0xe4
+[   14.589005]  r10:00000004 r9:c25f5780 r8:c02002fA0 r7:00000000 r6:00000000 r5:c34f7f00
+[   14.589008]  r4:c34f7f00
+[   14.589011]  ksys_write from sys_write+0x10/0x14
+[   14.589029]  r7:00000004 r6:004421c0 r5:00443398 r4:00000004
+[   14.589032]  sys_write from ret_fast_syscall+0x0/0x5c
+[   14.589044] Exception stack(0xf09f9fa8 to 0xf09f9ff0)
+[   14.589050] 9fa0:                   00000004 00443398 00000004 00443398 00000004 00000001
+[   14.589056] 9fc0: 00000004 00443398 004421c0 00000004 b6ecbd58 00000008 bebfbc38 0043eb78
+[   14.589062] 9fe0: 00440eb0 bebfbaf8 b6de18a0 b6e579e8
+[   14.589065] ---[ end trace 0000000000000000 ]---
 
-[  271.991245] BUG: kernel NULL pointer dereference, address: 0000000000000058
-[  271.998215] #PF: supervisor read access in kernel mode
-[  272.003351] #PF: error_code(0x0000) - not-present page
-[  272.008485] PGD 0 P4D 0
-[  272.011022] Oops: Oops: 0000 [#1] SMP NOPTI
-[  272.015207] CPU: 0 UID: 0 PID: 3859 Comm: insmod Tainted: G S                  6.15.0-rc1-00004-g44722359ed83 #30 PREEMPT(full)  3c7fb39a552e7d949de2ad921a7d6588d3a4fdc5
-[  272.030312] Tainted: [S]=CPU_OUT_OF_SPEC
-[  272.034233] Hardware name: HP Berknip/Berknip, BIOS Google_Berknip.13434.356.0 05/17/2021
-[  272.042400] RIP: 0010:ec_i2c_probe+0x2b/0x1c0 [i2c_cros_ec_tunnel]
-[  272.048577] Code: 1f 44 00 00 41 57 41 56 41 55 41 54 53 48 83 ec 10 65 48 8b 05 06 a0 6c e7 48 89 44 24 08 4c 8d 7f 10 48 8b 47 50 4c 8b 60 78 <49> 83 7c 24 58 00 0f 84 2f 01 00 00 48 89 fb be 30 06 00 00 4c 9
-[  272.067317] RSP: 0018:ffffa32082a03940 EFLAGS: 00010282
-[  272.072541] RAX: ffff969580b6a810 RBX: ffff969580b68c10 RCX: 0000000000000000
-[  272.079672] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff969580b68c00
-[  272.086804] RBP: 00000000fffffdfb R08: 0000000000000000 R09: 0000000000000000
-[  272.093936] R10: 0000000000000000 R11: ffffffffc0600000 R12: 0000000000000000
-[  272.101067] R13: ffffffffa666fbb8 R14: ffffffffc05b5528 R15: ffff969580b68c10
-[  272.108198] FS:  00007b930906fc40(0000) GS:ffff969603149000(0000) knlGS:0000000000000000
-[  272.116282] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  272.122024] CR2: 0000000000000058 CR3: 000000012631c000 CR4: 00000000003506f0
-[  272.129155] Call Trace:
-[  272.131606]  <TASK>
-[  272.133709]  ? acpi_dev_pm_attach+0xdd/0x110
-[  272.137985]  platform_probe+0x69/0xa0
-[  272.141652]  really_probe+0x152/0x310
-[  272.145318]  __driver_probe_device+0x77/0x110
-[  272.149678]  driver_probe_device+0x1e/0x190
-[  272.153864]  __driver_attach+0x10b/0x1e0
-[  272.157790]  ? driver_attach+0x20/0x20
-[  272.161542]  bus_for_each_dev+0x107/0x150
-[  272.165553]  bus_add_driver+0x15d/0x270
-[  272.169392]  driver_register+0x65/0x110
-[  272.173232]  ? cleanup_module+0xa80/0xa80 [i2c_cros_ec_tunnel 3a00532f3f4af4a9eade753f86b0f8dd4e4e5698]
-[  272.182617]  do_one_initcall+0x110/0x350
-[  272.186543]  ? security_kernfs_init_security+0x49/0xd0
-[  272.191682]  ? __kernfs_new_node+0x1b9/0x240
-[  272.195954]  ? security_kernfs_init_security+0x49/0xd0
-[  272.201093]  ? __kernfs_new_node+0x1b9/0x240
-[  272.205365]  ? kernfs_link_sibling+0x105/0x130
-[  272.209810]  ? kernfs_next_descendant_post+0x1c/0xa0
-[  272.214773]  ? kernfs_activate+0x57/0x70
-[  272.218699]  ? kernfs_add_one+0x118/0x160
-[  272.222710]  ? __kernfs_create_file+0x71/0xa0
-[  272.227069]  ? sysfs_add_bin_file_mode_ns+0xd6/0x110
-[  272.232033]  ? internal_create_group+0x453/0x4a0
-[  272.236651]  ? __vunmap_range_noflush+0x214/0x2d0
-[  272.241355]  ? __free_frozen_pages+0x1dc/0x420
-[  272.245799]  ? free_vmap_area_noflush+0x10a/0x1c0
-[  272.250505]  ? load_module+0x1509/0x16f0
-[  272.254431]  do_init_module+0x60/0x230
-[  272.258181]  __se_sys_finit_module+0x27a/0x370
-[  272.262627]  do_syscall_64+0x6a/0xf0
-[  272.266206]  ? do_syscall_64+0x76/0xf0
-[  272.269956]  ? irqentry_exit_to_user_mode+0x79/0x90
-[  272.274836]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
-[  272.279887] RIP: 0033:0x7b9309168d39
-[  272.283466] Code: 5b 41 5c 5d c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d af 40 0c 00 f7 d8 64 89 01 8
-[  272.302210] RSP: 002b:00007fff50f1a288 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-[  272.309774] RAX: ffffffffffffffda RBX: 000058bf9b50f6d0 RCX: 00007b9309168d39
-[  272.316905] RDX: 0000000000000000 RSI: 000058bf6c103a77 RDI: 0000000000000003
-[  272.324036] RBP: 00007fff50f1a2e0 R08: 00007fff50f19218 R09: 0000000021ec4150
-[  272.331166] R10: 000058bf9b50f7f0 R11: 0000000000000246 R12: 0000000000000000
-[  272.338296] R13: 00000000fffffffe R14: 0000000000000000 R15: 000058bf6c103a77
-[  272.345428]  </TASK>
-[  272.347617] Modules linked in: i2c_cros_ec_tunnel(+)
-[  272.364585] gsmi: Log Shutdown Reason 0x03
+The fix uses the higher level nand_reset(chip, chipnr); where chipnr = 0, when
+doing PM resume operation in compliance with the controller support for single
+die nand chip. Switching from nand_reset_op() to nand_reset() implies more
+than just setting the cs field op->cs, it also reconfigures the data interface
+(ie. the timings). Tested and confirmed the NAND chip is in sync timing wise
+with host after the fix.
 
-Returning -EPROBE_DEFER will allow the device to be bound once the
-controller is bound, in the case of built-in drivers.
-
-Fixes: 9d230c9e4f4e ("i2c: ChromeOS EC tunnel driver")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Cc: <stable@vger.kernel.org> # v3.16+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250407-null-ec-parent-v1-1-f7dda62d3110@igalia.com
+Fixes: 97d90da8a886 ("mtd: nand: provide several helpers to do common NAND operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-cros-ec-tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-cros-ec-tunnel.c
-+++ b/drivers/i2c/busses/i2c-cros-ec-tunnel.c
-@@ -247,6 +247,9 @@ static int ec_i2c_probe(struct platform_
- 	u32 remote_bus;
- 	int err;
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -2968,7 +2968,7 @@ static int brcmnand_resume(struct device
+ 		brcmnand_save_restore_cs_config(host, 1);
  
-+	if (!ec)
-+		return dev_err_probe(dev, -EPROBE_DEFER, "couldn't find parent EC device\n");
-+
- 	if (!ec->cmd_xfer) {
- 		dev_err(dev, "Missing sendrecv\n");
- 		return -EINVAL;
+ 		/* Reset the chip, required by some chips after power-up */
+-		nand_reset_op(chip);
++		nand_reset(chip, 0);
+ 	}
+ 
+ 	return 0;
 
 
