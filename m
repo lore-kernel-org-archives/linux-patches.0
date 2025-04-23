@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBE127FD56;
-	Wed, 23 Apr 2025 14:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6C827CB12;
+	Wed, 23 Apr 2025 14:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419742; cv=none; b=Dc0GPa/7PebJnGfE3AZXByXPAfi5fkrPjOdHBPNZ8Dvaa0z/bQDKk7SnPnssVM/WikVWqiKdKdZot9LlbATEOl+oz7OP6yZvkp5fytre/GhrBIsBbT5f6FYaXxw5ugK6/EgKvOZBfOXKBPZ/Q054BSensdQ7qKkdCE9iFVv7z2U=
+	t=1745419745; cv=none; b=d53vzUluQXb+0KCzMfzO+ak7qhcKcyLR6VyJaxrbayQQVZSNGxnTlM4U9wHO2/gkYgJo+w8F1Jy9esANImKWtXsBsaKELYYcuihWQkm8TEBoJv6uq+OP9XiFAStq2o/VzC3c8C1gw9XI03+UKzanbr46zNFilfn3zPTPVa5ovlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419742; c=relaxed/simple;
-	bh=ajzZncfpTod4Shxh9496jOmrs7R05Qf5Vxg4lU2g0kk=;
+	s=arc-20240116; t=1745419745; c=relaxed/simple;
+	bh=6ZYvM6pZUxwSylLvbmuHv7ypQMntLUJpNWpi/uO72Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UP4WNq9XxdP50OmtALoMG/qxeSAj0qs0mpsZPxVJ4xMMWlGxLqp1Lmz+tjWSYLaI3VcVpGfEyjmZMHVuMJBD7c3XqQaVRgLHc/JFm6oODCKA1omCMrZptdwj4cl79iEqTtQXJ16eErO9y6Kyv+DMJc4vZUDV3WgaxGZ140ZkgrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbVT8wY+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RtBffNZlLwtwas0UTJ018nhrjVLEipk8PlApVoJDgGtHitjJhX4FN/WbcXtouYRCemkzQqd6KlXDMhhwAZ6yTLIHLHS9ghBvsEdISGn+uF6KVLNMna0ElD4mWdwBUGqlv6zDIdgVZw6PfXkIIJ2WkJ08vs8YgbZIACHyoKWwgdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPwe/i1R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbVT8wY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF738C4CEE2;
-	Wed, 23 Apr 2025 14:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPwe/i1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AE5C4CEEB;
+	Wed, 23 Apr 2025 14:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419742;
-	bh=ajzZncfpTod4Shxh9496jOmrs7R05Qf5Vxg4lU2g0kk=;
+	s=korg; t=1745419744;
+	bh=6ZYvM6pZUxwSylLvbmuHv7ypQMntLUJpNWpi/uO72Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbVT8wY+B9tyr5fMYG1XiCGEOTFBu/e8CQB6FpE1tBY1dtiesHjJVLojgFPa4ID3w
-	 FRI79CXkPmTIzIeAfpL4TifijN4aZwlFIQpwyr4bUHpU9RnmPfNFaFPz0JLGts2TA5
-	 oIQPmmvlFSHNxgOV8nCn2+yfb7bW1kOMem6AYkgY=
+	b=yPwe/i1RgY2I1+eS86zJDN1Hu+46JLmAQ/6/2T2ijM3dI+Jktm7mpF1p9fkkcI7QM
+	 ONqvq4zLweLdJ6G0mssoY1WeSqAValKMkKGgr1yYdWv6+WRWLJlA564VT9/+foV7VF
+	 rcWwvn89tkQ9GwEnPyON1ZQrTQ4NSr3P/RKARjPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 019/241] ALSA: hda/realtek - Fixed ASUS platform headset Mic issue
-Date: Wed, 23 Apr 2025 16:41:23 +0200
-Message-ID: <20250423142621.302697898@linuxfoundation.org>
+Subject: [PATCH 6.12 054/223] ata: libata-sata: Save all fields from sense data descriptor
+Date: Wed, 23 Apr 2025 16:42:06 +0200
+Message-ID: <20250423142619.329833677@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +49,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit b5458fcabd96ce29adbf7225c1741ecdfff70a91 ]
+[ Upstream commit 399eab7f92fb73ffe621294a2d6bec8fc9f3b36b ]
 
-ASUS platform Headset Mic was disable by default.
-Assigned verb table for Mic pin will enable it.
+When filling the taskfile result for a successful NCQ command, we use
+the SDB FIS from the FIS Receive Area, see e.g. ahci_qc_ncq_fill_rtf().
 
-Fixes: 7ab61d0a9a35 ("ALSA: hda/realtek: Add support for ASUS B3405 and B3605 Laptops using CS35L41 HDA")
-Fixes: c86dd79a7c33 ("ALSA: hda/realtek: Add support for ASUS B5405 and B5605 Laptops using CS35L41 HDA")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/0fe3421a6850461fb0b7012cb28ef71d@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However, the SDB FIS only has fields STATUS and ERROR.
+
+For a successful NCQ command that has sense data, we will have a
+successful sense data descriptor, in the Sense Data for Successful NCQ
+Commands log.
+
+Since we have access to additional taskfile result fields, fill in these
+additional fields in qc->result_tf.
+
+This matches how for failing/aborted NCQ commands, we will use e.g.
+ahci_qc_fill_rtf() to fill in some fields, but then for the command that
+actually caused the NCQ error, we will use ata_eh_read_log_10h(), which
+provides additional fields, saving additional fields/overriding the
+qc->result_tf that was fetched using ahci_qc_fill_rtf().
+
+Fixes: 18bd7718b5c4 ("scsi: ata: libata: Handle completion of CDL commands using policy 0xD")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/ata/libata-sata.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 8e482f6ecafea..356df48c97309 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7924,6 +7924,7 @@ enum {
- 	ALC233_FIXUP_MEDION_MTL_SPK,
- 	ALC294_FIXUP_BASS_SPEAKER_15,
- 	ALC283_FIXUP_DELL_HP_RESUME,
-+	ALC294_FIXUP_ASUS_CS35L41_SPI_2,
- };
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index 9c76fb1ad2ec5..a7442dc0bd8e1 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -1510,6 +1510,8 @@ int ata_eh_get_ncq_success_sense(struct ata_link *link)
+ 	unsigned int err_mask, tag;
+ 	u8 *sense, sk = 0, asc = 0, ascq = 0;
+ 	u64 sense_valid, val;
++	u16 extended_sense;
++	bool aux_icc_valid;
+ 	int ret = 0;
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -10278,6 +10279,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc283_fixup_dell_hp_resume,
- 	},
-+	[ALC294_FIXUP_ASUS_CS35L41_SPI_2] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_spi_two,
-+		.chained = true,
-+		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC,
-+	},
- };
+ 	err_mask = ata_read_log_page(dev, ATA_LOG_SENSE_NCQ, 0, buf, 2);
+@@ -1529,6 +1531,8 @@ int ata_eh_get_ncq_success_sense(struct ata_link *link)
  
- static const struct hda_quirk alc269_fixup_tbl[] = {
-@@ -10763,7 +10770,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x12a0, "ASUS X441UV", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x12a3, "Asus N7691ZM", ALC269_FIXUP_ASUS_N7601ZM),
- 	SND_PCI_QUIRK(0x1043, 0x12af, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
-@@ -10853,14 +10860,14 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1fb3, "ASUS ROG Flow Z13 GZ302EA", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3011, "ASUS B5605CVA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
--	SND_PCI_QUIRK(0x1043, 0x3061, "ASUS B3405CCA", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x3071, "ASUS B5405CCA", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x30c1, "ASUS B3605CCA / P3605CCA", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x30d1, "ASUS B5405CCA", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x30e1, "ASUS B5605CCA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x3061, "ASUS B3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x3071, "ASUS B5405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x30c1, "ASUS B3605CCA / P3605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x30d1, "ASUS B5405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x30e1, "ASUS B5605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x31d0, "ASUS Zen AIO 27 Z272SD_A272SD", ALC274_FIXUP_ASUS_ZEN_AIO_27),
--	SND_PCI_QUIRK(0x1043, 0x31e1, "ASUS B5605CCA", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x31f1, "ASUS B3605CCA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x31e1, "ASUS B5605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x31f1, "ASUS B3605CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	sense_valid = (u64)buf[8] | ((u64)buf[9] << 8) |
+ 		((u64)buf[10] << 16) | ((u64)buf[11] << 24);
++	extended_sense = get_unaligned_le16(&buf[14]);
++	aux_icc_valid = extended_sense & BIT(15);
+ 
+ 	ata_qc_for_each_raw(ap, qc, tag) {
+ 		if (!(qc->flags & ATA_QCFLAG_EH) ||
+@@ -1556,6 +1560,17 @@ int ata_eh_get_ncq_success_sense(struct ata_link *link)
+ 			continue;
+ 		}
+ 
++		qc->result_tf.nsect = sense[6];
++		qc->result_tf.hob_nsect = sense[7];
++		qc->result_tf.lbal = sense[8];
++		qc->result_tf.lbam = sense[9];
++		qc->result_tf.lbah = sense[10];
++		qc->result_tf.hob_lbal = sense[11];
++		qc->result_tf.hob_lbam = sense[12];
++		qc->result_tf.hob_lbah = sense[13];
++		if (aux_icc_valid)
++			qc->result_tf.auxiliary = get_unaligned_le32(&sense[16]);
++
+ 		/* Set sense without also setting scsicmd->result */
+ 		scsi_build_sense_buffer(dev->flags & ATA_DFLAG_D_SENSE,
+ 					qc->scsicmd->sense_buffer, sk,
 -- 
 2.39.5
 
