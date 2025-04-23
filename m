@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D38EC8EB;
-	Wed, 23 Apr 2025 14:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4B127D788;
+	Wed, 23 Apr 2025 14:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419599; cv=none; b=klNRPks09FBBNA630+nDyqdECCQsU/zz9LtiTO5TCpgmZyuiHBM/OupIIqSfgNP3v8C8TgAPC16SKNKOJAkvoUC7pO/cqJ+b2Uj//i9g2TwaLUzFSzI2VtkZCwXZ86tLBspCbN/gqxJ32A+1hnXgc7CIk6/MpbMxSOXwhCml1Nw=
+	t=1745419603; cv=none; b=RA/jM0G0eHL7S9aw7EvZtNGtaW4o4XhN6JbfpLgGG6H7ru+pCbJ1I8V6RXUE5N1iO7edBFDdTtFE9tBvlytMUkairYtROc59h0NADTVNqpJc6YrY6s5WVpROjeEaswtQWAsM4eLMs9G3seHGQPQ5Yy6XteWRDREpgqUsDZujTmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419599; c=relaxed/simple;
-	bh=2heZO1M83XAwHDe+P8Rjf958t2yCjlc2hYr6cdldgAI=;
+	s=arc-20240116; t=1745419603; c=relaxed/simple;
+	bh=C/D/MEmfQGY8mXD/qJGj49Dk12TtBWhrjfJrIyTDcew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P98A06d+wmMrVhPez0M9q1ZbSyhaA4ujDzhy38EaSLUKbVfXNN7bF7wLwBoRdgSJIlssc7GoAPbA/N49xgll2VD4NSK696bRBbh7rXh/TUH80AnRfJR1lMdOTfHf1dAMyEtcKxPA9CEAc0Z0TlIN3N32uWU/N0ueNQUgc7FpvN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWh/XO/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgUEz0sam7Fr9bYU/xOy5ZHNiV44JlIZovYydolRgAgZG18QXoWDhV/oenswuiYFJG9jzYadmUPvyyLfe3yy5xGo+DGstsAC1Vprh8eopmLsTYqcYmbbeRa/+fUOlfB4F7bZD9jQihsQddRFCdMlsfiTk8xm1bNxcpe+pXmJdEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhmaZMIO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWh/XO/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BCAC4CEE2;
-	Wed, 23 Apr 2025 14:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhmaZMIO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5877AC4CEE2;
+	Wed, 23 Apr 2025 14:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419599;
-	bh=2heZO1M83XAwHDe+P8Rjf958t2yCjlc2hYr6cdldgAI=;
+	s=korg; t=1745419601;
+	bh=C/D/MEmfQGY8mXD/qJGj49Dk12TtBWhrjfJrIyTDcew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWh/XO/JPNb9xlgyTOvs8YdgGLKPaoo/EJDVFsdbzi0Y8L2oUnbUMCeMeggfRShog
-	 s8VuWUkWq/mlDyPabQNetME9DJjQiFrIx3Qgq1e0R8xkbCe0ivY1HR/cA7+O6cH3e7
-	 0QDBt0oDMzS3XN3O1PY0XeXo8durABQ1HJKaU8wo=
+	b=OhmaZMIOmGQ77jKFIyMDCsjSKae65I4NdO0i13A61jhFaj5IwvL9d6LICBGZUjkvt
+	 hNwQcT7NFEM1WsF78vj2iJZ4zyEG1cabG8G3AaSAIUFMY/FzOyNbJm5kKaZ+tTG/2u
+	 CkuGfFqzQQUyjhoyqs5No0SsfyqTKAMtu7H6bl+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Hannes Reinecke <hare@suse.de>,
 	Ming Lei <ming.lei@redhat.com>,
+	John Garry <john.g.garry@oracle.com>,
 	Daniel Wagner <wagi@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/223] driver core: bus: add irq_get_affinity callback to bus_type
-Date: Wed, 23 Apr 2025 16:41:19 +0200
-Message-ID: <20250423142617.420331149@linuxfoundation.org>
+Subject: [PATCH 6.12 008/223] blk-mq: introduce blk_mq_map_hw_queues
+Date: Wed, 23 Apr 2025 16:41:20 +0200
+Message-ID: <20250423142617.460275438@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -57,47 +57,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit fea4952df0eeec4e1a295ebaac9f61c0065fae87 ]
+[ Upstream commit 1452e9b470c903fc4137a448e9f5767e92d68229 ]
 
-Introducing a callback in struct bus_type so that a subsystem
-can hook up the getters directly. This approach avoids exposing
-random getters in any subsystems APIs.
+blk_mq_pci_map_queues and blk_mq_virtio_map_queues will create a CPU to
+hardware queue mapping based on affinity information. These two function
+share common code and only differ on how the affinity information is
+retrieved. Also, those functions are located in the block subsystem
+where it doesn't really fit in. They are virtio and pci subsystem
+specific.
 
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Thus introduce provide a generic mapping function which uses the
+irq_get_affinity callback from bus_type.
+
+Originally idea from Ming Lei <ming.lei@redhat.com>
+
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
 Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Link: https://lore.kernel.org/r/20241202-refactor-blk-affinity-helpers-v6-1-27211e9c2cd5@kernel.org
+Link: https://lore.kernel.org/r/20241202-refactor-blk-affinity-helpers-v6-4-27211e9c2cd5@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: a2d5a0072235 ("scsi: smartpqi: Use is_kdump_kernel() to check for kdump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/device/bus.h | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-mq-cpumap.c  | 37 +++++++++++++++++++++++++++++++++++++
+ include/linux/blk-mq.h |  2 ++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/include/linux/device/bus.h b/include/linux/device/bus.h
-index cdc4757217f9b..b18658bce2c38 100644
---- a/include/linux/device/bus.h
-+++ b/include/linux/device/bus.h
-@@ -48,6 +48,7 @@ struct fwnode_handle;
-  *		will never get called until they do.
-  * @remove:	Called when a device removed from this bus.
-  * @shutdown:	Called at shut-down time to quiesce the device.
-+ * @irq_get_affinity:	Get IRQ affinity mask for the device on this bus.
-  *
-  * @online:	Called to put the device back online (after offlining it).
-  * @offline:	Called to put the device offline for hot-removal. May fail.
-@@ -87,6 +88,8 @@ struct bus_type {
- 	void (*sync_state)(struct device *dev);
- 	void (*remove)(struct device *dev);
- 	void (*shutdown)(struct device *dev);
-+	const struct cpumask *(*irq_get_affinity)(struct device *dev,
-+			unsigned int irq_vec);
+diff --git a/block/blk-mq-cpumap.c b/block/blk-mq-cpumap.c
+index 9638b25fd5212..ad8d6a363f24a 100644
+--- a/block/blk-mq-cpumap.c
++++ b/block/blk-mq-cpumap.c
+@@ -11,6 +11,7 @@
+ #include <linux/smp.h>
+ #include <linux/cpu.h>
+ #include <linux/group_cpus.h>
++#include <linux/device/bus.h>
  
- 	int (*online)(struct device *dev);
- 	int (*offline)(struct device *dev);
+ #include "blk.h"
+ #include "blk-mq.h"
+@@ -54,3 +55,39 @@ int blk_mq_hw_queue_to_node(struct blk_mq_queue_map *qmap, unsigned int index)
+ 
+ 	return NUMA_NO_NODE;
+ }
++
++/**
++ * blk_mq_map_hw_queues - Create CPU to hardware queue mapping
++ * @qmap:	CPU to hardware queue map
++ * @dev:	The device to map queues
++ * @offset:	Queue offset to use for the device
++ *
++ * Create a CPU to hardware queue mapping in @qmap. The struct bus_type
++ * irq_get_affinity callback will be used to retrieve the affinity.
++ */
++void blk_mq_map_hw_queues(struct blk_mq_queue_map *qmap,
++			  struct device *dev, unsigned int offset)
++
++{
++	const struct cpumask *mask;
++	unsigned int queue, cpu;
++
++	if (!dev->bus->irq_get_affinity)
++		goto fallback;
++
++	for (queue = 0; queue < qmap->nr_queues; queue++) {
++		mask = dev->bus->irq_get_affinity(dev, queue + offset);
++		if (!mask)
++			goto fallback;
++
++		for_each_cpu(cpu, mask)
++			qmap->mq_map[cpu] = qmap->queue_offset + queue;
++	}
++
++	return;
++
++fallback:
++	WARN_ON_ONCE(qmap->nr_queues > 1);
++	blk_mq_clear_mq_map(qmap);
++}
++EXPORT_SYMBOL_GPL(blk_mq_map_hw_queues);
+diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+index 7b5e5388c3801..d5229fd6f054b 100644
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -947,6 +947,8 @@ void blk_mq_unfreeze_queue_non_owner(struct request_queue *q);
+ void blk_freeze_queue_start_non_owner(struct request_queue *q);
+ 
+ void blk_mq_map_queues(struct blk_mq_queue_map *qmap);
++void blk_mq_map_hw_queues(struct blk_mq_queue_map *qmap,
++			  struct device *dev, unsigned int offset);
+ void blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set, int nr_hw_queues);
+ 
+ void blk_mq_quiesce_queue_nowait(struct request_queue *q);
 -- 
 2.39.5
 
