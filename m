@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA52519E966;
-	Wed, 23 Apr 2025 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB15828DEF4;
+	Wed, 23 Apr 2025 15:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421091; cv=none; b=QQiIx/JVJkqwCBi8LBuP3pPfGy/IOwZEdtDK8Xei/dCN0Yp7/oyL5lqlqijTLEg8elSPqhKLmOMgrx5lYEF/207/PTS57K6FWwqHvbCRs+O2Nz1wWsZz1/bWoSiONXZw79hRpnBM4TUEgxpH9FUFC+ArIpibJGl5L7nRLamxmls=
+	t=1745421094; cv=none; b=TRGiWs/yR/2m7GZHO9GpGQe1R98ltycFXsBLLMpQD5S5XyFDatVr/ixIjLNqxIx6Rrr/8l8GUqI23VA6JK7hImbHqblbHQY54LMpZQqZMCqi5/VdNwXmI2m6u4exh8P/bbLQIciC+sl6wa+SInfPfWFoft0Y+RSn/CbSJ+b/cpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421091; c=relaxed/simple;
-	bh=y3L0iDXdc1Yz0P2d/jW9n0mKkw+vgD7SHC3fgsQNkYw=;
+	s=arc-20240116; t=1745421094; c=relaxed/simple;
+	bh=TUgfKmPU99P31chfzG80s0/zFa5GqBmloheD7bGs8x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/BL5iOGAIsWQQ2Iyl1FP9HXBLl4vEIDE8cLiqpt/CChZzpk3jTT6xycsEbGtteRyBSGxSuY5H4ojFDUtVLqxJOiIpS52DiFfzRAU7eRGQNVuODkgZAlVUkdKyWKSSp1u1AsaFZ7baNzaoaOhjQ/kEHJyDTuhEDYPGFP0vQFBZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZYn9l1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwSHtSXg7wFx2AnPEenE6g0uHHKc1uFsrBPzbxhfdtbFneZREM+WD7CR1fdyetAfqBg+DKqo0n+QP2cRW9uBdALV6+xAYQOq3CBAhKlxnunqXXVaIEcr1eWlnGYovcmjpZKmIridq2Sg6LrzyfHD9RMJbpapAIJctOr2nkMYbPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkrjXt+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZYn9l1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E16AC4CEE2;
-	Wed, 23 Apr 2025 15:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkrjXt+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F125C4CEE2;
+	Wed, 23 Apr 2025 15:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421091;
-	bh=y3L0iDXdc1Yz0P2d/jW9n0mKkw+vgD7SHC3fgsQNkYw=;
+	s=korg; t=1745421094;
+	bh=TUgfKmPU99P31chfzG80s0/zFa5GqBmloheD7bGs8x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZYn9l1YhvFX6kHncdRSLqHt3EipCjDk2jTeeiIoAtCFLUFPXEXEXJKq3dTpvKqTQ
-	 IvJyGS81C0hjkGU6HV4xKYhJ7HnOlyrdIVnleOYaCcX0fFZUqtM3f0J2sNdHBC84nO
-	 PxyFatYOoVAs0F2uewZIJ3PZlzLCjAvBvL5nrBgw=
+	b=OkrjXt+T/3kUxE+YZS8ZFGBBmjCEYjoZGo2YNk1H3JwM+FbBigTDcujWrme9AMzQf
+	 n6qq6jzYSYgGQ05OgdOhnllyprXHWPsovaH8H+G/Vy0Wy0YcA9W6hfjgNnyCxVTZVe
+	 c37JWpws5hBU4/nUWuPDCOxJ0LiJ/LkyBvV/Az4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 151/241] selftests/mm: generate a temporary mountpoint for cgroup filesystem
-Date: Wed, 23 Apr 2025 16:43:35 +0200
-Message-ID: <20250423142626.713189737@linuxfoundation.org>
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 146/393] media: i2c: imx219: Rectify runtime PM handling in probe and remove
+Date: Wed, 23 Apr 2025 16:40:42 +0200
+Message-ID: <20250423142649.411388839@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,76 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 9c02223e2d9df5cb37c51aedb78f3960294e09b5 upstream.
+commit 42eceae9793566d0df53d509be3e416465c347f5 upstream.
 
-Currently if the filesystem for the cgroups version it wants to use is not
-mounted charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh tests
-will attempt to mount it on the hard coded path /dev/cgroup/memory,
-deleting that directory when the test finishes.  This will fail if there
-is not a preexisting directory at that path, and since the directory is
-deleted subsequent runs of the test will fail.  Instead of relying on this
-hard coded directory name use mktemp to generate a temporary directory to
-use as a mountpoint, fixing both the assumption and the disruption caused
-by deleting a preexisting directory.
+Set the device's runtime PM status and enable runtime PM before
+registering the async sub-device. This is needed to avoid the case where
+the device is runtime PM resumed while runtime PM has not been enabled
+yet.
 
-This means that if the relevant cgroup filesystem is not already mounted
-then we rely on having coreutils (which provides mktemp) installed.  I
-suspect that many current users are relying on having things automounted
-by default, and given that the script relies on bash it's probably not an
-unreasonable requirement.
+Also set the device's runtime PM status to suspended in remove only if it
+wasn't so already.
 
-Link: https://lkml.kernel.org/r/20250404-kselftest-mm-cgroup2-detection-v1-1-3dba6d32ba8c@kernel.org
-Fixes: 209376ed2a84 ("selftests/vm: make charge_reserved_hugetlb.sh work with existing cgroup setting")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Aishwarya TCV <aishwarya.tcv@arm.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+Cc: stable@vger.kernel.org # for >= v6.6
+Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/charge_reserved_hugetlb.sh  |    4 ++--
- tools/testing/selftests/mm/hugetlb_reparenting_test.sh |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/imx219.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-@@ -29,7 +29,7 @@ fi
- if [[ $cgroup2 ]]; then
-   cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
-   if [[ -z "$cgroup_path" ]]; then
--    cgroup_path=/dev/cgroup/memory
-+    cgroup_path=$(mktemp -d)
-     mount -t cgroup2 none $cgroup_path
-     do_umount=1
-   fi
-@@ -37,7 +37,7 @@ if [[ $cgroup2 ]]; then
- else
-   cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
-   if [[ -z "$cgroup_path" ]]; then
--    cgroup_path=/dev/cgroup/memory
-+    cgroup_path=$(mktemp -d)
-     mount -t cgroup memory,hugetlb $cgroup_path
-     do_umount=1
-   fi
---- a/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
-+++ b/tools/testing/selftests/mm/hugetlb_reparenting_test.sh
-@@ -23,7 +23,7 @@ fi
- if [[ $cgroup2 ]]; then
-   CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
-   if [[ -z "$CGROUP_ROOT" ]]; then
--    CGROUP_ROOT=/dev/cgroup/memory
-+    CGROUP_ROOT=$(mktemp -d)
-     mount -t cgroup2 none $CGROUP_ROOT
-     do_umount=1
-   fi
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -1334,21 +1334,23 @@ static int imx219_probe(struct i2c_clien
+ 		goto error_media_entity;
+ 	}
+ 
++	pm_runtime_set_active(dev);
++	pm_runtime_enable(dev);
++
+ 	ret = v4l2_async_register_subdev_sensor(&imx219->sd);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to register sensor sub-device: %d\n", ret);
+ 		goto error_subdev_cleanup;
+ 	}
+ 
+-	/* Enable runtime PM and turn off the device */
+-	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
+ 	pm_runtime_idle(dev);
+ 
+ 	return 0;
+ 
+ error_subdev_cleanup:
+ 	v4l2_subdev_cleanup(&imx219->sd);
++	pm_runtime_disable(dev);
++	pm_runtime_set_suspended(dev);
+ 
+ error_media_entity:
+ 	media_entity_cleanup(&imx219->sd.entity);
+@@ -1373,9 +1375,10 @@ static void imx219_remove(struct i2c_cli
+ 	imx219_free_controls(imx219);
+ 
+ 	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
++	if (!pm_runtime_status_suspended(&client->dev)) {
+ 		imx219_power_off(&client->dev);
+-	pm_runtime_set_suspended(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
+ }
+ 
+ static const struct of_device_id imx219_dt_ids[] = {
 
 
