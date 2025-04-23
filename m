@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5729228A1FD;
-	Wed, 23 Apr 2025 15:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F367A28A400;
+	Wed, 23 Apr 2025 15:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420968; cv=none; b=LuWljIRDI2B4DaYLVI9L8Mg377lxJkGgHAIMBp+HgX8TO7DP/HaeOhb7gXw84nhdVq7mOYVSollHb2Vw5Qt/y8von3mK48cl78aPJoABIBWDfiv8kIUGRytfETgBzeClJZmhJXHyrfYOLds/zsyjud7g8F6xefKFWWHgK18jQR0=
+	t=1745420971; cv=none; b=FC0v3Ci0ZJ0y77JB3Zthn35LOcRgy9ODCfZx8r7rHefQsSM4b5JRPcJp5N6NqcbWO/o2yny6XTd0JIM0nvDnnFR4azJFNctaEiXJCE6YpbXtAgslMjLSKVe1OTVgscaxmUSE9mAv/6BEkhUnrBaujW4zQA0MMgDWyRBZgrulugw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420968; c=relaxed/simple;
-	bh=AA0h21vWcdv/q1UVKGkIxLp99nqsS/G0Goaz8mNsNTM=;
+	s=arc-20240116; t=1745420971; c=relaxed/simple;
+	bh=MorKZ+OHPTrbe3pV2FWNpQn3TgYQbsWHDN7WIfank2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnqO8G4Qgz0mR30+7w6xsmxnnAgaBzkwKOS7TCBvnDlbXUfPjV8lE6xHo6ZtTuDgwnBKfhPhKbIAhjjMsIKH7nWTG3+tN7LCuWW6lAG5Exs3abXQ0lYIr3THTeaF5Z2Cx41bAjX/nvRi85EAgUUZePFigqhtp4Sxa2x0DmzkX8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfcMkkWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ecTkh7aAKrRpZMyno5wEICuKrywATb3ZcEIP8ig8XghuiO948EUmkbN3loR02BLwm8lBotcUIqQBWJswtGz93ORz6g5EkQ8EuIc3rNQAb0DIEKI38pcNi4G+HQclr1y45D9QPqFF3qQ/SUTj32PFCh6nD8aNGL4N/g9IigXr28Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zjT02/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfcMkkWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE7AC4CEE2;
-	Wed, 23 Apr 2025 15:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zjT02/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831C2C4CEE2;
+	Wed, 23 Apr 2025 15:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420968;
-	bh=AA0h21vWcdv/q1UVKGkIxLp99nqsS/G0Goaz8mNsNTM=;
+	s=korg; t=1745420970;
+	bh=MorKZ+OHPTrbe3pV2FWNpQn3TgYQbsWHDN7WIfank2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfcMkkWV0FYbkeqfoemKXHjxM8i+Jb3bV/vpgYcpUWHxRWIm9y9K1ZZ1T1c4zonyr
-	 6llc3GvKngYZenjPA7ntlMBDTxrWPDc8p8FEOEF3rfwXgUWugfX/Ptv8uFcyZnjPKH
-	 RHeyjrfgHLF4AoejsKaG5307kKgmViZvdX9YfH9A=
+	b=0zjT02/yifkRUQR9DdeKGX6rIQrq35lANG6AefA+wB+TjPFV51ox/vroDNDCeZirK
+	 kIrLJNR64k2Q4d8MzJCtxsBWykxn+zkWDj1G75eXDIvCYmtyTBHpOjcvrYet3T15nx
+	 zC+I9WEuqSZh80p+ipgMOqdKeQmsmNQAM7X6TBFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 178/223] drm/amd/display: Do not enable Replay and PSR while VRR is on in amdgpu_dm_commit_planes()
-Date: Wed, 23 Apr 2025 16:44:10 +0200
-Message-ID: <20250423142624.422221831@linuxfoundation.org>
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Qu Wenruo <quwenruo.btrfs@gmx.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 140/241] mm: fix filemap_get_folios_contig returning batches of identical folios
+Date: Wed, 23 Apr 2025 16:43:24 +0200
+Message-ID: <20250423142626.279595816@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-commit 69a46ce1f15b4391c128d581f6936750f9bfa052 upstream.
+commit 8ab1b16023961dc640023b10436d282f905835ad upstream.
 
-[Why]
-Replay and PSR will cause some video corruption while VRR is enabled.
+filemap_get_folios_contig() is supposed to return distinct folios found
+within [start, end].  Large folios in the Xarray become multi-index
+entries.  xas_next() can iterate through the sub-indexes before finding a
+sibling entry and breaking out of the loop.
 
-[How]
-Do not enable the Replay and PSR while VRR is active in
-amdgpu_dm_enable_self_refresh().
+This can result in a returned folio_batch containing an indeterminate
+number of duplicate folios, which forces the callers to skeptically handle
+the returned batch.  This is inefficient and incurs a large maintenance
+overhead.
 
-Fixes: 67edb81d6e9a ("drm/amd/display: Disable replay and psr while VRR is enabled")
-Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+We can fix this by calling xas_advance() after we have successfully adding
+a folio to the batch to ensure our Xarray is positioned such that it will
+correctly find the next folio - similar to filemap_get_read_batch().
+
+Link: https://lkml.kernel.org/r/Z-8s1-kiIDkzgRbc@fedora
+Fixes: 35b471467f88 ("filemap: add filemap_get_folios_contig()")
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Reported-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
+Closes: https://lkml.kernel.org/r/b714e4de-2583-4035-b829-72cfb5eb6fc6@gmx.com
+Tested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/filemap.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 36a830a7440f..87058271b00c 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -113,6 +113,7 @@ bool amdgpu_dm_crtc_vrr_active(const struct dm_crtc_state *dm_state)
-  *
-  * Panel Replay and PSR SU
-  * - Enable when:
-+ *      - VRR is disabled
-  *      - vblank counter is disabled
-  *      - entry is allowed: usermode demonstrates an adequate number of fast
-  *        commits)
-@@ -131,19 +132,20 @@ static void amdgpu_dm_crtc_set_panel_sr_feature(
- 	bool is_sr_active = (link->replay_settings.replay_allow_active ||
- 				 link->psr_settings.psr_allow_active);
- 	bool is_crc_window_active = false;
-+	bool vrr_active = amdgpu_dm_crtc_vrr_active_irq(vblank_work->acrtc);
- 
- #ifdef CONFIG_DRM_AMD_SECURE_DISPLAY
- 	is_crc_window_active =
- 		amdgpu_dm_crc_window_is_activated(&vblank_work->acrtc->base);
- #endif
- 
--	if (link->replay_settings.replay_feature_enabled &&
-+	if (link->replay_settings.replay_feature_enabled && !vrr_active &&
- 		allow_sr_entry && !is_sr_active && !is_crc_window_active) {
- 		amdgpu_dm_replay_enable(vblank_work->stream, true);
- 	} else if (vblank_enabled) {
- 		if (link->psr_settings.psr_version < DC_PSR_VERSION_SU_1 && is_sr_active)
- 			amdgpu_dm_psr_disable(vblank_work->stream, false);
--	} else if (link->psr_settings.psr_feature_enabled &&
-+	} else if (link->psr_settings.psr_feature_enabled && !vrr_active &&
- 		allow_sr_entry && !is_sr_active && !is_crc_window_active) {
- 
- 		struct amdgpu_dm_connector *aconn =
--- 
-2.49.0
-
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2244,6 +2244,7 @@ unsigned filemap_get_folios_contig(struc
+ 			*start = folio->index + nr;
+ 			goto out;
+ 		}
++		xas_advance(&xas, folio_next_index(folio) - 1);
+ 		continue;
+ put_folio:
+ 		folio_put(folio);
 
 
