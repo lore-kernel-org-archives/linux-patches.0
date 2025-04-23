@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C7C27D763;
-	Wed, 23 Apr 2025 15:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEE927D763;
+	Wed, 23 Apr 2025 15:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421516; cv=none; b=aXt7H3xSp/Ob3Rmerx0DCJOXxos9hr2ettytSEMsE/cOuTYSx/aiZxXrLV2kW+1U+wLTEgQkE8osGQJpADaGL/C07m+2jZYKlWXbQGnDzS3Wgq0A0gmi4teXH62/OGooqYmOAsm6F686e3TR1vrXDbSoQ2k/Yv7WaDKRUDz47FI=
+	t=1745421518; cv=none; b=ZymEaHR1h1e2MJ9df1lsNQgOvX/srx9J61l8brMR+fKuAtBo9Gz8jIx+UpsShkIT8HpdNVN5kD4ueWkk90XUCIBdxieESSjrfLf+fku+rUkjc/OFHjAWkWd8bLbkQoTdw+U5+FRHgymB+QbFEhV9cf+KtNkGY2aZnMjyI1eoK0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421516; c=relaxed/simple;
-	bh=Pa82AtQN3BH1foV03NF9BOsrwUMq9DOxifXuBBBc5SU=;
+	s=arc-20240116; t=1745421518; c=relaxed/simple;
+	bh=BbSXPBg/xAy9vOC0WBzRtxJsliynNp+hGlToQbeD1rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVv3mhHDUH/nUD5GVPHyLL5IX6fFXOiclya3nrS+oZCGbFBosCmxODYfcBWCR+zvv5nD9TfY14z7C7qBFb+H1qfOs/8McCz4DbbL4Fbmqg0ADj7HVC2pYW20KLxdCKAl0xWv6c/geBGzGvRspQp96KJU1exkUBYiqj3FZVhufcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAl7YqAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+taWnLrfAayOXT3/DXNFSGHZ3cKEvfY0bEvHGJVY024Q/ABD7u2Quq6LbKJ1wRt9KCI/5XytbhbB2L2qamSj/A/Q/yavUib7zm5bjYTmqqOXLh7emopxDW1Ak2HMM8ogEqm10aGwaFywfzccXdiHV0iQ0kNUO97iYvUCKQoTYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlopaIke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAl7YqAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB45C4CEE2;
-	Wed, 23 Apr 2025 15:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlopaIke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C038C4CEE2;
+	Wed, 23 Apr 2025 15:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421515;
-	bh=Pa82AtQN3BH1foV03NF9BOsrwUMq9DOxifXuBBBc5SU=;
+	s=korg; t=1745421518;
+	bh=BbSXPBg/xAy9vOC0WBzRtxJsliynNp+hGlToQbeD1rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAl7YqAin9ks7sV7a7aFBJFyGoO0i3iwkitbou7vOUjEn+vcqDT7aXNJQ3ouP5UtP
-	 Bi/y10/UH7dBvSU1hsMWbtec2rgz3XL8/W++KYrJFc0NDue/Pzp/0zRP3FSfyTTVUF
-	 ZeNMNmyeOHRwQH2H5Q1ch1ae8o+qz65/GWiPPOLg=
+	b=DlopaIkekPjj4bm9oJKy+lssGyAbaq8U6lzQpi3+nbBEIomFBvY82KeH7WV/K+dbC
+	 Ee3EbT0j07okBG0a8bRVVrh/1z4kCSZXM2LvQjDoGMyYp12UzHtEfiFVol+g2JLved
+	 G0jnDlGGh2XbaDHHeWsq8K+IkdrpN61ecyLRpSqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Juergen Gross <jgross@suse.com>,
-	Borislav Betkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 187/393] sparc/mm: disable preemption in lazy mmu mode
-Date: Wed, 23 Apr 2025 16:41:23 +0200
-Message-ID: <20250423142651.102970329@linuxfoundation.org>
+	Brendan King <brendan.king@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.14 198/241] drm/imagination: fix firmware memory leaks
+Date: Wed, 23 Apr 2025 16:44:22 +0200
+Message-ID: <20250423142628.598852603@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,74 +46,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Brendan King <Brendan.King@imgtec.com>
 
-commit a1d416bf9faf4f4871cb5a943614a07f80a7d70f upstream.
+commit a5b230e7f3a55bd8bd8d012eec75a4b7baa671d5 upstream.
 
-Since commit 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy
-updates") it's been possible for arch_[enter|leave]_lazy_mmu_mode() to be
-called without holding a page table lock (for the kernel mappings case),
-and therefore it is possible that preemption may occur while in the lazy
-mmu mode.  The Sparc lazy mmu implementation is not robust to preemption
-since it stores the lazy mode state in a per-cpu structure and does not
-attempt to manage that state on task switch.
+Free the memory used to hold the results of firmware image processing
+when the module is unloaded.
 
-Powerpc had the same issue and fixed it by explicitly disabling preemption
-in arch_enter_lazy_mmu_mode() and re-enabling in
-arch_leave_lazy_mmu_mode().  See commit b9ef323ea168 ("powerpc/64s:
-Disable preemption in hash lazy mmu mode").
+Fix the related issue of the same memory being leaked if processing
+of the firmware image fails during module load.
 
-Given Sparc's lazy mmu mode is based on powerpc's, let's fix it in the
-same way here.
+Ensure all firmware GEM objects are destroyed if firmware image
+processing fails.
 
-Link: https://lkml.kernel.org/r/20250303141542.3371656-4-ryan.roberts@arm.com
-Fixes: 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy updates")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Andreas Larsson <andreas@gaisler.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juegren Gross <jgross@suse.com>
-Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes memory leaks on powervr module unload detected by Kmemleak:
+
+unreferenced object 0xffff000042e20000 (size 94208):
+  comm "modprobe", pid 470, jiffies 4295277154
+  hex dump (first 32 bytes):
+    02 ae 7f ed bf 45 84 00 3c 5b 1f ed 9f 45 45 05  .....E..<[...EE.
+    d5 4f 5d 14 6c 00 3d 23 30 d0 3a 4a 66 0e 48 c8  .O].l.=#0.:Jf.H.
+  backtrace (crc dd329dec):
+    kmemleak_alloc+0x30/0x40
+    ___kmalloc_large_node+0x140/0x188
+    __kmalloc_large_node_noprof+0x2c/0x13c
+    __kmalloc_noprof+0x48/0x4c0
+    pvr_fw_init+0xaa4/0x1f50 [powervr]
+
+unreferenced object 0xffff000042d20000 (size 20480):
+  comm "modprobe", pid 470, jiffies 4295277154
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 09 00 00 00 0b 00 00 00  ................
+    00 00 00 00 00 00 00 00 07 00 00 00 08 00 00 00  ................
+  backtrace (crc 395b02e3):
+    kmemleak_alloc+0x30/0x40
+    ___kmalloc_large_node+0x140/0x188
+    __kmalloc_large_node_noprof+0x2c/0x13c
+    __kmalloc_noprof+0x48/0x4c0
+    pvr_fw_init+0xb0c/0x1f50 [powervr]
+
+Cc: stable@vger.kernel.org
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Signed-off-by: Brendan King <brendan.king@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://lore.kernel.org/r/20250318-ddkopsrc-1339-firmware-related-memory-leak-on-module-unload-v1-1-155337c57bb4@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/mm/tlb.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_fw.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/arch/sparc/mm/tlb.c
-+++ b/arch/sparc/mm/tlb.c
-@@ -52,8 +52,10 @@ out:
+--- a/drivers/gpu/drm/imagination/pvr_fw.c
++++ b/drivers/gpu/drm/imagination/pvr_fw.c
+@@ -732,7 +732,7 @@ pvr_fw_process(struct pvr_device *pvr_de
+ 					       fw_mem->core_data, fw_mem->core_code_alloc_size);
  
- void arch_enter_lazy_mmu_mode(void)
- {
--	struct tlb_batch *tb = this_cpu_ptr(&tlb_batch);
-+	struct tlb_batch *tb;
+ 	if (err)
+-		goto err_free_fw_core_data_obj;
++		goto err_free_kdata;
  
-+	preempt_disable();
-+	tb = this_cpu_ptr(&tlb_batch);
- 	tb->active = 1;
- }
+ 	memcpy(fw_code_ptr, fw_mem->code, fw_mem->code_alloc_size);
+ 	memcpy(fw_data_ptr, fw_mem->data, fw_mem->data_alloc_size);
+@@ -742,10 +742,14 @@ pvr_fw_process(struct pvr_device *pvr_de
+ 		memcpy(fw_core_data_ptr, fw_mem->core_data, fw_mem->core_data_alloc_size);
  
-@@ -64,6 +66,7 @@ void arch_leave_lazy_mmu_mode(void)
- 	if (tb->tlb_nr)
- 		flush_tlb_pending();
- 	tb->active = 0;
-+	preempt_enable();
- }
+ 	/* We're finished with the firmware section memory on the CPU, unmap. */
+-	if (fw_core_data_ptr)
++	if (fw_core_data_ptr) {
+ 		pvr_fw_object_vunmap(fw_mem->core_data_obj);
+-	if (fw_core_code_ptr)
++		fw_core_data_ptr = NULL;
++	}
++	if (fw_core_code_ptr) {
+ 		pvr_fw_object_vunmap(fw_mem->core_code_obj);
++		fw_core_code_ptr = NULL;
++	}
+ 	pvr_fw_object_vunmap(fw_mem->data_obj);
+ 	fw_data_ptr = NULL;
+ 	pvr_fw_object_vunmap(fw_mem->code_obj);
+@@ -753,7 +757,7 @@ pvr_fw_process(struct pvr_device *pvr_de
  
- static void tlb_batch_add_one(struct mm_struct *mm, unsigned long vaddr,
+ 	err = pvr_fw_create_fwif_connection_ctl(pvr_dev);
+ 	if (err)
+-		goto err_free_fw_core_data_obj;
++		goto err_free_kdata;
+ 
+ 	return 0;
+ 
+@@ -763,13 +767,16 @@ err_free_kdata:
+ 	kfree(fw_mem->data);
+ 	kfree(fw_mem->code);
+ 
+-err_free_fw_core_data_obj:
+ 	if (fw_core_data_ptr)
+-		pvr_fw_object_unmap_and_destroy(fw_mem->core_data_obj);
++		pvr_fw_object_vunmap(fw_mem->core_data_obj);
++	if (fw_mem->core_data_obj)
++		pvr_fw_object_destroy(fw_mem->core_data_obj);
+ 
+ err_free_fw_core_code_obj:
+ 	if (fw_core_code_ptr)
+-		pvr_fw_object_unmap_and_destroy(fw_mem->core_code_obj);
++		pvr_fw_object_vunmap(fw_mem->core_code_obj);
++	if (fw_mem->core_code_obj)
++		pvr_fw_object_destroy(fw_mem->core_code_obj);
+ 
+ err_free_fw_data_obj:
+ 	if (fw_data_ptr)
+@@ -836,6 +843,12 @@ pvr_fw_cleanup(struct pvr_device *pvr_de
+ 	struct pvr_fw_mem *fw_mem = &pvr_dev->fw_dev.mem;
+ 
+ 	pvr_fw_fini_fwif_connection_ctl(pvr_dev);
++
++	kfree(fw_mem->core_data);
++	kfree(fw_mem->core_code);
++	kfree(fw_mem->data);
++	kfree(fw_mem->code);
++
+ 	if (fw_mem->core_code_obj)
+ 		pvr_fw_object_destroy(fw_mem->core_code_obj);
+ 	if (fw_mem->core_data_obj)
 
 
