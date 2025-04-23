@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E0027FD73;
-	Wed, 23 Apr 2025 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F2D27FD73;
+	Wed, 23 Apr 2025 14:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420296; cv=none; b=E4kcue/WJpO5zzQQsYS8qls7y+ZTHEKdv3t6h5iNY+6vjA73jrD5LSgOx/5U1zYuzY+9791/P5Bvsl6LIw5MR9Pg69xWrrzubYOEBQD8EERcPPgAgXbthQi/1N781frRkXibBuCw2xj4xr1AymRDjBxxdwzM57hialLkXgLI8mI=
+	t=1745420297; cv=none; b=WqBMneyO/dIICYbb996hH3gMCdCH5o1xQK9cNjsftFeSzhT/+rJir+tXN0T66TrLa6zOiVezMvlw+5RYyHJRXjA6L2UpZQ+asZABzCpFb77HA86RTZoZI63dzXTlkRCd5yqTW8W4EL9okf98AUQuD8T9ErAmFmvUPhuiIgMO+9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420296; c=relaxed/simple;
-	bh=nkF4EZdgMGX6BL1/0ZmD5hf9kxAuzc42KFA51akdAbk=;
+	s=arc-20240116; t=1745420297; c=relaxed/simple;
+	bh=zMjMze5k7p0S0LcH7T+VTEIPC4lEDipaXnk/MopQ91I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jUO3NRd0hn7k5/vwcdMv9ag1LLE5lsh0ugtuWbslEXFR8LAjNJ8XN4o4vsJt28MxNZ/kB7PntQgSuvcMkx/NzSU4OPbzYfNKpQjSAEqrFGQfwg/BicvQXSSOFVvTULQBqIzdYH7sTEx7VNc0ErG+lhUFJbBlT0mi7WtucY6qN+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI91Q3PZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AtHVAnfTPikPo9ArxF5GiOPEufmqzJZi0NgGORn/7f0azZZYQKOIs9jgZNvEi10bqfh2sSEBeryZfXKcgqDKzizwpTTHeHHd6u9gOK5sUPXXn5Q9j+PQK9KzVx+OVAhpirmSeV+vWNbRHl7mqDhhghVVmUcjzWaVroNXGnq1KQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMJn9r2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI91Q3PZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A433C4CEE2;
-	Wed, 23 Apr 2025 14:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMJn9r2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E61EC4CEE2;
+	Wed, 23 Apr 2025 14:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420294;
-	bh=nkF4EZdgMGX6BL1/0ZmD5hf9kxAuzc42KFA51akdAbk=;
+	s=korg; t=1745420297;
+	bh=zMjMze5k7p0S0LcH7T+VTEIPC4lEDipaXnk/MopQ91I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BI91Q3PZ5MBfAwLBD95i9REPMqYDJM0u0A6WTL1I0KJXJq7bbhbR62Je+xJjuENBR
-	 JdlYuypr4OiCJ4V+8fbIFECpdRchQbLX1KOvt3IvwGn1IiqVbl9JfdG6gEB6M/oBwk
-	 0vCEsT8nE1bFnmd/Ukeu6h5lEqtnxVmB3d9+/SkE=
+	b=tMJn9r2Q5HkNJVDDwQtXV7PGEiMUfHm+vgpDHVuJfPEzBr+bQ2TVWJw2lN0Uaodtu
+	 Z9Z3BIJkbpeaXJKKjMAK6gnhx3W2m4T8SFisWNhBOuavDkulXEl1OxRlnRWKHcX/8g
+	 iK4FMsMPgX7ZWFI9jW31Cds+15pJ7/vkYvsvECUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 079/241] ptp: ocp: fix start time alignment in ptp_ocp_signal_set
-Date: Wed, 23 Apr 2025 16:42:23 +0200
-Message-ID: <20250423142623.815667425@linuxfoundation.org>
+Subject: [PATCH 6.6 059/393] ALSA: hda: intel: Add Lenovo IdeaPad Z570 to probe denylist
+Date: Wed, 23 Apr 2025 16:39:15 +0200
+Message-ID: <20250423142645.738047889@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit 2a5970d5aaff8f3e33ce3bfaa403ae88c40de40d ]
+[ Upstream commit becc794c5e46f4dfca59f2385f78d83fc9e84700 ]
 
-In ptp_ocp_signal_set, the start time for periodic signals is not
-aligned to the next period boundary. The current code rounds up the
-start time and divides by the period but fails to multiply back by
-the period, causing misaligned signal starts. Fix this by multiplying
-the rounded-up value by the period to ensure the start time is the
-closest next period.
+Lenovo IdeaPad Z570 with NVIDIA GeForce Ge 540M doesn't have sound on
+the discrete GPU. The HDA controller in DGPU is disabled by BIOS, but
+then reenabled by quirk_nvidia_hda(). The probe fails and ends up with
+the "GPU sound probed, but not operational" error.
 
-Fixes: 4bd46bb037f8e ("ptp: ocp: Use DIV64_U64_ROUND_UP for rounding.")
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250415053131.129413-1-maimon.sagi@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add this laptop to DMI-based denylist to prevent probe early. DMI is
+used, because the audio device has zero subsystem IDs, and this entry
+would be too much, blocking all 540M chips:
+    PCI_DEVICE_SUB(0x10de, 0x0bea, 0x0000, 0x0000)
+Also, this laptop comes in a variety of modifications with different
+NVIDIA GPUs, so the DMI check will cover them all.
+
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://patch.msgid.link/20250208214602.39607-3-maxtram95@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/hda_intel.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 4a87af0980d69..4b7344e1816e4 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -2067,6 +2067,7 @@ ptp_ocp_signal_set(struct ptp_ocp *bp, int gen, struct ptp_ocp_signal *s)
- 	if (!s->start) {
- 		/* roundup() does not work on 32-bit systems */
- 		s->start = DIV64_U64_ROUND_UP(start_ns, s->period);
-+		s->start *= s->period;
- 		s->start = ktime_add(s->start, s->phase);
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index da9b9dc0c96d4..3a0df631d25d9 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -37,6 +37,7 @@
+ #include <linux/completion.h>
+ #include <linux/acpi.h>
+ #include <linux/pgtable.h>
++#include <linux/dmi.h>
+ 
+ #ifdef CONFIG_X86
+ /* for snoop control */
+@@ -2092,6 +2093,27 @@ static const struct pci_device_id driver_denylist[] = {
+ 	{}
+ };
+ 
++static struct pci_device_id driver_denylist_ideapad_z570[] = {
++	{ PCI_DEVICE_SUB(0x10de, 0x0bea, 0x0000, 0x0000) }, /* NVIDIA GF108 HDA */
++	{}
++};
++
++/* DMI-based denylist, to be used when:
++ *  - PCI subsystem IDs are zero, impossible to distinguish from valid sound cards.
++ *  - Different modifications of the same laptop use different GPU models.
++ */
++static const struct dmi_system_id driver_denylist_dmi[] = {
++	{
++		/* No HDA in NVIDIA DGPU. BIOS disables it, but quirk_nvidia_hda() reenables. */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "Ideapad Z570"),
++		},
++		.driver_data = &driver_denylist_ideapad_z570,
++	},
++	{}
++};
++
+ static const struct hda_controller_ops pci_hda_ops = {
+ 	.disable_msi_reset_irq = disable_msi_reset_irq,
+ 	.position_check = azx_position_check,
+@@ -2102,6 +2124,7 @@ static DECLARE_BITMAP(probed_devs, SNDRV_CARDS);
+ static int azx_probe(struct pci_dev *pci,
+ 		     const struct pci_device_id *pci_id)
+ {
++	const struct dmi_system_id *dmi;
+ 	struct snd_card *card;
+ 	struct hda_intel *hda;
+ 	struct azx *chip;
+@@ -2114,6 +2137,12 @@ static int azx_probe(struct pci_dev *pci,
+ 		return -ENODEV;
  	}
  
++	dmi = dmi_first_match(driver_denylist_dmi);
++	if (dmi && pci_match_id(dmi->driver_data, pci)) {
++		dev_info(&pci->dev, "Skipping the device on the DMI denylist\n");
++		return -ENODEV;
++	}
++
+ 	dev = find_first_zero_bit(probed_devs, SNDRV_CARDS);
+ 	if (dev >= SNDRV_CARDS)
+ 		return -ENODEV;
 -- 
 2.39.5
 
