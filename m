@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE6C27D763;
-	Wed, 23 Apr 2025 14:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFC2281376;
+	Wed, 23 Apr 2025 14:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420287; cv=none; b=SuIfvN+CWTPYifzj7cldei6y99fCUv+TGPNyBFlidoR/kWUhRibRkvAzsCRascDtUF3ucsY5Y2fyGHwCuvdk371QRYhiRdbDMeWKvfV2yzKdBrjJKZ+VXjlRQlns2DrUvbURMblaMIPpDZrNXHSAyx9Mv/w5exATIrdRgC6GBwg=
+	t=1745420289; cv=none; b=aqDaFQGWbFa7wnWmz0faLbgc3NNlLJF4wp05VYeVf4z+ZLs03f88qhFL0sFAVHTdDD/aXWM/Kj57Z3N9+rT7GjI7zbQhFVS7vOhBNSEOBxPAyJEKgMSw/OirQht9uwu+7KYJkTfI9IYwyByhr/wOvc0A3UKzj2y5ubLlcpoZrw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420287; c=relaxed/simple;
-	bh=JIpKNCSSwhrp6h7EkIntaz+hBkYz72GyvZ9Qbtk/F9k=;
+	s=arc-20240116; t=1745420289; c=relaxed/simple;
+	bh=B3gMOjVve80gNTL9UEljEdLyuGmj1PKn2LgTzRve9Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h8QhyLRts4KeTXqCB3ps2BioyttFQPaYdGi755CoKEUlrgIHBYsGZhOa5Rq77o2TnyAaaUaOMHtmdAnvVHZIAgv0J5Cqe3iEzrZVjP95VBet+1zSKbPKPZez3AyGkcf/1N6xL7a99KBFtjGZtwx70B3ORQcTkSJHsMrK57a63l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTZsZF/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+4uLDRABySkAfyRauBtEvBfUcjLN/ZtFkXNK9NGLtnwLPLCyT23JPU1wiX4+CTCIIFBccNuN0nODj61KuZtle0DUmnPzGKr5qgmrOErblHLBFI6PoLbGp/0u5b98Qd8QdYy3kJxhV98MkGcWN0qKLaVjwwzEBqcz85D2EZ/vak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jn8qt/Mu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTZsZF/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2254C4CEE2;
-	Wed, 23 Apr 2025 14:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jn8qt/Mu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BC0C4CEE2;
+	Wed, 23 Apr 2025 14:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420287;
-	bh=JIpKNCSSwhrp6h7EkIntaz+hBkYz72GyvZ9Qbtk/F9k=;
+	s=korg; t=1745420289;
+	bh=B3gMOjVve80gNTL9UEljEdLyuGmj1PKn2LgTzRve9Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTZsZF/Sm04rIcyilcLlUQfJMyGlGcK6f9nh5xNVGAMDX1xXuk2SK/4/bmFbhdhPz
-	 t03JQdQWrviIQESO82P0IiDUdN9QNXgauqNiG0ITbt3v72B60U58/s/94SkRqeB7mp
-	 jILlmVkYN8E/CZGT/4bj6p80DTc6vA1mZIslQ7QI=
+	b=jn8qt/MuIeByjn749jrMDT1cDnBVzsmuizhyklEmBhtfcWiOFYtVF5pEDPu426PC+
+	 aaQtxA6eq3+0KBe9Pq7e20MXzeCfJVjpY+Bjy7XekeGE9XWjND2yU8XG1a7iVebu0v
+	 /PtKa33UF1xyDsHZgTu2EJ4Z7BGXAIq81EbD29lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 116/223] loop: LOOP_SET_FD: send uevents for partitions
-Date: Wed, 23 Apr 2025 16:43:08 +0200
-Message-ID: <20250423142621.835390054@linuxfoundation.org>
+	keenplify <keenplify@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 034/291] ASoC: amd: Add DMI quirk for ACP6X mic support
+Date: Wed, 23 Apr 2025 16:40:23 +0200
+Message-ID: <20250423142625.786195034@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: keenplify <keenplify@gmail.com>
 
-commit 0dba7a05b9e47d8b546399117b0ddf2426dc6042 upstream.
+[ Upstream commit 309b367eafc8e162603cd29189da6db770411fea ]
 
-Remove the suppression of the uevents before scanning for partitions.
-The partitions inherit their suppression settings from their parent device,
-which lead to the uevents being dropped.
+Some AMD laptops with ACP6X do not expose the DMIC properly on Linux.
+Adding a DMI quirk enables mic functionality.
 
-This is similar to the same changes for LOOP_CONFIGURE done in
-commit bb430b694226 ("loop: LOOP_CONFIGURE: send uevents for partitions").
+Similar to Bugzilla #218402, this issue affects multiple users.
 
-Fixes: 498ef5c777d9 ("loop: suppress uevents while reconfiguring the device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20250415-loop-uevent-changed-v3-1-60ff69ac6088@linutronix.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219853
+Signed-off-by: keenplify <keenplify@gmail.com>
+Link: https://patch.msgid.link/20250315111617.12194-1-keenplify@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -568,12 +568,12 @@ static int loop_change_fd(struct loop_de
- 	 * dependency.
- 	 */
- 	fput(old_file);
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	if (partscan)
- 		loop_reread_partitions(lo);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 77ea8a6c2d6d9..1f94269e121af 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -479,6 +479,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang13"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7UCX"),
++		}
++	},
+ 	{}
+ };
  
- 	error = 0;
- done:
--	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
- 	return error;
- 
-@@ -581,6 +581,7 @@ out_err:
- 	loop_global_unlock(lo, is_loop);
- out_putf:
- 	fput(file);
-+	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
- 	goto done;
- }
- 
+-- 
+2.39.5
+
 
 
