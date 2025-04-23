@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04270283687;
-	Wed, 23 Apr 2025 15:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EEA2641EA;
+	Wed, 23 Apr 2025 15:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421624; cv=none; b=GvxMhjyJAIgs+HjE2UCds4Ouf/NWdD9Cz5g7GhWoVo28OP7TSaCq4v5bud69bbwlBBsZdsVzU1ci04V3SYC3BY3RI3EIVHOeBCJDR36dFzbcWy8Go90/eWD3mQuGden7tcylVGX4B09cwUA/K3aGoYy/SGNtaD6MJP51YvcT8c8=
+	t=1745421626; cv=none; b=YajSAM1gbPeWKtq3B3cADIQ1Pw9wwnQgx8T4gfDUx2GZgXZRlK0Gr2pgkAFjKY5jIgkr2jIbSxPMtpnth+bdz8jpmmdasfWk4diVQ3a/m5eIgsDFd5QZfBssn7SwkwXFii1XOT9z07jpXVON4BpMx+ykXidNmyQUoJ5OVrxAzKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421624; c=relaxed/simple;
-	bh=Z+26j0WzcyPKEdiAYsBAMMzmij1hPWPZF98lu0Y3e2U=;
+	s=arc-20240116; t=1745421626; c=relaxed/simple;
+	bh=eabFZxWx0pL5sBTqGlBcTqxCBMfLZzJKIUAyDGfrdNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8FKU96AY4ogA/rLwy6rdaE21e2XDOw6aPeHnZ0grVFlp6FevFSYWc6TIAsyRxUOz6yYqscD/SilfbWbvXKzCq61On6cYeJOf3J4Elzwg9ToE3B4Hj+qWSoM2CoY3EuEux64aOewUgivMMMo5ToOwxD+AMwXkDOsRlHMbLzJ2oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWUt7cKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbc6GXOvfxn0HhUk9Vldv68VjSpl7bjEODQucjp1qi5zZRPmZiB33rZNrr+WklSa62gGCv9LzOihOABEAcvqK9jvHibLK82K8I1vwXnTp92wBHgd5DZDfmXLj176cSNxLgXVi17y7GkWNfkufzuwG43T319hgQlCVX6k/85PPfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kZGIrbY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWUt7cKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C386C4CEE2;
-	Wed, 23 Apr 2025 15:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kZGIrbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C5FC4CEE3;
+	Wed, 23 Apr 2025 15:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421623;
-	bh=Z+26j0WzcyPKEdiAYsBAMMzmij1hPWPZF98lu0Y3e2U=;
+	s=korg; t=1745421626;
+	bh=eabFZxWx0pL5sBTqGlBcTqxCBMfLZzJKIUAyDGfrdNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWUt7cKvutS0oE5LZYXBICVOB9x5DLVA/IY/0dQZEdmlOn63Vik47+5JmtdQ3GlVf
-	 z1funhir5dgiK6pK5jjwjn9TZ7G2EzoUfTJS4+vn0s6t6DPuF+WDpfciK+EnAjAXRY
-	 L5cAHfg3AOzeYQ7d1T6FF+IFkb15cEWKgujQ9klM=
+	b=2kZGIrbYOtTusn2zAGKYQlqjgKJUv6CB+fWmd+CH+YK9rx/snwJR5au3hspS4m8vO
+	 3Z9c09eI1CwaNez9N8qWzwbMjZTr8S2BRJqPQ06dJp/ClOlgW2ydLdAb92/EyVJjsb
+	 dEA7p3MqIMfQyApjBZhZrfzkTyK5GBJkoOkSTbNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Liu <liucong2@kylinos.cn>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 159/291] selftests: mptcp: close fd_in before returning in main_loop
-Date: Wed, 23 Apr 2025 16:42:28 +0200
-Message-ID: <20250423142630.888642467@linuxfoundation.org>
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 201/393] cifs: avoid NULL pointer dereference in dbg call
+Date: Wed, 23 Apr 2025 16:41:37 +0200
+Message-ID: <20250423142651.694828499@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-commit c183165f87a486d5879f782c05a23c179c3794ab upstream.
+commit b4885bd5935bb26f0a414ad55679a372e53f9b9b upstream.
 
-The file descriptor 'fd_in' is opened when cfg_input is configured, but
-not closed in main_loop(), this patch fixes it.
+cifs_server_dbg() implies server to be non-NULL so
+move call under condition to avoid NULL pointer dereference.
 
-Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e79b0332ae06 ("cifs: ignore cached share root handle closing errors")
 Cc: stable@vger.kernel.org
-Co-developed-by: Cong Liu <liucong2@kylinos.cn>
-Signed-off-by: Cong Liu <liucong2@kylinos.cn>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250328-net-mptcp-misc-fixes-6-15-v1-3-34161a482a7f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2misc.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -1213,7 +1213,7 @@ again:
- 	/* close the client socket open only if we are not going to reconnect */
- 	ret = copyfd_io(fd_in, fd, 1, 0);
- 	if (ret)
--		return ret;
-+		goto out;
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -816,11 +816,12 @@ smb2_handle_cancelled_close(struct cifs_
+ 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
+ 		spin_unlock(&cifs_tcp_ses_lock);
  
- 	if (cfg_truncate > 0) {
- 		shutdown(fd, SHUT_WR);
-@@ -1233,7 +1233,10 @@ again:
- 		close(fd);
+-		if (tcon->ses)
++		if (tcon->ses) {
+ 			server = tcon->ses->server;
+-
+-		cifs_server_dbg(FYI, "tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
+-				tcon->tid, persistent_fid, volatile_fid);
++			cifs_server_dbg(FYI,
++					"tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
++					tcon->tid, persistent_fid, volatile_fid);
++		}
+ 
+ 		return 0;
  	}
- 
--	return 0;
-+out:
-+	if (cfg_input)
-+		close(fd_in);
-+	return ret;
- }
- 
- int parse_proto(const char *proto)
 
 
