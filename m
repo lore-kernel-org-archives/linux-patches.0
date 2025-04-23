@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8131284B20;
-	Wed, 23 Apr 2025 15:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554B3284B42;
+	Wed, 23 Apr 2025 15:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422280; cv=none; b=COFIwgTzFtPMI9N95YEnrfJUUWjBKcyPUg41e2iZ1tlTrLrfXHQVna0vgHKhgS+Ktey6lQdMIRQd7Er0K5c8Y2EDXF1IUDzsdLDDHPgnI7S2FfNXGUAP9nArOumHtcGLzu7Ut7Idt7zfJSIfFQEcM08cSlTbeRfaBauwlzn8uZg=
+	t=1745422283; cv=none; b=bMB+p5PewqCPfvv7hsSe0tCz2E/Twj/Gu4LmecAku/iTYF/ojCCPB+auDrpYxD2qz4ecB23q6gXUKjCp9YsSTLOhD4ovjCctsQy/zTF9JoJ3+sCJx/5/V0bNjIxitdq3iKntlbX6PEyoLxzVwUxR10l15TjLJX/kogBGGqV/Zzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422280; c=relaxed/simple;
-	bh=2u7AoL9ZG/ZriXhn9VFwYyZT31u1NjLyFZkUKuZ4eQs=;
+	s=arc-20240116; t=1745422283; c=relaxed/simple;
+	bh=3Bp9wozF+n+HgUx8ETjP6IgxpTYm1e0ZCGBsbJFLIP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMOKJU//Mwi5CBmdLDNupFLa60SWng8hfwaPPqDhGHt6f8X0XlI3vKJN3w22ZueZY4W3py9hFLrWFg3hYRH6JpVVjTzwJBqKrth0I/1bXG2/h9Hvh6PcsBB95gryc08yykYVXUrnuKFeU7PC36nTE8sAYDwC9bRrCvDnwwIU6Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbMVRhpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrL4PoFDcAGB04h9QiO4LxAvHhLRJrN4zJfLQ1orMIMMwkfW21T15XPwyEP/Voytg3870eAyERoCLX6cTbevgb+OA2UySPfAZvrHz6UMD7nVE3rfspfkf3n3Ulzxx4Psg4aZzk2qOR8QcIvdgtqfZN1xm0cG+hVyTaIeFygNL/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vab9Z5PF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbMVRhpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4652DC4CEE2;
-	Wed, 23 Apr 2025 15:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vab9Z5PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC273C4CEE2;
+	Wed, 23 Apr 2025 15:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422280;
-	bh=2u7AoL9ZG/ZriXhn9VFwYyZT31u1NjLyFZkUKuZ4eQs=;
+	s=korg; t=1745422283;
+	bh=3Bp9wozF+n+HgUx8ETjP6IgxpTYm1e0ZCGBsbJFLIP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbMVRhpQIapNgHtGJ2Z1D3utPnxo9u9Zdg4JHWtB/4l5rngyeh4QspN0T8v0mdotg
-	 Ugb4vdczMEtGLMcXMxH5ttx0JvRzwvrBCkjx6wKfpVwbjAngwk1DTTak+iqwS3IZiR
-	 JBkdkkkYOCDrgsWjM7lfuAsZMC9niKf2X1AFv0o0=
+	b=Vab9Z5PF8Igbe2T0Rp9VtwQtDfAJsvsjYoJd+fPJql7CMtKmjO4mwFbyCskhsiuBJ
+	 zjVq6XMiXlxN8oCdM5j16m/nBPa8EtZquZOXPVZZW6w0zkBBFUqVSzAejjeZwFpCnv
+	 6sfm3kt+C5bMmrddwVoM3olu0Ni8vRYkiA5sPkH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 269/291] btrfs: fix qgroup reserve leaks in cow_file_range
-Date: Wed, 23 Apr 2025 16:44:18 +0200
-Message-ID: <20250423142635.413512902@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.6 313/393] cpufreq: Avoid using inconsistent policy->min and policy->max
+Date: Wed, 23 Apr 2025 16:43:29 +0200
+Message-ID: <20250423142656.256665653@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,118 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 30479f31d44d47ed00ae0c7453d9b253537005b2 upstream.
+commit 7491cdf46b5cbdf123fc84fbe0a07e9e3d7b7620 upstream.
 
-In the buffered write path, the dirty page owns the qgroup reserve until
-it creates an ordered_extent.
+Since cpufreq_driver_resolve_freq() can run in parallel with
+cpufreq_set_policy() and there is no synchronization between them,
+the former may access policy->min and policy->max while the latter
+is updating them and it may see intermediate values of them due
+to the way the update is carried out.  Also the compiler is free
+to apply any optimizations it wants both to the stores in
+cpufreq_set_policy() and to the loads in cpufreq_driver_resolve_freq()
+which may result in additional inconsistencies.
 
-Therefore, any errors that occur before the ordered_extent is created
-must free that reservation, or else the space is leaked. The fstest
-generic/475 exercises various IO error paths, and is able to trigger
-errors in cow_file_range where we fail to get to allocating the ordered
-extent. Note that because we *do* clear delalloc, we are likely to
-remove the inode from the delalloc list, so the inodes/pages to not have
-invalidate/launder called on them in the commit abort path.
+To address this, use WRITE_ONCE() when updating policy->min and
+policy->max in cpufreq_set_policy() and use READ_ONCE() for reading
+them in cpufreq_driver_resolve_freq().  Moreover, rearrange the update
+in cpufreq_set_policy() to avoid storing intermediate values in
+policy->min and policy->max with the help of the observation that
+their new values are expected to be properly ordered upfront.
 
-This results in failures at the unmount stage of the test that look like:
+Also modify cpufreq_driver_resolve_freq() to take the possible reverse
+ordering of policy->min and policy->max, which may happen depending on
+the ordering of operations when this function and cpufreq_set_policy()
+run concurrently, into account by always honoring the max when it
+turns out to be less than the min (in case it comes from thermal
+throttling or similar).
 
-  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
-  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
-  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
-  ------------[ cut here ]------------
-  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
-  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
-  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
-  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
-  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
-  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
-  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
-  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
-  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? __warn.cold+0x8e/0xea
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? report_bug+0xff/0x140
-   ? handle_bug+0x3b/0x70
-   ? exc_invalid_op+0x17/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   generic_shutdown_super+0x70/0x160
-   kill_anon_super+0x11/0x40
-   btrfs_kill_super+0x11/0x20 [btrfs]
-   deactivate_locked_super+0x2e/0xa0
-   cleanup_mnt+0xb5/0x150
-   task_work_run+0x57/0x80
-   syscall_exit_to_user_mode+0x121/0x130
-   do_syscall_64+0xab/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f916847a887
-  ---[ end trace 0000000000000000 ]---
-  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
-
-Cases 2 and 3 in the out_reserve path both pertain to this type of leak
-and must free the reserved qgroup data. Because it is already an error
-path, I opted not to handle the possible errors in
-btrfs_free_qgroup_data.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: 151717690694 ("cpufreq: Make policy min/max hard requirements")
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/5907080.DvuYhMxLoT@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c |   32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1428,6 +1428,7 @@ out_unlock:
- 					     locked_page,
- 					     clear_bits,
- 					     page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 		start += cur_alloc_size;
- 	}
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -538,8 +538,6 @@ static unsigned int __resolve_freq(struc
+ {
+ 	unsigned int idx;
  
-@@ -1441,6 +1442,7 @@ out_unlock:
- 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
- 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
- 					     clear_bits, page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 	}
- 	return ret;
- }
-@@ -2168,13 +2170,15 @@ error:
- 	if (nocow)
- 		btrfs_dec_nocow_writers(bg);
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
+-
+ 	if (!policy->freq_table)
+ 		return target_freq;
  
--	if (ret && cur_offset < end)
-+	if (ret && cur_offset < end) {
- 		extent_clear_unlock_delalloc(inode, cur_offset, end,
- 					     locked_page, EXTENT_LOCKED |
- 					     EXTENT_DELALLOC | EXTENT_DEFRAG |
- 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
- 					     PAGE_START_WRITEBACK |
- 					     PAGE_END_WRITEBACK);
-+		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
-+	}
- 	btrfs_free_path(path);
- 	return ret;
+@@ -563,7 +561,22 @@ static unsigned int __resolve_freq(struc
+ unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
+ 					 unsigned int target_freq)
+ {
+-	return __resolve_freq(policy, target_freq, CPUFREQ_RELATION_LE);
++	unsigned int min = READ_ONCE(policy->min);
++	unsigned int max = READ_ONCE(policy->max);
++
++	/*
++	 * If this function runs in parallel with cpufreq_set_policy(), it may
++	 * read policy->min before the update and policy->max after the update
++	 * or the other way around, so there is no ordering guarantee.
++	 *
++	 * Resolve this by always honoring the max (in case it comes from
++	 * thermal throttling or similar).
++	 */
++	if (unlikely(min > max))
++		min = max;
++
++	return __resolve_freq(policy, clamp_val(target_freq, min, max),
++			      CPUFREQ_RELATION_LE);
  }
+ EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+ 
+@@ -2335,6 +2348,7 @@ int __cpufreq_driver_target(struct cpufr
+ 	if (cpufreq_disabled())
+ 		return -ENODEV;
+ 
++	target_freq = clamp_val(target_freq, policy->min, policy->max);
+ 	target_freq = __resolve_freq(policy, target_freq, relation);
+ 
+ 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
+@@ -2625,11 +2639,15 @@ static int cpufreq_set_policy(struct cpu
+ 	 * Resolve policy min/max to available frequencies. It ensures
+ 	 * no frequency resolution will neither overshoot the requested maximum
+ 	 * nor undershoot the requested minimum.
++	 *
++	 * Avoid storing intermediate values in policy->max or policy->min and
++	 * compiler optimizations around them because they may be accessed
++	 * concurrently by cpufreq_driver_resolve_freq() during the update.
+ 	 */
+-	policy->min = new_data.min;
+-	policy->max = new_data.max;
+-	policy->min = __resolve_freq(policy, policy->min, CPUFREQ_RELATION_L);
+-	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
++	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
++	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
++	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
++
+ 	trace_cpu_frequency_limits(policy);
+ 
+ 	policy->cached_target_freq = UINT_MAX;
 
 
