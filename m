@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A0A27EC73;
-	Wed, 23 Apr 2025 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAC1284B4F;
+	Wed, 23 Apr 2025 15:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420637; cv=none; b=fVlMTqFPjSSE7j34mA4020hN5eROPAj2f0l3EfsmklUofRGBnvhzazlYrp7OPFdc4IQeN8tUxUc8l2DoSYX9qrJqiOW93fZ0W/9a68qd5IZ60F6ioHtV8m0jFEL8n0V8Nm65d9OATLufFbak5W4PZXSbRTNs4p54UrhaSwRvd/Q=
+	t=1745420640; cv=none; b=kT0NClQ/1KBsxiGhBw5e2tKNQxh8FrjQRYJ39q6vxOy4ZTG2ybGUKgy5gktu868NOuu5GxsarEt+56XYfacf6o7KSbS+ebDGEwhROva+Ls6tbapbZsHZfFcbaCbWXNxsChQbuZNJLIsXE8FHR3WQ+RBvjz9k8pIqVPSCTJ648gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420637; c=relaxed/simple;
-	bh=+IiZMHPNJ5ju+QjCOVx8GcDAl3S9VyLX5vDLKMwe3nU=;
+	s=arc-20240116; t=1745420640; c=relaxed/simple;
+	bh=CG+Q8psRAcIaU0BC1neXbOhDebygTEWD/TpgSRPSWOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqjS8HdzWA7rNKPB33K+R/E8P6L7/yz95Lpm1IJk0LGhoJHwY25oQcLoGVBmYKHyFMvxVbL2DaTzxTy0iIpJcB8/pI0Ib7aYH8wwJvr01tE16uxkLSmlLquFyUBz2SBpFrR0cf6fGsI4Osd//YHIrgr5n75PO3qvR8OOojXNcm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p//IxJIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f22Skm8m06xtgc9YWcWBHyuHKP2AsgVvHRoDt/YHqn8yopAT+ld0HpkghQ2GxtJF63CmNTV5EAbedgzKYHNVtoLsF+JzvHOjLcHMfXm5XfhZp2YP6KN7oWzsr7FkK04oPz4PV7ogklgGPuaMxqgnxsVxgsM0KMjmL27HUrNH4ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKmu313q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p//IxJIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D83C4CEE2;
-	Wed, 23 Apr 2025 15:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKmu313q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA28DC4CEE2;
+	Wed, 23 Apr 2025 15:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420637;
-	bh=+IiZMHPNJ5ju+QjCOVx8GcDAl3S9VyLX5vDLKMwe3nU=;
+	s=korg; t=1745420640;
+	bh=CG+Q8psRAcIaU0BC1neXbOhDebygTEWD/TpgSRPSWOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p//IxJIeKpQZexzNRJd3Yd4lpx3nlav0Zp4Y0M8RGh5z/EHgy2qHKwWMPi2GW8eO1
-	 BSbJSlZ9XF27lMO58j1oXl3+tF4mcj0ZPrEJBphsCXLW7mkuAbstCNIBd6e5HnQq1Q
-	 8c+bIO8Q3vaqPDFoRr3QQ/9IhO+GpsbdfzEF6m24=
+	b=RKmu313qrTu6mBb1qWKYxLP70pWfCzCoMlic6rGbxy/5argJ0h/t+27bNCfzwdjxo
+	 +xDskqmcnlJ5xrL5mKKMP6S76eZzB4aiaBNgRs5ZN7aVyclPXjNU1h9jJ6yQCMDPKn
+	 R15Piv5tKlov+Pu+6jpiiPWgcLMkcbNXlJQC61rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Lanzano <lanzano.alex@gmail.com>
-Subject: [PATCH 6.12 148/223] drm/repaper: fix integer overflows in repeat functions
-Date: Wed, 23 Apr 2025 16:43:40 +0200
-Message-ID: <20250423142623.206371477@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 067/291] drm/amdgpu: handle amdgpu_cgs_create_device() errors in amd_powerplay_create()
+Date: Wed, 23 Apr 2025 16:40:56 +0200
+Message-ID: <20250423142627.112983328@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 4d098000ac193f359e6b8ca4801dbdbd6a27b41f upstream.
+[ Upstream commit 1435e895d4fc967d64e9f5bf81e992ac32f5ac76 ]
 
-There are conditions, albeit somewhat unlikely, under which right hand
-expressions, calculating the end of time period in functions like
-repaper_frame_fixed_repeat(), may overflow.
+Add error handling to propagate amdgpu_cgs_create_device() failures
+to the caller. When amdgpu_cgs_create_device() fails, release hwmgr
+and return -ENOMEM to prevent null pointer dereference.
 
-For instance, if 'factor10x' in repaper_get_temperature() is high
-enough (170), as is 'epd->stage_time' in repaper_probe(), then the
-resulting value of 'end' will not fit in unsigned int expression.
+[v1]->[v2]: Change error code from -EINVAL to -ENOMEM. Free hwmgr.
 
-Mitigate this by casting 'epd->factored_stage_time' to wider type before
-any multiplication is done.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 3589211e9b03 ("drm/tinydrm: Add RePaper e-ink driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Lanzano <lanzano.alex@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250116134801.22067-1-n.zhandarovich@fintech.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/repaper.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/tiny/repaper.c
-+++ b/drivers/gpu/drm/tiny/repaper.c
-@@ -455,7 +455,7 @@ static void repaper_frame_fixed_repeat(s
- 				       enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
- 
- 	do {
- 		repaper_frame_fixed(epd, fixed_value, stage);
-@@ -466,7 +466,7 @@ static void repaper_frame_data_repeat(st
- 				      const u8 *mask, enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
- 
- 	do {
- 		repaper_frame_data(epd, image, mask, stage);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index eae4b4826f043..ab8ae74646649 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -51,6 +51,11 @@ static int amd_powerplay_create(struct amdgpu_device *adev)
+ 	hwmgr->adev = adev;
+ 	hwmgr->not_vf = !amdgpu_sriov_vf(adev);
+ 	hwmgr->device = amdgpu_cgs_create_device(adev);
++	if (!hwmgr->device) {
++		kfree(hwmgr);
++		return -ENOMEM;
++	}
++
+ 	mutex_init(&hwmgr->msg_lock);
+ 	hwmgr->chip_family = adev->family;
+ 	hwmgr->chip_id = adev->asic_type;
+-- 
+2.39.5
+
 
 
