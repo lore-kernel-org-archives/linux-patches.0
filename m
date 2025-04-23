@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F172176242;
-	Wed, 23 Apr 2025 15:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1442989B4;
+	Wed, 23 Apr 2025 15:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422431; cv=none; b=MKhXA2qbMDZ4W+L8iMnFgnjFhp50J0NSRZwS4Kpt3cr0BNf1/7pEzRTP9B3lVtNqtX2Pc9zgaYjW5Dbutvk0mLieIgcMkc0795MJym0TOXt9MD9UCHBmjoBYnZpxkRdgDGF5FLhnV++/1L+jccvcCctWEuNAnB5WbdPlAUQetbE=
+	t=1745422433; cv=none; b=mLGl5iSzCog9iSc/8u4lWT7jlYh5IegsQfYuaj4PYb9a6OERlbj2L7yw/zrXKNbYgMSu/s4G32DJZ+B8UNJD7j0fUN4m7PPFHBojXdXDY3Z/a71UbOofL9djArFXeg8JALyzw0lTLdvuBEzL5pN7PTuZTL4ASPgPjqfPmf9Hsa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422431; c=relaxed/simple;
-	bh=zr1IdI0r7UncH8qSEoQldn3tSH2++h7dTtGGkStKxlo=;
+	s=arc-20240116; t=1745422433; c=relaxed/simple;
+	bh=Qyqvlhj3EUDXRc1v2X1gXfyRP8ZFbB7s3opwGEFulSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OY9eKQIRohMth5ENq3NHBX7jDEou6HLWK3nF5FNJ1i00KO0d0L9CGvGKh2sqWCWCI9HeEB6d2tkSN8TL+URGpvC3V6v6GpOm7FBpdlrHsbBGUDlXgtHcxgJWTY7cmOGNWEcTnrFDOFps6ymZWA77vMfu2F4j0tATgt2+unH9YmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U31IQJC6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NpKAs2srbsu6oQmuL4nHBIvdY2FX2rpkI3x50NSbTaC5ma1d1SYpnkd/lAMKfxq74Ov7gZZXQQcsxYu0DtvF/dREJFUYGyuKOwJda9oaq/ZS1l4fh3/QEPBy+IL24ZP9iGtaNqBgquNvboKRC8A8hknGrHava5cGg7Zoirs1cYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7VReZHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U31IQJC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4405DC4CEE2;
-	Wed, 23 Apr 2025 15:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7VReZHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D47C4CEF7;
+	Wed, 23 Apr 2025 15:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422430;
-	bh=zr1IdI0r7UncH8qSEoQldn3tSH2++h7dTtGGkStKxlo=;
+	s=korg; t=1745422433;
+	bh=Qyqvlhj3EUDXRc1v2X1gXfyRP8ZFbB7s3opwGEFulSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U31IQJC6EL5eAh2aVDCATCOTUW0GJJgU2iFsGwIsQHV9MErjdmcTs9hlcGf9BnLiu
-	 AIZq2weDiBgfKh3rEe6puopjgyFciuhsKwcBN6igjehCM8U/LePL64DvinglzaBHeV
-	 k6QjdZS09+ueBHHPsBB1rvJbInuZxQA7s68CUtpc=
+	b=C7VReZHuIzfCymyZEdmONAhuA4AoAgUGRzFJU7yfybEb/V+eZ8aM2H6SP8W5XoYtx
+	 dnhTGKDlYYWcEwqpNTyfgI9eWMZJFdo9e6w8I19TcgxOKc/Ppc1AK+kRDUhbi7LRfc
+	 hF7uuzqu0tfMdTQ+l6tQKFByna+kMgvkefOwyCw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Lanzano <lanzano.alex@gmail.com>
-Subject: [PATCH 6.6 346/393] drm/repaper: fix integer overflows in repeat functions
-Date: Wed, 23 Apr 2025 16:44:02 +0200
-Message-ID: <20250423142657.630750686@linuxfoundation.org>
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.6 347/393] drm/msm/a6xx: Fix stale rpmh votes from GPU
+Date: Wed, 23 Apr 2025 16:44:03 +0200
+Message-ID: <20250423142657.670873942@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -50,53 +50,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-commit 4d098000ac193f359e6b8ca4801dbdbd6a27b41f upstream.
+commit f561db72a663f8a73c2250bf3244ce1ce221bed7 upstream.
 
-There are conditions, albeit somewhat unlikely, under which right hand
-expressions, calculating the end of time period in functions like
-repaper_frame_fixed_repeat(), may overflow.
+It was observed on sc7180 (A618 gpu) that GPU votes for GX rail and CNOC
+BCM nodes were not removed after GPU suspend. This was because we
+skipped sending 'prepare-slumber' request to gmu during suspend sequence
+in some cases. So, make sure we always call prepare-slumber hfi during
+suspend. Also, calling prepare-slumber without a prior oob-gpu handshake
+messes up gmu firmware's internal state. So, do that when required.
 
-For instance, if 'factor10x' in repaper_get_temperature() is high
-enough (170), as is 'epd->stage_time' in repaper_probe(), then the
-resulting value of 'end' will not fit in unsigned int expression.
-
-Mitigate this by casting 'epd->factored_stage_time' to wider type before
-any multiplication is done.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 3589211e9b03 ("drm/tinydrm: Add RePaper e-ink driver")
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Lanzano <lanzano.alex@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250116134801.22067-1-n.zhandarovich@fintech.ru
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/639569/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/repaper.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c |   82 ++++++++++++++++++----------------
+ 1 file changed, 44 insertions(+), 38 deletions(-)
 
---- a/drivers/gpu/drm/tiny/repaper.c
-+++ b/drivers/gpu/drm/tiny/repaper.c
-@@ -455,7 +455,7 @@ static void repaper_frame_fixed_repeat(s
- 				       enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1042,50 +1042,51 @@ static void a6xx_gmu_shutdown(struct a6x
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	u32 val;
++	int ret;
  
- 	do {
- 		repaper_frame_fixed(epd, fixed_value, stage);
-@@ -466,7 +466,7 @@ static void repaper_frame_data_repeat(st
- 				      const u8 *mask, enum repaper_stage stage)
- {
- 	u64 start = local_clock();
--	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
-+	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
+ 	/*
+-	 * The GMU may still be in slumber unless the GPU started so check and
+-	 * skip putting it back into slumber if so
++	 * GMU firmware's internal power state gets messed up if we send "prepare_slumber" hfi when
++	 * oob_gpu handshake wasn't done after the last wake up. So do a dummy handshake here when
++	 * required
+ 	 */
+-	val = gmu_read(gmu, REG_A6XX_GPU_GMU_CX_GMU_RPMH_POWER_STATE);
++	if (adreno_gpu->base.needs_hw_init) {
++		if (a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET))
++			goto force_off;
  
- 	do {
- 		repaper_frame_data(epd, image, mask, stage);
+-	if (val != 0xf) {
+-		int ret = a6xx_gmu_wait_for_idle(gmu);
+-
+-		/* If the GMU isn't responding assume it is hung */
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
+-
+-		/* tell the GMU we want to slumber */
+-		ret = a6xx_gmu_notify_slumber(gmu);
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		ret = gmu_poll_timeout(gmu,
+-			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
+-			!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
+-			100, 10000);
+-
+-		/*
+-		 * Let the user know we failed to slumber but don't worry too
+-		 * much because we are powering down anyway
+-		 */
+-
+-		if (ret)
+-			DRM_DEV_ERROR(gmu->dev,
+-				"Unable to slumber GMU: status = 0%x/0%x\n",
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+ 	}
+ 
++	ret = a6xx_gmu_wait_for_idle(gmu);
++
++	/* If the GMU isn't responding assume it is hung */
++	if (ret)
++		goto force_off;
++
++	a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
++
++	/* tell the GMU we want to slumber */
++	ret = a6xx_gmu_notify_slumber(gmu);
++	if (ret)
++		goto force_off;
++
++	ret = gmu_poll_timeout(gmu,
++		REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
++		!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
++		100, 10000);
++
++	/*
++	 * Let the user know we failed to slumber but don't worry too
++	 * much because we are powering down anyway
++	 */
++
++	if (ret)
++		DRM_DEV_ERROR(gmu->dev,
++			"Unable to slumber GMU: status = 0%x/0%x\n",
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++
+ 	/* Turn off HFI */
+ 	a6xx_hfi_stop(gmu);
+ 
+@@ -1094,6 +1095,11 @@ static void a6xx_gmu_shutdown(struct a6x
+ 
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
++
++	return;
++
++force_off:
++	a6xx_gmu_force_off(gmu);
+ }
+ 
+ 
 
 
