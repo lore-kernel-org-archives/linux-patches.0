@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680B129008D;
-	Wed, 23 Apr 2025 15:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C94928C5D1;
+	Wed, 23 Apr 2025 15:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421020; cv=none; b=Q+2VpRMKw4Ruk77mhwer8H4nHYF9qT7OxjTwEtsSQRJSyCVeb5ACE52IiqkON3SwBgSFOFQ9tNA4Tipy9HQ9nl712blkOe5zUGGjQ6WT0/pQ3fDWRMG9I2PqJWcmgV5i/Gk1spcMy5DnAjvTNJUebPNwzzq/9wc0I1J74dtnApQ=
+	t=1745421023; cv=none; b=TtgBofg83GSJklqRDyb9yGKuhrAC+sVyvOcRNqDIbFTgmZwr/RRZbN47YSvEqQ6xt3pnSMY3Jd4A0Y0cdC09iu+mtXwp/4xwg0jkK5w4vm/Atu4iyTuVA7NOG4oyPpLIS9q2OzgDOeImjxVnsWyQ04RylbxzheV2bDWL8n6sMbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421020; c=relaxed/simple;
-	bh=uvmg8TX0n1JcxuiC8HGgtjQVBIULWx8+WuxeZjDNkRI=;
+	s=arc-20240116; t=1745421023; c=relaxed/simple;
+	bh=//zXE4idh9IjfkiJCS9lUFXs8QxUFhTbcxvsqnVY3Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r9VpFAKJxq8uolBVXERpNt4bAF6wdMMFETnc/RZ2oEcMBXPWcpCfGSCzn5o+jSNAbnGf74NR8iHN/SpxaXTHOJXBvJvz9MVAYWwxPWOyycuAW00kudVmgrrK8GgmBuQKPb/AnQUd5alZ0ZrR8BTKAC0v7gwqtH3EsSBlpJX6gbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxwL26zL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ADfz5g8eT5gQyjb8HnaVbcbR6pwNEObVN4pzcZtekamIXmYuHnrTP2TeqvhduTfa5cjREvu+FWKyQJialfvoeVvzLbE9IfkuDI9Zt+dT0h16qhQsf8Xc+E4NG4ECqhVuKTsXGEVey4fBteBQzBWsS3awpHrtOGHIj4pImZxGSCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZoHmM+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxwL26zL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F104DC4CEE2;
-	Wed, 23 Apr 2025 15:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZoHmM+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C4DC4CEE2;
+	Wed, 23 Apr 2025 15:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421020;
-	bh=uvmg8TX0n1JcxuiC8HGgtjQVBIULWx8+WuxeZjDNkRI=;
+	s=korg; t=1745421022;
+	bh=//zXE4idh9IjfkiJCS9lUFXs8QxUFhTbcxvsqnVY3Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxwL26zLutbQ1sslRlQdOn40KdWcikPME0ADscWckwOaWQX11hCU+IMQO7sdQolOr
-	 arANyp5fsPJS3jVqdo8mhhsuulSvSRfTE+JInd4ktmrHkXEemyGJiCFltiqQUAFPVs
-	 Mh63/uHI+COkwQJzteMrB8PqXCX/6gtp+vQlN3w8=
+	b=VZoHmM+D4mA4JSNsyIOySBnnMWxqJCDi1BUIhOaEY8bANp7LCacqFmxUSuhlz7jfe
+	 csXLWrk+DZnqRkqBv1yDJoLpPcwl9w8ZGAmo/AUfaBXhOw1cmLcOv9HK6fBTEl9etX
+	 ZIKNJrDsZmddg84/HF3yCGbiJw1aPV2vasIbD+o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
-Subject: [PATCH 6.14 131/241] crypto: caam/qi - Fix drv_ctx refcount bug
-Date: Wed, 23 Apr 2025 16:43:15 +0200
-Message-ID: <20250423142625.921773471@linuxfoundation.org>
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 136/393] media: streamzap: prevent processing IR data on URB failure
+Date: Wed, 23 Apr 2025 16:40:32 +0200
+Message-ID: <20250423142648.996896883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
+commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
 
-Ensure refcount is raised before request is enqueued since it could
-be dequeued before the call returns.
+If streamzap_callback() receives an urb with any non-critical error
+status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
+it will try to process IR data, ignoring a possible transfer failure.
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: <stable@vger.kernel.org>
-Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
-Tested-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Make streamzap_callback() process IR data only when urb->status is 0.
+Move processing logic to a separate function to make code cleaner and
+more similar to the URB completion handlers in other RC drivers.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/qi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -122,12 +122,12 @@ int caam_qi_enqueue(struct device *qidev
- 	qm_fd_addr_set64(&fd, addr);
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -138,39 +138,10 @@ static void sz_push_half_space(struct st
+ 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
+ }
  
- 	do {
-+		refcount_inc(&req->drv_ctx->refcnt);
- 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
--		if (likely(!ret)) {
--			refcount_inc(&req->drv_ctx->refcnt);
-+		if (likely(!ret))
- 			return 0;
--		}
+-/*
+- * streamzap_callback - usb IRQ handler callback
+- *
+- * This procedure is invoked on reception of data from
+- * the usb remote.
+- */
+-static void streamzap_callback(struct urb *urb)
++static void sz_process_ir_data(struct streamzap_ir *sz, int len)
+ {
+-	struct streamzap_ir *sz;
+ 	unsigned int i;
+-	int len;
+-
+-	if (!urb)
+-		return;
+-
+-	sz = urb->context;
+-	len = urb->actual_length;
+-
+-	switch (urb->status) {
+-	case -ECONNRESET:
+-	case -ENOENT:
+-	case -ESHUTDOWN:
+-		/*
+-		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+-		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
+-		return;
+-	default:
+-		break;
+-	}
  
-+		refcount_dec(&req->drv_ctx->refcnt);
- 		if (ret != -EBUSY)
- 			break;
- 		num_retries++;
+-	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
+ 	for (i = 0; i < len; i++) {
+ 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
+ 			i, (unsigned char)sz->buf_in[i]);
+@@ -219,6 +190,43 @@ static void streamzap_callback(struct ur
+ 	}
+ 
+ 	ir_raw_event_handle(sz->rdev);
++}
++
++/*
++ * streamzap_callback - usb IRQ handler callback
++ *
++ * This procedure is invoked on reception of data from
++ * the usb remote.
++ */
++static void streamzap_callback(struct urb *urb)
++{
++	struct streamzap_ir *sz;
++	int len;
++
++	if (!urb)
++		return;
++
++	sz = urb->context;
++	len = urb->actual_length;
++
++	switch (urb->status) {
++	case 0:
++		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
++		sz_process_ir_data(sz, len);
++		break;
++	case -ECONNRESET:
++	case -ENOENT:
++	case -ESHUTDOWN:
++		/*
++		 * this urb is terminated, clean up.
++		 * sz might already be invalid at this point
++		 */
++		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		return;
++	default:
++		break;
++	}
++
+ 	usb_submit_urb(urb, GFP_ATOMIC);
+ }
+ 
 
 
