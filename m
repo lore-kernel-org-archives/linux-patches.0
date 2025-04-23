@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2F2281375;
-	Wed, 23 Apr 2025 14:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0132281375;
+	Wed, 23 Apr 2025 14:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419702; cv=none; b=pY7LPa/udEKvtCsChcHXz3W+qS0J86sL/2ekxg5Ktm5ArALAoH8j/4EG77bPgdRb1By2v8JUKo6K5+WO7Oo2N3GRI7Wcd5c/JzXGb0uuU8sg52xZYgdTKUeqeCkzx5Pg6RW+lavZX+qjHe7WXApUo/aEeeYH6u2CaMRI5wW1dCE=
+	t=1745419705; cv=none; b=OLKfkUz+4icgwML1kI+EPALI96xHgM+Z0WNnLzq4jSd7X6K9ZfvLo6k+rfJkiHCgzeIQBZXx/nDWNzdPq9cVCiFNjkJExAwpITGqPeLOYquNZevMUIajaXky7tRTvhi5DVUZkl4PKxDZTcFj/R08zCpNHrJ/xGYDoXQXuuxnt7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419702; c=relaxed/simple;
-	bh=rI+Ht9TvLc6sYUCdRdMIczU3BkQ0SzeDD7shiHC/u0w=;
+	s=arc-20240116; t=1745419705; c=relaxed/simple;
+	bh=W8l/Ytjc9E9+l2avAOghmqYU+SffGc9Ck/gAT2eOqKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+reKElckoH98nM5Eb8jNr+uEoPxdWdrcI/5fAIcSmUwLd4qatoHNmkB8y2iBCAPtglNrAy376lumcSLQ5S9mUTCSLsRwankc56CjPHWf1OUNO7XonufFwId2czLqFFXQ9OH6O7kcWgXmvuPcwAhN1KElkG3I5Rd7QA+LQbIl3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aceNkFKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3zZIgJjb+Tl9DiM4KS/mExVFOmTF5Tsz5p/LCBDeyR3183CPSvJN/hoOWH9eWI8/bKA8ZwVNfuvrjvE3QRxCO2kM7YrPZyP6Tqn4PAUoMvfxhQpCYr8CB9hrEVOLstkOIGAUl1MVJXgzoj/FEp2dtcItYbgzoelzWXYRXrdPhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FixuVrhV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aceNkFKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB4EC4CEE3;
-	Wed, 23 Apr 2025 14:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FixuVrhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD828C4CEE2;
+	Wed, 23 Apr 2025 14:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419702;
-	bh=rI+Ht9TvLc6sYUCdRdMIczU3BkQ0SzeDD7shiHC/u0w=;
+	s=korg; t=1745419705;
+	bh=W8l/Ytjc9E9+l2avAOghmqYU+SffGc9Ck/gAT2eOqKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aceNkFKDG6SsLPw8YUGyssW1127JnS7y/fKcEOM8jtZluPZDzhPvlerAOT0jPtBi7
-	 gTNOyyu/eI/tcWTeGihsGVvTbjZfrdjQghJ38rrm69E/sNrTcJwkPUoX36ghvuAXWn
-	 9Uq2RDnD8PdS18NtoLVnnZAn/iZlNLpBb4yvlrFk=
+	b=FixuVrhVQsHVPopZR4h/hZ9PWjnB35ZDL0PnJPraq1EMLb4LNOcwhhp4IMddwIChP
+	 FEfjnJVs24e95quecVzyV1nv814N0JYFCArTlIzGajkTGiKeqHE5wE13HD+XAlxc0J
+	 OuN+oQ3KMH0lfWyZIO0RhBwRtwlKsn/d7l3l2B8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Randy Wright <rwright@hpe.com>,
-	Don Brace <don.brace@microchip.com>,
-	Lee Duncan <lduncan@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/223] scsi: smartpqi: Use is_kdump_kernel() to check for kdump
-Date: Wed, 23 Apr 2025 16:41:22 +0200
-Message-ID: <20250423142617.541191209@linuxfoundation.org>
+Subject: [PATCH 6.12 043/223] ethtool: cmis_cdb: use correct rpl size in ethtool_cmis_module_poll()
+Date: Wed, 23 Apr 2025 16:41:55 +0200
+Message-ID: <20250423142618.881766286@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -54,96 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
 
-[ Upstream commit a2d5a0072235a69749ceb04c1a26dc75df66a31a ]
+[ Upstream commit f3fdd4fba16c74697d8bc730b82fb7c1eff7fab3 ]
 
-The smartpqi driver checks the reset_devices variable to determine
-whether special adjustments need to be made for kdump. This has the
-effect that after a regular kexec reboot, some driver parameters such as
-max_transfer_size are much lower than usual. More importantly, kexec
-reboot tests have revealed memory corruption caused by the driver log
-being written to system memory after a kexec.
+rpl is passed as a pointer to ethtool_cmis_module_poll(), so the correct
+size of rpl is sizeof(*rpl) which should be just 1 byte.  Using the
+pointer size instead can cause stack corruption:
 
-Fix this by testing is_kdump_kernel() rather than reset_devices where
-appropriate.
+Kernel panic - not syncing: stack-protector: Kernel stack is corrupted in: ethtool_cmis_wait_for_cond+0xf4/0x100
+CPU: 72 UID: 0 PID: 4440 Comm: kworker/72:2 Kdump: loaded Tainted: G           OE      6.11.0 #24
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: Dell Inc. PowerEdge R760/04GWWM, BIOS 1.6.6 09/20/2023
+Workqueue: events module_flash_fw_work
+Call Trace:
+ <TASK>
+ panic+0x339/0x360
+ ? ethtool_cmis_wait_for_cond+0xf4/0x100
+ ? __pfx_status_success+0x10/0x10
+ ? __pfx_status_fail+0x10/0x10
+ __stack_chk_fail+0x10/0x10
+ ethtool_cmis_wait_for_cond+0xf4/0x100
+ ethtool_cmis_cdb_execute_cmd+0x1fc/0x330
+ ? __pfx_status_fail+0x10/0x10
+ cmis_cdb_module_features_get+0x6d/0xd0
+ ethtool_cmis_cdb_init+0x8a/0xd0
+ ethtool_cmis_fw_update+0x46/0x1d0
+ module_flash_fw_work+0x17/0xa0
+ process_one_work+0x179/0x390
+ worker_thread+0x239/0x340
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xcc/0x100
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2d/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Fixes: 058311b72f54 ("scsi: smartpqi: Add fw log to kdump")
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Link: https://lore.kernel.org/r/20250321223319.109250-1-mwilck@suse.com
-Cc: Randy Wright <rwright@hpe.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Tested-by: Don Brace <don.brace@microchip.com>
-Reviewed-by: Lee Duncan <lduncan@suse.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a39c84d79625 ("ethtool: cmis_cdb: Add a layer for supporting CDB commands")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250409173312.733012-1-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/ethtool/cmis_cdb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 04fb24d77e9b5..d919a74746a05 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -19,6 +19,7 @@
- #include <linux/bcd.h>
- #include <linux/reboot.h>
- #include <linux/cciss_ioctl.h>
-+#include <linux/crash_dump.h>
- #include <scsi/scsi_host.h>
- #include <scsi/scsi_cmnd.h>
- #include <scsi/scsi_device.h>
-@@ -5246,7 +5247,7 @@ static void pqi_calculate_io_resources(struct pqi_ctrl_info *ctrl_info)
- 	ctrl_info->error_buffer_length =
- 		ctrl_info->max_io_slots * PQI_ERROR_BUFFER_ELEMENT_LENGTH;
+diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
+index 4d55811479520..8bf99295bfbe9 100644
+--- a/net/ethtool/cmis_cdb.c
++++ b/net/ethtool/cmis_cdb.c
+@@ -346,7 +346,7 @@ ethtool_cmis_module_poll(struct net_device *dev,
+ 	struct netlink_ext_ack extack = {};
+ 	int err;
  
--	if (reset_devices)
-+	if (is_kdump_kernel())
- 		max_transfer_size = min(ctrl_info->max_transfer_size,
- 			PQI_MAX_TRANSFER_SIZE_KDUMP);
- 	else
-@@ -5275,7 +5276,7 @@ static void pqi_calculate_queue_resources(struct pqi_ctrl_info *ctrl_info)
- 	u16 num_elements_per_iq;
- 	u16 num_elements_per_oq;
+-	ethtool_cmis_page_init(&page_data, 0, offset, sizeof(rpl));
++	ethtool_cmis_page_init(&page_data, 0, offset, sizeof(*rpl));
+ 	page_data.data = (u8 *)rpl;
  
--	if (reset_devices) {
-+	if (is_kdump_kernel()) {
- 		num_queue_groups = 1;
- 	} else {
- 		int num_cpus;
-@@ -8287,12 +8288,12 @@ static int pqi_ctrl_init(struct pqi_ctrl_info *ctrl_info)
- 	u32 product_id;
- 
- 	if (reset_devices) {
--		if (pqi_is_fw_triage_supported(ctrl_info)) {
-+		if (is_kdump_kernel() && pqi_is_fw_triage_supported(ctrl_info)) {
- 			rc = sis_wait_for_fw_triage_completion(ctrl_info);
- 			if (rc)
- 				return rc;
- 		}
--		if (sis_is_ctrl_logging_supported(ctrl_info)) {
-+		if (is_kdump_kernel() && sis_is_ctrl_logging_supported(ctrl_info)) {
- 			sis_notify_kdump(ctrl_info);
- 			rc = sis_wait_for_ctrl_logging_completion(ctrl_info);
- 			if (rc)
-@@ -8343,7 +8344,7 @@ static int pqi_ctrl_init(struct pqi_ctrl_info *ctrl_info)
- 	ctrl_info->product_id = (u8)product_id;
- 	ctrl_info->product_revision = (u8)(product_id >> 8);
- 
--	if (reset_devices) {
-+	if (is_kdump_kernel()) {
- 		if (ctrl_info->max_outstanding_requests >
- 			PQI_MAX_OUTSTANDING_REQUESTS_KDUMP)
- 				ctrl_info->max_outstanding_requests =
-@@ -8479,7 +8480,7 @@ static int pqi_ctrl_init(struct pqi_ctrl_info *ctrl_info)
- 	if (rc)
- 		return rc;
- 
--	if (ctrl_info->ctrl_logging_supported && !reset_devices) {
-+	if (ctrl_info->ctrl_logging_supported && !is_kdump_kernel()) {
- 		pqi_host_setup_buffer(ctrl_info, &ctrl_info->ctrl_log_memory, PQI_CTRL_LOG_TOTAL_SIZE, PQI_CTRL_LOG_MIN_SIZE);
- 		pqi_host_memory_update(ctrl_info, &ctrl_info->ctrl_log_memory, PQI_VENDOR_GENERAL_CTRL_LOG_MEMORY_UPDATE);
- 	}
+ 	err = ops->get_module_eeprom_by_page(dev, &page_data, &extack);
 -- 
 2.39.5
 
