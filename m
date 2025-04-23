@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD021A257D;
-	Wed, 23 Apr 2025 15:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24EF27EC9C;
+	Wed, 23 Apr 2025 15:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420514; cv=none; b=HqiPR+Wg7T6cUkuZ0V2/SaP9Qz1rWQA0MPDicRoO2q7UXU5crjnJE6IFw0Bk5zVzmYcite+3TUQwhTCe+Ei1jyoKTYGzsHnqE+Z9C05AZV+//l7arv45QdZEsUsclbiGJzJ+J8jBP8nvpyzELpbQwTmVR1o/8rlS+wmV+vDCcJw=
+	t=1745420518; cv=none; b=oRKAAXUx9LLsIYuHHIUiOYo55+rIAuqemYkJ6d7iJxoJkC0xw0U+xZiVhDqevfLElSqwBZJswo6n6s2Q+hnD0qiNr/igzTJ7ynNCJ9MwEKPfqHOs4ghM1E6NwjNNMwTJMInNAKhKZS7e/JlrVG91oVf4VecjhMWWaOmbNzb/yTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420514; c=relaxed/simple;
-	bh=SSTPWL22jhv+9ID+uz+R4a37LRV+vbDN20z+7HxID8Y=;
+	s=arc-20240116; t=1745420518; c=relaxed/simple;
+	bh=xmpV27ZJNcwNLemqjjKkIZddAVg6B+0ZG7hiwS4rv8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UY1f3y2bg6rcw82OpK2+OWm5ZoQM0D81OntE3mL6sgW9zfJA7BfwI3hIDbVMlMhNPWk5BY+gJGmpE+7TpZodM/TOv3UAE3DQ4s3nFDY7CdebSsLh3unbNLONDPKUTzA4PdPPpJaloKOsASjIWIqDVGQ+6Usvn/7ynWsH2yDpXLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w40zTOwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ma34ApHlmye3E1LeXuE1CJmAnH/3yhTKwUx7wOA/JDsJUADWn/iWom1tUH8D9Xnqyp6M5Et9TWvK92X6vJQAkuA3k0sWczHzeqPiIer4K+9OkJQAS6mztPs4R56yO7uLuJLVNt2A+fCyS4YCBFUp5eJW2XIISVmUi++TOLz+S+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdoskS3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w40zTOwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4D5C4CEE2;
-	Wed, 23 Apr 2025 15:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdoskS3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27050C4CEE8;
+	Wed, 23 Apr 2025 15:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420513;
-	bh=SSTPWL22jhv+9ID+uz+R4a37LRV+vbDN20z+7HxID8Y=;
+	s=korg; t=1745420516;
+	bh=xmpV27ZJNcwNLemqjjKkIZddAVg6B+0ZG7hiwS4rv8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w40zTOwbD9s69hR6XvohdPMSrRwztSqgXARYPdIA5O22lOCmuvn3ESWMgj+230OEa
-	 zCbn1SL+9Jw41zl0F9IOKwbpebfvksyKrJ987Q4b57RpBXWAbuFAtx91Qll9i1Ylgn
-	 +P7yRvNIj+i00moCFPrL+rk0UaekvyZXTVm9Swh4=
+	b=rdoskS3AGHAUKlTCIwzBj9+UcU5Apqb5mO78x54m5Au/RKiesYMgY+Quvz7DgXZVX
+	 WE3jhLzU21Y67E7wuMVKLcbsjvVbIpzGeqVnaR+RLawb06oQNV8r1hHB4lG26zCBAM
+	 NUju5dxaAkeqStFIc5TK7evxcxMAIa6abbvd/a6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	Ryan Lahfa <ryan@lahfa.xyz>
-Subject: [PATCH 6.12 138/223] scsi: megaraid_sas: Block zero-length ATA VPD inquiry
-Date: Wed, 23 Apr 2025 16:43:30 +0200
-Message-ID: <20250423142622.709563560@linuxfoundation.org>
+	Rand Deeb <rand.sec96@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 039/291] fs/jfs: Prevent integer overflow in AG size calculation
+Date: Wed, 23 Apr 2025 16:40:28 +0200
+Message-ID: <20250423142625.991759259@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-commit aad9945623ab4029ae7789609fb6166c97976c62 upstream.
+[ Upstream commit 7fcbf789629cdb9fbf4e2172ce31136cfed11e5e ]
 
-A firmware bug was observed where ATA VPD inquiry commands with a
-zero-length data payload were not handled and failed with a non-standard
-status code of 0xf0.
+The JFS filesystem calculates allocation group (AG) size using 1 <<
+l2agsize in dbExtendFS(). When l2agsize exceeds 31 (possible with >2TB
+aggregates on 32-bit systems), this 32-bit shift operation causes undefined
+behavior and improper AG sizing.
 
-Avoid sending ATA VPD inquiry commands without data payload by setting
-the device no_vpd_size flag to 1. In addition, if the firmware returns a
-status code of 0xf0, set scsi_cmnd->result to CHECK_CONDITION to
-facilitate proper error handling.
+On 32-bit architectures:
+- Left-shifting 1 by 32+ bits results in 0 due to integer overflow
+- This creates invalid AG sizes (0 or garbage values) in
+sbi->bmap->db_agsize
+- Subsequent block allocations would reference invalid AG structures
+- Could lead to:
+  - Filesystem corruption during extend operations
+  - Kernel crashes due to invalid memory accesses
+  - Security vulnerabilities via malformed on-disk structures
 
-Suggested-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250402193735.5098-1-chandrakanth.patil@broadcom.com
-Tested-by: Ryan Lahfa <ryan@lahfa.xyz>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by casting to s64 before shifting:
+bmp->db_agsize = (s64)1 << l2agsize;
+
+This ensures 64-bit arithmetic even on 32-bit architectures. The cast
+matches the data type of db_agsize (s64) and follows similar patterns in
+JFS block calculation code.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c   |    9 +++++++--
- drivers/scsi/megaraid/megaraid_sas_fusion.c |    5 ++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ fs/jfs/jfs_dmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -2103,6 +2103,9 @@ static int megasas_device_configure(stru
- 	/* This sdev property may change post OCR */
- 	megasas_set_dynamic_target_properties(sdev, lim, is_target_prop);
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 3d4c7373a25e0..11b6be462575c 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -3403,7 +3403,7 @@ int dbExtendFS(struct inode *ipbmap, s64 blkno,	s64 nblocks)
+ 	oldl2agsize = bmp->db_agl2size;
  
-+	if (!MEGASAS_IS_LOGICAL(sdev))
-+		sdev->no_vpd_size = 1;
-+
- 	mutex_unlock(&instance->reset_mutex);
+ 	bmp->db_agl2size = l2agsize;
+-	bmp->db_agsize = 1 << l2agsize;
++	bmp->db_agsize = (s64)1 << l2agsize;
  
- 	return 0;
-@@ -3662,8 +3665,10 @@ megasas_complete_cmd(struct megasas_inst
- 
- 		case MFI_STAT_SCSI_IO_FAILED:
- 		case MFI_STAT_LD_INIT_IN_PROGRESS:
--			cmd->scmd->result =
--			    (DID_ERROR << 16) | hdr->scsi_status;
-+			if (hdr->scsi_status == 0xf0)
-+				cmd->scmd->result = (DID_ERROR << 16) | SAM_STAT_CHECK_CONDITION;
-+			else
-+				cmd->scmd->result = (DID_ERROR << 16) | hdr->scsi_status;
- 			break;
- 
- 		case MFI_STAT_SCSI_DONE_WITH_ERROR:
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -2043,7 +2043,10 @@ map_cmd_status(struct fusion_context *fu
- 
- 	case MFI_STAT_SCSI_IO_FAILED:
- 	case MFI_STAT_LD_INIT_IN_PROGRESS:
--		scmd->result = (DID_ERROR << 16) | ext_status;
-+		if (ext_status == 0xf0)
-+			scmd->result = (DID_ERROR << 16) | SAM_STAT_CHECK_CONDITION;
-+		else
-+			scmd->result = (DID_ERROR << 16) | ext_status;
- 		break;
- 
- 	case MFI_STAT_SCSI_DONE_WITH_ERROR:
+ 	/* compute new number of AG */
+ 	agno = bmp->db_numag;
+-- 
+2.39.5
+
 
 
