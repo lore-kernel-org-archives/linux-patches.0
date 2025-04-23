@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44082561B3;
-	Wed, 23 Apr 2025 15:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E8B27FD42;
+	Wed, 23 Apr 2025 15:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421285; cv=none; b=Q57H05T868PpH6TKWhkNHr0CAD9RPcbjWhQIL4XlH7sO23WQLl8rvFWutxYYUuJb9RHkDdKbgJdYJIriUxb4i0OX5b/2skt12QR7TZdpG1P7kzoiCeyCDmAMOHRDfr6Th3Sh30D9t+VRSLtRYQPKFaYZro/t1EGujMmhn9wZGw4=
+	t=1745421288; cv=none; b=cYO6lsthkwijJ7YjRD0KstltdBi2LQEUssqUz05zirGkzkX/YLSxB374YN37v/7LB5owqJPeNOPny8lrrG3dnIbf1/nTP3dvdRJKStR8afjWgKrhnbqOxOUJu4ioe4SckrpfpY6wbkxOIHa+d1qLLHMbzqVnDrCfi2Bc8AAc9JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421285; c=relaxed/simple;
-	bh=krphSWIAzgcIz7vJXQWIZoPb3oh+k5U+FmqWUC0UiBQ=;
+	s=arc-20240116; t=1745421288; c=relaxed/simple;
+	bh=NXqQux3KbU2z1cFrHM20mCu9trQGSCPnivbUFF3mruQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B6wWFm5hyDko97vqwXzBLIBk6zC3Ey/fiAqco7IcUZ31AYGiFo5Yg4wtIdsmP58u5PiCkDDGEthPna1rJHwX2E6OJPZ1kTOoXy2sGS1oQzUoQnvbEGrVR81VOGA9CGfaz4AcuPvBw/p4Je7tZqUWZItNxRZhY+8Hws4FCKbyw3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCWge8ZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZRuMACNfQqGRY2R6a+gpzInPKHFZ0DQDXnBBQ4prSmwrMIuB6mstfc5teANxyf2+YMO1LNnNLu/xBDVykXW0+apeYI9KH6WlL0Lto7TD5YpiSnTWziO5EhYklK9OVLNr4fi4tu9CMsjkXCFDY9HUtwU5hXRH25+YNZG+ojFqk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+/o+9CL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCWge8ZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4EFC4CEE2;
-	Wed, 23 Apr 2025 15:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+/o+9CL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9719C4CEE2;
+	Wed, 23 Apr 2025 15:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421285;
-	bh=krphSWIAzgcIz7vJXQWIZoPb3oh+k5U+FmqWUC0UiBQ=;
+	s=korg; t=1745421288;
+	bh=NXqQux3KbU2z1cFrHM20mCu9trQGSCPnivbUFF3mruQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCWge8ZIxQ1X/N4lRRwema6pO39O/uWnAQjfW0DdZlERQ75dN0fZ2XPkqzqVDvbLa
-	 Przc8sXlyEooEZQ8WUMnqs3PBjaVg3PVB1l3zsnZAp7TrGnNMsYZrKarVy9ZfnXyT7
-	 oUIoxMHjfwHGJxUS1QnyJ9IeuSbey4HDGUCrkAuM=
+	b=M+/o+9CLOeEMnHxY05y2CShV+sBjD9E1FX0TXTl+VNGMze4YDwgI698juluQGia42
+	 W8twWQHAA2JHMTA5lIhlR43Uj+Qwi2Wc7X5uTLl5pCc03T0pT0PCSCYCzMXdtdAIXP
+	 PboUmI2uZ+WuOAdSxZjEhwRHup+znH/ODLxHpn6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.14 164/241] RDMA/cma: Fix workqueue crash in cma_netevent_work_handler
-Date: Wed, 23 Apr 2025 16:43:48 +0200
-Message-ID: <20250423142627.234228616@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 6.12 208/223] block: dont reorder requests in blk_add_rq_to_plug
+Date: Wed, 23 Apr 2025 16:44:40 +0200
+Message-ID: <20250423142625.637975185@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,145 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 45f5dcdd049719fb999393b30679605f16ebce14 upstream.
+commit e70c301faece15b618e54b613b1fd6ece3dd05b4 upstream.
 
-struct rdma_cm_id has member "struct work_struct net_work"
-that is reused for enqueuing cma_netevent_work_handler()s
-onto cma_wq.
+Add requests to the tail of the list instead of the front so that they
+are queued up in submission order.
 
-Below crash[1] can occur if more than one call to
-cma_netevent_callback() occurs in quick succession,
-which further enqueues cma_netevent_work_handler()s for the
-same rdma_cm_id, overwriting any previously queued work-item(s)
-that was just scheduled to run i.e. there is no guarantee
-the queued work item may run between two successive calls
-to cma_netevent_callback() and the 2nd INIT_WORK would overwrite
-the 1st work item (for the same rdma_cm_id), despite grabbing
-id_table_lock during enqueue.
+Remove the re-reordering in blk_mq_dispatch_plug_list, virtio_queue_rqs
+and nvme_queue_rqs now that the list is ordered as expected.
 
-Also drgn analysis [2] indicates the work item was likely overwritten.
-
-Fix this by moving the INIT_WORK() to __rdma_create_id(),
-so that it doesn't race with any existing queue_work() or
-its worker thread.
-
-[1] Trimmed crash stack:
-=============================================
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-kworker/u256:6 ... 6.12.0-0...
-Workqueue:  cma_netevent_work_handler [rdma_cm] (rdma_cm)
-RIP: 0010:process_one_work+0xba/0x31a
-Call Trace:
- worker_thread+0x266/0x3a0
- kthread+0xcf/0x100
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
-=============================================
-
-[2] drgn crash analysis:
-
->>> trace = prog.crashed_thread().stack_trace()
->>> trace
-(0)  crash_setup_regs (./arch/x86/include/asm/kexec.h:111:15)
-(1)  __crash_kexec (kernel/crash_core.c:122:4)
-(2)  panic (kernel/panic.c:399:3)
-(3)  oops_end (arch/x86/kernel/dumpstack.c:382:3)
-...
-(8)  process_one_work (kernel/workqueue.c:3168:2)
-(9)  process_scheduled_works (kernel/workqueue.c:3310:3)
-(10) worker_thread (kernel/workqueue.c:3391:4)
-(11) kthread (kernel/kthread.c:389:9)
-
-Line workqueue.c:3168 for this kernel version is in process_one_work():
-3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
-
->>> trace[8]["work"]
-*(struct work_struct *)0xffff92577d0a21d8 = {
-	.data = (atomic_long_t){
-		.counter = (s64)536870912,    <=== Note
-	},
-	.entry = (struct list_head){
-		.next = (struct list_head *)0xffff924d075924c0,
-		.prev = (struct list_head *)0xffff924d075924c0,
-	},
-	.func = (work_func_t)cma_netevent_work_handler+0x0 = 0xffffffffc2cec280,
-}
-
-Suspicion is that pwq is NULL:
->>> trace[8]["pwq"]
-(struct pool_workqueue *)<absent>
-
-In process_one_work(), pwq is assigned from:
-struct pool_workqueue *pwq = get_work_pwq(work);
-
-and get_work_pwq() is:
-static struct pool_workqueue *get_work_pwq(struct work_struct *work)
-{
- 	unsigned long data = atomic_long_read(&work->data);
-
- 	if (data & WORK_STRUCT_PWQ)
- 		return work_struct_pwq(data);
- 	else
- 		return NULL;
-}
-
-WORK_STRUCT_PWQ is 0x4:
->>> print(repr(prog['WORK_STRUCT_PWQ']))
-Object(prog, 'enum work_flags', value=4)
-
-But work->data is 536870912 which is 0x20000000.
-So, get_work_pwq() returns NULL and we crash in process_one_work():
-3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
-=============================================
-
-Fixes: 925d046e7e52 ("RDMA/core: Add a netevent notifier to cma")
-Cc: stable@vger.kernel.org
-Co-developed-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://patch.msgid.link/bf0082f9-5b25-4593-92c6-d130aa8ba439@oracle.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20241113152050.157179-6-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/cma.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-mq.c             |    4 ++--
+ drivers/block/virtio_blk.c |    2 +-
+ drivers/nvme/host/pci.c    |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -72,6 +72,8 @@ static const char * const cma_events[] =
- static void cma_iboe_set_mgid(struct sockaddr *addr, union ib_gid *mgid,
- 			      enum ib_gid_type gid_type);
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1386,7 +1386,7 @@ static void blk_add_rq_to_plug(struct bl
+ 	 */
+ 	if (!plug->has_elevator && (rq->rq_flags & RQF_SCHED_TAGS))
+ 		plug->has_elevator = true;
+-	rq_list_add_head(&plug->mq_list, rq);
++	rq_list_add_tail(&plug->mq_list, rq);
+ 	plug->rq_count++;
+ }
  
-+static void cma_netevent_work_handler(struct work_struct *_work);
-+
- const char *__attribute_const__ rdma_event_msg(enum rdma_cm_event_type event)
- {
- 	size_t index = event;
-@@ -1033,6 +1035,7 @@ __rdma_create_id(struct net *net, rdma_c
- 	get_random_bytes(&id_priv->seq_num, sizeof id_priv->seq_num);
- 	id_priv->id.route.addr.dev_addr.net = get_net(net);
- 	id_priv->seq_num &= 0x00ffffff;
-+	INIT_WORK(&id_priv->id.net_work, cma_netevent_work_handler);
- 
- 	rdma_restrack_new(&id_priv->res, RDMA_RESTRACK_CM_ID);
- 	if (parent)
-@@ -5227,7 +5230,6 @@ static int cma_netevent_callback(struct
- 		if (!memcmp(current_id->id.route.addr.dev_addr.dst_dev_addr,
- 			   neigh->ha, ETH_ALEN))
+@@ -2840,7 +2840,7 @@ static void blk_mq_dispatch_plug_list(st
+ 			rq_list_add_tail(&requeue_list, rq);
  			continue;
--		INIT_WORK(&current_id->id.net_work, cma_netevent_work_handler);
- 		cma_id_get(current_id);
- 		queue_work(cma_wq, &current_id->id.net_work);
+ 		}
+-		list_add(&rq->queuelist, &list);
++		list_add_tail(&rq->queuelist, &list);
+ 		depth++;
+ 	} while (!rq_list_empty(&plug->mq_list));
+ 
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -514,7 +514,7 @@ static void virtio_queue_rqs(struct rq_l
+ 		vq = this_vq;
+ 
+ 		if (virtblk_prep_rq_batch(req))
+-			rq_list_add_head(&submit_list, req); /* reverse order */
++			rq_list_add_tail(&submit_list, req);
+ 		else
+ 			rq_list_add_tail(&requeue_list, req);
+ 	}
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1026,7 +1026,7 @@ static void nvme_queue_rqs(struct rq_lis
+ 		nvmeq = req->mq_hctx->driver_data;
+ 
+ 		if (nvme_prep_rq_batch(nvmeq, req))
+-			rq_list_add_head(&submit_list, req); /* reverse order */
++			rq_list_add_tail(&submit_list, req);
+ 		else
+ 			rq_list_add_tail(&requeue_list, req);
  	}
 
 
