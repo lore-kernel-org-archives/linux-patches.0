@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6DC27EC73;
-	Wed, 23 Apr 2025 15:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B24B27CB12;
+	Wed, 23 Apr 2025 15:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420493; cv=none; b=JdB463BtRMMiDkEPqDKRcsk5jea87GKIJKIvARNK/59cj1XMV61wczvEYkVOfRedImC2DfzN31Z+F2AWy3oLLyXagfnyJUPpy2JCFNvzBXXP3LUfI/Jcfo+MEXb82bAKpWpkly3WbClTR0ukzaAeHsP6PF+PT7czynyUZNyf4eo=
+	t=1745420495; cv=none; b=fj8zbKDFLFbD4CeenjkaBnTMOqmh/owx665YhJOhBuYy5kx9S+Z/NCAwzHh5gnsfeB+oN3cNbVjs+pU/u8GVMQxkuPXuWKpX+QnQtoM4Q+h0oBDg40I6hGJSv5Mo8HyT6Af57SQ/j7fYG0WyPiy4Bq31NnIx8JZ+fZqG361rpFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420493; c=relaxed/simple;
-	bh=zSEkL9Y9gt7plHbE+65f6f8MV30KZT1A60MMQvZX+Eo=;
+	s=arc-20240116; t=1745420495; c=relaxed/simple;
+	bh=fFyRXWEhV1odPhixUuv+JTA4avgIyjPVqvD8vQU7/JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jku5B/VZjVl+xwic9FRs2E3nLO765kOHWrk84wElBz2YFYBd6YjWZqYmflxbfZIBTtD1y9j5japssthM4ceRTug/YXFE+ZHHSJklLhepO4estiOBSWfXX3RMD5s/VRyb4ntN6kDKrhmr182zY3h4CLmXUv1wO6EDI+ke1fr7mgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWVcqz5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXkI1DV9+Ljz0mJTAQEzPmlJmCOAQ93q85W61nw+M8yvToMCmODMCGLfr9YeWyeLfQGn0YHgdxS1b49YtBZc/xfdQHqvxMrKx4zGHCy1xCJYROlc+qlfgrRFZaTzay1uL61Yly3ceqKbuVJ24O7wh4SgE2STL3PW6tBY+8Ij6Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlp0TUxv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWVcqz5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68264C4CEE2;
-	Wed, 23 Apr 2025 15:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlp0TUxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8F4C4CEE2;
+	Wed, 23 Apr 2025 15:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420492;
-	bh=zSEkL9Y9gt7plHbE+65f6f8MV30KZT1A60MMQvZX+Eo=;
+	s=korg; t=1745420495;
+	bh=fFyRXWEhV1odPhixUuv+JTA4avgIyjPVqvD8vQU7/JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWVcqz5LjrenSXkbQRaJccHxeXghV4PxjRRYdJtgSIKAoyA5Nc9rK+QORGWwyow5r
-	 1+je8iGwglZWM0Eb7JmU8W3csn39YHOfHNF3YYHQbh5OpGl5CsAob6y/ZAouYbszy1
-	 MdcIkByp+NJZSUPeP12VmzCMFbHaA+2gp7j/r3/c=
+	b=Tlp0TUxvAEVYUOUxCaWOcPOIIagjwuDbm/q3tDLZC64ZwFUPY1rKSVh4fNnl6zfY7
+	 noNnhl5/T/8M+HlZRQ7l+NSSJyqparjsEpOlZ9XOQlSgBBvLy9j0A0l/+HxMAXRKnz
+	 SV9VpFI7ezzHMzXPVN+MPnJf6PpujB6cPzpfDfB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/393] f2fs: fix to avoid out-of-bounds access in f2fs_truncate_inode_blocks()
-Date: Wed, 23 Apr 2025 16:39:35 +0200
-Message-ID: <20250423142646.567877176@linuxfoundation.org>
+Subject: [PATCH 6.1 052/291] Bluetooth: qca: simplify WCN399x NVM loading
+Date: Wed, 23 Apr 2025 16:40:41 +0200
+Message-ID: <20250423142626.511946882@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,95 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e6494977bd4a83862118a05f57a8df40256951c0 ]
+[ Upstream commit 1cc41b5092e3aa511454ec882c525af311bee631 ]
 
-syzbot reports an UBSAN issue as below:
+The WCN399x code has two separate cases for loading the NVM data. In
+preparation to adding support for WCN3950, which also requires similar
+quirk, split the "variant" to be specified explicitly and merge two
+snprintfs into a single one.
 
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in fs/f2fs/node.h:381:10
-index 18446744073709550692 is out of range for type '__le32[5]' (aka 'unsigned int[5]')
-CPU: 0 UID: 0 PID: 5318 Comm: syz.0.0 Not tainted 6.14.0-rc3-syzkaller-00060-g6537cfb395f3 #0
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_out_of_bounds+0x121/0x150 lib/ubsan.c:429
- get_nid fs/f2fs/node.h:381 [inline]
- f2fs_truncate_inode_blocks+0xa5e/0xf60 fs/f2fs/node.c:1181
- f2fs_do_truncate_blocks+0x782/0x1030 fs/f2fs/file.c:808
- f2fs_truncate_blocks+0x10d/0x300 fs/f2fs/file.c:836
- f2fs_truncate+0x417/0x720 fs/f2fs/file.c:886
- f2fs_file_write_iter+0x1bdb/0x2550 fs/f2fs/file.c:5093
- aio_write+0x56b/0x7c0 fs/aio.c:1633
- io_submit_one+0x8a7/0x18a0 fs/aio.c:2052
- __do_sys_io_submit fs/aio.c:2111 [inline]
- __se_sys_io_submit+0x171/0x2e0 fs/aio.c:2081
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f238798cde9
-
-index 18446744073709550692 (decimal, unsigned long long)
-= 0xfffffffffffffc64 (hexadecimal, unsigned long long)
-= -924 (decimal, long long)
-
-In f2fs_truncate_inode_blocks(), UBSAN detects that get_nid() tries to
-access .i_nid[-924], it means both offset[0] and level should zero.
-
-The possible case should be in f2fs_do_truncate_blocks(), we try to
-truncate inode size to zero, however, dn.ofs_in_node is zero and
-dn.node_page is not an inode page, so it fails to truncate inode page,
-and then pass zeroed free_from to f2fs_truncate_inode_blocks(), result
-in this issue.
-
-	if (dn.ofs_in_node || IS_INODE(dn.node_page)) {
-		f2fs_truncate_data_blocks_range(&dn, count);
-		free_from += count;
-	}
-
-I guess the reason why dn.node_page is not an inode page could be: there
-are multiple nat entries share the same node block address, once the node
-block address was reused, f2fs_get_node_page() may load a non-inode block.
-
-Let's add a sanity check for such condition to avoid out-of-bounds access
-issue.
-
-Reported-by: syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/66fdcdf3.050a0220.40bef.0025.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btqca.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index dedba481b66d0..d93282c1ed384 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1134,7 +1134,14 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from)
- 	trace_f2fs_truncate_inode_blocks_enter(inode, from);
- 
- 	level = get_node_path(inode, from, offset, noffset);
--	if (level < 0) {
-+	if (level <= 0) {
-+		if (!level) {
-+			level = -EFSCORRUPTED;
-+			f2fs_err(sbi, "%s: inode ino=%lx has corrupted node block, from:%lu addrs:%u",
-+					__func__, inode->i_ino,
-+					from, ADDRS_PER_INODE(inode));
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		}
- 		trace_f2fs_truncate_inode_blocks_exit(inode, level);
- 		return level;
- 	}
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 892e2540f008a..5651f40db1736 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -807,6 +807,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   const char *firmware_name)
+ {
+ 	struct qca_fw_config config = {};
++	const char *variant = "";
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
+@@ -901,13 +902,11 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		case QCA_WCN3990:
+ 		case QCA_WCN3991:
+ 		case QCA_WCN3998:
+-			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID) {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02xu.bin", rom_ver);
+-			} else {
+-				snprintf(config.fwname, sizeof(config.fwname),
+-					 "qca/crnv%02x.bin", rom_ver);
+-			}
++			if (le32_to_cpu(ver.soc_id) == QCA_WCN3991_SOC_ID)
++				variant = "u";
++
++			snprintf(config.fwname, sizeof(config.fwname),
++				 "qca/crnv%02x%s.bin", rom_ver, variant);
+ 			break;
+ 		case QCA_WCN3988:
+ 			snprintf(config.fwname, sizeof(config.fwname),
 -- 
 2.39.5
 
