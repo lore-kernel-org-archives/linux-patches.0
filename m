@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB6157C9F;
-	Wed, 23 Apr 2025 15:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310E057C9F;
+	Wed, 23 Apr 2025 15:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421238; cv=none; b=bEyZ+Yl+dszgoYPSOuCswlzVZyD0W08aXpOMFJBfLEGLaAtnfMaB6kVjOua5IgWV3QJlBeJnlxcfwlVPZPPtdGbKqSHOJpbX3jpgSb4w+QDI1ZR6S4z8wnZCXckWDTrcA/Ywg6uj1pX1XaxhOvXji2qFq5jdLRRsvSgQXqtGyik=
+	t=1745421241; cv=none; b=XJbKW1qjAqV6echHRi6/Eu88rc0YWl3FAjnUTpPwTgv8rVD9Ju+vej8t3q43Og19kY/IE3Z8fPPMDBXLhLEEDcrD07JS1mxfdM0tSqaoM2d9fXZ9SOT8xVzvqsHuCCyn90bpT/gGSWkwVGwcezIj/BE+V8eTAzPDWeVTrIV+eV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421238; c=relaxed/simple;
-	bh=WQUpr/QGRNBvrKjZOES7OlMNHWSHRTRkJt4YQo8f40c=;
+	s=arc-20240116; t=1745421241; c=relaxed/simple;
+	bh=YF8TeajqCQP5U28EZzKjHRvrUAm8BBGP6q3PJ/uc35Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Czk3ScLWmtcfGGgT7+xPYcV24INZpr9JfqZxq58k0qSHG/v/nW9xKWa68tNqw9GD5xB/ADwuhalrN4rxXYmnmSAMKuMFe9TK5PQb9W9yjAgN+M3kKZ5MusorJQje6cMtv59fL0gsfofBLvRPsTzbq5qrTh58fYctyG5tkeJURDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPM6PcHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO79YlVl2VO/b8OMQ1LK3slO4JmjGYCN3Gr/IktZo5qBnTt81HduRCmZSm/WuazlJAvxXzMQNasKD2AAxG5AWJuy7uaezQaubMu5FI0WIutXItwWuOgsGS+0q08M1N2p7Yi8uMzW2uzIRK5AlBYCdwHk2AgZ9emhAfPR8wZ3hjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQxGEWaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPM6PcHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20559C4CEE2;
-	Wed, 23 Apr 2025 15:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQxGEWaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DBBC4CEE2;
+	Wed, 23 Apr 2025 15:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421238;
-	bh=WQUpr/QGRNBvrKjZOES7OlMNHWSHRTRkJt4YQo8f40c=;
+	s=korg; t=1745421241;
+	bh=YF8TeajqCQP5U28EZzKjHRvrUAm8BBGP6q3PJ/uc35Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vPM6PcHh1EbhiQtzio2ZY7YCDolIeRzn2/wXoQcl6ByfpaQ49iy44gioKsNNb7G4o
-	 eF+dd5bbjAwGCWkqWxX7Wu25t4TqiKE6rAB1LbTO0FnxI8IkmBsjEeKDolup8WyM8u
-	 z/nD3w2xJQvqbI4Ud91y+aSAg4wwy+uytCZZE4Gc=
+	b=MQxGEWaPDen0JFdRyyRRV8f1kNq/lhvytkn3tCPIfqYYWlyXzZhUrSslXZ35lkIMe
+	 dMhkhCkcmLM67cgG2sTPw5k0UanZeQ1NjhTzPHieYYy+PBv+zIIX7XyjuNzfcVe9nI
+	 Yv+iYEuUNUepjtyazKSj8ftXP++Ngaqzo0zdOMok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 161/393] f2fs: fix to avoid atomicity corruption of atomic file
-Date: Wed, 23 Apr 2025 16:40:57 +0200
-Message-ID: <20250423142650.024913877@linuxfoundation.org>
+	Sun peng Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 204/223] drm/amd/display: Temporarily disable hostvm on DCN31
+Date: Wed, 23 Apr 2025 16:44:36 +0200
+Message-ID: <20250423142625.477282455@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,72 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yeongjin Gil <youngjin.gil@samsung.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit f098aeba04c9328571567dca45159358a250240c upstream.
+commit ba93dddfc92084a1e28ea447ec4f8315f3d8d3fd upstream.
 
-In the case of the following call stack for an atomic file,
-FI_DIRTY_INODE is set, but FI_ATOMIC_DIRTIED is not subsequently set.
+With HostVM enabled, DCN31 fails to pass validation for 3x4k60. Some Linux
+userspace does not downgrade one of the monitors to 4k30, and the result
+is that the monitor does not light up. Disable it until the bandwidth
+calculation failure is resolved.
 
-f2fs_file_write_iter
-  f2fs_map_blocks
-    f2fs_reserve_new_blocks
-      inc_valid_block_count
-        __mark_inode_dirty(dquot)
-          f2fs_dirty_inode
-
-If FI_ATOMIC_DIRTIED is not set, atomic file can encounter corruption
-due to a mismatch between old file size and new data.
-
-To resolve this issue, I changed to set FI_ATOMIC_DIRTIED when
-FI_DIRTY_INODE is set. This ensures that FI_DIRTY_INODE, which was
-previously cleared by the Writeback thread during the commit atomic, is
-set and i_size is updated.
-
-Cc: <stable@vger.kernel.org>
-Fixes: fccaa81de87e ("f2fs: prevent atomic file from being dirtied before commit")
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c |    4 +---
- fs/f2fs/super.c |    4 ++++
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -35,10 +35,8 @@ void f2fs_mark_inode_dirty_sync(struct i
- 	if (f2fs_inode_dirtied(inode, sync))
- 		return;
- 
--	if (f2fs_is_atomic_file(inode)) {
--		set_inode_flag(inode, FI_ATOMIC_DIRTIED);
-+	if (f2fs_is_atomic_file(inode))
- 		return;
--	}
- 
- 	mark_inode_dirty_sync(inode);
- }
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1499,6 +1499,10 @@ int f2fs_inode_dirtied(struct inode *ino
- 		inc_page_count(sbi, F2FS_DIRTY_IMETA);
- 	}
- 	spin_unlock(&sbi->inode_lock[DIRTY_META]);
-+
-+	if (!ret && f2fs_is_atomic_file(inode))
-+		set_inode_flag(inode, FI_ATOMIC_DIRTIED);
-+
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
+@@ -891,7 +891,7 @@ static const struct dc_debug_options deb
+ 	.disable_z10 = true,
+ 	.enable_legacy_fast_update = true,
+ 	.enable_z9_disable_interface = true, /* Allow support for the PMFW interface for disable Z9*/
+-	.dml_hostvm_override = DML_HOSTVM_NO_OVERRIDE,
++	.dml_hostvm_override = DML_HOSTVM_OVERRIDE_FALSE,
+ 	.using_dml2 = false,
+ };
  
 
 
