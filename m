@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E5229C346;
-	Wed, 23 Apr 2025 15:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E98D296146;
+	Wed, 23 Apr 2025 15:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422002; cv=none; b=IvH3yf4sXcSN3iposAXRGkU7iws/nA+1ZKPq/AeVFRplHcTsP8tgi3PS0XZt8JAinCUzzifwx5BK9TeUXIAJWM2WHyEibcBsl4igE61k0bxmXDptzYYWU67Ww0AmUx7r3RGCXUhxnZphwQ76KYzhoP7J0e9IQQYrlA9ddbGxgp0=
+	t=1745422005; cv=none; b=PTrqjjeltnufbhM3iWc1yaDaCETrOFyVs2MBnNbTStMd/agpWpA4nGsK9EshNXA5iKNHVbEvUj111U87LQQsq2djBVvWvGv0v1mV5OxkQ7Pdsuky5MmvbwGtxh2jczWZavtGK+SVuK2eBQxmK9STEtjmVaH305v/gtH4awiXCvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422002; c=relaxed/simple;
-	bh=Jms9kSzbSX23joVlMl7toMxBSJnNRoivJCYHmjBoUQ0=;
+	s=arc-20240116; t=1745422005; c=relaxed/simple;
+	bh=7/XGCyip29YnzNqFeznBpzrvmG/lo2X/dnDDZ5vAw10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQ+mgXwhtP2NUqkuvKUGCV5Cuvhui3VHsa+K0Ve/QLNbt2omLYm0WWitow213Xzb54SSBYbg03TNqfXlN75WWhY2cfnH2z+Dw0F4MiCUSy0lMRwRnnIM4G9TYZLRM7LHqpLPP1vFmOrkM0suZQYCXSrD4sOpw/TthwESQBjjfFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFfkzuBj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSssdVSDyF28xLK6wYjMRcw0q/8D5jxUXnwT98GHctTGPXlcJnQOv7BxkRjbIfwVtDVHXa4hRtkKWv8KLNmRpP1i8sLRsjFORncIHms9Q59yl4oPwiszHdWFMlvjJJSEkByixgGnJmFCPP9I3h8wkg6pAsdWcIUDJmIqIm6CILA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbHo6G1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFfkzuBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28831C4CEE3;
-	Wed, 23 Apr 2025 15:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbHo6G1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C640CC4CEE2;
+	Wed, 23 Apr 2025 15:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422002;
-	bh=Jms9kSzbSX23joVlMl7toMxBSJnNRoivJCYHmjBoUQ0=;
+	s=korg; t=1745422005;
+	bh=7/XGCyip29YnzNqFeznBpzrvmG/lo2X/dnDDZ5vAw10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFfkzuBjq3h/7TC8d6wwlBYXzeO7rP6q/7gX4uU5R2j4qrqyfcsyBIirWdmfq/EEV
-	 pbBcaDKSD+2MvZBkeOxM94XW8DK1t010ASOEnh/7flOEcXBmxFANfmwFv5qEkvh1Vx
-	 Z9oQs1bwdWh46+7b01w6R5QJEqbDER2Qt+/5NlsU=
+	b=nbHo6G1Z5q4U0zFwuXfD0Uhnx89wMHJOR16qlsuevAR1LZNlj9EhwbNkIvUQ0AVw7
+	 6CYp5SZCNsCN+aAbO5sUg5eAb1smLGrVw+lSwcT+ky0LCpCm/Cc4OSTdON18tIJO7M
+	 J5QEb/FEF4uJEfZMYPAOoiGXg199WQGOAuZ1jUko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Heelan <seanheelan@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 216/291] ksmbd: Fix dangling pointer in krb_authenticate
-Date: Wed, 23 Apr 2025 16:43:25 +0200
-Message-ID: <20250423142633.219607233@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Christopher S M Hall <christopher.s.hall@intel.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 261/393] igc: move ktime snapshot into PTM retry loop
+Date: Wed, 23 Apr 2025 16:42:37 +0200
+Message-ID: <20250423142654.151692089@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +53,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Heelan <seanheelan@gmail.com>
+From: Christopher S M Hall <christopher.s.hall@intel.com>
 
-commit 1e440d5b25b7efccb3defe542a73c51005799a5f upstream.
+[ Upstream commit cd7f7328d691937102732f39f97ead35b15bf803 ]
 
-krb_authenticate frees sess->user and does not set the pointer
-to NULL. It calls ksmbd_krb5_authenticate to reinitialise
-sess->user but that function may return without doing so. If
-that happens then smb2_sess_setup, which calls krb_authenticate,
-will be accessing free'd memory when it later uses sess->user.
+Move ktime_get_snapshot() into the loop. If a retry does occur, a more
+recent snapshot will result in a more accurate cross-timestamp.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Heelan <seanheelan@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a90ec8483732 ("igc: Add support for PTP getcrosststamp()")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
+Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1615,8 +1615,10 @@ static int krb5_authenticate(struct ksmb
- 	if (prev_sess_id && prev_sess_id != sess->id)
- 		destroy_previous_session(conn, sess->user, prev_sess_id);
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 097a481e6b73d..adb31cccaf9a5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -980,16 +980,16 @@ static int igc_phc_get_syncdevicetime(ktime_t *device,
+ 	int err, count = 100;
+ 	ktime_t t1, t2_curr;
  
--	if (sess->state == SMB2_SESSION_VALID)
-+	if (sess->state == SMB2_SESSION_VALID) {
- 		ksmbd_free_user(sess->user);
-+		sess->user = NULL;
-+	}
+-	/* Get a snapshot of system clocks to use as historic value. */
+-	ktime_get_snapshot(&adapter->snapshot);
+-
++	/* Doing this in a loop because in the event of a
++	 * badly timed (ha!) system clock adjustment, we may
++	 * get PTM errors from the PCI root, but these errors
++	 * are transitory. Repeating the process returns valid
++	 * data eventually.
++	 */
+ 	do {
+-		/* Doing this in a loop because in the event of a
+-		 * badly timed (ha!) system clock adjustment, we may
+-		 * get PTM errors from the PCI root, but these errors
+-		 * are transitory. Repeating the process returns valid
+-		 * data eventually.
+-		 */
++		/* Get a snapshot of system clocks to use as historic value. */
++		ktime_get_snapshot(&adapter->snapshot);
++
+ 		igc_ptm_trigger(hw);
  
- 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
- 					 out_blob, &out_len);
+ 		err = readx_poll_timeout(rd32, IGC_PTM_STAT, stat,
+-- 
+2.39.5
+
 
 
