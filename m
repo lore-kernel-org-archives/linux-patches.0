@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E3226A082;
-	Wed, 23 Apr 2025 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09F426A082;
+	Wed, 23 Apr 2025 15:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422144; cv=none; b=IbB919iOTqNlaKSW/B7WmkL+ob3sdMVqOkPDcsH6zyqHDDbWRmYL7EsF1Y1AwAeNngKPzFh0VDC3emcxI5f2wvE3H3z9Kr92VFpB6K1Is/YjuyWkKbIAUatkDR1Rvn6Xj2XOuzchvdkcbdGrfTewD/hpTst8o+ezwU9AIi7iLvI=
+	t=1745422146; cv=none; b=N8mut7wQTpQHd4gpH9EEpKwFAZQC+KiVZVUFsTxVEltWQfBNDMww2v8FsDyWmQdanD4uWgw+ePc05pxYb/43ZCMcglF9VRFL6UyMGeuiGJwr2H/CnlaRd6/mSJteAVs0KGA8eRH2ZHhAxIb344tWPG5DR47oKhei4keq1LSH8oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422144; c=relaxed/simple;
-	bh=N/1RudE0Gfna3LlpXm00dTWMlh8OmN3Mu390VLsSbbg=;
+	s=arc-20240116; t=1745422146; c=relaxed/simple;
+	bh=eXqDLkyYUWuYB6dcdtugQiaYRnx1njDY8ni+XmCew9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTfa20kKMoXD7HIhCi4IhhQknk1lIinXutijS+tSq7fIf/qkLk5FsbnwA/M2YtoO2xo3miZu1kFk3DMwFXWZ9/HUOUy7EqrQIjL+q6YGyorvscLYRV3VOx3qs+SNmySsUQlpl1XiooupQeFEGLmbhg+k9JV/PNhf6fg3blNLaoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4I/+w9b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aV/dVERsGh6LeU/pqvbzkoDaRuDx8ixK3eBdSqUcOljwIr5RxT83M9Sh93otcyF2PgdOeNJXcEYnWNexyafL5J6JQ3hiAn3vCPOF8Fxynhq2va8cey3Hhlv3dUkOJbx4tKXD4G/5i4Zy1QJ4uZnx6x/kUA8wQvAt7O6CfB6AUlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzWfoFzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4I/+w9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90527C4CEE2;
-	Wed, 23 Apr 2025 15:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzWfoFzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34891C4CEE2;
+	Wed, 23 Apr 2025 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422143;
-	bh=N/1RudE0Gfna3LlpXm00dTWMlh8OmN3Mu390VLsSbbg=;
+	s=korg; t=1745422146;
+	bh=eXqDLkyYUWuYB6dcdtugQiaYRnx1njDY8ni+XmCew9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4I/+w9bkRSGsOPbj0tSKpj4bSnvhchdo0e413urIv1FQ+SicDggZhKeK+rWviAgE
-	 O+hU5WNTMJxJjqmz7VV+rvcvK62XqtO5Nc44LNPOx5eVaLooKDzOB2bUJa4BSfJ3uZ
-	 h/9bSd+fydzkKJ3L6HBe6MY6OzLys/FmbO8M7454=
+	b=fzWfoFzQjo0U1vZRvWjpO1yW+a8pAWBpcFH2ZQnrxbug6g2Lsd/WujudKC4BHrvOr
+	 tPgnY7ZsiF3a2GusATKwHWaGVyn0b59OupsYphslJvc+V3wcQuJ/YNcyIftTSjOhn2
+	 FnrJfbmtcWjKGv77Bv1WY0LiAfUJ2GTySsjCSTfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 286/393] net: dsa: clean up FDB, MDB, VLAN entries on unbind
-Date: Wed, 23 Apr 2025 16:43:02 +0200
-Message-ID: <20250423142655.159577195@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 6.1 245/291] KVM: arm64: Discard any SVE state when entering KVM guests
+Date: Wed, 23 Apr 2025 16:43:54 +0200
+Message-ID: <20250423142634.428314787@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +49,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 7afb5fb42d4950f33af2732b8147c552659f79b7 ]
+[ Upstream commit 93ae6b01bafee8fa385aa25ee7ebdb40057f6abe ]
 
-As explained in many places such as commit b117e1e8a86d ("net: dsa:
-delete dsa_legacy_fdb_add and dsa_legacy_fdb_del"), DSA is written given
-the assumption that higher layers have balanced additions/deletions.
-As such, it only makes sense to be extremely vocal when those
-assumptions are violated and the driver unbinds with entries still
-present.
+Since 8383741ab2e773a99 (KVM: arm64: Get rid of host SVE tracking/saving)
+KVM has not tracked the host SVE state, relying on the fact that we
+currently disable SVE whenever we perform a syscall. This may not be true
+in future since performance optimisation may result in us keeping SVE
+enabled in order to avoid needing to take access traps to reenable it.
+Handle this by clearing TIF_SVE and converting the stored task state to
+FPSIMD format when preparing to run the guest.  This is done with a new
+call fpsimd_kvm_prepare() to keep the direct state manipulation
+functions internal to fpsimd.c.
 
-But Ido Schimmel points out a very simple situation where that is wrong:
-https://lore.kernel.org/netdev/ZDazSM5UsPPjQuKr@shredder/
-(also briefly discussed by me in the aforementioned commit).
-
-Basically, while the bridge bypass operations are not something that DSA
-explicitly documents, and for the majority of DSA drivers this API
-simply causes them to go to promiscuous mode, that isn't the case for
-all drivers. Some have the necessary requirements for bridge bypass
-operations to do something useful - see dsa_switch_supports_uc_filtering().
-
-Although in tools/testing/selftests/net/forwarding/local_termination.sh,
-we made an effort to popularize better mechanisms to manage address
-filters on DSA interfaces from user space - namely macvlan for unicast,
-and setsockopt(IP_ADD_MEMBERSHIP) - through mtools - for multicast, the
-fact is that 'bridge fdb add ... self static local' also exists as
-kernel UAPI, and might be useful to someone, even if only for a quick
-hack.
-
-It seems counter-productive to block that path by implementing shim
-.ndo_fdb_add and .ndo_fdb_del operations which just return -EOPNOTSUPP
-in order to prevent the ndo_dflt_fdb_add() and ndo_dflt_fdb_del() from
-running, although we could do that.
-
-Accepting that cleanup is necessary seems to be the only option.
-Especially since we appear to be coming back at this from a different
-angle as well. Russell King is noticing that the WARN_ON() triggers even
-for VLANs:
-https://lore.kernel.org/netdev/Z_li8Bj8bD4-BYKQ@shell.armlinux.org.uk/
-
-What happens in the bug report above is that dsa_port_do_vlan_del() fails,
-then the VLAN entry lingers on, and then we warn on unbind and leak it.
-
-This is not a straight revert of the blamed commit, but we now add an
-informational print to the kernel log (to still have a way to see
-that bugs exist), and some extra comments gathered from past years'
-experience, to justify the logic.
-
-Fixes: 0832cd9f1f02 ("net: dsa: warn if port lists aren't empty in dsa_port_teardown")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250414212930.2956310-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221115094640.112848-2-broonie@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Mark: trivial backport to v6.1 ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/dsa.c | 38 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 35 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/fpsimd.h |    1 +
+ arch/arm64/kernel/fpsimd.c      |   23 +++++++++++++++++++++++
+ arch/arm64/kvm/fpsimd.c         |    3 ++-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index ccbdb98109f80..399675c5fcc7f 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -1483,12 +1483,44 @@ static int dsa_switch_parse(struct dsa_switch *ds, struct dsa_chip_data *cd)
+--- a/arch/arm64/include/asm/fpsimd.h
++++ b/arch/arm64/include/asm/fpsimd.h
+@@ -56,6 +56,7 @@ extern void fpsimd_signal_preserve_curre
+ extern void fpsimd_preserve_current_state(void);
+ extern void fpsimd_restore_current_state(void);
+ extern void fpsimd_update_current_state(struct user_fpsimd_state const *state);
++extern void fpsimd_kvm_prepare(void);
  
- static void dsa_switch_release_ports(struct dsa_switch *ds)
+ extern void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *state,
+ 				     void *sve_state, unsigned int sve_vl,
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1644,6 +1644,29 @@ void fpsimd_signal_preserve_current_stat
+ }
+ 
+ /*
++ * Called by KVM when entering the guest.
++ */
++void fpsimd_kvm_prepare(void)
++{
++	if (!system_supports_sve())
++		return;
++
++	/*
++	 * KVM does not save host SVE state since we can only enter
++	 * the guest from a syscall so the ABI means that only the
++	 * non-saved SVE state needs to be saved.  If we have left
++	 * SVE enabled for performance reasons then update the task
++	 * state to be FPSIMD only.
++	 */
++	get_cpu_fpsimd_context();
++
++	if (test_and_clear_thread_flag(TIF_SVE))
++		sve_to_fpsimd(current);
++
++	put_cpu_fpsimd_context();
++}
++
++/*
+  * Associate current's FPSIMD context with this cpu
+  * The caller must have ownership of the cpu FPSIMD context before calling
+  * this function.
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -75,11 +75,12 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_
+ void kvm_arch_vcpu_load_fp(struct kvm_vcpu *vcpu)
  {
-+	struct dsa_mac_addr *a, *tmp;
- 	struct dsa_port *dp, *next;
-+	struct dsa_vlan *v, *n;
+ 	BUG_ON(!current->mm);
+-	BUG_ON(test_thread_flag(TIF_SVE));
  
- 	dsa_switch_for_each_port_safe(dp, next, ds) {
--		WARN_ON(!list_empty(&dp->fdbs));
--		WARN_ON(!list_empty(&dp->mdbs));
--		WARN_ON(!list_empty(&dp->vlans));
-+		/* These are either entries that upper layers lost track of
-+		 * (probably due to bugs), or installed through interfaces
-+		 * where one does not necessarily have to remove them, like
-+		 * ndo_dflt_fdb_add().
-+		 */
-+		list_for_each_entry_safe(a, tmp, &dp->fdbs, list) {
-+			dev_info(ds->dev,
-+				 "Cleaning up unicast address %pM vid %u from port %d\n",
-+				 a->addr, a->vid, dp->index);
-+			list_del(&a->list);
-+			kfree(a);
-+		}
+ 	if (!system_supports_fpsimd())
+ 		return;
+ 
++	fpsimd_kvm_prepare();
 +
-+		list_for_each_entry_safe(a, tmp, &dp->mdbs, list) {
-+			dev_info(ds->dev,
-+				 "Cleaning up multicast address %pM vid %u from port %d\n",
-+				 a->addr, a->vid, dp->index);
-+			list_del(&a->list);
-+			kfree(a);
-+		}
-+
-+		/* These are entries that upper layers have lost track of,
-+		 * probably due to bugs, but also due to dsa_port_do_vlan_del()
-+		 * having failed and the VLAN entry still lingering on.
-+		 */
-+		list_for_each_entry_safe(v, n, &dp->vlans, list) {
-+			dev_info(ds->dev,
-+				 "Cleaning up vid %u from port %d\n",
-+				 v->vid, dp->index);
-+			list_del(&v->list);
-+			kfree(v);
-+		}
-+
- 		list_del(&dp->list);
- 		kfree(dp);
- 	}
--- 
-2.39.5
-
+ 	vcpu->arch.fp_state = FP_STATE_HOST_OWNED;
+ 
+ 	vcpu_clear_flag(vcpu, HOST_SVE_ENABLED);
 
 
