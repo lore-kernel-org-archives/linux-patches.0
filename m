@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6677E1F193C;
-	Wed, 23 Apr 2025 15:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1732127FD7A;
+	Wed, 23 Apr 2025 15:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420453; cv=none; b=eYHv6fId0Sp57L1dJrAL9nhi0Lb+hFphVNPPWJneGAknHt0s6TSxCO4Pu1NXJC9vkSqA1Xhks5dSPJ6EL5+VUn11WXgK6ge71cwBy8ynrGPEDrlC2yR15JIbk84ZuygXwVOcihMEMRsuTEeArKfetNOjHa4k+UTNIqPROLyg5u0=
+	t=1745420456; cv=none; b=uQJC7SmwQJK6wvlZ5ZOTuF8MNOdPz58mzV/wu5JB2lnPS/hJM/Ccd80Jo+1HwtcopNjUghPXcY4QMf1w/IbQ/2BMt1MNGg1uhi91LD/MkRYspILjSWBpcY2TZLzhqkE7lBjm8dKpUWCF359Qc69+NQQSQ0u/kqLMBzZFPfj0cL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420453; c=relaxed/simple;
-	bh=vntx5iVoBf/6gTu6s8/xjtw8+KvH0zNMpa3mOfrgumU=;
+	s=arc-20240116; t=1745420456; c=relaxed/simple;
+	bh=18xYFtwhXwqYSje0wMT4he8NIMPtPWldlsJh0E+U3wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QX0S9sB4C0B3ctAUtK7LUIChedb5LISy144IxlwpTHAxFuUX4aCrNs4XeAFv4/98baZEn9wEVsdYhtVKtjsk8LzBqnkPg+ofTjv0sNSIiDQQpxRnso8XcdViTIcR+TefAu3ud/HZmSW3sI/H4RYVfaas2hBUbWSfBb8Xf0+s8KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlQTzmCd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dg4nIGcsX1nkQi4A0od88yH/+5oArD8F5wCaLZQpY2QxLE9A9uXu2V469aatoafP1Alp3glOI+t2BF5U9WNgBHWzEINPGg6vkobIYeymEYcwWHscHkxEmejTDiXJYsYHr7SLCr+Q/d6qEpc2QanEdLWQt77wlXnzG2MQI+V41kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEsRyPaW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlQTzmCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC348C4CEE2;
-	Wed, 23 Apr 2025 15:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEsRyPaW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9788FC4CEE2;
+	Wed, 23 Apr 2025 15:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420453;
-	bh=vntx5iVoBf/6gTu6s8/xjtw8+KvH0zNMpa3mOfrgumU=;
+	s=korg; t=1745420455;
+	bh=18xYFtwhXwqYSje0wMT4he8NIMPtPWldlsJh0E+U3wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlQTzmCd29sLS8sFRyqytEWFxtKR1igVHcN8+7V8pSYhPBlLmjOMRMJ/ypCzRUKTr
-	 VCvffcZVJjv1p//JF+cdoES+6nD/QVRVa2h5109kh98jAuIu36X4raIT2tWMIIM0kc
-	 pq7gNAlaVLybhl8K1d2aJfomnE9DgvnC6LQ9TNC8=
+	b=kEsRyPaW+eGPkSU/RFZIcWIUcaLMWcXLuTEi0ZeYm7uQYduDd4+SaTXfjy2sM0JBF
+	 wN75Dn/DkU99iKxdPs8QmK/gJauVZz2pGGlzJhnjF+k43PO6O6G93jGsw4jSAKSS/N
+	 GCaXA2+niu5qSqIbsKd0+5jFq+y5btJLyi0QXcis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 093/241] riscv: KGDB: Do not inline arch_kgdb_breakpoint()
-Date: Wed, 23 Apr 2025 16:42:37 +0200
-Message-ID: <20250423142624.379485621@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 133/223] tracing: Fix filter string testing
+Date: Wed, 23 Apr 2025 16:43:25 +0200
+Message-ID: <20250423142622.509138169@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +50,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 3af4bec9c1db3f003be4d5ae09b6a737e4be1612 ]
+commit a8c5b0ed89a3f2c81c6ae0b041394e6eea0e7024 upstream.
 
-The arch_kgdb_breakpoint() function defines the kgdb_compiled_break
-symbol using inline assembly.
+The filter string testing uses strncpy_from_kernel/user_nofault() to
+retrieve the string to test the filter against. The if() statement was
+incorrect as it considered 0 as a fault, when it is only negative that it
+faulted.
 
-There's a potential issue where the compiler might inline
-arch_kgdb_breakpoint(), which would then define the kgdb_compiled_break
-symbol multiple times, leading to fail to link vmlinux.o.
+Running the following commands:
 
-This isn't merely a potential compilation problem. The intent here
-is to determine the global symbol address of kgdb_compiled_break,
-and if this function is inlined multiple times, it would logically
-be a grave error.
+  # cd /sys/kernel/tracing
+  # echo "filename.ustring ~ \"/proc*\"" > events/syscalls/sys_enter_openat/filter
+  # echo 1 > events/syscalls/sys_enter_openat/enable
+  # ls /proc/$$/maps
+  # cat trace
 
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/5b0adf9b-2b22-43fe-ab74-68df94115b9a@ghiti.fr/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Co-developed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/F22359AFB6FF9FD8+20250411073222.56820-1-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Would produce nothing, but with the fix it will produce something like:
+
+      ls-1192    [007] .....  8169.828333: sys_openat(dfd: ffffffffffffff9c, filename: 7efc18359904, flags: 80000, mode: 0)
+
+Link: https://lore.kernel.org/all/CAEf4BzbVPQ=BjWztmEwBPRKHUwNfKBkS3kce-Rzka6zvbQeVpg@mail.gmail.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250417183003.505835fb@gandalf.local.home
+Fixes: 77360f9bbc7e5 ("tracing: Add test for user space strings when filtering on string pointers")
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Reported-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/kgdb.h | 9 +--------
- arch/riscv/kernel/kgdb.c      | 8 ++++++++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ kernel/trace/trace_events_filter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kgdb.h b/arch/riscv/include/asm/kgdb.h
-index 46677daf708bd..cc11c4544cffd 100644
---- a/arch/riscv/include/asm/kgdb.h
-+++ b/arch/riscv/include/asm/kgdb.h
-@@ -19,16 +19,9 @@
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -808,7 +808,7 @@ static __always_inline char *test_string
+ 	kstr = ubuf->buffer;
  
- #ifndef	__ASSEMBLY__
- 
-+void arch_kgdb_breakpoint(void);
- extern unsigned long kgdb_compiled_break;
- 
--static inline void arch_kgdb_breakpoint(void)
--{
--	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
--}
--
- #endif /* !__ASSEMBLY__ */
- 
- #define DBG_REG_ZERO "zero"
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 2e0266ae6bd72..5d1ce8dacaf58 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -254,6 +254,14 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- 	regs->epc = pc;
+ 	/* For safety, do not trust the string pointer */
+-	if (!strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE))
++	if (strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 	return kstr;
  }
+@@ -827,7 +827,7 @@ static __always_inline char *test_ustrin
  
-+noinline void arch_kgdb_breakpoint(void)
-+{
-+	asm(".global kgdb_compiled_break\n"
-+	    ".option norvc\n"
-+	    "kgdb_compiled_break: ebreak\n"
-+	    ".option rvc\n");
-+}
-+
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
- 				char *remcom_out_buffer)
- {
--- 
-2.39.5
-
+ 	/* user space address? */
+ 	ustr = (char __user *)str;
+-	if (!strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE))
++	if (strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 
+ 	return kstr;
 
 
