@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD9027F4D9;
-	Wed, 23 Apr 2025 14:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795A027CB33;
+	Wed, 23 Apr 2025 14:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419780; cv=none; b=fY/5Ql4MCaJpQeAEX258AJ6LvvbZBtB/R+8fDzZD/Wnl7Ifu4b1lsRSCJjBVDy5T/MmsgvTJBbt/OdvJrRw3uYZrPTwmIe3xznA42Qq9rSe9hIcN3VMpY8PyWVBrJQMBcHUf6y02rMcyRGJv7vuT5R6AwxdwqLMrXJtMCqB283U=
+	t=1745419784; cv=none; b=Xs/LZBDkZe6J/YXIova9ekFmMoAuSYbkVHHTbK9u49DPVtU5bIp5a/DUe+oRdKmkPYhgAQotYKnTak57uNINBCJuU0FCiGSwjhl51ztX9ycnvdYwm7LsKXk0K2Zk19yojmAFu9PzANYar0QhaAe/de5/wObF7S0m7qV7T5rRM74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419780; c=relaxed/simple;
-	bh=sRYqjM4NHKh1QfUmJbCqYy8nRLSo42sWSc02gnSB9mo=;
+	s=arc-20240116; t=1745419784; c=relaxed/simple;
+	bh=v4uCKiptO4d0yaSCsnWR+/WMOiCvKj8RoI78/6G/UGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SD1SR8ln7d58LT8LemploHcz+kCwVjMRDwqkAG5XeDTTIsc8mvexAw5faK3MrkJMn5pmGRw10mUH5j5CQWWpZpLecj/twtlwqUM3+Sm4/NChCU30holUi8/q7AGeNhUJxcw0X38yM4FqcAnXysDVZDwmO4uCkZSUFiQAjt8Y3kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mnemu3Jq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pgb4NvH+15O1tK8ZejgojCFXe+3VXDK+0N90jYbuZzTRqkQil4lbxQbiM9c0RQTM+14MvBt/TpfMASfE8sa0DlujrA+x2+GlHKc1O38oZnf06Ww1ISmSlCuYrZOF+w6wLn0rm9XWeGc5qebrVgjOJ8Op0eg+pMiigHqTPbiE+rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWHzfLc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mnemu3Jq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AF2C4CEE2;
-	Wed, 23 Apr 2025 14:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWHzfLc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15C3C4CEE3;
+	Wed, 23 Apr 2025 14:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419779;
-	bh=sRYqjM4NHKh1QfUmJbCqYy8nRLSo42sWSc02gnSB9mo=;
+	s=korg; t=1745419782;
+	bh=v4uCKiptO4d0yaSCsnWR+/WMOiCvKj8RoI78/6G/UGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mnemu3Jq657QRCuzyj4aVv39k4KIbVTOxuHkbLBukdSrTfZW4IU5uxKcJwbNzPaQG
-	 cp5JlZczrQTSe0X60A0tCtyjrdh3OD+hmqiyFdtuThXQu/UC2sUKkI9PCACFvMpBg1
-	 pPKRPnBMVfDqKLaeWbdrULnNtIMQ+NAGeZ359hyM=
+	b=GWHzfLc3uT8FcjfLdT5OQ4C6qLI79rhc0s3Pq1O6eNs8n0gl0JIBYlUWXq4pxL809
+	 yQ1KydR6D+T7YYCP6ev5ZQMow4f0enXs+Km0fGXUi1jAHZZIRg/8ZhYcMzaVEmU2Qk
+	 x/rgjfN6T/fYFhugk331oRwImiAvybSkOV30r0CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/223] net: b53: enable BPDU reception for management port
-Date: Wed, 23 Apr 2025 16:42:12 +0200
-Message-ID: <20250423142619.581103180@linuxfoundation.org>
+Subject: [PATCH 6.14 026/241] Bluetooth: l2cap: Check encryption key size on incoming connection
+Date: Wed, 23 Apr 2025 16:41:30 +0200
+Message-ID: <20250423142621.587093760@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-[ Upstream commit 36355ddfe8955f226a88a543ed354b9f6b84cd70 ]
+[ Upstream commit 522e9ed157e3c21b4dd623c79967f72c21e45b78 ]
 
-For STP to work, receiving BPDUs is essential, but the appropriate bit
-was never set. Without GC_RX_BPDU_EN, the switch chip will filter all
-BPDUs, even if an appropriate PVID VLAN was setup.
+This is required for passing GAP/SEC/SEM/BI-04-C PTS test case:
+  Security Mode 4 Level 4, Responder - Invalid Encryption Key Size
+  - 128 bit
 
-Fixes: ff39c2d68679 ("net: dsa: b53: Add bridge support")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20250414200434.194422-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This tests the security key with size from 1 to 15 bytes while the
+Security Mode 4 Level 4 requests 16 bytes key size.
+
+Currently PTS fails with the following logs:
+- expected:Connection Response:
+    Code: [3 (0x03)] Code
+    Identifier: (lt)WildCard: Exists(gt)
+    Length: [8 (0x0008)]
+    Destination CID: (lt)WildCard: Exists(gt)
+    Source CID: [64 (0x0040)]
+    Result: [3 (0x0003)] Connection refused - Security block
+    Status: (lt)WildCard: Exists(gt),
+but received:Connection Response:
+    Code: [3 (0x03)] Code
+    Identifier: [1 (0x01)]
+    Length: [8 (0x0008)]
+    Destination CID: [64 (0x0040)]
+    Source CID: [64 (0x0040)]
+    Result: [0 (0x0000)] Connection Successful
+    Status: [0 (0x0000)] No further information available
+
+And HCI logs:
+< HCI Command: Read Encrypti.. (0x05|0x0008) plen 2
+        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 1
+        Status: Success (0x00)
+        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
+        Key size: 7
+> ACL Data RX: Handle 14 flags 0x02 dlen 12
+      L2CAP: Connection Request (0x02) ident 1 len 4
+        PSM: 4097 (0x1001)
+        Source CID: 64
+< ACL Data TX: Handle 14 flags 0x00 dlen 16
+      L2CAP: Connection Response (0x03) ident 1 len 8
+        Destination CID: 64
+        Source CID: 64
+        Result: Connection successful (0x0000)
+        Status: No further information available (0x0000)
+
+Fixes: 288c06973daa ("Bluetooth: Enforce key size of 16 bytes on FIPS level")
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index c39cb119e760d..d4600ab0b70b3 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -737,6 +737,15 @@ static void b53_enable_mib(struct b53_device *dev)
- 	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c27ea70f71e1e..499e38ed639e6 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3956,7 +3956,8 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
  
-+static void b53_enable_stp(struct b53_device *dev)
-+{
-+	u8 gc;
-+
-+	b53_read8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, &gc);
-+	gc |= GC_RX_BPDU_EN;
-+	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
-+}
-+
- static u16 b53_default_pvid(struct b53_device *dev)
- {
- 	if (is5325(dev) || is5365(dev))
-@@ -876,6 +885,7 @@ static int b53_switch_reset(struct b53_device *dev)
- 	}
- 
- 	b53_enable_mib(dev);
-+	b53_enable_stp(dev);
- 
- 	return b53_flush_arl(dev, FAST_AGE_STATIC);
- }
+ 	/* Check if the ACL is secure enough (if not SDP) */
+ 	if (psm != cpu_to_le16(L2CAP_PSM_SDP) &&
+-	    !hci_conn_check_link_mode(conn->hcon)) {
++	    (!hci_conn_check_link_mode(conn->hcon) ||
++	    !l2cap_check_enc_key_size(conn->hcon))) {
+ 		conn->disc_reason = HCI_ERROR_AUTH_FAILURE;
+ 		result = L2CAP_CR_SEC_BLOCK;
+ 		goto response;
 -- 
 2.39.5
 
