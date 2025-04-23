@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CA219DF4C;
-	Wed, 23 Apr 2025 14:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73A21EFFB9;
+	Wed, 23 Apr 2025 14:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420150; cv=none; b=RbFybxucr5hGDrnWz/rBQ/FT7QR94RaG6FeBn5UbeT2VuoZsC83R5Ce9KCusnRpUPP4iNks7fR+V5eeDEMOMlD696o8CchjX2/sDmRxZ0rkAGN+YW5pgPl6HOWLmtefRfoScnKQihyRHt1WETllrnEPunlg9a3bLFbsvvPO4H/w=
+	t=1745420153; cv=none; b=AsQbFxj0SXsq0NGZtW2v9tixl7DiPyWVZZEQ8gWIwojhrIGnVzzbCn0mvuF0IQwKy/OTMff9YXuoMT44f2RqraUfdNnp3y9dChH3ayyHlS244Dns0FmRW+na331yTo9v3DPP4TSBEg7t8EtPNtEzQ+gn62/6FopyAl6PhQuF03o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420150; c=relaxed/simple;
-	bh=hhP14TKCZ8V8oi8nwDl66JIAMfKJLqalxIuQoMEV5yg=;
+	s=arc-20240116; t=1745420153; c=relaxed/simple;
+	bh=q1AzHKTwpNxcr3JA2EFzfg4IzDOC8cD6M8HTGBsnkUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUn87HphbBcuUmvqUoVPqJW4/l2HM+j984muusceOWtO0s6glycDXQjn3fvJcbrvb58YMRuorS+gvAV+XH8/V2cfcv6ulsxb0NpJKzBANMMiAMivYvglKzqpOfEatWY6VNuLEvRg+KIDkjuVP5IpqdzX0zD6WH54LjsKup3UOSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu/eRtJO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iy8HfunSdZQzgmoOptBsUW27h7e801Kbmmf4tZgalinvT8XEcTXtKfX8WpeL2b8Dxvp3InGBT62zfDC7WrZauoegII1Q785BMDk99cLcTA2ZzVepOHZchdg/WRNHepS2+WzInLRv2fADtRN4YwRQPEujRQau4ZbHXn8wP6RCTFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVjXCUin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu/eRtJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0109C4CEE2;
-	Wed, 23 Apr 2025 14:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVjXCUin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783ECC4CEE2;
+	Wed, 23 Apr 2025 14:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420150;
-	bh=hhP14TKCZ8V8oi8nwDl66JIAMfKJLqalxIuQoMEV5yg=;
+	s=korg; t=1745420152;
+	bh=q1AzHKTwpNxcr3JA2EFzfg4IzDOC8cD6M8HTGBsnkUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xu/eRtJOfcW1jnF3ECvMuWlgaVxpN0MWnMseobqivlRY8XTfD2tHcUDAwzQDiSvwR
-	 RyZWUGEm03aK+FgBwXvhFW6CziTMMcRgZg6/gTKwke5cvebezaQPPk8umgfbKAnWLt
-	 uEgfd9+zsQMgUoWCtqEqHHvsZzsUVvsSgeGzgcmM=
+	b=vVjXCUinoHuYfB1D+3pNYbon8OvxseT2DI/BYwRA35nkfwM7ipBEukmMEjBXQVe1L
+	 GKaXQgTHVkenyF5dGKL13uO8KyXM1aGTc80xrzEfrBLrfsvOQNXrp47PNT2ngGhCNk
+	 AdAmtrxSGRaMvnerm9SmSIOUPLSOTQ1SpFanl1U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/291] pm: cpupower: bench: Prevent NULL dereference on malloc failure
-Date: Wed, 23 Apr 2025 16:40:10 +0200
-Message-ID: <20250423142625.268700991@linuxfoundation.org>
+Subject: [PATCH 6.12 104/223] ftrace: fix incorrect hash size in register_ftrace_direct()
+Date: Wed, 23 Apr 2025 16:42:56 +0200
+Message-ID: <20250423142621.349320061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-[ Upstream commit 208baa3ec9043a664d9acfb8174b332e6b17fb69 ]
+[ Upstream commit 92f1d3b40179b15630d72e2c6e4e25a899b67ba9 ]
 
-If malloc returns NULL due to low memory, 'config' pointer can be NULL.
-Add a check to prevent NULL dereference.
+The maximum of the ftrace hash bits is made fls(32) in
+register_ftrace_direct(), which seems illogical. So, we fix it by making
+the max hash bits FTRACE_HASH_MAX_BITS instead.
 
-Link: https://lore.kernel.org/r/20250219122715.3892223-1-quic_zhonhan@quicinc.com
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/20250413014444.36724-1-dongml2@chinatelecom.cn
+Fixes: d05cb470663a ("ftrace: Fix modification of direct_function hash while in use")
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/bench/parse.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/ftrace.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/power/cpupower/bench/parse.c b/tools/power/cpupower/bench/parse.c
-index e63dc11fa3a53..48e25be6e1635 100644
---- a/tools/power/cpupower/bench/parse.c
-+++ b/tools/power/cpupower/bench/parse.c
-@@ -120,6 +120,10 @@ FILE *prepare_output(const char *dirname)
- struct config *prepare_default_config()
- {
- 	struct config *config = malloc(sizeof(struct config));
-+	if (!config) {
-+		perror("malloc");
-+		return NULL;
-+	}
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 90b59c627bb8e..e67d67f7b9065 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -5944,9 +5944,10 @@ int register_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
  
- 	dprintf("loading defaults\n");
+ 	/* Make a copy hash to place the new and the old entries in */
+ 	size = hash->count + direct_functions->count;
+-	if (size > 32)
+-		size = 32;
+-	new_hash = alloc_ftrace_hash(fls(size));
++	size = fls(size);
++	if (size > FTRACE_HASH_MAX_BITS)
++		size = FTRACE_HASH_MAX_BITS;
++	new_hash = alloc_ftrace_hash(size);
+ 	if (!new_hash)
+ 		goto out_unlock;
  
 -- 
 2.39.5
