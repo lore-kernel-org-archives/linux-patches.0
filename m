@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687D02F2E;
-	Wed, 23 Apr 2025 15:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193892F2E;
+	Wed, 23 Apr 2025 15:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420437; cv=none; b=TsRQpeQb0coadKc1sifvgn6USHygCB3nZf6DVgBGJEqfjxSCWqXccdR5AHYT5tVfr5QTA3sew3J1ljWDzYQN3c/PCQSWHIq+Onq3v3VDdcOJEc5L+gE1FIvpOH5oz+RMAW8SfnkZeJZShigmcLxhSMcLHkPGKP8AildN1VC+eJ4=
+	t=1745420440; cv=none; b=BtbT0m4PlzyOrWVIKpMx70FBcXn08c9kESr3qTxh2hyxjvUmp/ZVlcarRZoqmP0vNqnar00d93X/3pCet/anjbsr8aswDxB3hwfaiTite3WTnM5d/CWM6r4AL4KXGhm5w23/HErg2Y8UfhnUE1y/iU8j/ZanTZsR7HYg8MD5sPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420437; c=relaxed/simple;
-	bh=ACCSwolwaN8u3mM9prov6X36cdd2Fas5ovPxOY3y81o=;
+	s=arc-20240116; t=1745420440; c=relaxed/simple;
+	bh=TTaK6q5EEKpXxM4utosuN2WqrmMIQgmBdjCTmdPyQsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jJX4DtLwDfGJI+E+dVAPM91gz2+iI/qf4rKOIHfaAArnwW7y2iiOtrF9HJHjWQMTCgPOGPisOF2Z1058/+//+wlwxHvdl75uudwoXcHpT31TsQ3FLU5D1h37DAqlYlBQxs8u+mby8b6pTEOPNhgOsoTWizlzUfiOIBSX1wX9/Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V00nFNK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DN0Wvr7eQOTlXdL75yERWg3DBZA88b51b3vnXLlaZXRyudlBhtdus6qhdpwHFwNn2S3qc/Pm3nTXeCq404j63IBhD2lPM88d1j+pFd/Wh9GWImE1toPV77+11jWO3WlmAo1gfNAqC+syJ98HiWGTXlOwQsAAltEF2j0VZM+KwCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlMjqfO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V00nFNK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1ADC4CEE2;
-	Wed, 23 Apr 2025 15:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlMjqfO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E97C4CEE2;
+	Wed, 23 Apr 2025 15:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420437;
-	bh=ACCSwolwaN8u3mM9prov6X36cdd2Fas5ovPxOY3y81o=;
+	s=korg; t=1745420439;
+	bh=TTaK6q5EEKpXxM4utosuN2WqrmMIQgmBdjCTmdPyQsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V00nFNK7vHveZv1+NyTlKv9v/utArdKGG7SoIcJ6jjQtUIzYrhUyvuONogjuIawtA
-	 8iiYRxw7VEE4IFf5hQYxvR0VJRM4tNfM8Y26wOHe6oyfAoIl3PqZLHnLlIb9SN5XVW
-	 n94eZewkjZ2bRR9IKd1mmefTdmLBUqYF4sYxqDbs=
+	b=rlMjqfO1UQmiU2KypxwhVsHLqxrK9cdGDcelC8l0aiXkWUjy8Ruk5jHPgYQdVGywz
+	 p8iExnX8a7OXNK0R7/r6xZ56v/mzbOPY5iN3arYYfoBjNSkoKnJZWqJTEogDXn0LJP
+	 AVU90JmH6O6biWShbKxowQ7p8K9hGMPpL5ePogmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Syed Saba kareem <syed.sabakareem@amd.com>,
+	Reiner <Reiner.Proels@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/291] scsi: st: Fix array overflow in st_setup()
-Date: Wed, 23 Apr 2025 16:40:36 +0200
-Message-ID: <20250423142626.315549883@linuxfoundation.org>
+Subject: [PATCH 6.6 065/393] ASoC: amd: yc: update quirk data for new Lenovo model
+Date: Wed, 23 Apr 2025 16:39:21 +0200
+Message-ID: <20250423142645.990524694@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Syed Saba kareem <syed.sabakareem@amd.com>
 
-[ Upstream commit a018d1cf990d0c339fe0e29b762ea5dc10567d67 ]
+[ Upstream commit 5a4dd520ef8a94ecf81ac77b90d6a03e91c100a9 ]
 
-Change the array size to follow parms size instead of a fixed value.
+Update Quirk data for new Lenovo model 83J2 for YC platform.
 
-Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Closes: https://lore.kernel.org/linux-scsi/CALGdzuoubbra4xKOJcsyThdk5Y1BrAmZs==wbqjbkAgmKS39Aw@mail.gmail.com/
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20250311112516.5548-2-Kai.Makisara@kolumbus.fi
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Syed Saba kareem <syed.sabakareem@amd.com>
+Link: https://patch.msgid.link/20250321122507.190193-1-syed.sabakareem@amd.com
+Reported-by: Reiner <Reiner.Proels@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219887
+Tested-by: Reiner <Reiner.Proels@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index b3caa3b9722d1..7f107be344236 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -4112,7 +4112,7 @@ static void validate_options(void)
-  */
- static int __init st_setup(char *str)
- {
--	int i, len, ints[5];
-+	int i, len, ints[ARRAY_SIZE(parms) + 1];
- 	char *stp;
- 
- 	stp = get_options(str, ARRAY_SIZE(ints), ints);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 2536bd3d59464..622df58a96942 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -339,6 +339,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83J2"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
