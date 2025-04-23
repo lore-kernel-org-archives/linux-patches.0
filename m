@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8C9289364;
-	Wed, 23 Apr 2025 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAD428FFD5;
+	Wed, 23 Apr 2025 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420616; cv=none; b=ibO5+euMloUtYZA6gn6xBBg5bh0tEwud/b8wigi5ymPIHdSOwO1m+GhBXB/0FgIsZBf9cwf0DrXYfs1i44eTsRt45UD87w7AOLPsI5UeqyoWuxMU3B06oIolpK+PO+B4dgWHTugk+4uBkDe7irbm5fotub6Q8PdeIpuD5BuZ7II=
+	t=1745420619; cv=none; b=eO3EmCSgvB8yIT4riIWEz7a0Ti7wqO+E7dhbxwgQA8WF6sEueMSHHdlUMXPZnKXXPNUjV+yhVNPiK44eYntAgbVmVvyJyYCq/7zcaLh+Y082ONqVJQI7BCVDeIENM2UJeIq33zaav25b2NG5dwyBF37TangOVAGSVxyoIAYcqZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420616; c=relaxed/simple;
-	bh=4nnYNBqLFS2n2SgPDDUq4CjO9CcO9h2ht74Y7ZMvce0=;
+	s=arc-20240116; t=1745420619; c=relaxed/simple;
+	bh=TBzK6Us8KDsailoB5etap1EHBKiobn5H4rQQiVBf4fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psIJZTFT/ws01FoG3NMn2Vfv6OI/E4s3YDxqMJlU6aC9otS9goazvrdEisyCbDko22cFx4TujFfaQrWFAB7axzTN4uiDPcHybuhivX66/Fynsy7S0Fr47tdC+LAw/cylVEZRpfhqTpt6jxfrH3EmbW+MDv3vEHRN0v+gwkY/hHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3kZ164m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmnAbZwL+BlFzrm/eYc0fHciEtIXJ+VELXVKo29437uUTdbLgptDtOlQIFyYQ04Uv18DgAoupWKYFSZ5WMJC8dYegegYq8ORi6iX9mcjbLmpFQ6NzJAL8e6cwygJBFmDDqyZ/gLnq89ZkijpvlR1HmcMm7fQ/WgMSEnfMMqKvaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NInUMZ+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3kZ164m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C868C4CEE2;
-	Wed, 23 Apr 2025 15:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NInUMZ+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B9BC4CEE2;
+	Wed, 23 Apr 2025 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420616;
-	bh=4nnYNBqLFS2n2SgPDDUq4CjO9CcO9h2ht74Y7ZMvce0=;
+	s=korg; t=1745420619;
+	bh=TBzK6Us8KDsailoB5etap1EHBKiobn5H4rQQiVBf4fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3kZ164mxcMK1vnpZ4hDbB7lmXRwaIpsKGKN/edWF1fcin4vmM8yoZ+NAOAU0qFM4
-	 8dqJ1MxzDTHHiAudkJUh5g87VzVnXxSaFSWg3KMQuCQq0EfDJ29QBeF/Xx9Hw80iF5
-	 6P2vIPfoMRsaAuv/uHmuLCQy+PIawuMD8C8tjZyQ=
+	b=NInUMZ+0i/bqPp5odDrOfBPr+hJkYEn/YTsNe2Dyc6TJtn4jBOilr2azXVb5aHRs7
+	 mac1KG1qYmzD835hAFf7w/wSDZYHUeQGtUH5wOMeJUCmbTl41rxoJo/RORZIyHk2KB
+	 E0ONzoyKbIc023GY6m+PSphuL5p3e1REzcmYlsII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tang Jun <dukang.tj@alibaba-inc.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>
-Subject: [PATCH 6.12 146/223] perf/x86/intel/uncore: Fix the scale of IIO free running counters on ICX
-Date: Wed, 23 Apr 2025 16:43:38 +0200
-Message-ID: <20250423142623.128986781@linuxfoundation.org>
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 065/291] drm/mediatek: mtk_dpi: Move the input_2p_en bit to platform data
+Date: Wed, 23 Apr 2025 16:40:54 +0200
+Message-ID: <20250423142627.031335261@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 32c7f1150225694d95a51110a93be25db03bb5db upstream.
+[ Upstream commit c90876a695dd83e76680b88b40067275a5982811 ]
 
-There was a mistake in the ICX uncore spec too. The counter increments
-for every 32 bytes rather than 4 bytes.
+In preparation for adding support for MT8195's HDMI reserved DPI
+instance, move the input_2p_en bit for DP_INTF to platform data.
 
-The same as SNR, there are 1 ioclk and 8 IIO bandwidth in free running
-counters. Reuse the snr_uncore_iio_freerunning_events().
+While at it, remove the input_2pixel member from platform data as
+having this bit implies that the 2pixel feature must be enabled.
 
-Fixes: 2b3b76b5ec67 ("perf/x86/intel/uncore: Add Ice Lake server uncore support")
-Reported-by: Tang Jun <dukang.tj@alibaba-inc.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250416142426.3933977-2-kan.liang@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-7-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   33 +--------------------------------
- 1 file changed, 1 insertion(+), 32 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dpi.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -5485,37 +5485,6 @@ static struct freerunning_counters icx_i
- 	[ICX_IIO_MSR_BW_IN]	= { 0xaa0, 0x1, 0x10, 8, 48, icx_iio_bw_freerunning_box_offsets },
+diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
+index 1f5d39a4077cd..cab4b3451187d 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dpi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
+@@ -125,14 +125,14 @@ struct mtk_dpi_yc_limit {
+  * @is_ck_de_pol: Support CK/DE polarity.
+  * @swap_input_support: Support input swap function.
+  * @support_direct_pin: IP supports direct connection to dpi panels.
+- * @input_2pixel: Input pixel of dp_intf is 2 pixel per round, so enable this
+- *		  config to enable this feature.
+  * @dimension_mask: Mask used for HWIDTH, HPORCH, VSYNC_WIDTH and VSYNC_PORCH
+  *		    (no shift).
+  * @hvsize_mask: Mask of HSIZE and VSIZE mask (no shift).
+  * @channel_swap_shift: Shift value of channel swap.
+  * @yuv422_en_bit: Enable bit of yuv422.
+  * @csc_enable_bit: Enable bit of CSC.
++ * @input_2p_en_bit: Enable bit for input two pixel per round feature.
++ *		     If present, implies that the feature must be enabled.
+  * @pixels_per_iter: Quantity of transferred pixels per iteration.
+  */
+ struct mtk_dpi_conf {
+@@ -145,12 +145,12 @@ struct mtk_dpi_conf {
+ 	bool is_ck_de_pol;
+ 	bool swap_input_support;
+ 	bool support_direct_pin;
+-	bool input_2pixel;
+ 	u32 dimension_mask;
+ 	u32 hvsize_mask;
+ 	u32 channel_swap_shift;
+ 	u32 yuv422_en_bit;
+ 	u32 csc_enable_bit;
++	u32 input_2p_en_bit;
+ 	u32 pixels_per_iter;
  };
  
--static struct uncore_event_desc icx_uncore_iio_freerunning_events[] = {
--	/* Free-Running IIO CLOCKS Counter */
--	INTEL_UNCORE_EVENT_DESC(ioclk,			"event=0xff,umask=0x10"),
--	/* Free-Running IIO BANDWIDTH IN Counters */
--	INTEL_UNCORE_EVENT_DESC(bw_in_port0,		"event=0xff,umask=0x20"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port0.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port1,		"event=0xff,umask=0x21"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port1.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port2,		"event=0xff,umask=0x22"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port2.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port3,		"event=0xff,umask=0x23"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port3.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port4,		"event=0xff,umask=0x24"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port4.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port5,		"event=0xff,umask=0x25"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port5.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port6,		"event=0xff,umask=0x26"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port6.unit,	"MiB"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port7,		"event=0xff,umask=0x27"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.814697266e-6"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port7.unit,	"MiB"),
--	{ /* end: all zeroes */ },
--};
--
- static struct intel_uncore_type icx_uncore_iio_free_running = {
- 	.name			= "iio_free_running",
- 	.num_counters		= 9,
-@@ -5523,7 +5492,7 @@ static struct intel_uncore_type icx_unco
- 	.num_freerunning_types	= ICX_IIO_FREERUNNING_TYPE_MAX,
- 	.freerunning		= icx_iio_freerunning,
- 	.ops			= &skx_uncore_iio_freerunning_ops,
--	.event_descs		= icx_uncore_iio_freerunning_events,
-+	.event_descs		= snr_uncore_iio_freerunning_events,
- 	.format_group		= &skx_uncore_iio_freerunning_format_group,
+@@ -602,9 +602,9 @@ static int mtk_dpi_set_display_mode(struct mtk_dpi *dpi,
+ 		mtk_dpi_dual_edge(dpi);
+ 		mtk_dpi_config_disable_edge(dpi);
+ 	}
+-	if (dpi->conf->input_2pixel) {
+-		mtk_dpi_mask(dpi, DPI_CON, DPINTF_INPUT_2P_EN,
+-			     DPINTF_INPUT_2P_EN);
++	if (dpi->conf->input_2p_en_bit) {
++		mtk_dpi_mask(dpi, DPI_CON, dpi->conf->input_2p_en_bit,
++			     dpi->conf->input_2p_en_bit);
+ 	}
+ 	mtk_dpi_sw_reset(dpi, false);
+ 
+@@ -952,12 +952,12 @@ static const struct mtk_dpi_conf mt8195_dpintf_conf = {
+ 	.output_fmts = mt8195_output_fmts,
+ 	.num_output_fmts = ARRAY_SIZE(mt8195_output_fmts),
+ 	.pixels_per_iter = 4,
+-	.input_2pixel = true,
+ 	.dimension_mask = DPINTF_HPW_MASK,
+ 	.hvsize_mask = DPINTF_HSIZE_MASK,
+ 	.channel_swap_shift = DPINTF_CH_SWAP,
+ 	.yuv422_en_bit = DPINTF_YUV422_EN,
+ 	.csc_enable_bit = DPINTF_CSC_ENABLE,
++	.input_2p_en_bit = DPINTF_INPUT_2P_EN,
  };
  
+ static int mtk_dpi_probe(struct platform_device *pdev)
+-- 
+2.39.5
+
 
 
