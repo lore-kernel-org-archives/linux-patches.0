@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263527CCC7;
-	Wed, 23 Apr 2025 14:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832E6263C9E;
+	Wed, 23 Apr 2025 14:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420229; cv=none; b=JooOO9zg1aPGzNE89V5c/2JcTnnu6jm+ODTQtElrSaF3jrsLhp/NTsDYaFcdglCuttqBSTYVq4LQCtJgrCEE1ZkPEV4nteWQ5H6temOcAEeJqA1RQnP0f4Pr+WqMekODhDNxrPySJ985bNpar8FaBNJlxOH8dbbtVrTz4E5I1jc=
+	t=1745420231; cv=none; b=oRmLOP+OHBIvGIJ4SqU8/6/KITV7rfusZcFfgs9WeKqLkToo5HQEpr0CyfOmg7nVQKwwJmwA3FUF3BcI0OjavjdD73r4Quq3A1tK2p3iMWgqmzxspc/1+ew3ftNJmDXLt0l2RrYgS1K8jF3M+PUL1as+7/VyhCG4N9qUuLkjS7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420229; c=relaxed/simple;
-	bh=KKFNNQeWm+oeqk7SXqqRl76CAg7GnGMMJJ3RftkZ6Is=;
+	s=arc-20240116; t=1745420231; c=relaxed/simple;
+	bh=CLX8xzo6ZoExV5f3Oc670zhqIE41x1vXqrc0Nhe6hdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iis66I/PILq3jhxS4W89EDKmnWB/J1odN9ZIvlrdlelk4ciueLqhxFvWPStaTHNSB4YLlOfRx1GmKh/id6jZ5cVLip+2IvXMHYTjDJ99h3MxoRKKXmB4OkNRHBChyWNy3CWjfEX0pa0fcrNl0QNdAQTAcEz883eHE3Pkyq0K4dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDmMdML+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fv3xdQNs4A+R1kID3DRkHnbKLcX3zyBe5+xwk2j3O3x0y7Cq1bbbwzwDz0rXB3ZoMIwDsfDdVnOv/nw/jTILaEgaztU6pAidVR0y//Siz1GAKrjluCOm2paE+OHR5VTYnXaSJv2qw1fcTe/PpXHwPDrhgJszcrFCsNKcNnCaX7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nRwEzYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDmMdML+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDEFC4CEE2;
-	Wed, 23 Apr 2025 14:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nRwEzYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18645C4CEE2;
+	Wed, 23 Apr 2025 14:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420228;
-	bh=KKFNNQeWm+oeqk7SXqqRl76CAg7GnGMMJJ3RftkZ6Is=;
+	s=korg; t=1745420231;
+	bh=CLX8xzo6ZoExV5f3Oc670zhqIE41x1vXqrc0Nhe6hdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDmMdML+80rLgGFMDmIxH3mPRwvsy20/P24BvPpN9DkF+TuBfDKWkjxToAIcG51IP
-	 VNxM5KoTjkK7zRjQ3VuAcgCwtE4UKPlnr3vMDMd208akvSOwqcJsoy0ftp3pwNVdXm
-	 2yIw/rrsbh1nrOJSq/Gybns0KTgJoXAl0jQLh6uE=
+	b=0nRwEzYr6Lbo6eTiv4h2ER4dgzCWgFk2o0h42BUxdkiDC3jvmUOYoUC9KF2sg9xMd
+	 LqfPTQqPhf8JeT8jeiTdgwWSOKawOkOA5Wv+98iH+xDp3OgH0IwFNHhO7efCPRHCB1
+	 hiEgMRlFSxDc70fmtPbc4W+YPEXG8oVF7GLdTQ8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/393] HID: pidff: Add hid_pidff_init_with_quirks and export as GPL symbol
-Date: Wed, 23 Apr 2025 16:39:09 +0200
-Message-ID: <20250423142645.490998316@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
+Subject: [PATCH 6.12 111/223] crypto: caam/qi - Fix drv_ctx refcount bug
+Date: Wed, 23 Apr 2025 16:43:03 +0200
+Message-ID: <20250423142621.633423905@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,89 +48,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 36de0164bbaff1484288e84ac5df5cff00580263 ]
+commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
 
-This lays out a way to provide an initial set of quirks to enable before
-device initialization takes place. GPL symbol export needed for the
-possibility of building HID drivers which use this function as modules.
+Ensure refcount is raised before request is enqueued since it could
+be dequeued before the call returns.
 
-Adding a wrapper function to ensure compatibility with the old behavior
-of hid_pidff_init.
-
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Sean Anderson <sean.anderson@linux.dev>
+Cc: <stable@vger.kernel.org>
+Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
+Tested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 15 ++++++++++++++-
- include/linux/hid.h            |  2 ++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/crypto/caam/qi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 5a57ba0d7026a..b8c2ba0a930c2 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -1268,8 +1268,9 @@ static int pidff_check_autocenter(struct pidff_device *pidff,
+--- a/drivers/crypto/caam/qi.c
++++ b/drivers/crypto/caam/qi.c
+@@ -122,12 +122,12 @@ int caam_qi_enqueue(struct device *qidev
+ 	qm_fd_addr_set64(&fd, addr);
  
- /*
-  * Check if the device is PID and initialize it
-+ * Set initial quirks
-  */
--int hid_pidff_init(struct hid_device *hid)
-+int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks)
- {
- 	struct pidff_device *pidff;
- 	struct hid_input *hidinput = list_entry(hid->inputs.next,
-@@ -1291,6 +1292,7 @@ int hid_pidff_init(struct hid_device *hid)
- 		return -ENOMEM;
+ 	do {
++		refcount_inc(&req->drv_ctx->refcnt);
+ 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
+-		if (likely(!ret)) {
+-			refcount_inc(&req->drv_ctx->refcnt);
++		if (likely(!ret))
+ 			return 0;
+-		}
  
- 	pidff->hid = hid;
-+	pidff->quirks = initial_quirks;
- 
- 	hid_device_io_start(hid);
- 
-@@ -1369,3 +1371,14 @@ int hid_pidff_init(struct hid_device *hid)
- 	kfree(pidff);
- 	return error;
- }
-+EXPORT_SYMBOL_GPL(hid_pidff_init_with_quirks);
-+
-+/*
-+ * Check if the device is PID and initialize it
-+ * Wrapper made to keep the compatibility with old
-+ * init function
-+ */
-+int hid_pidff_init(struct hid_device *hid)
-+{
-+	return hid_pidff_init_with_quirks(hid, 0);
-+}
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index a06f38c1441ad..3f776ab47e27d 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1214,8 +1214,10 @@ void hid_quirks_exit(__u16 bus);
- 
- #ifdef CONFIG_HID_PID
- int hid_pidff_init(struct hid_device *hid);
-+int hid_pidff_init_with_quirks(struct hid_device *hid, __u32 initial_quirks);
- #else
- #define hid_pidff_init NULL
-+#define hid_pidff_init_with_quirks NULL
- #endif
- 
- /* HID PIDFF quirks */
--- 
-2.39.5
-
++		refcount_dec(&req->drv_ctx->refcnt);
+ 		if (ret != -EBUSY)
+ 			break;
+ 		num_retries++;
 
 
