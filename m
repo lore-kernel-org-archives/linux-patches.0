@@ -1,40 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEE927D763;
-	Wed, 23 Apr 2025 15:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABA027D763;
+	Wed, 23 Apr 2025 15:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421518; cv=none; b=ZymEaHR1h1e2MJ9df1lsNQgOvX/srx9J61l8brMR+fKuAtBo9Gz8jIx+UpsShkIT8HpdNVN5kD4ueWkk90XUCIBdxieESSjrfLf+fku+rUkjc/OFHjAWkWd8bLbkQoTdw+U5+FRHgymB+QbFEhV9cf+KtNkGY2aZnMjyI1eoK0I=
+	t=1745421521; cv=none; b=gT/WQdTLkIqDvJ0zSFezSmXUhueedFUOEqozI0ajdaGzaNcw3bfAeFKkAGidi7S+HnEecWx3exmTvIy4J2MwfoB54cJMyPH7qevcNlXD3kIX6QNMw8kx6Ti6LekF3p9Ix/HnQLTIPFeGW5JVliySxs0C651eiBQwuuggiwRG/fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421518; c=relaxed/simple;
-	bh=BbSXPBg/xAy9vOC0WBzRtxJsliynNp+hGlToQbeD1rU=;
+	s=arc-20240116; t=1745421521; c=relaxed/simple;
+	bh=WkuYwG1VPNoCC+Tid/TlsoDG4JzcZ3Bf2dg8Tcr48Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+taWnLrfAayOXT3/DXNFSGHZ3cKEvfY0bEvHGJVY024Q/ABD7u2Quq6LbKJ1wRt9KCI/5XytbhbB2L2qamSj/A/Q/yavUib7zm5bjYTmqqOXLh7emopxDW1Ak2HMM8ogEqm10aGwaFywfzccXdiHV0iQ0kNUO97iYvUCKQoTYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlopaIke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YGYlCGqaJEBfhsTx1BjVKZdgB0JAuPg+yfhO0+b8Qf2wLU5gNwz5GMeBiswo2Czr592sigmFE+fmI2wqsUnzRgxywIGhqOTK7YjbF5BqTfWqRADWt2gMJ8B+cNfPWTm8BJQSDpuIfVmPfPstXsZeNALB1vDdoM6PS+gA5b9+6bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plLwQvKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlopaIke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C038C4CEE2;
-	Wed, 23 Apr 2025 15:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plLwQvKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8915C4CEE2;
+	Wed, 23 Apr 2025 15:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421518;
-	bh=BbSXPBg/xAy9vOC0WBzRtxJsliynNp+hGlToQbeD1rU=;
+	s=korg; t=1745421521;
+	bh=WkuYwG1VPNoCC+Tid/TlsoDG4JzcZ3Bf2dg8Tcr48Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlopaIkekPjj4bm9oJKy+lssGyAbaq8U6lzQpi3+nbBEIomFBvY82KeH7WV/K+dbC
-	 Ee3EbT0j07okBG0a8bRVVrh/1z4kCSZXM2LvQjDoGMyYp12UzHtEfiFVol+g2JLved
-	 G0jnDlGGh2XbaDHHeWsq8K+IkdrpN61ecyLRpSqE=
+	b=plLwQvKMRlV9Dg/UOCk0G4ebiCEkCa+4NPtopwreKlgkZ/ltIuRy66onpyEYIFJgO
+	 7AsXKr/NGtUWhSnJ6P0vB5R5kwpwRTrg1NE4wHRQQf1110A4v2nniuWKUwU8+FtRl/
+	 tBeNXyaxdgEDvouYtuYKjCRcxJo9DWmKAa3WL3h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan King <brendan.king@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>
-Subject: [PATCH 6.14 198/241] drm/imagination: fix firmware memory leaks
-Date: Wed, 23 Apr 2025 16:44:22 +0200
-Message-ID: <20250423142628.598852603@linuxfoundation.org>
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Borislav Betkov <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 133/291] mm/hwpoison: do not send SIGBUS to processes with recovered clean pages
+Date: Wed, 23 Apr 2025 16:42:02 +0200
+Message-ID: <20250423142629.831462019@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,129 +63,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brendan King <Brendan.King@imgtec.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit a5b230e7f3a55bd8bd8d012eec75a4b7baa671d5 upstream.
+commit aaf99ac2ceb7c974f758a635723eeaf48596388e upstream.
 
-Free the memory used to hold the results of firmware image processing
-when the module is unloaded.
+When an uncorrected memory error is consumed there is a race between the
+CMCI from the memory controller reporting an uncorrected error with a UCNA
+signature, and the core reporting and SRAR signature machine check when
+the data is about to be consumed.
 
-Fix the related issue of the same memory being leaked if processing
-of the firmware image fails during module load.
+- Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
 
-Ensure all firmware GEM objects are destroyed if firmware image
-processing fails.
+Prior to Icelake memory controllers reported patrol scrub events that
+detected a previously unseen uncorrected error in memory by signaling a
+broadcast machine check with an SRAO (Software Recoverable Action
+Optional) signature in the machine check bank.  This was overkill because
+it's not an urgent problem that no core is on the verge of consuming that
+bad data.  It's also found that multi SRAO UCE may cause nested MCE
+interrupts and finally become an IERR.
 
-Fixes memory leaks on powervr module unload detected by Kmemleak:
+Hence, Intel downgrades the machine check bank signature of patrol scrub
+from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
+#CMCI.  Just to add to the confusion, Linux does take an action (in
+uc_decode_notifier()) to try to offline the page despite the UC*NA*
+signature name.
 
-unreferenced object 0xffff000042e20000 (size 94208):
-  comm "modprobe", pid 470, jiffies 4295277154
-  hex dump (first 32 bytes):
-    02 ae 7f ed bf 45 84 00 3c 5b 1f ed 9f 45 45 05  .....E..<[...EE.
-    d5 4f 5d 14 6c 00 3d 23 30 d0 3a 4a 66 0e 48 c8  .O].l.=#0.:Jf.H.
-  backtrace (crc dd329dec):
-    kmemleak_alloc+0x30/0x40
-    ___kmalloc_large_node+0x140/0x188
-    __kmalloc_large_node_noprof+0x2c/0x13c
-    __kmalloc_noprof+0x48/0x4c0
-    pvr_fw_init+0xaa4/0x1f50 [powervr]
+- Background: why #CMCI and #MCE race when poison is consuming in Intel platform [1]
 
-unreferenced object 0xffff000042d20000 (size 20480):
-  comm "modprobe", pid 470, jiffies 4295277154
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 09 00 00 00 0b 00 00 00  ................
-    00 00 00 00 00 00 00 00 07 00 00 00 08 00 00 00  ................
-  backtrace (crc 395b02e3):
-    kmemleak_alloc+0x30/0x40
-    ___kmalloc_large_node+0x140/0x188
-    __kmalloc_large_node_noprof+0x2c/0x13c
-    __kmalloc_noprof+0x48/0x4c0
-    pvr_fw_init+0xb0c/0x1f50 [powervr]
+Having decided that CMCI/UCNA is the best action for patrol scrub errors,
+the memory controller uses it for reads too.  But the memory controller is
+executing asynchronously from the core, and can't tell the difference
+between a "real" read and a speculative read.  So it will do CMCI/UCNA if
+an error is found in any read.
 
-Cc: stable@vger.kernel.org
-Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
-Signed-off-by: Brendan King <brendan.king@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://lore.kernel.org/r/20250318-ddkopsrc-1339-firmware-related-memory-leak-on-module-unload-v1-1-155337c57bb4@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Thus:
+
+1) Core is clever and thinks address A is needed soon, issues a speculative read.
+2) Core finds it is going to use address A soon after sending the read request
+3) The CMCI from the memory controller is in a race with MCE from the core
+   that will soon try to retire the load from address A.
+
+Quite often (because speculation has got better) the CMCI from the memory
+controller is delivered before the core is committed to the instruction
+reading address A, so the interrupt is taken, and Linux offlines the page
+(marking it as poison).
+
+- Why user process is killed for instr case
+
+Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
+"not recovered"") tries to fix noise message "Memory error not recovered"
+and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
+that kill_accessing_process() return -EHWPOISON for instr case, as result,
+kill_me_maybe() send a SIGBUS to user process.
+
+If the CMCI wins that race, the page is marked poisoned when
+uc_decode_notifier() calls memory_failure().  For dirty pages,
+memory_failure() invokes try_to_unmap() with the TTU_HWPOISON flag,
+converting the PTE to a hwpoison entry.  As a result,
+kill_accessing_process():
+
+- call walk_page_range() and return 1 regardless of whether
+  try_to_unmap() succeeds or fails,
+- call kill_proc() to make sure a SIGBUS is sent
+- return -EHWPOISON to indicate that SIGBUS is already sent to the
+  process and kill_me_maybe() doesn't have to send it again.
+
+However, for clean pages, the TTU_HWPOISON flag is cleared, leaving the
+PTE unchanged and not converted to a hwpoison entry.  Conversely, for
+clean pages where PTE entries are not marked as hwpoison,
+kill_accessing_process() returns -EFAULT, causing kill_me_maybe() to send
+a SIGBUS.
+
+Console log looks like this:
+
+    Memory failure: 0x827ca68: corrupted page was clean: dropped without side effects
+    Memory failure: 0x827ca68: recovery action for clean LRU page: Recovered
+    Memory failure: 0x827ca68: already hardware poisoned
+    mce: Memory error not recovered
+
+To fix it, return 0 for "corrupted page was clean", preventing an
+unnecessary SIGBUS to user process.
+
+[1] https://lore.kernel.org/lkml/20250217063335.22257-1-xueshuai@linux.alibaba.com/T/#mba94f1305b3009dd340ce4114d3221fe810d1871
+Link: https://lkml.kernel.org/r/20250312112852.82415-3-xueshuai@linux.alibaba.com
+Fixes: 046545a661af ("mm/hwpoison: fix error page recovered but reported "not recovered"")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_fw.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ mm/memory-failure.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_fw.c
-+++ b/drivers/gpu/drm/imagination/pvr_fw.c
-@@ -732,7 +732,7 @@ pvr_fw_process(struct pvr_device *pvr_de
- 					       fw_mem->core_data, fw_mem->core_code_alloc_size);
- 
- 	if (err)
--		goto err_free_fw_core_data_obj;
-+		goto err_free_kdata;
- 
- 	memcpy(fw_code_ptr, fw_mem->code, fw_mem->code_alloc_size);
- 	memcpy(fw_data_ptr, fw_mem->data, fw_mem->data_alloc_size);
-@@ -742,10 +742,14 @@ pvr_fw_process(struct pvr_device *pvr_de
- 		memcpy(fw_core_data_ptr, fw_mem->core_data, fw_mem->core_data_alloc_size);
- 
- 	/* We're finished with the firmware section memory on the CPU, unmap. */
--	if (fw_core_data_ptr)
-+	if (fw_core_data_ptr) {
- 		pvr_fw_object_vunmap(fw_mem->core_data_obj);
--	if (fw_core_code_ptr)
-+		fw_core_data_ptr = NULL;
-+	}
-+	if (fw_core_code_ptr) {
- 		pvr_fw_object_vunmap(fw_mem->core_code_obj);
-+		fw_core_code_ptr = NULL;
-+	}
- 	pvr_fw_object_vunmap(fw_mem->data_obj);
- 	fw_data_ptr = NULL;
- 	pvr_fw_object_vunmap(fw_mem->code_obj);
-@@ -753,7 +757,7 @@ pvr_fw_process(struct pvr_device *pvr_de
- 
- 	err = pvr_fw_create_fwif_connection_ctl(pvr_dev);
- 	if (err)
--		goto err_free_fw_core_data_obj;
-+		goto err_free_kdata;
- 
- 	return 0;
- 
-@@ -763,13 +767,16 @@ err_free_kdata:
- 	kfree(fw_mem->data);
- 	kfree(fw_mem->code);
- 
--err_free_fw_core_data_obj:
- 	if (fw_core_data_ptr)
--		pvr_fw_object_unmap_and_destroy(fw_mem->core_data_obj);
-+		pvr_fw_object_vunmap(fw_mem->core_data_obj);
-+	if (fw_mem->core_data_obj)
-+		pvr_fw_object_destroy(fw_mem->core_data_obj);
- 
- err_free_fw_core_code_obj:
- 	if (fw_core_code_ptr)
--		pvr_fw_object_unmap_and_destroy(fw_mem->core_code_obj);
-+		pvr_fw_object_vunmap(fw_mem->core_code_obj);
-+	if (fw_mem->core_code_obj)
-+		pvr_fw_object_destroy(fw_mem->core_code_obj);
- 
- err_free_fw_data_obj:
- 	if (fw_data_ptr)
-@@ -836,6 +843,12 @@ pvr_fw_cleanup(struct pvr_device *pvr_de
- 	struct pvr_fw_mem *fw_mem = &pvr_dev->fw_dev.mem;
- 
- 	pvr_fw_fini_fwif_connection_ctl(pvr_dev);
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -764,12 +764,17 @@ static int kill_accessing_process(struct
+ 	mmap_read_lock(p->mm);
+ 	ret = walk_page_range(p->mm, 0, TASK_SIZE, &hwp_walk_ops,
+ 			      (void *)&priv);
++	/*
++	 * ret = 1 when CMCI wins, regardless of whether try_to_unmap()
++	 * succeeds or fails, then kill the process with SIGBUS.
++	 * ret = 0 when poison page is a clean page and it's dropped, no
++	 * SIGBUS is needed.
++	 */
+ 	if (ret == 1 && priv.tk.addr)
+ 		kill_proc(&priv.tk, pfn, flags);
+-	else
+-		ret = 0;
+ 	mmap_read_unlock(p->mm);
+-	return ret > 0 ? -EHWPOISON : -EFAULT;
 +
-+	kfree(fw_mem->core_data);
-+	kfree(fw_mem->core_code);
-+	kfree(fw_mem->data);
-+	kfree(fw_mem->code);
-+
- 	if (fw_mem->core_code_obj)
- 		pvr_fw_object_destroy(fw_mem->core_code_obj);
- 	if (fw_mem->core_data_obj)
++	return ret > 0 ? -EHWPOISON : 0;
+ }
+ 
+ static const char *action_name[] = {
 
 
