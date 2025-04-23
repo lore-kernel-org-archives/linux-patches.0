@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5020D2820A8;
-	Wed, 23 Apr 2025 15:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF30E281357;
+	Wed, 23 Apr 2025 15:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421134; cv=none; b=H4ZN4Lpe/1jZ49/ojLObuVIwU2SxO6f4FAqKisPwYbYF0hfXfmgtlw6Kjh8FlWlMbL3HiDBesXM6XyKMJq2JofUmNSFx9wCnKsldmvzXq3VBXY/kwkJiDT3wrHC/Luk52dBFvaFaxoauUn7NW4Y0iH8JYixPlkUfoUoFCePyGM0=
+	t=1745421137; cv=none; b=PE7UYrzpAZrFAMnySTHQXZQMlTof5R7kvxus7IHGlv3mFcTsAQ6p+W8QtF/kVcmyFtuLftV9r93uqt0EPVspeDlTYnRuXn/+M7RCTxoSdkSpBKs9OCTxuq5NTb+MDjSVMCu9CEjLgAtQA3yomlnet9/mXHawSRXHPAQ8IYjWW5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421134; c=relaxed/simple;
-	bh=zKhMxDWi3zj37wvL7SZZprALyGwvPNBq6mOrgD0eeKQ=;
+	s=arc-20240116; t=1745421137; c=relaxed/simple;
+	bh=oPVigV0DEvLm95BozM0O1jdlhsM60F6nRLmaFfVO6QE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PI9F0LMGOPnr9jaMaJlQ3fn5IvqcPy2LC9GwVwevwZeiGI1Cy1eX1jbWaG9nQKKcVgE0Ze5XUWUAVHncwD1I7tWBFUHsecZaaGtWgSLNXsf5dfDLKqP5ZoRyDFYJ1LprADzxhBlF5kzhx4w+PYEk5ZXE+d9eWXJqiu7ru5hxWKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjPk3jm3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vz6AhzyZAAR8LeAWLbGwGZtR7Nhox88RKoSC9Pm9BGABkvcUTQKaFIjGZ6si5/waAU+OUTN5tAIxU+6Xv5Zom2zYmJ0LkBMKhTKFEFTTQss1ICd11WxAAEBpJFH5kBMtr7mohBxUpK/2Thm9a2afJPvEtQyAD/hlFbRYQvRY9iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAsGBVrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjPk3jm3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A953AC4CEE3;
-	Wed, 23 Apr 2025 15:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAsGBVrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710DBC4CEE2;
+	Wed, 23 Apr 2025 15:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421134;
-	bh=zKhMxDWi3zj37wvL7SZZprALyGwvPNBq6mOrgD0eeKQ=;
+	s=korg; t=1745421136;
+	bh=oPVigV0DEvLm95BozM0O1jdlhsM60F6nRLmaFfVO6QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjPk3jm3dOYXPs9zgmqo9FG2ruS6By4XRveDq588sWXbUjKVfwvzkNzc1XslZSldi
-	 7wOie6VP/hIKHUXxBUC++imoCO5buk/6UWAnxEQ45Ugh2IxNfJtm3JuH/IhdrXllyu
-	 Fjyh2xMeLsArJI5Ln40+lsbxSOJx6DWA2+J7z8mE=
+	b=pAsGBVrL0i6XYPyk7w45KCZzYot96qQlCWR+JHIc0MjdGw/p+C4jGsK9QDQHYoUca
+	 n8ZqzBXj3FKl4nqH0NBixf+ps/FXOyrd6JLjNKM2HMhv50HNHZzeYNvdStaGtv+XMZ
+	 oxU8odcvIyU/bx0H14NW8JMbMwHxC61pAt/LR8cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 111/291] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params error path
-Date: Wed, 23 Apr 2025 16:41:40 +0200
-Message-ID: <20250423142628.909927666@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.14 155/241] tracing: Fix filter string testing
+Date: Wed, 23 Apr 2025 16:43:39 +0200
+Message-ID: <20250423142626.870994778@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,114 +50,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 7eccc86e90f04a0d758d16c08627a620ac59604d upstream.
+commit a8c5b0ed89a3f2c81c6ae0b041394e6eea0e7024 upstream.
 
-In case of attempts to compress playback something, for instance,
-when audio routing is not set up correctly, the audio DSP is left in
-inconsistent state because we are not doing the correct things in
-the error path of q6asm_dai_compr_set_params().
+The filter string testing uses strncpy_from_kernel/user_nofault() to
+retrieve the string to test the filter against. The if() statement was
+incorrect as it considered 0 as a fault, when it is only negative that it
+faulted.
 
-So, when routing is not set up and compress playback is attempted
-the following errors are present (simplified log):
+Running the following commands:
 
-q6routing routing: Routing not setup for MultiMedia-1 Session
-q6asm-dai dais: Stream reg failed ret:-22
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
+  # cd /sys/kernel/tracing
+  # echo "filename.ustring ~ \"/proc*\"" > events/syscalls/sys_enter_openat/filter
+  # echo 1 > events/syscalls/sys_enter_openat/enable
+  # ls /proc/$$/maps
+  # cat trace
 
-After setting the correct routing the compress playback will always fail:
+Would produce nothing, but with the fix it will produce something like:
 
-q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
-q6asm-dai dais: DSP returned error[9]
-q6asm-dai dais: q6asm_open_write failed
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
+      ls-1192    [007] .....  8169.828333: sys_openat(dfd: ffffffffffffff9c, filename: 7efc18359904, flags: 80000, mode: 0)
 
-0x9 here means "Operation is already processed". The CMD_OPEN here was
-sent the second time hence DSP responds that it was already done.
-
-Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
-succeeded but something failed after that, for instance, routing
-setup.
-
-Fix this by slightly reworking the error path in
-q6asm_dai_compr_set_params().
-
-Tested on QRB5165 RB5 and SDM845 RB3 boards.
+Link: https://lore.kernel.org/all/CAEf4BzbVPQ=BjWztmEwBPRKHUwNfKBkS3kce-Rzka6zvbQeVpg@mail.gmail.com/
 
 Cc: stable@vger.kernel.org
-Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://patch.msgid.link/20250327154650.337404-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250417183003.505835fb@gandalf.local.home
+Fixes: 77360f9bbc7e5 ("tracing: Add test for user space strings when filtering on string pointers")
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Reported-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events_filter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -902,9 +902,7 @@ static int q6asm_dai_compr_set_params(st
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -808,7 +808,7 @@ static __always_inline char *test_string
+ 	kstr = ubuf->buffer;
  
- 		if (ret < 0) {
- 			dev_err(dev, "q6asm_open_write failed\n");
--			q6asm_audio_client_free(prtd->audio_client);
--			prtd->audio_client = NULL;
--			return ret;
-+			goto open_err;
- 		}
- 	}
- 
-@@ -913,7 +911,7 @@ static int q6asm_dai_compr_set_params(st
- 			      prtd->session_id, dir);
- 	if (ret) {
- 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
-@@ -921,7 +919,7 @@ static int q6asm_dai_compr_set_params(st
- 						 prtd->stream_id);
- 	if (ret) {
- 		dev_err(dev, "codec param setup failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
-@@ -930,12 +928,21 @@ static int q6asm_dai_compr_set_params(st
- 
- 	if (ret < 0) {
- 		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto q6_err;
- 	}
- 
- 	prtd->state = Q6ASM_STREAM_RUNNING;
- 
- 	return 0;
-+
-+q6_err:
-+	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
-+
-+open_err:
-+	q6asm_audio_client_free(prtd->audio_client);
-+	prtd->audio_client = NULL;
-+	return ret;
+ 	/* For safety, do not trust the string pointer */
+-	if (!strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE))
++	if (strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 	return kstr;
  }
+@@ -827,7 +827,7 @@ static __always_inline char *test_ustrin
  
- static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
+ 	/* user space address? */
+ 	ustr = (char __user *)str;
+-	if (!strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE))
++	if (strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 
+ 	return kstr;
 
 
