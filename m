@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D798284693;
-	Wed, 23 Apr 2025 14:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459211F2C45;
+	Wed, 23 Apr 2025 14:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420334; cv=none; b=HVq1J9N5wV7IhfEivP48/79Tb4FEedtkFpfwxY53kv+ITCv/3bM00meWTSufkhWY4yj0Cjbdf40BOykpqYT9vhSDQNv6heNmNj2nGy4sohCXwwxSlk6Gyc9D4SaF7VmhW0StJo5ngJVarEYPudwtX2COw8ddEVlqsbLJfDZXn/M=
+	t=1745420337; cv=none; b=fxk3kPbZKS3bQfOQmdeDLD+areqUkZ+oqIcf5Pid4JQA2gkAuvI7q1gH4kM7TkEUTE9SQ01CCjXVq2TjSB0XoaUZesLlLnfx3B78PvnV29oWNn2+wR9PTUgzrLzBuEnwN0XJgdJMQfi46Zhoyvsdb4fTpw3Q4t4GvTwp2PWtwv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420334; c=relaxed/simple;
-	bh=6x1Y2qDzDgeFRvuqpF5qfn/n066UG/0AcB1gZWGko1M=;
+	s=arc-20240116; t=1745420337; c=relaxed/simple;
+	bh=fSyk6Nk1zIncrkiLswybBoVKLW56iizZu4cVCvIJBDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZOe01QUWAWxOJAg0NdQeo1GRt8yhwLyMLu9e/Yuz3fDMIayRZbFS/AeG6qZg6zWmwqfbT4qB+gIeiMo5VU5l9hatSrWA/nY8jtOvGnb78D41ZhB47PaQD3oxAia0J9j4AEhkgSAoaAzNFnlcKRtJVs4n0OZfdryFoFQBwU3jlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDZwX7js; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CI8mObkjK3UP7DlKie1cRH5quQLE04fOMzXmlPv7ZZjI/A+1I3YoXgwWY1V7p4Hca4O9EQX7AzshC658xZ85VHFYQfWHFRoBkd7+E+/LslJjdxezdYuklPhoNsRovJMe+2lHNr7TaVMSXkAO2Ifny+x6f2ErCeXEvc4OnfRvkRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g25wJ+Kp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDZwX7js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C7EC4CEE2;
-	Wed, 23 Apr 2025 14:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g25wJ+Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF1EC4CEEC;
+	Wed, 23 Apr 2025 14:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420334;
-	bh=6x1Y2qDzDgeFRvuqpF5qfn/n066UG/0AcB1gZWGko1M=;
+	s=korg; t=1745420337;
+	bh=fSyk6Nk1zIncrkiLswybBoVKLW56iizZu4cVCvIJBDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDZwX7jsq4GesmyQ4Oy75KEraz9DAhWwFZexScZqVgf9z2Xn9w9uPf/H1wXyuS10z
-	 ISNeRam9QwRwtIr0k7sGmKpkbQrlEvi9hzNd9gu0ntWjsbTY6kO4/KXsknZBrE2gtF
-	 dwQlQx6KuuDlE8Sc2G1bsooQ808YaciDoBLPjymo=
+	b=g25wJ+KpCOoWeJTqis2d6CY2MD1V4eiWkJRbUPvG9qneuO/vZiNzXWBWm0M0+961T
+	 rVUesdpOnIzjl9Q1ODIkpyQyswuX3LmhYwoaKOLosmHE4ubrh5ApPj0QjHqlNEfwRy
+	 QTddeRlFQbID14fBhMSPpfZ8cyCHO8zuRMxA0pGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Daniel Axtens <dja@axtens.net>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 120/223] mm: fix apply_to_existing_page_range()
-Date: Wed, 23 Apr 2025 16:43:12 +0200
-Message-ID: <20250423142621.995251391@linuxfoundation.org>
+	Rand Deeb <rand.sec96@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 038/291] fs/jfs: cast inactags to s64 to prevent potential overflow
+Date: Wed, 23 Apr 2025 16:40:27 +0200
+Message-ID: <20250423142625.948421773@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
+[ Upstream commit 70ca3246ad201b53a9f09380b3f29d8bac320383 ]
 
-In the case of apply_to_existing_page_range(), apply_to_pte_range() is
-reached with 'create' set to false.  When !create, the loop over the PTE
-page table is broken.
+The expression "inactags << bmp->db_agl2size" in the function
+dbFinalizeBmap() is computed using int operands. Although the
+values (inactags and db_agl2size) are derived from filesystem
+parameters and are usually small, there is a theoretical risk that
+the shift could overflow a 32-bit int if extreme values occur.
 
-apply_to_pte_range() will only move to the next PTE entry if 'create' is
-true or if the current entry is not pte_none().
+According to the C standard, shifting a signed 32-bit int can lead
+to undefined behavior if the result exceeds its range. In our
+case, an overflow could miscalculate free blocks, potentially
+leading to erroneous filesystem accounting.
 
-This means that the user of apply_to_existing_page_range() will not have
-'fn' called for any entries after the first pte_none() in the PTE page
-table.
+To ensure the arithmetic is performed in 64-bit space, we cast
+"inactags" to s64 before shifting. This defensive fix prevents any
+risk of overflow and complies with kernel coding best practices.
 
-Fix the loop logic in apply_to_pte_range().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-There are no known runtime issues from this, but the fix is trivial enough
-for stable@ even without a known buggy user.
-
-Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
-Cc: Daniel Axtens <dja@axtens.net>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c |    4 ++--
+ fs/jfs/jfs_dmap.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2811,11 +2811,11 @@ static int apply_to_pte_range(struct mm_
- 	if (fn) {
- 		do {
- 			if (create || !pte_none(ptep_get(pte))) {
--				err = fn(pte++, addr, data);
-+				err = fn(pte, addr, data);
- 				if (err)
- 					break;
- 			}
--		} while (addr += PAGE_SIZE, addr != end);
-+		} while (pte++, addr += PAGE_SIZE, addr != end);
- 	}
- 	*mask |= PGTBL_PTE_MODIFIED;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 6509102e581a1..3d4c7373a25e0 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -3666,8 +3666,8 @@ void dbFinalizeBmap(struct inode *ipbmap)
+ 	 * system size is not a multiple of the group size).
+ 	 */
+ 	inactfree = (inactags && ag_rem) ?
+-	    ((inactags - 1) << bmp->db_agl2size) + ag_rem
+-	    : inactags << bmp->db_agl2size;
++	    (((s64)inactags - 1) << bmp->db_agl2size) + ag_rem
++	    : ((s64)inactags << bmp->db_agl2size);
  
+ 	/* determine how many free blocks are in the active
+ 	 * allocation groups plus the average number of free blocks
+-- 
+2.39.5
+
 
 
