@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9395219DF4C;
-	Wed, 23 Apr 2025 14:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FCB27FD56;
+	Wed, 23 Apr 2025 14:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419800; cv=none; b=VxgviDpQwMkwzcdH6essAHSSQvqKu3Qj0qrM7P3hKzhf2ek4uTaEMDJVF3gOhbQ9j2QPwxWy1dx6+MpLrHHgCvPr2sEmBgXhBMh+Bhp7X+AwroZRKFn7n2hjb99S/uium8KSaXHXncd5S+Aa4XXMF1P/RzPThcN1Fv7mIBcmrnQ=
+	t=1745419803; cv=none; b=hmiZC8oEAJfEeeU/dWZqiRwyQ9Qj/OABIl+Q7AU9QBB2DlvfcPeRtFTBjdsr23zu6LKUk+eaBeGVrifdll6V/KSbE7bOdzJYXIG1Y0nJcO8FwldiUHxeTGK/sYY9tAMieXoqT9G+g9D5TDfRFM0OYQNqONdZR+8sknLMa9rNil4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419800; c=relaxed/simple;
-	bh=Kgh6ZJIj5DOxQKM6+OumIXGOsg9hXoPRkF+CZBmELBo=;
+	s=arc-20240116; t=1745419803; c=relaxed/simple;
+	bh=1r3+SoOvafKAaonbWGzDKLWN+fHFqAEAbDoz5rq+DIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQnpAF1eyVo9dpZolnPKsD0hAjnRIhO6YEN+AAADQi/jLVT9oZuRzCF6SvtR9Hz08Jts0VU0fSRaaTI7HuJdm0Y5Mhel3FGXBLxDZN1QKRzAOtIiN/uM732bG3UCgSWHYFwGBNncGreQk1Ipj0DaRY0W/dW1wmDPYBTJ0RvKo7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5s/hJy/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AC6gEs3hxQxy8IBrkUW/Csm+k4g+u05LaN36+VPlYObasqubWfZlLfPNRnIe5A+XlK7wgVbPcKUupZaqwb2x3brFZMXYz+wWpn+yR0IFnRg5xxRLWBENSXD893TXG3PDYMX2CbGMsip5tHj026Pnxko9BZJGyAVCl9fZEiHzG4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5kY0v/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5s/hJy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C68AC4CEE2;
-	Wed, 23 Apr 2025 14:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5kY0v/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0172C4CEE2;
+	Wed, 23 Apr 2025 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419800;
-	bh=Kgh6ZJIj5DOxQKM6+OumIXGOsg9hXoPRkF+CZBmELBo=;
+	s=korg; t=1745419803;
+	bh=1r3+SoOvafKAaonbWGzDKLWN+fHFqAEAbDoz5rq+DIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5s/hJy/Vz8TNzU8Zoz/KjWFOHgFz4/XvnROlE/TPLXenckw5Vt3fijMNerxwA8Uk
-	 hN91D7xjpTIMaeoQYN07XLJd4OzlNhK3z6lodx/omR0T0IMiSsEYLY6AeEutvDi3hh
-	 /6sAbvtcT2DEzZvKB6PoI9kTig8X7DYjEp7FbFXI=
+	b=f5kY0v/suOiILJgfn+1iinE52v8uaJ/SdjmLmq5VdQEFCdA3MDJzkB1ubu9rPiFz7
+	 M+4S6fUO0HXaDs9viwOaAccgKUls7K2+8CQ1/+s0bZNBsotU17E9BbzOX2hgLG1C9N
+	 ps3x+Eh8NSgzTg7TLJ0w8vPQICGzdV3ipT5lRwH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/393] drm/i915/dg2: wait for HuC load completion before running selftests
-Date: Wed, 23 Apr 2025 16:38:20 +0200
-Message-ID: <20250423142643.428844721@linuxfoundation.org>
+Subject: [PATCH 6.14 029/241] xen: fix multicall debug feature
+Date: Wed, 23 Apr 2025 16:41:33 +0200
+Message-ID: <20250423142621.710372803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +48,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit c3015eb6e25a735ab77591573236169eab8e2e3a ]
+[ Upstream commit 715ad3e0ec2b13c27335749f27a5c9f0c0e84064 ]
 
-On DG2, submissions to VCS engines tied to a gem context are blocked
-until the HuC is loaded. Since some selftests do use a gem context,
-wait for the HuC load to complete before running the tests to avoid
-contamination.
+Initializing a percpu variable with the address of a struct tagged as
+.initdata is breaking the build with CONFIG_SECTION_MISMATCH_WARN_ONLY
+not set to "y".
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10564
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240410201505.894594-1-daniele.ceraolospurio@intel.com
-Stable-dep-of: 9d3d9776bd3b ("drm/i915: Disable RPG during live selftest")
+Fix that by using an access function instead returning the .initdata
+struct address if the percpu space of the struct hasn't been
+allocated yet.
+
+Fixes: 368990a7fe30 ("xen: fix multicall debug data referencing")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Acked-by: "Borislav Petkov (AMD)" <bp@alien8.de>
+Tested-by: "Borislav Petkov (AMD)" <bp@alien8.de>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250327190602.26015-1-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/selftests/i915_selftest.c    | 36 ++++++++++++++++---
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ arch/x86/xen/multicalls.c | 26 ++++++++++++++------------
+ arch/x86/xen/smp_pv.c     |  1 -
+ arch/x86/xen/xen-ops.h    |  3 ---
+ 3 files changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/selftests/i915_selftest.c b/drivers/gpu/drm/i915/selftests/i915_selftest.c
-index ee79e0809a6dd..fee76c1d2f450 100644
---- a/drivers/gpu/drm/i915/selftests/i915_selftest.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_selftest.c
-@@ -154,6 +154,30 @@ __wait_gsc_proxy_completed(struct drm_i915_private *i915)
- 		pr_warn(DRIVER_NAME "Timed out waiting for gsc_proxy_completion!\n");
- }
+diff --git a/arch/x86/xen/multicalls.c b/arch/x86/xen/multicalls.c
+index 10c660fae8b30..7237d56a9d3f0 100644
+--- a/arch/x86/xen/multicalls.c
++++ b/arch/x86/xen/multicalls.c
+@@ -54,14 +54,20 @@ struct mc_debug_data {
  
-+static void
-+__wait_gsc_huc_load_completed(struct drm_i915_private *i915)
+ static DEFINE_PER_CPU(struct mc_buffer, mc_buffer);
+ static struct mc_debug_data mc_debug_data_early __initdata;
+-static DEFINE_PER_CPU(struct mc_debug_data *, mc_debug_data) =
+-	&mc_debug_data_early;
+ static struct mc_debug_data __percpu *mc_debug_data_ptr;
+ DEFINE_PER_CPU(unsigned long, xen_mc_irq_flags);
+ 
+ static struct static_key mc_debug __ro_after_init;
+ static bool mc_debug_enabled __initdata;
+ 
++static struct mc_debug_data * __ref get_mc_debug(void)
 +{
-+	/* this only applies to DG2, so we only care about GT0 */
-+	struct intel_huc *huc = &to_gt(i915)->uc.huc;
-+	bool need_to_wait = (IS_ENABLED(CONFIG_INTEL_MEI_PXP) &&
-+			     intel_huc_wait_required(huc));
-+	/*
-+	 * The GSC and PXP mei bringup depends on the kernel boot ordering, so
-+	 * to account for the worst case scenario the HuC code waits for up to
-+	 * 10s for the GSC driver to load and then another 5s for the PXP
-+	 * component to bind before giving up, even though those steps normally
-+	 * complete in less than a second from the i915 load. We match that
-+	 * timeout here, but we expect to bail early due to the fence being
-+	 * signalled even in a failure case, as it is extremely unlikely that
-+	 * both components will use their full timeout.
-+	 */
-+	unsigned long timeout_ms = 15000;
++	if (!mc_debug_data_ptr)
++		return &mc_debug_data_early;
 +
-+	if (need_to_wait &&
-+	    wait_for(i915_sw_fence_done(&huc->delayed_load.fence), timeout_ms))
-+		pr_warn(DRIVER_NAME "Timed out waiting for huc load via GSC!\n");
++	return this_cpu_ptr(mc_debug_data_ptr);
 +}
 +
- static int __run_selftests(const char *name,
- 			   struct selftest *st,
- 			   unsigned int count,
-@@ -228,14 +252,16 @@ int i915_mock_selftests(void)
- 
- int i915_live_selftests(struct pci_dev *pdev)
+ static int __init xen_parse_mc_debug(char *arg)
  {
-+	struct drm_i915_private *i915 = pdev_to_i915(pdev);
- 	int err;
+ 	mc_debug_enabled = true;
+@@ -71,20 +77,16 @@ static int __init xen_parse_mc_debug(char *arg)
+ }
+ early_param("xen_mc_debug", xen_parse_mc_debug);
  
- 	if (!i915_selftest.live)
+-void mc_percpu_init(unsigned int cpu)
+-{
+-	per_cpu(mc_debug_data, cpu) = per_cpu_ptr(mc_debug_data_ptr, cpu);
+-}
+-
+ static int __init mc_debug_enable(void)
+ {
+ 	unsigned long flags;
++	struct mc_debug_data __percpu *mcdb;
+ 
+ 	if (!mc_debug_enabled)
  		return 0;
  
--	__wait_gsc_proxy_completed(pdev_to_i915(pdev));
-+	__wait_gsc_proxy_completed(i915);
-+	__wait_gsc_huc_load_completed(i915);
+-	mc_debug_data_ptr = alloc_percpu(struct mc_debug_data);
+-	if (!mc_debug_data_ptr) {
++	mcdb = alloc_percpu(struct mc_debug_data);
++	if (!mcdb) {
+ 		pr_err("xen_mc_debug inactive\n");
+ 		static_key_slow_dec(&mc_debug);
+ 		return -ENOMEM;
+@@ -93,7 +95,7 @@ static int __init mc_debug_enable(void)
+ 	/* Be careful when switching to percpu debug data. */
+ 	local_irq_save(flags);
+ 	xen_mc_flush();
+-	mc_percpu_init(0);
++	mc_debug_data_ptr = mcdb;
+ 	local_irq_restore(flags);
  
--	err = run_selftests(live, pdev_to_i915(pdev));
-+	err = run_selftests(live, i915);
- 	if (err) {
- 		i915_selftest.live = err;
- 		return err;
-@@ -251,14 +277,16 @@ int i915_live_selftests(struct pci_dev *pdev)
+ 	pr_info("xen_mc_debug active\n");
+@@ -155,7 +157,7 @@ void xen_mc_flush(void)
+ 	trace_xen_mc_flush(b->mcidx, b->argidx, b->cbidx);
  
- int i915_perf_selftests(struct pci_dev *pdev)
- {
-+	struct drm_i915_private *i915 = pdev_to_i915(pdev);
- 	int err;
+ 	if (static_key_false(&mc_debug)) {
+-		mcdb = __this_cpu_read(mc_debug_data);
++		mcdb = get_mc_debug();
+ 		memcpy(mcdb->entries, b->entries,
+ 		       b->mcidx * sizeof(struct multicall_entry));
+ 	}
+@@ -235,7 +237,7 @@ struct multicall_space __xen_mc_entry(size_t args)
  
- 	if (!i915_selftest.perf)
- 		return 0;
+ 	ret.mc = &b->entries[b->mcidx];
+ 	if (static_key_false(&mc_debug)) {
+-		struct mc_debug_data *mcdb = __this_cpu_read(mc_debug_data);
++		struct mc_debug_data *mcdb = get_mc_debug();
  
--	__wait_gsc_proxy_completed(pdev_to_i915(pdev));
-+	__wait_gsc_proxy_completed(i915);
-+	__wait_gsc_huc_load_completed(i915);
+ 		mcdb->caller[b->mcidx] = __builtin_return_address(0);
+ 		mcdb->argsz[b->mcidx] = args;
+diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
+index 6863d3da7decf..7ea57f728b89d 100644
+--- a/arch/x86/xen/smp_pv.c
++++ b/arch/x86/xen/smp_pv.c
+@@ -305,7 +305,6 @@ static int xen_pv_kick_ap(unsigned int cpu, struct task_struct *idle)
+ 		return rc;
  
--	err = run_selftests(perf, pdev_to_i915(pdev));
-+	err = run_selftests(perf, i915);
- 	if (err) {
- 		i915_selftest.perf = err;
- 		return err;
+ 	xen_pmu_init(cpu);
+-	mc_percpu_init(cpu);
+ 
+ 	/*
+ 	 * Why is this a BUG? If the hypercall fails then everything can be
+diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
+index 63c13a2ccf556..25e318ef27d6b 100644
+--- a/arch/x86/xen/xen-ops.h
++++ b/arch/x86/xen/xen-ops.h
+@@ -261,9 +261,6 @@ void xen_mc_callback(void (*fn)(void *), void *data);
+  */
+ struct multicall_space xen_mc_extend_args(unsigned long op, size_t arg_size);
+ 
+-/* Do percpu data initialization for multicalls. */
+-void mc_percpu_init(unsigned int cpu);
+-
+ extern bool is_xen_pmu;
+ 
+ irqreturn_t xen_pmu_irq_handler(int irq, void *dev_id);
 -- 
 2.39.5
 
