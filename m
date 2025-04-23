@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F17A280CD9;
-	Wed, 23 Apr 2025 15:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008E557C9F;
+	Wed, 23 Apr 2025 15:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421246; cv=none; b=FAEfk3lT9kJ1mchZHluUS6cOvEucChv/aGwtlBZq9XfbBxCTf+D6ZmRjZJr+xZ2POClZuItKdLKAJGdDiQqKpuHOZS5ApL3W7roBHrNnWHEDZpuPyl3A+YeYXwcLCQQOsGYr1ssewXGLLTpTJl7fG9T3m/GjayoUwubp/+dkbUg=
+	t=1745421249; cv=none; b=P363j2OVg4pyrIYZC/yfX5T2vKvMGF6k4i63LjMJEjfUOUAT+me94LOvJBAVbEqOe5BOtZiMGx50Bp1xceclXQTvaHEytIkdrcqD8WYZprNUDyqAKPaWwrU6VnJBEgyRWx40evOjjvozO2TZH2ZtWuM4urRW2inkhmnuqg51Sq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421246; c=relaxed/simple;
-	bh=zOxaRruJnbG7QLJLiiLZWBP9Y0+PVMDGUGCIuS9SQNg=;
+	s=arc-20240116; t=1745421249; c=relaxed/simple;
+	bh=yh2iXL7nrxKvWTBXzxWp7EQSeFdZ6O0SWU89ajZYbWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTL88b1MVa5PVtF+4+/IENzd3f+e2Scf4wD45rzeSWJWrApeCPkEzxe+4NMee2KIDCOzJPwP7iRA/d7BKRH1+8+iJ1MLBAXc1XfH8IX3s0e/0dDfmGUE4szbtyjDjkwrKTE2B6kXJXfn0XQi1xpLtqGhp6CBWfLsu0JZsMt93iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+Z4DxGJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cALzuEQ35orVRLdLg8NfsLM7/213utFi/E2wsvrr9lyCPHQPIBB8dFx51zG8c2KsDr//gGvQ/tPHkJB3fiQ9G+JaDVpd9ggbSW/UhcR8Qn9Majbuz1rK3IKaDt0G8I7nAf9vr2C5JoauVvsDGqySm2kwvWInCS0azrboEr+pTJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joX8j7QO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+Z4DxGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2089C4CEE2;
-	Wed, 23 Apr 2025 15:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joX8j7QO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BDCC4CEE3;
+	Wed, 23 Apr 2025 15:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421246;
-	bh=zOxaRruJnbG7QLJLiiLZWBP9Y0+PVMDGUGCIuS9SQNg=;
+	s=korg; t=1745421248;
+	bh=yh2iXL7nrxKvWTBXzxWp7EQSeFdZ6O0SWU89ajZYbWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+Z4DxGJsd8yPYXtr9S44AB1eNpSpkcBPr1vbOuAlLXwimBcFdrIYyKlAaERZoTur
-	 7/nEV5CJSw8UTLrjSMvSZbwgJPZJk0tlp93OSzme9fWlahbsVhnOQGLsiLxYxQQVVT
-	 i0DpXZiEL/I+WI3l/u6CJqh59yri3O+c7MNH4vyk=
+	b=joX8j7QOoGK8yMzk9m/WPy8KuHZvRAVasIS6WLCZjDaxu1scqzlau8JoHUCgH6lis
+	 pso3S5a2ClCEalo6+RcZQ03+OJgBkcwAtyhmFk2FJL1l4KZ8f/Ypug3x8X+TDqt1Xf
+	 IdSar628ErRiaBw13o9TiuYL2/G9YnDuKTDfSsJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Chenyuan Yang <chenyuan0y@gmail.com>
-Subject: [PATCH 6.1 120/291] mfd: ene-kb3930: Fix a potential NULL pointer dereference
-Date: Wed, 23 Apr 2025 16:41:49 +0200
-Message-ID: <20250423142629.306450359@linuxfoundation.org>
+	Cong Meng <cong.meng@oracle.com>,
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 6.6 162/393] vdpa/mlx5: Fix oversized null mkey longer than 32bit
+Date: Wed, 23 Apr 2025 16:40:58 +0200
+Message-ID: <20250423142650.065800759@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,43 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-commit 4cdf1d2a816a93fa02f7b6b5492dc7f55af2a199 upstream.
+commit a6097e0a54a5c24f8d577ffecbc35289ae281c2e upstream.
 
-The off_gpios could be NULL. Add missing check in the kb3930_probe().
-This is similar to the issue fixed in commit b1ba8bcb2d1f
-("backlight: hx8357: Fix potential NULL pointer dereference").
+create_user_mr() has correct code to count the number of null keys
+used to fill in a hole for the memory map. However, fill_indir()
+does not follow the same to cap the range up to the 1GB limit
+correspondingly. Fill in more null keys for the gaps in between,
+so that null keys are correctly populated.
 
-This was detected by our static analysis tool.
-
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
 Cc: stable@vger.kernel.org
-Fixes: ede6b2d1dfc0 ("mfd: ene-kb3930: Add driver for ENE KB3930 Embedded Controller")
-Suggested-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250224233736.1919739-1-chenyuan0y@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Reported-by: Cong Meng <cong.meng@oracle.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Message-Id: <20250220193732.521462-2-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/ene-kb3930.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/mlx5/core/mr.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/mfd/ene-kb3930.c
-+++ b/drivers/mfd/ene-kb3930.c
-@@ -162,7 +162,7 @@ static int kb3930_probe(struct i2c_clien
- 			devm_gpiod_get_array_optional(dev, "off", GPIOD_IN);
- 		if (IS_ERR(ddata->off_gpios))
- 			return PTR_ERR(ddata->off_gpios);
--		if (ddata->off_gpios->ndescs < 2) {
-+		if (ddata->off_gpios && ddata->off_gpios->ndescs < 2) {
- 			dev_err(dev, "invalid off-gpios property\n");
- 			return -EINVAL;
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -166,9 +166,12 @@ again:
+ 			klm->bcount = cpu_to_be32(klm_bcount(dmr->end - dmr->start));
+ 			preve = dmr->end;
+ 		} else {
++			u64 bcount = min_t(u64, dmr->start - preve, MAX_KLM_SIZE);
++
+ 			klm->key = cpu_to_be32(mvdev->res.null_mkey);
+-			klm->bcount = cpu_to_be32(klm_bcount(dmr->start - preve));
+-			preve = dmr->start;
++			klm->bcount = cpu_to_be32(klm_bcount(bcount));
++			preve += bcount;
++
+ 			goto again;
  		}
+ 	}
 
 
