@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D482820B2;
-	Wed, 23 Apr 2025 15:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EADF281357;
+	Wed, 23 Apr 2025 15:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421587; cv=none; b=aH2umKnYb3CWJeZru/yZzz04JXEuCRm323ZSp/DRcyBJV5IqRbqSwDbZJPG6UFDFQ2HsKWzF06ZUJfgBCSzVv9qEUAWHwxFpCRYbnjerduzMcwqeZHi4YB7RZ98eqfkCqqxVUGPoamF/oDNAfXTnNQGuhreyUgkgRFhCXjCmKbc=
+	t=1745421589; cv=none; b=NBbUJaYC+iPduSXLw1vVF5c0qsFmVhh+ctLbgG2Fbr9KIoVqpzMrgSs1SIK63Uj6ycXPhFckR3GogNn19PIs2gFiJCnGyVNI+dfpg4n7CsOCkAeoMS00MBQRGtNC7+wg78hpu/KygAtjAnz0/1VkqNvg5juSaSM0R8lu8KjoX7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421587; c=relaxed/simple;
-	bh=Af4DKbCJsDnrK7Wv8e2uOMVsxIeubgsSrCV7h39mnd4=;
+	s=arc-20240116; t=1745421589; c=relaxed/simple;
+	bh=31KRagvrT4jRwOWeBP+I9jB5S66u3O8uYhSKlKVEbIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JB6VIEr6jBnoOXGiQOoMraGE/iolOGEscDIp9UR+RfUun9EUYFKXh9o/NWsBe+lXhUc33o26v1eqP+BrJI15fsqofR8xJMcW73b8phs+/1h1JRTzQKpR0bGo+SZIZT/NkVIliSDD/qEVk5TCSYohbHwStCz/Mj0g9zAswvQ+gZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2AHrC/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I6gos8u8OlQbHoHvSqXEsAwBt3UzWwtWfmUxkTi6oCBLlmQ+90pzjSJQEI7aRyfqwFHNVaCxJWZrFE9i34hZKsbJWgrPGiO/dZKI99BtxVtOylwzD9BUMFFVGOb4KB67h5UG82ELGsJVXnMjyWO8JNfv0FieFxe19SxGtvASdpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHxvwdRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2AHrC/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E627C4CEE2;
-	Wed, 23 Apr 2025 15:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHxvwdRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA5AC4CEE2;
+	Wed, 23 Apr 2025 15:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421586;
-	bh=Af4DKbCJsDnrK7Wv8e2uOMVsxIeubgsSrCV7h39mnd4=;
+	s=korg; t=1745421589;
+	bh=31KRagvrT4jRwOWeBP+I9jB5S66u3O8uYhSKlKVEbIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2AHrC/5LsmzjIhEzxVLEYWbmTSSdOE7Prruz1t/n24/SKuWVnN4kV/Nj283d+cu4
-	 6YGr2LeTZrJEedrK5f0s86yI6atJBOR4bkU7oRTpZwI7Kll0dG9jq9atY5K/hYcr92
-	 eEBaO16AY9QvoUvAT5Sqs53wMiD+Ijtbjxw8iQBM=
+	b=FHxvwdRQSb3Ee9X7L4OojOQYFP7whBZ0kgMttx3Vt43CBGoqY8+gHnMdXNVqkz7aD
+	 HPqm4F015S6epAEUWJkOPk1mgklmolCDTGMMlOw5H883k+hDB2CcDBT/fTa4bIdfKH
+	 bzHQQ026fOZhb0ZsXeNEIX6XVO++vIKpGdy2xKv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.1 155/291] of/irq: Fix device node refcount leakages in of_irq_init()
-Date: Wed, 23 Apr 2025 16:42:24 +0200
-Message-ID: <20250423142630.724715520@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 197/393] sctp: detect and prevent references to a freed transport in sendmsg
+Date: Wed, 23 Apr 2025 16:41:33 +0200
+Message-ID: <20250423142651.524774354@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,59 +45,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Ricardo Cañuelo Navarro <rcn@igalia.com>
 
-commit 708124d9e6e7ac5ebf927830760679136b23fdf0 upstream.
+commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
 
-of_irq_init() will leak interrupt controller device node refcounts
-in two places as explained below:
+sctp_sendmsg() re-uses associations and transports when possible by
+doing a lookup based on the socket endpoint and the message destination
+address, and then sctp_sendmsg_to_asoc() sets the selected transport in
+all the message chunks to be sent.
 
-1) Leak refcounts of both @desc->dev and @desc->interrupt_parent when
-   suffers @desc->irq_init_cb() failure.
-2) Leak refcount of @desc->interrupt_parent when cleans up list
-   @intc_desc_list in the end.
+There's a possible race condition if another thread triggers the removal
+of that selected transport, for instance, by explicitly unbinding an
+address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
+been set up and before the message is sent. This can happen if the send
+buffer is full, during the period when the sender thread temporarily
+releases the socket lock in sctp_wait_for_sndbuf().
 
-Refcounts of both @desc->dev and @desc->interrupt_parent were got in
-the first loop, but of_irq_init() does not put them before kfree(@desc)
-in places mentioned above, so causes refcount leakages.
+This causes the access to the transport data in
+sctp_outq_select_transport(), when the association outqueue is flushed,
+to result in a use-after-free read.
 
-Fix by putting refcounts involved before kfree(@desc).
+This change avoids this scenario by having sctp_transport_free() signal
+the freeing of the transport, tagging it as "dead". In order to do this,
+the patch restores the "dead" bit in struct sctp_transport, which was
+removed in
+commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
 
-Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
-Fixes: c71a54b08201 ("of/irq: introduce of_irq_init")
+Then, in the scenario where the sender thread has released the socket
+lock in sctp_wait_for_sndbuf(), the bit is checked again after
+re-acquiring the socket lock to detect the deletion. This is done while
+holding a reference to the transport to prevent it from being freed in
+the process.
+
+If the transport was deleted while the socket lock was relinquished,
+sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
+send.
+
+The bug was found by a private syzbot instance (see the error report [1]
+and the C reproducer that triggers it [2]).
+
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-7-93e3a2659aa7@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/net/sctp/structs.h |    3 ++-
+ net/sctp/socket.c          |   22 ++++++++++++++--------
+ net/sctp/transport.c       |    2 ++
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -627,6 +627,8 @@ void __init of_irq_init(const struct of_
- 				       __func__, desc->dev, desc->dev,
- 				       desc->interrupt_parent);
- 				of_node_clear_flag(desc->dev, OF_POPULATED);
-+				of_node_put(desc->interrupt_parent);
-+				of_node_put(desc->dev);
- 				kfree(desc);
- 				continue;
- 			}
-@@ -657,6 +659,7 @@ void __init of_irq_init(const struct of_
- err:
- 	list_for_each_entry_safe(desc, temp_desc, &intc_desc_list, list) {
- 		list_del(&desc->list);
-+		of_node_put(desc->interrupt_parent);
- 		of_node_put(desc->dev);
- 		kfree(desc);
- 	}
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -778,6 +778,7 @@ struct sctp_transport {
+ 
+ 	/* Reference counting. */
+ 	refcount_t refcnt;
++	__u32	dead:1,
+ 		/* RTO-Pending : A flag used to track if one of the DATA
+ 		 *		chunks sent to this address is currently being
+ 		 *		used to compute a RTT. If this flag is 0,
+@@ -787,7 +788,7 @@ struct sctp_transport {
+ 		 *		calculation completes (i.e. the DATA chunk
+ 		 *		is SACK'd) clear this flag.
+ 		 */
+-	__u32	rto_pending:1,
++		rto_pending:1,
+ 
+ 		/*
+ 		 * hb_sent : a flag that signals that we have a pending
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -71,8 +71,9 @@
+ /* Forward declarations for internal helper functions. */
+ static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len);
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+ static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+@@ -1827,7 +1828,7 @@ static int sctp_sendmsg_to_asoc(struct s
+ 
+ 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
++		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+ 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+@@ -9208,8 +9209,9 @@ void sctp_sock_rfree(struct sk_buff *skb
+ 
+ 
+ /* Helper function to wait for space in the sndbuf.  */
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len)
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	long current_timeo = *timeo_p;
+@@ -9219,7 +9221,9 @@ static int sctp_wait_for_sndbuf(struct s
+ 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
+ 		 *timeo_p, msg_len);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Increment the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	/* Wait on the association specific sndbuf space. */
+@@ -9228,7 +9232,7 @@ static int sctp_wait_for_sndbuf(struct s
+ 					  TASK_INTERRUPTIBLE);
+ 		if (asoc->base.dead)
+ 			goto do_dead;
+-		if (!*timeo_p)
++		if ((!*timeo_p) || (transport && transport->dead))
+ 			goto do_nonblock;
+ 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
+ 			goto do_error;
+@@ -9253,7 +9257,9 @@ static int sctp_wait_for_sndbuf(struct s
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	/* Release the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+--- a/net/sctp/transport.c
++++ b/net/sctp/transport.c
+@@ -117,6 +117,8 @@ fail:
+  */
+ void sctp_transport_free(struct sctp_transport *transport)
+ {
++	transport->dead = 1;
++
+ 	/* Try to delete the heartbeat timer.  */
+ 	if (del_timer(&transport->hb_timer))
+ 		sctp_transport_put(transport);
 
 
