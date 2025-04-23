@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA5817B421;
-	Wed, 23 Apr 2025 15:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E532283C87;
+	Wed, 23 Apr 2025 15:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421877; cv=none; b=meyXqGj0Hm25jXLrsoCpP+kM4GjH9YPP+KiyrtQMRV+abPkRqk9RQR8h5UXLq4BabJOqk6tuk3hs7hhZUU06DMV0YHBygJ2Z3ouDSGaYA8C++c1PEs51GCYjk4ixfmiP07lBh5/0J8eWwFcg4FQoGZgIpIzjuuMyUWyKCw8fzoY=
+	t=1745421879; cv=none; b=IwFZYy0q7OK54CmyxQo/rcM9x0qOMIdodhCGbBRVHKONjhkWGf5zVtOMYX6YBdR9bz46rzxALiuoVpYKyWMUTQSet3ZEzREfqsQPWvzPKEpA1LmR+zkZkbNL91twX4iyJOfYfjVes5GTLngtIlnC/DKAGHByLS5pvnJAT4SN4Lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421877; c=relaxed/simple;
-	bh=TB5k+hKtaBiX++ScL635bbQTcgDj5ZrPjll8y6+iY2U=;
+	s=arc-20240116; t=1745421879; c=relaxed/simple;
+	bh=bYEp2tUEbt3giAvxXwWzch3wjYtAKG2pqIVwofmPUo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2moeoV4feHvEtVE1xztYmCcbtjf7JKr68kFPRi1BV5XuxhT0IKTLZUm53JbF738d4tcZGZL7kcEn+aD1539PyZI5CMWVt7ZckaabSZriNqxKPiPIaUjDPx3VGKg4ONtIXu47m+RuSv/3XX/KtOxbOQ5Pj7M1p9LXlSrSf4Ypo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkdrccR1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dR5iyOT0EKNXm//SKnAPDdVxaRffozrFDJRyluLGv3hmJxotSf87tsKoiBoX7U+5zUKQNn2soLkVYPiedLY8HXTcIwq8IASar53YH9rhjJlAKxAp/hY1uuN3Ka7HVQhKs2TPasmrBJoAzDTZobtmXI7ILyEqr6S5qc1oKiM7Uic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvMGuTgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkdrccR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AB5C4CEE2;
-	Wed, 23 Apr 2025 15:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvMGuTgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A690EC4CEE3;
+	Wed, 23 Apr 2025 15:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421876;
-	bh=TB5k+hKtaBiX++ScL635bbQTcgDj5ZrPjll8y6+iY2U=;
+	s=korg; t=1745421879;
+	bh=bYEp2tUEbt3giAvxXwWzch3wjYtAKG2pqIVwofmPUo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkdrccR1RehGl3TmvEJclFmnXIHALCgCnfwbO2I9r71DO14jnFPcrYkJMSQW4rQbM
-	 qtJkXvj0gctNAYXrH16Nc3C1mdRFiyTqLVS/cwEZfv932s+xe+uDA3I5fkK+RYIgcx
-	 xVWSFvnAqepDApMTX6uQafyZirvtGeCdwUiXX2SI=
+	b=fvMGuTgptE0oT5edHTibhy6lZO4GcJtHR+GGlKnrTYcD2LC/Qio4Z3KCPKO3rO9XU
+	 YHWg4Goxq+9CKwKwU4ROJ2jZP8+WWwVY+i9eoR0to45MI1nwU5wY7Y8l+M/H4tj1sO
+	 waNax3DCdf8NC3UDlypIg7n+g5DPh7E8ETZAO64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 191/291] net: dsa: mv88e6xxx: fix -ENOENT when deleting VLANs and MST is unsupported
-Date: Wed, 23 Apr 2025 16:43:00 +0200
-Message-ID: <20250423142632.188641500@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	syzbot+683f8cb11b94b1824c77@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 238/393] Bluetooth: hci_uart: Fix another race during initialization
+Date: Wed, 23 Apr 2025 16:42:14 +0200
+Message-ID: <20250423142653.218979886@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,97 +47,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit ea08dfc35f83cfc73493c52f63ae4f2e29edfe8d ]
+commit 5df5dafc171b90d0b8d51547a82657cd5a1986c7 upstream.
 
-Russell King reports that on the ZII dev rev B, deleting a bridge VLAN
-from a user port fails with -ENOENT:
-https://lore.kernel.org/netdev/Z_lQXNP0s5-IiJzd@shell.armlinux.org.uk/
+Do not set 'HCI_UART_PROTO_READY' before call 'hci_uart_register_dev()'.
+Possible race is when someone calls 'hci_tty_uart_close()' after this bit
+is set, but 'hci_uart_register_dev()' wasn't done. This leads to access
+to uninitialized fields. To fix it let's set this bit after device was
+registered (as before patch c411c62cc133) and to fix previous problem let's
+add one more bit in addition to 'HCI_UART_PROTO_READY' which allows to
+perform power up without original bit set (pls see commit c411c62cc133).
 
-This comes from mv88e6xxx_port_vlan_leave() -> mv88e6xxx_mst_put(),
-which tries to find an MST entry in &chip->msts associated with the SID,
-but fails and returns -ENOENT as such.
+Crash backtrace from syzbot report:
 
-But we know that this chip does not support MST at all, so that is not
-surprising. The question is why does the guard in mv88e6xxx_mst_put()
-not exit early:
+RIP: 0010:skb_queue_empty_lockless include/linux/skbuff.h:1887 [inline]
+RIP: 0010:skb_queue_purge_reason+0x6d/0x140 net/core/skbuff.c:3936
 
-	if (!sid)
-		return 0;
+Call Trace:
+ <TASK>
+ skb_queue_purge include/linux/skbuff.h:3364 [inline]
+ mrvl_close+0x2f/0x90 drivers/bluetooth/hci_mrvl.c:100
+ hci_uart_tty_close+0xb6/0x120 drivers/bluetooth/hci_ldisc.c:557
+ tty_ldisc_close drivers/tty/tty_ldisc.c:455 [inline]
+ tty_ldisc_kill+0x66/0xc0 drivers/tty/tty_ldisc.c:613
+ tty_ldisc_release+0xc9/0x120 drivers/tty/tty_ldisc.c:781
+ tty_release_struct+0x10/0x80 drivers/tty/tty_io.c:1690
+ tty_release+0x4ef/0x640 drivers/tty/tty_io.c:1861
+ __fput+0x86/0x2a0 fs/file_table.c:450
+ task_work_run+0x82/0xb0 kernel/task_work.c:239
+ resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:114 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0xa3/0x1b0 kernel/entry/common.c:218
+ do_syscall_64+0x9a/0x190 arch/x86/entry/common.c:89
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-And the answer seems to be simple: the sid comes from vlan.sid which
-supposedly was previously populated by mv88e6xxx_vtu_get().
-But some chip->info->ops->vtu_getnext() implementations do not populate
-vlan.sid, for example see mv88e6185_g1_vtu_getnext(). In that case,
-later in mv88e6xxx_port_vlan_leave() we are using a garbage sid which is
-just residual stack memory.
-
-Testing for sid == 0 covers all cases of a non-bridge VLAN or a bridge
-VLAN mapped to the default MSTI. For some chips, SID 0 is valid and
-installed by mv88e6xxx_stu_setup(). A chip which does not support the
-STU would implicitly only support mapping all VLANs to the default MSTI,
-so although SID 0 is not valid, it would be sufficient, if we were to
-zero-initialize the vlan structure, to fix the bug, due to the
-coincidence that a test for vlan.sid == 0 already exists and leads to
-the same (correct) behavior.
-
-Another option which would be sufficient would be to add a test for
-mv88e6xxx_has_stu() inside mv88e6xxx_mst_put(), symmetric to the one
-which already exists in mv88e6xxx_mst_get(). But that placement means
-the caller will have to dereference vlan.sid, which means it will access
-uninitialized memory, which is not nice even if it ignores it later.
-
-So we end up making both modifications, in order to not rely just on the
-sid == 0 coincidence, but also to avoid having uninitialized structure
-fields which might get temporarily accessed.
-
-Fixes: acaf4d2e36b3 ("net: dsa: mv88e6xxx: MST Offloading")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250414212913.2955253-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reported-by: syzbot+683f8cb11b94b1824c77@syzkaller.appspotmail.com
+Tested-by: syzbot+683f8cb11b94b1824c77@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-bluetooth/d159c57f-8490-4c26-79da-6ad3612c4a14@salutedevices.com/
+Fixes: 366ceff495f9 ("Bluetooth: hci_uart: fix race during initialization")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_ldisc.c |   20 ++++++++++++++------
+ drivers/bluetooth/hci_uart.h  |    1 +
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index d348078ec033c..4c60f79ce2697 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -1724,6 +1724,8 @@ static int mv88e6xxx_vtu_get(struct mv88e6xxx_chip *chip, u16 vid,
- 	if (!chip->info->ops->vtu_getnext)
- 		return -EOPNOTSUPP;
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -102,7 +102,8 @@ static inline struct sk_buff *hci_uart_d
+ 	if (!skb) {
+ 		percpu_down_read(&hu->proto_lock);
  
-+	memset(entry, 0, sizeof(*entry));
-+
- 	entry->vid = vid ? vid - 1 : mv88e6xxx_max_vid(chip);
- 	entry->valid = false;
+-		if (test_bit(HCI_UART_PROTO_READY, &hu->flags))
++		if (test_bit(HCI_UART_PROTO_READY, &hu->flags) ||
++		    test_bit(HCI_UART_PROTO_INIT, &hu->flags))
+ 			skb = hu->proto->dequeue(hu);
  
-@@ -1859,7 +1861,16 @@ static int mv88e6xxx_mst_put(struct mv88e6xxx_chip *chip, u8 sid)
- 	struct mv88e6xxx_mst *mst, *tmp;
- 	int err;
- 
--	if (!sid)
-+	/* If the SID is zero, it is for a VLAN mapped to the default MSTI,
-+	 * and mv88e6xxx_stu_setup() made sure it is always present, and thus,
-+	 * should not be removed here.
-+	 *
-+	 * If the chip lacks STU support, numerically the "sid" variable will
-+	 * happen to also be zero, but we don't want to rely on that fact, so
-+	 * we explicitly test that first. In that case, there is also nothing
-+	 * to do here.
-+	 */
-+	if (!mv88e6xxx_has_stu(chip) || !sid)
+ 		percpu_up_read(&hu->proto_lock);
+@@ -124,7 +125,8 @@ int hci_uart_tx_wakeup(struct hci_uart *
+ 	if (!percpu_down_read_trylock(&hu->proto_lock))
  		return 0;
  
- 	list_for_each_entry_safe(mst, tmp, &chip->msts, node) {
--- 
-2.39.5
-
+-	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags))
++	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags) &&
++	    !test_bit(HCI_UART_PROTO_INIT, &hu->flags))
+ 		goto no_schedule;
+ 
+ 	set_bit(HCI_UART_TX_WAKEUP, &hu->tx_state);
+@@ -278,7 +280,8 @@ static int hci_uart_send_frame(struct hc
+ 
+ 	percpu_down_read(&hu->proto_lock);
+ 
+-	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
++	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags) &&
++	    !test_bit(HCI_UART_PROTO_INIT, &hu->flags)) {
+ 		percpu_up_read(&hu->proto_lock);
+ 		return -EUNATCH;
+ 	}
+@@ -582,7 +585,8 @@ static void hci_uart_tty_wakeup(struct t
+ 	if (tty != hu->tty)
+ 		return;
+ 
+-	if (test_bit(HCI_UART_PROTO_READY, &hu->flags))
++	if (test_bit(HCI_UART_PROTO_READY, &hu->flags) ||
++	    test_bit(HCI_UART_PROTO_INIT, &hu->flags))
+ 		hci_uart_tx_wakeup(hu);
+ }
+ 
+@@ -608,7 +612,8 @@ static void hci_uart_tty_receive(struct
+ 
+ 	percpu_down_read(&hu->proto_lock);
+ 
+-	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
++	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags) &&
++	    !test_bit(HCI_UART_PROTO_INIT, &hu->flags)) {
+ 		percpu_up_read(&hu->proto_lock);
+ 		return;
+ 	}
+@@ -704,13 +709,16 @@ static int hci_uart_set_proto(struct hci
+ 
+ 	hu->proto = p;
+ 
+-	set_bit(HCI_UART_PROTO_READY, &hu->flags);
++	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
+ 
+ 	err = hci_uart_register_dev(hu);
+ 	if (err) {
+ 		return err;
+ 	}
+ 
++	set_bit(HCI_UART_PROTO_READY, &hu->flags);
++	clear_bit(HCI_UART_PROTO_INIT, &hu->flags);
++
+ 	return 0;
+ }
+ 
+--- a/drivers/bluetooth/hci_uart.h
++++ b/drivers/bluetooth/hci_uart.h
+@@ -89,6 +89,7 @@ struct hci_uart {
+ #define HCI_UART_REGISTERED		1
+ #define HCI_UART_PROTO_READY		2
+ #define HCI_UART_NO_SUSPEND_NOTIFIER	3
++#define HCI_UART_PROTO_INIT		4
+ 
+ /* TX states  */
+ #define HCI_UART_SENDING	1
 
 
