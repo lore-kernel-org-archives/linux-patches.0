@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00132853ED;
-	Wed, 23 Apr 2025 15:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10EA28BAA0;
+	Wed, 23 Apr 2025 15:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422544; cv=none; b=UzOQsQ6tkW8yt4z1V2Xlpea+BpXP8eNQ/suM7rUXE72B2RlCdAL8kxhXZnMyYeZnbQh61Ymw+T4xEpdu/hAa2o+dtXc1RmA/Bd15g+f2HsYVOzeOF95iA1pshZ8sDbqbyPy0n59xtkCb1lVmmKvmFsWeOTvFZhunOK0/9jNrTDM=
+	t=1745422545; cv=none; b=ryybZQnQvtRT/GmiE8jRQ4SQY8rYJJYq2642L3JitX9yscSsB1Fj7t6Yd6R7nvw9lkH1fpLUqn33awzwbue8ch3RakTP92lEojyU5r+N7ZhGDZ3Elh24gnMhidwNH4EbnL/X4hl1xTc48StpBuwPYirIS1KqngXRMq1/eJywvhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422544; c=relaxed/simple;
-	bh=9jPSKLSs7AKzoEYvn0j/AaHPorMKCX5mn2kIZo3hYH8=;
+	s=arc-20240116; t=1745422545; c=relaxed/simple;
+	bh=iGbppD07ifKOHbgaykku/600YEqvE5lagOpUEa0a5K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anAjf17UfL3HXV8H0kBHe0i7XfLvljgfMnJwf3U8HFVYYMOb/XjAmmuiiRTLR/6djLTRNbBnZOTuTpQFiLD4iG6dIh0JfrmBGUb9c/y9WPTdxqppCGdfjqdzQlKgrPvPau7OyyJEDt6Nff+jxoFfUnUad7sZvV+zoqs3z+JFznY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xp+A8yqe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ocy2pAfdv5qLX3ul2zWN/FAhjniXCUtyc76+t6rjFkkHkcbl3UtsYgmwRfhIgHsKKrsarlC4nPDPv+J3il8lhozYPTcE6DSK9JIVQO3bk98JIZlaoLmkSDngNG5uCZE95r7p2Y3jbWGagVVSC3Y8QWNGXdYqRxoNSE3dR1G9foY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9wbZ0BO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xp+A8yqe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07A5C4CEE3;
-	Wed, 23 Apr 2025 15:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9wbZ0BO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55387C4CEE3;
+	Wed, 23 Apr 2025 15:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422543;
-	bh=9jPSKLSs7AKzoEYvn0j/AaHPorMKCX5mn2kIZo3hYH8=;
+	s=korg; t=1745422545;
+	bh=iGbppD07ifKOHbgaykku/600YEqvE5lagOpUEa0a5K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xp+A8yqeTHXR9B7MT8fnxZ0CZ5l36vuNLuK2DutdTtUYTDH3wZ9WXJYXIZt505zzn
-	 p8qfZ3VDC3pKST8Ec1gVFAx8ijJNaz9dt5uvIquhVCSW/Sy6LDmhlMCVVmjULuo63a
-	 FhE2g90ne7O4owjIgpvlpBZ2dEA6OJMUYPRAgwEs=
+	b=V9wbZ0BOUNwXbRN0QuMaDMy77lm0dHt9hTAqwu25ZvHUdi9qtbwOih2sa1k3fFM9L
+	 57xdDnp71PXa15Ab6JV1LkYj7OGhl93Qbe/NydEkORmUY3F4SYTDVTdMG2Eqk5WoLW
+	 dDf/4KU7sSJEB6u9yS0moYyvzfAybBgQCQXSh4ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 359/393] io_uring/net: fix accept multishot handling
-Date: Wed, 23 Apr 2025 16:44:15 +0200
-Message-ID: <20250423142658.170389982@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.6 360/393] cpufreq: Reference count policy in cpufreq_update_limits()
+Date: Wed, 23 Apr 2025 16:44:16 +0200
+Message-ID: <20250423142658.209590516@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -44,42 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-Commit f6a89bf5278d6e15016a736db67043560d1b50d5 upstream.
+commit 9e4e249018d208678888bdf22f6b652728106528 upstream.
 
-REQ_F_APOLL_MULTISHOT doesn't guarantee it's executed from the multishot
-context, so a multishot accept may get executed inline, fail
-io_req_post_cqe(), and ask the core code to kill the request with
--ECANCELED by returning IOU_STOP_MULTISHOT even when a socket has been
-accepted and installed.
+Since acpi_processor_notify() can be called before registering a cpufreq
+driver or even in cases when a cpufreq driver is not registered at all,
+cpufreq_update_limits() needs to check if a cpufreq driver is present
+and prevent it from being unregistered.
 
-Cc: stable@vger.kernel.org
-Fixes: 390ed29b5e425 ("io_uring: add IORING_ACCEPT_MULTISHOT for accept")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/51c6deb01feaa78b08565ca8f24843c017f5bc80.1740331076.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+For this purpose, make it call cpufreq_cpu_get() to obtain a cpufreq
+policy pointer for the given CPU and reference count the corresponding
+policy object, if present.
+
+Fixes: 5a25e3f7cc53 ("cpufreq: intel_pstate: Driver-specific handling of _PPC updates")
+Closes: https://lore.kernel.org/linux-acpi/Z-ShAR59cTow0KcR@mail-itl
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/1928789.tdWV9SEqCh@rjwysocki.net
+[do not use __free(cpufreq_cpu_put) in a backport]
+Signed-off-by: Marek Marczykowski-GÃ³recki <marmarek@invisiblethingslab.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1438,6 +1438,8 @@ retry:
- 		goto retry;
- 
- 	io_req_set_res(req, ret, 0);
-+	if (!(issue_flags & IO_URING_F_MULTISHOT))
-+		return IOU_OK;
- 	return IOU_STOP_MULTISHOT;
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2743,10 +2743,18 @@ EXPORT_SYMBOL(cpufreq_update_policy);
+  */
+ void cpufreq_update_limits(unsigned int cpu)
+ {
++	struct cpufreq_policy *policy;
++
++	policy = cpufreq_cpu_get(cpu);
++	if (!policy)
++		return;
++
+ 	if (cpufreq_driver->update_limits)
+ 		cpufreq_driver->update_limits(cpu);
+ 	else
+ 		cpufreq_update_policy(cpu);
++
++	cpufreq_cpu_put(policy);
  }
+ EXPORT_SYMBOL_GPL(cpufreq_update_limits);
  
 
 
