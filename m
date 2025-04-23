@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF3028A3F8;
-	Wed, 23 Apr 2025 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FF628E61B;
+	Wed, 23 Apr 2025 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422180; cv=none; b=C8duzY1/GCwd78IDbazgga8UgCmzPACpTzdRcMztkDiTtm7y7RYqEejLzNIb1LwiMV1cvkNFGjxbQtFJLC8ww3RL8M4Zn9gHdy//437poR08YuG9fJmtY6xrlUgB48jRRm0CoWZSZpPalW02xTh8I+BizLDTY2EvZ8Ge78hYL+E=
+	t=1745422183; cv=none; b=OSIlua0CxUIuPlGTtFy4MsI4xWSttx5FXpWGY7c3XTOV2OTaePjESYz5Q4H3R5csEgSNhC08IITPbsW2fDRyNPS4yHe07GeF36KMGwR6AHkBkag6enONuGnAqdguVwCRc7ZcAk0tN3uEBMsK96P7PYJR+LYcETBzZ3VwP+bqRpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422180; c=relaxed/simple;
-	bh=dHjKLAQubEuKUugmg2Gf3/n/7uIdasrwi7BBhM25rnM=;
+	s=arc-20240116; t=1745422183; c=relaxed/simple;
+	bh=rbHzUfWc7nHi6DWBTIv2NmiTM/mcWE8Y4nBaV3fakws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAtxeeATvWCgWZjMy7439nUN7MkQcg192o2TnGV4XQwZdieXVnyLFNZtXm08Te6hADKEqa8mbLpv4MEV9FGzJRUK7G9uryKnl8t4oEWFZ95ubHd4jJ68WCU/it6Dor5fvN4Wpc5p9tIqHk3+/ex2cSFwtJ1Li8xQJ6Rw6mei/II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsVavvmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOS11GMUm90Kz/Ga0H649SL4/Tr4t9qMERK7k9piJB1ULZ8IzC67z5uSegiUDGiNgLuBgfIXuKm3ZbJk9MtM+L94WosdTo1yuTmuqLLvoa4rEnt5C1he2aQ0orMW0yX9rcnP5O6/sIkdfe935/7DXapb/7dClCzXp9pDMllvfNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opAGeGqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsVavvmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27789C4CEE2;
-	Wed, 23 Apr 2025 15:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opAGeGqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CADAAC4CEE2;
+	Wed, 23 Apr 2025 15:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422180;
-	bh=dHjKLAQubEuKUugmg2Gf3/n/7uIdasrwi7BBhM25rnM=;
+	s=korg; t=1745422183;
+	bh=rbHzUfWc7nHi6DWBTIv2NmiTM/mcWE8Y4nBaV3fakws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsVavvmk3d4UaZxRM43aEaM6n+2A1tUGsmNRCcO6FznG3G6ryM54q5c4JK4q4NTjb
-	 qUNueZXau3YvFdZwMmaHtGg6Vl1NSFwnTAd6/wWSVIfBRgQbYHzF3K9z8lXrqMWPhX
-	 kZNcIm/KstdpItaMLPVcd9SLB1Ov5IB//tDmdK4I=
+	b=opAGeGqu6rrcS8wprEEye6boQ8Y6PvDGIm8iiS+R+9kttqD1+A7WZ8PBv6QiqTL04
+	 l8j31OIwDEfiu9eOKBDDhQlg0u+toizQGzYgkyDf1NxGrB76PNHL2fdCMxofIq09tL
+	 jBsaomup4u3CYWHAkxRxLaw8d5rUrXscJLwymKgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Meghana Malladi <m-malladi@ti.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 292/393] net: ti: icss-iep: Fix possible NULL pointer dereference for perout request
-Date: Wed, 23 Apr 2025 16:43:08 +0200
-Message-ID: <20250423142655.401810933@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 251/291] KVM: arm64: Remove VHE host restore of CPACR_EL1.ZEN
+Date: Wed, 23 Apr 2025 16:44:00 +0200
+Message-ID: <20250423142634.685492599@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,196 +51,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 7349c9e9979333abfce42da5f9025598083b59c9 ]
+[ Upstream commit 459f059be702056d91537b99a129994aa6ccdd35 ]
 
-The ICSS IEP driver tracks perout and pps enable state with flags.
-Currently when disabling pps and perout signals during icss_iep_exit(),
-results in NULL pointer dereference for perout.
+When KVM is in VHE mode, the host kernel tries to save and restore the
+configuration of CPACR_EL1.ZEN (i.e. CPTR_EL2.ZEN when HCR_EL2.E2H=1)
+across kvm_arch_vcpu_load_fp() and kvm_arch_vcpu_put_fp(), since the
+configuration may be clobbered by hyp when running a vCPU. This logic is
+currently redundant.
 
-To fix the null pointer dereference issue, the icss_iep_perout_enable_hw
-function can be modified to directly clear the IEP CMP registers when
-disabling PPS or PEROUT, without referencing the ptp_perout_request
-structure, as its contents are irrelevant in this case.
+The VHE hyp code unconditionally configures CPTR_EL2.ZEN to 0b01 when
+returning to the host, permitting host kernel usage of SVE.
 
-Fixes: 9b115361248d ("net: ti: icssg-prueth: Fix clearing of IEP_CMP_CFG registers during iep_init")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/7b1c7c36-363a-4085-b26c-4f210bee1df6@stanley.mountain/
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250415090543.717991-4-m-malladi@ti.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Now that the host eagerly saves and unbinds its own FPSIMD/SVE/SME
+state, there's no need to save/restore the state of the EL0 SVE trap.
+The kernel can safely save/restore state without trapping, as described
+above, and will restore userspace state (including trap controls) before
+returning to userspace.
+
+Remove the redundant logic.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Tested-by: Mark Brown <broonie@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Fuad Tabba <tabba@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20250210195226.1215254-4-mark.rutland@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[Rework for refactoring of where the flags are stored -- broonie]
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 121 +++++++++++------------
- 1 file changed, 58 insertions(+), 63 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |    2 --
+ arch/arm64/kvm/fpsimd.c           |   16 ----------------
+ 2 files changed, 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index 6006276ecce6f..f3315c6515156 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -482,6 +482,22 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 	int ret;
- 	u64 cmp;
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -556,8 +556,6 @@ struct kvm_vcpu_arch {
+ /* Save TRBE context if active  */
+ #define DEBUG_STATE_SAVE_TRBE	__vcpu_single_flag(iflags, BIT(6))
  
-+	if (!on) {
-+		/* Disable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), 0);
-+
-+		/* clear CMP regs */
-+		regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
-+		if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
-+			regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
-+
-+		/* Disable sync */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0);
-+
-+		return 0;
-+	}
-+
- 	/* Calculate width of the signal for PPS/PEROUT handling */
- 	ts.tv_sec = req->on.sec;
- 	ts.tv_nsec = req->on.nsec;
-@@ -500,64 +516,39 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 		if (ret)
- 			return ret;
+-/* SVE enabled for host EL0 */
+-#define HOST_SVE_ENABLED	__vcpu_single_flag(sflags, BIT(0))
+ /* SME enabled for EL0 */
+ #define HOST_SME_ENABLED	__vcpu_single_flag(sflags, BIT(1))
+ /* Physical CPU not in supported_cpus */
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -88,10 +88,6 @@ void kvm_arch_vcpu_load_fp(struct kvm_vc
+ 	fpsimd_save_and_flush_cpu_state();
+ 	vcpu->arch.fp_state = FP_STATE_FREE;
  
--		if (on) {
--			/* Configure CMP */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, lower_32_bits(cmp));
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, upper_32_bits(cmp));
--			/* Configure SYNC, based on req on width */
--			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
--				     div_u64(ns_width, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
--			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
--				     div_u64(ns_start, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
--			/* Enable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
--		} else {
--			/* Disable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), 0);
+-	vcpu_clear_flag(vcpu, HOST_SVE_ENABLED);
+-	if (read_sysreg(cpacr_el1) & CPACR_EL1_ZEN_EL0EN)
+-		vcpu_set_flag(vcpu, HOST_SVE_ENABLED);
 -
--			/* clear regs */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
--		}
-+		/* Configure CMP */
-+		regmap_write(iep->map, ICSS_IEP_CMP1_REG0, lower_32_bits(cmp));
-+		if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
-+			regmap_write(iep->map, ICSS_IEP_CMP1_REG1, upper_32_bits(cmp));
-+		/* Configure SYNC, based on req on width */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
-+			     div_u64(ns_width, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
-+		regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+			     div_u64(ns_start, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
-+		/* Enable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
- 	} else {
--		if (on) {
--			u64 start_ns;
--
--			iep->period = ((u64)req->period.sec * NSEC_PER_SEC) +
--				      req->period.nsec;
--			start_ns = ((u64)req->period.sec * NSEC_PER_SEC)
--				   + req->period.nsec;
--			icss_iep_update_to_next_boundary(iep, start_ns);
--
--			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
--				     div_u64(ns_width, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
--				     div_u64(ns_start, iep->def_inc));
--			/* Enable Sync in single shot mode  */
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
--				     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
--			/* Enable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
--		} else {
--			/* Disable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), 0);
--
--			/* clear CMP regs */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
--
--			/* Disable sync */
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0);
--		}
-+		u64 start_ns;
-+
-+		iep->period = ((u64)req->period.sec * NSEC_PER_SEC) +
-+				req->period.nsec;
-+		start_ns = ((u64)req->period.sec * NSEC_PER_SEC)
-+				+ req->period.nsec;
-+		icss_iep_update_to_next_boundary(iep, start_ns);
-+
-+		regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
-+			     div_u64(ns_width, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+			     div_u64(ns_start, iep->def_inc));
-+		/* Enable Sync in single shot mode  */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
-+			     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
-+		/* Enable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
+ 	/*
+ 	 * We don't currently support SME guests but if we leave
+ 	 * things in streaming mode then when the guest starts running
+@@ -193,18 +189,6 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcp
+ 		}
+ 
+ 		fpsimd_save_and_flush_cpu_state();
+-	} else if (has_vhe() && system_supports_sve()) {
+-		/*
+-		 * The FPSIMD/SVE state in the CPU has not been touched, and we
+-		 * have SVE (and VHE): CPACR_EL1 (alias CPTR_EL2) has been
+-		 * reset to CPACR_EL1_DEFAULT by the Hyp code, disabling SVE
+-		 * for EL0.  To avoid spurious traps, restore the trap state
+-		 * seen by kvm_arch_vcpu_load_fp():
+-		 */
+-		if (vcpu_get_flag(vcpu, HOST_SVE_ENABLED))
+-			sysreg_clear_set(CPACR_EL1, 0, CPACR_EL1_ZEN_EL0EN);
+-		else
+-			sysreg_clear_set(CPACR_EL1, CPACR_EL1_ZEN_EL0EN, 0);
  	}
  
- 	return 0;
-@@ -568,11 +559,21 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
- {
- 	int ret = 0;
- 
-+	if (!on)
-+		goto disable;
-+
- 	/* Reject requests with unsupported flags */
- 	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
- 			  PTP_PEROUT_PHASE))
- 		return -EOPNOTSUPP;
- 
-+	/* Set default "on" time (1ms) for the signal if not passed by the app */
-+	if (!(req->flags & PTP_PEROUT_DUTY_CYCLE)) {
-+		req->on.sec = 0;
-+		req->on.nsec = NSEC_PER_MSEC;
-+	}
-+
-+disable:
- 	mutex_lock(&iep->ptp_clk_mutex);
- 
- 	if (iep->pps_enabled) {
-@@ -583,12 +584,6 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
- 	if (iep->perout_enabled == !!on)
- 		goto exit;
- 
--	/* Set default "on" time (1ms) for the signal if not passed by the app */
--	if (!(req->flags & PTP_PEROUT_DUTY_CYCLE)) {
--		req->on.sec = 0;
--		req->on.nsec = NSEC_PER_MSEC;
--	}
--
- 	ret = icss_iep_perout_enable_hw(iep, req, on);
- 	if (!ret)
- 		iep->perout_enabled = !!on;
--- 
-2.39.5
-
+ 	local_irq_restore(flags);
 
 
