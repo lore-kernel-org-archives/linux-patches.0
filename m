@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8B6263C9E;
-	Wed, 23 Apr 2025 14:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EDC263C9E;
+	Wed, 23 Apr 2025 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420208; cv=none; b=icxImJScWcaeBSYwXVOJDCG/Sg2Du3PpfOLTLBy26HNf9AKBw3WIgVL1PTbtksqfVT+ncuZrTVH9FfVwFbvTQ2Up7PXRMimffl8nNm1GBzUDj2V2SXqu+up7r3hP/KjFgjV2PVqOL5jORnw9ClhqZeFmAt8WkzFml6se/ZUAsGU=
+	t=1745420210; cv=none; b=U6AqwYRtiQy0kkFwTezmumEBdQ5DWjpz3ehrfP78U6Ue2XzyOygm7LXZNICA6NzmYbVdtec2opcW+8UNUvOVxRtlo7o7Jc5ptxSMBjaBxKpblxm3g20C/pMA4LkKymETwFrefw/agbZzc992b4pUICrCtm50BJoKFwM05PviDYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420208; c=relaxed/simple;
-	bh=cbMa8aAcysCBMxgYHweRxZWqm4u5odV4LoNmaZw+f/g=;
+	s=arc-20240116; t=1745420210; c=relaxed/simple;
+	bh=6A5vRu94R1SedrAmTNxxYW+JihBSh6dGTAQfusjXTWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XEvd270hD70A59anpMkxsr0GoZbjKdOtE7JxfMF0g8Ij2SuXzi/47yfSDZxrLMnM8yoytcRFrbKFliLt+gCUmvJo8KrUIENmRAklGDqqhc0uz7dvQKxlAhujEGVgx/oJF8TxP0plM8nH4ve5upo69wBG5Te+daBRVDMU7HktBe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARFF6GUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rqt8E62hEB66Ou9CEv/LIpufoEJm8RmpJsrvcCwwC+2PTrWSpYCGqTO4aFRsjBN43Knr4QTgpsCiTTGc0Cu5VWQyrLidC/TELXPkGC/u4x5jx7eXbKTH3Bwz+ixEKUG3NNP0r1yVnqfusFCG5BpLDhKfO56oegdoSyJTdi8G8Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utN1cGDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARFF6GUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD90C4CEE2;
-	Wed, 23 Apr 2025 14:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utN1cGDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5751AC4CEE2;
+	Wed, 23 Apr 2025 14:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420208;
-	bh=cbMa8aAcysCBMxgYHweRxZWqm4u5odV4LoNmaZw+f/g=;
+	s=korg; t=1745420210;
+	bh=6A5vRu94R1SedrAmTNxxYW+JihBSh6dGTAQfusjXTWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARFF6GUYfOjwCnHmKG5H1T1yJ8OyutqfFQf8lgAljADXLSB689nZ4n6PC7JhyXvdp
-	 pVq0P/aW4+Lde4Sy1iQcTSdsqNoU7vY2lcW4bkPHTxM+z2wlR6lUey3Txd3GzQ0Mhg
-	 fa2MhtiDmrBJTlOlohZ5BfNdoNCknkyZizOwvSkw=
+	b=utN1cGDGev45rOkaK3GBwlssmenNCW61qY7tPC/JM9S7dsRxgccU4Ddg6zKEugRAu
+	 1zwelGEKGsHSHl+YRPB/tR0XV700Ji/4JETH5NuUPEatWxtgaR2Oj23uSIauz0rXaD
+	 WjLo+p8Etsa27zBTWeoxlK/arT8hIYyjiT0mMkFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Makarenko Oleg <oleg@makarenk.ooo>,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/393] HID: pidff: Add MISSING_PBO quirk and its detection
-Date: Wed, 23 Apr 2025 16:39:07 +0200
-Message-ID: <20250423142645.405478237@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 6.12 109/223] cpufreq/sched: Explicitly synchronize limits_changed flag handling
+Date: Wed, 23 Apr 2025 16:43:01 +0200
+Message-ID: <20250423142621.552337794@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,152 +44,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit fc7c154e9bb3c2b98875cfc565406f4787e3b7a4 ]
+commit 79443a7e9da3c9f68290a8653837e23aba0fa89f upstream.
 
-Some devices with only one axis are missing PARAMETER_BLOCK_OFFSET field
-for conditional effects. They can only have one axis, so we're limiting
-the max_axis when setting the report for those effects.
+The handling of the limits_changed flag in struct sugov_policy needs to
+be explicitly synchronized to ensure that cpufreq policy limits updates
+will not be missed in some cases.
 
-Automatic detection ensures compatibility even if such device won't be
-explicitly defined in the kernel.
+Without that synchronization it is theoretically possible that
+the limits_changed update in sugov_should_update_freq() will be
+reordered with respect to the reads of the policy limits in
+cpufreq_driver_resolve_freq() and in that case, if the limits_changed
+update in sugov_limits() clobbers the one in sugov_should_update_freq(),
+the new policy limits may not take effect for a long time.
 
-Fixes initialization of VRS DirectForce PRO and possibly other devices.
+Likewise, the limits_changed update in sugov_limits() may theoretically
+get reordered with respect to the updates of the policy limits in
+cpufreq_set_policy() and if sugov_should_update_freq() runs between
+them, the policy limits change may be missed.
 
-Changes in v6:
-- Fixed NULL pointer dereference. When PBO is missing, make sure not
-  to set it anyway
+To ensure that the above situations will not take place, add memory
+barriers preventing the reordering in question from taking place and
+add READ_ONCE() and WRITE_ONCE() annotations around all of the
+limits_changed flag updates to prevent the compiler from messing up
+with that code.
 
-Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 600f5badb78c ("cpufreq: schedutil: Don't skip freq update when limits change")
+Cc: 5.3+ <stable@vger.kernel.org> # 5.3+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/3376719.44csPzL39Z@rjwysocki.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 47 +++++++++++++++++++++-------------
- include/linux/hid.h            |  1 +
- 2 files changed, 30 insertions(+), 18 deletions(-)
+ kernel/sched/cpufreq_schedutil.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 929f5967e7cb1..503b22feacdbb 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -391,13 +391,19 @@ static int pidff_needs_set_periodic(struct ff_effect *effect,
- static void pidff_set_condition_report(struct pidff_device *pidff,
- 				       struct ff_effect *effect)
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -81,9 +81,20 @@ static bool sugov_should_update_freq(str
+ 	if (!cpufreq_this_cpu_can_update(sg_policy->policy))
+ 		return false;
+ 
+-	if (unlikely(sg_policy->limits_changed)) {
+-		sg_policy->limits_changed = false;
++	if (unlikely(READ_ONCE(sg_policy->limits_changed))) {
++		WRITE_ONCE(sg_policy->limits_changed, false);
+ 		sg_policy->need_freq_update = true;
++
++		/*
++		 * The above limits_changed update must occur before the reads
++		 * of policy limits in cpufreq_driver_resolve_freq() or a policy
++		 * limits update might be missed, so use a memory barrier to
++		 * ensure it.
++		 *
++		 * This pairs with the write memory barrier in sugov_limits().
++		 */
++		smp_mb();
++
+ 		return true;
+ 	}
+ 
+@@ -377,7 +388,7 @@ static inline bool sugov_hold_freq(struc
+ static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
  {
--	int i;
-+	int i, max_axis;
-+
-+	/* Devices missing Parameter Block Offset can only have one axis */
-+	max_axis = pidff->quirks & HID_PIDFF_QUIRK_MISSING_PBO ? 1 : 2;
+ 	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_min)
+-		sg_cpu->sg_policy->limits_changed = true;
++		WRITE_ONCE(sg_cpu->sg_policy->limits_changed, true);
+ }
  
- 	pidff->set_condition[PID_EFFECT_BLOCK_INDEX].value[0] =
- 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
- 
--	for (i = 0; i < 2; i++) {
--		pidff->set_condition[PID_PARAM_BLOCK_OFFSET].value[0] = i;
-+	for (i = 0; i < max_axis; i++) {
-+		/* Omit Parameter Block Offset if missing */
-+		if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_PBO))
-+			pidff->set_condition[PID_PARAM_BLOCK_OFFSET].value[0] = i;
-+
- 		pidff_set_signed(&pidff->set_condition[PID_CP_OFFSET],
- 				 effect->u.condition[i].center);
- 		pidff_set_signed(&pidff->set_condition[PID_POS_COEFFICIENT],
-@@ -809,6 +815,11 @@ static int pidff_find_fields(struct pidff_usage *usage, const u8 *table,
- 			pr_debug("Setting MISSING_DELAY quirk\n");
- 			return_value |= HID_PIDFF_QUIRK_MISSING_DELAY;
- 		}
-+		else if (!found && table[k] == pidff_set_condition[PID_PARAM_BLOCK_OFFSET]) {
-+			pr_debug("PBO field not found, but that's OK\n");
-+			pr_debug("Setting MISSING_PBO quirk\n");
-+			return_value |= HID_PIDFF_QUIRK_MISSING_PBO;
-+		}
- 		else if (!found && strict) {
- 			pr_debug("failed to locate %d\n", k);
- 			return -1;
-@@ -1088,7 +1099,6 @@ static int pidff_find_effects(struct pidff_device *pidff,
-  */
- static int pidff_init_fields(struct pidff_device *pidff, struct input_dev *dev)
- {
--	int envelope_ok = 0;
- 	int status = 0;
- 
- 	/* Save info about the device not having the DELAY ffb field. */
-@@ -1119,13 +1129,10 @@ static int pidff_init_fields(struct pidff_device *pidff, struct input_dev *dev)
- 		return -ENODEV;
+ static inline bool sugov_update_single_common(struct sugov_cpu *sg_cpu,
+@@ -900,7 +911,16 @@ static void sugov_limits(struct cpufreq_
+ 		mutex_unlock(&sg_policy->work_lock);
  	}
  
--	if (!PIDFF_FIND_FIELDS(set_envelope, PID_SET_ENVELOPE, 1))
--		envelope_ok = 1;
--
- 	if (pidff_find_special_fields(pidff) || pidff_find_effects(pidff, dev))
- 		return -ENODEV;
- 
--	if (!envelope_ok) {
-+	if (PIDFF_FIND_FIELDS(set_envelope, PID_SET_ENVELOPE, 1)) {
- 		if (test_and_clear_bit(FF_CONSTANT, dev->ffbit))
- 			hid_warn(pidff->hid,
- 				 "has constant effect but no envelope\n");
-@@ -1150,16 +1157,20 @@ static int pidff_init_fields(struct pidff_device *pidff, struct input_dev *dev)
- 		clear_bit(FF_RAMP, dev->ffbit);
- 	}
- 
--	if ((test_bit(FF_SPRING, dev->ffbit) ||
--	     test_bit(FF_DAMPER, dev->ffbit) ||
--	     test_bit(FF_FRICTION, dev->ffbit) ||
--	     test_bit(FF_INERTIA, dev->ffbit)) &&
--	    PIDFF_FIND_FIELDS(set_condition, PID_SET_CONDITION, 1)) {
--		hid_warn(pidff->hid, "unknown condition effect layout\n");
--		clear_bit(FF_SPRING, dev->ffbit);
--		clear_bit(FF_DAMPER, dev->ffbit);
--		clear_bit(FF_FRICTION, dev->ffbit);
--		clear_bit(FF_INERTIA, dev->ffbit);
-+	if (test_bit(FF_SPRING, dev->ffbit) ||
-+	    test_bit(FF_DAMPER, dev->ffbit) ||
-+	    test_bit(FF_FRICTION, dev->ffbit) ||
-+	    test_bit(FF_INERTIA, dev->ffbit)) {
-+		status = PIDFF_FIND_FIELDS(set_condition, PID_SET_CONDITION, 1);
+-	sg_policy->limits_changed = true;
++	/*
++	 * The limits_changed update below must take place before the updates
++	 * of policy limits in cpufreq_set_policy() or a policy limits update
++	 * might be missed, so use a memory barrier to ensure it.
++	 *
++	 * This pairs with the memory barrier in sugov_should_update_freq().
++	 */
++	smp_wmb();
 +
-+		if (status < 0) {
-+			hid_warn(pidff->hid, "unknown condition effect layout\n");
-+			clear_bit(FF_SPRING, dev->ffbit);
-+			clear_bit(FF_DAMPER, dev->ffbit);
-+			clear_bit(FF_FRICTION, dev->ffbit);
-+			clear_bit(FF_INERTIA, dev->ffbit);
-+		}
-+		pidff->quirks |= status;
- 	}
++	WRITE_ONCE(sg_policy->limits_changed, true);
+ }
  
- 	if (test_bit(FF_PERIODIC, dev->ffbit) &&
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 744a498462cec..8876d5f0cd87f 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1220,6 +1220,7 @@ int hid_pidff_init(struct hid_device *hid);
- 
- /* HID PIDFF quirks */
- #define HID_PIDFF_QUIRK_MISSING_DELAY	BIT(0)
-+#define HID_PIDFF_QUIRK_MISSING_PBO	BIT(1)
- 
- #define dbg_hid(fmt, ...) pr_debug("%s: " fmt, __FILE__, ##__VA_ARGS__)
- 
--- 
-2.39.5
-
+ struct cpufreq_governor schedutil_gov = {
 
 
