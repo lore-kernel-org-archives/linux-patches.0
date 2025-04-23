@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3D31F5435;
-	Wed, 23 Apr 2025 15:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CA71F5435;
+	Wed, 23 Apr 2025 15:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421639; cv=none; b=sQI4HQorf+KIAtfw405ZEJnddES/+rIaRR88W/ej6PfBrNH1+SFh4+TXa0xHzELqIzDnfAwkb7Awm4g4XTi3PVEdXvPavYzhgVzr+74RucraVfL7m4RRk9bVLtlc3L4s7V01CzwBwHsZU2uzOd1ZetQYqyjuKL0AwLXVxGpLtos=
+	t=1745421642; cv=none; b=ggWzu4mrv7LM9xt6h8tQzVbjuNlllncqzVC+e8JQuBYTfEZySRk+2NPkGVYrGS14KC1JFhQ5WbddZ01n/yk8OGnN245KHsLPc06ylGHNt/Gdml8qFzzAZIu8mPGUSr22b2X2zMS7Z2j2A4PNvLkt80scvjGD7SoUPcyBs8b3wFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421639; c=relaxed/simple;
-	bh=eeQB8ShbPOPHdnjmcCTXp/UsP+014LC+bMDv+ZwsrxQ=;
+	s=arc-20240116; t=1745421642; c=relaxed/simple;
+	bh=6PIpxABVYn9QulES4zMEMOqNeqPEbxwvEXAMDAmTR0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R33V21EZS8KUyb3mvkeM13uj4Kzbuyd8eZ4CECduGqz1Ox8SLdoR5nqJlav4r9TVtlGQs0e4HwRREHo2Wmc4O0e/54u0dV/P7dQIGs20r6ZbWefBtdw5lpXUcTjkGdD0RBGbdADFKuc7XExlmDRyo2c/2DQt3JA2VtPtKHUqzXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzUB6xZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=miw31BBd+PzoJjXwnFaHMYwUfdSwNxzm0tYOrZFfJ8qSdDx7uGe8BWbo945VSt5H93W0GCFb92Lu564+RC+rrhNyyTa+PDDB0XLz/Y1z7GeiCnozjd/e/rJw4vUvdgs+17FOEEjA4XI+zmhZwFpmgRGjJdsuAhRiJLuBqB08GQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQqWnLwy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzUB6xZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DE2C4CEE2;
-	Wed, 23 Apr 2025 15:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQqWnLwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78556C4CEE2;
+	Wed, 23 Apr 2025 15:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421639;
-	bh=eeQB8ShbPOPHdnjmcCTXp/UsP+014LC+bMDv+ZwsrxQ=;
+	s=korg; t=1745421641;
+	bh=6PIpxABVYn9QulES4zMEMOqNeqPEbxwvEXAMDAmTR0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzUB6xZDiQ0dHfyA5T6s0RF90McKf7KYClk9Sje0v9FlgqznvaxFVXItk6kSEdAGM
-	 M/IpVE792Y68rT2zgPpRqPlvQVrgD6ev1nT5/XA3ae6w58N2EyAhJGKDqfglDDdj82
-	 os9jMgiNgkZPubl24Kjf/fq77qMgWId/TBMirpb4=
+	b=BQqWnLwyqoztbgVh/qMFaDcb3afelU63Lh101II3FGbWMtuLH3Sp2YNhQbCkaoCPi
+	 F6OlR2cUSGn4VSIUv2LU/QJn30xftpA3dje52j1MS9BWVe3oIpHSTgUsyNHAluntWe
+	 q4Xf/WzT4FIQXLFuKshJ+JX/IYCk/04LRKmJSN2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Rowley <lkml@johnrowley.me>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 161/291] ACPI: platform-profile: Fix CFI violation when accessing sysfs files
-Date: Wed, 23 Apr 2025 16:42:30 +0200
-Message-ID: <20250423142630.975295948@linuxfoundation.org>
+	Junwen Sun <sunjw8888@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 203/393] cifs: Ensure that all non-client-specific reparse points are processed by the server
+Date: Wed, 23 Apr 2025 16:41:39 +0200
+Message-ID: <20250423142651.775096765@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,111 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Pali Rohár <pali@kernel.org>
 
-commit dd4f730b557ce701a2cd4f604bf1e57667bd8b6e upstream.
+commit 6f8a394aa952257575910d57cf0a63627fa949a2 upstream.
 
-When an attribute group is created with sysfs_create_group(), the
-->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
-and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
-respectively. These functions use container_of() to get the respective
-callback from the passed attribute, meaning that these callbacks need to
-be of the same type as the callbacks in 'struct kobj_attribute'.
+Fix regression in mounts to e.g. onedrive shares.
 
-However, ->show() and ->store() in the platform_profile driver are
-defined for struct device_attribute with the help of DEVICE_ATTR_RO()
-and DEVICE_ATTR_RW(), which results in a CFI violation when accessing
-platform_profile or platform_profile_choices under /sys/firmware/acpi
-because the types do not match:
+Generally, reparse points are processed by the SMB server during the
+SMB OPEN request, but there are few reparse points which do not have
+OPEN-like meaning for the SMB server and has to be processed by the SMB
+client. Those are symlinks and special files (fifo, socket, block, char).
 
-  CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
+For Linux SMB client, it is required to process also name surrogate reparse
+points as they represent another entity on the SMB server system. Linux
+client will mark them as separate mount points. Examples of name surrogate
+reparse points are NTFS junction points (e.g. created by the "mklink" tool
+on Windows servers).
 
-There is no functional issue from the type mismatch because the layout
-of 'struct kobj_attribute' and 'struct device_attribute' are the same,
-so the container_of() cast does not break anything aside from CFI.
+So after processing the name surrogate reparse points, clear the
+-EOPNOTSUPP error code returned from the parse_reparse_point() to let SMB
+server to process reparse points.
 
-Change the type of platform_profile_choices_show() and
-platform_profile_{show,store}() to match the callbacks in
-'struct kobj_attribute' and update the attribute variables to
-match, which resolves the CFI violation.
+And remove printing misleading error message "unhandled reparse tag:" as
+reparse points are handled by SMB server and hence unhandled fact is normal
+operation.
 
-Cc: All applicable <stable@vger.kernel.org>
-Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
-Reported-by: John Rowley <lkml@johnrowley.me>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
-Tested-by: John Rowley <lkml@johnrowley.me>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[nathan: Fix conflicts in older stable branches]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: cad3fc0a4c8c ("cifs: Throw -EOPNOTSUPP error on unsupported reparse point type from parse_reparse_point()")
+Fixes: b587fd128660 ("cifs: Treat unhandled directory name surrogate reparse points as mount directory nodes")
+Cc: stable@vger.kernel.org
+Reported-by: Junwen Sun <sunjw8888@gmail.com>
+Tested-by: Junwen Sun <sunjw8888@gmail.com>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/platform_profile.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/smb/client/inode.c   |   10 ++++++++++
+ fs/smb/client/reparse.c |    4 ----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/acpi/platform_profile.c
-+++ b/drivers/acpi/platform_profile.c
-@@ -22,8 +22,8 @@ static const char * const profile_names[
- };
- static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
- 
--static ssize_t platform_profile_choices_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_choices_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -1145,6 +1145,16 @@ static int reparse_info_to_fattr(struct
+ 				cifs_create_junction_fattr(fattr, sb);
+ 				goto out;
+ 			}
++			/*
++			 * If the reparse point is unsupported by the Linux SMB
++			 * client then let it process by the SMB server. So mask
++			 * the -EOPNOTSUPP error code. This will allow Linux SMB
++			 * client to send SMB OPEN request to server. If server
++			 * does not support this reparse point too then server
++			 * will return error during open the path.
++			 */
++			if (rc == -EOPNOTSUPP)
++				rc = 0;
+ 		}
+ 		break;
+ 	}
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -633,8 +633,6 @@ int parse_reparse_point(struct reparse_d
+ 			const char *full_path,
+ 			bool unicode, struct cifs_open_info_data *data)
  {
- 	int len = 0;
-@@ -49,8 +49,8 @@ static ssize_t platform_profile_choices_
- 	return len;
+-	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
+-
+ 	data->reparse.buf = buf;
+ 
+ 	/* See MS-FSCC 2.1.2 */
+@@ -658,8 +656,6 @@ int parse_reparse_point(struct reparse_d
+ 		}
+ 		return 0;
+ 	default:
+-		cifs_tcon_dbg(VFS | ONCE, "unhandled reparse tag: 0x%08x\n",
+-			      le32_to_cpu(buf->ReparseTag));
+ 		return -EOPNOTSUPP;
+ 	}
  }
- 
--static ssize_t platform_profile_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
- {
- 	enum platform_profile_option profile = PLATFORM_PROFILE_BALANCED;
-@@ -77,8 +77,8 @@ static ssize_t platform_profile_show(str
- 	return sysfs_emit(buf, "%s\n", profile_names[profile]);
- }
- 
--static ssize_t platform_profile_store(struct device *dev,
--			    struct device_attribute *attr,
-+static ssize_t platform_profile_store(struct kobject *kobj,
-+			    struct kobj_attribute *attr,
- 			    const char *buf, size_t count)
- {
- 	int err, i;
-@@ -115,12 +115,12 @@ static ssize_t platform_profile_store(st
- 	return count;
- }
- 
--static DEVICE_ATTR_RO(platform_profile_choices);
--static DEVICE_ATTR_RW(platform_profile);
-+static struct kobj_attribute attr_platform_profile_choices = __ATTR_RO(platform_profile_choices);
-+static struct kobj_attribute attr_platform_profile = __ATTR_RW(platform_profile);
- 
- static struct attribute *platform_profile_attrs[] = {
--	&dev_attr_platform_profile_choices.attr,
--	&dev_attr_platform_profile.attr,
-+	&attr_platform_profile_choices.attr,
-+	&attr_platform_profile.attr,
- 	NULL
- };
- 
 
 
