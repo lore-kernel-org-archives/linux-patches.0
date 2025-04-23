@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D128A419;
-	Wed, 23 Apr 2025 15:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB4928B4E7;
+	Wed, 23 Apr 2025 15:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420661; cv=none; b=EVz1/9PuQ9/WFI8LYC9vGZn1k7zCw1ox3UrrtWOYDECpQbF0p+lm49T7qacbxjhO17LJ4K/BbJRYfetUWja9DuB0jPZSmoy7/Emx8MSSfp3i8g/P2kWnCRmArQ7JU7aruCNU28gW5w7uja7ZsXsMiwOW77L9DzVHOuPd5eDwsrI=
+	t=1745420664; cv=none; b=Lc9sxRi2pxQQkbNTtXRSV1cf9uV1WPVU4YzpAyFVxcMJktXYaR1nhanRiBeuMRrzzdnpC4b+ulrHzKX/RS2PSH8bA5AuTw+9LpwxkXloHWp5VSDius92UabMddcUF0qzh3Rm9efgPjgurAG7D26W3tbkuOuQG+rZ7igEgK82x+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420661; c=relaxed/simple;
-	bh=5sGWRvHneMxcFkcHN6NVakmiWGh9bAbFM9gB2KbZQHI=;
+	s=arc-20240116; t=1745420664; c=relaxed/simple;
+	bh=Rd2erbfVisegTEEUnyybyE3hMFI7rElNMq27a4F+T4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdPXI+QKT6V3NmBShJMWIbYW9e5ZfW1cgoqmw0dureStaRSz8EjeF9pSeQmE4WFncvKpVFRzfdDc67Wbom+bjtt/AAgSZ3+Y2czpg9Iuc7WaaaWo5bZGDJh5Y373WuycyFcWDNx2OVDgBteXraja4GV1YvXNG5i/KxQ4LMbzvVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6S1Me70; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kk7ZqSvhhACqBN0Lhb0uhjCCteyPsbTbeWw9Nl0HhNiXL8Gx+HmhV7EZODd8eGlGaHZjCQ3HQ7c4u9EX80z3yaJ6k5Tbto+mYiAokYi7sjXBTvW3K9Ljq5Fi3RduJ6Aj5fYDCkTla+4q6HfrI6qnwXMglVybsG/2q06JOjj6waI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2UPApee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6S1Me70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BA1C4CEE8;
-	Wed, 23 Apr 2025 15:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2UPApee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC3FC4CEE2;
+	Wed, 23 Apr 2025 15:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420661;
-	bh=5sGWRvHneMxcFkcHN6NVakmiWGh9bAbFM9gB2KbZQHI=;
+	s=korg; t=1745420664;
+	bh=Rd2erbfVisegTEEUnyybyE3hMFI7rElNMq27a4F+T4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6S1Me70vYnD/lR1SXhDskchpLBQ10o561lQfYM+EoxEdD1cQyW9Pd/0QS2s+0ZF1
-	 QopiC1vJdRYyGH/X4y0dj6JDX2cxAij7cz8zkN1IejjidDVpSNlpnXEqStxLIQIw3d
-	 MpayI5AHFYFU4RDxR0URwIJWplFAfuRVew71dy28=
+	b=g2UPApeeTl3Dyrjyo6lFlClmab6jI6+OMC5PUa9WCDBA3SWN3bVRh5NwGSGPBFxIS
+	 AqvZBJP7stWuPyX0xQhgBnJEnlsOLX9tEEX0QLRZanHqxnTHUodtvGabDIsMPnHGoT
+	 +d9JGJ3kna2Q0cloG43hwYSjttq9bazmx0hqhfBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.12 150/223] drm/msm/dsi: Add check for devm_kstrdup()
-Date: Wed, 23 Apr 2025 16:43:42 +0200
-Message-ID: <20250423142623.289801051@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 069/291] drm/amdgpu: grab an additional reference on the gang fence v2
+Date: Wed, 23 Apr 2025 16:40:58 +0200
+Message-ID: <20250423142627.191704344@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 52b3f0e118b1700e5c60ff676a1f522ce44fadc8 upstream.
+[ Upstream commit 0d9a95099dcb05b5f4719c830d15bf4fdcad0dc2 ]
 
-Add check for the return value of devm_kstrdup() in
-dsi_host_parse_dt() to catch potential exception.
+We keep the gang submission fence around in adev, make sure that it
+stays alive.
 
-Fixes: 958d8d99ccb3 ("drm/msm/dsi: parse vsync source from device tree")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/638297/
-Link: https://lore.kernel.org/r/20250219040712.2598161-1-haoxiang_li2024@163.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+v2: fix memory leak on retry
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Acked-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1827,8 +1827,15 @@ static int dsi_host_parse_dt(struct msm_
- 			__func__, ret);
- 		goto err;
- 	}
--	if (!ret)
-+	if (!ret) {
- 		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
-+		if (!msm_dsi->te_source) {
-+			DRM_DEV_ERROR(dev, "%s: failed to allocate te_source\n",
-+				__func__);
-+			ret = -ENOMEM;
-+			goto err;
-+		}
-+	}
- 	ret = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index b41a97185823a..fcd0c61499f89 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -6186,6 +6186,7 @@ struct dma_fence *amdgpu_device_switch_gang(struct amdgpu_device *adev,
+ {
+ 	struct dma_fence *old = NULL;
  
- 	if (of_property_read_bool(np, "syscon-sfpb")) {
++	dma_fence_get(gang);
+ 	do {
+ 		dma_fence_put(old);
+ 		rcu_read_lock();
+@@ -6195,12 +6196,19 @@ struct dma_fence *amdgpu_device_switch_gang(struct amdgpu_device *adev,
+ 		if (old == gang)
+ 			break;
+ 
+-		if (!dma_fence_is_signaled(old))
++		if (!dma_fence_is_signaled(old)) {
++			dma_fence_put(gang);
+ 			return old;
++		}
+ 
+ 	} while (cmpxchg((struct dma_fence __force **)&adev->gang_submit,
+ 			 old, gang) != old);
+ 
++	/*
++	 * Drop it once for the exchanged reference in adev and once for the
++	 * thread local reference acquired in amdgpu_device_get_gang().
++	 */
++	dma_fence_put(old);
+ 	dma_fence_put(old);
+ 	return NULL;
+ }
+-- 
+2.39.5
+
 
 
