@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90319284692;
-	Wed, 23 Apr 2025 15:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D762C284692;
+	Wed, 23 Apr 2025 15:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422400; cv=none; b=gfud8ymAKCTDL32EC2sbGWsqWHACkS+E6pCySwQuwzIm9XETaNLa6K97Q751MBs1pYVvTp0Ytl0UogW9Iq2NBADyR4i1dNxePbzGPq+ZcN9dW5xOQzD9IxSfyZhLuck46VcLEDfbGh5A19Djmj5IJNaXfmUSKpwP9VaYtkibko4=
+	t=1745422401; cv=none; b=W5MLPMW50jxy+00o39vhZa5AVNtOEwBdB9jNmRwM5u1XMo3h+MEUX5t4QZMs4T3YFC1s4Bg8FDFgalRZN9WKlSb2IDa/2/o857Ysi70skxjfnX7uWSnP8oRWQ+6mE6wxZtAQR5jeHCH4Bq4o2ct41Mf8OIgOjXnXEKE50wrOeQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422400; c=relaxed/simple;
-	bh=pI3duBjXdOxwChaJNgU83E7vCLTUACN7EournJXfKQ8=;
+	s=arc-20240116; t=1745422401; c=relaxed/simple;
+	bh=wS+q+tuwb5kMB7zN9skvqNNiu9QDUkcPODfBTIQ1Gks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWcFd6djkz0TMoimp7EIrHa9GxNf1v2A12ffQq2c55djnBV0h0RGdQhS0xTaEZhXYmPvNzvJo9qNCAMFOrSAO0WTwnsSyrY24PSlaKPx8+SVVPKDLEhPG9uDe5u6kUaje2IxaI8VwZQSOrUMkAsWln2zSk4WblauGztlqei4knM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVKTMjYM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FkPH/OwtDPxWmR2IXfXsQRFlkuMU2enXZwzeEzrgzcorx239wS2wum4qJT7IMlKMNFhome8csec/XupIypnU4xXcrl+Zja+Y4o2Q7MAG3jA1Y1fu/k1zZmTiiPHJ4fpftil11G1eUmUilvpUOiezHtkPOs0PSx/+iZAVqDogM7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYt5IEIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVKTMjYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A15C4CEE2;
-	Wed, 23 Apr 2025 15:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYt5IEIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654E1C4CEE2;
+	Wed, 23 Apr 2025 15:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422399;
-	bh=pI3duBjXdOxwChaJNgU83E7vCLTUACN7EournJXfKQ8=;
+	s=korg; t=1745422401;
+	bh=wS+q+tuwb5kMB7zN9skvqNNiu9QDUkcPODfBTIQ1Gks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVKTMjYM4LG9esMYc353zrSblvBuORuKnqA+C55OAta+bAf5P7pa1/LxftP1S6ZMQ
-	 22EhoTX1hmfZ5w0GGadSXdQylARiMP/zYriGFDQKKbKt2DWS3TSXBN4lc5CcGeWdwT
-	 F4Axq0nwE4Xlq4kPKIvac1nVPIIgHHo8ukaeFb7M=
+	b=dYt5IEIYVikarPCPzPc47Km2rw2OYxNwQwwq2AWBQNXyDGmWfIsWmNmWQ8RlPxWvy
+	 rriWjV3sYEQ2EjbASAdAXivetUIj5bOJ/eTWDY0cgKrA1CMkjItvxvf5zEj6TOLbEf
+	 Tprq+PZmPSF2irpbm6OdaM3kpwyvL3wwPhBVONrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 326/393] ksmbd: Prevent integer overflow in calculation of deadtime
-Date: Wed, 23 Apr 2025 16:43:42 +0200
-Message-ID: <20250423142656.796553369@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	stable@kernel.org,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PATCH 6.6 336/393] x86/microcode/AMD: Extend the SHA check to Zen5, block loading of any unreleased standalone Zen5 microcode patches
+Date: Wed, 23 Apr 2025 16:43:52 +0200
+Message-ID: <20250423142657.214465712@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -51,48 +57,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit a93ff742820f75bf8bb3fcf21d9f25ca6eb3d4c6 upstream.
+commit 805b743fc163f1abef7ce1bea8eca8dfab5b685b upstream.
 
-The user can set any value for 'deadtime'. This affects the arithmetic
-expression 'req->deadtime * SMB_ECHO_INTERVAL', which is subject to
-overflow. The added check makes the server behavior more predictable.
+All Zen5 machines out there should get BIOS updates which update to the
+correct microcode patches addressing the microcode signature issue.
+However, silly people carve out random microcode blobs from BIOS
+packages and think are doing other people a service this way...
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Block loading of any unreleased standalone Zen5 microcode patches.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+Cc: Nikolay Borisov <nik.borisov@suse.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250410114222.32523-1-bp@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_ipc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -296,7 +296,11 @@ static int ipc_server_config_on_startup(
- 	server_conf.signing = req->signing;
- 	server_conf.tcp_port = req->tcp_port;
- 	server_conf.ipc_timeout = req->ipc_timeout * HZ;
--	server_conf.deadtime = req->deadtime * SMB_ECHO_INTERVAL;
-+	if (check_mul_overflow(req->deadtime, SMB_ECHO_INTERVAL,
-+					&server_conf.deadtime)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 	server_conf.share_fake_fscaps = req->share_fake_fscaps;
- 	ksmbd_init_domain(req->sub_auth);
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -201,6 +201,12 @@ static bool need_sha_check(u32 cur_rev)
+ 	case 0xa70c0: return cur_rev <= 0xa70C009; break;
+ 	case 0xaa001: return cur_rev <= 0xaa00116; break;
+ 	case 0xaa002: return cur_rev <= 0xaa00218; break;
++	case 0xb0021: return cur_rev <= 0xb002146; break;
++	case 0xb1010: return cur_rev <= 0xb101046; break;
++	case 0xb2040: return cur_rev <= 0xb204031; break;
++	case 0xb4040: return cur_rev <= 0xb404031; break;
++	case 0xb6000: return cur_rev <= 0xb600031; break;
++	case 0xb7000: return cur_rev <= 0xb700031; break;
+ 	default: break;
+ 	}
  
-@@ -322,6 +326,7 @@ static int ipc_server_config_on_startup(
- 	ret |= ksmbd_set_work_group(req->work_group);
- 	ret |= ksmbd_tcp_set_interfaces(KSMBD_STARTUP_CONFIG_INTERFACES(req),
- 					req->ifc_list_sz);
-+out:
- 	if (ret) {
- 		pr_err("Server configuration error: %s %s %s\n",
- 		       req->netbios_name, req->server_string,
+@@ -216,8 +222,7 @@ static bool verify_sha256_digest(u32 pat
+ 	struct sha256_state s;
+ 	int i;
+ 
+-	if (x86_family(bsp_cpuid_1_eax) < 0x17 ||
+-	    x86_family(bsp_cpuid_1_eax) > 0x19)
++	if (x86_family(bsp_cpuid_1_eax) < 0x17)
+ 		return true;
+ 
+ 	if (!need_sha_check(cur_rev))
 
 
