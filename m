@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B92266F1E;
-	Wed, 23 Apr 2025 15:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8D526F442;
+	Wed, 23 Apr 2025 15:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422220; cv=none; b=r4QdkC6EKo1Ql3ke0SQJo2z20xP80AA9MCaYEonRcChJp/5jv6IFj7vuGCrfaQPSYZzOvP5qnH3u65wfJpDKXN7qQoW7gJgwzwo7cy9vmHSLkRhTAl7I5RZHvj69vIdv3wvQbcWWVPdAJMI0xaC7XjHk+nrU7zxWI63jl7j9VFQ=
+	t=1745422221; cv=none; b=Gpi8D11V8w4/KY7bGt8nmlrfJQbfs1FbyXrOfel2Nss7drR4+drllbE1wvcSps148L8hH9BMplMSbT50N5v9A1cVmhMCOWlySkz1EddtTydb542g92O8MM7AHwZmyXgKwL07BQ/6tlySr+Vffuwd8FpTe+3lkbbXbkYrKWPw1og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422220; c=relaxed/simple;
-	bh=y/sJc+yQfMtkLYyzdS7TSf6VPrAodI6yd5d3jqW+ZnQ=;
+	s=arc-20240116; t=1745422221; c=relaxed/simple;
+	bh=gxNeq3ko1lVLV1JgwCKnDSA23hgIjT7mAS+qlr7n/Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9J2b07nkVsTte81g1b294pAoPKKP90TJDgtGK80+kg05xLo6BgoeKtMGUEs+JZDN4H/lQt9BhdTKVsQ0a9ZxBoQXY13YYHfLwikgPw64FMY8/a6b6m+XE953/FWUFIMuYyt04DpAMOZG4nNUkUz+kA4hGrCO6yDZ/Pg0lOseHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmt2S3Fu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gWak+uUXT33K62+06lKynVESIm9jBFz3h1wTE7a+kgmgcrErozCaoBwPmgS6UWbL8X+dEEi5qYrjcHl7tRvFbPUh+9qluEQS9Sa3TkMZ2K7wiM+sUvPOUyvOVIXXG+kTVwjPgnFU8RSOJRXjzx+M6R4UnpQ1781MQV8/vlUWEPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNIiAw0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmt2S3Fu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95E5C4CEE3;
-	Wed, 23 Apr 2025 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNIiAw0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F64C4CEE2;
+	Wed, 23 Apr 2025 15:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422220;
-	bh=y/sJc+yQfMtkLYyzdS7TSf6VPrAodI6yd5d3jqW+ZnQ=;
+	s=korg; t=1745422217;
+	bh=gxNeq3ko1lVLV1JgwCKnDSA23hgIjT7mAS+qlr7n/Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmt2S3Fu9G+u9Yiako3BKxlw5gDN+XIPUe9TLeEXTDuO4xtK1QEAdOQxDtXWtHab8
-	 7CTo0zoi7ADREvNkshW0scEnj4EZaVMT2wnl6pbJAx7SuHoUm4q+R6kiUR4McVMvWe
-	 EyR/u7lHYcu6aTzRdd+HYTuGUkwyNVnoX3cMcalw=
+	b=eNIiAw0r6Q7rdYzDTvpnjRQ4S1E8/UTwbFhOoKyZZkP1tNCEWSQGKatT6pYLunPad
+	 6oI/kUmRTWgRGxvg8YnDqkI89gKPhGEwv5YB5fC5fTpVuWmiMoMpgQ3CpTZsUcJXj3
+	 1uAdMZ/YwCGdpdmKuyj40VlI0LeTMB68/qXDid6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 299/393] cpufreq/sched: Fix the usage of CPUFREQ_NEED_UPDATE_LIMITS
-Date: Wed, 23 Apr 2025 16:43:15 +0200
-Message-ID: <20250423142655.689461340@linuxfoundation.org>
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.1 257/291] cpufreq: Reference count policy in cpufreq_update_limits()
+Date: Wed, 23 Apr 2025 16:44:06 +0200
+Message-ID: <20250423142634.931857527@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit cfde542df7dd51d26cf667f4af497878ddffd85a ]
+commit 9e4e249018d208678888bdf22f6b652728106528 upstream.
 
-Commit 8e461a1cb43d ("cpufreq: schedutil: Fix superfluous updates caused
-by need_freq_update") modified sugov_should_update_freq() to set the
-need_freq_update flag only for drivers with CPUFREQ_NEED_UPDATE_LIMITS
-set, but that flag generally needs to be set when the policy limits
-change because the driver callback may need to be invoked for the new
-limits to take effect.
+Since acpi_processor_notify() can be called before registering a cpufreq
+driver or even in cases when a cpufreq driver is not registered at all,
+cpufreq_update_limits() needs to check if a cpufreq driver is present
+and prevent it from being unregistered.
 
-However, if the return value of cpufreq_driver_resolve_freq() after
-applying the new limits is still equal to the previously selected
-frequency, the driver callback needs to be invoked only in the case
-when CPUFREQ_NEED_UPDATE_LIMITS is set (which means that the driver
-specifically wants its callback to be invoked every time the policy
-limits change).
+For this purpose, make it call cpufreq_cpu_get() to obtain a cpufreq
+policy pointer for the given CPU and reference count the corresponding
+policy object, if present.
 
-Update the code accordingly to avoid missing policy limits changes for
-drivers without CPUFREQ_NEED_UPDATE_LIMITS.
-
-Fixes: 8e461a1cb43d ("cpufreq: schedutil: Fix superfluous updates caused by need_freq_update")
-Closes: https://lore.kernel.org/lkml/Z_Tlc6Qs-tYpxWYb@linaro.org/
-Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Fixes: 5a25e3f7cc53 ("cpufreq: intel_pstate: Driver-specific handling of _PPC updates")
+Closes: https://lore.kernel.org/linux-acpi/Z-ShAR59cTow0KcR@mail-itl
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/3010358.e9J7NaK4W3@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/1928789.tdWV9SEqCh@rjwysocki.net
+[do not use __free(cpufreq_cpu_put) in a backport]
+Signed-off-by: Marek Marczykowski-GÃ³recki <marmarek@invisiblethingslab.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index a49f136014ce6..259521b179aa1 100644
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -83,7 +83,7 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- 
- 	if (unlikely(sg_policy->limits_changed)) {
- 		sg_policy->limits_changed = false;
--		sg_policy->need_freq_update = cpufreq_driver_test_flags(CPUFREQ_NEED_UPDATE_LIMITS);
-+		sg_policy->need_freq_update = true;
- 		return true;
- 	}
- 
-@@ -95,10 +95,22 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
- 				   unsigned int next_freq)
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2691,10 +2691,18 @@ EXPORT_SYMBOL(cpufreq_update_policy);
+  */
+ void cpufreq_update_limits(unsigned int cpu)
  {
--	if (sg_policy->need_freq_update)
-+	if (sg_policy->need_freq_update) {
- 		sg_policy->need_freq_update = false;
--	else if (sg_policy->next_freq == next_freq)
-+		/*
-+		 * The policy limits have changed, but if the return value of
-+		 * cpufreq_driver_resolve_freq() after applying the new limits
-+		 * is still equal to the previously selected frequency, the
-+		 * driver callback need not be invoked unless the driver
-+		 * specifically wants that to happen on every update of the
-+		 * policy limits.
-+		 */
-+		if (sg_policy->next_freq == next_freq &&
-+		    !cpufreq_driver_test_flags(CPUFREQ_NEED_UPDATE_LIMITS))
-+			return false;
-+	} else if (sg_policy->next_freq == next_freq) {
- 		return false;
-+	}
++	struct cpufreq_policy *policy;
++
++	policy = cpufreq_cpu_get(cpu);
++	if (!policy)
++		return;
++
+ 	if (cpufreq_driver->update_limits)
+ 		cpufreq_driver->update_limits(cpu);
+ 	else
+ 		cpufreq_update_policy(cpu);
++
++	cpufreq_cpu_put(policy);
+ }
+ EXPORT_SYMBOL_GPL(cpufreq_update_limits);
  
- 	sg_policy->next_freq = next_freq;
- 	sg_policy->last_freq_update_time = time;
--- 
-2.39.5
-
 
 
