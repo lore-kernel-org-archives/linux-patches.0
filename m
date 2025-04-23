@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C324B281507;
-	Wed, 23 Apr 2025 14:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D3F2820CF;
+	Wed, 23 Apr 2025 14:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420189; cv=none; b=UFPxatsCfN3Wfn+gKeY63sSvMvo3+VqMBQ7ORuGVqlMrjP2FPaqrnY2aKmHSjNAotW5pJkONfVbMsuDo5MRanPpBJcO5P7d7/EeLjCZ2GlbHPE+mb3pNvsqvB1Cfy3zUPuJ0k0x6vX09dU+LcNW+erJiSC0FyWw1iPiQfuQKVyg=
+	t=1745420192; cv=none; b=rbJ7rKTXPwqDR4W/hW/DYv1rGdqotd8m9NFCn6pjCUQhyoqfXOPz5ksZ8m9hVjggPaJJF6olC30WZFFohSsFIcHAIRVaccoc5VvhP4I2D5YioBqPzPLTa/FzQwrlL+oFOm8pFqGJV0OpEMfERYBMqrWNKYnsVfmuxF61yoZeeiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420189; c=relaxed/simple;
-	bh=vqPniA4RwBrC5u4M5W53TEEAIEszP/pophXU8zyqjRA=;
+	s=arc-20240116; t=1745420192; c=relaxed/simple;
+	bh=u4ZJEi5IiPiWfvZO1/8sPTqDP3oVUZ4o7KhWtxYqF7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StMRpB3LYPgh3r5ZCqiqvt33o7jy5wPThXpN1I4/YSOqyd2pf6svCN1CtJQ5oz4kD71wN6vMjUBwVwfQkdJwv37SqB/sM9dr5UrrZJvMGpNRSxG5kvGBJsExWGkX5D7I+KsE4Nx9aFx4I+SkYVAfb5Xzv/bR1OE467iKOqCWxJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoDLZilT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KubdmKkn82pxElGRNmHJcarHtH13aC8ssOgNKbew3vB7dRxlJnXTanmMYfNWx1x/OcDmqbwBNiycqPC2Yu/ubYxkjHD0P4rW064ji1Qpe4pECEsuJN2Tv9xo3p8u07nWQjf9pGokJuZbQOzAp783euKNzR9hH+pGyagZGbiHTdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcMyYKV5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoDLZilT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD69C4CEE2;
-	Wed, 23 Apr 2025 14:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcMyYKV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCC6C4CEE3;
+	Wed, 23 Apr 2025 14:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420189;
-	bh=vqPniA4RwBrC5u4M5W53TEEAIEszP/pophXU8zyqjRA=;
+	s=korg; t=1745420192;
+	bh=u4ZJEi5IiPiWfvZO1/8sPTqDP3oVUZ4o7KhWtxYqF7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoDLZilTAU2nE+HW4b7w0BPSxBDrOiGes/QFBMii9cbdpeErwiT4VArbp4ZO8c9tA
-	 E6p7pyOlpbzB82J48fgJ287/DY5wdw/R6qrGxSSeDA3yAOcvkfEuwHmbZkKPhF3pZf
-	 uVBQ6Ou3aprqN+yN+FslhJp177jvcU8IoyyxrhUk=
+	b=HcMyYKV5wh/ZRRx9r85aaHoPNkEQZBfUbeguEkAFzg0u9Y/GIqwRpEpsYFBmI0upJ
+	 iVemyJ32bgqmx6LW9PBgLJaHI5S4B5R4r0vsxWnf79CIxuYeKnhoGQwu7XGexnxqQt
+	 CTh9O6iZ96OhGCPtCQTN5Gk1l6BFRUJvuVQOQ6uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	xen-devel@lists.xenproject.org,
 	Kees Cook <kees@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 107/223] Bluetooth: vhci: Avoid needless snprintf() calls
-Date: Wed, 23 Apr 2025 16:42:59 +0200
-Message-ID: <20250423142621.470973616@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 025/291] xen/mcelog: Add __nonstring annotations for unterminated strings
+Date: Wed, 23 Apr 2025 16:40:14 +0200
+Message-ID: <20250423142625.430159156@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +50,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Kees Cook <kees@kernel.org>
 
-commit 875db86e1ec75fe633f1e85ed2f92c731cdbf760 upstream.
+[ Upstream commit 1c3dfc7c6b0f551fdca3f7c1f1e4c73be8adb17d ]
 
-Avoid double-copying of string literals. Use a "const char *" for each
-string instead of copying from .rodata into stack and then into the skb.
-We can go directly from .rodata to the skb.
+When a character array without a terminating NUL character has a static
+initializer, GCC 15's -Wunterminated-string-initialization will only
+warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
+with __nonstring to and correctly identify the char array as "not a C
+string" and thereby eliminate the warning.
 
-This also works around a Clang bug (that has since been fixed[1]).
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401250927.1poZERd6-lkp@intel.com/
-Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
-Link: https://github.com/llvm/llvm-project/commit/ea2e66aa8b6e363b89df66dc44275a0d7ecd70ce [1]
-Cc: stable@vger.kernel.org
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117178 [1]
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Cc: xen-devel@lists.xenproject.org
 Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250310222234.work.473-kees@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_vhci.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/xen/interface/xen-mca.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -289,18 +289,18 @@ static void vhci_coredump(struct hci_dev
+diff --git a/include/xen/interface/xen-mca.h b/include/xen/interface/xen-mca.h
+index 464aa6b3a5f92..1c9afbe8cc260 100644
+--- a/include/xen/interface/xen-mca.h
++++ b/include/xen/interface/xen-mca.h
+@@ -372,7 +372,7 @@ struct xen_mce {
+ #define XEN_MCE_LOG_LEN 32
  
- static void vhci_coredump_hdr(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	char buf[80];
-+	const char *buf;
- 
--	snprintf(buf, sizeof(buf), "Controller Name: vhci_ctrl\n");
-+	buf = "Controller Name: vhci_ctrl\n";
- 	skb_put_data(skb, buf, strlen(buf));
- 
--	snprintf(buf, sizeof(buf), "Firmware Version: vhci_fw\n");
-+	buf = "Firmware Version: vhci_fw\n";
- 	skb_put_data(skb, buf, strlen(buf));
- 
--	snprintf(buf, sizeof(buf), "Driver: vhci_drv\n");
-+	buf = "Driver: vhci_drv\n";
- 	skb_put_data(skb, buf, strlen(buf));
- 
--	snprintf(buf, sizeof(buf), "Vendor: vhci\n");
-+	buf = "Vendor: vhci\n";
- 	skb_put_data(skb, buf, strlen(buf));
- }
- 
+ struct xen_mce_log {
+-	char signature[12]; /* "MACHINECHECK" */
++	char signature[12] __nonstring; /* "MACHINECHECK" */
+ 	unsigned len;	    /* = XEN_MCE_LOG_LEN */
+ 	unsigned next;
+ 	unsigned flags;
+-- 
+2.39.5
+
+
+
+um: ntf-flags
+       -
+-        name: type
++        name: ndm-type
+         type: u8
+         enum: rtm-type
+   -
+-- 
+2.39.5
+
 
 
