@@ -1,67 +1,68 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D159443
-	for <patches@lists.linux.dev>; Wed, 23 Apr 2025 13:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF811B040B
+	for <patches@lists.linux.dev>; Wed, 23 Apr 2025 13:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745415937; cv=none; b=YV70ymncYjaL3gDbK6SXEubU8zjX8xkRyseE4mBTlzeBkH/w2JsZ/Fjw4ez27bmvU8FDZvBklc23Du+CZXhYy0ahEnqif07hhXwrnur6ZYTDsijkRPy5FbGyYh4hjQ8UmLZW1mHSkGDFaj8cqWJpFHxhu3SqYG/aR356mZdzSKg=
+	t=1745416600; cv=none; b=HlSeBmNTbf253A5AdknklfWSCUiaBfdFaS8dZFCot/qEpm39uULzZENLnYe/sPAt8tNKaZDCxDpwAXyk3285p7O/3k1Xl7+8SKD9tSHehIhrJgxyYlEAiPQiJkLsugtZKgFQZmYAjx7qwbqLGM+qvA02i2n3zG4v0hTKq8Sbweo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745415937; c=relaxed/simple;
-	bh=THD1ltI7KwFoV39fcHdBsSS/cEOqtzzyJoZjR3DEFoU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jaJ+Fm6/vrAahn+aNlNRIdyrEZo2krNqgDNR1nGP6ZCCR9tme/VLbIdeHEr4UslTJuQdMTp3D+BGvLMbX9qhY/ukg7HSwlgNXMP9+sPSwN+AiJtlCMUgOB0oMTEaQkm0Q1NoT0mzYAaJj5jmP/b1QqekciQg6mTSshveGFcJ4WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wkOSEl+6; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1745416600; c=relaxed/simple;
+	bh=O/wU7u0kHukyv+rP3LMiv3pfgu7kTYDVACxKkl17SOQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=K/ijc+aEuq2C5baQwCENrLF+2aV823+GnGnMi0Nl7wrqbIv28N9FkxS5zRM8deo0x1Xf2OgoMyRGeLv/Kx4Fb9yInQYFVjQW2DCCYhOzK5RGzoLN9bin1V1EnCpDQbrpMSbxhFMaxG1QG5JFrW1o6lvQbijeWISi62PP+7ckLs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I1LVgEK7; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wkOSEl+6"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so52161765e9.1
-        for <patches@lists.linux.dev>; Wed, 23 Apr 2025 06:45:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I1LVgEK7"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ac2dfdf3c38so1042862766b.3
+        for <patches@lists.linux.dev>; Wed, 23 Apr 2025 06:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745415934; x=1746020734; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1745416597; x=1746021397; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :content-language:references:cc:to:from:subject:reply-to:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=P8QsglmHWSnLCPZZnCIb0YOMFFG7cMKbE8Tp8ziopqs=;
-        b=wkOSEl+65lW/jcURCPUvPeAh81IShiQ755npvca9idZ6DRXSzY7tObac25w+12ZgL3
-         gvasFlOhZKcrKaJM5vzLTWncNUT486F9B4IQYUuextnYrREtEGqy36W9VvATYOkQ/a5E
-         xobZ/P+ba2Cv2EnuVu9GP1G3dvsGSIN8vHBjJQZ+uDv/Yw9b4i9Cn7APgDCFkrGXhH+8
-         iTmJ9oqVUTnE9CGYLAzX6VykJn3O7fgE1eSY//YFWaKqfdh2DzgcohMNfBRaBlp/+mP2
-         BygwNfD90F5i24p/OGfnofI9IPfiFTlZ/f0hq3XcJdQ1T5Wd3KmYmXn+7cJv52gPe44n
-         qEwA==
+        bh=WGyt2WO/nhpVYsYgbyvZLTSR7m3c3nMPYmbMH96yEAo=;
+        b=I1LVgEK7DxIBp6jq90fc01FPMHSyEsKdefcMt30/KBv26EWCP4lm2dxw3Y4rG2RE+P
+         eSFQXq45WgxpGPWTj2bs0bNJkW/UEfUPPo+Q/2PLU5vMi//D6hyP6x8oRSQ6l7MAZ7X7
+         sPKYx1uTy/LNt/WPDZYed7HIX5C33F9DTXWo9gbxmRk7WFltDatr69aKVHt3m8uzhR2g
+         fHyA9liH8uABxaLIWAlawl7PNEzYOukY7tFGiWCpFmEwbqPWh/0t7evg1dlOQWXGE78a
+         StwT1fl//4hz/jd/Yxtw7GG4Ly3PGFGWK0+5+8KI4gE5W+AlYx30QlKBFP6FK8KY9dhw
+         sUww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745415934; x=1746020734;
+        d=1e100.net; s=20230601; t=1745416597; x=1746021397;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :content-language:references:cc:to:from:subject:reply-to:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=P8QsglmHWSnLCPZZnCIb0YOMFFG7cMKbE8Tp8ziopqs=;
-        b=IcSlbjkDa6kZOL3W0M3SMHHZ8xvHO9Is7xktu/hNEf5b0sV3DnvXpCPu+BMbU1QM7+
-         0ifVD7nR0IU0GmKb4bVlYQyqhk/l/wJoS0xwC1gb94STu2SDAB8UdMxpxBb5ybQf2JhT
-         OZwmBo5dQf/MamNL3v3ZYwLTgfVIB5LHmh2eA0miuiYWLWHoJ3KmcVQIVbF0lLDa7VXQ
-         t4qroBtsgYTIIf7JQt0gxvrlG+GEqEpjDVWTpA/dFsKZjAQw5ghiVt0GjVudG9Vsbpqj
-         ZjbALO17ceHZB0lQdm9dri1M8spUSndOXDS0OlwM4h0zP3cHUSZvqBWIskNH7Q8mj2pf
-         hXpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUic4JegoiecOXSl4qH76AvxNZ3vDefjObODVIgxUtVfot6I9RxFQtnWlq19fD4cFo/TWisX0xA@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzk8+/HMcoVOCl/6vkrkjM6d3vRAOF9TwGQXKU6IRnIpAi95SXH
-	+1e8zdxLLoXjhYqp7tleNEPNHVFqfFVEUdVBiaedBsCD0HoEGozlB+fCbvXqHBw=
-X-Gm-Gg: ASbGncvn3FfyHN8OHo6aQn50lcwb8y/PX7gxx8EBpXTg8kEFkhhZEvPs+7HdbNdvLpu
-	ySsD6z2Eon6/QqHS0Y8ysUz1p+bG8ndXLPc5AsZxYQ6IMZWckxsURdblqDGDjLpZyupvgaVpw+6
-	dv6U7DKLWzxDZVatFCv6+7zyoQq2jfuRJceSpEJLLIs1u641tjc20xNahLC/hxC29yN44cnrBbA
-	oA6kbdUxC1xBbztHA96n4mYfHiWn2tL2wLCh6flfXvbfHu3TRcZSSwsl+192e7AO1MFsPnbtu4C
-	7RS9tbyZPiGf1iIaJ4X+TEeytHqmXZS9QQ0kEr1f1paij7qrbG0wUL6nXU0dQye1PSnpV47WygO
-	Zx/Yu/z/vovJHRUuC9kZtgSs79Nez
-X-Google-Smtp-Source: AGHT+IEnfwtHJ3Wn/vXOb22OP5r0g9c7Ff2/QGuF8c6+sb47ABmJh546Gq/OE0qgXK1bZeJ8IDOLkw==
-X-Received: by 2002:a05:600c:3485:b0:43d:abd:ad1c with SMTP id 5b1f17b1804b1-4406ab7b67bmr158450395e9.6.1745415934402;
-        Wed, 23 Apr 2025 06:45:34 -0700 (PDT)
+        bh=WGyt2WO/nhpVYsYgbyvZLTSR7m3c3nMPYmbMH96yEAo=;
+        b=qlY0ehRo4SsqfQo8sclwKa2LYUT8w9lwvtf4iqkfs3uWdaaUoTalGKxUYVK4fyZ/jU
+         AD3Pr0KbN6BN/LwjZ2LfLmz21EBTczwxHJVJnr3lrPbU5Dg8qvD81gOd9CIFlq9G6N+J
+         nXvBD5nIpl9gdEFQmFbXYs+PVzghF5gbTJzN7U0TouxYrwq78jlXrUtxxmcfoXU6IjMo
+         xMRo4i3u0XtfFvgkPYlU7YHxQ9wWR4ZB8RbUVS0sMUihGArQM8X3fbzY9zNtVakARROC
+         5yF9jLSvYph21eD/8980SlRuqElwqtmCb/9ZvFV+peKMHw3J9eVFdZ7jGwP7LoRl1zIn
+         TmhA==
+X-Forwarded-Encrypted: i=1; AJvYcCX4yzK46yFa/b3xzjGW1xtnc7GAFnwjRnssDAUNOWUbft00jqpR44UWXD6KmXBcABDwggBbph3R@lists.linux.dev
+X-Gm-Message-State: AOJu0YzL8a/trdZOBkhVjYlSzZKD1nOoJyG41dP/yKhB5BSn7WCWJxjy
+	ljxp3SZSTiNoS2lQHGZJdLcyhRCFVzd2KOAIb+gIgpxHsFXdXEnbYWvTFc5UvAdBhEBxCsyVq0+
+	D
+X-Gm-Gg: ASbGnctkLk2imS2sgKMblRaAeAtB4hR5elqmJnEmxnC5CfnJ5vUknvnU87YthyQmgGW
+	06QA8JJ78ewPBOVGVOgmlJ+C3aZZD4IFOB9x3mYj0vaQPBpJQLxGKS/O1nJg03cZ6SphlkPFLk0
+	RDHvahpBwS8HvvoMfoontQvwk5lIocR5ae6Gy9U2pddHk8chrXFh3tla65q6eFqKSA1izaC4PM5
+	d8Z/B3CoTzm5DAjgDeiCQ3XqyRLpmIRqpqDn3S0a1pdAHlqamUYAw5xW6PxCbJPr9DqVvCBzSJs
+	Bpqs9ma8CFEt/QrVRii7N/9nYto4W9Pc+BdIXt5/vai/bz+TlHNWfrSMACBy3hzDpdSrQqB8LVp
+	KC6jFdJzIUf6LcQRyMw==
+X-Google-Smtp-Source: AGHT+IF9wZ55LanTIIbI52wCH2cF8QheJlF74eWrveehR1AOJn21YY4EpLHMzNbE+nVYCGi6lRL//g==
+X-Received: by 2002:a5d:5f8a:0:b0:39e:cc10:3945 with SMTP id ffacd0b85a97d-39efba2da58mr13968361f8f.2.1745416230480;
+        Wed, 23 Apr 2025 06:50:30 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:2835:c2f4:c226:77dd? ([2a01:e0a:3d9:2080:2835:c2f4:c226:77dd])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092d16e60sm26380505e9.3.2025.04.23.06.45.33
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa43d006sm19124430f8f.56.2025.04.23.06.50.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 06:45:34 -0700 (PDT)
-Message-ID: <a6e47775-33c3-44c2-b6d5-58164e4a0a50@linaro.org>
-Date: Wed, 23 Apr 2025 15:45:33 +0200
+        Wed, 23 Apr 2025 06:50:30 -0700 (PDT)
+Message-ID: <b8d21e46-c50a-4212-ae7a-d292c2ec6ce4@linaro.org>
+Date: Wed, 23 Apr 2025 15:50:29 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,10 +70,10 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
 Subject: Re: [PATCH] drm/panel: himax-hx8279: Initialize goa_{even,odd}_valid
  in hx8279_check_goa_config()
+From: Neil Armstrong <neil.armstrong@linaro.org>
 To: Nathan Chancellor <nathan@kernel.org>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
@@ -81,6 +82,7 @@ Cc: Jessica Zhang <quic_jesszhan@quicinc.com>,
  dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
  patches@lists.linux.dev
 References: <20250422-panel-himax-hx8279-fix-sometimes-uninitialized-v1-1-614dba12b30d@kernel.org>
+ <a6e47775-33c3-44c2-b6d5-58164e4a0a50@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -107,60 +109,66 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250422-panel-himax-hx8279-fix-sometimes-uninitialized-v1-1-614dba12b30d@kernel.org>
+In-Reply-To: <a6e47775-33c3-44c2-b6d5-58164e4a0a50@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/04/2025 23:20, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y):
+On 23/04/2025 15:45, Neil Armstrong wrote:
+> On 22/04/2025 23:20, Nathan Chancellor wrote:
+>> Clang warns (or errors with CONFIG_WERROR=y):
+>>
+>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 'goa_even_valid' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
+>>          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use occurs here
+>>      842 |         if (goa_odd_valid != goa_even_valid)
+>>          |                              ^~~~~~~~~~~~~~
+>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if its condition is always true
+>>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
+>>          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>      839 |                 goa_even_valid = false;
+>>    drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the variable 'goa_even_valid' to silence this warning
+>>      818 |         bool goa_odd_valid, goa_even_valid;
+>>          |                                           ^
+>>          |                                            = 0
+>>
+>> Even though only the even valid variable gets flagged, both valid
+>> variables appear to have the same issue of possibly being used
+>> uninitialized if the if statement initializing them to false is not
+>> taken.
+>>
+>> Initialize both values to true to clear up the warning and remove any
+>> possibility of encountering undefined behavior.
+>>
+>> Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
+>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>> ---
+>>   drivers/gpu/drm/panel/panel-himax-hx8279.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/panel/panel-himax-hx8279.c b/drivers/gpu/drm/panel/panel-himax-hx8279.c
+>> index b48b350b62da..92f351e66c25 100644
+>> --- a/drivers/gpu/drm/panel/panel-himax-hx8279.c
+>> +++ b/drivers/gpu/drm/panel/panel-himax-hx8279.c
+>> @@ -815,7 +815,7 @@ static int hx8279_check_gmux_config(struct hx8279 *hx, struct device *dev)
+>>   static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
+>>   {
+>>       const struct hx8279_panel_desc *desc = hx->desc;
+>> -    bool goa_odd_valid, goa_even_valid;
+>> +    bool goa_odd_valid = true, goa_even_valid = true;
+>>       int i, num_zero, num_clr = 0;
+>>       /* Up to 4 zero values is a valid configuration. Check them all. */
+>>
+>> ---
+>> base-commit: dcbd5dcc956e2331414fd7020b4655df08deeb87
+>> change-id: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
+>>
+>> Best regards,
 > 
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 'goa_even_valid' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use occurs here
->      842 |         if (goa_odd_valid != goa_even_valid)
->          |                              ^~~~~~~~~~~~~~
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if its condition is always true
->      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->      839 |                 goa_even_valid = false;
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the variable 'goa_even_valid' to silence this warning
->      818 |         bool goa_odd_valid, goa_even_valid;
->          |                                           ^
->          |                                            = 0
-> 
-> Even though only the even valid variable gets flagged, both valid
-> variables appear to have the same issue of possibly being used
-> uninitialized if the if statement initializing them to false is not
-> taken.
-> 
-> Initialize both values to true to clear up the warning and remove any
-> possibility of encountering undefined behavior.
-> 
-> Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->   drivers/gpu/drm/panel/panel-himax-hx8279.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-himax-hx8279.c b/drivers/gpu/drm/panel/panel-himax-hx8279.c
-> index b48b350b62da..92f351e66c25 100644
-> --- a/drivers/gpu/drm/panel/panel-himax-hx8279.c
-> +++ b/drivers/gpu/drm/panel/panel-himax-hx8279.c
-> @@ -815,7 +815,7 @@ static int hx8279_check_gmux_config(struct hx8279 *hx, struct device *dev)
->   static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
->   {
->   	const struct hx8279_panel_desc *desc = hx->desc;
-> -	bool goa_odd_valid, goa_even_valid;
-> +	bool goa_odd_valid = true, goa_even_valid = true;
->   	int i, num_zero, num_clr = 0;
->   
->   	/* Up to 4 zero values is a valid configuration. Check them all. */
-> 
-> ---
-> base-commit: dcbd5dcc956e2331414fd7020b4655df08deeb87
-> change-id: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
-> 
-> Best regards,
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+I'll wait a few days until AngeloGioacchino Del Regno reviews it to be sure
+it's the right fix.
+
+Thanks,
+Neil
