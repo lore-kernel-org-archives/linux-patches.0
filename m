@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934802900A3;
-	Wed, 23 Apr 2025 15:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC175290BAB;
+	Wed, 23 Apr 2025 15:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421413; cv=none; b=elf0SV4RgP2coH0RsXR+WZsGqOQsunv0SrxknzWhsYIUf+pWGMPOPdP0H1y9CrAurctE+mOfBlOLAgmqt5lHp75/K3V25ylQitmmeco5B7a8UF4BuBa/GbiZEb12t57cUsIdfhrwAz4L8o5g0yLY4v4mhQETniQ3ieStG7046wc=
+	t=1745421415; cv=none; b=QEmTUqWgUx0K4lLChWPdn4Ag9gWEBxWKBerkOwhpU4MTmLPmbgGaqteJxhurEzLl8uD40WtXCkQuZXF8v6qbLrjY5guuOEQVUkxjIIckyCpGF+bkZ0CItIJQzygkZQEIn71nGwyzdsmFt/DN3MBo4KEmfL+2sghcVZTppy5fPcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421413; c=relaxed/simple;
-	bh=pzbC9OHwqltir+kr+uny027ABgGZ99EfvwglMkbWEF4=;
+	s=arc-20240116; t=1745421415; c=relaxed/simple;
+	bh=EIka25zInwlC2UqHSRFho0dC2KzCKB8sFcaCEnhRnM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVRMaGw0cXChmMlZO1RpV6DVpS/SVhqQYMSAzqLWf5zXVOFqR8sjB8b/FWf5glwMYCrfi04z6FpdWd9VJyaoQB7RZvITkh9gZU5bxapwzw7S2o4J61/HUdhs457Uzf+tq0d5oWW+USvF/CFHyvhCXxf5nV2r3qVHZoYmkciOxBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENUPLm2H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO8LX2BvHT6vZx9WKxgEK5xUl9Awb6QuibiXdhk08y3xIYqXmmoLnDCRfZY2RiTTPh6in2YFUHwJJYkSC0YCQ+yKcFUiryj2mQcNpsJORN2G+OtaJunfhajad6OcfDkKNCCH45GSKTAKItcd3EshlW6BEZJrZcJ8og/OsE7ZkBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+Igzp5o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENUPLm2H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC17BC4CEE2;
-	Wed, 23 Apr 2025 15:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+Igzp5o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607B2C4CEE2;
+	Wed, 23 Apr 2025 15:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421413;
-	bh=pzbC9OHwqltir+kr+uny027ABgGZ99EfvwglMkbWEF4=;
+	s=korg; t=1745421415;
+	bh=EIka25zInwlC2UqHSRFho0dC2KzCKB8sFcaCEnhRnM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENUPLm2Hv/jIRbqitiY++HFfE3xrUU7XZ9jkLUl6jY2sbvAKOMY8DWqD7sEio+5Lz
-	 9WbrOIW22+Lr9FjIwPf+SphoqP7K/Cgge/za9FygY9FTYq3GaFAeQR3qwsoJD5PqL7
-	 Sg6BjXFH9v6z37xc6M7kUmFq2WssD/BMLBe1Q7dY=
+	b=k+Igzp5o6i8VQTx3h/3sgJ6l5CKK6RMv/q58STplh0UwokzgK8+ZUh3lp6wbJ685g
+	 WhAT2RniA0Hvgw+5s1YB/jAF0tj1JH/L7NKIR6Xq8mj1ixLihi8LADkAQnbyduuWMw
+	 ew99xqxRMO4DQVZKgATI3Jpdyh2hi7c4Ts1hCvgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trevor Woerner <twoerner@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 6.1 135/291] thermal/drivers/rockchip: Add missing rk3328 mapping entry
-Date: Wed, 23 Apr 2025 16:42:04 +0200
-Message-ID: <20250423142629.921856393@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 219/223] selftests/bpf: freplace tests for tracking of changes_packet_data
+Date: Wed, 23 Apr 2025 16:44:51 +0200
+Message-ID: <20250423142626.085875487@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +47,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trevor Woerner <twoerner@gmail.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
+commit 89ff40890d8f12a7d7e93fb602cc27562f3834f0 upstream.
 
-The mapping table for the rk3328 is missing the entry for -25C which is
-found in the TRM section 9.5.2 "Temperature-to-code mapping".
+Try different combinations of global functions replacement:
+- replace function that changes packet data with one that doesn't;
+- replace function that changes packet data with one that does;
+- replace function that doesn't change packet data with one that does;
+- replace function that doesn't change packet data with one that doesn't;
 
-NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
-      4096-<code in table>. Whereas the table in the TRM gives the code
-      "3774" for -25C, the kernel uses 4096-3774=322.
-
-[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
-  well as through the downstream kernel code, it seems we may have
-  some troubles at our hands.  Let me explain, please.
-
-  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
-  the equation for the output when tsadc_q_sel equals 1 is (4096 -
-  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
-  equation is (1024 - tsadc_q) in that case.
-
-  The downstream kernel code, however, treats the RK3308 and RK3328
-  tables and their values as being the same.  It even mentions 1024 as
-  the "offset" value in a comment block for the rk_tsadcv3_control()
-  function, just like the upstream code does, which is obviously wrong
-  "offset" value when correlated with the table on page 544 of part 1
-  of the RK3308 TRM v1.1.
-
-  With all this in mind, it's obvious that more work is needed to make
-  it clear where's the actual mistake (it could be that the TRM is
-  wrong), which I'll volunteer for as part of the SoC binning project.
-  In the meantime, this patch looks fine as-is to me, by offering
-  what's a clear improvement to the current state of the upstream
-  code"
-
-Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
-Cc: stable@vger.kernel.org
-Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
-Signed-off-by: Trevor Woerner <twoerner@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20241210041100.1898468-7-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/rockchip_thermal.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/prog_tests/changes_pkt_data.c     |   76 ++++++++++
+ tools/testing/selftests/bpf/progs/changes_pkt_data.c          |   26 +++
+ tools/testing/selftests/bpf/progs/changes_pkt_data_freplace.c |   18 ++
+ 3 files changed, 120 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/changes_pkt_data.c
+ create mode 100644 tools/testing/selftests/bpf/progs/changes_pkt_data.c
+ create mode 100644 tools/testing/selftests/bpf/progs/changes_pkt_data_freplace.c
 
---- a/drivers/thermal/rockchip_thermal.c
-+++ b/drivers/thermal/rockchip_thermal.c
-@@ -373,6 +373,7 @@ static const struct tsadc_table rk3328_c
- 	{296, -40000},
- 	{304, -35000},
- 	{313, -30000},
-+	{322, -25000},
- 	{331, -20000},
- 	{340, -15000},
- 	{349, -10000},
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/changes_pkt_data.c
+@@ -0,0 +1,76 @@
++// SPDX-License-Identifier: GPL-2.0
++#include "bpf/libbpf.h"
++#include "changes_pkt_data_freplace.skel.h"
++#include "changes_pkt_data.skel.h"
++#include <test_progs.h>
++
++static void print_verifier_log(const char *log)
++{
++	if (env.verbosity >= VERBOSE_VERY)
++		fprintf(stdout, "VERIFIER LOG:\n=============\n%s=============\n", log);
++}
++
++static void test_aux(const char *main_prog_name, const char *freplace_prog_name, bool expect_load)
++{
++	struct changes_pkt_data_freplace *freplace = NULL;
++	struct bpf_program *freplace_prog = NULL;
++	LIBBPF_OPTS(bpf_object_open_opts, opts);
++	struct changes_pkt_data *main = NULL;
++	char log[16*1024];
++	int err;
++
++	opts.kernel_log_buf = log;
++	opts.kernel_log_size = sizeof(log);
++	if (env.verbosity >= VERBOSE_SUPER)
++		opts.kernel_log_level = 1 | 2 | 4;
++	main = changes_pkt_data__open_opts(&opts);
++	if (!ASSERT_OK_PTR(main, "changes_pkt_data__open"))
++		goto out;
++	err = changes_pkt_data__load(main);
++	print_verifier_log(log);
++	if (!ASSERT_OK(err, "changes_pkt_data__load"))
++		goto out;
++	freplace = changes_pkt_data_freplace__open_opts(&opts);
++	if (!ASSERT_OK_PTR(freplace, "changes_pkt_data_freplace__open"))
++		goto out;
++	freplace_prog = bpf_object__find_program_by_name(freplace->obj, freplace_prog_name);
++	if (!ASSERT_OK_PTR(freplace_prog, "freplace_prog"))
++		goto out;
++	bpf_program__set_autoload(freplace_prog, true);
++	bpf_program__set_autoattach(freplace_prog, true);
++	bpf_program__set_attach_target(freplace_prog,
++				       bpf_program__fd(main->progs.dummy),
++				       main_prog_name);
++	err = changes_pkt_data_freplace__load(freplace);
++	print_verifier_log(log);
++	if (expect_load) {
++		ASSERT_OK(err, "changes_pkt_data_freplace__load");
++	} else {
++		ASSERT_ERR(err, "changes_pkt_data_freplace__load");
++		ASSERT_HAS_SUBSTR(log, "Extension program changes packet data", "error log");
++	}
++
++out:
++	changes_pkt_data_freplace__destroy(freplace);
++	changes_pkt_data__destroy(main);
++}
++
++/* There are two global subprograms in both changes_pkt_data.skel.h:
++ * - one changes packet data;
++ * - another does not.
++ * It is ok to freplace subprograms that change packet data with those
++ * that either do or do not. It is only ok to freplace subprograms
++ * that do not change packet data with those that do not as well.
++ * The below tests check outcomes for each combination of such freplace.
++ */
++void test_changes_pkt_data_freplace(void)
++{
++	if (test__start_subtest("changes_with_changes"))
++		test_aux("changes_pkt_data", "changes_pkt_data", true);
++	if (test__start_subtest("changes_with_doesnt_change"))
++		test_aux("changes_pkt_data", "does_not_change_pkt_data", true);
++	if (test__start_subtest("doesnt_change_with_changes"))
++		test_aux("does_not_change_pkt_data", "changes_pkt_data", false);
++	if (test__start_subtest("doesnt_change_with_doesnt_change"))
++		test_aux("does_not_change_pkt_data", "does_not_change_pkt_data", true);
++}
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/changes_pkt_data.c
+@@ -0,0 +1,26 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <linux/bpf.h>
++#include <bpf/bpf_helpers.h>
++
++__noinline
++long changes_pkt_data(struct __sk_buff *sk, __u32 len)
++{
++	return bpf_skb_pull_data(sk, len);
++}
++
++__noinline __weak
++long does_not_change_pkt_data(struct __sk_buff *sk, __u32 len)
++{
++	return 0;
++}
++
++SEC("tc")
++int dummy(struct __sk_buff *sk)
++{
++	changes_pkt_data(sk, 0);
++	does_not_change_pkt_data(sk, 0);
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/changes_pkt_data_freplace.c
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <linux/bpf.h>
++#include <bpf/bpf_helpers.h>
++
++SEC("?freplace")
++long changes_pkt_data(struct __sk_buff *sk, __u32 len)
++{
++	return bpf_skb_pull_data(sk, len);
++}
++
++SEC("?freplace")
++long does_not_change_pkt_data(struct __sk_buff *sk, __u32 len)
++{
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
 
 
