@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D489C28B511;
-	Wed, 23 Apr 2025 15:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0E92900A8;
+	Wed, 23 Apr 2025 15:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420671; cv=none; b=oI+d6pCjxlS8tclpSh2OBRLxKWDIvdsG1aQijpEsJCvf130wLdQw2jL63xoOi6J9mvUA29oCOJkwABg6k0EK+fxY3A+PgYwRkgyLi4K9fNpdU/utsLvyQdYfOIupo3Drv6sCOEVu17Cs+YRZHJvvG63Q8UttQBb2c+c9V7zGQms=
+	t=1745420675; cv=none; b=ZIK3/OGiD+8wH0HGTNCrI3eYEzr7m+OXAEIZj+Yz2eSb0ZDWKGg/SO1ILJgqIhbQZDOEv/YP1F3jUHlPo4fOTgqawwWqG/L/BaX+xmBhZ0zLuEs94CCOBvdGY4LtE72Q+Qtxdm/t49ifh6TN1Cc2NgzPTHYUnX1Ti0qX1km0i/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420671; c=relaxed/simple;
-	bh=y9xOxbOvr5scDOv4oWgLO8YXxi6AVUvoDXS7AYWUl2o=;
+	s=arc-20240116; t=1745420675; c=relaxed/simple;
+	bh=Uk/045P/1B5lLqLNIQrKLw2erJg+eADPc/jks46gBXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2xfJt89o4r/5F2/BdObMuNsyf85IoktxjzmALR9GPHcJlkfUQApPmTZ66SqPh/mWiLWzJpSKtNVnhPhBsZDUqfseVqFF/dqfBxbRgoh7iT4YEQS6W66spyqLj8wxrT+6xzQK6D/mUU2Tlst5138KFAB68Wi0z6/fx+cMFwLD3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwYAziGt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCEpTSkAYDLaGZpjCMgOOO9NVcxWQRAOdkjApi8h6/GfBlEnOtZ5TeU4VW9frdlG7Gr4kh71fRkHGNyzaovqSQOILnVEtwyzXaHd2jSur+Kpul3bufYZAG3zOF9iVVP29I/S1KodES5tOLBnl5k/L4/TUIblofJUaxOGkBlpz5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuIZeEPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwYAziGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FF9C4CEE2;
-	Wed, 23 Apr 2025 15:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuIZeEPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF8DC4CEE2;
+	Wed, 23 Apr 2025 15:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420671;
-	bh=y9xOxbOvr5scDOv4oWgLO8YXxi6AVUvoDXS7AYWUl2o=;
+	s=korg; t=1745420674;
+	bh=Uk/045P/1B5lLqLNIQrKLw2erJg+eADPc/jks46gBXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwYAziGtnB3AfGJPonF5uZjPyAjjJgsNzWg9to8+fqY4PpmJY/+FQo+mFunBLt0IE
-	 p44mXNSYa0cQNawer2PAkpqAdaZkYeYqB8lL6Re9ts+Dw3DhqG43uVZM5nVTPZtr6r
-	 UdG4ZlrbK+vkvQznanu1mKsNibgErO6hG9vujxdY=
+	b=iuIZeEPGQIRT6tCAePgBt5pnzje9Cjg3ii5cDgea4WYtn5J8AYrTZt6qIuGQnQPJ0
+	 zjaYJD0/DxYt/T7GQTFxkuYVKe/kfVWLfEW9h0d/cxuGjoAze3OhKDAJn5Nd0O5Z67
+	 Ni1ExyX/pApBGNnvprRkB192CQCfPP7aUflsp95I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Wyatt <fewtarius@steamfork.org>,
-	John Edwards <uejji@uejji.net>,
-	Paco Avelar <pacoavelar@hotmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/291] drm: panel-orientation-quirks: Add quirks for AYA NEO Flip DS and KB
-Date: Wed, 23 Apr 2025 16:40:45 +0200
-Message-ID: <20250423142626.670098000@linuxfoundation.org>
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.12 151/223] drm/msm/a6xx: Fix stale rpmh votes from GPU
+Date: Wed, 23 Apr 2025 16:43:43 +0200
+Message-ID: <20250423142623.329486612@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,70 +46,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Wyatt <fewtarius@steamfork.org>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-[ Upstream commit 529741c331da1fbf54f86c6ec3a4558b9b0b16dc ]
+commit f561db72a663f8a73c2250bf3244ce1ce221bed7 upstream.
 
-The AYA NEO Flip DS and KB both use a 1080x1920 portrait LCD panel.  The
-Flip DS additionally uses a 640x960 portrait LCD panel as a second display.
+It was observed on sc7180 (A618 gpu) that GPU votes for GX rail and CNOC
+BCM nodes were not removed after GPU suspend. This was because we
+skipped sending 'prepare-slumber' request to gmu during suspend sequence
+in some cases. So, make sure we always call prepare-slumber hfi during
+suspend. Also, calling prepare-slumber without a prior oob-gpu handshake
+messes up gmu firmware's internal state. So, do that when required.
 
-Add DMI matches to correctly rotate these panels.
-
-Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Co-developed-by: John Edwards <uejji@uejji.net>
-Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: Paco Avelar <pacoavelar@hotmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-3-uejji@uejji.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/639569/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c |   82 ++++++++++++++++++----------------
+ 1 file changed, 44 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 7bf096ddeb06d..d9ed6214cf28b 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -93,6 +93,12 @@ static const struct drm_dmi_panel_orientation_data onegx1_pro = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
- };
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1126,50 +1126,51 @@ static void a6xx_gmu_shutdown(struct a6x
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	u32 val;
++	int ret;
  
-+static const struct drm_dmi_panel_orientation_data lcd640x960_leftside_up = {
-+	.width = 640,
-+	.height = 960,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
-+};
+ 	/*
+-	 * The GMU may still be in slumber unless the GPU started so check and
+-	 * skip putting it back into slumber if so
++	 * GMU firmware's internal power state gets messed up if we send "prepare_slumber" hfi when
++	 * oob_gpu handshake wasn't done after the last wake up. So do a dummy handshake here when
++	 * required
+ 	 */
+-	val = gmu_read(gmu, REG_A6XX_GPU_GMU_CX_GMU_RPMH_POWER_STATE);
++	if (adreno_gpu->base.needs_hw_init) {
++		if (a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET))
++			goto force_off;
+ 
+-	if (val != 0xf) {
+-		int ret = a6xx_gmu_wait_for_idle(gmu);
+-
+-		/* If the GMU isn't responding assume it is hung */
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
+-
+-		/* tell the GMU we want to slumber */
+-		ret = a6xx_gmu_notify_slumber(gmu);
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
+-
+-		ret = gmu_poll_timeout(gmu,
+-			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
+-			!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
+-			100, 10000);
+-
+-		/*
+-		 * Let the user know we failed to slumber but don't worry too
+-		 * much because we are powering down anyway
+-		 */
+-
+-		if (ret)
+-			DRM_DEV_ERROR(gmu->dev,
+-				"Unable to slumber GMU: status = 0%x/0%x\n",
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+ 	}
+ 
++	ret = a6xx_gmu_wait_for_idle(gmu);
 +
- static const struct drm_dmi_panel_orientation_data lcd720x1280_rightside_up = {
- 	.width = 720,
- 	.height = 1280,
-@@ -202,6 +208,18 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
- 		},
- 		.driver_data = (void *)&lcd1080x1920_leftside_up,
-+	}, {    /* AYA NEO Flip DS Bottom Screen */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "FLIP DS"),
-+		},
-+		.driver_data = (void *)&lcd640x960_leftside_up,
-+	}, {    /* AYA NEO Flip KB/DS Top Screen */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "FLIP"),
-+		},
-+		.driver_data = (void *)&lcd1080x1920_leftside_up,
- 	}, {	/* AYA NEO Founder */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYA NEO"),
--- 
-2.39.5
-
++	/* If the GMU isn't responding assume it is hung */
++	if (ret)
++		goto force_off;
++
++	a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
++
++	/* tell the GMU we want to slumber */
++	ret = a6xx_gmu_notify_slumber(gmu);
++	if (ret)
++		goto force_off;
++
++	ret = gmu_poll_timeout(gmu,
++		REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
++		!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
++		100, 10000);
++
++	/*
++	 * Let the user know we failed to slumber but don't worry too
++	 * much because we are powering down anyway
++	 */
++
++	if (ret)
++		DRM_DEV_ERROR(gmu->dev,
++			"Unable to slumber GMU: status = 0%x/0%x\n",
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
++
+ 	/* Turn off HFI */
+ 	a6xx_hfi_stop(gmu);
+ 
+@@ -1178,6 +1179,11 @@ static void a6xx_gmu_shutdown(struct a6x
+ 
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
++
++	return;
++
++force_off:
++	a6xx_gmu_force_off(gmu);
+ }
+ 
+ 
 
 
