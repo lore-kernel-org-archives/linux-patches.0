@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4827A238C16;
-	Wed, 23 Apr 2025 15:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF39374F1;
+	Wed, 23 Apr 2025 15:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422357; cv=none; b=m+U4jKVhXbIzG8Z92ZamN/tC7CxlLpiGL/pg2OpQlXp017mHV7f2aME1B3zmnh0YvP4mxIgT3Zh3RaJVjAR0Hf5RA0jujLhoZ05Z7omNPM36AC/BuJP2/364ZthimcKk53AVVHKSvGyGbTK8gbYB5lBlsiNE4oXXvahHLwsvtZU=
+	t=1745422360; cv=none; b=l6OOp+vBkRTtWcOwHMIRgpfu5jprmwim60ZtShRPUlJRdDVpQcDGwgqI9etuCtJO5il18IWYf2AOmh/ZYEZU4htAtdX8w6FLJ0t3Bk1t2fu6bhuMoKC9qMk0jpW8m7NYkVwdEvKMBy0bkyMP1daSZ3qGyphqSXaU3pGnnfiohVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422357; c=relaxed/simple;
-	bh=y39HUTzubdlAMtXVQqL6MJzHPrXao9Evzvg069lK/vo=;
+	s=arc-20240116; t=1745422360; c=relaxed/simple;
+	bh=Tsi2uHyhsI8a/owt45NN3zNc2yeedYnN93x2krk7AOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jy//SRo9IJ2wOt4a/R67N7MQAiOxbkLQPBDMZlQQclyyqy9q8qaQs5bUtK85fpXbacjIJufXNyHtTp0lIjL2pqGU50o/JDEFIPiNlcBb+iCKuSAyON6HE56zN0yptXGIQGq+gPUwY7R5HamP34A63oqr8koBhpsOwXC0039/dV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcVJeg1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eW+z4fOTNnkUA3RGE81+8B+FX3ExHFnq/KE0z+ShoY/STynkvnE5UVIgnRCrK8NLRyDM/PJ5qcKvRP50W99I6CtI9re0MBf7kd0U2Sbe/XXpVZkY9HQBvBhvaBwOa02RfE7QcQP90YWRPJYeym+g1G9YBD9QFQEp4rhP4biNL48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWNzJ9lo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcVJeg1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08E9C4CEE2;
-	Wed, 23 Apr 2025 15:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWNzJ9lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3CAC4CEE2;
+	Wed, 23 Apr 2025 15:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422357;
-	bh=y39HUTzubdlAMtXVQqL6MJzHPrXao9Evzvg069lK/vo=;
+	s=korg; t=1745422359;
+	bh=Tsi2uHyhsI8a/owt45NN3zNc2yeedYnN93x2krk7AOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcVJeg1uOa19NyQ5Ar9be5NbnhTsJaC51D9quI5U2R/D5eJDDHqA+UmuB1WlCqOXe
-	 67DDsExzmb8+Dty4+ayTzyzMdxKQp3QtHAEk68nSBGZxY+Acv6vslqmdlga53I2qKk
-	 J4MkjdOxhYrdrpQP0xHfohU44IDhF1p7KViIkK3w=
+	b=uWNzJ9lofJhONW6QZpSDwzj6gAgJOxmr2ntiEZeBVapSTcNSgxQ5rZryD/Cupmmfm
+	 IOgUi2gy0S9hD90OA7z5C4ILYQPFc6f6bxRQh4M+bBNfKnhFUU9wkBVUKdFGPqHVp0
+	 wd/XeM0V7NtIFwa85EFpKdicsFa1o42QRNBRiSJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 305/393] asus-laptop: Fix an uninitialized variable
-Date: Wed, 23 Apr 2025 16:43:21 +0200
-Message-ID: <20250423142655.934357889@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.1 262/291] misc: pci_endpoint_test: Fix displaying irq_type after request_irq error
+Date: Wed, 23 Apr 2025 16:44:11 +0200
+Message-ID: <20250423142635.132499907@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +48,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 6c683c6887e4addcd6bd1ddce08cafccb0a21e32 upstream.
+commit 919d14603dab6a9cf03ebbeb2cfa556df48737c8 upstream.
 
-The value returned by acpi_evaluate_integer() is not checked,
-but the result is not always successful, so it is necessary to
-add a check of the returned value.
+There are two variables that indicate the interrupt type to be used
+in the next test execution, global "irq_type" and "test->irq_type".
 
-If the result remains negative during three iterations of the loop,
-then the uninitialized variable 'val' will be used in the clamp_val()
-macro, so it must be initialized with the current value of the 'curr'
-variable.
+The former is referenced from pci_endpoint_test_get_irq() to preserve
+the current type for ioctl(PCITEST_GET_IRQTYPE).
 
-In this case, the algorithm should be less noisy.
+In the pci_endpoint_test_request_irq(), since this global variable
+is referenced when an error occurs, the unintended error message is
+displayed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+For example, after running "pcitest -i 2", the following message
+shows "MSI 3" even if the current IRQ type becomes "MSI-X":
 
-Fixes: b23910c2194e ("asus-laptop: Pegatron Lucid accelerometer")
+  pci-endpoint-test 0000:01:00.0: Failed to request IRQ 30 for MSI 3
+  SET IRQ TYPE TO MSI-X:          NOT OKAY
+
+Fix this issue by using "test->irq_type" instead of global "irq_type".
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Link: https://lore.kernel.org/r/20250403122603.18172-1-arefev@swemel.ru
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: b2ba9225e031 ("misc: pci_endpoint_test: Avoid using module parameter to determine irqtype")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20250225110252.28866-4-hayashi.kunihiko@socionext.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-laptop.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/misc/pci_endpoint_test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/asus-laptop.c
-+++ b/drivers/platform/x86/asus-laptop.c
-@@ -427,11 +427,14 @@ static int asus_pega_lucid_set(struct as
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -245,7 +245,7 @@ static bool pci_endpoint_test_request_ir
+ 	return true;
  
- static int pega_acc_axis(struct asus_laptop *asus, int curr, char *method)
- {
-+	unsigned long long val = (unsigned long long)curr;
-+	acpi_status status;
- 	int i, delta;
--	unsigned long long val;
--	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
--		acpi_evaluate_integer(asus->handle, method, NULL, &val);
- 
-+	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
-+		status = acpi_evaluate_integer(asus->handle, method, NULL, &val);
-+		if (ACPI_FAILURE(status))
-+			continue;
- 		/* The output is noisy.  From reading the ASL
- 		 * dissassembly, timeout errors are returned with 1's
- 		 * in the high word, and the lack of locking around
+ fail:
+-	switch (irq_type) {
++	switch (test->irq_type) {
+ 	case IRQ_TYPE_LEGACY:
+ 		dev_err(dev, "Failed to request IRQ %d for Legacy\n",
+ 			pci_irq_vector(pdev, i));
 
 
