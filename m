@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705785674E;
-	Wed, 23 Apr 2025 14:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1398818DB17;
+	Wed, 23 Apr 2025 14:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419929; cv=none; b=EzAYYDVnmM1xoM5CXW1PBFk9+oy4YqAj/UFY/o3rTS6gNObdiT+L/L9oaCgrBYNJOVb+zL/opvJqpjPK7R5YHN5Z79u98EhJ8BYIXbC6A6jt5ED75cPqjb0E+fUtgV//cpseFwJp4XSY34CXw3QRO9eiWfibbV02aeDGn/Kvrh4=
+	t=1745419932; cv=none; b=i942foPwkm6i/tJvynK0aLX0s18vLGo09pPqj84hyedN+7LLaiI6W4PRIQFAJp3k7VAtaLfp79msnQko93r4yz/ZSLDkHUimWx9yS/gauyP4qfugyKVEVaQNp2BrFQ8zK1taTTJKPvk7iMRI5SIf+3M9oB21/hDAgeVzvqCmtG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419929; c=relaxed/simple;
-	bh=w52cHdtaQ/a2EmCwXuIN1wXw0vbMOMZEKC6W2/XjuTY=;
+	s=arc-20240116; t=1745419932; c=relaxed/simple;
+	bh=gSt79VuvKpu3tH7hcCV9tw77ardnRb2vAqxIhDkdH/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbktBllr88IuodVg9H5VCjGVORtZErOtCoOGnNw2JbYu8eBCpAteTziUEcBvglxOYsqJ7pbHm2fGE86YpYtB6UBvVyIQmb7PgUFjYGyyzU2rWEwSppAWclMrOHxbwZ158vGgYFpW27F+o75oEDAimtx2PB7KF8lO2lpf+qJyvOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1ucUwFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLmxMmC0Ix6JAf6xA+4pMCHnOpS3E9lwXCkWQv+2Z1Uz8oJ+0Pd+bokD5yTpmSLFhDPlmX39iE4EZ5+yQqwx2ojmqIdPfNur6+bwgxLWe1ZTPI6TDsR+kFsURLcXQeWvkYJMV6DDkT/xPWAB8kqaWxkVjAbKsMWJddEP5H9umjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4ztDeUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1ucUwFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04354C4CEE2;
-	Wed, 23 Apr 2025 14:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4ztDeUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9883DC4CEE2;
+	Wed, 23 Apr 2025 14:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419929;
-	bh=w52cHdtaQ/a2EmCwXuIN1wXw0vbMOMZEKC6W2/XjuTY=;
+	s=korg; t=1745419931;
+	bh=gSt79VuvKpu3tH7hcCV9tw77ardnRb2vAqxIhDkdH/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1ucUwFR53x6/HKXcuTfKsJvEp1zEQzWQ/Iq+QR8nk6kT9FCgXQs8ct/IHCum+p9S
-	 Rc3jlQydm5zDq8Atq2mX97MPi3oK2dWhq/Cex/6Hu71AOaL345MSmCL4kyRq74yId6
-	 Nb4a2DkzDSMYaMHsclleRAHVT11eHVDbJzro4Puk=
+	b=W4ztDeUBhXblcEMq9ldZzdYjgiOfxhnMmdP9xhmtQOU1+YYh3WK6TvmXwuwWdXHe2
+	 91ziGCpYsQQJAaqEup3Kn5Z1+BxhuhuhgQsV9joBo+ZLdpDk6OjW1f0ACcsENLQ0sw
+	 nACrbSKEKZsEm93kCW8B9C9A/j+wpQoaShvfUonY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/393] drm/tests: helpers: Add helper for drm_display_mode_from_cea_vic()
-Date: Wed, 23 Apr 2025 16:38:37 +0200
-Message-ID: <20250423142644.140793487@linuxfoundation.org>
+Subject: [PATCH 6.14 044/241] pds_core: fix memory leak in pdsc_debugfs_add_qcq()
+Date: Wed, 23 Apr 2025 16:41:48 +0200
+Message-ID: <20250423142622.307871993@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit caa714f86699bcfb01aa2d698db12d91af7d0d81 ]
+[ Upstream commit 8b82f656826c741d032490b089a5638c33f2c91d ]
 
-As Maxime suggested, add a new helper
-drm_kunit_display_mode_from_cea_vic(), it can replace the direct call
-of drm_display_mode_from_cea_vic(), and it will help solving
-the `mode` memory leaks.
+The memory allocated for intr_ctrl_regset, which is passed to
+debugfs_create_regset32() may not be cleaned up when the driver is
+removed. Fix that by using device managed allocation for it.
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241030023504.530425-2-ruanjinjie@huawei.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Stable-dep-of: 70f29ca3117a ("drm/tests: cmdline: Fix drm_display_mode memory leak")
+Fixes: 45d76f492938 ("pds_core: set up device and adminq")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://patch.msgid.link/20250409054450.48606-1-abdun.nihaal@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_kunit_helpers.c | 42 +++++++++++++++++++++++
- include/drm/drm_kunit_helpers.h           |  4 +++
- 2 files changed, 46 insertions(+)
+ drivers/net/ethernet/amd/pds_core/debugfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-index ca513235b5e2a..9a35b2cf6a032 100644
---- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
-+++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-@@ -3,6 +3,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_drv.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_kunit_helpers.h>
- #include <drm/drm_managed.h>
-@@ -383,5 +384,46 @@ drm_kunit_helper_create_crtc(struct kunit *test,
- }
- EXPORT_SYMBOL_GPL(drm_kunit_helper_create_crtc);
+diff --git a/drivers/net/ethernet/amd/pds_core/debugfs.c b/drivers/net/ethernet/amd/pds_core/debugfs.c
+index ac37a4e738ae7..04c5e3abd8d70 100644
+--- a/drivers/net/ethernet/amd/pds_core/debugfs.c
++++ b/drivers/net/ethernet/amd/pds_core/debugfs.c
+@@ -154,8 +154,9 @@ void pdsc_debugfs_add_qcq(struct pdsc *pdsc, struct pdsc_qcq *qcq)
+ 		debugfs_create_u32("index", 0400, intr_dentry, &intr->index);
+ 		debugfs_create_u32("vector", 0400, intr_dentry, &intr->vector);
  
-+static void kunit_action_drm_mode_destroy(void *ptr)
-+{
-+	struct drm_display_mode *mode = ptr;
-+
-+	drm_mode_destroy(NULL, mode);
-+}
-+
-+/**
-+ * drm_kunit_display_mode_from_cea_vic() - return a mode for CEA VIC
-+					   for a KUnit test
-+ * @test: The test context object
-+ * @dev: DRM device
-+ * @video_code: CEA VIC of the mode
-+ *
-+ * Creates a new mode matching the specified CEA VIC for a KUnit test.
-+ *
-+ * Resources will be cleaned up automatically.
-+ *
-+ * Returns: A new drm_display_mode on success or NULL on failure
-+ */
-+struct drm_display_mode *
-+drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
-+				    u8 video_code)
-+{
-+	struct drm_display_mode *mode;
-+	int ret;
-+
-+	mode = drm_display_mode_from_cea_vic(dev, video_code);
-+	if (!mode)
-+		return NULL;
-+
-+	ret = kunit_add_action_or_reset(test,
-+					kunit_action_drm_mode_destroy,
-+					mode);
-+	if (ret)
-+		return NULL;
-+
-+	return mode;
-+}
-+EXPORT_SYMBOL_GPL(drm_kunit_display_mode_from_cea_vic);
-+
- MODULE_AUTHOR("Maxime Ripard <maxime@cerno.tech>");
- MODULE_LICENSE("GPL");
-diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
-index 6e99627edf458..3e5f4a23685ef 100644
---- a/include/drm/drm_kunit_helpers.h
-+++ b/include/drm/drm_kunit_helpers.h
-@@ -120,4 +120,8 @@ drm_kunit_helper_create_crtc(struct kunit *test,
- 			     const struct drm_crtc_funcs *funcs,
- 			     const struct drm_crtc_helper_funcs *helper_funcs);
- 
-+struct drm_display_mode *
-+drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
-+				    u8 video_code);
-+
- #endif // DRM_KUNIT_HELPERS_H_
+-		intr_ctrl_regset = kzalloc(sizeof(*intr_ctrl_regset),
+-					   GFP_KERNEL);
++		intr_ctrl_regset = devm_kzalloc(pdsc->dev,
++						sizeof(*intr_ctrl_regset),
++						GFP_KERNEL);
+ 		if (!intr_ctrl_regset)
+ 			return;
+ 		intr_ctrl_regset->regs = intr_ctrl_regs;
 -- 
 2.39.5
 
