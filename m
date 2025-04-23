@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5492980C7;
-	Wed, 23 Apr 2025 15:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0496D283C81;
+	Wed, 23 Apr 2025 15:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422262; cv=none; b=cBPbx/9ZZIungeICCivsCd7nUWs+ExDyVdRkfQlwBdlO4kxeHdEg84MgC9wr64XcevFslcnE35N32bQt+MN5D+cvqP6+bKQy8HwLTjEOIJ3ovgCyS+r3SUn6N485ZzXZbO6g0hS8/MAO5hQhc5bM7Ao3hmEe0LhoYR0MP26aoYs=
+	t=1745422265; cv=none; b=lGSb8dG+qileprJ4aESKMNHrq0C2iA/veMrF0TzVrvPFw/EA1V1Lgwv9E1n1MDc93VlrAjJ6CxvHwFKLxk3/CNGdzHNfXqa8RoVRji7LvuHcfA7qPSoDCBjpL/+TV0+aMMNBwdJ1784hd0aMZcuz0DLdg4XcLGd+EpKfNHOMDfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422262; c=relaxed/simple;
-	bh=ZAXQg4uC2mGYSeq1PfD1XEf5KyxD7qvQFD5sg+gFe8E=;
+	s=arc-20240116; t=1745422265; c=relaxed/simple;
+	bh=4ceBUmeJURfUmz1J3HDK3fTMytu+Ku/PHYdZSTOa2sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OA/ik6kud4ZHYrEAOtea935lrxVgpzo6kxvIVL0XPQiwQiq7vdb3vVibd+34uE8t+tM4As9Scb9T30qgEGOPUZ6J266bdntzlxgQjYTuag7XPHLdh4MdkuxSIX/SNgFCGMhcELTz87UTYbQ1U7Z8DeEnKl9rc6a43ao3CK+Nze0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4998dv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rRj7hDWcUr/71m1llW6bXSt/WE3wYd8nS01XuFlOcNbg8EC5NB0ltWzpaHwBDW8BXPkdnLl+BPU6Uvb8GxdEXHMbdFtVUqPQoVC1K5+hwEQ2osznyyHWAOuuSdT7oCOE/8xIW1mr24LK6ExO7xiAQm4hvLu8Wy1MjJgoKO3d1bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpeivcOP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4998dv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D505EC4CEE3;
-	Wed, 23 Apr 2025 15:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpeivcOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FC2C4CEE2;
+	Wed, 23 Apr 2025 15:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422262;
-	bh=ZAXQg4uC2mGYSeq1PfD1XEf5KyxD7qvQFD5sg+gFe8E=;
+	s=korg; t=1745422264;
+	bh=4ceBUmeJURfUmz1J3HDK3fTMytu+Ku/PHYdZSTOa2sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4998dv64BToVZ0riQ9LqRa44XhkfmmFLnes5GQPnAgENr3vXkEMdBdh2OIOvZjQG
-	 LpHubZaafNa0k4aK70BcMUfW57hFbGCyQBV0Q1H0cEUYiMDWFTpFsqTn8jxDkJrIQY
-	 UpHnS/XlycSYFk7Vd5Sau5AKSanQD8iBEJADT5cQ=
+	b=cpeivcOPPPhjOI2wDpSUKdtuLrGnewnBGG2n/lcVkNeKCXko9/AuAliGkOE66+05X
+	 wobC/oZ5upPOvC6tHUBE4JnVpSrgLc+aDiHPY3u1Un9gvDZiykIEdwlQ/jJ6s+/ANI
+	 FC6k3C39AYrXyML9McQerHsTIzkER6c2eYC1tI8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.1 266/291] x86/pvh: Call C code via the kernel virtual mapping
-Date: Wed, 23 Apr 2025 16:44:15 +0200
-Message-ID: <20250423142635.294020231@linuxfoundation.org>
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 310/393] Bluetooth: l2cap: Process valid commands in too long frame
+Date: Wed, 23 Apr 2025 16:43:26 +0200
+Message-ID: <20250423142656.134205394@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,55 +44,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-commit e8fbc0d9cab6c1ee6403f42c0991b0c1d5dbc092 upstream.
+commit e2e49e214145a8f6ece6ecd52fec63ebc2b27ce9 upstream.
 
-Calling C code via a different mapping than it was linked at is
-problematic, because the compiler assumes that RIP-relative and absolute
-symbol references are interchangeable. GCC in particular may use
-RIP-relative per-CPU variable references even when not using -fpic.
+This is required for passing PTS test cases:
+- L2CAP/COS/CED/BI-14-C
+  Multiple Signaling Command in one PDU, Data Truncated, BR/EDR,
+  Connection Request
+- L2CAP/COS/CED/BI-15-C
+  Multiple Signaling Command in one PDU, Data Truncated, BR/EDR,
+  Disconnection Request
 
-So call xen_prepare_pvh() via its kernel virtual mapping on x86_64, so
-that those RIP-relative references produce the correct values. This
-matches the pre-existing behavior for i386, which also invokes
-xen_prepare_pvh() via the kernel virtual mapping before invoking
-startup_32 with paging disabled again.
+The test procedure defined in L2CAP.TS.p39 for both tests is:
+1. The Lower Tester sends a C-frame to the IUT with PDU Length set
+   to 8 and Channel ID set to the correct signaling channel for the
+   logical link. The Information payload contains one L2CAP_ECHO_REQ
+   packet with Data Length set to 0 with 0 octets of echo data and
+   one command packet and Data Length set as specified in Table 4.6
+   and the correct command data.
+2. The IUT sends an L2CAP_ECHO_RSP PDU to the Lower Tester.
+3. Perform alternative 3A, 3B, 3C, or 3D depending on the IUT’s
+   response.
+   Alternative 3A (IUT terminates the link):
+     3A.1 The IUT terminates the link.
+     3A.2 The test ends with a Pass verdict.
+   Alternative 3B (IUT discards the frame):
+     3B.1 The IUT does not send a reply to the Lower Tester.
+   Alternative 3C (IUT rejects PDU):
+     3C.1 The IUT sends an L2CAP_COMMAND_REJECT_RSP PDU to the
+          Lower Tester.
+   Alternative 3D (Any other IUT response):
+     3D.1 The Upper Tester issues a warning and the test ends.
+4. The Lower Tester sends a C-frame to the IUT with PDU Length set
+   to 4 and Channel ID set to the correct signaling channel for the
+   logical link. The Information payload contains Data Length set to
+   0 with an L2CAP_ECHO_REQ packet with 0 octets of echo data.
+5. The IUT sends an L2CAP_ECHO_RSP PDU to the Lower Tester.
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Tested-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Message-ID: <20241009160438.3884381-8-ardb+git@google.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-[ Stable context update ]
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+With expected outcome:
+  In Steps 2 and 5, the IUT responds with an L2CAP_ECHO_RSP.
+  In Step 3A.1, the IUT terminates the link.
+  In Step 3B.1, the IUT does not send a reply to the Lower Tester.
+  In Step 3C.1, the IUT rejects the PDU.
+  In Step 3D.1, the IUT sends any valid response.
+
+Currently PTS fails with the following logs:
+  Failed to receive ECHO RESPONSE.
+
+And HCI logs:
+> ACL Data RX: Handle 11 flags 0x02 dlen 20
+      L2CAP: Information Response (0x0b) ident 2 len 12
+        Type: Fixed channels supported (0x0003)
+        Result: Success (0x0000)
+        Channels: 0x000000000000002e
+          L2CAP Signaling (BR/EDR)
+          Connectionless reception
+          AMP Manager Protocol
+          L2CAP Signaling (LE)
+> ACL Data RX: Handle 11 flags 0x02 dlen 13
+        frame too long
+        08 01 00 00 08 02 01 00 aa                       .........
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/platform/pvh/head.S |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/arch/x86/platform/pvh/head.S
-+++ b/arch/x86/platform/pvh/head.S
-@@ -100,7 +100,12 @@ SYM_CODE_START_LOCAL(pvh_start_xen)
- 	xor %edx, %edx
- 	wrmsr
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7510,8 +7510,24 @@ void l2cap_recv_acldata(struct hci_conn
+ 		if (skb->len > len) {
+ 			BT_ERR("Frame is too long (len %u, expected len %d)",
+ 			       skb->len, len);
++			/* PTS test cases L2CAP/COS/CED/BI-14-C and BI-15-C
++			 * (Multiple Signaling Command in one PDU, Data
++			 * Truncated, BR/EDR) send a C-frame to the IUT with
++			 * PDU Length set to 8 and Channel ID set to the
++			 * correct signaling channel for the logical link.
++			 * The Information payload contains one L2CAP_ECHO_REQ
++			 * packet with Data Length set to 0 with 0 octets of
++			 * echo data and one invalid command packet due to
++			 * data truncated in PDU but present in HCI packet.
++			 *
++			 * Shorter the socket buffer to the PDU length to
++			 * allow to process valid commands from the PDU before
++			 * setting the socket unreliable.
++			 */
++			skb->len = len;
++			l2cap_recv_frame(conn, skb);
+ 			l2cap_conn_unreliable(conn, ECOMM);
+-			goto drop;
++			goto unlock;
+ 		}
  
--	call xen_prepare_pvh
-+	/* Call xen_prepare_pvh() via the kernel virtual mapping */
-+	leaq xen_prepare_pvh(%rip), %rax
-+	subq phys_base(%rip), %rax
-+	addq $__START_KERNEL_map, %rax
-+	ANNOTATE_RETPOLINE_SAFE
-+	call *%rax
- 
- 	/* startup_64 expects boot_params in %rsi. */
- 	mov $_pa(pvh_bootparams), %rsi
+ 		/* Append fragment into frame (with header) */
 
 
