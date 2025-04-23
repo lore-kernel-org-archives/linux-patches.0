@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17FD280CFF;
-	Wed, 23 Apr 2025 14:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D02E27CB12;
+	Wed, 23 Apr 2025 14:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419869; cv=none; b=Qkmy1XiTgbq5xYF4LdlnI2wjZc5uSX1lo8q0cK7UXXxJvr6cZXCBkrF7bKbvIgES5Wa7aGstBqYtDVJTDB1NHxzBb+DkcckwKs7OS9MNzZ8vBJhx4HRSomUMpYtwfc438QwnygvAOgJ8LCu5b4cd+xsF/Ci9D42VF1BEFtlMOAQ=
+	t=1745419871; cv=none; b=Cx1nS/OzRb/G5WuVrNM3zCtz149gobMxWONsQUaPX8ff9knwHrCSz44N4iIpVXLiTDdBx/MKnv8XgUM/EXhR6PgUYO+gaQ/R5VVE+yxvCQwivOElIJYANOyBaHNtj/KxMLiBUpCeXqC6KihUVx/rtvHAwCG6UxvuHvSAKNJ8Khw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419869; c=relaxed/simple;
-	bh=3nL7GEnfTEIfxjQaf7myhvkOtAvRyYDpE+ro3j5BDYs=;
+	s=arc-20240116; t=1745419871; c=relaxed/simple;
+	bh=il0PPzXMiym9fA1IcrT3C7tzOOrI+aAkYSoYClgXnKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmxBECdCOUV1MqDYAn9Ka8ncR+YY1VCbQgHF3ncGE7mCK6ABWJX6EfY0nW8MY5IQQRjDCzrIxo8s6g9BgV77kdINLOfp216Plxf65+xiVRJFukMP2HDeN9HyP+6NFXkKIIseZZWStZJoOJ1/lo1lKpWiu4WqyPPv7T/nQ768IL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKv6NIZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0j58l4Db3Bq00rVFzCNSbVYX/gr1lCZUCcLzX+2VW2BbiUxyZUVJDVnNO9F4+e4yVAS5AHmXHl0OLPcxd+5P4IY7bbZAPojdQnnNCxXxqS4EE7RUUScdZNeGljx2gVXB1iWg51R/OmJfb/cJEjWbWgosIlL8e5vo+tgmLYeya4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkI1hhg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKv6NIZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2EEC4CEE8;
-	Wed, 23 Apr 2025 14:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkI1hhg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D74C4CEE2;
+	Wed, 23 Apr 2025 14:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419868;
-	bh=3nL7GEnfTEIfxjQaf7myhvkOtAvRyYDpE+ro3j5BDYs=;
+	s=korg; t=1745419871;
+	bh=il0PPzXMiym9fA1IcrT3C7tzOOrI+aAkYSoYClgXnKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKv6NIZChY7o1nfADk3kcV5rrVxU70bWK0vT1gMHjbZRf5qvOKR3uLwWgw8N5lYmZ
-	 miPU6KezIW1pGH5ehW5QtZC+mddc966GWswIJmN89qI4s0P9+RGRlqEOhJSYCuUbUc
-	 pTYJtclByDwc7PkkwbYofLp2QZHDqXXAqiCWIRX8=
+	b=IkI1hhg9171h4ZzQ4yrAajT8O2ck0mjmu7qjhmv3h7vIvK++UhbEHB+YwRoaE818f
+	 onVm8g5VqpAaNMwUlzBKvDv2U9YI5t7yB1QQ3X/cD8YrqqWVLwRv8Q/PIEGfVXrXgH
+	 duaKpI27cSe4TB568uGknbJ0j8tw+DCumh9lRUpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christopher S M Hall <christopher.s.hall@intel.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/393] net/sched: cls_api: conditional notification of events
-Date: Wed, 23 Apr 2025 16:38:30 +0200
-Message-ID: <20250423142643.860517417@linuxfoundation.org>
+Subject: [PATCH 6.14 037/241] igc: cleanup PTP module if probe fails
+Date: Wed, 23 Apr 2025 16:41:41 +0200
+Message-ID: <20250423142622.029592049@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +51,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Christopher S M Hall <christopher.s.hall@intel.com>
 
-[ Upstream commit 93775590b1ee98bf2976b1f4a1ed24e9ff76170f ]
+[ Upstream commit 1f025759ba394dd53e434d2668cb0597886d9b69 ]
 
-As of today tc-filter/chain events are unconditionally built and sent to
-RTNLGRP_TC. As with the introduction of rtnl_notify_needed we can check
-before-hand if they are really needed. This will help to alleviate
-system pressure when filters are concurrently added without the rtnl
-lock as in tc-flower.
+Make sure that the PTP module is cleaned up if the igc_probe() fails by
+calling igc_ptp_stop() on exit.
 
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://lore.kernel.org/r/20231208192847.714940-8-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 369609fc6272 ("tc: Ensure we have enough buffer space when sending filter netlink notifications")
+Fixes: d89f88419f99 ("igc: Add skeletal frame for Intel(R) 2.5G Ethernet Controller support")
+Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
+Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 96c39e9a873c7..a0eb389b4fb4b 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2038,6 +2038,9 @@ static int tfilter_notify(struct net *net, struct sk_buff *oskb,
- 	u32 portid = oskb ? NETLINK_CB(oskb).portid : 0;
- 	int err = 0;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index daf2a24ead037..80831c57f7509 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -7230,6 +7230,7 @@ static int igc_probe(struct pci_dev *pdev,
  
-+	if (!unicast && !rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC))
-+		return 0;
-+
- 	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOBUFS;
-@@ -2067,6 +2070,9 @@ static int tfilter_del_notify(struct net *net, struct sk_buff *oskb,
- 	u32 portid = oskb ? NETLINK_CB(oskb).portid : 0;
- 	int err;
- 
-+	if (!rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC))
-+		return tp->ops->delete(tp, fh, last, rtnl_held, extack);
-+
- 	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOBUFS;
-@@ -2891,6 +2897,9 @@ static int tc_chain_notify(struct tcf_chain *chain, struct sk_buff *oskb,
- 	struct sk_buff *skb;
- 	int err = 0;
- 
-+	if (!unicast && !rtnl_notify_needed(net, flags, RTNLGRP_TC))
-+		return 0;
-+
- 	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOBUFS;
-@@ -2920,6 +2929,9 @@ static int tc_chain_notify_delete(const struct tcf_proto_ops *tmplt_ops,
- 	struct net *net = block->net;
- 	struct sk_buff *skb;
- 
-+	if (!rtnl_notify_needed(net, flags, RTNLGRP_TC))
-+		return 0;
-+
- 	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOBUFS;
+ err_register:
+ 	igc_release_hw_control(adapter);
++	igc_ptp_stop(adapter);
+ err_eeprom:
+ 	if (!igc_check_reset_block(hw))
+ 		igc_reset_phy(hw);
 -- 
 2.39.5
 
