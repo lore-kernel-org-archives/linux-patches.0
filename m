@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A010A289373;
-	Wed, 23 Apr 2025 15:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D482820B2;
+	Wed, 23 Apr 2025 15:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421584; cv=none; b=C9CTgFi0/dtASxalgf5d0FFQuzB0LztOJpndTiQLl82B+ZbLEcdSOD8JyszHdghFv6Gxcay+kYXUbzEGqRtMYClz47u8LI8jT5+KGOjGi62M/+L/DSyimrETmO85bHq4g9vYdxvJHAp/YUfek9EM7XvCHe6hnQ79/6cbzcgdnI8=
+	t=1745421587; cv=none; b=aH2umKnYb3CWJeZru/yZzz04JXEuCRm323ZSp/DRcyBJV5IqRbqSwDbZJPG6UFDFQ2HsKWzF06ZUJfgBCSzVv9qEUAWHwxFpCRYbnjerduzMcwqeZHi4YB7RZ98eqfkCqqxVUGPoamF/oDNAfXTnNQGuhreyUgkgRFhCXjCmKbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421584; c=relaxed/simple;
-	bh=AygCXRF2HsabppF4m+aQW41OKqdfIlOu2xVUaqvWv7o=;
+	s=arc-20240116; t=1745421587; c=relaxed/simple;
+	bh=Af4DKbCJsDnrK7Wv8e2uOMVsxIeubgsSrCV7h39mnd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rCMdMAJHpx1eUJeyxw7aPqvCcrq1bAjaOMT5FsmxeAyg6gfhYIHHk+NKRsy6pXRCyAIu1FUVZz0oskU9xroWeg+MNup3zaVkOPV63TtsBr+HiEQSyLVReT3vGnXV0zFIQLc0LjV0H3x4iPEvFaEa6x9dirHB4ztRAhWLnOohHa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrYD+O1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JB6VIEr6jBnoOXGiQOoMraGE/iolOGEscDIp9UR+RfUun9EUYFKXh9o/NWsBe+lXhUc33o26v1eqP+BrJI15fsqofR8xJMcW73b8phs+/1h1JRTzQKpR0bGo+SZIZT/NkVIliSDD/qEVk5TCSYohbHwStCz/Mj0g9zAswvQ+gZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2AHrC/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrYD+O1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BF0C4CEE2;
-	Wed, 23 Apr 2025 15:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2AHrC/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E627C4CEE2;
+	Wed, 23 Apr 2025 15:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421584;
-	bh=AygCXRF2HsabppF4m+aQW41OKqdfIlOu2xVUaqvWv7o=;
+	s=korg; t=1745421586;
+	bh=Af4DKbCJsDnrK7Wv8e2uOMVsxIeubgsSrCV7h39mnd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrYD+O1pGbibH2oKTR8LHDNZMMjNmRvor9vrL8BoFWhy+5qeoqOp4ARYWERJp4vK6
-	 R+AiRTgOu1MiTqCk8iMC5PDe5+E+pC2Mnz0QUQDwt22ZgZGOP5OXpkBo5DhfwvPg7u
-	 bTXo2e50ex0eqJhlH9kAtDFX82LG1GMl7+mkZ3Jg=
+	b=n2AHrC/5LsmzjIhEzxVLEYWbmTSSdOE7Prruz1t/n24/SKuWVnN4kV/Nj283d+cu4
+	 6YGr2LeTZrJEedrK5f0s86yI6atJBOR4bkU7oRTpZwI7Kll0dG9jq9atY5K/hYcr92
+	 eEBaO16AY9QvoUvAT5Sqs53wMiD+Ijtbjxw8iQBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 208/241] drm/amdgpu: immediately use GTT for new allocations
-Date: Wed, 23 Apr 2025 16:44:32 +0200
-Message-ID: <20250423142629.036378227@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.1 155/291] of/irq: Fix device node refcount leakages in of_irq_init()
+Date: Wed, 23 Apr 2025 16:42:24 +0200
+Message-ID: <20250423142630.724715520@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,46 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit a755906fb2b8370c43e91ba437ae1b3e228e8b02 upstream.
+commit 708124d9e6e7ac5ebf927830760679136b23fdf0 upstream.
 
-Only use GTT as a fallback if we already have a backing store. This
-prevents evictions when an application constantly allocates and frees new
-memory.
+of_irq_init() will leak interrupt controller device node refcounts
+in two places as explained below:
 
-Partially fixes
-https://gitlab.freedesktop.org/drm/amd/-/issues/3844#note_2833985.
+1) Leak refcounts of both @desc->dev and @desc->interrupt_parent when
+   suffers @desc->irq_init_cb() failure.
+2) Leak refcount of @desc->interrupt_parent when cleans up list
+   @intc_desc_list in the end.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 216c1282dde3 ("drm/amdgpu: use GTT only as fallback for VRAM|GTT")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Refcounts of both @desc->dev and @desc->interrupt_parent were got in
+the first loop, but of_irq_init() does not put them before kfree(@desc)
+in places mentioned above, so causes refcount leakages.
+
+Fix by putting refcounts involved before kfree(@desc).
+
+Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
+Fixes: c71a54b08201 ("of/irq: introduce of_irq_init")
 Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-7-93e3a2659aa7@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/of/irq.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -163,8 +163,8 @@ void amdgpu_bo_placement_from_domain(str
- 		 * When GTT is just an alternative to VRAM make sure that we
- 		 * only use it as fallback and still try to fill up VRAM first.
- 		 */
--		if (domain & abo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM &&
--		    !(adev->flags & AMD_IS_APU))
-+		if (abo->tbo.resource && !(adev->flags & AMD_IS_APU) &&
-+		    domain & abo->preferred_domains & AMDGPU_GEM_DOMAIN_VRAM)
- 			places[c].flags |= TTM_PL_FLAG_FALLBACK;
- 		c++;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -627,6 +627,8 @@ void __init of_irq_init(const struct of_
+ 				       __func__, desc->dev, desc->dev,
+ 				       desc->interrupt_parent);
+ 				of_node_clear_flag(desc->dev, OF_POPULATED);
++				of_node_put(desc->interrupt_parent);
++				of_node_put(desc->dev);
+ 				kfree(desc);
+ 				continue;
+ 			}
+@@ -657,6 +659,7 @@ void __init of_irq_init(const struct of_
+ err:
+ 	list_for_each_entry_safe(desc, temp_desc, &intc_desc_list, list) {
+ 		list_del(&desc->list);
++		of_node_put(desc->interrupt_parent);
+ 		of_node_put(desc->dev);
+ 		kfree(desc);
  	}
 
 
