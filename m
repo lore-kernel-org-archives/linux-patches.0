@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EADF281357;
-	Wed, 23 Apr 2025 15:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB03280A52;
+	Wed, 23 Apr 2025 15:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421589; cv=none; b=NBbUJaYC+iPduSXLw1vVF5c0qsFmVhh+ctLbgG2Fbr9KIoVqpzMrgSs1SIK63Uj6ycXPhFckR3GogNn19PIs2gFiJCnGyVNI+dfpg4n7CsOCkAeoMS00MBQRGtNC7+wg78hpu/KygAtjAnz0/1VkqNvg5juSaSM0R8lu8KjoX7M=
+	t=1745421592; cv=none; b=RFPFE2DyPqHdZN2E0nwwfDcNAwrS2Ge2tXDdDhv7o2+tLslYrzkI5VObaiuhxVttLHbl/dVEGWcZIrT5K7UwemKm6XQtdLlzMniQTewUZb/tLqYWAr0CWJpPQ2ESwNYNJZrUiSQQRQhrqvoLs7qXz+omdiTHdNg5wjDDI7oeFmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421589; c=relaxed/simple;
-	bh=31KRagvrT4jRwOWeBP+I9jB5S66u3O8uYhSKlKVEbIg=;
+	s=arc-20240116; t=1745421592; c=relaxed/simple;
+	bh=bDcowQl2M7zgCzJAZa1PrDkStgAcohlGwaE2fxqS2FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I6gos8u8OlQbHoHvSqXEsAwBt3UzWwtWfmUxkTi6oCBLlmQ+90pzjSJQEI7aRyfqwFHNVaCxJWZrFE9i34hZKsbJWgrPGiO/dZKI99BtxVtOylwzD9BUMFFVGOb4KB67h5UG82ELGsJVXnMjyWO8JNfv0FieFxe19SxGtvASdpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHxvwdRQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnaZ7u4n54UdCT6naas6CROrruEDM6ASvmuGMJtHEXQYq5FM7xQEzmfQzMJjR+EBQJDkDGR2f6FqOp1AfQmUujXmlMWu5/YCVlJxoWDbDKECZrIFa9ZAGduIhWJwKsJKrqL4nSWN0lXSx1RLjiWE42W077lUPaLCSxgdAc6Iy/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YriI35rO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHxvwdRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA5AC4CEE2;
-	Wed, 23 Apr 2025 15:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YriI35rO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4795C4CEE2;
+	Wed, 23 Apr 2025 15:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421589;
-	bh=31KRagvrT4jRwOWeBP+I9jB5S66u3O8uYhSKlKVEbIg=;
+	s=korg; t=1745421592;
+	bh=bDcowQl2M7zgCzJAZa1PrDkStgAcohlGwaE2fxqS2FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHxvwdRQSb3Ee9X7L4OojOQYFP7whBZ0kgMttx3Vt43CBGoqY8+gHnMdXNVqkz7aD
-	 HPqm4F015S6epAEUWJkOPk1mgklmolCDTGMMlOw5H883k+hDB2CcDBT/fTa4bIdfKH
-	 bzHQQ026fOZhb0ZsXeNEIX6XVO++vIKpGdy2xKv4=
+	b=YriI35rOEnQA3BsfxfNrdFkfIdCgqvpDy0QOTIuandnqN1UVUDtOsrLTFVRHHj2dT
+	 NBU+yxOdKFRQT9K0rSKfqjX9u30Tj+JVxAP32wz6H1sPHAfPhrD49fXSPt13wtVPqO
+	 pryfhEeZTQvpEcoUoOuS+dxsZXQVAyILy64ggSAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 197/393] sctp: detect and prevent references to a freed transport in sendmsg
-Date: Wed, 23 Apr 2025 16:41:33 +0200
-Message-ID: <20250423142651.524774354@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 192/393] mm/mremap: correctly handle partial mremap() of VMA starting at 0
+Date: Wed, 23 Apr 2025 16:41:28 +0200
+Message-ID: <20250423142651.316543768@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -45,163 +47,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Cañuelo Navarro <rcn@igalia.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
+commit 937582ee8e8d227c30ec147629a0179131feaa80 upstream.
 
-sctp_sendmsg() re-uses associations and transports when possible by
-doing a lookup based on the socket endpoint and the message destination
-address, and then sctp_sendmsg_to_asoc() sets the selected transport in
-all the message chunks to be sent.
+Patch series "refactor mremap and fix bug", v3.
 
-There's a possible race condition if another thread triggers the removal
-of that selected transport, for instance, by explicitly unbinding an
-address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
-been set up and before the message is sent. This can happen if the send
-buffer is full, during the period when the sender thread temporarily
-releases the socket lock in sctp_wait_for_sndbuf().
+The existing mremap() logic has grown organically over a very long period
+of time, resulting in code that is in many parts, very difficult to follow
+and full of subtleties and sources of confusion.
 
-This causes the access to the transport data in
-sctp_outq_select_transport(), when the association outqueue is flushed,
-to result in a use-after-free read.
+In addition, it is difficult to thread state through the operation
+correctly, as function arguments have expanded, some parameters are
+expected to be temporarily altered during the operation, others are
+intended to remain static and some can be overridden.
 
-This change avoids this scenario by having sctp_transport_free() signal
-the freeing of the transport, tagging it as "dead". In order to do this,
-the patch restores the "dead" bit in struct sctp_transport, which was
-removed in
-commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
+This series completely refactors the mremap implementation, sensibly
+separating functions, adding comments to explain the more subtle aspects
+of the implementation and making use of small structs to thread state
+through everything.
 
-Then, in the scenario where the sender thread has released the socket
-lock in sctp_wait_for_sndbuf(), the bit is checked again after
-re-acquiring the socket lock to detect the deletion. This is done while
-holding a reference to the transport to prevent it from being freed in
-the process.
+The reason for doing so is to lay the groundwork for planned future
+changes to the mremap logic, changes which require the ability to easily
+pass around state.
 
-If the transport was deleted while the socket lock was relinquished,
-sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
-send.
+Additionally, it would be unhelpful to add yet more logic to code that is
+already difficult to follow without first refactoring it like this.
 
-The bug was found by a private syzbot instance (see the error report [1]
-and the C reproducer that triggers it [2]).
+The first patch in this series additionally fixes a bug when a VMA with
+start address zero is partially remapped.
 
-Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
-Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
-Cc: stable@vger.kernel.org
-Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested on real hardware under heavy workload and all self tests are
+passing.
+
+
+This patch (of 3):
+
+Consider the case of a partial mremap() (that results in a VMA split) of
+an accountable VMA (i.e.  which has the VM_ACCOUNT flag set) whose start
+address is zero, with the MREMAP_MAYMOVE flag specified and a scenario
+where a move does in fact occur:
+
+       addr  end
+        |     |
+        v     v
+    |-------------|
+    |     vma     |
+    |-------------|
+    0
+
+This move is affected by unmapping the range [addr, end).  In order to
+prevent an incorrect decrement of accounted memory which has already been
+determined, the mremap() code in move_vma() clears VM_ACCOUNT from the VMA
+prior to doing so, before reestablishing it in each of the VMAs
+post-split:
+
+    addr  end
+     |     |
+     v     v
+ |---|     |---|
+ | A |     | B |
+ |---|     |---|
+
+Commit 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
+changed this logic such as to determine whether there is a need to do so
+by establishing account_start and account_end and, in the instance where
+such an operation is required, assigning them to vma->vm_start and
+vma->vm_end.
+
+Later the code checks if the operation is required for 'A' referenced
+above thusly:
+
+	if (account_start) {
+		...
+	}
+
+However, if the VMA described above has vma->vm_start == 0, which is now
+assigned to account_start, this branch will not be executed.
+
+As a result, the VMA 'A' above will remain stripped of its VM_ACCOUNT
+flag, incorrectly.
+
+The fix is to simply convert these variables to booleans and set them as
+required.
+
+Link: https://lkml.kernel.org/r/cover.1741639347.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/dc55cb6db25d97c3d9e460de4986a323fa959676.1741639347.git.lorenzo.stoakes@oracle.com
+Fixes: 6b73cff239e5 ("mm: change munmap splitting order and move_vma()")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sctp/structs.h |    3 ++-
- net/sctp/socket.c          |   22 ++++++++++++++--------
- net/sctp/transport.c       |    2 ++
- 3 files changed, 18 insertions(+), 9 deletions(-)
+ mm/mremap.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/net/sctp/structs.h
-+++ b/include/net/sctp/structs.h
-@@ -778,6 +778,7 @@ struct sctp_transport {
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -599,8 +599,8 @@ static unsigned long move_vma(struct vm_
+ 	unsigned long vm_flags = vma->vm_flags;
+ 	unsigned long new_pgoff;
+ 	unsigned long moved_len;
+-	unsigned long account_start = 0;
+-	unsigned long account_end = 0;
++	bool account_start = false;
++	bool account_end = false;
+ 	unsigned long hiwater_vm;
+ 	int err = 0;
+ 	bool need_rmap_locks;
+@@ -684,9 +684,9 @@ static unsigned long move_vma(struct vm_
+ 	if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP)) {
+ 		vm_flags_clear(vma, VM_ACCOUNT);
+ 		if (vma->vm_start < old_addr)
+-			account_start = vma->vm_start;
++			account_start = true;
+ 		if (vma->vm_end > old_addr + old_len)
+-			account_end = vma->vm_end;
++			account_end = true;
+ 	}
  
- 	/* Reference counting. */
- 	refcount_t refcnt;
-+	__u32	dead:1,
- 		/* RTO-Pending : A flag used to track if one of the DATA
- 		 *		chunks sent to this address is currently being
- 		 *		used to compute a RTT. If this flag is 0,
-@@ -787,7 +788,7 @@ struct sctp_transport {
- 		 *		calculation completes (i.e. the DATA chunk
- 		 *		is SACK'd) clear this flag.
- 		 */
--	__u32	rto_pending:1,
-+		rto_pending:1,
+ 	/*
+@@ -726,7 +726,7 @@ static unsigned long move_vma(struct vm_
+ 		/* OOM: unable to split vma, just get accounts right */
+ 		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
+ 			vm_acct_memory(old_len >> PAGE_SHIFT);
+-		account_start = account_end = 0;
++		account_start = account_end = false;
+ 	}
  
- 		/*
- 		 * hb_sent : a flag that signals that we have a pending
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -71,8 +71,9 @@
- /* Forward declarations for internal helper functions. */
- static bool sctp_writeable(const struct sock *sk);
- static void sctp_wfree(struct sk_buff *skb);
--static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
--				size_t msg_len);
-+static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
-+				struct sctp_transport *transport,
-+				long *timeo_p, size_t msg_len);
- static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
- static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
- static int sctp_wait_for_accept(struct sock *sk, long timeo);
-@@ -1827,7 +1828,7 @@ static int sctp_sendmsg_to_asoc(struct s
- 
- 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
- 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
--		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
-+		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
- 		if (err)
- 			goto err;
- 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
-@@ -9208,8 +9209,9 @@ void sctp_sock_rfree(struct sk_buff *skb
- 
- 
- /* Helper function to wait for space in the sndbuf.  */
--static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
--				size_t msg_len)
-+static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
-+				struct sctp_transport *transport,
-+				long *timeo_p, size_t msg_len)
- {
- 	struct sock *sk = asoc->base.sk;
- 	long current_timeo = *timeo_p;
-@@ -9219,7 +9221,9 @@ static int sctp_wait_for_sndbuf(struct s
- 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
- 		 *timeo_p, msg_len);
- 
--	/* Increment the association's refcnt.  */
-+	/* Increment the transport and association's refcnt. */
-+	if (transport)
-+		sctp_transport_hold(transport);
- 	sctp_association_hold(asoc);
- 
- 	/* Wait on the association specific sndbuf space. */
-@@ -9228,7 +9232,7 @@ static int sctp_wait_for_sndbuf(struct s
- 					  TASK_INTERRUPTIBLE);
- 		if (asoc->base.dead)
- 			goto do_dead;
--		if (!*timeo_p)
-+		if ((!*timeo_p) || (transport && transport->dead))
- 			goto do_nonblock;
- 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
- 			goto do_error;
-@@ -9253,7 +9257,9 @@ static int sctp_wait_for_sndbuf(struct s
- out:
- 	finish_wait(&asoc->wait, &wait);
- 
--	/* Release the association's refcnt.  */
-+	/* Release the transport and association's refcnt. */
-+	if (transport)
-+		sctp_transport_put(transport);
- 	sctp_association_put(asoc);
- 
- 	return err;
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -117,6 +117,8 @@ fail:
-  */
- void sctp_transport_free(struct sctp_transport *transport)
- {
-+	transport->dead = 1;
-+
- 	/* Try to delete the heartbeat timer.  */
- 	if (del_timer(&transport->hb_timer))
- 		sctp_transport_put(transport);
+ 	if (vm_flags & VM_LOCKED) {
 
 
