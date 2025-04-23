@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3652428D843;
-	Wed, 23 Apr 2025 15:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB58E269B07;
+	Wed, 23 Apr 2025 15:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420754; cv=none; b=hZ1Ll9ejPTTw8xKy9FCsG/urhomV17ZaBF1Zh1T6OyHQlVmsLGFgqtY9N/hQzT0NLYK7+DiIYmytdpzdopWDiD4gekquIcj1RfMrDD+pgktHTyjrZtGpHP+FF3w78eBRPKqDGrTV5saof+Fd4OcI/qqo89+VW7ktf9LzCFD5Q1U=
+	t=1745420756; cv=none; b=hURvx4vcL/GUhcc75TLdQS7F9cwytFKaP+dB9Y4jA2pxb1SSFdGUuO2ZCJelnJyWi6qDbVV3VJ0LW662o4aIaoEpTW4RAVC9tSt4MjUMwY987Knv4NThkT6Rlub8TpOaaonsKKFaGFhP8ybLWBsO2Gr8xCBFU+0TAI/QcU5SdZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420754; c=relaxed/simple;
-	bh=37JvIAMG/SgyPfZ1WXs7EC9JJphPjQpsTgJgJ+/WhHQ=;
+	s=arc-20240116; t=1745420756; c=relaxed/simple;
+	bh=tEzl66fiS2bFum9+7+E1V2gtBsPISk988CsvpQWo44A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtFMBhVocQ/nan6Hpy6MhYp7nRphBmoeOghYa1JAPrGWrBtKDwMjaYjctUPFiw6ETtNtRYJR9aVLV+sRwG+lJ0JYtUntIDP43OcFMT3eC94U4eVZsbNZpvTKkVJrQ1cFWyYJefe16oj0PLFS5ALhFT9qA5LDxdy90SLQxkuYpt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW6QySFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=An4fk9CM9Al5AU34ogBaF0eFKK9B9a3ajGxlL35iSRfMDt91RcWNrykIiClhO9V2EsL3zsmRquZpibZmeHKI/GmLzDTFcHUOMFhY1IXpTT1Nf4bK45sLIWLpxMTm5fpZ5N7JtpvmWQq5zicagq/eVyhXL743YdAZfc91JCbzYp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1021qgck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW6QySFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9B3C4CEF4;
-	Wed, 23 Apr 2025 15:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1021qgck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E042C4CEE2;
+	Wed, 23 Apr 2025 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420754;
-	bh=37JvIAMG/SgyPfZ1WXs7EC9JJphPjQpsTgJgJ+/WhHQ=;
+	s=korg; t=1745420756;
+	bh=tEzl66fiS2bFum9+7+E1V2gtBsPISk988CsvpQWo44A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RW6QySFb7o+YafN97vCJZ/S0SZ66aCp3QRL9mk8I6Gf0977eTtWlGJJvkSS92RhDy
-	 NTuYw+KmzTMwJ/4svezO3nUxlUFMI202KeRO25mB1+fRiy2GCgJdvVORcc8R2oZx/a
-	 10u+VV9/82b41Dda2Vvm/Az0HgIWRJ3keFl2fLtM=
+	b=1021qgckIX73Ge2jFKwoDlYdKJCHFnWDiLiqHRvOpahqH/HZE0paJryxnpuzOHUwe
+	 1co50hw6uRmNynpoea5QU1H6AYVDayL95sztfzlwRX+wbWOBLCGUfqcWXZBMyjEZ9e
+	 f6e7Q9Xa07faD7ZRJOogrwnMXEYbInf6eivOrszE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 119/241] i2c: atr: Fix wrong include
-Date: Wed, 23 Apr 2025 16:43:03 +0200
-Message-ID: <20250423142625.446342462@linuxfoundation.org>
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 078/291] media: i2c: adv748x: Fix test pattern selection mask
+Date: Wed, 23 Apr 2025 16:41:07 +0200
+Message-ID: <20250423142627.556504180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 75caec0c2aa3a7ec84348d438c74cb8a2eb4de97 ]
+commit 9e38acacb9d809b97a0bdc5c76e725355a47158a upstream.
 
-The fwnode.h is not supposed to be used by the drivers as it
-has the definitions for the core parts for different device
-property provider implementations. Drop it.
+The mask to select the test-pattern in register ADV748X_SDP_FRP is
+incorrect, it's the lower 3 bits which controls the pattern. The
+GENMASK() macro is used incorrectly and the generated mask is 0x0e
+instead of 0x07.
 
-Note, that fwnode API for drivers is provided in property.h
-which is included here.
+The result is that not all test patterns are selectable, and that in
+some cases the wrong test pattern is activated. Fix this by correcting
+the GENMASK().
 
-Fixes: a076a860acae ("media: i2c: add I2C Address Translator (ATR) support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-[wsa: reworded subject]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3e89586a64df ("media: i2c: adv748x: add adv748x driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[hverkuil: fixed tiny typo in commit log: my -> by]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-atr.c | 2 +-
+ drivers/media/i2c/adv748x/adv748x.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/i2c-atr.c b/drivers/i2c/i2c-atr.c
-index 8fe9ddff8e96f..783fb8df2ebee 100644
---- a/drivers/i2c/i2c-atr.c
-+++ b/drivers/i2c/i2c-atr.c
-@@ -8,12 +8,12 @@
-  * Originally based on i2c-mux.c
-  */
+--- a/drivers/media/i2c/adv748x/adv748x.h
++++ b/drivers/media/i2c/adv748x/adv748x.h
+@@ -322,7 +322,7 @@ struct adv748x_state {
  
--#include <linux/fwnode.h>
- #include <linux/i2c-atr.h>
- #include <linux/i2c.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
+ /* Free run pattern select */
+ #define ADV748X_SDP_FRP			0x14
+-#define ADV748X_SDP_FRP_MASK		GENMASK(3, 1)
++#define ADV748X_SDP_FRP_MASK		GENMASK(2, 0)
  
--- 
-2.39.5
-
+ /* Saturation */
+ #define ADV748X_SDP_SD_SAT_U		0xe3	/* user_map_rw_reg_e3 */
 
 
