@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61FA2820A8;
-	Wed, 23 Apr 2025 15:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C87C1EEA3E;
+	Wed, 23 Apr 2025 15:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421555; cv=none; b=Bm2CEhXWYy+Z47lMxLdPQrx7Nio5S0zDGRfqqm9TES0kxKkks8+UJNFgtpjMRetEj7FNbYM2NiZyb5aUPBOGzFlotJnbFdrN10cjbHLJL5lXfAOaUKMgJV32nxh4mGnk6/exe6Tt77b1h6s2fdU/5vTP36eVEvLCGDL3EFMG8WM=
+	t=1745421558; cv=none; b=ipXGXyQe1TDjtVThTQrDMQeK7cTa4p1oXyaOeBunL9DVvyb2M+TZGv0OaccDWg4qqpeSmMtQK8ksyS4kX8WChQBskwcNgeozOKveZGyxnzDHIhQPXMV6+riLcqmkFGGF81Lm1lNU2KTaNpVdVcmoA+Zk8Q98/F41LBC3g8hAqoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421555; c=relaxed/simple;
-	bh=xm9yKs0dzFiuQJ//xtkoG6AuTojR8XRkiCamC2P9E9g=;
+	s=arc-20240116; t=1745421558; c=relaxed/simple;
+	bh=MwJuP400XVhD0kvQkd4RZeAQdb3jjXJi5ax7qcSvCt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccOXAmeKCBwwvI49vx1iMxF0/lCMrGcdk0nkxe9XJQIC2AlQ8fqzPBaon916sF3pw+0TsulLhs+WmjstqH2Fgn8780Azy7TeIVsnrYQOCAIvbZqxB/pIK/ZEchWU/4rF4HsjpUrE9zXEpp0L829EuK1nrD6c10bYmGU7xAPnHRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uH8HKfqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ufjbEr63WM2dCcsrvIk+ashRTxtygrXhkozU3eN9VotoYY54N/Aw0NkjyQNdTKE+QEpm3dxVgQGyGbivKRfKDQBXX/2DnV/nVfnGwmlYevM1yTzbsw7ZQjt0B7PdSr954j1QYjdviLVSTe9ojkHObQ+a9o4IBcmNCToedz4VZfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVv138Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uH8HKfqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE367C4CEE2;
-	Wed, 23 Apr 2025 15:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVv138Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9266AC4CEE2;
+	Wed, 23 Apr 2025 15:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421555;
-	bh=xm9yKs0dzFiuQJ//xtkoG6AuTojR8XRkiCamC2P9E9g=;
+	s=korg; t=1745421557;
+	bh=MwJuP400XVhD0kvQkd4RZeAQdb3jjXJi5ax7qcSvCt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uH8HKfqJAPMorKi4QyIDSC4qt2Vu1saCHpQvJ+FqPsI82gwSZtiKQSuEYo8MjqiVB
-	 GpyFqcg4TLnvSXkR/prdLsPe820uJ4mWIeS8x6njLIbvLy6Xtc8eihkip8XaoGRMA2
-	 BYD6xzeJHShulXip+eH2ex4LoJOTYr5rVVQmFjkU=
+	b=oVv138HnfLuHA50DYHWwW7rm1QLO6O6JzMXXYPBnga+44VtAgnVX/0beo5amv6g4T
+	 nratsB1qu+PC63/bM6RfMk7Vy5nnk4v3BDZlS0ubrpzItZaoXnTwOteH5qgBOCMsPF
+	 R0lUgjbfHGDTDFIrG4xP9/rPeXqIPL8RJEKnN2fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.12 218/223] bpf: check changes_pkt_data property for extension programs
-Date: Wed, 23 Apr 2025 16:44:50 +0200
-Message-ID: <20250423142626.045637070@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 134/291] sctp: detect and prevent references to a freed transport in sendmsg
+Date: Wed, 23 Apr 2025 16:42:03 +0200
+Message-ID: <20250423142629.871754095@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,131 +45,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Ricardo Cañuelo Navarro <rcn@igalia.com>
 
-commit 81f6d0530ba031b5f038a091619bf2ff29568852 upstream.
+commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
 
-When processing calls to global sub-programs, verifier decides whether
-to invalidate all packet pointers in current state depending on the
-changes_pkt_data property of the global sub-program.
+sctp_sendmsg() re-uses associations and transports when possible by
+doing a lookup based on the socket endpoint and the message destination
+address, and then sctp_sendmsg_to_asoc() sets the selected transport in
+all the message chunks to be sent.
 
-Because of this, an extension program replacing a global sub-program
-must be compatible with changes_pkt_data property of the sub-program
-being replaced.
+There's a possible race condition if another thread triggers the removal
+of that selected transport, for instance, by explicitly unbinding an
+address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
+been set up and before the message is sent. This can happen if the send
+buffer is full, during the period when the sender thread temporarily
+releases the socket lock in sctp_wait_for_sndbuf().
 
-This commit:
-- adds changes_pkt_data flag to struct bpf_prog_aux:
-  - this flag is set in check_cfg() for main sub-program;
-  - in jit_subprogs() for other sub-programs;
-- modifies bpf_check_attach_btf_id() to check changes_pkt_data flag;
-- moves call to check_attach_btf_id() after the call to check_cfg(),
-  because it needs changes_pkt_data flag to be set:
+This causes the access to the transport data in
+sctp_outq_select_transport(), when the association outqueue is flushed,
+to result in a use-after-free read.
 
-    bpf_check:
-      ...                             ...
-    - check_attach_btf_id             resolve_pseudo_ldimm64
-      resolve_pseudo_ldimm64   -->    bpf_prog_is_offloaded
-      bpf_prog_is_offloaded           check_cfg
-      check_cfg                     + check_attach_btf_id
-      ...                             ...
+This change avoids this scenario by having sctp_transport_free() signal
+the freeing of the transport, tagging it as "dead". In order to do this,
+the patch restores the "dead" bit in struct sctp_transport, which was
+removed in
+commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
 
-The following fields are set by check_attach_btf_id():
-- env->ops
-- prog->aux->attach_btf_trace
-- prog->aux->attach_func_name
-- prog->aux->attach_func_proto
-- prog->aux->dst_trampoline
-- prog->aux->mod
-- prog->aux->saved_dst_attach_type
-- prog->aux->saved_dst_prog_type
-- prog->expected_attach_type
+Then, in the scenario where the sender thread has released the socket
+lock in sctp_wait_for_sndbuf(), the bit is checked again after
+re-acquiring the socket lock to detect the deletion. This is done while
+holding a reference to the transport to prevent it from being freed in
+the process.
 
-Neither of these fields are used by resolve_pseudo_ldimm64() or
-bpf_prog_offload_verifier_prep() (for netronome and netdevsim
-drivers), so the reordering is safe.
+If the transport was deleted while the socket lock was relinquished,
+sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
+send.
 
-Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20241210041100.1898468-6-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ shung-hsi.yu: both jits_use_priv_stack and priv_stack_requested fields are
-missing from context because "bpf: Support private stack for bpf progs" series
-is not present.]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+The bug was found by a private syzbot instance (see the error report [1]
+and the C reproducer that triggers it [2]).
+
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
+Cc: stable@vger.kernel.org
+Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h   |    1 +
- kernel/bpf/verifier.c |   16 ++++++++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ include/net/sctp/structs.h |    3 ++-
+ net/sctp/socket.c          |   22 ++++++++++++++--------
+ net/sctp/transport.c       |    2 ++
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1499,6 +1499,7 @@ struct bpf_prog_aux {
- 	bool exception_cb;
- 	bool exception_boundary;
- 	bool is_extended; /* true if extended by freplace program */
-+	bool changes_pkt_data;
- 	u64 prog_array_member_cnt; /* counts how many times as member of prog_array */
- 	struct mutex ext_mutex; /* mutex for is_extended and prog_array_member_cnt */
- 	struct bpf_arena *arena;
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -16650,6 +16650,7 @@ walk_cfg:
- 		}
- 	}
- 	ret = 0; /* cfg looks good */
-+	env->prog->aux->changes_pkt_data = env->subprog_info[0].changes_pkt_data;
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -777,6 +777,7 @@ struct sctp_transport {
  
- err_free:
- 	kvfree(insn_state);
-@@ -20152,6 +20153,7 @@ static int jit_subprogs(struct bpf_verif
- 		func[i]->aux->num_exentries = num_exentries;
- 		func[i]->aux->tail_call_reachable = env->subprog_info[i].tail_call_reachable;
- 		func[i]->aux->exception_cb = env->subprog_info[i].is_exception_cb;
-+		func[i]->aux->changes_pkt_data = env->subprog_info[i].changes_pkt_data;
- 		if (!i)
- 			func[i]->aux->exception_boundary = env->seen_exception;
- 		func[i] = bpf_int_jit_compile(func[i]);
-@@ -22022,6 +22024,12 @@ int bpf_check_attach_target(struct bpf_v
- 					"Extension programs should be JITed\n");
- 				return -EINVAL;
- 			}
-+			if (prog->aux->changes_pkt_data &&
-+			    !aux->func[subprog]->aux->changes_pkt_data) {
-+				bpf_log(log,
-+					"Extension program changes packet data, while original does not\n");
-+				return -EINVAL;
-+			}
- 		}
- 		if (!tgt_prog->jited) {
- 			bpf_log(log, "Can attach to only JITed progs\n");
-@@ -22487,10 +22495,6 @@ int bpf_check(struct bpf_prog **prog, un
- 	if (ret < 0)
- 		goto skip_full_check;
+ 	/* Reference counting. */
+ 	refcount_t refcnt;
++	__u32	dead:1,
+ 		/* RTO-Pending : A flag used to track if one of the DATA
+ 		 *		chunks sent to this address is currently being
+ 		 *		used to compute a RTT. If this flag is 0,
+@@ -786,7 +787,7 @@ struct sctp_transport {
+ 		 *		calculation completes (i.e. the DATA chunk
+ 		 *		is SACK'd) clear this flag.
+ 		 */
+-	__u32	rto_pending:1,
++		rto_pending:1,
  
--	ret = check_attach_btf_id(env);
--	if (ret)
--		goto skip_full_check;
--
- 	ret = resolve_pseudo_ldimm64(env);
- 	if (ret < 0)
- 		goto skip_full_check;
-@@ -22505,6 +22509,10 @@ int bpf_check(struct bpf_prog **prog, un
- 	if (ret < 0)
- 		goto skip_full_check;
+ 		/*
+ 		 * hb_sent : a flag that signals that we have a pending
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -70,8 +70,9 @@
+ /* Forward declarations for internal helper functions. */
+ static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len);
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+ static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+@@ -1826,7 +1827,7 @@ static int sctp_sendmsg_to_asoc(struct s
  
-+	ret = check_attach_btf_id(env);
-+	if (ret)
-+		goto skip_full_check;
+ 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
++		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+ 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+@@ -9203,8 +9204,9 @@ void sctp_sock_rfree(struct sk_buff *skb
+ 
+ 
+ /* Helper function to wait for space in the sndbuf.  */
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len)
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	long current_timeo = *timeo_p;
+@@ -9214,7 +9216,9 @@ static int sctp_wait_for_sndbuf(struct s
+ 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
+ 		 *timeo_p, msg_len);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Increment the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	/* Wait on the association specific sndbuf space. */
+@@ -9223,7 +9227,7 @@ static int sctp_wait_for_sndbuf(struct s
+ 					  TASK_INTERRUPTIBLE);
+ 		if (asoc->base.dead)
+ 			goto do_dead;
+-		if (!*timeo_p)
++		if ((!*timeo_p) || (transport && transport->dead))
+ 			goto do_nonblock;
+ 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
+ 			goto do_error;
+@@ -9248,7 +9252,9 @@ static int sctp_wait_for_sndbuf(struct s
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	/* Release the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+--- a/net/sctp/transport.c
++++ b/net/sctp/transport.c
+@@ -117,6 +117,8 @@ fail:
+  */
+ void sctp_transport_free(struct sctp_transport *transport)
+ {
++	transport->dead = 1;
 +
- 	ret = mark_fastcall_patterns(env);
- 	if (ret < 0)
- 		goto skip_full_check;
+ 	/* Try to delete the heartbeat timer.  */
+ 	if (del_timer(&transport->hb_timer))
+ 		sctp_transport_put(transport);
 
 
