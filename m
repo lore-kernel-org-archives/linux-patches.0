@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F5E2820DC;
-	Wed, 23 Apr 2025 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D128152D;
+	Wed, 23 Apr 2025 15:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422172; cv=none; b=TXogrDsbwP3yWL3GXEsHLbsVcaWrNgUhDh7M3t5K77j53z5MW7iExiowLxR9/96lsgyBkwhOmilWC+53x4AzM0nVNumPaLMM4c73WGofm+JCal8H7rSwZOORefh6PIdP3qdDWgzkEyIp1Tjse+zrNEycrxGgZNLceJzB4FiTmu0=
+	t=1745422175; cv=none; b=Ptb5mJIejI8bzxkMoJpGv8cRyPCOEKPbzeJyvZUhJXySDio9NO0Xqqg0IyrMxS2XGENxvXaIIwhBsLPMXgMSAGz0vZ/ZCtO0M+y716V+19ZOpNHh1xp/rSFW1WttxT+Bs91d/jAMfnMwAD1QplGTJPrZNG5tgRr6mEeKtt5Kv3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422172; c=relaxed/simple;
-	bh=Rwr1+ya7mlQxTaZ2QK62OYCWvyzUCCY2yFFbGVN0Ir4=;
+	s=arc-20240116; t=1745422175; c=relaxed/simple;
+	bh=KzS8Suj0ApsMWf6eQZ+dD7NmKNotmYkubPF4grzKEus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DP+IQ8o4WGrqZzpCFHR35dTzMnVh0LgNLcCvyv/WRXtn+gKUuNXTG0VBUsp0zVd7goC1HHxuh/0fzQikUya+ykXwdWeDEwk2Asb7dXWoqVT5HcwZf8SZ18meWgKgzafP57U+FA2SENjrm2z9/WA4bTPXhKe6wOGYFSd/ls/XA3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNWj3Ldb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DE9xt65diCb4se4IRJWvjKRjTAVBwB9wiLPTtuwDoB6hmcZb8NFVwJCX4iayvIK2sT79BNiJhacbVA6T0V1UZKnYd0IcunqDq/2JFDXBW4PbG6yNNZsxTMHy89n3NQg0ixiC+ZFOrDy/gdJzdLovo21jm4ZHUMVXGOPvR5fvWKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZrKLBCa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNWj3Ldb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6785BC4CEE2;
-	Wed, 23 Apr 2025 15:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZrKLBCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F8DC4CEE2;
+	Wed, 23 Apr 2025 15:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422172;
-	bh=Rwr1+ya7mlQxTaZ2QK62OYCWvyzUCCY2yFFbGVN0Ir4=;
+	s=korg; t=1745422175;
+	bh=KzS8Suj0ApsMWf6eQZ+dD7NmKNotmYkubPF4grzKEus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNWj3LdbqY0ZTaj83NkmVm5Onv2OYWfOi8BqCMMprFsbJQ9eCsmcLMyMp2lauHdk/
-	 Bolt9PrmLNg7SkG4EamwBB4p+iTZ3FYXdIz0rURhQMt6QvW4qIyibDIH9c0QIlafK/
-	 wTP7jvDV82+WsBwNSpZqWyYJtIusSF2slTXFjB6M=
+	b=xZrKLBCaR/hlRPp0jigj4yGW4e9PoMkRP+CvycT+4CcbrqiHEhOZtrwbsWTxczZ4M
+	 WoXtRsJvvazfIqLJO2RhINJsRqz4NJoRIltithsRvCrxtaL+09RbDWC179pNd5klte
+	 1jDBX3OiTU17taS64Gb6JxGykHhD+tcd3jLxQFB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 291/393] net: ti: icss-iep: Add phase offset configuration for perout signal
-Date: Wed, 23 Apr 2025 16:43:07 +0200
-Message-ID: <20250423142655.361510236@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 250/291] KVM: arm64: Remove host FPSIMD saving for non-protected KVM
+Date: Wed, 23 Apr 2025 16:43:59 +0200
+Message-ID: <20250423142634.642902378@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,102 +51,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 220cb1be647a7ca4e60241405c66f8f612c9b046 ]
+[ Upstream commit 8eca7f6d5100b6997df4f532090bc3f7e0203bef ]
 
-icss_iep_perout_enable_hw() is a common function for generating
-both pps and perout signals. When enabling pps, the application needs
-to only pass enable/disable argument, whereas for perout it supports
-different flags to configure the signal.
+Now that the host eagerly saves its own FPSIMD/SVE/SME state,
+non-protected KVM never needs to save the host FPSIMD/SVE/SME state,
+and the code to do this is never used. Protected KVM still needs to
+save/restore the host FPSIMD/SVE state to avoid leaking guest state to
+the host (and to avoid revealing to the host whether the guest used
+FPSIMD/SVE/SME), and that code needs to be retained.
 
-In case the app passes a valid phase offset value, the signal should
-start toggling after that phase offset, else start immediately or
-as soon as possible. ICSS_IEP_SYNC_START_REG register take number of
-clock cycles to wait before starting the signal after activation time.
-Set appropriate value to this register to support phase offset.
+Remove the unused code and data structures.
 
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20250304105753.1552159-3-m-malladi@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 7349c9e99793 ("net: ti: icss-iep: Fix possible NULL pointer dereference for perout request")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To avoid the need for a stub copy of kvm_hyp_save_fpsimd_host() in the
+VHE hyp code, the nVHE/hVHE version is moved into the shared switch
+header, where it is only invoked when KVM is in protected mode.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Tested-by: Mark Brown <broonie@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Fuad Tabba <tabba@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20250210195226.1215254-3-mark.rutland@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/kvm_host.h       |    1 -
+ arch/arm64/kvm/fpsimd.c                 |    2 --
+ arch/arm64/kvm/hyp/include/hyp/switch.h |    4 ----
+ 3 files changed, 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index 923ac58c9de5b..6006276ecce6f 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -477,6 +477,7 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 				     struct ptp_perout_request *req, int on)
- {
- 	struct timespec64 ts;
-+	u64 ns_start;
- 	u64 ns_width;
- 	int ret;
- 	u64 cmp;
-@@ -486,6 +487,14 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 	ts.tv_nsec = req->on.nsec;
- 	ns_width = timespec64_to_ns(&ts);
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -380,7 +380,6 @@ struct kvm_vcpu_arch {
+ 	struct kvm_guest_debug_arch vcpu_debug_state;
+ 	struct kvm_guest_debug_arch external_debug_state;
  
-+	if (req->flags & PTP_PEROUT_PHASE) {
-+		ts.tv_sec = req->phase.sec;
-+		ts.tv_nsec = req->phase.nsec;
-+		ns_start = timespec64_to_ns(&ts);
-+	} else {
-+		ns_start = 0;
-+	}
-+
- 	if (iep->ops && iep->ops->perout_enable) {
- 		ret = iep->ops->perout_enable(iep->clockops_data, req, on, &cmp);
- 		if (ret)
-@@ -500,7 +509,8 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
- 				     div_u64(ns_width, iep->def_inc));
- 			regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
--			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG, 0);
-+			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+				     div_u64(ns_start, iep->def_inc));
- 			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
- 			/* Enable CMP 1 */
- 			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-@@ -527,6 +537,8 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
+-	struct user_fpsimd_state *host_fpsimd_state;	/* hyp VA */
+ 	struct task_struct *parent_task;
  
- 			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
- 				     div_u64(ns_width, iep->def_inc));
-+			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+				     div_u64(ns_start, iep->def_inc));
- 			/* Enable Sync in single shot mode  */
- 			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
- 				     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
-@@ -557,7 +569,8 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
- 	int ret = 0;
+ 	struct {
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -49,8 +49,6 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_
+ 	if (ret)
+ 		return ret;
  
- 	/* Reject requests with unsupported flags */
--	if (req->flags & ~PTP_PEROUT_DUTY_CYCLE)
-+	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
-+			  PTP_PEROUT_PHASE))
- 		return -EOPNOTSUPP;
+-	vcpu->arch.host_fpsimd_state = kern_hyp_va(fpsimd);
+-
+ 	/*
+ 	 * We need to keep current's task_struct pinned until its data has been
+ 	 * unshared with the hypervisor to make sure it is not re-used by the
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -207,10 +207,6 @@ static bool kvm_hyp_handle_fpsimd(struct
+ 	}
+ 	isb();
  
- 	mutex_lock(&iep->ptp_clk_mutex);
-@@ -607,6 +620,7 @@ static int icss_iep_pps_enable(struct icss_iep *iep, int on)
- 	if (on) {
- 		ns = icss_iep_gettime(iep, NULL);
- 		ts = ns_to_timespec64(ns);
-+		rq.perout.flags = 0;
- 		rq.perout.period.sec = 1;
- 		rq.perout.period.nsec = 0;
- 		rq.perout.start.sec = ts.tv_sec + 2;
--- 
-2.39.5
-
+-	/* Write out the host state if it's in the registers */
+-	if (vcpu->arch.fp_state == FP_STATE_HOST_OWNED)
+-		__fpsimd_save_state(vcpu->arch.host_fpsimd_state);
+-
+ 	/* Restore the guest state */
+ 	if (sve_guest)
+ 		__hyp_sve_restore_guest(vcpu);
 
 
