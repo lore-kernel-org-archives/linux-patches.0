@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2923729290B;
-	Wed, 23 Apr 2025 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A4E292924;
+	Wed, 23 Apr 2025 15:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421145; cv=none; b=vETZlbyPUflwnAhnZl4ejtRhc7733T+UQsCWsi03VTm0xqGyC3TIjB5HDJuxLFjDcADNLpnbvU5YTfzJspAdFfzEydP+rJlOCndrnKIq0oIh3YZ9B8I6ajOVXeCpXN2lQpwfCbAmR4p4Pslnd/yBj45RhaAl/tER65gBVQ2WlCw=
+	t=1745421147; cv=none; b=C96yYZ0yLanNe2w1aqx0KDcAZnUXKRVNbaUrDdKCrfCQysE546EUxQIjGvVV4aj/WNY0g3L8ud8/ScOSZk+RYk9+x9M1V1N0lXazSEP5HAO1WTgLv4oAMdOcRwvfI3qbUWzUP8rtczaUjFmddtw/BoGbP+qRc4EyeMEuKeReq+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421145; c=relaxed/simple;
-	bh=OBwdQ1EUPH2YHPWLxYcgA9N3mY4TJv+6XmpRG9gDJgY=;
+	s=arc-20240116; t=1745421147; c=relaxed/simple;
+	bh=12c78STudlL1M+UovmdfpkqIW1DHg5kEpDUABzLXDrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMC5vITD6mxEURvy3P6yhuXAwGc0nT8OC3wbfk9lJMnROjyAjuKcLiJUJF3684e8DozTpW4yXYnNgg51ZdWemAuMugGNB/70yb2Ht9JCWFW2eVx9ees6OR4ozJjIWj+fNAStsHOX4CXRW0usudIr85aOW8ByditQ2dOPNwlZ1II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6JdPm0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NhYLH2DpGeTR9gvpSec900biYzVzPR7mXI40xZeExEeKh4r+4gOG6bnJZ1xDRjiTZWpWCTJ7TOV4rViGt4vbGwuCBnLZCrdleTLmNZcGG65MtpOshKkjUIK+wmss5i+tNA+TkuI+FH8SodphFx/HLIZo7wEuhqiDeKUIIoV8TtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSVIJ/bv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6JdPm0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474B2C4CEE2;
-	Wed, 23 Apr 2025 15:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSVIJ/bv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2F3C4CEE2;
+	Wed, 23 Apr 2025 15:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421144;
-	bh=OBwdQ1EUPH2YHPWLxYcgA9N3mY4TJv+6XmpRG9gDJgY=;
+	s=korg; t=1745421147;
+	bh=12c78STudlL1M+UovmdfpkqIW1DHg5kEpDUABzLXDrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6JdPm0I/0NGqqzVzt21bEHAexAtOJ3x3QoK2ioMBgUfrBX91nWe3Qapu6MtZckte
-	 opNG4OoVcwRbtC+j+WPEQLLPdIthHqSvFIHBNknSyXwfWm3MiFFzOfsoiSiNOpZg30
-	 +6Xwz5oqsvrWhv/mtTuxxXlGcGo6YArbaiwA6pd0=
+	b=dSVIJ/bvaAjb6Qnl1R8qsisHhDexOY2W1wF8U8B6JRq9z/vPE536V8oY4JtluefJs
+	 MzBtFfi+zZ90KlI0CtzXKOaLyNUZCdYf0UfGj6NVh8gPR7HRkJaj8UluVdpFHbxu9X
+	 LixGF3fOovNetlHN0CzhrOGLizrkj9w7Dl5E2lic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.12 195/223] kbuild: Add -fno-builtin-wcslen
-Date: Wed, 23 Apr 2025 16:44:27 +0200
-Message-ID: <20250423142625.116718009@linuxfoundation.org>
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Troy Hanson <quic_thanson@quicinc.com>
+Subject: [PATCH 6.1 112/291] bus: mhi: host: Fix race between unprepare and queue_buf
+Date: Wed, 23 Apr 2025 16:41:41 +0200
+Message-ID: <20250423142628.949897435@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,63 +50,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jeff Hugo <quic_jhugo@quicinc.com>
 
-commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
+commit 0686a818d77a431fc3ba2fab4b46bbb04e8c9380 upstream.
 
-A recent optimization change in LLVM [1] aims to transform certain loop
-idioms into calls to strlen() or wcslen(). This change transforms the
-first while loop in UniStrcat() into a call to wcslen(), breaking the
-build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
+A client driver may use mhi_unprepare_from_transfer() to quiesce
+incoming data during the client driver's tear down. The client driver
+might also be processing data at the same time, resulting in a call to
+mhi_queue_buf() which will invoke mhi_gen_tre(). If mhi_gen_tre() runs
+after mhi_unprepare_from_transfer() has torn down the channel, a panic
+will occur due to an invalid dereference leading to a page fault.
 
-  ld.lld: error: undefined symbol: wcslen
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+This occurs because mhi_gen_tre() does not verify the channel state
+after locking it. Fix this by having mhi_gen_tre() confirm the channel
+state is valid, or return error to avoid accessing deinitialized data.
 
-Disable this optimization with '-fno-builtin-wcslen', which prevents the
-compiler from assuming that wcslen() is available in the kernel's C
-library.
-
-[ More to the point - it's not that we couldn't implement wcslen(), it's
-  that this isn't an optimization at all in the context of the kernel.
-
-  Replacing a simple inlined loop with a function call to the same loop
-  is just stupid and pointless if you don't have long strings and fancy
-  libraries with vectorization support etc.
-
-  For the regular 'strlen()' cases, we want the compiler to do this in
-  order to handle the trivial case of constant strings. And we do have
-  optimized versions of 'strlen()' on some architectures. But for
-  wcslen? Just no.    - Linus ]
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nathan: Resolve small conflict in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org # 6.8
+Fixes: b89b6a863dd5 ("bus: mhi: host: Add spinlock to protect WP access when queueing TREs")
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
+Link: https://lore.kernel.org/r/20250306172913.856982-1-jeff.hugo@oss.qualcomm.com
+[mani: added stable tag]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bus/mhi/host/main.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1015,6 +1015,9 @@ endif
- # Ensure compilers do not transform certain loops into calls to wcslen()
- KBUILD_CFLAGS += -fno-builtin-wcslen
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -1201,11 +1201,16 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	struct mhi_ring_element *mhi_tre;
+ 	struct mhi_buf_info *buf_info;
+ 	int eot, eob, chain, bei;
+-	int ret;
++	int ret = 0;
  
-+# Ensure compilers do not transform certain loops into calls to wcslen()
-+KBUILD_CFLAGS += -fno-builtin-wcslen
+ 	/* Protect accesses for reading and incrementing WP */
+ 	write_lock_bh(&mhi_chan->lock);
+ 
++	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
++		ret = -ENODEV;
++		goto out;
++	}
 +
- # change __FILE__ to the relative path from the srctree
- KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
+ 	buf_ring = &mhi_chan->buf_ring;
+ 	tre_ring = &mhi_chan->tre_ring;
  
+@@ -1223,10 +1228,8 @@ int mhi_gen_tre(struct mhi_controller *m
+ 
+ 	if (!info->pre_mapped) {
+ 		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
+-		if (ret) {
+-			write_unlock_bh(&mhi_chan->lock);
+-			return ret;
+-		}
++		if (ret)
++			goto out;
+ 	}
+ 
+ 	eob = !!(flags & MHI_EOB);
+@@ -1243,9 +1246,10 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	mhi_add_ring_element(mhi_cntrl, tre_ring);
+ 	mhi_add_ring_element(mhi_cntrl, buf_ring);
+ 
++out:
+ 	write_unlock_bh(&mhi_chan->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
 
 
