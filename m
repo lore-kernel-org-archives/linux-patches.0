@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0D917B421;
-	Wed, 23 Apr 2025 15:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410C2820DE;
+	Wed, 23 Apr 2025 15:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421168; cv=none; b=Vd2ZWbw0dgkcfFH9HZKkeG3ZQ4x7lIOflKuSVttqQB7O524gfEcfC1U9LteSSZCpb1FbXWnS6BAU/crBnqLi+pbYdyvw5gR6phOyGun4ARJAhlx+2+fI23X8lta8+zn+o94O4VO6GEkm3dCf5WKnd9KN1nMYyUSROJGiNIUFmWw=
+	t=1745421171; cv=none; b=ZaUpFLsMCvgpHMc+x+3/aFm4q+jF3kOYGhuar1T6QupNRQZVSr8ucpnmTisNIsA2j+puHa4MfYrVQTDc1GTsDIwFnAplFNhZeBOAAE3XbEDAqfkA4H368Rf/HG4KRolpt7UQvdEWYqV13SFetVfgCrOmJ46ilfjeeY5HfC/hLkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421168; c=relaxed/simple;
-	bh=FfttEDL5PChT2fTA0/9bvwkdE7Fg+WsxRT/8z+Cai8M=;
+	s=arc-20240116; t=1745421171; c=relaxed/simple;
+	bh=s451sJB50M6FmZV61fBL8Whsy95Sc2aDN7sbRGLl1Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DAu4l7a6f24/WDm7KUMsGtsBZY84E3/wzedT2/LTEa8yIjIClYMi8WNfI58I/8YpsbdKc6Uk/fzDaezxtwo/z22mf7Dxv1Boml85YJLKh8SAA+8xzo4gc3rpjpsuv4wIBTlqDRL1LUXePfoIUqofknr1A/5nTsp/uVqtQ0dceZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOLvKsY/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkNTBXyl3rnIIDfmp7lbWKTeWcbqRnROpJVlUQap7ALnYFfSmSNm2bM2XiqYn7miO3wvbYpB8Pa47kCR4FvMkmhQwJrk8h+9PVb4ryHk9/YZgV32pnvO4EEmurnoEyjSDtgVMFa5S6iAUEWKO7cywwfJSxdfy0ajlES49Ni5PJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtEoVysY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOLvKsY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35CAC4CEE2;
-	Wed, 23 Apr 2025 15:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtEoVysY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AC0C4CEE2;
+	Wed, 23 Apr 2025 15:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421168;
-	bh=FfttEDL5PChT2fTA0/9bvwkdE7Fg+WsxRT/8z+Cai8M=;
+	s=korg; t=1745421170;
+	bh=s451sJB50M6FmZV61fBL8Whsy95Sc2aDN7sbRGLl1Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOLvKsY/NqYrbMyMvxxIurfuEeqglPicX1U80Rj4kkGHKdpKCpXp/A3ZCNs9kNf5H
-	 9TK8ej+GOzNcDXizkGlYUkTqsfV+AJIk1J040OSnjLlJPxK5vOCfEqS5zEx7JaXQ9y
-	 a03khhsznf5MgD7EcSXnqphWDHpehgjh2p8zwovM=
+	b=FtEoVysYApVdDDek6TRQWW2AURkvsD8jjRQibN6JsOdHD+tEX3tQzES4WgPWuO7Nb
+	 A8uIcxnr57g/b7krgsMFywC3cF3lHkAUP1bfVCmEzs/a6bM+DtJhA/6z2y+6T67no7
+	 PrrSofS8dvcaJubcH3RrjMR8FidS9y1Hiqd15orc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Meng <cong.meng@oracle.com>,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6.1 114/291] vdpa/mlx5: Fix oversized null mkey longer than 32bit
-Date: Wed, 23 Apr 2025 16:41:43 +0200
-Message-ID: <20250423142629.032854602@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Eric Auger <eric.auger@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.12 186/223] arm64/sysreg: Update register fields for ID_AA64MMFR0_EL1
+Date: Wed, 23 Apr 2025 16:44:18 +0200
+Message-ID: <20250423142624.750771111@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +49,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit a6097e0a54a5c24f8d577ffecbc35289ae281c2e upstream.
+commit cc15f548cc77574bcd68425ae01a796659bd3705 upstream.
 
-create_user_mr() has correct code to count the number of null keys
-used to fill in a hole for the memory map. However, fill_indir()
-does not follow the same to cap the range up to the 1GB limit
-correspondingly. Fill in more null keys for the gaps in between,
-so that null keys are correctly populated.
+This updates ID_AA64MMFR0_EL1 register fields as per the definitions based
+on DDI0601 2024-12.
 
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
-Cc: stable@vger.kernel.org
-Reported-by: Cong Meng <cong.meng@oracle.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Message-Id: <20250220193732.521462-2-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250203050828.1049370-2-anshuman.khandual@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/core/mr.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/tools/sysreg |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -166,9 +166,12 @@ again:
- 			klm->bcount = cpu_to_be32(klm_bcount(dmr->end - dmr->start));
- 			preve = dmr->end;
- 		} else {
-+			u64 bcount = min_t(u64, dmr->start - preve, MAX_KLM_SIZE);
-+
- 			klm->key = cpu_to_be32(mvdev->res.null_mkey);
--			klm->bcount = cpu_to_be32(klm_bcount(dmr->start - preve));
--			preve = dmr->start;
-+			klm->bcount = cpu_to_be32(klm_bcount(bcount));
-+			preve += bcount;
-+
- 			goto again;
- 		}
- 	}
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -1556,6 +1556,7 @@ EndEnum
+ UnsignedEnum	59:56	FGT
+ 	0b0000	NI
+ 	0b0001	IMP
++	0b0010	FGT2
+ EndEnum
+ Res0	55:48
+ UnsignedEnum	47:44	EXS
+@@ -1617,6 +1618,7 @@ Enum	3:0	PARANGE
+ 	0b0100	44
+ 	0b0101	48
+ 	0b0110	52
++	0b0111	56
+ EndEnum
+ EndSysreg
+ 
 
 
