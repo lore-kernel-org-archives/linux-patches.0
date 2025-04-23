@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EF9293B57;
-	Wed, 23 Apr 2025 15:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01331293B57;
+	Wed, 23 Apr 2025 15:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422246; cv=none; b=k5kkNJ0/eJOAqB0QsFmOMeJImo2oC8spUUBv3+2RnrIs+i2P3eL8rToytc1sTUrTvnKmDDX54FeZi1bAGCOL0Wa1fm3XZHbSMF8R68IaHUUNtUwQghvvpCXLFcQo3mMQUtBBoFe6IWCT4alsTN+Sib2OvlXMFpP9dBrtNCchyNM=
+	t=1745422249; cv=none; b=TonN1+TPPW53zDHeH85lZzTI2tezzkxC7sK9LPmxMgYVNYwWYxyFQL2esblGD4wLaLg8GvyCzXZAHXSxY9nU5uKP9ubtEPpM/3N4OnGBzXaWTKXa4i/v4oCCVHs7Xk2e18dzjFQpLFONyWnM2kp4VLp9XAQNUlqe/So1U3sOjoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422246; c=relaxed/simple;
-	bh=rbOUXNxgQDtxilzDbJ+hyvxCsXb14AhOUtm6+CVBqTI=;
+	s=arc-20240116; t=1745422249; c=relaxed/simple;
+	bh=sONtULOyiWBZU0jH+oLwPIfhVHl2WFoUEMZRZSDGfas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGYn92UPSmU0lQBrhytVxnqcNyhfANAh/AdDnQG3kEpoWF6muQtupClw6LV1W4od/tSKvCpqz/J7fdJtHsmFhdabZ4KH/HUxge9X/afVLEvwO1yoPcmiDItyXMsWUfpmez6rwrUb/enx+AOApD1kEzQKfEIphpEnMBSYtLLPnmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsgcBjBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8L+MX+casyo2iDjSJKO9XosLg8HwWj5QkDqSVVMcTggNKJY3gCsxYz1AVsUyiMU0h12eczmmvH4CfR8kv37rSwvl++/VPBejxY6ntJprHiDZxCdC5mIlLbnrzMgIIr/iIoFa0XhP+kIlq7KG3+bp2JRs/6UcZFrfXk/GEh9tS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndCox2BJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsgcBjBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3792C4CEE3;
-	Wed, 23 Apr 2025 15:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndCox2BJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888A8C4CEE2;
+	Wed, 23 Apr 2025 15:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422246;
-	bh=rbOUXNxgQDtxilzDbJ+hyvxCsXb14AhOUtm6+CVBqTI=;
+	s=korg; t=1745422248;
+	bh=sONtULOyiWBZU0jH+oLwPIfhVHl2WFoUEMZRZSDGfas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsgcBjBhcbhghqPOS4DsmrPJGwjs0bt9r0q5On6YzC3q0TrsgIAHaWgIdbC2IX2Gj
-	 dbe41RK9vjhQSfxiBHAk898rVmEHxmA7vWZscxvSlnjtBGLINATuh2qw0BBueAEUsr
-	 1OOtRzrcft8xIKUIeg60eoD5o93rlD/LGlGX95sM=
+	b=ndCox2BJrliEB1eNGdgEek4kxv0baouWf3kqrCYjN2i7wrdF5fy5Xdr47f9lcG8uy
+	 0VHNt4ctGrUOWm9Ya7HhC0+Iuah5li2+nfPNmmT0xn4LCto70c1Opx64HsCOHqZFVw
+	 DEZthLxcofcU4h4HwmW6cczKqPK69aus+0lKgSok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 302/393] ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
-Date: Wed, 23 Apr 2025 16:43:18 +0200
-Message-ID: <20250423142655.810677709@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 307/393] nfsd: decrease sc_count directly if fail to queue dl_recall
+Date: Wed, 23 Apr 2025 16:43:23 +0200
+Message-ID: <20250423142656.013246204@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -51,118 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-commit d7bff1415e85b889dc8908be6aedba8807ae5e37 upstream.
+[ Upstream commit a1d14d931bf700c1025db8c46d6731aa5cf440f9 ]
 
-Currently the VI feedback rate is set to fixed 8K, fix this by getting
-the correct rate from params_rate.
+A deadlock warning occurred when invoking nfs4_put_stid following a failed
+dl_recall queue operation:
+            T1                            T2
+                                nfs4_laundromat
+                                 nfs4_get_client_reaplist
+                                  nfs4_anylock_blockers
+__break_lease
+ spin_lock // ctx->flc_lock
+                                   spin_lock // clp->cl_lock
+                                   nfs4_lockowner_has_blockers
+                                    locks_owner_has_blockers
+                                     spin_lock // flctx->flc_lock
+ nfsd_break_deleg_cb
+  nfsd_break_one_deleg
+   nfs4_put_stid
+    refcount_dec_and_lock
+     spin_lock // clp->cl_lock
 
-Without this patch incorrect rate will be set on the VI feedback
-recording resulting in rate miss match and audio artifacts.
+When a file is opened, an nfs4_delegation is allocated with sc_count
+initialized to 1, and the file_lease holds a reference to the delegation.
+The file_lease is then associated with the file through kernel_setlease.
 
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250403160209.21613-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The disassociation is performed in nfsd4_delegreturn via the following
+call chain:
+nfsd4_delegreturn --> destroy_delegation --> destroy_unhashed_deleg -->
+nfs4_unlock_deleg_lease --> kernel_setlease --> generic_delete_lease
+The corresponding sc_count reference will be released after this
+disassociation.
+
+Since nfsd_break_one_deleg executes while holding the flc_lock, the
+disassociation process becomes blocked when attempting to acquire flc_lock
+in generic_delete_lease. This means:
+1) sc_count in nfsd_break_one_deleg will not be decremented to 0;
+2) The nfs4_put_stid called by nfsd_break_one_deleg will not attempt to
+acquire cl_lock;
+3) Consequently, no deadlock condition is created.
+
+Given that sc_count in nfsd_break_one_deleg remains non-zero, we can
+safely perform refcount_dec on sc_count directly. This approach
+effectively avoids triggering deadlock warnings.
+
+Fixes: 230ca758453c ("nfsd: put dl_stid if fail to queue dl_recall")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |   39 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -66,6 +66,10 @@
- #define CDC_WSA_TX_SPKR_PROT_CLK_DISABLE	0
- #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK	GENMASK(3, 0)
- #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K	0
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K	1
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K	2
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K	3
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K	4
- #define CDC_WSA_TX0_SPKR_PROT_PATH_CFG0		(0x0248)
- #define CDC_WSA_TX1_SPKR_PROT_PATH_CTL		(0x0264)
- #define CDC_WSA_TX1_SPKR_PROT_PATH_CFG0		(0x0268)
-@@ -347,6 +351,7 @@ struct wsa_macro {
- 	int ear_spkr_gain;
- 	int spkr_gain_offset;
- 	int spkr_mode;
-+	u32 pcm_rate_vi;
- 	int is_softclip_on[WSA_MACRO_SOFTCLIP_MAX];
- 	int softclip_clk_users[WSA_MACRO_SOFTCLIP_MAX];
- 	struct regmap *regmap;
-@@ -974,6 +979,7 @@ static int wsa_macro_hw_params(struct sn
- 			       struct snd_soc_dai *dai)
- {
- 	struct snd_soc_component *component = dai->component;
-+	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 	int ret;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 140784446ad22..e2875706e6bfd 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4938,7 +4938,7 @@ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ 	queued = nfsd4_run_cb(&dp->dl_recall);
+ 	WARN_ON_ONCE(!queued);
+ 	if (!queued)
+-		nfs4_put_stid(&dp->dl_stid);
++		refcount_dec(&dp->dl_stid.sc_count);
+ }
  
- 	switch (substream->stream) {
-@@ -986,6 +992,11 @@ static int wsa_macro_hw_params(struct sn
- 			return ret;
- 		}
- 		break;
-+	case SNDRV_PCM_STREAM_CAPTURE:
-+		if (dai->id == WSA_MACRO_AIF_VI)
-+			wsa->pcm_rate_vi = params_rate(params);
-+
-+		break;
- 	default:
- 		break;
- 	}
-@@ -1159,6 +1170,28 @@ static int wsa_macro_enable_vi_feedback(
- 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 	u32 tx_reg0, tx_reg1;
-+	u32 rate_val;
-+
-+	switch (wsa->pcm_rate_vi) {
-+	case 8000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-+		break;
-+	case 16000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K;
-+		break;
-+	case 24000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K;
-+		break;
-+	case 32000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K;
-+		break;
-+	case 48000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K;
-+		break;
-+	default:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-+		break;
-+	}
- 
- 	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
- 		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
-@@ -1170,7 +1203,7 @@ static int wsa_macro_enable_vi_feedback(
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_POST_PMU:
--			/* Enable V&I sensing */
-+		/* Enable V&I sensing */
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
- 					      CDC_WSA_TX_SPKR_PROT_RESET);
-@@ -1179,10 +1212,10 @@ static int wsa_macro_enable_vi_feedback(
- 					      CDC_WSA_TX_SPKR_PROT_RESET);
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-+					      rate_val);
- 		snd_soc_component_update_bits(component, tx_reg1,
- 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-+					      rate_val);
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
- 					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+ /* Called from break_lease() with flc_lock held. */
+-- 
+2.39.5
+
 
 
