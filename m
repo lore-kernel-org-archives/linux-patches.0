@@ -1,40 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DC128A1CC;
-	Wed, 23 Apr 2025 15:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD2F27FD42;
+	Wed, 23 Apr 2025 15:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421703; cv=none; b=cstykHp5GHNqKfY7aQfzhyNqFU37uLQUDanRQ+pT0fpbiXgPs9KbqJ7F3GLAzcakaMTa0uZzQOkKG5DC9io1Kb3mFXXz7kMllu8s4QcbjFfYNxB0VgEFSa6X5tOlmYvElPoOCC/Tb8emG7+2hrEooh7Z7CtF/7IJVMXCE+CM8HE=
+	t=1745421706; cv=none; b=q+7zjYIfQCgJE95pbeZM6s0phRl71Y+lV11MOU3OGdN5fvgOal9bPKwglgtMOGwNrxBOYa95c4dpsNKlBIS7EIw57DjKEoxCd/UW4ZlnWXQpNe9ixCczaQDsUFrDm5+CF3z5v20DsE4a2C3GhKeZvf+YwYBjqq1ZsEuN/VD7JiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421703; c=relaxed/simple;
-	bh=SuWKjMm3l1djzOdiAa/X7I9xYSRIpEysQADRSTkDWtQ=;
+	s=arc-20240116; t=1745421706; c=relaxed/simple;
+	bh=v5IvUSzEGUQ/wZAj6+QxV3fRzzjyRTSU1yyjUs2nFEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlPWa1GoAtTlq8TxNZZlZayaqFvAEeuDowx3NtZBIhT5q7Oyoba+90syGrBcveLjaQ4NIWKkvK9bIY6Cqn42vz+QkV8Tt3j8eZ7PDYaXnxTKuMZ2if3Al6BSwzblUTNICSEQRGA7g4koPO0rvcTz5/UYX5sq4v5FYX26sVCE9uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rme1Mnjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViCwj7d/rG/AwgGolqBim15U4TSkApI0muexnsfoZeC8X2k6wALcDm9ZC0AAjeQrUSvm9GzC1il2XFNEVZwHY9E/YrH/G0g3SRVe3gOKg4HzNRmEPRB/YCOUICArjYf+NfDAQwosQC5OapxeP6PQK+7tXrnvN0HdFRv/rTN+3vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwi7xanq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rme1Mnjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84958C4CEE2;
-	Wed, 23 Apr 2025 15:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwi7xanq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EA1C4CEE2;
+	Wed, 23 Apr 2025 15:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421702;
-	bh=SuWKjMm3l1djzOdiAa/X7I9xYSRIpEysQADRSTkDWtQ=;
+	s=korg; t=1745421705;
+	bh=v5IvUSzEGUQ/wZAj6+QxV3fRzzjyRTSU1yyjUs2nFEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rme1MnjjUkrbPWVkGPfSWr1FP+jCWwfzvqetKpFapVKw+2nBEEc435g1lFiSNUkNn
-	 rQhE38DU3xFaEoTQZIx3o/R+03mgX51CsjAoXkgq65+jr0O8yiy8j+wtcsrmq+AfF5
-	 s0lq0RCB0aS7Lt276HjM52lpIxamInZw4LEOn5Zk=
+	b=bwi7xanqaxx1l9DEPX5XrTtRrZcuCV8Gl09je+mcUmvnbZj3k6UCCHlyQkE6/mwZF
+	 rE1pqiQkWPQ0RMPhU+Yudqa6GE0abnO3OdS1zSKtyHXK18REBs4NCDOJqoN3Oh4PWj
+	 PTZBB29D4bPgLDxBLGyQ8Zx2twp8RIEiZD7za7ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.1 151/291] of/irq: Fix device node refcount leakage in API of_irq_parse_one()
-Date: Wed, 23 Apr 2025 16:42:20 +0200
-Message-ID: <20250423142630.567401186@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 193/393] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
+Date: Wed, 23 Apr 2025 16:41:29 +0200
+Message-ID: <20250423142651.362162877@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,130 +58,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 0cb58d6c7b558a69957fabe159bfb184196e1e8d upstream.
+commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
 
-of_irq_parse_one(@int_gen_dev, i, ...) will leak refcount of @i_th_phandle
+The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
+reclaim for struct pglist_data using a single bit.
 
-int_gen_dev {
-    ...
-    interrupts-extended = ..., <&i_th_phandle ...>, ...;
-    ...
-};
+It is "locked" with a test_and_set_bit (similarly to a try lock) which
+provides full ordering with respect to loads and stores done within
+__node_reclaim().
 
-Refcount of @i_th_phandle is increased by of_parse_phandle_with_args()
-but is not decreased by API of_irq_parse_one() before return, so causes
-refcount leakage.
+It is "unlocked" with clear_bit(), which does not provide any ordering
+with respect to loads and stores done before clearing the bit.
 
-Rework the refcounting to use __free() cleanup and simplify the code to
-have a single call to of_irq_parse_raw().
+The lack of clear_bit() memory ordering with respect to stores within
+__node_reclaim() can cause a subsequent CPU to fail to observe stores from
+a prior node reclaim.  This is not an issue in practice on TSO (e.g.
+x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
 
-Also add comments about refcount of node @out_irq->np got by the API.
+Fix this by using clear_bit_unlock rather than clear_bit to clear
+PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
 
-Fixes: 79d9701559a9 ("of/irq: create interrupts-extended property")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-2-93e3a2659aa7@quicinc.com
-[robh: Use __free() to do puts]
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+This provides stronger memory ordering (release rather than relaxed).
+
+Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
+Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Andrea Parri <parri.andrea@gmail.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Jade Alglave <j.alglave@ucl.ac.uk>
+Cc: Luc Maranget <luc.maranget@inria.fr>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |   59 +++++++++++++++++++++++++------------------------------
- 1 file changed, 27 insertions(+), 32 deletions(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -16,6 +16,7 @@
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -8115,7 +8115,7 @@ int node_reclaim(struct pglist_data *pgd
+ 		return NODE_RECLAIM_NOSCAN;
  
- #define pr_fmt(fmt)	"OF: " fmt
+ 	ret = __node_reclaim(pgdat, gfp_mask, order);
+-	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
++	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
  
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/errno.h>
- #include <linux/list.h>
-@@ -339,10 +340,12 @@ EXPORT_SYMBOL_GPL(of_irq_parse_raw);
-  * This function resolves an interrupt for a node by walking the interrupt tree,
-  * finding which interrupt controller node it is attached to, and returning the
-  * interrupt specifier that can be used to retrieve a Linux IRQ number.
-+ *
-+ * Note: refcount of node @out_irq->np is increased by 1 on success.
-  */
- int of_irq_parse_one(struct device_node *device, int index, struct of_phandle_args *out_irq)
- {
--	struct device_node *p;
-+	struct device_node __free(device_node) *p = NULL;
- 	const __be32 *addr;
- 	u32 intsize;
- 	int i, res, addr_len;
-@@ -367,41 +370,33 @@ int of_irq_parse_one(struct device_node
- 	/* Try the new-style interrupts-extended first */
- 	res = of_parse_phandle_with_args(device, "interrupts-extended",
- 					"#interrupt-cells", index, out_irq);
--	if (!res)
--		return of_irq_parse_raw(addr_buf, out_irq);
--
--	/* Look for the interrupt parent. */
--	p = of_irq_find_parent(device);
--	if (p == NULL)
--		return -EINVAL;
--
--	/* Get size of interrupt specifier */
--	if (of_property_read_u32(p, "#interrupt-cells", &intsize)) {
--		res = -EINVAL;
--		goto out;
--	}
--
--	pr_debug(" parent=%pOF, intsize=%d\n", p, intsize);
-+	if (!res) {
-+		p = out_irq->np;
-+	} else {
-+		/* Look for the interrupt parent. */
-+		p = of_irq_find_parent(device);
-+		/* Get size of interrupt specifier */
-+		if (!p || of_property_read_u32(p, "#interrupt-cells", &intsize))
-+			return -EINVAL;
-+
-+		pr_debug(" parent=%pOF, intsize=%d\n", p, intsize);
-+
-+		/* Copy intspec into irq structure */
-+		out_irq->np = p;
-+		out_irq->args_count = intsize;
-+		for (i = 0; i < intsize; i++) {
-+			res = of_property_read_u32_index(device, "interrupts",
-+							(index * intsize) + i,
-+							out_irq->args + i);
-+			if (res)
-+				return res;
-+		}
- 
--	/* Copy intspec into irq structure */
--	out_irq->np = p;
--	out_irq->args_count = intsize;
--	for (i = 0; i < intsize; i++) {
--		res = of_property_read_u32_index(device, "interrupts",
--						 (index * intsize) + i,
--						 out_irq->args + i);
--		if (res)
--			goto out;
-+		pr_debug(" intspec=%d\n", *out_irq->args);
- 	}
- 
--	pr_debug(" intspec=%d\n", *out_irq->args);
--
--
- 	/* Check if there are any interrupt-map translations to process */
--	res = of_irq_parse_raw(addr_buf, out_irq);
-- out:
--	of_node_put(p);
--	return res;
-+	return of_irq_parse_raw(addr_buf, out_irq);
- }
- EXPORT_SYMBOL_GPL(of_irq_parse_one);
- 
+ 	if (!ret)
+ 		count_vm_event(PGSCAN_ZONE_RECLAIM_FAILED);
 
 
