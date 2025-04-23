@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D762C284692;
-	Wed, 23 Apr 2025 15:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC59528F93A;
+	Wed, 23 Apr 2025 15:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422401; cv=none; b=W5MLPMW50jxy+00o39vhZa5AVNtOEwBdB9jNmRwM5u1XMo3h+MEUX5t4QZMs4T3YFC1s4Bg8FDFgalRZN9WKlSb2IDa/2/o857Ysi70skxjfnX7uWSnP8oRWQ+6mE6wxZtAQR5jeHCH4Bq4o2ct41Mf8OIgOjXnXEKE50wrOeQY=
+	t=1745422405; cv=none; b=uZWzwbYceaBoKVuthzgtRlhyCRcoVhbWKasPDs02C59/4qZF6PiRWZYZphSSli0ftBey10Q+Jb7TefAmx4osNRdZP5T5RGKWkKGApGR4vwWc0OOrSgOLyhYgNjniaRalCQl/Fl3hNQl4Y39AunKY77mlTMjT0nXMfTSMDcK/8AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422401; c=relaxed/simple;
-	bh=wS+q+tuwb5kMB7zN9skvqNNiu9QDUkcPODfBTIQ1Gks=;
+	s=arc-20240116; t=1745422405; c=relaxed/simple;
+	bh=qmeKZahCrPljg7f/SOREpLNjKiwmKhYxkYXmHNt/NIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkPH/OwtDPxWmR2IXfXsQRFlkuMU2enXZwzeEzrgzcorx239wS2wum4qJT7IMlKMNFhome8csec/XupIypnU4xXcrl+Zja+Y4o2Q7MAG3jA1Y1fu/k1zZmTiiPHJ4fpftil11G1eUmUilvpUOiezHtkPOs0PSx/+iZAVqDogM7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYt5IEIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6XjV0nPwNs2imV8InEkn8l0GxWYaaykCgFv0PIkyWvRnHgJvFWuB0QuHJ4wfpfbvjzJk3veFbu2yT1Igye/lMhAwpcSTdcF4S4xEq2xBu5cJesWbQejOY5TPwEv4qjBBGE1Z6sl46xF6OzMMCI/V5Cos8wwggr8in03OK8/qkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RucD9n99; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYt5IEIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654E1C4CEE2;
-	Wed, 23 Apr 2025 15:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RucD9n99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF61C4CEE2;
+	Wed, 23 Apr 2025 15:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422401;
-	bh=wS+q+tuwb5kMB7zN9skvqNNiu9QDUkcPODfBTIQ1Gks=;
+	s=korg; t=1745422404;
+	bh=qmeKZahCrPljg7f/SOREpLNjKiwmKhYxkYXmHNt/NIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYt5IEIYVikarPCPzPc47Km2rw2OYxNwQwwq2AWBQNXyDGmWfIsWmNmWQ8RlPxWvy
-	 rriWjV3sYEQ2EjbASAdAXivetUIj5bOJ/eTWDY0cgKrA1CMkjItvxvf5zEj6TOLbEf
-	 Tprq+PZmPSF2irpbm6OdaM3kpwyvL3wwPhBVONrA=
+	b=RucD9n99fdRldvIxxXtj079p9ghPONoQSDTywRHEm7lhWWIjnBto0lZu/4/3b7Ea5
+	 5bYU68x7aOlAOcRLdGmt3iXo+AXSWoFOvteC2yOfWbPkdFrz3dYi/QFFFDg+t+M+9V
+	 3G786bYmukodtY7x4tsBxRKTAL4jeOsHKE9CCI8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sandipan Das <sandipan.das@amd.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.6 336/393] x86/microcode/AMD: Extend the SHA check to Zen5, block loading of any unreleased standalone Zen5 microcode patches
-Date: Wed, 23 Apr 2025 16:43:52 +0200
-Message-ID: <20250423142657.214465712@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>
+Subject: [PATCH 6.6 337/393] x86/cpu/amd: Fix workaround for erratum 1054
+Date: Wed, 23 Apr 2025 16:43:53 +0200
+Message-ID: <20250423142657.254453551@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -57,56 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 805b743fc163f1abef7ce1bea8eca8dfab5b685b upstream.
+commit 263e55949d8902a6a09bdb92a1ab6a3f67231abe upstream.
 
-All Zen5 machines out there should get BIOS updates which update to the
-correct microcode patches addressing the microcode signature issue.
-However, silly people carve out random microcode blobs from BIOS
-packages and think are doing other people a service this way...
+Erratum 1054 affects AMD Zen processors that are a part of Family 17h
+Models 00-2Fh and the workaround is to not set HWCR[IRPerfEn]. However,
+when X86_FEATURE_ZEN1 was introduced, the condition to detect unaffected
+processors was incorrectly changed in a way that the IRPerfEn bit gets
+set only for unaffected Zen 1 processors.
 
-Block loading of any unreleased standalone Zen5 microcode patches.
+Ensure that HWCR[IRPerfEn] is set for all unaffected processors. This
+includes a subset of Zen 1 (Family 17h Models 30h and above) and all
+later processors. Also clear X86_FEATURE_IRPERF on affected processors
+so that the IRPerfCount register is not used by other entities like the
+MSR PMU driver.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: 232afb557835 ("x86/CPU/AMD: Add X86_FEATURE_ZEN1")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Cc: Nikolay Borisov <nik.borisov@suse.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20250410114222.32523-1-bp@kernel.org
+Acked-by: Borislav Petkov <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/caa057a9d6f8ad579e2f1abaa71efbd5bd4eaf6d.1744956467.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/amd.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -201,6 +201,12 @@ static bool need_sha_check(u32 cur_rev)
- 	case 0xa70c0: return cur_rev <= 0xa70C009; break;
- 	case 0xaa001: return cur_rev <= 0xaa00116; break;
- 	case 0xaa002: return cur_rev <= 0xaa00218; break;
-+	case 0xb0021: return cur_rev <= 0xb002146; break;
-+	case 0xb1010: return cur_rev <= 0xb101046; break;
-+	case 0xb2040: return cur_rev <= 0xb204031; break;
-+	case 0xb4040: return cur_rev <= 0xb404031; break;
-+	case 0xb6000: return cur_rev <= 0xb600031; break;
-+	case 0xb7000: return cur_rev <= 0xb700031; break;
- 	default: break;
- 	}
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1039,6 +1039,16 @@ static void init_amd_zen1(struct cpuinfo
  
-@@ -216,8 +222,7 @@ static bool verify_sha256_digest(u32 pat
- 	struct sha256_state s;
- 	int i;
+ 	pr_notice_once("AMD Zen1 DIV0 bug detected. Disable SMT for full protection.\n");
+ 	setup_force_cpu_bug(X86_BUG_DIV0);
++
++	/*
++	 * Turn off the Instructions Retired free counter on machines that are
++	 * susceptible to erratum #1054 "Instructions Retired Performance
++	 * Counter May Be Inaccurate".
++	 */
++	if (c->x86_model < 0x30) {
++		msr_clear_bit(MSR_K7_HWCR, MSR_K7_HWCR_IRPERF_EN_BIT);
++		clear_cpu_cap(c, X86_FEATURE_IRPERF);
++	}
+ }
  
--	if (x86_family(bsp_cpuid_1_eax) < 0x17 ||
--	    x86_family(bsp_cpuid_1_eax) > 0x19)
-+	if (x86_family(bsp_cpuid_1_eax) < 0x17)
- 		return true;
+ static bool cpu_has_zenbleed_microcode(void)
+@@ -1185,13 +1195,8 @@ static void init_amd(struct cpuinfo_x86
+ 	if (!cpu_feature_enabled(X86_FEATURE_XENPV))
+ 		set_cpu_bug(c, X86_BUG_SYSRET_SS_ATTRS);
  
- 	if (!need_sha_check(cur_rev))
+-	/*
+-	 * Turn on the Instructions Retired free counter on machines not
+-	 * susceptible to erratum #1054 "Instructions Retired Performance
+-	 * Counter May Be Inaccurate".
+-	 */
+-	if (cpu_has(c, X86_FEATURE_IRPERF) &&
+-	    (boot_cpu_has(X86_FEATURE_ZEN1) && c->x86_model > 0x2f))
++	/* Enable the Instructions Retired free counter */
++	if (cpu_has(c, X86_FEATURE_IRPERF))
+ 		msr_set_bit(MSR_K7_HWCR, MSR_K7_HWCR_IRPERF_EN_BIT);
+ 
+ 	check_null_seg_clears_base(c);
 
 
