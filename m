@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D41285412;
-	Wed, 23 Apr 2025 15:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C020284685;
+	Wed, 23 Apr 2025 15:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420711; cv=none; b=NakjVB/OzKJGG79qdAjRGLU8Lo4zRbF8JXEkJsafovIxImWiEPbi1AsMo4zhUj3pdAXPcqpNtBTYUq/meXr8toTDJDGqnNjWB7I8lbndOFWrHxqHaDJhrpke7fUlK3J6dBZPpfYjUHqqkEVueLvWcRROtgBMRTOjaJLZmjqNmMo=
+	t=1745420714; cv=none; b=nRD1btkrHC2qMBHhA7CJIMZ1Vq190/l/4POb2AzFBWx8g/QZwGmAkUrSL8Gi8dd6k7Z6ZIU/HKdXLdpfB56I8lSZzhNY4jX++5UnAI1kDXVimCqhjX49muyfW5ReYrWnWoO/WXW25kY+kvVItURzQmZs2NhdYzFTA8QNJnNC218=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420711; c=relaxed/simple;
-	bh=GlXH+6DNIcv+s5B86SrD+l3kUJQMzE7yzZ/pwrTR+rM=;
+	s=arc-20240116; t=1745420714; c=relaxed/simple;
+	bh=01c5D9dN3os3ACO8eB1Mt5pka4h8+6Hfjb1KaG9qMZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XjYxvOKAir29tEcbYO3GeO2UvuINzpenfvZ4XF2wpxeRSjDPYCCjKNLXsYd6MYIUHCtfnXQ95I4E5BZ5Av1lEAzQ7848Vhwv1j3y58fJnW4X6jYywkxeP2lVn3uRHSMJV5j15jMqadopGfyhpIDQVMf6Ldrgy9aYJKgjqInQnLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVIhWhES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajc5sQzhlLWBgYZ3OQZm0WUHLochTMwqJ/OChOs3irkgufVgMN9ATWo4g5ue7w4H3Ne8INw9/2UwDiF97O815eLXAi3k8NQ9P9X6DwnavdaeNZ8NMef/4gE/b89eo/pJPcg1XHRxM4n0OMLDg47VKbbhfMigbeV7v7RnKxmayIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+v7HWA/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVIhWhES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B97C4CEE2;
-	Wed, 23 Apr 2025 15:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+v7HWA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3F0C4CEE2;
+	Wed, 23 Apr 2025 15:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420711;
-	bh=GlXH+6DNIcv+s5B86SrD+l3kUJQMzE7yzZ/pwrTR+rM=;
+	s=korg; t=1745420713;
+	bh=01c5D9dN3os3ACO8eB1Mt5pka4h8+6Hfjb1KaG9qMZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVIhWhESRqgOmdnjyQ/L2810cwC0hOmViSYzNXm1Ponsm5nmxU4zoWUtC6Vj+yEn8
-	 zcA7iDXs16vbym2YcAOixFpeKKVbgROVR4cLYcdxVPVmEi13pjaKRM5R/gazqeIsoP
-	 R0MJ46HwjWhCBotTIb152uMkml4T46YkRkLSA/5w=
+	b=w+v7HWA//S/9fVpwHBwFrAieFsdhiKxeYN7GJbS67UjDwULbUoUgoJLmaT29fjjxS
+	 uU18ZITQskkL4SqDYtpMC3LArKHUnXRyYqu8QAdCBht2WQ2oLTMLZpGlQybJJhycHD
+	 co3+mRng3/FRdd2pxBsK7gQ2T/0e1sNNxb55K1ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/291] pwm: rcar: Improve register calculation
-Date: Wed, 23 Apr 2025 16:41:03 +0200
-Message-ID: <20250423142627.396716263@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 156/223] drm/amd/display: Increase vblank offdelay for PSR panels
+Date: Wed, 23 Apr 2025 16:43:48 +0200
+Message-ID: <20250423142623.527793928@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,97 +47,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-[ Upstream commit e7327c193014a4d8666e9c1cda09cf2c060518e8 ]
+commit f21e6d149b49c92f9e68aa0c76033e1e13d9f5da upstream.
 
-There were several issues in the function rcar_pwm_set_counter():
+[Why]
 
- - The u64 values period_ns and duty_ns were cast to int on function
-   call which might loose bits on 32 bit architectures.
-   Fix: Make parameters to rcar_pwm_set_counter() u64
- - The algorithm divided by the result of a division which looses
-   precision.
-   Fix: Make use of mul_u64_u64_div_u64()
- - The calculated values were just masked to fit the respective register
-   fields which again might loose bits.
-   Fix: Explicitly check for overlow
+Depending on when the HW latching event (vupdate) of double-buffered
+registers happen relative to the PSR SDP (signals panel psr enter/exit)
+deadline, and how bad the Panel clock has drifted since the last ALPM
+off event, there can be up to 3 frames of delay between sending the PSR
+exit cmd to DMUB fw, and when the panel starts displaying live frames.
+This can manifest as micro-stuttering when userspace commit patterns
+cause rapid toggling of the DRM vblank counter, since PSR enter/exit is
+hooked up to DRM vblank disable/enable respectively.
 
-Implement the respective fixes.
+In the ideal world, the panel should present the live frame immediately
+on PSR exit cmd. But due to HW design and PSR limitations, immediate
+exit can only happen by chance, when:
 
-A side effect of fixing the 2nd issue is that there is no division by 0
-if clk_get_rate() returns 0.
+1. PSR exit cmd is ack'd by FW before HW latching (vupdate) event, and
+2. Panel's SDP deadline -- determined by it's PSR Start Delay in DPCD
+  71h -- is after the vupdate event. The PSR exit SDP can then be sent
+  immediately after HW latches. Otherwise, we have to wait 1 frame. And
+3. There is negligible drift between the panel's clock and source clock.
+  Otherwise, there can be up to 1 frame of drift.
 
-Fixes: ed6c1476bf7f ("pwm: Add support for R-Car PWM Timer")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/ab3dac794b2216cc1cc56d65c93dd164f8bd461b.1743501688.git.u.kleine-koenig@baylibre.com
-[ukleinek: Added an explicit #include <linux/bitfield.h> to please the
-0day build bot]
-Link: https://lore.kernel.org/oe-kbuild-all/202504031354.VJtxScP5-lkp@intel.com/
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that this delay is not expected with Panel Replay.
+
+[How]
+
+Since PSR power savings can be quite substantial, and there are a lot of
+systems in the wild with PSR panels, It'll be nice to have a middle
+ground that balances user experience with power savings.
+
+A simple way to achieve this is by extending the vblank offdelay, such
+that additional PSR exit delays will be less perceivable.
+
+We can set:
+
+   20/100 * offdelay_ms = 3_frames_ms
+=> offdelay_ms = 5 * 3_frames_ms
+
+This ensures that `3_frames_ms` will only be experienced as a 20% delay
+on top how long the panel has been static, and thus make the delay
+less perceivable.
+
+If this ends up being too high of a percentage, it can be dropped
+further in a future change.
+
+Fixes: 537ef0f88897 ("drm/amd/display: use new vblank enable policy for DCN35+")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-rcar.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   39 ++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pwm/pwm-rcar.c b/drivers/pwm/pwm-rcar.c
-index 55f46d09602b1..b2e75d870532e 100644
---- a/drivers/pwm/pwm-rcar.c
-+++ b/drivers/pwm/pwm-rcar.c
-@@ -8,6 +8,7 @@
-  * - The hardware cannot generate a 0% duty cycle.
-  */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8458,14 +8458,39 @@ static void manage_dm_interrupts(struct
+ 	int offdelay;
  
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/err.h>
- #include <linux/io.h>
-@@ -103,23 +104,24 @@ static void rcar_pwm_set_clock_control(struct rcar_pwm_chip *rp,
- 	rcar_pwm_write(rp, value, RCAR_PWMCR);
- }
+ 	if (acrtc_state) {
+-		if (amdgpu_ip_version(adev, DCE_HWIP, 0) <
+-		    IP_VERSION(3, 5, 0) ||
+-		    acrtc_state->stream->link->psr_settings.psr_version <
+-		    DC_PSR_VERSION_UNSUPPORTED ||
+-		    !(adev->flags & AMD_IS_APU)) {
+-			timing = &acrtc_state->stream->timing;
++		timing = &acrtc_state->stream->timing;
  
--static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, int duty_ns,
--				int period_ns)
-+static int rcar_pwm_set_counter(struct rcar_pwm_chip *rp, int div, u64 duty_ns,
-+				u64 period_ns)
- {
--	unsigned long long one_cycle, tmp;	/* 0.01 nanoseconds */
-+	unsigned long long tmp;
- 	unsigned long clk_rate = clk_get_rate(rp->clk);
- 	u32 cyc, ph;
- 
--	one_cycle = NSEC_PER_SEC * 100ULL << div;
--	do_div(one_cycle, clk_rate);
-+	/* div <= 24 == RCAR_PWM_MAX_DIVISION, so the shift doesn't overflow. */
-+	tmp = mul_u64_u64_div_u64(period_ns, clk_rate, (u64)NSEC_PER_SEC << div);
-+	if (tmp > FIELD_MAX(RCAR_PWMCNT_CYC0_MASK))
-+		tmp = FIELD_MAX(RCAR_PWMCNT_CYC0_MASK);
- 
--	tmp = period_ns * 100ULL;
--	do_div(tmp, one_cycle);
--	cyc = (tmp << RCAR_PWMCNT_CYC0_SHIFT) & RCAR_PWMCNT_CYC0_MASK;
-+	cyc = FIELD_PREP(RCAR_PWMCNT_CYC0_MASK, tmp);
- 
--	tmp = duty_ns * 100ULL;
--	do_div(tmp, one_cycle);
--	ph = tmp & RCAR_PWMCNT_PH0_MASK;
-+	tmp = mul_u64_u64_div_u64(duty_ns, clk_rate, (u64)NSEC_PER_SEC << div);
-+	if (tmp > FIELD_MAX(RCAR_PWMCNT_PH0_MASK))
-+		tmp = FIELD_MAX(RCAR_PWMCNT_PH0_MASK);
-+	ph = FIELD_PREP(RCAR_PWMCNT_PH0_MASK, tmp);
- 
- 	/* Avoid prohibited setting */
- 	if (cyc == 0 || ph == 0)
--- 
-2.39.5
-
+-			/* at least 2 frames */
++		/*
++		 * Depending on when the HW latching event of double-buffered
++		 * registers happen relative to the PSR SDP deadline, and how
++		 * bad the Panel clock has drifted since the last ALPM off
++		 * event, there can be up to 3 frames of delay between sending
++		 * the PSR exit cmd to DMUB fw, and when the panel starts
++		 * displaying live frames.
++		 *
++		 * We can set:
++		 *
++		 * 20/100 * offdelay_ms = 3_frames_ms
++		 * => offdelay_ms = 5 * 3_frames_ms
++		 *
++		 * This ensures that `3_frames_ms` will only be experienced as a
++		 * 20% delay on top how long the display has been static, and
++		 * thus make the delay less perceivable.
++		 */
++		if (acrtc_state->stream->link->psr_settings.psr_version <
++		    DC_PSR_VERSION_UNSUPPORTED) {
++			offdelay = DIV64_U64_ROUND_UP((u64)5 * 3 * 10 *
++						      timing->v_total *
++						      timing->h_total,
++						      timing->pix_clk_100hz);
++			config.offdelay_ms = offdelay ?: 30;
++		} else if (amdgpu_ip_version(adev, DCE_HWIP, 0) <
++			   IP_VERSION(3, 5, 0) ||
++			   !(adev->flags & AMD_IS_APU)) {
++			/*
++			 * Older HW and DGPU have issues with instant off;
++			 * use a 2 frame offdelay.
++			 */
+ 			offdelay = DIV64_U64_ROUND_UP((u64)20 *
+ 						      timing->v_total *
+ 						      timing->h_total,
 
 
