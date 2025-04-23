@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E78118DB17;
-	Wed, 23 Apr 2025 14:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4338D18DB17;
+	Wed, 23 Apr 2025 14:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420118; cv=none; b=Gg6oyCnaUZ79UsHF8SmLl17V2BafBHjCx1M4pettoIUWv8oqdmhqrQV59Cv1dzbpQnm+TDzBThj3YCGbnTs8IEqlv+BfSFscvMYjy0GOkYggYw1vG2cDfF692yqhXAFcuXh9VFEH9LEziHazad1Xgm0BhkWRC+bsIpBUilxhzbs=
+	t=1745420121; cv=none; b=LxwCHeTACik6JkizT/lBEhw7zez9TI2Tr6sTy7ue3ZXTKyMmMqkte45MQY3il2BHRGvFpQpZI6Z4DvDhZcVpNvBKN4xiW7H7dAEpdVeU8oVIZdDcznjWyIVaKAu5JwVH2xUOddMUsrSTY/X4MZJZI5+HJK8EiVcG70wyo+8upIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420118; c=relaxed/simple;
-	bh=Seq9Tn6zd7GgXSLQkR4PQvzHVtjjrW7lTAbTOJcwPCA=;
+	s=arc-20240116; t=1745420121; c=relaxed/simple;
+	bh=Glx7QZb3iCVP5gHgWOl6FvGSjZarnasYeIjL8bAElAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/0ILhut/jH/O7281AHpxYEn1swFbqbBnl0nAg/N/1fpOFIS5/cr0OEvgwVg9p9O3qVLTTtHwkWOJbSoMu8Bctzn+KmampwH94ziZ3YT21mOeOWzeoDnxAt2daId88AhLVPLSww4XcB1JK64H2Qw7qL3eoScq3WOUHPy38Jq334=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlL3R/nl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgcXWQNJF2CBqR0h11FZmBLCQtkjJ0dYPx/UlKu5KqRF4OvQ6Uv+qHUasdze/MzXR12nkXAvHy2eAWfnJUlVYUyYN+XPkiarig7jlhbTsEXF4z+SMpvpB5/WYyNsIKGtQPMWpq1WPSgQufG367h9oi4BwIKbZcaa/+yAAJO0vVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqcWZYjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlL3R/nl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE3EC4CEE2;
-	Wed, 23 Apr 2025 14:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqcWZYjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94F7C4CEE3;
+	Wed, 23 Apr 2025 14:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420118;
-	bh=Seq9Tn6zd7GgXSLQkR4PQvzHVtjjrW7lTAbTOJcwPCA=;
+	s=korg; t=1745420121;
+	bh=Glx7QZb3iCVP5gHgWOl6FvGSjZarnasYeIjL8bAElAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlL3R/nlhGHSxt/xfdwatbNgTu6fzQaThnxvRVn7DWQtMs/QJsAveVdHcxl5ONZNf
-	 zltt3IAAbwjivvNpXq/xnOm9foA5TshdlJtXYElGdP+0I6BQ733mG0zuSoeGc4g3G1
-	 7YiAdqVBXDL8g7Okg//3oAich1GIDNNJGLDxOkN4=
+	b=rqcWZYjgXsRrgxM+PVX0avZgjBdIRs8LkEwV0gWUOdA8nRfn3JkO9wANApLVaNsDa
+	 XBQ3ZgIDsKhH7IF+ofRTN/mkx6OyM3a15VEXhkBPhvyE4XY8enIYhcbZ/Zlv2vU07P
+	 Grdaw8FHzMKrz1A1vtrZwbSjDYWraVz+yKtECgn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Tyler Hicks <code@tyhicks.com>,
-	ecryptfs@vger.kernel.org,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	linux-unionfs@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
-	Stefan Berger <stefanb@linux.ibm.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/223] fs: Simplify getattr interface function checking AT_GETATTR_NOSEC flag
-Date: Wed, 23 Apr 2025 16:42:53 +0200
-Message-ID: <20250423142621.227689976@linuxfoundation.org>
+Subject: [PATCH 6.14 061/241] nvmet: pci-epf: always fully initialize completion entries
+Date: Wed, 23 Apr 2025 16:42:05 +0200
+Message-ID: <20250423142623.097181536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,188 +48,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 95f567f81e43a1bcb5fbf0559e55b7505707300d ]
+[ Upstream commit ffe0398c7d6a38af0584d4668d3762b7a97e2275 ]
 
-Commit 8a924db2d7b5 ("fs: Pass AT_GETATTR_NOSEC flag to getattr interface
-function")' introduced the AT_GETATTR_NOSEC flag to ensure that the
-call paths only call vfs_getattr_nosec if it is set instead of vfs_getattr.
-Now, simplify the getattr interface functions of filesystems where the flag
-AT_GETATTR_NOSEC is checked.
+For a command that is normally processed through the command request
+execute() function, the completion entry for the command is initialized
+by __nvmet_req_complete() and nvmet_pci_epf_cq_work() only needs to set
+the status field and the phase of the completion entry before posting
+the entry to the completion queue.
 
-There is only a single caller of inode_operations getattr function and it
-is located in fs/stat.c in vfs_getattr_nosec. The caller there is the only
-one from which the AT_GETATTR_NOSEC flag is passed from.
+However, for commands that are failed due to an internal error (e.g. the
+command data buffer allocation fails), the command request execute()
+function is not called and __nvmet_req_complete() is never executed for
+the command, leaving the command completion entry uninitialized. For
+such command failed before calling req->execute(), the host ends up
+seeing completion entries with an invalid submission queue ID and
+command ID.
 
-Two filesystems are checking this flag in .getattr and the flag is always
-passed to them unconditionally from only vfs_getattr_nosec:
+Avoid such issue by always fully initilizing a command completion entry
+in nvmet_pci_epf_cq_work(), setting the entry submission queue head, ID
+and command ID.
 
-- ecryptfs:  Simplify by always calling vfs_getattr_nosec in
-             ecryptfs_getattr. From there the flag is passed to no other
-             function and this function is not called otherwise.
-
-- overlayfs: Simplify by always calling vfs_getattr_nosec in
-             ovl_getattr. From there the flag is passed to no other
-             function and this function is not called otherwise.
-
-The query_flags in vfs_getattr_nosec will mask-out AT_GETATTR_NOSEC from
-any caller using AT_STATX_SYNC_TYPE as mask so that the flag is not
-important inside this function. Also, since no filesystem is checking the
-flag anymore, remove the flag entirely now, including the BUG_ON check that
-never triggered.
-
-The net change of the changes here combined with the original commit is
-that ecryptfs and overlayfs do not call vfs_getattr but only
-vfs_getattr_nosec.
-
-Fixes: 8a924db2d7b5 ("fs: Pass AT_GETATTR_NOSEC flag to getattr interface function")
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Closes: https://lore.kernel.org/linux-fsdevel/20241101011724.GN1350452@ZenIV/T/#u
-Cc: Tyler Hicks <code@tyhicks.com>
-Cc: ecryptfs@vger.kernel.org
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: linux-unionfs@vger.kernel.org
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: linux-fsdevel@vger.kernel.org
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Stable-dep-of: 777d0961ff95 ("fs: move the bdex_statx call to vfs_getattr_nosec")
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ecryptfs/inode.c        | 12 ++----------
- fs/overlayfs/inode.c       | 10 +++++-----
- fs/overlayfs/overlayfs.h   |  8 --------
- fs/stat.c                  |  5 +----
- include/uapi/linux/fcntl.h |  4 ----
- 5 files changed, 8 insertions(+), 31 deletions(-)
+ drivers/nvme/target/pci-epf.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ecryptfs/inode.c b/fs/ecryptfs/inode.c
-index cbdf82f0183f3..a9819ddb1ab85 100644
---- a/fs/ecryptfs/inode.c
-+++ b/fs/ecryptfs/inode.c
-@@ -1008,14 +1008,6 @@ static int ecryptfs_getattr_link(struct mnt_idmap *idmap,
- 	return rc;
- }
- 
--static int ecryptfs_do_getattr(const struct path *path, struct kstat *stat,
--			       u32 request_mask, unsigned int flags)
--{
--	if (flags & AT_GETATTR_NOSEC)
--		return vfs_getattr_nosec(path, stat, request_mask, flags);
--	return vfs_getattr(path, stat, request_mask, flags);
--}
--
- static int ecryptfs_getattr(struct mnt_idmap *idmap,
- 			    const struct path *path, struct kstat *stat,
- 			    u32 request_mask, unsigned int flags)
-@@ -1024,8 +1016,8 @@ static int ecryptfs_getattr(struct mnt_idmap *idmap,
- 	struct kstat lower_stat;
- 	int rc;
- 
--	rc = ecryptfs_do_getattr(ecryptfs_dentry_to_lower_path(dentry),
--				 &lower_stat, request_mask, flags);
-+	rc = vfs_getattr_nosec(ecryptfs_dentry_to_lower_path(dentry),
-+			       &lower_stat, request_mask, flags);
- 	if (!rc) {
- 		fsstack_copy_attr_all(d_inode(dentry),
- 				      ecryptfs_inode_to_lower(d_inode(dentry)));
-diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
-index baa54c718bd72..97dd70d631446 100644
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -170,7 +170,7 @@ int ovl_getattr(struct mnt_idmap *idmap, const struct path *path,
- 
- 	type = ovl_path_real(dentry, &realpath);
- 	old_cred = ovl_override_creds(dentry->d_sb);
--	err = ovl_do_getattr(&realpath, stat, request_mask, flags);
-+	err = vfs_getattr_nosec(&realpath, stat, request_mask, flags);
- 	if (err)
- 		goto out;
- 
-@@ -195,8 +195,8 @@ int ovl_getattr(struct mnt_idmap *idmap, const struct path *path,
- 					(!is_dir ? STATX_NLINK : 0);
- 
- 			ovl_path_lower(dentry, &realpath);
--			err = ovl_do_getattr(&realpath, &lowerstat, lowermask,
--					     flags);
-+			err = vfs_getattr_nosec(&realpath, &lowerstat, lowermask,
-+						flags);
- 			if (err)
- 				goto out;
- 
-@@ -248,8 +248,8 @@ int ovl_getattr(struct mnt_idmap *idmap, const struct path *path,
- 
- 			ovl_path_lowerdata(dentry, &realpath);
- 			if (realpath.dentry) {
--				err = ovl_do_getattr(&realpath, &lowerdatastat,
--						     lowermask, flags);
-+				err = vfs_getattr_nosec(&realpath, &lowerdatastat,
-+							lowermask, flags);
- 				if (err)
- 					goto out;
- 			} else {
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index 500a9634ad533..63ad4511c1208 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -412,14 +412,6 @@ static inline bool ovl_open_flags_need_copy_up(int flags)
- 	return ((OPEN_FMODE(flags) & FMODE_WRITE) || (flags & O_TRUNC));
- }
- 
--static inline int ovl_do_getattr(const struct path *path, struct kstat *stat,
--				 u32 request_mask, unsigned int flags)
--{
--	if (flags & AT_GETATTR_NOSEC)
--		return vfs_getattr_nosec(path, stat, request_mask, flags);
--	return vfs_getattr(path, stat, request_mask, flags);
--}
--
- /* util.c */
- int ovl_get_write_access(struct dentry *dentry);
- void ovl_put_write_access(struct dentry *dentry);
-diff --git a/fs/stat.c b/fs/stat.c
-index 41e598376d7e3..cbc0fcd4fba39 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -165,7 +165,7 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
- 	if (inode->i_op->getattr)
- 		return inode->i_op->getattr(idmap, path, stat,
- 					    request_mask,
--					    query_flags | AT_GETATTR_NOSEC);
-+					    query_flags);
- 
- 	generic_fillattr(idmap, request_mask, inode, stat);
- 	return 0;
-@@ -198,9 +198,6 @@ int vfs_getattr(const struct path *path, struct kstat *stat,
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index 99563648c318f..70855bb9823af 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -1655,16 +1655,17 @@ static int nvmet_pci_epf_process_sq(struct nvmet_pci_epf_ctrl *ctrl,
  {
- 	int retval;
+ 	struct nvmet_pci_epf_iod *iod;
+ 	int ret, n = 0;
++	u16 head = sq->head;
  
--	if (WARN_ON_ONCE(query_flags & AT_GETATTR_NOSEC))
--		return -EPERM;
--
- 	retval = security_inode_getattr(path);
- 	if (retval)
- 		return retval;
-diff --git a/include/uapi/linux/fcntl.h b/include/uapi/linux/fcntl.h
-index 87e2dec79fea4..a40833bf2855e 100644
---- a/include/uapi/linux/fcntl.h
-+++ b/include/uapi/linux/fcntl.h
-@@ -154,8 +154,4 @@
- 					   usable with open_by_handle_at(2). */
- #define AT_HANDLE_MNT_ID_UNIQUE	0x001	/* Return the u64 unique mount ID. */
+ 	sq->tail = nvmet_pci_epf_bar_read32(ctrl, sq->db);
+-	while (sq->head != sq->tail && (!ctrl->sq_ab || n < ctrl->sq_ab)) {
++	while (head != sq->tail && (!ctrl->sq_ab || n < ctrl->sq_ab)) {
+ 		iod = nvmet_pci_epf_alloc_iod(sq);
+ 		if (!iod)
+ 			break;
  
--#if defined(__KERNEL__)
--#define AT_GETATTR_NOSEC	0x80000000
--#endif
--
- #endif /* _UAPI_LINUX_FCNTL_H */
+ 		/* Get the NVMe command submitted by the host. */
+ 		ret = nvmet_pci_epf_transfer(ctrl, &iod->cmd,
+-					     sq->pci_addr + sq->head * sq->qes,
++					     sq->pci_addr + head * sq->qes,
+ 					     sq->qes, DMA_FROM_DEVICE);
+ 		if (ret) {
+ 			/* Not much we can do... */
+@@ -1673,12 +1674,13 @@ static int nvmet_pci_epf_process_sq(struct nvmet_pci_epf_ctrl *ctrl,
+ 		}
+ 
+ 		dev_dbg(ctrl->dev, "SQ[%u]: head %u, tail %u, command %s\n",
+-			sq->qid, sq->head, sq->tail,
++			sq->qid, head, sq->tail,
+ 			nvmet_pci_epf_iod_name(iod));
+ 
+-		sq->head++;
+-		if (sq->head == sq->depth)
+-			sq->head = 0;
++		head++;
++		if (head == sq->depth)
++			head = 0;
++		WRITE_ONCE(sq->head, head);
+ 		n++;
+ 
+ 		queue_work_on(WORK_CPU_UNBOUND, sq->iod_wq, &iod->work);
+@@ -1772,8 +1774,17 @@ static void nvmet_pci_epf_cq_work(struct work_struct *work)
+ 		if (!iod)
+ 			break;
+ 
+-		/* Post the IOD completion entry. */
++		/*
++		 * Post the IOD completion entry. If the IOD request was
++		 * executed (req->execute() called), the CQE is already
++		 * initialized. However, the IOD may have been failed before
++		 * that, leaving the CQE not properly initialized. So always
++		 * initialize it here.
++		 */
+ 		cqe = &iod->cqe;
++		cqe->sq_head = cpu_to_le16(READ_ONCE(iod->sq->head));
++		cqe->sq_id = cpu_to_le16(iod->sq->qid);
++		cqe->command_id = iod->cmd.common.command_id;
+ 		cqe->status = cpu_to_le16((iod->status << 1) | cq->phase);
+ 
+ 		dev_dbg(ctrl->dev,
 -- 
 2.39.5
 
