@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898CD28935F;
-	Wed, 23 Apr 2025 15:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B36028937D;
+	Wed, 23 Apr 2025 15:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420926; cv=none; b=qO7dXv83OnJT1tE570q9zZWn75pXrjVkVlgRdrS9iWpZtFA4Mb+c3NqW8xI4Z/BLnDVLGMnAM0R0Fhz9NyciJdArWaDrguA8Jy50WLF899GthbvnMkzX2OI66nPoqF+FBMrfALAmQNN1Na9CrcyKqCGtEFglEP3aIv7ug2HATC0=
+	t=1745420929; cv=none; b=qaj+hBsVD3LZ9q0JNwPmhsKemz3oLw9B04YXPc3tZ2MGNiipGopNCBWzepOGPQUWjmRN/GPchCCqEAJ00gBfT5en9AlraXF6Xg6jabcMT3ghgqOUv9IgLYV7OAvoA1Ju/QmZsyKj8VOE91dPUKcvI4OigwIYnBRCCl+9A2NLmOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420926; c=relaxed/simple;
-	bh=KdRxXK0DzrrIOtnxtd9iMr7an9xlNLmQDdOZtlHOmZo=;
+	s=arc-20240116; t=1745420929; c=relaxed/simple;
+	bh=qaR/TKrOuQEfWM96EW5N1hpaRQeQGgXLgCdRQVFf6HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6xEPP8ivYqLS+ny6Y6X5Aa6LQQfNc/FoUnYha+L1j0Gs4H1yU1mWNKrDF1YMRpeyCvknGpuPJaeDtuUgxLlG550TawiHx69Xyii7S9jtpc7w+yEYbbPUKvO4/vdr+jk/8Jjomy3VELz2ugdzZKPnbKAkLQC+JL2tOorIZNIz/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW5Gj1mD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hQMjAmOHDbNP/97NYIJZfcEeQLSThACy+71JFyaZAI+eGTWhcj2aDbLbhXORsI5VsttgYAGri3UqFP4neLpfp/DHS0eHbFHv28l5E0+2nHYC+kD7VlNKImem2tNq3AMFKSF/qEip7ODlCku3bqo2jD11ZuGWOReq3s60Lsy9Vds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRoWaCOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW5Gj1mD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D931C4CEE2;
-	Wed, 23 Apr 2025 15:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRoWaCOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B04C4CEE2;
+	Wed, 23 Apr 2025 15:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420926;
-	bh=KdRxXK0DzrrIOtnxtd9iMr7an9xlNLmQDdOZtlHOmZo=;
+	s=korg; t=1745420929;
+	bh=qaR/TKrOuQEfWM96EW5N1hpaRQeQGgXLgCdRQVFf6HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EW5Gj1mDI3LBbC5LWVj3ShlzRnw2KwFWd33kEH+1nHqqmkMszyGrLKcP3hkFpozRM
-	 pVSqprcppGdmSzvaZ5HI+6EWnBqFWs/l4omdDj4VZi6mJimZBbkgjJ9EmHAtoaw2A7
-	 Gt+oliOqAwAB4KSQp2H7WcJfOq+yrJH/qSFSGZQY=
+	b=hRoWaCOCcVEE1AeUf6Es6dUxmYkFvELEq3yvnHVrTiNupa8wmB84xSNUDURj8Tl9Z
+	 YxhpID5JOhZ+zc6bAbk1SssmSa7WPlCqFOB9lg1ER8vi84MDKBVypiyrtkErKduE0+
+	 Rr/nSz+4FQ+/rFnyqMArzZpMDMKbSYTpnLP0q6kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 093/291] media: platform: stm32: Add check for clk_enable()
-Date: Wed, 23 Apr 2025 16:41:22 +0200
-Message-ID: <20250423142628.156048296@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 128/393] arm64: cputype: Add MIDR_CORTEX_A76AE
+Date: Wed, 23 Apr 2025 16:40:24 +0200
+Message-ID: <20250423142648.645656871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,36 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit f883f34b6a46b1a09d44d7f94c3cd72fe0e8f93b upstream.
+commit a9b5bd81b294d30a747edd125e9f6aef2def7c79 upstream.
 
-Add check for the return value of clk_enable() to gurantee the success.
+>From the TRM, MIDR_CORTEX_A76AE has a partnum of 0xDOE and an
+implementor of 0x41 (ARM). Add the values.
 
-Fixes: 002e8f0d5927 ("media: stm32-dma2d: STM32 DMA2D driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: stable@vger.kernel.org # dependency of the next fix in the series
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250107120555.v4.4.I151f3b7ee323bcc3082179b8c60c3cd03308aa94@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/st/stm32/dma2d/dma2d.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/st/stm32/dma2d/dma2d.c
-+++ b/drivers/media/platform/st/stm32/dma2d/dma2d.c
-@@ -492,7 +492,8 @@ static void device_run(void *prv)
- 	dst->sequence = frm_cap->sequence++;
- 	v4l2_m2m_buf_copy_metadata(src, dst, true);
- 
--	clk_enable(dev->gate);
-+	if (clk_enable(dev->gate))
-+		goto end;
- 
- 	dma2d_config_fg(dev, frm_out,
- 			vb2_dma_contig_plane_dma_addr(&src->vb2_buf, 0));
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -75,6 +75,7 @@
+ #define ARM_CPU_PART_CORTEX_A76		0xD0B
+ #define ARM_CPU_PART_NEOVERSE_N1	0xD0C
+ #define ARM_CPU_PART_CORTEX_A77		0xD0D
++#define ARM_CPU_PART_CORTEX_A76AE	0xD0E
+ #define ARM_CPU_PART_NEOVERSE_V1	0xD40
+ #define ARM_CPU_PART_CORTEX_A78		0xD41
+ #define ARM_CPU_PART_CORTEX_A78AE	0xD42
+@@ -159,6 +160,7 @@
+ #define MIDR_CORTEX_A76	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A76)
+ #define MIDR_NEOVERSE_N1 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N1)
+ #define MIDR_CORTEX_A77	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A77)
++#define MIDR_CORTEX_A76AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A76AE)
+ #define MIDR_NEOVERSE_V1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V1)
+ #define MIDR_CORTEX_A78	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78)
+ #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
 
 
