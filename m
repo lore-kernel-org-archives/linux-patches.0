@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C1018DB17;
-	Wed, 23 Apr 2025 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB41381BA;
+	Wed, 23 Apr 2025 14:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420018; cv=none; b=sbwW+i2HUwF48Vb6ijAF4+nrLEL9bFgaIP1ILS8oxHVoKIKHPo87VYr+2wqHxC5MOf4hgmoDRMxp6k0ChRn0vKTS8bDsytp+HheG+t+fDNcWfu1T6AiPJJRG2h72JXmdN74Nq3ZLvjcPfnh2tuM9sVvdB77GcaC6rXwKYLdAtIY=
+	t=1745420021; cv=none; b=ZlyNEYHgiJe8w5//9C/jQ92wDoromCT+dygkZXnfLbw1ZjkRHeWIdZFHpFmP2GSF6n4YSZTV29sZyClIcAHrTwC1RMMxA2AftfL+nKVrffDaSPACtgbZLqohlGNebVFluw8DXOSMS+PDZtn4KQ2E1gIz6LKwpoQdZRL8GMy1XCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420018; c=relaxed/simple;
-	bh=GflyFEGqjHsE+IFHU9i95DRGOcES48fuAS0d5lV9rO8=;
+	s=arc-20240116; t=1745420021; c=relaxed/simple;
+	bh=+6R7jy++AODK32EdpUccDLuD9pjfe0GohYW8BsuCfmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhVxzIYcwzvIrtEY9pFvvLO4+OcpXbuR390n3jpA2cb+J5Dw243iXUuDyClpoea+cznDsG7z8wWujKrCu+RcthV5kVi7opnRQGrydTO2Yrt6JL8gt4fVgfgcXOFHVnsCLmhjf31pGYpvoebaHnvu1imWimgXzUg6onOkxxPSJAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfB8Ip+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2PAXHoWQpZJMQJw7/Ev7+CpfS9SmCxpsSsN4np4kH0pqKPVPyizBKY2qQa2ILHbCkdDoV1Yymc0H9wrekjNN6+jp2iqTeNNq8uEL+Gh1OUm0SXpvDac0NIFafGV1jHddD5BQliApkQog7eYDqmkIFDYrOrqXDOfkV7P0H7pzJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNORmj1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfB8Ip+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26C7C4CEE2;
-	Wed, 23 Apr 2025 14:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNORmj1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91185C4CEE2;
+	Wed, 23 Apr 2025 14:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420018;
-	bh=GflyFEGqjHsE+IFHU9i95DRGOcES48fuAS0d5lV9rO8=;
+	s=korg; t=1745420020;
+	bh=+6R7jy++AODK32EdpUccDLuD9pjfe0GohYW8BsuCfmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfB8Ip+zRySfa6VEEh3euZD3FmrCrXUUZBUBuxMmYsGQ7rX80gftPyXF3tcldVeSm
-	 O6wrFcTxQgNEM5r0/5aRBhHjRNzmNIjqJnSDwH2614LIa49dCr1aWqFefoCu962wLc
-	 uJ1MJ46/JUHGpCucOWwHIV6dNQdLKymSo1I8+m48=
+	b=DNORmj1+K/8mxzKTUPbcIRpyCOWWToXwKnRv/JhqpuIzDm7uXJmmsI8EJVKCANRNa
+	 kvfcJW5mS9vSyT+8gA9olzbOcuHfO2pa50ljFq6Pxa8F4TbYXIbQ5ca5J3+7UY+zzv
+	 wCVxJfOqYy97wBt/4eijiW4/wQGxY5aVmVRROtLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
+	Michal Kubecek <mkubecek@suse.cz>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/393] net_sched: sch_sfq: use a temporary work area for validating configuration
-Date: Wed, 23 Apr 2025 16:38:47 +0200
-Message-ID: <20250423142644.577744195@linuxfoundation.org>
+Subject: [PATCH 6.1 010/291] net: ethtool: Dont call .cleanup_data when prepare_data fails
+Date: Wed, 23 Apr 2025 16:39:59 +0200
+Message-ID: <20250423142624.829914585@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +50,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
+[ Upstream commit 4f038a6a02d20859a3479293cbf172b0f14cbdd6 ]
 
-Many configuration parameters have influence on others (e.g. divisor
--> flows -> limit, depth -> limit) and so it is difficult to correctly
-do all of the validation before applying the configuration. And if a
-validation error is detected late it is difficult to roll back a
-partially applied configuration.
+There's a consistent pattern where the .cleanup_data() callback is
+called when .prepare_data() fails, when it should really be called to
+clean after a successful .prepare_data() as per the documentation.
 
-To avoid these issues use a temporary work area to update and validate
-the configuration and only then apply the configuration to the
-internal state.
+Rewrite the error-handling paths to make sure we don't cleanup
+un-prepared data.
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b3bf8f63e617 ("net_sched: sch_sfq: move the limit validation")
+Fixes: c781ff12a2f3 ("ethtool: Allow network drivers to dump arbitrary EEPROM data")
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Michal Kubecek <mkubecek@suse.cz>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250407130511.75621-1-maxime.chevallier@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 56 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 12 deletions(-)
+ net/ethtool/netlink.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 60754f366ab7b..68e909e8fabd9 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 	struct red_parms *p = NULL;
- 	struct sk_buff *to_free = NULL;
- 	struct sk_buff *tail = NULL;
-+	unsigned int maxflows;
-+	unsigned int quantum;
-+	unsigned int divisor;
-+	int perturb_period;
-+	u8 headdrop;
-+	u8 maxdepth;
-+	int limit;
-+	u8 flags;
-+
- 
- 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
- 		return -EINVAL;
-@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
- 		return -EINVAL;
- 	}
-+
- 	sch_tree_lock(sch);
-+
-+	limit = q->limit;
-+	divisor = q->divisor;
-+	headdrop = q->headdrop;
-+	maxdepth = q->maxdepth;
-+	maxflows = q->maxflows;
-+	perturb_period = q->perturb_period;
-+	quantum = q->quantum;
-+	flags = q->flags;
-+
-+	/* update and validate configuration */
- 	if (ctl->quantum)
--		q->quantum = ctl->quantum;
--	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
-+		quantum = ctl->quantum;
-+	perturb_period = ctl->perturb_period * HZ;
- 	if (ctl->flows)
--		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-+		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
--		q->divisor = ctl->divisor;
--		q->maxflows = min_t(u32, q->maxflows, q->divisor);
-+		divisor = ctl->divisor;
-+		maxflows = min_t(u32, maxflows, divisor);
- 	}
- 	if (ctl_v1) {
- 		if (ctl_v1->depth)
--			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
-+			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
- 		if (p) {
--			swap(q->red_parms, p);
--			red_set_parms(q->red_parms,
-+			red_set_parms(p,
- 				      ctl_v1->qth_min, ctl_v1->qth_max,
- 				      ctl_v1->Wlog,
- 				      ctl_v1->Plog, ctl_v1->Scell_log,
- 				      NULL,
- 				      ctl_v1->max_P);
- 		}
--		q->flags = ctl_v1->flags;
--		q->headdrop = ctl_v1->headdrop;
-+		flags = ctl_v1->flags;
-+		headdrop = ctl_v1->headdrop;
- 	}
- 	if (ctl->limit) {
--		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
--		q->maxflows = min_t(u32, q->maxflows, q->limit);
-+		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
-+		maxflows = min_t(u32, maxflows, limit);
- 	}
- 
-+	/* commit configuration */
-+	q->limit = limit;
-+	q->divisor = divisor;
-+	q->headdrop = headdrop;
-+	q->maxdepth = maxdepth;
-+	q->maxflows = maxflows;
-+	WRITE_ONCE(q->perturb_period, perturb_period);
-+	q->quantum = quantum;
-+	q->flags = flags;
-+	if (p)
-+		swap(q->red_parms, p);
-+
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > q->limit) {
- 		dropped += sfq_drop(sch, &to_free);
+diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
+index e5efdf2817eff..98c0641138825 100644
+--- a/net/ethtool/netlink.c
++++ b/net/ethtool/netlink.c
+@@ -384,7 +384,7 @@ static int ethnl_default_doit(struct sk_buff *skb, struct genl_info *info)
+ 	ret = ops->prepare_data(req_info, reply_data, info);
+ 	rtnl_unlock();
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_dev;
+ 	ret = ops->reply_size(req_info, reply_data);
+ 	if (ret < 0)
+ 		goto err_cleanup;
+@@ -442,7 +442,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
+ 	ret = ctx->ops->prepare_data(ctx->req_info, ctx->reply_data, NULL);
+ 	rtnl_unlock();
+ 	if (ret < 0)
+-		goto out;
++		goto out_cancel;
+ 	ret = ethnl_fill_reply_header(skb, dev, ctx->ops->hdr_attr);
+ 	if (ret < 0)
+ 		goto out;
+@@ -451,6 +451,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
+ out:
+ 	if (ctx->ops->cleanup_data)
+ 		ctx->ops->cleanup_data(ctx->reply_data);
++out_cancel:
+ 	ctx->reply_data->dev = NULL;
+ 	if (ret < 0)
+ 		genlmsg_cancel(skb, ehdr);
+@@ -636,7 +637,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
+ 	ethnl_init_reply_data(reply_data, ops, dev);
+ 	ret = ops->prepare_data(req_info, reply_data, NULL);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_rep;
+ 	ret = ops->reply_size(req_info, reply_data);
+ 	if (ret < 0)
+ 		goto err_cleanup;
+@@ -671,6 +672,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
+ err_cleanup:
+ 	if (ops->cleanup_data)
+ 		ops->cleanup_data(reply_data);
++err_rep:
+ 	kfree(reply_data);
+ 	kfree(req_info);
+ 	return;
 -- 
 2.39.5
 
