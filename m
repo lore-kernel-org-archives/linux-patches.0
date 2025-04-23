@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC127FD5B;
-	Wed, 23 Apr 2025 14:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B5719DF4C;
+	Wed, 23 Apr 2025 14:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420266; cv=none; b=F8OhUcUOJMpn4RV3uPjT4CtwormAS7LXq5WHzyzObj+MTYPoZlgPJRRdmz5g2YB3OTVTT9OSCr+RAKVFsIjwwhWK+gmbLUati27OSSj/xaPikupvgWF4l0iHeFzFSC/NUOOqFufbRSJD8m/QCZCajX8Qu5OMVUUO6IbG/czlydI=
+	t=1745420268; cv=none; b=hpGyGcpmEWvBHIyV4KC7S5QqGZY6bLj5Y5ftHO8PfCsyjcI4TZBavHmoc/o1yqymt6IffX2iUOT2OWWqnQ0XF2em5pv+OxY6MOGTbfMnEb2K2U+7ayyu9Lo96/jcREK/iXAeprfLA59OayAgIYb3CKLLsba/kZbUyTBUvDXPIMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420266; c=relaxed/simple;
-	bh=Yo832697sqJs7kWAxwSRpFTENjg5Xtc89s/7CqvYR5I=;
+	s=arc-20240116; t=1745420268; c=relaxed/simple;
+	bh=krmcyhsrRjg/dnGSh+tyYxSfAofTs5nAnPpVw+M+7NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2hBvXLNcneIllIZicpcRkmtCR8D7Zl4qDUseyckjwks1Tl/OLE3docmhnAxwLSl4gz2Cx0j3L+CX1eiiWZ8RKC838PVubgJPZwIe0yNQCol8lZlYfC2tv37c9u4MAYYUUdLb6RjY/Xb7faiBWXrQ4ViEY64RE2FsKxyoMWCAFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT/z4Fsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lTgCaROI1nmXsDE0B+pXyWoqBaoGhHPR61Gib+2rkDmEje6/jByGZEEVjPobfEFwafs0PnS3oNBgt7lFOeq/KXftVlrjoo4DaZraN04XMXPQk1V/thLAXDVqv7QqtJL7k517ACw6IKwvUekwTSt1af71eeVuAiuZKJgoG4w0Pao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqukIBUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT/z4Fsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74F2C4CEE3;
-	Wed, 23 Apr 2025 14:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqukIBUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599A0C4CEE2;
+	Wed, 23 Apr 2025 14:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420266;
-	bh=Yo832697sqJs7kWAxwSRpFTENjg5Xtc89s/7CqvYR5I=;
+	s=korg; t=1745420268;
+	bh=krmcyhsrRjg/dnGSh+tyYxSfAofTs5nAnPpVw+M+7NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WT/z4Fsc17XIvtKnxUTlp4Mz6i7Pvc7R3J5QZ2ZoeqdolMCQoD8WRsfzfC4HJn7en
-	 ++wNEqtwzWr7xfPAf3ZHuYTHunNLBcuHqDStxMJbEGck66u/oc0MxGMPuEknBilWcl
-	 FVrzYej4c9jVQCorUXtv8ns7PuD7BWOmkJksgOmc=
+	b=AqukIBUuxN+mOd8c0Wsh42xZP3mQKpqBlLusjXnc8qAyitky3V2nrFtWwIX6NPk5u
+	 YHE6xwSfSxCBfwZCPmuLaAEvt+riTfknwMVZb4m58nCa6tD7vq57M8qsqMPSGwbluK
+	 NhMYZfU+viGfrYcUKOS3yJ5cEORda3JsarQ+gk7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.12 114/223] isofs: Prevent the use of too small fid
-Date: Wed, 23 Apr 2025 16:43:06 +0200
-Message-ID: <20250423142621.752391818@linuxfoundation.org>
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 032/291] mmc: dw_mmc: add a quirk for accessing 64-bit FIFOs in two halves
+Date: Wed, 23 Apr 2025 16:40:21 +0200
+Message-ID: <20250423142625.708210832@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,99 +47,187 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
 
-commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
+[ Upstream commit 57c0902f8bec51add5a1eb908d8b876592725d81 ]
 
-syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
+In certain DW MMC implementations (such as in some Exynos7870
+controllers), 64-bit read/write is not allowed from a 64-bit FIFO.
+Add a quirk which facilitates accessing the 64-bit FIFO registers in two
+32-bit halves.
 
-The handle_bytes value passed in by the reproducing program is equal to 12.
-In handle_to_path(), only 12 bytes of memory are allocated for the structure
-file_handle->f_handle member, which causes an out-of-bounds access when
-accessing the member parent_block of the structure isofs_fid in isofs,
-because accessing parent_block requires at least 16 bytes of f_handle.
-Here, fh_len is used to indirectly confirm that the value of handle_bytes
-is greater than 3 before accessing parent_block.
-
-[1]
-BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
-Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
-CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0x198/0x550 mm/kasan/report.c:521
- kasan_report+0xd8/0x138 mm/kasan/report.c:634
- __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
- isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
- exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
- do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
- handle_to_path fs/fhandle.c:385 [inline]
- do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
-
-Allocated by task 6466:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4294 [inline]
- __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
- kmalloc_noprof include/linux/slab.h:905 [inline]
- handle_to_path fs/fhandle.c:357 [inline]
- do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
-
-Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
-Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+Link: https://lore.kernel.org/r/20250219-exynos7870-mmc-v2-2-b4255a3e39ed@disroot.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c | 94 ++++++++++++++++++++++++++++++++++++++-
+ drivers/mmc/host/dw_mmc.h | 27 +++++++++++
+ 2 files changed, 119 insertions(+), 2 deletions(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
- 		return NULL;
- 
- 	return isofs_export_iget(sb,
--			fh_len > 2 ? ifid->parent_block : 0,
-+			fh_len > 3 ? ifid->parent_block : 0,
- 			ifid->parent_offset,
- 			fh_len > 4 ? ifid->parent_generation : 0);
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index d0da4573b38cd..0822493c949e8 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2574,6 +2574,91 @@ static void dw_mci_pull_data64(struct dw_mci *host, void *buf, int cnt)
+ 	}
  }
+ 
++static void dw_mci_push_data64_32(struct dw_mci *host, void *buf, int cnt)
++{
++	struct mmc_data *data = host->data;
++	int init_cnt = cnt;
++
++	/* try and push anything in the part_buf */
++	if (unlikely(host->part_buf_count)) {
++		int len = dw_mci_push_part_bytes(host, buf, cnt);
++
++		buf += len;
++		cnt -= len;
++
++		if (host->part_buf_count == 8) {
++			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
++			host->part_buf_count = 0;
++		}
++	}
++#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
++	if (unlikely((unsigned long)buf & 0x7)) {
++		while (cnt >= 8) {
++			u64 aligned_buf[16];
++			int len = min(cnt & -8, (int)sizeof(aligned_buf));
++			int items = len >> 3;
++			int i;
++			/* memcpy from input buffer into aligned buffer */
++			memcpy(aligned_buf, buf, len);
++			buf += len;
++			cnt -= len;
++			/* push data from aligned buffer into fifo */
++			for (i = 0; i < items; ++i)
++				mci_fifo_l_writeq(host->fifo_reg, aligned_buf[i]);
++		}
++	} else
++#endif
++	{
++		u64 *pdata = buf;
++
++		for (; cnt >= 8; cnt -= 8)
++			mci_fifo_l_writeq(host->fifo_reg, *pdata++);
++		buf = pdata;
++	}
++	/* put anything remaining in the part_buf */
++	if (cnt) {
++		dw_mci_set_part_bytes(host, buf, cnt);
++		/* Push data if we have reached the expected data length */
++		if ((data->bytes_xfered + init_cnt) ==
++		    (data->blksz * data->blocks))
++			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
++	}
++}
++
++static void dw_mci_pull_data64_32(struct dw_mci *host, void *buf, int cnt)
++{
++#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
++	if (unlikely((unsigned long)buf & 0x7)) {
++		while (cnt >= 8) {
++			/* pull data from fifo into aligned buffer */
++			u64 aligned_buf[16];
++			int len = min(cnt & -8, (int)sizeof(aligned_buf));
++			int items = len >> 3;
++			int i;
++
++			for (i = 0; i < items; ++i)
++				aligned_buf[i] = mci_fifo_l_readq(host->fifo_reg);
++
++			/* memcpy from aligned buffer into output buffer */
++			memcpy(buf, aligned_buf, len);
++			buf += len;
++			cnt -= len;
++		}
++	} else
++#endif
++	{
++		u64 *pdata = buf;
++
++		for (; cnt >= 8; cnt -= 8)
++			*pdata++ = mci_fifo_l_readq(host->fifo_reg);
++		buf = pdata;
++	}
++	if (cnt) {
++		host->part_buf = mci_fifo_l_readq(host->fifo_reg);
++		dw_mci_pull_final_bytes(host, buf, cnt);
++	}
++}
++
+ static void dw_mci_pull_data(struct dw_mci *host, void *buf, int cnt)
+ {
+ 	int len;
+@@ -3374,8 +3459,13 @@ int dw_mci_probe(struct dw_mci *host)
+ 		width = 16;
+ 		host->data_shift = 1;
+ 	} else if (i == 2) {
+-		host->push_data = dw_mci_push_data64;
+-		host->pull_data = dw_mci_pull_data64;
++		if ((host->quirks & DW_MMC_QUIRK_FIFO64_32)) {
++			host->push_data = dw_mci_push_data64_32;
++			host->pull_data = dw_mci_pull_data64_32;
++		} else {
++			host->push_data = dw_mci_push_data64;
++			host->pull_data = dw_mci_pull_data64;
++		}
+ 		width = 64;
+ 		host->data_shift = 3;
+ 	} else {
+diff --git a/drivers/mmc/host/dw_mmc.h b/drivers/mmc/host/dw_mmc.h
+index 4ed81f94f7cab..af16dbb37f261 100644
+--- a/drivers/mmc/host/dw_mmc.h
++++ b/drivers/mmc/host/dw_mmc.h
+@@ -280,6 +280,8 @@ struct dw_mci_board {
+ 
+ /* Support for longer data read timeout */
+ #define DW_MMC_QUIRK_EXTENDED_TMOUT            BIT(0)
++/* Force 32-bit access to the FIFO */
++#define DW_MMC_QUIRK_FIFO64_32                 BIT(1)
+ 
+ #define DW_MMC_240A		0x240a
+ #define DW_MMC_280A		0x280a
+@@ -471,6 +473,31 @@ struct dw_mci_board {
+ #define mci_fifo_writel(__value, __reg)	__raw_writel(__reg, __value)
+ #define mci_fifo_writeq(__value, __reg)	__raw_writeq(__reg, __value)
+ 
++/*
++ * Some dw_mmc devices have 64-bit FIFOs, but expect them to be
++ * accessed using two 32-bit accesses. If such controller is used
++ * with a 64-bit kernel, this has to be done explicitly.
++ */
++static inline u64 mci_fifo_l_readq(void __iomem *addr)
++{
++	u64 ans;
++	u32 proxy[2];
++
++	proxy[0] = mci_fifo_readl(addr);
++	proxy[1] = mci_fifo_readl(addr + 4);
++	memcpy(&ans, proxy, 8);
++	return ans;
++}
++
++static inline void mci_fifo_l_writeq(void __iomem *addr, u64 value)
++{
++	u32 proxy[2];
++
++	memcpy(proxy, &value, 8);
++	mci_fifo_writel(addr, proxy[0]);
++	mci_fifo_writel(addr + 4, proxy[1]);
++}
++
+ /* Register access macros */
+ #define mci_readl(dev, reg)			\
+ 	readl_relaxed((dev)->regs + SDMMC_##reg)
+-- 
+2.39.5
+
 
 
