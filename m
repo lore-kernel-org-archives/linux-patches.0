@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1273129614D;
-	Wed, 23 Apr 2025 15:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83C228DEEA;
+	Wed, 23 Apr 2025 15:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422050; cv=none; b=oXjDlKRsLSSPLeSAXtXTdgllCCByz+J5KXRnSsDcUux2i8XKNM6N8PKjpaqq2+zY/wwdZ6QmUZ6tmbL+qhoTgKRO1FiA3g2Ihhkx3qzqiyP7U6qlLduKMfEMTC7b22sA7H/bGXSJSKvcWGvT+zPC9Y0oQz/zj+41tCI86/l8s6k=
+	t=1745422052; cv=none; b=m04DQzcet770Q1stIofm9a0ioHLmxb9Qzke398lfgXph5mvjsI8pLfOyaounp1Nm4/nozbvSlZFC1G/sPJe75kb8VFV1WPvXJUSlyAMmTRKtO7sOqyTVcKreyaHxdi9u9dYL5NpvcyJzgBNTsaDkk6iHaSKGN11FICZi6lyI3ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422050; c=relaxed/simple;
-	bh=gz8ND9px3DP8WKm7ovnoRmwc6YDKp9ScN4qeZW2c1vM=;
+	s=arc-20240116; t=1745422052; c=relaxed/simple;
+	bh=tonkvqmEJU035JKxUsDP2ZMBPeSyvE+4fZhmSLdBq+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbFhFywZcXgiFfJ/Lp3dg0Gu37WUN6RWXFkzC1vvUZgHbN9XAobLQdZBTx9Z9qXTtnkhsq5vozjVu0iTmNg6nDQ1aBuWVl+1wA8HM6jjFOjoNHaQrb5QyBbIOLyLuictNqGjXhqc6AwopSTOsxFBiQTjhWznWXyZSoEp1BJRdRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXl8bjYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lf+JbfvYJOSorvOgQh0US118CGeJzNRhARhR33LaWOGYkitjAC2HKg7hEQS0gX3P3wtrR61VSPfacLFpjPvroF4HVpi+tTdfOYLVU51hM6XIqIvozV21lG83kMuRCz5JGkTb/l/pBDHhNa+LFiFLqbmV8mdoBCCaKbn+i5hA+u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DriiBlhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXl8bjYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A94EC4CEE2;
-	Wed, 23 Apr 2025 15:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DriiBlhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CA0C4CEE2;
+	Wed, 23 Apr 2025 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422050;
-	bh=gz8ND9px3DP8WKm7ovnoRmwc6YDKp9ScN4qeZW2c1vM=;
+	s=korg; t=1745422052;
+	bh=tonkvqmEJU035JKxUsDP2ZMBPeSyvE+4fZhmSLdBq+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXl8bjYDOFBiLetRb7jqMVDewNZinmgJk8tVXrZHHtcRI3zhpOZzPhZfoeuji8N+X
-	 zXdQJn2M4Jt8vjV1lHFxMnFWtM9utQdeq/QYTmNd/H0zL+sg+0tL0648jhFFK+Su7T
-	 vtB8L+yNNgUnkTRRSbDn3/DkQkvQMgbOXokaHLvk=
+	b=DriiBlhz/QYmkpmmIjDtObQssNNjjB1rB5cjjKBJTQNFwQLEShWWV4i5F1++XKQko
+	 95UXl97q9qHekq1g+7j3ESIs7LibMcipfUBIr+QG7u1mg0zznpYuQy+KkW0+qSPZCg
+	 /Uciu/ktobbV01eAMdJB2ZQk4r1fF/Fk9F/KzT+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 269/393] net: openvswitch: fix nested key length validation in the set() action
-Date: Wed, 23 Apr 2025 16:42:45 +0200
-Message-ID: <20250423142654.471868019@linuxfoundation.org>
+Subject: [PATCH 6.6 256/393] Bluetooth: btrtl: Prevent potential NULL dereference
+Date: Wed, 23 Apr 2025 16:42:32 +0200
+Message-ID: <20250423142653.948154001@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -54,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
+[ Upstream commit 324dddea321078a6eeb535c2bff5257be74c9799 ]
 
-It's not safe to access nla_len(ovs_key) if the data is smaller than
-the netlink header.  Check that the attribute is OK first.
+The btrtl_initialize() function checks that rtl_load_file() either
+had an error or it loaded a zero length file.  However, if it loaded
+a zero length file then the error code is not set correctly.  It
+results in an error pointer vs NULL bug, followed by a NULL pointer
+dereference.  This was detected by Smatch:
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
-Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+drivers/bluetooth/btrtl.c:592 btrtl_initialize() warn: passing zero to 'ERR_PTR'
+
+Fixes: 26503ad25de8 ("Bluetooth: btrtl: split the device initialization into smaller parts")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btrtl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 9c13e14034d3b..089ab1826e1d5 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2862,7 +2862,8 @@ static int validate_set(const struct nlattr *a,
- 	size_t key_len;
- 
- 	/* There can be only one key in a action */
--	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
-+	if (!nla_ok(ovs_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
- 		return -EINVAL;
- 
- 	key_len = nla_len(ovs_key);
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 1e7c1f9db9e4b..7f67e460f7f49 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -1194,6 +1194,8 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 			rtl_dev_err(hdev, "mandatory config file %s not found",
+ 				    btrtl_dev->ic_info->cfg_name);
+ 			ret = btrtl_dev->cfg_len;
++			if (!ret)
++				ret = -EINVAL;
+ 			goto err_free;
+ 		}
+ 	}
 -- 
 2.39.5
 
