@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFA0143736;
-	Wed, 23 Apr 2025 14:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CAF280A5A;
+	Wed, 23 Apr 2025 14:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420142; cv=none; b=T3npLzqxz4LjA3GQwh6SBzz3MzbfADArhBLPq3YB8XUzcZXswVQEGmtJU094daYuFx0RZogVwMFubWwBrV6253v/sSjTS+5M00Mb0BPS/M0Iw5aCOb4x2Q4TDUJmMKRZPD89727zmWhX3r9qF4w2fk+qmN5gejOTAuYJNXxSW4E=
+	t=1745420144; cv=none; b=FG987FNhVrzOcwNbZC1E5Y29HFmwiGFxOgX4R1TDJDzotPKgLzPu2UnfCwjY5ZUTk9aExyfF6ux8mBcX+nXQj3Hy0cciu0NB2znT5MtGjjMBeruiw80GrGw41f3ZLqvl1ako0xbK3P1eJZBktjIxZMLqH1j1T6/EwYK+hhrvX3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420142; c=relaxed/simple;
-	bh=oDo3UZgN2f0i5SU10aU0wh8oxr5T89ZFV8R4Orckq3g=;
+	s=arc-20240116; t=1745420144; c=relaxed/simple;
+	bh=v3hbHNRYa3H0b7FNrxOBDF/dU7YwM4VBHXWVz/sRTSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O9UFEKDrd1Xly85tRsKUhbqoqfhPVdNDELBsgTOstpA50sA2bnL8GqaPltmLw/xQwK0OFINhQWOjJOy7+FfAgt0w1Aqal+uvC7u0kl2NuBSSmOJY8DNjkRE5sxF+h+PJ3QmU/tGJunmLczTzpc+nMe+C8jAIv8EKqI3WV454OT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEKOF5AJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q42UncIFjl6YNzw7UGjxj9RGLBEaLMsS/v+h8BbQdUv5hOpGUTrnMkBK9jeYnVAc9AmyS4oG1ahCHx2AvSplskXVmsMWaMujMy1ITulk7ng8QWbfchhzwaajTyqoHLm/THsbMlW9XnzMEWjhMjXpRHrXD0LEKhl2jOIMxeUu9pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQwGJAlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEKOF5AJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE3FC4CEE2;
-	Wed, 23 Apr 2025 14:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQwGJAlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC3DC4CEE3;
+	Wed, 23 Apr 2025 14:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420142;
-	bh=oDo3UZgN2f0i5SU10aU0wh8oxr5T89ZFV8R4Orckq3g=;
+	s=korg; t=1745420144;
+	bh=v3hbHNRYa3H0b7FNrxOBDF/dU7YwM4VBHXWVz/sRTSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEKOF5AJdI6dvv1qWrqGB9O8/fu8TuTK7z8o0nvkbT3IgYq+BIvI0JlJdfopstZZX
-	 tOlSn3IOykmT3EolEmSTqHL1BxxlwnlS95sE8uMPqHT4K6kio1mqijC7Yzu4/Ui6rm
-	 aeHuTkp8eqRrJUJe8oOwOqCm2KI3JT34bqbpFFkc=
+	b=gQwGJAlrWDss8hoHmMmAQ/QvITy+koX6O6mJWfM6Won7whO6c5t04v3UCSu7Nanch
+	 qXIUScBexYoLTVuh66HzN9JXaKeNLUt3plL7eRPZ8k6tDV3y5XAQh3ZKLh2Dpwe6YT
+	 Gy3XaK9ZY2g1M/qSYdb1IxlZoZ8HL+S6JdnwP0GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Grobecker <max@grobecker.info>,
-	Ingo Molnar <mingo@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Borislav Petkov <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/393] x86/cpu: Dont clear X86_FEATURE_LAHF_LM flag in init_amd_k8() on AMD when running in a virtual machine
-Date: Wed, 23 Apr 2025 16:38:58 +0200
-Message-ID: <20250423142645.029766418@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 090/223] ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
+Date: Wed, 23 Apr 2025 16:42:42 +0200
+Message-ID: <20250423142620.787951817@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,106 +45,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Grobecker <max@grobecker.info>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit a4248ee16f411ac1ea7dfab228a6659b111e3d65 ]
+commit d7bff1415e85b889dc8908be6aedba8807ae5e37 upstream.
 
-When running in a virtual machine, we might see the original hardware CPU
-vendor string (i.e. "AuthenticAMD"), but a model and family ID set by the
-hypervisor. In case we run on AMD hardware and the hypervisor sets a model
-ID < 0x14, the LAHF cpu feature is eliminated from the the list of CPU
-capabilities present to circumvent a bug with some BIOSes in conjunction with
-AMD K8 processors.
+Currently the VI feedback rate is set to fixed 8K, fix this by getting
+the correct rate from params_rate.
 
-Parsing the flags list from /proc/cpuinfo seems to be happening mostly in
-bash scripts and prebuilt Docker containers, as it does not need to have
-additionals tools present – even though more reliable ways like using "kcpuid",
-which calls the CPUID instruction instead of parsing a list, should be preferred.
-Scripts, that use /proc/cpuinfo to determine if the current CPU is
-"compliant" with defined microarchitecture levels like x86-64-v2 will falsely
-claim the CPU is incapable of modern CPU instructions when "lahf_lm" is missing
-in that flags list.
+Without this patch incorrect rate will be set on the VI feedback
+recording resulting in rate miss match and audio artifacts.
 
-This can prevent some docker containers from starting or build scripts to create
-unoptimized binaries.
-
-Admittably, this is more a small inconvenience than a severe bug in the kernel
-and the shoddy scripts that rely on parsing /proc/cpuinfo
-should be fixed instead.
-
-This patch adds an additional check to see if we're running inside a
-virtual machine (X86_FEATURE_HYPERVISOR is present), which, to my
-understanding, can't be present on a real K8 processor as it was introduced
-only with the later/other Athlon64 models.
-
-Example output with the "lahf_lm" flag missing in the flags list
-(should be shown between "hypervisor" and "abm"):
-
-    $ cat /proc/cpuinfo
-    processor       : 0
-    vendor_id       : AuthenticAMD
-    cpu family      : 15
-    model           : 6
-    model name      : Common KVM processor
-    stepping        : 1
-    microcode       : 0x1000065
-    cpu MHz         : 2599.998
-    cache size      : 512 KB
-    physical id     : 0
-    siblings        : 1
-    core id         : 0
-    cpu cores       : 1
-    apicid          : 0
-    initial apicid  : 0
-    fpu             : yes
-    fpu_exception   : yes
-    cpuid level     : 13
-    wp              : yes
-    flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca
-                      cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp
-                      lm rep_good nopl cpuid extd_apicid tsc_known_freq pni
-                      pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt
-                      tsc_deadline_timer aes xsave avx f16c hypervisor abm
-                      3dnowprefetch vmmcall bmi1 avx2 bmi2 xsaveopt
-
-... while kcpuid shows the feature to be present in the CPU:
-
-    # kcpuid -d | grep lahf
-         lahf_lm             - LAHF/SAHF available in 64-bit mode
-
-[ mingo: Updated the comment a bit, incorporated Boris's review feedback. ]
-
-Signed-off-by: Max Grobecker <max@grobecker.info>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+Cc: stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250403160209.21613-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/lpass-wsa-macro.c |   39 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 9413fb767c6a7..be378b44ca35f 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -825,7 +825,7 @@ static void init_amd_k8(struct cpuinfo_x86 *c)
- 	 * (model = 0x14) and later actually support it.
- 	 * (AMD Erratum #110, docId: 25759).
- 	 */
--	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM)) {
-+	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM) && !cpu_has(c, X86_FEATURE_HYPERVISOR)) {
- 		clear_cpu_cap(c, X86_FEATURE_LAHF_LM);
- 		if (!rdmsrl_amd_safe(0xc001100d, &value)) {
- 			value &= ~BIT_64(32);
--- 
-2.39.5
-
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -63,6 +63,10 @@
+ #define CDC_WSA_TX_SPKR_PROT_CLK_DISABLE	0
+ #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK	GENMASK(3, 0)
+ #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K	0
++#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K	1
++#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K	2
++#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K	3
++#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K	4
+ #define CDC_WSA_TX0_SPKR_PROT_PATH_CFG0		(0x0248)
+ #define CDC_WSA_TX1_SPKR_PROT_PATH_CTL		(0x0264)
+ #define CDC_WSA_TX1_SPKR_PROT_PATH_CFG0		(0x0268)
+@@ -407,6 +411,7 @@ struct wsa_macro {
+ 	int ear_spkr_gain;
+ 	int spkr_gain_offset;
+ 	int spkr_mode;
++	u32 pcm_rate_vi;
+ 	int is_softclip_on[WSA_MACRO_SOFTCLIP_MAX];
+ 	int softclip_clk_users[WSA_MACRO_SOFTCLIP_MAX];
+ 	struct regmap *regmap;
+@@ -1280,6 +1285,7 @@ static int wsa_macro_hw_params(struct sn
+ 			       struct snd_soc_dai *dai)
+ {
+ 	struct snd_soc_component *component = dai->component;
++	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 	int ret;
+ 
+ 	switch (substream->stream) {
+@@ -1292,6 +1298,11 @@ static int wsa_macro_hw_params(struct sn
+ 			return ret;
+ 		}
+ 		break;
++	case SNDRV_PCM_STREAM_CAPTURE:
++		if (dai->id == WSA_MACRO_AIF_VI)
++			wsa->pcm_rate_vi = params_rate(params);
++
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -1465,6 +1476,28 @@ static int wsa_macro_enable_vi_feedback(
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 	u32 tx_reg0, tx_reg1;
++	u32 rate_val;
++
++	switch (wsa->pcm_rate_vi) {
++	case 8000:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
++		break;
++	case 16000:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K;
++		break;
++	case 24000:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K;
++		break;
++	case 32000:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K;
++		break;
++	case 48000:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K;
++		break;
++	default:
++		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
++		break;
++	}
+ 
+ 	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+ 		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
+@@ -1476,7 +1509,7 @@ static int wsa_macro_enable_vi_feedback(
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+-			/* Enable V&I sensing */
++		/* Enable V&I sensing */
+ 		snd_soc_component_update_bits(component, tx_reg0,
+ 					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+ 					      CDC_WSA_TX_SPKR_PROT_RESET);
+@@ -1485,10 +1518,10 @@ static int wsa_macro_enable_vi_feedback(
+ 					      CDC_WSA_TX_SPKR_PROT_RESET);
+ 		snd_soc_component_update_bits(component, tx_reg0,
+ 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
++					      rate_val);
+ 		snd_soc_component_update_bits(component, tx_reg1,
+ 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
++					      rate_val);
+ 		snd_soc_component_update_bits(component, tx_reg0,
+ 					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+ 					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
 
 
