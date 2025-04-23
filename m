@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF828468E;
-	Wed, 23 Apr 2025 14:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5DC284692;
+	Wed, 23 Apr 2025 14:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420395; cv=none; b=e0S9WWDOBanSzv6dfbL3/UbrAFKSjU0xZOQai+BVhU6V4C4MGbX1H/iY3Uvro4QgLbMOzbxMcExXIiUtiJF/PLqFHDgZEsVINiiXWO0r7Gq+MdzEEe4S5185IabJRvJSqHY1w2hbvo1NnAVwVsVKzzIZSGKis2GnyvkwFllvt8A=
+	t=1745420398; cv=none; b=PmNQGAzC57oadVZRayrfR0NLM+ODg8CBQaAelMGhmNqEKNhSs39XfKfKpIv7gOJAucDSLS5oLTu+MOy5jUb4BaJdulltyGwauBs8nARNr3OFiXojZjBT2kPK4ekSfo2KhGL7DC2Fgc7OVvV5mVFFRZ6CZY09UhrUKTEGhX7RFXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420395; c=relaxed/simple;
-	bh=0RHgjRXovHduyPYU5KCqch+V3nU4v7Rbarx3NiCEFP0=;
+	s=arc-20240116; t=1745420398; c=relaxed/simple;
+	bh=irs2jvOhLSOSZIbfTj5q/10xzgwzzFZ+FqXenTB5skA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JgGy7SdCQeVmR4BzbNf9eFMVCRF1efxku9QJNu9r+TlKFG9ouCQLjy4A0wJcPDVFfrUWf/NLygGIWpx4r+aABOBqZlllf2B6E5hhJNlBxAffs5VLY12SKGHtpGJ6o/eFM0OCGNmgW530HRTTxAeB9aaMl9ySi3uA2t1tA9YPtiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xF98fxNc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTIr5LFfK0aPF5PbxckvcP6syyVFc0AI9zFo7x9fZhy64+328IaPnC6m8tikHLILiCyZVIUlEx/MLMXKZGrwuz0BktSKyfWFSs9ptbJbLMmgYtDlIZPdWpNC7T4/BN1BSPBZqXo83wX4DTRNZM0A4+5f18mhahVQ05Y0WRgaEbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmBUoSnv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xF98fxNc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC4FC4CEE2;
-	Wed, 23 Apr 2025 14:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmBUoSnv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9366AC4CEE2;
+	Wed, 23 Apr 2025 14:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420395;
-	bh=0RHgjRXovHduyPYU5KCqch+V3nU4v7Rbarx3NiCEFP0=;
+	s=korg; t=1745420397;
+	bh=irs2jvOhLSOSZIbfTj5q/10xzgwzzFZ+FqXenTB5skA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xF98fxNcH478/pkov6BDO13TSe+u9P44FNwkACwoZJ8641RaIK1svZNr1wJbbDHO0
-	 kTwBP8Ps9qxOeOrMxnubacNW+8+1LxWwik6ofacn+Ny8zYMwfilPvrSJkSMR2xq+8w
-	 b9fzF5A1I9L/dlbV/RFxvm6meE4PUV5ARjJRCYFA=
+	b=UmBUoSnvloVznzF/KEZ4AP+KKeX9+xaGftxkYUht2kqkOAs2eF2WLDkwpTQ9+Asn1
+	 dEI7O33KioSUy/tge5u/QZ0s8kZm+soLAvHdnTrSyFAIViDkzjyTdrNnA64BF6MqU6
+	 LKNfMi5rjY0mRVd3ZT4bjtnPghE5/evwwBLGFwq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 088/241] riscv: Properly export reserved regions in /proc/iomem
-Date: Wed, 23 Apr 2025 16:42:32 +0200
-Message-ID: <20250423142624.177116964@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Dmitry V. Levin" <ldv@strace.io>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.12 128/223] riscv: Avoid fortify warning in syscall_get_arguments()
+Date: Wed, 23 Apr 2025 16:43:20 +0200
+Message-ID: <20250423142622.311527758@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,124 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit e94eb7ea6f206e229791761a5fdf9389f8dbd183 ]
+commit adf53771a3123df99ca26e38818760fbcf5c05d0 upstream.
 
-The /proc/iomem represents the kernel's memory map. Regions marked
-with "Reserved" tells the user that the range should not be tampered
-with. Kexec-tools, when using the older kexec_load syscall relies on
-the "Reserved" regions to build the memory segments, that will be the
-target of the new kexec'd kernel.
+When building with CONFIG_FORTIFY_SOURCE=y and W=1, there is a warning
+because of the memcpy() in syscall_get_arguments():
 
-The RISC-V port tries to expose all reserved regions to userland, but
-some regions were not properly exposed: Regions that resided in both
-the "regular" and reserved memory block, e.g. the EFI Memory Map. A
-missing entry could result in reserved memory being overwritten.
+  In file included from include/linux/string.h:392,
+                   from include/linux/bitmap.h:13,
+                   from include/linux/cpumask.h:12,
+                   from arch/riscv/include/asm/processor.h:55,
+                   from include/linux/sched.h:13,
+                   from kernel/ptrace.c:13:
+  In function 'fortify_memcpy_chk',
+      inlined from 'syscall_get_arguments.isra' at arch/riscv/include/asm/syscall.h:66:2:
+  include/linux/fortify-string.h:580:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+    580 |                         __read_overflow2_field(q_size_field, size);
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-It turns out, that arm64, and loongarch had a similar issue a while
-back:
+The fortified memcpy() routine enforces that the source is not overread
+and the destination is not overwritten if the size of either field and
+the size of the copy are known at compile time. The memcpy() in
+syscall_get_arguments() intentionally overreads from a1 to a5 in
+'struct pt_regs' but this is bigger than the size of a1.
 
-  commit d91680e687f4 ("arm64: Fix /proc/iomem for reserved but not memory regions")
-  commit 50d7ba36b916 ("arm64: export memblock_reserve()d regions via /proc/iomem")
+Normally, this could be solved by wrapping a1 through a5 with
+struct_group() but there was already a struct_group() applied to these
+members in commit bba547810c66 ("riscv: tracing: Fix
+__write_overflow_field in ftrace_partial_regs()").
 
-Similar to the other ports, resolve the issue by splitting the regions
-in an arch initcall, since we need a working allocator.
+Just avoid memcpy() altogether and write the copying of args from regs
+manually, which clears up the warning at the expense of three extra
+lines of code.
 
-Fixes: ffe0e5261268 ("RISC-V: Improve init_resources()")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250409182129.634415-1-bjorn@kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dmitry V. Levin <ldv@strace.io>
+Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250409-riscv-avoid-fortify-warning-syscall_get_arguments-v1-1-7853436d4755@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/setup.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/syscall.h |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index 4fe45daa6281e..b7d0bd4c0a81a 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -66,6 +66,9 @@ static struct resource bss_res = { .name = "Kernel bss", };
- static struct resource elfcorehdr_res = { .name = "ELF Core hdr", };
- #endif
- 
-+static int num_standard_resources;
-+static struct resource *standard_resources;
-+
- static int __init add_resource(struct resource *parent,
- 				struct resource *res)
+--- a/arch/riscv/include/asm/syscall.h
++++ b/arch/riscv/include/asm/syscall.h
+@@ -62,8 +62,11 @@ static inline void syscall_get_arguments
+ 					 unsigned long *args)
  {
-@@ -139,7 +142,7 @@ static void __init init_resources(void)
- 	struct resource *res = NULL;
- 	struct resource *mem_res = NULL;
- 	size_t mem_res_sz = 0;
--	int num_resources = 0, res_idx = 0;
-+	int num_resources = 0, res_idx = 0, non_resv_res = 0;
- 	int ret = 0;
- 
- 	/* + 1 as memblock_alloc() might increase memblock.reserved.cnt */
-@@ -193,6 +196,7 @@ static void __init init_resources(void)
- 	/* Add /memory regions to the resource tree */
- 	for_each_mem_region(region) {
- 		res = &mem_res[res_idx--];
-+		non_resv_res++;
- 
- 		if (unlikely(memblock_is_nomap(region))) {
- 			res->name = "Reserved";
-@@ -210,6 +214,9 @@ static void __init init_resources(void)
- 			goto error;
- 	}
- 
-+	num_standard_resources = non_resv_res;
-+	standard_resources = &mem_res[res_idx + 1];
-+
- 	/* Clean-up any unused pre-allocated resources */
- 	if (res_idx >= 0)
- 		memblock_free(mem_res, (res_idx + 1) * sizeof(*mem_res));
-@@ -221,6 +228,33 @@ static void __init init_resources(void)
- 	memblock_free(mem_res, mem_res_sz);
+ 	args[0] = regs->orig_a0;
+-	args++;
+-	memcpy(args, &regs->a1, 5 * sizeof(args[0]));
++	args[1] = regs->a1;
++	args[2] = regs->a2;
++	args[3] = regs->a3;
++	args[4] = regs->a4;
++	args[5] = regs->a5;
  }
  
-+static int __init reserve_memblock_reserved_regions(void)
-+{
-+	u64 i, j;
-+
-+	for (i = 0; i < num_standard_resources; i++) {
-+		struct resource *mem = &standard_resources[i];
-+		phys_addr_t r_start, r_end, mem_size = resource_size(mem);
-+
-+		if (!memblock_is_region_reserved(mem->start, mem_size))
-+			continue;
-+
-+		for_each_reserved_mem_range(j, &r_start, &r_end) {
-+			resource_size_t start, end;
-+
-+			start = max(PFN_PHYS(PFN_DOWN(r_start)), mem->start);
-+			end = min(PFN_PHYS(PFN_UP(r_end)) - 1, mem->end);
-+
-+			if (start > mem->end || end < mem->start)
-+				continue;
-+
-+			reserve_region_with_split(mem, start, end, "Reserved");
-+		}
-+	}
-+
-+	return 0;
-+}
-+arch_initcall(reserve_memblock_reserved_regions);
- 
- static void __init parse_dtb(void)
- {
--- 
-2.39.5
-
+ static inline int syscall_get_arch(struct task_struct *task)
 
 
