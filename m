@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524DA1F193C;
-	Wed, 23 Apr 2025 15:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FC2280CE0;
+	Wed, 23 Apr 2025 15:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420469; cv=none; b=kj2HgQOjvbZ/n7lt42zO0530ecqmyAXe69hmL2e1A/+hXsxOYnOvBUX65vUFwdG0oWsqdN4yQxUpU1WkBLuIzlJP94APGpzhOQoZ/ZO8HBI53dVvG4jwPmmySFnwIU6qEZvV+v7Jxw8Nyqq64F3MgcPXXp6yq/OQCYATkrwbMHU=
+	t=1745420472; cv=none; b=gdCB0vUNyNZA2Nwk8TtpkrMFSe8ifzhpSPW23v0MMKhkBWNwI2YwdfrmeLoBrl/KFGj11u6d5wQavMiboXa3lPwnOEk9FGl0Wzg0nhH0aEBVr9rKnninDusrJMkWaW9hhWDKWCag7rSFkOtcyIpypXIiUNd0S+SecjsB84wHxXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420469; c=relaxed/simple;
-	bh=6O/XzfhDX2GL0M3UWse4O5JnUdrpT6K79aW8DkkT9RU=;
+	s=arc-20240116; t=1745420472; c=relaxed/simple;
+	bh=4uETPo3gOGrdzlm2skROmZw2vRj/oooqSGyvWrS/mF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+jwq62vxpjiWmsao1OrqXBGkXWwwhby/noMpz9YA3Bwt/3vrdR1DH5D9BYQJTm1U6rVb1089hglrCeXB3d0oUq1RNjXfoECqtj6FBx1qLYLfDX7LiAqCajtapSubZ9iPT5NUTkE8v5OJ65XgQYvL2HYW/bskPm2UUvbnYM1jsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqnwTpdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cecjp3TvXS5+SY5P04tnDxNDtOkZZFn89JowUwPteqLeMFPcnV2KNQwVvfbo/Jj3isMz9Yf5eVZd8Fd3j/UmRPSU0x/n9IT6BT0Rb0kBTFoMFIgZCFS/tEJGZZEnnbCSwoxpCdeT/ll0l+GcgJ1FWhS+AP9Lz8FukSDDfj2hxv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zqt1W8z7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqnwTpdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80EEC4CEE2;
-	Wed, 23 Apr 2025 15:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zqt1W8z7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876B9C4CEE2;
+	Wed, 23 Apr 2025 15:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420469;
-	bh=6O/XzfhDX2GL0M3UWse4O5JnUdrpT6K79aW8DkkT9RU=;
+	s=korg; t=1745420471;
+	bh=4uETPo3gOGrdzlm2skROmZw2vRj/oooqSGyvWrS/mF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqnwTpdkAlH9KlrTROOgPiXEMxl6O+RQ96XIrUVGUmhlodZFWjAsM9xMGdbl8Bii1
-	 EZ5AMaTU7ZXztpmet0CbJ7tc/Rq0o5ZO43j+UYt5nlD75iUhaPKYGldY1LtqUOSBMy
-	 uZ9NOCEZnarCU5sHxccUq6rK604OawfJO7rv1n6I=
+	b=Zqt1W8z7fokmBk6hiiWTbnmB1YTE0w2qNKx3Jmt7VFb9+K5LXipJ48EfXRNvmUUWH
+	 UPykVeFahHNt4d4NW7z1/zlPVzzfDpGBftRO12H73NUk/qgsothT7byWsi7dHbaYZP
+	 LSV3MSggwvWbxH3Al46NwP5GXjMK4AKlVTlj+6gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 123/223] ksmbd: fix use-after-free in smb_break_all_levII_oplock()
-Date: Wed, 23 Apr 2025 16:43:15 +0200
-Message-ID: <20250423142622.115489286@linuxfoundation.org>
+	Birger Koblitz <mail@birger-koblitz.de>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 077/393] net: sfp: add quirk for 2.5G OEM BX SFP
+Date: Wed, 23 Apr 2025 16:39:33 +0200
+Message-ID: <20250423142646.484550602@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,133 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Birger Koblitz <mail@birger-koblitz.de>
 
-commit 18b4fac5ef17f77fed9417d22210ceafd6525fc7 upstream.
+[ Upstream commit a85035561025063125f81090e4f2bd65da368c83 ]
 
-There is a room in smb_break_all_levII_oplock that can cause racy issues
-when unlocking in the middle of the loop. This patch use read lock
-to protect whole loop.
+The OEM SFP-2.5G-BX10-D/U SFP module pair is meant to operate with
+2500Base-X. However, in their EEPROM they incorrectly specify:
+Transceiver codes   : 0x00 0x12 0x00 0x00 0x12 0x00 0x01 0x05 0x00
+BR, Nominal         : 2500MBd
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use sfp_quirk_2500basex for this module to allow 2500Base-X mode anyway.
+Tested on BananaPi R3.
+
+Signed-off-by: Birger Koblitz <mail@birger-koblitz.de>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/20250218-b4-lkmsub-v1-1-1e51dcabed90@birger-koblitz.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c |   29 +++++++++--------------------
- fs/smb/server/oplock.h |    1 -
- 2 files changed, 9 insertions(+), 21 deletions(-)
+ drivers/net/phy/sfp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -129,14 +129,6 @@ static void free_opinfo(struct oplock_in
- 	kfree(opinfo);
- }
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index e0e4a68cda3ea..dc62f141f4038 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -488,6 +488,8 @@ static const struct sfp_quirk sfp_quirks[] = {
  
--static inline void opinfo_free_rcu(struct rcu_head *rcu_head)
--{
--	struct oplock_info *opinfo;
--
--	opinfo = container_of(rcu_head, struct oplock_info, rcu_head);
--	free_opinfo(opinfo);
--}
--
- struct oplock_info *opinfo_get(struct ksmbd_file *fp)
- {
- 	struct oplock_info *opinfo;
-@@ -157,8 +149,8 @@ static struct oplock_info *opinfo_get_li
- 	if (list_empty(&ci->m_op_list))
- 		return NULL;
- 
--	rcu_read_lock();
--	opinfo = list_first_or_null_rcu(&ci->m_op_list, struct oplock_info,
-+	down_read(&ci->m_lock);
-+	opinfo = list_first_entry(&ci->m_op_list, struct oplock_info,
- 					op_entry);
- 	if (opinfo) {
- 		if (opinfo->conn == NULL ||
-@@ -171,8 +163,7 @@ static struct oplock_info *opinfo_get_li
- 			}
- 		}
- 	}
--
--	rcu_read_unlock();
-+	up_read(&ci->m_lock);
- 
- 	return opinfo;
- }
-@@ -185,7 +176,7 @@ void opinfo_put(struct oplock_info *opin
- 	if (!atomic_dec_and_test(&opinfo->refcount))
- 		return;
- 
--	call_rcu(&opinfo->rcu_head, opinfo_free_rcu);
-+	free_opinfo(opinfo);
- }
- 
- static void opinfo_add(struct oplock_info *opinfo)
-@@ -193,7 +184,7 @@ static void opinfo_add(struct oplock_inf
- 	struct ksmbd_inode *ci = opinfo->o_fp->f_ci;
- 
- 	down_write(&ci->m_lock);
--	list_add_rcu(&opinfo->op_entry, &ci->m_op_list);
-+	list_add(&opinfo->op_entry, &ci->m_op_list);
- 	up_write(&ci->m_lock);
- }
- 
-@@ -207,7 +198,7 @@ static void opinfo_del(struct oplock_inf
- 		write_unlock(&lease_list_lock);
- 	}
- 	down_write(&ci->m_lock);
--	list_del_rcu(&opinfo->op_entry);
-+	list_del(&opinfo->op_entry);
- 	up_write(&ci->m_lock);
- }
- 
-@@ -1347,8 +1338,8 @@ void smb_break_all_levII_oplock(struct k
- 	ci = fp->f_ci;
- 	op = opinfo_get(fp);
- 
--	rcu_read_lock();
--	list_for_each_entry_rcu(brk_op, &ci->m_op_list, op_entry) {
-+	down_read(&ci->m_lock);
-+	list_for_each_entry(brk_op, &ci->m_op_list, op_entry) {
- 		if (brk_op->conn == NULL)
- 			continue;
- 
-@@ -1358,7 +1349,6 @@ void smb_break_all_levII_oplock(struct k
- 		if (ksmbd_conn_releasing(brk_op->conn))
- 			continue;
- 
--		rcu_read_unlock();
- 		if (brk_op->is_lease && (brk_op->o_lease->state &
- 		    (~(SMB2_LEASE_READ_CACHING_LE |
- 				SMB2_LEASE_HANDLE_CACHING_LE)))) {
-@@ -1388,9 +1378,8 @@ void smb_break_all_levII_oplock(struct k
- 		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE, NULL);
- next:
- 		opinfo_put(brk_op);
--		rcu_read_lock();
- 	}
--	rcu_read_unlock();
-+	up_read(&ci->m_lock);
- 
- 	if (op)
- 		opinfo_put(op);
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -71,7 +71,6 @@ struct oplock_info {
- 	struct list_head        lease_entry;
- 	wait_queue_head_t oplock_q; /* Other server threads */
- 	wait_queue_head_t oplock_brk; /* oplock breaking wait */
--	struct rcu_head		rcu_head;
- };
- 
- struct lease_break_info {
+ 	SFP_QUIRK_F("OEM", "SFP-10G-T", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_M("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
++	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
++	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
+ 	SFP_QUIRK_F("OEM", "RTSFP-10", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_F("OEM", "RTSFP-10G", sfp_fixup_rollball_cc),
+ 	SFP_QUIRK_F("Turris", "RTSFP-10", sfp_fixup_rollball),
+-- 
+2.39.5
+
 
 
