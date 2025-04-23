@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52FF293B5C;
-	Wed, 23 Apr 2025 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76008298CB5;
+	Wed, 23 Apr 2025 15:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422457; cv=none; b=Wh43rzvu6kuPnLDQgca4JSPRlsdmbcNn3j07bI5rEpBhUjMPHJ5Slrkcf2/lDt1UGbFk2SICbqZ80dEApsDi4vK7V/lRDwoD1w47e1XNlUzXNrKDs6alRgDoIO3pVoBl/m15dYyJJXyjDelfWPuXyVea512AUg5R76KyHgVFIRY=
+	t=1745422459; cv=none; b=elsSLn9EYi5HeRhjMfVCOWHgI7IhVtL32Lrlj0uddvfhJs9CBJ/CTwXdcOFyH80op3aLAaHZ/y4a18igUiXpt81h4R7z48BscoqD7oxfeLZSP+4clPDWFCpZApaZN7mhqkVRCSx0HbvhB5ZE++C3bFKV+3771ytDKGM9aJWAwbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422457; c=relaxed/simple;
-	bh=rcINRd6Y6ciq1t4oYTsjC8Z1upA1U/VOCuer1ymbupo=;
+	s=arc-20240116; t=1745422459; c=relaxed/simple;
+	bh=2mS9irV8Xwct1MpiAFwVeNAhkdmVOmtXTh3mB+eZpn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d94xa8dBuFpk12BF7DJ4KGeW6A4wv++QXnI0P0JIkegSIquKJ00E/p2dpXjZAGvDaV+bFxHjo4IDBOZQCe3Lht9Q1kiyZRi6Hgtcmwwv27IawIzp/nXpyQYpo5TTvuTARxIW0vzsPEtAYlkYD2lHpic9S+m3BiVcGzaCpI77hkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWUf309M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HiFOszz3fZTc2w3x+fhSnjHbM7IEfY6/qdU+jgIUxM6NXpQ0Fqpe61HGuUzg/J+2Z6UT/D1nflPule+C2hCrD8g4Jd8adLq1wHBw8mTrb5aRsFWmnmHwZ+oAEcDFe3P9AdJZPmNe764GzhvFjMYsImdiN+5S6erZWP8CnBlIk4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=md3SHryQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWUf309M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C5DC4CEE2;
-	Wed, 23 Apr 2025 15:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="md3SHryQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0044EC4CEE2;
+	Wed, 23 Apr 2025 15:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422456;
-	bh=rcINRd6Y6ciq1t4oYTsjC8Z1upA1U/VOCuer1ymbupo=;
+	s=korg; t=1745422459;
+	bh=2mS9irV8Xwct1MpiAFwVeNAhkdmVOmtXTh3mB+eZpn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWUf309MRX6TN/hPsBqfMptzMRU82IDzzPG2zVpwAFBaTdpi4R4HcztdGTJJY8ewr
-	 tNnga/YupeiCTJAdalZagPn1eNiVHgzB31cfwSk0ZqXk4SoiKlFe20iHWQpxa9zmIH
-	 fl4VlOK0EYs8dAQOf+rXYTBRgGNRRaonuXRJ+jDo=
+	b=md3SHryQH1J4wr/yclnk8gVzlvw8bNCD5ULZS0Qq+pBJJn08RsCWzFqK31/vIZ5A6
+	 F3ZZZ71EuN2nOZcgjFOraSLmMUBEmlqWeY4io/ocJJFptq+5tc6GIQbhxksL0PnBIq
+	 q+87ZM4MDnDBUJkeAYA5eyeJnG1/JKCJgcCQt4ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 329/393] Revert "smb: client: fix TCP timers deadlock after rmmod"
-Date: Wed, 23 Apr 2025 16:43:45 +0200
-Message-ID: <20250423142656.923344457@linuxfoundation.org>
+	Jan Stancek <jstancek@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 287/291] sign-file,extract-cert: avoid using deprecated ERR_get_error_line()
+Date: Wed, 23 Apr 2025 16:44:36 +0200
+Message-ID: <20250423142636.147703380@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,199 +49,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-commit 95d2b9f693ff2a1180a23d7d59acc0c4e72f4c41 upstream.
+commit 467d60eddf55588add232feda325da7215ddaf30 upstream.
 
-This reverts commit e9f2517a3e18a54a3943c098d2226b245d488801.
+ERR_get_error_line() is deprecated since OpenSSL 3.0.
 
-Commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
-rmmod") is intended to fix a null-ptr-deref in LOCKDEP, which is
-mentioned as CVE-2024-54680, but is actually did not fix anything;
-The issue can be reproduced on top of it. [0]
+Use ERR_peek_error_line() instead, and combine display_openssl_errors()
+and drain_openssl_errors() to a single function where parameter decides
+if it should consume errors silently.
 
-Also, it reverted the change by commit ef7134c7fc48 ("smb: client:
-Fix use-after-free of network namespace.") and introduced a real
-issue by reviving the kernel TCP socket.
-
-When a reconnect happens for a CIFS connection, the socket state
-transitions to FIN_WAIT_1.  Then, inet_csk_clear_xmit_timers_sync()
-in tcp_close() stops all timers for the socket.
-
-If an incoming FIN packet is lost, the socket will stay at FIN_WAIT_1
-forever, and such sockets could be leaked up to net.ipv4.tcp_max_orphans.
-
-Usually, FIN can be retransmitted by the peer, but if the peer aborts
-the connection, the issue comes into reality.
-
-I warned about this privately by pointing out the exact report [1],
-but the bogus fix was finally merged.
-
-So, we should not stop the timers to finally kill the connection on
-our side in that case, meaning we must not use a kernel socket for
-TCP whose sk->sk_net_refcnt is 0.
-
-The kernel socket does not have a reference to its netns to make it
-possible to tear down netns without cleaning up every resource in it.
-
-For example, tunnel devices use a UDP socket internally, but we can
-destroy netns without removing such devices and let it complete
-during exit.  Otherwise, netns would be leaked when the last application
-died.
-
-However, this is problematic for TCP sockets because TCP has timers to
-close the connection gracefully even after the socket is close()d.  The
-lifetime of the socket and its netns is different from the lifetime of
-the underlying connection.
-
-If the socket user does not maintain the netns lifetime, the timer could
-be fired after the socket is close()d and its netns is freed up, resulting
-in use-after-free.
-
-Actually, we have seen so many similar issues and converted such sockets
-to have a reference to netns.
-
-That's why I converted the CIFS client socket to have a reference to
-netns (sk->sk_net_refcnt == 1), which is somehow mentioned as out-of-scope
-of CIFS and technically wrong in e9f2517a3e18, but **is in-scope and right
-fix**.
-
-Regarding the LOCKDEP issue, we can prevent the module unload by
-bumping the module refcount when switching the LOCKDDEP key in
-sock_lock_init_class_and_name(). [2]
-
-For a while, let's revert the bogus fix.
-
-Note that now we can use sk_net_refcnt_upgrade() for the socket
-conversion, but I'll do so later separately to make backport easy.
-
-Link: https://lore.kernel.org/all/20250402020807.28583-1-kuniyu@amazon.com/ #[0]
-Link: https://lore.kernel.org/netdev/c08bd5378da647a2a4c16698125d180a@huawei.com/ #[1]
-Link: https://lore.kernel.org/lkml/20250402005841.19846-1-kuniyu@amazon.com/ #[2]
-Fixes: e9f2517a3e18 ("smb: client: fix TCP timers deadlock after rmmod")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   36 ++++++++++--------------------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
+ certs/extract-cert.c |    4 ++--
+ scripts/sign-file.c  |    6 +++---
+ scripts/ssl-common.h |   23 ++++++++---------------
+ 3 files changed, 13 insertions(+), 20 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1003,13 +1003,9 @@ clean_demultiplex_info(struct TCP_Server
- 	msleep(125);
- 	if (cifs_rdma_enabled(server))
- 		smbd_destroy(server);
--
- 	if (server->ssocket) {
- 		sock_release(server->ssocket);
- 		server->ssocket = NULL;
--
--		/* Release netns reference for the socket. */
--		put_net(cifs_net_ns(server));
+--- a/certs/extract-cert.c
++++ b/certs/extract-cert.c
+@@ -96,11 +96,11 @@ int main(int argc, char **argv)
+ 		parms.cert = NULL;
+ 
+ 		ENGINE_load_builtin_engines();
+-		drain_openssl_errors();
++		drain_openssl_errors(__LINE__, 1);
+ 		e = ENGINE_by_id("pkcs11");
+ 		ERR(!e, "Load PKCS#11 ENGINE");
+ 		if (ENGINE_init(e))
+-			drain_openssl_errors();
++			drain_openssl_errors(__LINE__, 1);
+ 		else
+ 			ERR(1, "ENGINE_init");
+ 		if (key_pass)
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -114,11 +114,11 @@ static EVP_PKEY *read_private_key(const
+ 		ENGINE *e;
+ 
+ 		ENGINE_load_builtin_engines();
+-		drain_openssl_errors();
++		drain_openssl_errors(__LINE__, 1);
+ 		e = ENGINE_by_id("pkcs11");
+ 		ERR(!e, "Load PKCS#11 ENGINE");
+ 		if (ENGINE_init(e))
+-			drain_openssl_errors();
++			drain_openssl_errors(__LINE__, 1);
+ 		else
+ 			ERR(1, "ENGINE_init");
+ 		if (key_pass)
+@@ -273,7 +273,7 @@ int main(int argc, char **argv)
+ 
+ 		/* Digest the module data. */
+ 		OpenSSL_add_all_digests();
+-		display_openssl_errors(__LINE__);
++		drain_openssl_errors(__LINE__, 0);
+ 		digest_algo = EVP_get_digestbyname(hash_algo);
+ 		ERR(!digest_algo, "EVP_get_digestbyname");
+ 
+--- a/scripts/ssl-common.h
++++ b/scripts/ssl-common.h
+@@ -3,7 +3,7 @@
+  * SSL helper functions shared by sign-file and extract-cert.
+  */
+ 
+-static void display_openssl_errors(int l)
++static void drain_openssl_errors(int l, int silent)
+ {
+ 	const char *file;
+ 	char buf[120];
+@@ -11,28 +11,21 @@ static void display_openssl_errors(int l
+ 
+ 	if (ERR_peek_error() == 0)
+ 		return;
+-	fprintf(stderr, "At main.c:%d:\n", l);
++	if (!silent)
++		fprintf(stderr, "At main.c:%d:\n", l);
+ 
+-	while ((e = ERR_get_error_line(&file, &line))) {
++	while ((e = ERR_peek_error_line(&file, &line))) {
+ 		ERR_error_string(e, buf);
+-		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
++		if (!silent)
++			fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
++		ERR_get_error();
  	}
- 
- 	if (!list_empty(&server->pending_mid_q)) {
-@@ -1058,7 +1054,6 @@ clean_demultiplex_info(struct TCP_Server
- 		 */
- 	}
- 
--	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(server));
- 	kfree(server->leaf_fullpath);
- 	kfree(server->hostname);
-@@ -1730,8 +1725,6 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 
- 	tcp_ses->ops = ctx->ops;
- 	tcp_ses->vals = ctx->vals;
--
--	/* Grab netns reference for this server. */
- 	cifs_set_net_ns(tcp_ses, get_net(current->nsproxy->net_ns));
- 
- 	tcp_ses->conn_id = atomic_inc_return(&tcpSesNextId);
-@@ -1863,7 +1856,6 @@ smbd_connected:
- out_err_crypto_release:
- 	cifs_crypto_secmech_release(tcp_ses);
- 
--	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(tcp_ses));
- 
- out_err:
-@@ -1872,10 +1864,8 @@ out_err:
- 			cifs_put_tcp_session(tcp_ses->primary_server, false);
- 		kfree(tcp_ses->hostname);
- 		kfree(tcp_ses->leaf_fullpath);
--		if (tcp_ses->ssocket) {
-+		if (tcp_ses->ssocket)
- 			sock_release(tcp_ses->ssocket);
--			put_net(cifs_net_ns(tcp_ses));
--		}
- 		kfree(tcp_ses);
- 	}
- 	return ERR_PTR(rc);
-@@ -3139,20 +3129,20 @@ generic_ip_connect(struct TCP_Server_Inf
- 		socket = server->ssocket;
- 	} else {
- 		struct net *net = cifs_net_ns(server);
-+		struct sock *sk;
- 
--		rc = sock_create_kern(net, sfamily, SOCK_STREAM, IPPROTO_TCP, &server->ssocket);
-+		rc = __sock_create(net, sfamily, SOCK_STREAM,
-+				   IPPROTO_TCP, &server->ssocket, 1);
- 		if (rc < 0) {
- 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
- 			return rc;
- 		}
- 
--		/*
--		 * Grab netns reference for the socket.
--		 *
--		 * It'll be released here, on error, or in clean_demultiplex_info() upon server
--		 * teardown.
--		 */
--		get_net(net);
-+		sk = server->ssocket->sk;
-+		__netns_tracker_free(net, &sk->ns_tracker, false);
-+		sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 
- 		/* BB other socket options to set KEEPALIVE, NODELAY? */
- 		cifs_dbg(FYI, "Socket created\n");
-@@ -3166,10 +3156,8 @@ generic_ip_connect(struct TCP_Server_Inf
- 	}
- 
- 	rc = bind_socket(server);
--	if (rc < 0) {
--		put_net(cifs_net_ns(server));
-+	if (rc < 0)
- 		return rc;
--	}
- 
- 	/*
- 	 * Eventually check for other socket options to change from
-@@ -3206,7 +3194,6 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (rc < 0) {
- 		cifs_dbg(FYI, "Error %d connecting to server\n", rc);
- 		trace_smb3_connect_err(server->hostname, server->conn_id, &server->dstaddr, rc);
--		put_net(cifs_net_ns(server));
- 		sock_release(socket);
- 		server->ssocket = NULL;
- 		return rc;
-@@ -3215,9 +3202,6 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (sport == htons(RFC1001_PORT))
- 		rc = ip_rfc1001_connect(server);
- 
--	if (rc < 0)
--		put_net(cifs_net_ns(server));
--
- 	return rc;
  }
  
+-static void drain_openssl_errors(void)
+-{
+-	const char *file;
+-	int line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	while (ERR_get_error_line(&file, &line)) {}
+-}
+-
+ #define ERR(cond, fmt, ...)				\
+ 	do {						\
+ 		bool __cond = (cond);			\
+-		display_openssl_errors(__LINE__);	\
++		drain_openssl_errors(__LINE__, 0);	\
+ 		if (__cond) {				\
+ 			errx(1, fmt, ## __VA_ARGS__);	\
+ 		}					\
 
 
