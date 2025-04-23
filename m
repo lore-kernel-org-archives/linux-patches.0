@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63694288C8D;
-	Wed, 23 Apr 2025 15:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0140D280A22;
+	Wed, 23 Apr 2025 15:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420606; cv=none; b=eDNb79Lk6gAM8Y4htESCcOfV3onuEPhcDiFOSYs1pNLJnL3cBR0llaQ4l5lzCib0Bp8/f50yWC1KF4+TkFLoiPLPjTcyADz2oJAWor2Jfk6/LrYQhGxGmWHqLkXc2v2M/j4ZPH1szCPrH5SobuguUExLl5ea/3qA5o3RZm3Huc8=
+	t=1745420609; cv=none; b=ohu+2CG0hAotr9N2FkIcrVbkJA6jXUPS2rDHJHYCjlhHBNU95sstb0HcPUUBLGDmIPNCUGZZKmlZ+7m/raFSgAkw4v5MkuMHG3+3UK26cI0gw++Z2BXD6+Q+NAob335HwLWczmOwjpIeYCkS1DsxobSpd0G4IdOcvpkV1aoXMMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420606; c=relaxed/simple;
-	bh=03Q/jjH3qANNEtI3QsCvdXdkBh/A1xQpm3+11zc7Ao0=;
+	s=arc-20240116; t=1745420609; c=relaxed/simple;
+	bh=I1st/aNNUKMYE7yT1wVv5CNVrvpDX0ppQJ1Iwj1G2k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3EYu4YDrfFspknWdSSRH3HpqP7DMwAMsW3NckmBljkxpQOO3KYzF1J48JSup7Qzo25n+KL+TlcbQ5TcC6j/91T5p9FcBpULj+RvEZ7mF8Itg4u4ENtGUfy75+BDoctD2RLgCIK2811wuw+/3P9hP3RpuirnYd7aa6b87JDfrZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSj03wWp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQiRdyvJheTQzCqPvrZPUPA/7GbjI4JrOMluRMZSI7Xi/12xXZBsMKj94+fN7z+4gV0bzs+i22NnETu1rWs2py341daMS5LzbuC4BalURlVjV+FUNrXzB2N8PRC8Ovx/v0RVlp8rBY7zOfo5OGBL2iQduMF/XlscZS1D0c+9oJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELYqS5F+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSj03wWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6414C4CEE2;
-	Wed, 23 Apr 2025 15:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELYqS5F+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BECC4CEE2;
+	Wed, 23 Apr 2025 15:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420606;
-	bh=03Q/jjH3qANNEtI3QsCvdXdkBh/A1xQpm3+11zc7Ao0=;
+	s=korg; t=1745420608;
+	bh=I1st/aNNUKMYE7yT1wVv5CNVrvpDX0ppQJ1Iwj1G2k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSj03wWpcPffwj55w+clQiP2mVHnTjMqihWNFdaKYui3KdaxzCw9dxQz7kgzn7PNl
-	 NoXNDAiDC7c6uue8SKmVS500RoD01iKvJE493EmhXqXsYs1+x9Xh6CGs5WJiOlBPtI
-	 nAMRToMcDnejBaJHd6r3T1GhBRl3zs0QKwpmpvmY=
+	b=ELYqS5F+eQ9ruqdlwpiqf6KKwzZSosy0RyHX8OeIC+ExgUedapQqfojOrn8sgth1V
+	 beM0zMgIhcYDMJsfJvSXJppZQlrFOalHVVOHWmqDyZeZG5UY0gj1aFs1+hXp+VBSoX
+	 PnYOC1xP4a9AbDJ1PBFS605Na+P/nbrDw6omNW5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/291] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
-Date: Wed, 23 Apr 2025 16:40:53 +0200
-Message-ID: <20250423142626.991708030@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 107/241] ASoC: Intel: sof_sdw: Add quirk for Asus Zenbook S16
+Date: Wed, 23 Apr 2025 16:42:51 +0200
+Message-ID: <20250423142624.955852300@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
+commit dfcf3dde45df383f2695c3d3475fec153d2c7dbe upstream.
 
-If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
-delete the queue from process_queue_list and free the resource.
+Asus laptops with sound PCI subsystem ID 1043:1f43 have the DMICs
+connected to the host instead of the CS42L43 so need the
+SOC_SDW_CODEC_MIC quirk.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://github.com/thesofproject/sof/issues/9930
+Fixes: 084344970808 ("ASoC: Intel: sof_sdw: Add quirk for Asus Zenbook S14")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250404133213.4658-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_sdw.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index 1918a3c06ac86..a15bf1e382767 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -429,7 +429,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
- 			pr_err("Pasid 0x%x destroy queue %d failed, ret %d\n",
- 				pqm->process->pasid,
- 				pqn->q->properties.queue_id, retval);
--			if (retval != -ETIME)
-+			if (retval != -ETIME && retval != -EIO)
- 				goto err_destroy_queue;
- 		}
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -764,6 +764,7 @@ static const struct dmi_system_id sof_sd
  
--- 
-2.39.5
-
+ static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1e13, "ASUS Zenbook S14", SOC_SDW_CODEC_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1f43, "ASUS Zenbook S16", SOC_SDW_CODEC_MIC),
+ 	{}
+ };
+ 
 
 
