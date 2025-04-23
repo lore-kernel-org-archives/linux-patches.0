@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75FD29DB81;
-	Wed, 23 Apr 2025 15:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6528728DEEA;
+	Wed, 23 Apr 2025 15:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422057; cv=none; b=W6EmO/5PWEqZyXJHHNG9B1rUJ46WjTFghLnPZvUix7r2S+FDRDVlbk74BFHWWQggsBR3ffFVkWzYshSJvFQbMciGvs0/DHVrmzvDwwlokUSfcU7nF/9ig9jR8wkuw6FGfSkvIykTFUpjGgGw2voV65J8CRJ1LpsFx4XvYAjr2GE=
+	t=1745422060; cv=none; b=X5u/d4Ju0J99ytS1V6e/m9m/IBsAppEcac+31VnqauDjAyQeTAWfFBO6Zl4j43Lawq3gBYGKM0NsudZLx04ukWv6YWLUTmpVLqt38OSqnKBABgIlT9jiv87rtCKfV4FTJ7gAkhI8bJdLzMTAN+FprU1KHLXEWYEFKjgtcjcS7yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422057; c=relaxed/simple;
-	bh=UaHEXakF8xTyAIw0zked7sOYEZ0Pr+nQgQ0jn+nNPRY=;
+	s=arc-20240116; t=1745422060; c=relaxed/simple;
+	bh=rJemsLZrIlseUWWQy4xlmBvD3yCaENLUHFkYj8Mc3XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXDHlPN0xw/E34n2xn8pJWqgSFiBwDuQbWo0mkKi2+xj4K1yUelOvxZDESYafK8VU0WM2sVi+WdX9zp+onBwcAEK/hrl9eA9G/t0D2UyIHLQP40o0RhVU/lRTgh8R+UCjSZhMNWlsObnQZ0Ai62XJc5pvP3VBmjpib2sSxz6gTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmXMxno1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pe9C8LFjKEw1qQQALj5jkJ96B1r7hmLI2p2RxPieRNRYYF/dkdRWA8LQjnz/NSdHmc9rOAk0chxZOdpeSLiD/47QCFxSKCx+iZDGeDCbZUCeurscMF3kvmZgAMPHX2fwxs0Tj0Z6pujFv3beAF/D3PAEZ/I9ilS0C0xr9zHdewU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iV7m51cz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmXMxno1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB39C4CEE2;
-	Wed, 23 Apr 2025 15:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iV7m51cz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EEEC4CEE2;
+	Wed, 23 Apr 2025 15:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422057;
-	bh=UaHEXakF8xTyAIw0zked7sOYEZ0Pr+nQgQ0jn+nNPRY=;
+	s=korg; t=1745422060;
+	bh=rJemsLZrIlseUWWQy4xlmBvD3yCaENLUHFkYj8Mc3XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmXMxno1TXV8k9OEuSsnIik4QrIp3i4kdMwDb+T/MiV4co5XEbFvG+3bsSIG2f2hd
-	 1kXlhAOc7TwXna18Xt7qxA5OA4wmQfZmWYRKTt1+Tk0aBbBl+C4W9yJg2G263u4YuD
-	 1YMxh+OsHOCxAwHpoQrsBI658X9bPCqX9hvvdao8=
+	b=iV7m51czSmuWdTcwxTJxJ/0HR4DBAVclVxmq9R2bkvutwYh2B10WM8Hr15MjFUFfN
+	 EgEB1VlwWULC7xvuYirhSV2sGfOvpNBbPu/gbm3d329SY+2AWQIBOvhQ/0NSyzjeOz
+	 wlj/vrGUGA94Oeox4q0eQY7ie3svZ699d7GEChdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 270/393] net: ngbe: fix memory leak in ngbe_probe() error path
-Date: Wed, 23 Apr 2025 16:42:46 +0200
-Message-ID: <20250423142654.513329397@linuxfoundation.org>
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 226/291] RDMA/cma: Fix workqueue crash in cma_netevent_work_handler
+Date: Wed, 23 Apr 2025 16:43:35 +0200
+Message-ID: <20250423142633.658526588@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +46,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
 
-[ Upstream commit 88fa80021b77732bc98f73fb69d69c7cc37b9f0d ]
+commit 45f5dcdd049719fb999393b30679605f16ebce14 upstream.
 
-When ngbe_sw_init() is called, memory is allocated for wx->rss_key
-in wx_init_rss_key(). However, in ngbe_probe() function, the subsequent
-error paths after ngbe_sw_init() don't free the rss_key. Fix that by
-freeing it in error path along with wx->mac_table.
+struct rdma_cm_id has member "struct work_struct net_work"
+that is reused for enqueuing cma_netevent_work_handler()s
+onto cma_wq.
 
-Also change the label to which execution jumps when ngbe_sw_init()
-fails, because otherwise, it could lead to a double free for rss_key,
-when the mac_table allocation fails in wx_sw_init().
+Below crash[1] can occur if more than one call to
+cma_netevent_callback() occurs in quick succession,
+which further enqueues cma_netevent_work_handler()s for the
+same rdma_cm_id, overwriting any previously queued work-item(s)
+that was just scheduled to run i.e. there is no guarantee
+the queued work item may run between two successive calls
+to cma_netevent_callback() and the 2nd INIT_WORK would overwrite
+the 1st work item (for the same rdma_cm_id), despite grabbing
+id_table_lock during enqueue.
 
-Fixes: 02338c484ab6 ("net: ngbe: Initialize sw info and register netdev")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Reviewed-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20250412154927.25908-1-abdun.nihaal@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also drgn analysis [2] indicates the work item was likely overwritten.
+
+Fix this by moving the INIT_WORK() to __rdma_create_id(),
+so that it doesn't race with any existing queue_work() or
+its worker thread.
+
+[1] Trimmed crash stack:
+=============================================
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+kworker/u256:6 ... 6.12.0-0...
+Workqueue:  cma_netevent_work_handler [rdma_cm] (rdma_cm)
+RIP: 0010:process_one_work+0xba/0x31a
+Call Trace:
+ worker_thread+0x266/0x3a0
+ kthread+0xcf/0x100
+ ret_from_fork+0x31/0x50
+ ret_from_fork_asm+0x1a/0x30
+=============================================
+
+[2] drgn crash analysis:
+
+>>> trace = prog.crashed_thread().stack_trace()
+>>> trace
+(0)  crash_setup_regs (./arch/x86/include/asm/kexec.h:111:15)
+(1)  __crash_kexec (kernel/crash_core.c:122:4)
+(2)  panic (kernel/panic.c:399:3)
+(3)  oops_end (arch/x86/kernel/dumpstack.c:382:3)
+...
+(8)  process_one_work (kernel/workqueue.c:3168:2)
+(9)  process_scheduled_works (kernel/workqueue.c:3310:3)
+(10) worker_thread (kernel/workqueue.c:3391:4)
+(11) kthread (kernel/kthread.c:389:9)
+
+Line workqueue.c:3168 for this kernel version is in process_one_work():
+3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
+
+>>> trace[8]["work"]
+*(struct work_struct *)0xffff92577d0a21d8 = {
+	.data = (atomic_long_t){
+		.counter = (s64)536870912,    <=== Note
+	},
+	.entry = (struct list_head){
+		.next = (struct list_head *)0xffff924d075924c0,
+		.prev = (struct list_head *)0xffff924d075924c0,
+	},
+	.func = (work_func_t)cma_netevent_work_handler+0x0 = 0xffffffffc2cec280,
+}
+
+Suspicion is that pwq is NULL:
+>>> trace[8]["pwq"]
+(struct pool_workqueue *)<absent>
+
+In process_one_work(), pwq is assigned from:
+struct pool_workqueue *pwq = get_work_pwq(work);
+
+and get_work_pwq() is:
+static struct pool_workqueue *get_work_pwq(struct work_struct *work)
+{
+ 	unsigned long data = atomic_long_read(&work->data);
+
+ 	if (data & WORK_STRUCT_PWQ)
+ 		return work_struct_pwq(data);
+ 	else
+ 		return NULL;
+}
+
+WORK_STRUCT_PWQ is 0x4:
+>>> print(repr(prog['WORK_STRUCT_PWQ']))
+Object(prog, 'enum work_flags', value=4)
+
+But work->data is 536870912 which is 0x20000000.
+So, get_work_pwq() returns NULL and we crash in process_one_work():
+3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
+=============================================
+
+Fixes: 925d046e7e52 ("RDMA/core: Add a netevent notifier to cma")
+Cc: stable@vger.kernel.org
+Co-developed-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://patch.msgid.link/bf0082f9-5b25-4593-92c6-d130aa8ba439@oracle.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/ngbe/ngbe_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/cma.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-index a4d63d2f3c5bb..91f0f23c176a0 100644
---- a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-+++ b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-@@ -589,7 +589,7 @@ static int ngbe_probe(struct pci_dev *pdev,
- 	/* setup the private structure */
- 	err = ngbe_sw_init(wx);
- 	if (err)
--		goto err_free_mac_table;
-+		goto err_pci_release_regions;
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -72,6 +72,8 @@ static const char * const cma_events[] =
+ static void cma_iboe_set_mgid(struct sockaddr *addr, union ib_gid *mgid,
+ 			      enum ib_gid_type gid_type);
  
- 	/* check if flash load is done after hw power up */
- 	err = wx_check_flash_load(wx, NGBE_SPI_ILDR_STATUS_PERST);
-@@ -687,6 +687,7 @@ static int ngbe_probe(struct pci_dev *pdev,
- err_clear_interrupt_scheme:
- 	wx_clear_interrupt_scheme(wx);
- err_free_mac_table:
-+	kfree(wx->rss_key);
- 	kfree(wx->mac_table);
- err_pci_release_regions:
- 	pci_release_selected_regions(pdev,
--- 
-2.39.5
-
++static void cma_netevent_work_handler(struct work_struct *_work);
++
+ const char *__attribute_const__ rdma_event_msg(enum rdma_cm_event_type event)
+ {
+ 	size_t index = event;
+@@ -994,6 +996,7 @@ __rdma_create_id(struct net *net, rdma_c
+ 	get_random_bytes(&id_priv->seq_num, sizeof id_priv->seq_num);
+ 	id_priv->id.route.addr.dev_addr.net = get_net(net);
+ 	id_priv->seq_num &= 0x00ffffff;
++	INIT_WORK(&id_priv->id.net_work, cma_netevent_work_handler);
+ 
+ 	rdma_restrack_new(&id_priv->res, RDMA_RESTRACK_CM_ID);
+ 	if (parent)
+@@ -5186,7 +5189,6 @@ static int cma_netevent_callback(struct
+ 		if (!memcmp(current_id->id.route.addr.dev_addr.dst_dev_addr,
+ 			   neigh->ha, ETH_ALEN))
+ 			continue;
+-		INIT_WORK(&current_id->id.net_work, cma_netevent_work_handler);
+ 		cma_id_get(current_id);
+ 		queue_work(cma_wq, &current_id->id.net_work);
+ 	}
 
 
