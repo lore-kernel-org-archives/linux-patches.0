@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771C28D854;
-	Wed, 23 Apr 2025 15:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D586F28D849;
+	Wed, 23 Apr 2025 15:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421071; cv=none; b=ujui9TCeyyvpmoD3iZFlRl2T636LX3fyrdzZWLzKS73MukwV07cGfsqb6SpRAGghGOYGxTHzdec/AgCj3vc9yZf3/X9tynspxQ8FwhpFjuurssG0wi2oV37khPBf3IJ+yRvQ5cPP/VQwlfSZn2GRsmt3flDDHb/ZkwllxNAJ/aI=
+	t=1745421074; cv=none; b=d6gybAwO2h1xhuBCpEpnPR/Cu1RNIlgM1AIxqjM8KodS4f7q/5C9OMF45joGmypdJJgZ4F1gQs1FziX0GHpnUciz9Zq8yJID/Sk5J0aKvVs84fU98OYGuSppe0mv5SMhGHfdmlaQ06iDRJl7qog8HTP+Dyf52fke5NrxGEXtgHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421071; c=relaxed/simple;
-	bh=YOYAv+YwPa4kh5yGVBQI7MEyDsTgh20PimoPWYQvbfk=;
+	s=arc-20240116; t=1745421074; c=relaxed/simple;
+	bh=F+hx4Fn5mDfpyt0oGlpKpllYKk1cWAK1EFxhtiq3FK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnKRP217sxAmKqHcU8Y9k3+i/6JJNcAy4ifvHpag2Pw0RBeBHyxbi1eRaop2U8a5SDJVzNm/Ufkfdzt0TVX8F1lpGumOgCH++KYYvb5Ax+kAMK76j5KYsY8yETvj+9HSdhUPEppNtgMDiRSLC24kVtzkBb+5KOTZo24tPBmwFds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWhiAwxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6ejhX8GCBw+F4zsQUA4Jcd/s8pQAUWmlSGM5d3Jc+R+5r2T7O2IUJiKU1WxS9cWPiESYnushGhgNfB/C20SWNOKg/KxkoouthXrD6YevyJupCYZLmi5s5qKI+JSuB3hDib8c+2S0rQ/gcpfgsfcl0yw53zZ2P0R8ZLbxoYf9KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muBl9RGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWhiAwxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6506DC4CEE2;
-	Wed, 23 Apr 2025 15:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muBl9RGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097EFC4CEE2;
+	Wed, 23 Apr 2025 15:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421070;
-	bh=YOYAv+YwPa4kh5yGVBQI7MEyDsTgh20PimoPWYQvbfk=;
+	s=korg; t=1745421073;
+	bh=F+hx4Fn5mDfpyt0oGlpKpllYKk1cWAK1EFxhtiq3FK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWhiAwxmyVa7a3MAQdl/ZIZ8EDM/OOVdNJqBZ7nCEyIdlojQkbQjl2LxHI5LmIOnr
-	 ivOS1jt2EyvA/TnnYYRlcx1ZGXP23Fi8hBLNkVTXgmadleJUENWGz0IjZfZZ8RPWEy
-	 zQPQR9ZkUmKMRnzGHl9dKqF6ONXjgzwupi+d9v98=
+	b=muBl9RGQg5hOTawKUYt3aISA7ofsXcDD2l7VaiJp0G1/e+v1Wcb1nM/HW4Wve9ktJ
+	 9GO7SNUUa3Q4vHsRsOsTIqHNkU2dj0Q6LFziSuEeXmhy99sb7GTBzQhgs1a+DPjDSi
+	 wAyfJbTlWt3xDSyApWiub5Po207YBYflida11p44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 144/393] media: venus: hfi_parser: add check to avoid out of bound access
-Date: Wed, 23 Apr 2025 16:40:40 +0200
-Message-ID: <20250423142649.330699316@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Eric Auger <eric.auger@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.12 189/223] arm64/sysreg: Add register fields for HFGITR2_EL2
+Date: Wed, 23 Apr 2025 16:44:21 +0200
+Message-ID: <20250423142624.873400250@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +51,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit 172bf5a9ef70a399bb227809db78442dc01d9e48 upstream.
+commit 9401476f17747586a8bfb29abfdf5ade7a8bceef upstream.
 
-There is a possibility that init_codecs is invoked multiple times during
-manipulated payload from video firmware. In such case, if codecs_count
-can get incremented to value more than MAX_CODEC_NUM, there can be OOB
-access. Reset the count so that it always starts from beginning.
+This adds register fields for HFGITR2_EL2 as per the definitions based
+on DDI0601 2024-12.
 
-Cc: stable@vger.kernel.org
-Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250203050828.1049370-5-anshuman.khandual@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/tools/sysreg |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -19,6 +19,8 @@ static void init_codecs(struct venus_cor
- 	struct hfi_plat_caps *caps = core->caps, *cap;
- 	unsigned long bit;
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -2694,6 +2694,12 @@ Field	1	AMEVCNTR00_EL0
+ Field	0	AMCNTEN0
+ EndSysreg
  
-+	core->codecs_count = 0;
++Sysreg	HFGITR2_EL2	3	4	3	1	7
++Res0	63:2
++Field	1	nDCCIVAPS
++Field	0	TSBCSYNC
++EndSysreg
 +
- 	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
- 		return;
- 
+ Sysreg	ZCR_EL2	3	4	1	2	0
+ Fields	ZCR_ELx
+ EndSysreg
 
 
