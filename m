@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4738226A082;
-	Wed, 23 Apr 2025 15:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9BE281364;
+	Wed, 23 Apr 2025 15:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420814; cv=none; b=uUIsHNYsRpqMTDhN/IM9tCHcDM812yQMw7NkqnigsuVyYLWZrmU5qrAMCKDur8LqQjlteuGEfYqTGN8AWBGum3XJ+Mb7NmLwl/M7n4AwSsBHxh9tlbX7l9eFY97OCLiPwHI0+QZ2OpMKgdGHq+8Mw0bXYuTgB5CeEcpNE3QBO2c=
+	t=1745420817; cv=none; b=oOC2JUmL2++s88ZkgBRNqakDquukp4WRN/sTHRUTGqX/YvRmL339PUPZL+NGszjxyxbmNXLctzwwgiQMOv639ZiJkniuHnbFah1g3ARAZNCSYkUpaPHEdin5go2BJoyLHV5ATrlbi9q3XWOpi0M1zhIKz1dXp5VBwrhr4LELVQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420814; c=relaxed/simple;
-	bh=HhMW7h6yPlEVCTIndnZeoqJ4ysJviIg/6VKNf65EkMc=;
+	s=arc-20240116; t=1745420817; c=relaxed/simple;
+	bh=DCF7e3Bu383lCR7QwIFtM3UeoF0GdvfVfOrF0KWuNmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrU435R8r2X24PnnhrlymfWR6j4qYSfKfYFBLEhCcxPp7hN4jpfyZQSOoSxp6T2KbHInnKL6qd0EWAg9CsTsHbJoDfQOvc0H/NlRoJSxO5BZoxQ0Sx35DRRhx6AfhRS2dhOywKR6pohygZ/ohJ+ymCz21MSD9/64ZX1XPuEO2qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKQAD4sR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kQ+pSaB/I65zrVZ5FoAx2r3IZjYWlzevXIQYidcd51oSX+fMDw5x9fTpAqUcZpRmPiMXjl8s68kiBt7kLWoeWvtiTtd2aoQmfZQHHpH4y0ex141H6bP7xe5GoyQeYTB2XEll/NMKEtgw+algDeedbSg0InTcCsqxSvzUo3m/SBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMQTwI4i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKQAD4sR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD6DC4CEE2;
-	Wed, 23 Apr 2025 15:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMQTwI4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726B5C4CEE3;
+	Wed, 23 Apr 2025 15:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420814;
-	bh=HhMW7h6yPlEVCTIndnZeoqJ4ysJviIg/6VKNf65EkMc=;
+	s=korg; t=1745420816;
+	bh=DCF7e3Bu383lCR7QwIFtM3UeoF0GdvfVfOrF0KWuNmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKQAD4sR90za/XrcixLt5ITARhdJL7U2YgQzZ59OouJs9DZpuadZAcsM0LbGDemyb
-	 eiDF+DsVnGXXYpVG13LT2VglQnYW/77bVQ5+EYEVqYSgMc4frsAFq4o2sG+A9EMv/4
-	 6gZ97bGdB7XyXM9h3ZkHQFI5aTyi1Htj+NpTBjvg=
+	b=uMQTwI4ieS+t3fpA/g7b2CFF6es4+iwLVz8VPkUB7ENCbtg5MWMHfuYPdWuADBPbe
+	 pRphRQto5rXn/D34++Brz3YHg1zVuwW8owAe67hSM0gDsqbdcOlWz5K6GAsOYFhyfc
+	 hhbX+MiHaJYTOt2d1O4Z/DZu4LXdukwp9CSsnTHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.1 083/291] xenfs/xensyms: respect hypervisors "next" indication
-Date: Wed, 23 Apr 2025 16:41:12 +0200
-Message-ID: <20250423142627.758951997@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 165/223] drm/xe: Use local fence in error path of xe_migrate_clear
+Date: Wed, 23 Apr 2025 16:43:57 +0200
+Message-ID: <20250423142623.888469363@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 5c4e79e29a9fe4ea132118ac40c2bc97cfe23077 upstream.
+commit 20659d3150f1a2a258a173fe011013178ff2a197 upstream.
 
-The interface specifies the symnum field as an input and output; the
-hypervisor sets it to the next sequential symbol's index. xensyms_next()
-incrementing the position explicitly (and xensyms_next_sym()
-decrementing it to "rewind") is only correct as long as the sequence of
-symbol indexes is non-sparse. Use the hypervisor-supplied value instead
-to update the position in xensyms_next(), and use the saved incoming
-index in xensyms_next_sym().
+The intent of the error path in xe_migrate_clear is to wait on locally
+generated fence and then return. The code is waiting on m->fence which
+could be the local fence but this is only stable under the job mutex
+leading to a possible UAF. Fix code to wait on local fence.
 
-Cc: stable@kernel.org
-Fixes: a11f4f0a4e18 ("xen: xensyms support")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <15d5e7fa-ec5d-422f-9319-d28bed916349@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20250311182915.3606291-1-matthew.brost@intel.com
+(cherry picked from commit 762b7e95362170b3e13a8704f38d5e47eca4ba74)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xenfs/xensyms.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_migrate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/xen/xenfs/xensyms.c
-+++ b/drivers/xen/xenfs/xensyms.c
-@@ -48,7 +48,7 @@ static int xensyms_next_sym(struct xensy
- 			return -ENOMEM;
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -1177,7 +1177,7 @@ err:
+ err_sync:
+ 		/* Sync partial copies if any. FIXME: job_mutex? */
+ 		if (fence) {
+-			dma_fence_wait(m->fence, false);
++			dma_fence_wait(fence, false);
+ 			dma_fence_put(fence);
+ 		}
  
- 		set_xen_guest_handle(symdata->name, xs->name);
--		symdata->symnum--; /* Rewind */
-+		symdata->symnum = symnum; /* Rewind */
- 
- 		ret = HYPERVISOR_platform_op(&xs->op);
- 		if (ret < 0)
-@@ -78,7 +78,7 @@ static void *xensyms_next(struct seq_fil
- {
- 	struct xensyms *xs = (struct xensyms *)m->private;
- 
--	xs->op.u.symdata.symnum = ++(*pos);
-+	*pos = xs->op.u.symdata.symnum;
- 
- 	if (xensyms_next_sym(xs))
- 		return NULL;
 
 
