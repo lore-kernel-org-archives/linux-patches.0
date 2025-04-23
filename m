@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14511F193C;
-	Wed, 23 Apr 2025 14:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A031F2C45;
+	Wed, 23 Apr 2025 14:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420303; cv=none; b=i3A3L0lEyq9ShMgsFBvpXbw9oKXF8MB0IMXWl3N2GyFYd52IEUKCPNpLwabQ+tuqxoTn21ZfYR6zGEgnAgEGFkh9p5P2w0GG5INgd07HPIWmblqxbvBfXgWVM8qJtbokXDO/5fazHU4zpWoBC8ZOf7BsKRLd5s71ReOZHhZTmDo=
+	t=1745420305; cv=none; b=OjFZPp6cnDrB8um4qjCO72ffnXofKVViJzLewHcPk5EqfBIzj2CgSOaLDnZE2y+TOpP8F9yLBtKT7fQo8+QCuq6ymdycKJjtBrb3jRxIs6CBQ0weFWZkKcIkolCVb10aUCPRo6W8gSndgGR8MB9UJOokmPnMdu012+w9ioDrgcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420303; c=relaxed/simple;
-	bh=ElJlXbZBmyxcsboAeemP1gZGIsjFojUGM4iDaL52sB8=;
+	s=arc-20240116; t=1745420305; c=relaxed/simple;
+	bh=oPUNRA4N4jjFfIScXoeHJLFGitr9Abt4g1F6aIr8NZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BV9p+hGmI62fsv0CVl9sn7qXMxlF2IqPNlWnVIfaWRQwN6pj8Hi3vx6vlIwdvHJdyOytaliIUO3xXf5PANBxkT0TuQOJzjyMSo5zVlsLClRlUMqZPyHB7eGmNyOtCMkrfRBHTMRCHHRpeC/p687sMpOc9wPBkA90p59URdnJBCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njNjQrvC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DcvNE6cObySFy+uqctMjq3HSDXqfO8VOerO+1wpXdi/C0JWzvURpA1wG8zN/0WWb2uYjgFmK74635cYPS7/AtB8ZB3/3AMQuA3VXfMre1cK5Dv8vHeaVhbVs0JDvf/5+3oDeI+APe6WtIxh5tDV9tkSKiBg+o301XE/6e+RnwrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlz37wj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njNjQrvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72776C4CEE2;
-	Wed, 23 Apr 2025 14:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlz37wj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F70FC4CEE2;
+	Wed, 23 Apr 2025 14:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420302;
-	bh=ElJlXbZBmyxcsboAeemP1gZGIsjFojUGM4iDaL52sB8=;
+	s=korg; t=1745420305;
+	bh=oPUNRA4N4jjFfIScXoeHJLFGitr9Abt4g1F6aIr8NZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njNjQrvCCnVoDe+QC3KCT2XkH6cJEXC9LI1LM+1au8TL5lBi/5FSWWu0srWC3uGu2
-	 WIF52+WNFf4hgPQP95XDmVI1FNQUP13N7ZRniKOyvakkLkgV6qBpqZumBvGnE/tveu
-	 E4BbD41De7JzZZdx4KCKDcTiCABlDkGGrImjxnHg=
+	b=nlz37wj9njRmph26bOYnPtzYRbWphsUkp4shxiazUGFdE3KxPVU3UOkL1LSu6n7Ei
+	 YE3RBL6ACJj2QyR9g2jrLD5/4KuCGH9N9780tdvyaTB2uUDUxE29QLKRk4UISizQ4e
+	 JdcBF6CGKv0zUPnH40RUoGu/fVYULnfVPYmnghS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/291] f2fs: dont retry IO for corrupted data scenario
-Date: Wed, 23 Apr 2025 16:40:24 +0200
-Message-ID: <20250423142625.830451583@linuxfoundation.org>
+Subject: [PATCH 6.14 080/241] netfilter: conntrack: fix erronous removal of offload bit
+Date: Wed, 23 Apr 2025 16:42:24 +0200
+Message-ID: <20250423142623.855270556@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 1534747d3170646ddeb9ea5f7caaac90359707cf ]
+[ Upstream commit d2d31ea8cd80b9830cdab624e94f9d41178fc99d ]
 
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
-F2FS-fs (dm-105): inconsistent node block, nid:430, node_footer[nid:2198964142,ino:598252782,ofs:118300154,cpver:5409237455940746069,blkaddr:2125070942]
+The blamed commit exposes a possible issue with flow_offload_teardown():
+We might remove the offload bit of a conntrack entry that has been
+offloaded again.
 
-If node block is loaded successfully, but its content is inconsistent, it
-doesn't need to retry IO.
+1. conntrack entry c1 is offloaded via flow f1 (f1->ct == c1).
+2. f1 times out and is pushed back to slowpath, c1 offload bit is
+   removed.  Due to bug, f1 is not unlinked from rhashtable right away.
+3. a new packet arrives for the flow and re-offload is triggered, i.e.
+   f2->ct == c1.  This is because lookup in flowtable skip entries with
+   teardown bit set.
+4. Next flowtable gc cycle finds f1 again
+5. flow_offload_teardown() is called again for f1 and c1 offload bit is
+   removed again, even though we have f2 referencing the same entry.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This is harmless, but clearly not correct.
+Fix the bug that exposes this: set 'teardown = true' to have the gc
+callback unlink the flowtable entry from the table right away instead of
+the unintentional defer to the next round.
+
+Also prevent flow_offload_teardown() from fixing up the ct state more than
+once: We could also be called from the data path or a notifier, not only
+from the flowtable gc callback.
+
+NF_FLOW_TEARDOWN can never be unset, so we can use it as synchronization
+point: if we observe did not see a 0 -> 1 transition, then another CPU
+is already doing the ct state fixups for us.
+
+Fixes: 03428ca5cee9 ("netfilter: conntrack: rework offload nf_conn timeout extension logic")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nf_flow_table_core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 0f350368dea73..b8296b0414fcb 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -695,8 +695,12 @@ void f2fs_update_inode_page(struct inode *inode)
- 		if (err == -ENOENT)
- 			return;
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 9d8361526f82a..9441ac3d8c1a2 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -383,8 +383,8 @@ static void flow_offload_del(struct nf_flowtable *flow_table,
+ void flow_offload_teardown(struct flow_offload *flow)
+ {
+ 	clear_bit(IPS_OFFLOAD_BIT, &flow->ct->status);
+-	set_bit(NF_FLOW_TEARDOWN, &flow->flags);
+-	flow_offload_fixup_ct(flow);
++	if (!test_and_set_bit(NF_FLOW_TEARDOWN, &flow->flags))
++		flow_offload_fixup_ct(flow);
+ }
+ EXPORT_SYMBOL_GPL(flow_offload_teardown);
  
-+		if (err == -EFSCORRUPTED)
-+			goto stop_checkpoint;
-+
- 		if (err == -ENOMEM || ++count <= DEFAULT_RETRY_IO_COUNT)
- 			goto retry;
-+stop_checkpoint:
- 		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_UPDATE_INODE);
- 		return;
- 	}
+@@ -558,10 +558,12 @@ static void nf_flow_offload_gc_step(struct nf_flowtable *flow_table,
+ 
+ 	if (nf_flow_has_expired(flow) ||
+ 	    nf_ct_is_dying(flow->ct) ||
+-	    nf_flow_custom_gc(flow_table, flow))
++	    nf_flow_custom_gc(flow_table, flow)) {
+ 		flow_offload_teardown(flow);
+-	else if (!teardown)
++		teardown = true;
++	} else if (!teardown) {
+ 		nf_flow_table_extend_ct_timeout(flow->ct);
++	}
+ 
+ 	if (teardown) {
+ 		if (test_bit(NF_FLOW_HW, &flow->flags)) {
 -- 
 2.39.5
 
