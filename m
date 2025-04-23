@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0931128540E;
-	Wed, 23 Apr 2025 15:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A7E263F2D;
+	Wed, 23 Apr 2025 15:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420588; cv=none; b=MKMGb+/1PZ/9OaNmYrr8+wVEFl7TYagUPMbS7D57J41i+tKHROpe9akCotwRIYrlsy169DeiXhITk20y6PznmfUTu+3t6P0505fXMl+Zd63H0fOLJs9Tk7KUJuLYK1KKC41wupEZRG9+WvRZhre1YLnkFcycYEvDFajpwyNZ7N0=
+	t=1745420590; cv=none; b=F7z0azx37jOPRbPRSKc2efrFk1DdMFPIe0F8UsG38YV485ciZOMs3m67YRJCTEZUitzl07VMr64oSLeCJnxHT/ILQ7+j6EVO+gkZ5RLYCgOA/ZKkOfeKKzLTHvXU+dAsmKYyh3SY10exwZK6nc54blhLEh29hsdik9qNwHF2M3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420588; c=relaxed/simple;
-	bh=1DRMyqhgHRzttT8cCMvsEJ+P15ynU9UgvD9xiT2dY2M=;
+	s=arc-20240116; t=1745420590; c=relaxed/simple;
+	bh=o62NYw+JbA7SXYimpVcp1ddg/BNwKybROR4ZyGKPXvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwT8r4OeJaWJ7o2xwht4LPdReiHwaDioTc1QkoTu+zrFz1yrPCfnPQcoj/rHvag4GW7omyvgotfqaM6C290sWVaQJHjU8/KiHSSmhP7usZ5X4Z8wLBWXbbCcoVOW3rNXDPEa8lAGh8PgDMa1tLDCKk3HMeM7OvHd5mBwPgxFJzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKnqd5At; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9jjK9ovdJ4BO7yVvStUd2c0vDC9i5IrU8A8aMMvVRSM7GP0v/VWM9oqgaAmu5WeOLSZpWoHCpxxFJECNWqCrnE/LJBWZtcZkbplmBJG2pTFrohbgY9bDIYeVcLhOzRVxIKzFu1ojXSojbVSbeJ4SoDDhI6cT7QQyOWz2cCWWBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZlv5aLR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKnqd5At"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7E3C4CEEB;
-	Wed, 23 Apr 2025 15:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZlv5aLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378D9C4CEE2;
+	Wed, 23 Apr 2025 15:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420587;
-	bh=1DRMyqhgHRzttT8cCMvsEJ+P15ynU9UgvD9xiT2dY2M=;
+	s=korg; t=1745420590;
+	bh=o62NYw+JbA7SXYimpVcp1ddg/BNwKybROR4ZyGKPXvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKnqd5Atvdd/6O+2scIde9AQUNKKcdguyNmK1bO/tLtxLcpvzesZvixqXBGZdZXyW
-	 w9oc7QJUMKZsJMgM4QKvie+BDY8oMvh1SFqJpTR+pilTHxpbBlVwwbcNyba7uHtMGN
-	 8MQhlr6H5FD6GOPGQhkPLS1KKlTlnV2G8TLauVrg=
+	b=sZlv5aLRxjfpbnv5NVX8nulCM6yFOW8hgKixCfrS+nrNi6NdHg3S815pOOD6OgQTE
+	 uzFFlakfLxmPPn7IhRgiqSgsxeLBn6B9P9g8Xm6QpOgfJjJ3whvCD0AzCTXLp6YPCM
+	 nb7UdE2QYh5K3p7mu6m2OVCeDURZKwvL+ELha/os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.14 105/241] ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
-Date: Wed, 23 Apr 2025 16:42:49 +0200
-Message-ID: <20250423142624.868551464@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 091/393] drm: allow encoder mode_set even when connectors change for crtc
+Date: Wed, 23 Apr 2025 16:39:47 +0200
+Message-ID: <20250423142647.052116742@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,122 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-commit d7bff1415e85b889dc8908be6aedba8807ae5e37 upstream.
+[ Upstream commit 7e182cb4f5567f53417b762ec0d679f0b6f0039d ]
 
-Currently the VI feedback rate is set to fixed 8K, fix this by getting
-the correct rate from params_rate.
+In certain use-cases, a CRTC could switch between two encoders
+and because the mode being programmed on the CRTC remains
+the same during this switch, the CRTC's mode_changed remains false.
+In such cases, the encoder's mode_set also gets skipped.
 
-Without this patch incorrect rate will be set on the VI feedback
-recording resulting in rate miss match and audio artifacts.
+Skipping mode_set on the encoder for such cases could cause an issue
+because even though the same CRTC mode was being used, the encoder
+type could have changed like the CRTC could have switched from a
+real time encoder to a writeback encoder OR vice-versa.
 
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250403160209.21613-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Allow encoder's mode_set to happen even when connectors changed on a
+CRTC and not just when the mode changed.
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241211-abhinavk-modeset-fix-v3-1-0de4bf3e7c32@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |   39 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -63,6 +63,10 @@
- #define CDC_WSA_TX_SPKR_PROT_CLK_DISABLE	0
- #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK	GENMASK(3, 0)
- #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K	0
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K	1
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K	2
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K	3
-+#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K	4
- #define CDC_WSA_TX0_SPKR_PROT_PATH_CFG0		(0x0248)
- #define CDC_WSA_TX1_SPKR_PROT_PATH_CTL		(0x0264)
- #define CDC_WSA_TX1_SPKR_PROT_PATH_CFG0		(0x0268)
-@@ -407,6 +411,7 @@ struct wsa_macro {
- 	int ear_spkr_gain;
- 	int spkr_gain_offset;
- 	int spkr_mode;
-+	u32 pcm_rate_vi;
- 	int is_softclip_on[WSA_MACRO_SOFTCLIP_MAX];
- 	int softclip_clk_users[WSA_MACRO_SOFTCLIP_MAX];
- 	struct regmap *regmap;
-@@ -1280,6 +1285,7 @@ static int wsa_macro_hw_params(struct sn
- 			       struct snd_soc_dai *dai)
- {
- 	struct snd_soc_component *component = dai->component;
-+	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 	int ret;
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 554d4468aa7c0..f3681970887cc 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -1373,7 +1373,7 @@ crtc_set_mode(struct drm_device *dev, struct drm_atomic_state *old_state)
+ 		mode = &new_crtc_state->mode;
+ 		adjusted_mode = &new_crtc_state->adjusted_mode;
  
- 	switch (substream->stream) {
-@@ -1292,6 +1298,11 @@ static int wsa_macro_hw_params(struct sn
- 			return ret;
- 		}
- 		break;
-+	case SNDRV_PCM_STREAM_CAPTURE:
-+		if (dai->id == WSA_MACRO_AIF_VI)
-+			wsa->pcm_rate_vi = params_rate(params);
-+
-+		break;
- 	default:
- 		break;
- 	}
-@@ -1465,6 +1476,28 @@ static int wsa_macro_enable_vi_feedback(
- 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 	u32 tx_reg0, tx_reg1;
-+	u32 rate_val;
-+
-+	switch (wsa->pcm_rate_vi) {
-+	case 8000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-+		break;
-+	case 16000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K;
-+		break;
-+	case 24000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K;
-+		break;
-+	case 32000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K;
-+		break;
-+	case 48000:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K;
-+		break;
-+	default:
-+		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-+		break;
-+	}
+-		if (!new_crtc_state->mode_changed)
++		if (!new_crtc_state->mode_changed && !new_crtc_state->connectors_changed)
+ 			continue;
  
- 	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
- 		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
-@@ -1476,7 +1509,7 @@ static int wsa_macro_enable_vi_feedback(
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_POST_PMU:
--			/* Enable V&I sensing */
-+		/* Enable V&I sensing */
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
- 					      CDC_WSA_TX_SPKR_PROT_RESET);
-@@ -1485,10 +1518,10 @@ static int wsa_macro_enable_vi_feedback(
- 					      CDC_WSA_TX_SPKR_PROT_RESET);
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-+					      rate_val);
- 		snd_soc_component_update_bits(component, tx_reg1,
- 					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-+					      rate_val);
- 		snd_soc_component_update_bits(component, tx_reg0,
- 					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
- 					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+ 		drm_dbg_atomic(dev, "modeset on [ENCODER:%d:%s]\n",
+-- 
+2.39.5
+
 
 
