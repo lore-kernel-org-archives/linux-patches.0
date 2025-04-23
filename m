@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD9B46447;
-	Wed, 23 Apr 2025 15:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0178028CF64;
+	Wed, 23 Apr 2025 15:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421985; cv=none; b=JhRdmOZysBF14a9Pxn/xpVrumhNcsUTzxzKChmSnlfk5uYlcK3Scau4g8U2VM/12fkUX3K1mtMpJl6cxjHqhaz/wQ3PXfdxqo8WVbOxQjgmunQRlP4aZcwVuZv9OcKcOmp3kZ7/KgfDF4CptgJLs96JDJgEZBEc8PxcMnSgQRfQ=
+	t=1745421987; cv=none; b=ny0sRdLbcqYQzBmj5cSHmKMYQlmBlEPzRxxqywj9FHLVO0I/28obiBsmGGvhcrc1RSkia4sKPTFW2S1bds9hqyazZlfITThD952v07xC6DOQtVzKRuFYnSlx7WNw3+SWov+MQ2udqQ/uEBBWaU5R8JeCO68rYvvxf3f1MKNYeZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421985; c=relaxed/simple;
-	bh=w1lBleTQuTFmxNuXwx2T4jqYEQmxXedGMFyeiWy5xvw=;
+	s=arc-20240116; t=1745421987; c=relaxed/simple;
+	bh=AKBrkWGm2AZHx6Br4W7WfvRgLJ1O4Wi4nd75NAvE+0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNXy9FsrdPbvvByO9dFObkG+htRhagAG1EznHtlzAds3y6n2ZNBGQw4d/Fi5SVNuevsIT+0BgNUtmMCeVl1qxC4mlsiOfZkNNJp/6TGsw/G9QlKhC40RMzZK+qnuZ/aDmmz6r7YtsfUbaQlOOJxrSgh1QueVw4U8x9pyb8mJ8No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN2Jzvl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQ6ISqRSk/aFaeZeFzI6JTJxap3F6TcFC/GfUK3syBjLAMAu31NF5o9rqOsmsnreNf2rMYpMZKa2h5DIp9tzPiKwWMPi6HUTmncthyd8XuHA3UelWWx4YlR4BJBYyZQGMH9hTNXZm+HTulgxtGIYTGMHF3r70VSCTXuLfF4a0Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljchWsQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN2Jzvl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7B8C4CEE3;
-	Wed, 23 Apr 2025 15:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljchWsQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886FDC4CEE2;
+	Wed, 23 Apr 2025 15:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421984;
-	bh=w1lBleTQuTFmxNuXwx2T4jqYEQmxXedGMFyeiWy5xvw=;
+	s=korg; t=1745421986;
+	bh=AKBrkWGm2AZHx6Br4W7WfvRgLJ1O4Wi4nd75NAvE+0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EN2Jzvl0lhogvsYRFLjyW2Skajqy4rrAOgdxkAQtn3BFHKVcuficQEr5aAi4mWujx
-	 3j4Aer4B4I0ofIzO+hPU0t6fLaN3mRnpRZ2lKpvIHVtROWZDF36rKteWfuPOHKvgAT
-	 /bcuDN/dVlE1UfrbDlxhxkezPxm4I+Sa4moFR6HQ=
+	b=ljchWsQC2iOvK4jys3kgj7ppvHhAZsUyJsVYnDvIApnmB4Srekm/7jxJEC5xCo2J8
+	 ZeR5Q6KZTWw4AGV7gxUFalNvHEi1ja54QnPyj5IVuupe35AYIXP78ondYdzNqQlFhm
+	 0x2QTqPCnI2+OlxSc0YkpnA8gwX2iDhXpAscyojA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/291] net: bridge: switchdev: do not notify new brentries as changed
-Date: Wed, 23 Apr 2025 16:42:58 +0200
-Message-ID: <20250423142632.105780872@linuxfoundation.org>
+	Roberto Ricci <io@r-ricci.it>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Len Brown <len.brown@intel.com>
+Subject: [PATCH 6.6 236/393] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
+Date: Wed, 23 Apr 2025 16:42:12 +0200
+Message-ID: <20250423142653.135755841@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,96 +54,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit eb25de13bd9cf025413a04f25e715d0e99847e30 ]
+commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
 
-When adding a bridge vlan that is pvid or untagged after the vlan has
-already been added to any other switchdev backed port, the vlan change
-will be propagated as changed, since the flags change.
+While debugging kexec/hibernation hangs and crashes, it turned out that
+the current implementation of e820__register_nosave_regions() suffers from
+multiple serious issues:
 
-This causes the vlan to not be added to the hardware for DSA switches,
-since the DSA handler ignores any vlans for the CPU or DSA ports that
-are changed.
+ - The end of last region is tracked by PFN, causing it to find holes
+   that aren't there if two consecutive subpage regions are present
 
-E.g. the following order of operations would work:
+ - The nosave PFN ranges derived from holes are rounded out (instead of
+   rounded in) which makes it inconsistent with how explicitly reserved
+   regions are handled
 
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
-$ bridge vlan add dev lan1 vid 1 pvid untagged
+Fix this by:
 
-but this order would break:
+ - Treating reserved regions as if they were holes, to ensure consistent
+   handling (rounding out nosave PFN ranges is more correct as the
+   kernel does not use partial pages)
 
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev lan1 vid 1 pvid untagged
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
+ - Tracking the end of the last RAM region by address instead of pages
+   to detect holes more precisely
 
-Additionally, the vlan on the bridge itself would become undeletable:
+These bugs appear to have been introduced about ~18 years ago with the very
+first version of e820_mark_nosave_regions(), and its flawed assumptions were
+carried forward uninterrupted through various waves of rewrites and renames.
 
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 PVID Egress Untagged
-$ bridge vlan del dev swbridge vid 1 self
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 Egress Untagged
+[ mingo: Added Git archeology details, for kicks and giggles. ]
 
-since the vlan was never added to DSA's vlan list, so deleting it will
-cause an error, causing the bridge code to not remove it.
-
-Fix this by checking if flags changed only for vlans that are already
-brentry and pass changed as false for those that become brentries, as
-these are a new vlan (member) from the switchdev point of view.
-
-Since *changed is set to true for becomes_brentry = true regardless of
-would_change's value, this will not change any rtnetlink notification
-delivery, just the value passed on to switchdev in vlan->changed.
-
-Fixes: 8d23a54f5bee ("net: bridge: switchdev: differentiate new VLANs from changed ones")
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250414200020.192715-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Tested-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
+Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_vlan.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/e820.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 9ffd40b8270c1..23a82567fe624 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -715,8 +715,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 				u16 flags, bool *changed,
- 				struct netlink_ext_ack *extack)
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -753,22 +753,21 @@ void __init e820__memory_setup_extended(
+ void __init e820__register_nosave_regions(unsigned long limit_pfn)
  {
--	bool would_change = __vlan_flags_would_change(vlan, flags);
- 	bool becomes_brentry = false;
-+	bool would_change = false;
- 	int err;
+ 	int i;
+-	unsigned long pfn = 0;
++	u64 last_addr = 0;
  
- 	if (!br_vlan_is_brentry(vlan)) {
-@@ -725,6 +725,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 			return -EINVAL;
+ 	for (i = 0; i < e820_table->nr_entries; i++) {
+ 		struct e820_entry *entry = &e820_table->entries[i];
  
- 		becomes_brentry = true;
-+	} else {
-+		would_change = __vlan_flags_would_change(vlan, flags);
+-		if (pfn < PFN_UP(entry->addr))
+-			register_nosave_region(pfn, PFN_UP(entry->addr));
+-
+-		pfn = PFN_DOWN(entry->addr + entry->size);
+-
+ 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
+-			register_nosave_region(PFN_UP(entry->addr), pfn);
++			continue;
+ 
+-		if (pfn >= limit_pfn)
+-			break;
++		if (last_addr < entry->addr)
++			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
++
++		last_addr = entry->addr + entry->size;
  	}
++
++	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
+ }
  
- 	/* Master VLANs that aren't brentries weren't notified before,
--- 
-2.39.5
-
+ #ifdef CONFIG_ACPI
 
 
