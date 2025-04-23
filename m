@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8A2280A4F;
-	Wed, 23 Apr 2025 14:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D798284693;
+	Wed, 23 Apr 2025 14:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420332; cv=none; b=omrEZb9Mw4XOPHD0YM4kFUbh3dYb4aOZFb9tl4u6YpWpLuTmzjNa1pHuqqJyPocmtd5kyH5csttrIt6yVOethheBDHD4TIIA2a9ZkKfQjQ1kPSU7A2nAGaCK03TqDNY83scSdgCgMWOomkw+EmW5fZLZwIBiXDKWVI1yDR28GUI=
+	t=1745420334; cv=none; b=HVq1J9N5wV7IhfEivP48/79Tb4FEedtkFpfwxY53kv+ITCv/3bM00meWTSufkhWY4yj0Cjbdf40BOykpqYT9vhSDQNv6heNmNj2nGy4sohCXwwxSlk6Gyc9D4SaF7VmhW0StJo5ngJVarEYPudwtX2COw8ddEVlqsbLJfDZXn/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420332; c=relaxed/simple;
-	bh=yZiYRg9oVgDb3KF+IOwMrLOd6+PrU0yKD/73VJ5xCqc=;
+	s=arc-20240116; t=1745420334; c=relaxed/simple;
+	bh=6x1Y2qDzDgeFRvuqpF5qfn/n066UG/0AcB1gZWGko1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAHX0/y0VuzzlAPSKnE1k4rcGlBJxdpFSMEzOF4p+ToM+icfdlr5xItlENZ4gEMkN592fc/BMeDBkSyYtAFBRzs8A4J7EvdtUGrOulSUXcP18VVJM06U7QFs7V3m/+H5wX/d3MKmsy9v81UPxhRY0f693hPjQ61VUcyUzktitwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzcwUqZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZOe01QUWAWxOJAg0NdQeo1GRt8yhwLyMLu9e/Yuz3fDMIayRZbFS/AeG6qZg6zWmwqfbT4qB+gIeiMo5VU5l9hatSrWA/nY8jtOvGnb78D41ZhB47PaQD3oxAia0J9j4AEhkgSAoaAzNFnlcKRtJVs4n0OZfdryFoFQBwU3jlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDZwX7js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzcwUqZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83286C4CEE8;
-	Wed, 23 Apr 2025 14:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDZwX7js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C7EC4CEE2;
+	Wed, 23 Apr 2025 14:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420331;
-	bh=yZiYRg9oVgDb3KF+IOwMrLOd6+PrU0yKD/73VJ5xCqc=;
+	s=korg; t=1745420334;
+	bh=6x1Y2qDzDgeFRvuqpF5qfn/n066UG/0AcB1gZWGko1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzcwUqZ4qrSIokfULMphIjgeXMDrgCswx47j80GJR9WS+07N0fZurO3iyuFNz+QMr
-	 wxZxfuUPoUtvt+yyJ4oXnDYXKkkWzAWGPJO+txSk2IgZi7l/7Nc8T6u+8jJ7nHKNLx
-	 WoNuAjmLZdC7I6GFZS9Iq6Ud6l5PtDsuV1lS5pXk=
+	b=wDZwX7jsq4GesmyQ4Oy75KEraz9DAhWwFZexScZqVgf9z2Xn9w9uPf/H1wXyuS10z
+	 ISNeRam9QwRwtIr0k7sGmKpkbQrlEvi9hzNd9gu0ntWjsbTY6kO4/KXsknZBrE2gtF
+	 dwQlQx6KuuDlE8Sc2G1bsooQ808YaciDoBLPjymo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/393] mmc: dw_mmc: add a quirk for accessing 64-bit FIFOs in two halves
-Date: Wed, 23 Apr 2025 16:39:18 +0200
-Message-ID: <20250423142645.869431005@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Daniel Axtens <dja@axtens.net>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 120/223] mm: fix apply_to_existing_page_range()
+Date: Wed, 23 Apr 2025 16:43:12 +0200
+Message-ID: <20250423142621.995251391@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,187 +49,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 57c0902f8bec51add5a1eb908d8b876592725d81 ]
+commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
 
-In certain DW MMC implementations (such as in some Exynos7870
-controllers), 64-bit read/write is not allowed from a 64-bit FIFO.
-Add a quirk which facilitates accessing the 64-bit FIFO registers in two
-32-bit halves.
+In the case of apply_to_existing_page_range(), apply_to_pte_range() is
+reached with 'create' set to false.  When !create, the loop over the PTE
+page table is broken.
 
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Link: https://lore.kernel.org/r/20250219-exynos7870-mmc-v2-2-b4255a3e39ed@disroot.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+apply_to_pte_range() will only move to the next PTE entry if 'create' is
+true or if the current entry is not pte_none().
+
+This means that the user of apply_to_existing_page_range() will not have
+'fn' called for any entries after the first pte_none() in the PTE page
+table.
+
+Fix the loop logic in apply_to_pte_range().
+
+There are no known runtime issues from this, but the fix is trivial enough
+for stable@ even without a known buggy user.
+
+Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
+Cc: Daniel Axtens <dja@axtens.net>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c | 94 ++++++++++++++++++++++++++++++++++++++-
- drivers/mmc/host/dw_mmc.h | 27 +++++++++++
- 2 files changed, 119 insertions(+), 2 deletions(-)
+ mm/memory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
-index 02bee7afab37e..f97caaa829f70 100644
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2574,6 +2574,91 @@ static void dw_mci_pull_data64(struct dw_mci *host, void *buf, int cnt)
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2811,11 +2811,11 @@ static int apply_to_pte_range(struct mm_
+ 	if (fn) {
+ 		do {
+ 			if (create || !pte_none(ptep_get(pte))) {
+-				err = fn(pte++, addr, data);
++				err = fn(pte, addr, data);
+ 				if (err)
+ 					break;
+ 			}
+-		} while (addr += PAGE_SIZE, addr != end);
++		} while (pte++, addr += PAGE_SIZE, addr != end);
  	}
- }
+ 	*mask |= PGTBL_PTE_MODIFIED;
  
-+static void dw_mci_push_data64_32(struct dw_mci *host, void *buf, int cnt)
-+{
-+	struct mmc_data *data = host->data;
-+	int init_cnt = cnt;
-+
-+	/* try and push anything in the part_buf */
-+	if (unlikely(host->part_buf_count)) {
-+		int len = dw_mci_push_part_bytes(host, buf, cnt);
-+
-+		buf += len;
-+		cnt -= len;
-+
-+		if (host->part_buf_count == 8) {
-+			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
-+			host->part_buf_count = 0;
-+		}
-+	}
-+#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	if (unlikely((unsigned long)buf & 0x7)) {
-+		while (cnt >= 8) {
-+			u64 aligned_buf[16];
-+			int len = min(cnt & -8, (int)sizeof(aligned_buf));
-+			int items = len >> 3;
-+			int i;
-+			/* memcpy from input buffer into aligned buffer */
-+			memcpy(aligned_buf, buf, len);
-+			buf += len;
-+			cnt -= len;
-+			/* push data from aligned buffer into fifo */
-+			for (i = 0; i < items; ++i)
-+				mci_fifo_l_writeq(host->fifo_reg, aligned_buf[i]);
-+		}
-+	} else
-+#endif
-+	{
-+		u64 *pdata = buf;
-+
-+		for (; cnt >= 8; cnt -= 8)
-+			mci_fifo_l_writeq(host->fifo_reg, *pdata++);
-+		buf = pdata;
-+	}
-+	/* put anything remaining in the part_buf */
-+	if (cnt) {
-+		dw_mci_set_part_bytes(host, buf, cnt);
-+		/* Push data if we have reached the expected data length */
-+		if ((data->bytes_xfered + init_cnt) ==
-+		    (data->blksz * data->blocks))
-+			mci_fifo_l_writeq(host->fifo_reg, host->part_buf);
-+	}
-+}
-+
-+static void dw_mci_pull_data64_32(struct dw_mci *host, void *buf, int cnt)
-+{
-+#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	if (unlikely((unsigned long)buf & 0x7)) {
-+		while (cnt >= 8) {
-+			/* pull data from fifo into aligned buffer */
-+			u64 aligned_buf[16];
-+			int len = min(cnt & -8, (int)sizeof(aligned_buf));
-+			int items = len >> 3;
-+			int i;
-+
-+			for (i = 0; i < items; ++i)
-+				aligned_buf[i] = mci_fifo_l_readq(host->fifo_reg);
-+
-+			/* memcpy from aligned buffer into output buffer */
-+			memcpy(buf, aligned_buf, len);
-+			buf += len;
-+			cnt -= len;
-+		}
-+	} else
-+#endif
-+	{
-+		u64 *pdata = buf;
-+
-+		for (; cnt >= 8; cnt -= 8)
-+			*pdata++ = mci_fifo_l_readq(host->fifo_reg);
-+		buf = pdata;
-+	}
-+	if (cnt) {
-+		host->part_buf = mci_fifo_l_readq(host->fifo_reg);
-+		dw_mci_pull_final_bytes(host, buf, cnt);
-+	}
-+}
-+
- static void dw_mci_pull_data(struct dw_mci *host, void *buf, int cnt)
- {
- 	int len;
-@@ -3374,8 +3459,13 @@ int dw_mci_probe(struct dw_mci *host)
- 		width = 16;
- 		host->data_shift = 1;
- 	} else if (i == 2) {
--		host->push_data = dw_mci_push_data64;
--		host->pull_data = dw_mci_pull_data64;
-+		if ((host->quirks & DW_MMC_QUIRK_FIFO64_32)) {
-+			host->push_data = dw_mci_push_data64_32;
-+			host->pull_data = dw_mci_pull_data64_32;
-+		} else {
-+			host->push_data = dw_mci_push_data64;
-+			host->pull_data = dw_mci_pull_data64;
-+		}
- 		width = 64;
- 		host->data_shift = 3;
- 	} else {
-diff --git a/drivers/mmc/host/dw_mmc.h b/drivers/mmc/host/dw_mmc.h
-index 4ed81f94f7cab..af16dbb37f261 100644
---- a/drivers/mmc/host/dw_mmc.h
-+++ b/drivers/mmc/host/dw_mmc.h
-@@ -280,6 +280,8 @@ struct dw_mci_board {
- 
- /* Support for longer data read timeout */
- #define DW_MMC_QUIRK_EXTENDED_TMOUT            BIT(0)
-+/* Force 32-bit access to the FIFO */
-+#define DW_MMC_QUIRK_FIFO64_32                 BIT(1)
- 
- #define DW_MMC_240A		0x240a
- #define DW_MMC_280A		0x280a
-@@ -471,6 +473,31 @@ struct dw_mci_board {
- #define mci_fifo_writel(__value, __reg)	__raw_writel(__reg, __value)
- #define mci_fifo_writeq(__value, __reg)	__raw_writeq(__reg, __value)
- 
-+/*
-+ * Some dw_mmc devices have 64-bit FIFOs, but expect them to be
-+ * accessed using two 32-bit accesses. If such controller is used
-+ * with a 64-bit kernel, this has to be done explicitly.
-+ */
-+static inline u64 mci_fifo_l_readq(void __iomem *addr)
-+{
-+	u64 ans;
-+	u32 proxy[2];
-+
-+	proxy[0] = mci_fifo_readl(addr);
-+	proxy[1] = mci_fifo_readl(addr + 4);
-+	memcpy(&ans, proxy, 8);
-+	return ans;
-+}
-+
-+static inline void mci_fifo_l_writeq(void __iomem *addr, u64 value)
-+{
-+	u32 proxy[2];
-+
-+	memcpy(proxy, &value, 8);
-+	mci_fifo_writel(addr, proxy[0]);
-+	mci_fifo_writel(addr + 4, proxy[1]);
-+}
-+
- /* Register access macros */
- #define mci_readl(dev, reg)			\
- 	readl_relaxed((dev)->regs + SDMMC_##reg)
--- 
-2.39.5
-
 
 
