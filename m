@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F2A28F50A;
-	Wed, 23 Apr 2025 15:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A3C27FD75;
+	Wed, 23 Apr 2025 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422230; cv=none; b=p+IzhZ6RWIYSDVTtyaySUN3VZOxTtRbAKPPHC5Wfh4pGuNIyIbFZn35t4fdoqeInMnOlMR1R5HBaAQIKvNWY4sQAu5BBYZ7dWgcCs/G51lHDEdUV4iR8bMuGSEx5t01DPhVYc18wABTETV1gFTZeG8AK+LhVFVjGBo4TlZAqZHU=
+	t=1745422233; cv=none; b=F8tCLes4Gy6E4x3TGNQDO9OU69u3PXM/n10daBJb7jjcmm2109bZd7hFfBtKJC5AzjhgCTjzcYbxsfTyJG18+11sAp0Ypsbxck4ZKJ7fL3mawy7dLW+z31ASS6Bfth78vBn3nyDDP3TFaDlmtWeSe6vd8HRCiaAIYUCZJlfNxTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422230; c=relaxed/simple;
-	bh=Kss84yfNbzjeh8Z2CKGhsSRdYXGTCR7WGWYKQS+h33o=;
+	s=arc-20240116; t=1745422233; c=relaxed/simple;
+	bh=8bi19nHHi7RMaXH95huB6OuC0pCvrGJBjb05pJVGC44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgkgEOGSwgZfY1uNp3wPt70SsVz1XKaKTFDsMJzJ5hvp++ss0LMB5DH6MNzK5CyLOX0l97QHzM/xJWR3ErElcKcv6ih28bckDzjzvbiZehUjjq9dJVwqo9Tytm3/J1X2QyWIctqVlkfEqNw3qK9aBuJMHrYiQ9IJUamxIePpsxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrQj9t9P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7szCo6qMzWH2TOnEoN37waUklrGKL/SxkwREGSBh1AJaydIYyv/jFDwEo6GszJOWhkLcLhiqG6od5J7hAKt3SHy6jNM+zjNvrY8D9vo5s0bRIMM4VuXqrw1NwDkvkRveVsyNuJLucRRzuI3Yt1H1XGAEkH86YhhyeCV2QZ5IIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ix6/bei2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrQj9t9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6D9C4CEE8;
-	Wed, 23 Apr 2025 15:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix6/bei2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA32C4CEE2;
+	Wed, 23 Apr 2025 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422230;
-	bh=Kss84yfNbzjeh8Z2CKGhsSRdYXGTCR7WGWYKQS+h33o=;
+	s=korg; t=1745422233;
+	bh=8bi19nHHi7RMaXH95huB6OuC0pCvrGJBjb05pJVGC44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrQj9t9PJtD5sD++/3CLNNkPG+KhNJCbXq24tnarcVJ20Z+l6PRwPaoPse+9PwIIk
-	 en3TYC/9Zuzrc6VlP8SjsvI5Xi/1wkaHRdY1jSpOwfgYS0qjhbtF7MJaP40zhDL/mz
-	 4P8XquqFtENe/D1qMy/NXNVYKE8Xr3/IaSJj2v3Q=
+	b=ix6/bei2zUZKw8vtv2IK5aqfyfUHspVikelI80H0h8vTSTMprGbIqVpsX6/YevAsx
+	 TNfSB46Cs2bGOP+Qm5hToRcXb1MVc4Te8Nnts0EtEMtA2TLiqbgozVi2P3wVF9/Lz8
+	 XO/c7+fKenHB2ErSSNdK4gwD76WvjYz0Kn/N2an4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 238/291] drm/amd/pm/swsmu/smu13/smu_v13_0: Prevent division by zero
-Date: Wed, 23 Apr 2025 16:43:47 +0200
-Message-ID: <20250423142634.141814951@linuxfoundation.org>
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 280/393] netlink: specs: rt-link: add an attr layer around alt-ifname
+Date: Wed, 23 Apr 2025 16:42:56 +0200
+Message-ID: <20250423142654.912950959@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit f23e9116ebb71b63fe9cec0dcac792aa9af30b0c upstream.
+[ Upstream commit acf4da17deada7f8b120e051aa6c9cac40dbd83b ]
 
-The user can set any speed value.
-If speed is greater than UINT_MAX/8, division by zero is possible.
+alt-ifname attr is directly placed in requests (as an alternative
+to ifname) but in responses its wrapped up in IFLA_PROP_LIST
+and only there is may be multi-attr. See rtnl_fill_prop_list().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b2f63d904e72 ("doc/netlink: Add spec for rt link messages")
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250414211851.602096-6-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/netlink/specs/rt_link.yaml | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -1265,7 +1265,7 @@ int smu_v13_0_set_fan_speed_rpm(struct s
- 	uint32_t tach_period;
- 	int ret;
- 
--	if (!speed)
-+	if (!speed || speed > UINT_MAX/8)
- 		return -EINVAL;
- 
- 	ret = smu_v13_0_auto_fan_control(smu, 0);
+diff --git a/Documentation/netlink/specs/rt_link.yaml b/Documentation/netlink/specs/rt_link.yaml
+index d86a68f8475ca..34f74c451dcdb 100644
+--- a/Documentation/netlink/specs/rt_link.yaml
++++ b/Documentation/netlink/specs/rt_link.yaml
+@@ -892,11 +892,10 @@ attribute-sets:
+       -
+         name: prop-list
+         type: nest
+-        nested-attributes: link-attrs
++        nested-attributes: prop-list-link-attrs
+       -
+         name: alt-ifname
+         type: string
+-        multi-attr: true
+       -
+         name: perm-address
+         type: binary
+@@ -931,6 +930,13 @@ attribute-sets:
+       -
+         name: gro-ipv4-max-size
+         type: u32
++  -
++    name: prop-list-link-attrs
++    subset-of: link-attrs
++    attributes:
++      -
++        name: alt-ifname
++        multi-attr: true
+   -
+     name: af-spec-attrs
+     attributes:
+@@ -1362,7 +1368,6 @@ operations:
+             - min-mtu
+             - max-mtu
+             - prop-list
+-            - alt-ifname
+             - perm-address
+             - proto-down-reason
+             - parent-dev-name
+-- 
+2.39.5
+
 
 
