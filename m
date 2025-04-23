@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53F3279345;
-	Wed, 23 Apr 2025 15:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0FF279345;
+	Wed, 23 Apr 2025 15:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422319; cv=none; b=OvbAkwzAekmJW8dG7gUcVHoTS/sN5zg11DWm9nEwxGX3QeKfafCpKO4cSn3Q74OXnPqA8CZyZiMT4AIzO98GvdwYhX+irCFtHmryNUZ2Uo5L/xCnatIJ+tbKzoyNdKVppT85z4ulGC9GaoMGS+HdGiaL2qXaLngN6mohqfRAK/M=
+	t=1745422323; cv=none; b=JdzmE6xbK9SiNbSBfUTijF3FkqUzF3608wH3vdvjgRKyugPl+fv/cNyqgPb/QSMtp3hYq0nEYLk1OJgKJ+LvISrwALNWSz3X/0/JFLpEQUfANXWOqpV5SrgiHQ006ax2eT8dFdSi4Y5rH4GZSDOEAJz0PFNC18nANRVwMcRtif0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422319; c=relaxed/simple;
-	bh=r+K/aRIOvf1YpC8iX1/l3Dnmx4A8TxWlSjftD/p6598=;
+	s=arc-20240116; t=1745422323; c=relaxed/simple;
+	bh=hKL2cpoJQq5do5Y1DVzKZ0MRnT2ptu7JoGZ9XvNaFwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WogvGB7OHXQ2+eo3IT+O3q4R/rMmoRh7L6UEcBfsV/eA5kFLrjMcoGdmQrOhMraG04ccWjP70zOwTgIrnIvxAXbSs5FfWOuTGivcF3aB0AeOON6+ovbR3CSW4ArRu4xfQDXSJZkxiYheqPB08XaKTLpc7YsigiTbN+PK4VWeCD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC1xNhfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gele+x1LYuW2ivbPqhKqn0LaOZ4kSMUZlwW/xV0RrFvZcVKXuuJqYP7DcRjDt2NYrfKTiVHDz9jZXPRhCLBKV/2r0aGFCxJnEx85AfyGXGSnbeBIa+P0BoE2EQLRZO3zrRrwAECVjj7f0+B01Ed4NmQ2Y5Ir1qkkPYqUw6H5XpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPSUULTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC1xNhfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6536DC4CEE2;
-	Wed, 23 Apr 2025 15:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPSUULTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F338C4CEE2;
+	Wed, 23 Apr 2025 15:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422319;
-	bh=r+K/aRIOvf1YpC8iX1/l3Dnmx4A8TxWlSjftD/p6598=;
+	s=korg; t=1745422322;
+	bh=hKL2cpoJQq5do5Y1DVzKZ0MRnT2ptu7JoGZ9XvNaFwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cC1xNhfENkTdEBBfhYS9xpe+xVdOzjhhbWcirrATm0FgpfrtAhK3kUwk0WRK4jBo4
-	 xnM3115hhW9l73cM84Mb7IuPWABXorj5Jvwx1GX9ts6m+lL40sSEw9S+l5lPquQ+C8
-	 9Z1T6jQ3Tbm6WSzIoTWeObG4p66NjRMbLqk5tYMk=
+	b=PPSUULTps56Jd5fGLhjMY05l40/iP8rEjbZMCkLj7wXlb37YWL3OmE0TfDiQiKrgC
+	 xmuYOAKhdPiYNlUglWSIC7v2SJE5ScF39q+sau3gLSWQw4oxLafcuU9aDcAPOfo8Ak
+	 sHpoqu8gh9Dg4Lix6hxhn5DoVntqsvgFWyVolqYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 276/291] nvmet-fc: Remove unused functions
-Date: Wed, 23 Apr 2025 16:44:25 +0200
-Message-ID: <20250423142635.707619635@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 320/393] mm/gup: fix wrongly calculated returned value in fault_in_safe_writeable()
+Date: Wed, 23 Apr 2025 16:43:36 +0200
+Message-ID: <20250423142656.558126305@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +50,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Baoquan He <bhe@redhat.com>
 
-commit 1b304c006b0fb4f0517a8c4ba8c46e88f48a069c upstream.
+commit 8c03ebd7cdc06bd0d2fecb4d1a609ef1dbb7d0aa upstream.
 
-The functions nvmet_fc_iodnum() and nvmet_fc_fodnum() are currently
-unutilized.
+Not like fault_in_readable() or fault_in_writeable(), in
+fault_in_safe_writeable() local variable 'start' is increased page by page
+to loop till the whole address range is handled.  However, it mistakenly
+calculates the size of the handled range with 'uaddr - start'.
 
-Following commit c53432030d86 ("nvme-fabrics: Add target support for FC
-transport"), which introduced these two functions, they have not been
-used at all in practice.
+Fix it here.
 
-Remove them to resolve the compiler warnings.
+Andreas said:
 
-Fix follow errors with clang-19 when W=1e:
-  drivers/nvme/target/fc.c:177:1: error: unused function 'nvmet_fc_iodnum' [-Werror,-Wunused-function]
-    177 | nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
-        | ^~~~~~~~~~~~~~~
-  drivers/nvme/target/fc.c:183:1: error: unused function 'nvmet_fc_fodnum' [-Werror,-Wunused-function]
-    183 | nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
-        | ^~~~~~~~~~~~~~~
-  2 errors generated.
-  make[8]: *** [scripts/Makefile.build:207: drivers/nvme/target/fc.o] Error 1
-  make[7]: *** [scripts/Makefile.build:465: drivers/nvme/target] Error 2
-  make[6]: *** [scripts/Makefile.build:465: drivers/nvme] Error 2
-  make[6]: *** Waiting for unfinished jobs....
+: In gfs2, fault_in_iov_iter_writeable() is used in
+: gfs2_file_direct_read() and gfs2_file_read_iter(), so this potentially
+: affects buffered as well as direct reads.  This bug could cause those
+: gfs2 functions to spin in a loop.
 
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://lkml.kernel.org/r/20250410035717.473207-1-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20250410035717.473207-2-bhe@redhat.com
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Fixes: fe673d3f5bf1 ("mm: gup: make fault_in_safe_writeable() use fixup_user_fault()")
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Yanjun.Zhu <yanjun.zhu@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ mm/gup.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -173,20 +173,6 @@ struct nvmet_fc_tgt_assoc {
- 	struct rcu_head			rcu;
- };
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1871,8 +1871,8 @@ size_t fault_in_safe_writeable(const cha
+ 	} while (start != end);
+ 	mmap_read_unlock(mm);
  
--
--static inline int
--nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
--{
--	return (iodptr - iodptr->tgtport->iod);
--}
--
--static inline int
--nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
--{
--	return (fodptr - fodptr->queue->fod);
--}
--
--
- /*
-  * Association and Connection IDs:
-  *
+-	if (size > (unsigned long)uaddr - start)
+-		return size - ((unsigned long)uaddr - start);
++	if (size > start - (unsigned long)uaddr)
++		return size - (start - (unsigned long)uaddr);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(fault_in_safe_writeable);
 
 
