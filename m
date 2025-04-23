@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EEA2641EA;
-	Wed, 23 Apr 2025 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BF42641EA;
+	Wed, 23 Apr 2025 15:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421626; cv=none; b=YajSAM1gbPeWKtq3B3cADIQ1Pw9wwnQgx8T4gfDUx2GZgXZRlK0Gr2pgkAFjKY5jIgkr2jIbSxPMtpnth+bdz8jpmmdasfWk4diVQ3a/m5eIgsDFd5QZfBssn7SwkwXFii1XOT9z07jpXVON4BpMx+ykXidNmyQUoJ5OVrxAzKc=
+	t=1745421628; cv=none; b=aIlnfIDMChTjJ5R67Crj1+o+0DKtttHwDsucmvkw0ZIurLI6FsdZWiBYXr0Ve98zYtwI/sRA+s3GNFKdqVD3HC+rsdZ/QRL/MHhzZnBSWI7vNFLkT8fr7Pn4dYQF76BjaO7aZGJIYZZuURB4NsVaD+ahzbxQosBSA9VSjC9gZJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421626; c=relaxed/simple;
-	bh=eabFZxWx0pL5sBTqGlBcTqxCBMfLZzJKIUAyDGfrdNM=;
+	s=arc-20240116; t=1745421628; c=relaxed/simple;
+	bh=xoP1KCN4ZY7R692igvLNk0CaOlS692Qy1NeEeH5Xz1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbc6GXOvfxn0HhUk9Vldv68VjSpl7bjEODQucjp1qi5zZRPmZiB33rZNrr+WklSa62gGCv9LzOihOABEAcvqK9jvHibLK82K8I1vwXnTp92wBHgd5DZDfmXLj176cSNxLgXVi17y7GkWNfkufzuwG43T319hgQlCVX6k/85PPfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kZGIrbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PB/I0EdgSYn0r+hY6jfG7Ip7YJeGwdT8dKmlIolLnYvoUHsCY6VItRp0ffbY99LBDogQBFvUEVAxmmDvoEDhk4ZjyCHam+Nns18MzbnHN9ZqWqGTorwfrJQttImtrOujBAh9FCXvOmFTd0H3+GSjqNjxz9RuErC9zYDyD2MYIlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxoW738v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kZGIrbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C5FC4CEE3;
-	Wed, 23 Apr 2025 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxoW738v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A594C4CEE2;
+	Wed, 23 Apr 2025 15:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421626;
-	bh=eabFZxWx0pL5sBTqGlBcTqxCBMfLZzJKIUAyDGfrdNM=;
+	s=korg; t=1745421628;
+	bh=xoP1KCN4ZY7R692igvLNk0CaOlS692Qy1NeEeH5Xz1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kZGIrbYOtTusn2zAGKYQlqjgKJUv6CB+fWmd+CH+YK9rx/snwJR5au3hspS4m8vO
-	 3Z9c09eI1CwaNez9N8qWzwbMjZTr8S2BRJqPQ06dJp/ClOlgW2ydLdAb92/EyVJjsb
-	 dEA7p3MqIMfQyApjBZhZrfzkTyK5GBJkoOkSTbNs=
+	b=pxoW738vAU+DvifspDJIIaHYrZGdngOgHlSoRboFgjxmXhqMnj5ijwdbh1lucMtLu
+	 hzMowFv/OAttQrOPA3SXDmoeheibV6zWTf4unatSkE2HYBDqoirJHUDijsAjF1u069
+	 FCCP3cjs/UxT4xeJqPJg/T1zp7CuHcJtUUJfn3a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 201/393] cifs: avoid NULL pointer dereference in dbg call
-Date: Wed, 23 Apr 2025 16:41:37 +0200
-Message-ID: <20250423142651.694828499@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.14 213/241] drm/xe/userptr: fix notifier vs folio deadlock
+Date: Wed, 23 Apr 2025 16:44:37 +0200
+Message-ID: <20250423142629.261025398@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,48 +47,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit b4885bd5935bb26f0a414ad55679a372e53f9b9b upstream.
+commit 2577b202458cddff85cc154b1fe7f313e0d1f418 upstream.
 
-cifs_server_dbg() implies server to be non-NULL so
-move call under condition to avoid NULL pointer dereference.
+User is reporting what smells like notifier vs folio deadlock, where
+migrate_pages_batch() on core kernel side is holding folio lock(s) and
+then interacting with the mappings of it, however those mappings are
+tied to some userptr, which means calling into the notifier callback and
+grabbing the notifier lock. With perfect timing it looks possible that
+the pages we pulled from the hmm fault can get sniped by
+migrate_pages_batch() at the same time that we are holding the notifier
+lock to mark the pages as accessed/dirty, but at this point we also want
+to grab the folio locks(s) to mark them as dirty, but if they are
+contended from notifier/migrate_pages_batch side then we deadlock since
+folio lock won't be dropped until we drop the notifier lock.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fortunately the mark_page_accessed/dirty is not really needed in the
+first place it seems and should have already been done by hmm fault, so
+just remove it.
 
-Fixes: e79b0332ae06 ("cifs: ignore cached share root handle closing errors")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4765
+Fixes: 0a98219bcc96 ("drm/xe/hmm: Don't dereference struct page pointers without notifier lock")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.10+
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250414132539.26654-2-matthew.auld@intel.com
+(cherry picked from commit bd7c0cb695e87c0e43247be8196b4919edbe0e85)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_hmm.c |   24 ------------------------
+ 1 file changed, 24 deletions(-)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -816,11 +816,12 @@ smb2_handle_cancelled_close(struct cifs_
- 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
- 		spin_unlock(&cifs_tcp_ses_lock);
+--- a/drivers/gpu/drm/xe/xe_hmm.c
++++ b/drivers/gpu/drm/xe/xe_hmm.c
+@@ -19,29 +19,6 @@ static u64 xe_npages_in_range(unsigned l
+ 	return (end - start) >> PAGE_SHIFT;
+ }
  
--		if (tcon->ses)
-+		if (tcon->ses) {
- 			server = tcon->ses->server;
+-/**
+- * xe_mark_range_accessed() - mark a range is accessed, so core mm
+- * have such information for memory eviction or write back to
+- * hard disk
+- * @range: the range to mark
+- * @write: if write to this range, we mark pages in this range
+- * as dirty
+- */
+-static void xe_mark_range_accessed(struct hmm_range *range, bool write)
+-{
+-	struct page *page;
+-	u64 i, npages;
 -
--		cifs_server_dbg(FYI, "tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
--				tcon->tid, persistent_fid, volatile_fid);
-+			cifs_server_dbg(FYI,
-+					"tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
-+					tcon->tid, persistent_fid, volatile_fid);
-+		}
+-	npages = xe_npages_in_range(range->start, range->end);
+-	for (i = 0; i < npages; i++) {
+-		page = hmm_pfn_to_page(range->hmm_pfns[i]);
+-		if (write)
+-			set_page_dirty_lock(page);
+-
+-		mark_page_accessed(page);
+-	}
+-}
+-
+ static int xe_alloc_sg(struct xe_device *xe, struct sg_table *st,
+ 		       struct hmm_range *range, struct rw_semaphore *notifier_sem)
+ {
+@@ -331,7 +308,6 @@ int xe_hmm_userptr_populate_range(struct
+ 	if (ret)
+ 		goto out_unlock;
  
- 		return 0;
- 	}
+-	xe_mark_range_accessed(&hmm_range, write);
+ 	userptr->sg = &userptr->sgt;
+ 	xe_hmm_userptr_set_mapped(uvma);
+ 	userptr->notifier_seq = hmm_range.notifier_seq;
 
 
