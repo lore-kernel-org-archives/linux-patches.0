@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4338D18DB17;
-	Wed, 23 Apr 2025 14:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3E18DB17;
+	Wed, 23 Apr 2025 14:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420121; cv=none; b=LxwCHeTACik6JkizT/lBEhw7zez9TI2Tr6sTy7ue3ZXTKyMmMqkte45MQY3il2BHRGvFpQpZI6Z4DvDhZcVpNvBKN4xiW7H7dAEpdVeU8oVIZdDcznjWyIVaKAu5JwVH2xUOddMUsrSTY/X4MZJZI5+HJK8EiVcG70wyo+8upIY=
+	t=1745420123; cv=none; b=JE0diAD3Zm05EsBtZigWnzrVOhLmTXpfe8AUmToJBcEBJg1XEyLRnWtc3UtDezcOw9aC5P/yMdFxyBkTPe3dkr6sLyL2HLBssTJJhwlPvIegmlkSum9o5BbplIKoBG4b+xsVRFa3nL1GEgeLqNgO+YeAS1u432HCpBQhCAlIIhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420121; c=relaxed/simple;
-	bh=Glx7QZb3iCVP5gHgWOl6FvGSjZarnasYeIjL8bAElAQ=;
+	s=arc-20240116; t=1745420123; c=relaxed/simple;
+	bh=mPe1EJBcWzcp15OSicOrLMvdgJVQhsBf7QcLik08mzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgcXWQNJF2CBqR0h11FZmBLCQtkjJ0dYPx/UlKu5KqRF4OvQ6Uv+qHUasdze/MzXR12nkXAvHy2eAWfnJUlVYUyYN+XPkiarig7jlhbTsEXF4z+SMpvpB5/WYyNsIKGtQPMWpq1WPSgQufG367h9oi4BwIKbZcaa/+yAAJO0vVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqcWZYjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKffdsvtd9wOLaGb1J0GppRXWk9VwJGyzWJenLjUhJs2k5qshUaERDbqP4kOXQrKK9VcbZFrYyxmnMgt1eJHvaD640PRumvsT2p52GJtHkhyzMpKcCKC2lBThkjp8MrBbwIoTP3Jzho7C+Hn8Pn5R4qwYX+mT+uVJw6N/R0SzHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRBXwfKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqcWZYjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94F7C4CEE3;
-	Wed, 23 Apr 2025 14:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRBXwfKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A951C4CEE2;
+	Wed, 23 Apr 2025 14:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420121;
-	bh=Glx7QZb3iCVP5gHgWOl6FvGSjZarnasYeIjL8bAElAQ=;
+	s=korg; t=1745420123;
+	bh=mPe1EJBcWzcp15OSicOrLMvdgJVQhsBf7QcLik08mzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rqcWZYjgXsRrgxM+PVX0avZgjBdIRs8LkEwV0gWUOdA8nRfn3JkO9wANApLVaNsDa
-	 XBQ3ZgIDsKhH7IF+ofRTN/mkx6OyM3a15VEXhkBPhvyE4XY8enIYhcbZ/Zlv2vU07P
-	 Grdaw8FHzMKrz1A1vtrZwbSjDYWraVz+yKtECgn4=
+	b=xRBXwfKQhnq/xUvwa9uOMnKIUkDHfuoeSr+29j53uqYEk9l72Qa5BhrcHfwrW4UlA
+	 Q1dg/0Tfcu15cyx+XMTVP2CHcOkf87qIxGjjpsT8oenoXydfLWcsU7o77trbZ1OuTE
+	 NeuT2VUpYsRaPohAbqTxo0PqncmIN5geeNX3eDKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	kernel test robot <oliver.sang@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 061/241] nvmet: pci-epf: always fully initialize completion entries
-Date: Wed, 23 Apr 2025 16:42:05 +0200
-Message-ID: <20250423142623.097181536@linuxfoundation.org>
+Subject: [PATCH 6.6 040/393] x86/mm: Clear _PAGE_DIRTY for kernel mappings when we clear _PAGE_RW
+Date: Wed, 23 Apr 2025 16:38:56 +0200
+Message-ID: <20250423142644.949341713@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,102 +49,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit ffe0398c7d6a38af0584d4668d3762b7a97e2275 ]
+[ Upstream commit c1fcf41cf37f7a3fd3bbf6f0c04aba3ea4258888 ]
 
-For a command that is normally processed through the command request
-execute() function, the completion entry for the command is initialized
-by __nvmet_req_complete() and nvmet_pci_epf_cq_work() only needs to set
-the status field and the phase of the completion entry before posting
-the entry to the completion queue.
+The bit pattern of _PAGE_DIRTY set and _PAGE_RW clear is used to mark
+shadow stacks.  This is currently checked for in mk_pte() but not
+pfn_pte().  If we add the check to pfn_pte(), it catches vfree()
+calling set_direct_map_invalid_noflush() which calls
+__change_page_attr() which loads the old protection bits from the
+PTE, clears the specified bits and uses pfn_pte() to construct the
+new PTE.
 
-However, for commands that are failed due to an internal error (e.g. the
-command data buffer allocation fails), the command request execute()
-function is not called and __nvmet_req_complete() is never executed for
-the command, leaving the command completion entry uninitialized. For
-such command failed before calling req->execute(), the host ends up
-seeing completion entries with an invalid submission queue ID and
-command ID.
+We should, therefore, for kernel mappings, clear the _PAGE_DIRTY bit
+consistently whenever we clear _PAGE_RW.  I opted to do it in the
+callers in case we want to use __change_page_attr() to create shadow
+stacks inside the kernel at some point in the future.  Arguably, we
+might also want to clear _PAGE_ACCESSED here.
 
-Avoid such issue by always fully initilizing a command completion entry
-in nvmet_pci_epf_cq_work(), setting the entry submission queue head, ID
-and command ID.
+Note that the 3 functions involved:
 
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+  __set_pages_np()
+  kernel_map_pages_in_pgd()
+  kernel_unmap_pages_in_pgd()
+
+Only ever manipulate non-swappable kernel mappings, so maintaining
+the DIRTY:1|RW:0 special pattern for shadow stacks and DIRTY:0
+pattern for non-shadow-stack entries can be maintained consistently
+and doesn't result in the unintended clearing of a live dirty bit
+that could corrupt (destroy) dirty bit information for user mappings.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/174051422675.10177.13226545170101706336.tip-bot2@tip-bot2
+Closes: https://lore.kernel.org/oe-lkp/202502241646.719f4651-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pci-epf.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ arch/x86/mm/pat/set_memory.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
-index 99563648c318f..70855bb9823af 100644
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1655,16 +1655,17 @@ static int nvmet_pci_epf_process_sq(struct nvmet_pci_epf_ctrl *ctrl,
- {
- 	struct nvmet_pci_epf_iod *iod;
- 	int ret, n = 0;
-+	u16 head = sq->head;
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 2d850f6bae701..525794f1eefb3 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2374,7 +2374,7 @@ static int __set_pages_np(struct page *page, int numpages)
+ 				.pgd = NULL,
+ 				.numpages = numpages,
+ 				.mask_set = __pgprot(0),
+-				.mask_clr = __pgprot(_PAGE_PRESENT | _PAGE_RW),
++				.mask_clr = __pgprot(_PAGE_PRESENT | _PAGE_RW | _PAGE_DIRTY),
+ 				.flags = CPA_NO_CHECK_ALIAS };
  
- 	sq->tail = nvmet_pci_epf_bar_read32(ctrl, sq->db);
--	while (sq->head != sq->tail && (!ctrl->sq_ab || n < ctrl->sq_ab)) {
-+	while (head != sq->tail && (!ctrl->sq_ab || n < ctrl->sq_ab)) {
- 		iod = nvmet_pci_epf_alloc_iod(sq);
- 		if (!iod)
- 			break;
+ 	/*
+@@ -2453,7 +2453,7 @@ int __init kernel_map_pages_in_pgd(pgd_t *pgd, u64 pfn, unsigned long address,
+ 		.pgd = pgd,
+ 		.numpages = numpages,
+ 		.mask_set = __pgprot(0),
+-		.mask_clr = __pgprot(~page_flags & (_PAGE_NX|_PAGE_RW)),
++		.mask_clr = __pgprot(~page_flags & (_PAGE_NX|_PAGE_RW|_PAGE_DIRTY)),
+ 		.flags = CPA_NO_CHECK_ALIAS,
+ 	};
  
- 		/* Get the NVMe command submitted by the host. */
- 		ret = nvmet_pci_epf_transfer(ctrl, &iod->cmd,
--					     sq->pci_addr + sq->head * sq->qes,
-+					     sq->pci_addr + head * sq->qes,
- 					     sq->qes, DMA_FROM_DEVICE);
- 		if (ret) {
- 			/* Not much we can do... */
-@@ -1673,12 +1674,13 @@ static int nvmet_pci_epf_process_sq(struct nvmet_pci_epf_ctrl *ctrl,
- 		}
+@@ -2496,7 +2496,7 @@ int __init kernel_unmap_pages_in_pgd(pgd_t *pgd, unsigned long address,
+ 		.pgd		= pgd,
+ 		.numpages	= numpages,
+ 		.mask_set	= __pgprot(0),
+-		.mask_clr	= __pgprot(_PAGE_PRESENT | _PAGE_RW),
++		.mask_clr	= __pgprot(_PAGE_PRESENT | _PAGE_RW | _PAGE_DIRTY),
+ 		.flags		= CPA_NO_CHECK_ALIAS,
+ 	};
  
- 		dev_dbg(ctrl->dev, "SQ[%u]: head %u, tail %u, command %s\n",
--			sq->qid, sq->head, sq->tail,
-+			sq->qid, head, sq->tail,
- 			nvmet_pci_epf_iod_name(iod));
- 
--		sq->head++;
--		if (sq->head == sq->depth)
--			sq->head = 0;
-+		head++;
-+		if (head == sq->depth)
-+			head = 0;
-+		WRITE_ONCE(sq->head, head);
- 		n++;
- 
- 		queue_work_on(WORK_CPU_UNBOUND, sq->iod_wq, &iod->work);
-@@ -1772,8 +1774,17 @@ static void nvmet_pci_epf_cq_work(struct work_struct *work)
- 		if (!iod)
- 			break;
- 
--		/* Post the IOD completion entry. */
-+		/*
-+		 * Post the IOD completion entry. If the IOD request was
-+		 * executed (req->execute() called), the CQE is already
-+		 * initialized. However, the IOD may have been failed before
-+		 * that, leaving the CQE not properly initialized. So always
-+		 * initialize it here.
-+		 */
- 		cqe = &iod->cqe;
-+		cqe->sq_head = cpu_to_le16(READ_ONCE(iod->sq->head));
-+		cqe->sq_id = cpu_to_le16(iod->sq->qid);
-+		cqe->command_id = iod->cmd.common.command_id;
- 		cqe->status = cpu_to_le16((iod->status << 1) | cq->phase);
- 
- 		dev_dbg(ctrl->dev,
 -- 
 2.39.5
 
