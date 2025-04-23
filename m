@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A6F29DB64;
-	Wed, 23 Apr 2025 15:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88822C1E33;
+	Wed, 23 Apr 2025 15:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422042; cv=none; b=hCCzNH115Mm1AnRPva3kjQ3fY90cULT9X0NkBf4JLg9U+EWu3KE2+zIPIP6L8STH3SCf1/6Fcv81r5egfzesQUVDuWzjnCU+4KWGUXbBBQj/3fLBrZeHVa0qO0ERC4NfQMraK76WotXNMHM0cVrp+lCpdMMAkMb0dP6CI2Yqzec=
+	t=1745422044; cv=none; b=VFIhUjkbEake/BKQkvgnQYRX+kb2bCqqzy2UilgSbH4Y5ew4OK/xHpUukK3wnAGplNB/bVJv1Ls22htVFbMato5QLBf1OSYmIGrO9HBJ2IeaTG5Bsl6lakq2sasKw53Ejmvclo1T6HM2YT6QUSZc0PRFZ/u2sZ9Zfty1/3LDZXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422042; c=relaxed/simple;
-	bh=OfwdPLDlEVfLbxOawXANDLW/gGmRkP3jAq5byFV+t+Y=;
+	s=arc-20240116; t=1745422044; c=relaxed/simple;
+	bh=5pgt83/LlkZ7UjKxdvfQfvBaFWAIYd5DkSYTk+tes3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx1LTQ3bT454Zed1dRZoXbpivhHF/z0Yee/Y0hQnaGox3RFerxXB/J/PHbedebzUckQ6zc9COkcumgWNwh/AeFQHlrfQcboyTEeq1MRG+dm5R5WCYQWrqRzzNcQlfAFq+k3+uS/K/b7OJ/H8olQxCeVkIaUNFf/fGBbFr05YTC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZYd54Fc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1yvbKLSa2b5Bl77MwClR3/IRT9iuHRKoPdekpZZZNvJGufQRMy8KMei6r7bN8vC3ve01Yb47bggtQOZGvknFRjNvNQ70YdEaOGtKgTnoRtTK5uAWCuO0GIt9uYUS0thR/PodFA5pFhanWMzqd+P9DoS0U0xB42H7CEw+dcNqoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKFWk3BB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZYd54Fc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE031C4CEE2;
-	Wed, 23 Apr 2025 15:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKFWk3BB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68982C4AF0D;
+	Wed, 23 Apr 2025 15:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422042;
-	bh=OfwdPLDlEVfLbxOawXANDLW/gGmRkP3jAq5byFV+t+Y=;
+	s=korg; t=1745422044;
+	bh=5pgt83/LlkZ7UjKxdvfQfvBaFWAIYd5DkSYTk+tes3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZYd54FcdGy8Rqon7yrUIUPrnTlLJ3ZNkQRwJgLy5XpH+b1sYEkqX0MowT0f6c3j5
-	 853nR6tGI4taQGl3D5MqTk/TqGTcB4Ntx/HolzKsKSP74k4wDQ7zfO0sQAGEYh80zU
-	 UfKu69mkGoLz2Ojp38duN5E+1wRXsalosJFSzpzY=
+	b=JKFWk3BBuyb1WwZiT2PEa+Dg+hOJ2IygX6YAapLrmNVCizq7W8uHJnx2FvrDTkFy7
+	 JSIIMnZE+PVbc2LzdVT55ltVp7GSQalg0n4t+Z25BJ4AFQp0K2u/sMOyaI9om3SvHs
+	 fmQhwitjP/cVUBSMFSq2KWlGFn9mSo1dwnKNgE68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangsheng Hou <xiangsheng.hou@mediatek.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 223/291] virtiofs: add filesystem context source name check
-Date: Wed, 23 Apr 2025 16:43:32 +0200
-Message-ID: <20250423142633.535174815@linuxfoundation.org>
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 268/393] block: fix resource leak in blk_register_queue() error path
+Date: Wed, 23 Apr 2025 16:42:44 +0200
+Message-ID: <20250423142654.432829863@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit a94fd938df2b1628da66b498aa0eeb89593bc7a2 upstream.
+[ Upstream commit 40f2eb9b531475dd01b683fdaf61ca3cfd03a51e ]
 
-In certain scenarios, for example, during fuzz testing, the source
-name may be NULL, which could lead to a kernel panic. Therefore, an
-extra check for the source name should be added.
+When registering a queue fails after blk_mq_sysfs_register() is
+successful but the function later encounters an error, we need
+to clean up the blk_mq_sysfs resources.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: <stable@vger.kernel.org> # all LTS kernels
-Signed-off-by: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
-Link: https://lore.kernel.org/20250407115111.25535-1-xiangsheng.hou@mediatek.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the missing blk_mq_sysfs_unregister() call in the error path
+to properly clean up these resources and prevent a memory leak.
+
+Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250412092554.475218-1-zhengqixing@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -1429,6 +1429,9 @@ static int virtio_fs_get_tree(struct fs_
- 	unsigned int virtqueue_size;
- 	int err = -EIO;
- 
-+	if (!fsc->source)
-+		return invalf(fsc, "No source specified");
-+
- 	/* This gets a reference on virtio_fs object. This ptr gets installed
- 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
- 	 * to drop the reference to this object.
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 4990a19e60133..74839f6f2e0cb 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -854,6 +854,8 @@ int blk_register_queue(struct gendisk *disk)
+ out_debugfs_remove:
+ 	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
++	if (queue_is_mq(q))
++		blk_mq_sysfs_unregister(disk);
+ out_put_queue_kobj:
+ 	kobject_put(&disk->queue_kobj);
+ 	mutex_unlock(&q->sysfs_dir_lock);
+-- 
+2.39.5
+
 
 
