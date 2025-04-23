@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C0418DB17;
-	Wed, 23 Apr 2025 14:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13E1175BF;
+	Wed, 23 Apr 2025 14:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420065; cv=none; b=u+IIKcrXYqCydjymk9BM8oEfDdNmEY8iGtFVLunnQB4JYHgBa0ktnda9jW7KQpCoHet0xaSXS6NPo8lhw/URfvu6+m0DswLwrZs5lZ7P5egj5DaG6oVE3DIhrI5vm93ZB0RPuIZrXDYVFbIOtJlNuJTYjFTF8WjIXqyQEp5fmdY=
+	t=1745420069; cv=none; b=FWve/WnYdZm/4cu24/g4r8b2jf0fuY78/5G7VncDNu++H9fekTovQPoBopzEDfFMkCHwHs4BkeTtmGCr/1q9t4kZ4ADoVwAYd4ibZVvrhw/9ZThwUmjAWBP/OJGXSybd9AQwwzFMOEdw19Gf5KNEF4jqH03psjg5KpEvLeiSEPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420065; c=relaxed/simple;
-	bh=Sff0duBx82M+qCZHPvFycu5ZmEdO85uOL6C3h2iUzR8=;
+	s=arc-20240116; t=1745420069; c=relaxed/simple;
+	bh=QS1HXhA9So4UgQHdlfnw828MoeFzNqXlI4WUQG1q9EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTvrKYLM/4S5HLjMtMcOYqokaDpK8NDE+5GMDfIvKj8G6zugpstZXaGnrrRTldB1rRZDgDBjU5aWfDcMtZJA9RkMhsw+WcO2O3zW7lMTZUx3GW2ahifl4hJeCNRE2NHN0xg3viaxQsdBTIZLVKR60zvuTDhDxT+LQYqClfa+r4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=om1/JVE/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRZDWE54qjEBsqWYs7JcGbh/GmqqjJL+4k+X9I/KCtoAKJDqy3SjUPS9TkN9IMptvV74aCI5RD4z5pqJ90nwTDciqjc20urFoszsvYFpN8aYPZUL30Z3p03owN9mnjmP7vgKNwkOeEdfRkloSnAOFt8+HTHTL0w9Qi1+fI3SWaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj9iLQcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="om1/JVE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA7EC4CEE2;
-	Wed, 23 Apr 2025 14:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj9iLQcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F5AC4CEE2;
+	Wed, 23 Apr 2025 14:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420065;
-	bh=Sff0duBx82M+qCZHPvFycu5ZmEdO85uOL6C3h2iUzR8=;
+	s=korg; t=1745420068;
+	bh=QS1HXhA9So4UgQHdlfnw828MoeFzNqXlI4WUQG1q9EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=om1/JVE/JPeKevztIAAVBgBS9o9hiRZk+5L2Us4MGxMY47eMtME87Kv4N1Wxd9m5W
-	 vx2ehxJzxJ5NvwYsCC219XNmZMp/CXALF8RfSBKiHFXIECiCbonaKafx99On9Lfl1i
-	 ppiNpbxgo6VoHDEI6Y3Qr5TAUYSqEvgAspfkOAwQ=
+	b=Vj9iLQcf3ESpjJ1nyX74gxj4DMcIx89oIsJ8sq9UbQHjOtO2shTSKMq3YX1pp/8HB
+	 +PrA5AbUIn3ZVLKUEj5WlO16BB3/eD71d9jqCKX07MO6nMVIo8SN/wDDHKxJzPee/K
+	 h1EHQ4LKrlco6QT7QMoSkIULbluLn2SFV93cjsi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sontu mazumdar <sontu21@gmail.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Octavian Purdila <tavip@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/393] nft_set_pipapo: fix incorrect avx2 match of 5th field octet
-Date: Wed, 23 Apr 2025 16:38:51 +0200
-Message-ID: <20250423142644.738076598@linuxfoundation.org>
+Subject: [PATCH 6.1 014/291] net_sched: sch_sfq: move the limit validation
+Date: Wed, 23 Apr 2025 16:40:03 +0200
+Message-ID: <20250423142624.989277295@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +49,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit e042ed950d4e176379ba4c0722146cd96fb38aa2 ]
+[ Upstream commit b3bf8f63e6179076b57c9de660c9f80b5abefe70 ]
 
-Given a set element like:
+It is not sufficient to directly validate the limit on the data that
+the user passes as it can be updated based on how the other parameters
+are changed.
 
-	icmpv6 . dead:beef:00ff::1
+Move the check at the end of the configuration update process to also
+catch scenarios where the limit is indirectly updated, for example
+with the following configurations:
 
-The value of 'ff' is irrelevant, any address will be matched
-as long as the other octets are the same.
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 depth 1
+tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 divisor 1
 
-This is because of too-early register clobbering:
-ymm7 is reloaded with new packet data (pkt[9])  but it still holds data
-of an earlier load that wasn't processed yet.
+This fixes the following syzkaller reported crash:
 
-The existing tests in nft_concat_range.sh selftests do exercise this code
-path, but do not trigger incorrect matching due to the network prefix
-limitation.
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:203:6
+index 65535 is out of range for type 'struct sfq_head[128]'
+CPU: 1 UID: 0 PID: 3037 Comm: syz.2.16 Not tainted 6.14.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x201/0x300 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_out_of_bounds+0xf5/0x120 lib/ubsan.c:429
+ sfq_link net/sched/sch_sfq.c:203 [inline]
+ sfq_dec+0x53c/0x610 net/sched/sch_sfq.c:231
+ sfq_dequeue+0x34e/0x8c0 net/sched/sch_sfq.c:493
+ sfq_reset+0x17/0x60 net/sched/sch_sfq.c:518
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ tbf_reset+0x41/0x110 net/sched/sch_tbf.c:339
+ qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
+ dev_reset_queue+0x100/0x1b0 net/sched/sch_generic.c:1311
+ netdev_for_each_tx_queue include/linux/netdevice.h:2590 [inline]
+ dev_deactivate_many+0x7e5/0xe70 net/sched/sch_generic.c:1375
 
-Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
-Reported-by: sontu mazumdar <sontu21@gmail.com>
-Closes: https://lore.kernel.org/netfilter/CANgxkqwnMH7fXra+VUfODT-8+qFLgskq3set1cAzqqJaV4iEZg@mail.gmail.com/T/#t
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo_avx2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_sfq.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index b8d3c3213efee..c15db28c5ebc4 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -994,8 +994,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(5, lt,  8,  pkt[8], bsize);
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 68e909e8fabd9..002941d35b643 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -661,10 +661,6 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		if (!p)
+ 			return -ENOMEM;
+ 	}
+-	if (ctl->limit == 1) {
+-		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
+-		return -EINVAL;
+-	}
  
- 		NFT_PIPAPO_AVX2_AND(6, 2, 3);
-+		NFT_PIPAPO_AVX2_AND(3, 4, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(7, lt,  9,  pkt[9], bsize);
--		NFT_PIPAPO_AVX2_AND(0, 4, 5);
-+		NFT_PIPAPO_AVX2_AND(0, 3, 5);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(1, lt, 10, pkt[10], bsize);
- 		NFT_PIPAPO_AVX2_AND(2, 6, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(3, lt, 11, pkt[11], bsize);
+ 	sch_tree_lock(sch);
+ 
+@@ -705,6 +701,12 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
+ 		maxflows = min_t(u32, maxflows, limit);
+ 	}
++	if (limit == 1) {
++		sch_tree_unlock(sch);
++		kfree(p);
++		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
++		return -EINVAL;
++	}
+ 
+ 	/* commit configuration */
+ 	q->limit = limit;
 -- 
 2.39.5
 
