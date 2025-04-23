@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61462C2AB4;
-	Wed, 23 Apr 2025 15:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB93728B4E6;
+	Wed, 23 Apr 2025 15:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422498; cv=none; b=IeAP5C7WeHYZa5Izy5mqYDLiMvJkFKsftCvHaYaL81HCWTWbyZjbuYtuV+JZBswAI2KcOZglDy13g+TwKVliTmqq1AJz1nUggqrjlcTiDyvBwFRYF11ljJOWfIbR744d8QkWDB8LALw4FaF7LHT6H+p9lNOLo9VWL2QAYXahmiE=
+	t=1745422501; cv=none; b=PTBwd75F904MvT+T3SxBPCQxzimPKoQyG0NGqKU+y2/p9ipCutMWyDQ6tRyd0WSeYvC+d65Pr5Jht7FnP2s58Fp3evGa5IT8SKAipRNlKOS5scUkFjshhCcftaNj4t5Q/ofdr6DFsQKZuV474KrUojC1D9jmQZXhlYeG34tcAqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422498; c=relaxed/simple;
-	bh=xBDkHk55wiKPRyQnhyovj1InKvK31PUNLvis8i6m9eg=;
+	s=arc-20240116; t=1745422501; c=relaxed/simple;
+	bh=4w/SbY7zFNaEQeaa8HfabppZUJCHnM9+x68Pjc8hAPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZX9wIU3W//rDCMSzmqtME62oUoK0uG9IQJ9Tj25ep0tkUBbXW+OCZ5B3sUubn8GhV1lD3OjdBtrkJvjBObbiwtvwxrudq6ioNSnpDUCEP98PW1o5ym982+trMuRr5H+gN7tJB26LXmrSai8gPxzs95I3gXnaDi6OMf/iCBYNZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orOloaFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMc3r9xyH4qEKOjh4YYAjdOlp8NytNe6EKDQhjBI3NeuJRBPBeWYKdo8i0NkQapMe2ED4/M9ssu6CB1kBTvFeOONGGc0R4/wwjT90qY2gGTNvn0L0HYVacwytTjDAOTqUKxozGvWohAftsZSuitavztD5TRv4bZ+DaWlpg8ohco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REwKiyMZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orOloaFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE6DC4CEE2;
-	Wed, 23 Apr 2025 15:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REwKiyMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD326C4CEE3;
+	Wed, 23 Apr 2025 15:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422498;
-	bh=xBDkHk55wiKPRyQnhyovj1InKvK31PUNLvis8i6m9eg=;
+	s=korg; t=1745422501;
+	bh=4w/SbY7zFNaEQeaa8HfabppZUJCHnM9+x68Pjc8hAPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orOloaFWVYT+W85ohYnTCgsdWkLVWp96/Xo/hWRbL49Mm5jFUeBa+aOv1CL5AC88I
-	 L5CkbIMw69mPMYosOuz9ppgzN9AJi0oXcfNoYpZYMRNJiMxFpVfs5ls/CfVnEZxYiB
-	 HlIjr5P7rC7NsvFXO6dH9nKq7cjwirOFa+j4vGoQ=
+	b=REwKiyMZn1j5UMSE3/U0922DSzXvnVbrk8W2WqO9DbNNh7KOst5327khBbIlhrOYm
+	 JrjNg5cQwvcg37X7391m0IaZYcD4h58PuFvI1HYq+PJFLH5dyApZ1syxeMmXUv0XYG
+	 T7xxL7uaW51s/OkV2pKZMvb873cLCu321K4jggBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Davydov <davydov-max@yandex-team.ru>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.6 373/393] x86/split_lock: Fix the delayed detection logic
-Date: Wed, 23 Apr 2025 16:44:29 +0200
-Message-ID: <20250423142658.739160224@linuxfoundation.org>
+	"Yingfu.zhou" <yingfu.zhou@shopee.com>,
+	"Chunguang.xu" <chunguang.xu@shopee.com>,
+	"Yue.zhao" <yue.zhao@shopee.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Feng Liu <Feng.Liu3@windriver.com>,
+	He Zhe <Zhe.He@windriver.com>
+Subject: [PATCH 6.6 374/393] nvme-rdma: unquiesce admin_q before destroy it
+Date: Wed, 23 Apr 2025 16:44:30 +0200
+Message-ID: <20250423142658.780460334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -54,156 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksim Davydov <davydov-max@yandex-team.ru>
+From: Chunguang.xu <chunguang.xu@shopee.com>
 
-commit c929d08df8bee855528b9d15b853c892c54e1eee upstream.
+commit 5858b687559809f05393af745cbadf06dee61295 upstream.
 
-If the warning mode with disabled mitigation mode is used, then on each
-CPU where the split lock occurred detection will be disabled in order to
-make progress and delayed work will be scheduled, which then will enable
-detection back.
+Kernel will hang on destroy admin_q while we create ctrl failed, such
+as following calltrace:
 
-Now it turns out that all CPUs use one global delayed work structure.
-This leads to the fact that if a split lock occurs on several CPUs
-at the same time (within 2 jiffies), only one CPU will schedule delayed
-work, but the rest will not.
+PID: 23644    TASK: ff2d52b40f439fc0  CPU: 2    COMMAND: "nvme"
+ #0 [ff61d23de260fb78] __schedule at ffffffff8323bc15
+ #1 [ff61d23de260fc08] schedule at ffffffff8323c014
+ #2 [ff61d23de260fc28] blk_mq_freeze_queue_wait at ffffffff82a3dba1
+ #3 [ff61d23de260fc78] blk_freeze_queue at ffffffff82a4113a
+ #4 [ff61d23de260fc90] blk_cleanup_queue at ffffffff82a33006
+ #5 [ff61d23de260fcb0] nvme_rdma_destroy_admin_queue at ffffffffc12686ce
+ #6 [ff61d23de260fcc8] nvme_rdma_setup_ctrl at ffffffffc1268ced
+ #7 [ff61d23de260fd28] nvme_rdma_create_ctrl at ffffffffc126919b
+ #8 [ff61d23de260fd68] nvmf_dev_write at ffffffffc024f362
+ #9 [ff61d23de260fe38] vfs_write at ffffffff827d5f25
+    RIP: 00007fda7891d574  RSP: 00007ffe2ef06958  RFLAGS: 00000202
+    RAX: ffffffffffffffda  RBX: 000055e8122a4d90  RCX: 00007fda7891d574
+    RDX: 000000000000012b  RSI: 000055e8122a4d90  RDI: 0000000000000004
+    RBP: 00007ffe2ef079c0   R8: 000000000000012b   R9: 000055e8122a4d90
+    R10: 0000000000000000  R11: 0000000000000202  R12: 0000000000000004
+    R13: 000055e8122923c0  R14: 000000000000012b  R15: 00007fda78a54500
+    ORIG_RAX: 0000000000000001  CS: 0033  SS: 002b
 
-The return value of schedule_delayed_work_on() would have shown this,
-but it is not checked in the code.
+This due to we have quiesced admi_q before cancel requests, but forgot
+to unquiesce before destroy it, as a result we fail to drain the
+pending requests, and hang on blk_mq_freeze_queue_wait() forever. Here
+try to reuse nvme_rdma_teardown_admin_queue() to fix this issue and
+simplify the code.
 
-A diagram that can help to understand the bug reproduction:
-
- - sld_update_msr() enables/disables SLD on both CPUs on the same core
-
- - schedule_delayed_work_on() internally checks WORK_STRUCT_PENDING_BIT.
-   If a work has the 'pending' status, then schedule_delayed_work_on()
-   will return an error code and, most importantly, the work will not
-   be placed in the workqueue.
-
-Let's say we have a multicore system on which split_lock_mitigate=0 and
-a multithreaded application is running that calls splitlock in multiple
-threads. Due to the fact that sld_update_msr() affects the entire core
-(both CPUs), we will consider 2 CPUs from different cores. Let the 2
-threads of this application schedule to CPU0 (core 0) and to CPU 2
-(core 1), then:
-
-|                                 ||                                   |
-|             CPU 0 (core 0)      ||          CPU 2 (core 1)           |
-|_________________________________||___________________________________|
-|                                 ||                                   |
-| 1) SPLIT LOCK occured           ||                                   |
-|                                 ||                                   |
-| 2) split_lock_warn()            ||                                   |
-|                                 ||                                   |
-| 3) sysctl_sld_mitigate == 0     ||                                   |
-|    (work = &sl_reenable)        ||                                   |
-|                                 ||                                   |
-| 4) schedule_delayed_work_on()   ||                                   |
-|    (reenable will be called     ||                                   |
-|     after 2 jiffies on CPU 0)   ||                                   |
-|                                 ||                                   |
-| 5) disable SLD for core 0       ||                                   |
-|                                 ||                                   |
-|    -------------------------    ||                                   |
-|                                 ||                                   |
-|                                 || 6) SPLIT LOCK occured             |
-|                                 ||                                   |
-|                                 || 7) split_lock_warn()              |
-|                                 ||                                   |
-|                                 || 8) sysctl_sld_mitigate == 0       |
-|                                 ||    (work = &sl_reenable,          |
-|                                 ||     the same address as in 3) )   |
-|                                 ||                                   |
-|            2 jiffies            || 9) schedule_delayed_work_on()     |
-|                                 ||    fials because the work is in   |
-|                                 ||    the pending state since 4).    |
-|                                 ||    The work wasn't placed to the  |
-|                                 ||    workqueue. reenable won't be   |
-|                                 ||    called on CPU 2                |
-|                                 ||                                   |
-|                                 || 10) disable SLD for core 0        |
-|                                 ||                                   |
-|                                 ||     From now on SLD will          |
-|                                 ||     never be reenabled on core 1  |
-|                                 ||                                   |
-|    -------------------------    ||                                   |
-|                                 ||                                   |
-|    11) enable SLD for core 0 by ||                                   |
-|        __split_lock_reenable    ||                                   |
-|                                 ||                                   |
-
-If the application threads can be scheduled to all processor cores,
-then over time there will be only one core left, on which SLD will be
-enabled and split lock will be able to be detected; and on all other
-cores SLD will be disabled all the time.
-
-Most likely, this bug has not been noticed for so long because
-sysctl_sld_mitigate default value is 1, and in this case a semaphore
-is used that does not allow 2 different cores to have SLD disabled at
-the same time, that is, strictly only one work is placed in the
-workqueue.
-
-In order to fix the warning mode with disabled mitigation mode,
-delayed work has to be per-CPU. Implement it.
-
-Fixes: 727209376f49 ("x86/split_lock: Add sysctl to control the misery mode")
-Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20250115131704.132609-1-davydov-max@yandex-team.ru
+Fixes: 958dc1d32c80 ("nvme-rdma: add clean action for failed reconnection")
+Reported-by: Yingfu.zhou <yingfu.zhou@shopee.com>
+Signed-off-by: Chunguang.xu <chunguang.xu@shopee.com>
+Signed-off-by: Yue.zhao <yue.zhao@shopee.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[Minor context change fixed]
+Signed-off-by: Feng Liu <Feng.Liu3@windriver.com>
+Signed-off-by: He Zhe <Zhe.He@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/intel.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/nvme/host/rdma.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -1168,7 +1168,13 @@ static void __split_lock_reenable(struct
- {
- 	sld_update_msr(true);
- }
--static DECLARE_DELAYED_WORK(sl_reenable, __split_lock_reenable);
-+/*
-+ * In order for each CPU to schedule its delayed work independently of the
-+ * others, delayed work struct must be per-CPU. This is not required when
-+ * sysctl_sld_mitigate is enabled because of the semaphore that limits
-+ * the number of simultaneously scheduled delayed works to 1.
-+ */
-+static DEFINE_PER_CPU(struct delayed_work, sl_reenable);
- 
- /*
-  * If a CPU goes offline with pending delayed work to re-enable split lock
-@@ -1189,7 +1195,7 @@ static int splitlock_cpu_offline(unsigne
- 
- static void split_lock_warn(unsigned long ip)
- {
--	struct delayed_work *work;
-+	struct delayed_work *work = NULL;
- 	int cpu;
- 
- 	if (!current->reported_split_lock)
-@@ -1211,11 +1217,17 @@ static void split_lock_warn(unsigned lon
- 		if (down_interruptible(&buslock_sem) == -EINTR)
- 			return;
- 		work = &sl_reenable_unlock;
--	} else {
--		work = &sl_reenable;
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -1083,13 +1083,7 @@ destroy_io:
+ 		nvme_rdma_free_io_queues(ctrl);
  	}
+ destroy_admin:
+-	nvme_quiesce_admin_queue(&ctrl->ctrl);
+-	blk_sync_queue(ctrl->ctrl.admin_q);
+-	nvme_rdma_stop_queue(&ctrl->queues[0]);
+-	nvme_cancel_admin_tagset(&ctrl->ctrl);
+-	if (new)
+-		nvme_remove_admin_tag_set(&ctrl->ctrl);
+-	nvme_rdma_destroy_admin_queue(ctrl);
++	nvme_rdma_teardown_admin_queue(ctrl, new);
+ 	return ret;
+ }
  
- 	cpu = get_cpu();
-+
-+	if (!work) {
-+		work = this_cpu_ptr(&sl_reenable);
-+		/* Deferred initialization of per-CPU struct */
-+		if (!work->work.func)
-+			INIT_DELAYED_WORK(work, __split_lock_reenable);
-+	}
-+
- 	schedule_delayed_work_on(cpu, work, 2);
- 
- 	/* Disable split lock detection on this CPU to make progress */
 
 
