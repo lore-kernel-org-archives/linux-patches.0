@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E798728D858;
-	Wed, 23 Apr 2025 15:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2C72BCF7F;
+	Wed, 23 Apr 2025 15:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421495; cv=none; b=B3MagmYLbaNMR6RxYVgnl77o2rTFbm6o0TbLdgNSvzrNiYT5nB6qh8mcjsvhWLFaFrNN5krSRgk8cz8j+UER7XTheVOJFjk8lD1BxPwCUErZi45+OsK9UAFbl49p4zWKWrVjECWfP1bnzeWJtf9NoZrkrzP478USLMyhYoGUziI=
+	t=1745421500; cv=none; b=cpdybnOp4PMAZT/7JVXSjVUiyCvdrNO7WO32vMn/NRZZsUTuvdKINvyN56x43e8nhKRDOGxnQSnawAqiU8JkRs2ULFaBZj7H3KQTPQDhIOVrPT9QPOMJOk87yATXc7IdLfQVJQfGvmh0EQa9GbMv10p8kWyZ5B19OTSCk2P3yF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421495; c=relaxed/simple;
-	bh=2wp1+RuCb3jAvwXvckrNpyvgRwaPN3JytLX7Shlw28U=;
+	s=arc-20240116; t=1745421500; c=relaxed/simple;
+	bh=Y2OeIHOClCJsou7Cq8lcAddAUk2qAkJ7jIpDs9hwdPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZpGw6ZqdzMRJVxUMcWIzdd3ZEcaxvxxhgbmcqC0rZQ54FkSCESRsDXKRmebxFqE/+h3t8mNkvHM7LYTAqUe9gHEwiOGndvSwIfOsQBSfiRGSHEI7HvyHqCi12WVthYQMBMZFqP+aNl7OcF5p+G42SxguRR0y12iX5K28yxnqNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ/4XXJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8mhoeTLGzgHLfLGr7VWsibZ1e9OtHwxlJx0nIo/br98lg1tJ19ANLpYGCfmoa4I8HhoQr+6XGr7kmowEcV8zdBiG6igbcfalhZpjBjyzs62hGrTcry3X3Y31MpqnCxKX/FS+5wV+I/HXQdpT5crqyVbS4mG+024IjMlWiB+x2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2X2z/jAn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ/4XXJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788A7C4CEE3;
-	Wed, 23 Apr 2025 15:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2X2z/jAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2848C4CEE3;
+	Wed, 23 Apr 2025 15:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421494;
-	bh=2wp1+RuCb3jAvwXvckrNpyvgRwaPN3JytLX7Shlw28U=;
+	s=korg; t=1745421500;
+	bh=Y2OeIHOClCJsou7Cq8lcAddAUk2qAkJ7jIpDs9hwdPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZ/4XXJBPV2WmPMWrAO1oRfkx557r7Zvufi13F66YgF2B7R+oK4D70rp74ORNRwxX
-	 J8U8Kxu5q1eSeBT/FXMkL6M9h3gptObUcPDAJM0nKGnDlQPu8NbcM/NiQiTzCtMwq/
-	 I0CSCDY/e69jVYHq4vWZ/1NRaQznqPsG/f3Okzc4=
+	b=2X2z/jAnkqBrNmzhRquDE4Yly1X2LOG6iCI+rQUBTk3SIo8ttHW6rb3xtYei2PWBF
+	 gebpnPmHnasr82zAhpRGIcYpoDHkh5XvOq74lNR8gFWQnOsU/dkBSiMneoSXUOfDD7
+	 OGIJSBpaGwistyHZrndgm6zTr+ocNVucRQvr8HUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 195/241] drm/amdgpu/mes11: optimize MES pipe FW version fetching
-Date: Wed, 23 Apr 2025 16:44:19 +0200
-Message-ID: <20250423142628.477881123@linuxfoundation.org>
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 185/393] btrfs: zoned: fix zone finishing with missing devices
+Date: Wed, 23 Apr 2025 16:41:21 +0200
+Message-ID: <20250423142651.022134777@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit b71a2bb0ce07f40f92f59ed7f283068e41b10075 upstream.
+commit 35fec1089ebb5617f85884d3fa6a699ce6337a75 upstream.
 
-Don't fetch it again if we already have it.  It seems the
-registers don't reliably have the value at resume in some
-cases.
+If do_zone_finish() is called with a filesystem that has missing devices
+(e.g. a RAID file system mounted in degraded mode) it is accessing the
+btrfs_device::zone_info pointer, which will not be set if the device
+in question is missing.
 
-Fixes: 028c3fb37e70 ("drm/amdgpu/mes11: initiate mes v11 support")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4083
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Check if the device is present (by checking if it has a valid block device
+pointer associated) and if not, skip zone finishing for it.
+
+Fixes: 4dcbb8ab31c1 ("btrfs: zoned: make zone finishing multi stripe capable")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/zoned.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -899,6 +899,10 @@ static void mes_v11_0_get_fw_version(str
- {
- 	int pipe;
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2168,6 +2168,9 @@ static int do_zone_finish(struct btrfs_b
+ 		const u64 physical = map->stripes[i].physical;
+ 		struct btrfs_zoned_device_info *zinfo = device->zone_info;
  
-+	/* return early if we have already fetched these */
-+	if (adev->mes.sched_version && adev->mes.kiq_version)
-+		return;
++		if (!device->bdev)
++			continue;
 +
- 	/* get MES scheduler/KIQ versions */
- 	mutex_lock(&adev->srbm_mutex);
+ 		if (zinfo->max_active_zones == 0)
+ 			continue;
  
 
 
