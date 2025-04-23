@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474E92BF3C9;
-	Wed, 23 Apr 2025 15:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915882BEC4A;
+	Wed, 23 Apr 2025 15:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422512; cv=none; b=DEsZm9PrGayIhJ+yTNOop3p7GfNZJn5Pqxfw6eZtpA89cNkDEFq371XUNG+kz08WQAPsd3Fq+JB3wV1axlVuzW3iJGM0L//bEfNh4ezvdYnTVWzH3aqqf7pejeP+rCiN7ha6T3xswxi+kqoWCQ/Nk42EYcGOlnr+EWVAC4jsZsg=
+	t=1745422514; cv=none; b=MkTOZHI1H9OvvD8HSonCZwJoafdDjdpoe7/DOK135lPpQmNAroiX2WItffxhL6P6RBZwtgxhanh5+IjUngHn2fSXfL2UVQtj/2kxlnxdaROyeGXcTSGd53oYwiswsu9htaZyPnxcLH0qLCaGxKjenwSil7FrTvmDefhEyx/6ys8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422512; c=relaxed/simple;
-	bh=YeMR0XwkWsLUwMqv885RtcXmcFx15BdPPSR+Ltxii1U=;
+	s=arc-20240116; t=1745422514; c=relaxed/simple;
+	bh=i34TvYDXoC6csvgHLrwfHQYN96ODQHls7gQnB2aTqlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2BLAwjRCFiUY2J7kV4WIbRH6NU4fTQGM2FUj376ZFhFJvNmn4yj330Nea1rFlssb0YJury0KTf1Yzn/jtyXX9dqrRtUtoljxcS7f9osjZyIAFqZgMLFAHeCwTwaBxbRXEWIDFCnOHThtei25BrFtSFVY+r//n3xeqwGt92EKO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biXvtI1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DvGn6dJUvY2sYekV5tXprwEqBoanf6C2nFqEZWkeAIwIoNxQXmaQfL629P77aq5evtGUBqSpGlc9QExjWCC2zl8orWevr0NC7Qi+6MddLAXRc9m1i+RbsmOJHifuu/LzLoP71Xy5CI3LrrDTcY18kFhdjKIw4Rv06+JEido0hPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xr7cZo3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biXvtI1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BF2C4CEE2;
-	Wed, 23 Apr 2025 15:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xr7cZo3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E14C4CEE2;
+	Wed, 23 Apr 2025 15:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422511;
-	bh=YeMR0XwkWsLUwMqv885RtcXmcFx15BdPPSR+Ltxii1U=;
+	s=korg; t=1745422514;
+	bh=i34TvYDXoC6csvgHLrwfHQYN96ODQHls7gQnB2aTqlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=biXvtI1Yli5TPgtiBMYUwLTANiMeqVGyGpJJxHgCuyHEEQdSHug4BFhZ8fG/DsvH+
-	 heQ8UcspdPpzfxnJc/6DQ17kSpwOeDYWaESc+bZOQwzVW/Sl72ubVIuwwifgW9OiYB
-	 IfoLzdVObV2XySSJaf/AHTOkiQq3G1b4hSZHoKjA=
+	b=Xr7cZo3JcNkBjNVxWSTy4TJ+0eUA433TiKExczDyFNm/uJ6guJm+lsD1q6WBQnulw
+	 uxf9gXKt1ynZDMTbKN46r1EXwWzh/eqsXoWea3dwwgl10XCSydQ+cdwiHlB1Gr8JaY
+	 MtrZvQ6DZ6U4QD3mvauJyDoMDI3ZwmuFweXDHEDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	GONG Ruiqi <gongruiqi1@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bin Lan <bin.lan.cn@windriver.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.6 378/393] usb: typec: fix pm usage counter imbalance in ucsi_ccg_sync_control()
-Date: Wed, 23 Apr 2025 16:44:34 +0200
-Message-ID: <20250423142658.944800819@linuxfoundation.org>
+Subject: [PATCH 6.6 379/393] btrfs: fix qgroup reserve leaks in cow_file_range
+Date: Wed, 23 Apr 2025 16:44:35 +0200
+Message-ID: <20250423142658.984684778@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -54,49 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: GONG Ruiqi <gongruiqi1@huawei.com>
+From: Boris Burkov <boris@bur.io>
 
-commit b0e525d7a22ea350e75e2aec22e47fcfafa4cacd upstream.
+commit 30479f31d44d47ed00ae0c7453d9b253537005b2 upstream.
 
-The error handling for the case `con_index == 0` should involve dropping
-the pm usage counter, as ucsi_ccg_sync_control() gets it at the
-beginning. Fix it.
+In the buffered write path, the dirty page owns the qgroup reserve until
+it creates an ordered_extent.
 
-Cc: stable <stable@kernel.org>
-Fixes: e56aac6e5a25 ("usb: typec: fix potential array underflow in ucsi_ccg_sync_control()")
-Signed-off-by: GONG Ruiqi <gongruiqi1@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250107015750.2778646-1-gongruiqi1@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Minor context change fixed]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Therefore, any errors that occur before the ordered_extent is created
+must free that reservation, or else the space is leaked. The fstest
+generic/475 exercises various IO error paths, and is able to trigger
+errors in cow_file_range where we fail to get to allocating the ordered
+extent. Note that because we *do* clear delalloc, we are likely to
+remove the inode from the delalloc list, so the inodes/pages to not have
+invalidate/launder called on them in the commit abort path.
+
+This results in failures at the unmount stage of the test that look like:
+
+  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
+  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
+  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
+  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
+  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
+  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
+  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
+  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
+  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
+  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? __warn.cold+0x8e/0xea
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? report_bug+0xff/0x140
+   ? handle_bug+0x3b/0x70
+   ? exc_invalid_op+0x17/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   generic_shutdown_super+0x70/0x160
+   kill_anon_super+0x11/0x40
+   btrfs_kill_super+0x11/0x20 [btrfs]
+   deactivate_locked_super+0x2e/0xa0
+   cleanup_mnt+0xb5/0x150
+   task_work_run+0x57/0x80
+   syscall_exit_to_user_mode+0x121/0x130
+   do_syscall_64+0xab/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f916847a887
+  ---[ end trace 0000000000000000 ]---
+  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
+
+Cases 2 and 3 in the out_reserve path both pertain to this type of leak
+and must free the reserved qgroup data. Because it is already an error
+path, I opted not to handle the possible errors in
+btrfs_free_qgroup_data.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -587,7 +587,7 @@ static int ucsi_ccg_sync_write(struct uc
- 				    UCSI_CMD_CONNECTOR_MASK;
- 			if (con_index == 0) {
- 				ret = -EINVAL;
--				goto unlock;
-+				goto err_put;
- 			}
- 			con = &uc->ucsi->connector[con_index - 1];
- 			ucsi_ccg_update_set_new_cam_cmd(uc, con, (u64 *)val);
-@@ -603,8 +603,8 @@ static int ucsi_ccg_sync_write(struct uc
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1546,6 +1546,7 @@ out_unlock:
+ 					     locked_page,
+ 					     clear_bits,
+ 					     page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 		start += cur_alloc_size;
+ 	}
  
- err_clear_bit:
- 	clear_bit(DEV_CMD_PENDING, &uc->flags);
-+err_put:
- 	pm_runtime_put_sync(uc->dev);
--unlock:
- 	mutex_unlock(&uc->lock);
- 
+@@ -1559,6 +1560,7 @@ out_unlock:
+ 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
+ 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
+ 					     clear_bits, page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 	}
  	return ret;
+ }
+@@ -2222,13 +2224,15 @@ error:
+ 	 */
+ 	if (cow_start != (u64)-1)
+ 		cur_offset = cow_start;
+-	if (cur_offset < end)
++	if (cur_offset < end) {
+ 		extent_clear_unlock_delalloc(inode, cur_offset, end,
+ 					     locked_page, EXTENT_LOCKED |
+ 					     EXTENT_DELALLOC | EXTENT_DEFRAG |
+ 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
+ 					     PAGE_START_WRITEBACK |
+ 					     PAGE_END_WRITEBACK);
++		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
++	}
+ 	btrfs_free_path(path);
+ 	return ret;
+ }
 
 
