@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BC52C1E18;
-	Wed, 23 Apr 2025 15:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BCE29CB3D;
+	Wed, 23 Apr 2025 15:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422021; cv=none; b=bVUumyiB7KhDUqqT0aoMgMHzyhKMi/tLE4v2WNjdO/VTzfl7w51hajt5MS94fj4a46aMEbbL4c9h+NLiBfJy6P5ryyyIe5EhQ426Y73f666qOhgt3spka0GTrc0GuJ5N2FO0mt9S855e1Biob2zs6IoqizM5hdBzgDjrA0kPTrE=
+	t=1745422023; cv=none; b=DDuwJvSlIHSPN0SuiWRHNTRM/GiKtdMg/rOPEsJoeb41MGC5lU6VG6R8BLUwg6IUjXCHTD3Lshd/THm/XQpDYA7sGcpiywr6QiDK2sd0km2p8yjEXhfqSTttLpZke3H5cHkwCpcV2RdBue+sbaarBQVFp4eJzDBq+ixJrrUWpzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422021; c=relaxed/simple;
-	bh=IL0I3zLeSsa9qAtc2Y8N9xqUV4oWNGQKwtWG/yMLVvg=;
+	s=arc-20240116; t=1745422023; c=relaxed/simple;
+	bh=Aqbi9QN5w1isQ6dFpTYC0XeezC4qh69VbdKuGVX58SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4el0BqD+XJNogEkW51A9uPiBFp4/OhilyvQKwlud9lt5cJG1bSoCKIUumzwpBY7PLv6n0SiRlDwPVB+iyTCffhZYklsqig13WzaVDLuRCRlaLL8EO1G90HgPwR+xKXtMRfYwUB0XBHLoQhNlpid9EKmKWPbZkRhvSAQwLwSU0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8qrpCm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWHBC6PCIdzJVsjVF1ui5SE0yafTcHEx89SJiuqLRg2aubUfOeR2aSpY6nkET7Vn1kH6q7GG6MePN4VMjKGgRrkyz2TVXBsVJ/vLvdLhq9Mpid+8hKg7NFQ8N2apdUzDNavrUYypYv4Th76JUmFi6tRrAh0mfgqWnEi9k5yInL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2HQ3Naq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8qrpCm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCFCC4CEE2;
-	Wed, 23 Apr 2025 15:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2HQ3Naq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B83BC4CEE8;
+	Wed, 23 Apr 2025 15:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422021;
-	bh=IL0I3zLeSsa9qAtc2Y8N9xqUV4oWNGQKwtWG/yMLVvg=;
+	s=korg; t=1745422023;
+	bh=Aqbi9QN5w1isQ6dFpTYC0XeezC4qh69VbdKuGVX58SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8qrpCm8ZKWZDT3E3eQai+EDK94SFoawweJkFIl8/gN7e18dyoJ1ToBSx4RioDSUD
-	 XaDJncPCqEHIsW51aJdg3Ahja56tZqbsFK3UFmSLLEKqr0RUJ4O6xoF2UI/d0uP/W5
-	 Pn+hMyvSEN6sJUp+a9pLJTuQ09ZT0hfYdQuynERU=
+	b=F2HQ3NaqCOx/LctkwEsfitzKnXRasPvNP6zX6jwfnFt+Vjai4khnU2JFu24Q2+VjJ
+	 jaiESclC8UuKlPwCCKJ0H0khonqpk5NgBCZcFK3F0zTNhcjwWbX+j1lVokqy5PxCi1
+	 1A6mhXP2KNNtqW4Sfcojf8mIYIZ6zPo1cVD4HAQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher S M Hall <christopher.s.hall@intel.com>,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/393] igc: add lock preventing multiple simultaneous PTM transactions
-Date: Wed, 23 Apr 2025 16:42:40 +0200
-Message-ID: <20250423142654.271059930@linuxfoundation.org>
+	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 211/291] isofs: Prevent the use of too small fid
+Date: Wed, 23 Apr 2025 16:43:20 +0200
+Message-ID: <20250423142633.009390371@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,149 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christopher S M Hall <christopher.s.hall@intel.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 1a931c4f5e6862e61a4b130cb76b422e1415f644 ]
+commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
 
-Add a mutex around the PTM transaction to prevent multiple transactors
+syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
 
-Multiple processes try to initiate a PTM transaction, one or all may
-fail. This can be reproduced by running two instances of the
-following:
+The handle_bytes value passed in by the reproducing program is equal to 12.
+In handle_to_path(), only 12 bytes of memory are allocated for the structure
+file_handle->f_handle member, which causes an out-of-bounds access when
+accessing the member parent_block of the structure isofs_fid in isofs,
+because accessing parent_block requires at least 16 bytes of f_handle.
+Here, fh_len is used to indirectly confirm that the value of handle_bytes
+is greater than 3 before accessing parent_block.
 
-$ sudo phc2sys -O 0 -i tsn0 -m
+[1]
+BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
+CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0x198/0x550 mm/kasan/report.c:521
+ kasan_report+0xd8/0x138 mm/kasan/report.c:634
+ __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
+ isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+ exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
+ do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
+ handle_to_path fs/fhandle.c:385 [inline]
+ do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-PHC2SYS exits with:
+Allocated by task 6466:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4294 [inline]
+ __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ handle_to_path fs/fhandle.c:357 [inline]
+ do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-"ioctl PTP_OFFSET_PRECISE: Connection timed out" when the PTM transaction
- fails
-
-Note: Normally two instance of PHC2SYS will not run, but one process
- should not break another.
-
-Fixes: a90ec8483732 ("igc: Add support for PTP getcrosststamp()")
-Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
-Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
+Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h     |  1 +
- drivers/net/ethernet/intel/igc/igc_ptp.c | 20 ++++++++++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ fs/isofs/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 85cc163965062..49702169a3d8a 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -266,6 +266,7 @@ struct igc_adapter {
- 	struct timespec64 prev_ptp_time; /* Pre-reset PTP clock */
- 	ktime_t ptp_reset_start; /* Reset time in clock mono */
- 	struct system_time_snapshot snapshot;
-+	struct mutex ptm_lock; /* Only allow one PTM transaction at a time */
+--- a/fs/isofs/export.c
++++ b/fs/isofs/export.c
+@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
+ 		return NULL;
  
- 	char fw_version[32];
- 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index c5387610ca3df..b6bb01a486d9d 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -943,6 +943,7 @@ static void igc_ptm_log_error(struct igc_adapter *adapter, u32 ptm_stat)
- 	}
+ 	return isofs_export_iget(sb,
+-			fh_len > 2 ? ifid->parent_block : 0,
++			fh_len > 3 ? ifid->parent_block : 0,
+ 			ifid->parent_offset,
+ 			fh_len > 4 ? ifid->parent_generation : 0);
  }
- 
-+/* The PTM lock: adapter->ptm_lock must be held when calling igc_ptm_trigger() */
- static void igc_ptm_trigger(struct igc_hw *hw)
- {
- 	u32 ctrl;
-@@ -959,6 +960,7 @@ static void igc_ptm_trigger(struct igc_hw *hw)
- 	wrfl();
- }
- 
-+/* The PTM lock: adapter->ptm_lock must be held when calling igc_ptm_reset() */
- static void igc_ptm_reset(struct igc_hw *hw)
- {
- 	u32 ctrl;
-@@ -1037,9 +1039,16 @@ static int igc_ptp_getcrosststamp(struct ptp_clock_info *ptp,
- {
- 	struct igc_adapter *adapter = container_of(ptp, struct igc_adapter,
- 						   ptp_caps);
-+	int ret;
- 
--	return get_device_system_crosststamp(igc_phc_get_syncdevicetime,
--					     adapter, &adapter->snapshot, cts);
-+	/* This blocks until any in progress PTM transactions complete */
-+	mutex_lock(&adapter->ptm_lock);
-+
-+	ret = get_device_system_crosststamp(igc_phc_get_syncdevicetime,
-+					    adapter, &adapter->snapshot, cts);
-+	mutex_unlock(&adapter->ptm_lock);
-+
-+	return ret;
- }
- 
- /**
-@@ -1116,6 +1125,7 @@ void igc_ptp_init(struct igc_adapter *adapter)
- 
- 	spin_lock_init(&adapter->ptp_tx_lock);
- 	spin_lock_init(&adapter->tmreg_lock);
-+	mutex_init(&adapter->ptm_lock);
- 
- 	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
- 	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
-@@ -1128,6 +1138,7 @@ void igc_ptp_init(struct igc_adapter *adapter)
- 	if (IS_ERR(adapter->ptp_clock)) {
- 		adapter->ptp_clock = NULL;
- 		netdev_err(netdev, "ptp_clock_register failed\n");
-+		mutex_destroy(&adapter->ptm_lock);
- 	} else if (adapter->ptp_clock) {
- 		netdev_info(netdev, "PHC added\n");
- 		adapter->ptp_flags |= IGC_PTP_ENABLED;
-@@ -1157,10 +1168,12 @@ static void igc_ptm_stop(struct igc_adapter *adapter)
- 	struct igc_hw *hw = &adapter->hw;
- 	u32 ctrl;
- 
-+	mutex_lock(&adapter->ptm_lock);
- 	ctrl = rd32(IGC_PTM_CTRL);
- 	ctrl &= ~IGC_PTM_CTRL_EN;
- 
- 	wr32(IGC_PTM_CTRL, ctrl);
-+	mutex_unlock(&adapter->ptm_lock);
- }
- 
- /**
-@@ -1202,6 +1215,7 @@ void igc_ptp_stop(struct igc_adapter *adapter)
- 		netdev_info(adapter->netdev, "PHC removed\n");
- 		adapter->ptp_flags &= ~IGC_PTP_ENABLED;
- 	}
-+	mutex_destroy(&adapter->ptm_lock);
- }
- 
- /**
-@@ -1241,6 +1255,7 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- 		if (!igc_is_crosststamp_supported(adapter))
- 			break;
- 
-+		mutex_lock(&adapter->ptm_lock);
- 		wr32(IGC_PCIE_DIG_DELAY, IGC_PCIE_DIG_DELAY_DEFAULT);
- 		wr32(IGC_PCIE_PHY_DELAY, IGC_PCIE_PHY_DELAY_DEFAULT);
- 
-@@ -1264,6 +1279,7 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- 			netdev_err(adapter->netdev, "Timeout reading IGC_PTM_STAT register\n");
- 
- 		igc_ptm_reset(hw);
-+		mutex_unlock(&adapter->ptm_lock);
- 		break;
- 	default:
- 		/* No work to do. */
--- 
-2.39.5
-
 
 
