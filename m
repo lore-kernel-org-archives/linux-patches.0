@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B66023D298;
-	Wed, 23 Apr 2025 14:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5CA481CD;
+	Wed, 23 Apr 2025 14:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420200; cv=none; b=qUKWhshcPi1cyv6NcJyIcKaCFiuEN5yc+9lqoFSxfL1iL2FM7WMR0BvK1GDKp4h87xqpwEX/SpNqu0y6Jibx2tcdWSXsiaag+mHN9QfObtdlGyaaQXsEcaPYPSs6z2E2WecGYLh8UDdGp6/XZ2K7y8Thv7vFMvVTPQFKS+fVdW8=
+	t=1745420202; cv=none; b=hsCaKs5rYqixAmaC+xqdFLTJxp2iSKysZ3R0fIpDkodx94/IaUGAVGsrU/nHCPWaG+bwdOpN9s7rRHiTubFfLu9hGI9WuPzRda6wQR4YJe4WBH3+Wsgm4D6EI53MhTpg9VUgZYjPXEw84O+bbAGMOugUJedvbTNAE2l8i22eE60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420200; c=relaxed/simple;
-	bh=xT78nCPnXjfGaok6iydY6I+PpDNunJBayZAe9fQMVgY=;
+	s=arc-20240116; t=1745420202; c=relaxed/simple;
+	bh=Fm68xKX4LDii94xv3RxQcnphb+2GwrFqRZRUYVxCe7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=udK+qXd5z4Q9lDwm8KNa8fTYBQ+Btw6UHYX5OwlmxLkAIDoLTdJYTbKgbNXLQS3/cGvlE3AA7aixT/f+WS6ga37WLpuAk4Msc/xficfvMlJ+JjAfiIHbDVYMEHfr+HJ0NIpKe3n84x2wKfplfViTmGRTp5tFta3yllbPpknw+VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKPM2GVa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IjsPnwUaM2oD3JC5hijKABq99MXWYSCVPYFluV4HGMX6Dy7YyDFHSsrvHlQMxYY3ZOVtrom0rvOGcgwDrZ8zS/LIlbBM9RhIab8vvpgZQB+hAuWIWJDXyUVvVMR+qAJBirRVX29Unx4QMhWBIMdKgmZnXlCg3n1v130c+D8WfVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZKCssAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKPM2GVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F58C4CEE2;
-	Wed, 23 Apr 2025 14:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZKCssAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6124EC4CEE2;
+	Wed, 23 Apr 2025 14:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420200;
-	bh=xT78nCPnXjfGaok6iydY6I+PpDNunJBayZAe9fQMVgY=;
+	s=korg; t=1745420202;
+	bh=Fm68xKX4LDii94xv3RxQcnphb+2GwrFqRZRUYVxCe7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKPM2GVaZsTfjYOKgvPyfEFsvRHTKryYFyLmtwrOTQ2gWS3PAAUSaMp4r/rGO5cTP
-	 Rwz6tGu6JCLWG6FjOgFmACZEae3R7MNRfjfmRrfOT+BpVtnb1VgUVndgOKqcsDHK3x
-	 vbbC1DO951LPXXRdc6j5vYoWAdcTbxdijZ3h6S68=
+	b=zZKCssAqltPGCvzbHU1QT6ObmEdxTu9bRoLDwTC4x/ntTtxhG1iCazy70/qKAeDiC
+	 9PhSF8kubGL+LTmgV/gWrgFwlbw/+qjaZtfHN05pMB2FZT/I05+qkmOafy6X+ytFdK
+	 SHd3L3ccrBuQoPSPZ6sRISAid81pNVymQ3FW7wVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Makarenko Oleg <oleg@makarenk.ooo>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Paul Dino Jones <paul@spacefreak18.xyz>,
+	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
+	Pablo Cisneros <patchkez@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 071/241] net: b53: enable BPDU reception for management port
-Date: Wed, 23 Apr 2025 16:42:15 +0200
-Message-ID: <20250423142623.496309789@linuxfoundation.org>
+Subject: [PATCH 6.1 026/291] HID: pidff: Convert infinite length from Linux API to PID standard
+Date: Wed, 23 Apr 2025 16:40:15 +0200
+Message-ID: <20250423142625.470467213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +50,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 36355ddfe8955f226a88a543ed354b9f6b84cd70 ]
+[ Upstream commit 37e0591fe44dce39d1ebc7a82d5b6e4dba1582eb ]
 
-For STP to work, receiving BPDUs is essential, but the appropriate bit
-was never set. Without GC_RX_BPDU_EN, the switch chip will filter all
-BPDUs, even if an appropriate PVID VLAN was setup.
+Software uses 0 as de-facto infinite lenght on Linux FF apis (SDL),
+Linux doesn't actually define anythi as of now, while USB PID defines
+NULL (0xffff). Most PID devices do not expect a 0-length effect and
+can't interpret it as infinite. This change fixes Force Feedback for
+most PID compliant devices.
 
-Fixes: ff39c2d68679 ("net: dsa: b53: Add bridge support")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20250414200434.194422-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As most games depend on updating the values of already playing infinite
+effects, this is crucial to ensure they will actually work.
+
+Previously, users had to rely on third-party software to do this conversion
+and make their PID devices usable.
+
+Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
+Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Michał Kopeć <michal@nozomi.space>
+Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Paul Dino Jones <paul@spacefreak18.xyz>
+Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
+Tested-by: Pablo Cisneros <patchkez@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/usbhid/hid-pidff.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 79dc77835681c..3b49e87e8ef72 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -737,6 +737,15 @@ static void b53_enable_mib(struct b53_device *dev)
- 	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
- }
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 3b4ee21cd8111..5fe4422bb5bad 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -21,6 +21,7 @@
+ #include "usbhid.h"
  
-+static void b53_enable_stp(struct b53_device *dev)
-+{
-+	u8 gc;
+ #define	PID_EFFECTS_MAX		64
++#define	PID_INFINITE		0xffff
+ 
+ /* Report usage table used to put reports into an array */
+ 
+@@ -301,7 +302,12 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+ 	pidff->set_effect_type->value[0] =
+ 		pidff->create_new_effect_type->value[0];
+-	pidff->set_effect[PID_DURATION].value[0] = effect->replay.length;
 +
-+	b53_read8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, &gc);
-+	gc |= GC_RX_BPDU_EN;
-+	b53_write8(dev, B53_MGMT_PAGE, B53_GLOBAL_CONFIG, gc);
-+}
++	/* Convert infinite length from Linux API (0)
++	   to PID standard (NULL) if needed */
++	pidff->set_effect[PID_DURATION].value[0] =
++		effect->replay.length == 0 ? PID_INFINITE : effect->replay.length;
 +
- static u16 b53_default_pvid(struct b53_device *dev)
- {
- 	if (is5325(dev) || is5365(dev))
-@@ -876,6 +885,7 @@ static int b53_switch_reset(struct b53_device *dev)
- 	}
- 
- 	b53_enable_mib(dev);
-+	b53_enable_stp(dev);
- 
- 	return b53_flush_arl(dev, FAST_AGE_STATIC);
- }
+ 	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
+ 	pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] =
+ 		effect->trigger.interval;
 -- 
 2.39.5
 
