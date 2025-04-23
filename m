@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC872820CC;
-	Wed, 23 Apr 2025 15:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A8281522;
+	Wed, 23 Apr 2025 15:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420830; cv=none; b=CHPU5u91HqMahioO8k19DmfsXqp7iZvq4XBlcN2JXhABb/74bob1t4YdRC4lq4iHCEpWHwHe5ea1LdLsGd5LhpqSHASoapCmsNbdGcKDedvrN5F1kbo/Bwv/XV51ugMguUZopor5mRB23ise9OYBi7Mf6zv6v1BU2O/CQg71b8I=
+	t=1745420832; cv=none; b=Zzf2QhgHX2ybg0c/fQ0ik0j/+citI2eCtUJTtHP0KdjwyDEJSbmcyhnKHFEDim2cbr7BOnq9r6U8oT0YCM1jr7HCAnjzAaoNeL5t+nAMKpwFqRS97rwthC+6Y3TcfCe9WxfRlhEPeAA0sdozsmA//IiPRot+/gCx9in9uhEnM/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420830; c=relaxed/simple;
-	bh=zjDE5/MyZwIct41uQFDVpqJ2LOqJUUHZ9Av+ABeUR6I=;
+	s=arc-20240116; t=1745420832; c=relaxed/simple;
+	bh=LDJSTXnTAYB8LOsWyEzYLZJcd8+aMBjq9YoMp4GuQow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXoHLP7OREAMB1EhvoxnwBVlx29tmS12zpHZ5Z6xNUhVfFR/jhj3xLzbjQJaCl9LjAdt6kdpyCzYk7aWlH63M3djRyPlFhlQd/0zxqfDVXb53Zh2br2pGypJ+Os2SYN2spBpY8aPEAKjSP1KJx/pNWIoF1Bhk6RIqXA4/BbuR2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO1PZ8B3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B7KoV/RrsGPs/r4aVBG5Bcp0WOCnjCu1U2tyc7kpNnyQTreDPzqJhoONSDttMVDEsWivyLV0badMuYae0zI4gni44TJcQHTGoy8EZtTqzC7rpV+5wN/O7JRr5HF3y00q81l+ksVG9sx4Wov7cS7nuYDddK8bUqnIr8aTRcOdWhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpl2aluB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO1PZ8B3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB4BC4CEE2;
-	Wed, 23 Apr 2025 15:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpl2aluB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F86C4CEE3;
+	Wed, 23 Apr 2025 15:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420829;
-	bh=zjDE5/MyZwIct41uQFDVpqJ2LOqJUUHZ9Av+ABeUR6I=;
+	s=korg; t=1745420832;
+	bh=LDJSTXnTAYB8LOsWyEzYLZJcd8+aMBjq9YoMp4GuQow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO1PZ8B3MeoJthjenVkrP56n51XaoVg7UYe72e4GGRcAq38iGrHWrdOYpTp/cs9iY
-	 vHeogL2A9OlpEDoUf36WwA4koiEZt9fZpmKrzZMHl0TAurTmRr9GjxTCsloONjiESX
-	 kuUbPKnx3g6GfzmpRUatefT2WndqExv7QRusyTfE=
+	b=kpl2aluBuoZQs9QdwO80Mn7ryUitHRCZPF1fuhv4kubnoPHPMrDKrnvQI5O7lBznk
+	 g4aGQ30Gif3e/KsIHZuqfcr3px9CtfltAbz1IHkdVmCBzTxyzAmDFhcZDw3J27TMqL
+	 ljaI84M+IfyRJilNPQAOODUEtxjo8pdrh2ykOLV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 166/223] drm/amd/display: Add HP Elitebook 645 to the quirk list for eDP on DP1
-Date: Wed, 23 Apr 2025 16:43:58 +0200
-Message-ID: <20250423142623.930586886@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 116/393] pwm: fsl-ftm: Handle clk_get_rate() returning 0
+Date: Wed, 23 Apr 2025 16:40:12 +0200
+Message-ID: <20250423142648.151917932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 1c5fdef30ed120613e769a3bd2a144cfd4c688d6 upstream.
+[ Upstream commit 928446a5302eee30ebb32075c0db5dda5a138fb7 ]
 
-[Why]
-HP Elitebook 645 has DP0 and DP1 swapped.
+Considering that the driver doesn't enable the used clocks (and also
+that clk_get_rate() returns 0 if CONFIG_HAVE_CLK is unset) better check
+the return value of clk_get_rate() for being non-zero before dividing by
+it.
 
-[How]
-Add HP Elitebook 645 to DP0/DP1 swap quirk list.
-
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3701
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3479bbd1e1f8 ("pwm: fsl-ftm: More relaxed permissions for updating period")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/b68351a51017035651bc62ad3146afcb706874f0.1743501688.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pwm/pwm-fsl-ftm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1694,6 +1694,13 @@ static const struct dmi_system_id dmi_qu
- 		.callback = edp0_on_dp1_callback,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP EliteBook 645 14 inch G11 Notebook PC"),
-+		},
-+	},
-+	{
-+		.callback = edp0_on_dp1_callback,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "HP EliteBook 665 16 inch G11 Notebook PC"),
- 		},
- 	},
+diff --git a/drivers/pwm/pwm-fsl-ftm.c b/drivers/pwm/pwm-fsl-ftm.c
+index b7c6045c5d089..2c60d67e9a4a4 100644
+--- a/drivers/pwm/pwm-fsl-ftm.c
++++ b/drivers/pwm/pwm-fsl-ftm.c
+@@ -119,6 +119,9 @@ static unsigned int fsl_pwm_ticks_to_ns(struct fsl_pwm_chip *fpc,
+ 	unsigned long long exval;
+ 
+ 	rate = clk_get_rate(fpc->clk[fpc->period.clk_select]);
++	if (rate >> fpc->period.clk_ps == 0)
++		return 0;
++
+ 	exval = ticks;
+ 	exval *= 1000000000UL;
+ 	do_div(exval, rate >> fpc->period.clk_ps);
+@@ -191,6 +194,9 @@ static unsigned int fsl_pwm_calculate_duty(struct fsl_pwm_chip *fpc,
+ 	unsigned int period = fpc->period.mod_period + 1;
+ 	unsigned int period_ns = fsl_pwm_ticks_to_ns(fpc, period);
+ 
++	if (!period_ns)
++		return 0;
++
+ 	duty = (unsigned long long)duty_ns * period;
+ 	do_div(duty, period_ns);
+ 
+-- 
+2.39.5
+
 
 
