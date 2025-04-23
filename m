@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C440957C9F;
-	Wed, 23 Apr 2025 15:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68EB284695;
+	Wed, 23 Apr 2025 15:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420582; cv=none; b=h4ZEzL/siDv8JvoElsxCJp76i5NqiUHFGWqJyvwLVn1grZ2hcQyMI18JJKBYOGP+4vf/H9HqdFoTtTGhsD67cSV3lLnrfvmnJfZGUz25aOvA0QKZmKFb0Jl+T8R7eYWZ0tz3Q6oPGO56EKsf56ccGgQp4ZWvAEOof35yTwqxQss=
+	t=1745420586; cv=none; b=AHAwHlOFxiLkVQXcaANOex4NeN77CbviN1qc8mJq5umzLTFzE5eOIf7u3MxMWe+lTD4tj1HkRVpevTXYKIZgqvk0BuP3ci7caVIoizzSe3X7nez5Pcu3dHI5I0hY53l9h6+kiGI3VtkDy8XG+FGoZa5uf1w11z3GqgNOJi38E94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420582; c=relaxed/simple;
-	bh=2EpD3V+zq9f4zuL/L7NTPcy6YG2XGZqQoftaAIHkHgA=;
+	s=arc-20240116; t=1745420586; c=relaxed/simple;
+	bh=qobWGTciV3/f1Mg3hCSwvIvv5yg6kdb7GHxPkKEAwiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjFNjymWSP/Ce2KchBetwNbQSsraC19IBrlGn3r4O2thaD/+6IgBYvygYMA7dqw0tV+XwJsoZc9hD6QZ+45kCpF/t3Zuj6vyvm4sd0iN6HSIh8cLwU+EZJFcx77xz5S0rN3iTU1eAC/OjCGUTkWSbORdOxscFlSU1Fzs+az0BXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwusrOgs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjQRKO/fwtIyyuLVQsl1UtA60njCgQWMgQ7o6c8MDvrgNETQh+VKqKLnxmrShi1Smongi4jokF69kLbKqqo3vo8KOAUPN+3SiY2H8FwoILSgcqqmnZMeQD1JwY5hxoQ4e2ggoGFh9WgsfkrCV7IwxPSGU9I3UfApXRG+bY/XaEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2RsQKsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwusrOgs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524BEC4CEE3;
-	Wed, 23 Apr 2025 15:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2RsQKsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4DCC4CEE3;
+	Wed, 23 Apr 2025 15:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420582;
-	bh=2EpD3V+zq9f4zuL/L7NTPcy6YG2XGZqQoftaAIHkHgA=;
+	s=korg; t=1745420585;
+	bh=qobWGTciV3/f1Mg3hCSwvIvv5yg6kdb7GHxPkKEAwiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwusrOgsAOZMeLagJbsBLrp9pHJbbjEgdGNgefzKLqYBw3mWuqX5/PhjrS/i+9IZm
-	 VJ3AeGm/3o7PUFuQZZPYt8NxdyEjzng6kb7HWO+YnQzp5OeX3Il3ooEGi3yPfKmUc8
-	 lebIkp+vWzvRVdOdn/nbywfmHuVSUCFwCnsidnEA=
+	b=O2RsQKsao2kRWu/j3DVubBWeydPv9X/etLzaXmEseXWnlDAE+/xCF7+CI9d6kmE6y
+	 R13KBWJSHjBj4cFlnX9eCafqwsikSJXMFNUD4JnaLeSHZAbJxzGVJtRnfDNpQnYfra
+	 Uf1tfUrXywHGCY8O/33dahNrMxHoeeu/KFFH6I9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yat Sin <David.YatSin@amd.com>,
-	Jay Cornwall <jay.cornwall@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+b244bda78289b00204ed@syzkaller.appspotmail.com,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Bhupesh <bhupesh@igalia.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/291] drm/amdkfd: clamp queue size to minimum
-Date: Wed, 23 Apr 2025 16:40:51 +0200
-Message-ID: <20250423142626.913779928@linuxfoundation.org>
+Subject: [PATCH 6.6 083/393] ext4: ignore xattrs past end
+Date: Wed, 23 Apr 2025 16:39:39 +0200
+Message-ID: <20250423142646.726199024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +49,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Yat Sin <David.YatSin@amd.com>
+From: Bhupesh <bhupesh@igalia.com>
 
-[ Upstream commit e90711946b53590371ecce32e8fcc381a99d6333 ]
+[ Upstream commit c8e008b60492cf6fd31ef127aea6d02fd3d314cd ]
 
-If queue size is less than minimum, clamp it to minimum to prevent
-underflow when writing queue mqd.
+Once inside 'ext4_xattr_inode_dec_ref_all' we should
+ignore xattrs entries past the 'end' entry.
 
-Signed-off-by: David Yat Sin <David.YatSin@amd.com>
-Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This fixes the following KASAN reported issue:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in ext4_xattr_inode_dec_ref_all+0xb8c/0xe90
+Read of size 4 at addr ffff888012c120c4 by task repro/2065
+
+CPU: 1 UID: 0 PID: 2065 Comm: repro Not tainted 6.13.0-rc2+ #11
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x1fd/0x300
+ ? tcp_gro_dev_warn+0x260/0x260
+ ? _printk+0xc0/0x100
+ ? read_lock_is_recursive+0x10/0x10
+ ? irq_work_queue+0x72/0xf0
+ ? __virt_addr_valid+0x17b/0x4b0
+ print_address_description+0x78/0x390
+ print_report+0x107/0x1f0
+ ? __virt_addr_valid+0x17b/0x4b0
+ ? __virt_addr_valid+0x3ff/0x4b0
+ ? __phys_addr+0xb5/0x160
+ ? ext4_xattr_inode_dec_ref_all+0xb8c/0xe90
+ kasan_report+0xcc/0x100
+ ? ext4_xattr_inode_dec_ref_all+0xb8c/0xe90
+ ext4_xattr_inode_dec_ref_all+0xb8c/0xe90
+ ? ext4_xattr_delete_inode+0xd30/0xd30
+ ? __ext4_journal_ensure_credits+0x5f0/0x5f0
+ ? __ext4_journal_ensure_credits+0x2b/0x5f0
+ ? inode_update_timestamps+0x410/0x410
+ ext4_xattr_delete_inode+0xb64/0xd30
+ ? ext4_truncate+0xb70/0xdc0
+ ? ext4_expand_extra_isize_ea+0x1d20/0x1d20
+ ? __ext4_mark_inode_dirty+0x670/0x670
+ ? ext4_journal_check_start+0x16f/0x240
+ ? ext4_inode_is_fast_symlink+0x2f2/0x3a0
+ ext4_evict_inode+0xc8c/0xff0
+ ? ext4_inode_is_fast_symlink+0x3a0/0x3a0
+ ? do_raw_spin_unlock+0x53/0x8a0
+ ? ext4_inode_is_fast_symlink+0x3a0/0x3a0
+ evict+0x4ac/0x950
+ ? proc_nr_inodes+0x310/0x310
+ ? trace_ext4_drop_inode+0xa2/0x220
+ ? _raw_spin_unlock+0x1a/0x30
+ ? iput+0x4cb/0x7e0
+ do_unlinkat+0x495/0x7c0
+ ? try_break_deleg+0x120/0x120
+ ? 0xffffffff81000000
+ ? __check_object_size+0x15a/0x210
+ ? strncpy_from_user+0x13e/0x250
+ ? getname_flags+0x1dc/0x530
+ __x64_sys_unlinkat+0xc8/0xf0
+ do_syscall_64+0x65/0x110
+ entry_SYSCALL_64_after_hwframe+0x67/0x6f
+RIP: 0033:0x434ffd
+Code: 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 8
+RSP: 002b:00007ffc50fa7b28 EFLAGS: 00000246 ORIG_RAX: 0000000000000107
+RAX: ffffffffffffffda RBX: 00007ffc50fa7e18 RCX: 0000000000434ffd
+RDX: 0000000000000000 RSI: 0000000020000240 RDI: 0000000000000005
+RBP: 00007ffc50fa7be0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+R13: 00007ffc50fa7e08 R14: 00000000004bbf30 R15: 0000000000000001
+ </TASK>
+
+The buggy address belongs to the object at ffff888012c12000
+ which belongs to the cache filp of size 360
+The buggy address is located 196 bytes inside of
+ freed 360-byte region [ffff888012c12000, ffff888012c12168)
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x12c12
+head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x40(head|node=0|zone=0)
+page_type: f5(slab)
+raw: 0000000000000040 ffff888000ad7640 ffffea0000497a00 dead000000000004
+raw: 0000000000000000 0000000000100010 00000001f5000000 0000000000000000
+head: 0000000000000040 ffff888000ad7640 ffffea0000497a00 dead000000000004
+head: 0000000000000000 0000000000100010 00000001f5000000 0000000000000000
+head: 0000000000000001 ffffea00004b0481 ffffffffffffffff 0000000000000000
+head: 0000000000000002 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888012c11f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff888012c12000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+> ffff888012c12080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                           ^
+ ffff888012c12100: fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc
+ ffff888012c12180: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Reported-by: syzbot+b244bda78289b00204ed@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b244bda78289b00204ed
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Bhupesh <bhupesh@igalia.com>
+Link: https://patch.msgid.link/20250128082751.124948-2-bhupesh@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 10 ++++++++++
- include/uapi/linux/kfd_ioctl.h           |  2 ++
- 2 files changed, 12 insertions(+)
+ fs/ext4/xattr.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index f83574107eb85..773913a7d6e90 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -208,6 +208,11 @@ static int set_queue_properties_from_user(struct queue_properties *q_properties,
- 		return -EINVAL;
- 	}
- 
-+	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
-+		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
-+		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index df5ab1a75fc48..ca22aa9e04b4b 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1176,15 +1176,24 @@ ext4_xattr_inode_dec_ref_all(handle_t *handle, struct inode *parent,
+ {
+ 	struct inode *ea_inode;
+ 	struct ext4_xattr_entry *entry;
++	struct ext4_iloc iloc;
+ 	bool dirty = false;
+ 	unsigned int ea_ino;
+ 	int err;
+ 	int credits;
++	void *end;
++
++	if (block_csum)
++		end = (void *)bh->b_data + bh->b_size;
++	else {
++		ext4_get_inode_loc(parent, &iloc);
++		end = (void *)ext4_raw_inode(&iloc) + EXT4_SB(parent->i_sb)->s_inode_size;
 +	}
-+
- 	if (!access_ok((const void __user *) args->read_pointer_address,
- 			sizeof(uint32_t))) {
- 		pr_err("Can't access read pointer\n");
-@@ -464,6 +469,11 @@ static int kfd_ioctl_update_queue(struct file *filp, struct kfd_process *p,
- 		return -EINVAL;
- 	}
  
-+	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
-+		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
-+		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
-+	}
-+
- 	properties.queue_address = args->ring_base_address;
- 	properties.queue_size = args->ring_size;
- 	properties.queue_percent = args->queue_percentage;
-diff --git a/include/uapi/linux/kfd_ioctl.h b/include/uapi/linux/kfd_ioctl.h
-index 42b60198b6c5f..deed930ed3051 100644
---- a/include/uapi/linux/kfd_ioctl.h
-+++ b/include/uapi/linux/kfd_ioctl.h
-@@ -55,6 +55,8 @@ struct kfd_ioctl_get_version_args {
- #define KFD_MAX_QUEUE_PERCENTAGE	100
- #define KFD_MAX_QUEUE_PRIORITY		15
+ 	/* One credit for dec ref on ea_inode, one for orphan list addition, */
+ 	credits = 2 + extra_credits;
  
-+#define KFD_MIN_QUEUE_RING_SIZE		1024
-+
- struct kfd_ioctl_create_queue_args {
- 	__u64 ring_base_address;	/* to KFD */
- 	__u64 write_pointer_address;	/* from KFD */
+-	for (entry = first; !IS_LAST_ENTRY(entry);
++	for (entry = first; (void *)entry < end && !IS_LAST_ENTRY(entry);
+ 	     entry = EXT4_XATTR_NEXT(entry)) {
+ 		if (!entry->e_value_inum)
+ 			continue;
 -- 
 2.39.5
 
