@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03D028E5F8;
-	Wed, 23 Apr 2025 15:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C1628E5FD;
+	Wed, 23 Apr 2025 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420796; cv=none; b=Myni+BZYFTuaX2DrablCzD9BrvalHfpB+G+Oq5nOmDJ1VsqiTS+Mzv49bqt1G7YEyMdz3fuUXoCFYUhmEX3kWNlz6m54QJO7y0PQAzQlomX47V1qru8Svpn2QpIhEgzOYup+5fEpSfdxRwelo2iLtrXn3W34pZgh79CPxvF7stQ=
+	t=1745420798; cv=none; b=VinDtCk0BPXf2i0Awop+3b1TpRoJK+9worEpF0l9aEaVXBSzR0111wlTWd0wz7M5TByfqb3rn2c5gTy3/a0aiAlW8KJ10IXVfp9TaNYWgfpBeZ45LBNVQOQGZb3uuoaZWn+D3x3gH9ADchtfwk337sJUf7LKE2/JO38tgVifSMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420796; c=relaxed/simple;
-	bh=Hns5VpGqDtrqEEnJLJF+5JlqFpyB6S9mpjV7qYXXFVM=;
+	s=arc-20240116; t=1745420798; c=relaxed/simple;
+	bh=eonMF3yTKlzHvRZcoc3i4mz3ZuK+1GWnqODOzeg1+tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf+kHRF9nEwmpvfO+AifhbXAR5N2ini+46SuraKsfKEd/cE6/8gbYEq49gDk4l/XffeA/6Njrg1szyo9BCndIuFnP7RNfkmtrxuckXBM6pbZZDYlwiX1Zt0i2lz4QtXJnlWTr1ekLbG0KGNSdbaF3JpyEaY5Hm5u+JdmEAvK8E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdbM3tGO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPJSrSQ+7wE93EmbLgWgC8qbD2JHoyRee6fwWQvNbTzQ1s6FldxuMPhIs8D19J+CVCuze/37HNY3PtPA51A+9tE2KHuEtDQM1yfxbrDcY6niLnlFUOVeI+s2dJmqyj0JaKEJE54GUVoBkN4eQEigZv3iO6lnpMhoj1Au9DVRgE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0xcmrGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdbM3tGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6994BC4CEE2;
-	Wed, 23 Apr 2025 15:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0xcmrGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19511C4CEE2;
+	Wed, 23 Apr 2025 15:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420795;
-	bh=Hns5VpGqDtrqEEnJLJF+5JlqFpyB6S9mpjV7qYXXFVM=;
+	s=korg; t=1745420798;
+	bh=eonMF3yTKlzHvRZcoc3i4mz3ZuK+1GWnqODOzeg1+tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdbM3tGOYTeVvJa2tKenPyx5ttxqfLGcqNPX826xcQR6DUZIXQkcPTDwAAsvLiLT0
-	 mLIvbp8Tyn2Fk7U7eqlsZpHSJ3XtteZJJ49HobSI012hVuOYirsvin4zdaEsaWLruY
-	 X0tPkc7c9MvP/NhJ+BKdzA2PdJNvsa6yJQ9r+/6c=
+	b=m0xcmrGVCILV3b5HNLIbLzj03OzKvxMVC+94JZyqzgKDs366lzyFAG6YEcATCXbCh
+	 afGsA2w3xI7ltIPlJSa/kq9/rRZ5wil7fL5zNnWIJQjNw+5bNllGU9/xjk42jGFo6f
+	 whp/WUqe1HmXzez6O7gzeGWEL5OFwaWY7EODN+w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Shaoyun.liu" <Shaoyun.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 163/223] drm/amdgpu/mes12: optimize MES pipe FW version fetching
-Date: Wed, 23 Apr 2025 16:43:55 +0200
-Message-ID: <20250423142623.807785160@linuxfoundation.org>
+	Jonathan McDowell <noodles@meta.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 113/393] tpm, tpm_tis: Workaround failed command reception on Infineon devices
+Date: Wed, 23 Apr 2025 16:40:09 +0200
+Message-ID: <20250423142648.032688930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +47,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jonathan McDowell <noodles@meta.com>
 
-commit 34779e14461cf715238dec5fd43a1e11977ec115 upstream.
+[ Upstream commit de9e33df7762abbfc2a1568291f2c3a3154c6a9d ]
 
-Don't fetch it again if we already have it.  It seems the
-registers don't reliably have the value at resume in some
-cases.
+Some Infineon devices have a issue where the status register will get
+stuck with a quick REQUEST_USE / COMMAND_READY sequence. This is not
+simply a matter of requiring a longer timeout; the work around is to
+retry the command submission. Add appropriate logic to do this in the
+send path.
 
-Fixes: 785f0f9fe742 ("drm/amdgpu: Add mes v12_0 ip block support (v4)")
-Reviewed-by: Shaoyun.liu <Shaoyun.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9e7b08d239c2f21e8f417854f81e5ff40edbebff)
-Cc: stable@vger.kernel.org # 6.12.x
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is fixed in later firmware revisions, but those are not always
+available, and cannot generally be easily updated from outside a
+firmware environment.
+
+Testing has been performed with a simple repeated loop of doing a
+TPM2_CC_GET_CAPABILITY for TPM_CAP_PROP_MANUFACTURER using the Go code
+at:
+
+  https://the.earth.li/~noodles/tpm-stuff/timeout-reproducer-simple.go
+
+It can take several hours to reproduce, and several million operations.
+
+Signed-off-by: Jonathan McDowell <noodles@meta.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 17 ++++++++++++++---
+ drivers/char/tpm/tpm_tis_core.h |  1 +
+ include/linux/tpm.h             |  1 +
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -1225,17 +1225,20 @@ static int mes_v12_0_queue_init(struct a
- 		mes_v12_0_queue_init_register(ring);
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index f6aa0dfadb93e..7ade8bd12ab26 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -464,7 +464,10 @@ static int tpm_tis_send_data(struct tpm_chip *chip, const u8 *buf, size_t len)
+ 
+ 		if (wait_for_tpm_stat(chip, TPM_STS_VALID, chip->timeout_c,
+ 					&priv->int_queue, false) < 0) {
+-			rc = -ETIME;
++			if (test_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags))
++				rc = -EAGAIN;
++			else
++				rc = -ETIME;
+ 			goto out_err;
+ 		}
+ 		status = tpm_tis_status(chip);
+@@ -481,7 +484,10 @@ static int tpm_tis_send_data(struct tpm_chip *chip, const u8 *buf, size_t len)
+ 
+ 	if (wait_for_tpm_stat(chip, TPM_STS_VALID, chip->timeout_c,
+ 				&priv->int_queue, false) < 0) {
+-		rc = -ETIME;
++		if (test_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags))
++			rc = -EAGAIN;
++		else
++			rc = -ETIME;
+ 		goto out_err;
+ 	}
+ 	status = tpm_tis_status(chip);
+@@ -546,9 +552,11 @@ static int tpm_tis_send_main(struct tpm_chip *chip, const u8 *buf, size_t len)
+ 		if (rc >= 0)
+ 			/* Data transfer done successfully */
+ 			break;
+-		else if (rc != -EIO)
++		else if (rc != -EAGAIN && rc != -EIO)
+ 			/* Data transfer failed, not recoverable */
+ 			return rc;
++
++		usleep_range(priv->timeout_min, priv->timeout_max);
  	}
  
--	/* get MES scheduler/KIQ versions */
--	mutex_lock(&adev->srbm_mutex);
--	soc21_grbm_select(adev, 3, pipe, 0, 0);
-+	if (((pipe == AMDGPU_MES_SCHED_PIPE) && !adev->mes.sched_version) ||
-+	    ((pipe == AMDGPU_MES_KIQ_PIPE) && !adev->mes.kiq_version)) {
-+		/* get MES scheduler/KIQ versions */
-+		mutex_lock(&adev->srbm_mutex);
-+		soc21_grbm_select(adev, 3, pipe, 0, 0);
+ 	/* go and do it */
+@@ -1147,6 +1155,9 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		priv->timeout_max = TIS_TIMEOUT_MAX_ATML;
+ 	}
  
--	if (pipe == AMDGPU_MES_SCHED_PIPE)
--		adev->mes.sched_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
--	else if (pipe == AMDGPU_MES_KIQ_PIPE && adev->enable_mes_kiq)
--		adev->mes.kiq_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
-+		if (pipe == AMDGPU_MES_SCHED_PIPE)
-+			adev->mes.sched_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
-+		else if (pipe == AMDGPU_MES_KIQ_PIPE && adev->enable_mes_kiq)
-+			adev->mes.kiq_version = RREG32_SOC15(GC, 0, regCP_MES_GP3_LO);
++	if (priv->manufacturer_id == TPM_VID_IFX)
++		set_bit(TPM_TIS_STATUS_VALID_RETRY, &priv->flags);
++
+ 	if (is_bsw()) {
+ 		priv->ilb_base_addr = ioremap(INTEL_LEGACY_BLK_BASE_ADDR,
+ 					ILB_REMAP_SIZE);
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 13e99cf65efe4..369496a6aebf1 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -89,6 +89,7 @@ enum tpm_tis_flags {
+ 	TPM_TIS_INVALID_STATUS		= 1,
+ 	TPM_TIS_DEFAULT_CANCELLATION	= 2,
+ 	TPM_TIS_IRQ_TESTED		= 3,
++	TPM_TIS_STATUS_VALID_RETRY	= 4,
+ };
  
--	soc21_grbm_select(adev, 0, 0, 0, 0);
--	mutex_unlock(&adev->srbm_mutex);
-+		soc21_grbm_select(adev, 0, 0, 0, 0);
-+		mutex_unlock(&adev->srbm_mutex);
-+	}
+ struct tpm_tis_data {
+diff --git a/include/linux/tpm.h b/include/linux/tpm.h
+index 4ee9d13749adc..5f4998626a988 100644
+--- a/include/linux/tpm.h
++++ b/include/linux/tpm.h
+@@ -272,6 +272,7 @@ enum tpm2_cc_attrs {
+ #define TPM_VID_WINBOND  0x1050
+ #define TPM_VID_STM      0x104A
+ #define TPM_VID_ATML     0x1114
++#define TPM_VID_IFX      0x15D1
  
- 	return 0;
- }
+ enum tpm_chip_flags {
+ 	TPM_CHIP_FLAG_BOOTSTRAPPED		= BIT(0),
+-- 
+2.39.5
+
 
 
