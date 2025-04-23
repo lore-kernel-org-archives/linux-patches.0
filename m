@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B842918C6;
-	Wed, 23 Apr 2025 15:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A3428DF16;
+	Wed, 23 Apr 2025 15:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420777; cv=none; b=PO2yMYuZBWv1K8Wy+FuK2erYLxDM32JgNR520pOGgwK1qapuLzDL9aZ8DwwAES8rRJDa26CEffaEeRpOwpUuWp4ueBudLARDRCFN0fwT0jfVeVqoXIFAYuyitrcjaK/hpwq/iY97MxbNVsDFHREOTxZ1Pb49S57bPuHfziFAs8w=
+	t=1745420780; cv=none; b=QuFlEz1FhSh5/+0ZJIneb4BxfGNCCgn8RECgXU6rOoOhJaWizVfq7ycS8luKEKNVLlg/alb0MBuDwxnMW4bB0kdBBDRGGlscj2YvhzXbCy1Doy1nVNCfLIqj8UcsnskMmDCt1cZ8GHP3w/k+8hDX6MC8kfsf+ui8GXMhHog5hFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420777; c=relaxed/simple;
-	bh=3J36967YIlkAq9gZJdd2bhTBZbAWBgCEo5HifbdAPDw=;
+	s=arc-20240116; t=1745420780; c=relaxed/simple;
+	bh=8FnkFg07vX46Raq/M4L12JQQ41vN4/C+PbL6+pty78s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMT9v3AdV1KzbwklWCxSWWw/ISG5dk4nXiNZgmI3giaAuj8QGxy0amus13NlgixyIX7Mh0XDEJcvAs8RVEYEwMoo3444gZh4eHvQfBUeFjgAkSx8oM2FnmEmpI+q9OEMeH7es2bxzANFVauJ/0DePxlMFDjDTFk9I7Mhe+SYN+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4hZLMzM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c65FqzuB5oXyB8d77TCwHvr7Q3uxtgcRmmwwLD+34OHgSXO5IyxVwqOINod0tsV+Ahk/jbOzC+YnJL7Osa0NKj2F/BegbrP56zPbVKB8N7nbJMwCKXejXIrhIr5nAvAMQdE7p8Z6oMsai74byqKo10h3PqJB1FHGa3n8u8dt0d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Alp2JHZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4hZLMzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43155C4CEF8;
-	Wed, 23 Apr 2025 15:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Alp2JHZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D282DC4CEE2;
+	Wed, 23 Apr 2025 15:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420777;
-	bh=3J36967YIlkAq9gZJdd2bhTBZbAWBgCEo5HifbdAPDw=;
+	s=korg; t=1745420780;
+	bh=8FnkFg07vX46Raq/M4L12JQQ41vN4/C+PbL6+pty78s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4hZLMzMbJU8TgARRm6Ow48Zy6JE1WUBMut3jXT6FlZn5NjZjKW1+tNJtlpUMQya9
-	 qdjgZsCGqkxxlsxk/1DwMzTFI50e9KTA5ItouXJtvQviB2N8bqI1Pwr4aIRsPK2/6x
-	 saycueI0BwTEjWXyb4GuHm0FEON45hjdjR+ZE0sA=
+	b=Alp2JHZcRdn9x1xHLSNCkCWYSkwEU0k2KQG5Jp6BcOzFMcG0ZfDf96zvxWlZtBJYT
+	 9cdjltmkGDS5LuEGwvAKSdsD08l0pGVC4Agd5kXTD1/RYjSTKIgEKagDNdtclOgQXx
+	 qMHRc+Jx+SSRXpoSBkMkiVgeHbf4riHSfHOjXwnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 121/241] eventpoll: Set epoll timeout if its in the future
-Date: Wed, 23 Apr 2025 16:43:05 +0200
-Message-ID: <20250423142625.524368814@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 080/291] media: venus: hfi: add check to handle incorrect queue size
+Date: Wed, 23 Apr 2025 16:41:09 +0200
+Message-ID: <20250423142627.638829011@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,96 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-[ Upstream commit 0a65bc27bd645894175c059397b4916e31955fb2 ]
+commit 69baf245b23e20efda0079238b27fc63ecf13de1 upstream.
 
-Avoid an edge case where epoll_wait arms a timer and calls schedule()
-even if the timer will expire immediately.
+qsize represents size of shared queued between driver and video
+firmware. Firmware can modify this value to an invalid large value. In
+such situation, empty_space will be bigger than the space actually
+available. Since new_wr_idx is not checked, so the following code will
+result in an OOB write.
+...
+qsize = qhdr->q_size
 
-For example: if the user has specified an epoll busy poll usecs which is
-equal or larger than the epoll_wait/epoll_pwait2 timeout, it is
-unnecessary to call schedule_hrtimeout_range; the busy poll usecs have
-consumed the entire timeout duration so it is unnecessary to induce
-scheduling latency by calling schedule() (via schedule_hrtimeout_range).
+if (wr_idx >= rd_idx)
+ empty_space = qsize - (wr_idx - rd_idx)
+....
+if (new_wr_idx < qsize) {
+ memcpy(wr_ptr, packet, dwords << 2) --> OOB write
 
-This can be measured using a simple bpftrace script:
+Add check to ensure qsize is within the allocated size while
+reading and writing packets into the queue.
 
-tracepoint:sched:sched_switch
-/ args->prev_pid == $1 /
-{
-  print(kstack());
-  print(ustack());
-}
-
-Before this patch is applied:
-
-  Testing an epoll_wait app with busy poll usecs set to 1000, and
-  epoll_wait timeout set to 1ms using the script above shows:
-
-     __traceiter_sched_switch+69
-     __schedule+1495
-     schedule+32
-     schedule_hrtimeout_range+159
-     do_epoll_wait+1424
-     __x64_sys_epoll_wait+97
-     do_syscall_64+95
-     entry_SYSCALL_64_after_hwframe+118
-
-     epoll_wait+82
-
-  Which is unexpected; the busy poll usecs should have consumed the
-  entire timeout and there should be no reason to arm a timer.
-
-After this patch is applied: the same test scenario does not generate a
-call to schedule() in the above edge case. If the busy poll usecs are
-reduced (for example usecs: 100, epoll_wait timeout 1ms) the timer is
-armed as expected.
-
-Fixes: bf3b9f6372c4 ("epoll: Add busy poll support to epoll with socket fds.")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Link: https://lore.kernel.org/20250416185826.26375-1-jdamato@fastly.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 67d1808fda0e5..c01234bbac498 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1996,6 +1996,14 @@ static int ep_try_send_events(struct eventpoll *ep,
- 	return res;
- }
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -187,6 +187,9 @@ static int venus_write_queue(struct venu
+ 	/* ensure rd/wr indices's are read from memory */
+ 	rmb();
  
-+static int ep_schedule_timeout(ktime_t *to)
-+{
-+	if (to)
-+		return ktime_after(*to, ktime_get());
-+	else
-+		return 1;
-+}
++	if (qsize > IFACEQ_QUEUE_SIZE / 4)
++		return -EINVAL;
 +
- /**
-  * ep_poll - Retrieves ready events, and delivers them to the caller-supplied
-  *           event buffer.
-@@ -2103,7 +2111,7 @@ static int ep_poll(struct eventpoll *ep, struct epoll_event __user *events,
+ 	if (wr_idx >= rd_idx)
+ 		empty_space = qsize - (wr_idx - rd_idx);
+ 	else
+@@ -255,6 +258,9 @@ static int venus_read_queue(struct venus
+ 	wr_idx = qhdr->write_idx;
+ 	qsize = qhdr->q_size;
  
- 		write_unlock_irq(&ep->lock);
++	if (qsize > IFACEQ_QUEUE_SIZE / 4)
++		return -EINVAL;
++
+ 	/* make sure data is valid before using it */
+ 	rmb();
  
--		if (!eavail)
-+		if (!eavail && ep_schedule_timeout(to))
- 			timed_out = !schedule_hrtimeout_range(to, slack,
- 							      HRTIMER_MODE_ABS);
- 		__set_current_state(TASK_RUNNING);
--- 
-2.39.5
-
 
 
