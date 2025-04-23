@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637DC28C5A4;
-	Wed, 23 Apr 2025 15:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19952367A0;
+	Wed, 23 Apr 2025 15:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421348; cv=none; b=F/03Zr/3CvwMbsr3t/Bt8NGPN7lXVFFCkPT8mhrzrtivods0AJ/DmzECmzwq7N+N1hbTb9ZWwIj4/r5FO28d2M7W0FWllnag96P7czv3COT35IfDxnGhd+m4kZWGAF+NMhEctClmOT0hbhtGki/n/SyJ31mvapNWmPXsxIf7bhY=
+	t=1745421352; cv=none; b=f98BQpM+BVgWDBBTptFrNlf6uP2UZxh2oKApUouuqphFA5bQqhYzFawC6kiRpiOrxVAswi2ujMyMEzZcLZIw/zLwHxtwnafIJ+O2xdbhEqrefFwsLCkOY+kayui1LGw6jMdYPc7DjmPRjbbKxXBjjt/bUZdCE429my0cLfetImY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421348; c=relaxed/simple;
-	bh=EA38VdJovGL3ILlTgZ2ukOUzrMxgNLi3hJCeoGVGxzs=;
+	s=arc-20240116; t=1745421352; c=relaxed/simple;
+	bh=2QYZt8aGc3fG/28hGRGIjfU/xnYWb21hpfKD5u6d0MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBwbjsyeSM1qNNLFiSXc6Yy0zFjwvKYKvp+6qQ/c3HbkQE/3lZk2PBFbDNW1dhD0N/aLn16DHnB5jSc7p+GfKgbjG1PrkeQ+LZ6kMMgv7ueh9uljKxEnuy4j6SvB3fx+XqnFrek5mJpw69758ErcGwOCj7Ffn31J5kR+Tfix4k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUydXMqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R2ujKVuwsAon03Dq1Thfm4wtLHddjVShIIYjcTXrXYcuQvAUd5mGYOGm+0ZvRnHiL6KQL9mJR7lgK2ftCHfi9ED318hi4Dk3sFGgSClawL4PHpdU8jwnxReZqY9xKUq9kebww+injAf4IHE6mF+LBFTWyLnuWnArt9AMcGs2QFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HZO5YM2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUydXMqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA916C4CEE2;
-	Wed, 23 Apr 2025 15:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HZO5YM2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D40C4CEE2;
+	Wed, 23 Apr 2025 15:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421348;
-	bh=EA38VdJovGL3ILlTgZ2ukOUzrMxgNLi3hJCeoGVGxzs=;
+	s=korg; t=1745421352;
+	bh=2QYZt8aGc3fG/28hGRGIjfU/xnYWb21hpfKD5u6d0MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUydXMqJzrsS4CXxkzln3ReNYM79qICD4MfVjDs6PfjpRm0zExZDBkXFk6vtiHhTi
-	 7lK+0rhP5rpP5jU+iHjcYr0MrIR/LErbVnZPg0X3EKBRUue9ytCCCDZuRcY6Vbsepq
-	 0OCIIbqeZ+oo5kwS1F/1qNZlKm6UdsW7RsZ7jMNs=
+	b=2HZO5YM27bjfftPS67u77lilTne86r/6jidqbg7KJ1JA4EzLkK/ZQKdTekIlrzoRt
+	 YMSH1MSl5D5sVYmFCVUbZC8uLZaxtkJPl2hI69PCwy8iPylFtM4CosTY+ztfhsmz7J
+	 5dJDyeFWD6uFVwbMEXixe+dRX1wwLnAE1T+JgVuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Brendan Tam <Brendan.Tam@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 177/241] drm/amd/display: prevent hang on link training fail
-Date: Wed, 23 Apr 2025 16:44:01 +0200
-Message-ID: <20250423142627.757707726@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 129/291] btrfs: fix non-empty delayed iputs list on unmount due to compressed write workers
+Date: Wed, 23 Apr 2025 16:41:58 +0200
+Message-ID: <20250423142629.672294467@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,66 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brendan Tam <Brendan.Tam@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 8058061ed9d6bc259d1e678607b07d259342c08f upstream.
+commit 4c782247b89376a83fa132f7d45d6977edae0629 upstream.
 
-[Why]
-When link training fails, the phy clock will be disabled. However, in
-enable_streams, it is assumed that link training succeeded and the
-mux selects the phy clock, causing a hang when a register write is made.
+At close_ctree() after we have ran delayed iputs either through explicitly
+calling btrfs_run_delayed_iputs() or later during the call to
+btrfs_commit_super() or btrfs_error_commit_super(), we assert that the
+delayed iputs list is empty.
 
-[How]
-When enable_stream is hit, check if link training failed. If it did, fall
-back to the ref clock to avoid a hang and keep the system in a recoverable
-state.
+When we have compressed writes this assertion may fail because delayed
+iputs may have been added to the list after we last ran delayed iputs.
+This happens like this:
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Brendan Tam <Brendan.Tam@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+1) We have a compressed write bio executing;
+
+2) We enter close_ctree() and flush the fs_info->endio_write_workers
+   queue which is the queue used for running ordered extent completion;
+
+3) The compressed write bio finishes and enters
+   btrfs_finish_compressed_write_work(), where it calls
+   btrfs_finish_ordered_extent() which in turn calls
+   btrfs_queue_ordered_fn(), which queues a work item in the
+   fs_info->endio_write_workers queue that we have flushed before;
+
+4) At close_ctree() we proceed, run all existing delayed iputs and
+   call btrfs_commit_super() (which also runs delayed iputs), but before
+   we run the following assertion below:
+
+      ASSERT(list_empty(&fs_info->delayed_iputs))
+
+   A delayed iput is added by the step below...
+
+5) The ordered extent completion job queued in step 3 runs and results in
+   creating a delayed iput when dropping the last reference of the ordered
+   extent (a call to btrfs_put_ordered_extent() made from
+   btrfs_finish_one_ordered());
+
+6) At this point the delayed iputs list is not empty, so the assertion at
+   close_ctree() fails.
+
+Fix this by flushing the fs_info->compressed_write_workers queue at
+close_ctree() before flushing the fs_info->endio_write_workers queue,
+respecting the queue dependency as the later is responsible for the
+execution of ordered extent completion.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c   |    6 +++++-
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    7 +++++--
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ fs/btrfs/disk-io.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -3027,7 +3027,11 @@ void dcn20_enable_stream(struct pipe_ctx
- 		dccg->funcs->set_dpstreamclk(dccg, DTBCLK0, tg->inst, dp_hpo_inst);
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4662,6 +4662,18 @@ void __cold close_ctree(struct btrfs_fs_
+ 	btrfs_flush_workqueue(fs_info->delalloc_workers);
  
- 		phyd32clk = get_phyd32clk_src(link);
--		dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
-+		if (link->cur_link_settings.link_rate == LINK_RATE_UNKNOWN) {
-+			dccg->funcs->disable_symclk32_se(dccg, dp_hpo_inst);
-+		} else {
-+			dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
-+		}
- 	} else {
- 		if (dccg->funcs->enable_symclk_se)
- 			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -936,8 +936,11 @@ void dcn401_enable_stream(struct pipe_ct
- 	if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
- 		if (dc->link_srv->dp_is_128b_132b_signal(pipe_ctx)) {
- 			dccg->funcs->set_dpstreamclk(dccg, DPREFCLK, tg->inst, dp_hpo_inst);
--
--			dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
-+			if (link->cur_link_settings.link_rate == LINK_RATE_UNKNOWN) {
-+				dccg->funcs->disable_symclk32_se(dccg, dp_hpo_inst);
-+			} else {
-+				dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
-+			}
- 		} else {
- 			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
- 					link_enc->transmitter - TRANSMITTER_UNIPHY_A);
+ 	/*
++	 * When finishing a compressed write bio we schedule a work queue item
++	 * to finish an ordered extent - btrfs_finish_compressed_write_work()
++	 * calls btrfs_finish_ordered_extent() which in turns does a call to
++	 * btrfs_queue_ordered_fn(), and that queues the ordered extent
++	 * completion either in the endio_write_workers work queue or in the
++	 * fs_info->endio_freespace_worker work queue. We flush those queues
++	 * below, so before we flush them we must flush this queue for the
++	 * workers of compressed writes.
++	 */
++	flush_workqueue(fs_info->compressed_write_workers);
++
++	/*
+ 	 * After we parked the cleaner kthread, ordered extents may have
+ 	 * completed and created new delayed iputs. If one of the async reclaim
+ 	 * tasks is running and in the RUN_DELAYED_IPUTS flush state, then we
 
 
