@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E490F18DB17;
-	Wed, 23 Apr 2025 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6AE27D763;
+	Wed, 23 Apr 2025 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420040; cv=none; b=C00kxcOae5RRiMR+9nAyAlA/WcmxN0cIsIdVXR7eSVJnQVVcRv3w3YRpg+UVDTq0CdTUgEEqSe/t69IN9WV3+Jte3AbXlgqb0qqCJJh32lRnlT3JArOlR6+i+6CwhWOmJUgVr4ocGuOku/ee2QWDY5jVjaQI/LvdILQz+bh3I7E=
+	t=1745420042; cv=none; b=otVR469cUE0+tABA5aTLLEaGwhkCHeDbUKbv9znGG0Jx02sBBQ3oolQCQW34e6dAuxIgMvbgxYCAXX992Od6hb6q7u6dmCQvBDs/IgXU8a4eiuXCM8QqCD3cZoX2sCdTWNUXRqejvizpLaskVsZrIvXxAoDUctFJa8aMuPi9iTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420040; c=relaxed/simple;
-	bh=gcxMeKa4i0X1Debv9JhfMPihW4TV7S2dBArdPX36wYA=;
+	s=arc-20240116; t=1745420042; c=relaxed/simple;
+	bh=dT4kHhT91ReiM6HbBSG0ZYkWRP1Jno31YY4auH4Av60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dt2OK25aUW85Tm3peqXCHC6fpJPjiYnnOLg/tjBYeqmEpTBSa7Ajv6HrPOYouRP7uNcSwf1VZmz/M5yZKMY+ox+sB9X82D+ip1TpkJ1cTy57JeHkhRZKXZ7+hiqpP+BdMZ9Hge6vRyP1LMacb0ToHXp4ZIyOFOEp8mlvPYKiE38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ra0yqlw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lhp05dZ/aX1zJ25xkDofV4PtiTIV7ZuURDToIrhyxZ3Sk6KjkB/OCcPmrSL6vBsWyKKpdr8uaOwAmgYYYnwroXV5jpYJaVoanaqohdhTVVe8XyMTYiqqxda+gI8C0j2TB2iJCEcjACaG4RJl8TxM4H4PIdYTCcTms2HXN967PN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJaUFsS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ra0yqlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A79C4CEE2;
-	Wed, 23 Apr 2025 14:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJaUFsS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8B1C4CEE2;
+	Wed, 23 Apr 2025 14:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420039;
-	bh=gcxMeKa4i0X1Debv9JhfMPihW4TV7S2dBArdPX36wYA=;
+	s=korg; t=1745420042;
+	bh=dT4kHhT91ReiM6HbBSG0ZYkWRP1Jno31YY4auH4Av60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Ra0yqlwW9v8+vPhFYmAZzfP3oVHUHy3oSuX61EXlpn3NjoBVok9usmjo/KW+e09N
-	 x+KVtseCjGUx+v8Wv9AcSmMs8DJFywKgWKk+pdJtcjkUlLltEFflGuTJBtLLw23rbQ
-	 +U/W6jpo6jjN/H5G+82u+xm0VCjAsjhfVGM+aK7g=
+	b=WJaUFsS+chM+5guZ66KCMh4M9p97GK1i1LEvk6rNZmTuBumG8dRWD682lR9QXfutu
+	 kTZSzE4yO1Xcvnr0ZBFhu+rixEI+w15uW7JzKeHFzImLUSin8m1gQzqKAuzKEiz+Yu
+	 PBqUh7/48zdcUfSl2rn8XZE9ep4CFLFSxccx0QJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weizhao Ouyang <o451686892@gmail.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 054/241] can: rockchip_canfd: fix broken quirks checks
-Date: Wed, 23 Apr 2025 16:41:58 +0200
-Message-ID: <20250423142622.714545855@linuxfoundation.org>
+Subject: [PATCH 6.6 033/393] ipv6: Align behavior across nexthops during path selection
+Date: Wed, 23 Apr 2025 16:38:49 +0200
+Message-ID: <20250423142644.656407622@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +50,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weizhao Ouyang <o451686892@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 6315d93541f8a5f77c5ef5c4f25233e66d189603 ]
+[ Upstream commit 6933cd4714861eea6848f18396a119d741f25fc3 ]
 
-First get the devtype_data then check quirks.
+A nexthop is only chosen when the calculated multipath hash falls in the
+nexthop's hash region (i.e., the hash is smaller than the nexthop's hash
+threshold) and when the nexthop is assigned a non-negative score by
+rt6_score_route().
 
-Fixes: bbdffb341498 ("can: rockchip_canfd: add quirk for broken CAN-FD support")
-Signed-off-by: Weizhao Ouyang <o451686892@gmail.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20250324114416.10160-1-o451686892@gmail.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Commit 4d0ab3a6885e ("ipv6: Start path selection from the first
+nexthop") introduced an unintentional difference between the first
+nexthop and the rest when the score is negative.
+
+When the first nexthop matches, but has a negative score, the code will
+currently evaluate subsequent nexthops until one is found with a
+non-negative score. On the other hand, when a different nexthop matches,
+but has a negative score, the code will fallback to the nexthop with
+which the selection started ('match').
+
+Align the behavior across all nexthops and fallback to 'match' when the
+first nexthop matches, but has a negative score.
+
+Fixes: 3d709f69a3e7 ("ipv6: Use hash-threshold instead of modulo-N")
+Fixes: 4d0ab3a6885e ("ipv6: Start path selection from the first nexthop")
+Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Closes: https://lore.kernel.org/netdev/67efef607bc41_1ddca82948c@willemb.c.googlers.com.notmuch/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250408084316.243559-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rockchip/rockchip_canfd-core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv6/route.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/rockchip/rockchip_canfd-core.c b/drivers/net/can/rockchip/rockchip_canfd-core.c
-index 46201c126703c..7107a37da36c7 100644
---- a/drivers/net/can/rockchip/rockchip_canfd-core.c
-+++ b/drivers/net/can/rockchip/rockchip_canfd-core.c
-@@ -902,15 +902,16 @@ static int rkcanfd_probe(struct platform_device *pdev)
- 	priv->can.data_bittiming_const = &rkcanfd_data_bittiming_const;
- 	priv->can.ctrlmode_supported = CAN_CTRLMODE_LOOPBACK |
- 		CAN_CTRLMODE_BERR_REPORTING;
--	if (!(priv->devtype_data.quirks & RKCANFD_QUIRK_CANFD_BROKEN))
--		priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD;
- 	priv->can.do_set_mode = rkcanfd_set_mode;
- 	priv->can.do_get_berr_counter = rkcanfd_get_berr_counter;
- 	priv->ndev = ndev;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 2e98531fa51a3..53197087353a7 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -472,10 +472,10 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
+ 		goto out;
  
- 	match = device_get_match_data(&pdev->dev);
--	if (match)
-+	if (match) {
- 		priv->devtype_data = *(struct rkcanfd_devtype_data *)match;
-+		if (!(priv->devtype_data.quirks & RKCANFD_QUIRK_CANFD_BROKEN))
-+			priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD;
-+	}
+ 	hash = fl6->mp_hash;
+-	if (hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
+-	    rt6_score_route(first->fib6_nh, first->fib6_flags, oif,
+-			    strict) >= 0) {
+-		match = first;
++	if (hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound)) {
++		if (rt6_score_route(first->fib6_nh, first->fib6_flags, oif,
++				    strict) >= 0)
++			match = first;
+ 		goto out;
+ 	}
  
- 	err = can_rx_offload_add_manual(ndev, &priv->offload,
- 					RKCANFD_NAPI_WEIGHT);
 -- 
 2.39.5
 
