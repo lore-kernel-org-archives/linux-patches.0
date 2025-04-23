@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6077427D763;
-	Wed, 23 Apr 2025 14:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDEC19E966;
+	Wed, 23 Apr 2025 14:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420250; cv=none; b=l9zGoa6HFrLlaC4e++TooVJ9qX0hWnrcaQTIR31Ze1oaSpG4L4wcj2c5tB3bNfwUwk08TiL6EDY7/bNFl/uCt4BH49CyBM71s5g5BxJCPk1dO35M5suQq/embg9z5TgpCn7kxAjm2A4AZnI2HvW1qKg2yFV1TycK8XRgZaSOuAM=
+	t=1745420253; cv=none; b=iH5VeZT74YcZNPYAtq3cR/B5LbWCIp8Mb8ZDb+UISIa3M6KllCpchNGQlxNjYIfl9MVilqkctqyawurdW5jcsld/bpjmsqvLoLx4W01N/H6gosg6HinCU7sJR+KrWW7JJ+mzaWrOFKwUTPiOQ8ySDIAdKGVcN2Wcal0BWXpENiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420250; c=relaxed/simple;
-	bh=ZAwf8sQ2+6IZ64P9QK6yEM7V4NvOI4pu8jWA5cLdTYU=;
+	s=arc-20240116; t=1745420253; c=relaxed/simple;
+	bh=8fLU5mLnaYUd0y7ZxIt/fzx3N4hkZgRsU4jCryQPVJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JPNV9WXs6lzrjeJr/y6dEOvyZcrrUf1M/eBmdnbrkuTraAbmIuvqapYwG0KsAiI7UrJkuWGMC3pfVIMUoxUV2PyfBJ/VS4eeYjZsIQyb2TE7MnU6bEI705emB/yfJq8+CCiuHQFA7B9MnSTA6gjDN/qtqt4ddP1/Kq1OH5CRtGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryeBVzy3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QG11GMyj7Fxa592r4vqN0YO8NknGX3M6U9bc9ABbZFAtL2UjfLy93iPIvqSZ/inr6F8mYX6qWSkU9Yh8dXcYRc3ktjUnTcUae0JJUezwGNdskOfdG3nBx/sNt+7sKbBR6CfmG0QjxctiWMaMTBAnQexImXsFNdGmeM7Alv0dU08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDxXZwy9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryeBVzy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB083C4CEE2;
-	Wed, 23 Apr 2025 14:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDxXZwy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A43C4CEE2;
+	Wed, 23 Apr 2025 14:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420250;
-	bh=ZAwf8sQ2+6IZ64P9QK6yEM7V4NvOI4pu8jWA5cLdTYU=;
+	s=korg; t=1745420252;
+	bh=8fLU5mLnaYUd0y7ZxIt/fzx3N4hkZgRsU4jCryQPVJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryeBVzy30qeYFfsasHu2s73R8c2gjLT+12czEpVU4UMtOz8uno5v8sXFruB3mi1iB
-	 4bRu8Duoj8AWXKVXq2IG/60a8TyjL4oZrKTMb3N7nb/E923l8QHjsMd0Erg+KvaNIv
-	 3ZIa3Ly+F2xM95sOYmiUGuRBn/1SamyfFclghMZM=
+	b=GDxXZwy9apURMPrhfzjx07q93C2oI9wDD5LPx06oZYPaUhSVhS9Gg06srz80hJQET
+	 To0EUSFVmofsRnTOAeUP8D44rygJBSZnDjgXBlsWvgQQb76VbLdbfI4ftfj3AjAoeg
+	 LnnLOiIqoXqBb3SZNEFOmOCFu835cv35INRLjVeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Makarenko Oleg <oleg@makarenk.ooo>,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Paul Dino Jones <paul@spacefreak18.xyz>,
-	=?UTF-8?q?Crist=C3=B3ferson=20Bueno?= <cbueno81@gmail.com>,
-	Pablo Cisneros <patchkez@protonmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/393] HID: Add hid-universal-pidff driver and supported device ids
-Date: Wed, 23 Apr 2025 16:39:11 +0200
-Message-ID: <20250423142645.574264860@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 113/223] i2c: cros-ec-tunnel: defer probe if parent EC is not present
+Date: Wed, 23 Apr 2025 16:43:05 +0200
+Message-ID: <20250423142621.710952289@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,360 +44,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit f06bf8d94fffbb544b1cb5402c92e0a075f0d420 ]
+commit 424eafe65647a8d6c690284536e711977153195a upstream.
 
-Extend pidff compatibility, usable button range, manage pidff quirks and
-set improved fuzz/flat default for high precision devices. Possibility
-of fixing device descriptors in the future if such needs arises.
+When i2c-cros-ec-tunnel and the EC driver are built-in, the EC parent
+device will not be found, leading to NULL pointer dereference.
 
-As many of PID devices are quite similar and not dependent on
-custom drivers, this one can handle all of PID devices which
-need special care.
+That can also be reproduced by unbinding the controller driver and then
+loading i2c-cros-ec-tunnel module (or binding the device).
 
-Numerous sim racing/sim flight bases report a lot of buttons
-in excess of 100. Moza Racing exposes 128 of them and thus
-the need to extend the available range.
+[  271.991245] BUG: kernel NULL pointer dereference, address: 0000000000000058
+[  271.998215] #PF: supervisor read access in kernel mode
+[  272.003351] #PF: error_code(0x0000) - not-present page
+[  272.008485] PGD 0 P4D 0
+[  272.011022] Oops: Oops: 0000 [#1] SMP NOPTI
+[  272.015207] CPU: 0 UID: 0 PID: 3859 Comm: insmod Tainted: G S                  6.15.0-rc1-00004-g44722359ed83 #30 PREEMPT(full)  3c7fb39a552e7d949de2ad921a7d6588d3a4fdc5
+[  272.030312] Tainted: [S]=CPU_OUT_OF_SPEC
+[  272.034233] Hardware name: HP Berknip/Berknip, BIOS Google_Berknip.13434.356.0 05/17/2021
+[  272.042400] RIP: 0010:ec_i2c_probe+0x2b/0x1c0 [i2c_cros_ec_tunnel]
+[  272.048577] Code: 1f 44 00 00 41 57 41 56 41 55 41 54 53 48 83 ec 10 65 48 8b 05 06 a0 6c e7 48 89 44 24 08 4c 8d 7f 10 48 8b 47 50 4c 8b 60 78 <49> 83 7c 24 58 00 0f 84 2f 01 00 00 48 89 fb be 30 06 00 00 4c 9
+[  272.067317] RSP: 0018:ffffa32082a03940 EFLAGS: 00010282
+[  272.072541] RAX: ffff969580b6a810 RBX: ffff969580b68c10 RCX: 0000000000000000
+[  272.079672] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff969580b68c00
+[  272.086804] RBP: 00000000fffffdfb R08: 0000000000000000 R09: 0000000000000000
+[  272.093936] R10: 0000000000000000 R11: ffffffffc0600000 R12: 0000000000000000
+[  272.101067] R13: ffffffffa666fbb8 R14: ffffffffc05b5528 R15: ffff969580b68c10
+[  272.108198] FS:  00007b930906fc40(0000) GS:ffff969603149000(0000) knlGS:0000000000000000
+[  272.116282] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  272.122024] CR2: 0000000000000058 CR3: 000000012631c000 CR4: 00000000003506f0
+[  272.129155] Call Trace:
+[  272.131606]  <TASK>
+[  272.133709]  ? acpi_dev_pm_attach+0xdd/0x110
+[  272.137985]  platform_probe+0x69/0xa0
+[  272.141652]  really_probe+0x152/0x310
+[  272.145318]  __driver_probe_device+0x77/0x110
+[  272.149678]  driver_probe_device+0x1e/0x190
+[  272.153864]  __driver_attach+0x10b/0x1e0
+[  272.157790]  ? driver_attach+0x20/0x20
+[  272.161542]  bus_for_each_dev+0x107/0x150
+[  272.165553]  bus_add_driver+0x15d/0x270
+[  272.169392]  driver_register+0x65/0x110
+[  272.173232]  ? cleanup_module+0xa80/0xa80 [i2c_cros_ec_tunnel 3a00532f3f4af4a9eade753f86b0f8dd4e4e5698]
+[  272.182617]  do_one_initcall+0x110/0x350
+[  272.186543]  ? security_kernfs_init_security+0x49/0xd0
+[  272.191682]  ? __kernfs_new_node+0x1b9/0x240
+[  272.195954]  ? security_kernfs_init_security+0x49/0xd0
+[  272.201093]  ? __kernfs_new_node+0x1b9/0x240
+[  272.205365]  ? kernfs_link_sibling+0x105/0x130
+[  272.209810]  ? kernfs_next_descendant_post+0x1c/0xa0
+[  272.214773]  ? kernfs_activate+0x57/0x70
+[  272.218699]  ? kernfs_add_one+0x118/0x160
+[  272.222710]  ? __kernfs_create_file+0x71/0xa0
+[  272.227069]  ? sysfs_add_bin_file_mode_ns+0xd6/0x110
+[  272.232033]  ? internal_create_group+0x453/0x4a0
+[  272.236651]  ? __vunmap_range_noflush+0x214/0x2d0
+[  272.241355]  ? __free_frozen_pages+0x1dc/0x420
+[  272.245799]  ? free_vmap_area_noflush+0x10a/0x1c0
+[  272.250505]  ? load_module+0x1509/0x16f0
+[  272.254431]  do_init_module+0x60/0x230
+[  272.258181]  __se_sys_finit_module+0x27a/0x370
+[  272.262627]  do_syscall_64+0x6a/0xf0
+[  272.266206]  ? do_syscall_64+0x76/0xf0
+[  272.269956]  ? irqentry_exit_to_user_mode+0x79/0x90
+[  272.274836]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
+[  272.279887] RIP: 0033:0x7b9309168d39
+[  272.283466] Code: 5b 41 5c 5d c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d af 40 0c 00 f7 d8 64 89 01 8
+[  272.302210] RSP: 002b:00007fff50f1a288 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+[  272.309774] RAX: ffffffffffffffda RBX: 000058bf9b50f6d0 RCX: 00007b9309168d39
+[  272.316905] RDX: 0000000000000000 RSI: 000058bf6c103a77 RDI: 0000000000000003
+[  272.324036] RBP: 00007fff50f1a2e0 R08: 00007fff50f19218 R09: 0000000021ec4150
+[  272.331166] R10: 000058bf9b50f7f0 R11: 0000000000000246 R12: 0000000000000000
+[  272.338296] R13: 00000000fffffffe R14: 0000000000000000 R15: 000058bf6c103a77
+[  272.345428]  </TASK>
+[  272.347617] Modules linked in: i2c_cros_ec_tunnel(+)
+[  272.364585] gsmi: Log Shutdown Reason 0x03
 
-All the included devices were tested and confirmed working
-with the help of the sim racing community.
+Returning -EPROBE_DEFER will allow the device to be bound once the
+controller is bound, in the case of built-in drivers.
 
-Changes in v6:
-- Support "split" devices with a separate "input device" for buttons
-- Fixed comment styling
-
-Co-developed-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Makarenko Oleg <oleg@makarenk.ooo>
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Michał Kopeć <michal@nozomi.space>
-Reviewed-by: Paul Dino Jones <paul@spacefreak18.xyz>
-Tested-by: Cristóferson Bueno <cbueno81@gmail.com>
-Tested-by: Pablo Cisneros <patchkez@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9d230c9e4f4e ("i2c: ChromeOS EC tunnel driver")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: <stable@vger.kernel.org> # v3.16+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250407-null-ec-parent-v1-1-f7dda62d3110@igalia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/Kconfig               |  14 +++
- drivers/hid/Makefile              |   1 +
- drivers/hid/hid-ids.h             |  31 +++++
- drivers/hid/hid-universal-pidff.c | 192 ++++++++++++++++++++++++++++++
- 4 files changed, 238 insertions(+)
- create mode 100644 drivers/hid/hid-universal-pidff.c
+ drivers/i2c/busses/i2c-cros-ec-tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
-index 979ebe69c8e30..ffbeb39341e1a 100644
---- a/drivers/hid/Kconfig
-+++ b/drivers/hid/Kconfig
-@@ -1202,6 +1202,20 @@ config HID_U2FZERO
- 	  allow setting the brightness to anything but 1, which will
- 	  trigger a single blink and immediately reset back to 0.
+--- a/drivers/i2c/busses/i2c-cros-ec-tunnel.c
++++ b/drivers/i2c/busses/i2c-cros-ec-tunnel.c
+@@ -247,6 +247,9 @@ static int ec_i2c_probe(struct platform_
+ 	u32 remote_bus;
+ 	int err;
  
-+config HID_UNIVERSAL_PIDFF
-+	tristate "universal-pidff: extended USB PID driver compatibility and usage"
-+	depends on USB_HID
-+	depends on HID_PID
-+	help
-+	  Extended PID support for selected devices.
++	if (!ec)
++		return dev_err_probe(dev, -EPROBE_DEFER, "couldn't find parent EC device\n");
 +
-+	  Contains report fixups, extended usable button range and
-+	  pidff quirk management to extend compatibility with slightly
-+	  non-compliant USB PID devices and better fuzz/flat values for
-+	  high precision direct drive devices.
-+
-+	  Supports Moza Racing, Cammus, VRS, FFBeast and more.
-+
- config HID_WACOM
- 	tristate "Wacom Intuos/Graphire tablet support (USB)"
- 	depends on USB_HID
-diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
-index f5a06b62b385d..dcb81891c725a 100644
---- a/drivers/hid/Makefile
-+++ b/drivers/hid/Makefile
-@@ -138,6 +138,7 @@ hid-uclogic-objs		:= hid-uclogic-core.o \
- 				   hid-uclogic-params.o
- obj-$(CONFIG_HID_UCLOGIC)	+= hid-uclogic.o
- obj-$(CONFIG_HID_UDRAW_PS3)	+= hid-udraw-ps3.o
-+obj-$(CONFIG_HID_UNIVERSAL_PIDFF)	+= hid-universal-pidff.o
- obj-$(CONFIG_HID_LED)		+= hid-led.o
- obj-$(CONFIG_HID_XIAOMI)	+= hid-xiaomi.o
- obj-$(CONFIG_HID_XINMO)		+= hid-xinmo.o
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 09090803f1dd2..8e721ec3faaff 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -262,6 +262,10 @@
- #define USB_DEVICE_ID_BTC_EMPREX_REMOTE	0x5578
- #define USB_DEVICE_ID_BTC_EMPREX_REMOTE_2	0x5577
- 
-+#define USB_VENDOR_ID_CAMMUS		0x3416
-+#define USB_DEVICE_ID_CAMMUS_C5		0x0301
-+#define USB_DEVICE_ID_CAMMUS_C12	0x0302
-+
- #define USB_VENDOR_ID_CANDO		0x2087
- #define USB_DEVICE_ID_CANDO_PIXCIR_MULTI_TOUCH 0x0703
- #define USB_DEVICE_ID_CANDO_MULTI_TOUCH	0x0a01
-@@ -453,6 +457,11 @@
- #define USB_VENDOR_ID_EVISION           0x320f
- #define USB_DEVICE_ID_EVISION_ICL01     0x5041
- 
-+#define USB_VENDOR_ID_FFBEAST		0x045b
-+#define USB_DEVICE_ID_FFBEAST_JOYSTICK	0x58f9
-+#define USB_DEVICE_ID_FFBEAST_RUDDER	0x5968
-+#define USB_DEVICE_ID_FFBEAST_WHEEL	0x59d7
-+
- #define USB_VENDOR_ID_FLATFROG		0x25b5
- #define USB_DEVICE_ID_MULTITOUCH_3200	0x0002
- 
-@@ -812,6 +821,13 @@
- #define I2C_DEVICE_ID_LG_8001		0x8001
- #define I2C_DEVICE_ID_LG_7010		0x7010
- 
-+#define USB_VENDOR_ID_LITE_STAR		0x11ff
-+#define USB_DEVICE_ID_PXN_V10		0x3245
-+#define USB_DEVICE_ID_PXN_V12		0x1212
-+#define USB_DEVICE_ID_PXN_V12_LITE	0x1112
-+#define USB_DEVICE_ID_PXN_V12_LITE_2	0x1211
-+#define USB_DEVICE_LITE_STAR_GT987_FF	0x2141
-+
- #define USB_VENDOR_ID_LOGITECH		0x046d
- #define USB_DEVICE_ID_LOGITECH_Z_10_SPK	0x0a07
- #define USB_DEVICE_ID_LOGITECH_AUDIOHUB 0x0a0e
-@@ -959,6 +975,18 @@
- #define USB_VENDOR_ID_MONTEREY		0x0566
- #define USB_DEVICE_ID_GENIUS_KB29E	0x3004
- 
-+#define USB_VENDOR_ID_MOZA		0x346e
-+#define USB_DEVICE_ID_MOZA_R3		0x0005
-+#define USB_DEVICE_ID_MOZA_R3_2		0x0015
-+#define USB_DEVICE_ID_MOZA_R5		0x0004
-+#define USB_DEVICE_ID_MOZA_R5_2		0x0014
-+#define USB_DEVICE_ID_MOZA_R9		0x0002
-+#define USB_DEVICE_ID_MOZA_R9_2		0x0012
-+#define USB_DEVICE_ID_MOZA_R12		0x0006
-+#define USB_DEVICE_ID_MOZA_R12_2	0x0016
-+#define USB_DEVICE_ID_MOZA_R16_R21	0x0000
-+#define USB_DEVICE_ID_MOZA_R16_R21_2	0x0010
-+
- #define USB_VENDOR_ID_MSI		0x1770
- #define USB_DEVICE_ID_MSI_GT683R_LED_PANEL 0xff00
- 
-@@ -1360,6 +1388,9 @@
- #define USB_DEVICE_ID_VELLEMAN_K8061_FIRST	0x8061
- #define USB_DEVICE_ID_VELLEMAN_K8061_LAST	0x8068
- 
-+#define USB_VENDOR_ID_VRS	0x0483
-+#define USB_DEVICE_ID_VRS_DFP	0xa355
-+
- #define USB_VENDOR_ID_VTL		0x0306
- #define USB_DEVICE_ID_VTL_MULTITOUCH_FF3F	0xff3f
- 
-diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
-new file mode 100644
-index 0000000000000..55aad2e4ac1b8
---- /dev/null
-+++ b/drivers/hid/hid-universal-pidff.c
-@@ -0,0 +1,192 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * HID UNIVERSAL PIDFF
-+ * hid-pidff wrapper for PID-enabled devices
-+ * Handles device reports, quirks and extends usable button range
-+ *
-+ * Copyright (c) 2024, 2025 Makarenko Oleg
-+ * Copyright (c) 2024, 2025 Tomasz Pakuła
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/hid.h>
-+#include <linux/module.h>
-+#include <linux/input-event-codes.h>
-+#include "hid-ids.h"
-+
-+#define JOY_RANGE (BTN_DEAD - BTN_JOYSTICK + 1)
-+
-+/*
-+ * Map buttons manually to extend the default joystick button limit
-+ */
-+static int universal_pidff_input_mapping(struct hid_device *hdev,
-+	struct hid_input *hi, struct hid_field *field, struct hid_usage *usage,
-+	unsigned long **bit, int *max)
-+{
-+	if ((usage->hid & HID_USAGE_PAGE) != HID_UP_BUTTON)
-+		return 0;
-+
-+	if (field->application != HID_GD_JOYSTICK)
-+		return 0;
-+
-+	int button = ((usage->hid - 1) & HID_USAGE);
-+	int code = button + BTN_JOYSTICK;
-+
-+	/* Detect the end of JOYSTICK buttons range */
-+	if (code > BTN_DEAD)
-+		code = button + KEY_NEXT_FAVORITE - JOY_RANGE;
-+
-+	/*
-+	 * Map overflowing buttons to KEY_RESERVED to not ignore
-+	 * them and let them still trigger MSC_SCAN
-+	 */
-+	if (code > KEY_MAX)
-+		code = KEY_RESERVED;
-+
-+	hid_map_usage(hi, usage, bit, max, EV_KEY, code);
-+	hid_dbg(hdev, "Button %d: usage %d", button, code);
-+	return 1;
-+}
-+
-+/*
-+ * Check if the device is PID and initialize it
-+ * Add quirks after initialisation
-+ */
-+static int universal_pidff_probe(struct hid_device *hdev,
-+				 const struct hid_device_id *id)
-+{
-+	int i, error;
-+	error = hid_parse(hdev);
-+	if (error) {
-+		hid_err(hdev, "HID parse failed\n");
-+		goto err;
-+	}
-+
-+	error = hid_hw_start(hdev, HID_CONNECT_DEFAULT & ~HID_CONNECT_FF);
-+	if (error) {
-+		hid_err(hdev, "HID hw start failed\n");
-+		goto err;
-+	}
-+
-+	/* Check if device contains PID usage page */
-+	error = 1;
-+	for (i = 0; i < hdev->collection_size; i++)
-+		if ((hdev->collection[i].usage & HID_USAGE_PAGE) == HID_UP_PID) {
-+			error = 0;
-+			hid_dbg(hdev, "PID usage page found\n");
-+			break;
-+		}
-+
-+	/*
-+	 * Do not fail as this might be the second "device"
-+	 * just for additional buttons/axes. Exit cleanly if force
-+	 * feedback usage page wasn't found (included devices were
-+	 * tested and confirmed to be USB PID after all).
-+	 */
-+	if (error) {
-+		hid_dbg(hdev, "PID usage page not found in the descriptor\n");
-+		return 0;
-+	}
-+
-+	/* Check if HID_PID support is enabled */
-+	int (*init_function)(struct hid_device *, __u32);
-+	init_function = hid_pidff_init_with_quirks;
-+
-+	if (!init_function) {
-+		hid_warn(hdev, "HID_PID support not enabled!\n");
-+		return 0;
-+	}
-+
-+	error = init_function(hdev, id->driver_data);
-+	if (error) {
-+		hid_warn(hdev, "Error initialising force feedback\n");
-+		goto err;
-+	}
-+
-+	hid_info(hdev, "Universal pidff driver loaded sucesfully!");
-+
-+	return 0;
-+err:
-+	return error;
-+}
-+
-+static int universal_pidff_input_configured(struct hid_device *hdev,
-+					    struct hid_input *hidinput)
-+{
-+	int axis;
-+	struct input_dev *input = hidinput->input;
-+
-+	if (!input->absinfo)
-+		return 0;
-+
-+	/* Decrease fuzz and deadzone on available axes */
-+	for (axis = ABS_X; axis <= ABS_BRAKE; axis++) {
-+		if (!test_bit(axis, input->absbit))
-+			continue;
-+
-+		input_set_abs_params(input, axis,
-+			input->absinfo[axis].minimum,
-+			input->absinfo[axis].maximum,
-+			axis == ABS_X ? 0 : 8, 0);
-+	}
-+
-+	/* Remove fuzz and deadzone from the second joystick axis */
-+	if (hdev->vendor == USB_VENDOR_ID_FFBEAST &&
-+	    hdev->product == USB_DEVICE_ID_FFBEAST_JOYSTICK)
-+		input_set_abs_params(input, ABS_Y,
-+			input->absinfo[ABS_Y].minimum,
-+			input->absinfo[ABS_Y].maximum, 0, 0);
-+
-+	return 0;
-+}
-+
-+static const struct hid_device_id universal_pidff_devices[] = {
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3_2),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5_2),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9_2),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12_2),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21_2),
-+		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C5) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C12) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_DFP),
-+		.driver_data = HID_PIDFF_QUIRK_PERMISSIVE_CONTROL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_JOYSTICK), },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_RUDDER), },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_FFBEAST, USB_DEVICE_ID_FFBEAST_WHEEL) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V10) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_ID_PXN_V12_LITE_2) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LITE_STAR, USB_DEVICE_LITE_STAR_GT987_FF) },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
-+
-+static struct hid_driver universal_pidff = {
-+	.name = "hid-universal-pidff",
-+	.id_table = universal_pidff_devices,
-+	.input_mapping = universal_pidff_input_mapping,
-+	.probe = universal_pidff_probe,
-+	.input_configured = universal_pidff_input_configured
-+};
-+module_hid_driver(universal_pidff);
-+
-+MODULE_DESCRIPTION("Universal driver for USB PID Force Feedback devices");
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("Makarenko Oleg <oleg@makarenk.ooo>");
-+MODULE_AUTHOR("Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>");
--- 
-2.39.5
-
+ 	if (!ec->cmd_xfer) {
+ 		dev_err(dev, "Missing sendrecv\n");
+ 		return -EINVAL;
 
 
