@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856D27CCD7;
-	Wed, 23 Apr 2025 15:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9EB28CF6C;
+	Wed, 23 Apr 2025 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421041; cv=none; b=tSOth+nE89bqpPUbxLzhWDSpJVE2yf5NJH0Up85TeTHiGeSjvpAKLU7RKAFRnA7pJWbvYu8+iDipnXYJ8LQPJCQdEVNiGFeRmRGxjiADjpzCvqcPvct9P8Dv0MWnamNZ7t5GZNKbEozmA0PL2g1snbT189mEvYkY3VFjHhAgE3s=
+	t=1745421044; cv=none; b=r9MDQVs9gbkiFJu4ARwXB7TQ45QIfYOi2mKWHWLp4vQ2OkBVbDzdc3+nUHqgLm5XqrDO5+fNgoFpVyD5ybQouArhoSAC01WDylkFf+rdPkB9Txaw/A7yKHmOV1znm8jAuZqSqwJRzVoHxYDL8p6bXB/llnTlIUfqYUNfvlE2tCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421041; c=relaxed/simple;
-	bh=hLOeI5Ew1FpOcutXamgECI/jz3MT/r2uxldVII5wEOc=;
+	s=arc-20240116; t=1745421044; c=relaxed/simple;
+	bh=P15eP17d98fbJ7o2DmPT+Mkxx6u5uPLbSsb3j+p2sE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HwODXd1ACApBBOcRwOlWIAXgYaiu7h9CukK2TqISBo+JDNrsS40e6u8C3217NzGh1sdp4rY0SUVoWzHwJaq3nAtCernPEHFCf8urG8Xvk82R3CAjedA1DDf7b6P1kyqL5Wn2h/GtGvhgoAaWt3L64L4fYreolyltUMhsUAPvpBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plL+RwqP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4zQBcE59sJexFah3dmphLZzKQV6fp0F+EJ1RiKPP5R6w1PXEE9+2/mKX9YOXRAndOh3O1B/8zUrAi3p6T6SfIrP+56xv8/LUTOc03JdYR8DM8mZqB/ET9Yx9Me1qlvX9Yj3oJ/hn4soT0Tz1gzrcPPwRJt2O5sb2wWgwgW3bmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha6LeBsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plL+RwqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAD1C4CEE2;
-	Wed, 23 Apr 2025 15:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha6LeBsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE22C4CEE2;
+	Wed, 23 Apr 2025 15:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421041;
-	bh=hLOeI5Ew1FpOcutXamgECI/jz3MT/r2uxldVII5wEOc=;
+	s=korg; t=1745421044;
+	bh=P15eP17d98fbJ7o2DmPT+Mkxx6u5uPLbSsb3j+p2sE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plL+RwqPsRv16JLhvCYqWj8+IjdKixE2ASulp1a6oF5Jw3NaEKDqermN6ZeYn6Nby
-	 AgQO+ByKtsTjeou0bgaIiW4+fgHxGasipy7CwFHpDM/DeWKRtV+HSnTusXXcZ3s5vQ
-	 wruKPluVPM2oh2UFPIKzOg1vZJwUMBorNiAC3GSw=
+	b=ha6LeBsMlk4YikJmtskq2pL1OYWve1qChJldpktV8MKxrZxd0fEvUUMbqBj2mGWO0
+	 zuorMvoe0YMVoTTjzMfJBWC3HvOkMyM7xmJBMhyt4TGmomHUDq2P+Whl3rPZ937dBy
+	 9q0W4HlehcNjotfXsyAUk6fM/P6LkK7/HvJ5RQzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 103/291] net: dsa: mv88e6xxx: workaround RGMII transmit delay erratum for 6320 family
-Date: Wed, 23 Apr 2025 16:41:32 +0200
-Message-ID: <20250423142628.558946783@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Quentin Perret <qperret@google.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 088/291] KVM: arm64: Tear down vGIC on failed vCPU creation
+Date: Wed, 23 Apr 2025 16:41:17 +0200
+Message-ID: <20250423142627.957196114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -45,74 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-commit 1ebc8e1ef906db9c08e9abe9776d85ddec837725 upstream.
+commit 250f25367b58d8c65a1b060a2dda037eea09a672 upstream.
 
-Implement the workaround for erratum
-  3.3 RGMII timing may be out of spec when transmit delay is enabled
-for the 6320 family, which says:
+If kvm_arch_vcpu_create() fails to share the vCPU page with the
+hypervisor, we propagate the error back to the ioctl but leave the
+vGIC vCPU data initialised. Note only does this leak the corresponding
+memory when the vCPU is destroyed but it can also lead to use-after-free
+if the redistributor device handling tries to walk into the vCPU.
 
-  When transmit delay is enabled via Port register 1 bit 14 = 1, duty
-  cycle may be out of spec. Under very rare conditions this may cause
-  the attached device receive CRC errors.
+Add the missing cleanup to kvm_arch_vcpu_create(), ensuring that the
+vGIC vCPU structures are destroyed on error.
 
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.4.x
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-8-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@vger.kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Quentin Perret <qperret@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20250314133409.9123-1-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/arm64/kvm/arm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3694,6 +3694,21 @@ static int mv88e6xxx_stats_setup(struct
- 	return mv88e6xxx_g1_stats_clear(chip);
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -371,7 +371,11 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+ 	if (err)
+ 		return err;
+ 
+-	return kvm_share_hyp(vcpu, vcpu + 1);
++	err = kvm_share_hyp(vcpu, vcpu + 1);
++	if (err)
++		kvm_vgic_vcpu_destroy(vcpu);
++
++	return err;
  }
  
-+static int mv88e6320_setup_errata(struct mv88e6xxx_chip *chip)
-+{
-+	u16 dummy;
-+	int err;
-+
-+	/* Workaround for erratum
-+	 *   3.3 RGMII timing may be out of spec when transmit delay is enabled
-+	 */
-+	err = mv88e6xxx_port_hidden_write(chip, 0, 0xf, 0x7, 0xe000);
-+	if (err)
-+		return err;
-+
-+	return mv88e6xxx_port_hidden_read(chip, 0, 0xf, 0x7, &dummy);
-+}
-+
- /* Check if the errata has already been applied. */
- static bool mv88e6390_setup_errata_applied(struct mv88e6xxx_chip *chip)
- {
-@@ -5110,6 +5125,7 @@ static const struct mv88e6xxx_ops mv88e6
- 
- static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	/* MV88E6XXX_FAMILY_6320 */
-+	.setup_errata = mv88e6320_setup_errata,
- 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
- 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
- 	.irl_init_all = mv88e6352_g2_irl_init_all,
-@@ -5157,6 +5173,7 @@ static const struct mv88e6xxx_ops mv88e6
- 
- static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	/* MV88E6XXX_FAMILY_6320 */
-+	.setup_errata = mv88e6320_setup_errata,
- 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
- 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
- 	.irl_init_all = mv88e6352_g2_irl_init_all,
+ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
 
 
