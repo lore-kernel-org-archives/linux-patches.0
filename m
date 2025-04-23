@@ -1,135 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F761E2606;
-	Wed, 23 Apr 2025 17:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D226928CF75
+	for <patches@lists.linux.dev>; Wed, 23 Apr 2025 18:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745430123; cv=none; b=ebaxZ+FX2NNiXiXgEkdQP6TL+rHAWpv4Z5e9fMubylECYE/6Li7GWFKjw+GCyrFW5H+BxSHTxnTZgdpUarUOZQL6OzntWaK75quSjoUw5lNADf7D2nOZlNxTo4gig626jMSraIUIyt+JpwBUgOH02YOoLPKDxhMacUbKlCW1kJc=
+	t=1745431737; cv=none; b=puzav+wRXbxmDMDq8V2PDVBdJdZKAGNFBQllJRwGVYL8wzqMcM2XX8zR2uXx8VTTtkG2RYT26WZ7dANK0XX9DaEKAGCrVxTQbdHgT3dJj5krAknkMC2ZuFMql0C4nVRiDBYCEu9O+5DcSxnNnop+TjwgkH6Ds4qOMUg9PupgZqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745430123; c=relaxed/simple;
-	bh=NTrHTWzZvM5uXlSAI972iPQd+fZJob+j5Vq6RPGax0M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hgmooKWG/c+d0Zo+TJvUicJeeSkbKWn84s0fhsySpOMKm5Z26nRUdlg2Kp/pPBxQ5IlNYgKkyAPRo9AVhk6ql/La1npL08oGIxtkPr1K9O7AXxBntIyDcxjNyLHr9h6W+LDYDQm6bjQObqXTZTRk4+sOB62FgtE9V+WESutRKG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VAQTSii+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1745431737; c=relaxed/simple;
+	bh=/a6rlE6WF6SC5/BC0SPA4vfety/OfUOdkiUb0LxSejs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nHL909+gyqQUeTmV9IOlkh+6yhVY3aWastvtnVkCqE/bfmFe26pwoCrvfyG/3R4fhv84HBqH4AUu0itwWPAN040AnMJiryATry/sqbNG7wXRCtrcOjPGS5T2hefESZXpIHkYNZLtuZbiriW++PQgK9IyOWqe/og6Sqfbcj9HD+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Xv6KMYzD; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VAQTSii+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8DAC4CEF1;
-	Wed, 23 Apr 2025 17:42:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745430122;
-	bh=NTrHTWzZvM5uXlSAI972iPQd+fZJob+j5Vq6RPGax0M=;
-	h=From:Date:Subject:To:Cc:From;
-	b=VAQTSii+LS2I6aFsl0M+J8l2PVEuUc5qeEWUvPrUrX2kvohWAGg1+7lFyzEFMTAcZ
-	 +JNT1vz3255ll1UgD4H601JjnJ5rUGNgfHA14lmkC8AjVY1Al4BG37Sm2fq7p2J2ME
-	 e3oC3E1SoOLLzd4niquO1i2OZKqcdRPd/ZBIZKtpZzrPJEtfxidujnhnpJrd5zwhFG
-	 8E/NjhwFBqFf1cdPdUx8+DIc0aSCZZwGzY5/nQfa3BoE7kCntWMrjIAbqVmCA9ayUi
-	 ZSpWVeWi0GXzyCFCYy5BaBd/e1I8EmlnzmMZwjcRb2AMH35MWhik5R31FdLtCLaAdQ
-	 du8/16Gho/jHA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 23 Apr 2025 10:41:41 -0700
-Subject: [PATCH v2] drm/panel: himax-hx8279: Always initialize
- goa_{even,odd}_valid in hx8279_check_goa_config()
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Xv6KMYzD"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3914aba1ce4so91047f8f.2
+        for <patches@lists.linux.dev>; Wed, 23 Apr 2025 11:08:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1745431734; x=1746036534; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/5xauHxSZRZBjL1s6uQdVTJHCQeRvkb+4xCubFVd7n4=;
+        b=Xv6KMYzDC5nnmyZVAPJ08LQwonnb42fSIbbLIhWrYti9kq9VD+DArUUn70sUD0wffS
+         fdX3qLFzeHunXTNK9XPWWZ/Yzfrfg8nKyiiTHJUACdXY77d2i+dkwqt7dQjJ/VEM+EjZ
+         nh2G7x8gMusLLBuPM67BiTZv9DJdMcZrvML59+WiE3lI0quNIy0/GabobSipdElKNUib
+         uH4Wtz5xyeUrMdQYHvDD0elMycH58Gt56UBOcxVK2ZGuWKj4QoOKIMrSOnMf6Zl5USXP
+         6GKBcGptfIk7pNUGV+WJeEaqKeixVL/UwmPmEXPncfxCUIemoG1Q1ICnGz14ZOYRsrhG
+         FTgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745431734; x=1746036534;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/5xauHxSZRZBjL1s6uQdVTJHCQeRvkb+4xCubFVd7n4=;
+        b=vg+lXECEi2TL/MPopVVNJcj4Sl/HQHaVANsMDMrRC2RYShwhssFgzzshNsMOaw0KmT
+         7wtlkm+Xkl5C7o305/g/f4M8bmT5uM/YEXxrM0OVUY4stK6dVOiV3zoy9a51ljcn4DI8
+         cnpCtWLMNY8uVfytcryhJGrlm8O+xDVyiONK9xiyMsmq+ho8UO0eTu6+dw6m1DscQVaL
+         BaPQsPJGPzxZblg6vtOl7V96x4RliYiGL+dOumugTzHL2AoqSIH/oO30H3x9fcML/bYj
+         Cv5/Zag/ANKaT3+T9tZUMK0Yx7FzB1pCA9kgNreeGQoeMDEm0OgYlbSNEU6V8VC2/iWy
+         ZKmA==
+X-Gm-Message-State: AOJu0YzZrTZzZYUSr1yQJFKpfQsj+t5F8f/RadZpIVrEo/+XtVEJJIqp
+	xMxu1nZJuV6xS8Ee9KO8ZqANroQHaNY2seCZflN2r4C0AZxf8PM=
+X-Gm-Gg: ASbGncs2DhtntJP/8WTCp/1z4L3mctIWPTmIGZY4A1jqDZteAWOoUaby346rIa2EAOf
+	cT9Ne7rZfVKpdHTa5gBmiKnkuS/OiypPcd0R15hK67XX4B2gpZ7dLRcrsvdE1zP2P5to/6aer6g
+	vDWwmoevtgkwQBGj2ZGk4UZmbuT5mkA2EuGBOv0D68oMd5KeFytiOvhVsqdqCpBVnivZ7cI8zAw
+	sQBIEDFF2jFWAgHMCrvCFyNJb2Q7gWMOQ6IdhPmhXBaAu0Tio3EVxLXUw+CbBL338m0K/JbMstA
+	bSK0YwadHYDXDVwr5yL0wSxKx0CaUceee/pkggBjmJmarDMLVJX9BK7nWmB+cIDQtlSHZ5FV+zQ
+	gJDAOI7jYn/AJ+4rDQg==
+X-Google-Smtp-Source: AGHT+IENifynQvLMfyjbaFmHerjupvosjrvvoV00BFoAAhIPUsf6sZjXUl/Wm/EfEtV8y/3bKy3dfg==
+X-Received: by 2002:a05:6000:18a8:b0:391:1218:d5f7 with SMTP id ffacd0b85a97d-39efbad7d6amr16420654f8f.40.1745431733961;
+        Wed, 23 Apr 2025 11:08:53 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac758.dip0.t-ipconnect.de. [91.42.199.88])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa4a4cd0sm20036747f8f.90.2025.04.23.11.08.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Apr 2025 11:08:53 -0700 (PDT)
+Message-ID: <14fbae74-0620-4e9c-aebc-5f4337e14089@googlemail.com>
+Date: Wed, 23 Apr 2025 20:08:52 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250423-panel-himax-hx8279-fix-sometimes-uninitialized-v2-1-fc501c6558d9@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFQmCWgC/52NQQ6CMBBFr0K6dkw7gIgr72FYFDrQiVBIiwQl3
- N3KEVy+n5/3NhHIMwVxSzbhaeHAo4uAp0Q0VruOgE1kgRJzmSHCpB31YHnQK9j1ikUJLa8QxoF
- mHijAy7HjmXXPHzKAskjzrK3LVDYiSidP8X4EH1Vky2Ee/fvoL+q3/p1aFCi4qMzUWmGdSnN/k
- o+G8+g7Ue37/gUK8aoD7QAAAA==
-X-Change-ID: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3423; i=nathan@kernel.org;
- h=from:subject:message-id; bh=NTrHTWzZvM5uXlSAI972iPQd+fZJob+j5Vq6RPGax0M=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBmcahkrdd8e7uavnvmBY1LhxmWeO088fcfye/Ei7Ql3V
- +oyy5nYdZSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJ6Hgy/E89ft14erP9+vez
- arQ9vPrEDv4+VZvfz9w9P29ZpuFvNRGG/7Eb/176e/fqrp6fiosO/Null3BmcvrTyD1Z39QlDl7
- KFWUGAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/393] 6.6.88-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250423142643.246005366@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Clang warns (or errors with CONFIG_WERROR=y):
+Am 23.04.2025 um 16:38 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.88 release.
+> There are 393 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 'goa_even_valid' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-    838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use occurs here
-    842 |         if (goa_odd_valid != goa_even_valid)
-        |                              ^~~~~~~~~~~~~~
-  drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if its condition is always true
-    838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    839 |                 goa_even_valid = false;
-  drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the variable 'goa_even_valid' to silence this warning
-    818 |         bool goa_odd_valid, goa_even_valid;
-        |                                           ^
-        |                                            = 0
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-Even though only the even valid variable gets flagged, both valid
-variables appear to have the same issue of possibly being used
-uninitialized if the if statement initializing them to false is not
-taken.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Turn the if statement then variable assignment into a single variable
-assignment, which states that the configuration is valid when there are
-not all zeros, clearing up the warning since the variable will always be
-initialized.
 
-Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v2:
-- Initialize valid variables once using the inverse of the current
-  condition (Angelo).
-- Link to v1: https://lore.kernel.org/r/20250422-panel-himax-hx8279-fix-sometimes-uninitialized-v1-1-614dba12b30d@kernel.org
----
- drivers/gpu/drm/panel/panel-himax-hx8279.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Beste Grüße,
+Peter Schneider
 
-diff --git a/drivers/gpu/drm/panel/panel-himax-hx8279.c b/drivers/gpu/drm/panel/panel-himax-hx8279.c
-index b48b350b62da..fb302d1f91b9 100644
---- a/drivers/gpu/drm/panel/panel-himax-hx8279.c
-+++ b/drivers/gpu/drm/panel/panel-himax-hx8279.c
-@@ -825,8 +825,7 @@ static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
- 			num_zero++;
- 	}
- 
--	if (num_zero == ARRAY_SIZE(desc->goa_odd_timing))
--		goa_odd_valid = false;
-+	goa_odd_valid = (num_zero != ARRAY_SIZE(desc->goa_odd_timing));
- 
- 	/* Up to 3 zeroes is a valid config. Check them all. */
- 	num_zero = 1;
-@@ -835,8 +834,7 @@ static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
- 			num_zero++;
- 	}
- 
--	if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
--		goa_even_valid = false;
-+	goa_even_valid = (num_zero != ARRAY_SIZE(desc->goa_even_timing));
- 
- 	/* Programming one without the other would make no sense! */
- 	if (goa_odd_valid != goa_even_valid)
-
----
-base-commit: dcbd5dcc956e2331414fd7020b4655df08deeb87
-change-id: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
-
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
