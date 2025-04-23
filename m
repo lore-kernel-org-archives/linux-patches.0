@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832E6263C9E;
-	Wed, 23 Apr 2025 14:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC7263C9E;
+	Wed, 23 Apr 2025 14:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420231; cv=none; b=oRmLOP+OHBIvGIJ4SqU8/6/KITV7rfusZcFfgs9WeKqLkToo5HQEpr0CyfOmg7nVQKwwJmwA3FUF3BcI0OjavjdD73r4Quq3A1tK2p3iMWgqmzxspc/1+ew3ftNJmDXLt0l2RrYgS1K8jF3M+PUL1as+7/VyhCG4N9qUuLkjS7g=
+	t=1745420234; cv=none; b=IB7Rw5G5HKrOlp7fPtdZdV6VbJ61/I82SNAWO/KHJSFpvtfJjQT/oauY7rLNzcwFO7t6KYvJZL8EkbdvbOiS+9MEeI+YOjPhpAGEADsCAvXpdi4z6PzfiGQTuZKvQdWqIc+BiMctD22LFCU30mUeQD4E4j0vVxYGgR/SSY1S+9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420231; c=relaxed/simple;
-	bh=CLX8xzo6ZoExV5f3Oc670zhqIE41x1vXqrc0Nhe6hdk=;
+	s=arc-20240116; t=1745420234; c=relaxed/simple;
+	bh=q6iu41dtoXDMR+mTs8DOf0m/HQ1MuyLU4HhOvRBRw3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fv3xdQNs4A+R1kID3DRkHnbKLcX3zyBe5+xwk2j3O3x0y7Cq1bbbwzwDz0rXB3ZoMIwDsfDdVnOv/nw/jTILaEgaztU6pAidVR0y//Siz1GAKrjluCOm2paE+OHR5VTYnXaSJv2qw1fcTe/PpXHwPDrhgJszcrFCsNKcNnCaX7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nRwEzYr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdTKGc/udC/lKY7Gy9uoPkAg7MrNlkTY8GYavCmtd2Ig3u9wRpBM8tiuzEzgeOwaUBaykx75RRhTnQ+50JpteYWX1uXjKtNO9XuUbC9idZ1FDwBrMG3/cTOHVjuwsp7VqNwUcLsNa8b94W0Zo1qf4z0JCDcbpfToRLeU1yH6oD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t174VgD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nRwEzYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18645C4CEE2;
-	Wed, 23 Apr 2025 14:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t174VgD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F075C4CEE3;
+	Wed, 23 Apr 2025 14:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420231;
-	bh=CLX8xzo6ZoExV5f3Oc670zhqIE41x1vXqrc0Nhe6hdk=;
+	s=korg; t=1745420234;
+	bh=q6iu41dtoXDMR+mTs8DOf0m/HQ1MuyLU4HhOvRBRw3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nRwEzYr6Lbo6eTiv4h2ER4dgzCWgFk2o0h42BUxdkiDC3jvmUOYoUC9KF2sg9xMd
-	 LqfPTQqPhf8JeT8jeiTdgwWSOKawOkOA5Wv+98iH+xDp3OgH0IwFNHhO7efCPRHCB1
-	 hiEgMRlFSxDc70fmtPbc4W+YPEXG8oVF7GLdTQ8g=
+	b=t174VgD8E7Xo9A/EolTUYFgH+FpY8KQr4IPZcVcRf68PZmfjU6y69iIaH0KAuGwgz
+	 RUZdQm7l5y9wVN14IuetLfp3qtV/eo+sN810YSXBFXzgaMo9AD7xr30uooHiogXdrj
+	 e+1XRBIy+YZj5q7tlWNWw5vkpLTHcFDzcORt96zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
-Subject: [PATCH 6.12 111/223] crypto: caam/qi - Fix drv_ctx refcount bug
-Date: Wed, 23 Apr 2025 16:43:03 +0200
-Message-ID: <20250423142621.633423905@linuxfoundation.org>
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 066/241] tools: ynl-gen: make sure we validate subtype of array-nest
+Date: Wed, 23 Apr 2025 16:42:10 +0200
+Message-ID: <20250423142623.297717626@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
+[ Upstream commit 57e7dedf2b8c72caa6f04b9e08b19e4f370562fa ]
 
-Ensure refcount is raised before request is enqueued since it could
-be dequeued before the call returns.
+ArrayNest AKA indexed-array support currently skips inner type
+validation. We count the attributes and then we parse them,
+make sure we call validate, too. Otherwise buggy / unexpected
+kernel response may lead to crashes.
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: <stable@vger.kernel.org>
-Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
-Tested-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250414211851.602096-5-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/qi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -122,12 +122,12 @@ int caam_qi_enqueue(struct device *qidev
- 	qm_fd_addr_set64(&fd, addr);
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index 9c9a62a93afe7..f36af0e1da78e 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -706,8 +706,11 @@ class TypeArrayNest(Type):
+     def _attr_get(self, ri, var):
+         local_vars = ['const struct nlattr *attr2;']
+         get_lines = [f'attr_{self.c_name} = attr;',
+-                     'ynl_attr_for_each_nested(attr2, attr)',
+-                     f'\t{var}->n_{self.c_name}++;']
++                     'ynl_attr_for_each_nested(attr2, attr) {',
++                     '\tif (ynl_attr_validate(yarg, attr2))',
++                     '\t\treturn YNL_PARSE_CB_ERROR;',
++                     f'\t{var}->n_{self.c_name}++;',
++                     '}']
+         return get_lines, None, local_vars
  
- 	do {
-+		refcount_inc(&req->drv_ctx->refcnt);
- 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
--		if (likely(!ret)) {
--			refcount_inc(&req->drv_ctx->refcnt);
-+		if (likely(!ret))
- 			return 0;
--		}
  
-+		refcount_dec(&req->drv_ctx->refcnt);
- 		if (ret != -EBUSY)
- 			break;
- 		num_retries++;
+-- 
+2.39.5
+
 
 
