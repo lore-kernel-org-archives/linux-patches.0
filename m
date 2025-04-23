@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DA827F4D9;
-	Wed, 23 Apr 2025 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B127CB33;
+	Wed, 23 Apr 2025 14:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419784; cv=none; b=IjoD/s6DDwLzNXLAUetkuhoMyVPcczPR5qoC3H2IcuD4FWFd3ycpkMyGDDz4L9wfxLnOOchtrhWK5KPBN4a27gTsqIDfZAY0QXfFwUrJfngFasNQD3VAX9rT4AUV2QpKQb1+pSgcgiwKcRLkzKMVia9U9G1+/eonUAmsHioBfbQ=
+	t=1745419787; cv=none; b=SwZ4HRfx7a54MD8zv2GDFtJICt619sHhj5Py3z1NSgkIlc9RLUN8/IUU5nfYX6YRlVo6C8U1mLD6OHJP+fEuuRkaLnphOzRlNeW5gcLog3xdDa53Sgl9sjIe2qsaQDn8qqeljTTCgREkMa7KgRfi/ZqDUawB8/Oqdu7g5sExRAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419784; c=relaxed/simple;
-	bh=cQMhZdExweta1k+wrW7j1C9wbRsxCzC8bqHWLZn4y/Y=;
+	s=arc-20240116; t=1745419787; c=relaxed/simple;
+	bh=IoqrGK5owEgWKsoU9Nv3qSdTsijndyZHDv6avjJyGA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQfNZv8Oj0O339N8MLTF/arEig1mjFCmhdcytGHtYzU5RZi+ncXZ3hgvj5ioYT65joo+2sLqlCP7a3Zwbj1SOXwMQSfugJnFiSQiSWctdwnQbsxB9hg63AVEF2Bjeh/XU8zMr5eqdOqXM+ba0KtnNIHBIgYkdqVwM7FmDblPXRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbZEWmCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+I9koa6iZ6QxTaI2xqgIJ3rhOLyTcY0w2T1yTuJ03EwKnNu+Hoi0QLUipTzYV91+uu5tlAceZS1DiOCn4Q0dOCAwo42Q2ApXf7URQO/tfAA3Lfp7HMNUvZ7n/gkfkfz3xJjvHyRc8flmwuSdaGHV7CPPHyvlu+bgFB2ddTvmFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oj7OwLNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbZEWmCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3867BC4CEE8;
-	Wed, 23 Apr 2025 14:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oj7OwLNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB88BC4CEE2;
+	Wed, 23 Apr 2025 14:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419784;
-	bh=cQMhZdExweta1k+wrW7j1C9wbRsxCzC8bqHWLZn4y/Y=;
+	s=korg; t=1745419787;
+	bh=IoqrGK5owEgWKsoU9Nv3qSdTsijndyZHDv6avjJyGA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UbZEWmCJH4DtMrpRzSOkglmpbNF4ZdFmmfOKC1B1Tyn5P9rzjSuPGH0oh4oH/DcHa
-	 RUmUD53UR2AZi9M1xb3VYVP+QPiKPZrQ/oL5jTzt4tk/bIoq6Kfq7y9u7BL3vXu3cJ
-	 g0p4ZsNfP8l3D7NIgl4ZgMqw05lx4YUdCUcblMWA=
+	b=oj7OwLNef1opVE+VRSrpM3uEVpOjy3NOlZdfPP+wJlarvmG+5al2mk1WbAU5LKqJz
+	 GGFPTSNTAoTplO9ZAeRNFgS6XOAou6Y2Yu9ppWs8mTlPqxzw2ShxP8GIWNFnM3qlzw
+	 Nykz1/BHhQecWWGCjA7tevp0QK3TkTeoILACZqsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/223] net: bridge: switchdev: do not notify new brentries as changed
-Date: Wed, 23 Apr 2025 16:42:13 +0200
-Message-ID: <20250423142619.621783324@linuxfoundation.org>
+Subject: [PATCH 6.14 027/241] RDMA/bnxt_re: Remove unusable nq variable
+Date: Wed, 23 Apr 2025 16:41:31 +0200
+Message-ID: <20250423142621.626894010@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,94 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit eb25de13bd9cf025413a04f25e715d0e99847e30 ]
+[ Upstream commit ffc59e32c67e599cc473d6427a4aa584399d5b3c ]
 
-When adding a bridge vlan that is pvid or untagged after the vlan has
-already been added to any other switchdev backed port, the vlan change
-will be propagated as changed, since the flags change.
+Remove nq variable from bnxt_re_create_srq() and bnxt_re_destroy_srq()
+as it generates the following compilation warnings:
 
-This causes the vlan to not be added to the hardware for DSA switches,
-since the DSA handler ignores any vlans for the CPU or DSA ports that
-are changed.
+>> drivers/infiniband/hw/bnxt_re/ib_verbs.c:1777:24: warning: variable
+'nq' set but not used [-Wunused-but-set-variable]
+    1777 |         struct bnxt_qplib_nq *nq = NULL;
+         |                               ^
+   drivers/infiniband/hw/bnxt_re/ib_verbs.c:1828:24: warning: variable
+'nq' set but not used [-Wunused-but-set-variable]
+    1828 |         struct bnxt_qplib_nq *nq = NULL;
+         |                               ^
+   2 warnings generated.
 
-E.g. the following order of operations would work:
-
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
-$ bridge vlan add dev lan1 vid 1 pvid untagged
-
-but this order would break:
-
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev lan1 vid 1 pvid untagged
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
-
-Additionally, the vlan on the bridge itself would become undeletable:
-
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 PVID Egress Untagged
-$ bridge vlan del dev swbridge vid 1 self
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 Egress Untagged
-
-since the vlan was never added to DSA's vlan list, so deleting it will
-cause an error, causing the bridge code to not remove it.
-
-Fix this by checking if flags changed only for vlans that are already
-brentry and pass changed as false for those that become brentries, as
-these are a new vlan (member) from the switchdev point of view.
-
-Since *changed is set to true for becomes_brentry = true regardless of
-would_change's value, this will not change any rtnetlink notification
-delivery, just the value passed on to switchdev in vlan->changed.
-
-Fixes: 8d23a54f5bee ("net: bridge: switchdev: differentiate new VLANs from changed ones")
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250414200020.192715-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6b395d31146a ("RDMA/bnxt_re: Fix budget handling of notification queue")
+Link: https://patch.msgid.link/r/8a4343e217d7d1c0a5a786b785c4ac57cb72a2a0.1744288299.git.leonro@nvidia.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202504091055.CzgXnk4C-lkp@intel.com/
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 89f51ea4cabec..f2efb58d152bc 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -715,8 +715,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 				u16 flags, bool *changed,
- 				struct netlink_ext_ack *extack)
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index cb9b820c613d6..02b21d484677e 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1773,10 +1773,7 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
+ 					       ib_srq);
+ 	struct bnxt_re_dev *rdev = srq->rdev;
+ 	struct bnxt_qplib_srq *qplib_srq = &srq->qplib_srq;
+-	struct bnxt_qplib_nq *nq = NULL;
+ 
+-	if (qplib_srq->cq)
+-		nq = qplib_srq->cq->nq;
+ 	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT) {
+ 		free_page((unsigned long)srq->uctx_srq_page);
+ 		hash_del(&srq->hash_entry);
+@@ -1824,7 +1821,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 		       struct ib_udata *udata)
  {
--	bool would_change = __vlan_flags_would_change(vlan, flags);
- 	bool becomes_brentry = false;
-+	bool would_change = false;
- 	int err;
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+-	struct bnxt_qplib_nq *nq = NULL;
+ 	struct bnxt_re_ucontext *uctx;
+ 	struct bnxt_re_dev *rdev;
+ 	struct bnxt_re_srq *srq;
+@@ -1870,7 +1866,6 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 	srq->qplib_srq.eventq_hw_ring_id = rdev->nqr->nq[0].ring_id;
+ 	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
+ 	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
+-	nq = &rdev->nqr->nq[0];
  
- 	if (!br_vlan_is_brentry(vlan)) {
-@@ -725,6 +725,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 			return -EINVAL;
- 
- 		becomes_brentry = true;
-+	} else {
-+		would_change = __vlan_flags_would_change(vlan, flags);
- 	}
- 
- 	/* Master VLANs that aren't brentries weren't notified before,
+ 	if (udata) {
+ 		rc = bnxt_re_init_user_srq(rdev, pd, srq, udata);
 -- 
 2.39.5
 
