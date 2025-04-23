@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9ED6280A4F;
-	Wed, 23 Apr 2025 15:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69945280A4F;
+	Wed, 23 Apr 2025 15:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420479; cv=none; b=KO//VeIJtnCRkQVaXGFhhG4Mq7H1CgZcAQEK/Rsv+yRPv2lyQVDKQfugDZm8HSHbYo/HBXbE5mYQuch7iEWVYVz/agHZh0ToyDs3Ue/V0AfyvNr+PMSelRibq6OTA2FJX9dXRmCHQpbeWu8sH0KK7c5SiQMVa/7AkSOCmB3u8PQ=
+	t=1745420482; cv=none; b=JmAyqCSbU2A9bA8G/EKSHHDgAH3Bxby7GBmcoKrlRaVmK+auoGRbI6SqC83jbsulyVyQrNY1SXEBjjVdLs1+UgFQiIFSnSFiOjgvgCg87JOT5hY1jPDtA9HtbxnbxaFljUlpY2WKZXspsCnNp3TOvEN/Zdj9nKiRzJ4BIKem93U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420479; c=relaxed/simple;
-	bh=16+1F53NjAPN2AMalJR8Kf2Ug5MD3j9oEg5gdIYURM8=;
+	s=arc-20240116; t=1745420482; c=relaxed/simple;
+	bh=SsdFVzBGb/qfeBLpy1q8yF14JJUQ3zfKRiJynF1KFIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8pI3ImhY7GQBSs9NFsG7vdpZpYbwd3MYN4cL1ez8NQXqiWX6GQJ3s2mJgkPU7SZOv6sEZzVHXAlqvmlbXqd+o6Z4Bh1Xsq0roVewFQzezdmzYrzSfAKP9pZ63xhMtnWX5TYdF2rhjU1Rpw3e/UjhTfgVeVytcMKrtzDGDi55Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLfcFybT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GVB5epLrEv4qCLnVOvK5PdnrSRd8dKRkHhMLkjMBjOUCqR5joTC1xF7/Dqj5/M+7ReNKpkmAi6lynNj7DovOqqdOzpJt82NuOEHz5ZAvWGYSow3lfxJSi5U5lI62eJIc1kVLy1DrOhQC/cxuvkbAxkcgAFjaVFPnD9xDsrlSn6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqyrvTEm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLfcFybT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50758C4CEE2;
-	Wed, 23 Apr 2025 15:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqyrvTEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEABFC4CEE3;
+	Wed, 23 Apr 2025 15:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420479;
-	bh=16+1F53NjAPN2AMalJR8Kf2Ug5MD3j9oEg5gdIYURM8=;
+	s=korg; t=1745420482;
+	bh=SsdFVzBGb/qfeBLpy1q8yF14JJUQ3zfKRiJynF1KFIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLfcFybTxS1zaHGkMrnk0iDXTjwdZpBlGcLwM48Guyw/1A5iibjuBTgglTWS7glTS
-	 wgb6mxMjEtD2rmrBHpQ0lFtrfrHE4m7Rp/H987cQXBpLDWo2ABZapXj4md5iUkZstx
-	 dhvfUOlsY0O7iU4h9DoKo61fj0FvB9WbD1WAqY1I=
+	b=tqyrvTEmTVluKwD/bIirfZGfdSlYdOInqX5ofrA46pvlljkJ37znQLxMSL6RRdvdD
+	 AB5l5YuOS11XJJbJkifbnEI2WwpeMLX1xoKbg1NaP2ZI0P6s2Q2hVsKBhB/kLwmRqW
+	 jAlgMQM7sUOwrfKMW9YY3MDl32y4MeObTMhlwxuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.12 135/223] x86/microcode/AMD: Extend the SHA check to Zen5, block loading of any unreleased standalone Zen5 microcode patches
-Date: Wed, 23 Apr 2025 16:43:27 +0200
-Message-ID: <20250423142622.591037913@linuxfoundation.org>
+	Manish Dharanenthiran <quic_mdharane@quicinc.com>,
+	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 078/393] wifi: ath12k: Fix invalid data access in ath12k_dp_rx_h_undecap_nwifi
+Date: Wed, 23 Apr 2025 16:39:34 +0200
+Message-ID: <20250423142646.529923624@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,60 +48,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Manish Dharanenthiran <quic_mdharane@quicinc.com>
 
-commit 805b743fc163f1abef7ce1bea8eca8dfab5b685b upstream.
+[ Upstream commit 9a0dddfb30f120db3851627935851d262e4e7acb ]
 
-All Zen5 machines out there should get BIOS updates which update to the
-correct microcode patches addressing the microcode signature issue.
-However, silly people carve out random microcode blobs from BIOS
-packages and think are doing other people a service this way...
+In certain cases, hardware might provide packets with a
+length greater than the maximum native Wi-Fi header length.
+This can lead to accessing and modifying fields in the header
+within the ath12k_dp_rx_h_undecap_nwifi function for
+DP_RX_DECAP_TYPE_NATIVE_WIFI decap type and
+potentially resulting in invalid data access and memory corruption.
 
-Block loading of any unreleased standalone Zen5 microcode patches.
+Add a sanity check before processing the SKB to prevent invalid
+data access in the undecap native Wi-Fi function for the
+DP_RX_DECAP_TYPE_NATIVE_WIFI decap type.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Cc: Nikolay Borisov <nik.borisov@suse.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20250410114222.32523-1-bp@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Manish Dharanenthiran <quic_mdharane@quicinc.com>
+Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250211090302.4105141-1-tamizh.raja@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 42 +++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -199,6 +199,12 @@ static bool need_sha_check(u32 cur_rev)
- 	case 0xa70c0: return cur_rev <= 0xa70C009; break;
- 	case 0xaa001: return cur_rev <= 0xaa00116; break;
- 	case 0xaa002: return cur_rev <= 0xaa00218; break;
-+	case 0xb0021: return cur_rev <= 0xb002146; break;
-+	case 0xb1010: return cur_rev <= 0xb101046; break;
-+	case 0xb2040: return cur_rev <= 0xb204031; break;
-+	case 0xb4040: return cur_rev <= 0xb404031; break;
-+	case 0xb6000: return cur_rev <= 0xb600031; break;
-+	case 0xb7000: return cur_rev <= 0xb700031; break;
- 	default: break;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 70ad035acac75..8d9315038a75e 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2484,6 +2484,29 @@ static void ath12k_dp_rx_deliver_msdu(struct ath12k *ar, struct napi_struct *nap
+ 	ieee80211_rx_napi(ar->hw, pubsta, msdu, napi);
+ }
+ 
++static bool ath12k_dp_rx_check_nwifi_hdr_len_valid(struct ath12k_base *ab,
++						   struct hal_rx_desc *rx_desc,
++						   struct sk_buff *msdu)
++{
++	struct ieee80211_hdr *hdr;
++	u8 decap_type;
++	u32 hdr_len;
++
++	decap_type = ath12k_dp_rx_h_decap_type(ab, rx_desc);
++	if (decap_type != DP_RX_DECAP_TYPE_NATIVE_WIFI)
++		return true;
++
++	hdr = (struct ieee80211_hdr *)msdu->data;
++	hdr_len = ieee80211_hdrlen(hdr->frame_control);
++
++	if ((likely(hdr_len <= DP_MAX_NWIFI_HDR_LEN)))
++		return true;
++
++	ab->soc_stats.invalid_rbm++;
++	WARN_ON_ONCE(1);
++	return false;
++}
++
+ static int ath12k_dp_rx_process_msdu(struct ath12k *ar,
+ 				     struct sk_buff *msdu,
+ 				     struct sk_buff_head *msdu_list,
+@@ -2542,6 +2565,11 @@ static int ath12k_dp_rx_process_msdu(struct ath12k *ar,
+ 		}
  	}
  
-@@ -214,8 +220,7 @@ static bool verify_sha256_digest(u32 pat
- 	struct sha256_state s;
- 	int i;
++	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu))) {
++		ret = -EINVAL;
++		goto free_out;
++	}
++
+ 	ath12k_dp_rx_h_ppdu(ar, rx_desc, rx_status);
+ 	ath12k_dp_rx_h_mpdu(ar, msdu, rx_desc, rx_status);
  
--	if (x86_family(bsp_cpuid_1_eax) < 0x17 ||
--	    x86_family(bsp_cpuid_1_eax) > 0x19)
-+	if (x86_family(bsp_cpuid_1_eax) < 0x17)
- 		return true;
+@@ -2867,6 +2895,9 @@ static int ath12k_dp_rx_h_verify_tkip_mic(struct ath12k *ar, struct ath12k_peer
+ 		    RX_FLAG_IV_STRIPPED | RX_FLAG_DECRYPTED;
+ 	skb_pull(msdu, hal_rx_desc_sz);
  
- 	if (!need_sha_check(cur_rev))
++	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu)))
++		return -EINVAL;
++
+ 	ath12k_dp_rx_h_ppdu(ar, rx_desc, rxs);
+ 	ath12k_dp_rx_h_undecap(ar, msdu, rx_desc,
+ 			       HAL_ENCRYPT_TYPE_TKIP_MIC, rxs, true);
+@@ -3590,6 +3621,9 @@ static int ath12k_dp_rx_h_null_q_desc(struct ath12k *ar, struct sk_buff *msdu,
+ 		skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
+ 		skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
+ 	}
++	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, desc, msdu)))
++		return -EINVAL;
++
+ 	ath12k_dp_rx_h_ppdu(ar, desc, status);
+ 
+ 	ath12k_dp_rx_h_mpdu(ar, msdu, desc, status);
+@@ -3634,7 +3668,7 @@ static bool ath12k_dp_rx_h_reo_err(struct ath12k *ar, struct sk_buff *msdu,
+ 	return drop;
+ }
+ 
+-static void ath12k_dp_rx_h_tkip_mic_err(struct ath12k *ar, struct sk_buff *msdu,
++static bool ath12k_dp_rx_h_tkip_mic_err(struct ath12k *ar, struct sk_buff *msdu,
+ 					struct ieee80211_rx_status *status)
+ {
+ 	struct ath12k_base *ab = ar->ab;
+@@ -3652,6 +3686,9 @@ static void ath12k_dp_rx_h_tkip_mic_err(struct ath12k *ar, struct sk_buff *msdu,
+ 	skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
+ 	skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
+ 
++	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, desc, msdu)))
++		return true;
++
+ 	ath12k_dp_rx_h_ppdu(ar, desc, status);
+ 
+ 	status->flag |= (RX_FLAG_MMIC_STRIPPED | RX_FLAG_MMIC_ERROR |
+@@ -3659,6 +3696,7 @@ static void ath12k_dp_rx_h_tkip_mic_err(struct ath12k *ar, struct sk_buff *msdu,
+ 
+ 	ath12k_dp_rx_h_undecap(ar, msdu, desc,
+ 			       HAL_ENCRYPT_TYPE_TKIP_MIC, status, false);
++	return false;
+ }
+ 
+ static bool ath12k_dp_rx_h_rxdma_err(struct ath12k *ar,  struct sk_buff *msdu,
+@@ -3677,7 +3715,7 @@ static bool ath12k_dp_rx_h_rxdma_err(struct ath12k *ar,  struct sk_buff *msdu,
+ 	case HAL_REO_ENTR_RING_RXDMA_ECODE_TKIP_MIC_ERR:
+ 		err_bitmap = ath12k_dp_rx_h_mpdu_err(ab, rx_desc);
+ 		if (err_bitmap & HAL_RX_MPDU_ERR_TKIP_MIC) {
+-			ath12k_dp_rx_h_tkip_mic_err(ar, msdu, status);
++			drop = ath12k_dp_rx_h_tkip_mic_err(ar, msdu, status);
+ 			break;
+ 		}
+ 		fallthrough;
+-- 
+2.39.5
+
 
 
