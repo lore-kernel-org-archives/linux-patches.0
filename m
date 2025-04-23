@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E7B27CB12;
-	Wed, 23 Apr 2025 14:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409072820BC;
+	Wed, 23 Apr 2025 14:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419876; cv=none; b=mv5tbYq/pqkj3e38sMr/NtygS3vIwkgP+0KN9kWnXu/mJ6WtpPopHfjtGe73FOHXMfFTYDNOqZQOVMG4qjCgianWW69eRIGsoO7Diif5qALglqzygqC4Byqri1wHXg4+gcAB527JQ2NHTWnG1Q6ugBqfe6ZD++YAMPSHafbRUr8=
+	t=1745419879; cv=none; b=dN2ob+MdeqBtuCQvLxUDvC9ym8cuJbMOG4d0PYuJCnR/rQ6ABwQSU73wamdJpwKM7nyX2VhAfSG3mXr/qsh4UgVw5hDixve5VZ9DoAgHVC47Ht/IiyHIcLoya8eZQXsbj+u5Bs9/ZkPPp3oTLjdgY5G8Gx5S/oyvrklus92Tm3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419876; c=relaxed/simple;
-	bh=TwFsPhVAjPMy2625eu+6oY8Jt24pEYDNe0zsF//gYVc=;
+	s=arc-20240116; t=1745419879; c=relaxed/simple;
+	bh=JVR2TB3tFpsZBrIht9Lb8Vaz/OLVH8x+sDTnl0prEXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CDKq9ZsX+gzl80FzKLE0uVyFRUgbfix53tkf7/KsQVS/hc5XFeedV6Nh88IrX3SaoAnxAkKLc6PfQUS1E0U54p+4RbM/4ZP5USyBlfHEa1z6ubKv1EVz5e8uhe3GO9grxvQ71l82kdaXNDoNWUuZu1+j0409AOCPk1VIgYIhaSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0YZX0R9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QT9VKjpLm4A6bvADhUh8wDETR8c2WI+9PMlBk0Mgp6I+I3r0ofz7NEmBpn/CUCNxJp43z0EKSzMl1n5pbUnfLvvXQeKm8xxQDNv3qeuSBnEshQwqZYalHYggBmBPIO6v8TzKqZ+tKICTcC7pmO/tsAfcaSYsZ9QmiWBagIAvFMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhPbemwG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0YZX0R9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBE4C4CEE2;
-	Wed, 23 Apr 2025 14:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhPbemwG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61AEC4CEE2;
+	Wed, 23 Apr 2025 14:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419876;
-	bh=TwFsPhVAjPMy2625eu+6oY8Jt24pEYDNe0zsF//gYVc=;
+	s=korg; t=1745419879;
+	bh=JVR2TB3tFpsZBrIht9Lb8Vaz/OLVH8x+sDTnl0prEXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0YZX0R9lcstw9uxLOi2C4ouxqYsCqtsC+ELyT+fQ84hFa+A6Ba7XWQNil8JktUX3
-	 KFh5D9U/AMf9ClUX3JI8eCphUPKY24Jok1rq/us5qHpp57PX8hCVoA4vVqVu7mJF71
-	 OaH1FtmlUVudiZxA9bvibOuIzUdLg4E/qa1h7h+Q=
+	b=yhPbemwGRb5tabEVyxKeMvgIcswnGJf/KAmofl6njYv+9/GUBRnxJhjAhoEQ84Srf
+	 HLC4lQniYWeQGIhz/ZjXclz4/F9BwHCOVAwGOy6JfoLWDPD6NDwwGpSBBUxYFEFF5r
+	 FGG+GRT7fVjoxbrO+cDoTBUkh1xPC61aEEX71+KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frode Nordahl <frode.nordahl@canonical.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christopher S M Hall <christopher.s.hall@intel.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/393] tc: Ensure we have enough buffer space when sending filter netlink notifications
-Date: Wed, 23 Apr 2025 16:38:31 +0200
-Message-ID: <20250423142643.901604408@linuxfoundation.org>
+Subject: [PATCH 6.14 038/241] igc: add lock preventing multiple simultaneous PTM transactions
+Date: Wed, 23 Apr 2025 16:41:42 +0200
+Message-ID: <20250423142622.067909270@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,163 +49,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Christopher S M Hall <christopher.s.hall@intel.com>
 
-[ Upstream commit 369609fc6272c2f6ad666ba4fd913f3baf32908f ]
+[ Upstream commit 1a931c4f5e6862e61a4b130cb76b422e1415f644 ]
 
-The tfilter_notify() and tfilter_del_notify() functions assume that
-NLMSG_GOODSIZE is always enough to dump the filter chain. This is not
-always the case, which can lead to silent notify failures (because the
-return code of tfilter_notify() is not always checked). In particular,
-this can lead to NLM_F_ECHO not being honoured even though an action
-succeeds, which forces userspace to create workarounds[0].
+Add a mutex around the PTM transaction to prevent multiple transactors
 
-Fix this by increasing the message size if dumping the filter chain into
-the allocated skb fails. Use the size of the incoming skb as a size hint
-if set, so we can start at a larger value when appropriate.
+Multiple processes try to initiate a PTM transaction, one or all may
+fail. This can be reproduced by running two instances of the
+following:
 
-To trigger this, run the following commands:
+$ sudo phc2sys -O 0 -i tsn0 -m
 
- # ip link add type veth
- # tc qdisc replace dev veth0 root handle 1: fq_codel
- # tc -echo filter add dev veth0 parent 1: u32 match u32 0 0 $(for i in $(seq 32); do echo action pedit munge ip dport set 22; done)
+PHC2SYS exits with:
 
-Before this fix, tc just returns:
+"ioctl PTP_OFFSET_PRECISE: Connection timed out" when the PTM transaction
+ fails
 
-Not a filter(cmd 2)
+Note: Normally two instance of PHC2SYS will not run, but one process
+ should not break another.
 
-After the fix, we get the correct echo:
-
-added filter dev veth0 parent 1: protocol all pref 49152 u32 chain 0 fh 800::800 order 2048 key ht 800 bkt 0 terminal flowid not_in_hw
-  match 00000000/00000000 at 0
-	action order 1:  pedit action pass keys 1
- 	index 1 ref 1 bind 1
-	key #0  at 20: val 00000016 mask ffff0000
-[repeated 32 times]
-
-[0] https://github.com/openvswitch/ovs/commit/106ef21860c935e5e0017a88bf42b94025c4e511
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Frode Nordahl <frode.nordahl@canonical.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/openvswitch/+bug/2018500
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250407105542.16601-1-toke@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a90ec8483732 ("igc: Add support for PTP getcrosststamp()")
+Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
+Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 66 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 45 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/intel/igc/igc.h     |  1 +
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 20 ++++++++++++++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index a0eb389b4fb4b..7245f39d1e652 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1977,6 +1977,7 @@ static int tcf_fill_node(struct net *net, struct sk_buff *skb,
- 	struct tcmsg *tcm;
- 	struct nlmsghdr  *nlh;
- 	unsigned char *b = skb_tail_pointer(skb);
-+	int ret = -EMSGSIZE;
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index c35cc5cb11856..2f265c0959c7a 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -319,6 +319,7 @@ struct igc_adapter {
+ 	struct timespec64 prev_ptp_time; /* Pre-reset PTP clock */
+ 	ktime_t ptp_reset_start; /* Reset time in clock mono */
+ 	struct system_time_snapshot snapshot;
++	struct mutex ptm_lock; /* Only allow one PTM transaction at a time */
  
- 	nlh = nlmsg_put(skb, portid, seq, event, sizeof(*tcm), flags);
- 	if (!nlh)
-@@ -2021,11 +2022,45 @@ static int tcf_fill_node(struct net *net, struct sk_buff *skb,
+ 	char fw_version[32];
  
- 	return skb->len;
- 
-+cls_op_not_supp:
-+	ret = -EOPNOTSUPP;
- out_nlmsg_trim:
- nla_put_failure:
--cls_op_not_supp:
- 	nlmsg_trim(skb, b);
--	return -1;
-+	return ret;
-+}
-+
-+static struct sk_buff *tfilter_notify_prep(struct net *net,
-+					   struct sk_buff *oskb,
-+					   struct nlmsghdr *n,
-+					   struct tcf_proto *tp,
-+					   struct tcf_block *block,
-+					   struct Qdisc *q, u32 parent,
-+					   void *fh, int event,
-+					   u32 portid, bool rtnl_held,
-+					   struct netlink_ext_ack *extack)
-+{
-+	unsigned int size = oskb ? max(NLMSG_GOODSIZE, oskb->len) : NLMSG_GOODSIZE;
-+	struct sk_buff *skb;
-+	int ret;
-+
-+retry:
-+	skb = alloc_skb(size, GFP_KERNEL);
-+	if (!skb)
-+		return ERR_PTR(-ENOBUFS);
-+
-+	ret = tcf_fill_node(net, skb, tp, block, q, parent, fh, portid,
-+			    n->nlmsg_seq, n->nlmsg_flags, event, false,
-+			    rtnl_held, extack);
-+	if (ret <= 0) {
-+		kfree_skb(skb);
-+		if (ret == -EMSGSIZE) {
-+			size += NLMSG_GOODSIZE;
-+			goto retry;
-+		}
-+		return ERR_PTR(-EINVAL);
-+	}
-+	return skb;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 343205bffc355..612ed26a29c5d 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -974,6 +974,7 @@ static void igc_ptm_log_error(struct igc_adapter *adapter, u32 ptm_stat)
+ 	}
  }
  
- static int tfilter_notify(struct net *net, struct sk_buff *oskb,
-@@ -2041,16 +2076,10 @@ static int tfilter_notify(struct net *net, struct sk_buff *oskb,
- 	if (!unicast && !rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC))
- 		return 0;
++/* The PTM lock: adapter->ptm_lock must be held when calling igc_ptm_trigger() */
+ static void igc_ptm_trigger(struct igc_hw *hw)
+ {
+ 	u32 ctrl;
+@@ -990,6 +991,7 @@ static void igc_ptm_trigger(struct igc_hw *hw)
+ 	wrfl();
+ }
  
--	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
--	if (!skb)
--		return -ENOBUFS;
--
--	if (tcf_fill_node(net, skb, tp, block, q, parent, fh, portid,
--			  n->nlmsg_seq, n->nlmsg_flags, event,
--			  false, rtnl_held, extack) <= 0) {
--		kfree_skb(skb);
--		return -EINVAL;
--	}
-+	skb = tfilter_notify_prep(net, oskb, n, tp, block, q, parent, fh, event,
-+				  portid, rtnl_held, extack);
-+	if (IS_ERR(skb))
-+		return PTR_ERR(skb);
++/* The PTM lock: adapter->ptm_lock must be held when calling igc_ptm_reset() */
+ static void igc_ptm_reset(struct igc_hw *hw)
+ {
+ 	u32 ctrl;
+@@ -1068,9 +1070,16 @@ static int igc_ptp_getcrosststamp(struct ptp_clock_info *ptp,
+ {
+ 	struct igc_adapter *adapter = container_of(ptp, struct igc_adapter,
+ 						   ptp_caps);
++	int ret;
  
- 	if (unicast)
- 		err = rtnl_unicast(skb, net, portid);
-@@ -2073,16 +2102,11 @@ static int tfilter_del_notify(struct net *net, struct sk_buff *oskb,
- 	if (!rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC))
- 		return tp->ops->delete(tp, fh, last, rtnl_held, extack);
+-	return get_device_system_crosststamp(igc_phc_get_syncdevicetime,
+-					     adapter, &adapter->snapshot, cts);
++	/* This blocks until any in progress PTM transactions complete */
++	mutex_lock(&adapter->ptm_lock);
++
++	ret = get_device_system_crosststamp(igc_phc_get_syncdevicetime,
++					    adapter, &adapter->snapshot, cts);
++	mutex_unlock(&adapter->ptm_lock);
++
++	return ret;
+ }
  
--	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
--	if (!skb)
--		return -ENOBUFS;
--
--	if (tcf_fill_node(net, skb, tp, block, q, parent, fh, portid,
--			  n->nlmsg_seq, n->nlmsg_flags, RTM_DELTFILTER,
--			  false, rtnl_held, extack) <= 0) {
-+	skb = tfilter_notify_prep(net, oskb, n, tp, block, q, parent, fh,
-+				  RTM_DELTFILTER, portid, rtnl_held, extack);
-+	if (IS_ERR(skb)) {
- 		NL_SET_ERR_MSG(extack, "Failed to build del event notification");
--		kfree_skb(skb);
--		return -EINVAL;
-+		return PTR_ERR(skb);
+ static int igc_ptp_getcyclesx64(struct ptp_clock_info *ptp,
+@@ -1169,6 +1178,7 @@ void igc_ptp_init(struct igc_adapter *adapter)
+ 	spin_lock_init(&adapter->ptp_tx_lock);
+ 	spin_lock_init(&adapter->free_timer_lock);
+ 	spin_lock_init(&adapter->tmreg_lock);
++	mutex_init(&adapter->ptm_lock);
+ 
+ 	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
+ 	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
+@@ -1181,6 +1191,7 @@ void igc_ptp_init(struct igc_adapter *adapter)
+ 	if (IS_ERR(adapter->ptp_clock)) {
+ 		adapter->ptp_clock = NULL;
+ 		netdev_err(netdev, "ptp_clock_register failed\n");
++		mutex_destroy(&adapter->ptm_lock);
+ 	} else if (adapter->ptp_clock) {
+ 		netdev_info(netdev, "PHC added\n");
+ 		adapter->ptp_flags |= IGC_PTP_ENABLED;
+@@ -1210,10 +1221,12 @@ static void igc_ptm_stop(struct igc_adapter *adapter)
+ 	struct igc_hw *hw = &adapter->hw;
+ 	u32 ctrl;
+ 
++	mutex_lock(&adapter->ptm_lock);
+ 	ctrl = rd32(IGC_PTM_CTRL);
+ 	ctrl &= ~IGC_PTM_CTRL_EN;
+ 
+ 	wr32(IGC_PTM_CTRL, ctrl);
++	mutex_unlock(&adapter->ptm_lock);
+ }
+ 
+ /**
+@@ -1255,6 +1268,7 @@ void igc_ptp_stop(struct igc_adapter *adapter)
+ 		netdev_info(adapter->netdev, "PHC removed\n");
+ 		adapter->ptp_flags &= ~IGC_PTP_ENABLED;
  	}
++	mutex_destroy(&adapter->ptm_lock);
+ }
  
- 	err = tp->ops->delete(tp, fh, last, rtnl_held, extack);
+ /**
+@@ -1294,6 +1308,7 @@ void igc_ptp_reset(struct igc_adapter *adapter)
+ 		if (!igc_is_crosststamp_supported(adapter))
+ 			break;
+ 
++		mutex_lock(&adapter->ptm_lock);
+ 		wr32(IGC_PCIE_DIG_DELAY, IGC_PCIE_DIG_DELAY_DEFAULT);
+ 		wr32(IGC_PCIE_PHY_DELAY, IGC_PCIE_PHY_DELAY_DEFAULT);
+ 
+@@ -1317,6 +1332,7 @@ void igc_ptp_reset(struct igc_adapter *adapter)
+ 			netdev_err(adapter->netdev, "Timeout reading IGC_PTM_STAT register\n");
+ 
+ 		igc_ptm_reset(hw);
++		mutex_unlock(&adapter->ptm_lock);
+ 		break;
+ 	default:
+ 		/* No work to do. */
 -- 
 2.39.5
 
