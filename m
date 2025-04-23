@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBA8242D64;
-	Wed, 23 Apr 2025 15:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D9C57C9F;
+	Wed, 23 Apr 2025 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422288; cv=none; b=d38wtrjTY2rXSYXDKJarAa8kLsPUHJobcaDai7aMD8QS3LUGsoycBzzBKy2eBtaBcUDEAZnTxKsHU9lUsD3VKbF1eU0X+MD//hqatYNXp3uv4ksT7IsjcLNyfCwXKOxva0WdmLqkorJHRbexbmYJopPBxVRbFtPYlX3LP8r/wtc=
+	t=1745422291; cv=none; b=Yqa6+HLn2OTR+CtJyDa4brIWXfgwCaQ96mHGEW9w6KV88l249kp/jF+6mxj0thR8dJcJOWxlZx10lwMI9CbHstq+v2a+4Zyxciu0lFSjJ2vzIYPpKRoYI1ZQ5394L5xEPnfWDfV5bhN9H95pV279JkwWpp1SzxyqhgaM20r9siY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422288; c=relaxed/simple;
-	bh=oFn0Yq20cGpm31e2TVIOnR9gyPFfJ003EbAMr8Dw1sg=;
+	s=arc-20240116; t=1745422291; c=relaxed/simple;
+	bh=gCd6lIL7DBqNvoY0ZeUC6zeNJ/yzlHtnNOwVdC8ebO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G3A/EETotUxmveQb6nr+UT60+b/hGiMHIePajVa8Ygm7GCwGasEY8DRV9RgV9MuZNXhxfTcK9c2/1yKlqk+eEhb9h2CRc9stKLCpBt8ibZNYMPagDAPQ0/6WY9fLRhfpQ5uYLqAfQbpHqxunoV8ym8MLU7FzhCW5dzayKdQ8MM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMt8uLoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FkWIHdY33XOsdP+PODQBQB5IpYTOG8quygdLhGMjJQMmozvl8w9HVFAeEvT9FT1KnCAOYJ2C/HReZZHKJRQNG5N66qeN0RhSwcoJf3uB1qTl31lJHdEjUOVeBrpKGdbW3hXJP7XmsCSFpmhZBHDZRpMVGLmaWmvBadnjbkOtTTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QV5TfdAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMt8uLoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4D6C4CEE2;
-	Wed, 23 Apr 2025 15:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QV5TfdAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA966C4CEE2;
+	Wed, 23 Apr 2025 15:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422288;
-	bh=oFn0Yq20cGpm31e2TVIOnR9gyPFfJ003EbAMr8Dw1sg=;
+	s=korg; t=1745422291;
+	bh=gCd6lIL7DBqNvoY0ZeUC6zeNJ/yzlHtnNOwVdC8ebO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMt8uLoIEJ0RsDHSt2F5+hYo2Oo0ONGNJ8KcgizM0NrInfmMdDQFu2ttRwyJcNpIf
-	 wVR3RFk3xHTJx0dCUoq0PhvUDNtTSayiwO7oavLwYeZfM/cCTS02wCq4yZvv+GAcbB
-	 s8MsYgSao8owqR4cSq3WsxWhzd1rZXu54YA/TkBs=
+	b=QV5TfdAdYcqHT6338V8fLHiBQ+N8hHpfucPkbu8DtvKtm0Sq+2YDmcVaKIkDx6FOs
+	 TgKvd4/kjOkEz65yRGxFZ/tyzLC27wokouk9OfND+M1EAaJrEWngh89lyfmsSsIiJM
+	 Z+np5dWaYfuBoERsDhM8P5GtLZpd8X03K3c7qRWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
-Subject: [PATCH 6.6 314/393] crypto: caam/qi - Fix drv_ctx refcount bug
-Date: Wed, 23 Apr 2025 16:43:30 +0200
-Message-ID: <20250423142656.297862063@linuxfoundation.org>
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 271/291] btrfs: zoned: fix zone finishing with missing devices
+Date: Wed, 23 Apr 2025 16:44:20 +0200
+Message-ID: <20250423142635.493423860@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
+commit 35fec1089ebb5617f85884d3fa6a699ce6337a75 upstream.
 
-Ensure refcount is raised before request is enqueued since it could
-be dequeued before the call returns.
+If do_zone_finish() is called with a filesystem that has missing devices
+(e.g. a RAID file system mounted in degraded mode) it is accessing the
+btrfs_device::zone_info pointer, which will not be set if the device
+in question is missing.
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: <stable@vger.kernel.org>
-Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
-Tested-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Check if the device is present (by checking if it has a valid block device
+pointer associated) and if not, skip zone finishing for it.
+
+Fixes: 4dcbb8ab31c1 ("btrfs: zoned: make zone finishing multi stripe capable")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/qi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/zoned.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -122,12 +122,12 @@ int caam_qi_enqueue(struct device *qidev
- 	qm_fd_addr_set64(&fd, addr);
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2055,6 +2055,9 @@ static int do_zone_finish(struct btrfs_b
+ 		struct btrfs_device *device = map->stripes[i].dev;
+ 		const u64 physical = map->stripes[i].physical;
  
- 	do {
-+		refcount_inc(&req->drv_ctx->refcnt);
- 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
--		if (likely(!ret)) {
--			refcount_inc(&req->drv_ctx->refcnt);
-+		if (likely(!ret))
- 			return 0;
--		}
++		if (!device->bdev)
++			continue;
++
+ 		if (device->zone_info->max_active_zones == 0)
+ 			continue;
  
-+		refcount_dec(&req->drv_ctx->refcnt);
- 		if (ret != -EBUSY)
- 			break;
- 		num_retries++;
 
 
