@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1DB28D84D;
-	Wed, 23 Apr 2025 15:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C81528A1DB;
+	Wed, 23 Apr 2025 15:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421939; cv=none; b=ACAsmBbui683Wr+7SnF6rdvR0QFxyExPYyfTccfeOwqx2ybfeoyB95mBWrWGGImr8CUJR8l/SacQST8tMeNQ7uqYcy1jhEmD95EOBq7mjDc5EEjvWiVCcWHiexV1X5amLgZiAT8gkyw/BbiO2bwm1dmgV+Df2cZYtBf6Gl1uLLY=
+	t=1745421944; cv=none; b=gXgpyIUHe4yG6O3QOwbazbk1xGBNI1HGMGDUY9ruYs6EgCTpKACpTeVACQRda4Tx9fhxTqq05ehySvJ7bDlj2RQitl4It0UbaBe24TfmiMICTBsNmW0AejhbeTUXLMDBFOF/6x/YkR0VAmgYTXvecMrUBDHB9HLvLmaVR5smpko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421939; c=relaxed/simple;
-	bh=ifrlf4BUVlvkB0+5HLv1v79yVHY+Hg2wLl7anqT7/Ww=;
+	s=arc-20240116; t=1745421944; c=relaxed/simple;
+	bh=Ouxh4cMHs0C1tW4b6Aes6ISNRfpqKSkYIUNlo4Q3R3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j8WqUOUNj5fbOK/r2zChUPwUA0qD0Ofk3SRkDQUNK7jAOWI27Wl5hGcqQfSMx6GQGcgiwLXGo8EAaHR5ePqvf15KIwb1gPGugbrPafQ1lIcrMz9Z4XCiYGWw5DEfVOE/Bf9l18D848koqyLpqMBOdoyE+Aixyx18N74F9KfAZq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZJ+eRa8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ub4xY0aAv+4HYmN2OiLkbDSBPl5keUiiZofM3swBmCfI86Q4Ff8K25oQhZuz/BJK7AaEGiUd9tUUVtndPAtjZA3S/xFdaheptP1esxWIvn6rkIJX37O8SCVo18lQ/SbwGgOuUao7vNFh1Y8MeUvsPuK1TQPvRfFrE7JZvo1mlOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLA9/Mnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZJ+eRa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0320FC4CEE2;
-	Wed, 23 Apr 2025 15:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLA9/Mnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951E6C4CEE2;
+	Wed, 23 Apr 2025 15:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421939;
-	bh=ifrlf4BUVlvkB0+5HLv1v79yVHY+Hg2wLl7anqT7/Ww=;
+	s=korg; t=1745421941;
+	bh=Ouxh4cMHs0C1tW4b6Aes6ISNRfpqKSkYIUNlo4Q3R3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZJ+eRa8UP0bQ+odYvNDW6OXQzcnM/XamJNYBhmhG9NNQXj/XASzd2mcQzLdIFVbc
-	 jc7T4zc+PzRo0ZOH36J0hVWQY4/palj1RN6G9wldifBSwZtAABs3wQMf+t4Lw+hxTd
-	 EDhJ6rYJ5Ual+YpSYOVJeEFBbbhArdYPoLhjTkkc=
+	b=PLA9/Mnfh0CLWV5rUHAjovUoj8CQ+z1h5gILXkMQ3H1nsvvt3u4oEswMpLrUbQSBX
+	 u94E6MmkxzlERJwHRe1yf85M990eMBhdzzZ7aKtS9sspKKaSIcADwwIE+MWHQT/ERn
+	 p5OGYSA6vXA18iex0PH+sjd1Otwyg/NATg+FB5uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 202/291] asus-laptop: Fix an uninitialized variable
-Date: Wed, 23 Apr 2025 16:43:11 +0200
-Message-ID: <20250423142632.632824738@linuxfoundation.org>
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Ethan Carter Edwards <ethan@ethancedwards.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 249/393] ASoC: Intel: avs: Fix null-ptr-deref in avs_component_probe()
+Date: Wed, 23 Apr 2025 16:42:25 +0200
+Message-ID: <20250423142653.660335593@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,60 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit 6c683c6887e4addcd6bd1ddce08cafccb0a21e32 upstream.
+[ Upstream commit 95f723cf141b95e3b3a5b92cf2ea98a863fe7275 ]
 
-The value returned by acpi_evaluate_integer() is not checked,
-but the result is not always successful, so it is necessary to
-add a check of the returned value.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+avs_component_probe() does not check for this case, which results in a
+NULL pointer dereference.
 
-If the result remains negative during three iterations of the loop,
-then the uninitialized variable 'val' will be used in the clamp_val()
-macro, so it must be initialized with the current value of the 'curr'
-variable.
-
-In this case, the algorithm should be less noisy.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: b23910c2194e ("asus-laptop: Pegatron Lucid accelerometer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Link: https://lore.kernel.org/r/20250403122603.18172-1-arefev@swemel.ru
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Ethan Carter Edwards <ethan@ethancedwards.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250402141411.44972-1-bsdhenrymartin@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-laptop.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/intel/avs/pcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/asus-laptop.c
-+++ b/drivers/platform/x86/asus-laptop.c
-@@ -427,11 +427,14 @@ static int asus_pega_lucid_set(struct as
- 
- static int pega_acc_axis(struct asus_laptop *asus, int curr, char *method)
- {
-+	unsigned long long val = (unsigned long long)curr;
-+	acpi_status status;
- 	int i, delta;
--	unsigned long long val;
--	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
--		acpi_evaluate_integer(asus->handle, method, NULL, &val);
- 
-+	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
-+		status = acpi_evaluate_integer(asus->handle, method, NULL, &val);
-+		if (ACPI_FAILURE(status))
-+			continue;
- 		/* The output is noisy.  From reading the ASL
- 		 * dissassembly, timeout errors are returned with 1's
- 		 * in the high word, and the lack of locking around
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index bb1e77ac78e04..781019685b941 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -808,7 +808,8 @@ static int avs_component_probe(struct snd_soc_component *component)
+ 		else
+ 			mach->tplg_filename = devm_kasprintf(adev->dev, GFP_KERNEL,
+ 							     "hda-generic-tplg.bin");
+-
++		if (!mach->tplg_filename)
++			return -ENOMEM;
+ 		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
+ 				     mach->tplg_filename);
+ 		if (!filename)
+-- 
+2.39.5
+
 
 
