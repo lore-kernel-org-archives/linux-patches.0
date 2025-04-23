@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC8429B201;
-	Wed, 23 Apr 2025 15:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DF52C2598;
+	Wed, 23 Apr 2025 15:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422483; cv=none; b=gSCzgUHDTHiLDEFeHHmmY5NoipEECSD/8Mq0/1RtXwzGoHhh0XMoLvyPI1g4M6Q7SJs5x9t0YRDg11+PGG6S4ShMaKaC+MPIwbl5K1b+ReebZyFa4D4yS2RTP6DXZrQjM+yabRIsaDTbIV/3hDkMCxXN+ipk5+xEl46lT6b/rlg=
+	t=1745422486; cv=none; b=lT3UqHFdgOXWATK1kOFQ7avoSbOXp7/bB899JSGTCwu9PjUjrhrupSUhN/bx+AfMF5SjLQWPxji0IdHlr5KxwSXwL3AucVDgFz3eKHFIjtclrSuulMzU5DpcEHmlTmT920cAVOHm23oSgKv072M+pV/uwgy/v/7Rh+sQMdvtsFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422483; c=relaxed/simple;
-	bh=nBOB2RB8Gi5Quj2lV/zQhImxicJWnB8a6mxXg5tyIMY=;
+	s=arc-20240116; t=1745422486; c=relaxed/simple;
+	bh=IjRbjy5JJiXhw7bmD6BoKqi+bzN6hVAGwgVD/vzU/Vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYyV4a+nJwZaB0ZMwgAyN9SLw1ge5ecmi2rgbwCv0hK1a3AVDYjppDbgCHGa27iJktDZkDq3HrwjvvSes5Y2plkBtiWKBMkYvFrNGrWBWvj/AI1Y7C8tWGTymAFERTsJmyP0+OI0kTeDXbqI6t6z8VjmEQKvPtXdYUjP4072o6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIcD5TDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tp8GW7z47VLlYco3Iux5KcbBabqA/XPnqiZws2JYbW3nN8h6QmWfW/aeyi+gdwBmBRAG/YNgKUQatt9HqnYDRCPSL93p3a9ZWJjzK1naJCsghJ1V2hqVCdEKSHVuOz/puJRxfZlXmkk4PtVMlp/9mnJIC3RWrHpf1xvTf5tBeJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKOL4+eR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIcD5TDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E9FC4CEE2;
-	Wed, 23 Apr 2025 15:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKOL4+eR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B933C4CEE3;
+	Wed, 23 Apr 2025 15:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422482;
-	bh=nBOB2RB8Gi5Quj2lV/zQhImxicJWnB8a6mxXg5tyIMY=;
+	s=korg; t=1745422485;
+	bh=IjRbjy5JJiXhw7bmD6BoKqi+bzN6hVAGwgVD/vzU/Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIcD5TDHhqBmF7mynXS0s154aZje1oXFoYvt+BMgnI5+k4NsBz5saoD1U97fSmagk
-	 cF/RJbPuC1CTzA4ZIWwEYs4Y52OW9+x0kSByrrMYqpsMC8T5x9v1JmjCZTAorsOR/D
-	 NXli8K9j/5+ePp3iQcFe+lsymhiNY+RO1yljxl6Q=
+	b=wKOL4+eRQw2757pdGtZ9AqRGwZl6q+X0I4fFA36uIjBhnQ9a5yEanxDP5iTm5KjDl
+	 lYhMMlhhh66te7L6iPC07iMYz1Czsql0aDUjKbKxpICXIMoLlLKteAoN9Xn1dd9MR4
+	 vEkO4vHXRRj9AUNaqOwFWIt0Mi2eE36KSombuGbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Jaroszynski <pjaroszynski@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	SeongJae Park <sj@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.6 368/393] Fix mmu notifiers for range-based invalidates
-Date: Wed, 23 Apr 2025 16:44:24 +0200
-Message-ID: <20250423142658.539422318@linuxfoundation.org>
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Allen Pais <apais@linux.microsoft.com>
+Subject: [PATCH 6.6 369/393] efi/libstub: Bump up EFI_MMAP_NR_SLACK_SLOTS to 32
+Date: Wed, 23 Apr 2025 16:44:25 +0200
+Message-ID: <20250423142658.578731331@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 References: <20250423142643.246005366@linuxfoundation.org>
@@ -62,98 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Jaroszynski <pjaroszynski@nvidia.com>
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 
-commit f7edb07ad7c66eab3dce57384f33b9799d579133 upstream.
+commit ec4696925da6b9baec38345184403ce9e29a2e48 upstream.
 
-Update the __flush_tlb_range_op macro not to modify its parameters as
-these are unexepcted semantics. In practice, this fixes the call to
-mmu_notifier_arch_invalidate_secondary_tlbs() in
-__flush_tlb_range_nosync() to use the correct range instead of an empty
-range with start=end. The empty range was (un)lucky as it results in
-taking the invalidate-all path that doesn't cause correctness issues,
-but can certainly result in suboptimal perf.
+Recent platforms require more slack slots than the current value of
+EFI_MMAP_NR_SLACK_SLOTS, otherwise they fail to boot. The current
+workaround is to append `efi=disable_early_pci_dma` to the kernel's
+cmdline. So, bump up EFI_MMAP_NR_SLACK_SLOTS to 32 to allow those
+platforms to boot with the aforementioned workaround.
 
-This has been broken since commit 6bbd42e2df8f ("mmu_notifiers: call
-invalidate_range() when invalidating TLBs") when the call to the
-notifiers was added to __flush_tlb_range(). It predates the addition of
-the __flush_tlb_range_op() macro from commit 360839027a6e ("arm64: tlb:
-Refactor the core flush algorithm of __flush_tlb_range") that made the
-bug hard to spot.
-
-Fixes: 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when invalidating TLBs")
-
-Signed-off-by: Piotr Jaroszynski <pjaroszynski@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Raghavendra Rao Ananta <rananta@google.com>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: iommu@lists.linux.dev
-Cc: linux-mm@kvack.org
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Link: https://lore.kernel.org/r/20250304085127.2238030-1-pjaroszynski@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[will: Resolve conflicts due to lack of LPA2 support]
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Allen Pais <apais@linux.microsoft.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/tlbflush.h |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/firmware/efi/libstub/efistub.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/tlbflush.h
-+++ b/arch/arm64/include/asm/tlbflush.h
-@@ -369,31 +369,33 @@ static inline void arch_tlbbatch_flush(s
- #define __flush_tlb_range_op(op, start, pages, stride,			\
- 				asid, tlb_level, tlbi_user)		\
- do {									\
-+	typeof(start) __flush_start = start;				\
-+	typeof(pages) __flush_pages = pages;				\
- 	int num = 0;							\
- 	int scale = 3;							\
- 	unsigned long addr;						\
- 									\
--	while (pages > 0) {						\
-+	while (__flush_pages > 0) {					\
- 		if (!system_supports_tlb_range() ||			\
--		    pages == 1) {					\
--			addr = __TLBI_VADDR(start, asid);		\
-+		    __flush_pages == 1) {				\
-+			addr = __TLBI_VADDR(__flush_start, asid);	\
- 			__tlbi_level(op, addr, tlb_level);		\
- 			if (tlbi_user)					\
- 				__tlbi_user_level(op, addr, tlb_level);	\
--			start += stride;				\
--			pages -= stride >> PAGE_SHIFT;			\
-+			__flush_start += stride;			\
-+			__flush_pages -= stride >> PAGE_SHIFT;		\
- 			continue;					\
- 		}							\
- 									\
--		num = __TLBI_RANGE_NUM(pages, scale);			\
-+		num = __TLBI_RANGE_NUM(__flush_pages, scale);		\
- 		if (num >= 0) {						\
--			addr = __TLBI_VADDR_RANGE(start, asid, scale,	\
--						  num, tlb_level);	\
-+			addr = __TLBI_VADDR_RANGE(__flush_start, asid,	\
-+						scale, num, tlb_level);	\
- 			__tlbi(r##op, addr);				\
- 			if (tlbi_user)					\
- 				__tlbi_user(r##op, addr);		\
--			start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
--			pages -= __TLBI_RANGE_PAGES(num, scale);	\
-+			__flush_start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
-+			__flush_pages -= __TLBI_RANGE_PAGES(num, scale);\
- 		}							\
- 		scale--;						\
- 	}								\
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -171,7 +171,7 @@ void efi_set_u64_split(u64 data, u32 *lo
+  * the EFI memory map. Other related structures, e.g. x86 e820ext, need
+  * to factor in this headroom requirement as well.
+  */
+-#define EFI_MMAP_NR_SLACK_SLOTS	8
++#define EFI_MMAP_NR_SLACK_SLOTS	32
+ 
+ typedef struct efi_generic_dev_path efi_device_path_protocol_t;
+ 
 
 
