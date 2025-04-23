@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2428E28137A;
-	Wed, 23 Apr 2025 15:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99682280A52;
+	Wed, 23 Apr 2025 15:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420543; cv=none; b=MRgYciNV7deLNhOefn/UW7Zj3ZtE7ueobsTQk8P08PY5sWpFzyIH0ilFvwfivxFuEeZ1fNlG3Ba+fB28ePOxt8sZP7RHHbVj26Y1q7oQbE4MjT6glgSIC8xRVQC3MUBbIcZZbiTudVZ94gfWbLbgQTIE61Ovt1u3V2s2VLO9/90=
+	t=1745420545; cv=none; b=iNGBe3EJnLcZg/uzrXfTooUOA37CGtwIi3E7DJ2kRG4GDajWdDOHOshKNyi2wsI8AXaU8EVm3nd8Nl2v1yTPStdsMMo/hFY6LiNa8VdbRLFZn01OPS+tB0Sr6sksfJmOXSLgEuv9Yb/h5PN3NJo4nRHhDX3JRcbvONXjQeY5gTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420543; c=relaxed/simple;
-	bh=lMl2Ei1jEBZuuYwzwYxbg/4zy5HIRTHooVmE8bFf5SE=;
+	s=arc-20240116; t=1745420545; c=relaxed/simple;
+	bh=PmSz/5VGRHMxvFrwz038TcUAeLRrumUvs53jvnXoInA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LU1RdB6yRfri7qx16hsKsEVozGwhK9tj+6bhRVke1pf9CJJd4RtlWuE6ZbgXpH17kpmUGYZdVH0buChWABOSQQYX5f8kZsqWG05pUTgIsLAhIM4wMn/qfCJ9BeBN2ZO27lT6loU0jb0j9LVFYuGBlv6b8O0vTRLsEcXy120guNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqOD/0ck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KMmTxOtEPy3Tt4mXFZfxVuVcsCwcXLiwQFHfuIVwx9dlVg5b54ukD3cNTjpHT4v5V8fLcMbjEnnpg77EHCbWW/dQKdMBe/zPVA93YCBzNo5Gv7nkeUoZyvSVL8/3T1UTNs0KLMy4d1n69I/6/ii5Vteje2OriFQDpQNCWZtmdaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZHRZN8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqOD/0ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F2CC4CEE2;
-	Wed, 23 Apr 2025 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZHRZN8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EC9C4CEE2;
+	Wed, 23 Apr 2025 15:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420542;
-	bh=lMl2Ei1jEBZuuYwzwYxbg/4zy5HIRTHooVmE8bFf5SE=;
+	s=korg; t=1745420545;
+	bh=PmSz/5VGRHMxvFrwz038TcUAeLRrumUvs53jvnXoInA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqOD/0ckFFS7+olqutd06rdWgurcm0l2TP1QJvXbN6XB04vtqcD6W30s1fC4juKf9
-	 1hpPx9Om68P2yLhLdQQNujtg+JT+lFNVssJmJhAz8Ima8YxCc49Qav2Upqk8Z0Gooa
-	 eMYknsGXzPJUKsB0qS7CIbHE5djJLH0Z+As2MQwA=
+	b=UZHRZN8uHuTWfISshoL5Sro1LqOlkN9lwmR0wJSDUm0pmLNdcE8UBmNvGUw6xmPVi
+	 GCsCxjBksqcjJ9EEQEgdPQyzJ6RQ28behYwUTXkCxn+oNYrwnWvvnd/TTh4vXoNvpO
+	 +Y9e3MXzKybkOmTfvktskHGKW3FzouDWnyJRTsiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/393] net: vlan: dont propagate flags on open
-Date: Wed, 23 Apr 2025 16:39:43 +0200
-Message-ID: <20250423142646.891948618@linuxfoundation.org>
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.12 140/223] RDMA/cma: Fix workqueue crash in cma_netevent_work_handler
+Date: Wed, 23 Apr 2025 16:43:32 +0200
+Message-ID: <20250423142622.791036606@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,188 +46,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
 
-[ Upstream commit 27b918007d96402aba10ed52a6af8015230f1793 ]
+commit 45f5dcdd049719fb999393b30679605f16ebce14 upstream.
 
-With the device instance lock, there is now a possibility of a deadlock:
+struct rdma_cm_id has member "struct work_struct net_work"
+that is reused for enqueuing cma_netevent_work_handler()s
+onto cma_wq.
 
-[    1.211455] ============================================
-[    1.211571] WARNING: possible recursive locking detected
-[    1.211687] 6.14.0-rc5-01215-g032756b4ca7a-dirty #5 Not tainted
-[    1.211823] --------------------------------------------
-[    1.211936] ip/184 is trying to acquire lock:
-[    1.212032] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_set_allmulti+0x4e/0xb0
-[    1.212207]
-[    1.212207] but task is already holding lock:
-[    1.212332] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
-[    1.212487]
-[    1.212487] other info that might help us debug this:
-[    1.212626]  Possible unsafe locking scenario:
-[    1.212626]
-[    1.212751]        CPU0
-[    1.212815]        ----
-[    1.212871]   lock(&dev->lock);
-[    1.212944]   lock(&dev->lock);
-[    1.213016]
-[    1.213016]  *** DEADLOCK ***
-[    1.213016]
-[    1.213143]  May be due to missing lock nesting notation
-[    1.213143]
-[    1.213294] 3 locks held by ip/184:
-[    1.213371]  #0: ffffffff838b53e0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x1b/0xa0
-[    1.213543]  #1: ffffffff84e5fc70 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x37/0xa0
-[    1.213727]  #2: ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
-[    1.213895]
-[    1.213895] stack backtrace:
-[    1.213991] CPU: 0 UID: 0 PID: 184 Comm: ip Not tainted 6.14.0-rc5-01215-g032756b4ca7a-dirty #5
-[    1.213993] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-[    1.213994] Call Trace:
-[    1.213995]  <TASK>
-[    1.213996]  dump_stack_lvl+0x8e/0xd0
-[    1.214000]  print_deadlock_bug+0x28b/0x2a0
-[    1.214020]  lock_acquire+0xea/0x2a0
-[    1.214027]  __mutex_lock+0xbf/0xd40
-[    1.214038]  dev_set_allmulti+0x4e/0xb0 # real_dev->flags & IFF_ALLMULTI
-[    1.214040]  vlan_dev_open+0xa5/0x170 # ndo_open on vlandev
-[    1.214042]  __dev_open+0x145/0x270
-[    1.214046]  __dev_change_flags+0xb0/0x1e0
-[    1.214051]  netif_change_flags+0x22/0x60 # IFF_UP vlandev
-[    1.214053]  dev_change_flags+0x61/0xb0 # for each device in group from dev->vlan_info
-[    1.214055]  vlan_device_event+0x766/0x7c0 # on netdevsim0
-[    1.214058]  notifier_call_chain+0x78/0x120
-[    1.214062]  netif_open+0x6d/0x90
-[    1.214064]  dev_open+0x5b/0xb0 # locks netdevsim0
-[    1.214066]  bond_enslave+0x64c/0x1230
-[    1.214075]  do_set_master+0x175/0x1e0 # on netdevsim0
-[    1.214077]  do_setlink+0x516/0x13b0
-[    1.214094]  rtnl_newlink+0xaba/0xb80
-[    1.214132]  rtnetlink_rcv_msg+0x440/0x490
-[    1.214144]  netlink_rcv_skb+0xeb/0x120
-[    1.214150]  netlink_unicast+0x1f9/0x320
-[    1.214153]  netlink_sendmsg+0x346/0x3f0
-[    1.214157]  __sock_sendmsg+0x86/0xb0
-[    1.214160]  ____sys_sendmsg+0x1c8/0x220
-[    1.214164]  ___sys_sendmsg+0x28f/0x2d0
-[    1.214179]  __x64_sys_sendmsg+0xef/0x140
-[    1.214184]  do_syscall_64+0xec/0x1d0
-[    1.214190]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[    1.214191] RIP: 0033:0x7f2d1b4a7e56
+Below crash[1] can occur if more than one call to
+cma_netevent_callback() occurs in quick succession,
+which further enqueues cma_netevent_work_handler()s for the
+same rdma_cm_id, overwriting any previously queued work-item(s)
+that was just scheduled to run i.e. there is no guarantee
+the queued work item may run between two successive calls
+to cma_netevent_callback() and the 2nd INIT_WORK would overwrite
+the 1st work item (for the same rdma_cm_id), despite grabbing
+id_table_lock during enqueue.
 
-Device setup:
+Also drgn analysis [2] indicates the work item was likely overwritten.
 
-     netdevsim0 (down)
-     ^        ^
-  bond        netdevsim1.100@netdevsim1 allmulticast=on (down)
+Fix this by moving the INIT_WORK() to __rdma_create_id(),
+so that it doesn't race with any existing queue_work() or
+its worker thread.
 
-When we enslave the lower device (netdevsim0) which has a vlan, we
-propagate vlan's allmuti/promisc flags during ndo_open. This causes
-(re)locking on of the real_dev.
+[1] Trimmed crash stack:
+=============================================
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+kworker/u256:6 ... 6.12.0-0...
+Workqueue:  cma_netevent_work_handler [rdma_cm] (rdma_cm)
+RIP: 0010:process_one_work+0xba/0x31a
+Call Trace:
+ worker_thread+0x266/0x3a0
+ kthread+0xcf/0x100
+ ret_from_fork+0x31/0x50
+ ret_from_fork_asm+0x1a/0x30
+=============================================
 
-Propagate allmulti/promisc on flags change, not on the open. There
-is a slight semantics change that vlans that are down now propagate
-the flags, but this seems unlikely to result in the real issues.
+[2] drgn crash analysis:
 
-Reproducer:
+>>> trace = prog.crashed_thread().stack_trace()
+>>> trace
+(0)  crash_setup_regs (./arch/x86/include/asm/kexec.h:111:15)
+(1)  __crash_kexec (kernel/crash_core.c:122:4)
+(2)  panic (kernel/panic.c:399:3)
+(3)  oops_end (arch/x86/kernel/dumpstack.c:382:3)
+...
+(8)  process_one_work (kernel/workqueue.c:3168:2)
+(9)  process_scheduled_works (kernel/workqueue.c:3310:3)
+(10) worker_thread (kernel/workqueue.c:3391:4)
+(11) kthread (kernel/kthread.c:389:9)
 
-  echo 0 1 > /sys/bus/netdevsim/new_device
+Line workqueue.c:3168 for this kernel version is in process_one_work():
+3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
 
-  dev_path=$(ls -d /sys/bus/netdevsim/devices/netdevsim0/net/*)
-  dev=$(echo $dev_path | rev | cut -d/ -f1 | rev)
+>>> trace[8]["work"]
+*(struct work_struct *)0xffff92577d0a21d8 = {
+	.data = (atomic_long_t){
+		.counter = (s64)536870912,    <=== Note
+	},
+	.entry = (struct list_head){
+		.next = (struct list_head *)0xffff924d075924c0,
+		.prev = (struct list_head *)0xffff924d075924c0,
+	},
+	.func = (work_func_t)cma_netevent_work_handler+0x0 = 0xffffffffc2cec280,
+}
 
-  ip link set dev $dev name netdevsim0
-  ip link set dev netdevsim0 up
+Suspicion is that pwq is NULL:
+>>> trace[8]["pwq"]
+(struct pool_workqueue *)<absent>
 
-  ip link add link netdevsim0 name netdevsim0.100 type vlan id 100
-  ip link set dev netdevsim0.100 allmulticast on down
-  ip link add name bond1 type bond mode 802.3ad
-  ip link set dev netdevsim0 down
-  ip link set dev netdevsim0 master bond1
-  ip link set dev bond1 up
-  ip link show
+In process_one_work(), pwq is assigned from:
+struct pool_workqueue *pwq = get_work_pwq(work);
 
-Reported-by: syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/Z9CfXjLMKn6VLG5d@mini-arch/T/#m15ba130f53227c883e79fb969687d69d670337a0
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250313100657.2287455-1-sdf@fomichev.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+and get_work_pwq() is:
+static struct pool_workqueue *get_work_pwq(struct work_struct *work)
+{
+ 	unsigned long data = atomic_long_read(&work->data);
+
+ 	if (data & WORK_STRUCT_PWQ)
+ 		return work_struct_pwq(data);
+ 	else
+ 		return NULL;
+}
+
+WORK_STRUCT_PWQ is 0x4:
+>>> print(repr(prog['WORK_STRUCT_PWQ']))
+Object(prog, 'enum work_flags', value=4)
+
+But work->data is 536870912 which is 0x20000000.
+So, get_work_pwq() returns NULL and we crash in process_one_work():
+3168	strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
+=============================================
+
+Fixes: 925d046e7e52 ("RDMA/core: Add a netevent notifier to cma")
+Cc: stable@vger.kernel.org
+Co-developed-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://patch.msgid.link/bf0082f9-5b25-4593-92c6-d130aa8ba439@oracle.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan_dev.c | 31 ++++---------------------------
- 1 file changed, 4 insertions(+), 27 deletions(-)
+ drivers/infiniband/core/cma.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index 2a7f1b15714ab..e9326f322d7a2 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -273,17 +273,6 @@ static int vlan_dev_open(struct net_device *dev)
- 			goto out;
- 	}
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -72,6 +72,8 @@ static const char * const cma_events[] =
+ static void cma_iboe_set_mgid(struct sockaddr *addr, union ib_gid *mgid,
+ 			      enum ib_gid_type gid_type);
  
--	if (dev->flags & IFF_ALLMULTI) {
--		err = dev_set_allmulti(real_dev, 1);
--		if (err < 0)
--			goto del_unicast;
--	}
--	if (dev->flags & IFF_PROMISC) {
--		err = dev_set_promiscuity(real_dev, 1);
--		if (err < 0)
--			goto clear_allmulti;
--	}
--
- 	ether_addr_copy(vlan->real_dev_addr, real_dev->dev_addr);
- 
- 	if (vlan->flags & VLAN_FLAG_GVRP)
-@@ -297,12 +286,6 @@ static int vlan_dev_open(struct net_device *dev)
- 		netif_carrier_on(dev);
- 	return 0;
- 
--clear_allmulti:
--	if (dev->flags & IFF_ALLMULTI)
--		dev_set_allmulti(real_dev, -1);
--del_unicast:
--	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
--		dev_uc_del(real_dev, dev->dev_addr);
- out:
- 	netif_carrier_off(dev);
- 	return err;
-@@ -315,10 +298,6 @@ static int vlan_dev_stop(struct net_device *dev)
- 
- 	dev_mc_unsync(real_dev, dev);
- 	dev_uc_unsync(real_dev, dev);
--	if (dev->flags & IFF_ALLMULTI)
--		dev_set_allmulti(real_dev, -1);
--	if (dev->flags & IFF_PROMISC)
--		dev_set_promiscuity(real_dev, -1);
- 
- 	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
- 		dev_uc_del(real_dev, dev->dev_addr);
-@@ -490,12 +469,10 @@ static void vlan_dev_change_rx_flags(struct net_device *dev, int change)
++static void cma_netevent_work_handler(struct work_struct *_work);
++
+ const char *__attribute_const__ rdma_event_msg(enum rdma_cm_event_type event)
  {
- 	struct net_device *real_dev = vlan_dev_priv(dev)->real_dev;
+ 	size_t index = event;
+@@ -1033,6 +1035,7 @@ __rdma_create_id(struct net *net, rdma_c
+ 	get_random_bytes(&id_priv->seq_num, sizeof id_priv->seq_num);
+ 	id_priv->id.route.addr.dev_addr.net = get_net(net);
+ 	id_priv->seq_num &= 0x00ffffff;
++	INIT_WORK(&id_priv->id.net_work, cma_netevent_work_handler);
  
--	if (dev->flags & IFF_UP) {
--		if (change & IFF_ALLMULTI)
--			dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
--		if (change & IFF_PROMISC)
--			dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
--	}
-+	if (change & IFF_ALLMULTI)
-+		dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
-+	if (change & IFF_PROMISC)
-+		dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
- }
- 
- static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
--- 
-2.39.5
-
+ 	rdma_restrack_new(&id_priv->res, RDMA_RESTRACK_CM_ID);
+ 	if (parent)
+@@ -5227,7 +5230,6 @@ static int cma_netevent_callback(struct
+ 		if (!memcmp(current_id->id.route.addr.dev_addr.dst_dev_addr,
+ 			   neigh->ha, ETH_ALEN))
+ 			continue;
+-		INIT_WORK(&current_id->id.net_work, cma_netevent_work_handler);
+ 		cma_id_get(current_id);
+ 		queue_work(cma_wq, &current_id->id.net_work);
+ 	}
 
 
