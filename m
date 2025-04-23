@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A046828D82C;
-	Wed, 23 Apr 2025 15:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F3528D83F;
+	Wed, 23 Apr 2025 15:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421057; cv=none; b=a6v9d5H2aNl5FLqexbSw/33Lr4kV06piBGXJJapmSb4KWy5QbIzmhoYEQalbswlZX+FiEL4QJMjXXx5pvhBh4/UpMQG/cdIZ6JqCYXfKvTn0jL+VoHYCdlAFWR/GDMs3pnfmLpwwr/PBDaPjidFqOxkwzFmc4hQloNd+5cPU71I=
+	t=1745421060; cv=none; b=qkVMmjtLN2yAhIWCfJHDk2pPDUxX1fwe6B+Z71DMIG3r8ATs2lzZd/+Fj2FrN5kySgzkSGv4biT/ohjlimw0gtS7Uiyi8nDI3qrIqWI3vSc0gnIVHcUZuu339r5JeMB2gFaH3Fs32Qbc3EAWaFb/wi7FtmRvuSoP+FdCR6c4WLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421057; c=relaxed/simple;
-	bh=ddJFFBdC73TIlFqzshy3Sg0mSboX9GUsDG317hVhjis=;
+	s=arc-20240116; t=1745421060; c=relaxed/simple;
+	bh=vYi7b8G8mtqDazpYeVtS62KfVpcLXQLdTZ6o2TXVz+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFMLh7+jVuWAF+aVCNleSI3xK0CbLtqqSjAp0yP1j726bqW7L7r/AehgzyV2M5HnfW5v9AQUWq0vA7jPZPUIYZmPc0DXhc2uBOuxoeB+co4aTBSyGjPPorB8kvvzHNxOQ7V2we8urHWjoZq0SjeF/s9dALXANxgLb4ZhO/lIW0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYLd24dR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VgxRec66xgKG/RK+uUp5gsrAfpgrVMudVj+HCdAFZIlJoJTLiszVdsXIEtPnx8ejDt+sSS5OwOy4YwKX0Iqnk76pcqWH2GHnZMuiO29EmMoh2ir/8gobHU7aVMDwWI3tBomLr88VbL3vmTcRlozo8D6X9p0FyA/qqLYtR6GOCnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTvlt3Hs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYLd24dR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3273AC4CEE2;
-	Wed, 23 Apr 2025 15:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTvlt3Hs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF299C4CEE2;
+	Wed, 23 Apr 2025 15:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421057;
-	bh=ddJFFBdC73TIlFqzshy3Sg0mSboX9GUsDG317hVhjis=;
+	s=korg; t=1745421060;
+	bh=vYi7b8G8mtqDazpYeVtS62KfVpcLXQLdTZ6o2TXVz+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYLd24dRVgWioIqW27bJR+u5n6/7BrkG2sBrZ06wYiMApWxqbL0PD1fH70X2+oxIW
-	 +lxsW+V3RuMkmQBF7G3mwzOFuhrH4tACLvfRLdPHNhBZBXMa9ulv5rjBYHA6IuJeEC
-	 71So6KM/OeoCxtIt4Adg/14iO5yN9ehlu//AWxwQ=
+	b=VTvlt3HsZ1rT4K9nDTnNNm6ZcMKqsL14YdgAT/RCAMkvvSlp0411iV1rxWSExq26I
+	 Sj3aZ3WFOnzVdoE+JkpNN1XTT8ayg0Wzk67C4FFJraxKueEVPUKQ0u9vFjzJEr85+M
+	 6gsp4nnPg2yCX0aAqdqrcMhduqrsZwtnGAROwP/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 104/291] mtd: Replace kcalloc() with devm_kcalloc()
-Date: Wed, 23 Apr 2025 16:41:33 +0200
-Message-ID: <20250423142628.602163020@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 143/393] media: i2c: ov7251: Introduce 1 ms delay between regulators and en GPIO
+Date: Wed, 23 Apr 2025 16:40:39 +0200
+Message-ID: <20250423142649.281817720@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 1b61a59876f0eafc19b23007c522ee407f55dbec upstream.
+commit 3d391292cdd53984ec1b9a1f6182a62a62751e03 upstream.
 
-Replace kcalloc() with devm_kcalloc() to prevent memory leaks in case of
-errors.
+Lift the xshutdown (enable) GPIO 1 ms after enabling the regulators, as
+required by the sensor's power-up sequence.
 
-Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: d30bb512da3d ("media: Add a driver for the ov7251 camera sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdpstore.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/media/i2c/ov7251.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/mtdpstore.c
-+++ b/drivers/mtd/mtdpstore.c
-@@ -417,11 +417,11 @@ static void mtdpstore_notify_add(struct
+--- a/drivers/media/i2c/ov7251.c
++++ b/drivers/media/i2c/ov7251.c
+@@ -922,6 +922,8 @@ static int ov7251_set_power_on(struct de
+ 		return ret;
  	}
  
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, info->kmsg_size));
--	cxt->rmmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
--	cxt->usedmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->rmmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->usedmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
++	usleep_range(1000, 1100);
++
+ 	gpiod_set_value_cansleep(ov7251->enable_gpio, 1);
  
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
--	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
-+	cxt->badmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
- 
- 	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
- 		return;
-@@ -530,9 +530,6 @@ static void mtdpstore_notify_remove(stru
- 	mtdpstore_flush_removed(cxt);
- 
- 	unregister_pstore_device(&cxt->dev);
--	kfree(cxt->badmap);
--	kfree(cxt->usedmap);
--	kfree(cxt->rmmap);
- 	cxt->mtd = NULL;
- 	cxt->index = -1;
- }
+ 	/* wait at least 65536 external clock cycles */
 
 
