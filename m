@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2672284B35;
-	Wed, 23 Apr 2025 15:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FA62BD5AC;
+	Wed, 23 Apr 2025 15:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421667; cv=none; b=pMAaQnlzlcS0mbkgjn0l7bdygWgy8H5Llv4whoIetfPY22vu50LrOdGEWhAjn7LgT3yXkEV7GbkuHrJzLxIfUJ3x8ZYFDmGvf2VZdP6Cf6usGicTqWQuBSeFeWGkzUy039cAsxH5QbjY4X0p8oSrqGBYRxNf7HE6fCs88Bi6zLo=
+	t=1745421669; cv=none; b=JVtyBGQ5dS4TyCu4t2+PQ55PJa6+/o/KvQKhpNww6mfqDhyV7L/BhfH7fLaqcjzjy1K3H34CRw3ZKjLPGMV1OH/2lwMF7mopuOZB2snT37bdXokFNXPQmJPCj31xPx3KAg73XWtapGSOnWCfjIoEtHvz5A+uA9GWf4IQD+bpYJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421667; c=relaxed/simple;
-	bh=cx6b7TFJaARhOMNIhRy847cj8kkKPZgXlrQt7O3c828=;
+	s=arc-20240116; t=1745421669; c=relaxed/simple;
+	bh=dO4ge5baQKXYKQZcwuyY0Z/2xp7NzHY99CFV39JC6pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chLBJhcJNm7/iUQAIZf6cIV3Wj458+DXNY+2QcwALuRI/Ar3/J2Coqd3ryIrOMpVYhF2JNuACGNrJTGiuQTByIJh1XlyDdYG4I8jOvwYeeeZQXCJ/1sQTVZe7iPLPVv0swFKsf+7ZGg9rDzK/GhuvQvwVyvq2CrdRWSdnJfCEm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4cNjbBr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBjXLTICs47tUKBOSrvXlDnSsynbdVFAgg/qTlCNvANcEqG5Cz7srvx5SHWPWxmIoRNY0qH1CPgTErw1hNFxkMXVkKePvbBGyTJbMp8avfLM89p1NxTYXOE4z9o0qlDdgxU0ELouq700pLLEz2Q2uf7lySi3UUq6Zqi6/c5K7QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWeItZqz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4cNjbBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3403C4CEEB;
-	Wed, 23 Apr 2025 15:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWeItZqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A11C4CEE2;
+	Wed, 23 Apr 2025 15:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421666;
-	bh=cx6b7TFJaARhOMNIhRy847cj8kkKPZgXlrQt7O3c828=;
+	s=korg; t=1745421668;
+	bh=dO4ge5baQKXYKQZcwuyY0Z/2xp7NzHY99CFV39JC6pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4cNjbBr5WbTT0kohargiUZxrdk/UTcyWzrsu5Ij/NWrBh9b8wWSFXzQAAF2GgOVY
-	 Vd0YYzM74acJTuI4A6tjR1hecOK4G14/DZ33+yyIMyLZZBXtjbDuuuSOwNfuGSgTN7
-	 MmekgOGfux/SW5pKB8sE/ai1OTCycZH1ysL7LfGc=
+	b=pWeItZqz1kJnM1SMJRZ7P6d5k2+j85KGeyg+kbm+iOMl0kYCmSvl3t4af4wbk4YQo
+	 1tkW4nPs+EiXG3xT7byFAQOyg09D8j5GceAkTFKAse/dgje0ZYjMAOTtMqzg9njzzH
+	 2io2Yd1AjejCVyVrLIFLUijQvQzASvEHKyokTcJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 164/291] HSI: ssi_protocol: Fix use after free vulnerability in ssi_protocol Driver Due to Race Condition
-Date: Wed, 23 Apr 2025 16:42:33 +0200
-Message-ID: <20250423142631.094535840@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 206/393] clk: qcom: gdsc: Capture pm_genpd_add_subdomain result code
+Date: Wed, 23 Apr 2025 16:41:42 +0200
+Message-ID: <20250423142651.895136541@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +46,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit e3f88665a78045fe35c7669d2926b8d97b892c11 upstream.
+commit 65a733464553ea192797b889d1533a1a37216f32 upstream.
 
-In the ssi_protocol_probe() function, &ssi->work is bound with
-ssip_xmit_work(), In ssip_pn_setup(), the ssip_pn_xmit() function
-within the ssip_pn_ops structure is capable of starting the
-work.
+Adding a new clause to this if/else I noticed the existing usage of
+pm_genpd_add_subdomain() wasn't capturing and returning the result code.
 
-If we remove the module which will call ssi_protocol_remove()
-to make a cleanup, it will free ssi through kfree(ssi),
-while the work mentioned above will be used. The sequence
-of operations that may lead to a UAF bug is as follows:
+pm_genpd_add_subdomain() returns an int and can fail. Capture that result
+code and throw it up the call stack if something goes wrong.
 
-CPU0                                    CPU1
-
-                        | ssip_xmit_work
-ssi_protocol_remove     |
-kfree(ssi);             |
-                        | struct hsi_client *cl = ssi->cl;
-                        | // use ssi
-
-Fix it by ensuring that the work is canceled before proceeding
-with the cleanup in ssi_protocol_remove().
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240918120749.1730-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-2-13f2bb656dad@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hsi/clients/ssi_protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/gdsc.c |   40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
---- a/drivers/hsi/clients/ssi_protocol.c
-+++ b/drivers/hsi/clients/ssi_protocol.c
-@@ -403,6 +403,7 @@ static void ssip_reset(struct hsi_client
- 	del_timer(&ssi->rx_wd);
- 	del_timer(&ssi->tx_wd);
- 	del_timer(&ssi->keep_alive);
-+	cancel_work_sync(&ssi->work);
- 	ssi->main_state = 0;
- 	ssi->send_state = 0;
- 	ssi->recv_state = 0;
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -465,6 +465,23 @@ err_disable_supply:
+ 	return ret;
+ }
+ 
++static void gdsc_pm_subdomain_remove(struct gdsc_desc *desc, size_t num)
++{
++	struct device *dev = desc->dev;
++	struct gdsc **scs = desc->scs;
++	int i;
++
++	/* Remove subdomains */
++	for (i = num - 1; i >= 0; i--) {
++		if (!scs[i])
++			continue;
++		if (scs[i]->parent)
++			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
++		else if (!IS_ERR_OR_NULL(dev->pm_domain))
++			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++	}
++}
++
+ int gdsc_register(struct gdsc_desc *desc,
+ 		  struct reset_controller_dev *rcdev, struct regmap *regmap)
+ {
+@@ -509,30 +526,27 @@ int gdsc_register(struct gdsc_desc *desc
+ 		if (!scs[i])
+ 			continue;
+ 		if (scs[i]->parent)
+-			pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
++			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
+ 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+-			pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++		if (ret)
++			goto err_pm_subdomain_remove;
+ 	}
+ 
+ 	return of_genpd_add_provider_onecell(dev->of_node, data);
++
++err_pm_subdomain_remove:
++	gdsc_pm_subdomain_remove(desc, i);
++
++	return ret;
+ }
+ 
+ void gdsc_unregister(struct gdsc_desc *desc)
+ {
+-	int i;
+ 	struct device *dev = desc->dev;
+-	struct gdsc **scs = desc->scs;
+ 	size_t num = desc->num;
+ 
+-	/* Remove subdomains */
+-	for (i = num - 1; i >= 0; i--) {
+-		if (!scs[i])
+-			continue;
+-		if (scs[i]->parent)
+-			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
+-		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+-			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
+-	}
++	gdsc_pm_subdomain_remove(desc, num);
+ 	of_genpd_del_provider(dev->of_node);
+ }
+ 
 
 
