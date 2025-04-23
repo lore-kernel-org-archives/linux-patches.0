@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4DE18DB17;
-	Wed, 23 Apr 2025 14:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0DC19DF4C;
+	Wed, 23 Apr 2025 14:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419947; cv=none; b=MwvDsNUWEjR3Oi+8km/jCYJj8KhiSyVRqWf15Mdr6Y6GwtBUWCuRDxb8BCMjmVvqUa3njfz/qv5e+tssftO2prWpp/4PLqDahpKwvueaMj55KZqoglBVAJeKX2kBaEx4Im21uSwaLWflQQUdqfw5XI8dX6QuZc6wiflEwLbeY/8=
+	t=1745419950; cv=none; b=VeX1B8Gi2RetGlfoW4ty6qzNgZgAo3J47xCCaworBjILG6TofwPw0XI+t8kIUhVBbIrht95ffD1iGqsYKe+Y4mJrVk8SxdCEwY4Y5M1G+NUVKRaaye3Ez8BgOXlScPmQr+LAM4BoQZ6S4rQ20NDDHH7UHEMX84ALxujpWdcFx9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419947; c=relaxed/simple;
-	bh=Ywfj61JihySVYb8FQE0xQufvWbFsNHdfoeiBAd/euog=;
+	s=arc-20240116; t=1745419950; c=relaxed/simple;
+	bh=EJx7NbsHPFZ9suDgNWoeqG40leZWaRltiRp3y4HOK8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hh1Y8w9ahhBqauEFyancv5K2pBcrQLaJN0ANOCjuEnpVoPJrXgsZZULOgwBAo34gJVAB/NTS50qOd6gIb4W6bMIttzVYSM2XimxwVNYehWb2x48E+gwKpDgu9U1OOnBUXavJR1PQidBwF/Fce0y1V9F0P1QcpaSjtR5+d+smyxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+jQPgIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIWzPb+n5/zf/FChrph7cK+uKEazAQppNoqUM7DXFAFibYoclqdhPqGeMusx1iAw2bI6R8dPg0UaUDq944MdHMmSJNgGMPc10ghd1uwuAW9Pgk8lQhV4Guhc+NA44rhvMX6MGJqseBRyQ1cn4rPNshBj8aS8H5ndGUdLTqkottE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bcn1GZl8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+jQPgIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F682C4CEE3;
-	Wed, 23 Apr 2025 14:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bcn1GZl8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA38C4CEE2;
+	Wed, 23 Apr 2025 14:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419947;
-	bh=Ywfj61JihySVYb8FQE0xQufvWbFsNHdfoeiBAd/euog=;
+	s=korg; t=1745419950;
+	bh=EJx7NbsHPFZ9suDgNWoeqG40leZWaRltiRp3y4HOK8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+jQPgIngQlw+t52BuYhOTMgnSEhckF0dqly4YZLjPyuFLoxB+ahyczLNHsoo0Puv
-	 YVYOoIcYxBZ++sPJFEmUjmi+jGXOCkTFneDH3/2zbXmO8OdkAzJ5fIKIDWw05g9NBf
-	 LrZRpsRMcKBnw2DbO4B2cErSe39hgKeIjpZz4+Z8=
+	b=Bcn1GZl8eunPUFN2sykcch0ykT5pfHhhbVqGTAQ3BKniVdl5WAjBa1HoX5Lc6nL3O
+	 wh5stS1+5XtZrfDdz0VlNZjkE0u7es2+8BwKcQyBBQBGYVHPlZv9lAymSxy+O5FWW2
+	 xgRuMER8WYr6kBMtaD3sBgy7X/75jQ/4tVDN6vs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 046/241] net: mctp: Set SOCK_RCU_FREE
-Date: Wed, 23 Apr 2025 16:41:50 +0200
-Message-ID: <20250423142622.390159395@linuxfoundation.org>
+Subject: [PATCH 6.1 004/291] codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()
+Date: Wed, 23 Apr 2025 16:39:53 +0200
+Message-ID: <20250423142624.592963341@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +50,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 52024cd6ec71a6ca934d0cc12452bd8d49850679 ]
+[ Upstream commit 342debc12183b51773b3345ba267e9263bdfaaef ]
 
-Bind lookup runs under RCU, so ensure that a socket doesn't go away in
-the middle of a lookup.
+After making all ->qlen_notify() callbacks idempotent, now it is safe to
+remove the check of qlen!=0 from both fq_codel_dequeue() and
+codel_qdisc_dequeue().
 
-Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250410-mctp-rcu-sock-v1-1-872de9fdc877@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211636.166257-1-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/sch_codel.c    | 5 +----
+ net/sched/sch_fq_codel.c | 6 ++----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index f6de136008f6f..57850d4dac5db 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -630,6 +630,9 @@ static int mctp_sk_hash(struct sock *sk)
- {
- 	struct net *net = sock_net(sk);
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index d7a4874543de5..5f2e068157456 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -95,10 +95,7 @@ static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
+ 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
+ 			    drop_func, dequeue_func);
  
-+	/* Bind lookup runs under RCU, remain live during that. */
-+	sock_set_flag(sk, SOCK_RCU_FREE);
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->stats.drop_count && sch->q.qlen) {
++	if (q->stats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
+ 		q->stats.drop_count = 0;
+ 		q->stats.drop_len = 0;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 8c4fee0634366..9330923a624c0 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -314,10 +314,8 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
+ 	}
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->cstats.drop_count && sch->q.qlen) {
 +
- 	mutex_lock(&net->mctp.bind_lock);
- 	sk_add_node_rcu(sk, &net->mctp.binds);
- 	mutex_unlock(&net->mctp.bind_lock);
++	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
 -- 
 2.39.5
 
