@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76008298CB5;
-	Wed, 23 Apr 2025 15:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340E419CCEC;
+	Wed, 23 Apr 2025 15:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422459; cv=none; b=elsSLn9EYi5HeRhjMfVCOWHgI7IhVtL32Lrlj0uddvfhJs9CBJ/CTwXdcOFyH80op3aLAaHZ/y4a18igUiXpt81h4R7z48BscoqD7oxfeLZSP+4clPDWFCpZApaZN7mhqkVRCSx0HbvhB5ZE++C3bFKV+3771ytDKGM9aJWAwbU=
+	t=1745422462; cv=none; b=ogSfhtXb94mW7g37uA0eGByyXS3nhkKSkLNCe6bRl/hnN5mHUR7zngaaKz73jq4C9faJaXZy7X+AsyOM/n7tFEHjufBmgmXOExhNFXkqFq6lFOT2h+TuftBDUNmGxo+WbExPP6tLiHy9rW2yacAZQOt2QG/Kl9evSSYRv+BO6oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422459; c=relaxed/simple;
-	bh=2mS9irV8Xwct1MpiAFwVeNAhkdmVOmtXTh3mB+eZpn0=;
+	s=arc-20240116; t=1745422462; c=relaxed/simple;
+	bh=KOzFCu1RVKBvJMMWBUmQrW79PGckYdeEfpWOwejzBuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HiFOszz3fZTc2w3x+fhSnjHbM7IEfY6/qdU+jgIUxM6NXpQ0Fqpe61HGuUzg/J+2Z6UT/D1nflPule+C2hCrD8g4Jd8adLq1wHBw8mTrb5aRsFWmnmHwZ+oAEcDFe3P9AdJZPmNe764GzhvFjMYsImdiN+5S6erZWP8CnBlIk4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=md3SHryQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MNjLdLmnzeS795arMfszAiturXh4rByPpoQcXDOoJozbLo32zYvThJDnX6xiN35RBeWhi9H0Ebt7pyfHs3u14Jfi1F3W2l63TPz4NseGGcJ0149qvIOGrMCcHw9N7hQdnG4gLYXhxupGbxLpEV4etqUslws9EOZ1WDPcc60V8jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsG58NL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="md3SHryQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0044EC4CEE2;
-	Wed, 23 Apr 2025 15:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsG58NL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97694C4CEE2;
+	Wed, 23 Apr 2025 15:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422459;
-	bh=2mS9irV8Xwct1MpiAFwVeNAhkdmVOmtXTh3mB+eZpn0=;
+	s=korg; t=1745422461;
+	bh=KOzFCu1RVKBvJMMWBUmQrW79PGckYdeEfpWOwejzBuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=md3SHryQH1J4wr/yclnk8gVzlvw8bNCD5ULZS0Qq+pBJJn08RsCWzFqK31/vIZ5A6
-	 F3ZZZ71EuN2nOZcgjFOraSLmMUBEmlqWeY4io/ocJJFptq+5tc6GIQbhxksL0PnBIq
-	 q+87ZM4MDnDBUJkeAYA5eyeJnG1/JKCJgcCQt4ug=
+	b=SsG58NL49qoty04B5XJfGrq7WdmfmU+u8jGo3gISkx39Ocz2hQ7lEOSWAjis80R5R
+	 ctXJqsQwINP+tHqXWfhfpJ+yqaxjuXz20DoZwnwdKfJ6ra63DMHPUiyOmw2hnD9jS7
+	 IW1RtKpOmYkWI932G7Z1tYbBvkyGoguofBGvzU2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 287/291] sign-file,extract-cert: avoid using deprecated ERR_get_error_line()
-Date: Wed, 23 Apr 2025 16:44:36 +0200
-Message-ID: <20250423142636.147703380@linuxfoundation.org>
+	Xu Kuohai <xukuohai@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.1 282/291] bpf: Prevent tail call between progs attached to different hooks
+Date: Wed, 23 Apr 2025 16:44:31 +0200
+Message-ID: <20250423142635.949057828@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -53,116 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-commit 467d60eddf55588add232feda325da7215ddaf30 upstream.
+commit 28ead3eaabc16ecc907cfb71876da028080f6356 upstream.
 
-ERR_get_error_line() is deprecated since OpenSSL 3.0.
+bpf progs can be attached to kernel functions, and the attached functions
+can take different parameters or return different return values. If
+prog attached to one kernel function tail calls prog attached to another
+kernel function, the ctx access or return value verification could be
+bypassed.
 
-Use ERR_peek_error_line() instead, and combine display_openssl_errors()
-and drain_openssl_errors() to a single function where parameter decides
-if it should consume errors silently.
+For example, if prog1 is attached to func1 which takes only 1 parameter
+and prog2 is attached to func2 which takes two parameters. Since verifier
+assumes the bpf ctx passed to prog2 is constructed based on func2's
+prototype, verifier allows prog2 to access the second parameter from
+the bpf ctx passed to it. The problem is that verifier does not prevent
+prog1 from passing its bpf ctx to prog2 via tail call. In this case,
+the bpf ctx passed to prog2 is constructed from func1 instead of func2,
+that is, the assumption for ctx access verification is bypassed.
 
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Another example, if BPF LSM prog1 is attached to hook file_alloc_security,
+and BPF LSM prog2 is attached to hook bpf_lsm_audit_rule_known. Verifier
+knows the return value rules for these two hooks, e.g. it is legal for
+bpf_lsm_audit_rule_known to return positive number 1, and it is illegal
+for file_alloc_security to return positive number. So verifier allows
+prog2 to return positive number 1, but does not allow prog1 to return
+positive number. The problem is that verifier does not prevent prog1
+from calling prog2 via tail call. In this case, prog2's return value 1
+will be used as the return value for prog1's hook file_alloc_security.
+That is, the return value rule is bypassed.
+
+This patch adds restriction for tail call to prevent such bypasses.
+
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/r/20240719110059.797546-4-xukuohai@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- certs/extract-cert.c |    4 ++--
- scripts/sign-file.c  |    6 +++---
- scripts/ssl-common.h |   23 ++++++++---------------
- 3 files changed, 13 insertions(+), 20 deletions(-)
+ include/linux/bpf.h |    1 +
+ kernel/bpf/core.c   |   19 +++++++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
---- a/certs/extract-cert.c
-+++ b/certs/extract-cert.c
-@@ -96,11 +96,11 @@ int main(int argc, char **argv)
- 		parms.cert = NULL;
- 
- 		ENGINE_load_builtin_engines();
--		drain_openssl_errors();
-+		drain_openssl_errors(__LINE__, 1);
- 		e = ENGINE_by_id("pkcs11");
- 		ERR(!e, "Load PKCS#11 ENGINE");
- 		if (ENGINE_init(e))
--			drain_openssl_errors();
-+			drain_openssl_errors(__LINE__, 1);
- 		else
- 			ERR(1, "ENGINE_init");
- 		if (key_pass)
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -114,11 +114,11 @@ static EVP_PKEY *read_private_key(const
- 		ENGINE *e;
- 
- 		ENGINE_load_builtin_engines();
--		drain_openssl_errors();
-+		drain_openssl_errors(__LINE__, 1);
- 		e = ENGINE_by_id("pkcs11");
- 		ERR(!e, "Load PKCS#11 ENGINE");
- 		if (ENGINE_init(e))
--			drain_openssl_errors();
-+			drain_openssl_errors(__LINE__, 1);
- 		else
- 			ERR(1, "ENGINE_init");
- 		if (key_pass)
-@@ -273,7 +273,7 @@ int main(int argc, char **argv)
- 
- 		/* Digest the module data. */
- 		OpenSSL_add_all_digests();
--		display_openssl_errors(__LINE__);
-+		drain_openssl_errors(__LINE__, 0);
- 		digest_algo = EVP_get_digestbyname(hash_algo);
- 		ERR(!digest_algo, "EVP_get_digestbyname");
- 
---- a/scripts/ssl-common.h
-+++ b/scripts/ssl-common.h
-@@ -3,7 +3,7 @@
-  * SSL helper functions shared by sign-file and extract-cert.
-  */
- 
--static void display_openssl_errors(int l)
-+static void drain_openssl_errors(int l, int silent)
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -250,6 +250,7 @@ struct bpf_map {
+ 	 * same prog type, JITed flag and xdp_has_frags flag.
+ 	 */
+ 	struct {
++		const struct btf_type *attach_func_proto;
+ 		spinlock_t lock;
+ 		enum bpf_prog_type type;
+ 		bool jited;
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2121,6 +2121,7 @@ bool bpf_prog_map_compatible(struct bpf_
  {
- 	const char *file;
- 	char buf[120];
-@@ -11,28 +11,21 @@ static void display_openssl_errors(int l
+ 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
+ 	bool ret;
++	struct bpf_prog_aux *aux = fp->aux;
  
- 	if (ERR_peek_error() == 0)
- 		return;
--	fprintf(stderr, "At main.c:%d:\n", l);
-+	if (!silent)
-+		fprintf(stderr, "At main.c:%d:\n", l);
- 
--	while ((e = ERR_get_error_line(&file, &line))) {
-+	while ((e = ERR_peek_error_line(&file, &line))) {
- 		ERR_error_string(e, buf);
--		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
-+		if (!silent)
-+			fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
-+		ERR_get_error();
+ 	if (fp->kprobe_override)
+ 		return false;
+@@ -2132,12 +2133,26 @@ bool bpf_prog_map_compatible(struct bpf_
+ 		 */
+ 		map->owner.type  = prog_type;
+ 		map->owner.jited = fp->jited;
+-		map->owner.xdp_has_frags = fp->aux->xdp_has_frags;
++		map->owner.xdp_has_frags = aux->xdp_has_frags;
++		map->owner.attach_func_proto = aux->attach_func_proto;
+ 		ret = true;
+ 	} else {
+ 		ret = map->owner.type  == prog_type &&
+ 		      map->owner.jited == fp->jited &&
+-		      map->owner.xdp_has_frags == fp->aux->xdp_has_frags;
++		      map->owner.xdp_has_frags == aux->xdp_has_frags;
++		if (ret &&
++		    map->owner.attach_func_proto != aux->attach_func_proto) {
++			switch (prog_type) {
++			case BPF_PROG_TYPE_TRACING:
++			case BPF_PROG_TYPE_LSM:
++			case BPF_PROG_TYPE_EXT:
++			case BPF_PROG_TYPE_STRUCT_OPS:
++				ret = false;
++				break;
++			default:
++				break;
++			}
++		}
  	}
- }
+ 	spin_unlock(&map->owner.lock);
  
--static void drain_openssl_errors(void)
--{
--	const char *file;
--	int line;
--
--	if (ERR_peek_error() == 0)
--		return;
--	while (ERR_get_error_line(&file, &line)) {}
--}
--
- #define ERR(cond, fmt, ...)				\
- 	do {						\
- 		bool __cond = (cond);			\
--		display_openssl_errors(__LINE__);	\
-+		drain_openssl_errors(__LINE__, 0);	\
- 		if (__cond) {				\
- 			errx(1, fmt, ## __VA_ARGS__);	\
- 		}					\
 
 
