@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7727281375;
-	Wed, 23 Apr 2025 14:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7178143736;
+	Wed, 23 Apr 2025 14:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420102; cv=none; b=KPqacp5mRv4Ge2KfYcz6LttrvDdcO1ZdqaNJg3U3PggwN2BLz4yj/jAirOBTBp5RPVPrabF8MmZwf1g8O4ooYKO7Z90AjdZibOAT4azbYIPIxVgiULJ/r+6PN8r0EilIQjjJb7nS5V9NFBYb3kQ09ZD/xjJ1M6BeA/FNQvLZY8Y=
+	t=1745420105; cv=none; b=BDmP1TehaDxXQMYfBiYtGlr2keBLzAdHomPPKYse7f1cb7+MKuTs4kEo2DBM52XyJYpmrQk8Y+BMyH4W5q1mazyat14Nd4+NLj7np88yMSapcJBy05dLj8r0dv4p8Rv1FXKd7EVnLXl19/o6+OzI0zf5P78IEeIWBRTiAU1RLXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420102; c=relaxed/simple;
-	bh=9ldwXaH3bFmuFCE3dB2GtedtmCjjiTi5nWX9TThtuf8=;
+	s=arc-20240116; t=1745420105; c=relaxed/simple;
+	bh=imMnaAbJUoAUmlgJA10AsNObMu9PGxHaAqc+NuvINZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOhchJEjSSIFOX8PHhY4A0f2fdM9DvqusQ+95ksr5rO6HA/2RxE9eRtoGoKcW+NrgO2ci64iGlEfMiT33rH+NFlmfOsfsWvlbT7r0dqKtSeuZmiNOIiJGwvFkrggPSzUOPjdSLIkAuRs9Q+p79fHbBVsR0ctdRM/wABr/DkNnXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jb2DfwI9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoWx87fXxi/4YLOv4y+ZTGbJ1esAhNBfLOZiJbOpfkk8uJTy7hy0Tslhj/QXnRY1kdg7G5eaGqtLUaspPBjEFWxQfNCG72YGK7xib3y/FdPDYfyGAyFa71+hBsyCKWqoXJtsGy71a4nHvLDqlr1B1XRpffeZXWHAfKVIjYvF0IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMrBPKX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jb2DfwI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A47EC4CEE8;
-	Wed, 23 Apr 2025 14:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMrBPKX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA21DC4CEEB;
+	Wed, 23 Apr 2025 14:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420102;
-	bh=9ldwXaH3bFmuFCE3dB2GtedtmCjjiTi5nWX9TThtuf8=;
+	s=korg; t=1745420105;
+	bh=imMnaAbJUoAUmlgJA10AsNObMu9PGxHaAqc+NuvINZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jb2DfwI91fzg9QbwsNKl3EdxaJFzm3CE/w6ViI8MyOfMbhrcPlVwNBoejLHjEP+Ks
-	 aFr+uHvzVxDBIJmc+47RfE+Q0EEewaLqhXbOtqnO7s4sNe4BkLA7P+6/EqdREKZWF+
-	 RLrN4QBuLwBgbfmO2WRiocsoBK5LLsBuniYCW7jI=
+	b=eMrBPKX7WHzUie6P9NXSmIR2wL+WjmHUbFNcZCHrbjp5YAArX6Xp5UJxB/HgyFt7S
+	 iCp+UjE7nZtegU57mGEV5ix3ZfxiK0VaohOFRgG3muFKu8spA6pvR7Jf+XrdZSZSOG
+	 PdEazBIgQj4fA4nX4sI8mrJyxPF5vJvS/nTJc6xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sontu mazumdar <sontu21@gmail.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/291] nft_set_pipapo: fix incorrect avx2 match of 5th field octet
-Date: Wed, 23 Apr 2025 16:40:06 +0200
-Message-ID: <20250423142625.108898714@linuxfoundation.org>
+Subject: [PATCH 6.12 100/223] i2c: atr: Fix wrong include
+Date: Wed, 23 Apr 2025 16:42:52 +0200
+Message-ID: <20250423142621.188357923@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +50,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e042ed950d4e176379ba4c0722146cd96fb38aa2 ]
+[ Upstream commit 75caec0c2aa3a7ec84348d438c74cb8a2eb4de97 ]
 
-Given a set element like:
+The fwnode.h is not supposed to be used by the drivers as it
+has the definitions for the core parts for different device
+property provider implementations. Drop it.
 
-	icmpv6 . dead:beef:00ff::1
+Note, that fwnode API for drivers is provided in property.h
+which is included here.
 
-The value of 'ff' is irrelevant, any address will be matched
-as long as the other octets are the same.
-
-This is because of too-early register clobbering:
-ymm7 is reloaded with new packet data (pkt[9])  but it still holds data
-of an earlier load that wasn't processed yet.
-
-The existing tests in nft_concat_range.sh selftests do exercise this code
-path, but do not trigger incorrect matching due to the network prefix
-limitation.
-
-Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
-Reported-by: sontu mazumdar <sontu21@gmail.com>
-Closes: https://lore.kernel.org/netfilter/CANgxkqwnMH7fXra+VUfODT-8+qFLgskq3set1cAzqqJaV4iEZg@mail.gmail.com/T/#t
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: a076a860acae ("media: i2c: add I2C Address Translator (ATR) support")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+[wsa: reworded subject]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo_avx2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-atr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index b8d3c3213efee..c15db28c5ebc4 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -994,8 +994,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(5, lt,  8,  pkt[8], bsize);
+diff --git a/drivers/i2c/i2c-atr.c b/drivers/i2c/i2c-atr.c
+index 0d54d0b5e3273..5342e934aa5e4 100644
+--- a/drivers/i2c/i2c-atr.c
++++ b/drivers/i2c/i2c-atr.c
+@@ -8,12 +8,12 @@
+  * Originally based on i2c-mux.c
+  */
  
- 		NFT_PIPAPO_AVX2_AND(6, 2, 3);
-+		NFT_PIPAPO_AVX2_AND(3, 4, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(7, lt,  9,  pkt[9], bsize);
--		NFT_PIPAPO_AVX2_AND(0, 4, 5);
-+		NFT_PIPAPO_AVX2_AND(0, 3, 5);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(1, lt, 10, pkt[10], bsize);
- 		NFT_PIPAPO_AVX2_AND(2, 6, 7);
- 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(3, lt, 11, pkt[11], bsize);
+-#include <linux/fwnode.h>
+ #include <linux/i2c-atr.h>
+ #include <linux/i2c.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ 
 -- 
 2.39.5
 
