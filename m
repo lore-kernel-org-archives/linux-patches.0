@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381C828DEF9;
-	Wed, 23 Apr 2025 15:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED46269B07;
+	Wed, 23 Apr 2025 15:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421961; cv=none; b=ECi3U/kZf+PzxeReyEK4rjNM6c60ldthYMr6bdLgg5MmzipGdOQ1L0TEgv2NqW9nNQztEo2yjzmH5ACCfp84o8L8KD92uy3u8NsYTJv77Vl/FECEOBRbFk9Uu2elrWPrczEft3cSQVnspBEqIiGyj2bDPkdpio3QUqRr4Nxs6Co=
+	t=1745421963; cv=none; b=T1jDPcbMtyv6D56kDLZ+T8I89ezEpYn61/D+ykxdUc3iz+Qf9Ng+m9n9F+zAk2d4a9+CmbK8A6B9HhtqJ3rH8sMflvxOCew2KjBB17UsQzhDcL2FXx+uZYnqHOlLno9EV1Vi0xzqUmvbdL0l6EcsQ2eycqk0itLqHo5ACTBZRP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421961; c=relaxed/simple;
-	bh=8f/HGOZ1y5RCyJQehh6qvMC9PW0sUM6P+nWSp6dxBaA=;
+	s=arc-20240116; t=1745421963; c=relaxed/simple;
+	bh=yyJQ0IuBWIPlVWmG+AXJUHI/ffC/rqZy/9F+LgLeHkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjacJz2daWmTzNU9O5+Z9xdP94Ca4c+o2bpSnQEqOy6aeFGcnqRs0DSpho+C0/Gafg0NjtJnzvXMIPDEk0JriKHrRfDSbuP9gzoTLa/lkCZF2vT+htl4lJyPcmz+JBYlTAQxCwggDKBBoNMDXuomq5+hzQPJ2kA3BCc4MnCEKEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2cPmeOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6iMB6XE7J2mSMUVLIgzrKfL03ikjr9td90kWGCuWPMd2I41+UFCC+BQDbdaVFpD1+0xjZtXAeiq5C4crApKsMlsq+3CFWUikhVhW1SMgyyqlxgVW+owUuhjMAoiBh5soZwoRuAlQ+A93fsFqj1UUX3CCPjZ3JM4nBWH2q0fPNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KapWIVDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2cPmeOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66524C4CEE3;
-	Wed, 23 Apr 2025 15:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KapWIVDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A998C4CEE2;
+	Wed, 23 Apr 2025 15:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421960;
-	bh=8f/HGOZ1y5RCyJQehh6qvMC9PW0sUM6P+nWSp6dxBaA=;
+	s=korg; t=1745421963;
+	bh=yyJQ0IuBWIPlVWmG+AXJUHI/ffC/rqZy/9F+LgLeHkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2cPmeOXfoNczIsxBTGlvqmTxKC4hjIe2p53AAdg4snOg4WjQiNmEziKMwvp4y7KS
-	 aF8TYZElr0AZnLBtE0qXgvFtwK8Q/baG7VuqDN4nGifJUivQRnptQ3bFiW6h532aiH
-	 KnvPPdoHRMEmeprWISSZSgTHXA0psqWZoMJD2B2g=
+	b=KapWIVDJomk0JkMVMAdUEhlq+pF/yIneMR7o2YzI3HhIHfcenIVM/LoWvMAgWPmX5
+	 yOmnuGIsjlVF4JnGpCcIYvsN6Sqi4JThoDOU4F3H9OStMM0RdGpUo/2Dz1TTOUba3E
+	 f2Uvf60qNyBz+HuYhBr3DLSZ/43VIMaI5nsLztQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 252/393] RDMA/hns: Fix wrong maximum DMA segment size
-Date: Wed, 23 Apr 2025 16:42:28 +0200
-Message-ID: <20250423142653.781330903@linuxfoundation.org>
+	Calvin Walton <calvin.walton@kepstin.ca>,
+	Johannes Kimmel <kernel@bareminimum.eu>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 206/291] btrfs: correctly escape subvol in btrfs_show_options()
+Date: Wed, 23 Apr 2025 16:43:15 +0200
+Message-ID: <20250423142632.800120912@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Johannes Kimmel <kernel@bareminimum.eu>
 
-[ Upstream commit 9beb2c91fb86e0be70a5833c6730441fa3c9efa8 ]
+commit dc08c58696f8555e4a802f1f23c894a330d80ab7 upstream.
 
-Set maximum DMA segment size to 2G instead of UINT_MAX due to HW limit.
+Currently, displaying the btrfs subvol mount option doesn't escape ','.
+This makes parsing /proc/self/mounts and /proc/self/mountinfo
+ambiguous for subvolume names that contain commas. The text after the
+comma could be mistaken for another option (think "subvol=foo,ro", where
+ro is actually part of the subvolumes name).
 
-Fixes: e0477b34d9d1 ("RDMA: Explicitly pass in the dma_device to ib_register_device")
-Link: https://patch.msgid.link/r/20250327114724.3454268-3-huangjunxian6@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Replace the manual escape characters list with a call to
+seq_show_option(). Thanks to Calvin Walton for suggesting this approach.
+
+Fixes: c8d3fe028f64 ("Btrfs: show subvol= and subvolid= in /proc/mounts")
+CC: stable@vger.kernel.org # 5.4+
+Suggested-by: Calvin Walton <calvin.walton@kepstin.ca>
+Signed-off-by: Johannes Kimmel <kernel@bareminimum.eu>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/super.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index dcd763dbb636d..a7e4c951f8fe4 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -731,7 +731,7 @@ static int hns_roce_register_device(struct hns_roce_dev *hr_dev)
- 		if (ret)
- 			return ret;
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1640,8 +1640,7 @@ static int btrfs_show_options(struct seq
+ 	subvol_name = btrfs_get_subvol_name_from_objectid(info,
+ 			BTRFS_I(d_inode(dentry))->root->root_key.objectid);
+ 	if (!IS_ERR(subvol_name)) {
+-		seq_puts(seq, ",subvol=");
+-		seq_escape(seq, subvol_name, " \t\n\\");
++		seq_show_option(seq, "subvol", subvol_name);
+ 		kfree(subvol_name);
  	}
--	dma_set_max_seg_size(dev, UINT_MAX);
-+	dma_set_max_seg_size(dev, SZ_2G);
- 	ret = ib_register_device(ib_dev, "hns_%d", dev);
- 	if (ret) {
- 		dev_err(dev, "ib_register_device failed!\n");
--- 
-2.39.5
-
+ 	return 0;
 
 
