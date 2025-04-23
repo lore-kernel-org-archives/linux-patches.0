@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E8B27FD42;
-	Wed, 23 Apr 2025 15:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F398A281344;
+	Wed, 23 Apr 2025 15:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421288; cv=none; b=cYO6lsthkwijJ7YjRD0KstltdBi2LQEUssqUz05zirGkzkX/YLSxB374YN37v/7LB5owqJPeNOPny8lrrG3dnIbf1/nTP3dvdRJKStR8afjWgKrhnbqOxOUJu4ioe4SckrpfpY6wbkxOIHa+d1qLLHMbzqVnDrCfi2Bc8AAc9JU=
+	t=1745421291; cv=none; b=q3bFoRJpLV5A9XWwG5UQ0LbWR+idBUu5uEbo2cl5mi/6KwEra41FpFTK7pIm5IKTPqftSga9v0wr+DdddR5hvulL16r7AwbwWdNKzyHmZ1iHSuD9GMuXu/oCo4qAztvlEK4RuuQHRla0V4/XLwk4Y4bOg6KK2iZmMvgF9Vz76jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421288; c=relaxed/simple;
-	bh=NXqQux3KbU2z1cFrHM20mCu9trQGSCPnivbUFF3mruQ=;
+	s=arc-20240116; t=1745421291; c=relaxed/simple;
+	bh=LQEWZIv+fj1ARm2a/e2DSdFFvuOGFD70RXYb2xYTxFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZRuMACNfQqGRY2R6a+gpzInPKHFZ0DQDXnBBQ4prSmwrMIuB6mstfc5teANxyf2+YMO1LNnNLu/xBDVykXW0+apeYI9KH6WlL0Lto7TD5YpiSnTWziO5EhYklK9OVLNr4fi4tu9CMsjkXCFDY9HUtwU5hXRH25+YNZG+ojFqk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+/o+9CL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3X6APjiJGTZ1D3vckM6CHrWRr6w6Ti8ppf/ml4+Hj6oj8ycnxaqAx5N2a8tVeIxAstRRvRiO+8P3z0gqSm0NRTxCVYaX2Z0SpW+gzndnNattWOu0EbU/S0bizZ/DqVfjjb9Sz1nixcw8vJrjDhYtQBDUZr+I9yBnC/N1AwNH1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GP9rQjyX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+/o+9CL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9719C4CEE2;
-	Wed, 23 Apr 2025 15:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GP9rQjyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8269BC4CEE2;
+	Wed, 23 Apr 2025 15:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421288;
-	bh=NXqQux3KbU2z1cFrHM20mCu9trQGSCPnivbUFF3mruQ=;
+	s=korg; t=1745421290;
+	bh=LQEWZIv+fj1ARm2a/e2DSdFFvuOGFD70RXYb2xYTxFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+/o+9CLOeEMnHxY05y2CShV+sBjD9E1FX0TXTl+VNGMze4YDwgI698juluQGia42
-	 W8twWQHAA2JHMTA5lIhlR43Uj+Qwi2Wc7X5uTLl5pCc03T0pT0PCSCYCzMXdtdAIXP
-	 PboUmI2uZ+WuOAdSxZjEhwRHup+znH/ODLxHpn6A=
+	b=GP9rQjyX3moEs8T0LRnvU85Jmo9XEdfLjgZuTotoVs4DWQ109V+aPZlhVEDYPi8mj
+	 SJws2H21f+df2Ohq/gIzsSmY3J1d7Af+g46RhFirF4bEO8lJ9FTjnyvC2NsrySeOts
+	 yIr4nQYVAc5obv+/vW91/fuNhBQY2Pr5V4eB8IdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.12 208/223] block: dont reorder requests in blk_add_rq_to_plug
-Date: Wed, 23 Apr 2025 16:44:40 +0200
-Message-ID: <20250423142625.637975185@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Lanzano <lanzano.alex@gmail.com>
+Subject: [PATCH 6.14 172/241] drm/repaper: fix integer overflows in repeat functions
+Date: Wed, 23 Apr 2025 16:43:56 +0200
+Message-ID: <20250423142627.557851190@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit e70c301faece15b618e54b613b1fd6ece3dd05b4 upstream.
+commit 4d098000ac193f359e6b8ca4801dbdbd6a27b41f upstream.
 
-Add requests to the tail of the list instead of the front so that they
-are queued up in submission order.
+There are conditions, albeit somewhat unlikely, under which right hand
+expressions, calculating the end of time period in functions like
+repaper_frame_fixed_repeat(), may overflow.
 
-Remove the re-reordering in blk_mq_dispatch_plug_list, virtio_queue_rqs
-and nvme_queue_rqs now that the list is ordered as expected.
+For instance, if 'factor10x' in repaper_get_temperature() is high
+enough (170), as is 'epd->stage_time' in repaper_probe(), then the
+resulting value of 'end' will not fit in unsigned int expression.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241113152050.157179-6-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Mitigate this by casting 'epd->factored_stage_time' to wider type before
+any multiplication is done.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 3589211e9b03 ("drm/tinydrm: Add RePaper e-ink driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Lanzano <lanzano.alex@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250116134801.22067-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c             |    4 ++--
- drivers/block/virtio_blk.c |    2 +-
- drivers/nvme/host/pci.c    |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tiny/repaper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1386,7 +1386,7 @@ static void blk_add_rq_to_plug(struct bl
- 	 */
- 	if (!plug->has_elevator && (rq->rq_flags & RQF_SCHED_TAGS))
- 		plug->has_elevator = true;
--	rq_list_add_head(&plug->mq_list, rq);
-+	rq_list_add_tail(&plug->mq_list, rq);
- 	plug->rq_count++;
- }
+--- a/drivers/gpu/drm/tiny/repaper.c
++++ b/drivers/gpu/drm/tiny/repaper.c
+@@ -456,7 +456,7 @@ static void repaper_frame_fixed_repeat(s
+ 				       enum repaper_stage stage)
+ {
+ 	u64 start = local_clock();
+-	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
++	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
  
-@@ -2840,7 +2840,7 @@ static void blk_mq_dispatch_plug_list(st
- 			rq_list_add_tail(&requeue_list, rq);
- 			continue;
- 		}
--		list_add(&rq->queuelist, &list);
-+		list_add_tail(&rq->queuelist, &list);
- 		depth++;
- 	} while (!rq_list_empty(&plug->mq_list));
+ 	do {
+ 		repaper_frame_fixed(epd, fixed_value, stage);
+@@ -467,7 +467,7 @@ static void repaper_frame_data_repeat(st
+ 				      const u8 *mask, enum repaper_stage stage)
+ {
+ 	u64 start = local_clock();
+-	u64 end = start + (epd->factored_stage_time * 1000 * 1000);
++	u64 end = start + ((u64)epd->factored_stage_time * 1000 * 1000);
  
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -514,7 +514,7 @@ static void virtio_queue_rqs(struct rq_l
- 		vq = this_vq;
- 
- 		if (virtblk_prep_rq_batch(req))
--			rq_list_add_head(&submit_list, req); /* reverse order */
-+			rq_list_add_tail(&submit_list, req);
- 		else
- 			rq_list_add_tail(&requeue_list, req);
- 	}
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1026,7 +1026,7 @@ static void nvme_queue_rqs(struct rq_lis
- 		nvmeq = req->mq_hctx->driver_data;
- 
- 		if (nvme_prep_rq_batch(nvmeq, req))
--			rq_list_add_head(&submit_list, req); /* reverse order */
-+			rq_list_add_tail(&submit_list, req);
- 		else
- 			rq_list_add_tail(&requeue_list, req);
- 	}
+ 	do {
+ 		repaper_frame_data(epd, image, mask, stage);
 
 
