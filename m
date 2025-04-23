@@ -1,42 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609F028C5AB;
-	Wed, 23 Apr 2025 15:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB428C5AB;
+	Wed, 23 Apr 2025 15:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421897; cv=none; b=chVdx6V4KzHfBPkQpsuelf8MjmTV3iDdb705ry9AcOzBHjiz4spa1VHpGKRmljTNLGqay+BLRDLZ4b0SeZxbk+/jo0LQMBDpMvw0SR04Iq4CgvIWM0hCyqiaitD10uDQKbJpC5F+g+EdfDePH0X0LBpi5B0yj0Ej7V51xkHebYg=
+	t=1745421900; cv=none; b=osOzKVETAeFv1RdyyjXcwfo+9mGdmroXM57OsRqAmqlTqmBCheYxAXW/pQAqXVaqQwAjb88Er1ALiYDRR0rkW4GXZ2XHbakM+4KYmVPQudq2yJ0oGndLV3nSCW9xY8APzSYFIqD+/QAGhY1qP2lMU0Z5UG7BJ+V9tFO2GoC3ZoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421897; c=relaxed/simple;
-	bh=aq/oIcSBccrR5rCr4VZtfo0ghRXvrnoQtu1mo2Yndbc=;
+	s=arc-20240116; t=1745421900; c=relaxed/simple;
+	bh=oah/ekBZQSHr1KMmd7bg97v5R3bk5xbDZ+FNXImCV3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iE6NaASpfWffnk6TCHsIyEWGSvnNs3MqzB6gkzqPuholRYYLaU12rNcZOTfBANH/E1DhpzoJAjh+l90sNHRm0iclQ3tQQicYwhtnRAmm4VHN04+st8HkihdvfD6YjmOjKzGtFxVa9wPuezHnhK95Up4c5+aX9rHWtvVzkrNSDWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NE/0vmSF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwHbx5why2I4P3XSU1mfKPqR+5ScK/dQSF6KG/D3HC0SucuLuYK0QEmgVBO1ljlfgINIHWvro+samoL+HErlNU/kfrFTFhZnljnzoMlJMlMuZO4s0sxkP8PYSCQNrNyUlHs7BDLF3qM6WnfKxaKpKEDDyGlS87OLnrTZwwnlVMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSAvGnkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NE/0vmSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5729C4CEE2;
-	Wed, 23 Apr 2025 15:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSAvGnkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66951C4CEE2;
+	Wed, 23 Apr 2025 15:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421897;
-	bh=aq/oIcSBccrR5rCr4VZtfo0ghRXvrnoQtu1mo2Yndbc=;
+	s=korg; t=1745421899;
+	bh=oah/ekBZQSHr1KMmd7bg97v5R3bk5xbDZ+FNXImCV3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NE/0vmSFx+FWXjFfhh3kPEfA1LZdxkwZRMQB6VSHDBXeicG4mcvsqg/siQy99DoES
-	 mpmS35intcaTazESY7X4CKNMn31TA27+SmB2LySIihyKH0+pMk8SRKWZ7zdEXMQi7j
-	 nifzdA+dQDEKKUD5KOpPvjOWUgAD8kHTChR0lClM=
+	b=TSAvGnkUEQ5bHZ5hn7P6JbLzHcm7uHjWW57sDTv9e/Kax6egiP0vT5xxXJErsw+a8
+	 XmRxJv/+Zku2IBN3pkwAeidP+Vvhfs1VlKFwcWvyf1gDcFvmDcN4Hr7oKcHIH05dkc
+	 4Y8FRodKZN8c5lW9QpAx+vo2HGEla/8bhL4fVeNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/291] riscv: KGDB: Do not inline arch_kgdb_breakpoint()
-Date: Wed, 23 Apr 2025 16:43:04 +0200
-Message-ID: <20250423142632.348669705@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Vishal Annapurve <vannapurve@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andi Kleen <ak@linux.intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Ryan Afranji <afranji@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	stable@kernel.org
+Subject: [PATCH 6.6 233/393] x86/paravirt: Move halt paravirt calls under CONFIG_PARAVIRT
+Date: Wed, 23 Apr 2025 16:42:09 +0200
+Message-ID: <20250423142653.014426963@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +58,200 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 3af4bec9c1db3f003be4d5ae09b6a737e4be1612 ]
+commit 22cc5ca5de52bbfc36a7d4a55323f91fb4492264 upstream.
 
-The arch_kgdb_breakpoint() function defines the kgdb_compiled_break
-symbol using inline assembly.
+CONFIG_PARAVIRT_XXL is mainly defined/used by XEN PV guests. For
+other VM guest types, features supported under CONFIG_PARAVIRT
+are self sufficient. CONFIG_PARAVIRT mainly provides support for
+TLB flush operations and time related operations.
 
-There's a potential issue where the compiler might inline
-arch_kgdb_breakpoint(), which would then define the kgdb_compiled_break
-symbol multiple times, leading to fail to link vmlinux.o.
+For TDX guest as well, paravirt calls under CONFIG_PARVIRT meets
+most of its requirement except the need of HLT and SAFE_HLT
+paravirt calls, which is currently defined under
+CONFIG_PARAVIRT_XXL.
 
-This isn't merely a potential compilation problem. The intent here
-is to determine the global symbol address of kgdb_compiled_break,
-and if this function is inlined multiple times, it would logically
-be a grave error.
+Since enabling CONFIG_PARAVIRT_XXL is too bloated for TDX guest
+like platforms, move HLT and SAFE_HLT paravirt calls under
+CONFIG_PARAVIRT.
 
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/5b0adf9b-2b22-43fe-ab74-68df94115b9a@ghiti.fr/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Co-developed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/F22359AFB6FF9FD8+20250411073222.56820-1-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Moving HLT and SAFE_HLT paravirt calls are not fatal and should not
+break any functionality for current users of CONFIG_PARAVIRT.
+
+Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
+Co-developed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Vishal Annapurve <vannapurve@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Andi Kleen <ak@linux.intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Ryan Afranji <afranji@google.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20250228014416.3925664-2-vannapurve@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/kgdb.h | 9 +--------
- arch/riscv/kernel/kgdb.c      | 8 ++++++++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ arch/x86/include/asm/irqflags.h       |   40 ++++++++++++++++++----------------
+ arch/x86/include/asm/paravirt.h       |   20 ++++++++---------
+ arch/x86/include/asm/paravirt_types.h |    3 --
+ arch/x86/kernel/paravirt.c            |   14 ++++++-----
+ 4 files changed, 41 insertions(+), 36 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kgdb.h b/arch/riscv/include/asm/kgdb.h
-index 46677daf708bd..cc11c4544cffd 100644
---- a/arch/riscv/include/asm/kgdb.h
-+++ b/arch/riscv/include/asm/kgdb.h
-@@ -19,16 +19,9 @@
+--- a/arch/x86/include/asm/irqflags.h
++++ b/arch/x86/include/asm/irqflags.h
+@@ -56,6 +56,28 @@ static __always_inline void native_halt(
  
- #ifndef	__ASSEMBLY__
+ #endif
  
-+void arch_kgdb_breakpoint(void);
- extern unsigned long kgdb_compiled_break;
- 
--static inline void arch_kgdb_breakpoint(void)
--{
--	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
--}
--
- #endif /* !__ASSEMBLY__ */
- 
- #define DBG_REG_ZERO "zero"
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 963ed7edcff26..b0db3350d243b 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -273,6 +273,14 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- 	regs->epc = pc;
- }
- 
-+noinline void arch_kgdb_breakpoint(void)
++#ifndef CONFIG_PARAVIRT
++#ifndef __ASSEMBLY__
++/*
++ * Used in the idle loop; sti takes one instruction cycle
++ * to complete:
++ */
++static __always_inline void arch_safe_halt(void)
 +{
-+	asm(".global kgdb_compiled_break\n"
-+	    ".option norvc\n"
-+	    "kgdb_compiled_break: ebreak\n"
-+	    ".option rvc\n");
++	native_safe_halt();
 +}
 +
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
- 				char *remcom_out_buffer)
++/*
++ * Used when interrupts are already enabled or to
++ * shutdown the processor:
++ */
++static __always_inline void halt(void)
++{
++	native_halt();
++}
++#endif /* __ASSEMBLY__ */
++#endif /* CONFIG_PARAVIRT */
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ #include <asm/paravirt.h>
+ #else
+@@ -78,24 +100,6 @@ static __always_inline void arch_local_i
+ }
+ 
+ /*
+- * Used in the idle loop; sti takes one instruction cycle
+- * to complete:
+- */
+-static __always_inline void arch_safe_halt(void)
+-{
+-	native_safe_halt();
+-}
+-
+-/*
+- * Used when interrupts are already enabled or to
+- * shutdown the processor:
+- */
+-static __always_inline void halt(void)
+-{
+-	native_halt();
+-}
+-
+-/*
+  * For spinlocks, etc:
+  */
+ static __always_inline unsigned long arch_local_irq_save(void)
+--- a/arch/x86/include/asm/paravirt.h
++++ b/arch/x86/include/asm/paravirt.h
+@@ -103,6 +103,16 @@ static inline void notify_page_enc_statu
+ 	PVOP_VCALL3(mmu.notify_page_enc_status_changed, pfn, npages, enc);
+ }
+ 
++static __always_inline void arch_safe_halt(void)
++{
++	PVOP_VCALL0(irq.safe_halt);
++}
++
++static inline void halt(void)
++{
++	PVOP_VCALL0(irq.halt);
++}
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ static inline void load_sp0(unsigned long sp0)
  {
--- 
-2.39.5
-
+@@ -168,16 +178,6 @@ static inline void __write_cr4(unsigned
+ 	PVOP_VCALL1(cpu.write_cr4, x);
+ }
+ 
+-static __always_inline void arch_safe_halt(void)
+-{
+-	PVOP_VCALL0(irq.safe_halt);
+-}
+-
+-static inline void halt(void)
+-{
+-	PVOP_VCALL0(irq.halt);
+-}
+-
+ extern noinstr void pv_native_wbinvd(void);
+ 
+ static __always_inline void wbinvd(void)
+--- a/arch/x86/include/asm/paravirt_types.h
++++ b/arch/x86/include/asm/paravirt_types.h
+@@ -130,10 +130,9 @@ struct pv_irq_ops {
+ 	struct paravirt_callee_save save_fl;
+ 	struct paravirt_callee_save irq_disable;
+ 	struct paravirt_callee_save irq_enable;
+-
++#endif
+ 	void (*safe_halt)(void);
+ 	void (*halt)(void);
+-#endif
+ } __no_randomize_layout;
+ 
+ struct pv_mmu_ops {
+--- a/arch/x86/kernel/paravirt.c
++++ b/arch/x86/kernel/paravirt.c
+@@ -142,6 +142,11 @@ int paravirt_disable_iospace(void)
+ 	return request_resource(&ioport_resource, &reserve_ioports);
+ }
+ 
++static noinstr void pv_native_safe_halt(void)
++{
++	native_safe_halt();
++}
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ static noinstr void pv_native_write_cr2(unsigned long val)
+ {
+@@ -162,11 +167,6 @@ noinstr void pv_native_wbinvd(void)
+ {
+ 	native_wbinvd();
+ }
+-
+-static noinstr void pv_native_safe_halt(void)
+-{
+-	native_safe_halt();
+-}
+ #endif
+ 
+ struct pv_info pv_info = {
+@@ -224,9 +224,11 @@ struct paravirt_patch_template pv_ops =
+ 	.irq.save_fl		= __PV_IS_CALLEE_SAVE(pv_native_save_fl),
+ 	.irq.irq_disable	= __PV_IS_CALLEE_SAVE(pv_native_irq_disable),
+ 	.irq.irq_enable		= __PV_IS_CALLEE_SAVE(pv_native_irq_enable),
++#endif /* CONFIG_PARAVIRT_XXL */
++
++	/* Irq HLT ops. */
+ 	.irq.safe_halt		= pv_native_safe_halt,
+ 	.irq.halt		= native_halt,
+-#endif /* CONFIG_PARAVIRT_XXL */
+ 
+ 	/* Mmu ops. */
+ 	.mmu.flush_tlb_user	= native_flush_tlb_local,
 
 
