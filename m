@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B8127FD4F;
-	Wed, 23 Apr 2025 15:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36FC28BA82;
+	Wed, 23 Apr 2025 15:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420680; cv=none; b=WHt6wASAIXTIDlH4GYWHhpQSQQgWiH+jd0b6Z07tbHHTAaYT3vMCqnq23HRd6km5nPZkSi6qnrgnufoTbqK1X5NdosXYH0ubHylPYoFIHEe2xvp3/kK/mIy6DLuB+9AoLXJKOHeLhJ71euE4lv5OzNSKo7KkTBH8wWpDZLdWwd0=
+	t=1745420682; cv=none; b=jPpycnt1aIaXn/2vBb9h+7iMf8iKuitrunqkx59iZ9Y8vX4603TX4lGvEnYbiiU1+fRSZj1NJu3F2YUsXiU/wHbNn/zB4MPts+YyveZFKHStoA2BW1kn6XTQ2xfztEGBd+M4lPbB0tEQN4DGQ5OMh1dPIvb/tgFP0KRqTjvvMhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420680; c=relaxed/simple;
-	bh=RoICGuCjCBcJnSLtZccIKa7Sn/APJSb3DRGPA3hEI7s=;
+	s=arc-20240116; t=1745420682; c=relaxed/simple;
+	bh=wC04MLuh8TS2w6gb8q/f8j9cThBDHgJfpFQiV4OhiBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/CkHBl0+LXbPvalf2DsBGHXvQqpnuClX5R+2kDAvy38isylHGnTQCQ/6kaoy72MNmYadEluZ5NShTEIzDUUfLOMhGfDQrV5gmPW+upfAGAieCXLDt3vigRpgNojoSZLMV6hBt6ZvKnVgFfwYzBOZAy1sXhm6TNQuC6mYXo7HBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkCms9wj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbuJLW9oEarSpBlgb/FZFmnlQi3MKWg6YJrC1m4HkQvjH1Dtnzymv2rPSaCTpMd90Hth1fwgfokn8XWp3Y3RHGgUJl46fvedYkHyNQY9V/Qhzldo7Njt4gNC1CRAi3aeF9vXAkrJ/z6iMR2CcAHynDweMJxby94yHcmmJ3Ouf7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPsj8itE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkCms9wj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5353DC4CEE2;
-	Wed, 23 Apr 2025 15:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPsj8itE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026D1C4CEE2;
+	Wed, 23 Apr 2025 15:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420679;
-	bh=RoICGuCjCBcJnSLtZccIKa7Sn/APJSb3DRGPA3hEI7s=;
+	s=korg; t=1745420682;
+	bh=wC04MLuh8TS2w6gb8q/f8j9cThBDHgJfpFQiV4OhiBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkCms9wjOCVpqY0bS3qmTauSsQ/7K3QKDYT++oKunWGNMVELd8s7sPEneKXBJx8Ey
-	 5K83nibEy7R4QM7EbrYsqD9Q2BJ4ZCO6Dm2yiyElCrr/pIP86xO3ZGMlHIRqO8OtFf
-	 GtpfAd/WR1EQXG4EysHLxjgMjy2mhgL/Y/deggJk=
+	b=wPsj8itET+8dYkMSidQUsuvA6VZkKq9IqZnJ5r1jDCEH8Gg8uRChNw4bT9b1fREqA
+	 gAs9Niw4Sp1/eToVIQuNy80RKsY6TUP+FqiuWNW9noras87qrHIoB7PJfmrBGN5axv
+	 +NHPd3A5ity5DeNNnvDj3ouJyRylXkf4WpUG1gFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 113/241] drm/v3d: Fix Indirect Dispatch configuration for V3D 7.1.6 and later
-Date: Wed, 23 Apr 2025 16:42:57 +0200
-Message-ID: <20250423142625.192185789@linuxfoundation.org>
+Subject: [PATCH 6.6 099/393] drm/bridge: panel: forbid initializing a panel with unknown connector type
+Date: Wed, 23 Apr 2025 16:39:55 +0200
+Message-ID: <20250423142647.377988842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,79 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit dcdae6e92d4e062da29235fe88980604595e3f0f ]
+[ Upstream commit b296955b3a740ecc8b3b08e34fd64f1ceabb8fb4 ]
 
-This commit is a resubmission of commit 1fe1c66274fb ("drm/v3d: Fix
-Indirect Dispatch configuration for V3D 7.1.6 and later"), which was
-accidentally reverted by commit 91dae758bdb8 ("Merge tag
-'drm-misc-next-2024-08-01' of https://gitlab.freedesktop.org/drm/misc/kernel
-into drm-next"), likely due to an unfortunate conflict resolution.
+Having an DRM_MODE_CONNECTOR_Unknown connector type is considered bad, and
+drm_panel_bridge_add_typed() and derivatives are deprecated for this.
 
->From the original commit message:
+drm_panel_init() won't prevent initializing a panel with a
+DRM_MODE_CONNECTOR_Unknown connector type. Luckily there are no in-tree
+users doing it, so take this as an opportinuty to document a valid
+connector type must be passed.
 
-```
-`args->cfg[4]` is configured in Indirect Dispatch using the number of
-batches. Currently, for all V3D tech versions, `args->cfg[4]` equals the
-number of batches subtracted by 1. But, for V3D 7.1.6 and later, we must not
-subtract 1 from the number of batches.
+Returning an error if this rule is violated is not possible because
+drm_panel_init() is a void function. Add at least a warning to make any
+violations noticeable, especially to non-upstream drivers.
 
-Implement the fix by checking the V3D tech version and revision.
-
-Fixes several `dEQP-VK.synchronization*` CTS tests related to Indirect Dispatch.
-```
-
-Fixes: 91dae758bdb8 ("Merge tag 'drm-misc-next-2024-08-01' of https://gitlab.freedesktop.org/drm/misc/kernel into drm-next")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://lore.kernel.org/r/20250409205051.9639-1-mcanal@igalia.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-5-88ca5827d7af@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_panel.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index 05608c894ed93..6db503a569180 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -428,7 +428,8 @@ v3d_rewrite_csd_job_wg_counts_from_indirect(struct v3d_cpu_job *job)
- 	struct v3d_bo *bo = to_v3d_bo(job->base.bo[0]);
- 	struct v3d_bo *indirect = to_v3d_bo(indirect_csd->indirect);
- 	struct drm_v3d_submit_csd *args = &indirect_csd->job->args;
--	u32 *wg_counts;
-+	struct v3d_dev *v3d = job->base.v3d;
-+	u32 num_batches, *wg_counts;
- 
- 	v3d_get_bo_vaddr(bo);
- 	v3d_get_bo_vaddr(indirect);
-@@ -441,8 +442,17 @@ v3d_rewrite_csd_job_wg_counts_from_indirect(struct v3d_cpu_job *job)
- 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[2] = wg_counts[2] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
--	args->cfg[4] = DIV_ROUND_UP(indirect_csd->wg_size, 16) *
--		       (wg_counts[0] * wg_counts[1] * wg_counts[2]) - 1;
+diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+index cfbe020de54e0..98df4788d096f 100644
+--- a/drivers/gpu/drm/drm_panel.c
++++ b/drivers/gpu/drm/drm_panel.c
+@@ -49,7 +49,7 @@ static LIST_HEAD(panel_list);
+  * @dev: parent device of the panel
+  * @funcs: panel operations
+  * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
+- *	the panel interface
++ *	the panel interface (must NOT be DRM_MODE_CONNECTOR_Unknown)
+  *
+  * Initialize the panel structure for subsequent registration with
+  * drm_panel_add().
+@@ -57,6 +57,9 @@ static LIST_HEAD(panel_list);
+ void drm_panel_init(struct drm_panel *panel, struct device *dev,
+ 		    const struct drm_panel_funcs *funcs, int connector_type)
+ {
++	if (connector_type == DRM_MODE_CONNECTOR_Unknown)
++		DRM_WARN("%s: %s: a valid connector type is required!\n", __func__, dev_name(dev));
 +
-+	num_batches = DIV_ROUND_UP(indirect_csd->wg_size, 16) *
-+		      (wg_counts[0] * wg_counts[1] * wg_counts[2]);
-+
-+	/* V3D 7.1.6 and later don't subtract 1 from the number of batches */
-+	if (v3d->ver < 71 || (v3d->ver == 71 && v3d->rev < 6))
-+		args->cfg[4] = num_batches - 1;
-+	else
-+		args->cfg[4] = num_batches;
-+
-+	WARN_ON(args->cfg[4] == ~0);
- 
- 	for (int i = 0; i < 3; i++) {
- 		/* 0xffffffff indicates that the uniform rewrite is not needed */
+ 	INIT_LIST_HEAD(&panel->list);
+ 	INIT_LIST_HEAD(&panel->followers);
+ 	mutex_init(&panel->follower_lock);
 -- 
 2.39.5
 
