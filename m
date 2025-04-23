@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574F6283C98;
-	Wed, 23 Apr 2025 15:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B46283CAC;
+	Wed, 23 Apr 2025 15:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421618; cv=none; b=PNq5CqaKCTBbOrn75CF/+M7YiQtPAPBYyyex/0QUXyMsQ0rbUlAVUqAWtaDPIYirZmoR2whL9AM4Q6ZArtqlTTOaF4NhxiJHuRR7twRgbbR10MgUCm/N7aEMLSh04oXhGrFSFHsL/BsoYbEbvb0BpmAT/TACioIFZDw7Q2sodtQ=
+	t=1745421621; cv=none; b=qopTtnDlnKqLJ/KGBBzpSKwdN0xeuEDYzDqbnndk180xdapnjtHBgUov4gZGuH+gyf8Zh9DaR3Q0bruEndY9W77S0dp7KCv/9GoEtQwybmB6WrLe4A2azc4EfU+9O/YLypDp4LnvWTMT+kHnIrhum8Vb+Bkq+R2dyzLlJ4btyKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421618; c=relaxed/simple;
-	bh=tnUac6utk5nc/nppFvT1+IWmfDmoSvpEUWAJDkQrc2g=;
+	s=arc-20240116; t=1745421621; c=relaxed/simple;
+	bh=L1hf1qgdFy7Pqd1+hUG3YMVguCG1q/5v1j0NpIeS6SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nvaf+GixOgBhnUCdlxGR7yQPWFZtZDO4T8MGcIndFTc+vTV/PvXmQ4cCPFOpwLoQ5lycYHefjm+tWP9TlZnL03dE5mdUKX+j2npr3/jdow5J/ARRZdRp6jJ7j1QnsB1ZkipmKqSakO/IE++BedUpGYPDqhUP8wXjqx2XBt1h1P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlP9mGFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SKl3JOo3tfUpKa8buW3IgPRbzydWCpxWcvkIOelKWF0ZhroH3NDEKlf5BWlDjoQmLDvK9yW+yLskhI3DXtKxV6J9jzFiPQbPuvoxjxQHgQ3Iqn1YN+jkhC6Q3rGH1NAe+oyw+ajtl7LFwVCnG7036ARhWw0agBquY35RSrVJTjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHVpRXSH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlP9mGFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D73C4CEE2;
-	Wed, 23 Apr 2025 15:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHVpRXSH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D682C4CEE2;
+	Wed, 23 Apr 2025 15:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421618;
-	bh=tnUac6utk5nc/nppFvT1+IWmfDmoSvpEUWAJDkQrc2g=;
+	s=korg; t=1745421620;
+	bh=L1hf1qgdFy7Pqd1+hUG3YMVguCG1q/5v1j0NpIeS6SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wlP9mGFetR/1EKWfD+DWc3nrt5mFPJg7dwue3p2/3JIhDB9cXCKb/YdXQCzq49FBe
-	 a1SyDctH7k8QWV+ZhHmg1i6uHmyxj5/ZN7cFEJI7uNw88+eZ4iovLUCRTpMhV2wmMl
-	 EsFm0dWOqQ/w8iYM1xW+Mm5DNw3wBtU61uQI5Wfo=
+	b=fHVpRXSHgCGVtn3TF18upgZg9SXUMUBVC7uHXBWoxBoRYNCkH0vKFnHFXbMUl1wTr
+	 ijWvK8CzclyiJBNh7QVrGjzImLRy8xTVq12OpfsvIikOlR6FC67qdYQeAWxQ3TcwcT
+	 StbLHuugg5tauWOSKAnq5gP2kJfDke9IvizNqvlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.14 212/241] drm/xe/dma_buf: stop relying on placement in unmap
-Date: Wed, 23 Apr 2025 16:44:36 +0200
-Message-ID: <20250423142629.209447971@linuxfoundation.org>
+Subject: [PATCH 6.14 203/241] drm/xe: Fix an out-of-bounds shift when invalidating TLB
+Date: Wed, 23 Apr 2025 16:44:27 +0200
+Message-ID: <20250423142628.830729242@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
 References: <20250423142620.525425242@linuxfoundation.org>
@@ -54,57 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 25583ad42d091819157832e894179200ba8b54ee upstream.
+commit 7bcfeddb36b77f9fe3b010bb0b282b7618420bba upstream.
 
-The is_vram() is checking the current placement, however if we consider
-exported VRAM with dynamic dma-buf, it looks possible for the xe driver
-to async evict the memory, notifying the importer, however importer does
-not have to call unmap_attachment() immediately, but rather just as
-"soon as possible", like when the dma-resv idles. Following from this we
-would then pipeline the move, attaching the fence to the manager, and
-then update the current placement. But when the unmap_attachment() runs
-at some later point we might see that is_vram() is now false, and take
-the complete wrong path when dma-unmapping the sg, leading to
-explosions.
+When the size of the range invalidated is larger than
+rounddown_pow_of_two(ULONG_MAX),
+The function macro roundup_pow_of_two(length) will hit an out-of-bounds
+shift [1].
 
-To fix this check if the sgl was mapping a struct page.
-
+Use a full TLB invalidation for such cases.
 v2:
-  - The attachment can be mapped multiple times it seems, so we can't
-    really rely on encoding something in the attachment->priv. Instead
-    see if the page_link has an encoded struct page. For vram we expect
-    this to be NULL.
+- Use a define for the range size limit over which we use a full
+  TLB invalidation. (Lucas)
+- Use a better calculation of the limit.
 
-Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4563
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+[1]:
+[   39.202421] ------------[ cut here ]------------
+[   39.202657] UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
+[   39.202673] shift exponent 64 is too large for 64-bit type 'long unsigned int'
+[   39.202688] CPU: 8 UID: 0 PID: 3129 Comm: xe_exec_system_ Tainted: G     U             6.14.0+ #10
+[   39.202690] Tainted: [U]=USER
+[   39.202690] Hardware name: ASUS System Product Name/PRIME B560M-A AC, BIOS 2001 02/01/2023
+[   39.202691] Call Trace:
+[   39.202692]  <TASK>
+[   39.202695]  dump_stack_lvl+0x6e/0xa0
+[   39.202699]  ubsan_epilogue+0x5/0x30
+[   39.202701]  __ubsan_handle_shift_out_of_bounds.cold+0x61/0xe6
+[   39.202705]  xe_gt_tlb_invalidation_range.cold+0x1d/0x3a [xe]
+[   39.202800]  ? find_held_lock+0x2b/0x80
+[   39.202803]  ? mark_held_locks+0x40/0x70
+[   39.202806]  xe_svm_invalidate+0x459/0x700 [xe]
+[   39.202897]  drm_gpusvm_notifier_invalidate+0x4d/0x70 [drm_gpusvm]
+[   39.202900]  __mmu_notifier_release+0x1f5/0x270
+[   39.202905]  exit_mmap+0x40e/0x450
+[   39.202912]  __mmput+0x45/0x110
+[   39.202914]  exit_mm+0xc5/0x130
+[   39.202916]  do_exit+0x21c/0x500
+[   39.202918]  ? lockdep_hardirqs_on_prepare+0xdb/0x190
+[   39.202920]  do_group_exit+0x36/0xa0
+[   39.202922]  get_signal+0x8f8/0x900
+[   39.202926]  arch_do_signal_or_restart+0x35/0x100
+[   39.202930]  syscall_exit_to_user_mode+0x1fc/0x290
+[   39.202932]  do_syscall_64+0xa1/0x180
+[   39.202934]  ? do_user_addr_fault+0x59f/0x8a0
+[   39.202937]  ? lock_release+0xd2/0x2a0
+[   39.202939]  ? do_user_addr_fault+0x5a9/0x8a0
+[   39.202942]  ? trace_hardirqs_off+0x4b/0xc0
+[   39.202944]  ? clear_bhb_loop+0x25/0x80
+[   39.202946]  ? clear_bhb_loop+0x25/0x80
+[   39.202947]  ? clear_bhb_loop+0x25/0x80
+[   39.202950]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   39.202952] RIP: 0033:0x7fa945e543e1
+[   39.202961] Code: Unable to access opcode bytes at 0x7fa945e543b7.
+[   39.202962] RSP: 002b:00007ffca8fb4170 EFLAGS: 00000293
+[   39.202963] RAX: 000000000000003d RBX: 0000000000000000 RCX: 00007fa945e543e3
+[   39.202964] RDX: 0000000000000000 RSI: 00007ffca8fb41ac RDI: 00000000ffffffff
+[   39.202964] RBP: 00007ffca8fb4190 R08: 0000000000000000 R09: 00007fa945f600a0
+[   39.202965] R10: 0000000000000000 R11: 0000000000000293 R12: 0000000000000000
+[   39.202966] R13: 00007fa9460dd310 R14: 00007ffca8fb41ac R15: 0000000000000000
+[   39.202970]  </TASK>
+[   39.202970] ---[ end trace ]---
+
+Fixes: 332dd0116c82 ("drm/xe: Add range based TLB invalidations")
 Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Cc: <stable@vger.kernel.org> # v6.8+
-Acked-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20250410162716.159403-2-matthew.auld@intel.com
-(cherry picked from commit d755887f8e5a2a18e15e6632a5193e5feea18499)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com> #v1
+Link: https://lore.kernel.org/r/20250326151634.36916-1-thomas.hellstrom@linux.intel.com
+(cherry picked from commit b88f48f86500bc0b44b4f73ac66d500a40d320ad)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -145,10 +145,7 @@ static void xe_dma_buf_unmap(struct dma_
- 			     struct sg_table *sgt,
- 			     enum dma_data_direction dir)
- {
--	struct dma_buf *dma_buf = attach->dmabuf;
--	struct xe_bo *bo = gem_to_xe_bo(dma_buf->priv);
--
--	if (!xe_bo_is_vram(bo)) {
-+	if (sg_page(sgt->sgl)) {
- 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
- 		sg_free_table(sgt);
- 		kfree(sgt);
+--- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
++++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
+@@ -322,6 +322,13 @@ int xe_gt_tlb_invalidation_ggtt(struct x
+ 	return 0;
+ }
+ 
++/*
++ * Ensure that roundup_pow_of_two(length) doesn't overflow.
++ * Note that roundup_pow_of_two() operates on unsigned long,
++ * not on u64.
++ */
++#define MAX_RANGE_TLB_INVALIDATION_LENGTH (rounddown_pow_of_two(ULONG_MAX))
++
+ /**
+  * xe_gt_tlb_invalidation_range - Issue a TLB invalidation on this GT for an
+  * address range
+@@ -346,6 +353,7 @@ int xe_gt_tlb_invalidation_range(struct
+ 	struct xe_device *xe = gt_to_xe(gt);
+ #define MAX_TLB_INVALIDATION_LEN	7
+ 	u32 action[MAX_TLB_INVALIDATION_LEN];
++	u64 length = end - start;
+ 	int len = 0;
+ 
+ 	xe_gt_assert(gt, fence);
+@@ -358,11 +366,11 @@ int xe_gt_tlb_invalidation_range(struct
+ 
+ 	action[len++] = XE_GUC_ACTION_TLB_INVALIDATION;
+ 	action[len++] = 0; /* seqno, replaced in send_tlb_invalidation */
+-	if (!xe->info.has_range_tlb_invalidation) {
++	if (!xe->info.has_range_tlb_invalidation ||
++	    length > MAX_RANGE_TLB_INVALIDATION_LENGTH) {
+ 		action[len++] = MAKE_INVAL_OP(XE_GUC_TLB_INVAL_FULL);
+ 	} else {
+ 		u64 orig_start = start;
+-		u64 length = end - start;
+ 		u64 align;
+ 
+ 		if (length < SZ_4K)
 
 
