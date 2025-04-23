@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A944481CD;
-	Wed, 23 Apr 2025 14:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1384B27EC6C;
+	Wed, 23 Apr 2025 14:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420055; cv=none; b=sb8na3tgNSCEp6nGfM8rpP/3ZiqpHgja7Y9hMlWikahMCWD3I546ocRE6UbxcNrZ6+P90UVRoG8tnRZO4LnH30BNHbuovKmp4Lie0afp/BloaQj5KIsMXSzILWUOTX5ycxliPijAmLRX2G1DurqRw8T/eDhCdqI2Frbaykv2VTE=
+	t=1745420058; cv=none; b=ktvcNAc7Sqqik2AVpDtnZyeVLFYDdjAwxI0U/kOw8QKD1Aind1+oaoKlGV4fSxpiIVOtxeB1W4SFAPeliN3CPohehPGCMK+RSaAJzLtQh2JBYhyYZIzr0BSyx6px0imquuuIrCqqIBwaSuBLIMajxja4fIi6mzzNhApZF9WFZJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420055; c=relaxed/simple;
-	bh=vUOlH+FueFMpwlPIejO6HLDjUSIi25fKsoNbjNjtUvg=;
+	s=arc-20240116; t=1745420058; c=relaxed/simple;
+	bh=nG8mpdekUKMYw34I6Oze0umIpbzZgvA9MKJbcvwqO5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abfz2LQQ1jrI46HyY4siqPkg2KGAVMDSNcH0Nrtt71eyGHuOd25XAhdNzd7phyMEse23rlVJAUv07MZ/qUy8eYlWt7zkiQ/GWeeYl7UCM+2qgqFiEH5On7vR1g6K7mpfgRpZe0yz7LmNXFARv3CxWI1pCEGkJXQb4kPiw9+Hpm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDL1Lxi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBBqz56GXGfh1rnro82ZdqirJkhrrtOWLsNsrSbbWkC3EmRKN4R0oda72yex9jehByrA3ms1QtzDvGH5jeG7iCxAQ5PsnHxyB49LODHxvhZ9xmxC41nroxbWKWzPgShX4ig1n8EWF8ATG0SccOCE9gTexr6K7kt5whZY+JVTlx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3Ha1WvS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDL1Lxi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CAAC4CEE2;
-	Wed, 23 Apr 2025 14:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3Ha1WvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996A9C4CEE2;
+	Wed, 23 Apr 2025 14:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420055;
-	bh=vUOlH+FueFMpwlPIejO6HLDjUSIi25fKsoNbjNjtUvg=;
+	s=korg; t=1745420058;
+	bh=nG8mpdekUKMYw34I6Oze0umIpbzZgvA9MKJbcvwqO5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDL1Lxi/Zysv82gOWhK9I0AxMVUCksEhUvUeFFF3mQ5QbEjrjnRqasoglmxfbdnXP
-	 cJI8hmiO2GipykXvkrQCc4hoE5dsIzbTwMz685JeEajRNRitfgtvkIayziXwxd30pa
-	 W3StD5Ihbmx8d8Fn0Tk/Vb3gEntSIQqtfenAgaqw=
+	b=x3Ha1WvSwWLeOgsWcTvX4pzwaLUbtwyvQK43C6XCoASOLquL3Es/dfUq9YOPot1Fu
+	 MGo1A2cRdhib1q+obcT8R1xFFJF1ogJui1SWrIYU1PBec8O5g4jxnzTQo7adNV/IoB
+	 s83IKNzi2EcWbLWtJLxLglRf+WMNje0a6LanztI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/291] net_sched: sch_sfq: use a temporary work area for validating configuration
-Date: Wed, 23 Apr 2025 16:40:02 +0200
-Message-ID: <20250423142624.949402035@linuxfoundation.org>
+Subject: [PATCH 6.6 027/393] net: libwx: handle page_pool_dev_alloc_pages error
+Date: Wed, 23 Apr 2025 16:38:43 +0200
+Message-ID: <20250423142644.393262011@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
+[ Upstream commit 7f1ff1b38a7c8b872382b796023419d87d78c47e ]
 
-Many configuration parameters have influence on others (e.g. divisor
--> flows -> limit, depth -> limit) and so it is difficult to correctly
-do all of the validation before applying the configuration. And if a
-validation error is detected late it is difficult to roll back a
-partially applied configuration.
+page_pool_dev_alloc_pages could return NULL. There was a WARN_ON(!page)
+but it would still proceed to use the NULL pointer and then crash.
 
-To avoid these issues use a temporary work area to update and validate
-the configuration and only then apply the configuration to the
-internal state.
+This is similar to commit 001ba0902046
+("net: fec: handle page_pool_dev_alloc_pages error").
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b3bf8f63e617 ("net_sched: sch_sfq: move the limit validation")
+This is found by our static analysis tool KNighter.
+
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20250407184952.2111299-1-chenyuan0y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 56 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 60754f366ab7b..68e909e8fabd9 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 	struct red_parms *p = NULL;
- 	struct sk_buff *to_free = NULL;
- 	struct sk_buff *tail = NULL;
-+	unsigned int maxflows;
-+	unsigned int quantum;
-+	unsigned int divisor;
-+	int perturb_period;
-+	u8 headdrop;
-+	u8 maxdepth;
-+	int limit;
-+	u8 flags;
-+
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+index c37500aa06379..c019fe964ecea 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -311,7 +311,8 @@ static bool wx_alloc_mapped_page(struct wx_ring *rx_ring,
+ 		return true;
  
- 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
- 		return -EINVAL;
-@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
- 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
- 		return -EINVAL;
- 	}
-+
- 	sch_tree_lock(sch);
-+
-+	limit = q->limit;
-+	divisor = q->divisor;
-+	headdrop = q->headdrop;
-+	maxdepth = q->maxdepth;
-+	maxflows = q->maxflows;
-+	perturb_period = q->perturb_period;
-+	quantum = q->quantum;
-+	flags = q->flags;
-+
-+	/* update and validate configuration */
- 	if (ctl->quantum)
--		q->quantum = ctl->quantum;
--	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
-+		quantum = ctl->quantum;
-+	perturb_period = ctl->perturb_period * HZ;
- 	if (ctl->flows)
--		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-+		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
--		q->divisor = ctl->divisor;
--		q->maxflows = min_t(u32, q->maxflows, q->divisor);
-+		divisor = ctl->divisor;
-+		maxflows = min_t(u32, maxflows, divisor);
- 	}
- 	if (ctl_v1) {
- 		if (ctl_v1->depth)
--			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
-+			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
- 		if (p) {
--			swap(q->red_parms, p);
--			red_set_parms(q->red_parms,
-+			red_set_parms(p,
- 				      ctl_v1->qth_min, ctl_v1->qth_max,
- 				      ctl_v1->Wlog,
- 				      ctl_v1->Plog, ctl_v1->Scell_log,
- 				      NULL,
- 				      ctl_v1->max_P);
- 		}
--		q->flags = ctl_v1->flags;
--		q->headdrop = ctl_v1->headdrop;
-+		flags = ctl_v1->flags;
-+		headdrop = ctl_v1->headdrop;
- 	}
- 	if (ctl->limit) {
--		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
--		q->maxflows = min_t(u32, q->maxflows, q->limit);
-+		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
-+		maxflows = min_t(u32, maxflows, limit);
- 	}
+ 	page = page_pool_dev_alloc_pages(rx_ring->page_pool);
+-	WARN_ON(!page);
++	if (unlikely(!page))
++		return false;
+ 	dma = page_pool_get_dma_addr(page);
  
-+	/* commit configuration */
-+	q->limit = limit;
-+	q->divisor = divisor;
-+	q->headdrop = headdrop;
-+	q->maxdepth = maxdepth;
-+	q->maxflows = maxflows;
-+	WRITE_ONCE(q->perturb_period, perturb_period);
-+	q->quantum = quantum;
-+	q->flags = flags;
-+	if (p)
-+		swap(q->red_parms, p);
-+
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > q->limit) {
- 		dropped += sfq_drop(sch, &to_free);
+ 	bi->page_dma = dma;
 -- 
 2.39.5
 
