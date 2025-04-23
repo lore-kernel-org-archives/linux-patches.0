@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883B427CB12;
-	Wed, 23 Apr 2025 15:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DA228A1F7;
+	Wed, 23 Apr 2025 15:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420960; cv=none; b=BStvFiK/baz2ADhm2nZ7UF4MPGmO16KM/Mmz2ZFV8YBdYKW5upm8Qw6EN2IWPOedmr1+fp9N36qT7Pknx9j12gng+Xu3bvXDV2HI1erkGSYKq6L/CZUGREpDS1QYcv6CNFwXjcT4stGYk2UgMgrk5jKkfD5LjvIGYLHji08uM10=
+	t=1745420963; cv=none; b=hLNWcy/Kv340qZ/Snzraj02jMtF4EuosmI6Fe9YIOyr/biTU8/NLZrnC0jWocajLW6bQd6lr1Da9pYe2zG9CehhbRs4CZmZL0zvIj7eZLSL+OKIgt+z4hVE37WkEc19cLDWW5q9QtL/ijjRG/B8dr8NVMSELrOhNfQnDsJTq8SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420960; c=relaxed/simple;
-	bh=YHAqohmTYkpP98Y57k6hqv7EmNFaUw2RBPDxUBcdU2M=;
+	s=arc-20240116; t=1745420963; c=relaxed/simple;
+	bh=xRKc71TJ6jvXwgJZHlEE47sjfe5laQPf/SkJFU6OL8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ/s2BpbrV7o891PaixwLuYS2f8DfbRMOV+EQUbjJVxUN74G4E8em4TrFYYCj/nKKdUqfaPkbC2nnc4UotYjcrdbjGLIMwN7V7ju7blcR7KplUNS5aXDQ8YIMN92GdksXX6AcjDq1HyCy8hWrvMOKAC35EeQe+0W6QwCyHTOT7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gTD/+AR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffhGkawA7tkQBW4yh0AylsddpBViG1u/tV/fXzxqQEIWPcpODjtlQ8bFS+3KVBLvsrryTyhqZGxSvRPgjavvdfVUoe756OK9PCRZ3lbw1/Hik2KlUT95NSkrAzVhnWukvqCJh4q8ywwEKgTj3EjNO27+t9Bo+f7KjgfKjSe45qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5gdkBZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gTD/+AR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136FDC4CEE3;
-	Wed, 23 Apr 2025 15:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5gdkBZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03D8C4CEE2;
+	Wed, 23 Apr 2025 15:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420960;
-	bh=YHAqohmTYkpP98Y57k6hqv7EmNFaUw2RBPDxUBcdU2M=;
+	s=korg; t=1745420963;
+	bh=xRKc71TJ6jvXwgJZHlEE47sjfe5laQPf/SkJFU6OL8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gTD/+ARkrJNLrxR89vkXUF2Y3Ri7jDdtn1ZGrzr8SxZB97RwfQ59WrT4oaSqLw3k
-	 S5NXchr3iGMsOmpPxeq+FQ5XnZRdUr7p7e+SFSyy18WRfIs0Vgh6i1pX9Mdk1hxV82
-	 gtXyVe44cfMfoFpeKOAmmnC1c1eIBTDAlNIpNFFE=
+	b=f5gdkBZGI0G346pVQO32nniu3d7kynCeuW25PO5ukAzTQAm0ufgpfYZ5tqDm1JVpb
+	 owHUSfwpP3GVg9I+a31Ta4ZHy7M6dp59KMPUCpg7Hvt96EaYVN+rTvovYNfzR7hjfQ
+	 +/ZXc+V51HwUK6APj4DxFq142HdWLb3SMQMixRrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 096/291] media: i2c: ccs: Set the devices runtime PM status correctly in probe
-Date: Wed, 23 Apr 2025 16:41:25 +0200
-Message-ID: <20250423142628.279425259@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.14 130/241] cpufreq: Avoid using inconsistent policy->min and policy->max
+Date: Wed, 23 Apr 2025 16:43:14 +0200
+Message-ID: <20250423142625.881627603@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 80704d14f1bd3628f578510e0a88b66824990ef6 upstream.
+commit 7491cdf46b5cbdf123fc84fbe0a07e9e3d7b7620 upstream.
 
-Set the device's runtime PM status to suspended in probe error paths where
-it was previously set to active.
+Since cpufreq_driver_resolve_freq() can run in parallel with
+cpufreq_set_policy() and there is no synchronization between them,
+the former may access policy->min and policy->max while the latter
+is updating them and it may see intermediate values of them due
+to the way the update is carried out.  Also the compiler is free
+to apply any optimizations it wants both to the stores in
+cpufreq_set_policy() and to the loads in cpufreq_driver_resolve_freq()
+which may result in additional inconsistencies.
 
-Fixes: 9447082ae666 ("[media] smiapp: Implement power-on and power-off sequences without runtime PM")
-Cc: stable@vger.kernel.org # for >= v5.15
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+To address this, use WRITE_ONCE() when updating policy->min and
+policy->max in cpufreq_set_policy() and use READ_ONCE() for reading
+them in cpufreq_driver_resolve_freq().  Moreover, rearrange the update
+in cpufreq_set_policy() to avoid storing intermediate values in
+policy->min and policy->max with the help of the observation that
+their new values are expected to be properly ordered upfront.
+
+Also modify cpufreq_driver_resolve_freq() to take the possible reverse
+ordering of policy->min and policy->max, which may happen depending on
+the ordering of operations when this function and cpufreq_set_policy()
+run concurrently, into account by always honoring the max when it
+turns out to be less than the min (in case it comes from thermal
+throttling or similar).
+
+Fixes: 151717690694 ("cpufreq: Make policy min/max hard requirements")
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/5907080.DvuYhMxLoT@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/cpufreq.c |   32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
---- a/drivers/media/i2c/ccs/ccs-core.c
-+++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3642,6 +3642,7 @@ static int ccs_probe(struct i2c_client *
- out_disable_runtime_pm:
- 	pm_runtime_put_noidle(&client->dev);
- 	pm_runtime_disable(&client->dev);
-+	pm_runtime_set_suspended(&client->dev);
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -539,8 +539,6 @@ static unsigned int __resolve_freq(struc
+ {
+ 	unsigned int idx;
  
- out_media_entity_cleanup:
- 	media_entity_cleanup(&sensor->src->sd.entity);
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
+-
+ 	if (!policy->freq_table)
+ 		return target_freq;
+ 
+@@ -564,7 +562,22 @@ static unsigned int __resolve_freq(struc
+ unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
+ 					 unsigned int target_freq)
+ {
+-	return __resolve_freq(policy, target_freq, CPUFREQ_RELATION_LE);
++	unsigned int min = READ_ONCE(policy->min);
++	unsigned int max = READ_ONCE(policy->max);
++
++	/*
++	 * If this function runs in parallel with cpufreq_set_policy(), it may
++	 * read policy->min before the update and policy->max after the update
++	 * or the other way around, so there is no ordering guarantee.
++	 *
++	 * Resolve this by always honoring the max (in case it comes from
++	 * thermal throttling or similar).
++	 */
++	if (unlikely(min > max))
++		min = max;
++
++	return __resolve_freq(policy, clamp_val(target_freq, min, max),
++			      CPUFREQ_RELATION_LE);
+ }
+ EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+ 
+@@ -2337,6 +2350,7 @@ int __cpufreq_driver_target(struct cpufr
+ 	if (cpufreq_disabled())
+ 		return -ENODEV;
+ 
++	target_freq = clamp_val(target_freq, policy->min, policy->max);
+ 	target_freq = __resolve_freq(policy, target_freq, relation);
+ 
+ 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
+@@ -2661,11 +2675,15 @@ static int cpufreq_set_policy(struct cpu
+ 	 * Resolve policy min/max to available frequencies. It ensures
+ 	 * no frequency resolution will neither overshoot the requested maximum
+ 	 * nor undershoot the requested minimum.
++	 *
++	 * Avoid storing intermediate values in policy->max or policy->min and
++	 * compiler optimizations around them because they may be accessed
++	 * concurrently by cpufreq_driver_resolve_freq() during the update.
+ 	 */
+-	policy->min = new_data.min;
+-	policy->max = new_data.max;
+-	policy->min = __resolve_freq(policy, policy->min, CPUFREQ_RELATION_L);
+-	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
++	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
++	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
++	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
++
+ 	trace_cpu_frequency_limits(policy);
+ 
+ 	cpufreq_update_pressure(policy);
 
 
