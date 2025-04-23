@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C336280A27;
-	Wed, 23 Apr 2025 14:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9845F27B4F2;
+	Wed, 23 Apr 2025 14:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419679; cv=none; b=iU+0MX28NujC26vkeW7KHlKWczESascXnyaBFNk6sst7u+K0aNmOcH3uQgzyGutayW7DdChkC4Gj+vilJr3Pw8JDMO3VwN+Wb5EkXWG7JnKRv6L8hyXrpxCVqNuG4dqi7D9V2ROAXSuXsga1UU8hL9s7Klc7X1MZRytBKn5bstU=
+	t=1745419681; cv=none; b=ZPcogk8HEzRMPJcdPHS0uThTuruQCk8jVZjOOktnYhe32QCXbK4qHyHlW4/NAIZ3gsqnkrPFcemsMy5xavfnwGoP4RiV5VTJ+YgD5WfNocWeo64UYkbPhyyQsAAAxDlvC47Lnmvp0xM9fPUwLWUq4Y+PphiDUmnn/zwm+d/9lfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419679; c=relaxed/simple;
-	bh=dxQiIESHnhL8kZAfu4wGiwp5cYBiyE4oMi7W0M/JUQU=;
+	s=arc-20240116; t=1745419681; c=relaxed/simple;
+	bh=8040pgTKB+yh2mZ3Kw0pPpMhuwkyesGe0TVcHi2a5mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3WxHElU1D1XMsK1fU0s10Mi6Zoh+Tcp7X61yJshiVRFhSZ4XuuTNVEbBoX/+VJeM0pNgWRRsHJUl8gwUpo5CDJWCEgvYRJxGT7DqWb5bpbjcFKmfF4u5Pl4FYJhj9PFZGF8t1pVNYTA1aARDYKRN4Qvs47znPbcn2G5mTYU5Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtHXZbGL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CdjA+soiVWbP3x8mWQfKLWkpgIGEd1UhJUEcnxewLUNIsEStn5jp98hPEliR9t5dYvNQOF98tfjNx9OHh4lEpbHCHtKnu2XtPkI1hv9xElUUocPxSsYtxJE4zfwpTCFVkqib/JqeQnzzP6DXDElVl/22bt8sft47t6ToIgmCC2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dglmIhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtHXZbGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEAAC4CEE2;
-	Wed, 23 Apr 2025 14:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dglmIhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF56C4CEE2;
+	Wed, 23 Apr 2025 14:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419678;
-	bh=dxQiIESHnhL8kZAfu4wGiwp5cYBiyE4oMi7W0M/JUQU=;
+	s=korg; t=1745419681;
+	bh=8040pgTKB+yh2mZ3Kw0pPpMhuwkyesGe0TVcHi2a5mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtHXZbGLezkAae+3eisIfiYe6srg1cVgEBCdxdw2vtXYob188Nf/BuM+qH+XSlv6W
-	 73TrxfRIc4uysY7oAUi5VGkYUsccXhJr4A5pmm8yk9zA4FQ1ydVd7S7+fCvoHU5y1O
-	 l+OkqcYpulctvZTPTS7L/bUtrxvOicVQLb1zJDZM=
+	b=1dglmIhz1SyiPjH3lZRB80Vs1VnELvxxJy3prls14GkuyffaWTjbC5QzN8DqjTiY6
+	 DQhyP0qwhIEVWiik9nrr41kw5xPtZwcHwB0G/QV2TCs2Flpb5QHoAcyhcl0OzkqRlz
+	 h2gipU4kC6vhlT9YUubS9x0Zg0PmmRdY9it61cCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/223] test suite: use %zu to print size_t
-Date: Wed, 23 Apr 2025 16:41:53 +0200
-Message-ID: <20250423142618.801300012@linuxfoundation.org>
+Subject: [PATCH 6.14 007/241] scsi: iscsi: Fix missing scsi_host_put() in error path
+Date: Wed, 23 Apr 2025 16:41:11 +0200
+Message-ID: <20250423142620.826698515@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit a30951d09c33c899f0e4aca80eb87fad5f10ecfa ]
+[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
 
-On 32-bit, we can't use %lu to print a size_t variable and gcc warns us
-about it.  Shame it doesn't warn about it on 64-bit.
+Add goto to ensure scsi_host_put() is called in all error paths of
+iscsi_set_host_param() function. This fixes a potential memory leak when
+strlen() check fails.
 
-Link: https://lkml.kernel.org/r/20250403003311.359917-1-Liam.Howlett@oracle.com
-Fixes: cc86e0c2f306 ("radix tree test suite: add support for slab bulk APIs")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/shared/linux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/shared/linux.c b/tools/testing/shared/linux.c
-index 17263696b5d88..61b3f571f7a70 100644
---- a/tools/testing/shared/linux.c
-+++ b/tools/testing/shared/linux.c
-@@ -147,7 +147,7 @@ void kmem_cache_free(struct kmem_cache *cachep, void *objp)
- void kmem_cache_free_bulk(struct kmem_cache *cachep, size_t size, void **list)
- {
- 	if (kmalloc_verbose)
--		pr_debug("Bulk free %p[0-%lu]\n", list, size - 1);
-+		pr_debug("Bulk free %p[0-%zu]\n", list, size - 1);
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index 9c347c64c315f..0b8c91bf793fc 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -3182,11 +3182,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
+ 	}
  
- 	pthread_mutex_lock(&cachep->lock);
- 	for (int i = 0; i < size; i++)
-@@ -165,7 +165,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *cachep, gfp_t gfp, size_t size,
- 	size_t i;
+ 	/* see similar check in iscsi_if_set_param() */
+-	if (strlen(data) > ev->u.set_host_param.len)
+-		return -EINVAL;
++	if (strlen(data) > ev->u.set_host_param.len) {
++		err = -EINVAL;
++		goto out;
++	}
  
- 	if (kmalloc_verbose)
--		pr_debug("Bulk alloc %lu\n", size);
-+		pr_debug("Bulk alloc %zu\n", size);
- 
- 	pthread_mutex_lock(&cachep->lock);
- 	if (cachep->nr_objs >= size) {
+ 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
+ 					data, ev->u.set_host_param.len);
++out:
+ 	scsi_host_put(shost);
+ 	return err;
+ }
 -- 
 2.39.5
 
