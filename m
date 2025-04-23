@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340E419CCEC;
-	Wed, 23 Apr 2025 15:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65E289374;
+	Wed, 23 Apr 2025 15:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422462; cv=none; b=ogSfhtXb94mW7g37uA0eGByyXS3nhkKSkLNCe6bRl/hnN5mHUR7zngaaKz73jq4C9faJaXZy7X+AsyOM/n7tFEHjufBmgmXOExhNFXkqFq6lFOT2h+TuftBDUNmGxo+WbExPP6tLiHy9rW2yacAZQOt2QG/Kl9evSSYRv+BO6oY=
+	t=1745422464; cv=none; b=u9GWqdRpaLtTUxHX4mXsZ5o/BoOGkoIUUZpttt9eT8jRJfKauHgAT1wSe0LSihc2MpTWcghBfI1UMiM3GFEiKCUibfxA+ZH8pSNS1ngURt42/bTHBrw+fWfrX+LdITwAp7KmYpZf2RV902lUb/1NH/jnG+shaaIdT+KZZfQBTKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422462; c=relaxed/simple;
-	bh=KOzFCu1RVKBvJMMWBUmQrW79PGckYdeEfpWOwejzBuY=;
+	s=arc-20240116; t=1745422464; c=relaxed/simple;
+	bh=1JDi/9n3Z+ZU7/beSUpQXaTtfSA7eq+UTjVwxrOBWg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNjLdLmnzeS795arMfszAiturXh4rByPpoQcXDOoJozbLo32zYvThJDnX6xiN35RBeWhi9H0Ebt7pyfHs3u14Jfi1F3W2l63TPz4NseGGcJ0149qvIOGrMCcHw9N7hQdnG4gLYXhxupGbxLpEV4etqUslws9EOZ1WDPcc60V8jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsG58NL4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9PA7nS6c101Tsf6oXTr3VPJS94DQREocDoW6hULRYauoGzG3n6So1QveNBDm5ZnyTNdjYA3acMKLhfhLDc3laaJOKOn161ijt6uAhoqgg71hE9Jr9JUXlvO21ybdf8XQ8ca/FeRzmS+VXkEWzuIo+qVdw7BkypUrXxjz0LVm+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geifjLw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsG58NL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97694C4CEE2;
-	Wed, 23 Apr 2025 15:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geifjLw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49285C4CEE2;
+	Wed, 23 Apr 2025 15:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422461;
-	bh=KOzFCu1RVKBvJMMWBUmQrW79PGckYdeEfpWOwejzBuY=;
+	s=korg; t=1745422464;
+	bh=1JDi/9n3Z+ZU7/beSUpQXaTtfSA7eq+UTjVwxrOBWg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsG58NL49qoty04B5XJfGrq7WdmfmU+u8jGo3gISkx39Ocz2hQ7lEOSWAjis80R5R
-	 ctXJqsQwINP+tHqXWfhfpJ+yqaxjuXz20DoZwnwdKfJ6ra63DMHPUiyOmw2hnD9jS7
-	 IW1RtKpOmYkWI932G7Z1tYbBvkyGoguofBGvzU2s=
+	b=geifjLw1MJEBGvUMtzNtu36w6iv3L4Kyl1J9MlGJE/LjCwctzgs50Hs/amvGnPh2P
+	 FO0ygNTEkBH4QdowY4oou4r32m6Hygg+IpC8VsLFXOUAUcKKtqwNePBjvWcpeD0+DX
+	 glWqldFKn3oKFAEtEnIw40cRnzIdgcz+JdWf72hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 282/291] bpf: Prevent tail call between progs attached to different hooks
-Date: Wed, 23 Apr 2025 16:44:31 +0200
-Message-ID: <20250423142635.949057828@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 353/393] drm/amd/pm/swsmu/smu13/smu_v13_0: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:44:09 +0200
+Message-ID: <20250423142657.920262340@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,103 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit 28ead3eaabc16ecc907cfb71876da028080f6356 upstream.
+commit f23e9116ebb71b63fe9cec0dcac792aa9af30b0c upstream.
 
-bpf progs can be attached to kernel functions, and the attached functions
-can take different parameters or return different return values. If
-prog attached to one kernel function tail calls prog attached to another
-kernel function, the ctx access or return value verification could be
-bypassed.
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
-For example, if prog1 is attached to func1 which takes only 1 parameter
-and prog2 is attached to func2 which takes two parameters. Since verifier
-assumes the bpf ctx passed to prog2 is constructed based on func2's
-prototype, verifier allows prog2 to access the second parameter from
-the bpf ctx passed to it. The problem is that verifier does not prevent
-prog1 from passing its bpf ctx to prog2 via tail call. In this case,
-the bpf ctx passed to prog2 is constructed from func1 instead of func2,
-that is, the assumption for ctx access verification is bypassed.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Another example, if BPF LSM prog1 is attached to hook file_alloc_security,
-and BPF LSM prog2 is attached to hook bpf_lsm_audit_rule_known. Verifier
-knows the return value rules for these two hooks, e.g. it is legal for
-bpf_lsm_audit_rule_known to return positive number 1, and it is illegal
-for file_alloc_security to return positive number. So verifier allows
-prog2 to return positive number 1, but does not allow prog1 to return
-positive number. The problem is that verifier does not prevent prog1
-from calling prog2 via tail call. In this case, prog2's return value 1
-will be used as the return value for prog1's hook file_alloc_security.
-That is, the return value rule is bypassed.
-
-This patch adds restriction for tail call to prevent such bypasses.
-
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20240719110059.797546-4-xukuohai@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h |    1 +
- kernel/bpf/core.c   |   19 +++++++++++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -250,6 +250,7 @@ struct bpf_map {
- 	 * same prog type, JITed flag and xdp_has_frags flag.
- 	 */
- 	struct {
-+		const struct btf_type *attach_func_proto;
- 		spinlock_t lock;
- 		enum bpf_prog_type type;
- 		bool jited;
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2121,6 +2121,7 @@ bool bpf_prog_map_compatible(struct bpf_
- {
- 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
- 	bool ret;
-+	struct bpf_prog_aux *aux = fp->aux;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1227,7 +1227,7 @@ int smu_v13_0_set_fan_speed_rpm(struct s
+ 	uint32_t tach_period;
+ 	int ret;
  
- 	if (fp->kprobe_override)
- 		return false;
-@@ -2132,12 +2133,26 @@ bool bpf_prog_map_compatible(struct bpf_
- 		 */
- 		map->owner.type  = prog_type;
- 		map->owner.jited = fp->jited;
--		map->owner.xdp_has_frags = fp->aux->xdp_has_frags;
-+		map->owner.xdp_has_frags = aux->xdp_has_frags;
-+		map->owner.attach_func_proto = aux->attach_func_proto;
- 		ret = true;
- 	} else {
- 		ret = map->owner.type  == prog_type &&
- 		      map->owner.jited == fp->jited &&
--		      map->owner.xdp_has_frags == fp->aux->xdp_has_frags;
-+		      map->owner.xdp_has_frags == aux->xdp_has_frags;
-+		if (ret &&
-+		    map->owner.attach_func_proto != aux->attach_func_proto) {
-+			switch (prog_type) {
-+			case BPF_PROG_TYPE_TRACING:
-+			case BPF_PROG_TYPE_LSM:
-+			case BPF_PROG_TYPE_EXT:
-+			case BPF_PROG_TYPE_STRUCT_OPS:
-+				ret = false;
-+				break;
-+			default:
-+				break;
-+			}
-+		}
- 	}
- 	spin_unlock(&map->owner.lock);
+-	if (!speed)
++	if (!speed || speed > UINT_MAX/8)
+ 		return -EINVAL;
  
+ 	ret = smu_v13_0_auto_fan_control(smu, 0);
 
 
