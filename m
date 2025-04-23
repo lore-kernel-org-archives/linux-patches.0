@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2022281344;
-	Wed, 23 Apr 2025 14:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F18280CCE;
+	Wed, 23 Apr 2025 14:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420342; cv=none; b=E9xcKQmkEfr2+ikU9twd2u59aewck3x5tEMx83iuwbF6JKGufxm4x8Oh6p667IrVzPrnCPtjFHH/D4C2XZvhOYcvvCAihFlVTeyA2VK1aPSxr3gURxZU02MpB5yjW5BJIWWUZFSN5z9Du/EW7bpbpLHYOz6KHhj2OWTjH12agGc=
+	t=1745420345; cv=none; b=PcfruVdZpURO3hyXiTzOsWSeceTA68vE/dbZT68NmXnP4jwKBx2gem9/ouhv00hsmPcOvV7LrNNqtDY6m7d/AKmTpj/gWP+6VCyrWGfaZKbl+bCJ21oDSsrRGx/mfbX+ctd8K/zJENW66vUfmyuc4UECAblg5VU9tF6KNU2MAj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420342; c=relaxed/simple;
-	bh=YyMBXsvPuUWLaphv/MV+3bJKRTCXKMO44EVGvMJxwc4=;
+	s=arc-20240116; t=1745420345; c=relaxed/simple;
+	bh=m1xoqtgq204qm0DAtR+NNA5JAdaBG3vzwOZNUNcGo3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMKTMmiwv8CzwuC3ItOfFZyTShTmrDkW0r+tC6ieNcu3YIuOJr2jfaRW5Tbzl7T7JtxL3IY94LNdHx0ow1JUj5MBLO64lwJnwmyo71EaQsEwU++Cd5xh8KjfaZzB3oehiZk0b/ECEHzRN/AumgojqgHABo1lX27jq0pJEIQfSD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUafnvqK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGif3MW7h8QPQBtY1JEukeBPdk1dKsjAsKCniBuYRL4oc233FOvXBE1FOr7gJiBSgbuZuOzinGiBaXrbRa8NtkDTwaQQlInOB1JTn93sc2Ccx2zfBy7aVRN5uBI6f8j8/HwPl526lnrxFHoOYzHlJhjW0UcnrkM8VZVnW1LBGrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNSs2rgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUafnvqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E80C4CEE2;
-	Wed, 23 Apr 2025 14:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNSs2rgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05110C4CEE2;
+	Wed, 23 Apr 2025 14:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420342;
-	bh=YyMBXsvPuUWLaphv/MV+3bJKRTCXKMO44EVGvMJxwc4=;
+	s=korg; t=1745420345;
+	bh=m1xoqtgq204qm0DAtR+NNA5JAdaBG3vzwOZNUNcGo3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUafnvqKPI3vQ7CCzUddTqg+IKbAq7AWm+2Mxok51Rh5E/F9w9vrXh08aUIwkZzMq
-	 SB5AqtrI+1Wps8NEAA1+8jQdAA3WPyFU8JI/nNoMjQHFbBf1HlSRjPndMMiPHfdTJH
-	 8F14FRAh+um77LO04pNmaro3P3zkAboQIY0YAim4=
+	b=TNSs2rgOgOUjXDRmS+0CKABd1ptSuD00Y0Jina3THKPMv61OJ8/VAnCx0F4wXp3Vz
+	 u1JKn85vnvlVAUwkoATdHbYKDFS2lzoyvgnyTL6iadAmoYS+96ednPcl51Ssc8d787
+	 +s8tLe5ZvGA2GMuKgXD5zbhvF1TYjvnP7kktgwOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 068/241] netlink: specs: rtnetlink: attribute naming corrections
-Date: Wed, 23 Apr 2025 16:42:12 +0200
-Message-ID: <20250423142623.377768943@linuxfoundation.org>
+Subject: [PATCH 6.1 023/291] perf: arm_pmu: Dont disable counter in armpmu_add()
+Date: Wed, 23 Apr 2025 16:40:12 +0200
+Message-ID: <20250423142625.351721348@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +50,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 540201c0ef7e8e7b169f68a238ade931a81a31a6 ]
+[ Upstream commit dcca27bc1eccb9abc2552aab950b18a9742fb8e7 ]
 
-Some attribute names diverge in very minor ways from the C names.
-These are most likely typos, and they prevent the C codegen from
-working.
+Currently armpmu_add() tries to handle a newly-allocated counter having
+a stale associated event, but this should not be possible, and if this
+were to happen the current mitigation is insufficient and potentially
+expensive. It would be better to warn if we encounter the impossible
+case.
 
-Fixes: bc515ed06652 ("netlink: specs: Add a spec for neighbor tables in rtnetlink")
-Fixes: b2f63d904e72 ("doc/netlink: Add spec for rt link messages")
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250414211851.602096-7-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Calls to pmu::add() and pmu::del() are serialized by the core perf code,
+and armpmu_del() clears the relevant slot in pmu_hw_events::events[]
+before clearing the bit in pmu_hw_events::used_mask such that the
+counter can be reallocated. Thus when armpmu_add() allocates a counter
+index from pmu_hw_events::used_mask, it should not be possible to observe
+a stale even in pmu_hw_events::events[] unless either
+pmu_hw_events::used_mask or pmu_hw_events::events[] have been corrupted.
+
+If this were to happen, we'd end up with two events with the same
+event->hw.idx, which would clash with each other during reprogramming,
+deletion, etc, and produce bogus results. Add a WARN_ON_ONCE() for this
+case so that we can detect if this ever occurs in practice.
+
+That possiblity aside, there's no need to call arm_pmu::disable(event)
+for the new event. The PMU reset code initialises the counter in a
+disabled state, and armpmu_del() will disable the counter before it can
+be reused. Remove the redundant disable.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250218-arm-brbe-v19-v20-2-4e9922fc2e8e@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/rt_link.yaml  | 6 +++---
- Documentation/netlink/specs/rt_neigh.yaml | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/perf/arm_pmu.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/netlink/specs/rt_link.yaml b/Documentation/netlink/specs/rt_link.yaml
-index 1eab6aeaa2193..9f0ca05df0b98 100644
---- a/Documentation/netlink/specs/rt_link.yaml
-+++ b/Documentation/netlink/specs/rt_link.yaml
-@@ -1576,7 +1576,7 @@ attribute-sets:
-         name: nf-call-iptables
-         type: u8
-       -
--        name: nf-call-ip6-tables
-+        name: nf-call-ip6tables
-         type: u8
-       -
-         name: nf-call-arptables
-@@ -2064,7 +2064,7 @@ attribute-sets:
-         name: id
-         type: u16
-       -
--        name: flag
-+        name: flags
-         type: binary
-         struct: ifla-vlan-flags
-       -
-@@ -2152,7 +2152,7 @@ attribute-sets:
-         type: binary
-         struct: ifla-cacheinfo
-       -
--        name: icmp6-stats
-+        name: icmp6stats
-         type: binary
-         struct: ifla-icmp6-stats
-       -
-diff --git a/Documentation/netlink/specs/rt_neigh.yaml b/Documentation/netlink/specs/rt_neigh.yaml
-index e670b6dc07be4..a1e137a16abd5 100644
---- a/Documentation/netlink/specs/rt_neigh.yaml
-+++ b/Documentation/netlink/specs/rt_neigh.yaml
-@@ -189,7 +189,7 @@ attribute-sets:
-         type: binary
-         display-hint: ipv4
-       -
--        name: lladr
-+        name: lladdr
-         type: binary
-         display-hint: mac
-       -
+diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
+index 3f07df5a7e950..d351d6ce750bf 100644
+--- a/drivers/perf/arm_pmu.c
++++ b/drivers/perf/arm_pmu.c
+@@ -340,12 +340,10 @@ armpmu_add(struct perf_event *event, int flags)
+ 	if (idx < 0)
+ 		return idx;
+ 
+-	/*
+-	 * If there is an event in the counter we are going to use then make
+-	 * sure it is disabled.
+-	 */
++	/* The newly-allocated counter should be empty */
++	WARN_ON_ONCE(hw_events->events[idx]);
++
+ 	event->hw.idx = idx;
+-	armpmu->disable(event);
+ 	hw_events->events[idx] = event;
+ 
+ 	hwc->state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
 -- 
 2.39.5
 
