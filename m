@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793FD28A1FD;
-	Wed, 23 Apr 2025 15:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7914528B4EA;
+	Wed, 23 Apr 2025 15:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420981; cv=none; b=MX803fbdISbZqQXaqNfQqHyBAkdLEIk0S5MMSpt+sxPU3ZsyiBOofiwiD4MEvH31UxjzCTdD1ROwLgXB56D4Mu8AZmOOM/cZupQppPOivTdmmkXRqLjcJ5RjIWBu1wyZLb0kYZu7x1n5gS20Wa6TGs8XwyfEd0x7MA9ZkdSF8BM=
+	t=1745420984; cv=none; b=ihUee4f11EJBUYeKbkByvC9ijHumQmUp+fAwuOBhZBIN8UiUaC4r4lhbT8Ed2W3uniUDhCzMRLWQU1qS1R5rXROwsx7mc7ihSWP7aqaf954xStlKTyiYktvK9VTD0ZBhTNyZtlCjqsg9w4VB0JfctWeEa2863z+er7dZSgCwO44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420981; c=relaxed/simple;
-	bh=kFF5Vlv7srnylU0Fy3fhpXl4YiEgka0ZyODbhWcuOjs=;
+	s=arc-20240116; t=1745420984; c=relaxed/simple;
+	bh=uVR/b5bL4duoxyRonEqBNOi8Al6v7T/xyFOIrCv2EGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXjMpYw3f6063NoBjt4rJK/3wi5J16apmzREs2yqYnPZAmc5rBUun+rAYZ4+bNr2F2ZlCTgDp3K+OgZi5fEwMY5f8v7zVfkNn3Th57wtWsuS92pI3jTOlhH0tyfSqc8wwwxricUCtINAyLxqxAw1hghVaN90WGcQjrMrYlyN2ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chINjexJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pIZPPONSYwJ6aDMa/ttqBTDvI7DAVPylqHAOQ4BE/UMdh2XvyjlM6gxiavDsSU/LWMhvUiwOx0KF4zArRPBwuec/HL8jBx80po3CDlC+q2flPAG3Wkmr96u2bT+YDe++HSX3BLA4car6jvwWZSF5nkLlIFkYp/E6eFdaMN/Ni1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRRCCEQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chINjexJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00679C4CEE2;
-	Wed, 23 Apr 2025 15:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRRCCEQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F13C4CEE2;
+	Wed, 23 Apr 2025 15:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420981;
-	bh=kFF5Vlv7srnylU0Fy3fhpXl4YiEgka0ZyODbhWcuOjs=;
+	s=korg; t=1745420983;
+	bh=uVR/b5bL4duoxyRonEqBNOi8Al6v7T/xyFOIrCv2EGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chINjexJ+1Eh8v6PTaaUbRh6ckEyvp+DFO0ZJAWTIjTXX3W0sWQKM//SlHj5ssQtb
-	 rV4YmJ8eCuUW46zIX4Im/UKojq+dyjJAjEuoNAbio9pJXgkJ9WEszagsLn9vV6lc9Y
-	 2OstA4Z5pGwct0HI2sfou585QVG3/mtnBnehm+l8=
+	b=YRRCCEQ2eU6cYLpkCBqUjIAL+oXiz8ygFauByZlzzYOwwgOphVTQ4ZpzE7WeUMzG/
+	 IuSubfpfxdg41214IyCc8WwPfa4Je9gf9IMVjgBCnqZUQsbB03nt4entzvai7XpsHb
+	 +QwEFTO8OFh6ZlklF0Tr5P+xmw9yvmYhU4T2Jpjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Daniel Axtens <dja@axtens.net>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 141/241] mm: fix apply_to_existing_page_range()
-Date: Wed, 23 Apr 2025 16:43:25 +0200
-Message-ID: <20250423142626.319426616@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 098/291] media: i2c: ov7251: Introduce 1 ms delay between regulators and en GPIO
+Date: Wed, 23 Apr 2025 16:41:27 +0200
+Message-ID: <20250423142628.359737944@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
+commit 3d391292cdd53984ec1b9a1f6182a62a62751e03 upstream.
 
-In the case of apply_to_existing_page_range(), apply_to_pte_range() is
-reached with 'create' set to false.  When !create, the loop over the PTE
-page table is broken.
+Lift the xshutdown (enable) GPIO 1 ms after enabling the regulators, as
+required by the sensor's power-up sequence.
 
-apply_to_pte_range() will only move to the next PTE entry if 'create' is
-true or if the current entry is not pte_none().
-
-This means that the user of apply_to_existing_page_range() will not have
-'fn' called for any entries after the first pte_none() in the PTE page
-table.
-
-Fix the loop logic in apply_to_pte_range().
-
-There are no known runtime issues from this, but the fix is trivial enough
-for stable@ even without a known buggy user.
-
-Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
-Cc: Daniel Axtens <dja@axtens.net>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d30bb512da3d ("media: Add a driver for the ov7251 camera sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov7251.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2904,11 +2904,11 @@ static int apply_to_pte_range(struct mm_
- 	if (fn) {
- 		do {
- 			if (create || !pte_none(ptep_get(pte))) {
--				err = fn(pte++, addr, data);
-+				err = fn(pte, addr, data);
- 				if (err)
- 					break;
- 			}
--		} while (addr += PAGE_SIZE, addr != end);
-+		} while (pte++, addr += PAGE_SIZE, addr != end);
+--- a/drivers/media/i2c/ov7251.c
++++ b/drivers/media/i2c/ov7251.c
+@@ -922,6 +922,8 @@ static int ov7251_set_power_on(struct de
+ 		return ret;
  	}
- 	*mask |= PGTBL_PTE_MODIFIED;
  
++	usleep_range(1000, 1100);
++
+ 	gpiod_set_value_cansleep(ov7251->enable_gpio, 1);
+ 
+ 	/* wait at least 65536 external clock cycles */
 
 
