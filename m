@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A3927B4F2;
-	Wed, 23 Apr 2025 14:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37053281363;
+	Wed, 23 Apr 2025 14:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419634; cv=none; b=F3fWIpSyeLUOi/s3c8jEFo75+bzB+LpDNGAcXFtyWKoz88/d4HJ5Lxplcs41wQEPJPQtqL8FaPfSNQSwkd141W/3NasDXx8Iat9wGu9RzxLNe6JQiCtVUKWco98f4/6YE8y+31XvExm9Pn6MmevI4vCgCf9mM/7GNO29CDSqSRI=
+	t=1745419638; cv=none; b=gPG8Xb2EqAHdh7lQfwWH04J0JzVw+tpKZezzL21TUqPU38xHypXtWbjpf7YbhZG8INV6ce+OVq4+UdBWOSihYIioeOmc2tbs2ypw1R/+YXQ5DKPcudYzvlBTQHV3o9blKb/P3uy5XHJvks2P5/FJOW9XtK7EY/user/mQAfEJEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419634; c=relaxed/simple;
-	bh=NfN/ZRGHogAxNDIEtetPVGzHbm+LVc5bSxskqo6tg04=;
+	s=arc-20240116; t=1745419638; c=relaxed/simple;
+	bh=al22d6oOkiYcTYrMRQTqtT5UV/KyCb7y5/wJLQROtVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqlP63sSdUlzF1dvFnRVkKMn5Re75f22XMg6ym5VqdqhfbcG1VtEgVOh3yv8vDCO7PKnWtahNyIfobreI53CuuxfQF110g+hsSB+DJiDyL7HAxI6HzW1nGnq7y+7nZnYo2uISMdRFnUEdxR/dscks2RJ0bjw56FVmv/Bs8bjRYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8+QJVI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MoKJPnH5D+HVSqMTsflj3ryqaB7k46n9TjYGwKvuqcPBjn6Dqm4ZRBfhdJGT1m7skp4aX6qZ2/hTB7YTGuq5KWbNdCr6kkITfcSGOV8bd/SsnqQDWp3i8hG3QS/FXYhVDi3InLqOVs3fZ3t7HsaN/J8KXAXSf6Li4N8Ceqc0LvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSeKAgHq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8+QJVI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77104C4CEE2;
-	Wed, 23 Apr 2025 14:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSeKAgHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AE2C4CEE2;
+	Wed, 23 Apr 2025 14:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419633;
-	bh=NfN/ZRGHogAxNDIEtetPVGzHbm+LVc5bSxskqo6tg04=;
+	s=korg; t=1745419636;
+	bh=al22d6oOkiYcTYrMRQTqtT5UV/KyCb7y5/wJLQROtVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8+QJVI4xW+ANhRESCoIB+M+QUMzkSJ9y64fWOXnd4jfFilAYjHLVRgDunS2BXgcA
-	 O7z9IOwK11dhtkLPNzu6oLeoxyJEXGp4hKkhb+b++BOzZvQWrZ2NNepe/wfyHryT0a
-	 p1DdOfo112wyeNzVYxSplethTVGpdoIXafa7JlqY=
+	b=cSeKAgHqJRQaTKn9cu5N3dWI0Xfo8HeWjBj7ohcHqnSbpU1/sZbWf3C70WA2Px3IT
+	 jUCYVgQT4IqJipBKOIDDZoDUF0wDt3izwwvVyc0XQwNpviNPgRi0F7z/zh6/pYsjjC
+	 kgGPbTDaf2co6Bf7gCqyYjdLh2+FBZqh2+kg5R+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/223] Bluetooth: btrtl: Prevent potential NULL dereference
-Date: Wed, 23 Apr 2025 16:41:40 +0200
-Message-ID: <20250423142618.259968977@linuxfoundation.org>
+Subject: [PATCH 6.12 029/223] Bluetooth: l2cap: Check encryption key size on incoming connection
+Date: Wed, 23 Apr 2025 16:41:41 +0200
+Message-ID: <20250423142618.300605782@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -46,46 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-[ Upstream commit 324dddea321078a6eeb535c2bff5257be74c9799 ]
+[ Upstream commit 522e9ed157e3c21b4dd623c79967f72c21e45b78 ]
 
-The btrtl_initialize() function checks that rtl_load_file() either
-had an error or it loaded a zero length file.  However, if it loaded
-a zero length file then the error code is not set correctly.  It
-results in an error pointer vs NULL bug, followed by a NULL pointer
-dereference.  This was detected by Smatch:
+This is required for passing GAP/SEC/SEM/BI-04-C PTS test case:
+  Security Mode 4 Level 4, Responder - Invalid Encryption Key Size
+  - 128 bit
 
-drivers/bluetooth/btrtl.c:592 btrtl_initialize() warn: passing zero to 'ERR_PTR'
+This tests the security key with size from 1 to 15 bytes while the
+Security Mode 4 Level 4 requests 16 bytes key size.
 
-Fixes: 26503ad25de8 ("Bluetooth: btrtl: split the device initialization into smaller parts")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Currently PTS fails with the following logs:
+- expected:Connection Response:
+    Code: [3 (0x03)] Code
+    Identifier: (lt)WildCard: Exists(gt)
+    Length: [8 (0x0008)]
+    Destination CID: (lt)WildCard: Exists(gt)
+    Source CID: [64 (0x0040)]
+    Result: [3 (0x0003)] Connection refused - Security block
+    Status: (lt)WildCard: Exists(gt),
+but received:Connection Response:
+    Code: [3 (0x03)] Code
+    Identifier: [1 (0x01)]
+    Length: [8 (0x0008)]
+    Destination CID: [64 (0x0040)]
+    Source CID: [64 (0x0040)]
+    Result: [0 (0x0000)] Connection Successful
+    Status: [0 (0x0000)] No further information available
+
+And HCI logs:
+< HCI Command: Read Encrypti.. (0x05|0x0008) plen 2
+        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 1
+        Status: Success (0x00)
+        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
+        Key size: 7
+> ACL Data RX: Handle 14 flags 0x02 dlen 12
+      L2CAP: Connection Request (0x02) ident 1 len 4
+        PSM: 4097 (0x1001)
+        Source CID: 64
+< ACL Data TX: Handle 14 flags 0x00 dlen 16
+      L2CAP: Connection Response (0x03) ident 1 len 8
+        Destination CID: 64
+        Source CID: 64
+        Result: Connection successful (0x0000)
+        Status: No further information available (0x0000)
+
+Fixes: 288c06973daa ("Bluetooth: Enforce key size of 16 bytes on FIPS level")
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 0a6ca6dfb9484..59eb948664223 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -1215,6 +1215,8 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
- 			rtl_dev_err(hdev, "mandatory config file %s not found",
- 				    btrtl_dev->ic_info->cfg_name);
- 			ret = btrtl_dev->cfg_len;
-+			if (!ret)
-+				ret = -EINVAL;
- 			goto err_free;
- 		}
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c27ea70f71e1e..499e38ed639e6 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3956,7 +3956,8 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
+ 
+ 	/* Check if the ACL is secure enough (if not SDP) */
+ 	if (psm != cpu_to_le16(L2CAP_PSM_SDP) &&
+-	    !hci_conn_check_link_mode(conn->hcon)) {
++	    (!hci_conn_check_link_mode(conn->hcon) ||
++	    !l2cap_check_enc_key_size(conn->hcon))) {
+ 		conn->disc_reason = HCI_ERROR_AUTH_FAILURE;
+ 		result = L2CAP_CR_SEC_BLOCK;
+ 		goto response;
 -- 
 2.39.5
 
