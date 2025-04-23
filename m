@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269F728B4F4;
-	Wed, 23 Apr 2025 15:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F9F28EB;
+	Wed, 23 Apr 2025 15:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421829; cv=none; b=M3iBxwmJSskDR0MDSb7y6uOeitcQnJQhxvWNsZJMAm71krneAJF/YfARwWy5Q6NEAaZN+lKcUmL0iF2cuICl3yRmeDMVcLldDR3U908xaTkaSfBOd2RBdMbUzYdut6aYz24fMRo6pAjAnDubI2Y/BkDP3ClBe6bLHzsJGVhQ9BM=
+	t=1745421832; cv=none; b=rQAANm/Emh8bzNPKYiT8VXeAWZpJ+WRFT4783hFw4MH+MZy8knQPFGWaTheX2FPHHw0ZKnwgnaQ4/4fi/FcZ7PVHRYjg/8B4z32dEy0hBgDx2IFjbPt2xzffUMawuYCOONVuaSt8HdNKNBkJ7XW7rYaUKQo1Y+0ch+cHvuFu7Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421829; c=relaxed/simple;
-	bh=X0ijJ55qql9APwH73dAZtusvSs67Xee350O2w40OR+k=;
+	s=arc-20240116; t=1745421832; c=relaxed/simple;
+	bh=CK+Hhj0cwlAsf8AbLbFfrDWK2eIVDuVDD0xo4r2chuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdBUKQ4V5Van8ofulkDFTyke9x+OzdL5nIA6xQCjJ0BaI3viwFGrKcBtLpcu4exhqHtsPwSZbqPk/jCuRkFyeJAo2/Xt6vC03UocEd5aIqTLtbALih8+uVNra5xb8SY3QnS+pVXc1ImWSbYg1ypXe33PQ9ILuvbxUjqE8fxFtGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+lW0Wn1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DB2uu8YCLIw2khaT+tAhIaJlAM5W/u2HRIciNWD23lIXCG6NBKgVWU0N8/PQqMvYKEev987z9K0FYpFxE/mEQfGGvouRF+s+ZqDbkMAEigrZpwtyWnaGWUtKNsdwk6KYGELHzo66fPXhbDDHfO0zURVxLGq5zwqNkTn2Vjr4KIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J42skv6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+lW0Wn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56455C4CEE2;
-	Wed, 23 Apr 2025 15:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J42skv6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DCBC4CEEC;
+	Wed, 23 Apr 2025 15:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421828;
-	bh=X0ijJ55qql9APwH73dAZtusvSs67Xee350O2w40OR+k=;
+	s=korg; t=1745421831;
+	bh=CK+Hhj0cwlAsf8AbLbFfrDWK2eIVDuVDD0xo4r2chuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+lW0Wn1MiHt81kZiysyzWhG5f+iKVqBiVye2nJBJjOv3J3I5IQO6KKGvwQ921gqk
-	 DL6rh0Fh/fi+KE5oKsmM8uvOSWsKNF9ybYarTz2bOOj0ilBf2HUGo+979VPJgexTYC
-	 BAcgoUqBecqOIvaD8Seba/2q4OAtUvHxSyoMufdc=
+	b=J42skv6RxUo5Pvab0cYBRFSqcEZroUyirxk2bdm2mUTPWpkpEZPnpDLfNq1HiWn7+
+	 mJUAqmzcKEU+oeAQlkSqgH3RSJh0glC98RPeJBW4kaFIdUmc9nJKMdtEpGFp93qvZY
+	 BtaW/Akjf5JbBwOpKJ0tCBV/jjAeqbMEqYsTq7s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher S M Hall <christopher.s.hall@intel.com>,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/291] igc: cleanup PTP module if probe fails
-Date: Wed, 23 Apr 2025 16:42:52 +0200
-Message-ID: <20250423142631.857382878@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.14 238/241] MIPS: dec: Declare which_prom() as static
+Date: Wed, 23 Apr 2025 16:45:02 +0200
+Message-ID: <20250423142630.295271079@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christopher S M Hall <christopher.s.hall@intel.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 1f025759ba394dd53e434d2668cb0597886d9b69 ]
+commit 55fa5868519bc48a7344a4c070efa2f4468f2167 upstream.
 
-Make sure that the PTP module is cleaned up if the igc_probe() fails by
-calling igc_ptp_stop() on exit.
+Declare which_prom() as static to suppress gcc compiler warning that
+'missing-prototypes'. This function is not intended to be called
+from other parts.
 
-Fixes: d89f88419f99 ("igc: Add skeletal frame for Intel(R) 2.5G Ethernet Controller support")
-Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
-Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix follow error with gcc-14 when -Werror:
+
+arch/mips/dec/prom/init.c:45:13: error: no previous prototype for ‘which_prom’ [-Werror=missing-prototypes]
+   45 | void __init which_prom(s32 magic, s32 *prom_vec)
+      |             ^~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:207: arch/mips/dec/prom/init.o] Error 1
+make[5]: *** [scripts/Makefile.build:465: arch/mips/dec/prom] Error 2
+make[5]: *** Waiting for unfinished jobs....
+
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/dec/prom/init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 6ae2d0b723c82..082f78beeb4ed 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6725,6 +6725,7 @@ static int igc_probe(struct pci_dev *pdev,
- 
- err_register:
- 	igc_release_hw_control(adapter);
-+	igc_ptp_stop(adapter);
- err_eeprom:
- 	if (!igc_check_reset_block(hw))
- 		igc_reset_phy(hw);
--- 
-2.39.5
-
+--- a/arch/mips/dec/prom/init.c
++++ b/arch/mips/dec/prom/init.c
+@@ -42,7 +42,7 @@ int (*__pmax_close)(int);
+  * Detect which PROM the DECSTATION has, and set the callback vectors
+  * appropriately.
+  */
+-void __init which_prom(s32 magic, s32 *prom_vec)
++static void __init which_prom(s32 magic, s32 *prom_vec)
+ {
+ 	/*
+ 	 * No sign of the REX PROM's magic number means we assume a non-REX
 
 
