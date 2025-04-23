@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818DC28CF6E;
-	Wed, 23 Apr 2025 15:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1422928D836;
+	Wed, 23 Apr 2025 15:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421918; cv=none; b=DYTGkYDgOmMTxtq8itXcbR0PcWvUGEC/BOzrWbCTtZpS2RUyBqK9p/wZXKykDlFxwWnrho3CyCz2qc0vcECAUPbo9WHAel/1//3nn7S/qxRHupCcQrOjskhQArsME5gdJso2KMSEWi95lRzDE792cM2hzucdYNJvty0uO+46We8=
+	t=1745421921; cv=none; b=CidrSWEHNR4gKeIrsxPir3kobIA3Pnt0cz0i9ahzoZlkLEvZt//dd63gVlHyLKUD9egSeLbM5qRVqT972NScEBxEHhmTUGsogJE4b+DvLxhVdGD81caFLJKVYBZuIuRpB6nD76v1CcLZffyL2iHWJAlwY1oButYTjVcFLdpyb+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421918; c=relaxed/simple;
-	bh=weZPZHcBcoIA11xlt2PlavBE+r2uUtltuYipPSF6WIQ=;
+	s=arc-20240116; t=1745421921; c=relaxed/simple;
+	bh=sgd6GNaVjcm4Jk9f7st5Vly7X48fRaIBxZcchqpdJ8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDq6N91tdM5sWMQhpA3qzESuSzUnnG42omIJPgauZAj4Wsb4dCotgBrklRm3Ki2gVvAgaTRwpJ7hpK3W9PJPeT6LpQPdEDoK6gfasbx/zpiKH5mBSS0C6kFaeCj/zyeRFVbcYbh6vU1a4jgHtNimgj71zLWUQ3LnNk00RQMvwSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqQ6k3rk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yv8M57rCBz52elNEyCIf3xQ1oSUG+2y0mVwoZt+2grvO9L/RTLkt3hkto4r+bNmpOUs+L41ys3rZTWWTwYopYJlXzwMR+ouHjR1/J6u9sE3effkIEbpjLIiQ9zLdgMZzB3R7Cro8sPZJ8KynVvWGbYOvgsLQPEV45fGU3/gW4jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6p+86jF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqQ6k3rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACC8C4CEE2;
-	Wed, 23 Apr 2025 15:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6p+86jF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3513AC4CEE3;
+	Wed, 23 Apr 2025 15:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421916;
-	bh=weZPZHcBcoIA11xlt2PlavBE+r2uUtltuYipPSF6WIQ=;
+	s=korg; t=1745421918;
+	bh=sgd6GNaVjcm4Jk9f7st5Vly7X48fRaIBxZcchqpdJ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VqQ6k3rkAAuCAmDcoWg++uhLQztTQfXEtfgtAw/O7QqzG4kSNjE3tj8VRaRCtkF4f
-	 a5DCMSfqliPa5y3WI8BGucRbIrUBqsfHfpUtUCGR7WMDED1cieYF/DTjXKaNa1/NDP
-	 4fU08B37xslT59ibEsKfhK678XCwNsOtLhmhz/I0=
+	b=r6p+86jFtKjzDOx7TjiMXD43Jk59outcskD55kg+ceQ2nqyuF50EkI3AYyAxlLGG6
+	 T1Wz7sknuVaJLecDmKQ8+ANsTwR7cyaFQv9g23y/l+AVB1NywVPfSJu5QPqLkoFK6H
+	 ZdhjD8tNxOUUZzz2eLqCNfWOimlWW73xLEYs7ZDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 198/291] writeback: fix false warning in inode_to_wb()
-Date: Wed, 23 Apr 2025 16:43:07 +0200
-Message-ID: <20250423142632.472445505@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 245/393] scsi: iscsi: Fix missing scsi_host_put() in error path
+Date: Wed, 23 Apr 2025 16:42:21 +0200
+Message-ID: <20250423142653.502319334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 9e888998ea4d22257b07ce911576509486fa0667 upstream.
+[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
 
-inode_to_wb() is used also for filesystems that don't support cgroup
-writeback.  For these filesystems inode->i_wb is stable during the
-lifetime of the inode (it points to bdi->wb) and there's no need to hold
-locks protecting the inode->i_wb dereference.  Improve the warning in
-inode_to_wb() to not trigger for these filesystems.
+Add goto to ensure scsi_host_put() is called in all error paths of
+iscsi_set_host_param() function. This fixes a potential memory leak when
+strlen() check fails.
 
-Link: https://lkml.kernel.org/r/20250412163914.3773459-3-agruenba@redhat.com
-Fixes: aaa2cacf8184 ("writeback: add lockdep annotation to inode_to_wb()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Reviewed-by: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/backing-dev.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/include/linux/backing-dev.h
-+++ b/include/linux/backing-dev.h
-@@ -241,6 +241,7 @@ static inline struct bdi_writeback *inod
- {
- #ifdef CONFIG_LOCKDEP
- 	WARN_ON_ONCE(debug_locks &&
-+		     (inode->i_sb->s_iflags & SB_I_CGROUPWB) &&
- 		     (!lockdep_is_held(&inode->i_lock) &&
- 		      !lockdep_is_held(&inode->i_mapping->i_pages.xa_lock) &&
- 		      !lockdep_is_held(&inode->i_wb->list_lock)));
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index deeb657981a69..0c30fec555475 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -3208,11 +3208,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
+ 	}
+ 
+ 	/* see similar check in iscsi_if_set_param() */
+-	if (strlen(data) > ev->u.set_host_param.len)
+-		return -EINVAL;
++	if (strlen(data) > ev->u.set_host_param.len) {
++		err = -EINVAL;
++		goto out;
++	}
+ 
+ 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
+ 					data, ev->u.set_host_param.len);
++out:
+ 	scsi_host_put(shost);
+ 	return err;
+ }
+-- 
+2.39.5
+
 
 
