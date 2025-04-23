@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9556C284B57;
-	Wed, 23 Apr 2025 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0451386DA;
+	Wed, 23 Apr 2025 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420403; cv=none; b=pbiuTGWf2JSHerT2ZQBnNfhz+y1/FahjrE2i0keKGqb9HzUV3HbrsJRwKLULuF8m9VlLJekXlJgfngbJMFOsrBdzrXQ8vdKRzFKQkG1m9s1K/xhQI1d4WyP2vpYvT9h/swwLm5fJAVJ+G8k6nhK9VGbGJ4YdTdnlwL27xtwjlds=
+	t=1745420406; cv=none; b=gOO9Fv0PRteIgZwtcT3DhS9624XWEYphVAvBbUNc2BP88RImoVgXVIlync5ybUfgGSenmD/gNUal07CqRRceLJVVN8frdZEB7JTJAj7bKmyEot6P0sYr98ouEwwWG9Sssx4BxMBHEaPxHHrZVxhesypnHQmK+xCGKbGCSKTzkSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420403; c=relaxed/simple;
-	bh=F9Jgx7BWN/GSaDlzONRxPt0gFKo2g+VcEsA8DehYX4g=;
+	s=arc-20240116; t=1745420406; c=relaxed/simple;
+	bh=bl9Cagc7DJ+Bc2eib3ghvoo9gHYP+fJwMfoTif8BgCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MA4mPhVvV7wpXy9ZfwioUL6aauUHvNauq9OGNZVnIkdOWCofi4//oaF/6ZXe5O2zz2W/3XFxhn6G5HSXoDwd/kWJnTDAcwxy/+VMuBhWs5vEN+Bkjg5vW0plT3HU6itLSVeioKNTaY3MOAKxdAfJ8vdofv9kqpAPEhdBg6ADVTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJ/BkQcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljUC2zY8czHuW0mudSMTDtdo1GeUiFhuk89gZFtq2ZYXgjMlVG4BooG5NE88ifuazGuYFfiJ4jdrBjIRkNO5Vy+k5G4yoclHW7vaZUKa0MUnllX5mFm/4YXX9H9MEv5aoI6UmCW2pIh6BR6Xm3YUJ/uAALNpw9Y8c+mNDSB9Eoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSCQhF/X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ/BkQcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6677C4CEE2;
-	Wed, 23 Apr 2025 15:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSCQhF/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B96C4CEE2;
+	Wed, 23 Apr 2025 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420403;
-	bh=F9Jgx7BWN/GSaDlzONRxPt0gFKo2g+VcEsA8DehYX4g=;
+	s=korg; t=1745420405;
+	bh=bl9Cagc7DJ+Bc2eib3ghvoo9gHYP+fJwMfoTif8BgCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJ/BkQcG1bsuuchV9th3MjqceyoWgtfu5Bi63guc4O8l8Cg3qgWwa/1xa9UOwvDG/
-	 w5oLXexM2zNigCjZkNYv+sD7cbXCxCStM5gkgD3PZz2sCAkBzJhX3ItW6KYU5/Rb3c
-	 pxc7+dmqvt+pPNhtWi47HUEVYTUO3U6oi8J+FvcA=
+	b=QSCQhF/Xg6tBa0uG+lV/f67yoxZNmx3Hq/qHL3UdQW01pigJQdxxMhevkpUi0uEgs
+	 0uy0No0CzW5pKErArhjZGwUvIUnVeBXwu++q7kCV0H0b8jwS/pL38lsU8l/NDe3OUa
+	 p3styGPpccaA9bMx+Q5kr9XzJOeg830uFVIM+QOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Kral <d.kral@proxmox.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/291] ahci: add PCI ID for Marvell 88SE9215 SATA Controller
-Date: Wed, 23 Apr 2025 16:40:33 +0200
-Message-ID: <20250423142626.195859584@linuxfoundation.org>
+Subject: [PATCH 6.14 089/241] riscv: module: Fix out-of-bounds relocation access
+Date: Wed, 23 Apr 2025 16:42:33 +0200
+Message-ID: <20250423142624.217502840@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Kral <d.kral@proxmox.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 885251dc35767b1c992f6909532ca366c830814a ]
+[ Upstream commit 0b4cce68efb93e31a8e51795d696df6e379cb41c ]
 
-Add support for Marvell Technology Group Ltd. 88SE9215 SATA 6 Gb/s
-controller, which is e.g. used in the DAWICONTROL DC-614e RAID bus
-controller and was not automatically recognized before.
+The current code allows rel[j] to access one element past the end of the
+relocation section. Simplify to num_relocations which is equivalent to
+the existing size expression.
 
-Tested with a DAWICONTROL DC-614e RAID bus controller.
-
-Signed-off-by: Daniel Kral <d.kral@proxmox.com>
-Link: https://lore.kernel.org/r/20250304092030.37108-1-d.kral@proxmox.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 080c4324fa5e ("riscv: optimize ELF relocation function in riscv")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Maxim Kochetkov <fido_max@inbox.ru>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250409171526.862481-1-samuel.holland@sifive.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/kernel/module.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 20f53ae4d204e..a4b0a499b67d4 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -592,6 +592,8 @@ static const struct pci_device_id ahci_pci_tbl[] = {
- 	  .driver_data = board_ahci_yes_fbs },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x91a3),
- 	  .driver_data = board_ahci_yes_fbs },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9215),
-+	  .driver_data = board_ahci_yes_fbs },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9230),
- 	  .driver_data = board_ahci_yes_fbs },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL_EXT, 0x9235),
+diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
+index 0ae34d79b87bd..7f6147c18033b 100644
+--- a/arch/riscv/kernel/module.c
++++ b/arch/riscv/kernel/module.c
+@@ -860,7 +860,7 @@ int apply_relocate_add(Elf_Shdr *sechdrs, const char *strtab,
+ 				}
+ 
+ 				j++;
+-				if (j > sechdrs[relsec].sh_size / sizeof(*rel))
++				if (j == num_relocations)
+ 					j = 0;
+ 
+ 			} while (j_idx != j);
 -- 
 2.39.5
 
