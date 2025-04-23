@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE8028D822;
-	Wed, 23 Apr 2025 15:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922E728D827;
+	Wed, 23 Apr 2025 15:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421047; cv=none; b=iEDJR2CoUtrIuYhvtN1SSUVULv42NJ34AesiBfc81oIEM7FJ62keWr2hp1kUZrLdX6x24cdCxJ4vo1qQ4DMzKwwwaBnaFLQmVSsWiM4L3ZTUT50UJV/77t69gW3ksTGoo89lA8VAtfgwGTocRnKMyyqifeQUxPRMYolKrunzA94=
+	t=1745421049; cv=none; b=JGlwZUm955yadjjDJL+kM3bJnWeiEYwglRUcYA5xxSNWhj8NnGlYhBL+AyMlMhHgf5qpuGq72huLD1RtaKrnC/It7vaxe8i6p8B5S+P3caZemjfGa7P+jdpuASigfW+mXuummcOcEVKErEFwXlo7JIhEjEXH7rnNSyAOFARIYMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421047; c=relaxed/simple;
-	bh=jQls2b7GK1yBlkkRMHVaauZJzBOaegY+AeYLXQwlMaM=;
+	s=arc-20240116; t=1745421049; c=relaxed/simple;
+	bh=QidgjTNCuKF8K1sIjKJeRWB+2L3N/oi8ALe7rqIhNt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PblhXpKv1BYfZ/Q2hbgADuguB+x66JkxVDVHPQ83x3u/K1dutel+e8NRUyUFMMXO33x3iKhgzCO6+/B/7V7HCtOR6QfbcfcqPVDn4+t9QfxMjzUc+QIHo8HZiW4FEdtakmDW8TE3PBh1cWdhGSKS824n9gRPUjNdCskoRjJBEIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRd4ptTT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQUBLZ/cK0onFg3iBXPb1asJf2VVGc7pZ2dNXZHacoNxu+oTx4/vnnRzI12GAqLGl40LoF0gMDdyddRWMhpwx+jiRsaSLqUDEJrJFTJJE0PKtMVTS+lNHDB+GkHRV0KI0swkOZHzDN4G38bIyyFi85TKxmtuc1IwE8g63/YZXCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgHtXmyo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRd4ptTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B0C4CEE2;
-	Wed, 23 Apr 2025 15:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgHtXmyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD0AC4CEE2;
+	Wed, 23 Apr 2025 15:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421046;
-	bh=jQls2b7GK1yBlkkRMHVaauZJzBOaegY+AeYLXQwlMaM=;
+	s=korg; t=1745421049;
+	bh=QidgjTNCuKF8K1sIjKJeRWB+2L3N/oi8ALe7rqIhNt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRd4ptTTI+vW89Ip4EfbgSQr47shfcwcs8eiEtxSloII5nnRaLyuKvvdksRsmKbkn
-	 RRCUzy7DrOuA+9MGuLSp7OzBalc7Xpdtw6LkHS39T0Fq/HJ32+AgrTaNuTvT/Z4tVr
-	 OcWwph1bohhZ+NHOyQmSpqBMcPyLEAhRS5ABZAmg=
+	b=bgHtXmyolzU9MPtdLlypSnQ5oPBp/2FNL4xDCmhqHX2Tik6C5yqSuDUN7yeqQpgM0
+	 wNc72sACGpPSo6bLCTp65Z6p4U/YX0Nz0e1FOZViqWL6eQJMo3TyhJ4J7CT3tNd1T7
+	 y1WsBMg1AcCqpUaHkxPXtz4YYFeoIH8ugnFyrMds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	amd-gfx@lists.freedesktop.org,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 170/223] drm/amdgpu/dma_buf: fix page_link check
-Date: Wed, 23 Apr 2025 16:44:02 +0200
-Message-ID: <20250423142624.088310148@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 123/393] media: venus: hfi: add a check to handle OOB in sfr region
+Date: Wed, 23 Apr 2025 16:40:19 +0200
+Message-ID: <20250423142648.444857743@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit c0dd8a9253fadfb8e5357217d085f1989da4ef0a upstream.
+commit f4b211714bcc70effa60c34d9fa613d182e3ef1e upstream.
 
-The page_link lower bits of the first sg could contain something like
-SG_END, if we are mapping a single VRAM page or contiguous blob which
-fits into one sg entry. Rather pull out the struct page, and use that in
-our check to know if we mapped struct pages vs VRAM.
+sfr->buf_size is in shared memory and can be modified by malicious user.
+OOB write is possible when the size is made higher than actual sfr data
+buffer. Cap the size to allocated size for such cases.
 
-Fixes: f44ffd677fb3 ("drm/amdgpu: add support for exporting VRAM using DMA-buf v3")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-@@ -181,7 +181,7 @@ static void amdgpu_dma_buf_unmap(struct
- 				 struct sg_table *sgt,
- 				 enum dma_data_direction dir)
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -1035,18 +1035,26 @@ static void venus_sfr_print(struct venus
  {
--	if (sgt->sgl->page_link) {
-+	if (sg_page(sgt->sgl)) {
- 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
- 		sg_free_table(sgt);
- 		kfree(sgt);
+ 	struct device *dev = hdev->core->dev;
+ 	struct hfi_sfr *sfr = hdev->sfr.kva;
++	u32 size;
+ 	void *p;
+ 
+ 	if (!sfr)
+ 		return;
+ 
+-	p = memchr(sfr->data, '\0', sfr->buf_size);
++	size = sfr->buf_size;
++	if (!size)
++		return;
++
++	if (size > ALIGNED_SFR_SIZE)
++		size = ALIGNED_SFR_SIZE;
++
++	p = memchr(sfr->data, '\0', size);
+ 	/*
+ 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
+ 	 * that Venus is in the process of crashing.
+ 	 */
+ 	if (!p)
+-		sfr->data[sfr->buf_size - 1] = '\0';
++		sfr->data[size - 1] = '\0';
+ 
+ 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
+ }
 
 
