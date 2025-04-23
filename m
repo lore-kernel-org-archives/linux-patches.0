@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04196296155;
-	Wed, 23 Apr 2025 15:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D32A29CB47;
+	Wed, 23 Apr 2025 15:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422029; cv=none; b=LwZY5YjiyxU3kOZjl2LkQpC7s4EdwCtofGC8VtaT9jfNwYMoyL96jYANKDcpmXZrQjyko/0AtLKN8e8JlAPv1Va4tYnjWYXo5YlFIfq8YQB41d9ZZ67WRdtlWul+lLp7TOsbOifzm/QznI+jvo7vo7603hAsUeJzpJBleyMJYBk=
+	t=1745422031; cv=none; b=emcQ9Nw12MCpMDw1ffVngVHvGqVyO4wb46vIezH2r+h2d9BMFw5wp5aD8iNipUwJYrjb/tikhj0MZON56Pczl4uOiUaOtiBWvpMxUgGNadiXm2D4cIt1R/R6qb4AVc0YL5ZfOJU+xFeG+cjTXL1OqmbZU77zR303WJplZvqs8pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422029; c=relaxed/simple;
-	bh=EQDQkLfb855H94vNq0lgengECwAPWx/jo72x7wTcCFw=;
+	s=arc-20240116; t=1745422031; c=relaxed/simple;
+	bh=pRFd6tSwLuxATHuNLWTdIMDyEmodrd5TrhCt4IBFJFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKQHLG2VchAexGcK9idwpCOtx9sGAP/LSj0vq4P9aIhOwBT8/Wvm0UWAnLi8SH1+ul0jJD/YoRu4N0SJ3TPhxeVs9JYsu+4bhdddFunVpoZZgGuu1/w0bHDaXLzydCIl/MzGMIlXocdOrJRMiPnd7raZhyX7HBUdN4ek5DJKjzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhByT8cJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uSSeCRPNhaLc+Dcbwz1s8HZQlAkd18f6FJBmfNXpoBuoPb+BiXvWzm0He3n/Uf8R/NNjLoei6SauJyiQ70/vAG7TPISHEQztAJ+Us/Up74ab+YM+ZtowL3lADcrjPsfGw3YyHgIeNdEy4sHgvXr/csDWLCpSAITZxnwVz0zxGU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1Lwfc9I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhByT8cJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7DFC4CEE2;
-	Wed, 23 Apr 2025 15:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1Lwfc9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3031EC4CEE2;
+	Wed, 23 Apr 2025 15:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422028;
-	bh=EQDQkLfb855H94vNq0lgengECwAPWx/jo72x7wTcCFw=;
+	s=korg; t=1745422031;
+	bh=pRFd6tSwLuxATHuNLWTdIMDyEmodrd5TrhCt4IBFJFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QhByT8cJ8DiiXa/Co4233sagW1c2HB91aZUh5D2fNPLyOf7q31roUrrAWf5E/+o8+
-	 h3LZZBFs2YKEhTBBkdEb2sBjPXCjQMhOTea5ZvsaZnVwEEa2lyBhL1bkhrRUlE84J9
-	 NvqmcY9dFG9PZ3vBgqh/CKWuEmFOmp4xaG67T+hI=
+	b=p1Lwfc9IWUskfdQ6MNHbb9C8y4Xfp0oKpvli5hbeMBIUmdBFSoP5Mc+Oo3wBrG5pN
+	 Z+fN9h43bqznUbBKb9mJhbijzfwVzn3cI55eY0AJRaHKtIxcptM+DwgMJCYr1UfIrZ
+	 Eh0L8JC6C4ni9SGOhj8or4Z7vUUmB+gnmt9yzHWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 265/393] test suite: use %zu to print size_t
-Date: Wed, 23 Apr 2025 16:42:41 +0200
-Message-ID: <20250423142654.312627848@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.1 221/291] string: Add load_unaligned_zeropad() code path to sized_strscpy()
+Date: Wed, 23 Apr 2025 16:43:30 +0200
+Message-ID: <20250423142633.437163324@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Peter Collingbourne <pcc@google.com>
 
-[ Upstream commit a30951d09c33c899f0e4aca80eb87fad5f10ecfa ]
+commit d94c12bd97d567de342fd32599e7cd9e50bfa140 upstream.
 
-On 32-bit, we can't use %lu to print a size_t variable and gcc warns us
-about it.  Shame it doesn't warn about it on 64-bit.
+The call to read_word_at_a_time() in sized_strscpy() is problematic
+with MTE because it may trigger a tag check fault when reading
+across a tag granule (16 bytes) boundary. To make this code
+MTE compatible, let's start using load_unaligned_zeropad()
+on architectures where it is available (i.e. architectures that
+define CONFIG_DCACHE_WORD_ACCESS). Because load_unaligned_zeropad()
+takes care of page boundaries as well as tag granule boundaries,
+also disable the code preventing crossing page boundaries when using
+load_unaligned_zeropad().
 
-Link: https://lkml.kernel.org/r/20250403003311.359917-1-Liam.Howlett@oracle.com
-Fixes: cc86e0c2f306 ("radix tree test suite: add support for slab bulk APIs")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Link: https://linux-review.googlesource.com/id/If4b22e43b5a4ca49726b4bf98ada827fdf755548
+Fixes: 94ab5b61ee16 ("kasan, arm64: enable CONFIG_KASAN_HW_TAGS")
+Cc: stable@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250403000703.2584581-2-pcc@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/radix-tree/linux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/string.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/radix-tree/linux.c b/tools/testing/radix-tree/linux.c
-index d587a558997f8..11149bd12a1f7 100644
---- a/tools/testing/radix-tree/linux.c
-+++ b/tools/testing/radix-tree/linux.c
-@@ -121,7 +121,7 @@ void kmem_cache_free(struct kmem_cache *cachep, void *objp)
- void kmem_cache_free_bulk(struct kmem_cache *cachep, size_t size, void **list)
- {
- 	if (kmalloc_verbose)
--		pr_debug("Bulk free %p[0-%lu]\n", list, size - 1);
-+		pr_debug("Bulk free %p[0-%zu]\n", list, size - 1);
+--- a/lib/string.c
++++ b/lib/string.c
+@@ -181,6 +181,7 @@ ssize_t strscpy(char *dest, const char *
+ 	if (count == 0 || WARN_ON_ONCE(count > INT_MAX))
+ 		return -E2BIG;
  
- 	pthread_mutex_lock(&cachep->lock);
- 	for (int i = 0; i < size; i++)
-@@ -139,7 +139,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *cachep, gfp_t gfp, size_t size,
- 	size_t i;
++#ifndef CONFIG_DCACHE_WORD_ACCESS
+ #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
+ 	/*
+ 	 * If src is unaligned, don't cross a page boundary,
+@@ -196,11 +197,13 @@ ssize_t strscpy(char *dest, const char *
+ 	if (((long) dest | (long) src) & (sizeof(long) - 1))
+ 		max = 0;
+ #endif
++#endif
  
- 	if (kmalloc_verbose)
--		pr_debug("Bulk alloc %lu\n", size);
-+		pr_debug("Bulk alloc %zu\n", size);
+ 	/*
+-	 * read_word_at_a_time() below may read uninitialized bytes after the
+-	 * trailing zero and use them in comparisons. Disable this optimization
+-	 * under KMSAN to prevent false positive reports.
++	 * load_unaligned_zeropad() or read_word_at_a_time() below may read
++	 * uninitialized bytes after the trailing zero and use them in
++	 * comparisons. Disable this optimization under KMSAN to prevent
++	 * false positive reports.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_KMSAN))
+ 		max = 0;
+@@ -208,7 +211,11 @@ ssize_t strscpy(char *dest, const char *
+ 	while (max >= sizeof(unsigned long)) {
+ 		unsigned long c, data;
  
- 	if (!(gfp & __GFP_DIRECT_RECLAIM)) {
- 		if (cachep->non_kernel < size)
--- 
-2.39.5
-
++#ifdef CONFIG_DCACHE_WORD_ACCESS
++		c = load_unaligned_zeropad(src+res);
++#else
+ 		c = read_word_at_a_time(src+res);
++#endif
+ 		if (has_zero(c, &data, &constants)) {
+ 			data = prep_zero_mask(c, data, &constants);
+ 			data = create_zero_mask(data);
 
 
