@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2A12857C4;
-	Wed, 23 Apr 2025 14:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2022281344;
+	Wed, 23 Apr 2025 14:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420340; cv=none; b=gyOSWRC8JrWwSHvURuxy8WgdXsjcTum2LiKnyX3oP2EkxKNoF1BcEf0sB1HzzJobSkRJ4xknuvi6ERM5Hhn3qaTCfY+uV0b6sM2YLtb7clulneKUjg9F0yBSNLMN4ZCySkD30Fy7o9IRhEIqIj0Bh5sslM088O1buGvmXZhQUPQ=
+	t=1745420342; cv=none; b=E9xcKQmkEfr2+ikU9twd2u59aewck3x5tEMx83iuwbF6JKGufxm4x8Oh6p667IrVzPrnCPtjFHH/D4C2XZvhOYcvvCAihFlVTeyA2VK1aPSxr3gURxZU02MpB5yjW5BJIWWUZFSN5z9Du/EW7bpbpLHYOz6KHhj2OWTjH12agGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420340; c=relaxed/simple;
-	bh=2CIBfoAv/kjCBUefdUsCermQ1/hLpBvp2y+AU6oHP8s=;
+	s=arc-20240116; t=1745420342; c=relaxed/simple;
+	bh=YyMBXsvPuUWLaphv/MV+3bJKRTCXKMO44EVGvMJxwc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HA0UG+/aqlqaJj1K/b5Oq+I1fTu95srxM7L7IVfNSTR9EKXhg6EAT+vjNm0LfN7SvZP6bUujn1LZOkO1uhZ94yvCjjJZA94ApGWgIOBZUME0ZUQ/ICKNEzPKU1WN65kSq2OnOofjtpGzZu3aZ+hpeZDM4HbnpY+fcKlIfgj+9Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiuR7yu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMKTMmiwv8CzwuC3ItOfFZyTShTmrDkW0r+tC6ieNcu3YIuOJr2jfaRW5Tbzl7T7JtxL3IY94LNdHx0ow1JUj5MBLO64lwJnwmyo71EaQsEwU++Cd5xh8KjfaZzB3oehiZk0b/ECEHzRN/AumgojqgHABo1lX27jq0pJEIQfSD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUafnvqK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiuR7yu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D04AC4CEE8;
-	Wed, 23 Apr 2025 14:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUafnvqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E80C4CEE2;
+	Wed, 23 Apr 2025 14:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420339;
-	bh=2CIBfoAv/kjCBUefdUsCermQ1/hLpBvp2y+AU6oHP8s=;
+	s=korg; t=1745420342;
+	bh=YyMBXsvPuUWLaphv/MV+3bJKRTCXKMO44EVGvMJxwc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiuR7yu62TpllbS6/Ln4We6eJpnqOKGayWqbwk0HnLObT7M/jaJvWd292zAktAvPp
-	 51sASZ0pF8/aW6NvOZjB0hhyAx9gEe3pVMfA+TyqSno4uHN5ht0sUtuCbdpdAD9yXE
-	 z3fYVvha6RDYL/PK0v9okd7Ta13l+ipZOldJZx5c=
+	b=bUafnvqKPI3vQ7CCzUddTqg+IKbAq7AWm+2Mxok51Rh5E/F9w9vrXh08aUIwkZzMq
+	 SB5AqtrI+1Wps8NEAA1+8jQdAA3WPyFU8JI/nNoMjQHFbBf1HlSRjPndMMiPHfdTJH
+	 8F14FRAh+um77LO04pNmaro3P3zkAboQIY0YAim4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Meghana Malladi <m-malladi@ti.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 083/241] net: ti: icss-iep: Fix possible NULL pointer dereference for perout request
-Date: Wed, 23 Apr 2025 16:42:27 +0200
-Message-ID: <20250423142623.972358043@linuxfoundation.org>
+Subject: [PATCH 6.14 068/241] netlink: specs: rtnetlink: attribute naming corrections
+Date: Wed, 23 Apr 2025 16:42:12 +0200
+Message-ID: <20250423142623.377768943@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
 References: <20250423142620.525425242@linuxfoundation.org>
@@ -53,190 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7349c9e9979333abfce42da5f9025598083b59c9 ]
+[ Upstream commit 540201c0ef7e8e7b169f68a238ade931a81a31a6 ]
 
-The ICSS IEP driver tracks perout and pps enable state with flags.
-Currently when disabling pps and perout signals during icss_iep_exit(),
-results in NULL pointer dereference for perout.
+Some attribute names diverge in very minor ways from the C names.
+These are most likely typos, and they prevent the C codegen from
+working.
 
-To fix the null pointer dereference issue, the icss_iep_perout_enable_hw
-function can be modified to directly clear the IEP CMP registers when
-disabling PPS or PEROUT, without referencing the ptp_perout_request
-structure, as its contents are irrelevant in this case.
-
-Fixes: 9b115361248d ("net: ti: icssg-prueth: Fix clearing of IEP_CMP_CFG registers during iep_init")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/7b1c7c36-363a-4085-b26c-4f210bee1df6@stanley.mountain/
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Fixes: bc515ed06652 ("netlink: specs: Add a spec for neighbor tables in rtnetlink")
+Fixes: b2f63d904e72 ("doc/netlink: Add spec for rt link messages")
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250415090543.717991-4-m-malladi@ti.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250414211851.602096-7-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 121 +++++++++++------------
- 1 file changed, 58 insertions(+), 63 deletions(-)
+ Documentation/netlink/specs/rt_link.yaml  | 6 +++---
+ Documentation/netlink/specs/rt_neigh.yaml | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index b4a34c57b7b48..2a1c43316f462 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -412,6 +412,22 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 	int ret;
- 	u64 cmp;
- 
-+	if (!on) {
-+		/* Disable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), 0);
-+
-+		/* clear CMP regs */
-+		regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
-+		if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
-+			regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
-+
-+		/* Disable sync */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0);
-+
-+		return 0;
-+	}
-+
- 	/* Calculate width of the signal for PPS/PEROUT handling */
- 	ts.tv_sec = req->on.sec;
- 	ts.tv_nsec = req->on.nsec;
-@@ -430,64 +446,39 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- 		if (ret)
- 			return ret;
- 
--		if (on) {
--			/* Configure CMP */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, lower_32_bits(cmp));
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, upper_32_bits(cmp));
--			/* Configure SYNC, based on req on width */
--			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
--				     div_u64(ns_width, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
--			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
--				     div_u64(ns_start, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
--			/* Enable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
--		} else {
--			/* Disable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), 0);
--
--			/* clear regs */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
--		}
-+		/* Configure CMP */
-+		regmap_write(iep->map, ICSS_IEP_CMP1_REG0, lower_32_bits(cmp));
-+		if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
-+			regmap_write(iep->map, ICSS_IEP_CMP1_REG1, upper_32_bits(cmp));
-+		/* Configure SYNC, based on req on width */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
-+			     div_u64(ns_width, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
-+		regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+			     div_u64(ns_start, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
-+		/* Enable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
- 	} else {
--		if (on) {
--			u64 start_ns;
--
--			iep->period = ((u64)req->period.sec * NSEC_PER_SEC) +
--				      req->period.nsec;
--			start_ns = ((u64)req->period.sec * NSEC_PER_SEC)
--				   + req->period.nsec;
--			icss_iep_update_to_next_boundary(iep, start_ns);
--
--			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
--				     div_u64(ns_width, iep->def_inc));
--			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
--				     div_u64(ns_start, iep->def_inc));
--			/* Enable Sync in single shot mode  */
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
--				     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
--			/* Enable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
--		} else {
--			/* Disable CMP 1 */
--			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
--					   IEP_CMP_CFG_CMP_EN(1), 0);
--
--			/* clear CMP regs */
--			regmap_write(iep->map, ICSS_IEP_CMP1_REG0, 0);
--			if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
--				regmap_write(iep->map, ICSS_IEP_CMP1_REG1, 0);
--
--			/* Disable sync */
--			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0);
--		}
-+		u64 start_ns;
-+
-+		iep->period = ((u64)req->period.sec * NSEC_PER_SEC) +
-+				req->period.nsec;
-+		start_ns = ((u64)req->period.sec * NSEC_PER_SEC)
-+				+ req->period.nsec;
-+		icss_iep_update_to_next_boundary(iep, start_ns);
-+
-+		regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
-+			     div_u64(ns_width, iep->def_inc));
-+		regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
-+			     div_u64(ns_start, iep->def_inc));
-+		/* Enable Sync in single shot mode  */
-+		regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
-+			     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
-+		/* Enable CMP 1 */
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(1), IEP_CMP_CFG_CMP_EN(1));
- 	}
- 
- 	return 0;
-@@ -498,11 +489,21 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
- {
- 	int ret = 0;
- 
-+	if (!on)
-+		goto disable;
-+
- 	/* Reject requests with unsupported flags */
- 	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
- 			  PTP_PEROUT_PHASE))
- 		return -EOPNOTSUPP;
- 
-+	/* Set default "on" time (1ms) for the signal if not passed by the app */
-+	if (!(req->flags & PTP_PEROUT_DUTY_CYCLE)) {
-+		req->on.sec = 0;
-+		req->on.nsec = NSEC_PER_MSEC;
-+	}
-+
-+disable:
- 	mutex_lock(&iep->ptp_clk_mutex);
- 
- 	if (iep->pps_enabled) {
-@@ -513,12 +514,6 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
- 	if (iep->perout_enabled == !!on)
- 		goto exit;
- 
--	/* Set default "on" time (1ms) for the signal if not passed by the app */
--	if (!(req->flags & PTP_PEROUT_DUTY_CYCLE)) {
--		req->on.sec = 0;
--		req->on.nsec = NSEC_PER_MSEC;
--	}
--
- 	ret = icss_iep_perout_enable_hw(iep, req, on);
- 	if (!ret)
- 		iep->perout_enabled = !!on;
+diff --git a/Documentation/netlink/specs/rt_link.yaml b/Documentation/netlink/specs/rt_link.yaml
+index 1eab6aeaa2193..9f0ca05df0b98 100644
+--- a/Documentation/netlink/specs/rt_link.yaml
++++ b/Documentation/netlink/specs/rt_link.yaml
+@@ -1576,7 +1576,7 @@ attribute-sets:
+         name: nf-call-iptables
+         type: u8
+       -
+-        name: nf-call-ip6-tables
++        name: nf-call-ip6tables
+         type: u8
+       -
+         name: nf-call-arptables
+@@ -2064,7 +2064,7 @@ attribute-sets:
+         name: id
+         type: u16
+       -
+-        name: flag
++        name: flags
+         type: binary
+         struct: ifla-vlan-flags
+       -
+@@ -2152,7 +2152,7 @@ attribute-sets:
+         type: binary
+         struct: ifla-cacheinfo
+       -
+-        name: icmp6-stats
++        name: icmp6stats
+         type: binary
+         struct: ifla-icmp6-stats
+       -
+diff --git a/Documentation/netlink/specs/rt_neigh.yaml b/Documentation/netlink/specs/rt_neigh.yaml
+index e670b6dc07be4..a1e137a16abd5 100644
+--- a/Documentation/netlink/specs/rt_neigh.yaml
++++ b/Documentation/netlink/specs/rt_neigh.yaml
+@@ -189,7 +189,7 @@ attribute-sets:
+         type: binary
+         display-hint: ipv4
+       -
+-        name: lladr
++        name: lladdr
+         type: binary
+         display-hint: mac
+       -
 -- 
 2.39.5
 
