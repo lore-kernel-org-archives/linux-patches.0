@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C2F280A50;
-	Wed, 23 Apr 2025 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE6C27D763;
+	Wed, 23 Apr 2025 14:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420285; cv=none; b=YR4jimsvY0YEvshcL+NpveFFZGn93XihHoHyljiLskQQkBbZbXFWVMp6QOpZe1bAH9FyZbZM5dErxibD1I/HCM1VLt1nAixfg/evQmkyEwNQZZ3UZm1S/n4NifnW6DKCw5/GWq6fMCrUgAMCKXdhwtCaI3Q4hj+38AJ9O9Dd6i0=
+	t=1745420287; cv=none; b=SuIfvN+CWTPYifzj7cldei6y99fCUv+TGPNyBFlidoR/kWUhRibRkvAzsCRascDtUF3ucsY5Y2fyGHwCuvdk371QRYhiRdbDMeWKvfV2yzKdBrjJKZ+VXjlRQlns2DrUvbURMblaMIPpDZrNXHSAyx9Mv/w5exATIrdRgC6GBwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420285; c=relaxed/simple;
-	bh=X4gD791SrjZ4HYGhT/FR4uPYiTYX4EcYqGxqL/odsSM=;
+	s=arc-20240116; t=1745420287; c=relaxed/simple;
+	bh=JIpKNCSSwhrp6h7EkIntaz+hBkYz72GyvZ9Qbtk/F9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcQmG1ufJHsme/JerG12y/hgDUY9NLD/Y2YFvG3zIDoEDdUex0jRhmKDAVbehPr0er7OlwBmqoXd4Zoe78Z4osmuqLf7/cfSlmzv9Fx7q0aoBrXkh38Sd3PdCG/11tUmaBaS9iOy0eDRiiBuipPhnpMPU+5gAZUYslmKRlV7x4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsuGVBhk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h8QhyLRts4KeTXqCB3ps2BioyttFQPaYdGi755CoKEUlrgIHBYsGZhOa5Rq77o2TnyAaaUaOMHtmdAnvVHZIAgv0J5Cqe3iEzrZVjP95VBet+1zSKbPKPZez3AyGkcf/1N6xL7a99KBFtjGZtwx70B3ORQcTkSJHsMrK57a63l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTZsZF/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsuGVBhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15372C4CEE2;
-	Wed, 23 Apr 2025 14:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTZsZF/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2254C4CEE2;
+	Wed, 23 Apr 2025 14:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420284;
-	bh=X4gD791SrjZ4HYGhT/FR4uPYiTYX4EcYqGxqL/odsSM=;
+	s=korg; t=1745420287;
+	bh=JIpKNCSSwhrp6h7EkIntaz+hBkYz72GyvZ9Qbtk/F9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsuGVBhk/ard0Et14+Qj92IOkfmSbgJCUWAwuaTiJnR8ejjgSLeBcShfEiP6H7RUP
-	 ig1pRdvteeqFFSf/5N60Ba0QgmYAfEgdDjr0z2kPv+9a4SYUkpfq5DEUx2HlohS6cs
-	 zSRh2O4IaEDLt043gzIQDilmE17gXZ3iykLYRkvI=
+	b=tTZsZF/Sm04rIcyilcLlUQfJMyGlGcK6f9nh5xNVGAMDX1xXuk2SK/4/bmFbhdhPz
+	 t03JQdQWrviIQESO82P0IiDUdN9QNXgauqNiG0ITbt3v72B60U58/s/94SkRqeB7mp
+	 jILlmVkYN8E/CZGT/4bj6p80DTc6vA1mZIslQ7QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/393] ALSA: hda: intel: Fix Optimus when GPU has no sound
-Date: Wed, 23 Apr 2025 16:39:14 +0200
-Message-ID: <20250423142645.697655583@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 116/223] loop: LOOP_SET_FD: send uevents for partitions
+Date: Wed, 23 Apr 2025 16:43:08 +0200
+Message-ID: <20250423142621.835390054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,72 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 2b360ba9a4936486380bc30d1eabceb40a714d98 ]
+commit 0dba7a05b9e47d8b546399117b0ddf2426dc6042 upstream.
 
-quirk_nvidia_hda() forcefully enables HDA controller on all NVIDIA GPUs,
-because some buggy BIOSes leave it disabled. However, some dual-GPU
-laptops do not have a functional HDA controller in DGPU, and BIOS
-disables it on purpose. After quirk_nvidia_hda() reenables this dummy
-HDA controller, attempting to probe it fails at azx_first_init(), which
-is too late to cancel the probe, as it happens in azx_probe_continue().
+Remove the suppression of the uevents before scanning for partitions.
+The partitions inherit their suppression settings from their parent device,
+which lead to the uevents being dropped.
 
-The sna_hda_intel driver calls azx_free() and stops the chip, however,
-it stays probed, and from the runtime PM point of view, the device
-remains active (it was set as active by the PCI subsystem on probe). It
-prevents vga_switcheroo from turning off the DGPU, because
-pci_create_device_link() syncs power management for video and audio
-devices.
+This is similar to the same changes for LOOP_CONFIGURE done in
+commit bb430b694226 ("loop: LOOP_CONFIGURE: send uevents for partitions").
 
-Affected devices should be added to driver_denylist to prevent them from
-probing early. This patch helps identify such devices by printing a
-warning, and also forces the device to the suspended state to allow
-vga_switcheroo turn off DGPU.
-
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://patch.msgid.link/20250208214602.39607-2-maxtram95@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 498ef5c777d9 ("loop: suppress uevents while reconfiguring the device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20250415-loop-uevent-changed-v3-1-60ff69ac6088@linutronix.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/block/loop.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index d90151910bee9..da9b9dc0c96d4 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -1363,8 +1363,21 @@ static void azx_free(struct azx *chip)
- 	if (use_vga_switcheroo(hda)) {
- 		if (chip->disabled && hda->probe_continued)
- 			snd_hda_unlock_devices(&chip->bus);
--		if (hda->vga_switcheroo_registered)
-+		if (hda->vga_switcheroo_registered) {
- 			vga_switcheroo_unregister_client(chip->pci);
-+
-+			/* Some GPUs don't have sound, and azx_first_init fails,
-+			 * leaving the device probed but non-functional. As long
-+			 * as it's probed, the PCI subsystem keeps its runtime
-+			 * PM status as active. Force it to suspended (as we
-+			 * actually stop the chip) to allow GPU to suspend via
-+			 * vga_switcheroo, and print a warning.
-+			 */
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
-+			pm_runtime_disable(&pci->dev);
-+			pm_runtime_set_suspended(&pci->dev);
-+			pm_runtime_enable(&pci->dev);
-+		}
- 	}
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -568,12 +568,12 @@ static int loop_change_fd(struct loop_de
+ 	 * dependency.
+ 	 */
+ 	fput(old_file);
++	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
+ 	if (partscan)
+ 		loop_reread_partitions(lo);
  
- 	if (bus->chip_init) {
--- 
-2.39.5
-
+ 	error = 0;
+ done:
+-	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
+ 	kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
+ 	return error;
+ 
+@@ -581,6 +581,7 @@ out_err:
+ 	loop_global_unlock(lo, is_loop);
+ out_putf:
+ 	fput(file);
++	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 0);
+ 	goto done;
+ }
+ 
 
 
