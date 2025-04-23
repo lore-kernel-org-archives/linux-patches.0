@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B699C2BE100;
-	Wed, 23 Apr 2025 15:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEB028B4FB;
+	Wed, 23 Apr 2025 15:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422388; cv=none; b=QywK1mr6A6b5B3fw/fbI0F0QGNb+R1jGVAqXtviliYutMCCWZ75dNtjQt3DEDDbP73u+4PYVDv9zn5VlUvoPPhCW6eY94qJEaLyVjbuFVTeee3usuf95VL7WosEW7uTpJbwaWgqie0iMbmeCm9rVK20q5ApbzqYCAp+gfLoLypg=
+	t=1745422391; cv=none; b=WdlPmrUx5xpK8qS/0PNilm2qFxDKiF2WJaR90VE/voS6sQ1XTwVEXoaAmRKwmhC2lNVuAh/s4Wq5HSf7a5qngl1i1ug1Y3MxqFtB1/o1rbodpBAMkmYThzjPZZxurnox5lkhmH3wC4GRWuVWBVJ0PO3ZpxetuwT6YbZ65avxybk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422388; c=relaxed/simple;
-	bh=fLZaofdbRjVEQ2zpn1aNyXzzbiwq8zdKMO0o5gv6Isw=;
+	s=arc-20240116; t=1745422391; c=relaxed/simple;
+	bh=62WJSADdndERgmOLSUKqqrBhA59/MY421eP/59e6Am8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3pGvP8YfNwroFflru5b35Tv6F6tnzcv/Kb9d0My0VkMOvTC2IKY7WCpD4xqsEqOmHVV0H13h5nTceEk4GbRWIv8V8Y8dAtpdaXW7/5bPP54WiylgOPs4s62OXlfjaZRcp8lOqXqULsqqZKRaukDrH5KYgPbzVe0iyPMqq5krpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABdhQdo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l9eVTCZfSFx9PbRFZB2t36/GAbemujY1A94ERxCOIoBjRuv1L+g5xl7JryjjmBP1YLpg9cm/jFJToaBcEYuzXqcd1H13aFW2EtjWmwHOOyR3AdQpgH5Jq6bC/hm2pfDdq/zFgdtCmQp1906BQuMSx5KrJsA5foY60GcHvY2a5gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOmMVs7a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABdhQdo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DD5C4CEE2;
-	Wed, 23 Apr 2025 15:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOmMVs7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D792EC4CEE3;
+	Wed, 23 Apr 2025 15:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422388;
-	bh=fLZaofdbRjVEQ2zpn1aNyXzzbiwq8zdKMO0o5gv6Isw=;
+	s=korg; t=1745422391;
+	bh=62WJSADdndERgmOLSUKqqrBhA59/MY421eP/59e6Am8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABdhQdo069vRuwC3NGrn2uIzL0zuwFB1c3tsyhqcZo3scJahmYNPeLWAAlUXKjxv5
-	 Llfq8/MPpgVEh1iwgQD5sUMJD8Fc9bykr1Z0zOusqJDMDyX8fGJHxn+pqPIvsWEP98
-	 WdPkAhnu6ZjaPs9TtcprNKP+9AWQPdO/ViIhbljM=
+	b=SOmMVs7ar/x9KuvAI9GyHctNPLyBj68mN8R9WdI5uE0CiJu0/DEKYfBlgw9SbCmUO
+	 0YVUnoCGCGfDcESOZp/slfgPVLifFrGkAgnPfhS5tNyotxh7Emz/f7phnjJOSvKot9
+	 D59VbUQ8miRxGK5xfHt6SevhW6Nq+d3EP81rAP1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.6 333/393] string: Add load_unaligned_zeropad() code path to sized_strscpy()
-Date: Wed, 23 Apr 2025 16:43:49 +0200
-Message-ID: <20250423142657.094509335@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 291/291] MIPS: ds1287: Match ds1287_set_base_clock() function types
+Date: Wed, 23 Apr 2025 16:44:40 +0200
+Message-ID: <20250423142636.320487366@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,76 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Collingbourne <pcc@google.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit d94c12bd97d567de342fd32599e7cd9e50bfa140 upstream.
+commit a759109b234385b74d2f5f4c86b5f59b3201ec12 upstream.
 
-The call to read_word_at_a_time() in sized_strscpy() is problematic
-with MTE because it may trigger a tag check fault when reading
-across a tag granule (16 bytes) boundary. To make this code
-MTE compatible, let's start using load_unaligned_zeropad()
-on architectures where it is available (i.e. architectures that
-define CONFIG_DCACHE_WORD_ACCESS). Because load_unaligned_zeropad()
-takes care of page boundaries as well as tag granule boundaries,
-also disable the code preventing crossing page boundaries when using
-load_unaligned_zeropad().
+Synchronize the declaration of ds1287_set_base_clock() between
+cevt-ds1287.c and ds1287.h.
 
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Link: https://linux-review.googlesource.com/id/If4b22e43b5a4ca49726b4bf98ada827fdf755548
-Fixes: 94ab5b61ee16 ("kasan, arm64: enable CONFIG_KASAN_HW_TAGS")
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20250403000703.2584581-2-pcc@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fix follow error with gcc-14 when -Werror:
+
+arch/mips/kernel/cevt-ds1287.c:21:5: error: conflicting types for ‘ds1287_set_base_clock’; have ‘int(unsigned int)’
+   21 | int ds1287_set_base_clock(unsigned int hz)
+      |     ^~~~~~~~~~~~~~~~~~~~~
+In file included from arch/mips/kernel/cevt-ds1287.c:13:
+./arch/mips/include/asm/ds1287.h:11:13: note: previous declaration of ‘ds1287_set_base_clock’ with type ‘void(unsigned int)’
+   11 | extern void ds1287_set_base_clock(unsigned int clock);
+      |             ^~~~~~~~~~~~~~~~~~~~~
+make[7]: *** [scripts/Makefile.build:207: arch/mips/kernel/cevt-ds1287.o] Error 1
+make[6]: *** [scripts/Makefile.build:465: arch/mips/kernel] Error 2
+make[6]: *** Waiting for unfinished jobs....
+
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/string.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/mips/include/asm/ds1287.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/string.c
-+++ b/lib/string.c
-@@ -128,6 +128,7 @@ ssize_t strscpy(char *dest, const char *
- 	if (count == 0 || WARN_ON_ONCE(count > INT_MAX))
- 		return -E2BIG;
+--- a/arch/mips/include/asm/ds1287.h
++++ b/arch/mips/include/asm/ds1287.h
+@@ -8,7 +8,7 @@
+ #define __ASM_DS1287_H
  
-+#ifndef CONFIG_DCACHE_WORD_ACCESS
- #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
- 	/*
- 	 * If src is unaligned, don't cross a page boundary,
-@@ -143,11 +144,13 @@ ssize_t strscpy(char *dest, const char *
- 	if (((long) dest | (long) src) & (sizeof(long) - 1))
- 		max = 0;
+ extern int ds1287_timer_state(void);
+-extern void ds1287_set_base_clock(unsigned int clock);
++extern int ds1287_set_base_clock(unsigned int hz);
+ extern int ds1287_clockevent_init(int irq);
+ 
  #endif
-+#endif
- 
- 	/*
--	 * read_word_at_a_time() below may read uninitialized bytes after the
--	 * trailing zero and use them in comparisons. Disable this optimization
--	 * under KMSAN to prevent false positive reports.
-+	 * load_unaligned_zeropad() or read_word_at_a_time() below may read
-+	 * uninitialized bytes after the trailing zero and use them in
-+	 * comparisons. Disable this optimization under KMSAN to prevent
-+	 * false positive reports.
- 	 */
- 	if (IS_ENABLED(CONFIG_KMSAN))
- 		max = 0;
-@@ -155,7 +158,11 @@ ssize_t strscpy(char *dest, const char *
- 	while (max >= sizeof(unsigned long)) {
- 		unsigned long c, data;
- 
-+#ifdef CONFIG_DCACHE_WORD_ACCESS
-+		c = load_unaligned_zeropad(src+res);
-+#else
- 		c = read_word_at_a_time(src+res);
-+#endif
- 		if (has_zero(c, &data, &constants)) {
- 			data = prep_zero_mask(c, data, &constants);
- 			data = create_zero_mask(data);
 
 
