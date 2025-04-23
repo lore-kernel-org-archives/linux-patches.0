@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E87280A5F;
-	Wed, 23 Apr 2025 14:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF828468E;
+	Wed, 23 Apr 2025 14:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420392; cv=none; b=er2yHcoDx6v+VOThmwyHViGIK0EOuILeb0dtw8aMi/YVoLHsH+4Zfb9SGv5pTSL71cCNOb+1p3CVGsdSaNkWOd1h5KUB1GyZvHAhbaiva+vxXbgQD/G6JSgz9Ctr8hH/CPdvQU0tcOT+nl3vp3KldZet6fteBV28TWiDYSJhu2c=
+	t=1745420395; cv=none; b=e0S9WWDOBanSzv6dfbL3/UbrAFKSjU0xZOQai+BVhU6V4C4MGbX1H/iY3Uvro4QgLbMOzbxMcExXIiUtiJF/PLqFHDgZEsVINiiXWO0r7Gq+MdzEEe4S5185IabJRvJSqHY1w2hbvo1NnAVwVsVKzzIZSGKis2GnyvkwFllvt8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420392; c=relaxed/simple;
-	bh=NBko84BXYlO2xgg3kpHHByzRGeyEFr8jIUzARY9xfRo=;
+	s=arc-20240116; t=1745420395; c=relaxed/simple;
+	bh=0RHgjRXovHduyPYU5KCqch+V3nU4v7Rbarx3NiCEFP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHZKare8/0x5ItqTNrwXxMFPTKVfUYHO9C5M9y3WOR58+PPhaLmN+VxEssG276Y8JyKCN6wnP88KeZCu3sq7sP9UHtI91eP2pJ333Jfdr84Ey5rV2wUGbhc9Eg9g13lF95iC6CveUlKH1DSzOgXC/HUfhu7MYNrkI23nQ6dP5UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fspFQHfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JgGy7SdCQeVmR4BzbNf9eFMVCRF1efxku9QJNu9r+TlKFG9ouCQLjy4A0wJcPDVFfrUWf/NLygGIWpx4r+aABOBqZlllf2B6E5hhJNlBxAffs5VLY12SKGHtpGJ6o/eFM0OCGNmgW530HRTTxAeB9aaMl9ySi3uA2t1tA9YPtiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xF98fxNc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fspFQHfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464D8C4CEE2;
-	Wed, 23 Apr 2025 14:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xF98fxNc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC4FC4CEE2;
+	Wed, 23 Apr 2025 14:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420392;
-	bh=NBko84BXYlO2xgg3kpHHByzRGeyEFr8jIUzARY9xfRo=;
+	s=korg; t=1745420395;
+	bh=0RHgjRXovHduyPYU5KCqch+V3nU4v7Rbarx3NiCEFP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fspFQHfcWFgh7mzafUGCk3yK3aWP6RYR6nTWDI3mOaeE+Mt6DpMaGm+BlVOQ2iYJ2
-	 Zkedh7mZ0P2AVCy8U1hGLPczQ24CkBF9o5deR0iZo2YSosKDRLOkTu9gkd/xd2UC9B
-	 l8KAzavl0CwsL3oiyyYYoj2/Wmf5WJP1+0x7g14I=
+	b=xF98fxNcH478/pkov6BDO13TSe+u9P44FNwkACwoZJ8641RaIK1svZNr1wJbbDHO0
+	 kTwBP8Ps9qxOeOrMxnubacNW+8+1LxWwik6ofacn+Ny8zYMwfilPvrSJkSMR2xq+8w
+	 b9fzF5A1I9L/dlbV/RFxvm6meE4PUV5ARjJRCYFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/291] f2fs: fix to avoid out-of-bounds access in f2fs_truncate_inode_blocks()
-Date: Wed, 23 Apr 2025 16:40:32 +0200
-Message-ID: <20250423142626.157063687@linuxfoundation.org>
+Subject: [PATCH 6.14 088/241] riscv: Properly export reserved regions in /proc/iomem
+Date: Wed, 23 Apr 2025 16:42:32 +0200
+Message-ID: <20250423142624.177116964@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,97 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit e6494977bd4a83862118a05f57a8df40256951c0 ]
+[ Upstream commit e94eb7ea6f206e229791761a5fdf9389f8dbd183 ]
 
-syzbot reports an UBSAN issue as below:
+The /proc/iomem represents the kernel's memory map. Regions marked
+with "Reserved" tells the user that the range should not be tampered
+with. Kexec-tools, when using the older kexec_load syscall relies on
+the "Reserved" regions to build the memory segments, that will be the
+target of the new kexec'd kernel.
 
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in fs/f2fs/node.h:381:10
-index 18446744073709550692 is out of range for type '__le32[5]' (aka 'unsigned int[5]')
-CPU: 0 UID: 0 PID: 5318 Comm: syz.0.0 Not tainted 6.14.0-rc3-syzkaller-00060-g6537cfb395f3 #0
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_out_of_bounds+0x121/0x150 lib/ubsan.c:429
- get_nid fs/f2fs/node.h:381 [inline]
- f2fs_truncate_inode_blocks+0xa5e/0xf60 fs/f2fs/node.c:1181
- f2fs_do_truncate_blocks+0x782/0x1030 fs/f2fs/file.c:808
- f2fs_truncate_blocks+0x10d/0x300 fs/f2fs/file.c:836
- f2fs_truncate+0x417/0x720 fs/f2fs/file.c:886
- f2fs_file_write_iter+0x1bdb/0x2550 fs/f2fs/file.c:5093
- aio_write+0x56b/0x7c0 fs/aio.c:1633
- io_submit_one+0x8a7/0x18a0 fs/aio.c:2052
- __do_sys_io_submit fs/aio.c:2111 [inline]
- __se_sys_io_submit+0x171/0x2e0 fs/aio.c:2081
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f238798cde9
+The RISC-V port tries to expose all reserved regions to userland, but
+some regions were not properly exposed: Regions that resided in both
+the "regular" and reserved memory block, e.g. the EFI Memory Map. A
+missing entry could result in reserved memory being overwritten.
 
-index 18446744073709550692 (decimal, unsigned long long)
-= 0xfffffffffffffc64 (hexadecimal, unsigned long long)
-= -924 (decimal, long long)
+It turns out, that arm64, and loongarch had a similar issue a while
+back:
 
-In f2fs_truncate_inode_blocks(), UBSAN detects that get_nid() tries to
-access .i_nid[-924], it means both offset[0] and level should zero.
+  commit d91680e687f4 ("arm64: Fix /proc/iomem for reserved but not memory regions")
+  commit 50d7ba36b916 ("arm64: export memblock_reserve()d regions via /proc/iomem")
 
-The possible case should be in f2fs_do_truncate_blocks(), we try to
-truncate inode size to zero, however, dn.ofs_in_node is zero and
-dn.node_page is not an inode page, so it fails to truncate inode page,
-and then pass zeroed free_from to f2fs_truncate_inode_blocks(), result
-in this issue.
+Similar to the other ports, resolve the issue by splitting the regions
+in an arch initcall, since we need a working allocator.
 
-	if (dn.ofs_in_node || IS_INODE(dn.node_page)) {
-		f2fs_truncate_data_blocks_range(&dn, count);
-		free_from += count;
-	}
-
-I guess the reason why dn.node_page is not an inode page could be: there
-are multiple nat entries share the same node block address, once the node
-block address was reused, f2fs_get_node_page() may load a non-inode block.
-
-Let's add a sanity check for such condition to avoid out-of-bounds access
-issue.
-
-Reported-by: syzbot+6653f10281a1badc749e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/66fdcdf3.050a0220.40bef.0025.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: ffe0e5261268 ("RISC-V: Improve init_resources()")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250409182129.634415-1-bjorn@kernel.org
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/setup.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 745ecf5523c9b..ccc72781e0c61 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1112,7 +1112,14 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from)
- 	trace_f2fs_truncate_inode_blocks_enter(inode, from);
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index 4fe45daa6281e..b7d0bd4c0a81a 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -66,6 +66,9 @@ static struct resource bss_res = { .name = "Kernel bss", };
+ static struct resource elfcorehdr_res = { .name = "ELF Core hdr", };
+ #endif
  
- 	level = get_node_path(inode, from, offset, noffset);
--	if (level < 0) {
-+	if (level <= 0) {
-+		if (!level) {
-+			level = -EFSCORRUPTED;
-+			f2fs_err(sbi, "%s: inode ino=%lx has corrupted node block, from:%lu addrs:%u",
-+					__func__, inode->i_ino,
-+					from, ADDRS_PER_INODE(inode));
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		}
- 		trace_f2fs_truncate_inode_blocks_exit(inode, level);
- 		return level;
++static int num_standard_resources;
++static struct resource *standard_resources;
++
+ static int __init add_resource(struct resource *parent,
+ 				struct resource *res)
+ {
+@@ -139,7 +142,7 @@ static void __init init_resources(void)
+ 	struct resource *res = NULL;
+ 	struct resource *mem_res = NULL;
+ 	size_t mem_res_sz = 0;
+-	int num_resources = 0, res_idx = 0;
++	int num_resources = 0, res_idx = 0, non_resv_res = 0;
+ 	int ret = 0;
+ 
+ 	/* + 1 as memblock_alloc() might increase memblock.reserved.cnt */
+@@ -193,6 +196,7 @@ static void __init init_resources(void)
+ 	/* Add /memory regions to the resource tree */
+ 	for_each_mem_region(region) {
+ 		res = &mem_res[res_idx--];
++		non_resv_res++;
+ 
+ 		if (unlikely(memblock_is_nomap(region))) {
+ 			res->name = "Reserved";
+@@ -210,6 +214,9 @@ static void __init init_resources(void)
+ 			goto error;
  	}
+ 
++	num_standard_resources = non_resv_res;
++	standard_resources = &mem_res[res_idx + 1];
++
+ 	/* Clean-up any unused pre-allocated resources */
+ 	if (res_idx >= 0)
+ 		memblock_free(mem_res, (res_idx + 1) * sizeof(*mem_res));
+@@ -221,6 +228,33 @@ static void __init init_resources(void)
+ 	memblock_free(mem_res, mem_res_sz);
+ }
+ 
++static int __init reserve_memblock_reserved_regions(void)
++{
++	u64 i, j;
++
++	for (i = 0; i < num_standard_resources; i++) {
++		struct resource *mem = &standard_resources[i];
++		phys_addr_t r_start, r_end, mem_size = resource_size(mem);
++
++		if (!memblock_is_region_reserved(mem->start, mem_size))
++			continue;
++
++		for_each_reserved_mem_range(j, &r_start, &r_end) {
++			resource_size_t start, end;
++
++			start = max(PFN_PHYS(PFN_DOWN(r_start)), mem->start);
++			end = min(PFN_PHYS(PFN_UP(r_end)) - 1, mem->end);
++
++			if (start > mem->end || end < mem->start)
++				continue;
++
++			reserve_region_with_split(mem, start, end, "Reserved");
++		}
++	}
++
++	return 0;
++}
++arch_initcall(reserve_memblock_reserved_regions);
+ 
+ static void __init parse_dtb(void)
+ {
 -- 
 2.39.5
 
