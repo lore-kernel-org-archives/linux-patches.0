@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB41381BA;
-	Wed, 23 Apr 2025 14:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F79381BA;
+	Wed, 23 Apr 2025 14:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420021; cv=none; b=ZlyNEYHgiJe8w5//9C/jQ92wDoromCT+dygkZXnfLbw1ZjkRHeWIdZFHpFmP2GSF6n4YSZTV29sZyClIcAHrTwC1RMMxA2AftfL+nKVrffDaSPACtgbZLqohlGNebVFluw8DXOSMS+PDZtn4KQ2E1gIz6LKwpoQdZRL8GMy1XCI=
+	t=1745420025; cv=none; b=gh46eY/alAhsrsL9VmsHot4MnhFI4pEfq/5P16xvEXLOxw2lZKET7NnicgYOFRARTT1TGUWryb5YPO1oxqTvxCDeCdNpy7JbosiM6BDDMv07/BGTo9qfgD6p4swHZQQsv2MfyIFnA+tvT3d7ajjF8VnRzpeAdMNkgrOuCFY7Kfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420021; c=relaxed/simple;
-	bh=+6R7jy++AODK32EdpUccDLuD9pjfe0GohYW8BsuCfmg=;
+	s=arc-20240116; t=1745420025; c=relaxed/simple;
+	bh=oBvIUfxGT4dqbgmrxgBrlpKR03+KLrwz2IsxQSucC1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2PAXHoWQpZJMQJw7/Ev7+CpfS9SmCxpsSsN4np4kH0pqKPVPyizBKY2qQa2ILHbCkdDoV1Yymc0H9wrekjNN6+jp2iqTeNNq8uEL+Gh1OUm0SXpvDac0NIFafGV1jHddD5BQliApkQog7eYDqmkIFDYrOrqXDOfkV7P0H7pzJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNORmj1+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxotM0H34NL8IqMfEDSPAaBPLYO+1IfvDgqEEDT5Sw4cA7/Eh4jhcSM3iI0OWqh6xpO3q1kLWH78BRSS0NZnldt08JemulYHp8TDpvvnG5w3RDjOjcM+kOD3Nf2dNidI3survlNSkNg1UIN8ddnw0NSzmsf/3cwYLsMdcax4C24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5uRsX8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNORmj1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91185C4CEE2;
-	Wed, 23 Apr 2025 14:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5uRsX8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9CAC4CEE2;
+	Wed, 23 Apr 2025 14:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420020;
-	bh=+6R7jy++AODK32EdpUccDLuD9pjfe0GohYW8BsuCfmg=;
+	s=korg; t=1745420023;
+	bh=oBvIUfxGT4dqbgmrxgBrlpKR03+KLrwz2IsxQSucC1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNORmj1+K/8mxzKTUPbcIRpyCOWWToXwKnRv/JhqpuIzDm7uXJmmsI8EJVKCANRNa
-	 kvfcJW5mS9vSyT+8gA9olzbOcuHfO2pa50ljFq6Pxa8F4TbYXIbQ5ca5J3+7UY+zzv
-	 wCVxJfOqYy97wBt/4eijiW4/wQGxY5aVmVRROtLY=
+	b=A5uRsX8Y3ci3IB5NEA4shWM0aYCLlDW+wphcUQcotWJrNclid4eKDYPo1BDrGwVXg
+	 8FcsoEOc4YI4wMqjBMC4x33UqAC2j0RaR8VVM4TyJHG7Jzf+Jm7vxlJqMhFLOAv/Wm
+	 CiG31C3fuKHplADniMI2FAya05ck7bO7IEBftHcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Simon Horman <horms@kernel.org>,
-	Michal Kubecek <mkubecek@suse.cz>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/291] net: ethtool: Dont call .cleanup_data when prepare_data fails
-Date: Wed, 23 Apr 2025 16:39:59 +0200
-Message-ID: <20250423142624.829914585@linuxfoundation.org>
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Evgeny Pimenov <pimenoveu12@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 093/223] ASoC: qcom: Fix sc7280 lpass potential buffer overflow
+Date: Wed, 23 Apr 2025 16:42:45 +0200
+Message-ID: <20250423142620.907389767@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,82 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Evgeny Pimenov <pimenoveu12@gmail.com>
 
-[ Upstream commit 4f038a6a02d20859a3479293cbf172b0f14cbdd6 ]
+commit a31a4934b31faea76e735bab17e63d02fcd8e029 upstream.
 
-There's a consistent pattern where the .cleanup_data() callback is
-called when .prepare_data() fails, when it should really be called to
-clean after a successful .prepare_data() as per the documentation.
+Case values introduced in commit
+5f78e1fb7a3e ("ASoC: qcom: Add driver support for audioreach solution")
+cause out of bounds access in arrays of sc7280 driver data (e.g. in case
+of RX_CODEC_DMA_RX_0 in sc7280_snd_hw_params()).
 
-Rewrite the error-handling paths to make sure we don't cleanup
-un-prepared data.
+Redefine LPASS_MAX_PORTS to consider the maximum possible port id for
+q6dsp as sc7280 driver utilizes some of those values.
 
-Fixes: c781ff12a2f3 ("ethtool: Allow network drivers to dump arbitrary EEPROM data")
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Michal Kubecek <mkubecek@suse.cz>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250407130511.75621-1-maxime.chevallier@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 77d0ffef793d ("ASoC: qcom: Add macro for lpass DAI id's max limit")
+Cc: stable@vger.kernel.org # v6.0+
+Suggested-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Evgeny Pimenov <pimenoveu12@gmail.com>
+Link: https://patch.msgid.link/20250401204058.32261-1-pimenoveu12@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/netlink.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/qcom/lpass.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
-index e5efdf2817eff..98c0641138825 100644
---- a/net/ethtool/netlink.c
-+++ b/net/ethtool/netlink.c
-@@ -384,7 +384,7 @@ static int ethnl_default_doit(struct sk_buff *skb, struct genl_info *info)
- 	ret = ops->prepare_data(req_info, reply_data, info);
- 	rtnl_unlock();
- 	if (ret < 0)
--		goto err_cleanup;
-+		goto err_dev;
- 	ret = ops->reply_size(req_info, reply_data);
- 	if (ret < 0)
- 		goto err_cleanup;
-@@ -442,7 +442,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
- 	ret = ctx->ops->prepare_data(ctx->req_info, ctx->reply_data, NULL);
- 	rtnl_unlock();
- 	if (ret < 0)
--		goto out;
-+		goto out_cancel;
- 	ret = ethnl_fill_reply_header(skb, dev, ctx->ops->hdr_attr);
- 	if (ret < 0)
- 		goto out;
-@@ -451,6 +451,7 @@ static int ethnl_default_dump_one(struct sk_buff *skb, struct net_device *dev,
- out:
- 	if (ctx->ops->cleanup_data)
- 		ctx->ops->cleanup_data(ctx->reply_data);
-+out_cancel:
- 	ctx->reply_data->dev = NULL;
- 	if (ret < 0)
- 		genlmsg_cancel(skb, ehdr);
-@@ -636,7 +637,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
- 	ethnl_init_reply_data(reply_data, ops, dev);
- 	ret = ops->prepare_data(req_info, reply_data, NULL);
- 	if (ret < 0)
--		goto err_cleanup;
-+		goto err_rep;
- 	ret = ops->reply_size(req_info, reply_data);
- 	if (ret < 0)
- 		goto err_cleanup;
-@@ -671,6 +672,7 @@ static void ethnl_default_notify(struct net_device *dev, unsigned int cmd,
- err_cleanup:
- 	if (ops->cleanup_data)
- 		ops->cleanup_data(reply_data);
-+err_rep:
- 	kfree(reply_data);
- 	kfree(req_info);
- 	return;
--- 
-2.39.5
-
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -13,10 +13,11 @@
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <dt-bindings/sound/qcom,lpass.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
+ #include "lpass-hdmi.h"
+ 
+ #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+-#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
++#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
+ #define LPASS_MAX_MI2S_PORTS			(8)
+ #define LPASS_MAX_DMA_CHANNELS			(8)
+ #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
 
 
