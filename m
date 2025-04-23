@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6A6280CF0;
-	Wed, 23 Apr 2025 15:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC00280CF0;
+	Wed, 23 Apr 2025 15:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421254; cv=none; b=eJGcJAGkXfN0XtQ6zhox4dCNg0zFC6CWo/nQoc9EKLPJIr2nyJDtzjpM1n3iylESNUewz46FWmDL/widCA7OXFBopn4QrFNmdo+b9STLwSqfpOZRCScDOx0SgQPhMVTHiQSuDf6jC+3V4kUGM15z/ORa+9To0sphrALEfveiA/M=
+	t=1745421256; cv=none; b=WeGw7XnBqTQgSK5pkwPGLCCSvjDOKOfIHZhBj0WhmoKRqgIOHrY8P8DFbqc4FYBL5a4Xc/7e1Dd51Q5T2sUtjj91eLtSV7rf59jxmCvplPRroKkzlos2NuB2JGV/dc29GmmNy4GoxPjnuoy3+bqcqWOUk4IzbrMpO2hKXyS8lec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421254; c=relaxed/simple;
-	bh=BOhgZc9Ac1WfyGgDD+4xqwlauCAnIX4lu5VCYeP+DHo=;
+	s=arc-20240116; t=1745421256; c=relaxed/simple;
+	bh=XUe2rKZgFr5ZOBcfq9voVIGj2mymy3bSVf2atRaMbnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ielucvh2ZpGMqYE8Ml+nRYNCyqcapLdzAqg63Hbe8pvBYNnHpwcYq6YguCfoge34iV3u9diaJJDJZ6oUsvr1UO3IzraB8GSYVN62kQZnS68XYX9XaeF7bAovSXtfR/GMn7bpQ6h+xb5yKiNiTCsoVt8yL9WxWX7bmdonAxS1grc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6zeV+rL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9Su49JptG22klfkhVHlA0tmwKIgRKoARAdaRchz72/ZhD/j+U3JEYmNkrY2XTVrexE97GtgE6vXbwmvV1T7anLFpKFOkrZiJSlwpx3w4j995UEhgIUU9aEPAQ+DKay//L/h/+pW2jYcF//uGZlnXx4EFOii7AdfffMK5o/T83U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siXMo9Dj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6zeV+rL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27E3C4CEE2;
-	Wed, 23 Apr 2025 15:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siXMo9Dj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCCFC4CEE2;
+	Wed, 23 Apr 2025 15:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421254;
-	bh=BOhgZc9Ac1WfyGgDD+4xqwlauCAnIX4lu5VCYeP+DHo=;
+	s=korg; t=1745421256;
+	bh=XUe2rKZgFr5ZOBcfq9voVIGj2mymy3bSVf2atRaMbnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6zeV+rLUbf7zdficGwpXWlOpWlJgkD8q16wcWa376O1X+8w1kj95SQWbqlBrf/2M
-	 C7LcouRIFbVDfPQjYzjFujTNcbDRVIWYqHhKbc+bxvI/jurv5u6fIsBuFvriYNfH5R
-	 oC7XzSFLK238zT7JCGSMW6ucgNGXeB0cLXXq05gY=
+	b=siXMo9DjzNGUlQXvtdFaPcKRF/c1uT1K76h/0UpDWbFcA7dHA97SSm2R3xQYylUZ/
+	 7rhIIfzywH2ow7MB/oAJCkfJll12n+y4Hp0K0gsZUB+svLJo84158NKMpTS13g3AHu
+	 g+STVzOhc0ToCVF/cWFo6dJvvugGh4Hg9VKD7CP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>
-Subject: [PATCH 6.14 169/241] perf/x86/intel/uncore: Fix the scale of IIO free running counters on SNR
-Date: Wed, 23 Apr 2025 16:43:53 +0200
-Message-ID: <20250423142627.437718385@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 157/393] ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
+Date: Wed, 23 Apr 2025 16:40:53 +0200
+Message-ID: <20250423142649.863026815@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit 96a720db59ab330c8562b2437153faa45dac705f upstream.
+commit 5d01ed9b9939b4c726be74db291a982bc984c584 upstream.
 
-There was a mistake in the SNR uncore spec. The counter increments for
-every 32 bytes of data sent from the IO agent to the SOC, not 4 bytes
-which was documented in the spec.
+Period sizes less than 6k for capture path triggers overruns in the
+dsp capture pipeline.
 
-The event list has been updated:
+Change the period size and number of periods to value which DSP is happy with.
 
-  "EventName": "UNC_IIO_BANDWIDTH_IN.PART0_FREERUN",
-  "BriefDescription": "Free running counter that increments for every 32
-		       bytes of data sent from the IO agent to the SOC",
-
-Update the scale of the IIO bandwidth in free running counters as well.
-
-Fixes: 210cc5f9db7a ("perf/x86/intel/uncore: Add uncore support for Snow Ridge server")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250416142426.3933977-1-kan.liang@linux.intel.com
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://patch.msgid.link/20250314174800.10142-6-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-dai.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -4891,28 +4891,28 @@ static struct uncore_event_desc snr_unco
- 	INTEL_UNCORE_EVENT_DESC(ioclk,			"event=0xff,umask=0x10"),
- 	/* Free-Running IIO BANDWIDTH IN Counters */
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port0,		"event=0xff,umask=0x20"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port0.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port1,		"event=0xff,umask=0x21"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port1.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port2,		"event=0xff,umask=0x22"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port2.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port3,		"event=0xff,umask=0x23"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port3.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port4,		"event=0xff,umask=0x24"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port4.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port5,		"event=0xff,umask=0x25"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port5.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port6,		"event=0xff,umask=0x26"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port6.unit,	"MiB"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port7,		"event=0xff,umask=0x27"),
--	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.814697266e-6"),
-+	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.0517578125e-5"),
- 	INTEL_UNCORE_EVENT_DESC(bw_in_port7.unit,	"MiB"),
- 	{ /* end: all zeroes */ },
- };
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -24,8 +24,8 @@
+ #define PLAYBACK_MIN_PERIOD_SIZE	128
+ #define CAPTURE_MIN_NUM_PERIODS		2
+ #define CAPTURE_MAX_NUM_PERIODS		8
+-#define CAPTURE_MAX_PERIOD_SIZE		4096
+-#define CAPTURE_MIN_PERIOD_SIZE		320
++#define CAPTURE_MAX_PERIOD_SIZE		65536
++#define CAPTURE_MIN_PERIOD_SIZE		6144
+ #define BUFFER_BYTES_MAX (PLAYBACK_MAX_NUM_PERIODS * PLAYBACK_MAX_PERIOD_SIZE)
+ #define BUFFER_BYTES_MIN (PLAYBACK_MIN_NUM_PERIODS * PLAYBACK_MIN_PERIOD_SIZE)
+ #define COMPR_PLAYBACK_MAX_FRAGMENT_SIZE (128 * 1024)
 
 
