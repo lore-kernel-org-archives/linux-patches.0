@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E1225EF8E;
-	Wed, 23 Apr 2025 15:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD2C28A409;
+	Wed, 23 Apr 2025 15:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421792; cv=none; b=mEW/dTZRJUN8fGa8xg4CxZkYJI0AYHfgwDx9DmK8mdOuGyYC5qlV5Oq15fSEVGU7W3hfuGBsiLHSBFYERNmFysVccIy/fDjcnVG/29dK7j8IRSShPNsObJSVkemqnrl4AUR57Z7SSB2U9RZmAVxl85k6FMyT5faPcl1y+UdAeSs=
+	t=1745421794; cv=none; b=NVA0vKM2Q1zStN8lC7Ejjc3T9qg2KKwhNlkHbW0UZcgY0Q+K7b3X2W38hnzsIMdpsDEu5V/BKGg6vgcJoeMtFnapCrV3hZX5LAp9/WalA/uaB11AWSTaW6tay1gwVt/KX6X/tUPHVvk9Ja34D2Zc9AupmwxA2fp9jz+GbPouYuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421792; c=relaxed/simple;
-	bh=b9XPAjsijW72XKXTWqSMAbz0xSgcMZEt0DdhqB/MrxU=;
+	s=arc-20240116; t=1745421794; c=relaxed/simple;
+	bh=DxNiVcN8TjDlveRUccQXEwI4FRcfdDH+oojsLHRpsA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvCN+laBpGemqOgmI1Pdnfjox/Z07ygyb7FwhWtlE9CDGCxpfh+5SrgbjvunbVPpB1vzgROftnGBhhpovBV7SQH9N05BDZiH5yjzicMkd/EQKrApv//3VkyDnWXmH87LnrDpaSfTpWMsFgcamAXGvXtEeZDdV3fG/SMbwGo7It0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4A+zxoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMGNCTI1XqNr+pdHMiRh/k1xahzG9NAD0uLC7xENy04RE3FcrGikMQqouKRoa6pGLQIrR0n7SPj2zyDhzra4wXKWZ99PET45bGtAu6cwptBA7QfpTLjI/RWLowvbWYQezkKM8Zg1xUxFCIsiFMlLtAuAWsHEk3R2VKDvIA+LMFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBY8USD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4A+zxoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C98C4CEE2;
-	Wed, 23 Apr 2025 15:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBY8USD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF17C4CEE2;
+	Wed, 23 Apr 2025 15:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421791;
-	bh=b9XPAjsijW72XKXTWqSMAbz0xSgcMZEt0DdhqB/MrxU=;
+	s=korg; t=1745421794;
+	bh=DxNiVcN8TjDlveRUccQXEwI4FRcfdDH+oojsLHRpsA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4A+zxoQZupjRwC/oO6YZDLx0j+P71pImEKgfCYVnUaG2s+PExiuhIUP8ubn85yss
-	 tNrUwK41lB0UqgYEfTgfWzS/WKsFtGjCzy3k0To5C7820jmSP7fFLNcI+VVdDaibek
-	 9EWqLilq1ZvJVitMprpv2Aw2Rr2pKD9cqXXHOIKY=
+	b=NBY8USD/Xc0DM0ZY+NLIF8xzkhnwB2uA+1YL7AytUxDkt4sL0Vl739eaWswiQQqpX
+	 yqoZjymEWKTGBW+wkAUNQ12EZ3JTnQGqbgxX9IlJl94uSTE5l/XfA1OknNuKR8C7wz
+	 JknWAMiZeIMykj3/sVJwvzZrvzmhNK1p7HLmxb80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bert Karwatzki <spasswolf@web.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/291] Revert "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
-Date: Wed, 23 Apr 2025 16:42:48 +0200
-Message-ID: <20250423142631.696346090@linuxfoundation.org>
+	Sun peng Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.14 234/241] drm/amd/display: Temporarily disable hostvm on DCN31
+Date: Wed, 23 Apr 2025 16:44:58 +0200
+Message-ID: <20250423142630.132082876@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 0937cb5f345c79d702b4d0d744e2a2529b551cb2 ]
+commit ba93dddfc92084a1e28ea447ec4f8315f3d8d3fd upstream.
 
-This reverts commit a104042e2bf6528199adb6ca901efe7b60c2c27f.
+With HostVM enabled, DCN31 fails to pass validation for 3x4k60. Some Linux
+userspace does not downgrade one of the monitors to 4k30, and the result
+is that the monitor does not light up. Disable it until the bandwidth
+calculation failure is resolved.
 
-Since the original bug seems to have been around for years,
-but a new issue was report with the fix, revert the fix for
-now. We have a couple of weeks to figure it out for this
-release, if needed.
-
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
-Fixes: a104042e2bf6 ("wifi: mac80211: Update skb's control block key in ieee80211_tx_dequeue()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 7c1e81e15865c..62b2817df2ba9 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3800,7 +3800,6 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
- 	 * The key can be removed while the packet was queued, so need to call
- 	 * this here to get the current key.
- 	 */
--	info->control.hw_key = NULL;
- 	r = ieee80211_tx_h_select_key(&tx);
- 	if (r != TX_CONTINUE) {
- 		ieee80211_free_txskb(&local->hw, skb);
--- 
-2.39.5
-
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
+@@ -890,7 +890,7 @@ static const struct dc_debug_options deb
+ 	.disable_z10 = true,
+ 	.enable_legacy_fast_update = true,
+ 	.enable_z9_disable_interface = true, /* Allow support for the PMFW interface for disable Z9*/
+-	.dml_hostvm_override = DML_HOSTVM_NO_OVERRIDE,
++	.dml_hostvm_override = DML_HOSTVM_OVERRIDE_FALSE,
+ 	.using_dml2 = false,
+ };
+ 
 
 
