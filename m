@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107A2BE101;
-	Wed, 23 Apr 2025 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9982BE101;
+	Wed, 23 Apr 2025 15:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421682; cv=none; b=skMSkIMR57jLZsKs1wtsblLg9cr8DCZS+wBZVF9TE4BBPH1q7xHzST5Vvi6uPUaVsTeQq7u5uDZcuZ7BeWoH5d1AYT65qakw4SD8yIUerl6P9QMfLHJLXt4a4IaYJh5/uTnmptys5x+vjJcis2Dc7+demIxqR8lVYm8OdfW1Ic0=
+	t=1745421684; cv=none; b=YGhujwZSjhfhPvZ8wAizmlZFinHYv5SQweJmOSNd6Bvh61YZLb8fa8bCEwxEtsYLqjt2q83EX1Qrzgs0yGlVB5DP/oWR9ZOWmXaXKYieJVpxCPg++yJHfVC7smSWFYK2/3EIHi8tK8r+SW7UVbLejlXP4rXtrNZgHj/K0rSpw9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421682; c=relaxed/simple;
-	bh=icdxCIF20ysLf8BxQUFbsqXxC2ZaOEksU/qxC2yFAfI=;
+	s=arc-20240116; t=1745421684; c=relaxed/simple;
+	bh=a2A8L4/XOW/fEuYDj8yb2VNOFIdqTgfbQIagIYouRDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ICP9iEd8xkRt3N9YYUrcFhoECHd/UaS5R23CuY9lVe/0WCC2c2OUrlUpA2x/2fAmmQtJ30NYiRIzGtacxVM2zl7ASQeTibD31gnYrtXY79TR9nhgcV2150t8bkZWFcnQQjD9ASXGDOQMX1ubQVycDVOGfHd2YMSRUmdfp3ldEOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9PjX7FJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhiFn7aKiQj+18TjU7bcfz/TlUL3ds7UDYNRoDVBv4qeaf3On3IkSBGbe/sY48XlkjAuayUgVv5uvnD2vGJrlBWHuhg6tZjRroZU+uazn66C7LyeUb7sRsyovYyuVSiMjP+/DJ9ymWRGl01WYJiIO5mcpp8xLS1mJBweNGjjwjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQXzSzeT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9PjX7FJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968D2C4CEE8;
-	Wed, 23 Apr 2025 15:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQXzSzeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A1AC4CEE3;
+	Wed, 23 Apr 2025 15:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421681;
-	bh=icdxCIF20ysLf8BxQUFbsqXxC2ZaOEksU/qxC2yFAfI=;
+	s=korg; t=1745421684;
+	bh=a2A8L4/XOW/fEuYDj8yb2VNOFIdqTgfbQIagIYouRDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9PjX7FJ9F3T+HI4WXGewcubo6aqOsHmShvV2RuQQP8OM1aTO3emFzIjrsBPaz2EB
-	 0wiAVdRdAHmGEOaZO3klerWBd6DraFfGiFhm/Sbi358CYvfRPigYziwMXeQb6dZJkk
-	 rB34+LvRgeep/ZVcyQrCfMHifhbgK2zo0WRSA4Lk=
+	b=mQXzSzeTGY/F/p9ryzQjfK76Q3K61Tuzm5EowWDrEhdbdgPO3VKPHqGu91nBAtOUs
+	 xFQlk9dE0NJzjj5smk38PJF8/dyBEn1PIwm6MFgk6JangbBDgTCgoMDTBw85uacV4K
+	 ussJGzXQH5vVEI4MWeVyv74RaA6LekumeUYYJ9yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wakko Warner <wakko@animx.eu.org>,
-	=?UTF-8?q?=D0=A1=D0=B5=D1=80=D0=B3=D0=B5=D0=B9?= <afmerlord@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.14 219/241] drm/mgag200: Fix value in <VBLKSTR> register
-Date: Wed, 23 Apr 2025 16:44:43 +0200
-Message-ID: <20250423142629.505225032@linuxfoundation.org>
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 166/291] wifi: at76c50x: fix use after free access in at76_disconnect
+Date: Wed, 23 Apr 2025 16:42:35 +0200
+Message-ID: <20250423142631.174740977@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit 76c332d119f9048c6e16b52359f401510f18b2ff upstream.
+[ Upstream commit 27c7e63b3cb1a20bb78ed4a36c561ea4579fd7da ]
 
-Fix an off-by-one error when setting the vblanking start in
-<VBLKSTR>. Commit d6460bd52c27 ("drm/mgag200: Add dedicated
-variables for blanking fields") switched the value from
-crtc_vdisplay to crtc_vblank_start, which DRM helpers copy
-from the former. The commit missed to subtract one though.
+The memory pointed to by priv is freed at the end of at76_delete_device
+function (using ieee80211_free_hw). But the code then accesses the udev
+field of the freed object to put the USB device. This may also lead to a
+memory leak of the usb device. Fix this by using udev from interface.
 
-Reported-by: Wakko Warner <wakko@animx.eu.org>
-Closes: https://lore.kernel.org/dri-devel/CAMwc25rKPKooaSp85zDq2eh-9q4UPZD=RqSDBRp1fAagDnmRmA@mail.gmail.com/
-Reported-by: Сергей <afmerlord@gmail.com>
-Closes: https://lore.kernel.org/all/5b193b75-40b1-4342-a16a-ae9fc62f245a@gmail.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?id=303819
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: d6460bd52c27 ("drm/mgag200: Add dedicated variables for blanking fields")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.12+
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Tested-by: Wakko Warner <wakko@animx.eu.org>
-Link: https://lore.kernel.org/r/20250416083847.51764-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 29e20aa6c6af ("at76c50x-usb: fix use after free on failure path in at76_probe()")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20250330103110.44080-1-abdun.nihaal@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mgag200/mgag200_mode.c |    2 +-
+ drivers/net/wireless/atmel/at76c50x-usb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/mgag200/mgag200_mode.c
-+++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
-@@ -223,7 +223,7 @@ void mgag200_set_mode_regs(struct mga_de
- 	vsyncstr = mode->crtc_vsync_start - 1;
- 	vsyncend = mode->crtc_vsync_end - 1;
- 	vtotal = mode->crtc_vtotal - 2;
--	vblkstr = mode->crtc_vblank_start;
-+	vblkstr = mode->crtc_vblank_start - 1;
- 	vblkend = vtotal + 1;
+diff --git a/drivers/net/wireless/atmel/at76c50x-usb.c b/drivers/net/wireless/atmel/at76c50x-usb.c
+index 24e609c1f5231..4a15c22cf348d 100644
+--- a/drivers/net/wireless/atmel/at76c50x-usb.c
++++ b/drivers/net/wireless/atmel/at76c50x-usb.c
+@@ -2553,7 +2553,7 @@ static void at76_disconnect(struct usb_interface *interface)
  
- 	linecomp = vdispend;
+ 	wiphy_info(priv->hw->wiphy, "disconnecting\n");
+ 	at76_delete_device(priv);
+-	usb_put_dev(priv->udev);
++	usb_put_dev(interface_to_usbdev(interface));
+ 	dev_info(&interface->dev, "disconnected\n");
+ }
+ 
+-- 
+2.39.5
+
 
 
