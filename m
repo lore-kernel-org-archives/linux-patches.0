@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4DD1F193C;
-	Wed, 23 Apr 2025 15:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524DA1F193C;
+	Wed, 23 Apr 2025 15:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420466; cv=none; b=BDGdcIi7H07BVozBTQcPDqUxw2fvKcWjJAdBmHQp/DVdhyR4QkRdRi1upuYWkfQ+dZY0LcLMoZ36/IiZSv8jzL+7FG00+4dOkWeJ1cA9llD5OMuMaJK6AGtGUs4pQ+fpLlhI+Cp+uBxpF9spAQ4t+djn6V52KIUYiy6oeLTGBHM=
+	t=1745420469; cv=none; b=kj2HgQOjvbZ/n7lt42zO0530ecqmyAXe69hmL2e1A/+hXsxOYnOvBUX65vUFwdG0oWsqdN4yQxUpU1WkBLuIzlJP94APGpzhOQoZ/ZO8HBI53dVvG4jwPmmySFnwIU6qEZvV+v7Jxw8Nyqq64F3MgcPXXp6yq/OQCYATkrwbMHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420466; c=relaxed/simple;
-	bh=DZzMKOD+Adys665PKV175Zi8jxMKGgCr5tcmLvVnY9g=;
+	s=arc-20240116; t=1745420469; c=relaxed/simple;
+	bh=6O/XzfhDX2GL0M3UWse4O5JnUdrpT6K79aW8DkkT9RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1cNyBMnVCK/Ck9ISCv9uuj4iIvMw/2RcmpypCS6fV3CbFlS/PYHYMzuoxA+BkWnvzm/papizGRhnumUYwlcz0PTteU2BUVNpJqklpgAoaf2MLJrnYfTw3ReG7/devyOQuUJB0IJyYCBU+YMeEkkgee8e2exVcx5sj1y4pUko9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGE3hDOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+jwq62vxpjiWmsao1OrqXBGkXWwwhby/noMpz9YA3Bwt/3vrdR1DH5D9BYQJTm1U6rVb1089hglrCeXB3d0oUq1RNjXfoECqtj6FBx1qLYLfDX7LiAqCajtapSubZ9iPT5NUTkE8v5OJ65XgQYvL2HYW/bskPm2UUvbnYM1jsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqnwTpdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGE3hDOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4216EC4CEE2;
-	Wed, 23 Apr 2025 15:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqnwTpdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80EEC4CEE2;
+	Wed, 23 Apr 2025 15:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420466;
-	bh=DZzMKOD+Adys665PKV175Zi8jxMKGgCr5tcmLvVnY9g=;
+	s=korg; t=1745420469;
+	bh=6O/XzfhDX2GL0M3UWse4O5JnUdrpT6K79aW8DkkT9RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGE3hDOMTx1bKQ8dvFofAptqiKetXpXGDUl5r1Bxstzma1ToK08kbkO7XkumtDq8c
-	 BZp7zHAhg6S5QIGxEyZ+XQI8glvvKkmWwtaKqNQttJ5OipWUNUwskADzB1kFwCwRbU
-	 U0d0RmZfceIutYtgZh9VYjkqbU7SjwwHpKtaVCT4=
+	b=bqnwTpdkAlH9KlrTROOgPiXEMxl6O+RQ96XIrUVGUmhlodZFWjAsM9xMGdbl8Bii1
+	 EZ5AMaTU7ZXztpmet0CbJ7tc/Rq0o5ZO43j+UYt5nlD75iUhaPKYGldY1LtqUOSBMy
+	 uZ9NOCEZnarCU5sHxccUq6rK604OawfJO7rv1n6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangsheng Hou <xiangsheng.hou@mediatek.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 134/223] virtiofs: add filesystem context source name check
-Date: Wed, 23 Apr 2025 16:43:26 +0200
-Message-ID: <20250423142622.550126221@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 123/223] ksmbd: fix use-after-free in smb_break_all_levII_oplock()
+Date: Wed, 23 Apr 2025 16:43:15 +0200
+Message-ID: <20250423142622.115489286@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -50,35 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit a94fd938df2b1628da66b498aa0eeb89593bc7a2 upstream.
+commit 18b4fac5ef17f77fed9417d22210ceafd6525fc7 upstream.
 
-In certain scenarios, for example, during fuzz testing, the source
-name may be NULL, which could lead to a kernel panic. Therefore, an
-extra check for the source name should be added.
+There is a room in smb_break_all_levII_oplock that can cause racy issues
+when unlocking in the middle of the loop. This patch use read lock
+to protect whole loop.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: <stable@vger.kernel.org> # all LTS kernels
-Signed-off-by: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
-Link: https://lore.kernel.org/20250407115111.25535-1-xiangsheng.hou@mediatek.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/virtio_fs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/oplock.c |   29 +++++++++--------------------
+ fs/smb/server/oplock.h |    1 -
+ 2 files changed, 9 insertions(+), 21 deletions(-)
 
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -1663,6 +1663,9 @@ static int virtio_fs_get_tree(struct fs_
- 	unsigned int virtqueue_size;
- 	int err = -EIO;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -129,14 +129,6 @@ static void free_opinfo(struct oplock_in
+ 	kfree(opinfo);
+ }
  
-+	if (!fsc->source)
-+		return invalf(fsc, "No source specified");
-+
- 	/* This gets a reference on virtio_fs object. This ptr gets installed
- 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
- 	 * to drop the reference to this object.
+-static inline void opinfo_free_rcu(struct rcu_head *rcu_head)
+-{
+-	struct oplock_info *opinfo;
+-
+-	opinfo = container_of(rcu_head, struct oplock_info, rcu_head);
+-	free_opinfo(opinfo);
+-}
+-
+ struct oplock_info *opinfo_get(struct ksmbd_file *fp)
+ {
+ 	struct oplock_info *opinfo;
+@@ -157,8 +149,8 @@ static struct oplock_info *opinfo_get_li
+ 	if (list_empty(&ci->m_op_list))
+ 		return NULL;
+ 
+-	rcu_read_lock();
+-	opinfo = list_first_or_null_rcu(&ci->m_op_list, struct oplock_info,
++	down_read(&ci->m_lock);
++	opinfo = list_first_entry(&ci->m_op_list, struct oplock_info,
+ 					op_entry);
+ 	if (opinfo) {
+ 		if (opinfo->conn == NULL ||
+@@ -171,8 +163,7 @@ static struct oplock_info *opinfo_get_li
+ 			}
+ 		}
+ 	}
+-
+-	rcu_read_unlock();
++	up_read(&ci->m_lock);
+ 
+ 	return opinfo;
+ }
+@@ -185,7 +176,7 @@ void opinfo_put(struct oplock_info *opin
+ 	if (!atomic_dec_and_test(&opinfo->refcount))
+ 		return;
+ 
+-	call_rcu(&opinfo->rcu_head, opinfo_free_rcu);
++	free_opinfo(opinfo);
+ }
+ 
+ static void opinfo_add(struct oplock_info *opinfo)
+@@ -193,7 +184,7 @@ static void opinfo_add(struct oplock_inf
+ 	struct ksmbd_inode *ci = opinfo->o_fp->f_ci;
+ 
+ 	down_write(&ci->m_lock);
+-	list_add_rcu(&opinfo->op_entry, &ci->m_op_list);
++	list_add(&opinfo->op_entry, &ci->m_op_list);
+ 	up_write(&ci->m_lock);
+ }
+ 
+@@ -207,7 +198,7 @@ static void opinfo_del(struct oplock_inf
+ 		write_unlock(&lease_list_lock);
+ 	}
+ 	down_write(&ci->m_lock);
+-	list_del_rcu(&opinfo->op_entry);
++	list_del(&opinfo->op_entry);
+ 	up_write(&ci->m_lock);
+ }
+ 
+@@ -1347,8 +1338,8 @@ void smb_break_all_levII_oplock(struct k
+ 	ci = fp->f_ci;
+ 	op = opinfo_get(fp);
+ 
+-	rcu_read_lock();
+-	list_for_each_entry_rcu(brk_op, &ci->m_op_list, op_entry) {
++	down_read(&ci->m_lock);
++	list_for_each_entry(brk_op, &ci->m_op_list, op_entry) {
+ 		if (brk_op->conn == NULL)
+ 			continue;
+ 
+@@ -1358,7 +1349,6 @@ void smb_break_all_levII_oplock(struct k
+ 		if (ksmbd_conn_releasing(brk_op->conn))
+ 			continue;
+ 
+-		rcu_read_unlock();
+ 		if (brk_op->is_lease && (brk_op->o_lease->state &
+ 		    (~(SMB2_LEASE_READ_CACHING_LE |
+ 				SMB2_LEASE_HANDLE_CACHING_LE)))) {
+@@ -1388,9 +1378,8 @@ void smb_break_all_levII_oplock(struct k
+ 		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE, NULL);
+ next:
+ 		opinfo_put(brk_op);
+-		rcu_read_lock();
+ 	}
+-	rcu_read_unlock();
++	up_read(&ci->m_lock);
+ 
+ 	if (op)
+ 		opinfo_put(op);
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -71,7 +71,6 @@ struct oplock_info {
+ 	struct list_head        lease_entry;
+ 	wait_queue_head_t oplock_q; /* Other server threads */
+ 	wait_queue_head_t oplock_brk; /* oplock breaking wait */
+-	struct rcu_head		rcu_head;
+ };
+ 
+ struct lease_break_info {
 
 
