@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63992BE114;
-	Wed, 23 Apr 2025 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CE2BE118;
+	Wed, 23 Apr 2025 15:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421687; cv=none; b=ef3k9IIwn1v11eF29AKSnoLtQYBGXMHikN1MxgDDOq9p/8ulKfitYiSEa/e+mw0uMdFcQb8O4ifLXi0x/7jRaUNMYBI3GZpM8epmUdDrPknTxWDnOy7/TF6dqtGEhkLNpkJ7CVmUSTpRepp9k4oZMIvroNyYFzrEKbe65OzOOfE=
+	t=1745421690; cv=none; b=hPjTUWi9r09Jrmxm0CHCGzqbi5mdxFdBNU7XsWol1JBQyg3fWaZTsMtf3GHoAoPUAftoydsvpAr1ecBtPvQyGTnoMEiwv4zCD3qhbQ+An1OWLvNTsUyCSIvBSuw6X/6LkZtq/akQ1IdhdAXNkUwPtJFm0pVw/iC5gEh2wZRke5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421687; c=relaxed/simple;
-	bh=R0oxMAPEdE9jsg7+4/IuhpO63mfluFNC5ubu12KGHCk=;
+	s=arc-20240116; t=1745421690; c=relaxed/simple;
+	bh=luU7Xf68R7FGwCo0tbyhNU1AaqAuBVNpZPJ3YmrUKKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlbURY7w7kV5lm2i2TeOR4Opyr/gX58l4oCCJSvUxnlJfjgvslOnkor+2dVQ36xUWB4q5tLrGs8OGO+CvsVkcw2epVthPBkJiwAgat1LITENErCTvMQ/Mg7JbWoPQ3fCMBwv7xgAq6ALDaHk9r+bOA+469Gy0SgZgPhJ3drq4Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQzY4DAw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dL3cXePOKaUp65+vOn9XkjtthnrTEqLaUHfi6fmwJNAbB2TLmiszyQdCSKoLta3mJ6AqAu/ptOyKF6EjS8Y1hWdm+iLEKd9gUo3Mr++AQZmVCtPes6jPcBGg14KI5QEKYNfoe0P2qPhN8RtoH5zaMTKkz9EQLBLdA4kX8M76J3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLlUVD61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQzY4DAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CDBC4CEE8;
-	Wed, 23 Apr 2025 15:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLlUVD61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6EAC4CEE2;
+	Wed, 23 Apr 2025 15:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421687;
-	bh=R0oxMAPEdE9jsg7+4/IuhpO63mfluFNC5ubu12KGHCk=;
+	s=korg; t=1745421689;
+	bh=luU7Xf68R7FGwCo0tbyhNU1AaqAuBVNpZPJ3YmrUKKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQzY4DAwejGcxonf8gpyBYfbJBOi6IE3cTrlLj8AwIAwe0DAaQ/xI5ABBjuufK1Yx
-	 CEf4ZP/1sIBpzlhnWg+M1Kr2fXOhuWqiCwMM4htWzEjW30vbK1u3LrY6zO2cCkH3SC
-	 EwDYIws4/GEIJpzPhN3TQJu4PdZkWZAzpUv/4vTs=
+	b=qLlUVD61oIqnqtbT7hoGUR3biRCNA3c2sDM9TXDr+xlH5eAsh0Po0HX7yZwII/SVc
+	 MoVGoWdbC1WSlTj7VquKNwLr1h1ao6aIZUWNxHNKNOvydMVBaPzJ42qAT5JG5jZFWM
+	 6I2cVvhu+ufJHV53AODLpuS9OQwSOTGPNBJI9jBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 208/393] crypto: ccp - Fix check for the primary ASP device
-Date: Wed, 23 Apr 2025 16:41:44 +0200
-Message-ID: <20250423142651.977297413@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.14 220/241] io_uring: dont post tag CQEs on file/buffer registration failure
+Date: Wed, 23 Apr 2025 16:44:44 +0200
+Message-ID: <20250423142629.546149474@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +46,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 07bb097b92b987db518e72525b515d77904e966e upstream.
+Commit ab6005f3912fff07330297aba08922d2456dcede upstream.
 
-Currently, the ASP primary device check does not have support for PCI
-domains, and, as a result, when the system is configured with PCI domains
-(PCI segments) the wrong device can be selected as primary. This results
-in commands submitted to the device timing out and failing. The device
-check also relies on specific device and function assignments that may
-not hold in the future.
+Buffer / file table registration is all or nothing, if it fails all
+resources we might have partially registered are dropped and the table
+is killed. If that happens, it doesn't make sense to post any rsrc tag
+CQEs. That would be confusing to the application, which should not need
+to handle that case.
 
-Fix the primary ASP device check to include support for PCI domains and
-to perform proper checking of the Bus/Device/Function positions.
-
-Fixes: 2a6170dfe755 ("crypto: ccp: Add Platform Security Processor (PSP) device support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Fixes: 7029acd8a9503 ("io_uring/rsrc: get rid of per-ring io_rsrc_node list")
+Link: https://lore.kernel.org/r/c514446a8dcb0197cddd5d4ba8f6511da081cf1f.1743777957.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sp-pci.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ io_uring/rsrc.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/ccp/sp-pci.c
-+++ b/drivers/crypto/ccp/sp-pci.c
-@@ -243,14 +243,17 @@ static bool sp_pci_is_master(struct sp_d
- 	pdev_new = to_pci_dev(dev_new);
- 	pdev_cur = to_pci_dev(dev_cur);
- 
--	if (pdev_new->bus->number < pdev_cur->bus->number)
--		return true;
-+	if (pci_domain_nr(pdev_new->bus) != pci_domain_nr(pdev_cur->bus))
-+		return pci_domain_nr(pdev_new->bus) < pci_domain_nr(pdev_cur->bus);
- 
--	if (PCI_SLOT(pdev_new->devfn) < PCI_SLOT(pdev_cur->devfn))
--		return true;
-+	if (pdev_new->bus->number != pdev_cur->bus->number)
-+		return pdev_new->bus->number < pdev_cur->bus->number;
- 
--	if (PCI_FUNC(pdev_new->devfn) < PCI_FUNC(pdev_cur->devfn))
--		return true;
-+	if (PCI_SLOT(pdev_new->devfn) != PCI_SLOT(pdev_cur->devfn))
-+		return PCI_SLOT(pdev_new->devfn) < PCI_SLOT(pdev_cur->devfn);
-+
-+	if (PCI_FUNC(pdev_new->devfn) != PCI_FUNC(pdev_cur->devfn))
-+		return PCI_FUNC(pdev_new->devfn) < PCI_FUNC(pdev_cur->devfn);
- 
- 	return false;
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -130,6 +130,18 @@ struct io_rsrc_node *io_rsrc_node_alloc(
+ 	return node;
  }
+ 
++static void io_clear_table_tags(struct io_rsrc_data *data)
++{
++	int i;
++
++	for (i = 0; i < data->nr; i++) {
++		struct io_rsrc_node *node = data->nodes[i];
++
++		if (node)
++			node->tag = 0;
++	}
++}
++
+ __cold void io_rsrc_data_free(struct io_ring_ctx *ctx, struct io_rsrc_data *data)
+ {
+ 	if (!data->nr)
+@@ -539,6 +551,7 @@ int io_sqe_files_register(struct io_ring
+ 	io_file_table_set_alloc_range(ctx, 0, ctx->file_table.data.nr);
+ 	return 0;
+ fail:
++	io_clear_table_tags(&ctx->file_table.data);
+ 	io_sqe_files_unregister(ctx);
+ 	return ret;
+ }
+@@ -855,8 +868,10 @@ int io_sqe_buffers_register(struct io_ri
+ 	}
+ 
+ 	ctx->buf_table = data;
+-	if (ret)
++	if (ret) {
++		io_clear_table_tags(&ctx->buf_table);
+ 		io_sqe_buffers_unregister(ctx);
++	}
+ 	return ret;
+ }
+ 
 
 
