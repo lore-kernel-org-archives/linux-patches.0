@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795A027CB33;
-	Wed, 23 Apr 2025 14:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DA827F4D9;
+	Wed, 23 Apr 2025 14:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419784; cv=none; b=Xs/LZBDkZe6J/YXIova9ekFmMoAuSYbkVHHTbK9u49DPVtU5bIp5a/DUe+oRdKmkPYhgAQotYKnTak57uNINBCJuU0FCiGSwjhl51ztX9ycnvdYwm7LsKXk0K2Zk19yojmAFu9PzANYar0QhaAe/de5/wObF7S0m7qV7T5rRM74=
+	t=1745419784; cv=none; b=IjoD/s6DDwLzNXLAUetkuhoMyVPcczPR5qoC3H2IcuD4FWFd3ycpkMyGDDz4L9wfxLnOOchtrhWK5KPBN4a27gTsqIDfZAY0QXfFwUrJfngFasNQD3VAX9rT4AUV2QpKQb1+pSgcgiwKcRLkzKMVia9U9G1+/eonUAmsHioBfbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745419784; c=relaxed/simple;
-	bh=v4uCKiptO4d0yaSCsnWR+/WMOiCvKj8RoI78/6G/UGI=;
+	bh=cQMhZdExweta1k+wrW7j1C9wbRsxCzC8bqHWLZn4y/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pgb4NvH+15O1tK8ZejgojCFXe+3VXDK+0N90jYbuZzTRqkQil4lbxQbiM9c0RQTM+14MvBt/TpfMASfE8sa0DlujrA+x2+GlHKc1O38oZnf06Ww1ISmSlCuYrZOF+w6wLn0rm9XWeGc5qebrVgjOJ8Op0eg+pMiigHqTPbiE+rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWHzfLc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQfNZv8Oj0O339N8MLTF/arEig1mjFCmhdcytGHtYzU5RZi+ncXZ3hgvj5ioYT65joo+2sLqlCP7a3Zwbj1SOXwMQSfugJnFiSQiSWctdwnQbsxB9hg63AVEF2Bjeh/XU8zMr5eqdOqXM+ba0KtnNIHBIgYkdqVwM7FmDblPXRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbZEWmCJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWHzfLc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15C3C4CEE3;
-	Wed, 23 Apr 2025 14:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbZEWmCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3867BC4CEE8;
+	Wed, 23 Apr 2025 14:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419782;
-	bh=v4uCKiptO4d0yaSCsnWR+/WMOiCvKj8RoI78/6G/UGI=;
+	s=korg; t=1745419784;
+	bh=cQMhZdExweta1k+wrW7j1C9wbRsxCzC8bqHWLZn4y/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWHzfLc3uT8FcjfLdT5OQ4C6qLI79rhc0s3Pq1O6eNs8n0gl0JIBYlUWXq4pxL809
-	 yQ1KydR6D+T7YYCP6ev5ZQMow4f0enXs+Km0fGXUi1jAHZZIRg/8ZhYcMzaVEmU2Qk
-	 x/rgjfN6T/fYFhugk331oRwImiAvybSkOV30r0CY=
+	b=UbZEWmCJH4DtMrpRzSOkglmpbNF4ZdFmmfOKC1B1Tyn5P9rzjSuPGH0oh4oH/DcHa
+	 RUmUD53UR2AZi9M1xb3VYVP+QPiKPZrQ/oL5jTzt4tk/bIoq6Kfq7y9u7BL3vXu3cJ
+	 g0p4ZsNfP8l3D7NIgl4ZgMqw05lx4YUdCUcblMWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 026/241] Bluetooth: l2cap: Check encryption key size on incoming connection
-Date: Wed, 23 Apr 2025 16:41:30 +0200
-Message-ID: <20250423142621.587093760@linuxfoundation.org>
+Subject: [PATCH 6.12 061/223] net: bridge: switchdev: do not notify new brentries as changed
+Date: Wed, 23 Apr 2025 16:42:13 +0200
+Message-ID: <20250423142619.621783324@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,83 +48,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frédéric Danis <frederic.danis@collabora.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 522e9ed157e3c21b4dd623c79967f72c21e45b78 ]
+[ Upstream commit eb25de13bd9cf025413a04f25e715d0e99847e30 ]
 
-This is required for passing GAP/SEC/SEM/BI-04-C PTS test case:
-  Security Mode 4 Level 4, Responder - Invalid Encryption Key Size
-  - 128 bit
+When adding a bridge vlan that is pvid or untagged after the vlan has
+already been added to any other switchdev backed port, the vlan change
+will be propagated as changed, since the flags change.
 
-This tests the security key with size from 1 to 15 bytes while the
-Security Mode 4 Level 4 requests 16 bytes key size.
+This causes the vlan to not be added to the hardware for DSA switches,
+since the DSA handler ignores any vlans for the CPU or DSA ports that
+are changed.
 
-Currently PTS fails with the following logs:
-- expected:Connection Response:
-    Code: [3 (0x03)] Code
-    Identifier: (lt)WildCard: Exists(gt)
-    Length: [8 (0x0008)]
-    Destination CID: (lt)WildCard: Exists(gt)
-    Source CID: [64 (0x0040)]
-    Result: [3 (0x0003)] Connection refused - Security block
-    Status: (lt)WildCard: Exists(gt),
-but received:Connection Response:
-    Code: [3 (0x03)] Code
-    Identifier: [1 (0x01)]
-    Length: [8 (0x0008)]
-    Destination CID: [64 (0x0040)]
-    Source CID: [64 (0x0040)]
-    Result: [0 (0x0000)] Connection Successful
-    Status: [0 (0x0000)] No further information available
+E.g. the following order of operations would work:
 
-And HCI logs:
-< HCI Command: Read Encrypti.. (0x05|0x0008) plen 2
-        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Success (0x00)
-        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
-        Key size: 7
-> ACL Data RX: Handle 14 flags 0x02 dlen 12
-      L2CAP: Connection Request (0x02) ident 1 len 4
-        PSM: 4097 (0x1001)
-        Source CID: 64
-< ACL Data TX: Handle 14 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 1 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection successful (0x0000)
-        Status: No further information available (0x0000)
+$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
+$ ip link set lan1 master swbridge
+$ bridge vlan add dev swbridge vid 1 pvid untagged self
+$ bridge vlan add dev lan1 vid 1 pvid untagged
 
-Fixes: 288c06973daa ("Bluetooth: Enforce key size of 16 bytes on FIPS level")
-Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+but this order would break:
+
+$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
+$ ip link set lan1 master swbridge
+$ bridge vlan add dev lan1 vid 1 pvid untagged
+$ bridge vlan add dev swbridge vid 1 pvid untagged self
+
+Additionally, the vlan on the bridge itself would become undeletable:
+
+$ bridge vlan
+port              vlan-id
+lan1              1 PVID Egress Untagged
+swbridge          1 PVID Egress Untagged
+$ bridge vlan del dev swbridge vid 1 self
+$ bridge vlan
+port              vlan-id
+lan1              1 PVID Egress Untagged
+swbridge          1 Egress Untagged
+
+since the vlan was never added to DSA's vlan list, so deleting it will
+cause an error, causing the bridge code to not remove it.
+
+Fix this by checking if flags changed only for vlans that are already
+brentry and pass changed as false for those that become brentries, as
+these are a new vlan (member) from the switchdev point of view.
+
+Since *changed is set to true for becomes_brentry = true regardless of
+would_change's value, this will not change any rtnetlink notification
+delivery, just the value passed on to switchdev in vlan->changed.
+
+Fixes: 8d23a54f5bee ("net: bridge: switchdev: differentiate new VLANs from changed ones")
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250414200020.192715-1-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/br_vlan.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index c27ea70f71e1e..499e38ed639e6 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3956,7 +3956,8 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 89f51ea4cabec..f2efb58d152bc 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -715,8 +715,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
+ 				u16 flags, bool *changed,
+ 				struct netlink_ext_ack *extack)
+ {
+-	bool would_change = __vlan_flags_would_change(vlan, flags);
+ 	bool becomes_brentry = false;
++	bool would_change = false;
+ 	int err;
  
- 	/* Check if the ACL is secure enough (if not SDP) */
- 	if (psm != cpu_to_le16(L2CAP_PSM_SDP) &&
--	    !hci_conn_check_link_mode(conn->hcon)) {
-+	    (!hci_conn_check_link_mode(conn->hcon) ||
-+	    !l2cap_check_enc_key_size(conn->hcon))) {
- 		conn->disc_reason = HCI_ERROR_AUTH_FAILURE;
- 		result = L2CAP_CR_SEC_BLOCK;
- 		goto response;
+ 	if (!br_vlan_is_brentry(vlan)) {
+@@ -725,6 +725,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
+ 			return -EINVAL;
+ 
+ 		becomes_brentry = true;
++	} else {
++		would_change = __vlan_flags_would_change(vlan, flags);
+ 	}
+ 
+ 	/* Master VLANs that aren't brentries weren't notified before,
 -- 
 2.39.5
 
