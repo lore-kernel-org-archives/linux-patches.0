@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD72291153;
-	Wed, 23 Apr 2025 15:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771C28D854;
+	Wed, 23 Apr 2025 15:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421068; cv=none; b=shS304ozQFblgf7JroYOFI2CPKbOiLwUotoMkXonCeOwEiZC5aFhMtrw64O/EpGyco0pIIxPR+P6frMGw33ufWmGc7NZ8oQ48bHIbJb1sQRlZi+aEYPtcmZajV9XNAnsDVxMBzqbTcfhub0ByvxC7fbNlIiHijsWnplykFK6I4M=
+	t=1745421071; cv=none; b=ujui9TCeyyvpmoD3iZFlRl2T636LX3fyrdzZWLzKS73MukwV07cGfsqb6SpRAGghGOYGxTHzdec/AgCj3vc9yZf3/X9tynspxQ8FwhpFjuurssG0wi2oV37khPBf3IJ+yRvQ5cPP/VQwlfSZn2GRsmt3flDDHb/ZkwllxNAJ/aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421068; c=relaxed/simple;
-	bh=guWFkdRkOQQNroYUkTnojpmKxq+sHeefdVi1+fw+we4=;
+	s=arc-20240116; t=1745421071; c=relaxed/simple;
+	bh=YOYAv+YwPa4kh5yGVBQI7MEyDsTgh20PimoPWYQvbfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7+SAz7LqF8p8j60wQc01QQT0AjOUtvFaULQMd1tJwtoy4u9pjSVim/DpOT1rM3bM39vA33Tc9qLe9OIUJ8+XVRIYh5FuIPbQfjQdd0ByzPt6unxFpDgzVVZjaVK+10Tg5THkPk9op5avbRFiXQTJaOyb1Ykr5UFG7+KgD/B2ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eim3PAVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rnKRP217sxAmKqHcU8Y9k3+i/6JJNcAy4ifvHpag2Pw0RBeBHyxbi1eRaop2U8a5SDJVzNm/Ufkfdzt0TVX8F1lpGumOgCH++KYYvb5Ax+kAMK76j5KYsY8yETvj+9HSdhUPEppNtgMDiRSLC24kVtzkBb+5KOTZo24tPBmwFds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWhiAwxm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eim3PAVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F42C4CEE2;
-	Wed, 23 Apr 2025 15:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWhiAwxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6506DC4CEE2;
+	Wed, 23 Apr 2025 15:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421068;
-	bh=guWFkdRkOQQNroYUkTnojpmKxq+sHeefdVi1+fw+we4=;
+	s=korg; t=1745421070;
+	bh=YOYAv+YwPa4kh5yGVBQI7MEyDsTgh20PimoPWYQvbfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eim3PAVlQUxY91JpFGZhUd4OCkmngXcPGmhi7MFHAe9IrsQ4q8r8O1hwyVj2HIb0B
-	 nCvMORz02GDrxQtBtgXRwdBZYiDTuiabEahzLEQDImKSSfL6lIIliNrLEWaNQqJidM
-	 04pO79XRLPiSQlpbnqqmnVHRg6DLsqIcSNGHJ+sY=
+	b=KWhiAwxmyVa7a3MAQdl/ZIZ8EDM/OOVdNJqBZ7nCEyIdlojQkbQjl2LxHI5LmIOnr
+	 ivOS1jt2EyvA/TnnYYRlcx1ZGXP23Fi8hBLNkVTXgmadleJUENWGz0IjZfZZ8RPWEy
+	 zQPQR9ZkUmKMRnzGHl9dKqF6ONXjgzwupi+d9v98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.14 149/241] Revert "smb: client: fix TCP timers deadlock after rmmod"
-Date: Wed, 23 Apr 2025 16:43:33 +0200
-Message-ID: <20250423142626.635146866@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 144/393] media: venus: hfi_parser: add check to avoid out of bound access
+Date: Wed, 23 Apr 2025 16:40:40 +0200
+Message-ID: <20250423142649.330699316@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,199 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 95d2b9f693ff2a1180a23d7d59acc0c4e72f4c41 upstream.
+commit 172bf5a9ef70a399bb227809db78442dc01d9e48 upstream.
 
-This reverts commit e9f2517a3e18a54a3943c098d2226b245d488801.
+There is a possibility that init_codecs is invoked multiple times during
+manipulated payload from video firmware. In such case, if codecs_count
+can get incremented to value more than MAX_CODEC_NUM, there can be OOB
+access. Reset the count so that it always starts from beginning.
 
-Commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
-rmmod") is intended to fix a null-ptr-deref in LOCKDEP, which is
-mentioned as CVE-2024-54680, but is actually did not fix anything;
-The issue can be reproduced on top of it. [0]
-
-Also, it reverted the change by commit ef7134c7fc48 ("smb: client:
-Fix use-after-free of network namespace.") and introduced a real
-issue by reviving the kernel TCP socket.
-
-When a reconnect happens for a CIFS connection, the socket state
-transitions to FIN_WAIT_1.  Then, inet_csk_clear_xmit_timers_sync()
-in tcp_close() stops all timers for the socket.
-
-If an incoming FIN packet is lost, the socket will stay at FIN_WAIT_1
-forever, and such sockets could be leaked up to net.ipv4.tcp_max_orphans.
-
-Usually, FIN can be retransmitted by the peer, but if the peer aborts
-the connection, the issue comes into reality.
-
-I warned about this privately by pointing out the exact report [1],
-but the bogus fix was finally merged.
-
-So, we should not stop the timers to finally kill the connection on
-our side in that case, meaning we must not use a kernel socket for
-TCP whose sk->sk_net_refcnt is 0.
-
-The kernel socket does not have a reference to its netns to make it
-possible to tear down netns without cleaning up every resource in it.
-
-For example, tunnel devices use a UDP socket internally, but we can
-destroy netns without removing such devices and let it complete
-during exit.  Otherwise, netns would be leaked when the last application
-died.
-
-However, this is problematic for TCP sockets because TCP has timers to
-close the connection gracefully even after the socket is close()d.  The
-lifetime of the socket and its netns is different from the lifetime of
-the underlying connection.
-
-If the socket user does not maintain the netns lifetime, the timer could
-be fired after the socket is close()d and its netns is freed up, resulting
-in use-after-free.
-
-Actually, we have seen so many similar issues and converted such sockets
-to have a reference to netns.
-
-That's why I converted the CIFS client socket to have a reference to
-netns (sk->sk_net_refcnt == 1), which is somehow mentioned as out-of-scope
-of CIFS and technically wrong in e9f2517a3e18, but **is in-scope and right
-fix**.
-
-Regarding the LOCKDEP issue, we can prevent the module unload by
-bumping the module refcount when switching the LOCKDDEP key in
-sock_lock_init_class_and_name(). [2]
-
-For a while, let's revert the bogus fix.
-
-Note that now we can use sk_net_refcnt_upgrade() for the socket
-conversion, but I'll do so later separately to make backport easy.
-
-Link: https://lore.kernel.org/all/20250402020807.28583-1-kuniyu@amazon.com/ #[0]
-Link: https://lore.kernel.org/netdev/c08bd5378da647a2a4c16698125d180a@huawei.com/ #[1]
-Link: https://lore.kernel.org/lkml/20250402005841.19846-1-kuniyu@amazon.com/ #[2]
-Fixes: e9f2517a3e18 ("smb: client: fix TCP timers deadlock after rmmod")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   36 ++++++++++--------------------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -972,13 +972,9 @@ clean_demultiplex_info(struct TCP_Server
- 	msleep(125);
- 	if (cifs_rdma_enabled(server))
- 		smbd_destroy(server);
--
- 	if (server->ssocket) {
- 		sock_release(server->ssocket);
- 		server->ssocket = NULL;
--
--		/* Release netns reference for the socket. */
--		put_net(cifs_net_ns(server));
- 	}
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -19,6 +19,8 @@ static void init_codecs(struct venus_cor
+ 	struct hfi_plat_caps *caps = core->caps, *cap;
+ 	unsigned long bit;
  
- 	if (!list_empty(&server->pending_mid_q)) {
-@@ -1026,7 +1022,6 @@ clean_demultiplex_info(struct TCP_Server
- 		 */
- 	}
- 
--	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(server));
- 	kfree(server->leaf_fullpath);
- 	kfree(server->hostname);
-@@ -1672,8 +1667,6 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 
- 	tcp_ses->ops = ctx->ops;
- 	tcp_ses->vals = ctx->vals;
--
--	/* Grab netns reference for this server. */
- 	cifs_set_net_ns(tcp_ses, get_net(current->nsproxy->net_ns));
- 
- 	tcp_ses->sign = ctx->sign;
-@@ -1803,7 +1796,6 @@ smbd_connected:
- out_err_crypto_release:
- 	cifs_crypto_secmech_release(tcp_ses);
- 
--	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(tcp_ses));
- 
- out_err:
-@@ -1812,10 +1804,8 @@ out_err:
- 			cifs_put_tcp_session(tcp_ses->primary_server, false);
- 		kfree(tcp_ses->hostname);
- 		kfree(tcp_ses->leaf_fullpath);
--		if (tcp_ses->ssocket) {
-+		if (tcp_ses->ssocket)
- 			sock_release(tcp_ses->ssocket);
--			put_net(cifs_net_ns(tcp_ses));
--		}
- 		kfree(tcp_ses);
- 	}
- 	return ERR_PTR(rc);
-@@ -3116,20 +3106,20 @@ generic_ip_connect(struct TCP_Server_Inf
- 		socket = server->ssocket;
- 	} else {
- 		struct net *net = cifs_net_ns(server);
-+		struct sock *sk;
- 
--		rc = sock_create_kern(net, sfamily, SOCK_STREAM, IPPROTO_TCP, &server->ssocket);
-+		rc = __sock_create(net, sfamily, SOCK_STREAM,
-+				   IPPROTO_TCP, &server->ssocket, 1);
- 		if (rc < 0) {
- 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
- 			return rc;
- 		}
- 
--		/*
--		 * Grab netns reference for the socket.
--		 *
--		 * It'll be released here, on error, or in clean_demultiplex_info() upon server
--		 * teardown.
--		 */
--		get_net(net);
-+		sk = server->ssocket->sk;
-+		__netns_tracker_free(net, &sk->ns_tracker, false);
-+		sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 
- 		/* BB other socket options to set KEEPALIVE, NODELAY? */
- 		cifs_dbg(FYI, "Socket created\n");
-@@ -3143,10 +3133,8 @@ generic_ip_connect(struct TCP_Server_Inf
- 	}
- 
- 	rc = bind_socket(server);
--	if (rc < 0) {
--		put_net(cifs_net_ns(server));
-+	if (rc < 0)
- 		return rc;
--	}
- 
- 	/*
- 	 * Eventually check for other socket options to change from
-@@ -3183,7 +3171,6 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (rc < 0) {
- 		cifs_dbg(FYI, "Error %d connecting to server\n", rc);
- 		trace_smb3_connect_err(server->hostname, server->conn_id, &server->dstaddr, rc);
--		put_net(cifs_net_ns(server));
- 		sock_release(socket);
- 		server->ssocket = NULL;
- 		return rc;
-@@ -3192,9 +3179,6 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (sport == htons(RFC1001_PORT))
- 		rc = ip_rfc1001_connect(server);
- 
--	if (rc < 0)
--		put_net(cifs_net_ns(server));
--
- 	return rc;
- }
++	core->codecs_count = 0;
++
+ 	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
+ 		return;
  
 
 
