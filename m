@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB7828D831;
-	Wed, 23 Apr 2025 15:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818DC28CF6E;
+	Wed, 23 Apr 2025 15:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421913; cv=none; b=Jef3tSSfj1f+P9RcwmAZzv7htwSXYs3rvy8eIWILVEvxsRJeHruPWqtW5j3ShG6Gy3ECbaCkEefSfuaLCKfPmkqFXbtedbOkmi27WWxhl64Diw7ChXSeQ0L5gq8ubN2WNvQKxSkAipRwiMTU6ieGG0a/PcwurXc9LGIY8XxdQ6k=
+	t=1745421918; cv=none; b=DYTGkYDgOmMTxtq8itXcbR0PcWvUGEC/BOzrWbCTtZpS2RUyBqK9p/wZXKykDlFxwWnrho3CyCz2qc0vcECAUPbo9WHAel/1//3nn7S/qxRHupCcQrOjskhQArsME5gdJso2KMSEWi95lRzDE792cM2hzucdYNJvty0uO+46We8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421913; c=relaxed/simple;
-	bh=xqeFU+74wLhSm9LD2LahRtoXtn874UwR0BO2VQTDQn0=;
+	s=arc-20240116; t=1745421918; c=relaxed/simple;
+	bh=weZPZHcBcoIA11xlt2PlavBE+r2uUtltuYipPSF6WIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eclNnp5TsQjeqT77ISAop+jfXpjhxkTfykhrAm+SnYNx9ZuEIbNi7J2EmsVtCVF9nrvhnDJT/fbQC0A/77QWG/hggdin31XG1v5htpDjiNlz38Gj2hCrwu791+ot6Ap8Qi3gGHUCIZV4d01WNadqPQ35EdC9GQ+LzxT2VW/ncOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tZxBMzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDq6N91tdM5sWMQhpA3qzESuSzUnnG42omIJPgauZAj4Wsb4dCotgBrklRm3Ki2gVvAgaTRwpJ7hpK3W9PJPeT6LpQPdEDoK6gfasbx/zpiKH5mBSS0C6kFaeCj/zyeRFVbcYbh6vU1a4jgHtNimgj71zLWUQ3LnNk00RQMvwSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqQ6k3rk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tZxBMzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF38C4CEE2;
-	Wed, 23 Apr 2025 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqQ6k3rk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACC8C4CEE2;
+	Wed, 23 Apr 2025 15:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421913;
-	bh=xqeFU+74wLhSm9LD2LahRtoXtn874UwR0BO2VQTDQn0=;
+	s=korg; t=1745421916;
+	bh=weZPZHcBcoIA11xlt2PlavBE+r2uUtltuYipPSF6WIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tZxBMzT9Ogmg7jesa2hbFk/jpmmwJlJIyAcfRlNPw4+i5fr2pMcJStCs2O3Dfup7
-	 SdoPyXVvgvpKMt3Yblt8CJp2WVhu9FNTLkb1Aupjww5GgGAxPEz7FxgnMSHD2lDnCk
-	 emBCT94CRlF6HkTWV4Q7ePICuajkrjqyDEte4WLk=
+	b=VqQ6k3rkAAuCAmDcoWg++uhLQztTQfXEtfgtAw/O7QqzG4kSNjE3tj8VRaRCtkF4f
+	 a5DCMSfqliPa5y3WI8BGucRbIrUBqsfHfpUtUCGR7WMDED1cieYF/DTjXKaNa1/NDP
+	 4fU08B37xslT59ibEsKfhK678XCwNsOtLhmhz/I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Michael Nemanov <michael.nemanov@ti.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/393] wifi: wl1251: fix memory leak in wl1251_tx_work
-Date: Wed, 23 Apr 2025 16:42:20 +0200
-Message-ID: <20250423142653.461815508@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 198/291] writeback: fix false warning in inode_to_wb()
+Date: Wed, 23 Apr 2025 16:43:07 +0200
+Message-ID: <20250423142632.472445505@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit a0f0dc96de03ffeefc2a177b7f8acde565cb77f4 ]
+commit 9e888998ea4d22257b07ce911576509486fa0667 upstream.
 
-The skb dequeued from tx_queue is lost when wl1251_ps_elp_wakeup fails
-with a -ETIMEDOUT error. Fix that by queueing the skb back to tx_queue.
+inode_to_wb() is used also for filesystems that don't support cgroup
+writeback.  For these filesystems inode->i_wb is stable during the
+lifetime of the inode (it points to bdi->wb) and there's no need to hold
+locks protecting the inode->i_wb dereference.  Improve the warning in
+inode_to_wb() to not trigger for these filesystems.
 
-Fixes: c5483b719363 ("wl12xx: check if elp wakeup failed")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Michael Nemanov <michael.nemanov@ti.com>
-Link: https://patch.msgid.link/20250330104532.44935-1-abdun.nihaal@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250412163914.3773459-3-agruenba@redhat.com
+Fixes: aaa2cacf8184 ("writeback: add lockdep annotation to inode_to_wb()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Reviewed-by: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ti/wl1251/tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/backing-dev.h |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
-index e9dc3c72bb110..06dc74cc6cb52 100644
---- a/drivers/net/wireless/ti/wl1251/tx.c
-+++ b/drivers/net/wireless/ti/wl1251/tx.c
-@@ -342,8 +342,10 @@ void wl1251_tx_work(struct work_struct *work)
- 	while ((skb = skb_dequeue(&wl->tx_queue))) {
- 		if (!woken_up) {
- 			ret = wl1251_ps_elp_wakeup(wl);
--			if (ret < 0)
-+			if (ret < 0) {
-+				skb_queue_head(&wl->tx_queue, skb);
- 				goto out;
-+			}
- 			woken_up = true;
- 		}
- 
--- 
-2.39.5
-
+--- a/include/linux/backing-dev.h
++++ b/include/linux/backing-dev.h
+@@ -241,6 +241,7 @@ static inline struct bdi_writeback *inod
+ {
+ #ifdef CONFIG_LOCKDEP
+ 	WARN_ON_ONCE(debug_locks &&
++		     (inode->i_sb->s_iflags & SB_I_CGROUPWB) &&
+ 		     (!lockdep_is_held(&inode->i_lock) &&
+ 		      !lockdep_is_held(&inode->i_mapping->i_pages.xa_lock) &&
+ 		      !lockdep_is_held(&inode->i_wb->list_lock)));
 
 
