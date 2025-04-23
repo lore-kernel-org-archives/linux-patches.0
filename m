@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025BD28468C;
-	Wed, 23 Apr 2025 15:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D920D4F8;
+	Wed, 23 Apr 2025 15:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422257; cv=none; b=Hi9HAJJ1uRh0bkvpR0+Qsc5gNYU4mEsLdTE0rVZHOcwhUWAOMzYGiTU5y+EvMntCBhrc9EOWPvQGAlz8Rzu+75JCKI1BQTzx6A/xfkGi3T9sYfgXqQqzYZEYjFxSYcYE0yVXmWxBHDwxemGSOSbBXOu5Ih3LwPAY1hErIjNanzc=
+	t=1745422259; cv=none; b=sFBLFail8DNLWcky1O64NgRDifh2mKaDdjnat+QBr7zuxmjvA0SFgHx+KP8FGgIeap1AUFzKry9bHrji7Wo/vhiLEgOFwEfsJkwobvm0JYtoGUDJK+m+9UtoUQu+HTNjkSlWH4bPfcrORLqNB3VmfkByX7ZXoAKRnA71/6zIIwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422257; c=relaxed/simple;
-	bh=I2qeRkXRgGTWnyjjoemxW0vw1um3yWbQcDX/JX6SZuM=;
+	s=arc-20240116; t=1745422259; c=relaxed/simple;
+	bh=XGsmt1r0WH9G2vdwFK7D/br0g9K4Lw1kezZM7kti14A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CspsYq8exd8cwb18en1AUfK91O1UFA/vGr/1OeXEy3dKs1tAFB2KZG/infc14B9YoREX3eIEx4ud6YOR5oEO+4Eo2W4j8BXUPQtM7wkoSWiM1HCBdCzUdAJUEwVSiLj7e/m3PK7msySnaWpG1wseRnHgXyBHAxkfvH1CCKJk9is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgpUIJQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ux/jGVGqBhaRsTbuE7UlfTLI3uVKae0siw07s7r07FhV2jerjfEwRdiCUORnFJd8+hd/6cFSrrHwhb6C5D2J09rT52M4Oi1U28druOhGDzlkrxL/sfd6kR6ec7C3dBJINNZ8Ztl5cQJxXlu6Moqf41iPZPItAn8K4t9kaJDHuWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wpQChQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgpUIJQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB5CC4CEE3;
-	Wed, 23 Apr 2025 15:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wpQChQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFEAC4CEE2;
+	Wed, 23 Apr 2025 15:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422256;
-	bh=I2qeRkXRgGTWnyjjoemxW0vw1um3yWbQcDX/JX6SZuM=;
+	s=korg; t=1745422259;
+	bh=XGsmt1r0WH9G2vdwFK7D/br0g9K4Lw1kezZM7kti14A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgpUIJQidVm8ReRWVFTen6SCDc2dGAps9kqklHb/yKTPqkSwejowAVs1bp2Y+AMQL
-	 7nJdJ3KcLCKhDx++1TaWJPwn+LGaRmAZcZzDhhrJRpFYG9X4ok3Z4plMJBpzRqn9Ad
-	 hWSm0t51EcQZF4Xw93UgqnhuR+zaUak21cJj9Wrs=
+	b=1wpQChQMPkr9fodUpoAnZm/5J0y5mlbDZxRI+r8a2V8iBKqbozcSmBivX91qH4pUv
+	 5al36j7JJoFOGxP6p/Oz9t/+lhipBxC5s8TsH1o7oh152ERwaYQz28CxRktUfZ2GrR
+	 4pt8ZL93OcDbEsQvid+XeClkmvLFFo7r1CBASVGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Davydov <davydov-max@yandex-team.ru>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.1 265/291] x86/split_lock: Fix the delayed detection logic
-Date: Wed, 23 Apr 2025 16:44:14 +0200
-Message-ID: <20250423142635.253329987@linuxfoundation.org>
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 309/393] ftrace: fix incorrect hash size in register_ftrace_direct()
+Date: Wed, 23 Apr 2025 16:43:25 +0200
+Message-ID: <20250423142656.094705862@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,160 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maksim Davydov <davydov-max@yandex-team.ru>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-commit c929d08df8bee855528b9d15b853c892c54e1eee upstream.
+[ Upstream commit 92f1d3b40179b15630d72e2c6e4e25a899b67ba9 ]
 
-If the warning mode with disabled mitigation mode is used, then on each
-CPU where the split lock occurred detection will be disabled in order to
-make progress and delayed work will be scheduled, which then will enable
-detection back.
+The maximum of the ftrace hash bits is made fls(32) in
+register_ftrace_direct(), which seems illogical. So, we fix it by making
+the max hash bits FTRACE_HASH_MAX_BITS instead.
 
-Now it turns out that all CPUs use one global delayed work structure.
-This leads to the fact that if a split lock occurs on several CPUs
-at the same time (within 2 jiffies), only one CPU will schedule delayed
-work, but the rest will not.
-
-The return value of schedule_delayed_work_on() would have shown this,
-but it is not checked in the code.
-
-A diagram that can help to understand the bug reproduction:
-
- - sld_update_msr() enables/disables SLD on both CPUs on the same core
-
- - schedule_delayed_work_on() internally checks WORK_STRUCT_PENDING_BIT.
-   If a work has the 'pending' status, then schedule_delayed_work_on()
-   will return an error code and, most importantly, the work will not
-   be placed in the workqueue.
-
-Let's say we have a multicore system on which split_lock_mitigate=0 and
-a multithreaded application is running that calls splitlock in multiple
-threads. Due to the fact that sld_update_msr() affects the entire core
-(both CPUs), we will consider 2 CPUs from different cores. Let the 2
-threads of this application schedule to CPU0 (core 0) and to CPU 2
-(core 1), then:
-
-|                                 ||                                   |
-|             CPU 0 (core 0)      ||          CPU 2 (core 1)           |
-|_________________________________||___________________________________|
-|                                 ||                                   |
-| 1) SPLIT LOCK occured           ||                                   |
-|                                 ||                                   |
-| 2) split_lock_warn()            ||                                   |
-|                                 ||                                   |
-| 3) sysctl_sld_mitigate == 0     ||                                   |
-|    (work = &sl_reenable)        ||                                   |
-|                                 ||                                   |
-| 4) schedule_delayed_work_on()   ||                                   |
-|    (reenable will be called     ||                                   |
-|     after 2 jiffies on CPU 0)   ||                                   |
-|                                 ||                                   |
-| 5) disable SLD for core 0       ||                                   |
-|                                 ||                                   |
-|    -------------------------    ||                                   |
-|                                 ||                                   |
-|                                 || 6) SPLIT LOCK occured             |
-|                                 ||                                   |
-|                                 || 7) split_lock_warn()              |
-|                                 ||                                   |
-|                                 || 8) sysctl_sld_mitigate == 0       |
-|                                 ||    (work = &sl_reenable,          |
-|                                 ||     the same address as in 3) )   |
-|                                 ||                                   |
-|            2 jiffies            || 9) schedule_delayed_work_on()     |
-|                                 ||    fials because the work is in   |
-|                                 ||    the pending state since 4).    |
-|                                 ||    The work wasn't placed to the  |
-|                                 ||    workqueue. reenable won't be   |
-|                                 ||    called on CPU 2                |
-|                                 ||                                   |
-|                                 || 10) disable SLD for core 0        |
-|                                 ||                                   |
-|                                 ||     From now on SLD will          |
-|                                 ||     never be reenabled on core 1  |
-|                                 ||                                   |
-|    -------------------------    ||                                   |
-|                                 ||                                   |
-|    11) enable SLD for core 0 by ||                                   |
-|        __split_lock_reenable    ||                                   |
-|                                 ||                                   |
-
-If the application threads can be scheduled to all processor cores,
-then over time there will be only one core left, on which SLD will be
-enabled and split lock will be able to be detected; and on all other
-cores SLD will be disabled all the time.
-
-Most likely, this bug has not been noticed for so long because
-sysctl_sld_mitigate default value is 1, and in this case a semaphore
-is used that does not allow 2 different cores to have SLD disabled at
-the same time, that is, strictly only one work is placed in the
-workqueue.
-
-In order to fix the warning mode with disabled mitigation mode,
-delayed work has to be per-CPU. Implement it.
-
-Fixes: 727209376f49 ("x86/split_lock: Add sysctl to control the misery mode")
-Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20250115131704.132609-1-davydov-max@yandex-team.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20250413014444.36724-1-dongml2@chinatelecom.cn
+Fixes: d05cb470663a ("ftrace: Fix modification of direct_function hash while in use")
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/intel.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ kernel/trace/ftrace.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -1204,7 +1204,13 @@ static void __split_lock_reenable(struct
- {
- 	sld_update_msr(true);
- }
--static DECLARE_DELAYED_WORK(sl_reenable, __split_lock_reenable);
-+/*
-+ * In order for each CPU to schedule its delayed work independently of the
-+ * others, delayed work struct must be per-CPU. This is not required when
-+ * sysctl_sld_mitigate is enabled because of the semaphore that limits
-+ * the number of simultaneously scheduled delayed works to 1.
-+ */
-+static DEFINE_PER_CPU(struct delayed_work, sl_reenable);
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 580ceb75f8c38..650493ed76cd4 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -5420,9 +5420,10 @@ int register_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
  
- /*
-  * If a CPU goes offline with pending delayed work to re-enable split lock
-@@ -1225,7 +1231,7 @@ static int splitlock_cpu_offline(unsigne
+ 	/* Make a copy hash to place the new and the old entries in */
+ 	size = hash->count + direct_functions->count;
+-	if (size > 32)
+-		size = 32;
+-	new_hash = alloc_ftrace_hash(fls(size));
++	size = fls(size);
++	if (size > FTRACE_HASH_MAX_BITS)
++		size = FTRACE_HASH_MAX_BITS;
++	new_hash = alloc_ftrace_hash(size);
+ 	if (!new_hash)
+ 		goto out_unlock;
  
- static void split_lock_warn(unsigned long ip)
- {
--	struct delayed_work *work;
-+	struct delayed_work *work = NULL;
- 	int cpu;
- 
- 	if (!current->reported_split_lock)
-@@ -1247,11 +1253,17 @@ static void split_lock_warn(unsigned lon
- 		if (down_interruptible(&buslock_sem) == -EINTR)
- 			return;
- 		work = &sl_reenable_unlock;
--	} else {
--		work = &sl_reenable;
- 	}
- 
- 	cpu = get_cpu();
-+
-+	if (!work) {
-+		work = this_cpu_ptr(&sl_reenable);
-+		/* Deferred initialization of per-CPU struct */
-+		if (!work->work.func)
-+			INIT_DELAYED_WORK(work, __split_lock_reenable);
-+	}
-+
- 	schedule_delayed_work_on(cpu, work, 2);
- 
- 	/* Disable split lock detection on this CPU to make progress */
+-- 
+2.39.5
+
 
 
