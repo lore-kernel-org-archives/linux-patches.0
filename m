@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D41279906;
-	Wed, 23 Apr 2025 15:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470C9279906;
+	Wed, 23 Apr 2025 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422128; cv=none; b=f1eB1ggh0/pDb41gHs5CyZRvOuqOpYx23FTqdAKY82NAe1YCthAfCCGfDJr5vXrb5V/4I1RJl1HddBV/YChBpajCfAAWDcwdkXA9/nOWZOkLCoDRKUDBu723nzc5TRybA7AYX2ZNh/T7Ni/D4g4mkSN/z5Y5riphtEJ+1JJWKRA=
+	t=1745422131; cv=none; b=Vc3SqtiDo2iKnI4THWyhJLwtkirM1LWbcppalo2sa4ZXesWGvtl1jWsSvb0YxNVEGuGwpo2tkbXiol0BaNy0+nmm7tvXDBffPLdeg1ACg3qJQLqVVB3jaVwjP5mlIKgHp0sxC2mfFKVgKAtY+0q96TnRpWbFe9SynoD0sNdF7No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422128; c=relaxed/simple;
-	bh=ePAOj0PPFgq2hUQiMLGULG5LSAd8aGOSrDnonvEIPZY=;
+	s=arc-20240116; t=1745422131; c=relaxed/simple;
+	bh=SVbWkhcbnOKIGR/RCMItJDWvmz0RnfPLzBwO6X2DhSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7Nv1WFcBu4Xn8/5iF9rycoC97aPSzCuJs5A7pMJgy5dTliZCQRmQc9ChOJBieeWTp7hwBLekAcMs5nF6s2AKLn0C0egjnuymVDx6t7Op6t3oSq4LQiyTXB0NE/VTlyiBBu0gXt4lT1d9djXC4LHreMT8F0POQpkc0KNrZj+/Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ie8zzkCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDK6jfs0rFLtv2JVhBXcXCdj17FFO0zFKpIasrGNHkbaN6cUMc+9G4OjcW+9zq2tzW96Z5/tif+9tLVOrGKFQPRvsTdb/x0c489iIob7JUqjo4oZjh3zcXCP/6V80wLYaclSbcBhGmO2Gr2BlYQ1mTxeQ2wnjcNJE+SgD579nUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vacl8u09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ie8zzkCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4D9C4CEE2;
-	Wed, 23 Apr 2025 15:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vacl8u09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75336C4CEE2;
+	Wed, 23 Apr 2025 15:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422128;
-	bh=ePAOj0PPFgq2hUQiMLGULG5LSAd8aGOSrDnonvEIPZY=;
+	s=korg; t=1745422130;
+	bh=SVbWkhcbnOKIGR/RCMItJDWvmz0RnfPLzBwO6X2DhSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ie8zzkCwfVb5Vpf3ZqH/iFB3rgh3wRF/Tf8FFn1a+n8kw1Ozze5rCTKCoFrTRcfaw
-	 GCCAaRwwgp96mKqrTnCXLyeHMetXprMwfxQpWHoYLnF0lcYuAerd9rudIIBE94slig
-	 Rl4aF1/WI5jGATHYj8cXg6MH56bwRLzd3ElkiY9g=
+	b=Vacl8u09ATrEONWWernQhb7HPp7TVDgheEuCXmp7Fg/hxgO/r/EP85RXVtyWPMucT
+	 AoQvSmOqwbHvdUJrzCK6wUa9rMJtXCpaaeKGs6ivEqNCIG5UC8hs3erfuvjGrW+ETc
+	 sQHRbO1ysoqwGfins5xyOzbRxe9dZEDAV6Y/LVn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/393] net: bridge: switchdev: do not notify new brentries as changed
-Date: Wed, 23 Apr 2025 16:42:59 +0200
-Message-ID: <20250423142655.034475454@linuxfoundation.org>
+	stable@kernel.org,
+	Rolf Eike Beer <eb@emlix.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Subject: [PATCH 6.1 242/291] drm/sti: remove duplicate object names
+Date: Wed, 23 Apr 2025 16:43:51 +0200
+Message-ID: <20250423142634.308079982@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,96 +48,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Rolf Eike Beer <eb@emlix.com>
 
-[ Upstream commit eb25de13bd9cf025413a04f25e715d0e99847e30 ]
+commit 7fb6afa9125fc111478615e24231943c4f76cc2e upstream.
 
-When adding a bridge vlan that is pvid or untagged after the vlan has
-already been added to any other switchdev backed port, the vlan change
-will be propagated as changed, since the flags change.
+When merging 2 drivers common object files were not deduplicated.
 
-This causes the vlan to not be added to the hardware for DSA switches,
-since the DSA handler ignores any vlans for the CPU or DSA ports that
-are changed.
-
-E.g. the following order of operations would work:
-
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
-$ bridge vlan add dev lan1 vid 1 pvid untagged
-
-but this order would break:
-
-$ ip link add swbridge type bridge vlan_filtering 1 vlan_default_pvid 0
-$ ip link set lan1 master swbridge
-$ bridge vlan add dev lan1 vid 1 pvid untagged
-$ bridge vlan add dev swbridge vid 1 pvid untagged self
-
-Additionally, the vlan on the bridge itself would become undeletable:
-
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 PVID Egress Untagged
-$ bridge vlan del dev swbridge vid 1 self
-$ bridge vlan
-port              vlan-id
-lan1              1 PVID Egress Untagged
-swbridge          1 Egress Untagged
-
-since the vlan was never added to DSA's vlan list, so deleting it will
-cause an error, causing the bridge code to not remove it.
-
-Fix this by checking if flags changed only for vlans that are already
-brentry and pass changed as false for those that become brentries, as
-these are a new vlan (member) from the switchdev point of view.
-
-Since *changed is set to true for becomes_brentry = true regardless of
-would_change's value, this will not change any rtnetlink notification
-delivery, just the value passed on to switchdev in vlan->changed.
-
-Fixes: 8d23a54f5bee ("net: bridge: switchdev: differentiate new VLANs from changed ones")
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250414200020.192715-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dcec16efd677 ("drm/sti: Build monolithic driver")
+Cc: stable@kernel.org
+Signed-off-by: Rolf Eike Beer <eb@emlix.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/1920148.tdWV9SEqCh@devpool47.emlix.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_vlan.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/sti/Makefile |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index be714b4d7b430..a1c22eab71ffe 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -715,8 +715,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 				u16 flags, bool *changed,
- 				struct netlink_ext_ack *extack)
- {
--	bool would_change = __vlan_flags_would_change(vlan, flags);
- 	bool becomes_brentry = false;
-+	bool would_change = false;
- 	int err;
- 
- 	if (!br_vlan_is_brentry(vlan)) {
-@@ -725,6 +725,8 @@ static int br_vlan_add_existing(struct net_bridge *br,
- 			return -EINVAL;
- 
- 		becomes_brentry = true;
-+	} else {
-+		would_change = __vlan_flags_would_change(vlan, flags);
- 	}
- 
- 	/* Master VLANs that aren't brentries weren't notified before,
--- 
-2.39.5
-
+--- a/drivers/gpu/drm/sti/Makefile
++++ b/drivers/gpu/drm/sti/Makefile
+@@ -7,8 +7,6 @@ sti-drm-y := \
+ 	sti_compositor.o \
+ 	sti_crtc.o \
+ 	sti_plane.o \
+-	sti_crtc.o \
+-	sti_plane.o \
+ 	sti_hdmi.o \
+ 	sti_hdmi_tx3g4c28phy.o \
+ 	sti_dvo.o \
 
 
