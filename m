@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEC62A1B2;
-	Wed, 23 Apr 2025 15:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784402A1B2;
+	Wed, 23 Apr 2025 15:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421197; cv=none; b=In/kvsUqI/SMiqkWGRCiLZxVPnCY9YzVz0dwR7/KTcDGg5DiwB1FYBk+LfQNLa62cRMhLadHehN2L8TJ2BCjXwRZyt4Uql2rUPafTANS28wjY6AuIZsQiDgUbq4JxUUF1gwu7jRoCSZHoqWlXqHyumDQVLS6auA+saUBtGaG3M8=
+	t=1745421199; cv=none; b=V0MnAWE2wCo3YipVE/kWtF+dol0awHMriQ5hNT7YeNnEL+K9W4ZbnQ/WmIJO/oF0VIlGMN7iVTZNBtdLOflpikwUzN4kuzEXzv4aMJGzltdLi/rrKImTD96GAbhYQ8bqhCimlA7bBwGLzwceLdisSvES/HXsUiwuTmWyg2bunYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421197; c=relaxed/simple;
-	bh=zpl1MTEjAxr1QblBt2iMbMP/+DEHV6fDZbMuLeUvoMA=;
+	s=arc-20240116; t=1745421199; c=relaxed/simple;
+	bh=WgQpmuXTsYEsIFFQrIwxgJlZHGovXZdG+e3J29rhGQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPNsAJ9uI3xqzO/hyzCc6Nryz/UNC52f5Y3o2EmVJSHe66jXIWzuXoXv4pAJU7bw1GmgmA4uYHJ4D1J+PYrQfMPrsdcoZsJ83nZDPMm+4ASbeJHkDRbGeW9hPkfxMF2MY92BuYqtlG7HcO4SIJ2V+Spjy2uDuThSVCX7Q4axQfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnrOH62l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t59C2heYfatemuzgkP4ONtUFhKkhOFIbV+QdixN14tkhjMp308Mj4b5b07yCcjuZEeL9Gtj0wUNwvaEFMg6cSoDX4+LKSamGipn2w8faLl5Uh8kx5FkSm6FtG4zh46+VOpiQBIwq8MeMSZXXfncfdnZeJC9T1wi7HOGU9xPme9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwWH4flK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnrOH62l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4F9C4CEE2;
-	Wed, 23 Apr 2025 15:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwWH4flK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0EAC4CEE2;
+	Wed, 23 Apr 2025 15:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421194;
-	bh=zpl1MTEjAxr1QblBt2iMbMP/+DEHV6fDZbMuLeUvoMA=;
+	s=korg; t=1745421199;
+	bh=WgQpmuXTsYEsIFFQrIwxgJlZHGovXZdG+e3J29rhGQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnrOH62lfs0KuFhnEPFomeOydPa655U3de/FPIR6g1CwZ0Sdqd/XCHCCNPC/+J/sP
-	 h/XjkzAxv5efHkdt7HKnAbY/qAhPL5cf77c7dymLp9PWbHJQ27ldBHla4ed3B6oBzI
-	 ezOj4FwEEK1lFu0CDVfJgxEnY4f2cZjp0C7PTcgQ=
+	b=fwWH4flKJY5SjU/xUXlgHyW/BL479kpB5Tz2vesWjVmIYAf8fuFZG6HLgsNvGs6Tb
+	 uVq3RSbdTAmtZOJI8cOIiwK7mwzsn3SOfVNSXN8NAMI2p5KcKcDZEMJYIDO80LE9zI
+	 u/lTXeFgcpioswHLA+u59xOrwS0RCaOtB9VX1zoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	Ryan Lahfa <ryan@lahfa.xyz>
-Subject: [PATCH 6.14 160/241] scsi: megaraid_sas: Block zero-length ATA VPD inquiry
-Date: Wed, 23 Apr 2025 16:43:44 +0200
-Message-ID: <20250423142627.075472601@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.14 147/241] ksmbd: fix the warning from __kernel_write_iter
+Date: Wed, 23 Apr 2025 16:43:31 +0200
+Message-ID: <20250423142626.557274213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
 References: <20250423142620.525425242@linuxfoundation.org>
@@ -51,69 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit aad9945623ab4029ae7789609fb6166c97976c62 upstream.
+commit b37f2f332b40ad1c27f18682a495850f2f04db0a upstream.
 
-A firmware bug was observed where ATA VPD inquiry commands with a
-zero-length data payload were not handled and failed with a non-standard
-status code of 0xf0.
+[ 2110.972290] ------------[ cut here ]------------
+[ 2110.972301] WARNING: CPU: 3 PID: 735 at fs/read_write.c:599 __kernel_write_iter+0x21b/0x280
 
-Avoid sending ATA VPD inquiry commands without data payload by setting
-the device no_vpd_size flag to 1. In addition, if the firmware returns a
-status code of 0xf0, set scsi_cmnd->result to CHECK_CONDITION to
-facilitate proper error handling.
+This patch doesn't allow writing to directory.
 
-Suggested-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250402193735.5098-1-chandrakanth.patil@broadcom.com
-Tested-by: Ryan Lahfa <ryan@lahfa.xyz>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c   |    9 +++++++--
- drivers/scsi/megaraid/megaraid_sas_fusion.c |    5 ++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ fs/smb/server/vfs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -2103,6 +2103,9 @@ static int megasas_sdev_configure(struct
- 	/* This sdev property may change post OCR */
- 	megasas_set_dynamic_target_properties(sdev, lim, is_target_prop);
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -496,7 +496,8 @@ int ksmbd_vfs_write(struct ksmbd_work *w
+ 	int err = 0;
  
-+	if (!MEGASAS_IS_LOGICAL(sdev))
-+		sdev->no_vpd_size = 1;
-+
- 	mutex_unlock(&instance->reset_mutex);
- 
- 	return 0;
-@@ -3662,8 +3665,10 @@ megasas_complete_cmd(struct megasas_inst
- 
- 		case MFI_STAT_SCSI_IO_FAILED:
- 		case MFI_STAT_LD_INIT_IN_PROGRESS:
--			cmd->scmd->result =
--			    (DID_ERROR << 16) | hdr->scsi_status;
-+			if (hdr->scsi_status == 0xf0)
-+				cmd->scmd->result = (DID_ERROR << 16) | SAM_STAT_CHECK_CONDITION;
-+			else
-+				cmd->scmd->result = (DID_ERROR << 16) | hdr->scsi_status;
- 			break;
- 
- 		case MFI_STAT_SCSI_DONE_WITH_ERROR:
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -2043,7 +2043,10 @@ map_cmd_status(struct fusion_context *fu
- 
- 	case MFI_STAT_SCSI_IO_FAILED:
- 	case MFI_STAT_LD_INIT_IN_PROGRESS:
--		scmd->result = (DID_ERROR << 16) | ext_status;
-+		if (ext_status == 0xf0)
-+			scmd->result = (DID_ERROR << 16) | SAM_STAT_CHECK_CONDITION;
-+		else
-+			scmd->result = (DID_ERROR << 16) | ext_status;
- 		break;
- 
- 	case MFI_STAT_SCSI_DONE_WITH_ERROR:
+ 	if (work->conn->connection_type) {
+-		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE))) {
++		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE)) ||
++		    S_ISDIR(file_inode(fp->filp)->i_mode)) {
+ 			pr_err("no right to write(%pD)\n", fp->filp);
+ 			err = -EACCES;
+ 			goto out;
 
 
