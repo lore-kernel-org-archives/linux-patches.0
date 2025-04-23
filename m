@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DFA2367A0;
-	Wed, 23 Apr 2025 15:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB482367A0;
+	Wed, 23 Apr 2025 15:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421338; cv=none; b=McSnNEvij+ywo03LkFGsYn4O/nFjOaSAAMMsyq7wDeIIwejtMsglJ5NssPmRBRVYtK9d0tNAoUyyVcpKzSfLq2O0kW0cWpUQ8hteeL6E+JC9ZmNfuAWzV+Vd2yfQOXTGeMGzKhnwFDZNhCWJSUP9u7sTfdd+sPZ5ryXvW7kIuPc=
+	t=1745421340; cv=none; b=BHZdcxNIn847aCih0csB7GCrPraJaOng3bQL/yQs1fqMUQEOWjqjefuliMHlIiqcjruHEtDP/fMXy009eJNEShz4ugMWp9JI8dbZ1cjgyY+NmS/K32Fi8GUiMzbzFinnPw4vGOYdlNbFCj4+65UvYZuWt8QKkFnHM5hidZvpycc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421338; c=relaxed/simple;
-	bh=pf0FhH6ltE9CPEMP55zCgwfGPHQ7Qgx6SqVSTt/YbCg=;
+	s=arc-20240116; t=1745421340; c=relaxed/simple;
+	bh=q8nOMnX+nLjo60WLDvL1NOPYuVxpFI1hCgQl/f647JY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rg5BcuvKg08IjRXTkdtmCSqXIzAVn7dlSVxTyEhUtJfPR1J9k61Xh7fK4pN21lgz6GNm38Mhvei8pbnM+UTWN4GgeVTKyiRaGyhIRF2CbQftyx4+K98unhN0HiFitlskgpJybu9fawofZAqiP0HX7BgFLoAyCaXBO5r+qXdjY/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0O7jA78J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxMSkkIdIcybeCLksw3nD4+IAiDohEMYsMy4saMG4ho/2Tkuq7jCv76Wgtsdpb7K/EsOqtATicPzbJAvAliJUmEulKcjzW2YbQwQOAvUGq/mwpNMBTx7KbF4RAX4hg7dmOoPDiKt0xrjojdWwOYM4u7SlrTW6dgZWRNFgMfHSWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/8joUE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0O7jA78J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819A7C4CEE2;
-	Wed, 23 Apr 2025 15:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/8joUE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D85C4CEE2;
+	Wed, 23 Apr 2025 15:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421337;
-	bh=pf0FhH6ltE9CPEMP55zCgwfGPHQ7Qgx6SqVSTt/YbCg=;
+	s=korg; t=1745421340;
+	bh=q8nOMnX+nLjo60WLDvL1NOPYuVxpFI1hCgQl/f647JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0O7jA78Jn68UbtRjsgLBrGOSbZuWC9Obpz+f3XGeX1YshKYyVCH9o96NN7v5bE2kF
-	 BwszlVARm0R2OnumNdSF1Q7qIxSOgg+Pq98i98rnfNwWISFMmXaWWtnnAqCVVaVuPj
-	 zoH7NsvmALMwz4ytgGZ1SbRJUyM4eggGhp3novlo=
+	b=N/8joUE6eh79TA+GD5RxK4kiBq92c1C8nsT8lqbH9vQoDoyoQ0Cba8GBLoMCc+JCy
+	 KhlJJ+SXohQnWFgfRkov3vOK9LC1cu7wXC+WRqb/QS9Qgi7Fr3We7ushuNUVu/MDic
+	 +chvW80AC9Ujw62Fbj0XPXENEo4i7ACtHr3GP1k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YH Huang <yh.huang@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.1 128/291] arm64: dts: mediatek: mt8173: Fix disp-pwm compatible string
-Date: Wed, 23 Apr 2025 16:41:57 +0200
-Message-ID: <20250423142629.629716917@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 170/393] leds: rgb: leds-qcom-lpg: Fix pwm resolution max for Hi-Res PWMs
+Date: Wed, 23 Apr 2025 16:41:06 +0200
+Message-ID: <20250423142650.391758248@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 46ad36002088eff8fc5cae200aa42ae9f9310ddd upstream.
+commit b7881eacc07fdf50be3f33c662997541bb59366d upstream.
 
-The MT8173 disp-pwm device should have only one compatible string, based
-on the following DT validation error:
+Ideally, the requested duty cycle should never translate to a PWM
+value higher than the selected resolution (PWM size), but currently the
+best matched period is never reported back to the PWM consumer, so the
+consumer will still be using the requested period which is higher than
+the best matched one. This will result in PWM consumer requesting
+duty cycle values higher than the allowed PWM value.
 
-    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401e000: compatible: 'oneOf' conditional failed, one must be fixed:
-	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' was expected
-	    'mediatek,mt8183-disp-pwm' was expected
-	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
-    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401f000: compatible: 'oneOf' conditional failed, one must be fixed:
-	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
-	    'mediatek,mt8173-disp-pwm' was expected
-	    'mediatek,mt8183-disp-pwm' was expected
-	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
+For example, a consumer might request a period of 5ms while the best
+(closest) period the PWM hardware will do is 4.26ms. For this best
+matched resolution, if the selected resolution is 8-bit wide, when
+the consumer asks for a duty cycle of 5ms, the PWM value will be 300,
+which is outside of what the resolution allows. This will happen with
+all possible resolutions when selected.
 
-Drop the extra "mediatek,mt6595-disp-pwm" compatible string.
+Since for these Hi-Res PWMs, the current implementation is capping the PWM
+value at a 15-bit resolution, even when lower resolutions are selected,
+the value will be wrapped around by the HW internal logic to the selected
+resolution.
 
-Fixes: 61aee9342514 ("arm64: dts: mt8173: add MT8173 display PWM driver support node")
-Cc: YH Huang <yh.huang@mediatek.com>
-Cc: stable@vger.kernel.org # v4.5+
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250108083424.2732375-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fix the issue by capping the PWM value to the maximum value allowed by
+the selected resolution.
+
+Cc: stable@vger.kernel.org    # 6.4
+Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Sebastian Reichel <sre@kernel.org>
+Link: https://lore.kernel.org/r/20250305-leds-qcom-lpg-fix-max-pwm-on-hi-res-v4-2-bfe124a53a9f@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173.dtsi |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/leds/rgb/leds-qcom-lpg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-@@ -1247,8 +1247,7 @@
- 		};
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -379,7 +379,7 @@ static void lpg_calc_duty(struct lpg_cha
+ 	unsigned int clk_rate;
  
- 		pwm0: pwm@1401e000 {
--			compatible = "mediatek,mt8173-disp-pwm",
--				     "mediatek,mt6595-disp-pwm";
-+			compatible = "mediatek,mt8173-disp-pwm";
- 			reg = <0 0x1401e000 0 0x1000>;
- 			#pwm-cells = <2>;
- 			clocks = <&mmsys CLK_MM_DISP_PWM026M>,
-@@ -1258,8 +1257,7 @@
- 		};
- 
- 		pwm1: pwm@1401f000 {
--			compatible = "mediatek,mt8173-disp-pwm",
--				     "mediatek,mt6595-disp-pwm";
-+			compatible = "mediatek,mt8173-disp-pwm";
- 			reg = <0 0x1401f000 0 0x1000>;
- 			#pwm-cells = <2>;
- 			clocks = <&mmsys CLK_MM_DISP_PWM126M>,
+ 	if (chan->subtype == LPG_SUBTYPE_HI_RES_PWM) {
+-		max = LPG_RESOLUTION_15BIT - 1;
++		max = BIT(lpg_pwm_resolution_hi_res[chan->pwm_resolution_sel]) - 1;
+ 		clk_rate = lpg_clk_rates_hi_res[chan->clk_sel];
+ 	} else {
+ 		max = LPG_RESOLUTION_9BIT - 1;
 
 
