@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E3619DF4C;
-	Wed, 23 Apr 2025 14:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F7D1A9B39;
+	Wed, 23 Apr 2025 14:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419805; cv=none; b=iOmRF5ADeZBG4bSobmNX9oopLmm47o11xr68ipbK/7M3gZEeupeENN+HvUbr2ztVTUt29b3DjZf/iPMN7u4C36yn+a0lk4vHiQelnauM7okQx34mHHb/Nahkg9E4OZYk1af65iGu37d5vYCQ+Psut9KkJ1DE4agfKU1lydOPc90=
+	t=1745419808; cv=none; b=q5zi2Qk56hvu2SeQU46OBf8JkM6LT2T5IMWLfbhCJgzwEpezrr//ZDT6OVKA6o6cioXT4XcVxiUgPgAPT/LYvtHPtMvhQxMlJwoBKQj/2kR92NmFWMkHcEixDd8wxLiJbRvP2Lsvin8jCLRPxgPq444vknsFa1lxcGNbFRg2jYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419805; c=relaxed/simple;
-	bh=CYaPmFvQow0CoaMPamHl8snE8SLDWrZlAUv1hvKtbFU=;
+	s=arc-20240116; t=1745419808; c=relaxed/simple;
+	bh=29fa3c1VLH6neIQz6lqUSOyLB4IYp7eX6XgjmPhxoM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YbrU7grD3y7NVHuYDJRg4IL3fz9q1e1AkdQ4eHhWyCDl9W6TU1wd38YlGZDDoGc5nRG44HMB8pvwV9LQLliLYZN6rdJhqsk5b40b4yzCtLlZA+3eMqZHCGDKIdOZoeD0Dquq6WfjmqwZdTM/u+kQCYGLsJpn6xxUUbnlluuns9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQe2q5Rz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tS9zfKbQm3M9SiCVjSflFDtbv2THdy3F8e6vXIsck78/fYlCUG74ftRLMOULHnF8/CwWyyfoyBKf1vLWgkQOrdbCAJxyeVl+pvphkS2MEOlCmELcDwDecDfrBrxsTtg+QdZEue/oyWoYH5rnOiv/m8OGNB4kJrRzGpMkKOeU1Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCWhLwev; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQe2q5Rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3D3C4CEE2;
-	Wed, 23 Apr 2025 14:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCWhLwev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5CCC4CEE2;
+	Wed, 23 Apr 2025 14:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419805;
-	bh=CYaPmFvQow0CoaMPamHl8snE8SLDWrZlAUv1hvKtbFU=;
+	s=korg; t=1745419808;
+	bh=29fa3c1VLH6neIQz6lqUSOyLB4IYp7eX6XgjmPhxoM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQe2q5RzRBeAdXjHDkgEa/eBh4gJfmZKA7PjTYwi2U2J8G1fQP0pmWHcsmFUfXqxA
-	 qY8lg1ejikQnG/kwt4CpUBi2p2AHQbOISEhUr/xY4J02GvVVqFi7Y2S/7qoxOV1H0X
-	 alH80/uDGmmR/512+koQzGBEIwORd8sdQaETt2D0=
+	b=MCWhLwevbta+fMc7KVdTHVC8WF5HxGZS4iBqP3tz7hIcHmc/AI44985JxIYa8nuCg
+	 zbiKZ6tCCBlwZ5byNzkKADUb5O6toGe3JqpG1W9TdoxMJJEps7h5ojKuFEcad+ax4N
+	 /Rwv0h+UUNftPcgLKoh10z48BOkjxUiyAsJXWI2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Andi Shyti <andi.shyti@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Sk Anirban <sk.anirban@intel.com>,
+	Karthik Poosa <karthik.poosa@intel.com>,
+	Anshuman Gupta <anshuman.gupta@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/223] net: dsa: mv88e6xxx: fix -ENOENT when deleting VLANs and MST is unsupported
-Date: Wed, 23 Apr 2025 16:42:16 +0200
-Message-ID: <20250423142619.741905660@linuxfoundation.org>
+Subject: [PATCH 6.6 005/393] drm/i915: Disable RPG during live selftest
+Date: Wed, 23 Apr 2025 16:38:21 +0200
+Message-ID: <20250423142643.474695889@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +53,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Badal Nilawar <badal.nilawar@intel.com>
 
-[ Upstream commit ea08dfc35f83cfc73493c52f63ae4f2e29edfe8d ]
+[ Upstream commit 9d3d9776bd3bd9c32d460dfe6c3363134de578bc ]
 
-Russell King reports that on the ZII dev rev B, deleting a bridge VLAN
-from a user port fails with -ENOENT:
-https://lore.kernel.org/netdev/Z_lQXNP0s5-IiJzd@shell.armlinux.org.uk/
+The Forcewake timeout issue has been observed on Gen 12.0 and above.
+To address this, disable Render Power-Gating (RPG) during live self-tests
+for these generations. The temporary workaround 'drm/i915/mtl: do not
+enable render power-gating on MTL' disables RPG globally, which is
+unnecessary since the issues were only seen during self-tests.
 
-This comes from mv88e6xxx_port_vlan_leave() -> mv88e6xxx_mst_put(),
-which tries to find an MST entry in &chip->msts associated with the SID,
-but fails and returns -ENOENT as such.
+v2: take runtime pm wakeref
 
-But we know that this chip does not support MST at all, so that is not
-surprising. The question is why does the guard in mv88e6xxx_mst_put()
-not exit early:
-
-	if (!sid)
-		return 0;
-
-And the answer seems to be simple: the sid comes from vlan.sid which
-supposedly was previously populated by mv88e6xxx_vtu_get().
-But some chip->info->ops->vtu_getnext() implementations do not populate
-vlan.sid, for example see mv88e6185_g1_vtu_getnext(). In that case,
-later in mv88e6xxx_port_vlan_leave() we are using a garbage sid which is
-just residual stack memory.
-
-Testing for sid == 0 covers all cases of a non-bridge VLAN or a bridge
-VLAN mapped to the default MSTI. For some chips, SID 0 is valid and
-installed by mv88e6xxx_stu_setup(). A chip which does not support the
-STU would implicitly only support mapping all VLANs to the default MSTI,
-so although SID 0 is not valid, it would be sufficient, if we were to
-zero-initialize the vlan structure, to fix the bug, due to the
-coincidence that a test for vlan.sid == 0 already exists and leads to
-the same (correct) behavior.
-
-Another option which would be sufficient would be to add a test for
-mv88e6xxx_has_stu() inside mv88e6xxx_mst_put(), symmetric to the one
-which already exists in mv88e6xxx_mst_get(). But that placement means
-the caller will have to dereference vlan.sid, which means it will access
-uninitialized memory, which is not nice even if it ignores it later.
-
-So we end up making both modifications, in order to not rely just on the
-sid == 0 coincidence, but also to avoid having uninitialized structure
-fields which might get temporarily accessed.
-
-Fixes: acaf4d2e36b3 ("net: dsa: mv88e6xxx: MST Offloading")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250414212913.2955253-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/9413
+Fixes: 25e7976db86b ("drm/i915/mtl: do not enable render power-gating on MTL")
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Andi Shyti <andi.shyti@intel.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
+Signed-off-by: Sk Anirban <sk.anirban@intel.com>
+Reviewed-by: Karthik Poosa <karthik.poosa@intel.com>
+Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250310152821.2931678-1-sk.anirban@intel.com
+(cherry picked from commit 0a4ae87706c6d15d14648e428c3a76351f823e48)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_rc6.c           | 19 ++++---------------
+ .../gpu/drm/i915/selftests/i915_selftest.c    | 18 ++++++++++++++++++
+ 2 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index e20d9d62032e3..df1df60154121 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -1878,6 +1878,8 @@ static int mv88e6xxx_vtu_get(struct mv88e6xxx_chip *chip, u16 vid,
- 	if (!chip->info->ops->vtu_getnext)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index 483d557858816..3c7f4ed51bb05 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -117,21 +117,10 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
+ 			GEN6_RC_CTL_RC6_ENABLE |
+ 			GEN6_RC_CTL_EI_MODE(1);
  
-+	memset(entry, 0, sizeof(*entry));
-+
- 	entry->vid = vid ? vid - 1 : mv88e6xxx_max_vid(chip);
- 	entry->valid = false;
+-	/*
+-	 * BSpec 52698 - Render powergating must be off.
+-	 * FIXME BSpec is outdated, disabling powergating for MTL is just
+-	 * temporary wa and should be removed after fixing real cause
+-	 * of forcewake timeouts.
+-	 */
+-	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74)))
+-		pg_enable =
+-			GEN9_MEDIA_PG_ENABLE |
+-			GEN11_MEDIA_SAMPLER_PG_ENABLE;
+-	else
+-		pg_enable =
+-			GEN9_RENDER_PG_ENABLE |
+-			GEN9_MEDIA_PG_ENABLE |
+-			GEN11_MEDIA_SAMPLER_PG_ENABLE;
++	pg_enable =
++		GEN9_RENDER_PG_ENABLE |
++		GEN9_MEDIA_PG_ENABLE |
++		GEN11_MEDIA_SAMPLER_PG_ENABLE;
  
-@@ -2013,7 +2015,16 @@ static int mv88e6xxx_mst_put(struct mv88e6xxx_chip *chip, u8 sid)
- 	struct mv88e6xxx_mst *mst, *tmp;
+ 	if (GRAPHICS_VER(gt->i915) >= 12 && !IS_DG1(gt->i915)) {
+ 		for (i = 0; i < I915_MAX_VCS; i++)
+diff --git a/drivers/gpu/drm/i915/selftests/i915_selftest.c b/drivers/gpu/drm/i915/selftests/i915_selftest.c
+index fee76c1d2f450..889281819c5b1 100644
+--- a/drivers/gpu/drm/i915/selftests/i915_selftest.c
++++ b/drivers/gpu/drm/i915/selftests/i915_selftest.c
+@@ -23,7 +23,9 @@
+ 
+ #include <linux/random.h>
+ 
++#include "gt/intel_gt.h"
+ #include "gt/intel_gt_pm.h"
++#include "gt/intel_gt_regs.h"
+ #include "gt/uc/intel_gsc_fw.h"
+ 
+ #include "i915_driver.h"
+@@ -253,11 +255,27 @@ int i915_mock_selftests(void)
+ int i915_live_selftests(struct pci_dev *pdev)
+ {
+ 	struct drm_i915_private *i915 = pdev_to_i915(pdev);
++	struct intel_uncore *uncore = &i915->uncore;
  	int err;
++	u32 pg_enable;
++	intel_wakeref_t wakeref;
  
--	if (!sid)
-+	/* If the SID is zero, it is for a VLAN mapped to the default MSTI,
-+	 * and mv88e6xxx_stu_setup() made sure it is always present, and thus,
-+	 * should not be removed here.
-+	 *
-+	 * If the chip lacks STU support, numerically the "sid" variable will
-+	 * happen to also be zero, but we don't want to rely on that fact, so
-+	 * we explicitly test that first. In that case, there is also nothing
-+	 * to do here.
-+	 */
-+	if (!mv88e6xxx_has_stu(chip) || !sid)
+ 	if (!i915_selftest.live)
  		return 0;
  
- 	list_for_each_entry_safe(mst, tmp, &chip->msts, node) {
++	/*
++	 * FIXME Disable render powergating, this is temporary wa and should be removed
++	 * after fixing real cause of forcewake timeouts.
++	 */
++	with_intel_runtime_pm(uncore->rpm, wakeref) {
++		if (IS_GFX_GT_IP_RANGE(to_gt(i915), IP_VER(12, 00), IP_VER(12, 74))) {
++			pg_enable = intel_uncore_read(uncore, GEN9_PG_ENABLE);
++			if (pg_enable & GEN9_RENDER_PG_ENABLE)
++				intel_uncore_write_fw(uncore, GEN9_PG_ENABLE,
++						      pg_enable & ~GEN9_RENDER_PG_ENABLE);
++		}
++	}
++
+ 	__wait_gsc_proxy_completed(i915);
+ 	__wait_gsc_huc_load_completed(i915);
+ 
 -- 
 2.39.5
 
