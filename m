@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27C219DF4C;
-	Wed, 23 Apr 2025 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511511EFFB9;
+	Wed, 23 Apr 2025 14:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420131; cv=none; b=bwip+P9EJSn1G2HWeFSe3OSD6IxtdY7x5L09FMvTpUSfMn5ZQtukwRdhBO4w5Ebo1VKSYo7qvIfiC4/AhdazMy60hrGl3tPlyxk/7SbdWVfyhtQHE71JQcO8KP11j5lOlhulrnXTOLl3S9XVxzXt6diJSBj2tSZYRiUZpP3GbkQ=
+	t=1745420134; cv=none; b=TaDKlk3O3hi0kGA9fEHSWabxHIcRhWQLfc65i4ZjVWG4yGyDlFxMH1pw+cNeWJZvUQ77t+3HXa0W94Fl75LPx4Cpw7IsiiiS4U1u5gRDuxynp1NGp6fh3wx3KimPdiFqgUIDPMPfTIFC2TzpqmiXKBF+uHRTz1yxkqCRlYfSfGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420131; c=relaxed/simple;
-	bh=THxIKIkrWGatwRPyojoytLmNtZOvZRyENL+l6D/Vbug=;
+	s=arc-20240116; t=1745420134; c=relaxed/simple;
+	bh=cIkcF+ojwo4E26zzmlKasrbUXfAfvuMdMQ8vmFt1Fpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iPSD6lPbYFNbYk6Tunr5+SunX/n2r3m+LXutttppyMuWwmFaIiCbKSW8Cgv/iVNO12AhMbl8RBkbU6uH1T4xnx25zFlD66JeYMP+nWju1HN6210vRmOSuKkpaeecXWFD1bIuj7ZfAZXtAx29IzR/BQ2+/5qHNv0FIZhYeAhB1z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPDXQP1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=auewsykQ/WT7/qxKRInIs6MO2ndTFH6tFyZJuMuaUZLQ8YKIwSHD8+fSF/lMnZC4UiJJNpQGuYIpccTHKZ9vBM8FiA0vJU7kPwkE/ZeoEHf+F1kW0xUyvUby+Mhq6SdJ40e2tnc+4CMfHx3t7q2ZxsyiHU9VZI8tCMeHIAq5FKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7RFIEWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPDXQP1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34399C4CEE2;
-	Wed, 23 Apr 2025 14:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7RFIEWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0284C4CEE2;
+	Wed, 23 Apr 2025 14:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420131;
-	bh=THxIKIkrWGatwRPyojoytLmNtZOvZRyENL+l6D/Vbug=;
+	s=korg; t=1745420134;
+	bh=cIkcF+ojwo4E26zzmlKasrbUXfAfvuMdMQ8vmFt1Fpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JPDXQP1ZghZUXNEUfe3pq1+okZhRF2HNahwd+W7AAFVwbCFb0Rbsq9o9JJYvD+iRg
-	 jZEVTXZGJiNNQrpoz1TpGJ01EP92mxG6nuxwirWqhPUaRkbpzYsP0uRpVdPGfVzCk6
-	 WGLO1TkmiVo/1XhRvjLIiiTKYz/yfoZsWpedFNKk=
+	b=J7RFIEWKK/lIj4k5Cp1t4s+uOdDtIl2WckgdrBz49lpvYyvOFtFH/9m8GPegOjjZV
+	 rlUsJn3cV5oguw/SXqXRkdWnbMuv/Y3M+LRipiz+dMyayteP1hkqMR24V2HB0GJ6Rl
+	 TrrmLq8s+PN45D1QMW5iMIw5D8gP0DVGXAre2mU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Brian Gerst <brgerst@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/393] x86/ia32: Leave NULL selector values 0~3 unchanged
-Date: Wed, 23 Apr 2025 16:38:57 +0200
-Message-ID: <20250423142644.988193420@linuxfoundation.org>
+Subject: [PATCH 6.14 062/241] nvmet: pci-epf: clear CC and CSTS when disabling the controller
+Date: Wed, 23 Apr 2025 16:42:06 +0200
+Message-ID: <20250423142623.135812274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,143 +48,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit ad546940b5991d3e141238cd80a6d1894b767184 ]
+[ Upstream commit f8e01fa93f3e4fc255d240cfa0c045ce0b5c97ea ]
 
-The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
-and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
-GDT, selector values 0~3 all point to the NULL descriptor, thus values
-0, 1, 2 and 3 are all valid NULL selector values.
+When a host shuts down the controller when shutting down but does so
+without first disabling the controller, the enable bit remains set in
+the controller configuration register. When the host restarts and
+attempts to enable the controller again, the
+nvmet_pci_epf_poll_cc_work() function is unable to detect the change
+from 0 to 1 of the enable bit, and thus the controller is not enabled
+again, which result in a device scan timeout on the host. This problem
+also occurs if the host shuts down uncleanly or if the PCIe link goes
+down: as the CC.EN value is not reset, the controller is not enabled
+again when the host restarts.
 
-When a NULL selector value is to be loaded into a segment register,
-reload_segments() sets its RPL bits.  Later IRET zeros ES, FS, GS, and
-DS segment registers if any of them is found to have any nonzero NULL
-selector value.  The two operations offset each other to actually effect
-a nop.
+Fix this by introducing the function nvmet_pci_epf_clear_ctrl_config()
+to clear the CC and CSTS registers of the controller when the PCIe link
+is lost (nvmet_pci_epf_stop_ctrl() function), or when starting the
+controller fails (nvmet_pci_epf_enable_ctrl() fails). Also use this
+function in nvmet_pci_epf_init_bar() to simplify the initialization of
+the CC and CSTS registers.
 
-Besides, zeroing of RPL in NULL selector values is an information leak
-in pre-FRED systems as userspace can spot any interrupt/exception by
-loading a nonzero NULL selector, and waiting for it to become zero.
-But there is nothing software can do to prevent it before FRED.
+Furthermore, modify the function nvmet_pci_epf_disable_ctrl() to clear
+the CC.EN bit and write this updated value to the BAR register when the
+controller is shutdown by the host, to ensure that upon restart, we can
+detect the host setting CC.EN.
 
-ERETU, the only legit instruction to return to userspace from kernel
-under FRED, by design does NOT zero any segment register to avoid this
-problem behavior.
-
-As such, leave NULL selector values 0~3 unchanged and close the leak.
-
-Do the same on 32-bit kernel as well.
-
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241126184529.1607334-1-xin@zytor.com
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/signal_32.c | 62 +++++++++++++++++++++++++------------
- 1 file changed, 43 insertions(+), 19 deletions(-)
+ drivers/nvme/target/pci-epf.c | 49 +++++++++++++++++++++++------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/arch/x86/kernel/signal_32.c b/arch/x86/kernel/signal_32.c
-index c12624bc82a31..983f8f5893a48 100644
---- a/arch/x86/kernel/signal_32.c
-+++ b/arch/x86/kernel/signal_32.c
-@@ -33,25 +33,55 @@
- #include <asm/smap.h>
- #include <asm/gsseg.h>
- 
-+/*
-+ * The first GDT descriptor is reserved as 'NULL descriptor'.  As bits 0
-+ * and 1 of a segment selector, i.e., the RPL bits, are NOT used to index
-+ * GDT, selector values 0~3 all point to the NULL descriptor, thus values
-+ * 0, 1, 2 and 3 are all valid NULL selector values.
-+ *
-+ * However IRET zeros ES, FS, GS, and DS segment registers if any of them
-+ * is found to have any nonzero NULL selector value, which can be used by
-+ * userspace in pre-FRED systems to spot any interrupt/exception by loading
-+ * a nonzero NULL selector and waiting for it to become zero.  Before FRED
-+ * there was nothing software could do to prevent such an information leak.
-+ *
-+ * ERETU, the only legit instruction to return to userspace from kernel
-+ * under FRED, by design does NOT zero any segment register to avoid this
-+ * problem behavior.
-+ *
-+ * As such, leave NULL selector values 0~3 unchanged.
-+ */
-+static inline u16 fixup_rpl(u16 sel)
-+{
-+	return sel <= 3 ? sel : sel | 3;
-+}
-+
- #ifdef CONFIG_IA32_EMULATION
- #include <asm/ia32_unistd.h>
- 
- static inline void reload_segments(struct sigcontext_32 *sc)
- {
--	unsigned int cur;
-+	u16 cur;
- 
-+	/*
-+	 * Reload fs and gs if they have changed in the signal
-+	 * handler.  This does not handle long fs/gs base changes in
-+	 * the handler, but does not clobber them at least in the
-+	 * normal case.
-+	 */
- 	savesegment(gs, cur);
--	if ((sc->gs | 0x03) != cur)
--		load_gs_index(sc->gs | 0x03);
-+	if (fixup_rpl(sc->gs) != cur)
-+		load_gs_index(fixup_rpl(sc->gs));
- 	savesegment(fs, cur);
--	if ((sc->fs | 0x03) != cur)
--		loadsegment(fs, sc->fs | 0x03);
-+	if (fixup_rpl(sc->fs) != cur)
-+		loadsegment(fs, fixup_rpl(sc->fs));
-+
- 	savesegment(ds, cur);
--	if ((sc->ds | 0x03) != cur)
--		loadsegment(ds, sc->ds | 0x03);
-+	if (fixup_rpl(sc->ds) != cur)
-+		loadsegment(ds, fixup_rpl(sc->ds));
- 	savesegment(es, cur);
--	if ((sc->es | 0x03) != cur)
--		loadsegment(es, sc->es | 0x03);
-+	if (fixup_rpl(sc->es) != cur)
-+		loadsegment(es, fixup_rpl(sc->es));
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index 70855bb9823af..5c4c4c1f535d4 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -1825,6 +1825,21 @@ static void nvmet_pci_epf_cq_work(struct work_struct *work)
+ 				   NVMET_PCI_EPF_CQ_RETRY_INTERVAL);
  }
  
- #define sigset32_t			compat_sigset_t
-@@ -105,18 +135,12 @@ static bool ia32_restore_sigcontext(struct pt_regs *regs,
- 	regs->orig_ax = -1;
++static void nvmet_pci_epf_clear_ctrl_config(struct nvmet_pci_epf_ctrl *ctrl)
++{
++	struct nvmet_ctrl *tctrl = ctrl->tctrl;
++
++	/* Initialize controller status. */
++	tctrl->csts = 0;
++	ctrl->csts = 0;
++	nvmet_pci_epf_bar_write32(ctrl, NVME_REG_CSTS, ctrl->csts);
++
++	/* Initialize controller configuration and start polling. */
++	tctrl->cc = 0;
++	ctrl->cc = 0;
++	nvmet_pci_epf_bar_write32(ctrl, NVME_REG_CC, ctrl->cc);
++}
++
+ static int nvmet_pci_epf_enable_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
+ {
+ 	u64 pci_addr, asq, acq;
+@@ -1890,18 +1905,20 @@ static int nvmet_pci_epf_enable_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
+ 	return 0;
  
- #ifdef CONFIG_IA32_EMULATION
--	/*
--	 * Reload fs and gs if they have changed in the signal
--	 * handler.  This does not handle long fs/gs base changes in
--	 * the handler, but does not clobber them at least in the
--	 * normal case.
--	 */
- 	reload_segments(&sc);
- #else
--	loadsegment(gs, sc.gs);
--	regs->fs = sc.fs;
--	regs->es = sc.es;
--	regs->ds = sc.ds;
-+	loadsegment(gs, fixup_rpl(sc.gs));
-+	regs->fs = fixup_rpl(sc.fs);
-+	regs->es = fixup_rpl(sc.es);
-+	regs->ds = fixup_rpl(sc.ds);
- #endif
+ err:
+-	ctrl->csts = 0;
++	nvmet_pci_epf_clear_ctrl_config(ctrl);
+ 	return -EINVAL;
+ }
  
- 	return fpu__restore_sig(compat_ptr(sc.fpstate), 1);
+-static void nvmet_pci_epf_disable_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
++static void nvmet_pci_epf_disable_ctrl(struct nvmet_pci_epf_ctrl *ctrl,
++				       bool shutdown)
+ {
+ 	int qid;
+ 
+ 	if (!ctrl->enabled)
+ 		return;
+ 
+-	dev_info(ctrl->dev, "Disabling controller\n");
++	dev_info(ctrl->dev, "%s controller\n",
++		 shutdown ? "Shutting down" : "Disabling");
+ 
+ 	ctrl->enabled = false;
+ 	cancel_delayed_work_sync(&ctrl->poll_sqs);
+@@ -1918,6 +1935,11 @@ static void nvmet_pci_epf_disable_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
+ 	nvmet_pci_epf_delete_cq(ctrl->tctrl, 0);
+ 
+ 	ctrl->csts &= ~NVME_CSTS_RDY;
++	if (shutdown) {
++		ctrl->csts |= NVME_CSTS_SHST_CMPLT;
++		ctrl->cc &= ~NVME_CC_ENABLE;
++		nvmet_pci_epf_bar_write32(ctrl, NVME_REG_CC, ctrl->cc);
++	}
+ }
+ 
+ static void nvmet_pci_epf_poll_cc_work(struct work_struct *work)
+@@ -1944,12 +1966,10 @@ static void nvmet_pci_epf_poll_cc_work(struct work_struct *work)
+ 	}
+ 
+ 	if (!nvmet_cc_en(new_cc) && nvmet_cc_en(old_cc))
+-		nvmet_pci_epf_disable_ctrl(ctrl);
++		nvmet_pci_epf_disable_ctrl(ctrl, false);
+ 
+-	if (nvmet_cc_shn(new_cc) && !nvmet_cc_shn(old_cc)) {
+-		nvmet_pci_epf_disable_ctrl(ctrl);
+-		ctrl->csts |= NVME_CSTS_SHST_CMPLT;
+-	}
++	if (nvmet_cc_shn(new_cc) && !nvmet_cc_shn(old_cc))
++		nvmet_pci_epf_disable_ctrl(ctrl, true);
+ 
+ 	if (!nvmet_cc_shn(new_cc) && nvmet_cc_shn(old_cc))
+ 		ctrl->csts &= ~NVME_CSTS_SHST_CMPLT;
+@@ -1988,16 +2008,10 @@ static void nvmet_pci_epf_init_bar(struct nvmet_pci_epf_ctrl *ctrl)
+ 	/* Clear Controller Memory Buffer Supported (CMBS). */
+ 	ctrl->cap &= ~(0x1ULL << 57);
+ 
+-	/* Controller configuration. */
+-	ctrl->cc = tctrl->cc & (~NVME_CC_ENABLE);
+-
+-	/* Controller status. */
+-	ctrl->csts = ctrl->tctrl->csts;
+-
+ 	nvmet_pci_epf_bar_write64(ctrl, NVME_REG_CAP, ctrl->cap);
+ 	nvmet_pci_epf_bar_write32(ctrl, NVME_REG_VS, tctrl->subsys->ver);
+-	nvmet_pci_epf_bar_write32(ctrl, NVME_REG_CSTS, ctrl->csts);
+-	nvmet_pci_epf_bar_write32(ctrl, NVME_REG_CC, ctrl->cc);
++
++	nvmet_pci_epf_clear_ctrl_config(ctrl);
+ }
+ 
+ static int nvmet_pci_epf_create_ctrl(struct nvmet_pci_epf *nvme_epf,
+@@ -2102,7 +2116,8 @@ static void nvmet_pci_epf_stop_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
+ {
+ 	cancel_delayed_work_sync(&ctrl->poll_cc);
+ 
+-	nvmet_pci_epf_disable_ctrl(ctrl);
++	nvmet_pci_epf_disable_ctrl(ctrl, false);
++	nvmet_pci_epf_clear_ctrl_config(ctrl);
+ }
+ 
+ static void nvmet_pci_epf_destroy_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
 -- 
 2.39.5
 
