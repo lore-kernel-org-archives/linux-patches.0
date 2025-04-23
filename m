@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C57E26A08C;
-	Wed, 23 Apr 2025 15:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F2A28F50A;
+	Wed, 23 Apr 2025 15:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422228; cv=none; b=pRlqXyT4GTgo4m52Z1/unQmo05WlOFUjRpKDvA+G3dqjYvgV9Vyhw7EG/e/SB5c5PSvvuNShkd48kbcRy/Ff9HO8kACfJwXWdS2/y2h0IAAyCeLBDD5g5KwIlhUGtrD7s7RzN+kkUUSXfJGNV3lKplRGl2+S0SIExggLGdt5rQo=
+	t=1745422230; cv=none; b=p+IzhZ6RWIYSDVTtyaySUN3VZOxTtRbAKPPHC5Wfh4pGuNIyIbFZn35t4fdoqeInMnOlMR1R5HBaAQIKvNWY4sQAu5BBYZ7dWgcCs/G51lHDEdUV4iR8bMuGSEx5t01DPhVYc18wABTETV1gFTZeG8AK+LhVFVjGBo4TlZAqZHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422228; c=relaxed/simple;
-	bh=FfJFaiVEPJ/dzHZTHwATBslQEYpvrYj+Sd9NBzU2sy4=;
+	s=arc-20240116; t=1745422230; c=relaxed/simple;
+	bh=Kss84yfNbzjeh8Z2CKGhsSRdYXGTCR7WGWYKQS+h33o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRTgAvQGO43N1csH4WTe6M6cYQ/s9wJqXZAh0/SYKc3k7NGT97WuC+5oNNX6DGadCRCeqJjhuxjeLwIc1DBakkLbtCdWlX8f3lFciK8Hck3QKFdlCn1U4I0tV69gtFnTcJ2RqEtKJTBl05ZoBGaTEb/K60yxiZfJivjhV4KgVQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZ06pl6v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PgkgEOGSwgZfY1uNp3wPt70SsVz1XKaKTFDsMJzJ5hvp++ss0LMB5DH6MNzK5CyLOX0l97QHzM/xJWR3ErElcKcv6ih28bckDzjzvbiZehUjjq9dJVwqo9Tytm3/J1X2QyWIctqVlkfEqNw3qK9aBuJMHrYiQ9IJUamxIePpsxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrQj9t9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZ06pl6v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DE8C4CEE2;
-	Wed, 23 Apr 2025 15:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrQj9t9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6D9C4CEE8;
+	Wed, 23 Apr 2025 15:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422228;
-	bh=FfJFaiVEPJ/dzHZTHwATBslQEYpvrYj+Sd9NBzU2sy4=;
+	s=korg; t=1745422230;
+	bh=Kss84yfNbzjeh8Z2CKGhsSRdYXGTCR7WGWYKQS+h33o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZ06pl6vF/btfqZs4z8JkQdX6DFW4+M1yrLE5aWyCLyxGvIzeov5shRJYNehcewOc
-	 3SaGwAvbQJkT/cevL+d1FnJzPAlINOfjb+a46cHw29EOMRntFj7mU/yvO473/gLiJ1
-	 vQN5rkoIUEnbnyXtC5vtS7OmMga/n7XtmU8JTtxQ=
+	b=KrQj9t9PJtD5sD++/3CLNNkPG+KhNJCbXq24tnarcVJ20Z+l6PRwPaoPse+9PwIIk
+	 en3TYC/9Zuzrc6VlP8SjsvI5Xi/1wkaHRdY1jSpOwfgYS0qjhbtF7MJaP40zhDL/mz
+	 4P8XquqFtENe/D1qMy/NXNVYKE8Xr3/IaSJj2v3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.1 259/291] media: mediatek: vcodec: mark vdec_vp9_slice_map_counts_eob_coef noinline
-Date: Wed, 23 Apr 2025 16:44:08 +0200
-Message-ID: <20250423142635.012030134@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 238/291] drm/amd/pm/swsmu/smu13/smu_v13_0: Prevent division by zero
+Date: Wed, 23 Apr 2025 16:43:47 +0200
+Message-ID: <20250423142634.141814951@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
 References: <20250423142624.409452181@linuxfoundation.org>
@@ -52,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit 8b55f8818900c99dd4f55a59a103f5b29e41eb2c upstream.
+commit f23e9116ebb71b63fe9cec0dcac792aa9af30b0c upstream.
 
-With KASAN enabled, clang fails to optimize the inline version of
-vdec_vp9_slice_map_counts_eob_coef() properly, leading to kilobytes
-of temporary values spilled to the stack:
+The user can set any speed value.
+If speed is greater than UINT_MAX/8, division by zero is possible.
 
-drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c:1526:12: error: stack frame size (2160) exceeds limit (2048) in 'vdec_vp9_slice_update_prob' [-Werror,-Wframe-larger-than]
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This seems to affect all versions of clang including the latest (clang-20),
-but the degree of stack overhead is different per release.
-
-Marking the function as noinline_for_stack is harmless here and avoids
-the problem completely.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-[nathan: Handle file location change in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
-@@ -1192,7 +1192,8 @@ err:
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1265,7 +1265,7 @@ int smu_v13_0_set_fan_speed_rpm(struct s
+ 	uint32_t tach_period;
+ 	int ret;
  
--static
-+/* clang stack usage explodes if this is inlined */
-+static noinline_for_stack
- void vdec_vp9_slice_map_counts_eob_coef(unsigned int i, unsigned int j, unsigned int k,
- 					struct vdec_vp9_slice_frame_counts *counts,
- 					struct v4l2_vp9_frame_symbol_counts *counts_helper)
+-	if (!speed)
++	if (!speed || speed > UINT_MAX/8)
+ 		return -EINVAL;
+ 
+ 	ret = smu_v13_0_auto_fan_control(smu, 0);
 
 
