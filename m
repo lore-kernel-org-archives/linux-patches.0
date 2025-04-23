@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C055C283689;
-	Wed, 23 Apr 2025 15:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574F6283C98;
+	Wed, 23 Apr 2025 15:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421615; cv=none; b=OqJNLQg/Eg2YlXaSdzTe8RlfjVcfcpseVgmJvgDAbXBPm7F+7ZqZBmQP6rvV21B2BP4bQAm8U9/vohJWzKZG5+x3Ifh47iaLWBn2qDxhiimWwe//WZ+DXZJrYxwKIOkCWrLs9+kUVBbFXE86hBhzqoEqxknpnM3oHQpJs6EesLc=
+	t=1745421618; cv=none; b=PNq5CqaKCTBbOrn75CF/+M7YiQtPAPBYyyex/0QUXyMsQ0rbUlAVUqAWtaDPIYirZmoR2whL9AM4Q6ZArtqlTTOaF4NhxiJHuRR7twRgbbR10MgUCm/N7aEMLSh04oXhGrFSFHsL/BsoYbEbvb0BpmAT/TACioIFZDw7Q2sodtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421615; c=relaxed/simple;
-	bh=PR2h3D9DAsGG6BMWqO/a2WUrgMZiOiPQhcMLA4MuH/M=;
+	s=arc-20240116; t=1745421618; c=relaxed/simple;
+	bh=tnUac6utk5nc/nppFvT1+IWmfDmoSvpEUWAJDkQrc2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLdQVuiwieMqjlspOxKBvOAFriyh+Rrn+iZGSYdrMEFXZQMo83eC3cHvkbBwRNCfrHjigFF6xg+zj9FII9dTM/txbQ6MXCqbwJKgATK7jdBmqqghNf5wCLnxL4ry5BAruLGaiSOijVarBLSpWNMCcfVOLBwB9iSCi5C27hemEFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNBtKBvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nvaf+GixOgBhnUCdlxGR7yQPWFZtZDO4T8MGcIndFTc+vTV/PvXmQ4cCPFOpwLoQ5lycYHefjm+tWP9TlZnL03dE5mdUKX+j2npr3/jdow5J/ARRZdRp6jJ7j1QnsB1ZkipmKqSakO/IE++BedUpGYPDqhUP8wXjqx2XBt1h1P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlP9mGFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNBtKBvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53349C4CEE3;
-	Wed, 23 Apr 2025 15:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlP9mGFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D73C4CEE2;
+	Wed, 23 Apr 2025 15:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421615;
-	bh=PR2h3D9DAsGG6BMWqO/a2WUrgMZiOiPQhcMLA4MuH/M=;
+	s=korg; t=1745421618;
+	bh=tnUac6utk5nc/nppFvT1+IWmfDmoSvpEUWAJDkQrc2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNBtKBvq+4NmtOgoicWYCCrZKiEMvW719a8np4hmweDUmHWBHUzULms9iE5i6//rx
-	 t+2XuztEZM6FS63QpzofvDfXoNZdgrsAG3MY92X36ETYEQ0JZZqgsQHAjxBFW7oXmA
-	 diuRKMbvvXkWLsUYXCsx37UGJwcdCD4pw+NSgmpU=
+	b=wlP9mGFetR/1EKWfD+DWc3nrt5mFPJg7dwue3p2/3JIhDB9cXCKb/YdXQCzq49FBe
+	 a1SyDctH7k8QWV+ZhHmg1i6uHmyxj5/ZN7cFEJI7uNw88+eZ4iovLUCRTpMhV2wmMl
+	 EsFm0dWOqQ/w8iYM1xW+Mm5DNw3wBtU61uQI5Wfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trevor Woerner <twoerner@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 6.6 200/393] thermal/drivers/rockchip: Add missing rk3328 mapping entry
-Date: Wed, 23 Apr 2025 16:41:36 +0200
-Message-ID: <20250423142651.651320994@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.14 212/241] drm/xe/dma_buf: stop relying on placement in unmap
+Date: Wed, 23 Apr 2025 16:44:36 +0200
+Message-ID: <20250423142629.209447971@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,67 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trevor Woerner <twoerner@gmail.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
+commit 25583ad42d091819157832e894179200ba8b54ee upstream.
 
-The mapping table for the rk3328 is missing the entry for -25C which is
-found in the TRM section 9.5.2 "Temperature-to-code mapping".
+The is_vram() is checking the current placement, however if we consider
+exported VRAM with dynamic dma-buf, it looks possible for the xe driver
+to async evict the memory, notifying the importer, however importer does
+not have to call unmap_attachment() immediately, but rather just as
+"soon as possible", like when the dma-resv idles. Following from this we
+would then pipeline the move, attaching the fence to the manager, and
+then update the current placement. But when the unmap_attachment() runs
+at some later point we might see that is_vram() is now false, and take
+the complete wrong path when dma-unmapping the sg, leading to
+explosions.
 
-NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
-      4096-<code in table>. Whereas the table in the TRM gives the code
-      "3774" for -25C, the kernel uses 4096-3774=322.
+To fix this check if the sgl was mapping a struct page.
 
-[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
-  well as through the downstream kernel code, it seems we may have
-  some troubles at our hands.  Let me explain, please.
+v2:
+  - The attachment can be mapped multiple times it seems, so we can't
+    really rely on encoding something in the attachment->priv. Instead
+    see if the page_link has an encoded struct page. For vram we expect
+    this to be NULL.
 
-  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
-  the equation for the output when tsadc_q_sel equals 1 is (4096 -
-  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
-  equation is (1024 - tsadc_q) in that case.
-
-  The downstream kernel code, however, treats the RK3308 and RK3328
-  tables and their values as being the same.  It even mentions 1024 as
-  the "offset" value in a comment block for the rk_tsadcv3_control()
-  function, just like the upstream code does, which is obviously wrong
-  "offset" value when correlated with the table on page 544 of part 1
-  of the RK3308 TRM v1.1.
-
-  With all this in mind, it's obvious that more work is needed to make
-  it clear where's the actual mistake (it could be that the TRM is
-  wrong), which I'll volunteer for as part of the SoC binning project.
-  In the meantime, this patch looks fine as-is to me, by offering
-  what's a clear improvement to the current state of the upstream
-  code"
-
-Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
-Cc: stable@vger.kernel.org
-Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
-Signed-off-by: Trevor Woerner <twoerner@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4563
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Acked-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250410162716.159403-2-matthew.auld@intel.com
+(cherry picked from commit d755887f8e5a2a18e15e6632a5193e5feea18499)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/rockchip_thermal.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_dma_buf.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/thermal/rockchip_thermal.c
-+++ b/drivers/thermal/rockchip_thermal.c
-@@ -386,6 +386,7 @@ static const struct tsadc_table rk3328_c
- 	{296, -40000},
- 	{304, -35000},
- 	{313, -30000},
-+	{322, -25000},
- 	{331, -20000},
- 	{340, -15000},
- 	{349, -10000},
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -145,10 +145,7 @@ static void xe_dma_buf_unmap(struct dma_
+ 			     struct sg_table *sgt,
+ 			     enum dma_data_direction dir)
+ {
+-	struct dma_buf *dma_buf = attach->dmabuf;
+-	struct xe_bo *bo = gem_to_xe_bo(dma_buf->priv);
+-
+-	if (!xe_bo_is_vram(bo)) {
++	if (sg_page(sgt->sgl)) {
+ 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
+ 		sg_free_table(sgt);
+ 		kfree(sgt);
 
 
