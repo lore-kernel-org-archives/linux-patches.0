@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF1C2522B9;
-	Wed, 23 Apr 2025 14:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ECD2D613;
+	Wed, 23 Apr 2025 14:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419534; cv=none; b=NA2XdpE+yGpyAB6onljezSnYBXN3VkZcdrl0hgrLzYBjTXdOFThgg5fFMM0uysVWQHX1sImXqmZT773Qx+jv4SAyB9Hsme1mQf2c2AIlUyEckuKXE5KThyXUMhJwdMBXh39JQa8iF5bI7cn5VN7zQI/uTfDroDECY+GtiQzHK3s=
+	t=1745419537; cv=none; b=DkQmKlccJr5ovtsgsM9m+L+SbpHnQWTZcTTCI7iY3qZskNQU7RDm+Oex9idvmJNOxvK+zODgPzJDRrzmNi0yxHH/AHjRPvelgNS5QaQr82n5yE/rprVKkFZhUWy42wgTzrA+PlhyiEtUx47X0ebEigt0sbYvR2UmuUMljS/azds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419534; c=relaxed/simple;
-	bh=linE5WJJ3i5g7PNRFRgyoVVMUV9vBG1Mh9kNYrl/u3s=;
+	s=arc-20240116; t=1745419537; c=relaxed/simple;
+	bh=oQLNLUvN7u3rQ11+heMLd0ymg4Mxtgn9WxGusPOEIYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0VqknjP7RXfEKYeECANxebLtBAWZfBSAk0n5dTLO3YO9HfVZ1xng560Xns/pXLsZCYmUIlMSDyKEDp9PeIj0NpZuLeblT+zUuNsLV5/dp641ULlwg0NglT5KhrKdWKyKDKohu3PkJsLOgTwgMcgyhMQnXXuCRL/C01YCZ6V4t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlDNcmnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GfX8UCLBDz5j9218W9Kj8Y0X44+anVXma10iMIEXHTKvX7F7x/jWShP/E1FO8HuuGH7L/LqT9EULUuwC0V5q+e75PGAIHtVBLva/O+xb5681yK7K4mYAUJcV0MaBXyif/I+mAJh4ToNzcRHT7DTLuEW2M56+6SXZlUk2tzh3/UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LP+NrVo8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlDNcmnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D72C4CEE2;
-	Wed, 23 Apr 2025 14:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LP+NrVo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EBDC4CEE2;
+	Wed, 23 Apr 2025 14:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419533;
-	bh=linE5WJJ3i5g7PNRFRgyoVVMUV9vBG1Mh9kNYrl/u3s=;
+	s=korg; t=1745419536;
+	bh=oQLNLUvN7u3rQ11+heMLd0ymg4Mxtgn9WxGusPOEIYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlDNcmnjwjag/XKkqenb8yhRbT3Om7XqO5KRIdjs1ZIgWI8PmyHCeQVNEoyzHMRf6
-	 poZGqlT+Vjn/v4g2qhKO7GL8Rfb0OgZZgNC0fELCXKgJbHihSCfBmJj0+3jA7xgMOe
-	 IAtkrApJuNUbfa4nYPjGg+A0Eovm3rqCkBSmGScw=
+	b=LP+NrVo8fllKvbJ9Lr9jjL+LMmR6dd7fotULkdmveTAX8+sUWCsBO39GaJr9/W0P4
+	 14DrwQjPD27tX47vTSRK9YJjAbgrCFaGTf9FuxiW7/BttmV6ykgPeRy19RV3m7GZux
+	 jb97aHjBfc7dgKAMpfhO+sGToSX3IlJ4Z2QTSx5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Remi Pommarel <repk@triplefau.lt>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/223] wifi: at76c50x: fix use after free access in at76_disconnect
-Date: Wed, 23 Apr 2025 16:41:14 +0200
-Message-ID: <20250423142617.222528839@linuxfoundation.org>
+Subject: [PATCH 6.12 003/223] wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()
+Date: Wed, 23 Apr 2025 16:41:15 +0200
+Message-ID: <20250423142617.260980619@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -51,37 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 27c7e63b3cb1a20bb78ed4a36c561ea4579fd7da ]
+[ Upstream commit a104042e2bf6528199adb6ca901efe7b60c2c27f ]
 
-The memory pointed to by priv is freed at the end of at76_delete_device
-function (using ieee80211_free_hw). But the code then accesses the udev
-field of the freed object to put the USB device. This may also lead to a
-memory leak of the usb device. Fix this by using udev from interface.
+The ieee80211 skb control block key (set when skb was queued) could have
+been removed before ieee80211_tx_dequeue() call. ieee80211_tx_dequeue()
+already called ieee80211_tx_h_select_key() to get the current key, but
+the latter do not update the key in skb control block in case it is
+NULL. Because some drivers actually use this key in their TX callbacks
+(e.g. ath1{1,2}k_mac_op_tx()) this could lead to the use after free
+below:
 
-Fixes: 29e20aa6c6af ("at76c50x-usb: fix use after free on failure path in at76_probe()")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Link: https://patch.msgid.link/20250330103110.44080-1-abdun.nihaal@gmail.com
+  BUG: KASAN: slab-use-after-free in ath11k_mac_op_tx+0x590/0x61c
+  Read of size 4 at addr ffffff803083c248 by task kworker/u16:4/1440
+
+  CPU: 3 UID: 0 PID: 1440 Comm: kworker/u16:4 Not tainted 6.13.0-ge128f627f404 #2
+  Hardware name: HW (DT)
+  Workqueue: bat_events batadv_send_outstanding_bcast_packet
+  Call trace:
+   show_stack+0x14/0x1c (C)
+   dump_stack_lvl+0x58/0x74
+   print_report+0x164/0x4c0
+   kasan_report+0xac/0xe8
+   __asan_report_load4_noabort+0x1c/0x24
+   ath11k_mac_op_tx+0x590/0x61c
+   ieee80211_handle_wake_tx_queue+0x12c/0x1c8
+   ieee80211_queue_skb+0xdcc/0x1b4c
+   ieee80211_tx+0x1ec/0x2bc
+   ieee80211_xmit+0x224/0x324
+   __ieee80211_subif_start_xmit+0x85c/0xcf8
+   ieee80211_subif_start_xmit+0xc0/0xec4
+   dev_hard_start_xmit+0xf4/0x28c
+   __dev_queue_xmit+0x6ac/0x318c
+   batadv_send_skb_packet+0x38c/0x4b0
+   batadv_send_outstanding_bcast_packet+0x110/0x328
+   process_one_work+0x578/0xc10
+   worker_thread+0x4bc/0xc7c
+   kthread+0x2f8/0x380
+   ret_from_fork+0x10/0x20
+
+  Allocated by task 1906:
+   kasan_save_stack+0x28/0x4c
+   kasan_save_track+0x1c/0x40
+   kasan_save_alloc_info+0x3c/0x4c
+   __kasan_kmalloc+0xac/0xb0
+   __kmalloc_noprof+0x1b4/0x380
+   ieee80211_key_alloc+0x3c/0xb64
+   ieee80211_add_key+0x1b4/0x71c
+   nl80211_new_key+0x2b4/0x5d8
+   genl_family_rcv_msg_doit+0x198/0x240
+  <...>
+
+  Freed by task 1494:
+   kasan_save_stack+0x28/0x4c
+   kasan_save_track+0x1c/0x40
+   kasan_save_free_info+0x48/0x94
+   __kasan_slab_free+0x48/0x60
+   kfree+0xc8/0x31c
+   kfree_sensitive+0x70/0x80
+   ieee80211_key_free_common+0x10c/0x174
+   ieee80211_free_keys+0x188/0x46c
+   ieee80211_stop_mesh+0x70/0x2cc
+   ieee80211_leave_mesh+0x1c/0x60
+   cfg80211_leave_mesh+0xe0/0x280
+   cfg80211_leave+0x1e0/0x244
+  <...>
+
+Reset SKB control block key before calling ieee80211_tx_h_select_key()
+to avoid that.
+
+Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://patch.msgid.link/06aa507b853ca385ceded81c18b0a6dd0f081bc8.1742833382.git.repk@triplefau.lt
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/atmel/at76c50x-usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/atmel/at76c50x-usb.c b/drivers/net/wireless/atmel/at76c50x-usb.c
-index 504e05ea30f29..97ea7ab0f4910 100644
---- a/drivers/net/wireless/atmel/at76c50x-usb.c
-+++ b/drivers/net/wireless/atmel/at76c50x-usb.c
-@@ -2552,7 +2552,7 @@ static void at76_disconnect(struct usb_interface *interface)
- 
- 	wiphy_info(priv->hw->wiphy, "disconnecting\n");
- 	at76_delete_device(priv);
--	usb_put_dev(priv->udev);
-+	usb_put_dev(interface_to_usbdev(interface));
- 	dev_info(&interface->dev, "disconnected\n");
- }
- 
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 0ff8b56f58070..9b3a5ef20f29e 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3892,6 +3892,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
++	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
 -- 
 2.39.5
 
