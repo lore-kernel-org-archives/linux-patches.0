@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BF42641EA;
-	Wed, 23 Apr 2025 15:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE8F293B5B;
+	Wed, 23 Apr 2025 15:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421628; cv=none; b=aIlnfIDMChTjJ5R67Crj1+o+0DKtttHwDsucmvkw0ZIurLI6FsdZWiBYXr0Ve98zYtwI/sRA+s3GNFKdqVD3HC+rsdZ/QRL/MHhzZnBSWI7vNFLkT8fr7Pn4dYQF76BjaO7aZGJIYZZuURB4NsVaD+ahzbxQosBSA9VSjC9gZJk=
+	t=1745421631; cv=none; b=TZQAGwi/Hiq/juNT3bm68SG6dhdf115MHKfcRgz6j7rblxzaUstYRph7rIObgsUQEzoKKDWkev7qc+jggu3kONuOpj4bhf6eYozghQphD33TPT+ljvLVfFiFyLw03UN8sH9bOKHb7LDwkFAHQxjLBCHU4++0pRPuB/Ezdsxujnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421628; c=relaxed/simple;
-	bh=xoP1KCN4ZY7R692igvLNk0CaOlS692Qy1NeEeH5Xz1s=;
+	s=arc-20240116; t=1745421631; c=relaxed/simple;
+	bh=aMr1n90udowTlCLlyLeU97wLfkH22ecW3Xm+Id0ucfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PB/I0EdgSYn0r+hY6jfG7Ip7YJeGwdT8dKmlIolLnYvoUHsCY6VItRp0ffbY99LBDogQBFvUEVAxmmDvoEDhk4ZjyCHam+Nns18MzbnHN9ZqWqGTorwfrJQttImtrOujBAh9FCXvOmFTd0H3+GSjqNjxz9RuErC9zYDyD2MYIlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxoW738v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDCzIcT/LONDH38awYDz1Z5XeMFOXpuzONXYKUzakcspX3OYkXEWhxZsak9ZiHeh/edQDTW7veU00ZV5vnlSyhOuKQdPN00ssmW+GLjWjcbFBTgRXAiuqtFvSruIc7aTm1MKydSdyJVwo5JdBqj3tvJMDo41DY/7usmLGEPAQpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLp5aGgu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxoW738v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A594C4CEE2;
-	Wed, 23 Apr 2025 15:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLp5aGgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DA6C4CEE2;
+	Wed, 23 Apr 2025 15:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421628;
-	bh=xoP1KCN4ZY7R692igvLNk0CaOlS692Qy1NeEeH5Xz1s=;
+	s=korg; t=1745421631;
+	bh=aMr1n90udowTlCLlyLeU97wLfkH22ecW3Xm+Id0ucfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxoW738vAU+DvifspDJIIaHYrZGdngOgHlSoRboFgjxmXhqMnj5ijwdbh1lucMtLu
-	 hzMowFv/OAttQrOPA3SXDmoeheibV6zWTf4unatSkE2HYBDqoirJHUDijsAjF1u069
-	 FCCP3cjs/UxT4xeJqPJg/T1zp7CuHcJtUUJfn3a4=
+	b=nLp5aGgu0beeV7Bd0tIDt3Z4uptY4yzpl8UJK8vIbga8WHpOZWvVAzWLHw8+d2sm4
+	 3ccO+PZxOzGrlsY/t5jvR26UxTaLSzIO01Qz42JxOnIC3qcsaqk6HO+20m3IbtvXw1
+	 qYpsDLlRkfAj+DnUz7/YtXx4sbk+JjcuOqLMfAQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.14 213/241] drm/xe/userptr: fix notifier vs folio deadlock
-Date: Wed, 23 Apr 2025 16:44:37 +0200
-Message-ID: <20250423142629.261025398@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.1 160/291] arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected() lists
+Date: Wed, 23 Apr 2025 16:42:29 +0200
+Message-ID: <20250423142630.935150731@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
-References: <20250423142620.525425242@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 2577b202458cddff85cc154b1fe7f313e0d1f418 upstream.
+commit a5951389e58d2e816eed3dbec5877de9327fd881 upstream.
 
-User is reporting what smells like notifier vs folio deadlock, where
-migrate_pages_batch() on core kernel side is holding folio lock(s) and
-then interacting with the mappings of it, however those mappings are
-tied to some userptr, which means calling into the notifier callback and
-grabbing the notifier lock. With perfect timing it looks possible that
-the pages we pulled from the hmm fault can get sniped by
-migrate_pages_batch() at the same time that we are holding the notifier
-lock to mark the pages as accessed/dirty, but at this point we also want
-to grab the folio locks(s) to mark them as dirty, but if they are
-contended from notifier/migrate_pages_batch side then we deadlock since
-folio lock won't be dropped until we drop the notifier lock.
+When comparing to the ARM list [1], it appears that several ARM cores
+were missing from the lists in spectre_bhb_loop_affected(). Add them.
 
-Fortunately the mark_page_accessed/dirty is not really needed in the
-first place it seems and should have already been done by hmm fault, so
-just remove it.
+NOTE: for some of these cores it may not matter since other ways of
+clearing the BHB may be used (like the CLRBHB instruction or ECBHB),
+but it still seems good to have all the info from ARM's whitepaper
+included.
 
-Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4765
-Fixes: 0a98219bcc96 ("drm/xe/hmm: Don't dereference struct page pointers without notifier lock")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.10+
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://lore.kernel.org/r/20250414132539.26654-2-matthew.auld@intel.com
-(cherry picked from commit bd7c0cb695e87c0e43247be8196b4919edbe0e85)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+[1] https://developer.arm.com/Arm%20Security%20Center/Spectre-BHB
+
+Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+Cc: stable@vger.kernel.org
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20250107120555.v4.5.I4a9a527e03f663040721c5401c41de587d015c82@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_hmm.c |   24 ------------------------
- 1 file changed, 24 deletions(-)
+ arch/arm64/kernel/proton-pack.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_hmm.c
-+++ b/drivers/gpu/drm/xe/xe_hmm.c
-@@ -19,29 +19,6 @@ static u64 xe_npages_in_range(unsigned l
- 	return (end - start) >> PAGE_SHIFT;
- }
- 
--/**
-- * xe_mark_range_accessed() - mark a range is accessed, so core mm
-- * have such information for memory eviction or write back to
-- * hard disk
-- * @range: the range to mark
-- * @write: if write to this range, we mark pages in this range
-- * as dirty
-- */
--static void xe_mark_range_accessed(struct hmm_range *range, bool write)
--{
--	struct page *page;
--	u64 i, npages;
--
--	npages = xe_npages_in_range(range->start, range->end);
--	for (i = 0; i < npages; i++) {
--		page = hmm_pfn_to_page(range->hmm_pfns[i]);
--		if (write)
--			set_page_dirty_lock(page);
--
--		mark_page_accessed(page);
--	}
--}
--
- static int xe_alloc_sg(struct xe_device *xe, struct sg_table *st,
- 		       struct hmm_range *range, struct rw_semaphore *notifier_sem)
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -888,6 +888,14 @@ static u8 spectre_bhb_loop_affected(void
  {
-@@ -331,7 +308,6 @@ int xe_hmm_userptr_populate_range(struct
- 	if (ret)
- 		goto out_unlock;
+ 	u8 k = 0;
  
--	xe_mark_range_accessed(&hmm_range, write);
- 	userptr->sg = &userptr->sgt;
- 	xe_hmm_userptr_set_mapped(uvma);
- 	userptr->notifier_seq = hmm_range.notifier_seq;
++	static const struct midr_range spectre_bhb_k132_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X3),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
++	};
++	static const struct midr_range spectre_bhb_k38_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
++	};
+ 	static const struct midr_range spectre_bhb_k32_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+@@ -901,6 +909,7 @@ static u8 spectre_bhb_loop_affected(void
+ 	};
+ 	static const struct midr_range spectre_bhb_k24_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76AE),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+ 		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+@@ -916,7 +925,11 @@ static u8 spectre_bhb_loop_affected(void
+ 		{},
+ 	};
+ 
+-	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
++	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k132_list))
++		k = 132;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k38_list))
++		k = 38;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+ 		k = 32;
+ 	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+ 		k = 24;
 
 
