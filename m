@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13E7242D64;
-	Wed, 23 Apr 2025 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F531F2C45;
+	Wed, 23 Apr 2025 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422272; cv=none; b=Ln5tx29gqgczTfFjllZO6txUU0fqJMVFQ9VoYp1ll2ENrG0O0h9uBkZhFjQg0sfDmZ7DI6vQReNU7ba9iHjEr7ZHtsRNl71HDQCtBMoooagHsPUeQ5V+pGbR6VAzwmlxs6AEFpKwT4Lc9JyDtsn+8J/Zj1LBN9nMMkivJp0/eR8=
+	t=1745422275; cv=none; b=oO/+P0GNUAsYbBBn+bPs6I1bfGT/+u4vka0cyfihn3p6x4fu4Yh/sV2hkYkbZmbMisk/CdyrF6KwB1HJnUYOL0470vWAt1kQ5MKj/ZkbsH51JpxljvQ0ygE03v45aWKFl35ZsCIbfLB6NjHwmqfzl+G6nFOD830du6i+I69BEkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422272; c=relaxed/simple;
-	bh=2x1VzHGf96rEkAFA1ltrdRnSAGzjQs6mbI1h/EL+FMs=;
+	s=arc-20240116; t=1745422275; c=relaxed/simple;
+	bh=p5dzKXk1Jb038/nmatcGtX5segBgjqJu8WgnJs7t2Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcFTciT07aGpTWn11kGaK/ryId67HU0drdJnK1lLptmRXsCpUw3CWyPs1JYhWyxIWV347yCZXpN/1UBwd7T9hSsfNsVJ3+mUbpEPJ/dskBwpWB6qhoPWdvIetEkk546UV/a70IVdIN7TrUAUXguIhADBWyTYb3VDFZn5PKANk5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiCrsOi9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ie8s8gnh9G+4PCdD2TzpGYJ19/sybTaEwzxzAkli/DKFDGuUsJE75Kkspo37oFWDWsvj7UPXEhSMERFi74Bv1/KyGNeGDDDCKIJmAxwkx9DFMeH5SQMf4YM7cnUtc+biprjk8HPBqkOl2OCfgcoS9Dfk7HSVoZY4DalHmaBPbGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUDAveC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiCrsOi9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DE6C4CEE2;
-	Wed, 23 Apr 2025 15:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUDAveC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7F1C4CEE2;
+	Wed, 23 Apr 2025 15:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745422272;
-	bh=2x1VzHGf96rEkAFA1ltrdRnSAGzjQs6mbI1h/EL+FMs=;
+	s=korg; t=1745422275;
+	bh=p5dzKXk1Jb038/nmatcGtX5segBgjqJu8WgnJs7t2Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiCrsOi9OQ2+FWT0EaNLCK9STy+i7jl7sIoLrBAwMhjiB4uN2rQjyxHlJIiC3PqQW
-	 mrXvC0ZrpZrY8kwSaOJCtRr3puj+CU3H/GISIBqJjZLO3yQUflCK2uesh9fC+pFwTf
-	 uAyYTm4Y5bG37ei2CqPnh4EVf93ND/8aeEy8uhsA=
+	b=KUDAveC7ogOe/SnmxSvrd+JAQdRZDUHw1Pfr5q91P37nQHqDyzIEbaidwwnh9IkL6
+	 eZqruJnDM5m9paqA1AQ6dVQk38NakaeRV4X/9v9/6Z8P//ay3a10AxXP9GVDT2XPm8
+	 uXeJhdA9GWN/3e6732OMua3A3VbGKI1jFBP1vaTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuli Wang <wangyuli@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 268/291] LoongArch: Eliminate superfluous get_numa_distances_cnt()
-Date: Wed, 23 Apr 2025 16:44:17 +0200
-Message-ID: <20250423142635.372704409@linuxfoundation.org>
+	Manikantan R <quic_manrav@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 303/393] ASoC: codecs:lpass-wsa-macro: Fix logic of enabling vi channels
+Date: Wed, 23 Apr 2025 16:43:19 +0200
+Message-ID: <20250423142655.851083805@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +48,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit a0d3c8bcb9206ac207c7ad3182027c6b0a1319bb upstream.
+commit 7648beb65600220996ebb2da207610b1ff9b735e upstream.
 
-In LoongArch, get_numa_distances_cnt() isn't in use, resulting in a
-compiler warning.
+Existing code only configures one of WSA_MACRO_TX0 or WSA_MACRO_TX1
+paths eventhough we enable both of them. Fix this bug by adding proper
+checks and rearranging some of the common code to able to allow setting
+both TX0 and TX1 paths
 
-Fix follow errors with clang-18 when W=1e:
+Without this patch only one channel gets enabled in VI path instead of 2
+channels. End result would be 1 channel recording instead of 2.
 
-arch/loongarch/kernel/acpi.c:259:28: error: unused function 'get_numa_distances_cnt' [-Werror,-Wunused-function]
-  259 | static inline unsigned int get_numa_distances_cnt(struct acpi_table_slit *slit)
-      |                            ^~~~~~~~~~~~~~~~~~~~~~
-1 error generated.
-
-Link: https://lore.kernel.org/all/Z7bHPVUH4lAezk0E@kernel.org/
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+Cc: stable@vger.kernel.org
+Co-developed-by: Manikantan R <quic_manrav@quicinc.com>
+Signed-off-by: Manikantan R <quic_manrav@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250403160209.21613-3-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/acpi.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ sound/soc/codecs/lpass-wsa-macro.c |  108 +++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 45 deletions(-)
 
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -173,18 +173,6 @@ static __init int setup_node(int pxm)
- 	return acpi_map_pxm_to_node(pxm);
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -1153,6 +1153,67 @@ static void wsa_macro_mclk_enable(struct
+ 	}
  }
  
--/*
-- * Callback for SLIT parsing.  pxm_to_node() returns NUMA_NO_NODE for
-- * I/O localities since SRAT does not list them.  I/O localities are
-- * not supported at this point.
-- */
--unsigned int numa_distance_cnt;
--
--static inline unsigned int get_numa_distances_cnt(struct acpi_table_slit *slit)
--{
--	return slit->locality_count;
--}
--
- void __init numa_set_distance(int from, int to, int distance)
++static void wsa_macro_enable_disable_vi_sense(struct snd_soc_component *component, bool enable,
++						u32 tx_reg0, u32 tx_reg1, u32 val)
++{
++	if (enable) {
++		/* Enable V&I sensing */
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
++					      val);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
++					      val);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++	} else {
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
++					      CDC_WSA_TX_SPKR_PROT_RESET);
++		snd_soc_component_update_bits(component, tx_reg0,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++		snd_soc_component_update_bits(component, tx_reg1,
++					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
++					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++	}
++}
++
++static void wsa_macro_enable_disable_vi_feedback(struct snd_soc_component *component,
++						 bool enable, u32 rate)
++{
++	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
++
++	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
++		wsa_macro_enable_disable_vi_sense(component, enable,
++				CDC_WSA_TX0_SPKR_PROT_PATH_CTL,
++				CDC_WSA_TX1_SPKR_PROT_PATH_CTL, rate);
++
++	if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
++		wsa_macro_enable_disable_vi_sense(component, enable,
++				CDC_WSA_TX2_SPKR_PROT_PATH_CTL,
++				CDC_WSA_TX3_SPKR_PROT_PATH_CTL, rate);
++}
++
+ static int wsa_macro_mclk_event(struct snd_soc_dapm_widget *w,
+ 				struct snd_kcontrol *kcontrol, int event)
  {
- 	if ((u8)distance != distance || (from == to && distance != LOCAL_DISTANCE)) {
+@@ -1169,7 +1230,6 @@ static int wsa_macro_enable_vi_feedback(
+ {
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+-	u32 tx_reg0, tx_reg1;
+ 	u32 rate_val;
+ 
+ 	switch (wsa->pcm_rate_vi) {
+@@ -1193,56 +1253,14 @@ static int wsa_macro_enable_vi_feedback(
+ 		break;
+ 	}
+ 
+-	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+-		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
+-		tx_reg1 = CDC_WSA_TX1_SPKR_PROT_PATH_CTL;
+-	} else if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+-		tx_reg0 = CDC_WSA_TX2_SPKR_PROT_PATH_CTL;
+-		tx_reg1 = CDC_WSA_TX3_SPKR_PROT_PATH_CTL;
+-	}
+-
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+ 		/* Enable V&I sensing */
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      rate_val);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+-					      rate_val);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
++		wsa_macro_enable_disable_vi_feedback(component, true, rate_val);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		/* Disable V&I sensing */
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_RESET);
+-		snd_soc_component_update_bits(component, tx_reg0,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
+-		snd_soc_component_update_bits(component, tx_reg1,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+-					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
++		wsa_macro_enable_disable_vi_feedback(component, false, rate_val);
+ 		break;
+ 	}
+ 
 
 
