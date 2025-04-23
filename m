@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C712263F54;
-	Wed, 23 Apr 2025 14:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4DE18DB17;
+	Wed, 23 Apr 2025 14:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419945; cv=none; b=k17++8qBW2/MEzr9mU+dFA3VzrHjpBUTV2Dl/cjdbVCNKV8ZIxM83oQ3qTvrGoLxiIcnsndchRnjyWgU84ienylF+9bRwKl35MhheIbTDlgFOT8aBVYsSK5my8fZ9yuQKwnxWSLXOXIpsgjgz/7JcWweIm5d5UR561wJm24hScU=
+	t=1745419947; cv=none; b=MwvDsNUWEjR3Oi+8km/jCYJj8KhiSyVRqWf15Mdr6Y6GwtBUWCuRDxb8BCMjmVvqUa3njfz/qv5e+tssftO2prWpp/4PLqDahpKwvueaMj55KZqoglBVAJeKX2kBaEx4Im21uSwaLWflQQUdqfw5XI8dX6QuZc6wiflEwLbeY/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419945; c=relaxed/simple;
-	bh=1Y7cfDpjU0HAvY5+vkrHryANsdPwfyEO6CCvSMF/njk=;
+	s=arc-20240116; t=1745419947; c=relaxed/simple;
+	bh=Ywfj61JihySVYb8FQE0xQufvWbFsNHdfoeiBAd/euog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTEuN5uv/qg1R922b80NPrLY+EKDryLNjcVFOeEIOrwokRsZ3NSo5NgrpM9+M1dpnYN5cbZCXbUcP8oX5YiOw8F7zd6nxHDm+LY8s6mhGYL0zF0Y1t1C9cKf57OYzDeEfLgwVyA7J50cGa4vQeETDzs5YlVwbHc4BLd41dVWzmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vi86x0v4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hh1Y8w9ahhBqauEFyancv5K2pBcrQLaJN0ANOCjuEnpVoPJrXgsZZULOgwBAo34gJVAB/NTS50qOd6gIb4W6bMIttzVYSM2XimxwVNYehWb2x48E+gwKpDgu9U1OOnBUXavJR1PQidBwF/Fce0y1V9F0P1QcpaSjtR5+d+smyxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+jQPgIn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vi86x0v4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0757C4CEE2;
-	Wed, 23 Apr 2025 14:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+jQPgIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F682C4CEE3;
+	Wed, 23 Apr 2025 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419945;
-	bh=1Y7cfDpjU0HAvY5+vkrHryANsdPwfyEO6CCvSMF/njk=;
+	s=korg; t=1745419947;
+	bh=Ywfj61JihySVYb8FQE0xQufvWbFsNHdfoeiBAd/euog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi86x0v4uHYPmTsD5rDfl4h7LmKJCDjeZU89rO5C8F6CK4B4iZaY8xgFgfLDkbUlL
-	 iP5/STJkqnEUnCzLS9dfLUMqiDy7NlHyOkrZDp9KgWNrqPL3b0aRV7oAVhUa11Hefv
-	 Ay+bSdeQ7PRGhfZ8rmo7OSBXvcy3dsvBmSl4zHWk=
+	b=L+jQPgIngQlw+t52BuYhOTMgnSEhckF0dqly4YZLjPyuFLoxB+ahyczLNHsoo0Puv
+	 YVYOoIcYxBZ++sPJFEmUjmi+jGXOCkTFneDH3/2zbXmO8OdkAzJ5fIKIDWw05g9NBf
+	 LrZRpsRMcKBnw2DbO4B2cErSe39hgKeIjpZz4+Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/393] drm/tests: helpers: Create kunit helper to destroy a drm_display_mode
-Date: Wed, 23 Apr 2025 16:38:39 +0200
-Message-ID: <20250423142644.220166239@linuxfoundation.org>
+Subject: [PATCH 6.14 046/241] net: mctp: Set SOCK_RCU_FREE
+Date: Wed, 23 Apr 2025 16:41:50 +0200
+Message-ID: <20250423142622.390159395@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 13c1d5f3a7fa7b55a26e73bb9e95342374a489b2 ]
+[ Upstream commit 52024cd6ec71a6ca934d0cc12452bd8d49850679 ]
 
-A number of test suites call functions that expect the returned
-drm_display_mode to be destroyed eventually.
+Bind lookup runs under RCU, so ensure that a socket doesn't go away in
+the middle of a lookup.
 
-However, none of the tests called drm_mode_destroy, which results in a
-memory leak.
-
-Since drm_mode_destroy takes two pointers as argument, we can't use a
-kunit wrapper. Let's just create a helper every test suite can use.
-
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250408-drm-kunit-drm-display-mode-memleak-v1-1-996305a2e75a@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Stable-dep-of: 70f29ca3117a ("drm/tests: cmdline: Fix drm_display_mode memory leak")
+Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250410-mctp-rcu-sock-v1-1-872de9fdc877@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_kunit_helpers.c | 22 ++++++++++++++++++++++
- include/drm/drm_kunit_helpers.h           |  3 +++
- 2 files changed, 25 insertions(+)
+ net/mctp/af_mctp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-index 12d58353a54ef..04d98f81c5227 100644
---- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
-+++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
-@@ -391,6 +391,28 @@ static void kunit_action_drm_mode_destroy(void *ptr)
- 	drm_mode_destroy(NULL, mode);
- }
+diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
+index f6de136008f6f..57850d4dac5db 100644
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -630,6 +630,9 @@ static int mctp_sk_hash(struct sock *sk)
+ {
+ 	struct net *net = sock_net(sk);
  
-+/**
-+ * drm_kunit_add_mode_destroy_action() - Add a drm_destroy_mode kunit action
-+ * @test: The test context object
-+ * @mode: The drm_display_mode to destroy eventually
-+ *
-+ * Registers a kunit action that will destroy the drm_display_mode at
-+ * the end of the test.
-+ *
-+ * If an error occurs, the drm_display_mode will be destroyed.
-+ *
-+ * Returns:
-+ * 0 on success, an error code otherwise.
-+ */
-+int drm_kunit_add_mode_destroy_action(struct kunit *test,
-+				      struct drm_display_mode *mode)
-+{
-+	return kunit_add_action_or_reset(test,
-+					 kunit_action_drm_mode_destroy,
-+					 mode);
-+}
-+EXPORT_SYMBOL_GPL(drm_kunit_add_mode_destroy_action);
++	/* Bind lookup runs under RCU, remain live during that. */
++	sock_set_flag(sk, SOCK_RCU_FREE);
 +
- /**
-  * drm_kunit_display_mode_from_cea_vic() - return a mode for CEA VIC for a KUnit test
-  * @test: The test context object
-diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
-index 3e5f4a23685ef..07e9a451262b6 100644
---- a/include/drm/drm_kunit_helpers.h
-+++ b/include/drm/drm_kunit_helpers.h
-@@ -120,6 +120,9 @@ drm_kunit_helper_create_crtc(struct kunit *test,
- 			     const struct drm_crtc_funcs *funcs,
- 			     const struct drm_crtc_helper_funcs *helper_funcs);
- 
-+int drm_kunit_add_mode_destroy_action(struct kunit *test,
-+				      struct drm_display_mode *mode);
-+
- struct drm_display_mode *
- drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
- 				    u8 video_code);
+ 	mutex_lock(&net->mctp.bind_lock);
+ 	sk_add_node_rcu(sk, &net->mctp.binds);
+ 	mutex_unlock(&net->mctp.bind_lock);
 -- 
 2.39.5
 
