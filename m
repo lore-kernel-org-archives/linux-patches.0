@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B434293B4A;
-	Wed, 23 Apr 2025 15:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C055C283689;
+	Wed, 23 Apr 2025 15:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421613; cv=none; b=tryQRyqzTdMbsL2q2lf38ZxyPNW50z2+jiSRUFNT4BE19S5VDojrXMYbY7Min7QWl9m+Xxabdam0s5LLFV6TzMqDRfjz+pzaYuHU0DLyT+Vg8+S1HjbqrR4ogr3/3ObuYGc2g5QriVLk+wVHNRAEibVP/eZsMwG5aA56blRFmdk=
+	t=1745421615; cv=none; b=OqJNLQg/Eg2YlXaSdzTe8RlfjVcfcpseVgmJvgDAbXBPm7F+7ZqZBmQP6rvV21B2BP4bQAm8U9/vohJWzKZG5+x3Ifh47iaLWBn2qDxhiimWwe//WZ+DXZJrYxwKIOkCWrLs9+kUVBbFXE86hBhzqoEqxknpnM3oHQpJs6EesLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421613; c=relaxed/simple;
-	bh=U1WRBLITAE6urfHrrmm6HWRK8+jCpJY6HCYDLvimRD0=;
+	s=arc-20240116; t=1745421615; c=relaxed/simple;
+	bh=PR2h3D9DAsGG6BMWqO/a2WUrgMZiOiPQhcMLA4MuH/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0cjS2fjGh+aZ7t62JVS6s69RhPt9/N0eMfPPFBZaXQWSykYQT0kcMzidEqZY7R6dEaE9YSrjA9oF9bN5G+NfoTotyLzd4zytHAvBbnQJEyXC6Wk+w5AQHqFIMIwJJtlNVtAsUfJn++X2gnbQIVbVje8x7LYMnCv2T2173i3WuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFZwgBP5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLdQVuiwieMqjlspOxKBvOAFriyh+Rrn+iZGSYdrMEFXZQMo83eC3cHvkbBwRNCfrHjigFF6xg+zj9FII9dTM/txbQ6MXCqbwJKgATK7jdBmqqghNf5wCLnxL4ry5BAruLGaiSOijVarBLSpWNMCcfVOLBwB9iSCi5C27hemEFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNBtKBvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFZwgBP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AD2C4CEE3;
-	Wed, 23 Apr 2025 15:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNBtKBvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53349C4CEE3;
+	Wed, 23 Apr 2025 15:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421613;
-	bh=U1WRBLITAE6urfHrrmm6HWRK8+jCpJY6HCYDLvimRD0=;
+	s=korg; t=1745421615;
+	bh=PR2h3D9DAsGG6BMWqO/a2WUrgMZiOiPQhcMLA4MuH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFZwgBP5y+TqLzRsJU6gtZopojlAPxOAEYn9gl0BUOj4zLIFHf1aAhsX8TF+Aa8pv
-	 XHay60jQiN5LeI6tNt07NFZsvTkyPlWlb4T4iro8EqFwF8vS9y7eOU6T5OVW8HXBhW
-	 ubvSKdLGKkAkKHgS4mOMQcA6MuuyvcJ+cN2BDTuU=
+	b=VNBtKBvq+4NmtOgoicWYCCrZKiEMvW719a8np4hmweDUmHWBHUzULms9iE5i6//rx
+	 t+2XuztEZM6FS63QpzofvDfXoNZdgrsAG3MY92X36ETYEQ0JZZqgsQHAjxBFW7oXmA
+	 diuRKMbvvXkWLsUYXCsx37UGJwcdCD4pw+NSgmpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 158/291] pinctrl: qcom: Clear latched interrupt status when changing IRQ type
-Date: Wed, 23 Apr 2025 16:42:27 +0200
-Message-ID: <20250423142630.846138766@linuxfoundation.org>
+	Trevor Woerner <twoerner@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.6 200/393] thermal/drivers/rockchip: Add missing rk3328 mapping entry
+Date: Wed, 23 Apr 2025 16:41:36 +0200
+Message-ID: <20250423142651.651320994@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Trevor Woerner <twoerner@gmail.com>
 
-commit e225128c3f8be879e7d4eb71a25949e188b420ae upstream.
+commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
 
-When submitting the TLMM test driver, Bjorn reported that some of the test
-cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
-GPIOs that are handled directly in pinctrl-msm). Basically, lingering
-latched interrupt state is still being delivered at IRQ request time, e.g.:
+The mapping table for the rk3328 is missing the entry for -25C which is
+found in the TRM section 9.5.2 "Temperature-to-code mapping".
 
-  ok 1 tlmm_test_silent_rising
-  tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 2 tlmm_test_silent_falling
-  tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 3 tlmm_test_silent_low
-  ok 4 tlmm_test_silent_high
+NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
+      4096-<code in table>. Whereas the table in the TRM gives the code
+      "3774" for -25C, the kernel uses 4096-3774=322.
 
-Whether to report interrupts that came in while the IRQ was unclaimed
-doesn't seem to be well-defined in the Linux IRQ API. However, looking
-closer at these specific cases, we're actually reporting events that do not
-match the interrupt type requested by the driver:
+[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
+  well as through the downstream kernel code, it seems we may have
+  some troubles at our hands.  Let me explain, please.
 
- 1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
-    configured for IRQF_TRIGGER_RISING.
+  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
+  the equation for the output when tsadc_q_sel equals 1 is (4096 -
+  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
+  equation is (1024 - tsadc_q) in that case.
 
- 2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
-        to high state. The rising interrupt gets latched.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
-        interrupt isn't cleared.
-    (c) The IRQ handler is called for the latched interrupt, but there
-        wasn't any falling edge.
+  The downstream kernel code, however, treats the RK3308 and RK3328
+  tables and their values as being the same.  It even mentions 1024 as
+  the "offset" value in a comment block for the rk_tsadcv3_control()
+  function, just like the upstream code does, which is obviously wrong
+  "offset" value when correlated with the table on page 544 of part 1
+  of the RK3308 TRM v1.1.
 
- 3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
-        result in a phantom interrupt that gets latched.
-    (c) The IRQ handler is called for the latched interrupt, but the GPIO
-        isn't in low state.
+  With all this in mind, it's obvious that more work is needed to make
+  it clear where's the actual mistake (it could be that the TRM is
+  wrong), which I'll volunteer for as part of the SoC binning project.
+  In the meantime, this patch looks fine as-is to me, by offering
+  what's a clear improvement to the current state of the upstream
+  code"
 
- 4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
-    (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
-        was cleared when masking the level-triggered interrupt.
-
-Fix this by clearing the interrupt state whenever making any changes to the
-interrupt configuration. This includes previously disabled interrupts, but
-also any changes to interrupt polarity or detection type.
-
-With this change, all 16 test cases are now passing for the non-wakeup
-GPIOs in the TLMM.
-
+Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
 Cc: stable@vger.kernel.org
-Fixes: cf9d052aa600 ("pinctrl: qcom: Don't clear pending interrupts when enabling")
-Reported-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Closes: https://lore.kernel.org/r/20250227-tlmm-test-v1-1-d18877b4a5db@oss.qualcomm.com/
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
+Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/thermal/rockchip_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1006,8 +1006,7 @@ static int msm_gpio_irq_set_type(struct
- 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
- 	const struct msm_pingroup *g;
- 	unsigned long flags;
--	bool was_enabled;
--	u32 val;
-+	u32 val, oldval;
- 
- 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
- 		set_bit(d->hwirq, pctrl->dual_edge_irqs);
-@@ -1067,8 +1066,7 @@ static int msm_gpio_irq_set_type(struct
- 	 * internal circuitry of TLMM, toggling the RAW_STATUS
- 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
- 	 */
--	val = msm_readl_intr_cfg(pctrl, g);
--	was_enabled = val & BIT(g->intr_raw_status_bit);
-+	val = oldval = msm_readl_intr_cfg(pctrl, g);
- 	val |= BIT(g->intr_raw_status_bit);
- 	if (g->intr_detection_width == 2) {
- 		val &= ~(3 << g->intr_detection_bit);
-@@ -1121,9 +1119,11 @@ static int msm_gpio_irq_set_type(struct
- 	/*
- 	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
- 	 * Clear the interrupt.  This is safe because we have
--	 * IRQCHIP_SET_TYPE_MASKED.
-+	 * IRQCHIP_SET_TYPE_MASKED. When changing the interrupt type, we could
-+	 * also still have a non-matching interrupt latched, so clear whenever
-+	 * making changes to the interrupt configuration.
- 	 */
--	if (!was_enabled)
-+	if (val != oldval)
- 		msm_ack_intr_status(pctrl, g);
- 
- 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+--- a/drivers/thermal/rockchip_thermal.c
++++ b/drivers/thermal/rockchip_thermal.c
+@@ -386,6 +386,7 @@ static const struct tsadc_table rk3328_c
+ 	{296, -40000},
+ 	{304, -35000},
+ 	{313, -30000},
++	{322, -25000},
+ 	{331, -20000},
+ 	{340, -15000},
+ 	{349, -10000},
 
 
