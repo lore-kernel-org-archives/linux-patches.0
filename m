@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05972269B07;
-	Wed, 23 Apr 2025 15:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DFA28DEE8;
+	Wed, 23 Apr 2025 15:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421953; cv=none; b=hEw6UHH5RycV9lby5r1UR+WMkAEqlCS4GGBfBwdPtAREF69kAj52F2dZsM3l8VHLvHnqEegG+T6qhWCMb4I85CGafAW05xqc5GpiOstSXsdvNk1hp20KEk1DERzx/WmAN6I9kQndEoGUerS5O6eNcLbjXa3uG8VfheaimP1FQ+M=
+	t=1745421955; cv=none; b=PS9jvKYkcu0Vszioq+iRBVCsPohMs38mXPvEyOkobj49Z/GKtxL/O2oyTkqffVNeroraLFWaCz3puQud55WGePVfg6UdduoxJygE6C7uZ/3Tm6IXtc9LR6aCuWRS1W9vfSJjizvtzwvqIT9/JJ43lCcgliRaTJ3buCOJkO06i2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421953; c=relaxed/simple;
-	bh=iF+Mw9HipAPdDJ8NHh3n/qPgNzBChFh5900zu4sUUO8=;
+	s=arc-20240116; t=1745421955; c=relaxed/simple;
+	bh=WQAe7SFxmWLY3B5h2hfUDJgknzf4GAhKt6QlM0BrKHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/F4KtccSQVQ5wm0ah1CFj4K+lCcPZhZkBm2kq9rdzIX78G7fL4+AVAR5dQIM01+Lw3+UggrYwueJ+qc9/BizntjXe5lLN3ENFt7qXlPfFhkaWMg0cDu27Gh4W7fq5Kjmdulo1uhcvOjSkjQSkTDIgA9FnQCSS4XYPCduXNLsSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHm88eVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmbEKQDcm3QdhPHY2RU+AP9KbIDi0uqa7L4KwngGlUzZfj/Hcn9IGOH+YQvYfmSG88tWZ9MJZsV949Bndn1DO3paKXXPs7PLHwtCWM+uQ6WoQkEstkwXdh75CNRFkhxtTDTCZT6ru7odyRRsBvLKgWqFMTiOOebOM+2DeyFpXjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo+WjbZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHm88eVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32823C4CEE3;
-	Wed, 23 Apr 2025 15:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo+WjbZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D56CC4CEE8;
+	Wed, 23 Apr 2025 15:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421952;
-	bh=iF+Mw9HipAPdDJ8NHh3n/qPgNzBChFh5900zu4sUUO8=;
+	s=korg; t=1745421955;
+	bh=WQAe7SFxmWLY3B5h2hfUDJgknzf4GAhKt6QlM0BrKHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHm88eVbEnGAuC4XciLGUhmGtG3eqtJcOtUw80qZ4QCQgCk4jm/NXGHPNTQ3MainK
-	 2pr9XYmh4fB8w7qWXaQwbEyRS+EbN4yyDkgeS0lbW3Jpc/hcmds0ZTodk1j3PCAxdD
-	 HO0MNO3jtWdNfpYHDnea6mWBPxJWRAGIsz3Zoeck=
+	b=Xo+WjbZPZuxEO93vYpUtT+1w9UIA2ajhNTCwAprJj+eMhgcGbIEUMP6Dp8ynmddf3
+	 u7c+x4SpkKmrOHpSa6ODHet0nEE/6fFEIfGSkUkzLc+MH+zIY5YEw+zLI59dZqpEiv
+	 SJ9jXW1yxFmfvcYN8arjnhfdH/YP5jrjTmKN87Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 251/393] RDMA/usnic: Fix passing zero to PTR_ERR in usnic_ib_pci_probe()
-Date: Wed, 23 Apr 2025 16:42:27 +0200
-Message-ID: <20250423142653.742023089@linuxfoundation.org>
+Subject: [PATCH 6.1 205/291] nfsd: decrease sc_count directly if fail to queue dl_recall
+Date: Wed, 23 Apr 2025 16:43:14 +0200
+Message-ID: <20250423142632.759431278@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 95ba3850fed03e01b422ab5d7943aeba130c9723 ]
+[ Upstream commit a1d14d931bf700c1025db8c46d6731aa5cf440f9 ]
 
-drivers/infiniband/hw/usnic/usnic_ib_main.c:590
- usnic_ib_pci_probe() warn: passing zero to 'PTR_ERR'
+A deadlock warning occurred when invoking nfs4_put_stid following a failed
+dl_recall queue operation:
+            T1                            T2
+                                nfs4_laundromat
+                                 nfs4_get_client_reaplist
+                                  nfs4_anylock_blockers
+__break_lease
+ spin_lock // ctx->flc_lock
+                                   spin_lock // clp->cl_lock
+                                   nfs4_lockowner_has_blockers
+                                    locks_owner_has_blockers
+                                     spin_lock // flctx->flc_lock
+ nfsd_break_deleg_cb
+  nfsd_break_one_deleg
+   nfs4_put_stid
+    refcount_dec_and_lock
+     spin_lock // clp->cl_lock
 
-Make usnic_ib_device_add() return NULL on fail path, also remove
-useless NULL check for usnic_ib_discover_pf()
+When a file is opened, an nfs4_delegation is allocated with sc_count
+initialized to 1, and the file_lease holds a reference to the delegation.
+The file_lease is then associated with the file through kernel_setlease.
 
-Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
-Link: https://patch.msgid.link/r/20250324123132.2392077-1-yuehaibing@huawei.com
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The disassociation is performed in nfsd4_delegreturn via the following
+call chain:
+nfsd4_delegreturn --> destroy_delegation --> destroy_unhashed_deleg -->
+nfs4_unlock_deleg_lease --> kernel_setlease --> generic_delete_lease
+The corresponding sc_count reference will be released after this
+disassociation.
+
+Since nfsd_break_one_deleg executes while holding the flc_lock, the
+disassociation process becomes blocked when attempting to acquire flc_lock
+in generic_delete_lease. This means:
+1) sc_count in nfsd_break_one_deleg will not be decremented to 0;
+2) The nfs4_put_stid called by nfsd_break_one_deleg will not attempt to
+acquire cl_lock;
+3) Consequently, no deadlock condition is created.
+
+Given that sc_count in nfsd_break_one_deleg remains non-zero, we can
+safely perform refcount_dec on sc_count directly. This approach
+effectively avoids triggering deadlock warnings.
+
+Fixes: 230ca758453c ("nfsd: put dl_stid if fail to queue dl_recall")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_ib_main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_ib_main.c b/drivers/infiniband/hw/usnic/usnic_ib_main.c
-index 13b654ddd3cc8..bcf7d8607d56e 100644
---- a/drivers/infiniband/hw/usnic/usnic_ib_main.c
-+++ b/drivers/infiniband/hw/usnic/usnic_ib_main.c
-@@ -380,7 +380,7 @@ static void *usnic_ib_device_add(struct pci_dev *dev)
- 	if (!us_ibdev) {
- 		usnic_err("Device %s context alloc failed\n",
- 				netdev_name(pci_get_drvdata(dev)));
--		return ERR_PTR(-EFAULT);
-+		return NULL;
- 	}
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 628d20574a919..bdee95d714d0e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4941,7 +4941,7 @@ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ 	queued = nfsd4_run_cb(&dp->dl_recall);
+ 	WARN_ON_ONCE(!queued);
+ 	if (!queued)
+-		nfs4_put_stid(&dp->dl_stid);
++		refcount_dec(&dp->dl_stid.sc_count);
+ }
  
- 	us_ibdev->ufdev = usnic_fwd_dev_alloc(dev);
-@@ -500,8 +500,8 @@ static struct usnic_ib_dev *usnic_ib_discover_pf(struct usnic_vnic *vnic)
- 	}
- 
- 	us_ibdev = usnic_ib_device_add(parent_pci);
--	if (IS_ERR_OR_NULL(us_ibdev)) {
--		us_ibdev = us_ibdev ? us_ibdev : ERR_PTR(-EFAULT);
-+	if (!us_ibdev) {
-+		us_ibdev = ERR_PTR(-EFAULT);
- 		goto out;
- 	}
- 
-@@ -569,10 +569,10 @@ static int usnic_ib_pci_probe(struct pci_dev *pdev,
- 	}
- 
- 	pf = usnic_ib_discover_pf(vf->vnic);
--	if (IS_ERR_OR_NULL(pf)) {
--		usnic_err("Failed to discover pf of vnic %s with err%ld\n",
--				pci_name(pdev), PTR_ERR(pf));
--		err = pf ? PTR_ERR(pf) : -EFAULT;
-+	if (IS_ERR(pf)) {
-+		err = PTR_ERR(pf);
-+		usnic_err("Failed to discover pf of vnic %s with err%d\n",
-+				pci_name(pdev), err);
- 		goto out_clean_vnic;
- 	}
- 
+ /* Called from break_lease() with flc_lock held. */
 -- 
 2.39.5
 
