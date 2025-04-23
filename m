@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7475A175BF;
-	Wed, 23 Apr 2025 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFA0143736;
+	Wed, 23 Apr 2025 14:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420139; cv=none; b=OEzpsO2xRVlbPIsV4iYmuuREmQ9vMh3clc3WKzGsp0X4OndTNzBCXfKfPmXpKmz8xQfo1+pB+mZ9NWK0eBPgyNSc5q6h3uTMO6e8RrBvef/CrzHU/0PQZ0hpx3AkTO7cLI9ID1cN2f0+Ynff6dUpy66+ltf6ZcuSJDJt1VkxbCw=
+	t=1745420142; cv=none; b=T3npLzqxz4LjA3GQwh6SBzz3MzbfADArhBLPq3YB8XUzcZXswVQEGmtJU094daYuFx0RZogVwMFubWwBrV6253v/sSjTS+5M00Mb0BPS/M0Iw5aCOb4x2Q4TDUJmMKRZPD89727zmWhX3r9qF4w2fk+qmN5gejOTAuYJNXxSW4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420139; c=relaxed/simple;
-	bh=RpL8mooEoxNIs4qvwjTD2Z9v++ie9mIlQ2mie0j2C6M=;
+	s=arc-20240116; t=1745420142; c=relaxed/simple;
+	bh=oDo3UZgN2f0i5SU10aU0wh8oxr5T89ZFV8R4Orckq3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZV5DOCb5zZ18jWWh+4NqPwyxnW2WFgp9nrB2DzTU1Z1VGjiuulQgbBSITGn/gInHvOMf+rhytKutBCK9k6pjycNCOGI6Rj+UAudxiNoVAG9Fk9FPiew2T3QvgJNnXIyOcNMRAubW89nTwNX2vjxuRafpTgUDbqFPji5e4thVzuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eM+NsZih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O9UFEKDrd1Xly85tRsKUhbqoqfhPVdNDELBsgTOstpA50sA2bnL8GqaPltmLw/xQwK0OFINhQWOjJOy7+FfAgt0w1Aqal+uvC7u0kl2NuBSSmOJY8DNjkRE5sxF+h+PJ3QmU/tGJunmLczTzpc+nMe+C8jAIv8EKqI3WV454OT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEKOF5AJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM+NsZih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072B0C4CEE2;
-	Wed, 23 Apr 2025 14:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEKOF5AJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE3FC4CEE2;
+	Wed, 23 Apr 2025 14:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420139;
-	bh=RpL8mooEoxNIs4qvwjTD2Z9v++ie9mIlQ2mie0j2C6M=;
+	s=korg; t=1745420142;
+	bh=oDo3UZgN2f0i5SU10aU0wh8oxr5T89ZFV8R4Orckq3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eM+NsZihq4d5gEsMbNoI0jxfk3tVr2lTA1l8sy/yEQPjJp9Bxk0MOKlFawU4EG69h
-	 YqHBtmNpbcsp+vpZ+/jix+TCxdgcNyj2ZIqKiaF3T32lMfDf/SRjy4k6GP0t8oOnrF
-	 FMjFopx3VTGSkzKFccH9qaTcR5m/PB0mI1/DeEII=
+	b=tEKOF5AJdI6dvv1qWrqGB9O8/fu8TuTK7z8o0nvkbT3IgYq+BIvI0JlJdfopstZZX
+	 tOlSn3IOykmT3EolEmSTqHL1BxxlwnlS95sE8uMPqHT4K6kio1mqijC7Yzu4/Ui6rm
+	 aeHuTkp8eqRrJUJe8oOwOqCm2KI3JT34bqbpFFkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Max Grobecker <max@grobecker.info>,
+	Ingo Molnar <mingo@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/223] fs: move the bdex_statx call to vfs_getattr_nosec
-Date: Wed, 23 Apr 2025 16:42:55 +0200
-Message-ID: <20250423142621.311212609@linuxfoundation.org>
+Subject: [PATCH 6.6 042/393] x86/cpu: Dont clear X86_FEATURE_LAHF_LM flag in init_amd_k8() on AMD when running in a virtual machine
+Date: Wed, 23 Apr 2025 16:38:58 +0200
+Message-ID: <20250423142645.029766418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +50,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Max Grobecker <max@grobecker.info>
 
-[ Upstream commit 777d0961ff95b26d5887fdae69900374364976f3 ]
+[ Upstream commit a4248ee16f411ac1ea7dfab228a6659b111e3d65 ]
 
-Currently bdex_statx is only called from the very high-level
-vfs_statx_path function, and thus bypassing it for in-kernel calls
-to vfs_getattr or vfs_getattr_nosec.
+When running in a virtual machine, we might see the original hardware CPU
+vendor string (i.e. "AuthenticAMD"), but a model and family ID set by the
+hypervisor. In case we run on AMD hardware and the hypervisor sets a model
+ID < 0x14, the LAHF cpu feature is eliminated from the the list of CPU
+capabilities present to circumvent a bug with some BIOSes in conjunction with
+AMD K8 processors.
 
-This breaks querying the block ѕize of the underlying device in the
-loop driver and also is a pitfall for any other new kernel caller.
+Parsing the flags list from /proc/cpuinfo seems to be happening mostly in
+bash scripts and prebuilt Docker containers, as it does not need to have
+additionals tools present – even though more reliable ways like using "kcpuid",
+which calls the CPUID instruction instead of parsing a list, should be preferred.
+Scripts, that use /proc/cpuinfo to determine if the current CPU is
+"compliant" with defined microarchitecture levels like x86-64-v2 will falsely
+claim the CPU is incapable of modern CPU instructions when "lahf_lm" is missing
+in that flags list.
 
-Move the call into the lowest level helper to ensure all callers get
-the right results.
+This can prevent some docker containers from starting or build scripts to create
+unoptimized binaries.
 
-Fixes: 2d985f8c6b91 ("vfs: support STATX_DIOALIGN on block devices")
-Fixes: f4774e92aab8 ("loop: take the file system minimum dio alignment into account")
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/20250417064042.712140-1-hch@lst.de
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Admittably, this is more a small inconvenience than a severe bug in the kernel
+and the shoddy scripts that rely on parsing /proc/cpuinfo
+should be fixed instead.
+
+This patch adds an additional check to see if we're running inside a
+virtual machine (X86_FEATURE_HYPERVISOR is present), which, to my
+understanding, can't be present on a real K8 processor as it was introduced
+only with the later/other Athlon64 models.
+
+Example output with the "lahf_lm" flag missing in the flags list
+(should be shown between "hypervisor" and "abm"):
+
+    $ cat /proc/cpuinfo
+    processor       : 0
+    vendor_id       : AuthenticAMD
+    cpu family      : 15
+    model           : 6
+    model name      : Common KVM processor
+    stepping        : 1
+    microcode       : 0x1000065
+    cpu MHz         : 2599.998
+    cache size      : 512 KB
+    physical id     : 0
+    siblings        : 1
+    core id         : 0
+    cpu cores       : 1
+    apicid          : 0
+    initial apicid  : 0
+    fpu             : yes
+    fpu_exception   : yes
+    cpuid level     : 13
+    wp              : yes
+    flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca
+                      cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp
+                      lm rep_good nopl cpuid extd_apicid tsc_known_freq pni
+                      pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt
+                      tsc_deadline_timer aes xsave avx f16c hypervisor abm
+                      3dnowprefetch vmmcall bmi1 avx2 bmi2 xsaveopt
+
+... while kcpuid shows the feature to be present in the CPU:
+
+    # kcpuid -d | grep lahf
+         lahf_lm             - LAHF/SAHF available in 64-bit mode
+
+[ mingo: Updated the comment a bit, incorporated Boris's review feedback. ]
+
+Signed-off-by: Max Grobecker <max@grobecker.info>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: Borislav Petkov <bp@alien8.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c           |  3 +--
- fs/stat.c              | 32 ++++++++++++++++++--------------
- include/linux/blkdev.h |  6 +++---
- 3 files changed, 22 insertions(+), 19 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 738e3c8457e7f..1f1282a0dc653 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1269,8 +1269,7 @@ void sync_bdevs(bool wait)
- /*
-  * Handle STATX_{DIOALIGN, WRITE_ATOMIC} for block devices.
-  */
--void bdev_statx(struct path *path, struct kstat *stat,
--		u32 request_mask)
-+void bdev_statx(const struct path *path, struct kstat *stat, u32 request_mask)
- {
- 	struct inode *backing_inode;
- 	struct block_device *bdev;
-diff --git a/fs/stat.c b/fs/stat.c
-index b399b881bbbf9..8ce0fc9cad5d0 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -162,12 +162,25 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
- 				  STATX_ATTR_DAX);
- 
- 	idmap = mnt_idmap(path->mnt);
--	if (inode->i_op->getattr)
--		return inode->i_op->getattr(idmap, path, stat,
--					    request_mask,
--					    query_flags);
-+	if (inode->i_op->getattr) {
-+		int ret;
-+
-+		ret = inode->i_op->getattr(idmap, path, stat, request_mask,
-+				query_flags);
-+		if (ret)
-+			return ret;
-+	} else {
-+		generic_fillattr(idmap, request_mask, inode, stat);
-+	}
-+
-+	/*
-+	 * If this is a block device inode, override the filesystem attributes
-+	 * with the block device specific parameters that need to be obtained
-+	 * from the bdev backing inode.
-+	 */
-+	if (S_ISBLK(stat->mode))
-+		bdev_statx(path, stat, request_mask);
- 
--	generic_fillattr(idmap, request_mask, inode, stat);
- 	return 0;
- }
- EXPORT_SYMBOL(vfs_getattr_nosec);
-@@ -260,15 +273,6 @@ static int vfs_statx_path(struct path *path, int flags, struct kstat *stat,
- 	if (path_mounted(path))
- 		stat->attributes |= STATX_ATTR_MOUNT_ROOT;
- 	stat->attributes_mask |= STATX_ATTR_MOUNT_ROOT;
--
--	/*
--	 * If this is a block device inode, override the filesystem
--	 * attributes with the block device specific parameters that need to be
--	 * obtained from the bdev backing inode.
--	 */
--	if (S_ISBLK(stat->mode))
--		bdev_statx(path, stat, request_mask);
--
- 	return 0;
- }
- 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 8f37c5dd52b21..2aa9cb446c6c8 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1624,7 +1624,7 @@ int sync_blockdev(struct block_device *bdev);
- int sync_blockdev_range(struct block_device *bdev, loff_t lstart, loff_t lend);
- int sync_blockdev_nowait(struct block_device *bdev);
- void sync_bdevs(bool wait);
--void bdev_statx(struct path *, struct kstat *, u32);
-+void bdev_statx(const struct path *path, struct kstat *stat, u32 request_mask);
- void printk_all_partitions(void);
- int __init early_lookup_bdev(const char *pathname, dev_t *dev);
- #else
-@@ -1642,8 +1642,8 @@ static inline int sync_blockdev_nowait(struct block_device *bdev)
- static inline void sync_bdevs(bool wait)
- {
- }
--static inline void bdev_statx(struct path *path, struct kstat *stat,
--				u32 request_mask)
-+static inline void bdev_statx(const struct path *path, struct kstat *stat,
-+		u32 request_mask)
- {
- }
- static inline void printk_all_partitions(void)
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 9413fb767c6a7..be378b44ca35f 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -825,7 +825,7 @@ static void init_amd_k8(struct cpuinfo_x86 *c)
+ 	 * (model = 0x14) and later actually support it.
+ 	 * (AMD Erratum #110, docId: 25759).
+ 	 */
+-	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM)) {
++	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM) && !cpu_has(c, X86_FEATURE_HYPERVISOR)) {
+ 		clear_cpu_cap(c, X86_FEATURE_LAHF_LM);
+ 		if (!rdmsrl_amd_safe(0xc001100d, &value)) {
+ 			value &= ~BIT_64(32);
 -- 
 2.39.5
 
