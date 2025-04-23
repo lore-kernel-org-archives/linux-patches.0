@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC00280CF0;
-	Wed, 23 Apr 2025 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD40285417;
+	Wed, 23 Apr 2025 15:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421256; cv=none; b=WeGw7XnBqTQgSK5pkwPGLCCSvjDOKOfIHZhBj0WhmoKRqgIOHrY8P8DFbqc4FYBL5a4Xc/7e1Dd51Q5T2sUtjj91eLtSV7rf59jxmCvplPRroKkzlos2NuB2JGV/dc29GmmNy4GoxPjnuoy3+bqcqWOUk4IzbrMpO2hKXyS8lec=
+	t=1745421260; cv=none; b=b+mHKeIlf1Ceu3UnBQaaAAj3Ynjt4YK1zujd7Ip2yjCfWu5tJwh6zLWtjjJZga9nWu5Jq78uhl7F6LH3tmQIqR5E3q9a0BuoVJ6gMkZJSH0z0/Ia9BM34l66iO/E9pH8FLZZWE+u2g6l9Q8S3Jy8l6yY0tn8lH7EO+cbNtMNRis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421256; c=relaxed/simple;
-	bh=XUe2rKZgFr5ZOBcfq9voVIGj2mymy3bSVf2atRaMbnI=;
+	s=arc-20240116; t=1745421260; c=relaxed/simple;
+	bh=+jHBv/EYgoKRjimDo6bW9302MSPrTJc391DAbVhOViU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9Su49JptG22klfkhVHlA0tmwKIgRKoARAdaRchz72/ZhD/j+U3JEYmNkrY2XTVrexE97GtgE6vXbwmvV1T7anLFpKFOkrZiJSlwpx3w4j995UEhgIUU9aEPAQ+DKay//L/h/+pW2jYcF//uGZlnXx4EFOii7AdfffMK5o/T83U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siXMo9Dj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqNj+EqFy3EAyftH2e/QuNxlZU03A38WQ3mK5KUEm8AwTQout/HFgR5mx4x82EspLaJAc23kVpj0950maBvyD0WOd1a2ssAru0RrkX+CSQgtZYppFk2T9mAtUbZUSxuyEA/Yz5jcQJCVtAnOx6y2txjZcN4xN1tJQ9BK9yb0Ty0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zt1ZvpKV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siXMo9Dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCCFC4CEE2;
-	Wed, 23 Apr 2025 15:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zt1ZvpKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAB7C4CEE2;
+	Wed, 23 Apr 2025 15:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421256;
-	bh=XUe2rKZgFr5ZOBcfq9voVIGj2mymy3bSVf2atRaMbnI=;
+	s=korg; t=1745421259;
+	bh=+jHBv/EYgoKRjimDo6bW9302MSPrTJc391DAbVhOViU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siXMo9DjzNGUlQXvtdFaPcKRF/c1uT1K76h/0UpDWbFcA7dHA97SSm2R3xQYylUZ/
-	 7rhIIfzywH2ow7MB/oAJCkfJll12n+y4Hp0K0gsZUB+svLJo84158NKMpTS13g3AHu
-	 g+STVzOhc0ToCVF/cWFo6dJvvugGh4Hg9VKD7CP0=
+	b=zt1ZvpKVGjBYWFaauFMgKyAlR+iBWOlvw0t6b8HrXTm9cWdPx+1WvOGVrFB5hoeqb
+	 zjQCwHii0M0F3QXn+GrHRKcUc3KmCd1llkKzUBt411ur7rorPnJuoIPD8h4Wh1V+qp
+	 h0cRoFjAURnnansREKp3LigxxXTS+4RhRablLwT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 157/393] ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
-Date: Wed, 23 Apr 2025 16:40:53 +0200
-Message-ID: <20250423142649.863026815@linuxfoundation.org>
+	Boqun Feng <boqun.feng@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 6.1 121/291] locking/lockdep: Decrease nr_unused_locks if lock unused in zap_class()
+Date: Wed, 23 Apr 2025 16:41:50 +0200
+Message-ID: <20250423142629.345889492@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Boqun Feng <boqun.feng@gmail.com>
 
-commit 5d01ed9b9939b4c726be74db291a982bc984c584 upstream.
+commit 495f53d5cca0f939eaed9dca90b67e7e6fb0e30c upstream.
 
-Period sizes less than 6k for capture path triggers overruns in the
-dsp capture pipeline.
+Currently, when a lock class is allocated, nr_unused_locks will be
+increased by 1, until it gets used: nr_unused_locks will be decreased by
+1 in mark_lock(). However, one scenario is missed: a lock class may be
+zapped without even being used once. This could result into a situation
+that nr_unused_locks != 0 but no unused lock class is active in the
+system, and when `cat /proc/lockdep_stats`, a WARN_ON() will
+be triggered in a CONFIG_DEBUG_LOCKDEP=y kernel:
 
-Change the period size and number of periods to value which DSP is happy with.
+  [...] DEBUG_LOCKS_WARN_ON(debug_atomic_read(nr_unused_locks) != nr_unused)
+  [...] WARNING: CPU: 41 PID: 1121 at kernel/locking/lockdep_proc.c:283 lockdep_stats_show+0xba9/0xbd0
 
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+And as a result, lockdep will be disabled after this.
+
+Therefore, nr_unused_locks needs to be accounted correctly at
+zap_class() time.
+
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://patch.msgid.link/20250314174800.10142-6-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250326180831.510348-1-boqun.feng@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/locking/lockdep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -24,8 +24,8 @@
- #define PLAYBACK_MIN_PERIOD_SIZE	128
- #define CAPTURE_MIN_NUM_PERIODS		2
- #define CAPTURE_MAX_NUM_PERIODS		8
--#define CAPTURE_MAX_PERIOD_SIZE		4096
--#define CAPTURE_MIN_PERIOD_SIZE		320
-+#define CAPTURE_MAX_PERIOD_SIZE		65536
-+#define CAPTURE_MIN_PERIOD_SIZE		6144
- #define BUFFER_BYTES_MAX (PLAYBACK_MAX_NUM_PERIODS * PLAYBACK_MAX_PERIOD_SIZE)
- #define BUFFER_BYTES_MIN (PLAYBACK_MIN_NUM_PERIODS * PLAYBACK_MIN_PERIOD_SIZE)
- #define COMPR_PLAYBACK_MAX_FRAGMENT_SIZE (128 * 1024)
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -6021,6 +6021,9 @@ static void zap_class(struct pending_fre
+ 		hlist_del_rcu(&class->hash_entry);
+ 		WRITE_ONCE(class->key, NULL);
+ 		WRITE_ONCE(class->name, NULL);
++		/* Class allocated but not used, -1 in nr_unused_locks */
++		if (class->usage_mask == 0)
++			debug_atomic_dec(nr_unused_locks);
+ 		nr_lock_classes--;
+ 		__clear_bit(class - lock_classes, lock_classes_in_use);
+ 		if (class - lock_classes == max_lock_class_idx)
 
 
