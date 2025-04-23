@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC08280A2C;
-	Wed, 23 Apr 2025 14:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812681EFFB9;
+	Wed, 23 Apr 2025 14:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420377; cv=none; b=En8JWVOK1XDpg5qKtUYINOiENf+W9hGkviD78097lfduW1X9hgsslLwI1RwUj9C7DKuvs4DPBn3iDRxh/Zj/hl+fHGRwMB17qizum+m5PpxBmMp3gm+IOefhw4HnXoanzCyUjhodUGkGJoENZ/EQCVqVoJ7falTHxKZ6NwG/62k=
+	t=1745420379; cv=none; b=McdtBYNhidBTvjMAmpBfIxFoN652ZtnIsQwXZijfVXYUAvJtbvWOpFHX5Vh4Vucq/fO6sV2oiusBbFeIomfAsJz0aYOtT6s54WH0z+gSLECHFKL1nk0WwBI6YBlHBiZ2EbeOikneUDB9ob7wwhszZpYccaLcL5fWEhW8JhU+u+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420377; c=relaxed/simple;
-	bh=jzpPhgLsxK8/NlhMvGeJdnJmcGXOFEdS+wW4ZDRQfCo=;
+	s=arc-20240116; t=1745420379; c=relaxed/simple;
+	bh=8ZdBhYOImJchWBIJRjnf6IZNwZEpV3v+Zf4z8jwGjBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSLEHW8jM1zMuNng1ajrUQ9AvYuLKaFo4biWxMa4KK9JwEn4CzqBPnv71YQEUcXxoEMeOAfgBan7EWY/Vc8rCjqsAMPDxL8GEz7IzLnppSTUaysPwMZ7JEWpCdnR+5QqIAloKNg5+wiSOxu1DRELXgEJGsj0KQv0RgVYl8wnxa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYrnrv1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rINx23iAY0Q7i4u407WH1qRPUb4lI2nQIPtAlN2ODi7rp+nKbKW5b59TzbgAcxvJDJzCNfzPLJTdScQFNSeyD1T6gHZ89L8G6pdKO3lnlPo1NHjh2ZZESs2kxLve4Vpdbeu5AAHksfc0XEIrAtENEoCcCRzre9mmrs5/j+FK87Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3SMdPSo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYrnrv1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F995C4CEE2;
-	Wed, 23 Apr 2025 14:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3SMdPSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BAFC4CEE2;
+	Wed, 23 Apr 2025 14:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420376;
-	bh=jzpPhgLsxK8/NlhMvGeJdnJmcGXOFEdS+wW4ZDRQfCo=;
+	s=korg; t=1745420379;
+	bh=8ZdBhYOImJchWBIJRjnf6IZNwZEpV3v+Zf4z8jwGjBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYrnrv1fPdVFuv5WRCohyhSrCCYn6uPnln+fzlnd9vJ7JaZd9kp4VHoYt+HhWElW/
-	 lK5jx4rctcXuq5Zv3dEpXgRW2gicmKwspuO3yQfmDA3fIi2J76JtIcojkUmIuqvYO/
-	 4NobuKhPJM0+EaSH6UUdMUo/Zh7MmaOtkM6UN1ps=
+	b=J3SMdPSom6pDj5d2apycCDYSln+fISgv81qYOQd5qMfp/8z7yKkRf3pGhIKVNkWEG
+	 4JAkW1ndruhSf5UIboDtiymSfCftOAskI3quQMQrWV9dSTew8xH5tPMTHAvE5npLT0
+	 2xqP1r/hc3f9zfdnJmIm+5rtp7DpwvBhbQcgqKDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Schulze <max.schulze@online.de>,
-	David Hollis <dhollis@davehollis.com>,
-	Sven Kreiensen <s.kreiensen@lyconsys.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philip Pemberton <lists@philpem.me.uk>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/393] net: usb: asix_devices: add FiberGecko DeviceID
-Date: Wed, 23 Apr 2025 16:39:25 +0200
-Message-ID: <20250423142646.155612494@linuxfoundation.org>
+Subject: [PATCH 6.1 042/291] ata: libata-eh: Do not use ATAPI DMA for a device limited to PIO mode
+Date: Wed, 23 Apr 2025 16:40:31 +0200
+Message-ID: <20250423142626.114923213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,62 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Schulze <max.schulze@online.de>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 4079918ae720e842ed7dff65fedeb9980b374995 ]
+[ Upstream commit 91ec84f8eaddbc93d7c62e363d68aeb7b89879c7 ]
 
-The FiberGecko is a small USB module that connects a 100 Mbit/s SFP
+atapi_eh_request_sense() currently uses ATAPI DMA if the SATA controller
+has ATA_FLAG_PIO_DMA (PIO cmds via DMA) set.
 
-Signed-off-by: Max Schulze <max.schulze@online.de>
-Tested-by: Max Schulze <max.schulze@online.de>
-Suggested-by: David Hollis <dhollis@davehollis.com>
-Reported-by: Sven Kreiensen <s.kreiensen@lyconsys.com>
-Link: https://patch.msgid.link/20250212150957.43900-2-max.schulze@online.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, ATA_FLAG_PIO_DMA is a flag that can be set by a low-level driver
+on a port at initialization time, before any devices are scanned.
+
+If a controller detects a connected device that only supports PIO, we set
+the flag ATA_DFLAG_PIO.
+
+Modify atapi_eh_request_sense() to not use ATAPI DMA if the connected
+device only supports PIO.
+
+Reported-by: Philip Pemberton <lists@philpem.me.uk>
+Closes: https://lore.kernel.org/linux-ide/c6722ee8-5e21-4169-af59-cbbae9edc02f@philpem.me.uk/
+Tested-by: Philip Pemberton <lists@philpem.me.uk>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250221015422.20687-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/asix_devices.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/ata/libata-eh.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
-index f7cff58fe0449..ec4dcf89cbedd 100644
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -1421,6 +1421,19 @@ static const struct driver_info hg20f9_info = {
- 	.data = FLAG_EEPROM_MAC,
- };
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 3f327ba759fd9..586982a2a61ff 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -1510,8 +1510,15 @@ unsigned int atapi_eh_request_sense(struct ata_device *dev,
+ 	tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	tf.command = ATA_CMD_PACKET;
  
-+static const struct driver_info lyconsys_fibergecko100_info = {
-+	.description = "LyconSys FiberGecko 100 USB 2.0 to SFP Adapter",
-+	.bind = ax88178_bind,
-+	.status = asix_status,
-+	.link_reset = ax88178_link_reset,
-+	.reset = ax88178_link_reset,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
-+		 FLAG_MULTI_PACKET,
-+	.rx_fixup = asix_rx_fixup_common,
-+	.tx_fixup = asix_tx_fixup,
-+	.data = 0x20061201,
-+};
-+
- static const struct usb_device_id	products [] = {
- {
- 	// Linksys USB200M
-@@ -1578,6 +1591,10 @@ static const struct usb_device_id	products [] = {
- 	// Linux Automation GmbH USB 10Base-T1L
- 	USB_DEVICE(0x33f7, 0x0004),
- 	.driver_info = (unsigned long) &lxausb_t1l_info,
-+}, {
-+	/* LyconSys FiberGecko 100 */
-+	USB_DEVICE(0x1d2a, 0x0801),
-+	.driver_info = (unsigned long) &lyconsys_fibergecko100_info,
- },
- 	{ },		// END
- };
+-	/* is it pointless to prefer PIO for "safety reasons"? */
+-	if (ap->flags & ATA_FLAG_PIO_DMA) {
++	/*
++	 * Do not use DMA if the connected device only supports PIO, even if the
++	 * port prefers PIO commands via DMA.
++	 *
++	 * Ideally, we should call atapi_check_dma() to check if it is safe for
++	 * the LLD to use DMA for REQUEST_SENSE, but we don't have a qc.
++	 * Since we can't check the command, perhaps we should only use pio?
++	 */
++	if ((ap->flags & ATA_FLAG_PIO_DMA) && !(dev->flags & ATA_DFLAG_PIO)) {
+ 		tf.protocol = ATAPI_PROT_DMA;
+ 		tf.feature |= ATAPI_PKT_DMA;
+ 	} else {
 -- 
 2.39.5
 
