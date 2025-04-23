@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B76E27CB12;
-	Wed, 23 Apr 2025 14:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBFF27CB12;
+	Wed, 23 Apr 2025 14:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419916; cv=none; b=na3xk0RYHEW7RLGpSqCW+7SrUCMGEUGENKFbTvkhHGYKGfYmni27xsglDJlD93PTcz2zZTBVVcasccFYIZpryoKsAisnVtZrR3GOXD+p/+NBBOdxkkMeoUlWCYapmFxBgVTs0k3f8AoWuBrpMOzHvXcZ30Jj6jRCSxQNpKR0SJI=
+	t=1745419919; cv=none; b=p5dWDaoCIKPYQsS/zJ2/VDS+8oDXKdGTXGfCnd+BbRX2UMFTWYmYgAMlbkTP/RDZ6A/giUPMMsNt60zzruD7AaCgVwv5v4OL/lY6olzrLgnth0Zo3jTYDZI/+SqRA8CzlEkBAMo7x+tKSePUfr0of1Ihf78zflxX+fGadl5ts2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419916; c=relaxed/simple;
-	bh=TW80RM4tD6tCYlDs6x8/EXYKHLMrGtoLxk6VYn2BO8g=;
+	s=arc-20240116; t=1745419919; c=relaxed/simple;
+	bh=EskSvx4pBuRF+DwPxZ9vYj3QgNRVhRC6ZsjQcAG/Tjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tc/vc7KDv9EMqL2d31IMfwEnJh9Nli3rfR63qKQzQ3HkDZNcd2gXKyR6ZtRzaRPcbjpgDKBAzKqNJWLW873M6XnO+cHnzZeoLhfa3YoKl9uawm6ir6FYdBIiqJ1lvwvcD1sZRrR+1H3qkpew7T/jR9jieQLcBdUn5HToZ0OEFRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wra56rIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lw4n8Xi9UjHjvoKiFIoTURHJ1ZqfjpILjLY2jaDMJpIKuF0lU6O6MrF2G3efHeavKsw8ytSOp4xMUKk6PaooZnTS10GEizkti8dZt1XkgDXB/A2zdLR9npx8oqTLW7G6uhM+Erjrt+YXKyUzGgF6B8LPk4+MgV0/Uz5j8dn/oCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3iXkisY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wra56rIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36BEC4CEE2;
-	Wed, 23 Apr 2025 14:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3iXkisY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B2CC4CEE2;
+	Wed, 23 Apr 2025 14:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419916;
-	bh=TW80RM4tD6tCYlDs6x8/EXYKHLMrGtoLxk6VYn2BO8g=;
+	s=korg; t=1745419918;
+	bh=EskSvx4pBuRF+DwPxZ9vYj3QgNRVhRC6ZsjQcAG/Tjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wra56rInW9XFwjNFSK/uhbs5k9mf93NcMjwStn/ivNPUTc+vDS+7d0w5fhmDAZaxs
-	 dUfh0k/DgPrqCT9hbK887qPOg//vuRvNqwUw7mulJCRAm/F7hzI10Pkp8H7RKiAqMI
-	 RBvZvN7PaV0AS8IKVV5cLGlUriH3tyYqhV/lfwUs=
+	b=R3iXkisYoJbNFaUBjGyV+d7eJ9h8Bw/KqalE9jmh+TDVBIBqEFwGxtdFmfugo9voA
+	 TgviTyIY1FVmvTgd8BPa/oLUNHz0R30BX+IGLNGKCtPUlbx/i+gPpV+qDDcfUAO9Ra
+	 dqsgnIHPvLtC18ynEElaQDnuCmsHT2TW5/BEEtFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/223] kunit: qemu_configs: SH: Respect kunit cmdline
-Date: Wed, 23 Apr 2025 16:42:31 +0200
-Message-ID: <20250423142620.339759258@linuxfoundation.org>
+Subject: [PATCH 6.6 020/393] drm/tests: Add helper to create mock crtc
+Date: Wed, 23 Apr 2025 16:38:36 +0200
+Message-ID: <20250423142644.099708186@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +48,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit b26c1a85f3fc3cc749380ff94199377fc2d0c203 ]
+[ Upstream commit 51f90720381dea79208513d059e0eb426dee511e ]
 
-The default SH kunit configuration sets CONFIG_CMDLINE_OVERWRITE which
-completely disregards the cmdline passed from the bootloader/QEMU in favor
-of the builtin CONFIG_CMDLINE.
-However the kunit tool needs to pass arguments to the in-kernel kunit core,
-for filters and other runtime parameters.
+We're going to need a full-blown, functional, KMS device to test more
+components of the atomic modesetting infrastructure.
 
-Enable CONFIG_CMDLINE_EXTEND instead, so kunit arguments are respected.
+Let's add a new helper to create a dumb, mocked, CRTC. By default it
+will create a CRTC relying only on the default helpers, but drivers are
+free to deviate from that.
 
-Link: https://lore.kernel.org/r/20250407-kunit-sh-v1-1-f5432a54cf2f@linutronix.de
-Fixes: 8110a3cab05e ("kunit: tool: Add support for SH under QEMU")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240222-kms-hdmi-connector-state-v7-4-8f4af575fce2@kernel.org
+Stable-dep-of: 70f29ca3117a ("drm/tests: cmdline: Fix drm_display_mode memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/qemu_configs/sh.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tests/drm_kunit_helpers.c | 62 +++++++++++++++++++++++
+ include/drm/drm_kunit_helpers.h           | 10 ++++
+ 2 files changed, 72 insertions(+)
 
-diff --git a/tools/testing/kunit/qemu_configs/sh.py b/tools/testing/kunit/qemu_configs/sh.py
-index 78a474a5b95f3..f00cb89fdef6a 100644
---- a/tools/testing/kunit/qemu_configs/sh.py
-+++ b/tools/testing/kunit/qemu_configs/sh.py
-@@ -7,7 +7,9 @@ CONFIG_CPU_SUBTYPE_SH7751R=y
- CONFIG_MEMORY_START=0x0c000000
- CONFIG_SH_RTS7751R2D=y
- CONFIG_RTS7751R2D_PLUS=y
--CONFIG_SERIAL_SH_SCI=y''',
-+CONFIG_SERIAL_SH_SCI=y
-+CONFIG_CMDLINE_EXTEND=y
-+''',
- 			   qemu_arch='sh4',
- 			   kernel_path='arch/sh/boot/zImage',
- 			   kernel_command_line='console=ttySC1',
+diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+index e0778a7ec2608..ca513235b5e2a 100644
+--- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
++++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+@@ -321,5 +321,67 @@ drm_kunit_helper_create_primary_plane(struct kunit *test,
+ }
+ EXPORT_SYMBOL_GPL(drm_kunit_helper_create_primary_plane);
+ 
++static const struct drm_crtc_helper_funcs default_crtc_helper_funcs = {
++};
++
++static const struct drm_crtc_funcs default_crtc_funcs = {
++	.atomic_destroy_state   = drm_atomic_helper_crtc_destroy_state,
++	.atomic_duplicate_state = drm_atomic_helper_crtc_duplicate_state,
++	.reset                  = drm_atomic_helper_crtc_reset,
++};
++
++/**
++ * drm_kunit_helper_create_crtc - Creates a mock CRTC for a KUnit test
++ * @test: The test context object
++ * @drm: The device to alloc the plane for
++ * @primary: Primary plane for CRTC
++ * @cursor: Cursor plane for CRTC. Optional.
++ * @funcs: Callbacks for the new plane. Optional.
++ * @helper_funcs: Helpers callbacks for the new plane. Optional.
++ *
++ * This allocates and initializes a mock struct &drm_crtc meant to be
++ * part of a mock device for a KUnit test.
++ *
++ * Resources will be cleaned up automatically.
++ *
++ * @funcs will default to the default helpers implementations.
++ * @helper_funcs will default to an empty implementation.
++ *
++ * Returns:
++ * A pointer to the new CRTC, or an ERR_PTR() otherwise.
++ */
++struct drm_crtc *
++drm_kunit_helper_create_crtc(struct kunit *test,
++			     struct drm_device *drm,
++			     struct drm_plane *primary,
++			     struct drm_plane *cursor,
++			     const struct drm_crtc_funcs *funcs,
++			     const struct drm_crtc_helper_funcs *helper_funcs)
++{
++	struct drm_crtc *crtc;
++	int ret;
++
++	if (!funcs)
++		funcs = &default_crtc_funcs;
++
++	if (!helper_funcs)
++		helper_funcs = &default_crtc_helper_funcs;
++
++	crtc = drmm_kzalloc(drm, sizeof(*crtc), GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test, crtc);
++
++	ret = drmm_crtc_init_with_planes(drm, crtc,
++					 primary,
++					 cursor,
++					 funcs,
++					 NULL);
++	KUNIT_ASSERT_EQ(test, ret, 0);
++
++	drm_crtc_helper_add(crtc, helper_funcs);
++
++	return crtc;
++}
++EXPORT_SYMBOL_GPL(drm_kunit_helper_create_crtc);
++
+ MODULE_AUTHOR("Maxime Ripard <maxime@cerno.tech>");
+ MODULE_LICENSE("GPL");
+diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
+index 38667d624aa8c..6e99627edf458 100644
+--- a/include/drm/drm_kunit_helpers.h
++++ b/include/drm/drm_kunit_helpers.h
+@@ -9,6 +9,8 @@
+ 
+ #include <kunit/test.h>
+ 
++struct drm_crtc_funcs;
++struct drm_crtc_helper_funcs;
+ struct drm_device;
+ struct drm_plane_funcs;
+ struct drm_plane_helper_funcs;
+@@ -110,4 +112,12 @@ drm_kunit_helper_create_primary_plane(struct kunit *test,
+ 				      unsigned int num_formats,
+ 				      const uint64_t *modifiers);
+ 
++struct drm_crtc *
++drm_kunit_helper_create_crtc(struct kunit *test,
++			     struct drm_device *drm,
++			     struct drm_plane *primary,
++			     struct drm_plane *cursor,
++			     const struct drm_crtc_funcs *funcs,
++			     const struct drm_crtc_helper_funcs *helper_funcs);
++
+ #endif // DRM_KUNIT_HELPERS_H_
 -- 
 2.39.5
 
