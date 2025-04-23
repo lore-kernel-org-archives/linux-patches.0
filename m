@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F6619DF4C;
-	Wed, 23 Apr 2025 14:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BDB281524;
+	Wed, 23 Apr 2025 14:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420324; cv=none; b=oFNxI55bbO5wn1UONtyYV6Sg4/H58WMFEFt1HVrH+Xu7R6auIzgUb45pTEboXF0zMV63fyT7m36DaoKrg3MupwBwTwkrMlVSUjJFAkbDt64BlnVrDknosuIaZlEuv878UAE9KW/qp3mL02xWl2dUSdc9DP8X+47xKru7m6qe5BY=
+	t=1745420326; cv=none; b=kp+lbVa7mH1idspI0sIw8m6q3Y47b1kTrDlYUyyPtWvEABdi8i1R7OMQYo04Tx+XhhH8hTZZQnF8J5k0lRCFMBv0/WivJuLwqrU1TcWrqLvwbIQwTV62AlvyqPmE/Q7018l7iDsV9Y0ZHutgzuQ/aFwZl3YKMllVvBr4+2UrtIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420324; c=relaxed/simple;
-	bh=AtdxKvor7etCHBlZNmXD3SvJVW8sItYCazOms7k/BhA=;
+	s=arc-20240116; t=1745420326; c=relaxed/simple;
+	bh=m1IcsdKbiY0Zq4nkjLU+J5YPNxgqZMkxNeFJlmy520c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b463Mc+mjj4h4Yq2XpcJgF1Rw7qGffHSXVyeVFT5Dx8aCtLlcMGuMGxL68zOYZTAGX7/GbnbuRc37w440+ib7/XwGrcGd3aM36w2Fcn1FWKYR7US7T4XzG10qHPPhzEfqZGvqyCoDKog1/VXKo0/5yjhS2QNYq08Mtmu5j6nuxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTIPkRQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Slujee92iZ8xMBHBFD+AnSeS4P+GVFIxqF3ir/B4yOIX/3FVC2eLB8vPq5Tb5oa8keThBr0CQ9KiVyCWB7j94PzUSIY0xicH15btkqoo4bakob1wwzVvImzGFIPW1yws6ZRZS0Ts4e99kZwFlYw3/dqxgxgCmqdqF2NNZSRnNMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqETvQj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTIPkRQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0390C4CEE8;
-	Wed, 23 Apr 2025 14:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqETvQj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4606DC4CEE2;
+	Wed, 23 Apr 2025 14:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420324;
-	bh=AtdxKvor7etCHBlZNmXD3SvJVW8sItYCazOms7k/BhA=;
+	s=korg; t=1745420326;
+	bh=m1IcsdKbiY0Zq4nkjLU+J5YPNxgqZMkxNeFJlmy520c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTIPkRQV40YjsGqSzDFUpTajdI34oNFgMDmnzrMLHBCFVng96iQZkACI6PpTrqfMi
-	 kLTvYKHRZ//QS54qid0EJLGzZCHNTgijlpRxIzEsvybusu5IA6kFzfX6FbtnqD4n2N
-	 xd1I/0yStaJP0KqdkzWVAyHk0OPE+IEVY/4FNPBA=
+	b=YqETvQj67w3mnCVP1lvw28WAZKvv3AqwUDCZvBTvFVQemf+FUpyvhTyy76bf2JZvb
+	 2pibQoEkEHljLOsSAamrqb0kALPZLkY7LFKJOMbM7TvMVai1r5Qm26UqUZq89LhFy0
+	 v4031WQFZ03BgMRxlr4sbDqWbMHnk1eYSjpjFMnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Qu Wenruo <quwenruo.btrfs@gmx.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 119/223] mm: fix filemap_get_folios_contig returning batches of identical folios
-Date: Wed, 23 Apr 2025 16:43:11 +0200
-Message-ID: <20250423142621.956713542@linuxfoundation.org>
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 037/291] jfs: Fix uninit-value access of imap allocated in the diMount() function
+Date: Wed, 23 Apr 2025 16:40:26 +0200
+Message-ID: <20250423142625.909635376@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +48,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-commit 8ab1b16023961dc640023b10436d282f905835ad upstream.
+[ Upstream commit 9629d7d66c621671d9a47afe27ca9336bfc8a9ea ]
 
-filemap_get_folios_contig() is supposed to return distinct folios found
-within [start, end].  Large folios in the Xarray become multi-index
-entries.  xas_next() can iterate through the sub-indexes before finding a
-sibling entry and breaking out of the loop.
+syzbot reports that hex_dump_to_buffer is using uninit-value:
 
-This can result in a returned folio_batch containing an indeterminate
-number of duplicate folios, which forces the callers to skeptically handle
-the returned batch.  This is inefficient and incurs a large maintenance
-overhead.
+=====================================================
+BUG: KMSAN: uninit-value in hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
+hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
+print_hex_dump+0x13d/0x3e0 lib/hexdump.c:276
+diFree+0x5ba/0x4350 fs/jfs/jfs_imap.c:876
+jfs_evict_inode+0x510/0x550 fs/jfs/inode.c:156
+evict+0x723/0xd10 fs/inode.c:796
+iput_final fs/inode.c:1946 [inline]
+iput+0x97b/0xdb0 fs/inode.c:1972
+txUpdateMap+0xf3e/0x1150 fs/jfs/jfs_txnmgr.c:2367
+txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+jfs_lazycommit+0x627/0x11d0 fs/jfs/jfs_txnmgr.c:2733
+kthread+0x6b9/0xef0 kernel/kthread.c:464
+ret_from_fork+0x6d/0x90 arch/x86/kernel/process.c:148
+ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-We can fix this by calling xas_advance() after we have successfully adding
-a folio to the batch to ensure our Xarray is positioned such that it will
-correctly find the next folio - similar to filemap_get_read_batch().
+Uninit was created at:
+slab_post_alloc_hook mm/slub.c:4121 [inline]
+slab_alloc_node mm/slub.c:4164 [inline]
+__kmalloc_cache_noprof+0x8e3/0xdf0 mm/slub.c:4320
+kmalloc_noprof include/linux/slab.h:901 [inline]
+diMount+0x61/0x7f0 fs/jfs/jfs_imap.c:105
+jfs_mount+0xa8e/0x11d0 fs/jfs/jfs_mount.c:176
+jfs_fill_super+0xa47/0x17c0 fs/jfs/super.c:523
+get_tree_bdev_flags+0x6ec/0x910 fs/super.c:1636
+get_tree_bdev+0x37/0x50 fs/super.c:1659
+jfs_get_tree+0x34/0x40 fs/jfs/super.c:635
+vfs_get_tree+0xb1/0x5a0 fs/super.c:1814
+do_new_mount+0x71f/0x15e0 fs/namespace.c:3560
+path_mount+0x742/0x1f10 fs/namespace.c:3887
+do_mount fs/namespace.c:3900 [inline]
+__do_sys_mount fs/namespace.c:4111 [inline]
+__se_sys_mount+0x71f/0x800 fs/namespace.c:4088
+__x64_sys_mount+0xe4/0x150 fs/namespace.c:4088
+x64_sys_call+0x39bf/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:166
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+=====================================================
 
-Link: https://lkml.kernel.org/r/Z-8s1-kiIDkzgRbc@fedora
-Fixes: 35b471467f88 ("filemap: add filemap_get_folios_contig()")
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Reported-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Closes: https://lkml.kernel.org/r/b714e4de-2583-4035-b829-72cfb5eb6fc6@gmx.com
-Tested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The reason is that imap is not properly initialized after memory
+allocation. It will cause the snprintf() function to write uninitialized
+data into linebuf within hex_dump_to_buffer().
+
+Fix this by using kzalloc instead of kmalloc to clear its content at the
+beginning in diMount().
+
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Reported-by: syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/67b5d07e.050a0220.14d86d.00e6.GAE@google.com/
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/jfs/jfs_imap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2222,6 +2222,7 @@ unsigned filemap_get_folios_contig(struc
- 			*start = folio->index + nr;
- 			goto out;
- 		}
-+		xas_advance(&xas, folio_next_index(folio) - 1);
- 		continue;
- put_folio:
- 		folio_put(folio);
+diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
+index c72e97f065798..309b5f6e977d7 100644
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -102,7 +102,7 @@ int diMount(struct inode *ipimap)
+ 	 * allocate/initialize the in-memory inode map control structure
+ 	 */
+ 	/* allocate the in-memory inode map control structure. */
+-	imap = kmalloc(sizeof(struct inomap), GFP_KERNEL);
++	imap = kzalloc(sizeof(struct inomap), GFP_KERNEL);
+ 	if (imap == NULL)
+ 		return -ENOMEM;
+ 
+-- 
+2.39.5
+
 
 
