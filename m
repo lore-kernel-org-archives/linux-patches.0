@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B001C2BE7A8;
-	Wed, 23 Apr 2025 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8AD28B500;
+	Wed, 23 Apr 2025 15:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421721; cv=none; b=fgDkhFQNE4xn8Twwy9QZiJKcroxy9AyALlhLHcRufk9Sin05jfNMAERo2AHa1D4Auu4PW3BLVp/hTTjtCl3IQ16r6QB2GKqrN9D8D3uroHHMsnW+/yf4kwcCBNa8aMN3BccL36baXibKWbiaeTABomEjrkZ10ZRZg34ZdKNJ+Wg=
+	t=1745421724; cv=none; b=dI5fjppsctszu51w6og7ERRcp2IJs+vnm3PqCyohHhVmV3jCjazSFS0kW1jvy8NjQLrYhPZLisTwIT4odFC9J77pPle+EwymZalFmJQoIoBTJplqKptpHPEnlEFRXp8lGW7fxBKrMahJTrGeCxqP+x2xYtariEGiTfyEdQLGrj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421721; c=relaxed/simple;
-	bh=lEg3w+OwJ7iE/E49YbjrdACZjDFDCJPYNIf7bTvR7nI=;
+	s=arc-20240116; t=1745421724; c=relaxed/simple;
+	bh=B/+RI7UQcvTyJe1ikhISTQ4pssbx/vLuLeSajZ2JJEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4aVl/+YOP0cN0OcBo6tmLJWylk/gAgTyNEK702ZF1HX7Ag3jZeKwYTicaM7ayNxm7Ml90mReoENsC5exYqDEdbYJey+YP1m+ecoHFVdOwNkj+ZrE6P/h+tNVw/GixrtsEjktOIcEWH+Y9bMd4UhFo587+yb3qNvj0ZXWtEWZq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l133+ulF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBBx1T2X3EAYLdPiYp8Rp6+x0J9lNbVfXiMZzn1Rwjmxa4lTnACkMRgPouQm0ma2nl5sIDPrfYwR3fc65YFUve2cd2BIvHhAjlcF3sPVQabbopoG/yMk45UIWVgQ/OEKGqscPpBm4FB6g2tU7MMiYK/V7lYfhtHCm1VHzdrEQp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azwJ+VBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l133+ulF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA16C4CEE2;
-	Wed, 23 Apr 2025 15:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azwJ+VBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E15BC4CEE2;
+	Wed, 23 Apr 2025 15:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421721;
-	bh=lEg3w+OwJ7iE/E49YbjrdACZjDFDCJPYNIf7bTvR7nI=;
+	s=korg; t=1745421723;
+	bh=B/+RI7UQcvTyJe1ikhISTQ4pssbx/vLuLeSajZ2JJEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l133+ulFnR51pEimhcFdm4Gq1ZXILie7LOpkqlCuA2iO9QLZWsssZDMcZ3uAQOA6C
-	 ncf5a9dx9DtqJIUpbbwZKlzT7bl8W5Vri4BLR0+mlaut1nNfkHGXKc0CLHgPnLqyzg
-	 hy15da/5yv4txmRT8QOfTKRCv2HG905uLbdyJNA4=
+	b=azwJ+VBFmkbQSu5ycnfvb/7EiOxGDuCoS8XG9oZOkMvpe05aetHz4qSiveiiSmziA
+	 yHW+jN7Pfuv8pZrKqKA2G9GEDBGM47lZhIEdpHnWQ8sVUTpm1FXe3hm86F5j4E7YQV
+	 aO/08VJuxlMZFCIFxc27zwqQX1mu9mgB9Pzhyn1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 216/393] gpio: zynq: Fix wakeup source leaks on device unbind
-Date: Wed, 23 Apr 2025 16:41:52 +0200
-Message-ID: <20250423142652.302159070@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Coly Li <colyli@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 171/291] md/raid10: fix missing discard IO accounting
+Date: Wed, 23 Apr 2025 16:42:40 +0200
+Message-ID: <20250423142631.371533244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit c5672e310ad971d408752fce7596ed27adc6008f upstream.
+[ Upstream commit d05af90d6218e9c8f1c2026990c3f53c1b41bfb0 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+md_account_bio() is not called from raid10_handle_discard(), now that we
+handle bitmap inside md_account_bio(), also fix missing
+bitmap_startwrite for discard.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406202245.53854-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Test whole disk discard for 20G raid10:
+
+Before:
+Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
+md0    48.00     16.00     0.00   0.00    5.42   341.33
+
+After:
+Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
+md0    68.00  20462.00     0.00   0.00    2.65 308133.65
+
+Link: https://lore.kernel.org/linux-raid/20250325015746.3195035-1-yukuai1@huaweicloud.com
+Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Coly Li <colyli@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zynq.c |    1 +
+ drivers/md/raid10.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-zynq.c
-+++ b/drivers/gpio/gpio-zynq.c
-@@ -1018,6 +1018,7 @@ static int zynq_gpio_remove(struct platf
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
- 		dev_warn(&pdev->dev, "pm_runtime_get_sync() Failed\n");
-+	device_init_wakeup(&pdev->dev, 0);
- 	gpiochip_remove(&gpio->chip);
- 	clk_disable_unprepare(gpio->clk);
- 	device_set_wakeup_capable(&pdev->dev, 0);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index f608f30c7d6a6..24427eddf61bc 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1772,6 +1772,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	 * The discard bio returns only first r10bio finishes
+ 	 */
+ 	if (first_copy) {
++		md_account_bio(mddev, &bio);
+ 		r10_bio->master_bio = bio;
+ 		set_bit(R10BIO_Discard, &r10_bio->state);
+ 		first_copy = false;
+-- 
+2.39.5
+
 
 
