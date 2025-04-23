@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B05928D822;
-	Wed, 23 Apr 2025 15:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EF228FFF9;
+	Wed, 23 Apr 2025 15:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421903; cv=none; b=lVH7JVbXpS9XUTbQMFDUt9Q+RHtSJT8CLMOVC9TQJc09zjB1FbiSaSX3XQ1LVgv3ZpqeQo4u5OT0Wd/E49p6nfWwy5PFaw4MyMZRWmdJ2OWnAceV3bN8P3cQGT82MANtJdFrrjVtX8vYp0MruRumxNDU8bV/FGQuBLq5F0mbhtE=
+	t=1745421905; cv=none; b=ljs1q3HuqQcd9pCaLUfx3alY9pW3gJUOzay/MQb3kjflGK2JAzHC+KGyDOK78b4mveYzXEXF/4cgZZlOTBiPvn6YWTR8CYtnyxsJsuR1szlZ26JYuyts1JYXkzrbW0B0gLgcnUb2/m8H++2m3wsNm32Xf2EHoM54nU4UN5gpLbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421903; c=relaxed/simple;
-	bh=Wgnq+pJMDp8EoqrIqhuSQA1BEBoMTEYjXe1MDhasxAw=;
+	s=arc-20240116; t=1745421905; c=relaxed/simple;
+	bh=H4thESjUmxL3DwYhxJUF7a/fVplorC+ORmBQHnaxYVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2msZUK2VfqJZyKFlZiWLhlieJub/NHp9mdxGrLRzhBRAmaXkIX/8G9FBhdpYjHYNHtLLeHG8MClLwia4wKtFJKTMxIVSfsBLAWIEmBUnHH625kiwc3j7nYbH+tfcVVUasoV6pSUGRASnAoerRT08AxPzQFLzND/7spUyZROgqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO08qsrt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5ynIWSg+UvoyK0dzZxSi2X2FeJJ4VuC4eT8MJMqwoSGbE0jKirsbDNtO2L1nvDZU7uWSR6iWECSW8Udy/b7jMsH8Q/7mSy00PKjvySapaXxjrt8jAi6NoZr9LoI19iOc/xy2W7KNgajfEsG1WLchVPRE/6sUL59vgYrRepzGGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/g2IgQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO08qsrt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43459C4CEE3;
-	Wed, 23 Apr 2025 15:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/g2IgQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27C6C4CEE8;
+	Wed, 23 Apr 2025 15:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745421902;
-	bh=Wgnq+pJMDp8EoqrIqhuSQA1BEBoMTEYjXe1MDhasxAw=;
+	s=korg; t=1745421905;
+	bh=H4thESjUmxL3DwYhxJUF7a/fVplorC+ORmBQHnaxYVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO08qsrtAcq8eCadGWtwDrrkIZx9p+snd2MyEISIPzt3jd3SU7xqj9mYv1CZjmxLU
-	 AjfMr/XRt1631Qw+DloTx16Fu7drsJOti0WkGUOTf0Goit8J72ykypgjULh1YU0+1d
-	 QjP8tV+rUIbysFDUyroHgNnFzWkkhil4kmpPzHUY=
+	b=f/g2IgQHG2dsIR4xUTvUDBYwublRo/0MQS6CfbXFtP+RzjWTUN4Xmgtb66+BybaWI
+	 weL4KHq3gslAwQZnNfalEHv93Yfi+BYzHVWz1YIE2FWWOppDrDFHwqgjb6+s9iFnak
+	 s5LxGEHhyDD3+6/hyYNtZDx97VAzDJvx8qn3ic4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	WangYuli <wangyuli@uniontech.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/393] wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()
-Date: Wed, 23 Apr 2025 16:42:18 +0200
-Message-ID: <20250423142653.381342914@linuxfoundation.org>
+Subject: [PATCH 6.1 196/291] riscv: KGDB: Remove ".option norvc/.option rvc" for kgdb_compiled_break
+Date: Wed, 23 Apr 2025 16:43:05 +0200
+Message-ID: <20250423142632.389043791@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
+References: <20250423142624.409452181@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +50,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit a104042e2bf6528199adb6ca901efe7b60c2c27f ]
+[ Upstream commit 550c2aa787d1b06efcb11de1877354502a1237f2 ]
 
-The ieee80211 skb control block key (set when skb was queued) could have
-been removed before ieee80211_tx_dequeue() call. ieee80211_tx_dequeue()
-already called ieee80211_tx_h_select_key() to get the current key, but
-the latter do not update the key in skb control block in case it is
-NULL. Because some drivers actually use this key in their TX callbacks
-(e.g. ath1{1,2}k_mac_op_tx()) this could lead to the use after free
-below:
+[ Quoting Samuel Holland: ]
 
-  BUG: KASAN: slab-use-after-free in ath11k_mac_op_tx+0x590/0x61c
-  Read of size 4 at addr ffffff803083c248 by task kworker/u16:4/1440
+  This is a separate issue, but using ".option rvc" here is a bug.
+  It will unconditionally enable the C extension for the rest of
+  the file, even if the kernel is being built with CONFIG_RISCV_ISA_C=n.
 
-  CPU: 3 UID: 0 PID: 1440 Comm: kworker/u16:4 Not tainted 6.13.0-ge128f627f404 #2
-  Hardware name: HW (DT)
-  Workqueue: bat_events batadv_send_outstanding_bcast_packet
-  Call trace:
-   show_stack+0x14/0x1c (C)
-   dump_stack_lvl+0x58/0x74
-   print_report+0x164/0x4c0
-   kasan_report+0xac/0xe8
-   __asan_report_load4_noabort+0x1c/0x24
-   ath11k_mac_op_tx+0x590/0x61c
-   ieee80211_handle_wake_tx_queue+0x12c/0x1c8
-   ieee80211_queue_skb+0xdcc/0x1b4c
-   ieee80211_tx+0x1ec/0x2bc
-   ieee80211_xmit+0x224/0x324
-   __ieee80211_subif_start_xmit+0x85c/0xcf8
-   ieee80211_subif_start_xmit+0xc0/0xec4
-   dev_hard_start_xmit+0xf4/0x28c
-   __dev_queue_xmit+0x6ac/0x318c
-   batadv_send_skb_packet+0x38c/0x4b0
-   batadv_send_outstanding_bcast_packet+0x110/0x328
-   process_one_work+0x578/0xc10
-   worker_thread+0x4bc/0xc7c
-   kthread+0x2f8/0x380
-   ret_from_fork+0x10/0x20
+[ Quoting Palmer Dabbelt: ]
 
-  Allocated by task 1906:
-   kasan_save_stack+0x28/0x4c
-   kasan_save_track+0x1c/0x40
-   kasan_save_alloc_info+0x3c/0x4c
-   __kasan_kmalloc+0xac/0xb0
-   __kmalloc_noprof+0x1b4/0x380
-   ieee80211_key_alloc+0x3c/0xb64
-   ieee80211_add_key+0x1b4/0x71c
-   nl80211_new_key+0x2b4/0x5d8
-   genl_family_rcv_msg_doit+0x198/0x240
-  <...>
+  We're just looking at the address of kgdb_compiled_break, so it's
+  fine if it ends up as a c.ebreak.
 
-  Freed by task 1494:
-   kasan_save_stack+0x28/0x4c
-   kasan_save_track+0x1c/0x40
-   kasan_save_free_info+0x48/0x94
-   __kasan_slab_free+0x48/0x60
-   kfree+0xc8/0x31c
-   kfree_sensitive+0x70/0x80
-   ieee80211_key_free_common+0x10c/0x174
-   ieee80211_free_keys+0x188/0x46c
-   ieee80211_stop_mesh+0x70/0x2cc
-   ieee80211_leave_mesh+0x1c/0x60
-   cfg80211_leave_mesh+0xe0/0x280
-   cfg80211_leave+0x1e0/0x244
-  <...>
+[ Quoting Alexandre Ghiti: ]
 
-Reset SKB control block key before calling ieee80211_tx_h_select_key()
-to avoid that.
+  .option norvc is used to prevent the assembler from using compressed
+  instructions, but it's generally used when we need to ensure the
+  size of the instructions that are used, which is not the case here
+  as noted by Palmer since we only care about the address. So yes
+  it will work fine with C enabled :)
 
-Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://patch.msgid.link/06aa507b853ca385ceded81c18b0a6dd0f081bc8.1742833382.git.repk@triplefau.lt
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So let's just remove them all.
+
+Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
+Link: https://lore.kernel.org/all/mhng-69513841-5068-441d-be8f-2aeebdc56a08@palmer-ri-x1c9a/
+Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
+Fixes: fe89bd2be866 ("riscv: Add KGDB support")
+Cc: Samuel Holland <samuel.holland@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/r/8B431C6A4626225C+20250411073222.56820-2-wangyuli@uniontech.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/kgdb.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 45a093d3f1fa7..8c46498152d76 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3877,6 +3877,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
- 	 * The key can be removed while the packet was queued, so need to call
- 	 * this here to get the current key.
- 	 */
-+	info->control.hw_key = NULL;
- 	r = ieee80211_tx_h_select_key(&tx);
- 	if (r != TX_CONTINUE) {
- 		ieee80211_free_txskb(&local->hw, skb);
+diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
+index b0db3350d243b..1d83b36967212 100644
+--- a/arch/riscv/kernel/kgdb.c
++++ b/arch/riscv/kernel/kgdb.c
+@@ -276,9 +276,7 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
+ noinline void arch_kgdb_breakpoint(void)
+ {
+ 	asm(".global kgdb_compiled_break\n"
+-	    ".option norvc\n"
+-	    "kgdb_compiled_break: ebreak\n"
+-	    ".option rvc\n");
++	    "kgdb_compiled_break: ebreak\n");
+ }
+ 
+ void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
 -- 
 2.39.5
 
