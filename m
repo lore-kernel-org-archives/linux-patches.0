@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1B27FD48;
-	Wed, 23 Apr 2025 14:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738C72D613;
+	Wed, 23 Apr 2025 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419665; cv=none; b=YQZ8L2IlRRizaoOCvnXmhOAQaTO7x+AnUK+LnoFkdS/9ZH6nUrLNSff/KMUXjTABWDIQDSU6o+FJrOaGrERPSMnMT5PLQLhguqRPA8yg3ZX8o/T9sMbrYpKecM2ETITBsRMvSiqgeGBEXkHZjcey+s3kffEpk+AdrJXCxvIqxLc=
+	t=1745419668; cv=none; b=YkTNtYw4AkrrCilbOa0b41XJWT09F9zOhzfVa81ijpMGUXbkmyA1dpNJfg4gfrcvbCjbu81XJDKEebFQ4Qzzyyqf2XT2dPKANAuAxxHwvgpylEhB0aAm0EprCS9cFse+IEGhK4sM7WTrXJNVVfRtTVJAXym21QFuRXeF6kzG4Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419665; c=relaxed/simple;
-	bh=gaihpRDXku+Optpp8tm0kRtmXhrvLMUsyezJKfp380U=;
+	s=arc-20240116; t=1745419668; c=relaxed/simple;
+	bh=TcdNewgQNsMOUOJR6PaOVRrVne0yuUb66a8cBZ6/C9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qo7A+F8Y9ANCx1m5Oapotc5BAO9nKGPDdqWfRI0SoSIkz9wuSSqWxk3eW3S2BlQWVjvYlqygfgRHqigw3DZnLs7MSKbHY90kOrCR/e2QlRVrEUPuNJdRT8Yqzxetok5V2130pN8H5zg9MlRdSYYQ4bUZtON5hwuCsi7t3kZ0VGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xif4yMQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqfmSpZkft9QLaLAFxNx/K0rWLCq8qe/RNsGmBysFQZvYvT+M8IIyTqjhxfwxUXzYSdO8mIy/U4LZAD7ObNotJ8EuBs+2wHki0FVjrzit3RoiEY1csrNqArAwUzUOMozYRFFg3tk5jXuXBwDPJf79MnIALuXHB6S8dTfpTQXkyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOw0er2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xif4yMQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D910C4CEE2;
-	Wed, 23 Apr 2025 14:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOw0er2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0944FC4CEE2;
+	Wed, 23 Apr 2025 14:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745419665;
-	bh=gaihpRDXku+Optpp8tm0kRtmXhrvLMUsyezJKfp380U=;
+	s=korg; t=1745419668;
+	bh=TcdNewgQNsMOUOJR6PaOVRrVne0yuUb66a8cBZ6/C9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xif4yMQ1PUfq0Gs9STvlJXtCW4D68qmcEQrr1FokDkWWmDMFbjE4XAZ51cQGr6D4X
-	 5badQlRuXcykLxf41aoOtxD+YcIJd8WmUrHKXxbnHtZHndRd7pkx5KsAnFdKxQjrdb
-	 m6BC3KG6f1oFQcNW2GgaI4176p+ff3oWKf304e9Y=
+	b=zOw0er2cVBffbmnrmgabDrWgbhFEBVIkZG5DCuW8HuA55VQc03pqL+/IVQZBEvsXs
+	 LRofRm/DZVyHNacUqSHMFINnTk23ZDaVaCIAaBcqGUm7Kob2giXWAeJGLGPgJn1V1y
+	 MPmS0wCG7HAKuM/CpAuDqfnfyFLXwKS+l6v+CbRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Frank Li <Frank.Li@nxp.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Brady Norander <bradynorander@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/223] dt-bindings: soc: fsl: fsl,ls1028a-reset: Fix maintainer entry
-Date: Wed, 23 Apr 2025 16:41:51 +0200
-Message-ID: <20250423142618.719698835@linuxfoundation.org>
+Subject: [PATCH 6.12 013/223] ASoC: dwc: always enable/disable i2s irqs
+Date: Wed, 23 Apr 2025 16:41:25 +0200
+Message-ID: <20250423142617.660654000@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
 References: <20250423142617.120834124@linuxfoundation.org>
@@ -52,40 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Brady Norander <bradynorander@gmail.com>
 
-[ Upstream commit d5f49921707cc73376ad6cf8410218b438fcd233 ]
+[ Upstream commit 2b727b3f8a04fe52f55316ccb8792cfd9b2dd05d ]
 
-make dt_binding_check:
+Commit a42e988 ("ASoC: dwc: add DMA handshake control") changed the
+behavior of the driver to not enable or disable i2s irqs if using DMA. This
+breaks platforms such as AMD ACP. Audio playback appears to work but no
+audio can be heard. Revert to the old behavior by always enabling and
+disabling i2s irqs while keeping DMA handshake control.
 
-    Documentation/devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml: maintainers:0: 'Frank Li' does not match '@'
-	    from schema $id: http://devicetree.org/meta-schemas/base.yaml#
-
-Fix this by adding Frank's email address.
-
-Fixes: 9ca5a7d9d2e05de6 ("dt-bindings: soc: fsl: Add fsl,ls1028a-reset for reset syscon node")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/185e1e06692dc5b08abcde2d3dd137c78e979d08.1744301283.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: a42e988b626 ("ASoC: dwc: add DMA handshake control")
+Signed-off-by: Brady Norander <bradynorander@gmail.com>
+Link: https://patch.msgid.link/20250330130852.37881-3-bradynorander@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml          | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/dwc/dwc-i2s.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml b/Documentation/devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml
-index 31295be910130..234089b5954dd 100644
---- a/Documentation/devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml
-+++ b/Documentation/devicetree/bindings/soc/fsl/fsl,ls1028a-reset.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Freescale Layerscape Reset Registers Module
+diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
+index 57b789d7fbedd..5b4f20dbf7bba 100644
+--- a/sound/soc/dwc/dwc-i2s.c
++++ b/sound/soc/dwc/dwc-i2s.c
+@@ -199,12 +199,10 @@ static void i2s_start(struct dw_i2s_dev *dev,
+ 	else
+ 		i2s_write_reg(dev->i2s_base, IRER, 1);
  
- maintainers:
--  - Frank Li
-+  - Frank Li <Frank.Li@nxp.com>
+-	/* I2S needs to enable IRQ to make a handshake with DMAC on the JH7110 SoC */
+-	if (dev->use_pio || dev->is_jh7110)
+-		i2s_enable_irqs(dev, substream->stream, config->chan_nr);
+-	else
++	if (!(dev->use_pio || dev->is_jh7110))
+ 		i2s_enable_dma(dev, substream->stream);
  
- description:
-   Reset Module includes chip reset, service processor control and Reset Control
++	i2s_enable_irqs(dev, substream->stream, config->chan_nr);
+ 	i2s_write_reg(dev->i2s_base, CER, 1);
+ }
+ 
+@@ -218,11 +216,12 @@ static void i2s_stop(struct dw_i2s_dev *dev,
+ 	else
+ 		i2s_write_reg(dev->i2s_base, IRER, 0);
+ 
+-	if (dev->use_pio || dev->is_jh7110)
+-		i2s_disable_irqs(dev, substream->stream, 8);
+-	else
++	if (!(dev->use_pio || dev->is_jh7110))
+ 		i2s_disable_dma(dev, substream->stream);
+ 
++	i2s_disable_irqs(dev, substream->stream, 8);
++
++
+ 	if (!dev->active) {
+ 		i2s_write_reg(dev->i2s_base, CER, 0);
+ 		i2s_write_reg(dev->i2s_base, IER, 0);
 -- 
 2.39.5
 
