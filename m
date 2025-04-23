@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9B128A403;
-	Wed, 23 Apr 2025 15:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1DD266B4B;
+	Wed, 23 Apr 2025 15:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420724; cv=none; b=euTWgbBscUkQv5WbPMdrE7n+G3Yvc5Xmkrxumsx8XDFMT1n78Fu+Vc5PdWmJTcHrUYApAsfkwfCQskbptbt1tPR60fZF0L8vMB+8jcrpnT7kQ0Lj9AnfBYRGywTV3p94NDA1LjXPL8WMq3bXlVjEBqcZnbclSr09IPc71Bu04wI=
+	t=1745420727; cv=none; b=MMWT93yc5CcDK7yOXz9K2Zse9VcCfJ0IqsNR687hcDYk1XnlkIKpeVGUnbOLdb3AbHL6NNWS9kBxS59RQiXtjQcO1zED+t21AWSXH/tBRUlgCQ4bLSSXhGyp6ThLSMg7y3EV1MTNHAuFLm2GJeLCBHxzTR3e0gh+YSLQVMnWZI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420724; c=relaxed/simple;
-	bh=oBNyR0V/j00QpJiWX0QwqfyBgWNK0uY2CLE8lS1ujlo=;
+	s=arc-20240116; t=1745420727; c=relaxed/simple;
+	bh=QuUKNH5G/+a2iAdI6/0/9RiV8L2t5y2XKIeQBSHy4UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/QiFuJ17jGjoT0Z17MKJQbNCHkoOuVHxGQIxnh564OuuPgtjta/L8SyyErIlJZYRUBqGYfv5/PKcgs63u9JRRdSEXlz1x+PYWo2Q/Uni0YmSeUj4ngLeFq5+zfiXN+EE8wrIfYRa1iYUX88URffxxV2g+N1fY6V/R4TiqGtgnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBqpyHWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8FMArpuMXk7NCXMU69Xz2zojo9EcxC+YKeFryi+xQdXEsT7BXIiR5zcHdUMLiDG89J3OEeCUtNvrH5y3JXaiKzeVTRTalgpD9N3GfCGM7azc3mu2OdZRBmB0KMYAmdiSPX0VkSDZDHziYHR1icsZ961N3XnnO7mGjnEvQcg4xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jj/H0LGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBqpyHWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103A2C4CEE2;
-	Wed, 23 Apr 2025 15:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jj/H0LGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15F6C4CEE2;
+	Wed, 23 Apr 2025 15:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420724;
-	bh=oBNyR0V/j00QpJiWX0QwqfyBgWNK0uY2CLE8lS1ujlo=;
+	s=korg; t=1745420727;
+	bh=QuUKNH5G/+a2iAdI6/0/9RiV8L2t5y2XKIeQBSHy4UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBqpyHWzYrDEEhaD2rwIi6JXjnnkrBec9klbkLDtAajObCoaFXcCWBJ5ZOt8D8jT2
-	 6/UVYFDM3+RL6TsllpXGQxsDyIQvYlPczVPhYNw+H8lSSE6eSoL/61znWwrDUztZTK
-	 swbntbeQ4782HL1nQMESclpOxE5x6VjZzRVN7w9Y=
+	b=Jj/H0LGdAc8esNKoIEd+BoQjRAFTXxn4CY4bAjjGdafajeACuh0nw2TbU/ZOTeR+d
+	 G++DAlR65mhfRokTUWUxT18XCR5eCBn6GHYEVfog3rKg+QjOj0F/FOh90am6qT/iap
+	 ax0ifvDJaK45mlWwPq6WWn2W6PjqfxmTQYLSfOYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 157/223] drm/amd/pm: Prevent division by zero
-Date: Wed, 23 Apr 2025 16:43:49 +0200
-Message-ID: <20250423142623.568622871@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 107/393] drm/amdgpu: handle amdgpu_cgs_create_device() errors in amd_powerplay_create()
+Date: Wed, 23 Apr 2025 16:40:03 +0200
+Message-ID: <20250423142647.702162863@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
+References: <20250423142643.246005366@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 7d641c2b83275d3b0424127b2e0d2d0f7dd82aef upstream.
+[ Upstream commit 1435e895d4fc967d64e9f5bf81e992ac32f5ac76 ]
 
-The user can set any speed value.
-If speed is greater than UINT_MAX/8, division by zero is possible.
+Add error handling to propagate amdgpu_cgs_create_device() failures
+to the caller. When amdgpu_cgs_create_device() fails, release hwmgr
+and return -ENOMEM to prevent null pointer dereference.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+[v1]->[v2]: Change error code from -EINVAL to -ENOMEM. Free hwmgr.
 
-Fixes: b64625a303de ("drm/amd/pm: correct the address of Arcturus fan related registers")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -1267,6 +1267,9 @@ static int arcturus_set_fan_speed_rpm(st
- 	uint32_t crystal_clock_freq = 2500;
- 	uint32_t tach_period;
- 
-+	if (!speed || speed > UINT_MAX/8)
-+		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index 86f95a291d65f..bef6578ac4bfe 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -51,6 +51,11 @@ static int amd_powerplay_create(struct amdgpu_device *adev)
+ 	hwmgr->adev = adev;
+ 	hwmgr->not_vf = !amdgpu_sriov_vf(adev);
+ 	hwmgr->device = amdgpu_cgs_create_device(adev);
++	if (!hwmgr->device) {
++		kfree(hwmgr);
++		return -ENOMEM;
++	}
 +
- 	tach_period = 60 * crystal_clock_freq * 10000 / (8 * speed);
- 	WREG32_SOC15(THM, 0, mmCG_TACH_CTRL_ARCT,
- 		     REG_SET_FIELD(RREG32_SOC15(THM, 0, mmCG_TACH_CTRL_ARCT),
+ 	mutex_init(&hwmgr->msg_lock);
+ 	hwmgr->chip_family = adev->family;
+ 	hwmgr->chip_id = adev->asic_type;
+-- 
+2.39.5
+
 
 
