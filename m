@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FFA28B4EA;
-	Wed, 23 Apr 2025 15:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5925128C5AD;
+	Wed, 23 Apr 2025 15:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420999; cv=none; b=rRHSESxjsxo7Ys1Wm6+Bw1mKGmfibmaF+tglq5txFKPAdWtRKDdfNQb8BoCL5g74egLRYAYHhx9yzKPKL9WmWcrXoIkTSC8ux7iws1L8MtsJFty/N0UnYLdKPDHSOc/vKkDWf09i8SzrIhZFm4z/nvU+mPpNjZHRHKnRGBM6EB4=
+	t=1745421002; cv=none; b=mfxJ6TfTC9OAYBiLd4MTlRSjqobEXInOMqpqXMw76WTgPRUrtqjFKKXRXOnNHmGxEBPfakOyk82zyY4+2K7bhLke47Zh4IttIJqxgCiNZyA9ZRylhcfS3zHAuR0w4VZD0ND16LSHwW3oDEPsXdpr3D8OhpgEXgE6XsZi0Evj1rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420999; c=relaxed/simple;
-	bh=hMpu/Jo22JT8BBGFWapD3TPNUKnLDGuUav0/VUbJjbk=;
+	s=arc-20240116; t=1745421002; c=relaxed/simple;
+	bh=C/lw9BVtB5AN/DC/UbWm9g0u+obHbCK+IQuDanwVebo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZM6q6+k88IkolKMFgmspL4VeAbdXu9LziPc4V+U+UN366MjbIlW/UxJvNBneqCw6cBf7iu+sUeBUI/nLGdkN4cM+zpXwRF0XgYIGxd8AUlrSRKD677S4Bw40nxQisBULibWLiJFxmYPjENMSw1NelqycIsJqBRzWdrw5/0q6s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXazYZTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e/NADmLxRR6xTMfq48pXmq8FnTHmop6DForJeIOKPICdqMuC1dFJK9QhhsqC87JtXtZHGQpsXaiBmT327A+1FVzmogIwc7/+qVvPE9WyAE82mBJxxgZxkxQ6iFVXAX4Cyl4Ny1HrWTbrX16A4nX/qRNFuYyh/INLowzh+8WRbUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIP6ptPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXazYZTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4499BC4CEE2;
-	Wed, 23 Apr 2025 15:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIP6ptPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78CDC4CEE2;
+	Wed, 23 Apr 2025 15:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420999;
-	bh=hMpu/Jo22JT8BBGFWapD3TPNUKnLDGuUav0/VUbJjbk=;
+	s=korg; t=1745421002;
+	bh=C/lw9BVtB5AN/DC/UbWm9g0u+obHbCK+IQuDanwVebo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXazYZTnX5nAZlzCNnx5ZvUTAs3cqTOplJfZqQSeuVXLDrTvXRaJckcLM2CpIXLIk
-	 7aHKd1hLqPLFZQTGP9Zsx+nO8vTobW+kySKB3DNW5CfDUBnYEs6BRhWzECk5oaTHKA
-	 h8OGCYVqpisMPs0pf7KNUU1vRw333Y4jzizxZyoA=
+	b=pIP6ptPT6LqAg8LAWJ8CpnCwSoaRXlEm9LK/7jXuJJJkPcN9zPcAL5eqoS4L4Dt9V
+	 QI7VQ2SBV4oKeIsclxe2XqZnI9BZiq/sy/2pfTYzDUy8AgpihhD1Y/qmAWHIDEfX5x
+	 63vvH8ljQ51e0Cbfi+1e5lRq5maijaCV42tlEFKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 134/393] mtd: rawnand: brcmnand: fix PM resume warning
-Date: Wed, 23 Apr 2025 16:40:30 +0200
-Message-ID: <20250423142648.906929785@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 181/223] drm/xe/dma_buf: stop relying on placement in unmap
+Date: Wed, 23 Apr 2025 16:44:13 +0200
+Message-ID: <20250423142624.542625735@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
-References: <20250423142643.246005366@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,104 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit ddc210cf8b8a8be68051ad958bf3e2cef6b681c2 upstream.
+commit 25583ad42d091819157832e894179200ba8b54ee upstream.
 
-Fixed warning on PM resume as shown below caused due to uninitialized
-struct nand_operation that checks chip select field :
-WARN_ON(op->cs >= nanddev_ntargets(&chip->base)
+The is_vram() is checking the current placement, however if we consider
+exported VRAM with dynamic dma-buf, it looks possible for the xe driver
+to async evict the memory, notifying the importer, however importer does
+not have to call unmap_attachment() immediately, but rather just as
+"soon as possible", like when the dma-resv idles. Following from this we
+would then pipeline the move, attaching the fence to the manager, and
+then update the current placement. But when the unmap_attachment() runs
+at some later point we might see that is_vram() is now false, and take
+the complete wrong path when dma-unmapping the sg, leading to
+explosions.
 
-[   14.588522] ------------[ cut here ]------------
-[   14.588529] WARNING: CPU: 0 PID: 1392 at drivers/mtd/nand/raw/internals.h:139 nand_reset_op+0x1e0/0x1f8
-[   14.588553] Modules linked in: bdc udc_core
-[   14.588579] CPU: 0 UID: 0 PID: 1392 Comm: rtcwake Tainted: G        W          6.14.0-rc4-g5394eea10651 #16
-[   14.588590] Tainted: [W]=WARN
-[   14.588593] Hardware name: Broadcom STB (Flattened Device Tree)
-[   14.588598] Call trace:
-[   14.588604]  dump_backtrace from show_stack+0x18/0x1c
-[   14.588622]  r7:00000009 r6:0000008b r5:60000153 r4:c0fa558c
-[   14.588625]  show_stack from dump_stack_lvl+0x70/0x7c
-[   14.588639]  dump_stack_lvl from dump_stack+0x18/0x1c
-[   14.588653]  r5:c08d40b0 r4:c1003cb0
-[   14.588656]  dump_stack from __warn+0x84/0xe4
-[   14.588668]  __warn from warn_slowpath_fmt+0x18c/0x194
-[   14.588678]  r7:c08d40b0 r6:c1003cb0 r5:00000000 r4:00000000
-[   14.588681]  warn_slowpath_fmt from nand_reset_op+0x1e0/0x1f8
-[   14.588695]  r8:70c40dff r7:89705f41 r6:36b4a597 r5:c26c9444 r4:c26b0048
-[   14.588697]  nand_reset_op from brcmnand_resume+0x13c/0x150
-[   14.588714]  r9:00000000 r8:00000000 r7:c24f8010 r6:c228a3f8 r5:c26c94bc r4:c26b0040
-[   14.588717]  brcmnand_resume from platform_pm_resume+0x34/0x54
-[   14.588735]  r5:00000010 r4:c0840a50
-[   14.588738]  platform_pm_resume from dpm_run_callback+0x5c/0x14c
-[   14.588757]  dpm_run_callback from device_resume+0xc0/0x324
-[   14.588776]  r9:c24f8054 r8:c24f80a0 r7:00000000 r6:00000000 r5:00000010 r4:c24f8010
-[   14.588779]  device_resume from dpm_resume+0x130/0x160
-[   14.588799]  r9:c22539e4 r8:00000010 r7:c22bebb0 r6:c24f8010 r5:c22539dc r4:c22539b0
-[   14.588802]  dpm_resume from dpm_resume_end+0x14/0x20
-[   14.588822]  r10:c2204e40 r9:00000000 r8:c228a3fc r7:00000000 r6:00000003 r5:c228a414
-[   14.588826]  r4:00000010
-[   14.588828]  dpm_resume_end from suspend_devices_and_enter+0x274/0x6f8
-[   14.588848]  r5:c228a414 r4:00000000
-[   14.588851]  suspend_devices_and_enter from pm_suspend+0x228/0x2bc
-[   14.588868]  r10:c3502910 r9:c3501f40 r8:00000004 r7:c228a438 r6:c0f95e18 r5:00000000
-[   14.588871]  r4:00000003
-[   14.588874]  pm_suspend from state_store+0x74/0xd0
-[   14.588889]  r7:c228a438 r6:c0f934c8 r5:00000003 r4:00000003
-[   14.588892]  state_store from kobj_attr_store+0x1c/0x28
-[   14.588913]  r9:00000000 r8:00000000 r7:f09f9f08 r6:00000004 r5:c3502900 r4:c0283250
-[   14.588916]  kobj_attr_store from sysfs_kf_write+0x40/0x4c
-[   14.588936]  r5:c3502900 r4:c0d92a48
-[   14.588939]  sysfs_kf_write from kernfs_fop_write_iter+0x104/0x1f0
-[   14.588956]  r5:c3502900 r4:c3501f40
-[   14.588960]  kernfs_fop_write_iter from vfs_write+0x250/0x420
-[   14.588980]  r10:c0e14b48 r9:00000000 r8:c25f5780 r7:00443398 r6:f09f9f68 r5:c34f7f00
-[   14.588983]  r4:c042a88c
-[   14.588987]  vfs_write from ksys_write+0x74/0xe4
-[   14.589005]  r10:00000004 r9:c25f5780 r8:c02002fA0 r7:00000000 r6:00000000 r5:c34f7f00
-[   14.589008]  r4:c34f7f00
-[   14.589011]  ksys_write from sys_write+0x10/0x14
-[   14.589029]  r7:00000004 r6:004421c0 r5:00443398 r4:00000004
-[   14.589032]  sys_write from ret_fast_syscall+0x0/0x5c
-[   14.589044] Exception stack(0xf09f9fa8 to 0xf09f9ff0)
-[   14.589050] 9fa0:                   00000004 00443398 00000004 00443398 00000004 00000001
-[   14.589056] 9fc0: 00000004 00443398 004421c0 00000004 b6ecbd58 00000008 bebfbc38 0043eb78
-[   14.589062] 9fe0: 00440eb0 bebfbaf8 b6de18a0 b6e579e8
-[   14.589065] ---[ end trace 0000000000000000 ]---
+To fix this check if the sgl was mapping a struct page.
 
-The fix uses the higher level nand_reset(chip, chipnr); where chipnr = 0, when
-doing PM resume operation in compliance with the controller support for single
-die nand chip. Switching from nand_reset_op() to nand_reset() implies more
-than just setting the cs field op->cs, it also reconfigures the data interface
-(ie. the timings). Tested and confirmed the NAND chip is in sync timing wise
-with host after the fix.
+v2:
+  - The attachment can be mapped multiple times it seems, so we can't
+    really rely on encoding something in the attachment->priv. Instead
+    see if the page_link has an encoded struct page. For vram we expect
+    this to be NULL.
 
-Fixes: 97d90da8a886 ("mtd: nand: provide several helpers to do common NAND operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4563
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Acked-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250410162716.159403-2-matthew.auld@intel.com
+(cherry picked from commit d755887f8e5a2a18e15e6632a5193e5feea18499)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_dma_buf.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2974,7 +2974,7 @@ static int brcmnand_resume(struct device
- 		brcmnand_save_restore_cs_config(host, 1);
- 
- 		/* Reset the chip, required by some chips after power-up */
--		nand_reset_op(chip);
-+		nand_reset(chip, 0);
- 	}
- 
- 	return 0;
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -145,10 +145,7 @@ static void xe_dma_buf_unmap(struct dma_
+ 			     struct sg_table *sgt,
+ 			     enum dma_data_direction dir)
+ {
+-	struct dma_buf *dma_buf = attach->dmabuf;
+-	struct xe_bo *bo = gem_to_xe_bo(dma_buf->priv);
+-
+-	if (!xe_bo_is_vram(bo)) {
++	if (sg_page(sgt->sgl)) {
+ 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
+ 		sg_free_table(sgt);
+ 		kfree(sgt);
 
 
