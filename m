@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BDB281524;
-	Wed, 23 Apr 2025 14:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B698A27FD7A;
+	Wed, 23 Apr 2025 14:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420326; cv=none; b=kp+lbVa7mH1idspI0sIw8m6q3Y47b1kTrDlYUyyPtWvEABdi8i1R7OMQYo04Tx+XhhH8hTZZQnF8J5k0lRCFMBv0/WivJuLwqrU1TcWrqLvwbIQwTV62AlvyqPmE/Q7018l7iDsV9Y0ZHutgzuQ/aFwZl3YKMllVvBr4+2UrtIE=
+	t=1745420329; cv=none; b=Z+0aDe/WkOGpCcDqdBCs02SBWb1I1nRZIzkpnvh0EurZBsH10XNmqObQZWb3aDc1aqlW583s4dPbTnFcQ5aN9BTNHhDni+oPi5685WvjBNU8Ilj9nZ3+Jjj+RjTWytj9lmUDGIqpOlhHAWR5eBl0JZB/2iA9w01b1mKC3BhO3UQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420326; c=relaxed/simple;
-	bh=m1IcsdKbiY0Zq4nkjLU+J5YPNxgqZMkxNeFJlmy520c=;
+	s=arc-20240116; t=1745420329; c=relaxed/simple;
+	bh=MgAfK1+hyfbdfvc4IgP7OE/I5kmmVfSOYnj7BVs0VHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Slujee92iZ8xMBHBFD+AnSeS4P+GVFIxqF3ir/B4yOIX/3FVC2eLB8vPq5Tb5oa8keThBr0CQ9KiVyCWB7j94PzUSIY0xicH15btkqoo4bakob1wwzVvImzGFIPW1yws6ZRZS0Ts4e99kZwFlYw3/dqxgxgCmqdqF2NNZSRnNMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqETvQj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TH1CRdNy5e38He+2U7BlXqPLZqXajAEFA1arsNlpA0VOShQ9sdV8c9UOM4vG5oMVETHoc8dVdc4E4Qt00xuzIdF61ny1J7gJGkPb1BxoeyWcvq4db3opGWlnIvEGFVdLym6GztKqim8ubxhgTQb/3pVuRMi0uboJfqnRxKwv9+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaZae+GJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqETvQj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4606DC4CEE2;
-	Wed, 23 Apr 2025 14:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaZae+GJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3198C4CEE2;
+	Wed, 23 Apr 2025 14:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420326;
-	bh=m1IcsdKbiY0Zq4nkjLU+J5YPNxgqZMkxNeFJlmy520c=;
+	s=korg; t=1745420329;
+	bh=MgAfK1+hyfbdfvc4IgP7OE/I5kmmVfSOYnj7BVs0VHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqETvQj67w3mnCVP1lvw28WAZKvv3AqwUDCZvBTvFVQemf+FUpyvhTyy76bf2JZvb
-	 2pibQoEkEHljLOsSAamrqb0kALPZLkY7LFKJOMbM7TvMVai1r5Qm26UqUZq89LhFy0
-	 v4031WQFZ03BgMRxlr4sbDqWbMHnk1eYSjpjFMnI=
+	b=NaZae+GJUuzIuhftqJKoQv4l/YZFQCC6vNEZB8HcPSqvBIao8ShsldyWNqbAy11AH
+	 SilRPacZJBmF/65llQVesVcblgok8CdjfJKXMv3XWLKQl3qattyigrbPsWyTOgXWM4
+	 dRbpXEmCkHsOHT5yjqLDH638llSP/YHJfR2KEd9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/291] jfs: Fix uninit-value access of imap allocated in the diMount() function
-Date: Wed, 23 Apr 2025 16:40:26 +0200
-Message-ID: <20250423142625.909635376@linuxfoundation.org>
+Subject: [PATCH 6.14 082/241] net: ti: icss-iep: Add phase offset configuration for perout signal
+Date: Wed, 23 Apr 2025 16:42:26 +0200
+Message-ID: <20250423142623.931981157@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +49,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 9629d7d66c621671d9a47afe27ca9336bfc8a9ea ]
+[ Upstream commit 220cb1be647a7ca4e60241405c66f8f612c9b046 ]
 
-syzbot reports that hex_dump_to_buffer is using uninit-value:
+icss_iep_perout_enable_hw() is a common function for generating
+both pps and perout signals. When enabling pps, the application needs
+to only pass enable/disable argument, whereas for perout it supports
+different flags to configure the signal.
 
-=====================================================
-BUG: KMSAN: uninit-value in hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
-hex_dump_to_buffer+0x888/0x1100 lib/hexdump.c:171
-print_hex_dump+0x13d/0x3e0 lib/hexdump.c:276
-diFree+0x5ba/0x4350 fs/jfs/jfs_imap.c:876
-jfs_evict_inode+0x510/0x550 fs/jfs/inode.c:156
-evict+0x723/0xd10 fs/inode.c:796
-iput_final fs/inode.c:1946 [inline]
-iput+0x97b/0xdb0 fs/inode.c:1972
-txUpdateMap+0xf3e/0x1150 fs/jfs/jfs_txnmgr.c:2367
-txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
-jfs_lazycommit+0x627/0x11d0 fs/jfs/jfs_txnmgr.c:2733
-kthread+0x6b9/0xef0 kernel/kthread.c:464
-ret_from_fork+0x6d/0x90 arch/x86/kernel/process.c:148
-ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+In case the app passes a valid phase offset value, the signal should
+start toggling after that phase offset, else start immediately or
+as soon as possible. ICSS_IEP_SYNC_START_REG register take number of
+clock cycles to wait before starting the signal after activation time.
+Set appropriate value to this register to support phase offset.
 
-Uninit was created at:
-slab_post_alloc_hook mm/slub.c:4121 [inline]
-slab_alloc_node mm/slub.c:4164 [inline]
-__kmalloc_cache_noprof+0x8e3/0xdf0 mm/slub.c:4320
-kmalloc_noprof include/linux/slab.h:901 [inline]
-diMount+0x61/0x7f0 fs/jfs/jfs_imap.c:105
-jfs_mount+0xa8e/0x11d0 fs/jfs/jfs_mount.c:176
-jfs_fill_super+0xa47/0x17c0 fs/jfs/super.c:523
-get_tree_bdev_flags+0x6ec/0x910 fs/super.c:1636
-get_tree_bdev+0x37/0x50 fs/super.c:1659
-jfs_get_tree+0x34/0x40 fs/jfs/super.c:635
-vfs_get_tree+0xb1/0x5a0 fs/super.c:1814
-do_new_mount+0x71f/0x15e0 fs/namespace.c:3560
-path_mount+0x742/0x1f10 fs/namespace.c:3887
-do_mount fs/namespace.c:3900 [inline]
-__do_sys_mount fs/namespace.c:4111 [inline]
-__se_sys_mount+0x71f/0x800 fs/namespace.c:4088
-__x64_sys_mount+0xe4/0x150 fs/namespace.c:4088
-x64_sys_call+0x39bf/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:166
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-=====================================================
-
-The reason is that imap is not properly initialized after memory
-allocation. It will cause the snprintf() function to write uninitialized
-data into linebuf within hex_dump_to_buffer().
-
-Fix this by using kzalloc instead of kmalloc to clear its content at the
-beginning in diMount().
-
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Reported-by: syzbot+df6cdcb35904203d2b6d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/67b5d07e.050a0220.14d86d.00e6.GAE@google.com/
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20250304105753.1552159-3-m-malladi@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 7349c9e99793 ("net: ti: icss-iep: Fix possible NULL pointer dereference for perout request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icss_iep.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index c72e97f065798..309b5f6e977d7 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -102,7 +102,7 @@ int diMount(struct inode *ipimap)
- 	 * allocate/initialize the in-memory inode map control structure
- 	 */
- 	/* allocate the in-memory inode map control structure. */
--	imap = kmalloc(sizeof(struct inomap), GFP_KERNEL);
-+	imap = kzalloc(sizeof(struct inomap), GFP_KERNEL);
- 	if (imap == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
+index 2981c19c48b18..b4a34c57b7b48 100644
+--- a/drivers/net/ethernet/ti/icssg/icss_iep.c
++++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
+@@ -407,6 +407,7 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
+ 				     struct ptp_perout_request *req, int on)
+ {
+ 	struct timespec64 ts;
++	u64 ns_start;
+ 	u64 ns_width;
+ 	int ret;
+ 	u64 cmp;
+@@ -416,6 +417,14 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
+ 	ts.tv_nsec = req->on.nsec;
+ 	ns_width = timespec64_to_ns(&ts);
  
++	if (req->flags & PTP_PEROUT_PHASE) {
++		ts.tv_sec = req->phase.sec;
++		ts.tv_nsec = req->phase.nsec;
++		ns_start = timespec64_to_ns(&ts);
++	} else {
++		ns_start = 0;
++	}
++
+ 	if (iep->ops && iep->ops->perout_enable) {
+ 		ret = iep->ops->perout_enable(iep->clockops_data, req, on, &cmp);
+ 		if (ret)
+@@ -430,7 +439,8 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
+ 			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
+ 				     div_u64(ns_width, iep->def_inc));
+ 			regmap_write(iep->map, ICSS_IEP_SYNC0_PERIOD_REG, 0);
+-			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG, 0);
++			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
++				     div_u64(ns_start, iep->def_inc));
+ 			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG, 0); /* one-shot mode */
+ 			/* Enable CMP 1 */
+ 			regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
+@@ -457,6 +467,8 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
+ 
+ 			regmap_write(iep->map, ICSS_IEP_SYNC_PWIDTH_REG,
+ 				     div_u64(ns_width, iep->def_inc));
++			regmap_write(iep->map, ICSS_IEP_SYNC_START_REG,
++				     div_u64(ns_start, iep->def_inc));
+ 			/* Enable Sync in single shot mode  */
+ 			regmap_write(iep->map, ICSS_IEP_SYNC_CTRL_REG,
+ 				     IEP_SYNC_CTRL_SYNC_N_EN(0) | IEP_SYNC_CTRL_SYNC_EN);
+@@ -487,7 +499,8 @@ static int icss_iep_perout_enable(struct icss_iep *iep,
+ 	int ret = 0;
+ 
+ 	/* Reject requests with unsupported flags */
+-	if (req->flags & ~PTP_PEROUT_DUTY_CYCLE)
++	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
++			  PTP_PEROUT_PHASE))
+ 		return -EOPNOTSUPP;
+ 
+ 	mutex_lock(&iep->ptp_clk_mutex);
+@@ -588,6 +601,7 @@ static int icss_iep_pps_enable(struct icss_iep *iep, int on)
+ 	if (on) {
+ 		ns = icss_iep_gettime(iep, NULL);
+ 		ts = ns_to_timespec64(ns);
++		rq.perout.flags = 0;
+ 		rq.perout.period.sec = 1;
+ 		rq.perout.period.nsec = 0;
+ 		rq.perout.start.sec = ts.tv_sec + 2;
 -- 
 2.39.5
 
