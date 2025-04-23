@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABEA2820A7;
-	Wed, 23 Apr 2025 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC098280CCE;
+	Wed, 23 Apr 2025 14:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420244; cv=none; b=Fpo+9rLbd1HGt2PKCHYyfiA5pHyOcPEeIQ1mkFq1g4zsLw4+hVW7aos/oigL7SaeEO3zqM0napluePM8hVgAKSyW0W/tyvLj/Bc4p1lWDI2qECNb99adp1GyHr7vQC+gTowHZcMyzSuk+KBj4wKUJznTheZcdgR2743ikI6fNXE=
+	t=1745420247; cv=none; b=doGQPzJOBlvqpC7Xe2MKeKZYeRQu1mEHFHnQrwR3xW8MwK7MFdRveo27peZ9rDm1xTeMzlirCpx/9sfoyf/kDVWDRQ2TxKUulTc26vwbf8vYs433IQmaEnwLtjpK4rzUObYzzM2FPOSZje36RJQSWX6YIV59IfYJXNcGq78wtCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420244; c=relaxed/simple;
-	bh=rOq8RU/qySFhzEnGPQC9u/SwbO2giNbUaJeYFOjDx+I=;
+	s=arc-20240116; t=1745420247; c=relaxed/simple;
+	bh=WHlo2y2BOlBx6FJdIzpix1HmBxePJJxhuoh3k2DUTuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUO1nGhoqADziPIj/2wfyFGvVuUOswyzXSRUx67eoAJCdIaMeH1Re1vQK5MgYxc26BH4WqA1+QCMT3qla0Asz4hDG8mlesP2OrN/Vjle8cpUnPspmYMsoKQdRkv5SLuS5a+IuHWOh8o/PaIiwnvSUQTFm/2lAS41n6nC72r6g0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F96UMUX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cY5q2qXxQjS5twFT2i4rV+WGS6pEa/gDIpZCVFj8CoSRtcxba75dn7jsUQOyzB6TIpzd3H0mINxH4HXdTgcGmqc8MuuWXV3NvZEUrgrbA7z0li7G6I4DZno3vsuheOnD0d5FejYMXdY2hnAnWgBhLmwJyh8wLXYOJZPaXwlcQ7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTLd1E2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F96UMUX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CCC4CEE2;
-	Wed, 23 Apr 2025 14:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTLd1E2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9BCC4CEE2;
+	Wed, 23 Apr 2025 14:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420244;
-	bh=rOq8RU/qySFhzEnGPQC9u/SwbO2giNbUaJeYFOjDx+I=;
+	s=korg; t=1745420247;
+	bh=WHlo2y2BOlBx6FJdIzpix1HmBxePJJxhuoh3k2DUTuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F96UMUX6ehvl/2fET/Y02KZSp9Rl1yaHLgHAN/iOHA4NOGl0xWjq/kmyTs4xzmkBe
-	 ZomJP0GIQGxgF2g+70EL5xtRMGqTXF9snlzHv6tMCAon2Xt9qUg73xwzcX/eueZhp5
-	 u1W142A4B6UM5Q4cuf6qj/x3nAiHXup7GxfQV4mM=
+	b=wTLd1E2x410iU2aXy5QduKN0B5XZIL76lt0x9c3SfQ4bJRYRKxChUl1GQMBbK/Ciz
+	 rlwv0LEvHepYe02/d5G3RAORtFdz8Ki9BxYwO9TAKhvLnMUzdYyWlrK8U1/6HR6bUZ
+	 kXPMUNLJ159B67XZ+3u/WJeAywCnpq6XH+qPFAkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 112/223] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
-Date: Wed, 23 Apr 2025 16:43:04 +0200
-Message-ID: <20250423142621.671111499@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 075/241] net: dsa: mv88e6xxx: fix -ENOENT when deleting VLANs and MST is unsupported
+Date: Wed, 23 Apr 2025 16:42:19 +0200
+Message-ID: <20250423142623.658574249@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-References: <20250423142617.120834124@linuxfoundation.org>
+In-Reply-To: <20250423142620.525425242@linuxfoundation.org>
+References: <20250423142620.525425242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +47,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
+[ Upstream commit ea08dfc35f83cfc73493c52f63ae4f2e29edfe8d ]
 
-Syzbot reported an issue in hfs subsystem:
+Russell King reports that on the ZII dev rev B, deleting a bridge VLAN
+from a user port fails with -ENOENT:
+https://lore.kernel.org/netdev/Z_lQXNP0s5-IiJzd@shell.armlinux.org.uk/
 
-BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
-Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
+This comes from mv88e6xxx_port_vlan_leave() -> mv88e6xxx_mst_put(),
+which tries to find an MST entry in &chip->msts associated with the SID,
+but fails and returns -ENOENT as such.
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- memcpy_from_page include/linux/highmem.h:423 [inline]
- hfs_bnode_read fs/hfs/bnode.c:35 [inline]
- hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
- hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
- hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
- hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
- vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
- do_mkdirat+0x264/0x3a0 fs/namei.c:4280
- __do_sys_mkdir fs/namei.c:4300 [inline]
- __se_sys_mkdir fs/namei.c:4298 [inline]
- __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fbdd6057a99
+But we know that this chip does not support MST at all, so that is not
+surprising. The question is why does the guard in mv88e6xxx_mst_put()
+not exit early:
 
-Add a check for key length in hfs_bnode_read_key to prevent
-out-of-bounds memory access. If the key length is invalid, the
-key buffer is cleared, improving stability and reliability.
+	if (!sid)
+		return 0;
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
-Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+And the answer seems to be simple: the sid comes from vlan.sid which
+supposedly was previously populated by mv88e6xxx_vtu_get().
+But some chip->info->ops->vtu_getnext() implementations do not populate
+vlan.sid, for example see mv88e6185_g1_vtu_getnext(). In that case,
+later in mv88e6xxx_port_vlan_leave() we are using a garbage sid which is
+just residual stack memory.
+
+Testing for sid == 0 covers all cases of a non-bridge VLAN or a bridge
+VLAN mapped to the default MSTI. For some chips, SID 0 is valid and
+installed by mv88e6xxx_stu_setup(). A chip which does not support the
+STU would implicitly only support mapping all VLANs to the default MSTI,
+so although SID 0 is not valid, it would be sufficient, if we were to
+zero-initialize the vlan structure, to fix the bug, due to the
+coincidence that a test for vlan.sid == 0 already exists and leads to
+the same (correct) behavior.
+
+Another option which would be sufficient would be to add a test for
+mv88e6xxx_has_stu() inside mv88e6xxx_mst_put(), symmetric to the one
+which already exists in mv88e6xxx_mst_get(). But that placement means
+the caller will have to dereference vlan.sid, which means it will access
+uninitialized memory, which is not nice even if it ignores it later.
+
+So we end up making both modifications, in order to not rely just on the
+sid == 0 coincidence, but also to avoid having uninitialized structure
+fields which might get temporarily accessed.
+
+Fixes: acaf4d2e36b3 ("net: dsa: mv88e6xxx: MST Offloading")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250414212913.2955253-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/bnode.c     |    6 ++++++
- fs/hfsplus/bnode.c |    6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -67,6 +67,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 1;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 29a89ab4b7894..08db846cda8de 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -1852,6 +1852,8 @@ static int mv88e6xxx_vtu_get(struct mv88e6xxx_chip *chip, u16 vid,
+ 	if (!chip->info->ops->vtu_getnext)
+ 		return -EOPNOTSUPP;
  
-+	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfs_btree_key));
-+		pr_err("hfs: Invalid key length: %d\n", key_len);
-+		return;
-+	}
++	memset(entry, 0, sizeof(*entry));
 +
- 	hfs_bnode_read(node, key, off, key_len);
- }
+ 	entry->vid = vid ? vid - 1 : mv88e6xxx_max_vid(chip);
+ 	entry->valid = false;
  
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -67,6 +67,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 2;
+@@ -1960,7 +1962,16 @@ static int mv88e6xxx_mst_put(struct mv88e6xxx_chip *chip, u8 sid)
+ 	struct mv88e6xxx_mst *mst, *tmp;
+ 	int err;
  
-+	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfsplus_btree_key));
-+		pr_err("hfsplus: Invalid key length: %d\n", key_len);
-+		return;
-+	}
-+
- 	hfs_bnode_read(node, key, off, key_len);
- }
+-	if (!sid)
++	/* If the SID is zero, it is for a VLAN mapped to the default MSTI,
++	 * and mv88e6xxx_stu_setup() made sure it is always present, and thus,
++	 * should not be removed here.
++	 *
++	 * If the chip lacks STU support, numerically the "sid" variable will
++	 * happen to also be zero, but we don't want to rely on that fact, so
++	 * we explicitly test that first. In that case, there is also nothing
++	 * to do here.
++	 */
++	if (!mv88e6xxx_has_stu(chip) || !sid)
+ 		return 0;
  
+ 	list_for_each_entry_safe(mst, tmp, &chip->msts, node) {
+-- 
+2.39.5
+
 
 
