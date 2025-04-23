@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B2C28F526;
-	Wed, 23 Apr 2025 15:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8C9289364;
+	Wed, 23 Apr 2025 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745420614; cv=none; b=aJWT4d0yH3Bo80LiWDrUTk1IHFrjG3NU6VLZQ5EAaM1iujEht/0F1DXHOrbvv9SY+xzWmm5p7uMl08nCeSjCI799WsgVLL5SvVxf2o7QZNR85VC7jNxI1eXVK5Z43CQaQinv0hskdNTLQrpUwfWmSBWjruyb7FzKq8pgshqdDYU=
+	t=1745420616; cv=none; b=ibO5+euMloUtYZA6gn6xBBg5bh0tEwud/b8wigi5ymPIHdSOwO1m+GhBXB/0FgIsZBf9cwf0DrXYfs1i44eTsRt45UD87w7AOLPsI5UeqyoWuxMU3B06oIolpK+PO+B4dgWHTugk+4uBkDe7irbm5fotub6Q8PdeIpuD5BuZ7II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745420614; c=relaxed/simple;
-	bh=7pIDcHWRfKYHcWbYvyiYBVqB78m8nn18NeJFo9UW6RQ=;
+	s=arc-20240116; t=1745420616; c=relaxed/simple;
+	bh=4nnYNBqLFS2n2SgPDDUq4CjO9CcO9h2ht74Y7ZMvce0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZFLYFFH4Frhmw2g7/RVfjx/x1/LjdQjb+rxpN+khEx4rScxQi/QSNDa8v0ln1p60n0EbNE68WjxS30005qbFiXk++pJSTOn1CHwZOtvPdKLg6A7fbx3lgrsnT6m8STEH58wL3anqrfskDqEWq8H8trps4iwfyWlvF1ZEvrxRVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQiuMhhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=psIJZTFT/ws01FoG3NMn2Vfv6OI/E4s3YDxqMJlU6aC9otS9goazvrdEisyCbDko22cFx4TujFfaQrWFAB7axzTN4uiDPcHybuhivX66/Fynsy7S0Fr47tdC+LAw/cylVEZRpfhqTpt6jxfrH3EmbW+MDv3vEHRN0v+gwkY/hHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3kZ164m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQiuMhhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A24C4AF0E;
-	Wed, 23 Apr 2025 15:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3kZ164m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C868C4CEE2;
+	Wed, 23 Apr 2025 15:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745420614;
-	bh=7pIDcHWRfKYHcWbYvyiYBVqB78m8nn18NeJFo9UW6RQ=;
+	s=korg; t=1745420616;
+	bh=4nnYNBqLFS2n2SgPDDUq4CjO9CcO9h2ht74Y7ZMvce0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQiuMhhHqhBEjJx75pWNurt91qi+hI1Yakh49B61n9uqrJ69PYGr4+iXhtLOHRZ9O
-	 8H+5ZGP3L1p1qiK5N34QeaU1a8Kw79tIeuNS0omvHwnuGSmxBfC2GOpmWERQ26JTa6
-	 uEUKP1vtUyBr6mCrKZcs1G9hzUv9nzYb75bBzM5c=
+	b=y3kZ164mxcMK1vnpZ4hDbB7lmXRwaIpsKGKN/edWF1fcin4vmM8yoZ+NAOAU0qFM4
+	 8dqJ1MxzDTHHiAudkJUh5g87VzVnXxSaFSWg3KMQuCQq0EfDJ29QBeF/Xx9Hw80iF5
+	 6P2vIPfoMRsaAuv/uHmuLCQy+PIawuMD8C8tjZyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Wyatt <fewtarius@steamfork.org>,
-	John Edwards <uejji@uejji.net>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/291] drm: panel-orientation-quirks: Add support for AYANEO 2S
-Date: Wed, 23 Apr 2025 16:40:44 +0200
-Message-ID: <20250423142626.631251174@linuxfoundation.org>
+	Tang Jun <dukang.tj@alibaba-inc.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>
+Subject: [PATCH 6.12 146/223] perf/x86/intel/uncore: Fix the scale of IIO free running counters on ICX
+Date: Wed, 23 Apr 2025 16:43:38 +0200
+Message-ID: <20250423142623.128986781@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423142624.409452181@linuxfoundation.org>
-References: <20250423142624.409452181@linuxfoundation.org>
+In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
+References: <20250423142617.120834124@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Wyatt <fewtarius@steamfork.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit eb8f1e3e8ee10cff591d4a47437dfd34d850d454 ]
+commit 32c7f1150225694d95a51110a93be25db03bb5db upstream.
 
-AYANEO 2S uses the same panel and orientation as the AYANEO 2.
+There was a mistake in the ICX uncore spec too. The counter increments
+for every 32 bytes rather than 4 bytes.
 
-Update the AYANEO 2 DMI match to also match AYANEO 2S.
+The same as SNR, there are 1 ioclk and 8 IIO bandwidth in free running
+counters. Reuse the snr_uncore_iio_freerunning_events().
 
-Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: John Edwards <uejji@uejji.net>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-2-uejji@uejji.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2b3b76b5ec67 ("perf/x86/intel/uncore: Add Ice Lake server uncore support")
+Reported-by: Tang Jun <dukang.tj@alibaba-inc.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250416142426.3933977-2-kan.liang@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c |   33 +--------------------------------
+ 1 file changed, 1 insertion(+), 32 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index c00f6f16244c0..7bf096ddeb06d 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -184,10 +184,10 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
--	}, {	/* AYA NEO AYANEO 2 */
-+	}, {	/* AYA NEO AYANEO 2/2S */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
--		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
- 		},
- 		.driver_data = (void *)&lcd1200x1920_rightside_up,
- 	}, {	/* AYA NEO 2021 */
--- 
-2.39.5
-
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -5485,37 +5485,6 @@ static struct freerunning_counters icx_i
+ 	[ICX_IIO_MSR_BW_IN]	= { 0xaa0, 0x1, 0x10, 8, 48, icx_iio_bw_freerunning_box_offsets },
+ };
+ 
+-static struct uncore_event_desc icx_uncore_iio_freerunning_events[] = {
+-	/* Free-Running IIO CLOCKS Counter */
+-	INTEL_UNCORE_EVENT_DESC(ioclk,			"event=0xff,umask=0x10"),
+-	/* Free-Running IIO BANDWIDTH IN Counters */
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0,		"event=0xff,umask=0x20"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port0.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1,		"event=0xff,umask=0x21"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port1.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2,		"event=0xff,umask=0x22"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port2.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3,		"event=0xff,umask=0x23"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port3.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4,		"event=0xff,umask=0x24"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port4.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5,		"event=0xff,umask=0x25"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port5.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6,		"event=0xff,umask=0x26"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port6.unit,	"MiB"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7,		"event=0xff,umask=0x27"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7.scale,	"3.814697266e-6"),
+-	INTEL_UNCORE_EVENT_DESC(bw_in_port7.unit,	"MiB"),
+-	{ /* end: all zeroes */ },
+-};
+-
+ static struct intel_uncore_type icx_uncore_iio_free_running = {
+ 	.name			= "iio_free_running",
+ 	.num_counters		= 9,
+@@ -5523,7 +5492,7 @@ static struct intel_uncore_type icx_unco
+ 	.num_freerunning_types	= ICX_IIO_FREERUNNING_TYPE_MAX,
+ 	.freerunning		= icx_iio_freerunning,
+ 	.ops			= &skx_uncore_iio_freerunning_ops,
+-	.event_descs		= icx_uncore_iio_freerunning_events,
++	.event_descs		= snr_uncore_iio_freerunning_events,
+ 	.format_group		= &skx_uncore_iio_freerunning_format_group,
+ };
+ 
 
 
