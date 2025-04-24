@@ -1,225 +1,186 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A495521D011
-	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 07:34:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1721F3FEC
+	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 07:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480073; cv=none; b=nQxlzRFKCToUwzF+ewxw0XBZFQOThbKzh7/z7Jbcr/kSge3BAE8GoUSJ6/NvQRcRCCTBkzYloXqiLtQg1U5aKCaYuzeqvLJUKLCtHUvBQrkcP9ewvNZ6IyeSOPYdlIUNT+l5E3U32Hu+I169PRzEH+F8u+bG7myO8X3vomOEY+Y=
+	t=1745480125; cv=none; b=FA2RPHAVA+kTTzeiEYp7nZHzBbM/ojXiFn070FIuproM5SQP7ly6yLrihO/ouB/O1Y2tbnyG7KCkMH7mMnMnkQKYIfCYGHsdbobOGc1VQzg/UCO70lobx+DVT3QdLOLPpnBzKt67P0YjOPywnKZ7LoGrYp2tcWqlsYKu/Zbl/ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480073; c=relaxed/simple;
-	bh=Dj1Lv1vYfLYfue1RADdfX9+Lvh8P7qLve8owX8a0Zq4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MHAbbWF+45SLbRm/YyidAuwFUFjXqTMa/sxRb4JmjKUm9VnNRp9rz377VgQVyoGptfcan6HyAR/9WNkb1raja1qWEUKbVLzOXn34JLAvBWkHdSySWFQImCl59Ny2h2znbea6ZnO9DFjaGhkxJPyv93CaHNDYcb5KDtt9dmj8ujU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wFA8BWh9; arc=none smtp.client-ip=209.85.221.181
+	s=arc-20240116; t=1745480125; c=relaxed/simple;
+	bh=w5CeZJEOONDHbrtkk/IdhPt6kfyEe8KT2zIeYourvzA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PcgfaJ0xv2renXwFtIuruUwT+7LXqrijQ11xomDK8dgpnTpcjuO1qKFME+zQlv0j6czz6hxfxodQQpfigiU9/NjWqbHqHA1O5SoQoqYkzcCpCtsCwpEuQU9Yl04jacNzZ08AaS8JLPA6nOWDbg56AGO90ULgWZs0U4NZ0wvjrGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DGAiM7KU; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wFA8BWh9"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-523f670ca99so278832e0c.1
-        for <patches@lists.linux.dev>; Thu, 24 Apr 2025 00:34:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DGAiM7KU"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so5846875e9.1
+        for <patches@lists.linux.dev>; Thu, 24 Apr 2025 00:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745480070; x=1746084870; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hg1fJUqFPUmaQAIOsB514eMr/+6dxVQ5q9mfZaUqhwI=;
-        b=wFA8BWh9Jq7SOZcg+oTtiiuqHXhSOititUSGNyx1XbeESzhuJihzE1NIiSsLKqS5mJ
-         lW8OgZeRy4NjMSUwVeWbcVRDzfXBBfhCdrCy+PQsRx99ZTGk5eIOiFYsyjEPKyQvnjNu
-         4hZha+HqFy6jf/ZI9FRujlhfpwk+E1l5Sa7CIvbsJqZuYsvDCxob11UVC5s+oRru4uMv
-         JzE0w9KMSIqfBpuaJHN4fag5/RH9IhrFbU1N0q3O2JtXa4j5UUrBMPzGuZBVItmARUQS
-         J3eZp2mieS8zUkRbjrqALuMwcVazeMZ+IUXcj0muL/oueYXonjU27caCZzIS05FboYFm
-         cn4g==
+        d=linaro.org; s=google; t=1745480121; x=1746084921; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NXlYjjVy/mEfKMv4LTdScgURSp3z8wVfLOByn6QRb6Y=;
+        b=DGAiM7KUL2F4gpzp5GwWqDnCTZUxYXtompLS8VrplNoQPtsvakO6Fx3bDLUN9t72FO
+         ge+m/6EefT5Qe+2hke8UIb8o4SEKYqV7thI2qstFDlimVE5bJcFfJLUUA1MBwSWrOXo4
+         NcOAzXIM+Fc7bkLE92K6RanuhtXTvLOl8VNzy8Dtp+bJ0NbOwyrhUbW7HvM5XwG0dJmy
+         LWl4p+wUM1NidES1kEmWnm4U5RM0wqz8Ytdw73qnu6Okag9hv38HHvbqE6JyAy7DoR0s
+         gnLMHJGjx2cdXQzxHgxkiN+DeXd+/qgIE4TxP6nmWAFst2pfNhDJRpUDrxoEeN1OkD3W
+         tgcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745480070; x=1746084870;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hg1fJUqFPUmaQAIOsB514eMr/+6dxVQ5q9mfZaUqhwI=;
-        b=HgIY5RQDbn50KgbWJrRsb0j4IVk9EjP0Evy9ybNITIlsmIzYf9jQP1wGyEAr4a5jII
-         iLYbtBBcvIDB82VgzKswpdSoKwD4vHq5KBlNHiYCsQk0NnFAOCfKx8l+h27cYaRp39we
-         KX873hULqDOTQvAGsSpod/q1IfptWFJ4vPpcekh39MiIKKx04fesNoOFbi0k1nTcGD62
-         XfHvacKy0AB4YCsIS61eOt2zdNoD2QHjznJANJmGFr7C8yr1SJdZMg+sv+QQDjWImkNd
-         PeWS2SikMV3ILVG5UbZb74geTny2VFqZiqS8wqbvdCZ/9NvKYC0NnUfP5aNXokSCZRcN
-         awEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5JfokBTiVHKijQgb/EFyqnzjTrxwO2SdK6fEngMjZqdM06/AROqsuQ9xujYvlTGHcnG0p0cnr@lists.linux.dev
-X-Gm-Message-State: AOJu0YyoSIk0fR3AjyVdd39Z0wWmIV7u4Ftr9JenKsMRkDzwp9w9S3Oy
-	255Xx9k/Vg/sibG1BXrNwtOKamHoJ0uaIqSjLMA1CDyByfx2bmhRbmOHCsiUrhmdF5scRAv+fTj
-	RgdVuQV1gQZEu292kxwX/c8alerrvAPjwy5aAxA==
-X-Gm-Gg: ASbGnctcf6BHmHvkkVxSb227lyjVb9o373WGYBXUB9U4afOQ7dpA8ggb94fLf/4bJ7P
-	RDMl9pXt+U8DC4G9t1B7RaW547cGT8lfPzjU1ynKepuND4MZTsxWKmQAFPe4OyDRspAXXaTzT59
-	Jpzs60J7O6kH/XA2fwDcULidGdcGqNf/mm0Ystn25MNGxBhFYCUCZj9OSd
-X-Google-Smtp-Source: AGHT+IH+AZQn/RXsq4aIiZBGFx6kcOfNTWST3Ud9lzCO1h/OKWqCizwpNOX6zINAICkkJCKhYFL2SJd/kzv5SZujIxg=
-X-Received: by 2002:a05:6122:1353:b0:526:2210:5b64 with SMTP id
- 71dfb90a1353d-52a7840b1e6mr978639e0c.9.1745480070478; Thu, 24 Apr 2025
- 00:34:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745480121; x=1746084921;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NXlYjjVy/mEfKMv4LTdScgURSp3z8wVfLOByn6QRb6Y=;
+        b=vJzfD4+SauvU0Ki7zh7s5BAZe/ukqiGs7cPBNOEH7ucj1sT5XAs/5v66VgBfZRN5/T
+         x9dCFhd1c1WqyK8aW8V9nucfYt/ROl2Z0NLsK9ecfjeFwv+bBRKSaXgsYLMArfCP97sN
+         y7nuHVxHLD3l0igjJq70hxVzJvxPtechong5HVhv3xFYUe213K9l7rOTKyfd+p4gbQ3f
+         27LNuFzr8jhgq8a7dy6UISMxzJSTkKUM0va12FqpWiNsFufWdzLJ5AGM5IKIn5YBHpfP
+         NyE9crvNJvxbKQFXBZdmahN4xvGrwocXX9zUVyB3H1ybrNDqzLM2c1qs65yYyAIlHMFu
+         tjGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVSlRw4s1jiosO9IYLPs02u+6PSuPTDCdsse6X5oqlKyy7YtRacYPTbFOUse7uj9i0mUH7DkVm3@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzlv6zwXB7mN2D2NH+YdyGFVOvySuqG5vKqLNUI+ENKhXLQLjRX
+	ROlN9Nb/YRPPw2ekcdPpg/5DclIC9G+pLEC8f5C3ByXbP/h22Z549Smvt76JF/s=
+X-Gm-Gg: ASbGncvcJQ5+kL65xzt5F3tvq/D4nWsYvbmtEY/gMsgTJ/7g6mS67aoVBrPdJ6LkulJ
+	CGRjZHrgiIKQKxE+pRsP80GtzIPPohE98nrm6lT8S/KfSUEjRIoJYv+3NBqohDh1HmpkOogC2fm
+	Y8HF5dgsXBSz1fYuzTYIb3/+ABA1hU2y5SHl73VW2Hiucih2RcTYVO8CoWeTyQXRtkI6YLT7hXS
+	pBj+3Noiv7XnPnYtIbEnFZBYFTwKxlpyGLd2UGiyk/RYpFLkvAT+XrwnB07OhmPjtktmPE37r2a
+	fvWMx/1DcL5W2/WqALVKyUHyDulGu+17+k2dGZ0fR1nfxYUEkEkwSSLg649YSPu6ZirEWSbwwJ/
+	cfdvX4v+atGGA8qJKvpgFD7TZnwAB
+X-Google-Smtp-Source: AGHT+IGcEWttEyWTq5B1l601OvcNgkQkRe4PgweFiFHW9TRCY66ESSb0W1W/0ogB3wW3F9wIzHy0ww==
+X-Received: by 2002:a05:600c:1910:b0:43c:e70d:450c with SMTP id 5b1f17b1804b1-4409bd8fd96mr9970555e9.22.1745480121293;
+        Thu, 24 Apr 2025 00:35:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:a24a:bfda:f031:720d? ([2a01:e0a:3d9:2080:a24a:bfda:f031:720d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2e0414sm9350205e9.40.2025.04.24.00.35.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Apr 2025 00:35:20 -0700 (PDT)
+Message-ID: <6be816bb-2163-4691-a728-fcb555e11b77@linaro.org>
+Date: Thu, 24 Apr 2025 09:35:20 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250423142617.120834124@linuxfoundation.org>
-In-Reply-To: <20250423142617.120834124@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 24 Apr 2025 13:04:18 +0530
-X-Gm-Features: ATxdqUF7KMwodSuA0qtPO12X0tglypY1DQaBNL6jLImWiASW8rwygFekJbp9zOU
-Message-ID: <CA+G9fYtT4eEO8Bz54gsvhA-rLp2yP=LDFV-evO2Dacm45zHX9w@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/223] 6.12.25-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2] drm/panel: himax-hx8279: Always initialize
+ goa_{even,odd}_valid in hx8279_check_goa_config()
+To: Nathan Chancellor <nathan@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev
+References: <20250423-panel-himax-hx8279-fix-sometimes-uninitialized-v2-1-fc501c6558d9@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250423-panel-himax-hx8279-fix-sometimes-uninitialized-v2-1-fc501c6558d9@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 23 Apr 2025 at 20:15, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.25 release.
-> There are 223 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 25 Apr 2025 14:25:27 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.25-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 23/04/2025 19:41, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR=y):
+> 
+>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 'goa_even_valid' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
+>          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use occurs here
+>      842 |         if (goa_odd_valid != goa_even_valid)
+>          |                              ^~~~~~~~~~~~~~
+>    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if its condition is always true
+>      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
+>          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>      839 |                 goa_even_valid = false;
+>    drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the variable 'goa_even_valid' to silence this warning
+>      818 |         bool goa_odd_valid, goa_even_valid;
+>          |                                           ^
+>          |                                            = 0
+> 
+> Even though only the even valid variable gets flagged, both valid
+> variables appear to have the same issue of possibly being used
+> uninitialized if the if statement initializing them to false is not
+> taken.
+> 
+> Turn the if statement then variable assignment into a single variable
+> assignment, which states that the configuration is valid when there are
+> not all zeros, clearing up the warning since the variable will always be
+> initialized.
+> 
+> Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
+> Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Changes in v2:
+> - Initialize valid variables once using the inverse of the current
+>    condition (Angelo).
+> - Link to v1: https://lore.kernel.org/r/20250422-panel-himax-hx8279-fix-sometimes-uninitialized-v1-1-614dba12b30d@kernel.org
+> ---
+>   drivers/gpu/drm/panel/panel-himax-hx8279.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/panel/panel-himax-hx8279.c b/drivers/gpu/drm/panel/panel-himax-hx8279.c
+> index b48b350b62da..fb302d1f91b9 100644
+> --- a/drivers/gpu/drm/panel/panel-himax-hx8279.c
+> +++ b/drivers/gpu/drm/panel/panel-himax-hx8279.c
+> @@ -825,8 +825,7 @@ static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
+>   			num_zero++;
+>   	}
+>   
+> -	if (num_zero == ARRAY_SIZE(desc->goa_odd_timing))
+> -		goa_odd_valid = false;
+> +	goa_odd_valid = (num_zero != ARRAY_SIZE(desc->goa_odd_timing));
+>   
+>   	/* Up to 3 zeroes is a valid config. Check them all. */
+>   	num_zero = 1;
+> @@ -835,8 +834,7 @@ static int hx8279_check_goa_config(struct hx8279 *hx, struct device *dev)
+>   			num_zero++;
+>   	}
+>   
+> -	if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
+> -		goa_even_valid = false;
+> +	goa_even_valid = (num_zero != ARRAY_SIZE(desc->goa_even_timing));
+>   
+>   	/* Programming one without the other would make no sense! */
+>   	if (goa_odd_valid != goa_even_valid)
+> 
+> ---
+> base-commit: dcbd5dcc956e2331414fd7020b4655df08deeb87
+> change-id: 20250422-panel-himax-hx8279-fix-sometimes-uninitialized-207354fb930c
+> 
+> Best regards,
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.12.25-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: 56d2398227a26c9827858b438ba125e54ae8b9f2
-* git describe: v6.12.24-224-g56d2398227a2
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12=
-.24-224-g56d2398227a2
-
-## Test Regressions (compared to v6.12.23-393-g7b7562936f80)
-
-## Metric Regressions (compared to v6.12.23-393-g7b7562936f80)
-
-## Test Fixes (compared to v6.12.23-393-g7b7562936f80)
-
-## Metric Fixes (compared to v6.12.23-393-g7b7562936f80)
-
-## Test result summary
-total: 126085, pass: 105995, fail: 3148, skip: 16539, xfail: 403
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 139 total, 137 passed, 2 failed
-* arm64: 57 total, 57 passed, 0 failed
-* i386: 18 total, 18 passed, 0 failed
-* mips: 34 total, 33 passed, 1 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 40 total, 40 passed, 0 failed
-* riscv: 25 total, 23 passed, 2 failed
-* s390: 22 total, 21 passed, 1 failed
-* sh: 5 total, 5 passed, 0 failed
-* sparc: 4 total, 3 passed, 1 failed
-* x86_64: 49 total, 49 passed, 0 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-* rt-tests-cyclicdeadline
-* rt-tests-pi-stress
-* rt-tests-pmqtest
-* rt-tests-rt-migrate-test
-* rt-tests-signaltest
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
