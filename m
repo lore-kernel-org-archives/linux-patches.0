@@ -1,390 +1,195 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2066.outbound.protection.outlook.com [40.107.94.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B4B223DC6
-	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 11:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745493053; cv=none; b=IWpGHGsQzKlDnU5pCoXul4sdQRfngUzkMBaULwkD3AD+/+aYiQOlqDz6shL1XZGrP1KaVN1+sTWIWw2UlFbsBI4T4NPNT1seEczj4eB4O2MLhOhJ6XWYv8ZxQoSkYDbfqBM471CtvqrNhWImKZvJ2Xy/sECYVj1r9HIMX6UuhE4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745493053; c=relaxed/simple;
-	bh=vHlM7vyyhvHO69IvXPugtFCtr96bxOcLbYznJ/LXqxQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GMduHFbfYxKLE/hz8aqiiFm+XItSf7QI6SCQCKMeF0NeyvPKELWDIBPlpeZ1rl5/XdlYtQb3AT9Osgcgq0ukcEW/p8/CqTCMxkBDkK/QVRu4JjigAKROdZefSkysrucxGyxbj0MhHABWGO+UIsyQPSncV0BXz0gFG5BmwGf2Qy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W1sDJeMk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFB91DE2A5;
+	Thu, 24 Apr 2025 11:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.66
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745493727; cv=fail; b=P5y+iK65evXGDDrvOEJff+E3JiVQ11/w1i7+DU5gs9YNrcpqJK78BbUlqIjQ24Q6RFCo1/oS/ewdq+aX8bEHpYOwEpv+c04i8AJeoVWxQq2H2OWYBJb1pIhe4nV2JWe/qSsul5bQAbHLIhTtdT3vDo/E34mCP4N1RxTBDMm7mvA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745493727; c=relaxed/simple;
+	bh=VkPOFTaNwwLRAOuKxrHHlLDgHiUslgaO74uf5Sit5ds=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=cFUgARwmgbPS26IJ8KMh5/D3j7Mch0SV9M2i5LOgrTQf+yRywJm+38l4HDB1eBf+XC8j/Shl6g1Dw7dNJshryz7lwtrtjJURrBqkY4cov9gjMzecRVfKB03gij4m9Y26PLED0eYiNtvYAiVgx0V3qjlpL/mvZHUNiYfFltLxd+A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=D7W5BIEo; arc=fail smtp.client-ip=40.107.94.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W1sDJeMk"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OAMrFX003456
-	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 11:10:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SbXkZiQgoCeol6j703bkn3BaF0gN+b66VO3cL6uNuA8=; b=W1sDJeMkeeGJXqJO
-	Q0V5h5Wq/x3Mmm87v5ouH/9p2pYIVCjPcN9BVgpehGBCpRNoKUB3AFRE5vYxK4WF
-	wHq0pa89xsBaj0XK4s3b+nWqoIjSGU6M7tFrusLwQ9iTcOS2x3cLnC3u3SKd5qcW
-	3gUsrgrDI7vNpvcGlCPz+zEzn5ZIJnFXRSBiybIYBE0dMqNq6qeEKG2uqgxWnLbZ
-	zoAIM+LDJVPGY7Ibd4TSsZvzk2RaVszqIakZPSW3e8wyDexcmF+zrmumTzzmdZHX
-	MCZnOy+uiWySiRZESlo18c19oI7y8kx3BfRgRNve+KkOaWOC+nr/4iXfE4KCLbht
-	vLKw8g==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh0n9ne-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 11:10:49 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c955be751aso145318485a.2
-        for <patches@lists.linux.dev>; Thu, 24 Apr 2025 04:10:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745493035; x=1746097835;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SbXkZiQgoCeol6j703bkn3BaF0gN+b66VO3cL6uNuA8=;
-        b=iH+9Ih0fTPO/pIsWXg1A5cEIt1i58Dds6He1N1sSX9VYw9ZR9qmA4aKmdow+roOjRr
-         JD+iYRtRsjUqfuqEk9g6U9koiyepDnlAueMq2MfDkVSgEZIc2aUubcPKVkJ51HFQQJGF
-         mIsj1rgq1xxUpmvblsh1ogq79fZOKlZPR19xDKhKe8TfBzNsIXrxQxr8gUnu6wZURonK
-         ycKAJ75gqWMrwZO7Tc/9D5WsHcFur0Z9DyqYLCfa/59XL5bcFjvhJT1K4SpSOM9Sdqvz
-         MFgqr2nT4VMb32IyrqhUFw4wuS1lyRca5VMaZeB21iiMZesjzTfjWaFST7B2U92REkxl
-         LASg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9durYwKep4Vy+P9f9s1FpskWas9n7C2+P3HJvVonU+iFahcnwA/mqbrslrfXMhNwmNBOx8GLT@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz77tTScy30p7iOu7tgO2qySU9QKBmkdKpPZf4/mfivRvtSJYi+
-	oD0WyoHS5OqOeaD+M+zKrSX9f55zCqry1avxPyxy+JAhKCuOks/32aRXTfpBM+KN3zLqIGIz+tC
-	fCFBo4dl8488ZCjhogfRJoDwdAD98Gyoyk6ssLqRNrEF7JR+vYeGRmx+a
-X-Gm-Gg: ASbGncv+pMxAEHkFhkbJNF9lVtXZSmvoaRJh/5E2J5fBodGt1j06W9xaii2w4Gij4z4
-	t/+zIZ68TFDN3opNjtWFATtzQ3dbDKlsVoilLqiYkZReFQvCvWUXZCqNXHeTk3OkP3mApN4/TBK
-	jZnjxPoPQgTOreZYQ8kWtAeOGEZg43bMihQsVYrahM1FvhxfQXslnbBZAy/OtDJ0YLW/OlabPLr
-	Ijd8vXhBCWntqAa7Tf0yOrcgHgg4fGNgM1fmcx9XnHOsacv5Y4BIS3Bf2upOHUOi80xERfxwUjf
-	1f4ntp+vAB+2N+iN8gOLqxpeuvOK9Ee9idDQD8nAgNTKIek5N30ZhO+rJBB/w5M6t3l/oLd0BkI
-	=
-X-Received: by 2002:a05:620a:2890:b0:7c0:be39:1a34 with SMTP id af79cd13be357-7c956f32b80mr335217885a.43.1745493035179;
-        Thu, 24 Apr 2025 04:10:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEIWSfSeagQCMxeexreJGiDfdJOejTbjRJi9VCGDNZjfVdsS5Ak1Wfu+3rMCEHoHHhMDdWtg==
-X-Received: by 2002:a05:620a:2890:b0:7c0:be39:1a34 with SMTP id af79cd13be357-7c956f32b80mr335213485a.43.1745493034794;
-        Thu, 24 Apr 2025 04:10:34 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb2627asm202514e87.16.2025.04.24.04.10.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 04:10:32 -0700 (PDT)
-Date: Thu, 24 Apr 2025 14:10:31 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>, chrome-platform@lists.linux.dev,
-        Pin-yen Lin <treapking@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        =?utf-8?Q?=C5=81ukasz?= Bartosik <ukaszb@chromium.org>,
-        Jameson Thies <jthies@google.com>,
-        Andrei Kuchynski <akuchynski@chromium.org>
-Subject: Re: [PATCH 5/7] dt-bindings: usb: google,cros-ec-typec: Add ports
- for DP altmode
-Message-ID: <air5bftw42xfc3ikm3zmcd2u7jwjya3wkqgw6ojjpf3v6q2d4y@djmxtnhzosed>
-References: <20250416000208.3568635-1-swboyd@chromium.org>
- <20250416000208.3568635-6-swboyd@chromium.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="D7W5BIEo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IfnGVheLFSEsjnALUBSfQ4CWS0Bl/ZDtSm6QSaYzKDToExuyzNtzALChHnr5o+SS2pcWa0SKwgWSLXWXg7wajHksJoCdWG6ynTi+WsZWVBpzGczTbE8+/wsNrZ8184pfpXQu+rr+NoNzEeDZ4eneRNuqD92P7ciqxynA9bMz5ckwVkXIxCQ6tIymnPCqTBf5spZYm88M80OObRjt4HEALQrfGYa5Kwq5770yl7E/eTQ8BZvv6TvWWOnFS/NLP4ffrralrnJwYjWBmNC2II+ehh4m5QDzF/WhHXxMSw2VPCd5RbRpFB1saW7rAYfcnzL9gr/+j/zwxzymLVie50TNRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5N9qvmKlKUcH4UNe3dZodxTZAnAONhKL0ClOo5n+q2o=;
+ b=gPKffut1lLu95BDzhvdDety57Ob60xzDrlhGjGU/76U8N53JW2JqWWoQ2q/XLrbdRuLAZasUrsBpKYePydssNOkjdNqIUbTIyCQt7vtOuPCwxQN01pO6LtMKVqzj3+U5FIUwcgOHrjFdWbTmD3aYcj0zifaEP0P6xOFfWTaQWcplACRgn9AIwUU9j9t0ezelNJOa3m8e/rtWoRXwcWUww8RfRZ54t35SFlhybXdnVf0BheUihtHEt6kdN8Q956Dzd4axOPgZheMnyBXD9GGtRLl/Y+Ed6UcqH9xQqPGIQKk3UUdC2DF3Y2wPPEk0614cXlcIlDTr11Qcvhrlm7072Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5N9qvmKlKUcH4UNe3dZodxTZAnAONhKL0ClOo5n+q2o=;
+ b=D7W5BIEoefuc/JnbwzYK0S90lBLfdkfHmWRD93KVTpoUClp4ibBgYn0oYjzzkNHCBduYWIl4+nIGUDylkb59EUYg7x5TacbWAcIX8X/g4DZBR5E1czUGRtgJlfYQC8/5DMYZk17hXry2YvQZJatIYaM1rB6N/NR3oC2Hovat5t8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ DS0PR12MB9040.namprd12.prod.outlook.com (2603:10b6:8:f5::18) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8678.23; Thu, 24 Apr 2025 11:22:02 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8678.021; Thu, 24 Apr 2025
+ 11:22:02 +0000
+Message-ID: <8dfb4ad6-5e98-4050-9cb1-888c01340ee8@amd.com>
+Date: Thu, 24 Apr 2025 16:51:48 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 00/16] iommufd: Add vIOMMU infrastructure (Part-4
+ vCMDQ)
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+ robin.murphy@arm.com, joro@8bytes.org, thierry.reding@gmail.com,
+ vdumpa@nvidia.com, jonathanh@nvidia.com, shuah@kernel.org, praan@google.com,
+ nathan@kernel.org, peterz@infradead.org, yi.l.liu@intel.com,
+ jsnitsel@redhat.com, mshavit@google.com, zhangzekun11@huawei.com,
+ iommu@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ patches@lists.linux.dev
+References: <cover.1744353300.git.nicolinc@nvidia.com>
+ <a0c248f0-71ff-4477-98ec-1bbd52eda566@amd.com>
+ <aAiaiomYczA22xik@Asurada-Nvidia>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <aAiaiomYczA22xik@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4P287CA0036.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:26f::6) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250416000208.3568635-6-swboyd@chromium.org>
-X-Proofpoint-ORIG-GUID: bvLr633MkBUiPwP9gAP1uccMIHHJWeGK
-X-Authority-Analysis: v=2.4 cv=ftfcZE4f c=1 sm=1 tr=0 ts=680a1c39 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=cm27Pg_UAAAA:8 a=1XWaLZrsAAAA:8 a=xgO1mOz0IQAmAFag51MA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: bvLr633MkBUiPwP9gAP1uccMIHHJWeGK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA3NSBTYWx0ZWRfX3In5uTLaLVzx 2co3S41Ctd0MQGu302iNkvZLEMijBNAaGkwflnmxZElxK2e6X8V+Bn5X4SqZSG+Gtx88u5VYc6k 6w4Gpimg/xOj636yiS2MBRKqg1M0urSW9SzTFa3LDtH61Of+XnwohVP9DJ2+tteMxz3jBXOj/x0
- WLclL74sYEZdrdwQ9nvxgjOwOUoc6s1FznRsvIkDY1tQyqP/27Cqg8DiGBxYMg8iUMrFpUQCua4 g/rM+uBN7TLRv5sfRR5QkOUdiJQcJ4BIV0AxocutmvEkNrQL+5KvMCsI9vzku82pO5+uNft/h5p aNNYRVpGBjDQ267ziwiCmvhXWSux6P0JsnIG/dMvpU1rapmdgCnaIhs/kLae4LbLWvzj0OTsR5p
- aeEwNeM7lCh3mJ92TtcVAwBESjvIRSRb6SSS8KR67o4KlWOopCecWIM515ziSwYdlqB3x2C8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
- definitions=2025-04-24_05,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- suspectscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240075
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|DS0PR12MB9040:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d68c84f-9733-4d96-d138-08dd83223c46
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aDltcVIvQlF3b2NEVFBsbUFLa1M3WjJnYVdkcmFBb2FrWVlmaVE4OEhJb3lu?=
+ =?utf-8?B?ak1aSE1xRnA2WHVHcFpSVEY1a2RKYkV1cjNiQU9WaWtENEVaUjAzSUZsQzc2?=
+ =?utf-8?B?MjFpK0duQXZWSzJ5U1pjUWVucVZWdlVuVjJDb2tqbzBLRXoveDU3ZGFadzZm?=
+ =?utf-8?B?cG9PcklNUGswU24xdmVrMG9hT2ltOTliU25sck5BZW9mWDR1S2UwTUtCaE12?=
+ =?utf-8?B?ODRPblZ1RDg5djRRSWU4a1V4OGFiaGFhaWovQmpsVDlOdkhzRTNLVFkvSkpi?=
+ =?utf-8?B?eGl5YU5MT05VRjFhMjdPMXA4ZmVKQllIbzdLdUpsSXRxVGdWR3hxM1JmRVNJ?=
+ =?utf-8?B?bDJvcW41MG53c2t1aXJuZ0pudTNidmloMW9pTUdocXZsWHE2RWdzUlJxV00z?=
+ =?utf-8?B?ekw2UFhCY09od1dGWXlLaGkySkNTWnF3U0U5N2NtY0FpSitOcjJ4cWY0d0Rt?=
+ =?utf-8?B?ZFc3MkoxTlJnVXZSdXpMZkxoMWNYZjgxUFpCNXBBNHVWa3ZNMFRCWnpkSllJ?=
+ =?utf-8?B?Uy9VYmNhUHlwVmpGMjB0ZFA3L3FRM0E0ajU5ZWR3WkY2QjNtS0lzK2NMdGpp?=
+ =?utf-8?B?WXRFZnJ0UkoyT1FoNVVqUWZsN1JyQVdJMDA2dExuWEZVUjJMcDZaVzByZHI0?=
+ =?utf-8?B?ZEtZdGg3U0htTlRiQXJFT0h0K1IyUUplSWYzT2FiVVNHa2lRdGQ2ZHNhSkRF?=
+ =?utf-8?B?SThWNTd3V2V1TWtnYVlyUEpXeXdsWjllTElaRmt1TDNHaXJrZE40QTFqdEp4?=
+ =?utf-8?B?Si9xS2dza1hKYklrSDFKQ0R6dk80N05jZnlHaEljdGoyZDFCTlI0R0hxNkpl?=
+ =?utf-8?B?QXljenR1V2NybFp3aS9SeHZ1WVVpd1dPOWdKVEMrR0RUVmpuYWptYWtmV0FG?=
+ =?utf-8?B?QmEwcmw1YUFtZWRhelNzeDB1WE80cG1reXlucitqajh3RWthY3ZFVzJTZVFR?=
+ =?utf-8?B?am83cjAyRENKT1JXbElxYlJSZ2R1dWZMZjR1SFZtcWd1M0U0dlR6QTRaa1Vl?=
+ =?utf-8?B?bDIyUytrYXF1QVpmWHBWSkNtaEZkaFNvbjdCckFDcTV0WVJUcVhLWVBuUXJ2?=
+ =?utf-8?B?OVVJQjIzNFpLcDJpL2VzcXNOZVhmNEJjeEZwQit2TkZ2cXJ6cHpFWFJjRjBN?=
+ =?utf-8?B?aExLOTd0OW5HWXhNdTFWbVNiTm9zRFYzYThRSVlFZEFQZ2haeTcxQ3hXM3dY?=
+ =?utf-8?B?aHk0TkpGaDdGbVZSTzlCRUFaWE44YjR6TVd0YmN1QnloSWZIN1I0ZmdZNG00?=
+ =?utf-8?B?a2p0S3ZnSkJhd2ozaG1nTmVqNTVkcUVmNzRzUzBFU0hLV01xV0N3bFNtU0Jl?=
+ =?utf-8?B?NWt3N3d6LytqMElUOS8zalh4MU5wNFF5NUNOOVZQZndKN2RxcmhKV0k2bnFZ?=
+ =?utf-8?B?UjNQWnA5RGgyRTJXZnFtZithVVFka2NpOU9wNEhWb0hpWkRuaHp6a3JiSUZW?=
+ =?utf-8?B?NDQzdmlZZVFPb2JhTzE2K0huSU0wTVk1V3pTNDJhS1hLSHBLMkhqdU9ndkdL?=
+ =?utf-8?B?QndYaDlPUXZJdEV0ZUh6dUZDU2w4MnNSUEtJRUVmSEp4UTRBSUpBY2tEQnBr?=
+ =?utf-8?B?RG9jVUNMeks3SFVDem82SG9mYk5tMitjaHYwOVk3QmNDTGRVM2V4SkZ1Slkz?=
+ =?utf-8?B?SVlsNCtPTjk5Mm53RHVmRitkSnBrVkd4V2cxdUdPQ2NEazFlTDB2ZTh3YThM?=
+ =?utf-8?B?WVVWTUszV1FUci9VT0VudlFnM3UyQ0loR2M0THhTbEpXV0ljL1BYRFcwc2x4?=
+ =?utf-8?B?WXZNVXkzYTd1M3daVU9udGpBM3NOYnJJb1Z6ZXI3dWpYdlE2YjVTNG5vb0ti?=
+ =?utf-8?B?VFZ3QzQ1eTVYWHlWbmZCeTBrdGlHTlZkb0NYdWg0aEdTWDdHL1dkWFZ6MVNE?=
+ =?utf-8?B?NUp6M3VDQWNPd0NsREhSZ0RKS1JpRnRaVWVIZUVVTm1XcVpQM2hnTlg0L3BD?=
+ =?utf-8?Q?aHWLdu2sMrM=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB6048.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?UlJIYWU3aXc2Q1FKK0pJNnRkamV3RjZJWVNSb2k1dWdaWEM0akVmU0YzTDlw?=
+ =?utf-8?B?VGQ1cjFqRk13bWlFQ21aZVFUcm9zZFZ6YmFFTkdrNjJHUVV2SlY2UktHeXB3?=
+ =?utf-8?B?MFRpQkIyRk5oQ3Jna2pwVjJLaFpnWDZxUVRlaCttSG84RklhbGtabXpPRS9Q?=
+ =?utf-8?B?YkEvbW96dXIvYVBvM3FoQU5SM0pFd1JvZ3I0QjVmY25GaG1RY3J5dEIydW80?=
+ =?utf-8?B?YytTVHRLOEtsWjY3SU5PZGljU3ppV2NHbGtrVnh4NHBaNWxzKy9qSUdNYVdC?=
+ =?utf-8?B?THk4YjlTZ01BSElibEFDcXptUGZZekxqKzd0S3BJSFRDbkhuYTc3d1VFYXFU?=
+ =?utf-8?B?eHhLMXlBRUlEaUZMVFIrREpqNFhncjBtOHkxaDEvb09icGYydFNENHcwdVpy?=
+ =?utf-8?B?N0YrbUxGMmJQSXJIVTZRYXJpanVDYk1MM1pVSWE0VWt6c05wQThqYWpHcVBH?=
+ =?utf-8?B?c2pqVjFVN05MM1JNNWpLaHduR1RXakdpcE1vVEQ1UGFaT1o5UEdqUzNIQ1FJ?=
+ =?utf-8?B?TUdPQmVqa2Z2UVBPbm9rUndoZTQ1d2dadllkeTFCKzQ5cTNNZXJUYmlSdnMr?=
+ =?utf-8?B?bjkveDArSTB5RDBmZ2h3MGsxZnFrZGJvdi9SS0NqNVg1cGptZW9iS3luNXVH?=
+ =?utf-8?B?c0F2S1JDYkpaeHdESUx5KytZWVhvaHFPc0F2bDYxRFUrRTk0ZXdBMllyNlJL?=
+ =?utf-8?B?RUNOMFN5Z2xiMG0wZE9ZLzRsVjdOMEtQZk5VSmg0Y0Y0aSt5dU4vTzBHRk9R?=
+ =?utf-8?B?RjlWc3A3OVMwd3BXZmU1VXBocHNXVDZYRUFRR0NLWXViTGpkSmgzMFN1QzF0?=
+ =?utf-8?B?UjUzQ2NUL1IrdkIrVEZLT1VvSW4rNWxDNTVXK1dwMzZpNTlMMXY0b2FuaElR?=
+ =?utf-8?B?SkJTOHhNOGR0TUpWbFU4bmU1czZwUEp2ajVleG9rZnMxRnZqYnE0bldxVExm?=
+ =?utf-8?B?b1JSL2toY1MvTG9tTm41bEFEV2ZkdjVEOGlPTk9QdUVyQ0VtNmpmNzNReVRs?=
+ =?utf-8?B?Q2M0RHpaS1puSnFHNGtJaEVFREtrbG5OTjhJNUszQ1J3dlVQb1p4YW0yNTJZ?=
+ =?utf-8?B?MkJ3YURXNXlrdWwrY0piMGxaNm1oVFIyN0NIbUZhTFVXL2hIUmFTNE5nQ0hE?=
+ =?utf-8?B?Y201N2t1SG5ScXdIT2pTMHZEek1IaE56L0pDRElScFRSQk9TOUJ1OFNmWHZi?=
+ =?utf-8?B?OHExSlBkSGlzalYyQWtBcXRuK1NPQjd3dGxpSEs3U0N3QzNPcXpHcVdXVktP?=
+ =?utf-8?B?S25yaFhzTVZscWVIbE9mVVorTlBmV0N3T0hBMVA1dDZUaTRJazdZOHFvSWRP?=
+ =?utf-8?B?QkpBcmNKSGhxR0h5Tk1ySGZwaktFUi9vSWc0YXllZ2RGM29JQ0gyS2dKR0Rs?=
+ =?utf-8?B?NEZjWUF0OExTSnRReTFIOVF6WjloMk1SaFMydjJSL05OMHRJS0VNUlpZdG1I?=
+ =?utf-8?B?RGZxK0dHK2tYL1h3VG5FOWxibXNuNnlZbHR6V2pEVlpDWit1OFNJakZzTkxw?=
+ =?utf-8?B?OFJmbFZRZzR1RzVRMElwbk5mS2o0M0FhdE9VV3E2YWZDeHdCK0xzZGMyNlpB?=
+ =?utf-8?B?TkFtZEhZODFjWTdLUUwzWTVnQ3pzR0NsaEhINnM2elAxRTF2L0dPUkVHR3I3?=
+ =?utf-8?B?ZTJ0R2E4bFlYSERKZ2llZ1VVMHlNUVh2dHdUNG8zcnlmV0hwVldpeUpJeEVH?=
+ =?utf-8?B?cDh0dy9rME1DVjFvQXBnZ21rNE5IVEphZ0Z4bGNOaFVOUmt2S3VGeHFBMlhN?=
+ =?utf-8?B?RlJ3bEs3RnlTT296V3ZmS2dkY1dYc0o5N0hTWlU2UlYyWkh1V1EzL0UzQ2JE?=
+ =?utf-8?B?dnB6UWh1bGY4T0JzOEJ0VGRURGUvSWZBRWo3QTE5Mmc2SG1CWFdtREJwZXRo?=
+ =?utf-8?B?OVIxdmVSWTFYZ2lhMkRGclJEaG51cVV2S1VDdzFOSGVTcUNVbnJnanpSK0pO?=
+ =?utf-8?B?M2hQNG9HSzVMMTI2eDA3cTRWdUdGV29EbHVNVm1xd1dQekYwaThKMmFLcm5O?=
+ =?utf-8?B?aStvcmpmSzNXNXJTaGgwT1MzTkNLRTByOGpZaEJoYnE5NWNYOUdIWThodXg2?=
+ =?utf-8?B?aGRkbWJRZVk0Tm1LSFozZHdEckdlcEZxa0wxUmRNaGdpMFJtT0tSRDFnSTM5?=
+ =?utf-8?Q?Y/kJVmNJPAIDSzoZ3pHL+CrDl?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d68c84f-9733-4d96-d138-08dd83223c46
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2025 11:22:02.3417
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pMMU+WCQy+fAi3avr1eiZaDXlXY/KVw2RQvfLJf/etYmLPZeZhLdXAraHV2isDA4BH6wt2GkFCyeXXUX50biBg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9040
 
-On Tue, Apr 15, 2025 at 05:02:05PM -0700, Stephen Boyd wrote:
-> Add a DT graph binding to google,cros-ec-typec so that it can combine
-> DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoint
-> that is connected to the usb-c-connector node's SS endpoint. Allow there
-> to be multiple 'typec' nodes underneath the EC node so that one DT graph
-> exists per DP bridge. The EC is actually controlling TCPCs and redrivers
-> that combine the DP and USB signals together so this more accurately
-> reflects the hardware design without introducing yet another DT node
-> underneath the EC for USB type-c "stuff".
+On 4/23/2025 1:15 PM, Nicolin Chen wrote:
+> On Wed, Apr 23, 2025 at 12:58:19PM +0530, Vasant Hegde wrote:
+>> On 4/11/2025 12:07 PM, Nicolin Chen wrote:
+>>> The vIOMMU object is designed to represent a slice of an IOMMU HW for its
+>>> virtualization features shared with or passed to user space (a VM mostly)
+>>> in a way of HW acceleration. This extended the HWPT-based design for more
+>>> advanced virtualization feature.
+>>>
+>>> A vCMDQ introduced by this series as a part of the vIOMMU infrastructure
+>>> represents a HW supported queue/buffer for VM to use exclusively, e.g.
+>>>   - NVIDIA's virtual command queue
+>>>   - AMD vIOMMU's command buffer
+>>
+>> I assume we can pass multiple buffer details (like GPA, size) from guest to
+>> hypervisor. Is that correct understanding?
 > 
-> If the type-c ports are being shared between a single DP controller then
-> the ports need to know about each other and determine a policy to drive
-> DP to one type-c port or the other. If the type-c ports each have their
-> own dedicated DP controller then they're able to operate independently
-> and enter/exit DP altmode independently as well. We can't connect the DP
-> controller's endpoint to one usb-c-connector port@1 endpoint and the USB
-> controller's endpoint to another usb-c-connector port@1 endpoint either
-> because the DP muxing case would have DP connected to two
-> usb-c-connector endpoints which the graph binding doesn't support.
+> Yes. The NVIDIA model passes through a Virtual-Interface to a VM,
+> and the VM can allocate and map multiple command queues (buffers)
+> to the V-Interface, by providing each command queue info in:
 > 
-> Therefore, one typec node is required per the capabilities of the type-c
-> port(s) being managed. Add a port to the DisplayPort altmode as well, so
-> that we can show the connection between the DP controller and the DP
-> altmode. This lets us indicate which type-c ports the DP controller is
-> wired to. For example, if DP was connected to ports 0 and 2, while port
-> 1 was connected to another DP controller we wouldn't be able to
-> implement that without having some other DT property to indicate which
-> output ports are connected to the DP endpoint.
-> 
-> Furthermore, this supports ChromeOS designs like Corsola where a DP
-> controller/PHY is split with two lanes going to one connector and the
-> other two lanes going to another connector. In this case, we wouldn't
-> have the graph binding under the cros-ec-typec node, but we would have
-> the graph binding in the DP altmode directly connected to the DP
-> controller's two output endpoints.
-> 
-> Cc: Rob Herring (Arm) <robh@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Acked-by: Lee Jones <lee@kernel.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> Cc: Łukasz Bartosik <ukaszb@chromium.org>
-> Cc: Jameson Thies <jthies@google.com>
-> Cc: Andrei Kuchynski <akuchynski@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/connector/usb-connector.yaml     |   6 +
->  .../bindings/mfd/google,cros-ec.yaml          |   7 +-
->  .../bindings/usb/google,cros-ec-typec.yaml    | 165 ++++++++++++++++++
->  3 files changed, 175 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> index 11e40d225b9f..e3d60997c03e 100644
-> --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> @@ -179,6 +179,12 @@ properties:
->              $ref: /schemas/types.yaml#/definitions/uint32
->              description: VDO returned by Discover Modes USB PD command.
->  
-> +          port:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: OF graph bindings modeling a data bus to the
-> +              DisplayPort altmode from the DisplayPort controller. Used when
-> +              the altmode switch is part of the port manager.
+> +struct iommu_vcmdq_tegra241_cmdqv {
+> +	__u32 vcmdq_id;
+> +	__u32 vcmdq_log2size;		// size
+> +	__aligned_u64 vcmdq_base;	// GPA
+>  };
 
-Well......
+Nice. Thanks for the details.
 
-> +
->    port:
->      $ref: /schemas/graph.yaml#/properties/port
->      description: OF graph bindings modeling a data bus to the connector, e.g.
-> diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> index ac89696fa649..63d506e88abb 100644
-> --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> @@ -98,9 +98,6 @@ properties:
->  
->    gpio-controller: true
->  
-> -  typec:
-> -    $ref: /schemas/usb/google,cros-ec-typec.yaml#
-> -
->    ec-pwm:
->      $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
->      deprecated: true
-> @@ -163,6 +160,10 @@ patternProperties:
->      type: object
->      $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
->  
-> +  "^typec(-[0-9])*$":
-> +    type: object
-> +    $ref: /schemas/usb/google,cros-ec-typec.yaml#
-> +
->  required:
->    - compatible
->  
-> diff --git a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> index 3272d0e01f7e..611345bbe884 100644
-> --- a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> +++ b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> @@ -26,6 +26,55 @@ properties:
->    '#size-cells':
->      const: 0
->  
-> +  mux-gpios:
-> +    description: GPIOs indicating which way the DisplayPort mux is steered
-> +    minItems: 1
-> +    maxItems: 3
-> +
-> +  no-hpd:
-> +    description: Indicates this device doesn't signal HPD for DisplayPort
-> +    type: boolean
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description:
-> +          Port for DisplayPort (DP) data
-> +
-> +        properties:
-> +          endpoint@0:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: Input DP port
-> +
-> +        patternProperties:
-> +          '^endpoint@[1-8]$':
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: Output to the usb-c connector's DP altmode
-> +
-> +        required:
-> +          - endpoint@0
-> +
-> +        anyOf:
-> +          - required:
-> +              - endpoint@1
-> +          - required:
-> +              - endpoint@2
-> +          - required:
-> +              - endpoint@3
-> +          - required:
-> +              - endpoint@4
-> +          - required:
-> +              - endpoint@5
-> +          - required:
-> +              - endpoint@6
-> +          - required:
-> +              - endpoint@7
-> +          - required:
-> +              - endpoint@8
-> +
->  patternProperties:
->    '^connector@[0-9a-f]+$':
->      $ref: /schemas/connector/usb-connector.yaml#
-> @@ -35,10 +84,30 @@ patternProperties:
->  required:
->    - compatible
->  
-> +allOf:
-> +  - if:
-> +      required:
-> +        - no-hpd
-> +    then:
-> +      properties:
-> +        ports:
-> +          required:
-> +            - port@0
-> +  - if:
-> +      required:
-> +        - mux-gpios
-> +    then:
-> +      properties:
-> +        ports:
-> +          required:
-> +            - port@0
-> +
->  additionalProperties: false
->  
->  examples:
->    - |+
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
->      spi {
->        #address-cells = <1>;
->        #size-cells = <0>;
-> @@ -47,6 +116,8 @@ examples:
->          compatible = "google,cros-ec-spi";
->          reg = <0>;
->          interrupts = <35 0>;
-> +        #gpio-cells = <2>;
-> +        gpio-controller;
->  
->          typec {
->            compatible = "google,cros-ec-typec";
-> @@ -54,12 +125,106 @@ examples:
->            #address-cells = <1>;
->            #size-cells = <0>;
->  
-> +          mux-gpios = <&cros_ec 42 GPIO_ACTIVE_HIGH>, <&cros_ec 3 GPIO_ACTIVE_HIGH>;
-> +
->            connector@0 {
->              compatible = "usb-c-connector";
->              reg = <0>;
->              power-role = "dual";
->              data-role = "dual";
->              try-power-role = "source";
-> +
-> +            altmodes {
-> +              displayport {
-
-Should there be an svid / vdo definition?
-
-> +                port {
-> +                  usbc0_dp: endpoint {
-> +                    remote-endpoint = <&dp_out0>;
-> +                  };
-
-I think this is slightly incorrect. The lanes from the DP mux inside the
-EC are routed to the SS part of the USB-C connector. As such...
-
-> +                };
-> +              };
-> +            };
-> +
-> +            ports {
-> +              #address-cells = <1>;
-> +              #size-cells = <0>;
-> +
-> +              port@0 {
-> +                reg = <0>;
-> +                usb_c0_hs: endpoint {
-> +                  remote-endpoint = <&usb_hub_dfp3_hs>;
-> +                };
-> +              };
-> +
-> +              port@1 {
-> +                reg = <1>;
-> +                usb_c0_ss: endpoint {
-> +                  remote-endpoint = <&usb_hub_dfp3_ss>;
-> +                };
-
-This should be more like
-
-              port@1 {
-                reg = <1>;
-                #address-cells = <1>;
-                #size-cells = <0>;
-
-                usb_c0_ss: endpoint@0 {
-                  reg = <0>;
-                  remote-endpoint = <&usb_hub_dfp3_ss>;
-                };
-
-                usbc0_dp: endpoint@1 {
-                  reg = <1>;
-                  remote-endpoint = <&dp_out0>;
-                };
-              };
-
-Would it make the driver significantly more complicated?
-
--- 
-With best wishes
-Dmitry
+-Vasant
