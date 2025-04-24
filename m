@@ -1,40 +1,52 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44A2207A26;
-	Thu, 24 Apr 2025 07:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA331F3D20
+	for <patches@lists.linux.dev>; Thu, 24 Apr 2025 07:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745479396; cv=none; b=f/1NWgHqBIF2Qn8lrXYh6VsWK5kF6AtYhcDeouRLv0XJUBR7SGT+oagamvDWQc9aZFpXfiE61rMIyFNfU1PnPJI/Im09SyqUJrHEpmXnsReGXCNSDJQyjlH9qkdIMugNeS+YYnZWmReQ2YqHXhQc5MBbCc5Q/S9O/SbJ33osv1I=
+	t=1745479472; cv=none; b=cfa1gVnYrlWA7rRG+UcW9aymu7bHHqhHmxBFpJZySjAfURDyLQ6oxbVPMl2UoIF73tEkQPdWIdH1swsAcYrG9ULvMi6VeUNkTC6cO2BsPCWUN/asfQSPoJByG8zn4+L9KrCNVuojgq69vnxAvq91BVArRaHDYows/gr4H82mYbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745479396; c=relaxed/simple;
-	bh=VumYsSmkonN04kMakyptQ61ZziCwgpn0S2e2cLk2ngc=;
+	s=arc-20240116; t=1745479472; c=relaxed/simple;
+	bh=SUiXSBVTodsrxvc8tpfjLeU3KmNzaV31IvgnMHDrvC0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WZUyzUynujNP4XaCVNppMKbljnEmYyf0Yu1nDjZF7HpAmTC8l4PYqFVDRtVMiq+xLUFdqsqj2vbSRbXqa4MtV8CtxfeILYbujBUA/pWYQUdjEHJWOLhuzVFGqbVhhvIC+DyNkhnjtng+DTLardKdcdfX8up3AE6+v1hVO83kxBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Z8t0DcaZ; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 In-Reply-To:Content-Type; b=j6oYAA9n8qg3K4ZmERs3RzlQOYvlxGsqBdxvUE0eCdNomTA0ABzId+bTscbPnSZihhtNbOCFYTgtuwgY5YF3qzCZ0XajsH/zP7xESW2tiY7Fg9LDAG/QM/qhS8Laa30pw4DKerk013Lwmz5mOVLkIVMGPJvS9EzF1fSqSjRDxU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=JEertdZn; arc=none smtp.client-ip=44.202.169.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Z8t0DcaZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1745479393;
-	bh=VumYsSmkonN04kMakyptQ61ZziCwgpn0S2e2cLk2ngc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z8t0DcaZz/8ioInBq6azat9/5KWCYu9uRlcpqjS8B82EJMKrpiqKGj76nu0hixsbT
-	 zxYCVJcm3RZd2WOtqhJgyofi8MCFSFr/79lfsdwLAEdSbKvDt/nlvNdjdm8XNbV9mo
-	 YCYmRoKfJ91yOWdm9N1qu784f7pvLZ1f976Z5Eg5jyY8mBaWV57/OOQmtiXk+cHCj/
-	 dcpBF8N/iavKzrdwcX+59uDXhZB1scM5cxu1nqvQ3LVKT7jy3e+3AFop8XhrF/Y+eZ
-	 /gXQNSOGQBTZzu+qZaCkSjb5CouYwTwuEmUWfo5MMYtE1wg7llkGNqlS2adnU5k2Iv
-	 ekGUnsq/dtweg==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 9C6A717E0808;
-	Thu, 24 Apr 2025 09:23:12 +0200 (CEST)
-Message-ID: <78d3095e-0cfd-4589-ada6-35569e01bc20@collabora.com>
-Date: Thu, 24 Apr 2025 09:23:11 +0200
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="JEertdZn"
+Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
+	by cmsmtp with ESMTPS
+	id 7gGZumH32iuzS7qwfuVnJ7; Thu, 24 Apr 2025 07:24:29 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id 7qweuauEA1vNy7qweu83Qi; Thu, 24 Apr 2025 07:24:28 +0000
+X-Authority-Analysis: v=2.4 cv=VMQWnMPX c=1 sm=1 tr=0 ts=6809e72c
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=X0g7uYtjAU900BSEm/gH4H5kkUda235ZpSk8sDLp9FU=; b=JEertdZn1xU8EIvEHfORzbQfYl
+	Ssz0j4gC+phdcnVPUbgBp+Wjcq/e0o4nTzpqJzHmbt3VI+WCTNrIYrAOYdiUHhyjNw9Uxa/k7ilLH
+	ucxTvAsA9gG8E6pNoeCgPYGx9TTn+LNYHssLvaetB8bzGOr88sKGeq7JD5d/kPZR2TMcY41s8XJIa
+	7gLouEGTxOvNUcnEK+zdLXCAohAfoihSoXtBwSF9qWea7eyCOgPg6mwASy6Xn5zRKRyrRaIBBzhz0
+	Yx9d2VjcETuRPmVH5zefh754mZgJb4fr5nHVEN0Y359fnxZMIK16KhPr93wq9L8IyRfvgt3VyNj22
+	WMW0csXw==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:41186 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1u7qwc-00000002ukl-0vxZ;
+	Thu, 24 Apr 2025 01:24:26 -0600
+Message-ID: <dbf52b63-df88-40a7-9a7d-2cde88d62ba9@w6rz.net>
+Date: Thu, 24 Apr 2025 00:24:22 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,58 +54,61 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/panel: himax-hx8279: Always initialize
- goa_{even,odd}_valid in hx8279_check_goa_config()
-To: Nathan Chancellor <nathan@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>,
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
- patches@lists.linux.dev
-References: <20250423-panel-himax-hx8279-fix-sometimes-uninitialized-v2-1-fc501c6558d9@kernel.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 6.6 000/393] 6.6.88-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250423142643.246005366@linuxfoundation.org>
 Content-Language: en-US
-In-Reply-To: <20250423-panel-himax-hx8279-fix-sometimes-uninitialized-v2-1-fc501c6558d9@kernel.org>
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250423142643.246005366@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1u7qwc-00000002ukl-0vxZ
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:41186
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 55
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfI5wqY6BM4Z2x3rOHEhvTNkT3VJZTa9mXu9C2QKrYh67e8GJRp/0lqSJMjLQApPvYHcHVpBlT6FBZWxYJGFZ2qtMZAzYdUqXTeE6qEL+3VAe3M+Z3XUK
+ jjqN+ftBbl7koaDE99XeMiH1kPOfYLTE4hKqXPm/M8+BYwevZ4pPEfmZXmMV4+7iIE7W02UJTfiaQQ==
 
-Il 23/04/25 19:41, Nathan Chancellor ha scritto:
-> Clang warns (or errors with CONFIG_WERROR=y):
-> 
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:6: error: variable 'goa_even_valid' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:842:23: note: uninitialized use occurs here
->      842 |         if (goa_odd_valid != goa_even_valid)
->          |                              ^~~~~~~~~~~~~~
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:838:2: note: remove the 'if' if its condition is always true
->      838 |         if (num_zero == ARRAY_SIZE(desc->goa_even_timing))
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->      839 |                 goa_even_valid = false;
->    drivers/gpu/drm/panel/panel-himax-hx8279.c:818:36: note: initialize the variable 'goa_even_valid' to silence this warning
->      818 |         bool goa_odd_valid, goa_even_valid;
->          |                                           ^
->          |                                            = 0
-> 
-> Even though only the even valid variable gets flagged, both valid
-> variables appear to have the same issue of possibly being used
-> uninitialized if the if statement initializing them to false is not
-> taken.
-> 
-> Turn the if statement then variable assignment into a single variable
-> assignment, which states that the configuration is valid when there are
-> not all zeros, clearing up the warning since the variable will always be
-> initialized.
-> 
-> Fixes: 38d42c261389 ("drm: panel: Add driver for Himax HX8279 DDIC panels")
-> Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On 4/23/25 07:38, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.88 release.
+> There are 393 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 25 Apr 2025 14:25:27 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.88-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Actually, I prefer this one, as Arnd's commit fixes only one of the two, but this
-initializes both :-)
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Cheers,
-Angelo
+Tested-by: Ron Economos <re@w6rz.net>
 
