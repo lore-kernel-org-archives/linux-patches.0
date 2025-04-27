@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598DE1FE469;
-	Sun, 27 Apr 2025 06:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9422046B3;
+	Sun, 27 Apr 2025 06:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745736222; cv=none; b=jkdKp1yY7qumepMfEDIVMe+Hyn3Mz55Inze1WnPlUcC2J6KzYAd2yb/GtmRJRCQUjbSQoTbRtg4ijjX5tvkXG26ShgwGctFxHaf1n2pQc/Hra0ZzLtBeTs/AB7m3ucMmyo6dem+R1pspSMCJS8F3XlRmK52L6g7oLeam6jWAp4A=
+	t=1745737198; cv=none; b=WyqB3YJH73Td+w9fopi+tjZouL46N9JWNbGMxgSO/CzyelMl6TJSUz8Av6d5JkfwGaFxBTFD0XCqnU9k+qDZhBlq+VLhfPVfzjsyJVvLV22mJphKR7p8hniv7KxQ/7qGpuyp2dlBspHerxDD1xczSYA3GjEb23J4VoP7qrX7IBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745736222; c=relaxed/simple;
-	bh=Avkh+IHRFhmXquqMCTj0xnURVEaMs2AVp7RorDHEx4U=;
+	s=arc-20240116; t=1745737198; c=relaxed/simple;
+	bh=WPVNiPXysA+ZKbcBuVxOUqy7B0r28vdmFSIesJvE8b0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tLuZp6dd6IShmGRzoeS2Re3koOCSgMF8mTSSJthMUJZVxhySln7BFnN2z27igAWO7BPIcrZpw1SUPqfELjR66xSMXrcWoTvf4Omdu8iwbY1r8P2ApsbYqkF5xW4oI6/DxUSCUOW/Egg+xbdwVPHBfZAQ/uz4bHnQmzdUHKfgJ4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dudawgPh; arc=none smtp.client-ip=198.175.65.16
+	 In-Reply-To:Content-Type; b=aKiL81tGTni/IFLvb+BweyOrQxjHmMQLgW2V0dmYxZgixWiek6AWWhiebdwJQSTkJo6rRGAk+r0jvu1L+MR0Nn+fAuabWD+L7PTZj09HanXEHY/9gt9zQ7Jgb9FTiquTO/7edcQcELu9lBbmDei6Xi9Jlz0D94GJpOB3EznAPQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fgtGjf8x; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dudawgPh"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fgtGjf8x"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745736221; x=1777272221;
+  t=1745737196; x=1777273196;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=Avkh+IHRFhmXquqMCTj0xnURVEaMs2AVp7RorDHEx4U=;
-  b=dudawgPhlhnQGOnjmfgycjZiRj+TtJk4ySBFyfDIz355QSGnbTsJ39Q/
-   TpVXLPu4unfpKKQu21cObNbitNrpSIPy4+uQHdPIjXXoLwRMimniWHWu5
-   xMn2+JUQQtuIiJB+MadW3CVdDcFNu8z3Rt5x5cFFge8YEHUYDEbqyIF6I
-   Mhwk0s4yBH5nFuZS9pyqPs4IuegtDWTuP6Suuo3hFzxEVGvTQiitbbicm
-   6Qk1BVQtC6FGcC+LxNVdH/qc1aHmBrOqM9Pbj5psDXfTHVuMpbKGNsqEk
-   lc7y4BB4JCz6edRroQKFosHTQJIFvFNhqnKwmAK65YsYzY48gmPDaEvs1
-   A==;
-X-CSE-ConnectionGUID: IXi635khRVuv/vP43cKrlw==
-X-CSE-MsgGUID: A5JWrN9sSpijnWeO0a+fCQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47430902"
+  bh=WPVNiPXysA+ZKbcBuVxOUqy7B0r28vdmFSIesJvE8b0=;
+  b=fgtGjf8xMz2QWfSSmDEAOu4xWCQp55BFu93xN9eySVZOiLMshQVsCep9
+   3yWREmQd/JNwjiJAYBWaam6s/bEqBY4VWSmXnRuj5uVKuIF8lK441AECU
+   zJCTx5k52jy3bN6RAR0DXnxxihbCTQRlYPKUDM8yp3EiCNhnOmmZxuduL
+   tyPXa+CFSQOXzNb1ZifTxBDt6euDA5mOH3wl96d9Xt3XkAeCOBb8YO5s5
+   Bo9Y/p9fQqyuBiZ5wZ8a4jQcdRBLC7ghLIqrfmTXlCAHUtFDIqbLnygBZ
+   Hf2Kzk2VhQAsTcpL9KpxPeUsIF/onl06HyMRUWUlXhKH8AzngUsvYigc1
+   w==;
+X-CSE-ConnectionGUID: 4KxIK6wdTu6O8oy5wJFY9Q==
+X-CSE-MsgGUID: 15IpvS1eSDqbJCK6pShs8Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47230525"
 X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; 
-   d="scan'208";a="47430902"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:43:41 -0700
-X-CSE-ConnectionGUID: nlUKeu2LRMaehOEljfFcBQ==
-X-CSE-MsgGUID: RSaSroJwTzy9u9o2IB/EVg==
+   d="scan'208";a="47230525"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:59:56 -0700
+X-CSE-ConnectionGUID: d1ZTnjH0RQyh27Uc3LKjrw==
+X-CSE-MsgGUID: v/r5yexURzibspAZ8Nkryw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; 
-   d="scan'208";a="133732043"
+   d="scan'208";a="138394240"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:43:35 -0700
-Message-ID: <6dc981fd-f093-48fc-a162-4e4e989c22f2@linux.intel.com>
-Date: Sun, 27 Apr 2025 14:39:26 +0800
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:59:49 -0700
+Message-ID: <9737606f-d3af-4c20-b1ce-7c705a7c8590@linux.intel.com>
+Date: Sun, 27 Apr 2025 14:55:40 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/22] iommu: Add iommu_copy_struct_to_user helper
+Subject: Re: [PATCH v2 05/22] iommufd: Add iommufd_struct_destroy to revert
+ iommufd_viommu_alloc
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
  corbet@lwn.net, will@kernel.org
 Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
@@ -65,19 +66,30 @@ Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
  linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
  alok.a.tiwari@oracle.com, vasant.hegde@amd.com
 References: <cover.1745646960.git.nicolinc@nvidia.com>
- <ca032e90c0241fe0653023fcb655185dba763f5f.1745646960.git.nicolinc@nvidia.com>
+ <3d8c60fe9f1cdaecd59ce3e395eb6ca029ca8ded.1745646960.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <ca032e90c0241fe0653023fcb655185dba763f5f.1745646960.git.nicolinc@nvidia.com>
+In-Reply-To: <3d8c60fe9f1cdaecd59ce3e395eb6ca029ca8ded.1745646960.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/26/25 13:57, Nicolin Chen wrote:
-> Similar to the iommu_copy_struct_from_user helper receiving data from the
-> user space, add an iommu_copy_struct_to_user helper to report output data
-> back to the user space data pointer.
+On 4/26/25 13:58, Nicolin Chen wrote:
+> An IOMMU driver that allocated a vIOMMU may want to revert the allocation,
+> if it encounters an internal error after the allocation. So, there needs a
+> destroy helper for drivers to use.
+
+A brief explanation or a small code snippet illustrating a typical
+allocation and potential abort scenario would be helpful.
+
+> Move iommufd_object_abort() to the driver.c file and the public header, to
+> introduce common iommufd_struct_destroy() helper that will abort all kinds
+> of driver structures, not confined to iommufd_viommu but also the new ones
+> being added in the future.
 > 
 > Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+
+Thanks,
+baolu
