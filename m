@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9422046B3;
-	Sun, 27 Apr 2025 06:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63B81DE3AC;
+	Sun, 27 Apr 2025 07:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745737198; cv=none; b=WyqB3YJH73Td+w9fopi+tjZouL46N9JWNbGMxgSO/CzyelMl6TJSUz8Av6d5JkfwGaFxBTFD0XCqnU9k+qDZhBlq+VLhfPVfzjsyJVvLV22mJphKR7p8hniv7KxQ/7qGpuyp2dlBspHerxDD1xczSYA3GjEb23J4VoP7qrX7IBM=
+	t=1745738791; cv=none; b=vGNXlN36KeEzaBN7it89Oo16YpNqaniUVouHkyZ/rSVB94MPkasSiIijZTCHeN3Ya6aLE6AUEm5UnrVAl4RJy4CPpQ13nds9k47wo1b6+Rthhdav9eMB+mp0G92RtX4LurW8nErRsY8HlK0ivInqqUoUkC37JBqRnOOBqvYdqCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745737198; c=relaxed/simple;
-	bh=WPVNiPXysA+ZKbcBuVxOUqy7B0r28vdmFSIesJvE8b0=;
+	s=arc-20240116; t=1745738791; c=relaxed/simple;
+	bh=Jmn+u6fFBrsun9XakIeVgT39XGKP2ToxwISS/MEt76w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aKiL81tGTni/IFLvb+BweyOrQxjHmMQLgW2V0dmYxZgixWiek6AWWhiebdwJQSTkJo6rRGAk+r0jvu1L+MR0Nn+fAuabWD+L7PTZj09HanXEHY/9gt9zQ7Jgb9FTiquTO/7edcQcELu9lBbmDei6Xi9Jlz0D94GJpOB3EznAPQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fgtGjf8x; arc=none smtp.client-ip=198.175.65.19
+	 In-Reply-To:Content-Type; b=S9PbG7y2RMEklljqe4yKRnVa89vh3RX9ZqhDqMw1kwf529Scu51C20Xd7FgrXVdDl+FGGMVWAPiQjXLGnsGLcyzNweEUIaVXdqYc+j3j0pc1mx2etziRmcER6yRlZeAiRCjW2pJMT1Mi/ZG+MhqDp0n6FiCeZuV6zR1zhi7Hl0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ow5hOO3d; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fgtGjf8x"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ow5hOO3d"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745737196; x=1777273196;
+  t=1745738789; x=1777274789;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=WPVNiPXysA+ZKbcBuVxOUqy7B0r28vdmFSIesJvE8b0=;
-  b=fgtGjf8xMz2QWfSSmDEAOu4xWCQp55BFu93xN9eySVZOiLMshQVsCep9
-   3yWREmQd/JNwjiJAYBWaam6s/bEqBY4VWSmXnRuj5uVKuIF8lK441AECU
-   zJCTx5k52jy3bN6RAR0DXnxxihbCTQRlYPKUDM8yp3EiCNhnOmmZxuduL
-   tyPXa+CFSQOXzNb1ZifTxBDt6euDA5mOH3wl96d9Xt3XkAeCOBb8YO5s5
-   Bo9Y/p9fQqyuBiZ5wZ8a4jQcdRBLC7ghLIqrfmTXlCAHUtFDIqbLnygBZ
-   Hf2Kzk2VhQAsTcpL9KpxPeUsIF/onl06HyMRUWUlXhKH8AzngUsvYigc1
-   w==;
-X-CSE-ConnectionGUID: 4KxIK6wdTu6O8oy5wJFY9Q==
-X-CSE-MsgGUID: 15IpvS1eSDqbJCK6pShs8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47230525"
+  bh=Jmn+u6fFBrsun9XakIeVgT39XGKP2ToxwISS/MEt76w=;
+  b=Ow5hOO3dYdPH0bm9AffH6yeAFD7CCB0RIYwBaD2sFblt8KuyX2XRiK8t
+   M63DFWJ2N1cU7Gi4dOBQyCdq+sBMmrrDtO6U24dE5FVSUY2C43vHTadZq
+   swYAasRJ6lecXN4KTQ+DdBmATuzBRoaLMirCjJK25DE1vU6ABw2IzHGht
+   3DQBnyc04vtGl3oD+Zr9Qgj+EwQPb3HTAx16dowlH3JbZIbAQwiQkV0hx
+   XWWpelvGb+iUpfckbXNdNS3AUV+SnnY3dh6QSCTodkglgTCvaeGIGFtF6
+   MOBrgenJz10QDSIo59+a4G7CiMqKNEVGy9rxtG/jIv4/a3mfkJP9B86S3
+   Q==;
+X-CSE-ConnectionGUID: 2FvxPvGKTWCQSD5345IeaQ==
+X-CSE-MsgGUID: XBixKStyQYG3dZD2UfhMeg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="58710629"
 X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; 
-   d="scan'208";a="47230525"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:59:56 -0700
-X-CSE-ConnectionGUID: d1ZTnjH0RQyh27Uc3LKjrw==
-X-CSE-MsgGUID: v/r5yexURzibspAZ8Nkryw==
+   d="scan'208";a="58710629"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2025 00:26:28 -0700
+X-CSE-ConnectionGUID: tjr0bvpUSgWfm/XawVYnrA==
+X-CSE-MsgGUID: OXjYL/GnT9ykpQQNpcmQ5A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; 
-   d="scan'208";a="138394240"
+   d="scan'208";a="164217471"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 23:59:49 -0700
-Message-ID: <9737606f-d3af-4c20-b1ce-7c705a7c8590@linux.intel.com>
-Date: Sun, 27 Apr 2025 14:55:40 +0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2025 00:26:22 -0700
+Message-ID: <376566b4-6c13-45ad-b1e5-8cfe2de437bc@linux.intel.com>
+Date: Sun, 27 Apr 2025 15:22:13 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,8 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/22] iommufd: Add iommufd_struct_destroy to revert
- iommufd_viommu_alloc
+Subject: Re: [PATCH v2 08/22] iommufd: Abstract iopt_pin_pages and
+ iopt_unpin_pages helpers
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
  corbet@lwn.net, will@kernel.org
 Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
@@ -66,30 +66,44 @@ Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
  linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
  alok.a.tiwari@oracle.com, vasant.hegde@amd.com
 References: <cover.1745646960.git.nicolinc@nvidia.com>
- <3d8c60fe9f1cdaecd59ce3e395eb6ca029ca8ded.1745646960.git.nicolinc@nvidia.com>
+ <d44272c153e7596c3cef716044de3dc6c2a8254a.1745646960.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <3d8c60fe9f1cdaecd59ce3e395eb6ca029ca8ded.1745646960.git.nicolinc@nvidia.com>
+In-Reply-To: <d44272c153e7596c3cef716044de3dc6c2a8254a.1745646960.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 4/26/25 13:58, Nicolin Chen wrote:
-> An IOMMU driver that allocated a vIOMMU may want to revert the allocation,
-> if it encounters an internal error after the allocation. So, there needs a
-> destroy helper for drivers to use.
-
-A brief explanation or a small code snippet illustrating a typical
-allocation and potential abort scenario would be helpful.
-
-> Move iommufd_object_abort() to the driver.c file and the public header, to
-> introduce common iommufd_struct_destroy() helper that will abort all kinds
-> of driver structures, not confined to iommufd_viommu but also the new ones
-> being added in the future.
+> The new vCMDQ object will be added for HW to access the guest memory for a
+> HW-accelerated virtualization feature. It needs to ensure the guest memory
+> pages are pinned when HW accesses them and they are contiguous in physical
+> address space.
 > 
-> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> This is very like the existing iommufd_access_pin_pages() that outputs the
+> pinned page list for the caller to test its contiguity.
+> 
+> Move those code from iommufd_access_pin/unpin_pages() and related function
+> for a pair of iopt helpers that can be shared with the vCMDQ allocator. As
+> the vCMDQ allocator will be a user-space triggered ioctl function, WARN_ON
+> would not be a good fit in the new iopt_unpin_pages(), thus change them to
+> use WARN_ON_ONCE instead.
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+I'm uncertain, but perhaps pr_warn_ratelimited() would be a better
+alternative to WARN_ON() here? WARN_ON_ONCE() generates warning messages
+with kernel call traces in the kernel messages, which might lead users
+to believe that something serious has happened in the kernel.
+
+> 
+> Rename check_area_prot() to align with the existing iopt_area helpers, and
+> inline it to the header since iommufd_access_rw() still uses it.
+> 
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> ---
+>   drivers/iommu/iommufd/io_pagetable.h    |   8 ++
+>   drivers/iommu/iommufd/iommufd_private.h |   6 ++
+>   drivers/iommu/iommufd/device.c          | 117 ++----------------------
+>   drivers/iommu/iommufd/io_pagetable.c    |  95 +++++++++++++++++++
+>   4 files changed, 117 insertions(+), 109 deletions(-)
 
 Thanks,
 baolu
