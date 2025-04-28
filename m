@@ -1,261 +1,416 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2051.outbound.protection.outlook.com [40.107.237.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ABD2980CA;
-	Mon, 28 Apr 2025 20:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745870567; cv=fail; b=iHMUkJplO/Dg567Ca9OZarkyjtE+tWteiDAuKbbjb2wVzv9k+qQrXtwPGSpuBtYR8TApOMv+14NZaZlnVdie0A8wH3jqA/FgXYRxpn3xfM6fwtulNLFUH/LK3+edGzc7WyC59xSIjDSDxgZ3Sk7cPK+7CA30UfYPolEeiidX1pw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745870567; c=relaxed/simple;
-	bh=/9a9u+Y0unDYMiHhgJZtzMRWS/kPxPTNQQUPln2NXhI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e3p+xQ60bi7XAzu3PMl9H5c0hJr5/fYxritCuSrNGDSkdF63gMSyohQBYfaMh6r+cSwDkzPhBNs3a3oY6U0XhPwL75itUDKKkK0S5aw0IiGunKWQbUPiEVPs4ZE8ZX0+z+V9DTjj1UoO9qDY3psUi8zryAYyFW9qyznRrBHdtg0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nNrR5qyG; arc=fail smtp.client-ip=40.107.237.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CB9297A41
+	for <patches@lists.linux.dev>; Mon, 28 Apr 2025 20:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745871274; cv=none; b=D851x4tJSyxJU1Yfl/vQ5dPGQionfKlXYaGr0ZVQfQDUW0krnzoBKLRvsmredsf5nfoaqASJUgl0zYmcDJsBeh3JnwOcIRtsKYv8z3KjVAP0Nzo0SjXeeEjPMR+4WHDqoRdQp7q4sXW7X066w56HJncv0hQXZt94PtmZ8/5fA5M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745871274; c=relaxed/simple;
+	bh=npEaUa9y7aoYDxWJKVP6eFuSAM+GuqK8BYJKktzo5Io=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=atJZkF2V3ZHMPK4ycF/oJDTixNxKBQtm1S0dmf7Sh8kzz3XhAsD2nwVAYu3/OOZL+ANGZIxma2GEgw3AIqiG926wy1I/JVZfRSxh7vSTy7vdqa1mr5gwO0lEShtmkZiopPDUteB9aRjFlA7819yW+rf+nDH7U04L1fIb/GmDjbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=09ZT0RnR; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nNrR5qyG"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tJEoo4HqdaCiyGGb306ZcQYvp4TIAScNXENVdyhiZNTB2Zh78n98GSHKcLk0oaoIaA/9g5fDFF3hvQS8ZctEC0Btel80KidwQ6hRk35Ake3yZG40sVsZ5I4HnafrOzzs3nRTS0yl0VvCU20xkfDYOFgm+EMlGrFoe4Qa8CyJdG+yTEyUHzzb+sUBJOX0YVVNIOFChWp8+LJAxFLxkEGe0hh3pDvYfBkUGexQhe6WjQKxf3Qr///q3gA0SeGL8f/QuQmjWXDx5EKQYK5U8bxooKclngxSyq3RFA8B8p+bmixzFz4GvWX1SYqKox2h1PY5pH4wnqFJNj4mQDz6CWR5Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J+4jt2aHKM9OQOxWZhzm58mt7UbTuOvn+tJa+Fg30QU=;
- b=njc8YWbMRvB5MPk7+1qAdl1imxNnEoc3o7cyLtUi+CVVU/Csl6iWVUcqj8LNtoW8bFSlF0Oti+DJ08LwVdOPgOVYjl9nAY66FkSz/SQwW6Kgi2Q4DXl8MjAIhRfMijvu3boDtYowfRyMMJohtlp5ssnUXLj8EEn68vT+VHqlYsh/+TauAJd/slxJrdmEMOB6Fm+gN5TB8cXjUrL9q+FP6ZTpDIs0ypFAbRhXLN+8boBN5GLU6XsOhb5KNaPPghCAK34En+MqywrbWE6DTgzOE1j8UmpixZ+06guIOltdZ5tk19u9KO1duh4pMF3b+qJ9yRzEa+VIQAimn1iQBw5kqw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J+4jt2aHKM9OQOxWZhzm58mt7UbTuOvn+tJa+Fg30QU=;
- b=nNrR5qyGr9uG2SObRjBvb7HiE7wKyfpGGsd5dGRnHWb0hp1b2sP9dsROq6Aza3xL+D7CJH1Qr705hCGudI0DMbeDsKB/bHvYK4Io+69+k6tqzah5VtLc8KoDV9u6jmA9e9aHtvtSgygx8mp8qDpNZtsG7bpF7ZScd1dgv+3BUfn268vaPwotmz+zM0yGSo1MPMFAQppHVtEkFu4qVrC87qz2BUsUsXhfmVJ/SPjEK1ikSpNk6hR06lo24ViszDLe86pTMOyYYJgbEwYUliOB+n647V79EqqCKLDeCAxf+z6iyD2IFd78KmrTWxiogT8B/ca0KnjjPH85Vvm07/5Qlw==
-Received: from CH0PR03CA0404.namprd03.prod.outlook.com (2603:10b6:610:11b::33)
- by SJ2PR12MB8009.namprd12.prod.outlook.com (2603:10b6:a03:4c7::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Mon, 28 Apr
- 2025 20:02:36 +0000
-Received: from CH2PEPF0000014A.namprd02.prod.outlook.com
- (2603:10b6:610:11b:cafe::7e) by CH0PR03CA0404.outlook.office365.com
- (2603:10b6:610:11b::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.37 via Frontend Transport; Mon,
- 28 Apr 2025 20:02:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH2PEPF0000014A.mail.protection.outlook.com (10.167.244.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8678.33 via Frontend Transport; Mon, 28 Apr 2025 20:02:35 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 28 Apr
- 2025 13:02:20 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 28 Apr
- 2025 13:02:19 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 28 Apr 2025 13:02:17 -0700
-Date: Mon, 28 Apr 2025 13:02:15 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Vasant Hegde <vasant.hegde@amd.com>
-CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
-	<will@kernel.org>, <bagasdotme@gmail.com>, <robin.murphy@arm.com>,
-	<joro@8bytes.org>, <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
-	<jonathanh@nvidia.com>, <shuah@kernel.org>, <jsnitsel@redhat.com>,
-	<nathan@kernel.org>, <peterz@infradead.org>, <yi.l.liu@intel.com>,
-	<mshavit@google.com>, <praan@google.com>, <zhangzekun11@huawei.com>,
-	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-tegra@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
-	<patches@lists.linux.dev>, <mochs@nvidia.com>, <alok.a.tiwari@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Subject: Re: [PATCH v2 10/22] iommufd/viommmu: Add IOMMUFD_CMD_VCMDQ_ALLOC
- ioctl
-Message-ID: <aA/exylmYJhIhEVL@Asurada-Nvidia>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="09ZT0RnR"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2264c9d0295so50125ad.0
+        for <patches@lists.linux.dev>; Mon, 28 Apr 2025 13:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1745871271; x=1746476071; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sF3TQXTjTwLlsmEr6Vx8Y4aN4YqmuAbAC+QoJEmyUXM=;
+        b=09ZT0RnRzGaPvuxJ4mpglmqCh5Y0H2AWaptTcLBAEEx3ou9q1ZMmTpBhZzP3Yw6bq8
+         fGqLDYJrD/GZs/zcGq72q9Nc7i9id6XyTHx9L1l415iGligop8V/9X4dLacwW6UlKWoD
+         kDwTB+Qwseynu1LZVZ0n6exOLenVmoHiZqTOlhTSG3ygu3+8SSREvCXKCKxe4TeJy8I/
+         89wro0wqahpSD0O9rOx5VD7CR94BGyLyBd3twAAtFH7wnu2DAtrAuFraWJeP2BpmVk4+
+         k4lY3ieOPiCZGpTEmYqef7iaAirBEYkxNvTQqnaaZ3hiPN3gtAQY5uA+UMcoEByWyDW0
+         kQug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745871271; x=1746476071;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sF3TQXTjTwLlsmEr6Vx8Y4aN4YqmuAbAC+QoJEmyUXM=;
+        b=RTY5nRzznmuv7dxgAyM/iNSUFtiqazeV+Q9k+bGT/DSh5zzfu6Ov3aCK10IdR5AG3G
+         w+JbJYRVcsBar5KJZb+z0Y1JyUzbTgy4dPLmiXdYpr5eHRZrPjh/JYJK3vp4xjavqeRr
+         HSEmWKcMO8R5K4FFlNNlIVwTcai/HgmFp3HqL+O3n5vhFj4FWQuNFVca6t7QdV/ij90r
+         MBWy7QfA5ckBoLrs6y9nDGpJ1PZoAQ+0vk6c4cB3/N+VGX4qHY6qL6GO6d4N2xurS0qP
+         cqrbBbtw54H+hwTZAUx6HFq5O5bT82RnszBwmYRX1fZrUMtA66Ku6SpPmfVINtU7OjII
+         XTRA==
+X-Forwarded-Encrypted: i=1; AJvYcCVUXtRfoyW9Qu+u8dn+ipb4ykuVIeOY6x0BnkrRXYFcZB2rehptNZYUYyvA42K7/gHpby66tp5h@lists.linux.dev
+X-Gm-Message-State: AOJu0YxlipuQ01ZBDeghzQsp0m4VovmrtT6YtjCcoluCDAsq3l5VW6mU
+	6myUUiCGf6icV9L6ePCbSTawYp4S0qSt4vbUB+nAuBeJ2n3sCgP0CGreUUPmjw==
+X-Gm-Gg: ASbGnct2om6vwdWAom3XjsIGnC4yXSsKGIVAfJRfMdvUoBUDoRnRbsrrIYfqn7Nl0Gt
+	KwIlVaIkn9RaRIT/a53RxWBEVTGeo0U21w4VMF5Ea+l3ZRRdBsaMj4Kp83fzN5i5i+GzTjXlbch
+	zUYFXjNsCotGpEH6uN7D+J1NxfuLditX48zaNagzqywd4o++H83uSK63TH1mxwpWspjNlxJfUhC
+	r4fctCW5WlF57BHJH4b5zS8EyVovDYLGFyZtCmDWRQbUY6Laj4ck7LsVZYgy+gygL8TilSWYCVy
+	Gk3tLozY7f7jUXfXhHUYXkl7HgtfrU9jnqyJT8Qo29DoIDbSxb8vD2OMacDVcbooj9DnV0p+
+X-Google-Smtp-Source: AGHT+IGmtl/Kj7Dfb3LKwjogpzMnxm1K7d+HjcHQ0Rw+sVKLpRXDlU7ddaIuIujt0mHKuRlgJFYRhQ==
+X-Received: by 2002:a17:902:ce0d:b0:21f:4986:c7d5 with SMTP id d9443c01a7336-22de6c488fcmr714075ad.8.1745871271079;
+        Mon, 28 Apr 2025 13:14:31 -0700 (PDT)
+Received: from google.com (2.210.143.34.bc.googleusercontent.com. [34.143.210.2])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b15fadea8d8sm7669029a12.64.2025.04.28.13.14.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Apr 2025 13:14:30 -0700 (PDT)
+Date: Mon, 28 Apr 2025 20:14:19 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
+Subject: Re: [PATCH v2 08/22] iommufd: Abstract iopt_pin_pages and
+ iopt_unpin_pages helpers
+Message-ID: <aA_hm_AD4Xzm3qJZ@google.com>
 References: <cover.1745646960.git.nicolinc@nvidia.com>
- <094992b874190ffdcf6012104b419c8649b5e4b4.1745646960.git.nicolinc@nvidia.com>
- <b0d01609-bdda-49a3-af0c-ca828a9c4cea@amd.com>
+ <d44272c153e7596c3cef716044de3dc6c2a8254a.1745646960.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b0d01609-bdda-49a3-af0c-ca828a9c4cea@amd.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000014A:EE_|SJ2PR12MB8009:EE_
-X-MS-Office365-Filtering-Correlation-Id: ab83bf12-0bbf-458d-2674-08dd868f9ec7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|376014|7416014|36860700013|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?eygLkwFwoONFetAiaOlkvRv561Cx0cmGlBj9l1OsDspcpkRbC4mMXFWMzn4w?=
- =?us-ascii?Q?b6+FCX+JEOYra0lJP2UxF2NpJeVUhydzGt4MTy6w0JL9J5FDp+U6Ws6FqXG/?=
- =?us-ascii?Q?fz7gGu52nRDvE7DJl8RCvBg12zNAD2/64Aoz9qqVAffzEGIw1J3grBAWcfCa?=
- =?us-ascii?Q?bLB+5gXjHe9Qigvd4FiNEbvH/2KLX1+AbJ3t5xU/T4/B60ekheugIQjTvYSO?=
- =?us-ascii?Q?grAKJgcKmkHTrZME+Xm4XuI/KcARAL0MiD62E/crQVceYipCGcQO/vKZzZH+?=
- =?us-ascii?Q?oL1SmkOdOapoQaHVQ3CsGxpsNY42VvJWhjmty6Ti9bOi9eQEPOD17Rukl4XL?=
- =?us-ascii?Q?SR2gbW3T3lqR+MZOipDlWJLNLGsHLmL7jv/Lnrn7I747dKaMt59Vt5L/i9gB?=
- =?us-ascii?Q?3Kj8G0/kqv4NFsuwA5Xym2Sh4kkoBY1N5NGUvwY/JlhTcnCZvIqSzqR11gCA?=
- =?us-ascii?Q?/WQgUVYy/UdSVR2qKpKCv7OxjcXKtD9vg1vqKfvpxNdtiFz3oojifbcwcbvU?=
- =?us-ascii?Q?rICfG2YPUflbgQzjm63SnB5TV2XIWqGrLn8s7K9TfnO/pmKaJbGvhV4WByq1?=
- =?us-ascii?Q?e9xOQKkplFLXfIaRTSGsaBEoklBHjBeq5LvcUCHoi9TinHTTRh74GPlgbWd1?=
- =?us-ascii?Q?HWT1YQkBIM/NLyUDBhzUqh+5xh8CKAKrzj70nK8ZgYU3S6JsO3WZwkIj3ig8?=
- =?us-ascii?Q?sFPFCbsM4hw0Kkh0jO5bBiMdIesX3CQFks3LNY2NScqt1fnjQCB4PxXDZOEO?=
- =?us-ascii?Q?uTA6GPu+tz48rmqogxFSF4rkI0wfs4naIfoC4zqE2kL7tI8kElq5cs4eFtYv?=
- =?us-ascii?Q?fJyNAMnfgOc7BxJ+8K1hjEADKWLGKWEgWkPxc9F+M11Ec+PpZYPEtSwhP55t?=
- =?us-ascii?Q?hhnYeVFW2AL4arqZwp8E5QEbn0XlYJ5KtRLg5sph0Vz1yHngHr2RRKlQEchz?=
- =?us-ascii?Q?2OnYXVyezaw7CpESrdWvOGH/BboXDFrDfeVdxGYGrDp43OXqgULF5Lr7upy/?=
- =?us-ascii?Q?Hx03YBsurJz6x+w5BqExWTPB04hZJ3ZoFsik0uPbiUkvlMovL6T3C2XkkdTJ?=
- =?us-ascii?Q?q7WyupTNNhtF5CBsWQSHrMaYCunN2UBUR37U0IH0Y5IPiZ2y7xSPFSAgPG98?=
- =?us-ascii?Q?ap9OkMg32vdqoz+tSSOcrKBhUgp1aD5Lqoz1xASyDTi21pb0lesnFV0viWK7?=
- =?us-ascii?Q?vjYhG2IbexnDf5BgJYinyBEJbuyLyq9vrDO6W5IYDVCzpY9J8P1tc9DvTG2u?=
- =?us-ascii?Q?0iRozBy7gBw6CjK1/Q8yV5gE+YXAIzg2xOrs9RgnKlvWDqtGjpoU7X78iA3H?=
- =?us-ascii?Q?F8SdqOeK88qfjsnplCwGQSyk9WgHe7wAANX2YgRyXYsEvrc7oz4ukt7ed2JQ?=
- =?us-ascii?Q?MqKHncUAGoMwSXc06EhaeNIRJ6m5IGMsJc1vhpZ3BNJtQPzcTSesc6ZCtd6U?=
- =?us-ascii?Q?65HOJ1fuRql3jm4wIwM53rFpsbmNb8ju1lNXwtZ0UvSlRIDiD92Xxj7U8atA?=
- =?us-ascii?Q?XzqQj+IaGthosV5f0s7EkvUmU/7ZZ0z1Xqr/IStW7/npzDFYrG9+GN97Jw?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(7416014)(36860700013)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2025 20:02:35.7139
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab83bf12-0bbf-458d-2674-08dd868f9ec7
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH2PEPF0000014A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8009
+In-Reply-To: <d44272c153e7596c3cef716044de3dc6c2a8254a.1745646960.git.nicolinc@nvidia.com>
 
-On Mon, Apr 28, 2025 at 05:42:27PM +0530, Vasant Hegde wrote:
-> > +/**
-> > + * struct iommu_vcmdq_alloc - ioctl(IOMMU_VCMDQ_ALLOC)
-> > + * @size: sizeof(struct iommu_vcmdq_alloc)
-> > + * @flags: Must be 0
-> > + * @viommu_id: Virtual IOMMU ID to associate the virtual command queue with
-> > + * @type: One of enum iommu_vcmdq_type
-> > + * @index: The logical index to the virtual command queue per virtual IOMMU, for
-> > + *         a multi-queue model
-> > + * @out_vcmdq_id: The ID of the new virtual command queue
-> > + * @addr: Base address of the queue memory in the guest physical address space
+On Fri, Apr 25, 2025 at 10:58:03PM -0700, Nicolin Chen wrote:
+> The new vCMDQ object will be added for HW to access the guest memory for a
+> HW-accelerated virtualization feature. It needs to ensure the guest memory
+> pages are pinned when HW accesses them and they are contiguous in physical
+> address space.
 > 
-> Sorry. I didn't get this part.
+> This is very like the existing iommufd_access_pin_pages() that outputs the
+> pinned page list for the caller to test its contiguity.
 > 
-> So here `addr` is command queue base address like
->  - NVIDIA's virtual command queue
->  - AMD vIOMMU's command buffer
+> Move those code from iommufd_access_pin/unpin_pages() and related function
+> for a pair of iopt helpers that can be shared with the vCMDQ allocator. As
+> the vCMDQ allocator will be a user-space triggered ioctl function, WARN_ON
+> would not be a good fit in the new iopt_unpin_pages(), thus change them to
+> use WARN_ON_ONCE instead.
 > 
-> .. and it will allocate vcmdq for each buffer type. Is that the correct
-> understanding?
-
-Yes. For AMD "vIOMMU", it needs a new type for iommufd vIOMMU:
-	IOMMU_VIOMMU_TYPE_AMD_VIOMMU,
-
-For AMD "vIOMMU" command buffer, it needs a new type too:
-	IOMMU_VCMDQ_TYPE_AMD_VIOMMU, /* Kdoc it to be Command Buffer */
-
-Then, use IOMMUFD_CMD_VIOMMU_ALLOC ioctl to allocate an vIOMMU
-obj, and use IOMMUFD_CMD_VCMDQ_ALLOC ioctl(s) to allocate vCMDQ
-objs.
-
-> In case of AMD vIOMMU, buffer base address is programmed in different register
-> (ex: MMIO Offset 0008h Command Buffer Base Address Register) and buffer
-> enable/disable is done via different register (ex: MMIO Offset 0018h IOMMU
-> Control Register). And we need to communicate both to hypervisor. Not sure this
-> API can accommodate this as addr seems to be mandatory.
-
-NVIDIA's CMDQV has all three of them too. What we do here is to
-let VMM trap the buffer base address (in guest physical address
-space) and forward it to kernel using this @addr. Then, kernel
-will translate this @addr to host physical address space, and
-program the physical address and size to the register.
-
-> [1]
-> https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
-
-Thanks for the doc. So, AMD has:
-
-Command Buffer Base Address Register [MMIO Offset 0008h]
-"used to program the system physical base address and size of the
- command buffer. The command buffer occupies contiguous physical
- memory starting at the programmed base address, up to the
- programmed size."
-Command Buffer Head Pointer Register [MMIO Offset 2000h]
-Command Buffer Tail Pointer Register [MMIO Offset 2008h]
-
-IIUIC, AMD should do the same: VMM traps VM's Command Buffer Base
-Address register when the guest kernel allocates a command buffer
-by programming the VM's Command Buffer Base Address register, to
-capture the guest PA and size. Then, VMM allocates a vCMDQ object
-(for this command buffer) forwarding its buffer address and size
-via @addr and @length to the host kernel. Then, the kernel should
-translate the guest PA to host PA to program the HW.
-
-We can see that the Head/Tail registers are in a different MMIO
-page (offset by two 4K pages), which is very like NVIDIA CMDQV
-that allows VMM to mmap that MMIO page of the Head/Tail registers
-for guest OS to directly control the HW (i.e. VMM doesn't trap
-these two registers.
-
-When guest OS wants to issue a new command, the guest kernel can
-just fill the guest command buffer at the entry that the Head
-register points to, and program the Tail register (backed by an
-mmap'd MMIO page), then the HW will read the programmed physical
-address from the entry (Head) till the entry (Tail) in the guest
-command buffer.
-
-> > @@ -170,3 +170,97 @@ int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
-> >  	iommufd_put_object(ucmd->ictx, &viommu->obj);
-> >  	return rc;
-> >  }
-> > +
-> > +void iommufd_vcmdq_destroy(struct iommufd_object *obj)
-> > +{
+> Rename check_area_prot() to align with the existing iopt_area helpers, and
+> inline it to the header since iommufd_access_rw() still uses it.
 > 
-> I didn't understood destroy flow in general. Can you please help me to understand:
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  drivers/iommu/iommufd/io_pagetable.h    |   8 ++
+>  drivers/iommu/iommufd/iommufd_private.h |   6 ++
+>  drivers/iommu/iommufd/device.c          | 117 ++----------------------
+>  drivers/iommu/iommufd/io_pagetable.c    |  95 +++++++++++++++++++
+>  4 files changed, 117 insertions(+), 109 deletions(-)
 > 
-> VMM is expected to track all buffers and call this interface?  OR iommufd will
-> take care of it? What happens if VM crashes ?
+> diff --git a/drivers/iommu/iommufd/io_pagetable.h b/drivers/iommu/iommufd/io_pagetable.h
+> index 10c928a9a463..4288a2b1a90f 100644
+> --- a/drivers/iommu/iommufd/io_pagetable.h
+> +++ b/drivers/iommu/iommufd/io_pagetable.h
+> @@ -114,6 +114,14 @@ static inline unsigned long iopt_area_iova_to_index(struct iopt_area *area,
+>  	return iopt_area_start_byte(area, iova) / PAGE_SIZE;
+>  }
+>  
+> +static inline bool iopt_area_check_prot(struct iopt_area *area,
+> +					unsigned int flags)
+> +{
+> +	if (flags & IOMMUFD_ACCESS_RW_WRITE)
+> +		return area->iommu_prot & IOMMU_WRITE;
+> +	return area->iommu_prot & IOMMU_READ;
+> +}
+> +
+>  #define __make_iopt_iter(name)                                                 \
+>  	static inline struct iopt_##name *iopt_##name##_iter_first(            \
+>  		struct io_pagetable *iopt, unsigned long start,                \
+> diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+> index 8d96aa514033..79160b039bc7 100644
+> --- a/drivers/iommu/iommufd/iommufd_private.h
+> +++ b/drivers/iommu/iommufd/iommufd_private.h
+> @@ -130,6 +130,12 @@ int iopt_cut_iova(struct io_pagetable *iopt, unsigned long *iovas,
+>  void iopt_enable_large_pages(struct io_pagetable *iopt);
+>  int iopt_disable_large_pages(struct io_pagetable *iopt);
+>  
+> +int iopt_pin_pages(struct io_pagetable *iopt, unsigned long iova,
+> +		   unsigned long length, struct page **out_pages,
+> +		   unsigned int flags);
+> +void iopt_unpin_pages(struct io_pagetable *iopt, unsigned long iova,
+> +		      unsigned long length);
+> +
+>  struct iommufd_ucmd {
+>  	struct iommufd_ctx *ictx;
+>  	void __user *ubuffer;
+> diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
+> index 2111bad72c72..a5c6be164254 100644
+> --- a/drivers/iommu/iommufd/device.c
+> +++ b/drivers/iommu/iommufd/device.c
+> @@ -1240,58 +1240,17 @@ void iommufd_access_notify_unmap(struct io_pagetable *iopt, unsigned long iova,
+>  void iommufd_access_unpin_pages(struct iommufd_access *access,
+>  				unsigned long iova, unsigned long length)
+>  {
+> -	struct iopt_area_contig_iter iter;
+> -	struct io_pagetable *iopt;
+> -	unsigned long last_iova;
+> -	struct iopt_area *area;
+> -
+> -	if (WARN_ON(!length) ||
+> -	    WARN_ON(check_add_overflow(iova, length - 1, &last_iova)))
+> -		return;
+> -
+> -	mutex_lock(&access->ioas_lock);
+> +	guard(mutex)(&access->ioas_lock);
+>  	/*
+>  	 * The driver must be doing something wrong if it calls this before an
+>  	 * iommufd_access_attach() or after an iommufd_access_detach().
+>  	 */
+> -	if (WARN_ON(!access->ioas_unpin)) {
+> -		mutex_unlock(&access->ioas_lock);
+> +	if (WARN_ON(!access->ioas_unpin))
+>  		return;
+> -	}
+> -	iopt = &access->ioas_unpin->iopt;
+> -
+> -	down_read(&iopt->iova_rwsem);
+> -	iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova)
+> -		iopt_area_remove_access(
+> -			area, iopt_area_iova_to_index(area, iter.cur_iova),
+> -			iopt_area_iova_to_index(
+> -				area,
+> -				min(last_iova, iopt_area_last_iova(area))));
+> -	WARN_ON(!iopt_area_contig_done(&iter));
+> -	up_read(&iopt->iova_rwsem);
+> -	mutex_unlock(&access->ioas_lock);
+> +	iopt_unpin_pages(&access->ioas_unpin->iopt, iova, length);
+>  }
+>  EXPORT_SYMBOL_NS_GPL(iommufd_access_unpin_pages, "IOMMUFD");
+>  
+> -static bool iopt_area_contig_is_aligned(struct iopt_area_contig_iter *iter)
+> -{
+> -	if (iopt_area_start_byte(iter->area, iter->cur_iova) % PAGE_SIZE)
+> -		return false;
+> -
+> -	if (!iopt_area_contig_done(iter) &&
+> -	    (iopt_area_start_byte(iter->area, iopt_area_last_iova(iter->area)) %
+> -	     PAGE_SIZE) != (PAGE_SIZE - 1))
+> -		return false;
+> -	return true;
+> -}
+> -
+> -static bool check_area_prot(struct iopt_area *area, unsigned int flags)
+> -{
+> -	if (flags & IOMMUFD_ACCESS_RW_WRITE)
+> -		return area->iommu_prot & IOMMU_WRITE;
+> -	return area->iommu_prot & IOMMU_READ;
+> -}
+> -
+>  /**
+>   * iommufd_access_pin_pages() - Return a list of pages under the iova
+>   * @access: IOAS access to act on
+> @@ -1315,76 +1274,16 @@ int iommufd_access_pin_pages(struct iommufd_access *access, unsigned long iova,
+>  			     unsigned long length, struct page **out_pages,
+>  			     unsigned int flags)
+>  {
+> -	struct iopt_area_contig_iter iter;
+> -	struct io_pagetable *iopt;
+> -	unsigned long last_iova;
+> -	struct iopt_area *area;
+> -	int rc;
+> -
+>  	/* Driver's ops don't support pin_pages */
+>  	if (IS_ENABLED(CONFIG_IOMMUFD_TEST) &&
+>  	    WARN_ON(access->iova_alignment != PAGE_SIZE || !access->ops->unmap))
+>  		return -EINVAL;
+>  
+> -	if (!length)
+> -		return -EINVAL;
+> -	if (check_add_overflow(iova, length - 1, &last_iova))
+> -		return -EOVERFLOW;
+> -
+> -	mutex_lock(&access->ioas_lock);
+> -	if (!access->ioas) {
+> -		mutex_unlock(&access->ioas_lock);
+> +	guard(mutex)(&access->ioas_lock);
+> +	if (!access->ioas)
+>  		return -ENOENT;
+> -	}
+> -	iopt = &access->ioas->iopt;
+> -
+> -	down_read(&iopt->iova_rwsem);
+> -	iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova) {
+> -		unsigned long last = min(last_iova, iopt_area_last_iova(area));
+> -		unsigned long last_index = iopt_area_iova_to_index(area, last);
+> -		unsigned long index =
+> -			iopt_area_iova_to_index(area, iter.cur_iova);
+> -
+> -		if (area->prevent_access ||
+> -		    !iopt_area_contig_is_aligned(&iter)) {
+> -			rc = -EINVAL;
+> -			goto err_remove;
+> -		}
+> -
+> -		if (!check_area_prot(area, flags)) {
+> -			rc = -EPERM;
+> -			goto err_remove;
+> -		}
+> -
+> -		rc = iopt_area_add_access(area, index, last_index, out_pages,
+> -					  flags);
+> -		if (rc)
+> -			goto err_remove;
+> -		out_pages += last_index - index + 1;
+> -	}
+> -	if (!iopt_area_contig_done(&iter)) {
+> -		rc = -ENOENT;
+> -		goto err_remove;
+> -	}
+> -
+> -	up_read(&iopt->iova_rwsem);
+> -	mutex_unlock(&access->ioas_lock);
+> -	return 0;
+> -
+> -err_remove:
+> -	if (iova < iter.cur_iova) {
+> -		last_iova = iter.cur_iova - 1;
+> -		iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova)
+> -			iopt_area_remove_access(
+> -				area,
+> -				iopt_area_iova_to_index(area, iter.cur_iova),
+> -				iopt_area_iova_to_index(
+> -					area, min(last_iova,
+> -						  iopt_area_last_iova(area))));
+> -	}
+> -	up_read(&iopt->iova_rwsem);
+> -	mutex_unlock(&access->ioas_lock);
+> -	return rc;
+> +	return iopt_pin_pages(&access->ioas->iopt, iova, length, out_pages,
+> +			      flags);
+>  }
+>  EXPORT_SYMBOL_NS_GPL(iommufd_access_pin_pages, "IOMMUFD");
+>  
+> @@ -1431,7 +1330,7 @@ int iommufd_access_rw(struct iommufd_access *access, unsigned long iova,
+>  			goto err_out;
+>  		}
+>  
+> -		if (!check_area_prot(area, flags)) {
+> +		if (!iopt_area_check_prot(area, flags)) {
+>  			rc = -EPERM;
+>  			goto err_out;
+>  		}
+> diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+> index 8a790e597e12..160eec49af1b 100644
+> --- a/drivers/iommu/iommufd/io_pagetable.c
+> +++ b/drivers/iommu/iommufd/io_pagetable.c
+> @@ -1472,3 +1472,98 @@ int iopt_table_enforce_dev_resv_regions(struct io_pagetable *iopt,
+>  	up_write(&iopt->iova_rwsem);
+>  	return rc;
+>  }
+> +
+> +static bool iopt_area_contig_is_aligned(struct iopt_area_contig_iter *iter)
+> +{
+> +	if (iopt_area_start_byte(iter->area, iter->cur_iova) % PAGE_SIZE)
+> +		return false;
+> +
+> +	if (!iopt_area_contig_done(iter) &&
+> +	    (iopt_area_start_byte(iter->area, iopt_area_last_iova(iter->area)) %
+> +	     PAGE_SIZE) != (PAGE_SIZE - 1))
+> +		return false;
+> +	return true;
+> +}
+> +
+> +int iopt_pin_pages(struct io_pagetable *iopt, unsigned long iova,
+> +		   unsigned long length, struct page **out_pages,
+> +		   unsigned int flags)
+> +{
+> +	struct iopt_area_contig_iter iter;
+> +	unsigned long last_iova;
+> +	struct iopt_area *area;
+> +	int rc;
+> +
+> +	if (!length)
+> +		return -EINVAL;
+> +	if (check_add_overflow(iova, length - 1, &last_iova))
+> +		return -EOVERFLOW;
+> +
+> +	down_read(&iopt->iova_rwsem);
+> +	iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova) {
+> +		unsigned long last = min(last_iova, iopt_area_last_iova(area));
+> +		unsigned long last_index = iopt_area_iova_to_index(area, last);
+> +		unsigned long index =
+> +			iopt_area_iova_to_index(area, iter.cur_iova);
+> +
+> +		if (area->prevent_access ||
 
-In a normal routine, VMM gets a vCMDQ object ID for each vCMDQ
-object it allocated. So, it should track all the IDs and release
-them when VM shuts down.
+Nit:
+Shouldn't we return -EBUSY or something if (area->prevent_access == 1) ?
+IIUC, this just means that an unmap attempt is in progress, hence avoid
+accessing the area.
 
-The iommufd core does track all the objects that belong to an
-iommufd context (ictx), and automatically release them. But, it
-can't resolve certain dependency on other FD, e.g. vEVENTQ and
-FAULT QUEUE would return another FD that user space listens to
-and must be closed properly to destroy the QUEUE object.
-
-> > +	/* The underlying physical pages must be pinned in the IOAS */
-> > +	rc = iopt_pin_pages(&viommu->hwpt->ioas->iopt, cmd->addr, cmd->length,
-> > +			    pages, 0);
+> +		    !iopt_area_contig_is_aligned(&iter)) {
+> +			rc = -EINVAL;
+> +			goto err_remove;
+> +		}
+> +
+> +		if (!iopt_area_check_prot(area, flags)) {
+> +			rc = -EPERM;
+> +			goto err_remove;
+> +		}
+> +
+> +		rc = iopt_area_add_access(area, index, last_index, out_pages,
+> +					  flags);
+> +		if (rc)
+> +			goto err_remove;
+> +		out_pages += last_index - index + 1;
+> +	}
+> +	if (!iopt_area_contig_done(&iter)) {
+> +		rc = -ENOENT;
+> +		goto err_remove;
+> +	}
+> +
+> +	up_read(&iopt->iova_rwsem);
+> +	return 0;
+> +
+> +err_remove:
+> +	if (iova < iter.cur_iova) {
+> +		last_iova = iter.cur_iova - 1;
+> +		iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova)
+> +			iopt_area_remove_access(
+> +				area,
+> +				iopt_area_iova_to_index(area, iter.cur_iova),
+> +				iopt_area_iova_to_index(
+> +					area, min(last_iova,
+> +						  iopt_area_last_iova(area))));
+> +	}
+> +	up_read(&iopt->iova_rwsem);
+> +	return rc;
+> +}
+> +
+> +void iopt_unpin_pages(struct io_pagetable *iopt, unsigned long iova,
+> +		      unsigned long length)
+> +{
+> +	struct iopt_area_contig_iter iter;
+> +	unsigned long last_iova;
+> +	struct iopt_area *area;
+> +
+> +	if (WARN_ON_ONCE(!length) ||
+> +	    WARN_ON_ONCE(check_add_overflow(iova, length - 1, &last_iova)))
+> +		return;
+> +
+> +	down_read(&iopt->iova_rwsem);
+> +	iopt_for_each_contig_area(&iter, area, iopt, iova, last_iova)
+> +		iopt_area_remove_access(
+> +			area, iopt_area_iova_to_index(area, iter.cur_iova),
+> +			iopt_area_iova_to_index(
+> +				area,
+> +				min(last_iova, iopt_area_last_iova(area))));
+> +	WARN_ON_ONCE(!iopt_area_contig_done(&iter));
+> +	up_read(&iopt->iova_rwsem);
+> +}
+> -- 
+> 2.43.0
 > 
-> Why do we need this? is it not pinned already as part of vfio binding?
-
-I think this could be clearer:
-	/*
-	 * The underlying physical pages must be pinned to prevent them from
-	 * being unmapped (via IOMMUFD_CMD_IOAS_UNMAP) during the life cycle
-	 * of the vCMDQ object.
-	 */
-
-Thanks
-Nicolin
