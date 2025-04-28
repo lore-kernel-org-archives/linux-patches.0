@@ -1,32 +1,32 @@
 Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCDD24A072
-	for <patches@lists.linux.dev>; Mon, 28 Apr 2025 08:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBEF259C9F
+	for <patches@lists.linux.dev>; Mon, 28 Apr 2025 08:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745827283; cv=none; b=AdL5bSG6GXa37HAbpOfyQOgRfzUSwJ1env8YjOh9jNn4GL8PhdPLalwLbvq8yJzHJhMcTpNdHdk/JlxH32cgRlhvykXGVzUnTycaHmXCkxJDcIXKisR2xL+q2LLy90xFujdZlaMJsYPLGGst0GriuujkYQKo3amuuLgWBSXdBes=
+	t=1745827353; cv=none; b=nHWDhex/exxk66WCxEWXIizzQArWboQgIcRcpmi3nDHyKr0vazhtHaXoG0czLBRmXhiq9k+j8LrSnwlKKp64d9Iy3tcNI9H4ovA3rtvqT7FaTNW+Db0LGQM4BIrijjl0rG3bmyyjSTACkU3ynRj2zByDJIb8qmoZhAfjKiBR5Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745827283; c=relaxed/simple;
-	bh=G8dU/8ZraGb4ZDw4STUDdNEQVI98PTS1z3Ot10oXmVU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cLtuefcGId5iOMhcpbbkbmmxxDeCevbYX4O4L6S5lePXzdmzkK+zlt7Gk2GCsGftPkZ4jpZAzfC4zb4k64qq4Ow9sGGz9fBnzOnzo2g91u8EoNvh/CrDNUfSiA+Tz3LSxow5jk9Lpg61HsB8eTmgyneFZSvQ1icfwznsgUAgWvA=
+	s=arc-20240116; t=1745827353; c=relaxed/simple;
+	bh=vLciUloHLERW9aR+xncs0h7qvBzeUm91okfoPiqerN8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=MxcFQE/JzditKZ4KtukbkPtOjIj0zhJO5eHJ7+gP4H8Ead4D0kWFXDSKt/FkRkC+1xeA9++npeQ6Y66+5LzxSd17qFLId3vL/aKSej+diFpLGe3OINeQWQaAatfMn1m4NA7CvDPWQzYPBso+9me2UKUXJ+apTejrV3n/ercXxmY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S5kAQ2015836;
-	Mon, 28 Apr 2025 08:01:14 GMT
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S4jsCS022226;
+	Mon, 28 Apr 2025 08:02:24 GMT
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 468mq1apnm-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 468mq1aq1y-3
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 28 Apr 2025 08:01:14 +0000 (GMT)
+	Mon, 28 Apr 2025 08:02:23 +0000 (GMT)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 28 Apr 2025 01:01:07 -0700
+ 15.1.2507.43; Mon, 28 Apr 2025 01:02:20 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 28 Apr 2025 01:01:04 -0700
+ 15.1.2507.43 via Frontend Transport; Mon, 28 Apr 2025 01:02:17 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
@@ -34,9 +34,9 @@ CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
         <xiyou.wangcong@gmail.com>, <jiri@resnulli.us>, <davem@davemloft.net>,
         <kuba@kernel.org>, <pabeni@redhat.com>, <netdev@vger.kernel.org>,
         <michal.swiatkowski@linux.intel.com>, <zhe.he@windriver.com>
-Subject: [PATCH 6.1.y v2] net/sched: act_mirred: don't override retval if we already lost the skb
-Date: Mon, 28 Apr 2025 16:01:03 +0800
-Message-ID: <20250428080103.4158144-1-jianqi.ren.cn@windriver.com>
+Subject: [PATCH 5.15.y v2] net/sched: act_mirred: don't override retval if we already lost the skb
+Date: Mon, 28 Apr 2025 16:02:16 +0800
+Message-ID: <20250428080216.4158232-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,13 +46,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=KsNN2XWN c=1 sm=1 tr=0 ts=680f35ca cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=QyXUC8HyAAAA:8 a=A7XncKjpAAAA:8 a=J1Y8HTJGAAAA:8 a=t7CeM3EgAAAA:8
+X-Authority-Analysis: v=2.4 cv=KsNN2XWN c=1 sm=1 tr=0 ts=680f360f cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=QyXUC8HyAAAA:8 a=A7XncKjpAAAA:8 a=J1Y8HTJGAAAA:8 a=t7CeM3EgAAAA:8
  a=46DbhiKqDBczhwNKROYA:9 a=R9rPLQDAdC6-Ub70kJmZ:22 a=y1Q9-5lHfBjTkpIzbSAN:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: 0dD-tRNeDmlrRJPK2WiWZ8-aN61t4lqA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA2NiBTYWx0ZWRfX/U/nh5Ol0bcf nk6K+uOySoSSt7Ibfp6drT4pWLUN8cnaSpUEYqmR8G/5jaQe2LO2rXvvt1Ujscdb2RF6Rd53xFo B2rDfE8YAElV7ibKN/7OPLj9YOgds9mohGWl+4B9qCV8Kr3sWu3xLz59OUqy0PU1hxUjjRIHAXB
- bnd8RSi8I7J2fyIZ97B5APOmNtix86fY7rSEgTrCHZfzqhMJtsuz0xRSNF6lG2xHfWPEMNaJY/T 03Y+707qlNP2lJ9MBUNfpCd+ZdN5+c/iP7ti8moizIJ3ibDbFgOP8rAn3x2OnsbPMaESbZUHZEv 2fLoXocfgKtaOC6uV16JD6ut+8UE5xvn2hwQ5ZDLZ8a1mMwMQzx+kWrwhJYZ7rxMKXBmobg8fzQ
- xCK/uv9eI61jWdtGhOYwHC0YRyiZ0TljnhRRoUy+hOJlsx69R2mmrrk6P97abr+gbdyTfZzY
-X-Proofpoint-GUID: 0dD-tRNeDmlrRJPK2WiWZ8-aN61t4lqA
+X-Proofpoint-ORIG-GUID: jrYP96IYdDN09f885ljKU7x6GUKD-QUK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA2NiBTYWx0ZWRfXwgrdDDxj3iQA ELGlV4OUlLo4zt5B9t34a/CFh5lwSZTthMFv5H1CUPWpx09zz/foz36ckUN+Wg/cCBZM1+IjtgW jUn8gNz42FI+iTmey6DVCzLOZg2lrNyuuE63pfH/pPakvyLJw1XK2idIgG/bsWz9XeStCm18aMN
+ 586ul+yVg3l+LISm7GpL4M8S5ZSGHEHKAW+uvIMfAtXSvo1L0yfZxjkL3qdGi7ERapxqNMu6s7z 8WqoJMVF9JX1oYYTQ+QmX3j/waOKoIxJz4X7pNyvLZREIHUi/lH57YVBDzpuIvdiHDI3Fl5AZUo kWsXUElI0vsfUNVprCfis/rMtM8w+DRbWU8lRn5D0i3kG4b7HydJL578TWFcF/qIKNqUPfJScjN
+ Nk9pTNTk7auqr3ebwKp93CGm8agRvUe+NaiBUjU7AMShT0Fl+dcRnqj/tEF4pWhLI+vNkLrc
+X-Proofpoint-GUID: jrYP96IYdDN09f885ljKU7x6GUKD-QUK
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
@@ -96,10 +96,10 @@ Verified the build test by cmd(tuxmake --runtime podman --target-arch arm
  1 file changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 36395e5db3b4..bbc34987bd09 100644
+index 97cd4b2377d6..1aa1d10de30e 100644
 --- a/net/sched/act_mirred.c
 +++ b/net/sched/act_mirred.c
-@@ -255,31 +255,31 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+@@ -254,31 +254,31 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
  
  	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
  	m_eaction = READ_ONCE(m->tcfm_eaction);
