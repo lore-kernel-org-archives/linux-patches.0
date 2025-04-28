@@ -1,33 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1C9157A72
-	for <patches@lists.linux.dev>; Mon, 28 Apr 2025 02:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC7142A89;
+	Mon, 28 Apr 2025 02:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745807698; cv=none; b=hce7l24Rm9BBBKm/sJuZgsu+zwSXnNWIOJmFIkJ8f4DbOucgnC9ElukD+x6kCxk7JRBmiZ2zWF+00sJ3ryqxhM5OBJv+Azg/hmCD7n7rTC8qHmR3+5nQ06OBmVCExEDnZdVX7KK8BiAkhYKGlQO1gMC5Ullr5othJ5htnyO9d68=
+	t=1745808890; cv=none; b=cSLSox4/YMcodDLRieC9Y75JfaE67N+Kk6XNeV5GB9BUQ4mHQpIW+0MXKhMWm/b0Kuggq5142jCvhsm4fBooP72qY0m8ONrZi8xBY1Rg+G6g0YlszRuXXeAV8o1XJa/8T3WPPTtMw8woTuWPXdoQghd1fNPm+ILroLgh288aXNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745807698; c=relaxed/simple;
-	bh=sQWVX5XMLGKXftxZqCjUh6JsyiNKX1MaQ1gWHUo5Y3M=;
+	s=arc-20240116; t=1745808890; c=relaxed/simple;
+	bh=8UmPPcYF02m42D0X2SqZC95wLkwf70+0LBSPOHRvYHs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uplsO7qlPK8QOVTHYSjGJrr5aOz8oBURjIQ2kyI5NVGKq6QDJzZv6jEs3W55POAEm2jUPA7oRzyTQqtHeTjvyXb507lUVkZAtesosd5CvYOwXacKzMsK6CC5qYeSKnI2q8O+ap8qMiBFaJg8VwmWfj1vXVx+8tCanHSxHB4CHzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qBZkFltv; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=MCEpufbB2As65xh0g2l5ZBNF48ES5QMasvLgIOabhYFgm9+ccXl0sd4h2Gx1meuiFravfOxbndhjCppNS8DY/CmxWGhSvFUzpuPRHVZgkLXeTh1hN0TuCj3I4m71w6aVVrl3LUGh1uSGrEohwjm/Gmj+YmqHDkuH4kyGj0kguKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dDZBpQq/; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qBZkFltv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D499C4CEE9;
-	Mon, 28 Apr 2025 02:34:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745807696;
-	bh=sQWVX5XMLGKXftxZqCjUh6JsyiNKX1MaQ1gWHUo5Y3M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qBZkFltv3i3ud6XIjFwKOA3jy3M8Koh240Uh+2HdAj5AT2krq0VxJrAvfWi0hNFA6
-	 kZPMi8iQ8w6BayT04f0j+DwYG0nSM+6GRs2e65OxVOrMLMTIYpel9s8lQkJRo4shKF
-	 jaAWRPr0rt+nJVsZBu6MisCFx6AHAuOVZf9/gt4yYe7vMYG3D7OCVph/ZJxd4Jvy34
-	 PIcdMkawABQ5t75pofIVthbW3JDF+UfFs4i5VlxVW3pDsy0m6fvI3LiV1KDrH1jj0F
-	 RB9Gec0riE8RirWPYPWEiQMmDabdzT02Vd0DlwnYx1awJHFbbC9FGoIOqGPyefRFKB
-	 25FolS69iaCvg==
-Message-ID: <499792a6-f907-47aa-ae30-4b9d6fcee669@kernel.org>
-Date: Sun, 27 Apr 2025 19:34:55 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dDZBpQq/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1745808889; x=1777344889;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=8UmPPcYF02m42D0X2SqZC95wLkwf70+0LBSPOHRvYHs=;
+  b=dDZBpQq/PKKneUvivkfpooKtszHrCBTMZ6+xEBzNeOs4QV25b2GJiimP
+   Xy2VmrvHu1imxey68SY5xpZe3Ltp1ufqHJ59URIstSi/+gCsQnGf8Z5Ea
+   sU4SMzzBMSvsThPwFwxiB9HUPuGeFOhHgyLp/HNjACwA3exG4MLOow1k1
+   TvflDmpoxQ/VjpcFbjvhCLKtG1ot2nIKSQ/LhPtVI46i9SIEUnN4EGs8K
+   HWLbpu+q5seRwfuBS1TyqvNBSboOJXIItg2ygXEXb1aUOzDR10kQ5G7fR
+   odmQoIA+8cW+OnZvDvJ/J08v2as/8N0L6PcaeMxYL3ezXai6NujyvIGMS
+   A==;
+X-CSE-ConnectionGUID: 8Er1ICvtSBG1XGpBh3qHqQ==
+X-CSE-MsgGUID: crWzCdG7SjyLxnDsDt6ZGQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11416"; a="51191800"
+X-IronPort-AV: E=Sophos;i="6.15,245,1739865600"; 
+   d="scan'208";a="51191800"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2025 19:54:48 -0700
+X-CSE-ConnectionGUID: +mY80rqWTlmDXdkEN10FGw==
+X-CSE-MsgGUID: I+oqtZWeS3+OR7W5/JQ1Gw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,245,1739865600"; 
+   d="scan'208";a="133277233"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2025 19:54:42 -0700
+Message-ID: <c4d03b52-422e-41ab-845b-1d2eda7ca9e2@linux.intel.com>
+Date: Mon, 28 Apr 2025 10:50:32 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,87 +52,180 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARC: atomics: Implement arch_atomic64_cmpxchg using
- _relaxed
-To: Jason Gunthorpe <jgg@nvidia.com>, Boqun Feng <boqun.feng@gmail.com>,
- linux-snps-arc@lists.infradead.org, Peter Zijlstra <peterz@infradead.org>,
- Vineet Gupta <vgupta@kernel.org>, Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
-References: <0-v1-2a485c0aa33a+505-arc_atomic_jgg@nvidia.com>
-From: Vineet Gupta <vgupta@kernel.org>
+Subject: Re: [PATCH v2 13/22] iommufd: Add mmap interface
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+ thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+ shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+ peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+ praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
+ alok.a.tiwari@oracle.com, vasant.hegde@amd.com
+References: <cover.1745646960.git.nicolinc@nvidia.com>
+ <7be26560c604b0cbc2fd218997b97a47e4ed11ff.1745646960.git.nicolinc@nvidia.com>
 Content-Language: en-US
-In-Reply-To: <0-v1-2a485c0aa33a+505-arc_atomic_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <7be26560c604b0cbc2fd218997b97a47e4ed11ff.1745646960.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/8/25 10:22, Jason Gunthorpe wrote:
-> The core atomic code has a number of macros where it elaborates
-> architecture primitives into more functions. ARC uses
-> arch_atomic64_cmpxchg() as it's architecture primitive which disable alot
-> of the additional functions.
->
-> Instead provide arch_cmpxchg64_relaxed() as the primitive and rely on the
-> core macros to create arch_cmpxchg64().
->
-> The macros will also provide other functions, for instance,
-> try_cmpxchg64_release(), giving a more complete implementation.
->
-> Suggested-by: Mark Rutland <mark.rutland@arm.com>
-> Link: https://lore.kernel.org/r/Z0747n5bSep4_1VX@J2N7QTR9R3
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On 4/26/25 13:58, Nicolin Chen wrote:
+> For vIOMMU passing through HW resources to user space (VMs), add an mmap
+> infrastructure to map a region of hardware MMIO pages.
+> 
+> Maintain an mt_mmap per ictx for validations. To allow IOMMU drivers to
+> add and delete mmappable regions to/from the mt_mmap, add a pair of new
+> helpers: iommufd_ctx_alloc_mmap() and iommufd_ctx_free_mmap().
 
-Acked-by: Vineet Gupta <vgupta@kernel.org>
+I am wondering why the dma_buf mechanism isn't used here, considering
+that this also involves an export and import pattern.
 
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->  arch/arc/include/asm/atomic64-arcv2.h | 15 +++++----------
->  1 file changed, 5 insertions(+), 10 deletions(-)
->
-> diff --git a/arch/arc/include/asm/atomic64-arcv2.h b/arch/arc/include/asm/atomic64-arcv2.h
-> index 9b5791b8547133..73080a664369b4 100644
-> --- a/arch/arc/include/asm/atomic64-arcv2.h
-> +++ b/arch/arc/include/asm/atomic64-arcv2.h
-> @@ -137,12 +137,9 @@ ATOMIC64_OPS(xor, xor, xor)
->  #undef ATOMIC64_OP_RETURN
->  #undef ATOMIC64_OP
->  
-> -static inline s64
-> -arch_atomic64_cmpxchg(atomic64_t *ptr, s64 expected, s64 new)
-> +static inline u64 __arch_cmpxchg64_relaxed(volatile void *ptr, u64 old, u64 new)
->  {
-> -	s64 prev;
-> -
-> -	smp_mb();
-> +	u64 prev;
->  
->  	__asm__ __volatile__(
->  	"1:	llockd  %0, [%1]	\n"
-> @@ -152,14 +149,12 @@ arch_atomic64_cmpxchg(atomic64_t *ptr, s64 expected, s64 new)
->  	"	bnz     1b		\n"
->  	"2:				\n"
->  	: "=&r"(prev)
-> -	: "r"(ptr), "ir"(expected), "r"(new)
-> -	: "cc");	/* memory clobber comes from smp_mb() */
-> -
-> -	smp_mb();
-> +	: "r"(ptr), "ir"(old), "r"(new)
-> +	: "memory", "cc");
->  
->  	return prev;
->  }
-> -#define arch_atomic64_cmpxchg arch_atomic64_cmpxchg
-> +#define arch_cmpxchg64_relaxed __arch_cmpxchg64_relaxed
->  
->  static inline s64 arch_atomic64_xchg(atomic64_t *ptr, s64 new)
->  {
->
-> base-commit: ea8f6ee2111cd78b32d0363ea630ba9b08ada22d
+>   drivers/iommu/iommufd/iommufd_private.h |  8 +++++
+>   include/linux/iommufd.h                 | 15 ++++++++++
+>   drivers/iommu/iommufd/driver.c          | 39 +++++++++++++++++++++++++
+>   drivers/iommu/iommufd/main.c            | 39 +++++++++++++++++++++++++
+>   4 files changed, 101 insertions(+)
+> 
+> diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+> index b974c207ae8a..db5b62ec4abb 100644
+> --- a/drivers/iommu/iommufd/iommufd_private.h
+> +++ b/drivers/iommu/iommufd/iommufd_private.h
+> @@ -7,6 +7,7 @@
+>   #include <linux/iommu.h>
+>   #include <linux/iommufd.h>
+>   #include <linux/iova_bitmap.h>
+> +#include <linux/maple_tree.h>
+>   #include <linux/rwsem.h>
+>   #include <linux/uaccess.h>
+>   #include <linux/xarray.h>
+> @@ -44,6 +45,7 @@ struct iommufd_ctx {
+>   	struct xarray groups;
+>   	wait_queue_head_t destroy_wait;
+>   	struct rw_semaphore ioas_creation_lock;
+> +	struct maple_tree mt_mmap;
+>   
+>   	struct mutex sw_msi_lock;
+>   	struct list_head sw_msi_list;
+> @@ -55,6 +57,12 @@ struct iommufd_ctx {
+>   	struct iommufd_ioas *vfio_ioas;
+>   };
+>   
+> +/* Entry for iommufd_ctx::mt_mmap */
+> +struct iommufd_mmap {
+> +	unsigned long pfn_start;
+> +	unsigned long pfn_end;
+> +};
 
-Thx for this.
+This structure is introduced to represent a mappable/mapped region,
+right? It would be better to add comments specifying whether the start
+and end are inclusive or exclusive.
 
-FWIW I missed the cmpxchg API when the rest of atomics were relaxed in commit
-301014cf6d728 ("ARC: atomic_cmpxchg/atomic_xchg: implement relaxed variants")
+> +
+>   /*
+>    * The IOVA to PFN map. The map automatically copies the PFNs into multiple
+>    * domains and permits sharing of PFNs between io_pagetable instances. This
+> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+> index 5dff154e8ce1..d63e2d91be0d 100644
+> --- a/include/linux/iommufd.h
+> +++ b/include/linux/iommufd.h
+> @@ -236,6 +236,9 @@ int iommufd_object_depend(struct iommufd_object *obj_dependent,
+>   			  struct iommufd_object *obj_depended);
+>   void iommufd_object_undepend(struct iommufd_object *obj_dependent,
+>   			     struct iommufd_object *obj_depended);
+> +int iommufd_ctx_alloc_mmap(struct iommufd_ctx *ictx, phys_addr_t base,
+> +			   size_t size, unsigned long *immap_id);
+> +void iommufd_ctx_free_mmap(struct iommufd_ctx *ictx, unsigned long immap_id);
+>   struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+>   				       unsigned long vdev_id);
+>   int iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
+> @@ -262,11 +265,23 @@ static inline int iommufd_object_depend(struct iommufd_object *obj_dependent,
+>   	return -EOPNOTSUPP;
+>   }
+>   
+> +static inline int iommufd_ctx_alloc_mmap(struct iommufd_ctx *ictx,
+> +					 phys_addr_t base, size_t size,
+> +					 unsigned long *immap_id)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+>   static inline void iommufd_object_undepend(struct iommufd_object *obj_dependent,
+>   					   struct iommufd_object *obj_depended)
+>   {
+>   }
+>   
+> +static inline void iommufd_ctx_free_mmap(struct iommufd_ctx *ictx,
+> +					 unsigned long immap_id)
+> +{
+> +}
+> +
+>   static inline struct device *
+>   iommufd_viommu_find_dev(struct iommufd_viommu *viommu, unsigned long vdev_id)
+>   {
+> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+> index fb7f8fe40f95..c55336c580dc 100644
+> --- a/drivers/iommu/iommufd/driver.c
+> +++ b/drivers/iommu/iommufd/driver.c
+> @@ -78,6 +78,45 @@ void iommufd_object_undepend(struct iommufd_object *obj_dependent,
+>   }
+>   EXPORT_SYMBOL_NS_GPL(iommufd_object_undepend, "IOMMUFD");
+>   
+> +/* Driver should report the output @immap_id to user space for mmap() syscall */
+> +int iommufd_ctx_alloc_mmap(struct iommufd_ctx *ictx, phys_addr_t base,
+> +			   size_t size, unsigned long *immap_id)
+> +{
+> +	struct iommufd_mmap *immap;
+> +	int rc;
+> +
+> +	if (WARN_ON_ONCE(!immap_id))
+> +		return -EINVAL;
+> +	if (base & ~PAGE_MASK)
+> +		return -EINVAL;
 
-Added to ARC for-curr (for next)
+Is it equal to PAGE_ALIGNED()?
 
-Thx,
--Vineet
+> +	if (!size || size & ~PAGE_MASK)
+> +		return -EINVAL;
+> +
+> +	immap = kzalloc(sizeof(*immap), GFP_KERNEL);
+> +	if (!immap)
+> +		return -ENOMEM;
+> +	immap->pfn_start = base >> PAGE_SHIFT;
+> +	immap->pfn_end = immap->pfn_start + (size >> PAGE_SHIFT) - 1;
+> +
+> +	rc = mtree_alloc_range(&ictx->mt_mmap, immap_id, immap, sizeof(immap),
+> +			       0, LONG_MAX >> PAGE_SHIFT, GFP_KERNEL);
+> +	if (rc < 0) {
+> +		kfree(immap);
+> +		return rc;
+> +	}
+> +
+> +	/* mmap() syscall will right-shift the immap_id to vma->vm_pgoff */
+> +	*immap_id <<= PAGE_SHIFT;
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_NS_GPL(iommufd_ctx_alloc_mmap, "IOMMUFD");
+> +
+> +void iommufd_ctx_free_mmap(struct iommufd_ctx *ictx, unsigned long immap_id)
+> +{
+> +	kfree(mtree_erase(&ictx->mt_mmap, immap_id >> PAGE_SHIFT));
+
+MMIO lifecycle question: what happens if a region is removed from the
+maple tree (and is therefore no longer mappable), but is still mapped
+and in use by userspace?
+
+> +}
+> +EXPORT_SYMBOL_NS_GPL(iommufd_ctx_free_mmap, "IOMMUFD");
+> +
+>   /* Caller should xa_lock(&viommu->vdevs) to protect the return value */
+>   struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+>   				       unsigned long vdev_id)
+
+Thanks,
+baolu
