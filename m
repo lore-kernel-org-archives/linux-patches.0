@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21A0254850;
-	Tue, 29 Apr 2025 18:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2255D1A5BBB;
+	Tue, 29 Apr 2025 18:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950365; cv=none; b=OmEYhfNtAI2d5zip7YyIK5zWvbtZ7RV/0MsW+DRrPlwCvXm1G28ADIhlXlTIoSjJ+KymskknW2t1LmH6od+YAbS5q3Y74FsVRg13vfPfjXEhf+bDq40IIdTIdupMESfcaPyqsN+jJPBZ+szlhJnt0pd4V+p8lcZl92frNwWJfkg=
+	t=1745950368; cv=none; b=BuzEGEUD1XNEZWDcCJCBe27Tax3t2ov/ohe4GXZf2ORwtRobnGN9K8b+GdONjR2VMSoqM9/iWwtrhynrGcsBCj+Izjt8ESCRUcCjiwzea22Ev5z2xU+6JfJPdb/1v+J/PMZPC+NeYkST0qldn8x4EuWOq+AG9JQSEKkmDi3ftv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950365; c=relaxed/simple;
-	bh=tOySkvdFzhHoUX0ThP5F1Abxl389SwK+YvKyHQBCNkQ=;
+	s=arc-20240116; t=1745950368; c=relaxed/simple;
+	bh=1+grEEiSbQ8TkdNjwLUswYviy22b2H9xl0P18sBXbPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NW9O0cmIBh+wchek4Mf3I2eULgfPbxM4/Po21w7OuzaCxxYoOgqiL70yKfEndNkGxTck1HtHt7zde4pKEDSM3bxhE10OfMU1octfo5hvuZtlptk+/v4jDWk7P8xbLTuWOA+vX1UsRtX2eDwiVhXLC11bFRBv9/pQ9YzUqlrIHQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYS2PDCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ovnt+sxXCd8HT5oiRA7AmxTctgQ8zrJCTp0q2EUMWAYo9f2j75kMP8M1vNyxK5S/L1yoGd+Q3rxVVfsVAOg/quQEvRrjv3F1Au4B9SCXKoC/8KWiCk9PoUckYMRaiJHDypLU0MEjkK56G0kthtFIoLarJPV08kZlsL4l82yGXbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB4+kyTD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYS2PDCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA5EC4CEE3;
-	Tue, 29 Apr 2025 18:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB4+kyTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F91C4CEE9;
+	Tue, 29 Apr 2025 18:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950364;
-	bh=tOySkvdFzhHoUX0ThP5F1Abxl389SwK+YvKyHQBCNkQ=;
+	s=korg; t=1745950368;
+	bh=1+grEEiSbQ8TkdNjwLUswYviy22b2H9xl0P18sBXbPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYS2PDCqABC7YjwweBKXLDbsC6G6alDvcvdTn6YQGY1G9fMpElaG8MtJ3lU6HSOGg
-	 g8NxO1hMUUytvYVX1hagaoraO2J8SBrnniItk2BHXQH1VUdDp+UHCie7WvEza5ACkf
-	 KiCEWo5jQBuAC8RYXDLfoeKUaB4V0HW6K5F62ebc=
+	b=QB4+kyTDbtALOhCrghVOKqvXEZga1/EVGXXugS+z0ItQ5yexqB1CAZadP/rwdptbb
+	 x2So8tc7f8gF4OUCmytHbVqAgVe/aRYWz5wjKHEdDSgAYHp4mVua8uzLVxnDxkcR2Z
+	 4qvKN/FflA8/jSlTt8w8WjvGF1QS+GDdTUsDc+r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 073/204] crypto: atmel-sha204a - Set hwrng quality to lowest possible
-Date: Tue, 29 Apr 2025 18:42:41 +0200
-Message-ID: <20250429161102.410915515@linuxfoundation.org>
+	Alexey Nepomnyashih <sdl@nppct.ru>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 074/204] xen-netfront: handle NULL returned by xdp_convert_buff_to_frame()
+Date: Tue, 29 Apr 2025 18:42:42 +0200
+Message-ID: <20250429161102.449319303@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -46,49 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-commit 8006aff15516a170640239c5a8e6696c0ba18d8e upstream.
+commit cc3628dcd851ddd8d418bf0c897024b4621ddc92 upstream.
 
-According to the review by Bill Cox [1], the Atmel SHA204A random number
-generator produces random numbers with very low entropy.
+The function xdp_convert_buff_to_frame() may return NULL if it fails
+to correctly convert the XDP buffer into an XDP frame due to memory
+constraints, internal errors, or invalid data. Failing to check for NULL
+may lead to a NULL pointer dereference if the result is used later in
+processing, potentially causing crashes, data corruption, or undefined
+behavior.
 
-Set the lowest possible entropy for this chip just to be safe.
+On XDP redirect failure, the associated page must be released explicitly
+if it was previously retained via get_page(). Failing to do so may result
+in a memory leak, as the pages reference count is not decremented.
 
-[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
-
-Fixes: da001fb651b00e1d ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: stable@vger.kernel.org # v5.9+
+Fixes: 6c5aa6fc4def ("xen networking: add basic XDP support for xen-netfront")
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
+Link: https://patch.msgid.link/20250417122118.1009824-1-sdl@nppct.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-sha204a.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/xen-netfront.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -107,6 +107,12 @@ static int atmel_sha204a_probe(struct i2
- 	i2c_priv->hwrng.name = dev_name(&client->dev);
- 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
- 
-+	/*
-+	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
-+	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
-+	 */
-+	i2c_priv->hwrng.quality = 1;
-+
- 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
- 	if (ret)
- 		dev_warn(&client->dev, "failed to register RNG (%d)\n", ret);
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -985,20 +985,27 @@ static u32 xennet_run_xdp(struct netfron
+ 	act = bpf_prog_run_xdp(prog, xdp);
+ 	switch (act) {
+ 	case XDP_TX:
+-		get_page(pdata);
+ 		xdpf = xdp_convert_buff_to_frame(xdp);
++		if (unlikely(!xdpf)) {
++			trace_xdp_exception(queue->info->netdev, prog, act);
++			break;
++		}
++		get_page(pdata);
+ 		err = xennet_xdp_xmit(queue->info->netdev, 1, &xdpf, 0);
+-		if (unlikely(!err))
++		if (unlikely(err <= 0)) {
++			if (err < 0)
++				trace_xdp_exception(queue->info->netdev, prog, act);
+ 			xdp_return_frame_rx_napi(xdpf);
+-		else if (unlikely(err < 0))
+-			trace_xdp_exception(queue->info->netdev, prog, act);
++		}
+ 		break;
+ 	case XDP_REDIRECT:
+ 		get_page(pdata);
+ 		err = xdp_do_redirect(queue->info->netdev, xdp, prog);
+ 		*need_xdp_flush = true;
+-		if (unlikely(err))
++		if (unlikely(err)) {
+ 			trace_xdp_exception(queue->info->netdev, prog, act);
++			xdp_return_buff(xdp);
++		}
+ 		break;
+ 	case XDP_PASS:
+ 	case XDP_DROP:
 
 
