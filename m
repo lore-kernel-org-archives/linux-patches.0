@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD51A250C0C;
-	Tue, 29 Apr 2025 17:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD924215060;
+	Tue, 29 Apr 2025 17:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949274; cv=none; b=c36+Df6iFi3h2WCu9LLApktnve8Go3AUkRTuHKBW37Uocc5duN+51KF5DpPesOvH9Jzz8PMWWMC3CASSNIOagBcQKsgXi49JavDSk0lpzvoEhlWisQN4sm/Ak8hob9AQHo95ozX1+hPm/T6bLa6VIAHlMFE1Zp0k/HA4LT4+Ao4=
+	t=1745949277; cv=none; b=uGlOal7UIXKBynVdzOqNG7uTOF9xUsUOfalMBI8PxHMbb/EhdxUzUejqbqWwA5qTvGdRADo58QTVjDZlSFPBDPggvg+6050xo6FmktGODTGhpjNuWABUMWPGyhPTWPv2ja4L1fKyRG9IBLkfDOiOQQnjTA57P+I5FtZLUzwSyRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949274; c=relaxed/simple;
-	bh=nKNVZd3rBOtYMoShXaJHSVL9NZ3LiBCMHE68hO2xJCU=;
+	s=arc-20240116; t=1745949277; c=relaxed/simple;
+	bh=7ENcSCnSl/RnKPu999SQ++NgTEAfpQ/Y6OnEf7Oy0/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+ZmzpW4uDXcOxwjIVarErgFmuSKxh3H0FN/tCY+pZl9JLWDcEPSU0Vj9iQe0LirHckbQDmVjX7sC+LuLHWs/qUma+DAHVjBoC2Bd92pBCFgGVzqcJHqaLhsETbT24Y0jUe18ok7xykdwdWQJV9URrJa2GQhBJYOespNhrWR/iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jat9IhYI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDRxt8yUv2HRHn89v7GvkFQgP6ozp+i1H3fNQ3q2ZaLOxs6HyQT6XIUBxq3Y2J+LBzXaRi0Saqm3V7N/SAu+PYFiI0tXIg+m5FX48rt1eo/pKFzVHX6SipHuYEFalTyF87D0QGF+zQBPmpmvTrdxiIgaJsH9fvh+6Bt05zN0fyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UophkesT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jat9IhYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33222C4CEE3;
-	Tue, 29 Apr 2025 17:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UophkesT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D422C4CEE3;
+	Tue, 29 Apr 2025 17:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949274;
-	bh=nKNVZd3rBOtYMoShXaJHSVL9NZ3LiBCMHE68hO2xJCU=;
+	s=korg; t=1745949277;
+	bh=7ENcSCnSl/RnKPu999SQ++NgTEAfpQ/Y6OnEf7Oy0/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jat9IhYIg3392/pGDzksSqCaHIQNZNzzHWxPP6TDbs+5AUu4OdcMQgYlht1Jx+o2O
-	 K2eCYd/2CHx9/XTT4dBaG8ucEoqzKIDRtuQYzavZdmBe6ZTem8351+5SHHa19q3H9y
-	 pR1TnZ6wAPOElJhzrdJLuTM0fJoBWigmKrHvgMuc=
+	b=UophkesTKQqtYQAMn0bJCZkDLoNJWE/aytQwdofnnSp8Xu879B5w6uO+1TQy49AaH
+	 PCkeO6uIZ6ony1mQFyYVmY/NG66TNbZszGcaC5YKMUE9KI84JCeGtmemRw+FrQCo/s
+	 ey0AYh//wgl5SiXeGfeyZHhGEBjhFLR58JeeeKfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Cliff Liu <donghua.liu@windriver.com>,
-	He Zhe <Zhe.He@windriver.com>
-Subject: [PATCH 5.15 249/373] f2fs: check validation of fault attrs in f2fs_build_fault_attr()
-Date: Tue, 29 Apr 2025 18:42:06 +0200
-Message-ID: <20250429161133.366159417@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Sergiu Cuciurean <sergiu.cuciurean@analog.com>,
+	Jonathan Santos <Jonathan.Santos@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 267/373] iio: adc: ad7768-1: Fix conversion result sign
+Date: Tue, 29 Apr 2025 18:42:24 +0200
+Message-ID: <20250429161134.105757360@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,135 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
 
-commit 4ed886b187f47447ad559619c48c086f432d2b77 upstream.
+[ Upstream commit 8236644f5ecb180e80ad92d691c22bc509b747bb ]
 
-- It missed to check validation of fault attrs in parse_options(),
-let's fix to add check condition in f2fs_build_fault_attr().
-- Use f2fs_build_fault_attr() in __sbi_store() to clean up code.
+The ad7768-1 ADC output code is two's complement, meaning that the voltage
+conversion result is a signed value.. Since the value is a 24 bit one,
+stored in a 32 bit variable, the sign should be extended in order to get
+the correct representation.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Cliff Liu <donghua.liu@windriver.com>
-Signed-off-by: He Zhe <Zhe.He@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also the channel description has been updated to signed representation,
+to match the ADC specifications.
+
+Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Signed-off-by: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://patch.msgid.link/505994d3b71c2aa38ba714d909a68e021f12124c.1741268122.git.Jonathan.Santos@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h  |   12 ++++++++----
- fs/f2fs/super.c |   27 ++++++++++++++++++++-------
- fs/f2fs/sysfs.c |   14 ++++++++++----
- 3 files changed, 38 insertions(+), 15 deletions(-)
+ drivers/iio/adc/ad7768-1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -64,7 +64,7 @@ enum {
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index 22c0303587b07..c922faab4a52b 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -142,7 +142,7 @@ static const struct iio_chan_spec ad7768_channels[] = {
+ 		.channel = 0,
+ 		.scan_index = 0,
+ 		.scan_type = {
+-			.sign = 'u',
++			.sign = 's',
+ 			.realbits = 24,
+ 			.storagebits = 32,
+ 			.shift = 8,
+@@ -374,7 +374,7 @@ static int ad7768_read_raw(struct iio_dev *indio_dev,
+ 		iio_device_release_direct_mode(indio_dev);
+ 		if (ret < 0)
+ 			return ret;
+-		*val = ret;
++		*val = sign_extend32(ret, chan->scan_type.realbits - 1);
  
- struct f2fs_fault_info {
- 	atomic_t inject_ops;
--	unsigned int inject_rate;
-+	int inject_rate;
- 	unsigned int inject_type;
- };
+ 		return IIO_VAL_INT;
  
-@@ -4373,10 +4373,14 @@ static inline bool f2fs_need_verity(cons
- }
- 
- #ifdef CONFIG_F2FS_FAULT_INJECTION
--extern void f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned int rate,
--							unsigned int type);
-+extern int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
-+							unsigned long type);
- #else
--#define f2fs_build_fault_attr(sbi, rate, type)		do { } while (0)
-+static int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
-+							unsigned long type)
-+{
-+	return 0;
-+}
- #endif
- 
- static inline bool is_journalled_quota(struct f2fs_sb_info *sbi)
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -61,21 +61,31 @@ const char *f2fs_fault_name[FAULT_MAX] =
- 	[FAULT_DQUOT_INIT]	= "dquot initialize",
- };
- 
--void f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned int rate,
--							unsigned int type)
-+int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
-+							unsigned long type)
- {
- 	struct f2fs_fault_info *ffi = &F2FS_OPTION(sbi).fault_info;
- 
- 	if (rate) {
-+		if (rate > INT_MAX)
-+			return -EINVAL;
- 		atomic_set(&ffi->inject_ops, 0);
--		ffi->inject_rate = rate;
-+		ffi->inject_rate = (int)rate;
- 	}
- 
--	if (type)
--		ffi->inject_type = type;
-+	if (type) {
-+		if (type >= BIT(FAULT_MAX))
-+			return -EINVAL;
-+		ffi->inject_type = (unsigned int)type;
-+	}
- 
- 	if (!rate && !type)
- 		memset(ffi, 0, sizeof(struct f2fs_fault_info));
-+	else
-+		f2fs_info(sbi,
-+			"build fault injection attr: rate: %lu, type: 0x%lx",
-+								rate, type);
-+	return 0;
- }
- #endif
- 
-@@ -901,14 +911,17 @@ static int parse_options(struct super_bl
- 		case Opt_fault_injection:
- 			if (args->from && match_int(args, &arg))
- 				return -EINVAL;
--			f2fs_build_fault_attr(sbi, arg, F2FS_ALL_FAULT_TYPE);
-+			if (f2fs_build_fault_attr(sbi, arg,
-+					F2FS_ALL_FAULT_TYPE))
-+				return -EINVAL;
- 			set_opt(sbi, FAULT_INJECTION);
- 			break;
- 
- 		case Opt_fault_type:
- 			if (args->from && match_int(args, &arg))
- 				return -EINVAL;
--			f2fs_build_fault_attr(sbi, 0, arg);
-+			if (f2fs_build_fault_attr(sbi, 0, arg))
-+				return -EINVAL;
- 			set_opt(sbi, FAULT_INJECTION);
- 			break;
- #else
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -407,10 +407,16 @@ out:
- 	if (ret < 0)
- 		return ret;
- #ifdef CONFIG_F2FS_FAULT_INJECTION
--	if (a->struct_type == FAULT_INFO_TYPE && t >= (1 << FAULT_MAX))
--		return -EINVAL;
--	if (a->struct_type == FAULT_INFO_RATE && t >= UINT_MAX)
--		return -EINVAL;
-+	if (a->struct_type == FAULT_INFO_TYPE) {
-+		if (f2fs_build_fault_attr(sbi, 0, t))
-+			return -EINVAL;
-+		return count;
-+	}
-+	if (a->struct_type == FAULT_INFO_RATE) {
-+		if (f2fs_build_fault_attr(sbi, t, 0))
-+			return -EINVAL;
-+		return count;
-+	}
- #endif
- 	if (a->struct_type == RESERVED_BLOCKS) {
- 		spin_lock(&sbi->stat_lock);
+-- 
+2.39.5
+
 
 
