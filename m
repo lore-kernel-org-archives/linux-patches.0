@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572CC155A4E;
-	Tue, 29 Apr 2025 18:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DBE188A0E;
+	Tue, 29 Apr 2025 18:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950641; cv=none; b=ljTgKvRVPJYLqFLzAuzlkkWrIpAvE5Y+m1h8xH7gbq9WPn5A1UHhcbKogBosgv4Erl/UcpVi+KeeG6sutnWduIzMs4S8fDlT1Hr+pP8E8EhpBvOPR3lYXBrKaZPDs1yXanPqAO6VAtFkhbXSdoCui7c/cUbYLLfWt88D1bgN3rE=
+	t=1745950645; cv=none; b=NPdGEx8k2V/uwLQqYdkOs5WilZXwsN5SD3hEes6pkdTc+kSyt6HE2fLHmcg8+fg13zqolyBsKdONmni6Sag5wjzXwVG/vSkm75Zoo4+2ZilerQApgzDGvUPucJwzJ5GVsL3zMXJAbpQUp9LhYO0grTfj7awtsY9WY7f7ZJzrkso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950641; c=relaxed/simple;
-	bh=++mJA97+LfkL8YxIZXBni2j5UUu1I4bXB63le8jseDE=;
+	s=arc-20240116; t=1745950645; c=relaxed/simple;
+	bh=XaEExmu7Ac9kPFOYJx7kyPBaO1Ua4ndonbyiTwUKw/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2DkJJfeymxciTMmaVPmeJfYNcGkaUzKbfPDHSN/dBeh5Yo6Ea1+mpMUy9p5WbjwQyFHx3TwP9ju5V3dGIk3e9/COL/uAAbL6yZSoTnenovAnmY/RrcbtrXPyj42x74n6HWR7SFIlLm5MIDdD0J2WBRASHmXoyg4REx5WpdnGmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQoIBtIE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckWjgSGOepXbm0YB7Z6cUchd4UKdUup/2vZWhDcN+CHEAnojSfIXkOMngNsGxzff2ivCRo/b0cmJ1QN8zhHMf110n7cwXHRH4HQeTGhpEHdkpdNfU4vMTQw/OHTlqj/Y1306XGoKHUCOIy07Um15cCEx8Io3aHmhdA5Xs7xytwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHwGhAAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQoIBtIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE74C4CEE3;
-	Tue, 29 Apr 2025 18:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHwGhAAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C77C4CEE3;
+	Tue, 29 Apr 2025 18:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950641;
-	bh=++mJA97+LfkL8YxIZXBni2j5UUu1I4bXB63le8jseDE=;
+	s=korg; t=1745950644;
+	bh=XaEExmu7Ac9kPFOYJx7kyPBaO1Ua4ndonbyiTwUKw/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQoIBtIEaAtJVGdl4iCsK3i+dDbU3NliUexAnFk1WgtNvuirUUZ0L5jpKO3+F6kJq
-	 tl/hJhrlvclow4fQc8g41DYyqLhznBmEWwMT8CdBPGIqBA5PODWfGYbF0TJMdktDZV
-	 v9Hv0KzNU/+ITwKrL/rprwidaWQzVc5mG6OxY/Xw=
+	b=WHwGhAAB0lC+oEytnEaZtbvq2LDoEPccZXPpBe969ZFWTc/dsB8dRXNcE+VS3NMXb
+	 IB4ycgzY4vmiK5yNdOCXdXF3Ukuk9sRxUoT/RObIblNxsroopvEzFd0GkZ+6HSjzsP
+	 k8ofKh1961gcfQGffJIgYEu+jfpyQUcav0AoORbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Alexander Stein <alexander.stein@mailbox.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/204] xen: Change xen-acpi-processor dom0 dependency
-Date: Tue, 29 Apr 2025 18:44:06 +0200
-Message-ID: <20250429161105.878160561@linuxfoundation.org>
+Subject: [PATCH 6.6 131/204] usb: host: max3421-hcd: Add missing spi_device_id table
+Date: Tue, 29 Apr 2025 18:43:39 +0200
+Message-ID: <20250429161104.787985497@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,38 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Alexander Stein <alexander.stein@mailbox.org>
 
-[ Upstream commit 0f2946bb172632e122d4033e0b03f85230a29510 ]
+[ Upstream commit 41d5e3806cf589f658f92c75195095df0b66f66a ]
 
-xen-acpi-processor functions under a PVH dom0 with only a
-xen_initial_domain() runtime check.  Change the Kconfig dependency from
-PV dom0 to generic dom0 to reflect that.
+"maxim,max3421" DT compatible is missing its SPI device ID entry, not
+allowing module autoloading and leading to the following message:
+ "SPI driver max3421-hcd has no spi_device_id for maxim,max3421"
 
-Suggested-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250331172913.51240-1-jason.andryuk@amd.com>
+Fix this by adding the spi_device_id table.
+
+Signed-off-by: Alexander Stein <alexander.stein@mailbox.org>
+Link: https://lore.kernel.org/r/20250128195114.56321-1-alexander.stein@mailbox.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/max3421-hcd.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/xen/Kconfig b/drivers/xen/Kconfig
-index d43153fec18ea..af5c214b22069 100644
---- a/drivers/xen/Kconfig
-+++ b/drivers/xen/Kconfig
-@@ -278,7 +278,7 @@ config XEN_PRIVCMD_IRQFD
+diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
+index a219260ad3e6c..cc1f579f02de1 100644
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -1946,6 +1946,12 @@ max3421_remove(struct spi_device *spi)
+ 	usb_put_hcd(hcd);
+ }
  
- config XEN_ACPI_PROCESSOR
- 	tristate "Xen ACPI processor"
--	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
-+	depends on XEN && XEN_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
- 	default m
- 	help
- 	  This ACPI processor uploads Power Management information to the Xen
++static const struct spi_device_id max3421_spi_ids[] = {
++	{ "max3421" },
++	{ },
++};
++MODULE_DEVICE_TABLE(spi, max3421_spi_ids);
++
+ static const struct of_device_id max3421_of_match_table[] = {
+ 	{ .compatible = "maxim,max3421", },
+ 	{},
+@@ -1955,6 +1961,7 @@ MODULE_DEVICE_TABLE(of, max3421_of_match_table);
+ static struct spi_driver max3421_driver = {
+ 	.probe		= max3421_probe,
+ 	.remove		= max3421_remove,
++	.id_table	= max3421_spi_ids,
+ 	.driver		= {
+ 		.name	= "max3421-hcd",
+ 		.of_match_table = max3421_of_match_table,
 -- 
 2.39.5
 
