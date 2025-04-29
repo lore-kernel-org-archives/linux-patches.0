@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92875229B05;
-	Tue, 29 Apr 2025 17:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A612F1DF73C;
+	Tue, 29 Apr 2025 17:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946191; cv=none; b=il0D/0/Tz2Uws0pPb1EYIhLB+L+wHbpyJuHq/+NiPb6yAsvaq2XpDNC1JGgkf06U2NCflERIeoKy+vjP1jZvSYTNlEAPPzfPLIuWicyjv987yTJFiiOr3EO3CrsAbqnXSak7+UYP+dZXCcYfZcrl58Hbi/+SsOY2yZ4KXQK6Y8U=
+	t=1745946194; cv=none; b=tetfhFBkhaqQ2zwtlaHH1m2Dcmp/AW3e+nPnzn1CnIqtpxRfDP6Q6zrpGlECcWGdR7dlLl7zN1wu2OAwHm1vhT+8Xn2PYnyFOT12Jy0O1tnIh7IU41U8Vk6XoUYhV0fIUFQpvv/isuLu8O1/OAgiQfnTPZrBPFjEt/tSNITVmRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946191; c=relaxed/simple;
-	bh=UvnoctLgWZKjZQVOWghBgpGHgOCVVRJbd0iEZ6w0/CM=;
+	s=arc-20240116; t=1745946194; c=relaxed/simple;
+	bh=WC0V6OPmfqEQflb1yq5Pu5x+vHbTnB7AeWZ+sVzV1H0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAP+vEZic6Welpblqq68fgS7Ix6Ci8hMCvrWGgINUfHefHM32kwAmNFWbPVsTnjQW8yDvRbbUNdNlEyxyDXKtf1gJG0k1sTo9EteGN1jB46LV3Pb2mBtA+pStqvvy/Ogkgm+9psaVnzq7DdkZgeuMb31+i85ZJ0Y1bE7aqAOVCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya/Rl+eW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liQs7ipxJMCqmvNfoSSOUKXz2kmmYwhZfRuEA1Sh+uGD+jd8AWE5wtSJ13tXvOXxzBXZS+ezBkCQmx2Jc5bPkGe6cno1gKFv/e6zPw+nAYNAAeanyb0V8A1UNU4rN41c7+vX6ZUHZAXnWYIGujaUX7u3p9li5zqzG2/39typW+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACAuYtEv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya/Rl+eW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F91C4CEE3;
-	Tue, 29 Apr 2025 17:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACAuYtEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1440FC4CEE9;
+	Tue, 29 Apr 2025 17:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946191;
-	bh=UvnoctLgWZKjZQVOWghBgpGHgOCVVRJbd0iEZ6w0/CM=;
+	s=korg; t=1745946194;
+	bh=WC0V6OPmfqEQflb1yq5Pu5x+vHbTnB7AeWZ+sVzV1H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ya/Rl+eWoJtF+reYF5kheXzQnr6w6uO+lF0fvpZkywbtVNsIaqc3iLnzyjckLnKTD
-	 viAYwBzTZS+6jYARHKGUmfdmiAc3h9I0nLzBa8duGoghF5voCnMQ+3Jh1VLBUvaBfL
-	 9ODsHzWn/2LHvTbOACK1Nzl1B8zzW+ySlM4gFZUA=
+	b=ACAuYtEvyUoijdqLBspIKBTpvGry56eG/RH8FG3NUyOAD+oG1lnsXUwsCoOxVAHr3
+	 l+CB8iUsJmJvv4w8WpOIDEfw6jo2lvyzzFk+nAlJF2z++yMwM2Uk7SSp7zwtKW+TR2
+	 ZsPYp69Hv5vCAdVLEsmgTpL81PpfgDfcvbVVCuoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Xue <zxue@semtech.com>,
+	Craig Hesling <craig@hesling.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.14 156/311] USB: serial: option: add Sierra Wireless EM9291
-Date: Tue, 29 Apr 2025 18:39:53 +0200
-Message-ID: <20250429161127.423035040@linuxfoundation.org>
+Subject: [PATCH 6.14 157/311] USB: serial: simple: add OWON HDS200 series oscilloscope support
+Date: Tue, 29 Apr 2025 18:39:54 +0200
+Message-ID: <20250429161127.462701919@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -50,63 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Xue <zxue@semtech.com>
+From: Craig Hesling <craig@hesling.com>
 
-commit 968e1cbb1f6293c3add9607f80b5ce3d29f57583 upstream.
+commit 4cc01410e1c1dd075df10f750775c81d1cb6672b upstream.
 
-Add Sierra Wireless EM9291.
+Add serial support for OWON HDS200 series oscilloscopes and likely
+many other pieces of OWON test equipment.
 
-Interface 0: MBIM control
-          1: MBIM data
-          3: AT port
-          4: Diagnostic port
+OWON HDS200 series devices host two USB endpoints, designed to
+facilitate bidirectional SCPI. SCPI is a predominately ASCII text
+protocol for test/measurement equipment. Having a serial/tty interface
+for these devices lowers the barrier to entry for anyone trying to
+write programs to communicate with them.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1199 ProdID=90e3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9291
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=(none)
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The following shows the USB descriptor for the OWON HDS272S running
+firmware V5.7.1:
 
-Signed-off-by: Adam Xue <zxue@semtech.com>
+Bus 001 Device 068: ID 5345:1234 Owon PDS6062T Oscilloscope
+Negotiated speed: Full Speed (12Mbps)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x5345 Owon
+  idProduct          0x1234 PDS6062T Oscilloscope
+  bcdDevice            1.00
+  iManufacturer           1 oscilloscope
+  iProduct                2 oscilloscope
+  iSerial                 3 oscilloscope
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0029
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         5 Physical Interface Device
+      bInterfaceSubClass      0 [unknown]
+      bInterfaceProtocol      0
+      iInterface              0
+      ** UNRECOGNIZED:  09 21 11 01 00 01 22 5f 00
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+Device Status:     0x0000
+  (Bus Powered)
+
+OWON appears to be using the same USB Vendor and Product ID for many
+of their oscilloscopes. Looking at the discussion about the USB
+vendor/product ID, in the link bellow, suggests that this VID/PID is
+shared with VDS, SDS, PDS, and now the HDS series oscilloscopes.
+Available documentation for these devices seems to indicate that all
+use a similar SCPI protocol, some with RS232 options. It is likely that
+this same simple serial setup would work correctly for them all.
+
+Link: https://usb-ids.gowdy.us/read/UD/5345/1234
+Signed-off-by: Craig Hesling <craig@hesling.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/usb-serial-simple.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -611,6 +611,7 @@ static void option_instat_callback(struc
- /* Sierra Wireless products */
- #define SIERRA_VENDOR_ID			0x1199
- #define SIERRA_PRODUCT_EM9191			0x90d3
-+#define SIERRA_PRODUCT_EM9291			0x90e3
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -100,6 +100,11 @@ DEVICE(nokia, NOKIA_IDS);
+ 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
+ DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
  
- /* UNISOC (Spreadtrum) products */
- #define UNISOC_VENDOR_ID			0x1782
-@@ -2432,6 +2433,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
++/* OWON electronic test and measurement equipment driver */
++#define OWON_IDS()			\
++	{ USB_DEVICE(0x5345, 0x1234) } /* HDS200 oscilloscopes and others */
++DEVICE(owon, OWON_IDS);
++
+ /* Siemens USB/MPI adapter */
+ #define SIEMENS_IDS()			\
+ 	{ USB_DEVICE(0x908, 0x0004) }
+@@ -134,6 +139,7 @@ static struct usb_serial_driver * const
+ 	&motorola_tetra_device,
+ 	&nokia_device,
+ 	&novatel_gps_device,
++	&owon_device,
+ 	&siemens_mpi_device,
+ 	&suunto_device,
+ 	&vivopay_device,
+@@ -153,6 +159,7 @@ static const struct usb_device_id id_tab
+ 	MOTOROLA_TETRA_IDS(),
+ 	NOKIA_IDS(),
+ 	NOVATEL_IDS(),
++	OWON_IDS(),
+ 	SIEMENS_IDS(),
+ 	SUUNTO_IDS(),
+ 	VIVOPAY_IDS(),
 
 
