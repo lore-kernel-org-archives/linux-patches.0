@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9DC38FB0;
-	Tue, 29 Apr 2025 17:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3705B78F58;
+	Tue, 29 Apr 2025 17:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947645; cv=none; b=qeaIQrpCaUW1lOdn2+bk/AmCE8wgh43qvGme/vr6l3wShVg8/+sPnHtidSsqcBNP//6ScQ01ZtPn8FgnHEMGrU3ub0ciWdLTAwyrM8bXejMdM1C1SXvX3MJx6R/znzuLRmn1XUND9mN6DIAuuQSbPUqCM179tKNeH52s4g5qwqs=
+	t=1745947648; cv=none; b=KuZrYjCQxLxCe/Fo8fgDOngt4Tf+T602YSSyD3jGlONGHvQLkJJRO7mIg6FXKvVsStnjb4bMbGCYV9ebS71112fQ3oD7yPQDcT+K+G6XFkE4CEuzjWCC1KW91MbIuxe+Pk48MoqJA7X/20v9+zdatM2gYVyxP8CjK+/hqYdpSbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947645; c=relaxed/simple;
-	bh=UVbnP2oxZi65tvT8FQ5CwtsQ0WWY5ZrtD8jBg+lI984=;
+	s=arc-20240116; t=1745947648; c=relaxed/simple;
+	bh=mNBine2AIkH/maHmHQDca4Pn2cZmjOZwC/YA4KYTTc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nFF40vFcxndM613bhonE1TMsfq9kEL0qMkqtwotON/2T3d3tEzHWlQj9ij19I1t91w42rtxesiXiQfF9JTLSpN5cQedPdJN6kS6mn1t5ZzG2tXLCf53dNKdOC49qYBhSep9R2asTU4NAZ+KrjcnQsIby8Uo9/fzCkuEgSp717SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaNN1s5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BVDjM+rbko75O2kf1kc+XivyypjZV36HOFyrTx8Tb2qtIphGxJLm818Bl8hgtyNYi02+u16D8I7ZCcyZHTY1Z9/mHgOQJxkiJVE0Wt/0pZqc4lSGy//nfQPZTzPAuiFjeNm6xC5FmaP0OuRpxpA+3RnlAMxcMuLctGx5OBxvP88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kve8f+y5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaNN1s5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA692C4CEE3;
-	Tue, 29 Apr 2025 17:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kve8f+y5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD19CC4CEE3;
+	Tue, 29 Apr 2025 17:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947645;
-	bh=UVbnP2oxZi65tvT8FQ5CwtsQ0WWY5ZrtD8jBg+lI984=;
+	s=korg; t=1745947648;
+	bh=mNBine2AIkH/maHmHQDca4Pn2cZmjOZwC/YA4KYTTc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaNN1s5ciFvvJYQP4zEw2XFeE2XHrMia1ABblZI1rgHmkkg0NgEb2DsHv4hTcOvVf
-	 U6S0fPzfER+/+Jo5EG8iABasttEeEwWsxTSWthPhXTKOzkPsdMxWgl2JSASrCoSXhw
-	 1nXxjv7Y8cfdo4FHFhQBkoYmVAmyD3w68CPqwq/M=
+	b=Kve8f+y5+k0pDj9GqZ6l9xDinFYND5kIWnHi+smRMuQ6jvpQm3eeOaZi9WHAxxSlL
+	 7HSnGUCazqAXvai2L6NvGLPQ8kSr4uVgsjS2hkyxJJ8VilyH6fcwIMt93RXjsPhN4b
+	 CVY0CFEvorGNEgEIh5SoV1VAu6f3F3lzda6Ogq84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E8=A5=BF=E6=9C=A8=E9=87=8E=E7=BE=B0=E5=9F=BA?= <yanqiyu01@gmail.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Waiman Long <longman@redhat.com>,
+	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/280] btrfs: zoned: return EIO on RAID1 block group write pointer mismatch
-Date: Tue, 29 Apr 2025 18:40:02 +0200
-Message-ID: <20250429161117.613231586@linuxfoundation.org>
+Subject: [PATCH 6.12 062/280] cgroup/cpuset-v1: Add missing support for cpuset_v2_mode
+Date: Tue, 29 Apr 2025 18:40:03 +0200
+Message-ID: <20250429161117.654144047@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,144 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: T.J. Mercier <tjmercier@google.com>
 
-[ Upstream commit b0c26f47992672661340dd6ea931240213016609 ]
+[ Upstream commit 1bf67c8fdbda21fadd564a12dbe2b13c1ea5eda7 ]
 
-There was a bug report about a NULL pointer dereference in
-__btrfs_add_free_space_zoned() that ultimately happens because a
-conversion from the default metadata profile DUP to a RAID1 profile on two
-disks.
+Android has mounted the v1 cpuset controller using filesystem type
+"cpuset" (not "cgroup") since 2015 [1], and depends on the resulting
+behavior where the controller name is not added as a prefix for cgroupfs
+files. [2]
 
-The stack trace has the following signature:
+Later, a problem was discovered where cpu hotplug onlining did not
+affect the cpuset/cpus files, which Android carried an out-of-tree patch
+to address for a while. An attempt was made to upstream this patch, but
+the recommendation was to use the "cpuset_v2_mode" mount option
+instead. [3]
 
-  BTRFS error (device sdc): zoned: write pointer offset mismatch of zones in raid1 profile
-  BUG: kernel NULL pointer dereference, address: 0000000000000058
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
-  RIP: 0010:__btrfs_add_free_space_zoned.isra.0+0x61/0x1a0
-  RSP: 0018:ffffa236b6f3f6d0 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffff96c8132f3400 RCX: 0000000000000001
-  RDX: 0000000010000000 RSI: 0000000000000000 RDI: ffff96c8132f3410
-  RBP: 0000000010000000 R08: 0000000000000003 R09: 0000000000000000
-  R10: 0000000000000000 R11: 00000000ffffffff R12: 0000000000000000
-  R13: ffff96c758f65a40 R14: 0000000000000001 R15: 000011aac0000000
-  FS: 00007fdab1cb2900(0000) GS:ffff96e60ca00000(0000) knlGS:0000000000000000
-  CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000058 CR3: 00000001a05ae000 CR4: 0000000000350ef0
-  Call Trace:
-  <TASK>
-  ? __die_body.cold+0x19/0x27
-  ? page_fault_oops+0x15c/0x2f0
-  ? exc_page_fault+0x7e/0x180
-  ? asm_exc_page_fault+0x26/0x30
-  ? __btrfs_add_free_space_zoned.isra.0+0x61/0x1a0
-  btrfs_add_free_space_async_trimmed+0x34/0x40
-  btrfs_add_new_free_space+0x107/0x120
-  btrfs_make_block_group+0x104/0x2b0
-  btrfs_create_chunk+0x977/0xf20
-  btrfs_chunk_alloc+0x174/0x510
-  ? srso_return_thunk+0x5/0x5f
-  btrfs_inc_block_group_ro+0x1b1/0x230
-  btrfs_relocate_block_group+0x9e/0x410
-  btrfs_relocate_chunk+0x3f/0x130
-  btrfs_balance+0x8ac/0x12b0
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  ? __kmalloc_cache_noprof+0x14c/0x3e0
-  btrfs_ioctl+0x2686/0x2a80
-  ? srso_return_thunk+0x5/0x5f
-  ? ioctl_has_perm.constprop.0.isra.0+0xd2/0x120
-  __x64_sys_ioctl+0x97/0xc0
-  do_syscall_64+0x82/0x160
-  ? srso_return_thunk+0x5/0x5f
-  ? __memcg_slab_free_hook+0x11a/0x170
-  ? srso_return_thunk+0x5/0x5f
-  ? kmem_cache_free+0x3f0/0x450
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  ? syscall_exit_to_user_mode+0x10/0x210
-  ? srso_return_thunk+0x5/0x5f
-  ? do_syscall_64+0x8e/0x160
-  ? sysfs_emit+0xaf/0xc0
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  ? seq_read_iter+0x207/0x460
-  ? srso_return_thunk+0x5/0x5f
-  ? vfs_read+0x29c/0x370
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  ? syscall_exit_to_user_mode+0x10/0x210
-  ? srso_return_thunk+0x5/0x5f
-  ? do_syscall_64+0x8e/0x160
-  ? srso_return_thunk+0x5/0x5f
-  ? exc_page_fault+0x7e/0x180
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7fdab1e0ca6d
-  RSP: 002b:00007ffeb2b60c80 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fdab1e0ca6d
-  RDX: 00007ffeb2b60d80 RSI: 00000000c4009420 RDI: 0000000000000003
-  RBP: 00007ffeb2b60cd0 R08: 0000000000000000 R09: 0000000000000013
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007ffeb2b6343b R14: 00007ffeb2b60d80 R15: 0000000000000001
-  </TASK>
-  CR2: 0000000000000058
-  ---[ end trace 0000000000000000 ]---
+An effort was made to do so, but this fails with "cgroup: Unknown
+parameter 'cpuset_v2_mode'" because commit e1cba4b85daa ("cgroup: Add
+mount flag to enable cpuset to use v2 behavior in v1 cgroup") did not
+update the special cased cpuset_mount(), and only the cgroup (v1)
+filesystem type was updated.
 
-The 1st line is the most interesting here:
+Add parameter parsing to the cpuset filesystem type so that
+cpuset_v2_mode works like the cgroup filesystem type:
 
- BTRFS error (device sdc): zoned: write pointer offset mismatch of zones in raid1 profile
+$ mkdir /dev/cpuset
+$ mount -t cpuset -ocpuset_v2_mode none /dev/cpuset
+$ mount|grep cpuset
+none on /dev/cpuset type cgroup (rw,relatime,cpuset,noprefix,cpuset_v2_mode,release_agent=/sbin/cpuset_release_agent)
 
-When a RAID1 block-group is created and a write pointer mismatch between
-the disks in the RAID set is detected, btrfs sets the alloc_offset to the
-length of the block group marking it as full. Afterwards the code expects
-that a balance operation will evacuate the data in this block-group and
-repair the problems.
+[1] https://cs.android.com/android/_/android/platform/system/core/+/b769c8d24fd7be96f8968aa4c80b669525b930d3
+[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libprocessgroup/setup/cgroup_map_write.cpp;drc=2dac5d89a0f024a2d0cc46a80ba4ee13472f1681;l=192
+[3] https://lore.kernel.org/lkml/f795f8be-a184-408a-0b5a-553d26061385@redhat.com/T/
 
-But before this is possible, the new space of this block-group will be
-accounted in the free space cache. But in __btrfs_add_free_space_zoned()
-it is being checked if it is a initial creation of a block group and if
-not a reclaim decision will be made. But the decision if a block-group's
-free space accounting is done for an initial creation depends on if the
-size of the added free space is the whole length of the block-group and
-the allocation offset is 0.
-
-But as btrfs_load_block_group_zone_info() sets the allocation offset to
-the zone capacity (i.e. marking the block-group as full) this initial
-decision is not met, and the space_info pointer in the 'struct
-btrfs_block_group' has not yet been assigned.
-
-Fail creation of the block group and rely on manual user intervention to
-re-balance the filesystem.
-
-Afterwards the filesystem can be unmounted, mounted in degraded mode and
-the missing device can be removed after a full balance of the filesystem.
-
-Reported-by: 西木野羰基 <yanqiyu01@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAB_b4sBhDe3tscz=duVyhc9hNE+gu=B8CrgLO152uMyanR8BEA@mail.gmail.com/
-Fixes: b1934cd60695 ("btrfs: zoned: handle broken write pointer on zones")
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: e1cba4b85daa ("cgroup: Add mount flag to enable cpuset to use v2 behavior in v1 cgroup")
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/cgroup/cgroup.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 2bb7e32ad9458..2603c9d60fd21 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1655,7 +1655,6 @@ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
- 		 * stripe.
- 		 */
- 		cache->alloc_offset = cache->zone_capacity;
--		ret = 0;
- 	}
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 4378f3eff25d2..e63d6f3b00470 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -2339,9 +2339,37 @@ static struct file_system_type cgroup2_fs_type = {
+ };
  
- out:
+ #ifdef CONFIG_CPUSETS_V1
++enum cpuset_param {
++	Opt_cpuset_v2_mode,
++};
++
++static const struct fs_parameter_spec cpuset_fs_parameters[] = {
++	fsparam_flag  ("cpuset_v2_mode", Opt_cpuset_v2_mode),
++	{}
++};
++
++static int cpuset_parse_param(struct fs_context *fc, struct fs_parameter *param)
++{
++	struct cgroup_fs_context *ctx = cgroup_fc2context(fc);
++	struct fs_parse_result result;
++	int opt;
++
++	opt = fs_parse(fc, cpuset_fs_parameters, param, &result);
++	if (opt < 0)
++		return opt;
++
++	switch (opt) {
++	case Opt_cpuset_v2_mode:
++		ctx->flags |= CGRP_ROOT_CPUSET_V2_MODE;
++		return 0;
++	}
++	return -EINVAL;
++}
++
+ static const struct fs_context_operations cpuset_fs_context_ops = {
+ 	.get_tree	= cgroup1_get_tree,
+ 	.free		= cgroup_fs_context_free,
++	.parse_param	= cpuset_parse_param,
+ };
+ 
+ /*
+@@ -2378,6 +2406,7 @@ static int cpuset_init_fs_context(struct fs_context *fc)
+ static struct file_system_type cpuset_fs_type = {
+ 	.name			= "cpuset",
+ 	.init_fs_context	= cpuset_init_fs_context,
++	.parameters		= cpuset_fs_parameters,
+ 	.fs_flags		= FS_USERNS_MOUNT,
+ };
+ #endif
 -- 
 2.39.5
 
