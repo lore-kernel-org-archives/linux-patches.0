@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7069222AE68;
-	Tue, 29 Apr 2025 18:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F24540C03;
+	Tue, 29 Apr 2025 18:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950294; cv=none; b=FQi/5vnJaKw0jikjZVRs/Ix5rMDbZmA74atSW3SqxkiZVGM8Tf+dT/032Ts5lN+5NfQggYT12DXyDpTm3LW40y1pcAnXn+pSAMVvOTuhLhyNZUjbBUgOGiMQJ/Lj3Dq0Keq1yO+3LcQjOJ2RAQaVvClxTWht5KgUtIh2tCa8kAY=
+	t=1745950297; cv=none; b=NTzaxZlSh4PxFflA+vDJBv9J/2qwtQA0Qh5wUnx0EtOkjoNmXe1Vh0H87pH9kiymKn5E8BlLVy8G2x5ioR32LfCVab5c2wK786vVjBraj3dq33PoqQpM8yIirGs0/qzEUNsNHrNpDRW+9QPgeJoB8GeXSDPC0YOoHcMbvEaytWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950294; c=relaxed/simple;
-	bh=5VpjnhmgHLqJRnD9dj/vReGQXb8twnSevk9HurDrXok=;
+	s=arc-20240116; t=1745950297; c=relaxed/simple;
+	bh=TiSHjUaeG8JMbKWhnGRFqROyqoIE7Cl20IGhxdqngMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzZdwzOBrHmAEtUkWfOdabiKCzNUJRjn+sBaZTei+s3TUs3FNBz23JseCN7V+DL3rZ3FK5tlGn9IH/XN+R+fiLzJvQZdpw/OxaLGvcUB7CUKlUMOnXd1uafnR3c5n+Y7Y1hCJc0fecaWIvCENizVSG8F3rSNyUNeABKQmKpe0BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYPweh8S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baAoRSzzj6zxCxb7Wtlj8Q3u4pzb3+hyyX5d8bG+Vqs+Dm/XVpBtv36JGLokh44e4y+W5GYdTSK/DAOIaW10jp8wr7jplV9atpzM3FQxyNxtXfE8ROUQsVxfKTbYqIbXx34dHZ3U8CHbZZCtVsYfcPVlbXU8oilEfm6pGlINHM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbBXnWJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYPweh8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA40FC4CEE3;
-	Tue, 29 Apr 2025 18:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbBXnWJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31BDC4CEE3;
+	Tue, 29 Apr 2025 18:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950294;
-	bh=5VpjnhmgHLqJRnD9dj/vReGQXb8twnSevk9HurDrXok=;
+	s=korg; t=1745950297;
+	bh=TiSHjUaeG8JMbKWhnGRFqROyqoIE7Cl20IGhxdqngMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYPweh8StupyvIlepK2fpbTnWVJ3v5pNovFuwv2tHCwI53nK2wpb3KUSuDpdZVuUC
-	 fgpaYnliuwFaOqNCrwlFQBcE7ou/7xzyGXnYSc46VcOnpNg/E+X852B/BOLp62fb7z
-	 mcDOmKQauS+yFtZziaNR9xWaL/ADfPTXCZHCLF/4=
+	b=EbBXnWJ8zaQcIjQjOVuxaRx7p/SjgCcUoD4ehBA66wpT0seG9nVmsEWWTLKRkCDo9
+	 J6IPwv01SGKpIlRmTKPvNGe+U1F8bkvmIo2IkMy1WqBcL64J7Sfyd1GoZYZau/AEvD
+	 hvD5sYMddU/otdYFpogpjwO5d6gd+Hu2fKhFYOjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/204] scsi: ufs: mcq: Add NULL check in ufshcd_mcq_abort()
-Date: Tue, 29 Apr 2025 18:42:18 +0200
-Message-ID: <20250429161101.451933628@linuxfoundation.org>
+Subject: [PATCH 6.6 033/204] of: resolver: Simplify of_resolve_phandles() using __free()
+Date: Tue, 29 Apr 2025 18:42:01 +0200
+Message-ID: <20250429161100.766525691@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -53,67 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 4c324085062919d4e21c69e5e78456dcec0052fe ]
+[ Upstream commit 5275e8b5293f65cc82a5ee5eab02dd573b911d6e ]
 
-A race can occur between the MCQ completion path and the abort handler:
-once a request completes, __blk_mq_free_request() sets rq->mq_hctx to
-NULL, meaning the subsequent ufshcd_mcq_req_to_hwq() call in
-ufshcd_mcq_abort() can return a NULL pointer. If this NULL pointer is
-dereferenced, the kernel will crash.
+Use the __free() cleanup to simplify of_resolve_phandles() and remove
+all the goto's.
 
-Add a NULL check for the returned hwq pointer. If hwq is NULL, log an
-error and return FAILED, preventing a potential NULL-pointer
-dereference.  As suggested by Bart, the ufshcd_cmd_inflight() check is
-removed.
-
-This is similar to the fix in commit 74736103fb41 ("scsi: ufs: core: Fix
-ufshcd_abort_one racing issue").
-
-This is found by our static analysis tool KNighter.
-
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250410001320.2219341-1-chenyuan0y@gmail.com
-Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Stable-dep-of: a46a0805635d ("of: resolver: Fix device node refcount leakage in of_resolve_phandles()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/of/resolver.c | 34 +++++++++++-----------------------
+ 1 file changed, 11 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index da8c1734d3335..411109a5ebbff 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -632,13 +632,6 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 	unsigned long flags;
+diff --git a/drivers/of/resolver.c b/drivers/of/resolver.c
+index b278ab4338ceb..2dd19dc6987c7 100644
+--- a/drivers/of/resolver.c
++++ b/drivers/of/resolver.c
+@@ -263,24 +263,20 @@ static int adjust_local_phandle_references(struct device_node *local_fixups,
+ int of_resolve_phandles(struct device_node *overlay)
+ {
+ 	struct device_node *child, *local_fixups, *refnode;
+-	struct device_node *tree_symbols, *overlay_fixups;
++	struct device_node *overlay_fixups;
+ 	struct property *prop;
+ 	const char *refpath;
+ 	phandle phandle, phandle_delta;
  	int err;
  
--	if (!ufshcd_cmd_inflight(lrbp->cmd)) {
--		dev_err(hba->dev,
--			"%s: skip abort. cmd at tag %d already completed.\n",
--			__func__, tag);
--		return FAILED;
--	}
+-	tree_symbols = NULL;
 -
- 	/* Skip task abort in case previous aborts failed and report failure */
- 	if (lrbp->req_abort_skip) {
- 		dev_err(hba->dev, "%s: skip abort. tag %d failed earlier\n",
-@@ -647,6 +640,11 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
+ 	if (!overlay) {
+ 		pr_err("null overlay\n");
+-		err = -EINVAL;
+-		goto out;
++		return -EINVAL;
  	}
  
- 	hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
-+	if (!hwq) {
-+		dev_err(hba->dev, "%s: skip abort. cmd at tag %d already completed.\n",
-+			__func__, tag);
-+		return FAILED;
-+	}
+ 	if (!of_node_check_flag(overlay, OF_DETACHED)) {
+ 		pr_err("overlay not detached\n");
+-		err = -EINVAL;
+-		goto out;
++		return -EINVAL;
+ 	}
  
- 	if (ufshcd_mcq_sqe_search(hba, hwq, tag)) {
- 		/*
+ 	phandle_delta = live_tree_max_phandle() + 1;
+@@ -292,7 +288,7 @@ int of_resolve_phandles(struct device_node *overlay)
+ 
+ 	err = adjust_local_phandle_references(local_fixups, overlay, phandle_delta);
+ 	if (err)
+-		goto out;
++		return err;
+ 
+ 	overlay_fixups = NULL;
+ 
+@@ -301,16 +297,13 @@ int of_resolve_phandles(struct device_node *overlay)
+ 			overlay_fixups = child;
+ 	}
+ 
+-	if (!overlay_fixups) {
+-		err = 0;
+-		goto out;
+-	}
++	if (!overlay_fixups)
++		return 0;
+ 
+-	tree_symbols = of_find_node_by_path("/__symbols__");
++	struct device_node __free(device_node) *tree_symbols = of_find_node_by_path("/__symbols__");
+ 	if (!tree_symbols) {
+ 		pr_err("no symbols in root of device tree.\n");
+-		err = -EINVAL;
+-		goto out;
++		return -EINVAL;
+ 	}
+ 
+ 	for_each_property_of_node(overlay_fixups, prop) {
+@@ -324,14 +317,12 @@ int of_resolve_phandles(struct device_node *overlay)
+ 		if (err) {
+ 			pr_err("node label '%s' not found in live devicetree symbols table\n",
+ 			       prop->name);
+-			goto out;
++			return err;
+ 		}
+ 
+ 		refnode = of_find_node_by_path(refpath);
+-		if (!refnode) {
+-			err = -ENOENT;
+-			goto out;
+-		}
++		if (!refnode)
++			return -ENOENT;
+ 
+ 		phandle = refnode->phandle;
+ 		of_node_put(refnode);
+@@ -341,11 +332,8 @@ int of_resolve_phandles(struct device_node *overlay)
+ 			break;
+ 	}
+ 
+-out:
+ 	if (err)
+ 		pr_err("overlay phandle fixup failed: %d\n", err);
+-	of_node_put(tree_symbols);
+-
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(of_resolve_phandles);
 -- 
 2.39.5
 
