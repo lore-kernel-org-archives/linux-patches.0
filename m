@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D59F227E95;
-	Tue, 29 Apr 2025 17:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3DF227E95;
+	Tue, 29 Apr 2025 17:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948627; cv=none; b=tErbjKIL63LMBZMuuKZlHHXNKZVBv6mE46T6yJCQifdTxmMTY9EJqbhQyW/m+qVe1d+1dGKY2gzBatb4n+sCaaJztwHhlhqVcGhiu6uZfGt7x6qtVAxWT4jC8dchMZDZm1Y6UT5zhfhk4FeFnZvY1BoZMxNsosNYRR+MuhV6864=
+	t=1745948630; cv=none; b=YPVikJumyx3fJQCmR4QVYDbBqJgcqg2OiQQjFk8bzFr5XXsZbnAelHDPKZsw5JVB5+dgK6I6pvdosfE4fX0XWmg5aaQlPtZy/nVyunMDOiKp5ankXSnkLXP4/+o2Gw+1ne9sHWdoNxlGSSQRkK/RlrUedC76q8F/gGwqIQyHUg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948627; c=relaxed/simple;
-	bh=qWr5jns3XUmw62gcHqzOKn+OG/but6WhVn9rGDSDPOs=;
+	s=arc-20240116; t=1745948630; c=relaxed/simple;
+	bh=kajTysS0CxXcxCoHM/Jy1LR70mt3Aq7uX8rUlMx8vnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ud2nTu0nrhpplZf9UF+aOaAMB49kzB3sBeBrOJGQfCzpw8OFT0zSjN1y+eNVM+yEMyZ2b5+6mjXkQ+zI3eoaJOd0wUb8bXahz3H0p+c984sS3vgOdtUK/ry9xgUop/iB/q4jVG59cyBoBz9NTNklCtfis9Dqq5CT20O7JQJleAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoUm/Eo/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AIMocxRzNVsdyafkWqfxQBLYnOHE0k2ZKgT9aUji8tQl7cymFYx3ks/Q1ONg5Ma9v3LJ69XPQXO7a63hXXQ+d6yVsSWZqVNlqI1mYXci8tUz73pb1feo/mNyZw3xGO6AgDvmh8IwtF7eyfxvb/keDHC20dvbUcUPGk1VoXqiahY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jii7VBJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoUm/Eo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B740EC4CEE3;
-	Tue, 29 Apr 2025 17:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jii7VBJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04875C4CEE3;
+	Tue, 29 Apr 2025 17:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948627;
-	bh=qWr5jns3XUmw62gcHqzOKn+OG/but6WhVn9rGDSDPOs=;
+	s=korg; t=1745948630;
+	bh=kajTysS0CxXcxCoHM/Jy1LR70mt3Aq7uX8rUlMx8vnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JoUm/Eo/HeX+BYbexElolUMHtlvZTCBaL+4k8ON2TLH5NfokzIJSy4yIei3vK86Ny
-	 1M6D0w91MCilyBrSnr1wj1ZH31IcLGuX8GNj64FDVrDgEgqJqmDc/w0NK7Pe2yA0DH
-	 LpEEEjglLH0XfTfjrWTJiB51+7kyeQCtk3Za14Iw=
+	b=Jii7VBJHX3ikUEJ+B/JWgD4ERCflyzde6We6+HPKYsAA52Dg0GCncSNNE+P/oVXCu
+	 LfMISdiEC3o02KaI1TTXrir5B1Bq3f7osdXQpVqUCYaIS8hatupMTurkKdqMEwMdyR
+	 MVfmPTt0x8uTGv+akeqXFxFjDi2WVCP2+y0tqamk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Bauer <sbauer@quicinc.com>,
+	Julius Werner <jwerner@chromium.org>,
 	Douglas Anderson <dianders@chromium.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.15 065/373] arm64: errata: Add QCOM_KRYO_4XX_GOLD to the spectre_bhb_k24_list
-Date: Tue, 29 Apr 2025 18:39:02 +0200
-Message-ID: <20250429161125.810184005@linuxfoundation.org>
+Subject: [PATCH 5.15 066/373] arm64: errata: Assume that unknown CPUs _are_ vulnerable to Spectre BHB
+Date: Tue, 29 Apr 2025 18:39:03 +0200
+Message-ID: <20250429161125.850540740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,36 +53,332 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-commit ed1ce841245d8febe3badf51c57e81c3619d0a1d upstream.
+commit e403e8538359d8580cbee1976ff71813e947101e upstream.
 
-Qualcomm Kryo 400-series Gold cores have a derivative of an ARM Cortex
-A76 in them. Since A76 needs Spectre mitigation via looping then the
-Kyro 400-series Gold cores also need Spectre mitigation via looping.
+The code for detecting CPUs that are vulnerable to Spectre BHB was
+based on a hardcoded list of CPU IDs that were known to be affected.
+Unfortunately, the list mostly only contained the IDs of standard ARM
+cores. The IDs for many cores that are minor variants of the standard
+ARM cores (like many Qualcomm Kyro CPUs) weren't listed. This led the
+code to assume that those variants were not affected.
 
-Qualcomm has confirmed that the proper "k" value for Kryo 400-series
-Gold cores is 24.
+Flip the code on its head and instead assume that a core is vulnerable
+if it doesn't have CSV2_3 but is unrecognized as being safe. This
+involves creating a "Spectre BHB safe" list.
+
+As of right now, the only CPU IDs added to the "Spectre BHB safe" list
+are ARM Cortex A35, A53, A55, A510, and A520. This list was created by
+looking for cores that weren't listed in ARM's list [1] as per review
+feedback on v2 of this patch [2]. Additionally Brahma A53 is added as
+per mailing list feedback [3].
+
+NOTE: this patch will not actually _mitigate_ anyone, it will simply
+cause them to report themselves as vulnerable. If any cores in the
+system are reported as vulnerable but not mitigated then the whole
+system will be reported as vulnerable though the system will attempt
+to mitigate with the information it has about the known cores.
+
+[1] https://developer.arm.com/Arm%20Security%20Center/Spectre-BHB
+[2] https://lore.kernel.org/r/20241219175128.GA25477@willie-the-truck
+[3] https://lore.kernel.org/r/18dbd7d1-a46c-4112-a425-320c99f67a8d@broadcom.com
 
 Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
 Cc: stable@vger.kernel.org
-Cc: Scott Bauer <sbauer@quicinc.com>
+Reviewed-by: Julius Werner <jwerner@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
-Link: https://lore.kernel.org/r/20250107120555.v4.1.Ie4ef54abe02e7eb0eee50f830575719bf23bda48@changeid
+Link: https://lore.kernel.org/r/20250107120555.v4.2.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/proton-pack.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/spectre.h |    1 
+ arch/arm64/kernel/proton-pack.c  |  201 +++++++++++++++++++--------------------
+ 2 files changed, 101 insertions(+), 101 deletions(-)
 
+--- a/arch/arm64/include/asm/spectre.h
++++ b/arch/arm64/include/asm/spectre.h
+@@ -97,7 +97,6 @@ enum mitigation_state arm64_get_meltdown
+ 
+ enum mitigation_state arm64_get_spectre_bhb_state(void);
+ bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry, int scope);
+-u8 spectre_bhb_loop_affected(int scope);
+ void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *__unused);
+ bool try_emulate_el1_ssbs(struct pt_regs *regs, u32 instr);
+ #endif	/* __ASSEMBLY__ */
 --- a/arch/arm64/kernel/proton-pack.c
 +++ b/arch/arm64/kernel/proton-pack.c
-@@ -866,6 +866,7 @@ u8 spectre_bhb_loop_affected(int scope)
- 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
- 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
- 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
-+			MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
- 			{},
- 		};
- 		static const struct midr_range spectre_bhb_k11_list[] = {
+@@ -845,53 +845,70 @@ static unsigned long system_bhb_mitigati
+  * This must be called with SCOPE_LOCAL_CPU for each type of CPU, before any
+  * SCOPE_SYSTEM call will give the right answer.
+  */
+-u8 spectre_bhb_loop_affected(int scope)
++static bool is_spectre_bhb_safe(int scope)
++{
++	static const struct midr_range spectre_bhb_safe_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A35),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A53),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A55),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A510),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A520),
++		MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
++		{},
++	};
++	static bool all_safe = true;
++
++	if (scope != SCOPE_LOCAL_CPU)
++		return all_safe;
++
++	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_safe_list))
++		return true;
++
++	all_safe = false;
++
++	return false;
++}
++
++static u8 spectre_bhb_loop_affected(void)
+ {
+ 	u8 k = 0;
+-	static u8 max_bhb_k;
+ 
+-	if (scope == SCOPE_LOCAL_CPU) {
+-		static const struct midr_range spectre_bhb_k32_list[] = {
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+-			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+-			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+-			{},
+-		};
+-		static const struct midr_range spectre_bhb_k24_list[] = {
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+-			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+-			MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+-			{},
+-		};
+-		static const struct midr_range spectre_bhb_k11_list[] = {
+-			MIDR_ALL_VERSIONS(MIDR_AMPERE1),
+-			{},
+-		};
+-		static const struct midr_range spectre_bhb_k8_list[] = {
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
+-			MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
+-			{},
+-		};
+-
+-		if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+-			k = 32;
+-		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+-			k = 24;
+-		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
+-			k = 11;
+-		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
+-			k =  8;
+-
+-		max_bhb_k = max(max_bhb_k, k);
+-	} else {
+-		k = max_bhb_k;
+-	}
++	static const struct midr_range spectre_bhb_k32_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
++		{},
++	};
++	static const struct midr_range spectre_bhb_k24_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
++		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
++		{},
++	};
++	static const struct midr_range spectre_bhb_k11_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_AMPERE1),
++		{},
++	};
++	static const struct midr_range spectre_bhb_k8_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
++		{},
++	};
++
++	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
++		k = 32;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
++		k = 24;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
++		k = 11;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
++		k =  8;
+ 
+ 	return k;
+ }
+@@ -917,29 +934,13 @@ static enum mitigation_state spectre_bhb
+ 	}
+ }
+ 
+-static bool is_spectre_bhb_fw_affected(int scope)
++static bool has_spectre_bhb_fw_mitigation(void)
+ {
+-	static bool system_affected;
+ 	enum mitigation_state fw_state;
+ 	bool has_smccc = arm_smccc_1_1_get_conduit() != SMCCC_CONDUIT_NONE;
+-	static const struct midr_range spectre_bhb_firmware_mitigated_list[] = {
+-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A73),
+-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A75),
+-		{},
+-	};
+-	bool cpu_in_list = is_midr_in_range_list(read_cpuid_id(),
+-					 spectre_bhb_firmware_mitigated_list);
+-
+-	if (scope != SCOPE_LOCAL_CPU)
+-		return system_affected;
+ 
+ 	fw_state = spectre_bhb_get_cpu_fw_mitigation_state();
+-	if (cpu_in_list || (has_smccc && fw_state == SPECTRE_MITIGATED)) {
+-		system_affected = true;
+-		return true;
+-	}
+-
+-	return false;
++	return has_smccc && fw_state == SPECTRE_MITIGATED;
+ }
+ 
+ static bool supports_ecbhb(int scope)
+@@ -955,6 +956,8 @@ static bool supports_ecbhb(int scope)
+ 						    ID_AA64MMFR1_ECBHB_SHIFT);
+ }
+ 
++static u8 max_bhb_k;
++
+ bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry,
+ 			     int scope)
+ {
+@@ -963,16 +966,18 @@ bool is_spectre_bhb_affected(const struc
+ 	if (supports_csv2p3(scope))
+ 		return false;
+ 
+-	if (supports_clearbhb(scope))
+-		return true;
+-
+-	if (spectre_bhb_loop_affected(scope))
+-		return true;
++	if (is_spectre_bhb_safe(scope))
++		return false;
+ 
+-	if (is_spectre_bhb_fw_affected(scope))
+-		return true;
++	/*
++	 * At this point the core isn't known to be "safe" so we're going to
++	 * assume it's vulnerable. We still need to update `max_bhb_k` though,
++	 * but only if we aren't mitigating with clearbhb though.
++	 */
++	if (scope == SCOPE_LOCAL_CPU && !supports_clearbhb(SCOPE_LOCAL_CPU))
++		max_bhb_k = max(max_bhb_k, spectre_bhb_loop_affected());
+ 
+-	return false;
++	return true;
+ }
+ 
+ static void this_cpu_set_vectors(enum arm64_bp_harden_el1_vectors slot)
+@@ -998,7 +1003,7 @@ static void this_cpu_set_vectors(enum ar
+ void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *entry)
+ {
+ 	bp_hardening_cb_t cpu_cb;
+-	enum mitigation_state fw_state, state = SPECTRE_VULNERABLE;
++	enum mitigation_state state = SPECTRE_VULNERABLE;
+ 	struct bp_hardening_data *data = this_cpu_ptr(&bp_hardening_data);
+ 
+ 	if (!is_spectre_bhb_affected(entry, SCOPE_LOCAL_CPU))
+@@ -1024,7 +1029,7 @@ void spectre_bhb_enable_mitigation(const
+ 		this_cpu_set_vectors(EL1_VECTOR_BHB_CLEAR_INSN);
+ 		state = SPECTRE_MITIGATED;
+ 		set_bit(BHB_INSN, &system_bhb_mitigations);
+-	} else if (spectre_bhb_loop_affected(SCOPE_LOCAL_CPU)) {
++	} else if (spectre_bhb_loop_affected()) {
+ 		/*
+ 		 * Ensure KVM uses the indirect vector which will have the
+ 		 * branchy-loop added. A57/A72-r0 will already have selected
+@@ -1037,32 +1042,29 @@ void spectre_bhb_enable_mitigation(const
+ 		this_cpu_set_vectors(EL1_VECTOR_BHB_LOOP);
+ 		state = SPECTRE_MITIGATED;
+ 		set_bit(BHB_LOOP, &system_bhb_mitigations);
+-	} else if (is_spectre_bhb_fw_affected(SCOPE_LOCAL_CPU)) {
+-		fw_state = spectre_bhb_get_cpu_fw_mitigation_state();
+-		if (fw_state == SPECTRE_MITIGATED) {
+-			/*
+-			 * Ensure KVM uses one of the spectre bp_hardening
+-			 * vectors. The indirect vector doesn't include the EL3
+-			 * call, so needs upgrading to
+-			 * HYP_VECTOR_SPECTRE_INDIRECT.
+-			 */
+-			if (!data->slot || data->slot == HYP_VECTOR_INDIRECT)
+-				data->slot += 1;
+-
+-			this_cpu_set_vectors(EL1_VECTOR_BHB_FW);
+-
+-			/*
+-			 * The WA3 call in the vectors supersedes the WA1 call
+-			 * made during context-switch. Uninstall any firmware
+-			 * bp_hardening callback.
+-			 */
+-			cpu_cb = spectre_v2_get_sw_mitigation_cb();
+-			if (__this_cpu_read(bp_hardening_data.fn) != cpu_cb)
+-				__this_cpu_write(bp_hardening_data.fn, NULL);
+-
+-			state = SPECTRE_MITIGATED;
+-			set_bit(BHB_FW, &system_bhb_mitigations);
+-		}
++	} else if (has_spectre_bhb_fw_mitigation()) {
++		/*
++		 * Ensure KVM uses one of the spectre bp_hardening
++		 * vectors. The indirect vector doesn't include the EL3
++		 * call, so needs upgrading to
++		 * HYP_VECTOR_SPECTRE_INDIRECT.
++		 */
++		if (!data->slot || data->slot == HYP_VECTOR_INDIRECT)
++			data->slot += 1;
++
++		this_cpu_set_vectors(EL1_VECTOR_BHB_FW);
++
++		/*
++		 * The WA3 call in the vectors supersedes the WA1 call
++		 * made during context-switch. Uninstall any firmware
++		 * bp_hardening callback.
++		 */
++		cpu_cb = spectre_v2_get_sw_mitigation_cb();
++		if (__this_cpu_read(bp_hardening_data.fn) != cpu_cb)
++			__this_cpu_write(bp_hardening_data.fn, NULL);
++
++		state = SPECTRE_MITIGATED;
++		set_bit(BHB_FW, &system_bhb_mitigations);
+ 	}
+ 
+ 	update_mitigation_state(&spectre_bhb_state, state);
+@@ -1096,7 +1098,6 @@ void noinstr spectre_bhb_patch_loop_iter
+ {
+ 	u8 rd;
+ 	u32 insn;
+-	u16 loop_count = spectre_bhb_loop_affected(SCOPE_SYSTEM);
+ 
+ 	BUG_ON(nr_inst != 1); /* MOV -> MOV */
+ 
+@@ -1105,7 +1106,7 @@ void noinstr spectre_bhb_patch_loop_iter
+ 
+ 	insn = le32_to_cpu(*origptr);
+ 	rd = aarch64_insn_decode_register(AARCH64_INSN_REGTYPE_RD, insn);
+-	insn = aarch64_insn_gen_movewide(rd, loop_count, 0,
++	insn = aarch64_insn_gen_movewide(rd, max_bhb_k, 0,
+ 					 AARCH64_INSN_VARIANT_64BIT,
+ 					 AARCH64_INSN_MOVEWIDE_ZERO);
+ 	*updptr++ = cpu_to_le32(insn);
 
 
