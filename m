@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89D7241664;
-	Tue, 29 Apr 2025 17:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A21221719;
+	Tue, 29 Apr 2025 17:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946535; cv=none; b=OdM7hUaPRpnCZGdp7U63hp8z/Zk7WpsVwxk3JKrTUw4EgA/b5xZ5mD5JioAorY7AmFZTDVCG98A3cTFBY+cSf8HxhZ+IkekTbg2D6KLQEVHo/UyI1b2EfU5ejkL+4/MKMRU1WRps38XDSdLSRxLa0Xq/J6mOE+xnYkaDgQNojyw=
+	t=1745946538; cv=none; b=VvjWgYKykphxG7qfrR5dlTUeD2ms94unA9+sFjm40Ox1GspDbvNygsovB4lZHX3CsSgzBxaOLDlUYdq+J5iGF9qrowxx09yRNJK+QRQeThcj4+eJBjw3/G18+IUGVdrOC10dITSoVSuRPVtmK12NhUfbvNUfNl7byRBwcX/zIsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946535; c=relaxed/simple;
-	bh=mzsb1DrgRBwSsSLdOzoyPf3Bk7yWPn/FUuoAuvKiX6Q=;
+	s=arc-20240116; t=1745946538; c=relaxed/simple;
+	bh=yaoVX8QjtpF7Z2jrdFdNwhTE/519U5Vxn0niJ7qqVpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kDz1hpQZ6g35p5hrTfdaC5UcCL/ibUQ93WTxo9ETDTPCMOetUtxquYbWYio4VTJkOe4LJmDDo0fiQB4rak9VzQyhzKljfclq8Yr9ibdUTBVXj2PyWWMXbKjvp+hdHoDffsEuvPQxdxacxgWs9dpA3CcahhRz2kBusYhVGMf2prU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmeh0OBS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjCVFpdYOdpk9mCC+9iOFUsrBivaFW3mRPZTa19jFmrWpTJLiedbhgdBLQcLSDB5vyAsJovE4Pfh6buSEW8c2le3J5s1YZT09oSx8qJZHwleRj27jAwbjBRG+8KWv0q5AVZFhiClqojIfIZ8Zokbnz/EGA1mB1Z/R/w3p3WXr7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF9Fs+E5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmeh0OBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7348DC4CEE3;
-	Tue, 29 Apr 2025 17:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF9Fs+E5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE7C4CEE3;
+	Tue, 29 Apr 2025 17:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946534;
-	bh=mzsb1DrgRBwSsSLdOzoyPf3Bk7yWPn/FUuoAuvKiX6Q=;
+	s=korg; t=1745946537;
+	bh=yaoVX8QjtpF7Z2jrdFdNwhTE/519U5Vxn0niJ7qqVpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmeh0OBSVkgXV7xnEIWoz3+4hAx9RUMSrvkyMB08keM1bL6UCOIgJ6/C6pmZtpvor
-	 wdLmwwnKEkfyjssQixGYdsCQWsmm3JroVxdSdekI3KWIyUy9E0JmZ8koV1+HNWKKCV
-	 xHj1DKDFXoqP26hSwS1BTeDaoXTigDtjZMdJJ/f4=
+	b=oF9Fs+E5oTIu/nnaaGb8nR7G9qm3bj+4EmkhDlU2RaC7/OeW+HuEqg+3TV939HGcj
+	 Bmq3NSJjZ1MUBj4Vel+R1lrLG4f+GPxw1JI+G5G5bMOsWdgdlsD2ja8tb2MOBwy5Y/
+	 p11stfoQeZeXBdOGHdZiR87c1bzgw4bMnPIQx+Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.14 298/311] driver core: fix potential NULL pointer dereference in dev_uevent()
-Date: Tue, 29 Apr 2025 18:42:15 +0200
-Message-ID: <20250429161133.209321190@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrew Sauber <andrew.sauber@isovalent.com>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	William Tu <witu@nvidia.com>,
+	Martin Zaharinov <micron10@gmail.com>,
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 299/311] vmxnet3: Fix malformed packet sizing in vmxnet3_process_xdp
+Date: Tue, 29 Apr 2025 18:42:16 +0200
+Message-ID: <20250429161133.248277933@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -50,118 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 18daa52418e7e4629ed1703b64777294209d2622 upstream.
+commit 4c2227656d9003f4d77afc76f34dd81b95e4c2c4 upstream.
 
-If userspace reads "uevent" device attribute at the same time as another
-threads unbinds the device from its driver, change to dev->driver from a
-valid pointer to NULL may result in crash. Fix this by using READ_ONCE()
-when fetching the pointer, and take bus' drivers klist lock to make sure
-driver instance will not disappear while we access it.
+vmxnet3 driver's XDP handling is buggy for packet sizes using ring0 (that
+is, packet sizes between 128 - 3k bytes).
 
-Use WRITE_ONCE() when setting the driver pointer to ensure there is no
-tearing.
+We noticed MTU-related connectivity issues with Cilium's service load-
+balancing in case of vmxnet3 as NIC underneath. A simple curl to a HTTP
+backend service where the XDP LB was doing IPIP encap led to overly large
+packet sizes but only for *some* of the packets (e.g. HTTP GET request)
+while others (e.g. the prior TCP 3WHS) looked completely fine on the wire.
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20250311052417.1846985-3-dmitry.torokhov@gmail.com
+In fact, the pcap recording on the backend node actually revealed that the
+node with the XDP LB was leaking uninitialized kernel data onto the wire
+for the affected packets, for example, while the packets should have been
+152 bytes their actual size was 1482 bytes, so the remainder after 152 bytes
+was padded with whatever other data was in that page at the time (e.g. we
+saw user/payload data from prior processed packets).
+
+We only noticed this through an MTU issue, e.g. when the XDP LB node and
+the backend node both had the same MTU (e.g. 1500) then the curl request
+got dropped on the backend node's NIC given the packet was too large even
+though the IPIP-encapped packet normally would never even come close to
+the MTU limit. Lowering the MTU on the XDP LB (e.g. 1480) allowed to let
+the curl request succeed (which also indicates that the kernel ignored the
+padding, and thus the issue wasn't very user-visible).
+
+Commit e127ce7699c1 ("vmxnet3: Fix missing reserved tailroom") was too eager
+to also switch xdp_prepare_buff() from rcd->len to rbi->len. It really needs
+to stick to rcd->len which is the actual packet length from the descriptor.
+The latter we also feed into vmxnet3_process_xdp_small(), by the way, and
+it indicates the correct length needed to initialize the xdp->{data,data_end}
+parts. For e127ce7699c1 ("vmxnet3: Fix missing reserved tailroom") the
+relevant part was adapting xdp_init_buff() to address the warning given the
+xdp_data_hard_end() depends on xdp->frame_sz. With that fixed, traffic on
+the wire looks good again.
+
+Fixes: e127ce7699c1 ("vmxnet3: Fix missing reserved tailroom")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Andrew Sauber <andrew.sauber@isovalent.com>
+Cc: Anton Protopopov <aspsk@isovalent.com>
+Cc: William Tu <witu@nvidia.com>
+Cc: Martin Zaharinov <micron10@gmail.com>
+Cc: Ronak Doshi <ronak.doshi@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250423133600.176689-1-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/base.h |   13 ++++++++++++-
- drivers/base/bus.c  |    2 +-
- drivers/base/core.c |   33 +++++++++++++++++++++++++++++++--
- 3 files changed, 44 insertions(+), 4 deletions(-)
+ drivers/net/vmxnet3/vmxnet3_xdp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/base.h
-+++ b/drivers/base/base.h
-@@ -73,6 +73,7 @@ static inline void subsys_put(struct sub
- 		kset_put(&sp->subsys);
- }
+--- a/drivers/net/vmxnet3/vmxnet3_xdp.c
++++ b/drivers/net/vmxnet3/vmxnet3_xdp.c
+@@ -397,7 +397,7 @@ vmxnet3_process_xdp(struct vmxnet3_adapt
  
-+struct subsys_private *bus_to_subsys(const struct bus_type *bus);
- struct subsys_private *class_to_subsys(const struct class *class);
+ 	xdp_init_buff(&xdp, PAGE_SIZE, &rq->xdp_rxq);
+ 	xdp_prepare_buff(&xdp, page_address(page), rq->page_pool->p.offset,
+-			 rbi->len, false);
++			 rcd->len, false);
+ 	xdp_buff_clear_frags_flag(&xdp);
  
- struct driver_private {
-@@ -182,8 +183,18 @@ void device_driver_detach(struct device
- 
- static inline void device_set_driver(struct device *dev, const struct device_driver *drv)
- {
-+	/*
-+	 * Majority (all?) read accesses to dev->driver happens either
-+	 * while holding device lock or in bus/driver code that is only
-+	 * invoked when the device is bound to a driver and there is no
-+	 * concern of the pointer being changed while it is being read.
-+	 * However when reading device's uevent file we read driver pointer
-+	 * without taking device lock (so we do not block there for
-+	 * arbitrary amount of time). We use WRITE_ONCE() here to prevent
-+	 * tearing so that READ_ONCE() can safely be used in uevent code.
-+	 */
- 	// FIXME - this cast should not be needed "soon"
--	dev->driver = (struct device_driver *)drv;
-+	WRITE_ONCE(dev->driver, (struct device_driver *)drv);
- }
- 
- int devres_release_all(struct device *dev);
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -57,7 +57,7 @@ static int __must_check bus_rescan_devic
-  * NULL.  A call to subsys_put() must be done when finished with the pointer in
-  * order for it to be properly freed.
-  */
--static struct subsys_private *bus_to_subsys(const struct bus_type *bus)
-+struct subsys_private *bus_to_subsys(const struct bus_type *bus)
- {
- 	struct subsys_private *sp = NULL;
- 	struct kobject *kobj;
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2624,6 +2624,35 @@ static const char *dev_uevent_name(const
- 	return NULL;
- }
- 
-+/*
-+ * Try filling "DRIVER=<name>" uevent variable for a device. Because this
-+ * function may race with binding and unbinding the device from a driver,
-+ * we need to be careful. Binding is generally safe, at worst we miss the
-+ * fact that the device is already bound to a driver (but the driver
-+ * information that is delivered through uevents is best-effort, it may
-+ * become obsolete as soon as it is generated anyways). Unbinding is more
-+ * risky as driver pointer is transitioning to NULL, so READ_ONCE() should
-+ * be used to make sure we are dealing with the same pointer, and to
-+ * ensure that driver structure is not going to disappear from under us
-+ * we take bus' drivers klist lock. The assumption that only registered
-+ * driver can be bound to a device, and to unregister a driver bus code
-+ * will take the same lock.
-+ */
-+static void dev_driver_uevent(const struct device *dev, struct kobj_uevent_env *env)
-+{
-+	struct subsys_private *sp = bus_to_subsys(dev->bus);
-+
-+	if (sp) {
-+		scoped_guard(spinlock, &sp->klist_drivers.k_lock) {
-+			struct device_driver *drv = READ_ONCE(dev->driver);
-+			if (drv)
-+				add_uevent_var(env, "DRIVER=%s", drv->name);
-+		}
-+
-+		subsys_put(sp);
-+	}
-+}
-+
- static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
- {
- 	const struct device *dev = kobj_to_dev(kobj);
-@@ -2655,8 +2684,8 @@ static int dev_uevent(const struct kobje
- 	if (dev->type && dev->type->name)
- 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
- 
--	if (dev->driver)
--		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
-+	/* Add "DRIVER=%s" variable if the device is bound to a driver */
-+	dev_driver_uevent(dev, env);
- 
- 	/* Add common DT information about the device */
- 	of_device_uevent(dev, env);
+ 	xdp_prog = rcu_dereference(rq->adapter->xdp_bpf_prog);
 
 
