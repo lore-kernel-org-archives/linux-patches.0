@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABC7250BFE;
-	Tue, 29 Apr 2025 16:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B813242934;
+	Tue, 29 Apr 2025 16:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945497; cv=none; b=V/dVu0j5bRBQ4iM6noNJxUsn2C10wkXqA03Q1jVoffr4iqRL948MrwIpm/Q7kY/GOO+BITUhzdqD/BlUpBtW5IQaQ7MCEMAVUsGHU4C/nCZUeg8PPzakHMM9Lwg8E2QEEbotrcazxUYuG05RsvaBj48qi73wGAvfLJVReg6MqIk=
+	t=1745945500; cv=none; b=TJ4Rx5+qJuJb3m5iT0H+gHexGF4BgzCIX8yEaGhQ4zXMp5Ok3qwrEgzv8duyJoI4btAsJ7oAoB0M0L9uyXRnET7QYGJcoe0ERY10R2E/JgAaDMt1Hv3g1nZ2fO+2SE2opyGwTjU7f1X8dGm6mu24gZbQ7YooWZr/Eg6CqJbp8K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945497; c=relaxed/simple;
-	bh=ka/UBEC2E2g0VdOanmUzmWL4CGW209I9SCS2A13GOW4=;
+	s=arc-20240116; t=1745945500; c=relaxed/simple;
+	bh=JprgFenxWpWmQDSfvKDvnjkKkOjQ4b8cwk22CBdlpho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kU1tA/88+HCDd3JTCt6unbe/vZwFa8foxIRVSwCO4GD4qXeHmnC71rdhCs6NKyEZFaifI66Yy2J5TTUydK5sgUN3OAomHaC0QWsltrYaAiMOCvm8yIn5R0SOEeMFgARvEGCyFDGIL1tD1nATZO8w6mZURLpC/evqtSLqkhlIJ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tq2PKN2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e/xb33bN/pY9MY3A3cot0a9Xqc34PpySYbcWITexUiM4ZYyjn8FE1KF3hMONnfLE7GS/xjHJsOWs85/8r1wAITbLlFyQA8+12zjTKvOTfPcY+C39Cnnr2oPW6B9UlLyh4XxOZznqQzb1TRUPGntJYk6vjJUUEsq+aszbCZ2EkdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jneGn8CV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tq2PKN2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993C5C4CEE9;
-	Tue, 29 Apr 2025 16:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jneGn8CV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9042C4CEE3;
+	Tue, 29 Apr 2025 16:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945497;
-	bh=ka/UBEC2E2g0VdOanmUzmWL4CGW209I9SCS2A13GOW4=;
+	s=korg; t=1745945500;
+	bh=JprgFenxWpWmQDSfvKDvnjkKkOjQ4b8cwk22CBdlpho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tq2PKN2IAnYaZHf5GAkzDMJHz4LPqNz4EZxxNdtlrTRyRB/qDNxPNBglPxrBoZKIg
-	 8/A9kUZR+XZuEfsL9U9PYKOhJsOtsXbMT23bWDh7B6Yg9MT2MMDH9ppoDoA54GTFaQ
-	 vEt7ijLU9TBw7Kjtr4iqODGmDTX3lckZA0IhinUI=
+	b=jneGn8CV+Iz8DK2V6fVp+aZL3Hk7kon4Xk+yqsbx3jCyZJoF1PLJ7psOrR/x1cYYw
+	 F0z/1uZ8xGNI9b4OpG82Q5vfqiOzzyaykDtLi8J9Y+YBidU1FO3dzXDoaEdH8Hday1
+	 h28ZZg6XFzOQsOWfbC1Z7E9I1IodUNZ6s/rnqAbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Majewski <mattwmajewski@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/179] media: vim2m: print device name after registering device
-Date: Tue, 29 Apr 2025 18:41:14 +0200
-Message-ID: <20250429161054.776090847@linuxfoundation.org>
+Subject: [PATCH 5.4 134/179] net: dsa: mv88e6xxx: fix VTU methods for 6320 family
+Date: Tue, 29 Apr 2025 18:41:15 +0200
+Message-ID: <20250429161054.816065154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -45,55 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Majewski <mattwmajewski@gmail.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 143d75583f2427f3a97dba62413c4f0604867ebf ]
+[ Upstream commit f9a457722cf5e3534be5ffab549d6b49737fca72 ]
 
-Move the v4l2_info() call displaying the video device name after the
-device is actually registered.
+The VTU registers of the 6320 family use the 6352 semantics, not 6185.
+Fix it.
 
-This fixes a bug where the driver was always displaying "/dev/video0"
-since it was reading from the vfd before it was registered.
-
-Fixes: cf7f34777a5b ("media: vim2m: Register video device after setting up internals")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Majewski <mattwmajewski@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: b8fee9571063 ("net: dsa: mv88e6xxx: add VLAN Get Next support")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250317173250.28780-2-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vim2m.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/vim2m.c b/drivers/media/platform/vim2m.c
-index 6fba00e03c67b..10c9e8026d981 100644
---- a/drivers/media/platform/vim2m.c
-+++ b/drivers/media/platform/vim2m.c
-@@ -1334,9 +1334,6 @@ static int vim2m_probe(struct platform_device *pdev)
- 	vfd->v4l2_dev = &dev->v4l2_dev;
- 
- 	video_set_drvdata(vfd, dev);
--	v4l2_info(&dev->v4l2_dev,
--		  "Device registered as /dev/video%d\n", vfd->num);
--
- 	platform_set_drvdata(pdev, dev);
- 
- 	dev->m2m_dev = v4l2_m2m_init(&m2m_ops);
-@@ -1363,6 +1360,9 @@ static int vim2m_probe(struct platform_device *pdev)
- 		goto error_m2m;
- 	}
- 
-+	v4l2_info(&dev->v4l2_dev,
-+		  "Device registered as /dev/video%d\n", vfd->num);
-+
- #ifdef CONFIG_MEDIA_CONTROLLER
- 	ret = v4l2_m2m_register_media_controller(dev->m2m_dev, vfd,
- 						 MEDIA_ENT_F_PROC_VIDEO_SCALER);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 86c4ec13b4b64..9264fe6648fdb 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3861,8 +3861,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
+ 	.reset = mv88e6352_g1_reset,
+-	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+-	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
++	.vtu_getnext = mv88e6352_g1_vtu_getnext,
++	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.gpio_ops = &mv88e6352_gpio_ops,
+ 	.avb_ops = &mv88e6352_avb_ops,
+ 	.ptp_ops = &mv88e6352_ptp_ops,
+@@ -3905,8 +3905,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.reset = mv88e6352_g1_reset,
+-	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+-	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
++	.vtu_getnext = mv88e6352_g1_vtu_getnext,
++	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.gpio_ops = &mv88e6352_gpio_ops,
+ 	.avb_ops = &mv88e6352_avb_ops,
+ 	.ptp_ops = &mv88e6352_ptp_ops,
 -- 
 2.39.5
 
