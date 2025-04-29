@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6648F242D6A;
-	Tue, 29 Apr 2025 17:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F7E22A81D;
+	Tue, 29 Apr 2025 17:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947901; cv=none; b=TxjouJgX5yeYxBua05yoa0t6l8z0CLmim59jwP3s8i0PBFwUb1F5Vw2lsQMFjsXGmF7cp1ICMVtimbAP4/MK/3/smCC8IQS5Od4WL+v0l/goZa+xVz/ZLf46h3hC4nZM2AvGATvPDrzHlMDJ0ewxZNUD1u2n1R4MRtMKec4j/6g=
+	t=1745947904; cv=none; b=ZYNWD5IHtQqGXNRFSGKAmEIXtHl23Ul+jixN1xlY2Ta2ozZF2kbGl+JNmcYYtnruSff02OebaHacMxTkuro+sd1IEmoolk74WNqqyytg8YP/yWSXJRKlGvtHxAtnL8aBvCOlfuotbKaw86GhSI3D8G4t7gOTDrQz0nsJNXUcKyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947901; c=relaxed/simple;
-	bh=WCA+dnR6NEltMDdQqbisXHpzlKKjgpCiPy3gh4Qig8k=;
+	s=arc-20240116; t=1745947904; c=relaxed/simple;
+	bh=uiWWJZTe/7OrMnvUAZg4hyzxKHCtgLJ0vGs1sBAeikI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nohZ4xdIa+vQ7vgqD61jJAZs5XpjbFwykuwQAjl7VS7r1HOrcaGV86EJGLfbdXQI7Jz8gTl791b6rVn3quHN/1d+Z/7a1vKW3IdhO4WnSJGMBUHcH5//uFRlcpF6mtAKNcu3znw8K9nM/ZIjNB7MFAF6wRmLdUuqjHbb4KfqIy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFFPTAyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fknXOmAxdL6DXcG6OKkZ4dNbtqbDq95BC3zFz5DZg5bDRA9BgTpXO71LSReNyIek1DdTiqUhpkyAff0J5qbkh1OoZ8HHHlbI2RHYuTDG5canQHmzTWwH8tdrAsECnGoGpz0ML+WJODIX4jxrpsOYkx94OBClB+PLAdthlm/OF5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vI74c+Kf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFFPTAyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED09BC4CEE3;
-	Tue, 29 Apr 2025 17:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vI74c+Kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A0DC4CEE3;
+	Tue, 29 Apr 2025 17:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947901;
-	bh=WCA+dnR6NEltMDdQqbisXHpzlKKjgpCiPy3gh4Qig8k=;
+	s=korg; t=1745947904;
+	bh=uiWWJZTe/7OrMnvUAZg4hyzxKHCtgLJ0vGs1sBAeikI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFFPTAyd8TSLASS/uGG9I6OqenabXz8xoc5hH6Ir+iTLIZIaRWGrzEWAuEimWhb5a
-	 AE0bHhDyfgX+CQM7iN0bulXtzw3kvpsQmYzfvAu7BTQEhqeZhF+udjvwVOz703sOfl
-	 GX8r5yunkfYM+Biz8KXedgaMKIv/nDCIl4yYkXjI=
+	b=vI74c+KfQy/EZ0alrOp2o4qnyh3DWcH815hUn1/rmIM5kz5Uh9jJUsIo/vJq76XAM
+	 h8SGpmzOW8i7tEhuB5Ij49dujCqwr1KY+nfO3gefc7aG8iTs9G6CV4GI2iU4KeN4on
+	 bsvw9m195lsIugIpNQYIj2YFTDy1MNBfDgNSMABY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Petr Tesarik <ptesarik@suse.com>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 109/280] LoongArch: Remove a bogus reference to ZONE_DMA
-Date: Tue, 29 Apr 2025 18:40:50 +0200
-Message-ID: <20250429161119.573961581@linuxfoundation.org>
+Subject: [PATCH 6.12 110/280] LoongArch: KVM: Fully clear some CSRs when VM reboot
+Date: Tue, 29 Apr 2025 18:40:51 +0200
+Message-ID: <20250429161119.615337418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,33 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <ptesarik@suse.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit c37325cbd91abe3bfab280b3b09947155abe8e07 upstream.
+commit 9ea86232a5520d9d21832d06031ea80f055a6ff8 upstream.
 
-Remove dead code. LoongArch does not have a DMA memory zone (24bit DMA).
-The architecture does not even define MAX_DMA_PFN.
+Some registers such as LOONGARCH_CSR_ESTAT and LOONGARCH_CSR_GINTC are
+partly cleared with function _kvm_setcsr(). This comes from the hardware
+specification, some bits are read only in VM mode, and however they can
+be written in host mode. So they are partly cleared in VM mode, and can
+be fully cleared in host mode.
+
+These read only bits show pending interrupt or exception status. When VM
+reset, the read-only bits should be cleared, otherwise vCPU will receive
+unknown interrupts in boot stage.
+
+Here registers LOONGARCH_CSR_ESTAT/LOONGARCH_CSR_GINTC are fully cleared
+in ioctl KVM_REG_LOONGARCH_VCPU_RESET vCPU reset path.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Petr Tesarik <ptesarik@suse.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/init.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/loongarch/kvm/vcpu.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -65,9 +65,6 @@ void __init paging_init(void)
- {
- 	unsigned long max_zone_pfns[MAX_NR_ZONES];
- 
--#ifdef CONFIG_ZONE_DMA
--	max_zone_pfns[ZONE_DMA] = MAX_DMA_PFN;
--#endif
- #ifdef CONFIG_ZONE_DMA32
- 	max_zone_pfns[ZONE_DMA32] = MAX_DMA32_PFN;
- #endif
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -874,6 +874,13 @@ static int kvm_set_one_reg(struct kvm_vc
+ 			vcpu->arch.st.guest_addr = 0;
+ 			memset(&vcpu->arch.irq_pending, 0, sizeof(vcpu->arch.irq_pending));
+ 			memset(&vcpu->arch.irq_clear, 0, sizeof(vcpu->arch.irq_clear));
++
++			/*
++			 * When vCPU reset, clear the ESTAT and GINTC registers
++			 * Other CSR registers are cleared with function _kvm_setcsr().
++			 */
++			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_GINTC, 0);
++			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_ESTAT, 0);
+ 			break;
+ 		default:
+ 			ret = -EINVAL;
 
 
