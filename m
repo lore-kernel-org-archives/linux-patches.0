@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487C31FE468;
-	Tue, 29 Apr 2025 17:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91900229B05;
+	Tue, 29 Apr 2025 17:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946182; cv=none; b=iE8OVH0LViATV5VDLyQpjpDf0Px4k+QSM0ogcH8DpAKDWo20m7LLN09ysS5sx3u3UWu0WQdkNdO8L+rUvhwUCMVQy0xBF1SN0EMmnj50lN1TNIln433HnPGeJx3acZRVaPUzaclvnDs+58kAvAexpikfyTmbb+Cj4pEm/D2O9jY=
+	t=1745946185; cv=none; b=kzBoN7Ja/pitXbCEihNe8kn9R7AWTlQ/t3GPPXDNlavAURIJjKmdHyTKNmpA3On1enm8Efga8AD8HvU1+6BeLxVSEm1lsgxn+HmWl8mlQt4Wi2l3aUt2Pi3XwWU9GWUFONY78L9gC9Q6lT5NwzsgxxG+3O95GDuklr36euP4gzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946182; c=relaxed/simple;
-	bh=bj22yOdEWtgfS/DW3oPOudE43Qo2v4SfxzjG9TCEZBI=;
+	s=arc-20240116; t=1745946185; c=relaxed/simple;
+	bh=WVT2/Rh3Ecj++8d/NjJU52xtnpaiPLdMR4yQ3utzeHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6YerFi64elGBu+6GoanKf9jTBep0lNRw012kxzAC0oq+cqPgObpLRvqZar3/hNQ8fPwQLTjy2WyAHrRnlHlzAGn3fAi4T7ykfKz2IiqkoT5GBlT63/lRbxXiGqDSg2yQuskgNeumhZxzRx97IsoFtL/53BpOC0DorfbPLisF+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwOiy/CS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FV8UmsXcvkui0X9P0l1Zsn+X3n9qxeMOMjpZqq0PnIW0Uc7LpzflsMrXPVEXPfh66PrygVModRyfVZTVevrkmy99boCXphmB1DgNjjr4c8XFluZDKU7m8k9gNW19UdF1luv9l4c0RgSSy63mCn3dI91MPOgM+7mnxZOM+x5o/Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndBViScG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwOiy/CS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25FEC4CEE3;
-	Tue, 29 Apr 2025 17:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndBViScG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED193C4CEE3;
+	Tue, 29 Apr 2025 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946182;
-	bh=bj22yOdEWtgfS/DW3oPOudE43Qo2v4SfxzjG9TCEZBI=;
+	s=korg; t=1745946185;
+	bh=WVT2/Rh3Ecj++8d/NjJU52xtnpaiPLdMR4yQ3utzeHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xwOiy/CSz5Br2WP8U9FDhpKuHszSARVCJAbYhwEPw7jcYLBQvGpjq7ncGwq2B+xN/
-	 f9WFz+NLOq6rU30jmBg5zV053VUiGM+HcPXSoV3ICQTYp2qCMu0lTi1u/GDDjnGeny
-	 rx4u4zIW9YIY2OFd2eJSAnDaLWYsvjgo1fD0s40c=
+	b=ndBViScGH1/Qv80lwvvDE3G08XeMYdZHd/PhmZaRAeRG6OmAct/y8MBXURctsrk+I
+	 7kS6+G6MZ/oKg9hAWcClFXnyOg6yEOa3/anBE0ZV1PwZ2I6z7qHW+nFCi9rLNEypg8
+	 lvfIwmIv4ikBKC3FaAsrG50cWlxPigeuSYFz2Lfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.14 153/311] serial: msm: Configure correct working mode before starting earlycon
-Date: Tue, 29 Apr 2025 18:39:50 +0200
-Message-ID: <20250429161127.303537467@linuxfoundation.org>
+	Ryo Takakura <ryotkkr98@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
+	John Ogness <john.ogness@linutronix.de>
+Subject: [PATCH 6.14 154/311] serial: sifive: lock port in startup()/shutdown() callbacks
+Date: Tue, 29 Apr 2025 18:39:51 +0200
+Message-ID: <20250429161127.342995168@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,54 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Ryo Takakura <ryotkkr98@gmail.com>
 
-commit 7094832b5ac861b0bd7ed8866c93cb15ef619996 upstream.
+commit e1ca3ff28ab1e2c1e70713ef3fa7943c725742c3 upstream.
 
-The MSM UART DM controller supports different working modes, e.g. DMA or
-the "single-character mode", where all reads/writes operate on a single
-character rather than 4 chars (32-bit) at once. When using earlycon,
-__msm_console_write() always writes 4 characters at a time, but we don't
-know which mode the bootloader was using and we don't set the mode either.
+startup()/shutdown() callbacks access SIFIVE_SERIAL_IE_OFFS.
+The register is also accessed from write() callback.
 
-This causes garbled output if the bootloader was using the single-character
-mode, because only every 4th character appears in the serial console, e.g.
+If console were printing and startup()/shutdown() callback
+gets called, its access to the register could be overwritten.
 
-  "[ 00oni pi  000xf0[ 00i s 5rm9(l)l s 1  1 SPMTA 7:C 5[ 00A ade k d[
-   00ano:ameoi .Q1B[ 00ac _idaM00080oo'"
+Add port->lock to startup()/shutdown() callbacks to make sure
+their access to SIFIVE_SERIAL_IE_OFFS is synchronized against
+write() callback.
 
-If the bootloader was using the DMA ("DM") mode, output would likely fail
-entirely. Later, when the full serial driver probes, the port is
-re-initialized and output works as expected.
-
-Fix this also for earlycon by clearing the DMEN register and
-reset+re-enable the transmitter to apply the change. This ensures the
-transmitter is in the expected state before writing any output.
-
-Cc: stable <stable@kernel.org>
-Fixes: 0efe72963409 ("tty: serial: msm: Add earlycon support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250408-msm-serial-earlycon-v1-1-429080127530@linaro.org
+Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
+Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Rule: add
+Link: https://lore.kernel.org/stable/20250330003522.386632-1-ryotkkr98%40gmail.com
+Link: https://lore.kernel.org/r/20250412001847.183221-1-ryotkkr98@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/msm_serial.c |    6 ++++++
+ drivers/tty/serial/sifive.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -1746,6 +1746,12 @@ msm_serial_early_console_setup_dm(struct
- 	if (!device->port.membase)
- 		return -ENODEV;
+--- a/drivers/tty/serial/sifive.c
++++ b/drivers/tty/serial/sifive.c
+@@ -563,8 +563,11 @@ static void sifive_serial_break_ctl(stru
+ static int sifive_serial_startup(struct uart_port *port)
+ {
+ 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
++	unsigned long flags;
  
-+	/* Disable DM / single-character modes */
-+	msm_write(&device->port, 0, UARTDM_DMEN);
-+	msm_write(&device->port, MSM_UART_CR_CMD_RESET_RX, MSM_UART_CR);
-+	msm_write(&device->port, MSM_UART_CR_CMD_RESET_TX, MSM_UART_CR);
-+	msm_write(&device->port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
-+
- 	device->con->write = msm_serial_early_write_dm;
++	uart_port_lock_irqsave(&ssp->port, &flags);
+ 	__ssp_enable_rxwm(ssp);
++	uart_port_unlock_irqrestore(&ssp->port, flags);
+ 
  	return 0;
  }
+@@ -572,9 +575,12 @@ static int sifive_serial_startup(struct
+ static void sifive_serial_shutdown(struct uart_port *port)
+ {
+ 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
++	unsigned long flags;
+ 
++	uart_port_lock_irqsave(&ssp->port, &flags);
+ 	__ssp_disable_rxwm(ssp);
+ 	__ssp_disable_txwm(ssp);
++	uart_port_unlock_irqrestore(&ssp->port, flags);
+ }
+ 
+ /**
 
 
