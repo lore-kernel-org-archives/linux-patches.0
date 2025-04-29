@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DD2244668;
-	Tue, 29 Apr 2025 17:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12B622172E;
+	Tue, 29 Apr 2025 17:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948261; cv=none; b=gqhtTZVNea5zzCHEZmt6AA6Zhj43yymKdUc8FY5iHnELDauCWqwLmHRT7hmonWZH+UrY6VCsiNVuqKBY01jIhV6tpRJovYC+578DjaHfcMBTvlfCzogUEmh2PVMpm+CCS/dZ3EfzElDdUpfZVYm0Mn1d3WK6TI1BnOww39u1vaE=
+	t=1745948265; cv=none; b=TTcEk1DUVwW6PE+lUgIn6FtpW1X0rHbjmHXc+W9M50EYP5vI8L3qAFUKiqbu0l7d+vJqwJ3NCM7xe0ZkkCfjQlziA35kIDrHG8YtvnUUiasB9BRcU/g03wBjCcjrvD4QX2pNrWHolfp0dFTY+xwFeu3KlpRSo3JwvhjyDYQvcy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948261; c=relaxed/simple;
-	bh=0xkIC7Ep52fkC48TIMC4kOA6CkTizslBfWJJMOFNqS8=;
+	s=arc-20240116; t=1745948265; c=relaxed/simple;
+	bh=Aa8jP6Bv/iEZQ4u0TU6dFp8fFiJqJV5i5VAgUPqYOi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASCAUOSjTWC4f/oi3sk4gFWr1tzh0Rhivs3P+q+iCdfpJpRHF87Q2Wg1AwlMpKY1F+TmvBUODVoMSihdY4TDMAhI/04evmv6z26cS/lIih+YUh4HG5BZGksM3tLpohOxfSyd6UufRYrKvOaMDRbyQtNICx85rve6llHPEtBN85w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHgCBzTR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdzjtID2RMcALzC1Ph6FFMSGUD0rN0iKgmU3GhQqDmQ7y4qiavIG5Rgm4hZeLiXCmS6lut5qOVITjkEI4XQi6evxXgoPfIFMWEBIcuUoDGqAQTPmzH6//5iLKFwn9/rwq0V/QIdbZZMi+rphq25ExWjk2IOUof9SL0/WMMZD69A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVEa/BTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHgCBzTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B0EC4CEE3;
-	Tue, 29 Apr 2025 17:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVEa/BTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A6BC4CEE3;
+	Tue, 29 Apr 2025 17:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948261;
-	bh=0xkIC7Ep52fkC48TIMC4kOA6CkTizslBfWJJMOFNqS8=;
+	s=korg; t=1745948264;
+	bh=Aa8jP6Bv/iEZQ4u0TU6dFp8fFiJqJV5i5VAgUPqYOi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHgCBzTRwh6jea47HLrT/M6jL3kcZULnZihpj5AqGZhzMhLv3miQ+qcLtKHl7euU5
-	 dEoYOXiE1fvOy6frrLCVjFIDWjKGoshOISIDbAbpWbKeLxy1aS72kWA3ykIrQYBNek
-	 MCe4cDj1IsjVvGppWOfp1Vdz06XS64cAnokh4KTI=
+	b=uVEa/BTYk5Wp/MpwFVx2xpnGe9wAKjDLZlubPWW8bWpTaZTczFzkppEIMaVf+QHgL
+	 tzdTAciQd7YYjmI8+D2snHUlomcZZ5WQedZfGYqOJADVkxWy5JAISTMqA9SWrfAEAO
+	 1v+xx1CA/8si9I1QSFGYu3pVj6X6XeZWRiME9Cu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/280] xen: Change xen-acpi-processor dom0 dependency
-Date: Tue, 29 Apr 2025 18:42:27 +0200
-Message-ID: <20250429161123.558907573@linuxfoundation.org>
+Subject: [PATCH 6.12 207/280] nvme: requeue namespace scan on missed AENs
+Date: Tue, 29 Apr 2025 18:42:28 +0200
+Message-ID: <20250429161123.600823696@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 0f2946bb172632e122d4033e0b03f85230a29510 ]
+[ Upstream commit 9546ad1a9bda7362492114f5866b95b0ac4a100e ]
 
-xen-acpi-processor functions under a PVH dom0 with only a
-xen_initial_domain() runtime check.  Change the Kconfig dependency from
-PV dom0 to generic dom0 to reflect that.
+Scanning for namespaces can take some time, so if the target is
+reconfigured while the scan is running we may miss a Attached Namespace
+Attribute Changed AEN.
 
-Suggested-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250331172913.51240-1-jason.andryuk@amd.com>
+Check if the NVME_AER_NOTICE_NS_CHANGED bit is set once the scan has
+finished, and requeue scanning to pick up any missed change.
+
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/xen/Kconfig b/drivers/xen/Kconfig
-index f7d6f47971fdf..24f485827e039 100644
---- a/drivers/xen/Kconfig
-+++ b/drivers/xen/Kconfig
-@@ -278,7 +278,7 @@ config XEN_PRIVCMD_EVENTFD
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 9bdf6fc53697c..587385b59b865 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4273,6 +4273,10 @@ static void nvme_scan_work(struct work_struct *work)
+ 			nvme_scan_ns_sequential(ctrl);
+ 	}
+ 	mutex_unlock(&ctrl->scan_lock);
++
++	/* Requeue if we have missed AENs */
++	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
++		nvme_queue_scan(ctrl);
+ }
  
- config XEN_ACPI_PROCESSOR
- 	tristate "Xen ACPI processor"
--	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
-+	depends on XEN && XEN_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
- 	default m
- 	help
- 	  This ACPI processor uploads Power Management information to the Xen
+ /*
 -- 
 2.39.5
 
