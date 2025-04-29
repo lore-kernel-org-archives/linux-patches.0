@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C77A1917E3;
-	Tue, 29 Apr 2025 17:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BF5227E95;
+	Tue, 29 Apr 2025 17:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948482; cv=none; b=Vgr8KffPkyEkqwkW0vmTmKwP57v66nu45xbyxUvYc8PFvPXQN8DYR1rh0Jgj7J5GgF/fngUqrUFPscvLFN2/SA6A9hoDZvRqWd0s889mJ3y6aXWpm6ELpEG2RqY2h5RnVze+7VBrGxDijjQpUa5giZKiolswlspsr6RuEYtJqrM=
+	t=1745948486; cv=none; b=Gg+SqNRmytm87Ws3nMgTRpb7/ormhtLWQdX/DJCWkE/ysyMz45IMLgYdQc98LtY9rfEARXXLzVh6ikesTYOQwzr2D+01mqeEBKJiHLxR4JD9el2QhX+SSJT3wvDeT7tqutkSmFYkQhN59qjbDI1vw5jD3+Y1PRDUceCUYEFBFME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948482; c=relaxed/simple;
-	bh=XA+DIS2XCPPdh3KLx0qE35R4jSy0vBJCyDyhsp3waEE=;
+	s=arc-20240116; t=1745948486; c=relaxed/simple;
+	bh=y6USMp+zTp+5cytCdLu0NNiMHXhkJY+i96hu7AZFpT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkE1UAFbPV3qWZDS4KDzmSdHZknLMj3EKBjE1aBAPiFVgTC73xpnIrzshm17+1Z9fuML4uAZInEfQNnU8qIgWQkKWVq41BII55HKgCB4jMCwUHPaUE16JW2bfwky9GFaT+ckTBLxXUbfaKyfk9zyKYeT7Njz6Cn3LVrshJT7FWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFbUcKIr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0b70VSTJSMHo6IqewwCLco6sktj8vFV+YEAOmon6HWysAmxOFIak7rFb4YJ5cW9Q0xQi36cmqR9iGfslcPwCBQ97SN4LaLvFSImp34QSlqE26MUGnl/7HmmBC4wtxNzhoNx+Crg9/vFd8y0pz6eKSRAXj7D4/oFr+QP7h4Qoq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz96q/OZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFbUcKIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C93C4CEE3;
-	Tue, 29 Apr 2025 17:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz96q/OZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79C1C4CEE3;
+	Tue, 29 Apr 2025 17:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948482;
-	bh=XA+DIS2XCPPdh3KLx0qE35R4jSy0vBJCyDyhsp3waEE=;
+	s=korg; t=1745948486;
+	bh=y6USMp+zTp+5cytCdLu0NNiMHXhkJY+i96hu7AZFpT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFbUcKIrgg31TztJxev8lhiZP98dypeY7IvYtRw5rwxzMGfq37tclYpENQxvEn50F
-	 uw83Sq7jPz15Vd3MHRM1D5hEAPv8YUTGGlz4K2IqYoNzqb+3sCTtckgL9gMXe3DVC9
-	 ZbDGWjrWqHgOJQgV4bG1ZJBdVLRnyod/P5DPxkVY=
+	b=tz96q/OZPEciLs9CSd27t/Lsk053yAd5r05b7xggbG3w5vrlIuLTeNqPnnRnAcqvu
+	 J12qiEWsQr8AVz5lOp8/xO+CDzSTTWEIXRkfful8UUqHRFelworI7SBuw8N+QCWeQ7
+	 Y6Dbd/mclJ95N0YUEcmLCOcj8bnb0LdRm9BSTG2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/373] ASoC: fsl_audmix: register card device depends on dais property
-Date: Tue, 29 Apr 2025 18:38:18 +0200
-Message-ID: <20250429161124.005182825@linuxfoundation.org>
+Subject: [PATCH 5.15 003/373] codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()
+Date: Tue, 29 Apr 2025 18:38:00 +0200
+Message-ID: <20250429161123.269149769@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,51 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 294a60e5e9830045c161181286d44ce669f88833 ]
+[ Upstream commit 342debc12183b51773b3345ba267e9263bdfaaef ]
 
-In order to make the audmix device linked by audio graph card, make
-'dais' property to be optional.
+After making all ->qlen_notify() callbacks idempotent, now it is safe to
+remove the check of qlen!=0 from both fq_codel_dequeue() and
+codel_qdisc_dequeue().
 
-If 'dais' property exists, then register the imx-audmix card driver.
-otherwise, it should be linked by audio graph card.
-
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250226100508.2352568-5-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211636.166257-1-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_audmix.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/sched/sch_codel.c    | 5 +----
+ net/sched/sch_fq_codel.c | 6 ++----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
-index f931288e256ca..9c46b25cc6541 100644
---- a/sound/soc/fsl/fsl_audmix.c
-+++ b/sound/soc/fsl/fsl_audmix.c
-@@ -500,11 +500,17 @@ static int fsl_audmix_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
- 	}
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 30169b3adbbb0..d9eff03deada4 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -95,10 +95,7 @@ static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
+ 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
+ 			    drop_func, dequeue_func);
  
--	priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
--	if (IS_ERR(priv->pdev)) {
--		ret = PTR_ERR(priv->pdev);
--		dev_err(dev, "failed to register platform: %d\n", ret);
--		goto err_disable_pm;
-+	/*
-+	 * If dais property exist, then register the imx-audmix card driver.
-+	 * otherwise, it should be linked by audio graph card.
-+	 */
-+	if (of_find_property(pdev->dev.of_node, "dais", NULL)) {
-+		priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
-+		if (IS_ERR(priv->pdev)) {
-+			ret = PTR_ERR(priv->pdev);
-+			dev_err(dev, "failed to register platform: %d\n", ret);
-+			goto err_disable_pm;
-+		}
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->stats.drop_count && sch->q.qlen) {
++	if (q->stats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
+ 		q->stats.drop_count = 0;
+ 		q->stats.drop_len = 0;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index efda894bbb78b..9a3df6884c5cd 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -314,10 +314,8 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
  	}
- 
- 	return 0;
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+-	/* We cant call qdisc_tree_reduce_backlog() if our qlen is 0,
+-	 * or HTB crashes. Defer it for next round.
+-	 */
+-	if (q->cstats.drop_count && sch->q.qlen) {
++
++	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
 -- 
 2.39.5
 
