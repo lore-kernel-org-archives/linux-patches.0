@@ -1,112 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB19221FAE;
-	Tue, 29 Apr 2025 18:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF5E250C0C;
+	Tue, 29 Apr 2025 18:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950548; cv=none; b=Y32jQxVI3btG/4xeAVylkDmFbQLoIoP/RTc+e6A0dRbmXfaFlp+FziSalg/gTaIGAsb+b71AmKIMom7ngn0d5SkqBEl52669r4fMVGIetlmM6EnMKCkQ0jJGmSCZdYXxrxY3yG8uVwaQgC0h1x+2Ia4QiOSdA+qYOacKrdaoogQ=
+	t=1745950550; cv=none; b=Tw0X+YE3u9aPbbvEhIeTjevwnAhw0ynUl94rzTY/9C0ze9POGLPUpPRlWiNJ2fe0FEZZJhZQsWwWfTOQnfEkekSD6+DEArBYNmH/jojqFVH0ygSWKL+B5DptuDrOTcMvfV6Yly/0r3004R3uc4VSIeFf4+ghaID6vxm4Y9xmPo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950548; c=relaxed/simple;
-	bh=UZJNZzOXTYEMLw/6ah8XrSLxVloLdfsEWWqLgycHDlU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWLk9ErrHabqtOECU8xtCdj06D6+6QDEj9NxfCRG6/V6tjVfkjliZ2ILkp6Ubsm8Pjl/HoAP8Io2IaWY94gpJy/U3xxpbMSAg7LjXicaJEKNO9E/Q8F8LjToXxp3fZ1mP/qtdtdFQ6U4xdQf0g9cpdOxmSgD0vuLq8PzwR723/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dwDXW+1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1745950550; c=relaxed/simple;
+	bh=cZo3zRIK2OoxRCc8DP2NAvhQPeEvQnvMCaZrZIodnTo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ob21D6rRPZHji2m/xtpc5lUnhBpNxzqB3QFp+/KW12t52rkamOMMZHIpCtChV4ePpuVYG1op+lWy0nL1ZeFjifUz6VdeMwbXAALf7Fff5BO/KgHXhB+teRFPNZ6vOOJiyDTR5RG5GcJ7bJY4LEzJG9x5WQ52ZhRlRzfuHGHif2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5iyh3hI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dwDXW+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B835AC4CEE9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5iyh3hI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EACEC4CEE3;
 	Tue, 29 Apr 2025 18:15:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950548;
-	bh=UZJNZzOXTYEMLw/6ah8XrSLxVloLdfsEWWqLgycHDlU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dwDXW+1zjMV3SSQW5+qoGgqYn/Npc9HnRztL0rFaMHV0JmZ3WiIGSrV9fhppYKrM
-	 98ZYyd86s8oSiCA5Mp1NA5h3ds7I26sj1kPgn0Hhs8lCSCAKjA4uRGs2O7isC01eCh
-	 ZDg2h3gZn2TfMSkZa5VWf8MZEf6bQiz115N/+zpg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745950550;
+	bh=cZo3zRIK2OoxRCc8DP2NAvhQPeEvQnvMCaZrZIodnTo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=e5iyh3hITc4zQ1/5fIp/NyuDkipQOYyj4RpR1aNk9PmTnUQAc696UkfAlGXKSelfA
+	 5eXhQ3Ex/DASvs2/e6SJO29tg8yRmyYUI1pRFlk2PW4Egu5EtMi0lOZ2Pk13Np55WF
+	 xsWPaMHat3poB082saSEaWN5BDrXvYYMFPVP6q8zBATEJ1HZY0l5RUHcCv3r1tpEiY
+	 cJvWlwi396q+Cur0tDH8tgKPnDOFYuD7N7VMrryeiasoWLJNpAhHcxeFCXkqYg02bf
+	 t3IM33pPU/6vujWZ0T6bKt+I/oUbG8N9UYXzpZhC35d1aJhC4sWqtyUasXxBtCSi88
+	 g8inSOWMtq+5Q==
+Date: Tue, 29 Apr 2025 20:15:44 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Adam Xue <zxue@semtech.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 100/204] USB: serial: option: add Sierra Wireless EM9291
-Date: Tue, 29 Apr 2025 18:43:08 +0200
-Message-ID: <20250429161103.525687937@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
-References: <20250429161059.396852607@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] rust: device: allow `dead_code` for `Device<>::parent()`
+Message-ID: <aBEXUG7QH0ymRuLm@pollux>
+References: <20250429150346.392050-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250429150346.392050-1-ojeda@kernel.org>
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Apr 29, 2025 at 05:03:46PM +0200, Miguel Ojeda wrote:
+> When `CONFIG_AUXILIARY_BUS` is disabled, `parent()` is still dead code:
+> 
+>     error: method `parent` is never used
+>       --> rust/kernel/device.rs:71:19
+>        |
+>     64 | impl<Ctx: DeviceContext> Device<Ctx> {
+>        | ------------------------------------ method in this implementation
+>     ...
+>     71 |     pub(crate) fn parent(&self) -> Option<&Self> {
+>        |                   ^^^^^^
+>        |
+>        = note: `-D dead-code` implied by `-D warnings`
+>        = help: to override `-D warnings` add `#[allow(dead_code)]`
+> 
+> Thus reintroduce the `expect`, but now as an `allow`, and do so as
+> `dead_code` since that is narrower.
+> 
+> Fixes: ce735e73dd59 ("rust: auxiliary: add auxiliary device / driver abstractions")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-------------------
+Good catch, thanks!
 
-From: Adam Xue <zxue@semtech.com>
+I wonder if for such or similar cases we want something like
 
-commit 968e1cbb1f6293c3add9607f80b5ce3d29f57583 upstream.
+	macro_rules! cfg_expect {
+	    (not($cfg:meta) => $lint:ident, $item:item) => {
+		#[cfg(not($cfg))]
+		#[expect($lint)]
+		$item
 
-Add Sierra Wireless EM9291.
+		#[cfg($cfg)]
+		$item
+	    };
+	}
 
-Interface 0: MBIM control
-          1: MBIM data
-          3: AT port
-          4: Diagnostic port
+which could be used like this:
 
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1199 ProdID=90e3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9291
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=(none)
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+    cfg_expect!(not(CONFIG_FEATURE) => dead_code,
+        pub(crate) fn foo(&self) {
+            // noop
+        }
+    );
 
-Signed-off-by: Adam Xue <zxue@semtech.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
-
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -611,6 +611,7 @@ static void option_instat_callback(struc
- /* Sierra Wireless products */
- #define SIERRA_VENDOR_ID			0x1199
- #define SIERRA_PRODUCT_EM9191			0x90d3
-+#define SIERRA_PRODUCT_EM9291			0x90e3
- 
- /* UNISOC (Spreadtrum) products */
- #define UNISOC_VENDOR_ID			0x1782
-@@ -2432,6 +2433,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
-
-
+Maybe there is a much better solution I don't know about.
