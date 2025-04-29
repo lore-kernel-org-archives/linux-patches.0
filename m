@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF2524C071;
-	Tue, 29 Apr 2025 16:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FDA2472AA;
+	Tue, 29 Apr 2025 16:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945547; cv=none; b=dnnmLFwiyYVUfjIBnw2EoqSaGrvb2+qQrQhrCgS6Xja5y6CfHuvjz/wXFZiJThViH0PVwaESPI669azLLjoj2xUtqJnpWY2+YDSAZ7GlOWprCGGqxN1w58IU8WNiRdRs1+fDOIrpZGxnVSnA/uT9F2ivEzgDrLleBab/WUjpsZg=
+	t=1745945550; cv=none; b=YMNL/5i+HhK/FhWrxqV5xMOrMZlfbqLzoL1Enq0/SMZNE9bgqNvz3j14Q+14mNTTuYbYtlHM3dOgUdkzCJsjqflSlnucIDZLDyjqPJsc9o56dvD0SGXCuGa/XFfGDrqPbBif6nzyfz74cuuJHo0AMUHnX9Vrk6Wff3VDvqTBm6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945547; c=relaxed/simple;
-	bh=z6wwGu5Nz4q+sgA3nKl7V3sl4hrwkMjsgoJMz+hWX58=;
+	s=arc-20240116; t=1745945550; c=relaxed/simple;
+	bh=Ixu+0A6CGraahTMimgqtV9p6ZsT8cq+7LMkCE6cWgxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2YaZCq9wThHpKDH8E1UrhvdlvGURHppqzqkUt4ZVusz7Pq8lKLvkY3Z7rhfDBuxlFNujdgVGovswg+ooa6bqMEaCHaz2ijSJJ13jgL4dpBukCkvNIjTwMcqSYuSvKqHfNkxLftRdnBRca/NSGLnYaITpwR9f6IHHSHymwz4O8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZBpRkvT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKY4ZPluhrWvyOKMiXf3xvWfBBfPBV8iZn/eBp8zoZlay/IDoa+U9iytoxmMre02RC/q+v5ZYPiJHCIVs1me6/3nrpbH3mofbvBjAetvZVInC3n2cWtmYdP16/RdWVhofzxgExUpwjkt4s0DMVLfj6ZIsNmP8c0vYuOnnBet0iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEsOijfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZBpRkvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922ADC4CEE3;
-	Tue, 29 Apr 2025 16:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEsOijfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A422BC4CEE3;
+	Tue, 29 Apr 2025 16:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945547;
-	bh=z6wwGu5Nz4q+sgA3nKl7V3sl4hrwkMjsgoJMz+hWX58=;
+	s=korg; t=1745945550;
+	bh=Ixu+0A6CGraahTMimgqtV9p6ZsT8cq+7LMkCE6cWgxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZBpRkvTaHoqdlZ4Vg2PN6qE9Jfd0A2r3dZrpprpvcmk49J6421E91I2V0FpLcH0b
-	 3MTExqDdFNYQnhoJtvH9QNc0bR2FXCXhm1uhYuz5KesmQfzulYU0T2ugF4IztTvhqt
-	 njVGOXpsCAFspnnU64B8qfn8HupwEYNANLxheIDE=
+	b=EEsOijfMM1LLcNFDN6PD2Gk9IeItqC6yi5izCr1lr7kbn0VTjlifUQURpPqvtuTTs
+	 ZA/85cTBHRNxFQybQXmYqvRA5gZYZ5biO2istkEMtMSnaVoP/cti4N2k73nWpegCMH
+	 sXt1PIN4Tm77uz7N3T2nQ2NlWneJp2SF4clJRh4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.4 148/179] USB: storage: quirk for ADATA Portable HDD CH94
-Date: Tue, 29 Apr 2025 18:41:29 +0200
-Message-ID: <20250429161055.375299003@linuxfoundation.org>
+	Friedrich Weber <f.weber@proxmox.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Carlos Soto <carlos.soto@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 5.4 121/179] openvswitch: fix lockup on tx to unregistering netdev with carrier
+Date: Tue, 29 Apr 2025 18:41:02 +0200
+Message-ID: <20250429161054.295457602@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,36 +55,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 9ab75eee1a056f896b87d139044dd103adc532b9 upstream.
+commit 47e55e4b410f7d552e43011baa5be1aab4093990 upstream.
 
-Version 1.60 specifically needs this quirk.
-Version 2.00 is known good.
+Commit in a fixes tag attempted to fix the issue in the following
+sequence of calls:
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250403180004.343133-1-oneukum@suse.com
+    do_output
+    -> ovs_vport_send
+       -> dev_queue_xmit
+          -> __dev_queue_xmit
+             -> netdev_core_pick_tx
+                -> skb_tx_hash
+
+When device is unregistering, the 'dev->real_num_tx_queues' goes to
+zero and the 'while (unlikely(hash >= qcount))' loop inside the
+'skb_tx_hash' becomes infinite, locking up the core forever.
+
+But unfortunately, checking just the carrier status is not enough to
+fix the issue, because some devices may still be in unregistering
+state while reporting carrier status OK.
+
+One example of such device is a net/dummy.  It sets carrier ON
+on start, but it doesn't implement .ndo_stop to set the carrier off.
+And it makes sense, because dummy doesn't really have a carrier.
+Therefore, while this device is unregistering, it's still easy to hit
+the infinite loop in the skb_tx_hash() from the OVS datapath.  There
+might be other drivers that do the same, but dummy by itself is
+important for the OVS ecosystem, because it is frequently used as a
+packet sink for tcpdump while debugging OVS deployments.  And when the
+issue is hit, the only way to recover is to reboot.
+
+Fix that by also checking if the device is running.  The running
+state is handled by the net core during unregistering, so it covers
+unregistering case better, and we don't really need to send packets
+to devices that are not running anyway.
+
+While only checking the running state might be enough, the carrier
+check is preserved.  The running and the carrier states seem disjoined
+throughout the code and different drivers.  And other core functions
+like __dev_direct_xmit() check both before attempting to transmit
+a packet.  So, it seems safer to check both flags in OVS as well.
+
+Fixes: 066b86787fa3 ("net: openvswitch: fix race on port output")
+Reported-by: Friedrich Weber <f.weber@proxmox.com>
+Closes: https://mail.openvswitch.org/pipermail/ovs-discuss/2025-January/053423.html
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Friedrich Weber <f.weber@proxmox.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250109122225.4034688-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Carlos Soto <carlos.soto@broadcom.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_uas.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/openvswitch/actions.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -83,6 +83,13 @@ UNUSUAL_DEV(0x0bc2, 0x331a, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_REPORT_LUNS),
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -920,7 +920,9 @@ static void do_output(struct datapath *d
+ {
+ 	struct vport *vport = ovs_vport_rcu(dp, out_port);
  
-+/* Reported-by: Oliver Neukum <oneukum@suse.com> */
-+UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
-+		"ADATA",
-+		"Portable HDD CH94",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_NO_ATA_1X),
-+
- /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
- UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
- 		"Initio Corporation",
+-	if (likely(vport && netif_carrier_ok(vport->dev))) {
++	if (likely(vport &&
++		   netif_running(vport->dev) &&
++		   netif_carrier_ok(vport->dev))) {
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
+ 
 
 
