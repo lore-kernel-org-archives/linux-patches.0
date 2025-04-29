@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA84242D6E;
-	Tue, 29 Apr 2025 17:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886FA27453;
+	Tue, 29 Apr 2025 17:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946887; cv=none; b=OkXzBz+UFbzGJY70wFSUWyz0+MHRQXPFwp0Zrqq8rUX97YgmM4vBw1iXeXtbLTyer/Ud5vPYk0lXpyK3aQj2usBSXv9DzVnZdFEldvHah+/YiDSVWzi8BkYmuf8FGfAyYqPMLlOWjyekSt5WQON9hbXj610gWYOY9pQQEMzIiIs=
+	t=1745946890; cv=none; b=iTtT63qx5fP+I0hUfCIudoJMFXRFASQepzYdmmjXsXCheN1YqJPZaggtb+lg3FbMj+0DSmTuPgsasPxRDPchuqB10xcS58GmQItzvpALKfRknL91dMRkK4d71B+M52Z6V1oojMygbZUIZKuHxLX4+YQe6CRl5uYPU+V+V5DmRr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946887; c=relaxed/simple;
-	bh=llKZ9zZU5x/nw2Spwk1adBYhMG5hSsagjSkpa7G83+E=;
+	s=arc-20240116; t=1745946890; c=relaxed/simple;
+	bh=y9XMNRsdd8V3ww4ZGKxwx13AcCyJR8OEg+zU9BABrSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwI7HUgspbHRut83kAyXVIqP3lghHm0fZCvefeF/OMzFbS1tq5HDjf46CuxnEJw9BCgUqIZPtnGfqNtxqIr1j8L/BpGILkKN9l5d29gSNvPLDYuH2nYGLTXF8phrXg4jf22mZ0cLmyigVZeu8LRVY27mgJe1oB173lEm1budNzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNP6Drkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK0ECGSB49152tuJ00MiwKI/hCF/NPXyl/NcpI+Icu4qHsp+wsONwlHoGgexDax+FOLcTkgYKOAOiI7sJYwUmbp2xmEC6Ere2mPHJSfnBJV5lr4I/T9mzij1x8WH/0SPcw8QHCAU44+iD1qOWL9ZwbuNaappBCRit1ylt1CZiJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdJ/P9G/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNP6Drkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6B0C4CEE3;
-	Tue, 29 Apr 2025 17:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdJ/P9G/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02075C4CEE3;
+	Tue, 29 Apr 2025 17:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946887;
-	bh=llKZ9zZU5x/nw2Spwk1adBYhMG5hSsagjSkpa7G83+E=;
+	s=korg; t=1745946890;
+	bh=y9XMNRsdd8V3ww4ZGKxwx13AcCyJR8OEg+zU9BABrSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNP6Drklkcy6qNjC30WVADiR2heb2lShsgp290g9BFDKoZmQ+q/UjFnI6C8Z6T0du
-	 N/TuQvmrsXZJL6EFfdTMZYQiawrWC7lyCHmhIK7zwYJbmOUDZwpskUfqZlc7uZbz0h
-	 LNYD2bt21xN6anW4aIuxnYYzMCKuC5GqKK0ifN4M=
+	b=mdJ/P9G/JHNqQaivzJTTNYG/Z+ordUuAcENy8A8XQf1eCzzO7GrNIovcdzkF0f4yV
+	 p9joO2W0sJNE1h3wyM87kqL3iW3PzfHFVP8VK2g4KZHJx925wMfKBvsB6ro7K9K3Nv
+	 Wv6BvsiH21vzeRmH+8Pnn9mea4LvU4zfNq5mnGXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 071/286] wifi: mac80211: fix integer overflow in hwmp_route_info_get()
-Date: Tue, 29 Apr 2025 18:39:35 +0200
-Message-ID: <20250429161110.776422538@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 072/286] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params error path
+Date: Tue, 29 Apr 2025 18:39:36 +0200
+Message-ID: <20250429161110.816790632@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,63 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-commit d00c0c4105e5ab8a6a13ed23d701cceb285761fa upstream.
+commit 7eccc86e90f04a0d758d16c08627a620ac59604d upstream.
 
-Since the new_metric and last_hop_metric variables can reach
-the MAX_METRIC(0xffffffff) value, an integer overflow may occur
-when multiplying them by 10/9. It can lead to incorrect behavior.
+In case of attempts to compress playback something, for instance,
+when audio routing is not set up correctly, the audio DSP is left in
+inconsistent state because we are not doing the correct things in
+the error path of q6asm_dai_compr_set_params().
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+So, when routing is not set up and compress playback is attempted
+the following errors are present (simplified log):
 
-Fixes: a8d418d9ac25 ("mac80211: mesh: only switch path when new metric is at least 10% better")
+q6routing routing: Routing not setup for MultiMedia-1 Session
+q6asm-dai dais: Stream reg failed ret:-22
+q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
+on 17300000.remoteproc:glink-edge:apr:service@7:dais
+
+After setting the correct routing the compress playback will always fail:
+
+q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
+q6asm-dai dais: DSP returned error[9]
+q6asm-dai dais: q6asm_open_write failed
+q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
+on 17300000.remoteproc:glink-edge:apr:service@7:dais
+
+0x9 here means "Operation is already processed". The CMD_OPEN here was
+sent the second time hence DSP responds that it was already done.
+
+Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
+succeeded but something failed after that, for instance, routing
+setup.
+
+Fix this by slightly reworking the error path in
+q6asm_dai_compr_set_params().
+
+Tested on QRB5165 RB5 and SDM845 RB3 boards.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Link: https://patch.msgid.link/20250212082124.4078236-1-Ilia.Gavrilov@infotecs.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://patch.msgid.link/20250327154650.337404-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_hwmp.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -360,6 +360,12 @@ u32 airtime_link_metric_get(struct ieee8
- 	return (u32)result;
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -916,9 +916,7 @@ static int q6asm_dai_compr_set_params(st
+ 
+ 		if (ret < 0) {
+ 			dev_err(dev, "q6asm_open_write failed\n");
+-			q6asm_audio_client_free(prtd->audio_client);
+-			prtd->audio_client = NULL;
+-			return ret;
++			goto open_err;
+ 		}
+ 	}
+ 
+@@ -927,7 +925,7 @@ static int q6asm_dai_compr_set_params(st
+ 			      prtd->session_id, dir);
+ 	if (ret) {
+ 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
+-		return ret;
++		goto q6_err;
+ 	}
+ 
+ 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
+@@ -935,7 +933,7 @@ static int q6asm_dai_compr_set_params(st
+ 						 prtd->stream_id);
+ 	if (ret) {
+ 		dev_err(dev, "codec param setup failed ret:%d\n", ret);
+-		return ret;
++		goto q6_err;
+ 	}
+ 
+ 	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
+@@ -944,12 +942,21 @@ static int q6asm_dai_compr_set_params(st
+ 
+ 	if (ret < 0) {
+ 		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto q6_err;
+ 	}
+ 
+ 	prtd->state = Q6ASM_STREAM_RUNNING;
+ 
+ 	return 0;
++
++q6_err:
++	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
++
++open_err:
++	q6asm_audio_client_free(prtd->audio_client);
++	prtd->audio_client = NULL;
++	return ret;
  }
  
-+/* Check that the first metric is at least 10% better than the second one */
-+static bool is_metric_better(u32 x, u32 y)
-+{
-+	return (x < y) && (x < (y - x / 10));
-+}
-+
- /**
-  * hwmp_route_info_get - Update routing info to originator and transmitter
-  *
-@@ -450,8 +456,8 @@ static u32 hwmp_route_info_get(struct ie
- 				    (mpath->sn == orig_sn &&
- 				     (rcu_access_pointer(mpath->next_hop) !=
- 						      sta ?
--					      mult_frac(new_metric, 10, 9) :
--					      new_metric) >= mpath->metric)) {
-+					      !is_metric_better(new_metric, mpath->metric) :
-+					      new_metric >= mpath->metric))) {
- 					process = false;
- 					fresh_info = false;
- 				}
-@@ -521,8 +527,8 @@ static u32 hwmp_route_info_get(struct ie
- 			if ((mpath->flags & MESH_PATH_FIXED) ||
- 			    ((mpath->flags & MESH_PATH_ACTIVE) &&
- 			     ((rcu_access_pointer(mpath->next_hop) != sta ?
--				       mult_frac(last_hop_metric, 10, 9) :
--				       last_hop_metric) > mpath->metric)))
-+				      !is_metric_better(last_hop_metric, mpath->metric) :
-+				       last_hop_metric > mpath->metric))))
- 				fresh_info = false;
- 		} else {
- 			mpath = mesh_path_add(sdata, ta);
+ static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
 
 
