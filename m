@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A957A244668;
-	Tue, 29 Apr 2025 16:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE3424A047;
+	Tue, 29 Apr 2025 16:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945993; cv=none; b=p+AjUkVQa8Me4lrin28qqXCdk4Jo0FMd8K+pa2FB8iWoDzltEfBiS6nHyX9kIuFONzZoVfmT3WUoRrfvquchJhhwRBGb0tzQt2ttc4lHqCzeeBYt+ATZn9R5IuGNIMNT0AT+oWWxyA/J/mxPeww506Sk//rnEoi8t7/ezNFYXFY=
+	t=1745945996; cv=none; b=SL7yPkOWrxsZab/QuVi05Ekekqn2LIdGVM3zM7p4SSPPX/8zAdXLumSMdXsCL50TZuQGJ5B7vXSv7v9EqElLF7XXnkpUvXC5XbuJ3ao9bOK6mo7OfNKnAKQVakvZM47vXpZafrkoJKrRtcHQawehEuKzDF890AsZw2rK+hq33/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945993; c=relaxed/simple;
-	bh=lkPhPH64Gmdne1LsJwflveyywA1lulhllSEv4SO3xC0=;
+	s=arc-20240116; t=1745945996; c=relaxed/simple;
+	bh=7tokVgwYApARNbfAynqbXIGa8m1Lf517gz0sh808bpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFoKJwLmSMEF5ZoTpJKp0gLVadrhp0Af41+lges37O0Q/09S7fwKBo2NF/lc7uPvwvOf489WGH7jFHPmRU85CLYxfIU1mCZn/8LZXlIJh42R96gzJswep2Cqn2roJkQ3hWf1PwZoTJtNhe1WbxclM0+DdzzhXLt316FvlGOTJc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqHsSTe9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i5CWbjaTTxH5RmtkpCwWDvqecKnfKoIyZMKJmjiauJyV9+2RCrqWlGbT1CaW2u4P4epzK7BpMjmX8ofbU62XTTBBcRh4qw8dfXQ6jOjcgVJ4PMa5cd9w7hw7NrBsyobffY//cB50snt01yOOJ3UV1ytldmA1EeEnLxgOwQje4KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHQv7AWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqHsSTe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F068C4CEE3;
-	Tue, 29 Apr 2025 16:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHQv7AWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3099C4CEE3;
+	Tue, 29 Apr 2025 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945993;
-	bh=lkPhPH64Gmdne1LsJwflveyywA1lulhllSEv4SO3xC0=;
+	s=korg; t=1745945996;
+	bh=7tokVgwYApARNbfAynqbXIGa8m1Lf517gz0sh808bpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqHsSTe9hISurPL558m3nhSOHizgqtJkqmnNDNnc2HTLOzsz5nRhjQrwhw1joTQvj
-	 nNM/TE3QAOmB8biRrQzOmVT3f0FTzwjAApPNawq5uZu/YklY7QT2pqiV7yrLC98p3y
-	 LGGGHbp9hvnwVoDCjG77Y6u8tAfTBKkNtWu5I74Y=
+	b=gHQv7AWX7Sk2W91UW9xu/U2IqlMX/a+8mpQul1tj5wEqi00VKVGP9j8u0/Qg2hI2I
+	 F12fkKPesJyz/pyNOi11ytASHMXXZx1i1BWQQr6pbDyTHGZeYN1MJx+LpgdrORH08+
+	 HvJAUQXQakpluCXqp9ZaQIAWjOJCgGXkZXdUWVVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 088/311] ublk: remove io_cmds list in ublk_queue
-Date: Tue, 29 Apr 2025 18:38:45 +0200
-Message-ID: <20250429161124.652166217@linuxfoundation.org>
+Subject: [PATCH 6.14 089/311] ublk: comment on ubq->canceling handling in ublk_queue_rq()
+Date: Tue, 29 Apr 2025 18:38:46 +0200
+Message-ID: <20250429161124.692198974@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,131 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 989bcd623a8b0c32b76d9258767d8b37e53419e6 ]
+[ Upstream commit 7e2fe01a69f6be3e284b38cfd2e4e0598a3b0a8f ]
 
-The current I/O dispatch mechanism - queueing I/O by adding it to the
-io_cmds list (and poking task_work as needed), then dispatching it in
-ublk server task context by reversing io_cmds and completing the
-io_uring command associated to each one - was introduced by commit
-7d4a93176e014 ("ublk_drv: don't forward io commands in reserve order")
-to ensure that the ublk server received I/O in the same order that the
-block layer submitted it to ublk_drv. This mechanism was only needed for
-the "raw" task_work submission mechanism, since the io_uring task work
-wrapper maintains FIFO ordering (using quite a similar mechanism in
-fact). The "raw" task_work submission mechanism is no longer supported
-in ublk_drv as of commit 29dc5d06613f2 ("ublk: kill queuing request by
-task_work_add"), so the explicit llist/reversal is no longer needed - it
-just duplicates logic already present in the underlying io_uring APIs.
-Remove it.
+In ublk_queue_rq(), ubq->canceling has to be handled after ->fail_io and
+->force_abort are dealt with, otherwise the request may not be failed
+when deleting disk.
 
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250318-ublk_io_cmds-v1-1-c1bb74798fef@purestorage.com
+Add comment on this usage.
+
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250327095123.179113-3-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: d6aa0c178bf8 ("ublk: call ublk_dispatch_req() for handling UBLK_U_IO_NEED_GET_DATA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 46 ++++++++++------------------------------
- 1 file changed, 11 insertions(+), 35 deletions(-)
+ drivers/block/ublk_drv.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 971b793dedd03..f615b9bd82f5f 100644
+index f615b9bd82f5f..fbc397efff175 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -73,8 +73,6 @@
- 	 UBLK_PARAM_TYPE_DEVT | UBLK_PARAM_TYPE_ZONED)
+@@ -1314,6 +1314,11 @@ static blk_status_t ublk_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	if (ublk_nosrv_should_queue_io(ubq) && unlikely(ubq->force_abort))
+ 		return BLK_STS_IOERR;
  
- struct ublk_rq_data {
--	struct llist_node node;
--
- 	struct kref ref;
- };
- 
-@@ -141,8 +139,6 @@ struct ublk_queue {
- 	struct task_struct	*ubq_daemon;
- 	char *io_cmd_buf;
- 
--	struct llist_head	io_cmds;
--
- 	unsigned long io_addr;	/* mapped vm address */
- 	unsigned int max_io_sz;
- 	bool force_abort;
-@@ -1114,7 +1110,7 @@ static void ublk_fail_rq_fn(struct kref *ref)
- }
- 
- /*
-- * Since __ublk_rq_task_work always fails requests immediately during
-+ * Since ublk_rq_task_work_cb always fails requests immediately during
-  * exiting, __ublk_fail_req() is only called from abort context during
-  * exiting. So lock is unnecessary.
-  *
-@@ -1163,11 +1159,14 @@ static inline void __ublk_abort_rq(struct ublk_queue *ubq,
- 		blk_mq_end_request(rq, BLK_STS_IOERR);
- }
- 
--static inline void __ublk_rq_task_work(struct request *req,
--				       unsigned issue_flags)
-+static void ublk_rq_task_work_cb(struct io_uring_cmd *cmd,
-+				 unsigned int issue_flags)
- {
--	struct ublk_queue *ubq = req->mq_hctx->driver_data;
--	int tag = req->tag;
-+	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
-+	struct ublk_queue *ubq = pdu->ubq;
-+	int tag = pdu->tag;
-+	struct request *req = blk_mq_tag_to_rq(
-+		ubq->dev->tag_set.tags[ubq->q_id], tag);
- 	struct ublk_io *io = &ubq->ios[tag];
- 	unsigned int mapped_bytes;
- 
-@@ -1242,34 +1241,11 @@ static inline void __ublk_rq_task_work(struct request *req,
- 	ubq_complete_io_cmd(io, UBLK_IO_RES_OK, issue_flags);
- }
- 
--static inline void ublk_forward_io_cmds(struct ublk_queue *ubq,
--					unsigned issue_flags)
--{
--	struct llist_node *io_cmds = llist_del_all(&ubq->io_cmds);
--	struct ublk_rq_data *data, *tmp;
--
--	io_cmds = llist_reverse_order(io_cmds);
--	llist_for_each_entry_safe(data, tmp, io_cmds, node)
--		__ublk_rq_task_work(blk_mq_rq_from_pdu(data), issue_flags);
--}
--
--static void ublk_rq_task_work_cb(struct io_uring_cmd *cmd, unsigned issue_flags)
--{
--	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
--	struct ublk_queue *ubq = pdu->ubq;
--
--	ublk_forward_io_cmds(ubq, issue_flags);
--}
--
- static void ublk_queue_cmd(struct ublk_queue *ubq, struct request *rq)
- {
--	struct ublk_rq_data *data = blk_mq_rq_to_pdu(rq);
-+	struct ublk_io *io = &ubq->ios[rq->tag];
- 
--	if (llist_add(&data->node, &ubq->io_cmds)) {
--		struct ublk_io *io = &ubq->ios[rq->tag];
--
--		io_uring_cmd_complete_in_task(io->cmd, ublk_rq_task_work_cb);
--	}
-+	io_uring_cmd_complete_in_task(io->cmd, ublk_rq_task_work_cb);
- }
- 
- static enum blk_eh_timer_return ublk_timeout(struct request *rq)
-@@ -1462,7 +1438,7 @@ static void ublk_abort_queue(struct ublk_device *ub, struct ublk_queue *ubq)
- 			struct request *rq;
- 
- 			/*
--			 * Either we fail the request or ublk_rq_task_work_fn
-+			 * Either we fail the request or ublk_rq_task_work_cb
- 			 * will do it
- 			 */
- 			rq = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], i);
++	/*
++	 * ->canceling has to be handled after ->force_abort and ->fail_io
++	 * is dealt with, otherwise this request may not be failed in case
++	 * of recovery, and cause hang when deleting disk
++	 */
+ 	if (unlikely(ubq->canceling)) {
+ 		__ublk_abort_rq(ubq, rq);
+ 		return BLK_STS_OK;
 -- 
 2.39.5
 
