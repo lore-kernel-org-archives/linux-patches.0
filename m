@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206792517A6;
-	Tue, 29 Apr 2025 18:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340AC251783;
+	Tue, 29 Apr 2025 18:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950542; cv=none; b=Vb1t3bAX5B7g/SBAfhBASeHRbhtZuVC+AG2so2IQBd9ENyUdVsYPZJx+KNIoA+0RAvozOGOG2UrBXTcfNeNpjRVCER6wYnMqZs1T4Pe65xDVwJ4wGJVSvk7HO8WXNnlTwJ3nzl7zAeBZYWSTUCfxEk16HQb8yPp7/k6zcCgHjTo=
+	t=1745950545; cv=none; b=Zhs05fA1RiQvxZdMp+QNprxD7PrK9dRd92DAZD2OjO/Vi6OkJgheBiIbZ3IpeutgJHL2kjQH3qV4o31GFm4agAey599w+n34kQsMhf0hTHpW7+wN+5fMke5/wsRwm0xCDOwyMU/Km/eMJSx+NzWe28KWAj+L6mZ2TKBg+81xvp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950542; c=relaxed/simple;
-	bh=J6+bQxQ9oNIKufbypeAyJ2KOX4f/lBI5xyfRZS8AwPo=;
+	s=arc-20240116; t=1745950545; c=relaxed/simple;
+	bh=hwxCKIe0Cs1wSQQvZxDGzuHrpI2bGqN66eLidgwvMpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUarzGtVOdQjXgpi15QtZHsBX3gAX5sJJNB/xnT3vh0IC/Qe4FBKwvpt4EnmNC9qbS+zBUfafTTqWYKmp+cN67UuwEahQ082yw5YT9+Lag3BR/yd9FK8GgR44jJNXL2DJrRsEKxkAAzVAScEqFp6TPUzIABjd2V/2JrPCSk0oUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+cKzse4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5Mgc2TV6l5a+XAZXrdiWWWsJYH0/sf+X3IAyAgFRMtoMgHZzhukiudYoELr93IS2hDK+J8OJOl1pRhMqQ9R1pJ6/J9gL2w1UDWUdwjVIoe/MlFYtZRLNCDS2aPYMXCiVYLWls4yn7MdyiwssJZZUvpF18fGLXOOdBQahWhNHCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8aIC2xH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+cKzse4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFF0C4CEEA;
-	Tue, 29 Apr 2025 18:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8aIC2xH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF6EC4CEE3;
+	Tue, 29 Apr 2025 18:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950542;
-	bh=J6+bQxQ9oNIKufbypeAyJ2KOX4f/lBI5xyfRZS8AwPo=;
+	s=korg; t=1745950545;
+	bh=hwxCKIe0Cs1wSQQvZxDGzuHrpI2bGqN66eLidgwvMpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+cKzse4j3jVxsWCQ6JTNlYnkpL53RsWXgKOHZKT8KpUXku6mgQ3kAy8zk8zH1InZ
-	 HRcAXrJkOYxAzNCKCLBfULMQygSRYGdSmpS3nuA9dxjHRi4qI7g55xC/kWcGT/lDiH
-	 0Cx8kdoaY2QFGAcgJsixOPDo2dWhpK9dAjVwUotA=
+	b=B8aIC2xH8NUPZN3kKBnXKC5h+BxuYM4cjKf7XVC0xql7Cr/Ky+El7fyBjjUDVPzP8
+	 quGmIPSXVSPGJgvOlODCo2rvYYHMQk3MD6gy8HsVHZ1Ag1BxO17ob1oyYbeRDf4j1J
+	 7Z47B8lI1xxnjKmYecQU/6pBanEh94lZznQH6pdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sewon Nam <swnam0729@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/204] bpf: bpftool: Setting error code in do_loader()
-Date: Tue, 29 Apr 2025 18:43:34 +0200
-Message-ID: <20250429161104.586472204@linuxfoundation.org>
+	Michael Ehrenreich <michideep@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 099/204] USB: serial: ftdi_sio: add support for Abacus Electrics Optical Probe
+Date: Tue, 29 Apr 2025 18:43:07 +0200
+Message-ID: <20250429161103.484804037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -54,45 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sewon Nam <swnam0729@gmail.com>
+From: Michael Ehrenreich <michideep@gmail.com>
 
-[ Upstream commit 02a4694107b4c830d4bd6d194e98b3ac0bc86f29 ]
+commit b399078f882b6e5d32da18b6c696cc84b12f90d5 upstream.
 
-We are missing setting error code in do_loader() when
-bpf_object__open_file() fails. This means the command's exit status code
-will be successful, even though the operation failed. So make sure to
-return the correct error code. To maintain consistency with other
-locations where bpf_object__open_file() is called, return -1.
+Abacus Electrics makes optical probes for interacting with smart meters
+over an optical interface.
 
-  [0] Closes: https://github.com/libbpf/bpftool/issues/156
+At least one version uses an FT232B chip (as detected by ftdi_sio) with
+a custom USB PID, which needs to be added to the list to make the device
+work in a plug-and-play fashion.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sewon Nam <swnam0729@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Quentin Monnet <qmo@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/d3b5b4b4-19bb-4619-b4dd-86c958c4a367@stanley.mountain/t/#u
-Link: https://lore.kernel.org/bpf/20250311031238.14865-1-swnam0729@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Michael Ehrenreich <michideep@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bpf/bpftool/prog.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/ftdi_sio.c     |    2 ++
+ drivers/usb/serial/ftdi_sio_ids.h |    5 +++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 90ae2ea61324c..174e076e56af2 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -1924,6 +1924,7 @@ static int do_loader(int argc, char **argv)
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1093,6 +1093,8 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 1) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 2) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 3) },
++	/* Abacus Electrics */
++	{ USB_DEVICE(FTDI_VID, ABACUS_OPTICAL_PROBE_PID) },
+ 	{ }					/* Terminating entry */
+ };
  
- 	obj = bpf_object__open_file(file, &open_opts);
- 	if (!obj) {
-+		err = -1;
- 		p_err("failed to open object file");
- 		goto err_close_obj;
- 	}
--- 
-2.39.5
-
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -443,6 +443,11 @@
+ #define LINX_FUTURE_2_PID   0xF44C	/* Linx future device */
+ 
+ /*
++ * Abacus Electrics
++ */
++#define ABACUS_OPTICAL_PROBE_PID	0xf458 /* ABACUS ELECTRICS Optical Probe */
++
++/*
+  * Oceanic product ids
+  */
+ #define FTDI_OCEANIC_PID	0xF460  /* Oceanic dive instrument */
 
 
