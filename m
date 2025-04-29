@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DB2522A1;
-	Tue, 29 Apr 2025 17:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3AD24A055;
+	Tue, 29 Apr 2025 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946241; cv=none; b=dcu9xGwYi7KsJLEljIEIVGuK3QjLT2Qoee/XQudWo/bC5rvQA8/H65hdrs66T+t7VKsBNiyXd2bgMhjGxVMLuC6Fn5GDceUnL3JP0s401KVDvxgSg/+vG0lCZr5/K1Vr3muvFunczcE+CvIdRMISrZPw/ztW6BDSzEkVvG7j0uY=
+	t=1745946244; cv=none; b=RHCaOiw/9etawQFkY7lO6ylXKcEhwn8wLU1X/uOwCGXcvOcYqC0AfbgSHiUGTAo6SJLsxMuPGDJRxiAw1LTQNFVo8BSb/tsuiyNSZ0SaAtfHY0X6sTyECEmcFwPxF5LpXZxEXd98tquuDIypeJWXGinyb0h5Vc0L97umqjLuQZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946241; c=relaxed/simple;
-	bh=IJptYgRhMSUZxNwGECoFJjf4EhmkdsNIfJd0jQkgfyU=;
+	s=arc-20240116; t=1745946244; c=relaxed/simple;
+	bh=eqKTnQ+1K+uwuRq/RP58NB/AH7hmIKolqRnCq4UfCbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5GmY5Nb0Mf9VpYxzai2DgvPYj4yrpPEey2phCOe3QJZBSvPIz0Z6WGjWPuZz4OhlC+RiZE96cRdUDfn/vHPgfY2JebMviKapSoQL5GiHqRiYR0e3l5F6ISh0cdHW0h8K0BPSpCcnIDAC8HWnvrLrrEsAtw3tGJt2vbz2Y56fCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6Ml7Q/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LzRfdDogW9U1tppsL+7IMiBYfNsy2K5ntuxnUdrWPigu4C4P6cuR8nWXzaF/gzYyeMVcV/mB+pMDAAHAE4EhKKnD5/2DDQD6lg8lsnW8YD92YBoNZquR9jkVr8u95V08Q2ENabvKOa8bQ/hlql+9QH4VoVU7dfK0eFJ8y4f9IQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQFhwj7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6Ml7Q/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1143C4CEE3;
-	Tue, 29 Apr 2025 17:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQFhwj7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531EDC4CEE3;
+	Tue, 29 Apr 2025 17:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946240;
-	bh=IJptYgRhMSUZxNwGECoFJjf4EhmkdsNIfJd0jQkgfyU=;
+	s=korg; t=1745946243;
+	bh=eqKTnQ+1K+uwuRq/RP58NB/AH7hmIKolqRnCq4UfCbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6Ml7Q/jZi0tnDd9OsAep3WemNrJtC0Lqyru1LmyzWLxdQJTtxPgRMnQgysb74JjS
-	 ryuDZkPw5Q6hXoiruLop4OUdCNSYRXHDlI+RbVJBGUMWNg3zBuTLrenXpTBSdCbe24
-	 A8wZFHsy2pgzNzjsSPsuX0ClXPQV4YhMJ1Qu2s+8=
+	b=WQFhwj7BPpSihe72qiBw2RRJ2DrthC4t3m6e0Ml7R3fnOmVY3H3kuuI6hbeXtHiZh
+	 2fPs7avkrUmtizQdEfJ/5gq4qjfQ5XWYHC3gse+jfPBu+ZrMydXoel8FkaNj+SY8CU
+	 akLYQ7L+P26c2i6ft8SwQoRi0lQUPxpGvNBVXPP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 201/311] usb: typec: ucsi: ccg: move command quirks to ucsi_ccg_sync_control()
-Date: Tue, 29 Apr 2025 18:40:38 +0200
-Message-ID: <20250429161129.247433244@linuxfoundation.org>
+Subject: [PATCH 6.14 202/311] iio: adc: ad4695: make ad4695_exit_conversion_mode() more robust
+Date: Tue, 29 Apr 2025 18:40:39 +0200
+Message-ID: <20250429161129.286427437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,131 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Trevor Gamblin <tgamblin@baylibre.com>
 
-[ Upstream commit 7f82635494ef3391ff6b542249793c7febf99c3f ]
+[ Upstream commit 998d20e4e99d909f14d96fdf0bdcf860f7efe3ef ]
 
-It is easier to keep all command-specific quirks in a single place. Move
-them to ucsi_ccg_sync_control() as the code now allows us to return
-modified messages data.
+Ensure that conversion mode is successfully exited when the command is
+issued by adding an extra transfer beforehand, matching the minimum CNV
+high and low times from the AD4695 datasheet. The AD4695 has a quirk
+where the exit command only works during a conversion, so guarantee this
+happens by triggering a conversion in ad4695_exit_conversion_mode().
+Then make this even more robust by ensuring that the exit command is run
+at AD4695_REG_ACCESS_SCLK_HZ rather than the bus maximum.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250120-ucsi-merge-commands-v2-2-462a1ec22ecc@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Tested-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20241113-tgamblin-ad4695_improvements-v2-2-b6bb7c758fc4@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 62 +++++++++++++++----------------
- 1 file changed, 29 insertions(+), 33 deletions(-)
+ drivers/iio/adc/ad4695.c | 34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 43a8a67159d84..c1d776c82fc2e 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -222,7 +222,6 @@ struct ucsi_ccg {
- 	u16 fw_build;
- 	struct work_struct pm_work;
+diff --git a/drivers/iio/adc/ad4695.c b/drivers/iio/adc/ad4695.c
+index b79d135a54718..22fdc454b0cea 100644
+--- a/drivers/iio/adc/ad4695.c
++++ b/drivers/iio/adc/ad4695.c
+@@ -92,6 +92,8 @@
+ #define AD4695_T_REFBUF_MS		100
+ #define AD4695_T_REGCONFIG_NS		20
+ #define AD4695_T_SCK_CNV_DELAY_NS	80
++#define AD4695_T_CNVL_NS		80
++#define AD4695_T_CNVH_NS		10
+ #define AD4695_REG_ACCESS_SCLK_HZ	(10 * MEGA)
  
--	u64 last_cmd_sent;
- 	bool has_multiple_dp;
- 	struct ucsi_ccg_altmode orig[UCSI_MAX_ALTMODES];
- 	struct ucsi_ccg_altmode updated[UCSI_MAX_ALTMODES];
-@@ -538,9 +537,10 @@ static void ucsi_ccg_update_set_new_cam_cmd(struct ucsi_ccg *uc,
-  * first and then vdo=0x3
+ /* Max number of voltage input channels. */
+@@ -364,11 +366,31 @@ static int ad4695_enter_advanced_sequencer_mode(struct ad4695_state *st, u32 n)
   */
- static void ucsi_ccg_nvidia_altmode(struct ucsi_ccg *uc,
--				    struct ucsi_altmode *alt)
-+				    struct ucsi_altmode *alt,
-+				    u64 command)
+ static int ad4695_exit_conversion_mode(struct ad4695_state *st)
  {
--	switch (UCSI_ALTMODE_OFFSET(uc->last_cmd_sent)) {
-+	switch (UCSI_ALTMODE_OFFSET(command)) {
- 	case NVIDIA_FTB_DP_OFFSET:
- 		if (alt[0].mid == USB_TYPEC_NVIDIA_VLINK_DBG_VDO)
- 			alt[0].mid = USB_TYPEC_NVIDIA_VLINK_DP_VDO |
-@@ -578,37 +578,11 @@ static int ucsi_ccg_read_cci(struct ucsi *ucsi, u32 *cci)
- static int ucsi_ccg_read_message_in(struct ucsi *ucsi, void *val, size_t val_len)
- {
- 	struct ucsi_ccg *uc = ucsi_get_drvdata(ucsi);
--	struct ucsi_capability *cap;
--	struct ucsi_altmode *alt;
+-	struct spi_transfer xfer = {
+-		.tx_buf = &st->cnv_cmd2,
+-		.len = 1,
+-		.delay.value = AD4695_T_REGCONFIG_NS,
+-		.delay.unit = SPI_DELAY_UNIT_NSECS,
++	/*
++	 * An extra transfer is needed to trigger a conversion here so
++	 * that we can be 100% sure the command will be processed by the
++	 * ADC, rather than relying on it to be in the correct state
++	 * when this function is called (this chip has a quirk where the
++	 * command only works when reading a conversion, and if the
++	 * previous conversion was already read then it won't work). The
++	 * actual conversion command is then run at the slower
++	 * AD4695_REG_ACCESS_SCLK_HZ speed to guarantee this works.
++	 */
++	struct spi_transfer xfers[] = {
++		{
++			.delay.value = AD4695_T_CNVL_NS,
++			.delay.unit = SPI_DELAY_UNIT_NSECS,
++			.cs_change = 1,
++			.cs_change_delay.value = AD4695_T_CNVH_NS,
++			.cs_change_delay.unit = SPI_DELAY_UNIT_NSECS,
++		},
++		{
++			.speed_hz = AD4695_REG_ACCESS_SCLK_HZ,
++			.tx_buf = &st->cnv_cmd2,
++			.len = 1,
++			.delay.value = AD4695_T_REGCONFIG_NS,
++			.delay.unit = SPI_DELAY_UNIT_NSECS,
++		},
+ 	};
  
- 	spin_lock(&uc->op_lock);
- 	memcpy(val, uc->op_data.message_in, val_len);
- 	spin_unlock(&uc->op_lock);
+ 	/*
+@@ -377,7 +399,7 @@ static int ad4695_exit_conversion_mode(struct ad4695_state *st)
+ 	 */
+ 	st->cnv_cmd2 = AD4695_CMD_EXIT_CNV_MODE << 3;
  
--	switch (UCSI_COMMAND(uc->last_cmd_sent)) {
--	case UCSI_GET_CURRENT_CAM:
--		if (uc->has_multiple_dp)
--			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
--		break;
--	case UCSI_GET_ALTERNATE_MODES:
--		if (UCSI_ALTMODE_RECIPIENT(uc->last_cmd_sent) ==
--		    UCSI_RECIPIENT_SOP) {
--			alt = val;
--			if (alt[0].svid == USB_TYPEC_NVIDIA_VLINK_SID)
--				ucsi_ccg_nvidia_altmode(uc, alt);
--		}
--		break;
--	case UCSI_GET_CAPABILITY:
--		if (uc->fw_build == CCG_FW_BUILD_NVIDIA_TEGRA) {
--			cap = val;
--			cap->features &= ~UCSI_CAP_ALT_MODE_DETAILS;
--		}
--		break;
--	default:
--		break;
--	}
--	uc->last_cmd_sent = 0;
--
- 	return 0;
+-	return spi_sync_transfer(st->spi, &xfer, 1);
++	return spi_sync_transfer(st->spi, xfers, ARRAY_SIZE(xfers));
  }
  
-@@ -639,11 +613,9 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
- 	mutex_lock(&uc->lock);
- 	pm_runtime_get_sync(uc->dev);
- 
--	uc->last_cmd_sent = command;
--
--	if (UCSI_COMMAND(uc->last_cmd_sent) == UCSI_SET_NEW_CAM &&
-+	if (UCSI_COMMAND(command) == UCSI_SET_NEW_CAM &&
- 	    uc->has_multiple_dp) {
--		con_index = (uc->last_cmd_sent >> 16) &
-+		con_index = (command >> 16) &
- 			UCSI_CMD_CONNECTOR_MASK;
- 		if (con_index == 0) {
- 			ret = -EINVAL;
-@@ -655,6 +627,30 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
- 
- 	ret = ucsi_sync_control_common(ucsi, command, cci, data, size);
- 
-+	switch (UCSI_COMMAND(command)) {
-+	case UCSI_GET_CURRENT_CAM:
-+		if (uc->has_multiple_dp)
-+			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
-+		break;
-+	case UCSI_GET_ALTERNATE_MODES:
-+		if (UCSI_ALTMODE_RECIPIENT(command) == UCSI_RECIPIENT_SOP) {
-+			struct ucsi_altmode *alt = data;
-+
-+			if (alt[0].svid == USB_TYPEC_NVIDIA_VLINK_SID)
-+				ucsi_ccg_nvidia_altmode(uc, alt, command);
-+		}
-+		break;
-+	case UCSI_GET_CAPABILITY:
-+		if (uc->fw_build == CCG_FW_BUILD_NVIDIA_TEGRA) {
-+			struct ucsi_capability *cap = data;
-+
-+			cap->features &= ~UCSI_CAP_ALT_MODE_DETAILS;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+
- err_put:
- 	pm_runtime_put_sync(uc->dev);
- 	mutex_unlock(&uc->lock);
+ static int ad4695_set_ref_voltage(struct ad4695_state *st, int vref_mv)
 -- 
 2.39.5
 
