@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF6121883E;
-	Tue, 29 Apr 2025 17:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABE4247280;
+	Tue, 29 Apr 2025 17:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946854; cv=none; b=c5R5ykw//Hx0EhQCNrMF7w0iH5kdXUSERunYMyabk9UyDTHYofv5kO/I7cBiU0x7uGjpZC7WfJOoHvpjp6QTdKdkGeS0V+nMJ/l1MuluacMYPSghUNdHrT530wI2USgxN7xP1NkhOO5SkMDWFAQOwBBXGunIWX879EMmU+2RBrU=
+	t=1745946857; cv=none; b=mUfvXElvtn28qbb3TVXZxiBT8vPc+/AFBVinHs+I+GSspPEJDGqcX+ejA49wrAKR4EeWfhOZsm1g3IQ0vEsv41K7LDLG81DmkNdHL4xcyH/3J+Ft7ovThmchEjiqujJpAf7QiktgPBfb9QmnL15uU7TtJ6JIQpiCjcDbdZFC3Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946854; c=relaxed/simple;
-	bh=v7y6mo/fKM0RHzMB6Vqd0XE6BmfilyVZqhNdym6Apto=;
+	s=arc-20240116; t=1745946857; c=relaxed/simple;
+	bh=25ZLQHut+7QOf6TWr6BgTiY0P+Km21+n/6d1UeBg4fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRYlNzIhdUcoiSXnAY2ey0yE7ssD25gpvc7uirE7KE0RbdbI4uB/eeVu3VuBIfnGUDAkc1p4Tb0o0qspE6e6c5GTMugDNyOr1Fsr8Xf9FMjuMbzupia+8xlt0NqeYN3CKvggyyhS3sgf4jhTGYC2gX4IkNjxvlbGLMhQY2gpb2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHgTG4UR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/cZh/Ap5P1+SjK/EtWShg2fmcF2ys75jIZOWoM7gv5sEQ1k1Uo0ancptBDzxa1soYAgxfiUIg3NN8aQ0jTmVbSSQByjVCjuZMkjOMS+saeJJzvZ75sXeLPm9y2PWJ7FRDnKBbycvV44cg3IjIuAHtF0PJs3idzyS5VKuK9+Ydo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfhblz14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHgTG4UR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F15C4CEE3;
-	Tue, 29 Apr 2025 17:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfhblz14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB98C4CEE3;
+	Tue, 29 Apr 2025 17:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946854;
-	bh=v7y6mo/fKM0RHzMB6Vqd0XE6BmfilyVZqhNdym6Apto=;
+	s=korg; t=1745946857;
+	bh=25ZLQHut+7QOf6TWr6BgTiY0P+Km21+n/6d1UeBg4fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHgTG4URETzVfeVn7eQiktiQgeTbe25dDGV4lz9XPKOk0aLPISjm+Lpf6MIZyQR7W
-	 lkzwDjOcFPaavRFcuDT5I4oBqhlWXvXc5uw/rBmoohCiaVcw+q/RLx7Y5qdSHaFmew
-	 SgvhKw9emqmk+m5QxBOm3umG8dBceLOX4jqmBQrM=
+	b=hfhblz14hbn8RN3RFeLYdFrfJD7wiVhJrGlp4xhT9rGzyNko1GYjPZCDiX9g5OoI7
+	 42GX+e/j88FjnKxAuymv4r6R6kwxB1m0LI23wh6QEjdvYr1xZFN3zvnjwlTNTn9yDB
+	 w6kgGtbilKqupEOt8j1T+4ViWrb9yUXHovz40t04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5.10 090/286] gpio: zynq: Fix wakeup source leaks on device unbind
-Date: Tue, 29 Apr 2025 18:39:54 +0200
-Message-ID: <20250429161111.560693376@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>
+Subject: [PATCH 5.10 091/286] ntb: use 64-bit arithmetic for the MSI doorbell mask
+Date: Tue, 29 Apr 2025 18:39:55 +0200
+Message-ID: <20250429161111.599992337@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,31 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit c5672e310ad971d408752fce7596ed27adc6008f upstream.
+commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
+performed to compute its value.
 
+While most of the ntb_hw drivers actually don't utilize the higher 32
+bits of the doorbell mask now, this may be the case for Switchtec - see
+switchtec_ntb_init_db().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
+
+Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406202245.53854-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-zynq.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/ntb/ntb_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-zynq.c
-+++ b/drivers/gpio/gpio-zynq.c
-@@ -1016,6 +1016,7 @@ static int zynq_gpio_remove(struct platf
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
- 		dev_warn(&pdev->dev, "pm_runtime_get_sync() Failed\n");
-+	device_init_wakeup(&pdev->dev, 0);
- 	gpiochip_remove(&gpio->chip);
- 	clk_disable_unprepare(gpio->clk);
- 	device_set_wakeup_capable(&pdev->dev, 0);
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1340,7 +1340,7 @@ static int ntb_transport_probe(struct nt
+ 	qp_count = ilog2(qp_bitmap);
+ 	if (nt->use_msi) {
+ 		qp_count -= 1;
+-		nt->msi_db_mask = 1 << qp_count;
++		nt->msi_db_mask = BIT_ULL(qp_count);
+ 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
+ 	}
+ 
 
 
