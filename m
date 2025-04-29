@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0C1155A4E;
-	Tue, 29 Apr 2025 18:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B9A188A0E;
+	Tue, 29 Apr 2025 18:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950603; cv=none; b=GTIfMQrSagMGzG7U0YqH3IMyc+Ko+gQgEZTuEdXADEGHFhs9JXYpRWEI4Bn/B/8rkgKLt+e24OpixOdDXh8ZF9ls1seuQCx5tqCH7vm55G5tICAKsjmq6WmuCLQAVi9IUgT0q/5DRXyeY9ha974/I/erFM/PYrpZ+P2fB513DxU=
+	t=1745950606; cv=none; b=fy5t22U3clK1xfS839j7wFaxcrRRnuRm8+AqT4GNnzIHtYEW/rpJBkQairixbQcomF0VUHkaNbw7+Yj+Z8ItZd4CMQGpav3CZYDfHocnz3d7QnWnkmUhX3APGs4XoOzMrig2we2KkyV8lx2DPD1oNPwA5PUbQlfopcwg3ieDFQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950603; c=relaxed/simple;
-	bh=mhCxIKxSGn8nAAfahxPLo7uc7rnEYEVEkIKF36WimMQ=;
+	s=arc-20240116; t=1745950606; c=relaxed/simple;
+	bh=3K3bhizG3PbK0MH0U/G0ueqTJ9br5phob0M70/pvuLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8MKIYjT/WLkwIuloopuHQgd1ilLIOXYh13c31/Q7AyXI6ean2IjEvAqNihbbxR7/7CmBe8TG5EyoltGpE9v4oyCHjkpkBlLoeA/RNGDNWSXw52LXfvuPKT2jEma75D6WNOagL/if9GscR0uku+3QPzI4m94EfsZ3oVxb35vVas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X69xrM+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m78aSDDc2RBGbo85KSgtec+yKMAHYjgsjuryyWNHfVENiARAcSfj8ABbpIFdzqf6X5GUXsTqKfX/2p6fSBHvsqudwvDiEMB9YgxIQZr+erlGWwl8KM/CK4/2UFcZDfnq5/IwRfeQQ0Xztez8mSBXgJtly01rOv0W07PEeKKokFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9q3M5SQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X69xrM+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A46C4CEE3;
-	Tue, 29 Apr 2025 18:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9q3M5SQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB920C4CEE3;
+	Tue, 29 Apr 2025 18:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950603;
-	bh=mhCxIKxSGn8nAAfahxPLo7uc7rnEYEVEkIKF36WimMQ=;
+	s=korg; t=1745950606;
+	bh=3K3bhizG3PbK0MH0U/G0ueqTJ9br5phob0M70/pvuLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X69xrM+TFKCr5TH/ljv7YLOBprbjiq1bthcPJSYHcO0z1++vi3r6PozqObZl6eP5C
-	 c7+ytaP6vnhC0RlgRZzk8q6WMqi9Y4y5HXuVtI+s1Oxbh43H1ivvUNP3CnjV+rDW73
-	 Xw+SKhgTKyzat5YcMGxzEdE8W6KntT/20FxYgRUg=
+	b=M9q3M5SQUGhN2ZB2gMxb7bg93iEFtqarG9sWRLkzRFCLo97au7Mf6KI5JVxYXPDUO
+	 UQELnUB/WAyzUNaxkk77/RYIF6Y5t/wGtpbRvLKU5NY6MhDqpKDKmFCbMA7dbWXBtd
+	 nGW5UytTRuO11xfPUrKmGA5GuVY7Q2UW+lOflK2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/204] ntb: reduce stack usage in idt_scan_mws
-Date: Tue, 29 Apr 2025 18:43:55 +0200
-Message-ID: <20250429161105.437877000@linuxfoundation.org>
+Subject: [PATCH 6.6 148/204] ntb_hw_amd: Add NTB PCI ID for new gen CPU
+Date: Tue, 29 Apr 2025 18:43:56 +0200
+Message-ID: <20250429161105.478042895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -54,75 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit aff12700b8dd7422bfe2277696e192af4df9de8f ]
+[ Upstream commit bf8a7ce7e4c7267a6f5f2b2023cfc459b330b25e ]
 
-idt_scan_mws() puts a large fixed-size array on the stack and copies
-it into a smaller dynamically allocated array at the end. On 32-bit
-targets, the fixed size can easily exceed the warning limit for
-possible stack overflow:
+Add NTB support for new generation of processor.
 
-drivers/ntb/hw/idt/ntb_hw_idt.c:1041:27: error: stack frame size (1032) exceeds limit (1024) in 'idt_scan_mws' [-Werror,-Wframe-larger-than]
-
-Change it to instead just always use dynamic allocation for the
-array from the start. It's too big for the stack, but not actually
-all that much for a permanent allocation.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202205111109.PiKTruEj-lkp@intel.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/idt/ntb_hw_idt.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ drivers/ntb/hw/amd/ntb_hw_amd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
-index 48823b53ede3e..22aaa60d2d384 100644
---- a/drivers/ntb/hw/idt/ntb_hw_idt.c
-+++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
-@@ -1041,7 +1041,7 @@ static inline char *idt_get_mw_name(enum idt_mw_type mw_type)
- static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 				       unsigned char *mw_cnt)
- {
--	struct idt_mw_cfg mws[IDT_MAX_NR_MWS], *ret_mws;
-+	struct idt_mw_cfg *mws;
- 	const struct idt_ntb_bar *bars;
- 	enum idt_mw_type mw_type;
- 	unsigned char widx, bidx, en_cnt;
-@@ -1049,6 +1049,11 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 	int aprt_size;
- 	u32 data;
- 
-+	mws = devm_kcalloc(&ndev->ntb.pdev->dev, IDT_MAX_NR_MWS,
-+			   sizeof(*mws), GFP_KERNEL);
-+	if (!mws)
-+		return ERR_PTR(-ENOMEM);
-+
- 	/* Retrieve the array of the BARs registers */
- 	bars = portdata_tbl[port].bars;
- 
-@@ -1103,16 +1108,7 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 		}
- 	}
- 
--	/* Allocate memory for memory window descriptors */
--	ret_mws = devm_kcalloc(&ndev->ntb.pdev->dev, *mw_cnt, sizeof(*ret_mws),
--			       GFP_KERNEL);
--	if (!ret_mws)
--		return ERR_PTR(-ENOMEM);
--
--	/* Copy the info of detected memory windows */
--	memcpy(ret_mws, mws, (*mw_cnt)*sizeof(*ret_mws));
--
--	return ret_mws;
-+	return mws;
- }
- 
- /*
+diff --git a/drivers/ntb/hw/amd/ntb_hw_amd.c b/drivers/ntb/hw/amd/ntb_hw_amd.c
+index d687e8c2cc78d..63ceed89b62ef 100644
+--- a/drivers/ntb/hw/amd/ntb_hw_amd.c
++++ b/drivers/ntb/hw/amd/ntb_hw_amd.c
+@@ -1318,6 +1318,7 @@ static const struct pci_device_id amd_ntb_pci_tbl[] = {
+ 	{ PCI_VDEVICE(AMD, 0x148b), (kernel_ulong_t)&dev_data[1] },
+ 	{ PCI_VDEVICE(AMD, 0x14c0), (kernel_ulong_t)&dev_data[1] },
+ 	{ PCI_VDEVICE(AMD, 0x14c3), (kernel_ulong_t)&dev_data[1] },
++	{ PCI_VDEVICE(AMD, 0x155a), (kernel_ulong_t)&dev_data[1] },
+ 	{ PCI_VDEVICE(HYGON, 0x145b), (kernel_ulong_t)&dev_data[0] },
+ 	{ 0, }
+ };
 -- 
 2.39.5
 
