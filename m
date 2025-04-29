@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEBB78F58;
-	Tue, 29 Apr 2025 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F90E21ABDB;
+	Tue, 29 Apr 2025 17:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947769; cv=none; b=CMHtHYUnkr7gzpxwZlflRP9B2AP3rfiLe9Rpi52t1R84sje2lkUdc2UvYruscEXfNtVNZmh8HEgVfvfiOS6YLSb+fd8AHnP/drwoYuvDotA9czLa/9eI7hmqpLhezBGSR8iCJx6DjkkBuin6Dpq+8M5nizt28TbzvQk8Vbp8aME=
+	t=1745947775; cv=none; b=EpbkyXNIB2ttaqRVQp9iavk+tW8kKjWS46JbW9ojyXcqxqw14tXKK02XoXlIKR8L5BaYkjDtXgHvou5qZlUCh45bNSftP8Hva2K4Cyvr8xRQiEYXRBwXOjZpKzdkST11N6/sr5Vy1vT/wHRYOsZJILbG4pxs7jncQBDPP9SBygQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947769; c=relaxed/simple;
-	bh=BTBsK2DVaKwCCzd/MnL7KiiEwxkLVBH536xApcG/7xw=;
+	s=arc-20240116; t=1745947775; c=relaxed/simple;
+	bh=UVvDCASDhkA9u1zHzd7PjwFDczkje8CKQy4XzaM8twY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Drfw2/hTym1NePyJgH4G+1tHN6j8sFIievx1wDbMQ16X4vvep+lc2r44ugCZuKqML9sL/VSOOL+SX6YaHgMrJfl+5+N4TrSTQXbpLb4ZWmhk8/lAYIzbqzlwvmGqO3dkYi/XhMhwm4iWlUI3AZZLPKRUaarZM0ZvlYtU2/5Ln5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lr1MVXyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B8Ws6VFVR7RNgAy4zNUYaUVqUS+wX7ZB4+yjufYkSdqStU92a34DdBS86Fy7jWlZtR1JDyJ04oKd9uHGfP8HZ+5LYYy32PMOH2aOYsxoaep7CipTTCs/KwqMqMIMEOkUHTZKCT7bXGCe7m4vzA3oCsPcJ+Y/iNiyICBwwC8ozQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+bFY7j5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lr1MVXyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20B1C4CEE9;
-	Tue, 29 Apr 2025 17:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+bFY7j5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6665C4CEE9;
+	Tue, 29 Apr 2025 17:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947769;
-	bh=BTBsK2DVaKwCCzd/MnL7KiiEwxkLVBH536xApcG/7xw=;
+	s=korg; t=1745947775;
+	bh=UVvDCASDhkA9u1zHzd7PjwFDczkje8CKQy4XzaM8twY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lr1MVXywnA6XCWtWk3RDJDU0QURH/FhwoFqGtxumY+LvommdyDQU02CozlA7EDry0
-	 5LpyzzLqgmRdQrrRFE2IWs/OxOIcWpzUVV37zCvqZk8cK7S9AU0xi0nNttRxP7E7be
-	 UphAwsix+qPCni0O7ABAuMmkrht/vs/9lB7JAoAA=
+	b=g+bFY7j50RuTVeq3QgbFguxO7H4CiGDAQ0L2MwHjzFqlbyScJUtzsA2tMGPvryhzK
+	 ofHoSlfmtaSliZxHKpRL7fIJFEOvdGHGo3u3z2UKwCGgBTNSRx/1TaWpBQ7ngCiMm3
+	 KBn/ClaF1ByNCIvskd+YkOOqhBUd008cKe3us01I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/280] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
-Date: Tue, 29 Apr 2025 18:40:13 +0200
-Message-ID: <20250429161118.060635861@linuxfoundation.org>
+	Fiona Klute <fiona.klute@gmx.de>,
+	kernel-list@raspberrypi.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 099/280] net: phy: microchip: force IRQ polling mode for lan88xx
+Date: Tue, 29 Apr 2025 18:40:40 +0200
+Message-ID: <20250429161119.164598875@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,125 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tung Nguyen <tung.quang.nguyen@est.tech>
+From: Fiona Klute <fiona.klute@gmx.de>
 
-[ Upstream commit d63527e109e811ef11abb1c2985048fdb528b4cb ]
+commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
 
-syzbot reported:
+With lan88xx based devices the lan78xx driver can get stuck in an
+interrupt loop while bringing the device up, flooding the kernel log
+with messages like the following:
 
-tipc: Node number set to 1055423674
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 3 UID: 0 PID: 6017 Comm: kworker/3:5 Not tainted 6.15.0-rc1-syzkaller-00246-g900241a5cc15 #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Workqueue: events tipc_net_finalize_work
-RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
-...
-RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
-RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
-RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
-R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
-FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- tipc_net_finalize+0x10b/0x180 net/tipc/net.c:140
- process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3319 [inline]
- worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
- kthread+0x3c2/0x780 kernel/kthread.c:464
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-...
-RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
-...
-RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
-RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
-RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
-R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
-FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+lan78xx 2-3:1.0 enp1s0u3: kevent 4 may have been dropped
 
-There is a racing condition between workqueue created when enabling
-bearer and another thread created when disabling bearer right after
-that as follow:
+Removing interrupt support from the lan88xx PHY driver forces the
+driver to use polling instead, which avoids the problem.
 
-enabling_bearer                          | disabling_bearer
----------------                          | ----------------
-tipc_disc_timeout()                      |
-{                                        | bearer_disable()
- ...                                     | {
- schedule_work(&tn->work);               |  tipc_mon_delete()
- ...                                     |  {
-}                                        |   ...
-                                         |   write_lock_bh(&mon->lock);
-                                         |   mon->self = NULL;
-                                         |   write_unlock_bh(&mon->lock);
-                                         |   ...
-                                         |  }
-tipc_net_finalize_work()                 | }
-{                                        |
- ...                                     |
- tipc_net_finalize()                     |
- {                                       |
-  ...                                    |
-  tipc_mon_reinit_self()                 |
-  {                                      |
-   ...                                   |
-   write_lock_bh(&mon->lock);            |
-   mon->self->addr = tipc_own_addr(net); |
-   write_unlock_bh(&mon->lock);          |
-   ...                                   |
-  }                                      |
-  ...                                    |
- }                                       |
- ...                                     |
-}                                        |
+The issue has been observed with Raspberry Pi devices at least since
+4.14 (see [1], bug report for their downstream kernel), as well as
+with Nvidia devices [2] in 2020, where disabling interrupts was the
+vendor-suggested workaround (together with the claim that phylib
+changes in 4.9 made the interrupt handling in lan78xx incompatible).
 
-'mon->self' is set to NULL in disabling_bearer thread and dereferenced
-later in enabling_bearer thread.
+Iperf reports well over 900Mbits/sec per direction with client in
+--dualtest mode, so there does not seem to be a significant impact on
+throughput (lan88xx device connected via switch to the peer).
 
-This commit fixes this issue by validating 'mon->self' before assigning
-node address to it.
+[1] https://github.com/raspberrypi/linux/issues/2447
+[2] https://forums.developer.nvidia.com/t/jetson-xavier-and-lan7800-problem/142134/11
 
-Reported-by: syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com
-Fixes: 46cb01eeeb86 ("tipc: update mon's self addr when node addr generated")
-Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250417074826.578115-1-tung.quang.nguyen@est.tech
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/0901d90d-3f20-4a10-b680-9c978e04ddda@lunn.ch
+Fixes: 792aec47d59d ("add microchip LAN88xx phy driver")
+Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
+Cc: kernel-list@raspberrypi.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250416102413.30654-1-fiona.klute@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/monitor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/microchip.c |   46 ++------------------------------------------
+ 1 file changed, 3 insertions(+), 43 deletions(-)
 
-diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
-index e2f19627e43d5..b45c5b91bc7af 100644
---- a/net/tipc/monitor.c
-+++ b/net/tipc/monitor.c
-@@ -716,7 +716,8 @@ void tipc_mon_reinit_self(struct net *net)
- 		if (!mon)
- 			continue;
- 		write_lock_bh(&mon->lock);
--		mon->self->addr = tipc_own_addr(net);
-+		if (mon->self)
-+			mon->self->addr = tipc_own_addr(net);
- 		write_unlock_bh(&mon->lock);
- 	}
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -37,47 +37,6 @@ static int lan88xx_write_page(struct phy
+ 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
  }
--- 
-2.39.5
-
+ 
+-static int lan88xx_phy_config_intr(struct phy_device *phydev)
+-{
+-	int rc;
+-
+-	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+-		/* unmask all source and clear them before enable */
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-		rc = phy_write(phydev, LAN88XX_INT_MASK,
+-			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
+-			       LAN88XX_INT_MASK_LINK_CHANGE_);
+-	} else {
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
+-		if (rc)
+-			return rc;
+-
+-		/* Ack interrupts after they have been disabled */
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-	}
+-
+-	return rc < 0 ? rc : 0;
+-}
+-
+-static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
+-{
+-	int irq_status;
+-
+-	irq_status = phy_read(phydev, LAN88XX_INT_STS);
+-	if (irq_status < 0) {
+-		phy_error(phydev);
+-		return IRQ_NONE;
+-	}
+-
+-	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
+-		return IRQ_NONE;
+-
+-	phy_trigger_machine(phydev);
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static int lan88xx_suspend(struct phy_device *phydev)
+ {
+ 	struct lan88xx_priv *priv = phydev->priv;
+@@ -528,8 +487,9 @@ static struct phy_driver microchip_phy_d
+ 	.config_aneg	= lan88xx_config_aneg,
+ 	.link_change_notify = lan88xx_link_change_notify,
+ 
+-	.config_intr	= lan88xx_phy_config_intr,
+-	.handle_interrupt = lan88xx_handle_interrupt,
++	/* Interrupt handling is broken, do not define related
++	 * functions to force polling.
++	 */
+ 
+ 	.suspend	= lan88xx_suspend,
+ 	.resume		= genphy_resume,
 
 
