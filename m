@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32CC2528F1;
-	Tue, 29 Apr 2025 17:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D34F221DA7;
+	Tue, 29 Apr 2025 17:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948836; cv=none; b=oWloOTFSb60i8PwKoYRrhzaCnXmL6aJSRQba2QDmqTbzJfSLFVKP267VSj8m4cOd5PRdzfOZsQJFpcj9oPMqP2LNf5P9vsaHs4xuGUxvoerCNfhvA3M6Sh/2AowP2wrhOlQqfeOfomWa4sshv6McJImGyMOsGv59ekGPjkVngPE=
+	t=1745948839; cv=none; b=XvAoLqeQCJEvihOxAFhlF6ka9JraBEfvE+9CPpiNXluSY93ui4O0vGxfF/Tn11AfiHLcPtgEiEnSdwhizlhSmeo+rfwxNp/jrmeA1LUmb+oTYuSO1jqChuiWoCcdmF/ixGh8/qe0sOp9LmRRW4tuZxRR8deq9hpiimwGlH4Lor4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948836; c=relaxed/simple;
-	bh=0dKhmXcJEMA6Y+10g+u5oEpeKMJOQR+ICARTUFrzxTA=;
+	s=arc-20240116; t=1745948839; c=relaxed/simple;
+	bh=/3Yi5gIBDz5vVSjVUL2M7/YfcNEhL7xCHGM70e4/L18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQeINPCuOV1uhp/fTi5ikS2jcrwcgCz+XhkF0a/1YeI57XFFuA9PDodo8PoRgPIQ/fGiROUeXEafYtrg8B/EgkD6uAi9RrnEUDMDHi6KbKK2Q3rB3Eery/SqvNQxF+h/Z2s7sO2IgD2v7c2AI1BTe7vpUa8rgVSzz1qzsoOND6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHfYbl6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0KdJRBXU/u67fJ1AQfXQpKPr3QgJoJWUSvQYhw86p0uUiL40I83LnP9GMLhtbp+4D/wXFFjWVJkYu66Ec91MZ4bxA/NxWY7UqwLWFBE7++rVMiHnt8/3kCRYOzYj7lNwCifDjZNsX0HH0JKNhHI7nGIjiX3uCZnlFDgk4ch/oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWg0D5eI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHfYbl6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35176C4CEE9;
-	Tue, 29 Apr 2025 17:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWg0D5eI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C3C4CEE3;
+	Tue, 29 Apr 2025 17:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948836;
-	bh=0dKhmXcJEMA6Y+10g+u5oEpeKMJOQR+ICARTUFrzxTA=;
+	s=korg; t=1745948839;
+	bh=/3Yi5gIBDz5vVSjVUL2M7/YfcNEhL7xCHGM70e4/L18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHfYbl6oZjmjx60voAR36U5w9swR/OA7aKh8kfO5G6vgoe+uHx0CzbUyjvdnrEPaw
-	 iJnjkzmoComTCpGhWkNqWycVc+kzS8GfWlrAhnXdteYVzWNp0d5KBiiaAysLNmOHxB
-	 RxkfHaH1vTqZ942PWHpQut6IzMKIVtaBzLeVSImI=
+	b=MWg0D5eI8b89DkzrCKysB2orNuqNYqDj9XNPHcl2wQ39ueQ+kT9zQ99IShX5qQXmk
+	 nzHEExZarhwGzUpFDjMqLbchrvVRg//7879TZbgBwHwoO5FrSOX/Y/enVNqtFImMXU
+	 DxsD1OG3BL9Ws9IoGhqmwBt7vq2SDUSI+73BqNjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Coly Li <colyli@kernel.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/373] md/raid10: fix missing discard IO accounting
-Date: Tue, 29 Apr 2025 18:40:09 +0200
-Message-ID: <20250429161128.596931365@linuxfoundation.org>
+Subject: [PATCH 5.15 133/373] RDMA/usnic: Fix passing zero to PTR_ERR in usnic_ib_pci_probe()
+Date: Tue, 29 Apr 2025 18:40:10 +0200
+Message-ID: <20250429161128.639263466@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,45 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit d05af90d6218e9c8f1c2026990c3f53c1b41bfb0 ]
+[ Upstream commit 95ba3850fed03e01b422ab5d7943aeba130c9723 ]
 
-md_account_bio() is not called from raid10_handle_discard(), now that we
-handle bitmap inside md_account_bio(), also fix missing
-bitmap_startwrite for discard.
+drivers/infiniband/hw/usnic/usnic_ib_main.c:590
+ usnic_ib_pci_probe() warn: passing zero to 'PTR_ERR'
 
-Test whole disk discard for 20G raid10:
+Make usnic_ib_device_add() return NULL on fail path, also remove
+useless NULL check for usnic_ib_discover_pf()
 
-Before:
-Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
-md0    48.00     16.00     0.00   0.00    5.42   341.33
-
-After:
-Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
-md0    68.00  20462.00     0.00   0.00    2.65 308133.65
-
-Link: https://lore.kernel.org/linux-raid/20250325015746.3195035-1-yukuai1@huaweicloud.com
-Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Coly Li <colyli@kernel.org>
+Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
+Link: https://patch.msgid.link/r/20250324123132.2392077-1-yuehaibing@huawei.com
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/usnic/usnic_ib_main.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index bdd5a564e3191..e6c0e24cb9ae2 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1771,6 +1771,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	 * The discard bio returns only first r10bio finishes
- 	 */
- 	if (first_copy) {
-+		md_account_bio(mddev, &bio);
- 		r10_bio->master_bio = bio;
- 		set_bit(R10BIO_Discard, &r10_bio->state);
- 		first_copy = false;
+diff --git a/drivers/infiniband/hw/usnic/usnic_ib_main.c b/drivers/infiniband/hw/usnic/usnic_ib_main.c
+index d346dd48e731b..9bb78918e52aa 100644
+--- a/drivers/infiniband/hw/usnic/usnic_ib_main.c
++++ b/drivers/infiniband/hw/usnic/usnic_ib_main.c
+@@ -380,7 +380,7 @@ static void *usnic_ib_device_add(struct pci_dev *dev)
+ 	if (!us_ibdev) {
+ 		usnic_err("Device %s context alloc failed\n",
+ 				netdev_name(pci_get_drvdata(dev)));
+-		return ERR_PTR(-EFAULT);
++		return NULL;
+ 	}
+ 
+ 	us_ibdev->ufdev = usnic_fwd_dev_alloc(dev);
+@@ -500,8 +500,8 @@ static struct usnic_ib_dev *usnic_ib_discover_pf(struct usnic_vnic *vnic)
+ 	}
+ 
+ 	us_ibdev = usnic_ib_device_add(parent_pci);
+-	if (IS_ERR_OR_NULL(us_ibdev)) {
+-		us_ibdev = us_ibdev ? us_ibdev : ERR_PTR(-EFAULT);
++	if (!us_ibdev) {
++		us_ibdev = ERR_PTR(-EFAULT);
+ 		goto out;
+ 	}
+ 
+@@ -564,10 +564,10 @@ static int usnic_ib_pci_probe(struct pci_dev *pdev,
+ 	}
+ 
+ 	pf = usnic_ib_discover_pf(vf->vnic);
+-	if (IS_ERR_OR_NULL(pf)) {
+-		usnic_err("Failed to discover pf of vnic %s with err%ld\n",
+-				pci_name(pdev), PTR_ERR(pf));
+-		err = pf ? PTR_ERR(pf) : -EFAULT;
++	if (IS_ERR(pf)) {
++		err = PTR_ERR(pf);
++		usnic_err("Failed to discover pf of vnic %s with err%d\n",
++				pci_name(pdev), err);
+ 		goto out_clean_vnic;
+ 	}
+ 
 -- 
 2.39.5
 
