@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE1F253956;
-	Tue, 29 Apr 2025 17:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303FA253B42;
+	Tue, 29 Apr 2025 17:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949226; cv=none; b=QxWP11FdS6yUZ6zc4vEt3P7ZJ99aXqv3vG306/tkkEJggQxcramHRtacvxf1HbYDL35yzbhT+h0oh+AtB8NoQFLmdupVdrX+P4D0XDwhnLGmgmTKkSBpfBH/uJrK/64RV/aGPs3/oTgUACnlxIznwV4DCCj7GeNfg/xeM8X4bo4=
+	t=1745949229; cv=none; b=DhKPZE9MEYChUkLUR9YL9lUOOsKZQG/WUjBOlcs5tFc/MkDKQIVN09dz0wvY0xyQso4QSPWrglanBwZfl1/VyoQrWrsRBlaEX97Jg5kWuPzQIb/5opfsJSbYyy6Y5HgtUXI54V4taBzIW2ICJ3JQunti3hyNSetzIEZJi7CDHj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949226; c=relaxed/simple;
-	bh=4FF0RQw0oyngqbpFpDhVx1rO/MZNLh6Y+pcQzl7V9GI=;
+	s=arc-20240116; t=1745949229; c=relaxed/simple;
+	bh=Fp4vD70U5Jv2ZDe+Mt09BEQLCPBKwgIuK2kbF9V0zog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIQnJ5kS+xJ/LglalQrQEPvZZ28PoPzCx3gN6+q/v+TIQQIaLivx1FFxQPFiXpS7QicI0j84oWs8a/kmbOlprTaWXHEkjjkKncDrC5dDSHMroq0bklqUyzOqyJC94dUTOWi7Yfjeeddr0r/juzkgd47NKEMa6n9mwjg+JPM0liQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loeWUrCL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXNTRzhnwPtlqf6+GzWUobh89MK7C/58xpqzPPh03Eg0XLrY2L3e7Th6fQiko2BgqTRwXHUyRJxhGu+MSt5aZRfKXZ7EFdRmpHYfsVldgDja+8QFKV7ymo1e+Qa5OcA+bc9b3IfEc6QQ9rzs7cWmM7hqujA6QBdEBCdwYQbd/Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igRPpR2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loeWUrCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB5EC4CEEA;
-	Tue, 29 Apr 2025 17:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igRPpR2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B31C4CEE3;
+	Tue, 29 Apr 2025 17:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949226;
-	bh=4FF0RQw0oyngqbpFpDhVx1rO/MZNLh6Y+pcQzl7V9GI=;
+	s=korg; t=1745949229;
+	bh=Fp4vD70U5Jv2ZDe+Mt09BEQLCPBKwgIuK2kbF9V0zog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loeWUrCLCQ5+pdzGYF5oMenfqfSQRtAGgHVwjhY07EQI8TnPz5t1dkkkVVepk85K4
-	 pTuL664RPFqen7ZLSskdN6Gs204DoHtmtvnETczjI/smxR8xMJMXjgI/XmPWkdTesy
-	 zJo4VhZpVvmkatvpfCPEMMO6J3wusg9EEbq1cxPw=
+	b=igRPpR2/oIdJzxfL+q+ogQ3zdOEVTPvSYrvPOmaRnj2FzuYSmzT8zIljS2GqH3A9p
+	 xWs3Gd1JcQfsfygIqgyXS++8IMV1fVccLqB99cbKnsQEhdEuw2GT5BLcF3FRNyYoNI
+	 aCZSmdFOTWyQNV1pBJmLQMG6piE9Czs48FcM9mA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
 	Steve French <stfrench@microsoft.com>,
-	He Zhe <zhe.he@windriver.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 5.15 223/373] cifs: Fix UAF in cifs_demultiplex_thread()
-Date: Tue, 29 Apr 2025 18:41:40 +0200
-Message-ID: <20250429161132.323894287@linuxfoundation.org>
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 224/373] smb: client: fix UAF in async decryption
+Date: Tue, 29 Apr 2025 18:41:41 +0200
+Message-ID: <20250429161132.363035699@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,249 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-commit d527f51331cace562393a8038d870b3e9916686f upstream.
+commit b0abcd65ec545701b8793e12bc27dc98042b151a upstream.
 
-There is a UAF when xfstests on cifs:
+Doing an async decryption (large read) crashes with a
+slab-use-after-free way down in the crypto API.
 
-  BUG: KASAN: use-after-free in smb2_is_network_name_deleted+0x27/0x160
-  Read of size 4 at addr ffff88810103fc08 by task cifsd/923
+Reproducer:
+    # mount.cifs -o ...,seal,esize=1 //srv/share /mnt
+    # dd if=/mnt/largefile of=/dev/null
+    ...
+    [  194.196391] ==================================================================
+    [  194.196844] BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xc1/0x110
+    [  194.197269] Read of size 8 at addr ffff888112bd0448 by task kworker/u77:2/899
+    [  194.197707]
+    [  194.197818] CPU: 12 UID: 0 PID: 899 Comm: kworker/u77:2 Not tainted 6.11.0-lku-00028-gfca3ca14a17a-dirty #43
+    [  194.198400] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
+    [  194.199046] Workqueue: smb3decryptd smb2_decrypt_offload [cifs]
+    [  194.200032] Call Trace:
+    [  194.200191]  <TASK>
+    [  194.200327]  dump_stack_lvl+0x4e/0x70
+    [  194.200558]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.200809]  print_report+0x174/0x505
+    [  194.201040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+    [  194.201352]  ? srso_return_thunk+0x5/0x5f
+    [  194.201604]  ? __virt_addr_valid+0xdf/0x1c0
+    [  194.201868]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.202128]  kasan_report+0xc8/0x150
+    [  194.202361]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.202616]  gf128mul_4k_lle+0xc1/0x110
+    [  194.202863]  ghash_update+0x184/0x210
+    [  194.203103]  shash_ahash_update+0x184/0x2a0
+    [  194.203377]  ? __pfx_shash_ahash_update+0x10/0x10
+    [  194.203651]  ? srso_return_thunk+0x5/0x5f
+    [  194.203877]  ? crypto_gcm_init_common+0x1ba/0x340
+    [  194.204142]  gcm_hash_assoc_remain_continue+0x10a/0x140
+    [  194.204434]  crypt_message+0xec1/0x10a0 [cifs]
+    [  194.206489]  ? __pfx_crypt_message+0x10/0x10 [cifs]
+    [  194.208507]  ? srso_return_thunk+0x5/0x5f
+    [  194.209205]  ? srso_return_thunk+0x5/0x5f
+    [  194.209925]  ? srso_return_thunk+0x5/0x5f
+    [  194.210443]  ? srso_return_thunk+0x5/0x5f
+    [  194.211037]  decrypt_raw_data+0x15f/0x250 [cifs]
+    [  194.212906]  ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
+    [  194.214670]  ? srso_return_thunk+0x5/0x5f
+    [  194.215193]  smb2_decrypt_offload+0x12a/0x6c0 [cifs]
 
-  CPU: 1 PID: 923 Comm: cifsd Not tainted 6.1.0-rc4+ #45
-  ...
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   print_report+0x171/0x472
-   kasan_report+0xad/0x130
-   kasan_check_range+0x145/0x1a0
-   smb2_is_network_name_deleted+0x27/0x160
-   cifs_demultiplex_thread.cold+0x172/0x5a4
-   kthread+0x165/0x1a0
-   ret_from_fork+0x1f/0x30
-   </TASK>
+This is because TFM is being used in parallel.
 
-  Allocated by task 923:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   __kasan_slab_alloc+0x54/0x60
-   kmem_cache_alloc+0x147/0x320
-   mempool_alloc+0xe1/0x260
-   cifs_small_buf_get+0x24/0x60
-   allocate_buffers+0xa1/0x1c0
-   cifs_demultiplex_thread+0x199/0x10d0
-   kthread+0x165/0x1a0
-   ret_from_fork+0x1f/0x30
+Fix this by allocating a new AEAD TFM for async decryption, but keep
+the existing one for synchronous READ cases (similar to what is done
+in smb3_calc_signature()).
 
-  Freed by task 921:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   kasan_save_free_info+0x2a/0x40
-   ____kasan_slab_free+0x143/0x1b0
-   kmem_cache_free+0xe3/0x4d0
-   cifs_small_buf_release+0x29/0x90
-   SMB2_negotiate+0x8b7/0x1c60
-   smb2_negotiate+0x51/0x70
-   cifs_negotiate_protocol+0xf0/0x160
-   cifs_get_smb_ses+0x5fa/0x13c0
-   mount_get_conns+0x7a/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Also remove the calls to aead_request_set_callback() and
+crypto_wait_req() since it's always going to be a synchronous operation.
 
-The UAF is because:
-
- mount(pid: 921)               | cifsd(pid: 923)
--------------------------------|-------------------------------
-                               | cifs_demultiplex_thread
-SMB2_negotiate                 |
- cifs_send_recv                |
-  compound_send_recv           |
-   smb_send_rqst               |
-    wait_for_response          |
-     wait_event_state      [1] |
-                               |  standard_receive3
-                               |   cifs_handle_standard
-                               |    handle_mid
-                               |     mid->resp_buf = buf;  [2]
-                               |     dequeue_mid           [3]
-     KILL the process      [4] |
-    resp_iov[i].iov_base = buf |
- free_rsp_buf              [5] |
-                               |   is_network_name_deleted [6]
-                               |   callback
-
-1. After send request to server, wait the response until
-    mid->mid_state != SUBMITTED;
-2. Receive response from server, and set it to mid;
-3. Set the mid state to RECEIVED;
-4. Kill the process, the mid state already RECEIVED, get 0;
-5. Handle and release the negotiate response;
-6. UAF.
-
-It can be easily reproduce with add some delay in [3] - [6].
-
-Only sync call has the problem since async call's callback is
-executed in cifsd process.
-
-Add an extra state to mark the mid state to READY before wakeup the
-waitter, then it can get the resp safely.
-
-Fixes: ec637e3ffb6b ("[CIFS] Avoid extra large buffer allocation (and memcpy) in cifs_readpages")
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-[fs/cifs was moved to fs/smb/client since
-38c8a9a52082 ("smb: move client and server files to common directory fs/smb").
-We apply the patch to fs/cifs with some minor context changes.]
+[In linux-5.15, dec and enc fields are named ccmaesdecrypt and ccmaesencrypt.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsglob.h  |    1 +
- fs/cifs/transport.c |   34 +++++++++++++++++++++++-----------
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ fs/cifs/smb2ops.c |   48 ++++++++++++++++++++++++++++--------------------
+ fs/cifs/smb2pdu.c |    6 ++++++
+ 2 files changed, 34 insertions(+), 20 deletions(-)
 
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1719,6 +1719,7 @@ static inline bool is_retryable_error(in
- #define   MID_RETRY_NEEDED      8 /* session closed while this request out */
- #define   MID_RESPONSE_MALFORMED 0x10
- #define   MID_SHUTDOWN		 0x20
-+#define   MID_RESPONSE_READY 0x40 /* ready for other process handle the rsp */
- 
- /* Flags */
- #define   MID_WAIT_CANCELLED	 1 /* Cancelled while waiting for response */
---- a/fs/cifs/transport.c
-+++ b/fs/cifs/transport.c
-@@ -34,6 +34,8 @@
- void
- cifs_wake_up_task(struct mid_q_entry *mid)
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -4541,7 +4541,7 @@ smb2_get_enc_key(struct TCP_Server_Info
+  */
+ static int
+ crypt_message(struct TCP_Server_Info *server, int num_rqst,
+-	      struct smb_rqst *rqst, int enc)
++	      struct smb_rqst *rqst, int enc, struct crypto_aead *tfm)
  {
-+	if (mid->mid_state == MID_RESPONSE_RECEIVED)
-+		mid->mid_state = MID_RESPONSE_READY;
- 	wake_up_process(mid->callback_data);
- }
+ 	struct smb2_transform_hdr *tr_hdr =
+ 		(struct smb2_transform_hdr *)rqst[0].rq_iov[0].iov_base;
+@@ -4552,8 +4552,6 @@ crypt_message(struct TCP_Server_Info *se
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+ 	struct aead_request *req;
+ 	u8 *iv;
+-	DECLARE_CRYPTO_WAIT(wait);
+-	struct crypto_aead *tfm;
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	void *creq;
  
-@@ -86,7 +88,8 @@ static void _cifs_mid_q_entry_release(st
- 	struct TCP_Server_Info *server = midEntry->server;
- 
- 	if (midEntry->resp_buf && (midEntry->mid_flags & MID_WAIT_CANCELLED) &&
--	    midEntry->mid_state == MID_RESPONSE_RECEIVED &&
-+	    (midEntry->mid_state == MID_RESPONSE_RECEIVED ||
-+	     midEntry->mid_state == MID_RESPONSE_READY) &&
- 	    server->ops->handle_cancelled_mid)
- 		server->ops->handle_cancelled_mid(midEntry, server);
- 
-@@ -762,7 +765,8 @@ wait_for_response(struct TCP_Server_Info
- 	int error;
- 
- 	error = wait_event_freezekillable_unsafe(server->response_q,
--				    midQ->mid_state != MID_REQUEST_SUBMITTED);
-+				    midQ->mid_state != MID_REQUEST_SUBMITTED &&
-+				    midQ->mid_state != MID_RESPONSE_RECEIVED);
- 	if (error < 0)
- 		return -ERESTARTSYS;
- 
-@@ -914,7 +918,7 @@ cifs_sync_mid_result(struct mid_q_entry
- 
- 	spin_lock(&GlobalMid_Lock);
- 	switch (mid->mid_state) {
--	case MID_RESPONSE_RECEIVED:
-+	case MID_RESPONSE_READY:
- 		spin_unlock(&GlobalMid_Lock);
+@@ -4564,15 +4562,6 @@ crypt_message(struct TCP_Server_Info *se
  		return rc;
- 	case MID_RETRY_NEEDED:
-@@ -1013,6 +1017,9 @@ cifs_compound_callback(struct mid_q_entr
- 	credits.instance = server->reconnect_instance;
- 
- 	add_credits(server, &credits, mid->optype);
-+
-+	if (mid->mid_state == MID_RESPONSE_RECEIVED)
-+		mid->mid_state = MID_RESPONSE_READY;
- }
- 
- static void
-@@ -1204,7 +1211,8 @@ compound_send_recv(const unsigned int xi
- 			send_cancel(server, &rqst[i], midQ[i]);
- 			spin_lock(&GlobalMid_Lock);
- 			midQ[i]->mid_flags |= MID_WAIT_CANCELLED;
--			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED) {
-+			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED ||
-+			    midQ[i]->mid_state == MID_RESPONSE_RECEIVED) {
- 				midQ[i]->callback = cifs_cancelled_callback;
- 				cancelled_mid[i] = true;
- 				credits[i].value = 0;
-@@ -1225,7 +1233,7 @@ compound_send_recv(const unsigned int xi
- 		}
- 
- 		if (!midQ[i]->resp_buf ||
--		    midQ[i]->mid_state != MID_RESPONSE_RECEIVED) {
-+		    midQ[i]->mid_state != MID_RESPONSE_READY) {
- 			rc = -EIO;
- 			cifs_dbg(FYI, "Bad MID state?\n");
- 			goto out;
-@@ -1404,7 +1412,8 @@ SendReceive(const unsigned int xid, stru
- 	if (rc != 0) {
- 		send_cancel(server, &rqst, midQ);
- 		spin_lock(&GlobalMid_Lock);
--		if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
-+		if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		    midQ->mid_state == MID_RESPONSE_RECEIVED) {
- 			/* no longer considered to be "in-flight" */
- 			midQ->callback = DeleteMidQEntry;
- 			spin_unlock(&GlobalMid_Lock);
-@@ -1421,7 +1430,7 @@ SendReceive(const unsigned int xid, stru
  	}
  
- 	if (!midQ->resp_buf || !out_buf ||
--	    midQ->mid_state != MID_RESPONSE_RECEIVED) {
-+	    midQ->mid_state != MID_RESPONSE_READY) {
- 		rc = -EIO;
- 		cifs_server_dbg(VFS, "Bad MID state?\n");
- 		goto out;
-@@ -1541,13 +1550,15 @@ SendReceiveBlockingLock(const unsigned i
+-	rc = smb3_crypto_aead_allocate(server);
+-	if (rc) {
+-		cifs_server_dbg(VFS, "%s: crypto alloc failed\n", __func__);
+-		return rc;
+-	}
+-
+-	tfm = enc ? server->secmech.ccmaesencrypt :
+-						server->secmech.ccmaesdecrypt;
+-
+ 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
+ 		(server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
+ 		rc = crypto_aead_setkey(tfm, key, SMB3_GCM256_CRYPTKEY_SIZE);
+@@ -4611,11 +4600,7 @@ crypt_message(struct TCP_Server_Info *se
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
  
- 	/* Wait for a reply - allow signals to interrupt. */
- 	rc = wait_event_interruptible(server->response_q,
--		(!(midQ->mid_state == MID_REQUEST_SUBMITTED)) ||
-+		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
- 		((server->tcpStatus != CifsGood) &&
- 		 (server->tcpStatus != CifsNew)));
+-	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				  crypto_req_done, &wait);
+-
+-	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
+-				: crypto_aead_decrypt(req), &wait);
++	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
  
- 	/* Were we interrupted by a signal ? */
- 	if ((rc == -ERESTARTSYS) &&
--		(midQ->mid_state == MID_REQUEST_SUBMITTED) &&
-+		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
- 		((server->tcpStatus == CifsGood) ||
- 		 (server->tcpStatus == CifsNew))) {
+ 	if (!rc && enc)
+ 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
+@@ -4704,7 +4689,7 @@ smb3_init_transform_rq(struct TCP_Server
+ 	/* fill the 1st iov with a transform header */
+ 	fill_transform_hdr(tr_hdr, orig_len, old_rq, server->cipher_type);
  
-@@ -1577,7 +1588,8 @@ SendReceiveBlockingLock(const unsigned i
- 		if (rc) {
- 			send_cancel(server, &rqst, midQ);
- 			spin_lock(&GlobalMid_Lock);
--			if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
-+			if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+			    midQ->mid_state == MID_RESPONSE_RECEIVED) {
- 				/* no longer considered to be "in-flight" */
- 				midQ->callback = DeleteMidQEntry;
- 				spin_unlock(&GlobalMid_Lock);
-@@ -1595,7 +1607,7 @@ SendReceiveBlockingLock(const unsigned i
+-	rc = crypt_message(server, num_rqst, new_rq, 1);
++	rc = crypt_message(server, num_rqst, new_rq, 1, server->secmech.ccmaesencrypt);
+ 	cifs_dbg(FYI, "Encrypt message returned %d\n", rc);
+ 	if (rc)
+ 		goto err_free;
+@@ -4730,8 +4715,9 @@ decrypt_raw_data(struct TCP_Server_Info
+ 		 unsigned int npages, unsigned int page_data_size,
+ 		 bool is_offloaded)
+ {
+-	struct kvec iov[2];
++	struct crypto_aead *tfm;
+ 	struct smb_rqst rqst = {NULL};
++	struct kvec iov[2];
+ 	int rc;
+ 
+ 	iov[0].iov_base = buf;
+@@ -4746,9 +4732,31 @@ decrypt_raw_data(struct TCP_Server_Info
+ 	rqst.rq_pagesz = PAGE_SIZE;
+ 	rqst.rq_tailsz = (page_data_size % PAGE_SIZE) ? : PAGE_SIZE;
+ 
+-	rc = crypt_message(server, 1, &rqst, 0);
++	if (is_offloaded) {
++		if ((server->cipher_type == SMB2_ENCRYPTION_AES128_GCM) ||
++		    (server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
++			tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
++		else
++			tfm = crypto_alloc_aead("ccm(aes)", 0, 0);
++		if (IS_ERR(tfm)) {
++			rc = PTR_ERR(tfm);
++			cifs_server_dbg(VFS, "%s: Failed alloc decrypt TFM, rc=%d\n", __func__, rc);
++
++			return rc;
++		}
++	} else {
++		if (unlikely(!server->secmech.ccmaesdecrypt))
++			return -EIO;
++
++		tfm = server->secmech.ccmaesdecrypt;
++	}
++
++	rc = crypt_message(server, 1, &rqst, 0, tfm);
+ 	cifs_dbg(FYI, "Decrypt message returned %d\n", rc);
+ 
++	if (is_offloaded)
++		crypto_free_aead(tfm);
++
+ 	if (rc)
  		return rc;
  
- 	/* rcvd frame is ok */
--	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_RECEIVED) {
-+	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
- 		rc = -EIO;
- 		cifs_tcon_dbg(VFS, "Bad MID state?\n");
- 		goto out;
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -1063,6 +1063,12 @@ SMB2_negotiate(const unsigned int xid, s
+ 		else
+ 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
+ 	}
++
++	if (server->cipher_type && !rc) {
++		rc = smb3_crypto_aead_allocate(server);
++		if (rc)
++			cifs_server_dbg(VFS, "%s: crypto alloc failed, rc=%d\n", __func__, rc);
++	}
+ neg_exit:
+ 	free_rsp_buf(resp_buftype, rsp);
+ 	return rc;
 
 
