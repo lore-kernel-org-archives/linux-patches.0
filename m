@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA7D27453;
-	Tue, 29 Apr 2025 17:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C57D21883E;
+	Tue, 29 Apr 2025 17:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946807; cv=none; b=caUmjuw/WAlpSvmoVF+/IFq0S7dRlECS7b2/Oi20yS6izEon3I6hZPPQrd8D1C58zCbq3BtLoLz+Y+5X0P1me9v4O9Yu5b8DaKBpLIVJDDtn8eiN1sVEcIZoRByKHgUlRRxLQTW+i13Ep0Igsv46zJTnSVQacFIxvHDzT1eu2uM=
+	t=1745946810; cv=none; b=IEcvfpaXSL0m+OZpXrq0X5rGV30wCQW5WG5d33BgkZ8Rrdrv+fDtiOXkwGJ5U34gwL/Eh+cjS84aGV5iLc/alQN4OFr/9cx7Vymex9YyLJdUMD3OZm0XWBozblZmGyKCU5d4IRW1PD9+22URTmSrHHGrP1mBTFyw9gghfK422xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946807; c=relaxed/simple;
-	bh=OwxsJnoObmk8JR3QIjbCx4HI1bG12051WCBjIp8n56Q=;
+	s=arc-20240116; t=1745946810; c=relaxed/simple;
+	bh=6HZUo9pHrfURPbQS8eJocFN8d+WH9pf52BlItf7IRv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVaoe2fAiMDmSlv71XR7hO1qOHCCmyvStzYiopEYC/HBmH77NcR1B6KrrYWx7KoJna6tWvjQ802N1kokjqjX9Jin2OYSCh6yzbkXBxXRnTpnPreNpxbe6Bu90o+u+7qaFQ0EXem3lTxnC5v2vqGZtN18oS0E9i27ns+dg1mKXeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDu7spia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9GKf6MlTlvoToDyOuiduHcBdfoh/BKLfFDtvlp/A0uH9VQtqEVCUfhZzKFu5OaEcOwQjqgt10cIJSuUKiqSADmBJFsXjzoq9yi2pdCUMzN2WgqCbmqJ1dAGAYKrNQn8yk8H9kwIoRj22EYlLpT4lE4P9bsCEW//Zk4zJ9//IRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvhttlHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDu7spia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4C4C4CEE3;
-	Tue, 29 Apr 2025 17:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvhttlHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD8FC4CEE3;
+	Tue, 29 Apr 2025 17:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946807;
-	bh=OwxsJnoObmk8JR3QIjbCx4HI1bG12051WCBjIp8n56Q=;
+	s=korg; t=1745946810;
+	bh=6HZUo9pHrfURPbQS8eJocFN8d+WH9pf52BlItf7IRv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDu7spiahxCIWyhOKDVQB6Ul9JWA7IQB3Ks2m7bQLU5XBj8t2pzeNVe8WZkg9uOlw
-	 fpHhNpSlX6qfQ4OgzQbDMCIjumXpJYh5O13YSsld8FUN+FikLtB6HCIo54+dB/NTR6
-	 pcZH0nTs8/xWk3JCq1iYYDXsX21PJcCJRke+7spU=
+	b=MvhttlHabvp1MwwdxRfdzcBjszPKr+JKam692+y9GPOvaQtJOiik17xWSlQVI7V1U
+	 iPp3mrcRMS/6Ad7VaeoDq+0OXjufH9YkmGb++AnXmk9e+ZVi4Y+6MifxSaMFcQDrI7
+	 /7fnh3SNREf0cnwRbRlKWDPE9DNq/UE+mbVDVJmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 076/286] jbd2: remove wrong sb->s_sequence check
-Date: Tue, 29 Apr 2025 18:39:40 +0200
-Message-ID: <20250429161110.976479051@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>
+Subject: [PATCH 5.10 077/286] mfd: ene-kb3930: Fix a potential NULL pointer dereference
+Date: Tue, 29 Apr 2025 18:39:41 +0200
+Message-ID: <20250429161111.017842348@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-commit e6eff39dd0fe4190c6146069cc16d160e71d1148 upstream.
+commit 4cdf1d2a816a93fa02f7b6b5492dc7f55af2a199 upstream.
 
-Journal emptiness is not determined by sb->s_sequence == 0 but rather by
-sb->s_start == 0 (which is set a few lines above). Furthermore 0 is a
-valid transaction ID so the check can spuriously trigger. Remove the
-invalid WARN_ON.
+The off_gpios could be NULL. Add missing check in the kb3930_probe().
+This is similar to the issue fixed in commit b1ba8bcb2d1f
+("backlight: hx8357: Fix potential NULL pointer dereference").
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250206094657.20865-3-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This was detected by our static analysis tool.
+
+Cc: stable@vger.kernel.org
+Fixes: ede6b2d1dfc0 ("mfd: ene-kb3930: Add driver for ENE KB3930 Embedded Controller")
+Suggested-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250224233736.1919739-1-chenyuan0y@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/mfd/ene-kb3930.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -1649,7 +1649,6 @@ int jbd2_journal_update_sb_log_tail(jour
- 
- 	/* Log is no longer empty */
- 	write_lock(&journal->j_state_lock);
--	WARN_ON(!sb->s_sequence);
- 	journal->j_flags &= ~JBD2_FLUSHED;
- 	write_unlock(&journal->j_state_lock);
- 
+--- a/drivers/mfd/ene-kb3930.c
++++ b/drivers/mfd/ene-kb3930.c
+@@ -162,7 +162,7 @@ static int kb3930_probe(struct i2c_clien
+ 			devm_gpiod_get_array_optional(dev, "off", GPIOD_IN);
+ 		if (IS_ERR(ddata->off_gpios))
+ 			return PTR_ERR(ddata->off_gpios);
+-		if (ddata->off_gpios->ndescs < 2) {
++		if (ddata->off_gpios && ddata->off_gpios->ndescs < 2) {
+ 			dev_err(dev, "invalid off-gpios property\n");
+ 			return -EINVAL;
+ 		}
 
 
