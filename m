@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E171A5BBB;
-	Tue, 29 Apr 2025 18:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0617F1A5BBB;
+	Tue, 29 Apr 2025 18:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950092; cv=none; b=h+0c3azuPtrvxhrGscPcw+IpfZ41i81eS8g26Cbisj/q5f402JiHtwv6AUjsLvXurAERpQkfXsL/KC4HTEFO16KEJuzoiZhgSKdFtmwDScP/0EPYXOxych7v8kB4+t8XZV8Ny7Bff5VK2ZHA+Hxoz52oQLAc7z8n0DruH4eb8H4=
+	t=1745950096; cv=none; b=d/0iW8qT+2aBzjwfA4pFOCZshvTvE4D01d2soThIOdRG1DKRnH13U3nB/T7yzZzA5dOi9dXSiE13omj9bW0rrhgkIgtbZxkjdtaiv2yi7b2DnVa5ifRxcOweFgR2AhOu4z2DieGHSs40Loo+R5nEtNlPfNxaBS+C1eRzFrz/xdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950092; c=relaxed/simple;
-	bh=n/TCoHJ6GrX1DPMnCt4cEYaS23T3VgIElZhLn2IBgZo=;
+	s=arc-20240116; t=1745950096; c=relaxed/simple;
+	bh=lo8rY3tWJuR6mLXExhKkSzpZW3NHp2hySa45m6pWgZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dgd14VmHkgf0YNlUZbd9GWq+EfUKTy2uFXDQOUUjWrPnXLI96QmdcpTBYUfeKYeU+PeQtdgOnSZCAuPL1vFDma/9jI0MeCuZasz2ldOuscKPGkOzUh34figGCctecenP9O41tTl4AQDsCI6d5OHkzxFXjqzfEATBX9FqRNp2sWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqsg9Gq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u+WrUwToBOqc0bMfOifdXzZQ73ZpZR/UAkhmm+q06+Z6vQ4aSlc4jHHhvwiQdpBUVCfE2Cyn7UT9dXTSR1KEoW0clHbHysrCcWUEJ7uBVY6GqM55flwdR0bq3i7LAtsdkhnNpUhNASaTzOZrUm11HNrbWtMIlHAzvoJJxXDHu88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kh/PBH8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqsg9Gq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B4C4CEE3;
-	Tue, 29 Apr 2025 18:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kh/PBH8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFC0C4CEE3;
+	Tue, 29 Apr 2025 18:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950092;
-	bh=n/TCoHJ6GrX1DPMnCt4cEYaS23T3VgIElZhLn2IBgZo=;
+	s=korg; t=1745950095;
+	bh=lo8rY3tWJuR6mLXExhKkSzpZW3NHp2hySa45m6pWgZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqsg9Gq5/8skbFiylVxTX1SFDfioQoB/3epksuCdIcigOqOx+7Wo9aoGtHPbsaRhT
-	 qmzWXZ3LnME0zX/SnWf4kDXOcn4ZuLKAtIfJbOYvhkCQC+egFa3BsuIh4D5fJATyEd
-	 R9y0UGSVMIKzgltKkUpC7jV9FSkkqLkTBvqLy2Z8=
+	b=kh/PBH8XTi9oJ5ubpaVSXhHt/+VmXjjMu7pFM96Ji79dCeVUwlr/CGk39jtbaHyK4
+	 nvW2Zn2IagbsEIbbsuexLMkMoi0goBh2llbR4quHuPwVYRljdkhx35s9W2SBL/1i8x
+	 Ir80Sz8w4HYHyQqfYgWkKkT8jPGmoBpwtzscWav8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 152/167] comedi: jr3_pci: Fix synchronous deletion of timer
-Date: Tue, 29 Apr 2025 18:44:20 +0200
-Message-ID: <20250429161057.871714438@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 153/167] crypto: atmel-sha204a - Set hwrng quality to lowest possible
+Date: Tue, 29 Apr 2025 18:44:21 +0200
+Message-ID: <20250429161057.911974303@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -44,79 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Marek Behún <kabel@kernel.org>
 
-commit 44d9b3f584c59a606b521e7274e658d5b866c699 upstream.
+commit 8006aff15516a170640239c5a8e6696c0ba18d8e upstream.
 
-When `jr3_pci_detach()` is called during device removal, it calls
-`timer_delete_sync()` to stop the timer, but the timer expiry function
-always reschedules the timer, so the synchronization is ineffective.
+According to the review by Bill Cox [1], the Atmel SHA204A random number
+generator produces random numbers with very low entropy.
 
-Call `timer_shutdown_sync()` instead.  It does not matter that the timer
-expiry function pointer is cleared, because the device is being removed.
+Set the lowest possible entropy for this chip just to be safe.
 
-Fixes: 07b509e6584a5 ("Staging: comedi: add jr3_pci driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250415123901.13483-1-abbotti@mev.co.uk
+[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+
+Fixes: da001fb651b00e1d ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marek Behún <kabel@kernel.org>
 ---
- drivers/comedi/drivers/jr3_pci.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/crypto/atmel-sha204a.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/jr3_pci.c
-+++ b/drivers/comedi/drivers/jr3_pci.c
-@@ -87,6 +87,7 @@ struct jr3_pci_poll_delay {
- struct jr3_pci_dev_private {
- 	struct timer_list timer;
- 	struct comedi_device *dev;
-+	bool timer_enable;
- };
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -107,7 +107,12 @@ static int atmel_sha204a_probe(struct i2
  
- union jr3_pci_single_range {
-@@ -596,10 +597,11 @@ static void jr3_pci_poll_dev(struct time
- 				delay = sub_delay.max;
- 		}
- 	}
-+	if (devpriv->timer_enable) {
-+		devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
-+		add_timer(&devpriv->timer);
-+	}
- 	spin_unlock_irqrestore(&dev->spinlock, flags);
--
--	devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
--	add_timer(&devpriv->timer);
- }
+ 	i2c_priv->hwrng.name = dev_name(&client->dev);
+ 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
+-	i2c_priv->hwrng.quality = 1024;
++
++	/*
++	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
++	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
++	 */
++	i2c_priv->hwrng.quality = 1;
  
- static struct jr3_pci_subdev_private *
-@@ -748,6 +750,7 @@ static int jr3_pci_auto_attach(struct co
- 	devpriv->dev = dev;
- 	timer_setup(&devpriv->timer, jr3_pci_poll_dev, 0);
- 	devpriv->timer.expires = jiffies + msecs_to_jiffies(1000);
-+	devpriv->timer_enable = true;
- 	add_timer(&devpriv->timer);
- 
- 	return 0;
-@@ -757,8 +760,12 @@ static void jr3_pci_detach(struct comedi
- {
- 	struct jr3_pci_dev_private *devpriv = dev->private;
- 
--	if (devpriv)
--		del_timer_sync(&devpriv->timer);
-+	if (devpriv) {
-+		spin_lock_bh(&dev->spinlock);
-+		devpriv->timer_enable = false;
-+		spin_unlock_bh(&dev->spinlock);
-+		timer_delete_sync(&devpriv->timer);
-+	}
- 
- 	comedi_pci_detach(dev);
- }
+ 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
+ 	if (ret)
 
 
