@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5B23FFD;
-	Tue, 29 Apr 2025 18:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F003FFD;
+	Tue, 29 Apr 2025 18:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949670; cv=none; b=XshIUQkZPNHSB5gpt6Us4mno/bmLtVCo42a63mWiKVxL2Aup84LZifbgpUwB95TeMQtIFVBe9djzNqb0PAuO0PNqQ5TKvbLiYEIPnLHBQXIDFT8UQxRHD2bzx53G1alUYzu23JGT7a+rf9C3LQGwE6q7fAv8eHFXPwbrGk+Kjng=
+	t=1745949672; cv=none; b=C/+/xTXTL61NeEA9hdGb/PSBy36ba4IBB3oOMyWf2bWjU94Fpl075imbvMKAqcRlgzxRRqWQtXFhIlWqYrzT6XCZwL0SA1B33OxGrDb2JSI83oId+sOYBcbF7npRsBYGl7CJtiWSYrVjgZm9wSrweFyZY5dX3xhQbaS6Wj5Oe9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949670; c=relaxed/simple;
-	bh=9Q7lRSuaS8ZOrYguDir/LAjYPGBPDF5ZMHjIAaHNX4o=;
+	s=arc-20240116; t=1745949672; c=relaxed/simple;
+	bh=Uup06BL3b2HPnlZ3XGL1PSdyjSm/cYJgoivsGgiDlu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZF7yxx028wd5O9Y6iAvBLYXHdV47bexvhtwNhVQB4EolxsZ4ajfX5q6HCWxozuBYLrNi5VoEzIGWfi5WHFq3wNfel47DYcQriZqDqBs3iwy/U9IETqUFJ2MW2kxJnfft8pwWoot9LXusa5AT/+48s9ATFoNKcPctZZ0W3xcuywg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxe5TObT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sj9vQDPOUqtZf5jTgR1m7FYR7kmdhfx/iUGWmIXnaZMSDyaDlOgioVQLhokWD28AX7VuFfnMfoEAwEL2M8U85PKdBoHc1PwThiEmH7lq3kXpcDV8TVcXUbxAizmwO7GmjRatbwNvMmQU6IPXofjisLI/sVWoIp/zpEzxgNRPBVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/smMmez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxe5TObT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DACC4CEE3;
-	Tue, 29 Apr 2025 18:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/smMmez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56960C4CEE3;
+	Tue, 29 Apr 2025 18:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949669;
-	bh=9Q7lRSuaS8ZOrYguDir/LAjYPGBPDF5ZMHjIAaHNX4o=;
+	s=korg; t=1745949672;
+	bh=Uup06BL3b2HPnlZ3XGL1PSdyjSm/cYJgoivsGgiDlu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxe5TObTVFxh2yqa8OCorqWz1JZDryPkCmzBhn3I3Dw/OUs7T1g4Aij/pw6vjWFp2
-	 j6aEZM9j92Ws6TEMs2yhaEJAPOYJKMjhK7jBkJ4+xEKUhS+1nZqhAy0IOxy+fKRraM
-	 zAACkUBCkgcldV5hVjCMuQrHFD/sD6awgGZWIyU8=
+	b=N/smMmezaeg+wRcA1TxuX/JaUdeGROMBlxUi+m2wCt/r0ftGECBGdqaK6ZY0WJHNz
+	 HVWkFttZqxr26dGrAJuZkOriwBLIq9TuQOA9G04L3S++f1TDD02Sk8lrLAqtzXeSRG
+	 4HOOt9RijKMQ+lRFgd/esZ02KIvu9n3RH/TZcsDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/167] backlight: led_bl: Convert to platform remove callback returning void
-Date: Tue, 29 Apr 2025 18:42:07 +0200
-Message-ID: <20250429161052.529803476@linuxfoundation.org>
+Subject: [PATCH 6.1 002/167] memcg: drain obj stock on cpu hotplug teardown
+Date: Tue, 29 Apr 2025 18:41:50 +0200
+Message-ID: <20250429161051.846625904@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -46,69 +49,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit c4c4fa57fd3cc00020152baa169337521f90b2ad ]
+[ Upstream commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+Currently on cpu hotplug teardown, only memcg stock is drained but we
+need to drain the obj stock as well otherwise we will miss the stats
+accumulated on the target cpu as well as the nr_bytes cached. The stats
+include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
+addition we are leaking reference to struct obj_cgroup object.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230308073945.2336302-7-u.kleine-koenig@pengutronix.de
-Stable-dep-of: 276822a00db3 ("backlight: led_bl: Hold led_access lock when calling led_sysfs_disable()")
+Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
+Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/led_bl.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ mm/memcontrol.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
-index f54d256e2d548..a1b6a2ad73a07 100644
---- a/drivers/video/backlight/led_bl.c
-+++ b/drivers/video/backlight/led_bl.c
-@@ -217,7 +217,7 @@ static int led_bl_probe(struct platform_device *pdev)
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 3f7cab196eb62..8c586133abb7c 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2368,9 +2368,18 @@ static void drain_all_stock(struct mem_cgroup *root_memcg)
+ static int memcg_hotplug_cpu_dead(unsigned int cpu)
+ {
+ 	struct memcg_stock_pcp *stock;
++	struct obj_cgroup *old;
++	unsigned long flags;
+ 
+ 	stock = &per_cpu(memcg_stock, cpu);
++
++	/* drain_obj_stock requires stock_lock */
++	local_lock_irqsave(&memcg_stock.stock_lock, flags);
++	old = drain_obj_stock(stock);
++	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
++
+ 	drain_stock(stock);
++	obj_cgroup_put(old);
+ 
  	return 0;
  }
- 
--static int led_bl_remove(struct platform_device *pdev)
-+static void led_bl_remove(struct platform_device *pdev)
- {
- 	struct led_bl_data *priv = platform_get_drvdata(pdev);
- 	struct backlight_device *bl = priv->bl_dev;
-@@ -228,8 +228,6 @@ static int led_bl_remove(struct platform_device *pdev)
- 	led_bl_power_off(priv);
- 	for (i = 0; i < priv->nb_leds; i++)
- 		led_sysfs_enable(priv->leds[i]);
--
--	return 0;
- }
- 
- static const struct of_device_id led_bl_of_match[] = {
-@@ -245,7 +243,7 @@ static struct platform_driver led_bl_driver = {
- 		.of_match_table	= of_match_ptr(led_bl_of_match),
- 	},
- 	.probe		= led_bl_probe,
--	.remove		= led_bl_remove,
-+	.remove_new	= led_bl_remove,
- };
- 
- module_platform_driver(led_bl_driver);
 -- 
 2.39.5
 
