@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8418740C03;
-	Tue, 29 Apr 2025 18:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27747243964;
+	Tue, 29 Apr 2025 18:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949881; cv=none; b=gdgKmaXxMi9E/MId+TOkl8Ee1Cf04CExtjAk6O1ut2vtu1nDQRue3EJg8q53qicj45OB5p1Lv6HiwmlRvZfHuT8ga5lNxLota6gkEXhXsQAee5VTjlfgkS4nmfak9i5c6mkhZHsno0ovFZBMw4udgmHXBJMGlpQ6PJ3r2mrTn7g=
+	t=1745949885; cv=none; b=TRRXygBdbZSJeDwAtm0Nc+v4BPBdHHTt8tipTdUpg0bdmEEQC2sl0Fi40pPqlg1qxAfLn8x/yA8iQUOhn2mwr6SCjnLp6Ya1NNeS1SKOKp43p84HX2cPMRyh6gdoWyN90ZCXo76d7MrD91imPJ7wlmS9fm1+Rq4hPWl14viXE1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949881; c=relaxed/simple;
-	bh=9kGQvuN8t96e2XE3ir7WJOXSdsKXzHSY7yKgAD1V+So=;
+	s=arc-20240116; t=1745949885; c=relaxed/simple;
+	bh=Efgw9k4aVj6GT2SBZiyN1Z3Lzh9cjhFTMCTUqwICswA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sR+5hydHK+73nu70Riz9qrf11/LbveUJTS+zhEk2+JnyNxc8hebvFcL/PUpkju9wO2FhPw5cf5HVaBtVNuUSHFTI4jD6o5NKbWsOpPgAcW54yjwOMD5Tw0ycuFgbtl7pTBkESeovaHJ2xl47eASQ7lECPi84ZWCBdTx1hxmziMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEgKo1v/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8sxKockkynoFI3NxMi+IWdrYdEyGLeUO4VOSlJlpiVB+P54nHHVxby/0aWh2CKzWfpJhjBDMhxD1MINIrbPofNbeCEU7uTOwVJsbjMHZikkg6q4heyqpBCpEQw5vxTCPP0XoIEQetXTLr7zewOfxw/5YqseytFHQbKCYJG1FTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTUDo0K8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEgKo1v/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7454C4CEE3;
-	Tue, 29 Apr 2025 18:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTUDo0K8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBEBC4CEE3;
+	Tue, 29 Apr 2025 18:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949881;
-	bh=9kGQvuN8t96e2XE3ir7WJOXSdsKXzHSY7yKgAD1V+So=;
+	s=korg; t=1745949884;
+	bh=Efgw9k4aVj6GT2SBZiyN1Z3Lzh9cjhFTMCTUqwICswA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEgKo1v/7Dp9k/zkBYAOmgVm7BmmkbFiQBIwiVEMRu3zLKfSQB/yWKToWdRN+iBcv
-	 OfvpdgW+WnUgQkEljoV0Xc/TKYhOB0jNxft5yPniYABPJsidXgoYTDKJnIsheiDQod
-	 W3nj26yuK99Z3lAFRcX2fyuvA8ZlniUGOndSxKQQ=
+	b=xTUDo0K8lYKQTL6Dtu1aom3Xn7UTTtdehlTBgiKHz58qhOfbwp6BHyhMLBRKt3Lhk
+	 4NEJxev5CJCErrrG5lglatYRCEWNw3ja5KsMnEw9Xax4jSsXzah5nA6/tnUPB99sMl
+	 ki6R5c1VKgIc5uUZNpVfm+adEFuDnfNy8Mx/oTK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.1 086/167] usb: chipidea: ci_hdrc_imx: implement usb_phy_init() error handling
-Date: Tue, 29 Apr 2025 18:43:14 +0200
-Message-ID: <20250429161055.233502876@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 060/167] wifi: mac80211: export ieee80211_purge_tx_queue() for drivers
+Date: Tue, 29 Apr 2025 18:42:48 +0200
+Message-ID: <20250429161054.198648669@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -51,68 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 8c531e0a8c2d82509ad97c6d3a1e6217c7ed136d upstream.
+commit 53bc1b73b67836ac9867f93dee7a443986b4a94f upstream.
 
-usb_phy_init() may return an error code if e.g. its implementation fails
-to prepare/enable some clocks. And properly rollback on probe error path
-by calling the counterpart usb_phy_shutdown().
+Drivers need to purge TX SKB when stopping. Using skb_queue_purge() can't
+report TX status to mac80211, causing ieee80211_free_ack_frame() warns
+"Have pending ack frames!". Export ieee80211_purge_tx_queue() for drivers
+to not have to reimplement it.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: be9cae2479f4 ("usb: chipidea: imx: Fix ULPI on imx53")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250316102658.490340-4-pchelkin@ispras.ru
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240822014255.10211-1-pkshih@realtek.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ include/net/mac80211.h     |   13 +++++++++++++
+ net/mac80211/ieee80211_i.h |    2 --
+ net/mac80211/status.c      |    1 +
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -463,7 +463,11 @@ static int ci_hdrc_imx_probe(struct plat
- 	    of_usb_get_phy_mode(np) == USBPHY_INTERFACE_MODE_ULPI) {
- 		pdata.flags |= CI_HDRC_OVERRIDE_PHY_CONTROL;
- 		data->override_phy_control = true;
--		usb_phy_init(pdata.usb_phy);
-+		ret = usb_phy_init(pdata.usb_phy);
-+		if (ret) {
-+			dev_err(dev, "Failed to init phy\n");
-+			goto err_clk;
-+		}
- 	}
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -2957,6 +2957,19 @@ ieee80211_get_alt_retry_rate(const struc
+ void ieee80211_free_txskb(struct ieee80211_hw *hw, struct sk_buff *skb);
  
- 	if (pdata.flags & CI_HDRC_SUPPORTS_RUNTIME_PM)
-@@ -472,7 +476,7 @@ static int ci_hdrc_imx_probe(struct plat
- 	ret = imx_usbmisc_init(data->usbmisc_data);
- 	if (ret) {
- 		dev_err(dev, "usbmisc init failed, ret=%d\n", ret);
--		goto err_clk;
-+		goto phy_shutdown;
- 	}
- 
- 	data->ci_pdev = ci_hdrc_add_device(dev,
-@@ -481,7 +485,7 @@ static int ci_hdrc_imx_probe(struct plat
- 	if (IS_ERR(data->ci_pdev)) {
- 		ret = PTR_ERR(data->ci_pdev);
- 		dev_err_probe(dev, ret, "ci_hdrc_add_device failed\n");
--		goto err_clk;
-+		goto phy_shutdown;
- 	}
- 
- 	if (data->usbmisc_data) {
-@@ -515,6 +519,9 @@ static int ci_hdrc_imx_probe(struct plat
- 
- disable_device:
- 	ci_hdrc_remove_device(data->ci_pdev);
-+phy_shutdown:
-+	if (data->override_phy_control)
-+		usb_phy_shutdown(data->phy);
- err_clk:
- 	imx_disable_unprepare_clks(dev);
- qos_remove_request:
+ /**
++ * ieee80211_purge_tx_queue - purge TX skb queue
++ * @hw: the hardware
++ * @skbs: the skbs
++ *
++ * Free a set of transmit skbs. Use this function when device is going to stop
++ * but some transmit skbs without TX status are still queued.
++ * This function does not take the list lock and the caller must hold the
++ * relevant locks to use it.
++ */
++void ieee80211_purge_tx_queue(struct ieee80211_hw *hw,
++			      struct sk_buff_head *skbs);
++
++/**
+  * DOC: Hardware crypto acceleration
+  *
+  * mac80211 is capable of taking advantage of many hardware
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1984,8 +1984,6 @@ void __ieee80211_subif_start_xmit(struct
+ 				  u32 info_flags,
+ 				  u32 ctrl_flags,
+ 				  u64 *cookie);
+-void ieee80211_purge_tx_queue(struct ieee80211_hw *hw,
+-			      struct sk_buff_head *skbs);
+ struct sk_buff *
+ ieee80211_build_data_template(struct ieee80211_sub_if_data *sdata,
+ 			      struct sk_buff *skb, u32 info_flags);
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -1294,3 +1294,4 @@ void ieee80211_purge_tx_queue(struct iee
+ 	while ((skb = __skb_dequeue(skbs)))
+ 		ieee80211_free_txskb(hw, skb);
+ }
++EXPORT_SYMBOL(ieee80211_purge_tx_queue);
 
 
