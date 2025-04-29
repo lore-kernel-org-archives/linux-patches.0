@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C512517AC;
-	Tue, 29 Apr 2025 18:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7E1155333;
+	Tue, 29 Apr 2025 18:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950437; cv=none; b=E6k9SPeCDKpLhdqVfjf3DBk3vp64tsRyBD1kK4iQPcPzFzL0K/vd3jIC8UyWkVPOvQ96vg8JJn9oIcxXA5fLa8OwT4UK4tYvY1R1URPrlyfdsTqCvNhJJ9Sq8jOs7YwlSfgUEQuzLmI1HJNmk5+EX8xDJShudHPkfj5DaEwYNwU=
+	t=1745950441; cv=none; b=Zfq+VVqJbbX31nyHUGZW/3p4BF5JuA/S8rXYR40TYJVM8tKeFbNMIgiu1eQ4RzkBo6g/r1COgBFL6PLXvzzPVC/wb2hqxD0/3KsbHBNpVd5rj4dJOKB+9xQbh9tCMk2mBbCgNynmoguOvZ0115tf2laYcntspyTkp3NftVZ6FpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950437; c=relaxed/simple;
-	bh=KdANkyBZc6Am3HVApavNrEjtXnv25lqZhtR1ZbuIwm4=;
+	s=arc-20240116; t=1745950441; c=relaxed/simple;
+	bh=cN78O8Gg/Ri3W0s78eDdfU/CGNtjSmyFhkDRh+0kq7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tb1KJj2k2FV4QzI4Ox92OCGZwvgr6Jto39dhQFqMMxGq2A98iMbW8hj745vqL6LozMbfpMjrfjQP/YT8sZ/egcJeQXlpyt2qlN01hcEDmET+W0OkrybaIrn+owZvxc6uh8nQIu6IDqVJOBBMHuDYBO/wb0rKHSSNCwRR9MuTunI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAFJ02Xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YkUmESJsVJ2cyraPcxODiS4/C9zrLytFtSjimZftp9vWpM/mU7RHANRCYqAUd6uX6dHQgslmTSDoB4Xa4+Gu1CphSKGbfrPBuD+tPtZnU9Sudwbxnuiy2OeE5K+8tAfGFwYHCQI9DH/tD0Rdk1WP1ZwiLhlX5j5HEwJrGCN5IOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeRK6yre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAFJ02Xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D752EC4CEE9;
-	Tue, 29 Apr 2025 18:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeRK6yre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D49FC4CEE3;
+	Tue, 29 Apr 2025 18:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950437;
-	bh=KdANkyBZc6Am3HVApavNrEjtXnv25lqZhtR1ZbuIwm4=;
+	s=korg; t=1745950440;
+	bh=cN78O8Gg/Ri3W0s78eDdfU/CGNtjSmyFhkDRh+0kq7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAFJ02XuiIIT6FBneRaLSPxtY1VmaQOYfWNEL0SW+aUnwUFIGgs13TqlIMZOKatK3
-	 NX7/OM0pNmkmO9nshaXuJRAbBrgjGzCjxQF1vzVoosVDDkz2+69V4tcTEhbqckpJdf
-	 liSexPqU5mxmv4MP4aZJ2+aiFFzNGLOPar94rnTc=
+	b=SeRK6yremrzAhns8dotWTxjfd2pAm+EwIZUQnwQl2SxKZopejBzLp7MysoqQtJKAn
+	 v+Lzps//DywowQBW+XuJbqibI3mDIediYlMtxoVQGkXafURJMHsydB/aTkrRTjbToz
+	 TkOdJ/a2Pp/5XN6I3bOjk1qHsKmr4vu8IEa1jLag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	stable <stable@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Hou Wenlong <houwenlong.hwl@antgroup.com>
-Subject: [PATCH 6.6 094/204] char: misc: register chrdev region with all possible minors
-Date: Tue, 29 Apr 2025 18:43:02 +0200
-Message-ID: <20250429161103.285243360@linuxfoundation.org>
+	"T.J. Mercier" <tjmercier@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 067/204] splice: remove duplicate noinline from pipe_clear_nowait
+Date: Tue, 29 Apr 2025 18:42:35 +0200
+Message-ID: <20250429161102.169694273@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: T.J. Mercier <tjmercier@google.com>
 
-commit c876be906ce7e518d9ef9926478669c151999e69 upstream.
+[ Upstream commit e6f141b332ddd9007756751b6afd24f799488fd8 ]
 
-register_chrdev will only register the first 256 minors of a major chrdev.
-That means that dynamically allocated misc devices with minor above 255
-will fail to open with -ENXIO.
+pipe_clear_nowait has two noinline macros, but we only need one.
 
-This was found by kernel test robot when testing a different change that
-makes all dynamically allocated minors be above 255. This has, however,
-been separately tested by creating 256 serio_raw devices with the help of
-userio driver.
+I checked the whole tree, and this is the only occurrence:
 
-Ever since allowing misc devices with minors above 128, this has been
-possible.
+$ grep -r "noinline .* noinline"
+fs/splice.c:static noinline void noinline pipe_clear_nowait(struct file *file)
+$
 
-Fix it by registering all minor numbers from 0 to MINORMASK + 1 for
-MISC_MAJOR.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/oe-lkp/202503171507.6c8093d0-lkp@intel.com
-Fixes: ab760791c0cf ("char: misc: Increase the maximum number of dynamic misc devices to 1048448")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Tested-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
-Link: https://lore.kernel.org/r/20250317-misc-chrdev-v1-1-6cd05da11aef@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f99fc513ddd ("splice: clear FMODE_NOWAIT on file if splice/vmsplice is used")
+Signed-off-by: "T.J. Mercier" <tjmercier@google.com>
+Link: https://lore.kernel.org/20250423180025.2627670-1-tjmercier@google.com
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c |    2 +-
+ fs/splice.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -315,7 +315,7 @@ static int __init misc_init(void)
- 		goto fail_remove;
+diff --git a/fs/splice.c b/fs/splice.c
+index d983d375ff113..6f9b06bbb860a 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -45,7 +45,7 @@
+  * here if set to avoid blocking other users of this pipe if splice is
+  * being done on it.
+  */
+-static noinline void noinline pipe_clear_nowait(struct file *file)
++static noinline void pipe_clear_nowait(struct file *file)
+ {
+ 	fmode_t fmode = READ_ONCE(file->f_mode);
  
- 	err = -EIO;
--	if (register_chrdev(MISC_MAJOR, "misc", &misc_fops))
-+	if (__register_chrdev(MISC_MAJOR, 0, MINORMASK + 1, "misc", &misc_fops))
- 		goto fail_printk;
- 	return 0;
- 
+-- 
+2.39.5
+
 
 
