@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2B5C148;
-	Tue, 29 Apr 2025 17:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA531C148;
+	Tue, 29 Apr 2025 17:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948888; cv=none; b=aoACwFvouErVNdFcgwY/xh1AgGAVMQgQQhKthrUkPlnzOuPpd8aBN9a5GRrNCbkjP/FuPqzfVYwVcllzo1X2NJuXsZbAeZoeEAOyHywlvrJ+ZE+ZY2Ju/vpAmf0TfVkzw/XtzsPv9tzSRIKXnBIhoIuwUIyGa62akJVaxEgMFas=
+	t=1745948890; cv=none; b=URbNJW/fbzjkiiAGLV8XPJoqBL5arz2VLlXZbG0iVOu0HGkPGMrUFf2x5tg/6o9ODqOG3ASI9Sea6dtKoeMHfJ+9RpskrAth6RMGh3WZuhiRgQvFYdtvVTYdEQchPZ5hsiQ4XQrj2/FTy1jrDGjNCp8NoLieujalLlzvvN9DQ1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948888; c=relaxed/simple;
-	bh=q7CkJayjYJqFqUwGemmPW3VYWXTA/ZSsP2ATXJXGsLo=;
+	s=arc-20240116; t=1745948890; c=relaxed/simple;
+	bh=eMKoWRJMjG8VwyEMLqO44TUZHrzkiB7wNKxohLYjLik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ucl5FXgdkcddLmqjzDw32nc9q5kJbOqpmsFJNvOutSjbDkcKTpEIhKotxjqTSTRJjsfeeIVx2K4HhHB40NEOYSEQeegejYkh26zgD5isJGOBHllRPTqJNdSQqJj6jWPAdgsVqmD/+IHo899/VA80vRRG3RsSldwuizwkFD7iL0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6dp1A8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SxAepsk4UGXy/KL14G+hhxP1YaXhTBkrcN7QkVI7RDs/cxOTyrnLgnWxX27FdijIOqBtWKqQ8LgYnM0Etl+nvaeqXH4L1rUWyL31/Wn74wUO82IBAJKzi+EZxqnPjYRwl2Zm9e528ipYOqPui63Ea0UHYNlt/i0hgdZ/nMjH2WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClBqtrVG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6dp1A8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45CFC4CEE3;
-	Tue, 29 Apr 2025 17:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClBqtrVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB7DC4CEE3;
+	Tue, 29 Apr 2025 17:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948888;
-	bh=q7CkJayjYJqFqUwGemmPW3VYWXTA/ZSsP2ATXJXGsLo=;
+	s=korg; t=1745948890;
+	bh=eMKoWRJMjG8VwyEMLqO44TUZHrzkiB7wNKxohLYjLik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6dp1A8HjU/xnBvNdZiVqOL6km68zw3bcUOUAUTsVcDvyV/d61GnPvQuogIy5K30f
-	 Ykd2pFQiWSh8DKpNoauGdjhTJZqNEv3SWQ3Cf7v0EfIIr2hcizwWwK7RHwkQHUQWO/
-	 OSYrqU+mkB1F7hFEtEGke3oXdd4qqtSHVe7yUHFw=
+	b=ClBqtrVGJoUEqKREIDmD5NVpDNOfrSmmXNfUrsl0RkEU63wpHeu0NRcPOBXgbIRpC
+	 kErwXVKkHwY5xkwvItRPicT8+tXAXiAAG81ZQ0JI6OznTpAcTl//qKbmGsWbbm4z7y
+	 jztHpUNGPCoAg32yz6n8n3K9J3jzdrO1ak7FjooM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	John Garry <john.garry@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/373] riscv: Properly export reserved regions in /proc/iomem
-Date: Tue, 29 Apr 2025 18:40:27 +0200
-Message-ID: <20250429161129.327047839@linuxfoundation.org>
+Subject: [PATCH 5.15 123/373] scsi: hisi_sas: Fix setting of hisi_sas_slot.is_internal
+Date: Tue, 29 Apr 2025 18:40:00 +0200
+Message-ID: <20250429161128.238796621@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,122 +46,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: John Garry <john.garry@huawei.com>
 
-[ Upstream commit e94eb7ea6f206e229791761a5fdf9389f8dbd183 ]
+[ Upstream commit c763ec4c10f78678d6d4415646237f07109a5a5f ]
 
-The /proc/iomem represents the kernel's memory map. Regions marked
-with "Reserved" tells the user that the range should not be tampered
-with. Kexec-tools, when using the older kexec_load syscall relies on
-the "Reserved" regions to build the memory segments, that will be the
-target of the new kexec'd kernel.
+The hisi_sas_slot.is_internal member is not set properly for ATA commands
+which the driver sends directly. A TMF struct pointer is normally used as a
+test to set this, but it is NULL for those commands. It's not ideal, but
+pass an empty TMF struct to set that member properly.
 
-The RISC-V port tries to expose all reserved regions to userland, but
-some regions were not properly exposed: Regions that resided in both
-the "regular" and reserved memory block, e.g. the EFI Memory Map. A
-missing entry could result in reserved memory being overwritten.
-
-It turns out, that arm64, and loongarch had a similar issue a while
-back:
-
-  commit d91680e687f4 ("arm64: Fix /proc/iomem for reserved but not memory regions")
-  commit 50d7ba36b916 ("arm64: export memblock_reserve()d regions via /proc/iomem")
-
-Similar to the other ports, resolve the issue by splitting the regions
-in an arch initcall, since we need a working allocator.
-
-Fixes: ffe0e5261268 ("RISC-V: Improve init_resources()")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250409182129.634415-1-bjorn@kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/1643627607-138785-1-git-send-email-john.garry@huawei.com
+Fixes: dc313f6b125b ("scsi: hisi_sas: Factor out task prep and delivery code")
+Reported-by: Xiang Chen <chenxiang66@hisilicon.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 8aa580cd9284 ("scsi: hisi_sas: Enable force phy when SATA disk directly connected")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/setup.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index 8cc147491c675..0c85b9e59ec0e 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -84,6 +84,9 @@ static struct resource bss_res = { .name = "Kernel bss", };
- static struct resource elfcorehdr_res = { .name = "ELF Core hdr", };
- #endif
- 
-+static int num_standard_resources;
-+static struct resource *standard_resources;
-+
- static int __init add_resource(struct resource *parent,
- 				struct resource *res)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index b9f4f7fadfd40..9663492e566d1 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -408,8 +408,7 @@ void hisi_sas_task_deliver(struct hisi_hba *hisi_hba,
+ 			   struct hisi_sas_slot *slot,
+ 			   struct hisi_sas_dq *dq,
+ 			   struct hisi_sas_device *sas_dev,
+-			   struct hisi_sas_internal_abort *abort,
+-			   struct hisi_sas_tmf_task *tmf)
++			   struct hisi_sas_internal_abort *abort)
  {
-@@ -157,7 +160,7 @@ static void __init init_resources(void)
- 	struct resource *res = NULL;
- 	struct resource *mem_res = NULL;
- 	size_t mem_res_sz = 0;
--	int num_resources = 0, res_idx = 0;
-+	int num_resources = 0, res_idx = 0, non_resv_res = 0;
- 	int ret = 0;
+ 	struct hisi_sas_cmd_hdr *cmd_hdr_base;
+ 	int dlvry_queue_slot, dlvry_queue;
+@@ -435,8 +434,6 @@ void hisi_sas_task_deliver(struct hisi_hba *hisi_hba,
+ 	cmd_hdr_base = hisi_hba->cmd_hdr[dlvry_queue];
+ 	slot->cmd_hdr = &cmd_hdr_base[dlvry_queue_slot];
  
- 	/* + 1 as memblock_alloc() might increase memblock.reserved.cnt */
-@@ -221,6 +224,7 @@ static void __init init_resources(void)
- 	/* Add /memory regions to the resource tree */
- 	for_each_mem_region(region) {
- 		res = &mem_res[res_idx--];
-+		non_resv_res++;
+-	slot->tmf = tmf;
+-	slot->is_internal = tmf;
+ 	task->lldd_task = slot;
  
- 		if (unlikely(memblock_is_nomap(region))) {
- 			res->name = "Reserved";
-@@ -238,6 +242,9 @@ static void __init init_resources(void)
- 			goto error;
+ 	memset(slot->cmd_hdr, 0, sizeof(struct hisi_sas_cmd_hdr));
+@@ -595,7 +592,7 @@ static int hisi_sas_task_exec(struct sas_task *task, gfp_t gfp_flags,
+ 	slot->is_internal = tmf;
+ 
+ 	/* protect task_prep and start_delivery sequence */
+-	hisi_sas_task_deliver(hisi_hba, slot, dq, sas_dev, NULL, tmf);
++	hisi_sas_task_deliver(hisi_hba, slot, dq, sas_dev, NULL);
+ 
+ 	return 0;
+ 
+@@ -1333,12 +1330,13 @@ static int hisi_sas_softreset_ata_disk(struct domain_device *device)
+ 	struct hisi_hba *hisi_hba = dev_to_hisi_hba(device);
+ 	struct device *dev = hisi_hba->dev;
+ 	int s = sizeof(struct host_to_dev_fis);
++	struct hisi_sas_tmf_task tmf = {};
+ 
+ 	ata_for_each_link(link, ap, EDGE) {
+ 		int pmp = sata_srst_pmp(link);
+ 
+ 		hisi_sas_fill_ata_reset_cmd(link->device, 1, pmp, fis);
+-		rc = hisi_sas_exec_internal_tmf_task(device, fis, s, NULL);
++		rc = hisi_sas_exec_internal_tmf_task(device, fis, s, &tmf);
+ 		if (rc != TMF_RESP_FUNC_COMPLETE)
+ 			break;
  	}
+@@ -1349,7 +1347,7 @@ static int hisi_sas_softreset_ata_disk(struct domain_device *device)
  
-+	num_standard_resources = non_resv_res;
-+	standard_resources = &mem_res[res_idx + 1];
-+
- 	/* Clean-up any unused pre-allocated resources */
- 	if (res_idx >= 0)
- 		memblock_free(__pa(mem_res), (res_idx + 1) * sizeof(*mem_res));
-@@ -249,6 +256,33 @@ static void __init init_resources(void)
- 	memblock_free(__pa(mem_res), mem_res_sz);
- }
+ 			hisi_sas_fill_ata_reset_cmd(link->device, 0, pmp, fis);
+ 			rc = hisi_sas_exec_internal_tmf_task(device, fis,
+-							     s, NULL);
++							     s, &tmf);
+ 			if (rc != TMF_RESP_FUNC_COMPLETE)
+ 				dev_err(dev, "ata disk %016llx de-reset failed\n",
+ 					SAS_ADDR(device->sas_addr));
+@@ -2003,7 +2001,7 @@ hisi_sas_internal_abort_task_exec(struct hisi_hba *hisi_hba, int device_id,
+ 	slot->port = port;
+ 	slot->is_internal = true;
  
-+static int __init reserve_memblock_reserved_regions(void)
-+{
-+	u64 i, j;
-+
-+	for (i = 0; i < num_standard_resources; i++) {
-+		struct resource *mem = &standard_resources[i];
-+		phys_addr_t r_start, r_end, mem_size = resource_size(mem);
-+
-+		if (!memblock_is_region_reserved(mem->start, mem_size))
-+			continue;
-+
-+		for_each_reserved_mem_range(j, &r_start, &r_end) {
-+			resource_size_t start, end;
-+
-+			start = max(PFN_PHYS(PFN_DOWN(r_start)), mem->start);
-+			end = min(PFN_PHYS(PFN_UP(r_end)) - 1, mem->end);
-+
-+			if (start > mem->end || end < mem->start)
-+				continue;
-+
-+			reserve_region_with_split(mem, start, end, "Reserved");
-+		}
-+	}
-+
-+	return 0;
-+}
-+arch_initcall(reserve_memblock_reserved_regions);
+-	hisi_sas_task_deliver(hisi_hba, slot, dq, sas_dev, abort, NULL);
++	hisi_sas_task_deliver(hisi_hba, slot, dq, sas_dev, abort);
  
- static void __init parse_dtb(void)
- {
+ 	return 0;
+ 
 -- 
 2.39.5
 
