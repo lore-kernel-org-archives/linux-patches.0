@@ -1,236 +1,106 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A910E210F5D
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 12:40:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD828E0F;
+	Tue, 29 Apr 2025 13:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745930421; cv=none; b=rLQd/9iXUW2U887O3nELsx2+TOlwnKJSmTy2l5uQlpdxLTEMImTTY4guSIF8i+owrdPWXWdNgfGWesU4bzl0w3koX4y/A5ePLfkFUhGZMUvJa14mPzXUb9D9Azz+wFiYroGRkVA2BGHs6HdOSbuc3AUxkiO6EjIPIRMZriT3vmU=
+	t=1745932767; cv=none; b=j73aGspN5O7qx49GfiGigBtPYgcY0xeiWB8Wxt06q0vtLub52Q1D3ZFHQE/Wk44/6IWM3FL3/BXIcj6nSNAmHAIelKjYGYn0ZJq23qvV2bDpzXH+KpFRU+OkkO83yEiKYCzhXHtRM/uBssKmzvHGPrmD9j6jgpC6iuY3XUvJJtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745930421; c=relaxed/simple;
-	bh=ip7eQAl3OkyTGCrq0cmjZ9WKSDXUMl/2DdneuAGxbWg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Po4toTtIUgOl7XKk3ViGqxyBULGF31DElS9Z2O32fm/3wJ5qrX0d9GzNV9M6Qmi3ZG28AzjP6U4nyyLMk5wyikqJd3aXOw/J+kjZ4jqxOTXpNuGllkNubgbxRP+4L6M/krV6PiQPPe4bfAjPAF3nCK6tVUJq6dKFzsKi8w2ae24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BEKARxJd; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1745932767; c=relaxed/simple;
+	bh=q6pMNSJyTz849RKd8d/Eni1P8kzBFLPdHuoV6nEkUnI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dilVZXp6NUcYuTTjxwPm0D7T5A/zBHNS7qjlA2eia1JJgoNliLZFQwEwASemTgAQykznl5WO1pKai9W6ewBP4RflF/THxRYRH5Ain07MXnIUdCetz8p/XoH2DbOfl/R/pgDiC4DZdZYyQohw4YNkX7fZxNIkyPEAiOhUGLiV2do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LD1Vq1Ka; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BEKARxJd"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2264c9d0295so118135ad.0
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 05:40:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LD1Vq1Ka"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-301001bc6a8so614615a91.1;
+        Tue, 29 Apr 2025 06:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1745930419; x=1746535219; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hhyBzxR8NyUZrkIJH4pc7IFsAn1vSN/LWAh25/3km3g=;
-        b=BEKARxJdogNTB+5wMYMcz7591ryM16+6Ix6hu6PR8pKVkk4D+t93QzjcsFBtRcB0Kb
-         t1Mdg0dmbDD6t0gZmrTMT0uKurORy7/+2PZWEqs+c+UUAtk/8vDOGdt6FAaxObDCaB2C
-         lj1Do2K0ad+x+ZBzAUFgCx+WDb9DFLgAFNY0RIw2dHcUxUp/A2ZwZ/FXjV37zQVqtLn9
-         vz1YT60p2CTejecjVMzRMx+e2JJ2hB9fFUg9D6MGid2RaalzkK0EFad++Raq3MqdBFl3
-         EVEqAEnuCerdz37x2QCPZXU80csxT3m9HhhxY91P7LP4gTgnpCSvvNlJWOKqYCyNkIi0
-         lw2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745930419; x=1746535219;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1745932766; x=1746537566; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hhyBzxR8NyUZrkIJH4pc7IFsAn1vSN/LWAh25/3km3g=;
-        b=LK3aYz7AByG8RVWcMojrpwXir3nDpDYF2rOESNneBE4whKZy9vwetzSbpKm5FsjXjH
-         IqBsiiCtYfzDGkV4f87GKnDj4Wy4i4X6cvntZgPhJxQn0/olXjpk1W/PbCi0TMDo8oeG
-         gPX6PtckBNw8SPPPx0gbryTuAdAuBj/6kWfot3WktVut/baMCkBIRXX8FmZ51nT9bmcB
-         hub6LqhMnKoULJl2PORT5tXkaiH0ik8zmBHOHnK//77qpSnHVj8HWQWfhEsW1V2Su8nR
-         y1/OkB/oQ1H38ZKblx1gBIe/qlkHvYn0MOoibvCbue/6M0fNC+qy4MAT48Iy2peZU8Ra
-         URWA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2hVj8j+YcSRntPG6cEyDxjPcgPWuX8cl8N3kDaLyDZSBccfFgk2TZoQQuidCWxhe3MHMdB6Cs@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0hdhDhk9u13+fUcBt45n8klw5JKOZmdx2xCaaOgiKuSyAeUn5
-	qoax5vSjh/EK8nh1/Mzx4MvF/OJYFgJr/jslDGg8DVswgb+f1NTqwXDZTeGn6w==
-X-Gm-Gg: ASbGncvNRef9MVotXBHSiKRl3FYiUZY2pimcwpJuLwqn8trGJjR3M75kKTnNm8lOtis
-	A399pKRYd0EcI3PupqWWccDceqUwTk77W+1LUkYiiOIyVHkqeyOc2YmJfllayGQ5lrzd33mOZI4
-	ku4x7XdR2AFck2OSkO3AF+8Vg19q+cFP7hxk2IeptUQBLpcdYZ0n+H4w4hr6lc60Zab1Md+ERYn
-	9y1Wy9BqGSA9KFbZZHBh0RbS0+9Eh+RK0E+pAodMsv9SS9hfFlc/r5UQ1iqqWYTTT7n1CUtnEF1
-	9MtcfS0klygRbs0vGL7zYXjzOmj/3apDtXTtjZabDHhIfn4zrdDuIvkvHylHDs8nLI43GOrZ
-X-Google-Smtp-Source: AGHT+IH/V/T2eUYQJIXG2EPtw/1cOV7MQT9tuyQOLSioTulIDCv1mtnsV9bjGKGjf9rlwz1NRxgL8g==
-X-Received: by 2002:a17:902:e786:b0:216:201e:1b63 with SMTP id d9443c01a7336-22de85f23admr2173255ad.11.1745930418710;
-        Tue, 29 Apr 2025 05:40:18 -0700 (PDT)
-Received: from google.com (2.210.143.34.bc.googleusercontent.com. [34.143.210.2])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25acd2fcsm10065488b3a.179.2025.04.29.05.40.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 05:40:18 -0700 (PDT)
-Date: Tue, 29 Apr 2025 12:40:07 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
-	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
-	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
-	zhangzekun11@huawei.com, iommu@lists.linux.dev,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
-	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-Subject: Re: [PATCH v2 11/22] iommufd: Add for-driver helpers
- iommufd_vcmdq_depend/undepend()
-Message-ID: <aBDIpz7w8wxIn_AF@google.com>
-References: <cover.1745646960.git.nicolinc@nvidia.com>
- <a25c9454c17663f9e79b37bc2908bf3a99856be6.1745646960.git.nicolinc@nvidia.com>
+        bh=qfwi78OPJ+7NloXGVD0nV3Y/3cfDPkY2XA/mDHzCFKg=;
+        b=LD1Vq1KaUkDwXRXsOlsHihh8sMbYXZOmAikYfhi5es9hGl7/tMErc2xTdcewFikS64
+         BYSXvNkM3IuZcXXIM9zMhQdJHP58LDfPOeHin1nkEhvzXwHyVrktb8ZlrZamS5Zt/Vru
+         PVlHbbyKT3z4c6ygRfvV34qxjGSGMKXrZu+ufwDu6tk3WuCKwI4L1tyTUpI4LLf3cQDl
+         Er+D32wRwW/nb/JJ9m8CLThDT//+1DDAbNCwIxJM9lLQibjoVIpQE7cH4u++eyONITms
+         Bq4/vvV1RL5sbP9ASTZFkZIwSyj0A6Il/0cYZ3sl76ij9qXetIn0uGPxO4yEP+X1ucLJ
+         e4uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745932766; x=1746537566;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qfwi78OPJ+7NloXGVD0nV3Y/3cfDPkY2XA/mDHzCFKg=;
+        b=hU14O+HxZddH5PjapzJ1S7htD5H7nkBWOZZ+5+I4ZR9g8vcGHvAgEF24NzS1/BkmWx
+         QAr08jwH/y52sTukS0zI9pvND3ZW9ZCxn2e53KGtgtFppiyfomz9HNNryaX7OOUGY+gu
+         cl42I1vzgZiS5wi/Tq62k0P63c7XQDHJgcuUZdxFd+3fQacq1RNdf3AE/+H1+Ca/YSlg
+         u9gSeaAbyYYBDIW94gxPnxspvWG5yt1keTYp99ZINY/ZvZDM9dTWtEQ8BKy1H4xMj+3I
+         LYaBFp2ujZOPQ7rtZ7n/TFJAeXpsgROe9Ql12lAKG0pzh5O7d8ueISDlDo2UUlVuxFiy
+         USPg==
+X-Forwarded-Encrypted: i=1; AJvYcCV4DGz160QgLhEJOu5mbWQ87MuRkauH3u1phtPP8BuYUhks0SEhVVXz95A7R5Cimt3rZrbnHTCOAA==@lists.linux.dev, AJvYcCXOjMXRl/5w7SaN+og0hdMM4M1WNWyPgopH1zi9eboA1mOjrZVHifk+sQfJ8R2vMrTFIQXw@lists.linux.dev
+X-Gm-Message-State: AOJu0YxYsOBnvyOmhxYArMeNjry4jRAnQ9i6f6MICXdoytXSYyI38zLj
+	gpo1nzTF8AbidTdhaeEvtzxg2RyZ4u0/D6C9IbkaPBHi9sS5Gw6PFtVPGlNFx/LLzf0jUTUBP6p
+	kzdVByvytD1ZupXJ1AC0YKBOkWbA=
+X-Gm-Gg: ASbGncuILXB1MwfwVUCUJW153b6MzBDaTcnxiP152atrfKSXI62IWCSDUAa730TXSJs
+	8sPNcjJNLmhJiihu3yu2XoSrw7k5m9Ser5E0TLFJKNnTxnlIkn2ZIdlmCOAH+4Kl5gyLQwzfblv
+	OQOW8wrmXpTLquofbDRJQxYA==
+X-Google-Smtp-Source: AGHT+IHxnj2vnGMV80DWZ4aFFXP8qUs5JrcNSGq2bKT98m93IjisoHwKfYDtOCPyJ/O9yqy7+8fVIugvKcq0lL0lIqo=
+X-Received: by 2002:a17:90b:33c7:b0:305:5f20:b28c with SMTP id
+ 98e67ed59e1d1-30a220f061dmr1555914a91.5.1745932765639; Tue, 29 Apr 2025
+ 06:19:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a25c9454c17663f9e79b37bc2908bf3a99856be6.1745646960.git.nicolinc@nvidia.com>
+References: <20241119185747.862544-1-ojeda@kernel.org> <CANiq72n4Fw96hcuqQeorsfH7z4Tb+R1gdf80H_XkD-oA6z5TSA@mail.gmail.com>
+In-Reply-To: <CANiq72n4Fw96hcuqQeorsfH7z4Tb+R1gdf80H_XkD-oA6z5TSA@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 29 Apr 2025 15:19:13 +0200
+X-Gm-Features: ATxdqUGN0dlLf5NE4vIholiXMZscWUbgyfznzqrixWlWYYWoan5VvhqtWa-4NWI
+Message-ID: <CANiq72mNJrMMbEcfJMLT4kM-_iviM0AR6oeigCyrb5eMWkn3KQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] rust: allow Clang-native `RANDSTRUCT` configs
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Aaron Ballman <aaron@aaronballman.com>, 
+	Bill Wendling <isanbard@gmail.com>, Cole Nixon <nixontcole@gmail.com>, 
+	Connor Kuehl <cipkuehl@gmail.com>, Fangrui Song <i@maskray.me>, James Foster <jafosterja@gmail.com>, 
+	Jeff Takahashi <jeffrey.takahashi@gmail.com>, Jordan Cantrell <jordan.cantrell@mail.com>, 
+	Matthew Maurer <mmaurer@google.com>, Nikk Forbus <nicholas.forbus@gmail.com>, 
+	Qing Zhao <qing.zhao@oracle.com>, Sami Tolvanen <samitolvanen@google.com>, 
+	Tim Pugh <nwtpugh@gmail.com>, Kees Cook <kees@kernel.org>, Nicolas Schier <n.schier@avm.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 25, 2025 at 10:58:06PM -0700, Nicolin Chen wrote:
-> NVIDIA Virtual Command Queue is one of the iommufd users exposing vIOMMU
-> features to user space VMs. Its hardware has a strict rule when mapping
-> and unmapping multiple global CMDQVs to/from a VM-owned VINTF, requiring
-> mappings in ascending order and unmappings in descending order.
-> 
-> The tegra241-cmdqv driver can apply the rule for a mapping in the LVCMDQ
-> allocation handler, however it can't do the same for an unmapping since
-> the destroy op returns void.
-> 
-> Add iommufd_vcmdq_depend/undepend() for-driver helpers, allowing LVCMDQ
-> allocator to refcount_inc() a sibling LVCMDQ object and LVCMDQ destroyer
-> to refcount_dec().
-> 
-> This is a bit of compromise, because a driver might end up with abusing
-> the API that deadlocks the objects. So restrict the API to a dependency
-> between two driver-allocated objects of the same type, as iommufd would
-> unlikely build any core-level dependency in this case.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  include/linux/iommufd.h        | 47 ++++++++++++++++++++++++++++++++++
->  drivers/iommu/iommufd/driver.c | 28 ++++++++++++++++++++
->  2 files changed, 75 insertions(+)
-> 
-> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
-> index e91381aaec5a..5dff154e8ce1 100644
-> --- a/include/linux/iommufd.h
-> +++ b/include/linux/iommufd.h
-> @@ -232,6 +232,10 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
->  					     size_t size,
->  					     enum iommufd_object_type type);
->  void iommufd_object_abort(struct iommufd_ctx *ictx, struct iommufd_object *obj);
-> +int iommufd_object_depend(struct iommufd_object *obj_dependent,
-> +			  struct iommufd_object *obj_depended);
-> +void iommufd_object_undepend(struct iommufd_object *obj_dependent,
-> +			     struct iommufd_object *obj_depended);
->  struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
->  				       unsigned long vdev_id);
->  int iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
-> @@ -252,6 +256,17 @@ static inline void iommufd_object_abort(struct iommufd_ctx *ictx,
->  {
->  }
->  
-> +static inline int iommufd_object_depend(struct iommufd_object *obj_dependent,
-> +					struct iommufd_object *obj_depended)
-> +{
-> +	return -EOPNOTSUPP;
-> +}
-> +
-> +static inline void iommufd_object_undepend(struct iommufd_object *obj_dependent,
-> +					   struct iommufd_object *obj_depended)
-> +{
-> +}
-> +
->  static inline struct device *
->  iommufd_viommu_find_dev(struct iommufd_viommu *viommu, unsigned long vdev_id)
->  {
-> @@ -329,4 +344,36 @@ static inline int iommufd_viommu_report_event(struct iommufd_viommu *viommu,
->  		static_assert(offsetof(typeof(*drv_struct), member.obj) == 0); \
->  		iommufd_object_abort(ictx, &drv_struct->member.obj);           \
->  	})
-> +
-> +/*
-> + * Helpers for IOMMU driver to build/destroy a dependency between two sibling
-> + * structures created by one of the allocators above
-> + */
-> +#define iommufd_vcmdq_depend(vcmdq_dependent, vcmdq_depended, member)          \
-> +	({                                                                     \
-> +		static_assert(__same_type(struct iommufd_object,               \
-> +					  vcmdq_dependent->member.obj));       \
-> +		static_assert(offsetof(typeof(*vcmdq_dependent),               \
-> +					      member.obj) == 0);               \
-> +		static_assert(__same_type(struct iommufd_object,               \
-> +					  vcmdq_depended->member.obj));        \
-> +		static_assert(offsetof(typeof(*vcmdq_depended),                \
-> +					      member.obj) == 0);               \
-> +		iommufd_object_depend(&vcmdq_dependent->member.obj,            \
-> +				      &vcmdq_depended->member.obj);            \
-> +	})
-> +
-> +#define iommufd_vcmdq_undepend(vcmdq_dependent, vcmdq_depended, member)        \
-> +	({                                                                     \
-> +		static_assert(__same_type(struct iommufd_object,               \
-> +					  vcmdq_dependent->member.obj));       \
-> +		static_assert(offsetof(typeof(*vcmdq_dependent),               \
-> +					      member.obj) == 0);               \
-> +		static_assert(__same_type(struct iommufd_object,               \
-> +					  vcmdq_depended->member.obj));        \
-> +		static_assert(offsetof(typeof(*vcmdq_depended),                \
-> +					      member.obj) == 0);               \
-> +		iommufd_object_undepend(&vcmdq_dependent->member.obj,          \
-> +					&vcmdq_depended->member.obj);          \
-> +	})
->  #endif
-> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
-> index 7980a09761c2..fb7f8fe40f95 100644
-> --- a/drivers/iommu/iommufd/driver.c
-> +++ b/drivers/iommu/iommufd/driver.c
-> @@ -50,6 +50,34 @@ void iommufd_object_abort(struct iommufd_ctx *ictx, struct iommufd_object *obj)
->  }
->  EXPORT_SYMBOL_NS_GPL(iommufd_object_abort, "IOMMUFD");
->  
-> +/* A per-structure helper is available in include/linux/iommufd.h */
-> +int iommufd_object_depend(struct iommufd_object *obj_dependent,
-> +			  struct iommufd_object *obj_depended)
-> +{
-> +	/* Reject self dependency that dead locks */
-> +	if (obj_dependent == obj_depended)
-> +		return -EINVAL;
-> +	/* Only support dependency between two objects of the same type */
-> +	if (obj_dependent->type != obj_depended->type)
-> +		return -EINVAL;
-> +
-> +	refcount_inc(&obj_depended->users);
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_NS_GPL(iommufd_object_depend, "IOMMUFD");
-> +
-> +/* A per-structure helper is available in include/linux/iommufd.h */
-> +void iommufd_object_undepend(struct iommufd_object *obj_dependent,
-> +			     struct iommufd_object *obj_depended)
-> +{
-> +	if (WARN_ON_ONCE(obj_dependent == obj_depended ||
-> +			 obj_dependent->type != obj_depended->type))
-> +		return;
-> +
-> +	refcount_dec(&obj_depended->users);
-> +}
-> +EXPORT_SYMBOL_NS_GPL(iommufd_object_undepend, "IOMMUFD");
-> +
->  /* Caller should xa_lock(&viommu->vdevs) to protect the return value */
->  struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
->  				       unsigned long vdev_id)
+On Thu, Jan 9, 2025 at 3:51=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> I may pick this very early next cycle so that we can get some testing
+> during the -rc's, and just drop it if something breaks for anyone.
+>
+> But any other testing beforehand would be still very welcome...
 
-If I'm getting this right, I think we are setting up dependencies like:
-vcmdq[2] -> vcmdq[1] -> vcmdq[0] based on refcounts of each object,
-which ensures that the unmaps happen in descending order..
+I ended up waiting on this one since I think Andreas would be able to
+try it with some actual workload (the nice benchmarks he has). Anyway,
+it will go in sooner or later.
 
-If that's right, Is it fair to have iommufd_vcmdq_depend/undepend in the
-core code itself? Since it's a driver-level limitation, I think we
-should just have iommufd_object_depend/undepend in the core code and the
-iommufd_vcmdq_depend/undepend can move into the CMDQV driver?
+On top of that, backlinking the seed discussion since I will need to
+update this patch:
 
-> -- 
-> 2.43.0
-> 
+    https://lore.kernel.org/rust-for-linux/CANiq72mwYbg_L8u9NEfRD0Fp9E_zhCi=
+=3Dt=3DU2jyjsZe_Ls306hw@mail.gmail.com/
 
-Thanks,
-Praan
+Cheers,
+Miguel
