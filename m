@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881932528ED;
-	Tue, 29 Apr 2025 18:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E171A5BBB;
+	Tue, 29 Apr 2025 18:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950089; cv=none; b=KGKCgX8EvEfkHEmfBq3YVq68V7AE/9tDcpONOiIajOa3p2h+cvYRywBfRbyA8AxGXcEWl7+vVQVwUe5vdMw3K0wfilBi6mu+Zl+4he9MIwQ+NFlrHn4HU5lWNOCVxaS0A79yn9dGSMmAa1Ms4PmIz//psZBkwMhI2jP8OWWDsHo=
+	t=1745950092; cv=none; b=h+0c3azuPtrvxhrGscPcw+IpfZ41i81eS8g26Cbisj/q5f402JiHtwv6AUjsLvXurAERpQkfXsL/KC4HTEFO16KEJuzoiZhgSKdFtmwDScP/0EPYXOxych7v8kB4+t8XZV8Ny7Bff5VK2ZHA+Hxoz52oQLAc7z8n0DruH4eb8H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950089; c=relaxed/simple;
-	bh=cittUK7G9jMsPDX9/wtIYccY8cycqbRl0/ak7TajJm4=;
+	s=arc-20240116; t=1745950092; c=relaxed/simple;
+	bh=n/TCoHJ6GrX1DPMnCt4cEYaS23T3VgIElZhLn2IBgZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rTA9AgJXdNX/qx+lYAw7x+WNhzo18/pbGPvvbqpRtNESy5yxYUbbmnmKLLYUHrPHdWpa9FvWyWtgNOlX7WXQOtx1IRjiduqt2c75VEUjas2wGTca/LVLkS8DA5rgvHSXqbtpwwdPRlCLEFD04+VSDIVY58MgycBcbRHvu/U2ikQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7V9/zb4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dgd14VmHkgf0YNlUZbd9GWq+EfUKTy2uFXDQOUUjWrPnXLI96QmdcpTBYUfeKYeU+PeQtdgOnSZCAuPL1vFDma/9jI0MeCuZasz2ldOuscKPGkOzUh34figGCctecenP9O41tTl4AQDsCI6d5OHkzxFXjqzfEATBX9FqRNp2sWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqsg9Gq5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7V9/zb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1025C4CEE3;
-	Tue, 29 Apr 2025 18:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqsg9Gq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B4C4CEE3;
+	Tue, 29 Apr 2025 18:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950089;
-	bh=cittUK7G9jMsPDX9/wtIYccY8cycqbRl0/ak7TajJm4=;
+	s=korg; t=1745950092;
+	bh=n/TCoHJ6GrX1DPMnCt4cEYaS23T3VgIElZhLn2IBgZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7V9/zb4H3PPO1X+wYlzxY8unCK+/EBlzPwboDaOE+diXiYEkLl/awot0uYmIrRx5
-	 vOmu/FFcXjuGH1Mu8i51N2I9r2lHEKJ5u+ASCrvcNzZL3nHVDdYGjNI+qb5hEpbKTS
-	 ZtrFuQlkTRvZhQruKRCLJs73U3E76O0X1PWAXwC0=
+	b=eqsg9Gq5/8skbFiylVxTX1SFDfioQoB/3epksuCdIcigOqOx+7Wo9aoGtHPbsaRhT
+	 qmzWXZ3LnME0zX/SnWf4kDXOcn4ZuLKAtIfJbOYvhkCQC+egFa3BsuIh4D5fJATyEd
+	 R9y0UGSVMIKzgltKkUpC7jV9FSkkqLkTBvqLy2Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <Xiaogang.Chen@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/167] udmabuf: fix a buf size overflow issue during udmabuf creation
-Date: Tue, 29 Apr 2025 18:43:53 +0200
-Message-ID: <20250429161056.799057359@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.1 152/167] comedi: jr3_pci: Fix synchronous deletion of timer
+Date: Tue, 29 Apr 2025 18:44:20 +0200
+Message-ID: <20250429161057.871714438@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -45,42 +44,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 021ba7f1babd029e714d13a6bf2571b08af96d0f ]
+commit 44d9b3f584c59a606b521e7274e658d5b866c699 upstream.
 
-by casting size_limit_mb to u64  when calculate pglimit.
+When `jr3_pci_detach()` is called during device removal, it calls
+`timer_delete_sync()` to stop the timer, but the timer expiry function
+always reschedules the timer, so the synchronization is ineffective.
 
-Signed-off-by: Xiaogang Chen<Xiaogang.Chen@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250321164126.329638-1-xiaogang.chen@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Call `timer_shutdown_sync()` instead.  It does not matter that the timer
+expiry function pointer is cleared, because the device is being removed.
+
+Fixes: 07b509e6584a5 ("Staging: comedi: add jr3_pci driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250415123901.13483-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/udmabuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/comedi/drivers/jr3_pci.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index ef99174d81ced..546bba502fbc1 100644
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -186,7 +186,7 @@ static long udmabuf_create(struct miscdevice *device,
- 	if (!ubuf)
- 		return -ENOMEM;
+--- a/drivers/comedi/drivers/jr3_pci.c
++++ b/drivers/comedi/drivers/jr3_pci.c
+@@ -87,6 +87,7 @@ struct jr3_pci_poll_delay {
+ struct jr3_pci_dev_private {
+ 	struct timer_list timer;
+ 	struct comedi_device *dev;
++	bool timer_enable;
+ };
  
--	pglimit = (size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
-+	pglimit = ((u64)size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
- 	for (i = 0; i < head->count; i++) {
- 		if (!IS_ALIGNED(list[i].offset, PAGE_SIZE))
- 			goto err;
--- 
-2.39.5
-
+ union jr3_pci_single_range {
+@@ -596,10 +597,11 @@ static void jr3_pci_poll_dev(struct time
+ 				delay = sub_delay.max;
+ 		}
+ 	}
++	if (devpriv->timer_enable) {
++		devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
++		add_timer(&devpriv->timer);
++	}
+ 	spin_unlock_irqrestore(&dev->spinlock, flags);
+-
+-	devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
+-	add_timer(&devpriv->timer);
+ }
+ 
+ static struct jr3_pci_subdev_private *
+@@ -748,6 +750,7 @@ static int jr3_pci_auto_attach(struct co
+ 	devpriv->dev = dev;
+ 	timer_setup(&devpriv->timer, jr3_pci_poll_dev, 0);
+ 	devpriv->timer.expires = jiffies + msecs_to_jiffies(1000);
++	devpriv->timer_enable = true;
+ 	add_timer(&devpriv->timer);
+ 
+ 	return 0;
+@@ -757,8 +760,12 @@ static void jr3_pci_detach(struct comedi
+ {
+ 	struct jr3_pci_dev_private *devpriv = dev->private;
+ 
+-	if (devpriv)
+-		del_timer_sync(&devpriv->timer);
++	if (devpriv) {
++		spin_lock_bh(&dev->spinlock);
++		devpriv->timer_enable = false;
++		spin_unlock_bh(&dev->spinlock);
++		timer_delete_sync(&devpriv->timer);
++	}
+ 
+ 	comedi_pci_detach(dev);
+ }
 
 
