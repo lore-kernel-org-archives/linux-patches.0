@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF38F7E110;
-	Tue, 29 Apr 2025 17:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1BC7E110;
+	Tue, 29 Apr 2025 17:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946030; cv=none; b=lQqpFvYPv6f9eYmyWFKIYRGlf/GXu4vTL/EtLZuzLRXxdyOGoF1IblWMRdB3G8nJnRMcgLY7ZpHP0tUY8Q9pIhbZCyshDFLg1sHBPmkmVkkrdh8Noly0wSaNWExi+kODYSoZf+5YT/KP2WQeyCHEclal/h+UtlTFBjgu0KPi/8g=
+	t=1745946032; cv=none; b=OVA9Sg8CqHo3LTIvb6Qp1MeDTmgYpfl6S99G1C8/+X+R9fmw6cjBQiJvc4asGjz74UyA9R5l5nw0sqCbaa30dl6bpyqG7+A1eZ4wxisVIRDdqDzLqlvwlZVL2w46Iy95NhVYfNusr5y9usIYSTRgrz1Iqs5IBw3eOhxhQe3UCpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946030; c=relaxed/simple;
-	bh=YMcI3uh8Hko4qzcyqgKdiDHqrsR22X5X0c4QozvM7qw=;
+	s=arc-20240116; t=1745946032; c=relaxed/simple;
+	bh=jelVxnANYkxCEDv6vkz2J1Xvrz2/NRFCorCwoLAiFxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLdqtW1vdmfgM9KmJBJrKtP+1gaFX1TyO8vAXC1yfZGMoVEbhx+cNGDwgJlysSF4mM9cNqKeSWgTnMl7dFjMrUBJ3w8iE4WQKnPca3bvo5Sejh3c/1SrAS1g6GWYJzxbVYTIgKVo3ALMAtmVbeLlvf4wCZ+e4OvAA5AW1BwONnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raKYPL60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WVJJuBNVeVcgonZOCba00TlLvxzFZPEnoo4mr20I5w1G3oTPKBKBkADvxthJvgSMzwE6DlRxa/pHzgY7oy8P6XOyb0tRK99qOEd/cVFpFnuGNJcKMiPzKmC3MIvvVuwaXW7uycITuDxEE3L7fWWu2E8EnN+xOtb/219seYXZatI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPtlUj46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raKYPL60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9449C4CEEA;
-	Tue, 29 Apr 2025 17:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPtlUj46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1836C4CEE3;
+	Tue, 29 Apr 2025 17:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946029;
-	bh=YMcI3uh8Hko4qzcyqgKdiDHqrsR22X5X0c4QozvM7qw=;
+	s=korg; t=1745946032;
+	bh=jelVxnANYkxCEDv6vkz2J1Xvrz2/NRFCorCwoLAiFxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raKYPL60qrlvT11/upHdFz/uVex5JlsDaYTlGflpBEqy/qDxxndLGcvhwLTMlg6GJ
-	 bI4926RFs19qiSai0Ghl9otGmYs3q6X0t8IyycqQx9zFTpEF95EWHBPBh4y5YC7HIL
-	 4m9cIpyzN1U+94544OsGe3Og8MmMRht4jQmRIKdg=
+	b=HPtlUj46GLysOSp3x09Ai+m7SyZyXmP5e40WzEMc+OlHxbOFeg3xa23jv8n4wryCj
+	 ekuLfi54dynNy1B+9TlNeKsB2sKW2roAgrmoZyhTFyb6/742bkC4Gb+VBx2XnAqIbh
+	 +Mcy7WokMYX7sjMhxQ7nnCVSRh8aKKrZPaSMyiDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuli Wang <wangyuli@uniontech.com>,
 	Bibo Mao <maobibo@loongson.cn>,
-	Yulong Han <wheatfox17@icloud.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 131/311] LoongArch: KVM: Fix multiple typos of KVM code
-Date: Tue, 29 Apr 2025 18:39:28 +0200
-Message-ID: <20250429161126.408529487@linuxfoundation.org>
+Subject: [PATCH 6.14 132/311] LoongArch: KVM: Fully clear some CSRs when VM reboot
+Date: Tue, 29 Apr 2025 18:39:29 +0200
+Message-ID: <20250429161126.449263519@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,57 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yulong Han <wheatfox17@icloud.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 8b2d01fec800081dd68271c01e4d239ef4d7115e upstream.
+commit 9ea86232a5520d9d21832d06031ea80f055a6ff8 upstream.
 
-Fix multiple typos inside arch/loongarch/kvm.
+Some registers such as LOONGARCH_CSR_ESTAT and LOONGARCH_CSR_GINTC are
+partly cleared with function _kvm_setcsr(). This comes from the hardware
+specification, some bits are read only in VM mode, and however they can
+be written in host mode. So they are partly cleared in VM mode, and can
+be fully cleared in host mode.
+
+These read only bits show pending interrupt or exception status. When VM
+reset, the read-only bits should be cleared, otherwise vCPU will receive
+unknown interrupts in boot stage.
+
+Here registers LOONGARCH_CSR_ESTAT/LOONGARCH_CSR_GINTC are fully cleared
+in ioctl KVM_REG_LOONGARCH_VCPU_RESET vCPU reset path.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Yuli Wang <wangyuli@uniontech.com>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Yulong Han <wheatfox17@icloud.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/ipi.c |    4 ++--
- arch/loongarch/kvm/main.c     |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/loongarch/kvm/vcpu.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/loongarch/kvm/intc/ipi.c
-+++ b/arch/loongarch/kvm/intc/ipi.c
-@@ -111,7 +111,7 @@ static int send_ipi_data(struct kvm_vcpu
- 		ret = kvm_io_bus_read(vcpu, KVM_IOCSR_BUS, addr, sizeof(val), &val);
- 		srcu_read_unlock(&vcpu->kvm->srcu, idx);
- 		if (unlikely(ret)) {
--			kvm_err("%s: : read date from addr %llx failed\n", __func__, addr);
-+			kvm_err("%s: : read data from addr %llx failed\n", __func__, addr);
- 			return ret;
- 		}
- 		/* Construct the mask by scanning the bit 27-30 */
-@@ -127,7 +127,7 @@ static int send_ipi_data(struct kvm_vcpu
- 	ret = kvm_io_bus_write(vcpu, KVM_IOCSR_BUS, addr, sizeof(val), &val);
- 	srcu_read_unlock(&vcpu->kvm->srcu, idx);
- 	if (unlikely(ret))
--		kvm_err("%s: : write date to addr %llx failed\n", __func__, addr);
-+		kvm_err("%s: : write data to addr %llx failed\n", __func__, addr);
- 
- 	return ret;
- }
---- a/arch/loongarch/kvm/main.c
-+++ b/arch/loongarch/kvm/main.c
-@@ -296,10 +296,10 @@ int kvm_arch_enable_virtualization_cpu(v
- 	/*
- 	 * Enable virtualization features granting guest direct control of
- 	 * certain features:
--	 * GCI=2:       Trap on init or unimplement cache instruction.
-+	 * GCI=2:       Trap on init or unimplemented cache instruction.
- 	 * TORU=0:      Trap on Root Unimplement.
- 	 * CACTRL=1:    Root control cache.
--	 * TOP=0:       Trap on Previlege.
-+	 * TOP=0:       Trap on Privilege.
- 	 * TOE=0:       Trap on Exception.
- 	 * TIT=0:       Trap on Timer.
- 	 */
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -874,6 +874,13 @@ static int kvm_set_one_reg(struct kvm_vc
+ 			vcpu->arch.st.guest_addr = 0;
+ 			memset(&vcpu->arch.irq_pending, 0, sizeof(vcpu->arch.irq_pending));
+ 			memset(&vcpu->arch.irq_clear, 0, sizeof(vcpu->arch.irq_clear));
++
++			/*
++			 * When vCPU reset, clear the ESTAT and GINTC registers
++			 * Other CSR registers are cleared with function _kvm_setcsr().
++			 */
++			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_GINTC, 0);
++			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_ESTAT, 0);
+ 			break;
+ 		default:
+ 			ret = -EINVAL;
 
 
