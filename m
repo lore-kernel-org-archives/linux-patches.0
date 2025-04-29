@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132F247291;
-	Tue, 29 Apr 2025 16:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C11C82C60;
+	Tue, 29 Apr 2025 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945862; cv=none; b=CF7EzjcI2fWLY0oYRp22wizdgl2GdmKVLTqgIfhFe8TvQdgVN1yPTp6O8PznndNK1beeoRemdL0L9HoHWUfQk5peCSFHso2/s3T1DJAj91opUMbNqlYm8IV6WGCENfMs+/zfmToN7ze4gxyCAJSWEn0QoFXaIX85go0xaL0gph0=
+	t=1745945865; cv=none; b=iA5asuivjaAdF1YoDUeC0ruced/i2ACQYz/th2bdp08FPxkxjZGbtY6nvrSbOGNjQPwRFH2GE5wx9U8CsXoId1aMFhX9kbE2pmmv4UrWW1BLcv/vbyHkb3rVfIXPLFi5D12FYkxagJ+zvuuh6TtQ1MuEV24ch2cxqCnCR9B1X28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945862; c=relaxed/simple;
-	bh=Qyxk4ZPDJ7aR6adgc2UHPn36wbyIIcb6CD8aTMMGKko=;
+	s=arc-20240116; t=1745945865; c=relaxed/simple;
+	bh=fTZz1P2L/VUeNKjq2YK29/KRmxN0opi43Z2670M8jdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbAyEOS3BeydDXSfB+ImwcZas7X+j6BbzzfJ0CwlHmO62kTqf9fc1BKQUIgfdLYKD8yahabEiLJgvvdF8J3cUZEpoLeTK2HzZRVzv7CooivrR6bfXQPhtS0QR0jRWf3ECdmCVRoz0EoWXHV/uadY80bSoxJX5TBBka5ITr+AbkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChZQrJ3H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=su+sgoouTL/NkJDVvzidOJysEeO0KYsnQeLttswAxCoEDHNUIVXeS/4lNef260NdXDuyz0JRwplu6pM5YDB+9/Lzywk44gSSFdFUI/U2W9oSZbHf6XgqiJ9+NGO8b5dPzKEpUZkaE0ftljdm1vvz+djtGC7aB8QH2i8LYqD12VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtt+M54X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChZQrJ3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C6EC4CEE3;
-	Tue, 29 Apr 2025 16:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtt+M54X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D78C4CEE3;
+	Tue, 29 Apr 2025 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945861;
-	bh=Qyxk4ZPDJ7aR6adgc2UHPn36wbyIIcb6CD8aTMMGKko=;
+	s=korg; t=1745945865;
+	bh=fTZz1P2L/VUeNKjq2YK29/KRmxN0opi43Z2670M8jdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ChZQrJ3H5iHcWz/OP+PIYyfaf9lTNh8qEqMewXjXqMkmLv95wpyeFzR5aXL0l+5E7
-	 QE0yaRQ5LBRFbAbRzhFDgtADZDJy/u4+y59jZoG771B27TKbgYjfMuVY/be75Y9NqD
-	 RYsy+EohgU3zlSqHzol1UCog3olfSnS9bu8NwOY4=
+	b=qtt+M54X0hNxFjj5WKTL7drV0JvFMeggRRAcqfAo7uQ38o04G3Zh32KMYI30+NnW+
+	 wp0m5vEFQiVfPlT0arjgVpKVYEV2nYn7ly6fMW9nqwtL4xwe6MlQv12Vca1JYjgW/u
+	 nUyc+F/HTuRr7kCY6DwknsX5cZb9t2lLosJWqok4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 074/311] pds_core: make wait_context part of q_info
-Date: Tue, 29 Apr 2025 18:38:31 +0200
-Message-ID: <20250429161124.077157732@linuxfoundation.org>
+Subject: [PATCH 6.14 075/311] net: phy: Add helper for getting tx amplitude gain
+Date: Tue, 29 Apr 2025 18:38:32 +0200
+Message-ID: <20250429161124.118086902@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,172 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 
-[ Upstream commit 3f77c3dfffc7063428b100c4945ca2a7a8680380 ]
+[ Upstream commit 961ee5aeea048aa292f28d61f3a96a48554e91af ]
 
-Make the wait_context a full part of the q_info struct rather
-than a stack variable that goes away after pdsc_adminq_post()
-is done so that the context is still available after the wait
-loop has given up.
+Add helper which returns the tx amplitude gain defined in device tree.
+Modifying it can be necessary to compensate losses on the PCB and
+connector, so the voltages measured on the RJ45 pins are conforming.
 
-There was a case where a slow development firmware caused
-the adminq request to time out, but then later the FW finally
-finished the request and sent the interrupt.  The handler tried
-to complete_all() the completion context that had been created
-on the stack in pdsc_adminq_post() but no longer existed.
-This caused bad pointer usage, kernel crashes, and much wailing
-and gnashing of teeth.
-
-Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250421174606.3892-5-shannon.nelson@amd.com
+Signed-off-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250214-dp83822-tx-swing-v5-2-02ca72620599@liebherr.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 607b310ada5e ("net: dp83822: Fix OF_MDIO config check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/adminq.c | 36 +++++++++-------------
- drivers/net/ethernet/amd/pds_core/core.c   |  4 ++-
- drivers/net/ethernet/amd/pds_core/core.h   |  2 +-
- 3 files changed, 18 insertions(+), 24 deletions(-)
+ drivers/net/phy/phy_device.c | 53 ++++++++++++++++++++++++------------
+ include/linux/phy.h          |  4 +++
+ 2 files changed, 39 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
-index c83a0a80d5334..506f682d15c10 100644
---- a/drivers/net/ethernet/amd/pds_core/adminq.c
-+++ b/drivers/net/ethernet/amd/pds_core/adminq.c
-@@ -5,11 +5,6 @@
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 92161af788afd..2a01887c5617e 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3123,19 +3123,12 @@ void phy_get_pause(struct phy_device *phydev, bool *tx_pause, bool *rx_pause)
+ EXPORT_SYMBOL(phy_get_pause);
  
- #include "core.h"
- 
--struct pdsc_wait_context {
--	struct pdsc_qcq *qcq;
--	struct completion wait_completion;
--};
+ #if IS_ENABLED(CONFIG_OF_MDIO)
+-static int phy_get_int_delay_property(struct device *dev, const char *name)
++static int phy_get_u32_property(struct device *dev, const char *name, u32 *val)
+ {
+-	s32 int_delay;
+-	int ret;
 -
- static int pdsc_process_notifyq(struct pdsc_qcq *qcq)
- {
- 	union pds_core_notifyq_comp *comp;
-@@ -109,10 +104,10 @@ void pdsc_process_adminq(struct pdsc_qcq *qcq)
- 		q_info = &q->info[q->tail_idx];
- 		q->tail_idx = (q->tail_idx + 1) & (q->num_descs - 1);
- 
--		/* Copy out the completion data */
--		memcpy(q_info->dest, comp, sizeof(*comp));
+-	ret = device_property_read_u32(dev, name, &int_delay);
+-	if (ret)
+-		return ret;
 -
--		complete_all(&q_info->wc->wait_completion);
-+		if (!completion_done(&q_info->completion)) {
-+			memcpy(q_info->dest, comp, sizeof(*comp));
-+			complete(&q_info->completion);
-+		}
- 
- 		if (cq->tail_idx == cq->num_descs - 1)
- 			cq->done_color = !cq->done_color;
-@@ -162,8 +157,7 @@ irqreturn_t pdsc_adminq_isr(int irq, void *data)
- static int __pdsc_adminq_post(struct pdsc *pdsc,
- 			      struct pdsc_qcq *qcq,
- 			      union pds_core_adminq_cmd *cmd,
--			      union pds_core_adminq_comp *comp,
--			      struct pdsc_wait_context *wc)
-+			      union pds_core_adminq_comp *comp)
- {
- 	struct pdsc_queue *q = &qcq->q;
- 	struct pdsc_q_info *q_info;
-@@ -205,9 +199,9 @@ static int __pdsc_adminq_post(struct pdsc *pdsc,
- 	/* Post the request */
- 	index = q->head_idx;
- 	q_info = &q->info[index];
--	q_info->wc = wc;
- 	q_info->dest = comp;
- 	memcpy(q_info->desc, cmd, sizeof(*cmd));
-+	reinit_completion(&q_info->completion);
- 
- 	dev_dbg(pdsc->dev, "head_idx %d tail_idx %d\n",
- 		q->head_idx, q->tail_idx);
-@@ -231,16 +225,13 @@ int pdsc_adminq_post(struct pdsc *pdsc,
- 		     union pds_core_adminq_comp *comp,
- 		     bool fast_poll)
- {
--	struct pdsc_wait_context wc = {
--		.wait_completion =
--			COMPLETION_INITIALIZER_ONSTACK(wc.wait_completion),
--	};
- 	unsigned long poll_interval = 1;
- 	unsigned long poll_jiffies;
- 	unsigned long time_limit;
- 	unsigned long time_start;
- 	unsigned long time_done;
- 	unsigned long remaining;
-+	struct completion *wc;
- 	int err = 0;
- 	int index;
- 
-@@ -250,20 +241,19 @@ int pdsc_adminq_post(struct pdsc *pdsc,
- 		return -ENXIO;
- 	}
- 
--	wc.qcq = &pdsc->adminqcq;
--	index = __pdsc_adminq_post(pdsc, &pdsc->adminqcq, cmd, comp, &wc);
-+	index = __pdsc_adminq_post(pdsc, &pdsc->adminqcq, cmd, comp);
- 	if (index < 0) {
- 		err = index;
- 		goto err_out;
- 	}
- 
-+	wc = &pdsc->adminqcq.q.info[index].completion;
- 	time_start = jiffies;
- 	time_limit = time_start + HZ * pdsc->devcmd_timeout;
- 	do {
- 		/* Timeslice the actual wait to catch IO errors etc early */
- 		poll_jiffies = msecs_to_jiffies(poll_interval);
--		remaining = wait_for_completion_timeout(&wc.wait_completion,
--							poll_jiffies);
-+		remaining = wait_for_completion_timeout(wc, poll_jiffies);
- 		if (remaining)
- 			break;
- 
-@@ -292,9 +282,11 @@ int pdsc_adminq_post(struct pdsc *pdsc,
- 	dev_dbg(pdsc->dev, "%s: elapsed %d msecs\n",
- 		__func__, jiffies_to_msecs(time_done - time_start));
- 
--	/* Check the results */
--	if (time_after_eq(time_done, time_limit))
-+	/* Check the results and clear an un-completed timeout */
-+	if (time_after_eq(time_done, time_limit) && !completion_done(wc)) {
- 		err = -ETIMEDOUT;
-+		complete(wc);
-+	}
- 
- 	dev_dbg(pdsc->dev, "read admin queue completion idx %d:\n", index);
- 	dynamic_hex_dump("comp ", DUMP_PREFIX_OFFSET, 16, 1,
-diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
-index 4830292d5f879..3c60d4cf9d0e1 100644
---- a/drivers/net/ethernet/amd/pds_core/core.c
-+++ b/drivers/net/ethernet/amd/pds_core/core.c
-@@ -167,8 +167,10 @@ static void pdsc_q_map(struct pdsc_queue *q, void *base, dma_addr_t base_pa)
- 	q->base = base;
- 	q->base_pa = base_pa;
- 
--	for (i = 0, cur = q->info; i < q->num_descs; i++, cur++)
-+	for (i = 0, cur = q->info; i < q->num_descs; i++, cur++) {
- 		cur->desc = base + (i * q->desc_size);
-+		init_completion(&cur->completion);
-+	}
+-	return int_delay;
++	return device_property_read_u32(dev, name, val);
  }
+ #else
+-static int phy_get_int_delay_property(struct device *dev, const char *name)
++static int phy_get_u32_property(struct device *dev, const char *name, u32 *val)
+ {
+ 	return -EINVAL;
+ }
+@@ -3160,12 +3153,12 @@ static int phy_get_int_delay_property(struct device *dev, const char *name)
+ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
+ 			   const int *delay_values, int size, bool is_rx)
+ {
+-	s32 delay;
+-	int i;
++	int i, ret;
++	u32 delay;
  
- static void pdsc_cq_map(struct pdsc_cq *cq, void *base, dma_addr_t base_pa)
-diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
-index 543097983bf60..ec637dc4327a5 100644
---- a/drivers/net/ethernet/amd/pds_core/core.h
-+++ b/drivers/net/ethernet/amd/pds_core/core.h
-@@ -96,7 +96,7 @@ struct pdsc_q_info {
- 	unsigned int bytes;
- 	unsigned int nbufs;
- 	struct pdsc_buf_info bufs[PDS_CORE_MAX_FRAGS];
--	struct pdsc_wait_context *wc;
-+	struct completion completion;
- 	void *dest;
- };
+ 	if (is_rx) {
+-		delay = phy_get_int_delay_property(dev, "rx-internal-delay-ps");
+-		if (delay < 0 && size == 0) {
++		ret = phy_get_u32_property(dev, "rx-internal-delay-ps", &delay);
++		if (ret < 0 && size == 0) {
+ 			if (phydev->interface == PHY_INTERFACE_MODE_RGMII_ID ||
+ 			    phydev->interface == PHY_INTERFACE_MODE_RGMII_RXID)
+ 				return 1;
+@@ -3174,8 +3167,8 @@ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
+ 		}
+ 
+ 	} else {
+-		delay = phy_get_int_delay_property(dev, "tx-internal-delay-ps");
+-		if (delay < 0 && size == 0) {
++		ret = phy_get_u32_property(dev, "tx-internal-delay-ps", &delay);
++		if (ret < 0 && size == 0) {
+ 			if (phydev->interface == PHY_INTERFACE_MODE_RGMII_ID ||
+ 			    phydev->interface == PHY_INTERFACE_MODE_RGMII_TXID)
+ 				return 1;
+@@ -3184,8 +3177,8 @@ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
+ 		}
+ 	}
+ 
+-	if (delay < 0)
+-		return delay;
++	if (ret < 0)
++		return ret;
+ 
+ 	if (size == 0)
+ 		return delay;
+@@ -3220,6 +3213,30 @@ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
+ }
+ EXPORT_SYMBOL(phy_get_internal_delay);
+ 
++/**
++ * phy_get_tx_amplitude_gain - stores tx amplitude gain in @val
++ * @phydev: phy_device struct
++ * @dev: pointer to the devices device struct
++ * @linkmode: linkmode for which the tx amplitude gain should be retrieved
++ * @val: tx amplitude gain
++ *
++ * Returns: 0 on success, < 0 on failure
++ */
++int phy_get_tx_amplitude_gain(struct phy_device *phydev, struct device *dev,
++			      enum ethtool_link_mode_bit_indices linkmode,
++			      u32 *val)
++{
++	switch (linkmode) {
++	case ETHTOOL_LINK_MODE_100baseT_Full_BIT:
++		return phy_get_u32_property(dev,
++					    "tx-amplitude-100base-tx-percent",
++					    val);
++	default:
++		return -EINVAL;
++	}
++}
++EXPORT_SYMBOL_GPL(phy_get_tx_amplitude_gain);
++
+ static int phy_led_set_brightness(struct led_classdev *led_cdev,
+ 				  enum led_brightness value)
+ {
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 19f076a71f946..7c9da26145d30 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -2114,6 +2114,10 @@ void phy_get_pause(struct phy_device *phydev, bool *tx_pause, bool *rx_pause);
+ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
+ 			   const int *delay_values, int size, bool is_rx);
+ 
++int phy_get_tx_amplitude_gain(struct phy_device *phydev, struct device *dev,
++			      enum ethtool_link_mode_bit_indices linkmode,
++			      u32 *val);
++
+ void phy_resolve_pause(unsigned long *local_adv, unsigned long *partner_adv,
+ 		       bool *tx_pause, bool *rx_pause);
  
 -- 
 2.39.5
