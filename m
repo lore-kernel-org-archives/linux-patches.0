@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9CC78F58;
-	Tue, 29 Apr 2025 17:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCA178F58;
+	Tue, 29 Apr 2025 17:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947751; cv=none; b=Iid6PGVmel+AhvmEGNondKU4CzUkCHNlAKHs90jAyIW3B5eTd9FwziAExQPRLd7IrqAFDxg2mjzg2RTy6PeGjbK4TXG7iSdx1OOevfgZI0boEPRiD7E38khe9iLja1ZP2Bh8ZeRIx/ja9XZuFhOfjuZiu/SHFaEQvQiFgjHS3+M=
+	t=1745947754; cv=none; b=KUGxQTMOuwyA1imBMYZrtUspviCfrfSsbUCrQYc1+3hvkx5cEMyB2NpQLUKdDmss+OKUb7xrVO1fq3GW3MowBEJdy77SZ5jyYC68ejT3vRHsAAltddHMuGJdCkEsjzkt062nvyUxWYB7fenAJEQAV/JxSX79FU5rPoMx9G0XyNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947751; c=relaxed/simple;
-	bh=K0LBvZrDu1HuikThZ+G9jY08VLn/8g6QFhOcWQgBfDg=;
+	s=arc-20240116; t=1745947754; c=relaxed/simple;
+	bh=evdSZMpeyYiJ6CaIdaaFe8X/KL1lXbfe4L8ECLNIO28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIzqgTSF3BAiSwlCELgwgd67udxysWg3iO4kqq27Gdilg7x/S+lGcExNRqst7NqmKUdFfvVFUqEEQdZlDikMQk1dzETcdAXgx+tny4FKPCMK2JtqaKzRh6B3axE5aVqtWRWj1qQJ18Gsx023wBo7gSeKzqi//T480bbyGbxsa7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jp8jzL+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNt4Fv/5VUnfxlCJ1vDGcYLFz/wdNrvlawXoZs97TY2fCgc0fMdySdDQ8PNGfnZHdWmnyFeOyX5TDR7PGlcNDosfoeCMymJFA04g171RRM/RB3vqeKOk+tdxkRtTxwIGBx4MlevCdHibJbUSHBQE4t2GwoQpkyFSYuUkBLEcQ8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXgTtXFs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jp8jzL+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54ADC4CEE9;
-	Tue, 29 Apr 2025 17:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXgTtXFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96D6C4CEE9;
+	Tue, 29 Apr 2025 17:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947751;
-	bh=K0LBvZrDu1HuikThZ+G9jY08VLn/8g6QFhOcWQgBfDg=;
+	s=korg; t=1745947754;
+	bh=evdSZMpeyYiJ6CaIdaaFe8X/KL1lXbfe4L8ECLNIO28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jp8jzL+MWgvqEII6DK7ZM7mTuO1kc7rsozCI4x87JYZ+BZmGDn1Z97g6mofph4TAq
-	 Q2YvpXZPSKaslIpxwDMKOXtgc+r1SjdJ3XVl87NSbvrXZUePT6O+Vz+Y4jkG1D0LeB
-	 RLNSrW67JGLJIKFmxpNdK87sfX7cyZ0nj3sOz3bg=
+	b=QXgTtXFsSRjNAjkEjfju6aTKtOtdQa/+L/+8UaSoenQ2LAPFf96TtV2mVxIme42d7
+	 devTDvCgE7Sk2O8CkoH+aDe4WYW3wS/e1gEEVO7fNWBsGpsfoHivGelj0oRU4p2Cwo
+	 6v9rmphXKz18xSypSNUDh8jw34gesuOn7LSIfaAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 093/280] netfilter: fib: avoid lookup if socket is available
-Date: Tue, 29 Apr 2025 18:40:34 +0200
-Message-ID: <20250429161118.912386855@linuxfoundation.org>
+	Halil Pasic <pasic@linux.ibm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.12 094/280] virtio_console: fix missing byte order handling for cols and rows
+Date: Tue, 29 Apr 2025 18:40:35 +0200
+Message-ID: <20250429161118.952596771@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,136 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-commit eaaff9b6702e99be5d79135f2afa9fc48a0d59e0 upstream.
+commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
 
-In case the fib match is used from the input hook we can avoid the fib
-lookup if early demux assigned a socket for us: check that the input
-interface matches sk-cached one.
+As per virtio spec the fields cols and rows are specified as little
+endian. Although there is no legacy interface requirement that would
+state that cols and rows need to be handled as native endian when legacy
+interface is used, unlike for the fields of the adjacent struct
+virtio_console_control, I decided to err on the side of caution based
+on some non-conclusive virtio spec repo archaeology and opt for using
+virtio16_to_cpu() much like for virtio_console_control.event. Strictly
+by the letter of the spec virtio_le_to_cpu() would have been sufficient.
+But when the legacy interface is not used, it boils down to the same.
 
-Rework the existing 'lo bypass' logic to first check sk, then
-for loopback interface type to elide the fib lookup.
+And when using the legacy interface, the device formatting these as
+little endian when the guest is big endian would surprise me more than
+it using guest native byte order (which would make it compatible with
+the current implementation). Nevertheless somebody trying to implement
+the spec following it to the letter could end up forcing little endian
+byte order when the legacy interface is in use. So IMHO this ultimately
+needs a judgement call by the maintainers.
 
-This speeds up fib matching a little, before:
-93.08 GBit/s (no rules at all)
-75.1  GBit/s ("fib saddr . iif oif missing drop" in prerouting)
-75.62 GBit/s ("fib saddr . iif oif missing drop" in input)
-
-After:
-92.48 GBit/s (no rules at all)
-75.62 GBit/s (fib rule in prerouting)
-90.37 GBit/s (fib rule in input).
-
-Numbers for the 'no rules' and 'prerouting' are expected to
-closely match in-between runs, the 3rd/input test case exercises the
-the 'avoid lookup if cached ifindex in sk matches' case.
-
-Test used iperf3 via veth interface, lo can't be used due to existing
-loopback test.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Cc: stable@vger.kernel.org # v2.6.35+
+Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nft_fib.h   |   21 +++++++++++++++++++++
- net/ipv4/netfilter/nft_fib_ipv4.c |   11 +++++------
- net/ipv6/netfilter/nft_fib_ipv6.c |   19 ++++++++++---------
- 3 files changed, 36 insertions(+), 15 deletions(-)
+ drivers/char/virtio_console.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/include/net/netfilter/nft_fib.h
-+++ b/include/net/netfilter/nft_fib.h
-@@ -18,6 +18,27 @@ nft_fib_is_loopback(const struct sk_buff
- 	return skb->pkt_type == PACKET_LOOPBACK || in->flags & IFF_LOOPBACK;
- }
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1579,8 +1579,8 @@ static void handle_control_message(struc
+ 		break;
+ 	case VIRTIO_CONSOLE_RESIZE: {
+ 		struct {
+-			__u16 rows;
+-			__u16 cols;
++			__virtio16 rows;
++			__virtio16 cols;
+ 		} size;
  
-+static inline bool nft_fib_can_skip(const struct nft_pktinfo *pkt)
-+{
-+	const struct net_device *indev = nft_in(pkt);
-+	const struct sock *sk;
-+
-+	switch (nft_hook(pkt)) {
-+	case NF_INET_PRE_ROUTING:
-+	case NF_INET_INGRESS:
-+	case NF_INET_LOCAL_IN:
-+		break;
-+	default:
-+		return false;
-+	}
-+
-+	sk = pkt->skb->sk;
-+	if (sk && sk_fullsock(sk))
-+	       return sk->sk_rx_dst_ifindex == indev->ifindex;
-+
-+	return nft_fib_is_loopback(pkt->skb, indev);
-+}
-+
- int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr, bool reset);
- int nft_fib_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
- 		 const struct nlattr * const tb[]);
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -70,6 +70,11 @@ void nft_fib4_eval(const struct nft_expr
- 	const struct net_device *oif;
- 	const struct net_device *found;
+ 		if (!is_console_port(port))
+@@ -1588,7 +1588,8 @@ static void handle_control_message(struc
  
-+	if (nft_fib_can_skip(pkt)) {
-+		nft_fib_store_result(dest, priv, nft_in(pkt));
-+		return;
-+	}
-+
- 	/*
- 	 * Do not set flowi4_oif, it restricts results (for example, asking
- 	 * for oif 3 will get RTN_UNICAST result even if the daddr exits
-@@ -84,12 +89,6 @@ void nft_fib4_eval(const struct nft_expr
- 	else
- 		oif = NULL;
+ 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
+ 		       sizeof(size));
+-		set_console_size(port, size.rows, size.cols);
++		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
++				 virtio16_to_cpu(vdev, size.cols));
  
--	if (nft_hook(pkt) == NF_INET_PRE_ROUTING &&
--	    nft_fib_is_loopback(pkt->skb, nft_in(pkt))) {
--		nft_fib_store_result(dest, priv, nft_in(pkt));
--		return;
--	}
--
- 	iph = skb_header_pointer(pkt->skb, noff, sizeof(_iph), &_iph);
- 	if (!iph) {
- 		regs->verdict.code = NFT_BREAK;
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -170,6 +170,11 @@ void nft_fib6_eval(const struct nft_expr
- 	struct rt6_info *rt;
- 	int lookup_flags;
- 
-+	if (nft_fib_can_skip(pkt)) {
-+		nft_fib_store_result(dest, priv, nft_in(pkt));
-+		return;
-+	}
-+
- 	if (priv->flags & NFTA_FIB_F_IIF)
- 		oif = nft_in(pkt);
- 	else if (priv->flags & NFTA_FIB_F_OIF)
-@@ -181,17 +186,13 @@ void nft_fib6_eval(const struct nft_expr
- 		return;
- 	}
- 
--	lookup_flags = nft_fib6_flowi_init(&fl6, priv, pkt, oif, iph);
--
--	if (nft_hook(pkt) == NF_INET_PRE_ROUTING ||
--	    nft_hook(pkt) == NF_INET_INGRESS) {
--		if (nft_fib_is_loopback(pkt->skb, nft_in(pkt)) ||
--		    nft_fib_v6_skip_icmpv6(pkt->skb, pkt->tprot, iph)) {
--			nft_fib_store_result(dest, priv, nft_in(pkt));
--			return;
--		}
-+	if (nft_fib_v6_skip_icmpv6(pkt->skb, pkt->tprot, iph)) {
-+		nft_fib_store_result(dest, priv, nft_in(pkt));
-+		return;
- 	}
- 
-+	lookup_flags = nft_fib6_flowi_init(&fl6, priv, pkt, oif, iph);
-+
- 	*dest = 0;
- 	rt = (void *)ip6_route_lookup(nft_net(pkt), &fl6, pkt->skb,
- 				      lookup_flags);
+ 		port->cons.hvc->irq_requested = 1;
+ 		resize_console(port);
 
 
