@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C269239072;
-	Tue, 29 Apr 2025 17:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8371F21ABC1;
+	Tue, 29 Apr 2025 17:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949059; cv=none; b=eH49yewupmn5Xulo7MI0gSmahQJEhPWqWoLP+VuCdLUM9KJJH/sP8hAm3XH3q5DeAAkzx0ZIQX8s+0AwS/XtZOZBM3EGA3Mi2iCeK0/0nzTZ0j6o6qg1pe/iqsflElzLywe2zngd4QOz4lf7akOWEzOU6yy6JfJZO2PvHgkLRrY=
+	t=1745949062; cv=none; b=o4KHh0RXiIgCJdBOfR7pX0f05QS5SEvUwLg/Pkd+1tCuroTpSswSHsp6fT1ol8nunV7eZdXAXHGnZv2RAwsscRHYWHxTGk1ZuYlPrsZ7S9s4ajVNsTp36Pg1t6OeaGwWRYxPamVsYCudUHXHj73zFxaFrWhjYK3cjEud6X/HyOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949059; c=relaxed/simple;
-	bh=2yoBz1D4OJprBtB1jR1P3VRo/4TdkvpWjRnYE2ALZ1U=;
+	s=arc-20240116; t=1745949062; c=relaxed/simple;
+	bh=sFe8QJOiN5/ONOr/xy3cZGoG8kNFRCrXn+8C7xndreM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kiaMr0gjdBbEtD7UITPBr4FKgHTzYzFD9tU95BK+cVoH7a+xA9kijxWHRV74s0HnvprPPu1gcPbkcTbGLXpuCiqGUBwFKS3yB+43KbuNhK7dk15u3GKS9D5qyEeTcsRVCK85lJ4USAgf7DhV/8AX/9avmZ++oCw4IZiPCS3d6Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3S+GQam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mCt68FH0gSYteBVTM0whZKvHhrhi7vBpnRDCmcrKXdS1AzmDKn/ZRmN7sbj84tDEVenK7Ej2Ek5REcKYleF8Tq4RRFIQnM7YY810mZaCWTcjMAcQVW2oV7HMxxcS9Cjsb8vB5CzGcp280oaczkPq8yLmyOHYybTfAhJCa6bAL1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vf19NZJB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3S+GQam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A039BC4CEE3;
-	Tue, 29 Apr 2025 17:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vf19NZJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8D2C4CEE3;
+	Tue, 29 Apr 2025 17:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949059;
-	bh=2yoBz1D4OJprBtB1jR1P3VRo/4TdkvpWjRnYE2ALZ1U=;
+	s=korg; t=1745949062;
+	bh=sFe8QJOiN5/ONOr/xy3cZGoG8kNFRCrXn+8C7xndreM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3S+GQamoUMds/wi+/pL+WzB0OmGagj561S2xk3c1QcsyP7GZVz37AzZFI0DPxCta
-	 HWh+mY9ESPtJitNglNO/9t4ljOQOALKHvdV+g/ViZimR7hqj2oXMnNK+jX7UPUKihL
-	 b2155KDjevpmAW3OTPPXZjh0H1m/zytzkHq7CkCA=
+	b=Vf19NZJBhB2mh6pLhsldwY8c1WdKx+sOWxHpIj1HEezwKbXu4lmx7Mj6qegUfyCeC
+	 hO4siOpntek6dcq7jTxJH7M/3RmC4wq3cD6Iro17Vru+/AH6VKUu8qRApRj9O1FO7k
+	 5th1Z7g0Seki118NjnN7BrqcB1VJjY1wFHh2Ihc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5.15 202/373] misc: pci_endpoint_test: Fix irq_type to convey the correct type
-Date: Tue, 29 Apr 2025 18:41:19 +0200
-Message-ID: <20250429161131.475079853@linuxfoundation.org>
+	stable@kernel.org,
+	Rolf Eike Beer <eb@emlix.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Subject: [PATCH 5.15 185/373] drm/sti: remove duplicate object names
+Date: Tue, 29 Apr 2025 18:41:02 +0200
+Message-ID: <20250429161130.770353280@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,69 +46,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Rolf Eike Beer <eb@emlix.com>
 
-commit baaef0a274cfb75f9b50eab3ef93205e604f662c upstream.
+commit 7fb6afa9125fc111478615e24231943c4f76cc2e upstream.
 
-There are two variables that indicate the interrupt type to be used
-in the next test execution, "irq_type" as global and "test->irq_type".
+When merging 2 drivers common object files were not deduplicated.
 
-The global is referenced from pci_endpoint_test_get_irq() to preserve
-the current type for ioctl(PCITEST_GET_IRQTYPE).
-
-The type set in this function isn't reflected in the global "irq_type",
-so ioctl(PCITEST_GET_IRQTYPE) returns the previous type.
-
-As a result, the wrong type is displayed in old version of "pcitest"
-as follows:
-
-  - Result of running "pcitest -i 0"
-
-      SET IRQ TYPE TO LEGACY:         OKAY
-
-  - Result of running "pcitest -I"
-
-      GET IRQ TYPE:           MSI
-
-Whereas running the new version of "pcitest" in kselftest results in an
-error as follows:
-
-  #  RUN           pci_ep_basic.LEGACY_IRQ_TEST ...
-  # pci_endpoint_test.c:104:LEGACY_IRQ_TEST:Expected 0 (0) == ret (1)
-  # pci_endpoint_test.c:104:LEGACY_IRQ_TEST:Can't get Legacy IRQ type
-
-Fix this issue by propagating the current type to the global "irq_type".
-
-Fixes: b2ba9225e031 ("misc: pci_endpoint_test: Avoid using module parameter to determine irqtype")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250225110252.28866-5-hayashi.kunihiko@socionext.com
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Fixes: dcec16efd677 ("drm/sti: Build monolithic driver")
+Cc: stable@kernel.org
+Signed-off-by: Rolf Eike Beer <eb@emlix.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/1920148.tdWV9SEqCh@devpool47.emlix.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/sti/Makefile |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -717,6 +717,7 @@ static bool pci_endpoint_test_set_irq(st
- 	if (!pci_endpoint_test_request_irq(test))
- 		goto err;
- 
-+	irq_type = test->irq_type;
- 	return true;
- 
- err:
+--- a/drivers/gpu/drm/sti/Makefile
++++ b/drivers/gpu/drm/sti/Makefile
+@@ -7,8 +7,6 @@ sti-drm-y := \
+ 	sti_compositor.o \
+ 	sti_crtc.o \
+ 	sti_plane.o \
+-	sti_crtc.o \
+-	sti_plane.o \
+ 	sti_hdmi.o \
+ 	sti_hdmi_tx3g4c28phy.o \
+ 	sti_dvo.o \
 
 
