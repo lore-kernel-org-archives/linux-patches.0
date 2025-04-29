@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8CA7E110;
-	Tue, 29 Apr 2025 17:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1549382C60;
+	Tue, 29 Apr 2025 17:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946094; cv=none; b=qpXvRLc1pkrtPTQ5EUZFdqLkDLd0yMqUwbgfVx+LX9/lzLgyRbaJWdE5dHvG8ZIY7qnBC6Xviy+Y1ieNwpg6MckmoKzaei0PypxKZuTA3F1VFt1PdxvytjsKc/meAFsg7VD3FKGkuiVMbjkP9kSLugprLzfNYGuLw3myOBD/efA=
+	t=1745946097; cv=none; b=gsg0Yl68HAoLclgT6TjnWvEG/akxW+uhXOYHVpzXOLo0ZXJnwwlAI2n3cmYqppBJmOttr5F/Bw9KtJZ5etWfVyD729HiVW7u8qCW8yLNI9MXRr49IIontxoUcd9W20EKYaXnwfq5CDNwyFZDbsSmqHd/9eQ64JadPRpmdDQc2qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946094; c=relaxed/simple;
-	bh=Ufi5vIWrMIu+2wh35DutQ4JNOgWWnsiIkGLFLSG5pLo=;
+	s=arc-20240116; t=1745946097; c=relaxed/simple;
+	bh=E0tkZNUpXAh/JLoatF2kAsvvwJ78uXtI3d0Py8Y9dfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMZpe3iz9fChGrOJsyBoV9mrInBmH1RzG4uw0zCvDR+9w7EKWawr+j1CaDTLUmEnEEucxukFn2WR7D38ZrTCTK2AEAkwZq7HGcZ2yVmemacOD1jOu/DQY2u0o5xHDw9L/LxNwe5sySxnL9H4uRyRFAi+7l6emySq+OBlQuhmo50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtX1KFqL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6HLeFb3v4tAAcJxCCglPJiZA+IDLX/j7exycvzQVY2Fy6X9teFE9kcjmcIh6pFI82wZLW10dlNp9yMBgzHftdv8sFwK6NEJ8riy3zV8Un/LodXwVkgPyYyAJVer5LUpSjnV0eJwMiM3F7dplC752dMrYf43+RMgfiBHOnZhLUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTiUNUPJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtX1KFqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1995C4CEE3;
-	Tue, 29 Apr 2025 17:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTiUNUPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FF0C4CEE3;
+	Tue, 29 Apr 2025 17:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946094;
-	bh=Ufi5vIWrMIu+2wh35DutQ4JNOgWWnsiIkGLFLSG5pLo=;
+	s=korg; t=1745946097;
+	bh=E0tkZNUpXAh/JLoatF2kAsvvwJ78uXtI3d0Py8Y9dfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtX1KFqLc6k4KoXWHG5auyUTHDJUFk0Gq0ROll4q7cGOWUFiS3KRrJ1pc6+RzhEr9
-	 z2e9J06i3KHfVXTjTEvGWhStXHqupPr6RI8bzZrhovEYTpf0kyLVSt0bkCLtDoVR0P
-	 AS7A6CPRDjT7fksyOdfOWoqsQfG9geCIOs2frQ4U=
+	b=eTiUNUPJv3yOIr0xlTBNH4WdduUWZfSKc23PazN/69bhB9jSTUnGNrhg+o1o1y57t
+	 Ow14jgfXa2cJN7Ue95jzU/4es89wGft6Jtp5uMDqc5IXqxDF4PSKkVpDqpJBGlZlIR
+	 LkgZUMeBvXobOnqXEbavqwt4w/nvkYwbOwZ4bhsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjith Pananchikkal <renjith.pananchikkal@amd.com>,
-	Mark Pearson <mpearson@lenovo.com>,
-	David Ober <dober@lenovo.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 122/311] drm/amd/display: Fix ACPI edid parsing on some Lenovo systems
-Date: Tue, 29 Apr 2025 18:39:19 +0200
-Message-ID: <20250429161126.036239887@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Subject: [PATCH 6.14 123/311] x86/insn: Fix CTEST instruction decoding
+Date: Tue, 29 Apr 2025 18:39:20 +0200
+Message-ID: <20250429161126.075231721@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -56,45 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 870bea21fdf88f45c94c0a3dbb0e3cc1b219680f upstream.
+commit 85fd85bc025a525354acb2241beb3c5387c551ec upstream.
 
-[Why]
-The ACPI EDID in the BIOS of a Lenovo laptop includes 3 blocks, but
-dm_helpers_probe_acpi_edid() has a start that is 'char'.  The 3rd
-block index starts after 255, so it can't be indexed properly.
-This leads to problems with the display when the EDID is parsed.
+insn_decoder_test found a problem with decoding APX CTEST instructions:
 
-[How]
-Change the variable type to 'short' so that larger values can be indexed.
+	Found an x86 instruction decoder bug, please report this.
+	ffffffff810021df	62 54 94 05 85 ff    	ctestneq
+	objdump says 6 bytes, but insn_get_length() says 5
 
-Cc: Renjith Pananchikkal <renjith.pananchikkal@amd.com>
-Reported-by: Mark Pearson <mpearson@lenovo.com>
-Suggested-by: David Ober <dober@lenovo.com>
-Fixes: c6a837088bed ("drm/amd/display: Fetch the EDID from _DDC if available for eDP")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a918bb4a90d423ced2976a794f2724c362c1f063)
-Cc: stable@vger.kernel.org
+It happens because x86-opcode-map.txt doesn't specify arguments for the
+instruction and the decoder doesn't expect to see ModRM byte.
+
+Fixes: 690ca3a3067f ("x86/insn: Add support for APX EVEX instructions to the opcode map")
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org # v6.10+
+Link: https://lore.kernel.org/r/20250423065815.2003231-1-kirill.shutemov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/lib/x86-opcode-map.txt       |    4 ++--
+ tools/arch/x86/lib/x86-opcode-map.txt |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -912,7 +912,7 @@ dm_helpers_probe_acpi_edid(void *data, u
- {
- 	struct drm_connector *connector = data;
- 	struct acpi_device *acpidev = ACPI_COMPANION(connector->dev->dev);
--	unsigned char start = block * EDID_LENGTH;
-+	unsigned short start = block * EDID_LENGTH;
- 	struct edid *edid;
- 	int r;
- 
+--- a/arch/x86/lib/x86-opcode-map.txt
++++ b/arch/x86/lib/x86-opcode-map.txt
+@@ -996,8 +996,8 @@ AVXcode: 4
+ 83: Grp1 Ev,Ib (1A),(es)
+ # CTESTSCC instructions are: CTESTB, CTESTBE, CTESTF, CTESTL, CTESTLE, CTESTNB, CTESTNBE, CTESTNL,
+ #			     CTESTNLE, CTESTNO, CTESTNS, CTESTNZ, CTESTO, CTESTS, CTESTT, CTESTZ
+-84: CTESTSCC (ev)
+-85: CTESTSCC (es) | CTESTSCC (66),(es)
++84: CTESTSCC Eb,Gb (ev)
++85: CTESTSCC Ev,Gv (es) | CTESTSCC Ev,Gv (66),(es)
+ 88: POPCNT Gv,Ev (es) | POPCNT Gv,Ev (66),(es)
+ 8f: POP2 Bq,Rq (000),(11B),(ev)
+ a5: SHLD Ev,Gv,CL (es) | SHLD Ev,Gv,CL (66),(es)
+--- a/tools/arch/x86/lib/x86-opcode-map.txt
++++ b/tools/arch/x86/lib/x86-opcode-map.txt
+@@ -996,8 +996,8 @@ AVXcode: 4
+ 83: Grp1 Ev,Ib (1A),(es)
+ # CTESTSCC instructions are: CTESTB, CTESTBE, CTESTF, CTESTL, CTESTLE, CTESTNB, CTESTNBE, CTESTNL,
+ #			     CTESTNLE, CTESTNO, CTESTNS, CTESTNZ, CTESTO, CTESTS, CTESTT, CTESTZ
+-84: CTESTSCC (ev)
+-85: CTESTSCC (es) | CTESTSCC (66),(es)
++84: CTESTSCC Eb,Gb (ev)
++85: CTESTSCC Ev,Gv (es) | CTESTSCC Ev,Gv (66),(es)
+ 88: POPCNT Gv,Ev (es) | POPCNT Gv,Ev (66),(es)
+ 8f: POP2 Bq,Rq (000),(11B),(ev)
+ a5: SHLD Ev,Gv,CL (es) | SHLD Ev,Gv,CL (66),(es)
 
 
