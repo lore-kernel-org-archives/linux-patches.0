@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4632472B0;
-	Tue, 29 Apr 2025 17:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351FA242D9A;
+	Tue, 29 Apr 2025 17:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946698; cv=none; b=RE/X80gp7MttlxOGOFuSjDQXJ/5QmnqZeIi7rPvdjxhqFpCmb36lR43KED+hQn7AyQmC0/XGRL9c/CbepBScDDN1pnXSoozIgF3saebZ/MsChAA+Lg+gxa7lpFwGR7Vsz/pUOHNXSO2Vtdjha2zJIRXXdQyos0lj44KMLfWonso=
+	t=1745946701; cv=none; b=PkS4N9UAnfGuIzcn5XimaFX93aWgKO92SL6ch7yln3lOqEa2iBl3zaipMOCiMW0Zq4Po+qtmR5JAboxPDrZAAepzKwHvmw0OdGzW+H3L3pfAJoZW9irKXzBgbZ4zadOtsyg5Rmw91cdtibOngAz99orA5eW0EsLTXVbVjXySCGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946698; c=relaxed/simple;
-	bh=cdPXczjclI38eroLHocv2tmff3LGIOBohjYy78zMkqE=;
+	s=arc-20240116; t=1745946701; c=relaxed/simple;
+	bh=zqxZOAFb3tbjVFsJDmDFmgHBzxChgBVkSh2YIsKuQeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ/roGk5Wef6mj3EkraHs/918hwCLIq8dTT4GCVlNBIsoY1ibFTpKurmR3xP3td8XxUCOmwfUoQ9Z7Cd3zNy62GYo2+8VBjLwGo7TywyAVxsyFi9+KtdpoY16uMFig1hAmi1Y2ryorLPH6rrBej7dJzxGwA0c7rWrWWGEZm+544=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txCleSnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYE73m2FahiYJGwR3+lOlWCa4xFlPnUQ5OlDdfEDKUyM2IR0SG50I+VQtTsnq3HGTy3xG39e5Ze9C63/hxsClfYfH9i2U69+Lv7ameNMm7Rb7mA6Csj3QA7sK6oHbbeCRBro3X2p1STEFU/cIsBybbE53dPLO4FLRK5DIC9bajk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKW+QFG2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txCleSnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FE4C4CEE9;
-	Tue, 29 Apr 2025 17:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKW+QFG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F6CC4CEE3;
+	Tue, 29 Apr 2025 17:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946697;
-	bh=cdPXczjclI38eroLHocv2tmff3LGIOBohjYy78zMkqE=;
+	s=korg; t=1745946701;
+	bh=zqxZOAFb3tbjVFsJDmDFmgHBzxChgBVkSh2YIsKuQeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txCleSnZiLvefSmghhpuMERqvYY/+r20hw7v7L0oq/sG4plTMI5V56bO5fhZV+4ct
-	 xxOwEDACxchfX4GmK/vfBVi6W2R3jg6ghhzIgbkeltoiwcP1KCg6feBHYuQUqiIZYS
-	 7cjBfe6J3isEi9lGBV2lTJTWxA6VpbE7WmL0XZJo=
+	b=pKW+QFG2TrA99v+1VMI9kzmaOzcm3QRPrHmrhmlg6Fhru6ciUAi15vu6sXsDU1w15
+	 Vk1j0wxSEtzRFJ0aHSFkTN9CyOLmIyEwMUts8hPwJsB95UrnMavUP7Pbg8pjM6TBXx
+	 G+h70wEbd4lzWPykJcKmsK2D5lYWKQ48guzNDEP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Felix Fietkau <nbd@nbd.name>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/286] wifi: mt76: mt76x2u: add TP-Link TL-WDN6200 ID to device table
-Date: Tue, 29 Apr 2025 18:38:56 +0200
-Message-ID: <20250429161109.178336187@linuxfoundation.org>
+Subject: [PATCH 5.10 041/286] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
+Date: Tue, 29 Apr 2025 18:39:05 +0200
+Message-ID: <20250429161109.552346515@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,33 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 06cccc2ebbe6c8a20f714f3a0ff3ff489d3004bb ]
+[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
 
-The TP-Link TL-WDN6200 "Driverless" version cards use a MT7612U chipset.
+If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
+delete the queue from process_queue_list and free the resource.
 
-Add the USB ID to mt76x2u driver.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Link: https://patch.msgid.link/20250317102235.1421726-1-uwu@icenowy.me
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index 4e003c7b62cf6..82a193aac09d7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -21,6 +21,7 @@ static const struct usb_device_id mt76x2u_device_table[] = {
- 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
- 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
- 	{ USB_DEVICE(0x045e, 0x02fe) },	/* XBox One Wireless Adapter */
-+	{ USB_DEVICE(0x2357, 0x0137) },	/* TP-Link TL-WDN6200 */
- 	{ },
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 43c07ac2c6fce..cabe0012ab5b1 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -384,7 +384,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
+ 			pr_err("Pasid 0x%x destroy queue %d failed, ret %d\n",
+ 				pqm->process->pasid,
+ 				pqn->q->properties.queue_id, retval);
+-			if (retval != -ETIME)
++			if (retval != -ETIME && retval != -EIO)
+ 				goto err_destroy_queue;
+ 		}
  
 -- 
 2.39.5
