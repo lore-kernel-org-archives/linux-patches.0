@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CE1155A4E;
-	Tue, 29 Apr 2025 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A152155A4E;
+	Tue, 29 Apr 2025 18:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950715; cv=none; b=iXHENt6UtI/O7mfkCCUe3yL4wrk94ix/XVhdRlZcbvfjElRmQ8ixdNk39WSrjyh8Li1Dwd3rXic+8sSO6bfcuLPs/aVXUH6j1JyYfVNXr2PQ6vL6EPWHKhlN5i3EubLgSSt/UWzn/RgzPU+GZ5ZQJKLCvNIA8mt2xgBfQqtHD10=
+	t=1745950718; cv=none; b=Xh0eNx2mzhgDh0Jiws3i3poh2pYL5/ibWFoEmN1yutl/9L7S3w8oTvi4Z13VY1I63uKcJby5D/uAaB29IiumbjbTNEZhhP+KcpIFk+IDewip9S9DORR5elfuFEpwRQ+XrxcOAdQyI0iHwSjycz4cChP53lyg1uBJid4Aa0/YiuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950715; c=relaxed/simple;
-	bh=g+2ts8Y8iakxVX/RByZc4SZSL8vqsUwS2VZ/7tvD3KQ=;
+	s=arc-20240116; t=1745950718; c=relaxed/simple;
+	bh=jQ0w0N8jvj+nshmZWw2Wyj2eEVtqSkW2iWrIdtPYOY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHAMyVuJwEa9QKc+91NmHkO4xKUb9574uiaI9qTKFCK1tguJ+1OD2dBW8eyl97h2QbtM9OY28XXAeT6ov0vdsuM6WaT/PhRxs8lC1qtXfdj3kqkcSp2HO0LeIz0YmwNu0ujCL5AWzErEbk+QsEFatb5pYaSsjcnTLVYUY9TWRm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5qFFjv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kpOL11k+pxcQI+zM1pxzWFji7r2f3K2SZi1EUdAiYDQb1gnY3oPCXzUJkrlbqqZZjlzPv7CxfTGIUEu5tyfuQ7wmq+nQsqyLA4j0IyubK5RsjL4l2AuMN/vvb5UiHMBk6tso92HEvxmq4NImwLC9wTM0+9/HemX2rY9w1S81DU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zq5uNqT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5qFFjv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA49AC4CEE3;
-	Tue, 29 Apr 2025 18:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zq5uNqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D537AC4CEE3;
+	Tue, 29 Apr 2025 18:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950715;
-	bh=g+2ts8Y8iakxVX/RByZc4SZSL8vqsUwS2VZ/7tvD3KQ=;
+	s=korg; t=1745950718;
+	bh=jQ0w0N8jvj+nshmZWw2Wyj2eEVtqSkW2iWrIdtPYOY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5qFFjv4B2vGcUVkfPecuqzedc8YF7XEz8p4EhLzD03ifkwfsRqJDW+dpkgtWFX2m
-	 3T+7i0WBMU7cU13e/einaGMXNs+ie/cmbYp+F2uSFtHIlHaReH3D032RBsSDfUVa+s
-	 2YtnUoTij7cQkGwYAM6y17XzIAsHySMr6PPD7iuk=
+	b=0zq5uNqTiIeXTKd0ikaqOGtKZLlLGyk6gCQEvCsOcHU9i1ZRMkNk8Q6PHGXHipHiW
+	 j0tkLPdbk9lUlPPRY/pXaym+PZ1COjtnV5KQoAHv094zs6RnNSkI8DBgxe++Ueth4m
+	 B2fDq2IYbmPgPL/P0XhiV3px49cFXoRIzFHYEXLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/204] riscv: Provide all alternative macros all the time
-Date: Tue, 29 Apr 2025 18:44:29 +0200
-Message-ID: <20250429161106.798816241@linuxfoundation.org>
+Subject: [PATCH 6.6 182/204] loop: aio inherit the ioprio of original request
+Date: Tue, 29 Apr 2025 18:44:30 +0200
+Message-ID: <20250429161106.838821747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,65 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Yunlong Xing <yunlong.xing@unisoc.com>
 
-[ Upstream commit fb53a9aa5f5b8bf302f3260a7f1f5a24345ce62a ]
+[ Upstream commit 1fdb8188c3d505452b40cdb365b1bb32be533a8e ]
 
-We need to provide all six forms of the alternative macros
-(ALTERNATIVE, ALTERNATIVE_2, _ALTERNATIVE_CFG, _ALTERNATIVE_CFG_2,
-__ALTERNATIVE_CFG, __ALTERNATIVE_CFG_2) for all four cases derived
-from the two ifdefs (RISCV_ALTERNATIVE, __ASSEMBLY__) in order to
-ensure all configs can compile. Define this missing ones and ensure
-all are defined to consume all parameters passed.
+Set cmd->iocb.ki_ioprio to the ioprio of loop device's request.
+The purpose is to inherit the original request ioprio in the aio
+flow.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202504130710.3IKz6Ibs-lkp@intel.com/
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250414120947.135173-2-ajones@ventanamicro.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Yunlong Xing <yunlong.xing@unisoc.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250414030159.501180-1-yunlong.xing@unisoc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/alternative-macros.h | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/block/loop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/alternative-macros.h b/arch/riscv/include/asm/alternative-macros.h
-index 721ec275ce57e..231d777d936c2 100644
---- a/arch/riscv/include/asm/alternative-macros.h
-+++ b/arch/riscv/include/asm/alternative-macros.h
-@@ -115,24 +115,19 @@
- 	\old_c
- .endm
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 8a6c1146df00f..455e2a2b149f4 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -441,7 +441,7 @@ static int lo_rw_aio(struct loop_device *lo, struct loop_cmd *cmd,
+ 	cmd->iocb.ki_filp = file;
+ 	cmd->iocb.ki_complete = lo_rw_aio_complete;
+ 	cmd->iocb.ki_flags = IOCB_DIRECT;
+-	cmd->iocb.ki_ioprio = IOPRIO_PRIO_VALUE(IOPRIO_CLASS_NONE, 0);
++	cmd->iocb.ki_ioprio = req_get_ioprio(rq);
  
--#define _ALTERNATIVE_CFG(old_c, ...)	\
--	ALTERNATIVE_CFG old_c
--
--#define _ALTERNATIVE_CFG_2(old_c, ...)	\
--	ALTERNATIVE_CFG old_c
-+#define __ALTERNATIVE_CFG(old_c, ...)		ALTERNATIVE_CFG old_c
-+#define __ALTERNATIVE_CFG_2(old_c, ...)		ALTERNATIVE_CFG old_c
- 
- #else /* !__ASSEMBLY__ */
- 
--#define __ALTERNATIVE_CFG(old_c)	\
--	old_c "\n"
-+#define __ALTERNATIVE_CFG(old_c, ...)		old_c "\n"
-+#define __ALTERNATIVE_CFG_2(old_c, ...)		old_c "\n"
- 
--#define _ALTERNATIVE_CFG(old_c, ...)	\
--	__ALTERNATIVE_CFG(old_c)
-+#endif /* __ASSEMBLY__ */
- 
--#define _ALTERNATIVE_CFG_2(old_c, ...)	\
--	__ALTERNATIVE_CFG(old_c)
-+#define _ALTERNATIVE_CFG(old_c, ...)		__ALTERNATIVE_CFG(old_c)
-+#define _ALTERNATIVE_CFG_2(old_c, ...)		__ALTERNATIVE_CFG_2(old_c)
- 
--#endif /* __ASSEMBLY__ */
- #endif /* CONFIG_RISCV_ALTERNATIVE */
- 
- /*
+ 	if (rw == ITER_SOURCE)
+ 		ret = call_write_iter(file, &cmd->iocb, &iter);
 -- 
 2.39.5
 
