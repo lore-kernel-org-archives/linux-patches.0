@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE25215060;
-	Tue, 29 Apr 2025 17:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94FC219A63;
+	Tue, 29 Apr 2025 17:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949388; cv=none; b=Fr2gS+sZ5t8xYsQskr8lTAMJ36kyINE2SJYbtBD+NJStXX2CwySgvyU41O0v4ylCjUcmEErwIt5gnAjLLgmfjl/VknF8TT7aeS2+F6WqpNYMmYM3vVPAz7kS4PTIrucfFKxvZDSlOHuWd034TgkgKo0lzo7IZNmXKN6WC1VHi9k=
+	t=1745949390; cv=none; b=WYAioaTn9luV8s/ObHR9/bBibIz3Wi1TX+n2u0z1J0ly1LWQezDxePEu9HuDK3xOpg14qMkp4/+zHkqBCibr5XjqBcCfiB4OOMttmDIjlXDJzdTwXKPmepztvLnSiU7jvqAfISlISaA1Z42VQr3jzwrZPFM4FdBGlDHlpXxiyC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949388; c=relaxed/simple;
-	bh=5/lmN5WwrLAmqMXqjWPR/p+hPLX8YfDcIHOJrPS1oXg=;
+	s=arc-20240116; t=1745949390; c=relaxed/simple;
+	bh=SOclo1YfiBaNT/ZBSKirPQNzt3pHijxJ/R7LnME2kWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAPXUzdeNCPYBQqLDCJwR0tn+a4nZ6WOuuN2rJCQBQYVcj1V/iP1cMyzblij67E1phjdAUpNENmOAB4xYK9VfsTQ44zThRefZbbEYBon3g7ezFRcgjnsHKhXBr7J+oNuN8cfwkxunHXtMYPU2to/VkIIqDDC6Z6GUkiLlvBRklQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2n3/Z5T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hhr/aGrTsp9KZFkzKC3Ndw4627ZeU0ew4hr0eyDkUStqlEldjM5ql2UZMBnYzZD0uV9U4Lo1vZJO+7X++HE46ve0zWb6GS0AiY0QpZk3QEes0/tumKn9DKsv3P+IfwpV7oYIMcK3y9mR3TYiVwA90c8GbKoQGyQqAQU54FQ6fJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXA5EfNk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2n3/Z5T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4FEC4CEE3;
-	Tue, 29 Apr 2025 17:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXA5EfNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4832DC4CEE3;
+	Tue, 29 Apr 2025 17:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949387;
-	bh=5/lmN5WwrLAmqMXqjWPR/p+hPLX8YfDcIHOJrPS1oXg=;
+	s=korg; t=1745949390;
+	bh=SOclo1YfiBaNT/ZBSKirPQNzt3pHijxJ/R7LnME2kWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2n3/Z5TRxSN8TTHLPBHTl/krUQCgyqfPouv7gDn3BVCrDjTXgYsHVLlhZ0tCLZuC
-	 Xmi+NHpYsgswjg/JY/bYPTqKPxySDAZKyY93iNGRRRB+lhUFfgdcdwtRP3SwoQLxaz
-	 w3DLjbJ6tw9tsbfUqMGHE/Bl7SoJKiygEjnJo8e0=
+	b=lXA5EfNkIb5H3WS2rIQDwQ1kBLY4vM8SrCBEYUv7oFardgQ/XOiQaz10uzfxTaxzD
+	 a6vbSnzvIHv2hAL9pYaPVe9hatYW+P4aWh24+JZT6WKBtod5rJIM8ZJoPpjUZjceRl
+	 OFi4gOPNOLXk0ThhT9vd3aqqVpr9/DvokSFaZOy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Johannes Thumshirn <jth@kernel.org>
-Subject: [PATCH 5.15 302/373] mcb: fix a double free bug in chameleon_parse_gdd()
-Date: Tue, 29 Apr 2025 18:42:59 +0200
-Message-ID: <20250429161135.536197386@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 303/373] USB: storage: quirk for ADATA Portable HDD CH94
+Date: Tue, 29 Apr 2025 18:43:00 +0200
+Message-ID: <20250429161135.577354635@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,35 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 7c7f1bfdb2249f854a736d9b79778c7e5a29a150 upstream.
+commit 9ab75eee1a056f896b87d139044dd103adc532b9 upstream.
 
-In chameleon_parse_gdd(), if mcb_device_register() fails, 'mdev'
-would be released in mcb_device_register() via put_device().
-Thus, goto 'err' label and free 'mdev' again causes a double free.
-Just return if mcb_device_register() fails.
+Version 1.60 specifically needs this quirk.
+Version 2.00 is known good.
 
-Fixes: 3764e82e5150 ("drivers: Introduce MEN Chameleon Bus")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/6201d09e2975ae5789879f79a6de4c38de9edd4a.1741596225.git.jth@kernel.org
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250403180004.343133-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mcb/mcb-parse.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -101,7 +101,7 @@ static int chameleon_parse_gdd(struct mc
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -83,6 +83,13 @@ UNUSUAL_DEV(0x0bc2, 0x331a, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_LUNS),
  
- 	ret = mcb_device_register(bus, mdev);
- 	if (ret < 0)
--		goto err;
-+		return ret;
- 
- 	return 0;
- 
++/* Reported-by: Oliver Neukum <oneukum@suse.com> */
++UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
++		"ADATA",
++		"Portable HDD CH94",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_ATA_1X),
++
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+ UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
+ 		"Initio Corporation",
 
 
