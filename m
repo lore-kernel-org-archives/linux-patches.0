@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE0B2472AC;
-	Tue, 29 Apr 2025 16:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4960244679;
+	Tue, 29 Apr 2025 16:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945690; cv=none; b=E+V8/uISWWgNDEWm9Q6I6QfOvtBma6xY/339d+aNDMtEE/q++QN1SLSBIIR9R1FfcFt5z2qJtTBuGstw9UJbze6nsJNxTlPnOF0OxdgDKC7TG0O91oTDdSbU6tGpx0tyVD518p+Ro7TIIecDIpXnQOYh0eGy8mpnPC8yN2aMEJ4=
+	t=1745945692; cv=none; b=MXgZsjm3UMHSAr0tRdutABqXG224s7lJpd47tXuVpQ3SHmIOfAATY6cVT11y8ZU135xKA8P+wENCj2OqA0woa5LphFU8tfYbv9jCTmQEeN3+5e2boxzU5dsbs1d3d3Mh6XSc4AP1V1/XYk+pU2j0OncllraSWvwr6dqLknbakpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945690; c=relaxed/simple;
-	bh=2dMC1oq8OHd5/G++PPu/j6RyX8WaaC4myU2tqPEn5BM=;
+	s=arc-20240116; t=1745945692; c=relaxed/simple;
+	bh=pUxc/tHwf4fOOICtEyuwj9B1fduA5e1onnVpPutyYYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2HsbjXOLyMeivIksYFsMVulGGu/J58qk69B67JtLIneSWtaovHBAu7iI0QLjhOcattsaMivtmSyBc1jlZPhwdWlBw2yi+rZo+jCCLW4qAuRXH3bc2/g1vFGyrpnGBKGKJYhT3aqfMMifLG5a6d9jAg9hQTDNe0kXtDMcoYAL/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2VvD6PE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNudsp2EqzsiLdOB+3bSCRgQ8ks9pEHuzNextTbp/l6LdcGW1GateotGGgSD+tGn9tQ6tcmj/nmKCU92mZNOHvvlnU1rWrjwmxJjlzIQTcZsiUW/uf99HIJHjvRh1Ex5AYan91y09VtW618N3JXO25bOdYu3GQfyAJYVNWoCiJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R066cJ0K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2VvD6PE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CCAC4CEE3;
-	Tue, 29 Apr 2025 16:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R066cJ0K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345B2C4CEE3;
+	Tue, 29 Apr 2025 16:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945689;
-	bh=2dMC1oq8OHd5/G++PPu/j6RyX8WaaC4myU2tqPEn5BM=;
+	s=korg; t=1745945692;
+	bh=pUxc/tHwf4fOOICtEyuwj9B1fduA5e1onnVpPutyYYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2VvD6PESy4eEzVEGPBEN+9wdFH93p2f8oCDwmja799a//iv7iJm1pJjbYeUcFvAb
-	 Q/D09v1EYqo7IRvW3tAaBf9IPfb06jRg1UPI3TOY47u/vVZhPNnqYkRhJPK1epa/3P
-	 yfJ+244HAnG80HA5vQyZbCJUPt24I9Ik2IaRf/ME=
+	b=R066cJ0Kboi3D1gtSTT+WIAHIy/VdHchgvDVKH3ayHsRDI25sw8aQ8R7sHku9lQiZ
+	 U2U/u528qwKTNP+CnI+dXwyPQssWhL5H26wTgcHdP/oDop2r+14SauZmbE1B6x94to
+	 EaXlOUeFvobEtK0HhmLLHZW+NK8ARZZXETeejZfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 017/311] of: resolver: Fix device node refcount leakage in of_resolve_phandles()
-Date: Tue, 29 Apr 2025 18:37:34 +0200
-Message-ID: <20250429161121.740425461@linuxfoundation.org>
+Subject: [PATCH 6.14 003/311] mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get
+Date: Tue, 29 Apr 2025 18:37:20 +0200
+Message-ID: <20250429161121.163355490@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,42 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit a46a0805635d07de50c2ac71588345323c13b2f9 ]
+[ Upstream commit cbef7442fba510b7eb229dcc9f39d3dde4a159a4 ]
 
-In of_resolve_phandles(), refcount of device node @local_fixups will be
-increased if the for_each_child_of_node() exits early, but nowhere to
-decrease the refcount, so cause refcount leakage for the node.
+The driver leaks the device reference taken with
+of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
 
-Fix by using __free() on @local_fixups.
-
-Fixes: da56d04c806a ("of/resolver: Switch to new local fixups format.")
+Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-9-93e3a2659aa7@quicinc.com
-[robh: Use __free() instead]
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-2-1ffa5b6884cb@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/resolver.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-msm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/resolver.c b/drivers/of/resolver.c
-index c871e35d49217..2caad365a665c 100644
---- a/drivers/of/resolver.c
-+++ b/drivers/of/resolver.c
-@@ -249,8 +249,9 @@ static int adjust_local_phandle_references(const struct device_node *local_fixup
-  */
- int of_resolve_phandles(struct device_node *overlay)
- {
--	struct device_node *child, *local_fixups, *refnode;
-+	struct device_node *child, *refnode;
- 	struct device_node *overlay_fixups;
-+	struct device_node __free(device_node) *local_fixups = NULL;
- 	struct property *prop;
- 	const char *refpath;
- 	phandle phandle, phandle_delta;
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e3d39311fdc75..3fd898647237f 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1873,7 +1873,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+ 	if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
+ 		return 0;
+ 
+-	ice = of_qcom_ice_get(dev);
++	ice = devm_of_qcom_ice_get(dev);
+ 	if (ice == ERR_PTR(-EOPNOTSUPP)) {
+ 		dev_warn(dev, "Disabling inline encryption support\n");
+ 		ice = NULL;
 -- 
 2.39.5
 
