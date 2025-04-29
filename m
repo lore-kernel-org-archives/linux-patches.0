@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CAF2512D8;
-	Tue, 29 Apr 2025 17:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4EC242D6A;
+	Tue, 29 Apr 2025 17:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947871; cv=none; b=d1ZUFfWe3ef5nw3jD8uKXu7oiDVajXeRhie44SNR7hNYA3D3MVsH6CK3yylJvszoPEfE27RO2Gb5Fg75nmKnXx0OTA4YWkI0L7tTg6xKWxH+Y0s1sjrIUux4v09yPKEHaQ0cHVtPU6FTPJZRXxCMSbiVTvQPume3FQJCKxxsmYg=
+	t=1745947874; cv=none; b=c9oZy1nA1x2kEuLJYODPiWzLCJii4M6I/jXdx4NjUSl/5m3FK0j+NGHawecQIFWuLYs3ey7qcUQWxwq44ov8OikIovoAxoSWMNyTyOBD0vDGL4lMVQzPrFlC3A2zayH1/DVgfo/wof1rISr92nE1LssPGuFlzdw6PshDkR4JqlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947871; c=relaxed/simple;
-	bh=kdryNQu8EXf/xaRaGaLyF+NvCdgFeFz6xS2pPLrm5bk=;
+	s=arc-20240116; t=1745947874; c=relaxed/simple;
+	bh=frB5SD1M2N4lkJx3tzPojavEHt5f8eCj5HNQRHmgOqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S9JYR07sr5XMzsXEcZ+GEPrhDRoYFzbf0CQJxFiahqcaAfKXMgMU3MCEkzIuQrKEVJDz651BrXmgufV2CVeP4s7zdPiLg3FFlpN9nMD/MCIvdJsLZUZB00V7cRnwSBBs1/WnG9Ta/2MrSGAuGJ3fysRQkIIUrGT3Ui6xb446+jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Db0qC4a0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2zPuCR0Mtc3Ih23wdzNUFjHSAAq9FPZrz9zXiYlhKRRJXK89ylQJZMe70b/V2FEutK1MDuhJW4j7uSAJFoVzRT/u+q7oPHV4MtqEroeGh0khQIJSovC7TYjuWy8l+5HtZpdRlEF66mrTjq30RDqQVY3AjO1m29dp22jbcC3FHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4mCoHyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Db0qC4a0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB85C4CEE3;
-	Tue, 29 Apr 2025 17:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4mCoHyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB0EC4CEE3;
+	Tue, 29 Apr 2025 17:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947871;
-	bh=kdryNQu8EXf/xaRaGaLyF+NvCdgFeFz6xS2pPLrm5bk=;
+	s=korg; t=1745947873;
+	bh=frB5SD1M2N4lkJx3tzPojavEHt5f8eCj5HNQRHmgOqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Db0qC4a0SIb/f9GrGLFMZ79tUxYlegSUMg4e9rqXcHGxOFGf2qr1ifm6tStAULFLe
-	 Ls9zTa55L0HctazIpUxAETDwRtwDox1uDozsrG89w4/61JS9DcDj+ik/0Ui6Kw0jwV
-	 VlpQA5EoZBDvIYCkAgPTlmKYtV8KDOmaVh5LNV9I=
+	b=v4mCoHyKTrs7VKibapB1fD7xb9upuimaYxekhhCPcMo3LP74l4ZJmsCylogT8dTv+
+	 kLJRj8cnkWSKZO+xrLt6fijfwZorzkX4ljbRHka4zN1TxI538Rv5n1HAUncRjVyZjq
+	 Z0NPrqRbdi/iC8T8kSY8cIHdCO70nAp5DVnzJgp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>
-Subject: [PATCH 6.12 128/280] misc: microchip: pci1xxxx: Fix incorrect IRQ status handling during ack
-Date: Tue, 29 Apr 2025 18:41:09 +0200
-Message-ID: <20250429161120.364713447@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Mahesh Rao <mahesh.rao@intel.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.12 129/280] firmware: stratix10-svc: Add of_platform_default_populate()
+Date: Tue, 29 Apr 2025 18:41:10 +0200
+Message-ID: <20250429161120.405123951@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,35 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Mahesh Rao <mahesh.rao@intel.com>
 
-commit e9d7748a7468581859d2b85b378135f9688a0aff upstream.
+commit 4d239f447f96bd2cb646f89431e9db186c1ccfd4 upstream.
 
-Under irq_ack, pci1xxxx_assign_bit reads the current interrupt status,
-modifies and writes the entire value back. Since, the IRQ status bit
-gets cleared on writing back, the better approach is to directly write
-the bitmask to the register in order to preserve the value.
+Add of_platform_default_populate() to stratix10-svc
+driver as the firmware/svc node was moved out of soc.
+This fixes the failed probing of child drivers of
+svc node.
 
-Fixes: 1f4d8ae231f4 ("misc: microchip: pci1xxxx: Add gpio irq handler and irq helper functions irq_ack, irq_mask, irq_unmask and irq_set_type of irq_chip.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20250313170856.20868-3-rengarajan.s@microchip.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 23c3ebed382a ("arm64: dts: socfpga: agilex: move firmware out of soc node")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Mahesh Rao <mahesh.rao@intel.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://lore.kernel.org/r/20250326115446.36123-1-dinguyen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/stratix10-svc.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-@@ -165,7 +165,7 @@ static void pci1xxxx_gpio_irq_ack(struct
- 	unsigned long flags;
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1227,22 +1227,28 @@ static int stratix10_svc_drv_probe(struc
+ 	if (!svc->intel_svc_fcs) {
+ 		dev_err(dev, "failed to allocate %s device\n", INTEL_FCS);
+ 		ret = -ENOMEM;
+-		goto err_unregister_dev;
++		goto err_unregister_rsu_dev;
+ 	}
  
- 	spin_lock_irqsave(&priv->lock, flags);
--	pci1xxx_assign_bit(priv->reg_base, INTR_STAT_OFFSET(gpio), (gpio % 32), true);
-+	writel(BIT(gpio % 32), priv->reg_base + INTR_STAT_OFFSET(gpio));
- 	spin_unlock_irqrestore(&priv->lock, flags);
- }
+ 	ret = platform_device_add(svc->intel_svc_fcs);
+ 	if (ret) {
+ 		platform_device_put(svc->intel_svc_fcs);
+-		goto err_unregister_dev;
++		goto err_unregister_rsu_dev;
+ 	}
+ 
++	ret = of_platform_default_populate(dev_of_node(dev), NULL, dev);
++	if (ret)
++		goto err_unregister_fcs_dev;
++
+ 	dev_set_drvdata(dev, svc);
+ 
+ 	pr_info("Intel Service Layer Driver Initialized\n");
+ 
+ 	return 0;
+ 
+-err_unregister_dev:
++err_unregister_fcs_dev:
++	platform_device_unregister(svc->intel_svc_fcs);
++err_unregister_rsu_dev:
+ 	platform_device_unregister(svc->stratix10_svc_rsu);
+ err_free_kfifo:
+ 	kfifo_free(&controller->svc_fifo);
+@@ -1256,6 +1262,8 @@ static void stratix10_svc_drv_remove(str
+ 	struct stratix10_svc *svc = dev_get_drvdata(&pdev->dev);
+ 	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
+ 
++	of_platform_depopulate(ctrl->dev);
++
+ 	platform_device_unregister(svc->intel_svc_fcs);
+ 	platform_device_unregister(svc->stratix10_svc_rsu);
  
 
 
