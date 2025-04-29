@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6DC24397A;
-	Tue, 29 Apr 2025 17:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8EF24397A;
+	Tue, 29 Apr 2025 17:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947551; cv=none; b=kTOEvNaOI849NSX1I9HtE5oHJgv0MMPFsldCDUDES+edtwdmzwQROY18bmt0dg7NHem7o/JBX0S1uepqunuPkRjIhSqfkZiDP3lF3oXcEBTxuEE5/bZIcONCihnP2XvQdEx4NBj5ReRWOipjpN8xbqUmJgD4bfg1NplrJ+T9bCw=
+	t=1745947555; cv=none; b=YOXTkXdNi9VR5AenLjaatsC4HMXFOmASQuvoYVuaVXbD/LHasGiVhw2X5h+6Fm6WMvnOFdj9YepjLTbDgeK2LwAU91vzCEsyBk3Cvepop43mMBvuVgXZMZfZ9vsnZRNE83DqrOIgBW9BB7OTvfl2Tw0mLuLR3BGG69IK3K1Br54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947551; c=relaxed/simple;
-	bh=ntaUJXRvnqythzEFgkEPC+bnwuFGujm6FjkmiLUNUQs=;
+	s=arc-20240116; t=1745947555; c=relaxed/simple;
+	bh=JEmQcACUZp/36o9edfAms4v1Drant34o1TuNlJBlVGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQK0SuWVArUpVaHsVLLaPXUSe0lQZL82DFMCijs3hO125Oh/qtgHXt30JYNxVu01uv6mjqBg8u+CYJIbHTaPpQSPHSUnDXTs3I+5ftAUAL00lD7aWht8W/j5bSJnxuhHW5cPLl7msIFvFAOTz2Nl7DHbAVfDREqmnfEYL3ZBpX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzugRywR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DNq+bMrGxr0fuGdxgR2vRVlD0wYuGx+Bob5dbnfoL5FkuK6jd6N24D7bRfno9cmXjL4uiBP5CGc5FegDecf7sBrqCSyiffjFH4E1DX4H24T01iBMbP5abu3VMgSZfSXxEbxUBAvtVFTFXQdI9FcfN1lXOJoZZaoIqLAHr/2i2Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEQWYlWv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzugRywR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616F8C4CEE9;
-	Tue, 29 Apr 2025 17:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEQWYlWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD0EC4CEE9;
+	Tue, 29 Apr 2025 17:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947551;
-	bh=ntaUJXRvnqythzEFgkEPC+bnwuFGujm6FjkmiLUNUQs=;
+	s=korg; t=1745947555;
+	bh=JEmQcACUZp/36o9edfAms4v1Drant34o1TuNlJBlVGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzugRywRtn6k2v8W57Nx3hTqbnhAotTGGIxHSzkweCfujDKeG18cE+DhrML7fOUjp
-	 EJxPwa1TU3zPdeyKhx3EEse3/dTvbGI+dRGHJXvBeN6wLqNJHHG2zUqoCpcW9iVJuc
-	 tR6pAL1+U/BYdHp8TFgStkkMzeRRcP2p/5Zky0F0=
+	b=PEQWYlWv6UsErVx6WI71+USDgg9L8631vULLfF6Vp3Fho01FbhAnGihhLnqq5RT93
+	 UqzltZsayEfJ7Oxc5sl5khSZd7c66n2VmevyABWv7yXGjufNhHboJlzx5/WYLtYjiK
+	 wiRggjJxiW0N1/gvExolgjbAk1oGivP2cbxmqjic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Juergen Gross <jgross@suse.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/280] s390/pci: Support mmap() of PCI resources except for ISM devices
-Date: Tue, 29 Apr 2025 18:39:31 +0200
-Message-ID: <20250429161116.345794298@linuxfoundation.org>
+Subject: [PATCH 6.12 031/280] PCI/MSI: Convert pci_msi_ignore_mask to per MSI domain flag
+Date: Tue, 29 Apr 2025 18:39:32 +0200
+Message-ID: <20250429161116.396656004@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -45,159 +47,224 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit aa9f168d55dc47c0de564f7dfe0e90467c9fee71 ]
+[ Upstream commit c3164d2e0d181027da8fc94f8179d8607c3d440f ]
 
-So far s390 does not allow mmap() of PCI resources to user-space via the
-usual mechanisms, though it does use it for RDMA. For the PCI sysfs
-resource files and /proc/bus/pci it defines neither HAVE_PCI_MMAP nor
-ARCH_GENERIC_PCI_MMAP_RESOURCE. For vfio-pci s390 previously relied on
-disabled VFIO_PCI_MMAP and now relies on setting pdev->non_mappable_bars
-for all devices.
+Setting pci_msi_ignore_mask inhibits the toggling of the mask bit for both
+MSI and MSI-X entries globally, regardless of the IRQ chip they are using.
+Only Xen sets the pci_msi_ignore_mask when routing physical interrupts over
+event channels, to prevent PCI code from attempting to toggle the maskbit,
+as it's Xen that controls the bit.
 
-This is partly because access to mapped PCI resources from user-space
-requires special PCI load/store memory-I/O (MIO) instructions, or the
-special MMIO syscalls when these are not available. Still, such access is
-possible and useful not just for RDMA, in fact not being able to mmap() PCI
-resources has previously caused extra work when testing devices.
+However, the pci_msi_ignore_mask being global will affect devices that use
+MSI interrupts but are not routing those interrupts over event channels
+(not using the Xen pIRQ chip).  One example is devices behind a VMD PCI
+bridge.  In that scenario the VMD bridge configures MSI(-X) using the
+normal IRQ chip (the pIRQ one in the Xen case), and devices behind the
+bridge configure the MSI entries using indexes into the VMD bridge MSI
+table.  The VMD bridge then demultiplexes such interrupts and delivers to
+the destination device(s).  Having pci_msi_ignore_mask set in that scenario
+prevents (un)masking of MSI entries for devices behind the VMD bridge.
 
-One thing that doesn't work with PCI resources mapped to user-space though
-is the s390 specific virtual ISM device. Not only because the BAR size of
-256 TiB prevents mapping the whole BAR but also because access requires use
-of the legacy PCI instructions which are not accessible to user-space on
-systems with the newer MIO PCI instructions.
+Move the signaling of no entry masking into the MSI domain flags, as that
+allows setting it on a per-domain basis.  Set it for the Xen MSI domain
+that uses the pIRQ chip, while leaving it unset for the rest of the
+cases.
 
-Now with the pdev->non_mappable_bars flag ISM can be excluded from mapping
-its resources while making this functionality available for all other PCI
-devices. To this end introduce a minimal implementation of PCI_QUIRKS and
-use that to set pdev->non_mappable_bars for ISM devices only. Then also set
-ARCH_GENERIC_PCI_MMAP_RESOURCE to take advantage of the generic
-implementation of pci_mmap_resource_range() enabling only the newer sysfs
-mmap() interface. This follows the recommendation in
-Documentation/PCI/sysfs-pci.rst.
+Remove pci_msi_ignore_mask at once, since it was only used by Xen code, and
+with Xen dropping usage the variable is unneeded.
 
-Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-3-c5c0f1d26efd@linux.ibm.com
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+This fixes using devices behind a VMD bridge on Xen PV hardware domains.
+
+Albeit Devices behind a VMD bridge are not known to Xen, that doesn't mean
+Linux cannot use them.  By inhibiting the usage of
+VMD_FEAT_CAN_BYPASS_MSI_REMAP and the removal of the pci_msi_ignore_mask
+bodge devices behind a VMD bridge do work fine when use from a Linux Xen
+hardware domain.  That's the whole point of the series.
+
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Juergen Gross <jgross@suse.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Message-ID: <20250219092059.90850-4-roger.pau@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: cf761e3dacc6 ("PCI/MSI: Add an option to write MSIX ENTRY_DATA before any reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig           |  4 +---
- arch/s390/include/asm/pci.h |  3 +++
- arch/s390/pci/Makefile      |  2 +-
- arch/s390/pci/pci_fixup.c   | 23 +++++++++++++++++++++++
- drivers/s390/net/ism_drv.c  |  1 -
- include/linux/pci_ids.h     |  1 +
- 6 files changed, 29 insertions(+), 5 deletions(-)
- create mode 100644 arch/s390/pci/pci_fixup.c
+ arch/x86/pci/xen.c    |  8 ++------
+ drivers/pci/msi/msi.c | 37 +++++++++++++++++++++----------------
+ include/linux/msi.h   |  3 ++-
+ kernel/irq/msi.c      |  2 +-
+ 4 files changed, 26 insertions(+), 24 deletions(-)
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index 62f2c9e8e05f7..b9f70927c1ed8 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -41,9 +41,6 @@ config AUDIT_ARCH
- config NO_IOPORT_MAP
- 	def_bool y
+diff --git a/arch/x86/pci/xen.c b/arch/x86/pci/xen.c
+index 0f2fe524f60dc..b8755cde24199 100644
+--- a/arch/x86/pci/xen.c
++++ b/arch/x86/pci/xen.c
+@@ -436,7 +436,8 @@ static struct msi_domain_ops xen_pci_msi_domain_ops = {
+ };
  
--config PCI_QUIRKS
--	def_bool n
+ static struct msi_domain_info xen_pci_msi_domain_info = {
+-	.flags			= MSI_FLAG_PCI_MSIX | MSI_FLAG_FREE_MSI_DESCS | MSI_FLAG_DEV_SYSFS,
++	.flags			= MSI_FLAG_PCI_MSIX | MSI_FLAG_FREE_MSI_DESCS |
++				  MSI_FLAG_DEV_SYSFS | MSI_FLAG_NO_MASK,
+ 	.ops			= &xen_pci_msi_domain_ops,
+ };
+ 
+@@ -484,11 +485,6 @@ static __init void xen_setup_pci_msi(void)
+ 	 * in allocating the native domain and never use it.
+ 	 */
+ 	x86_init.irqs.create_pci_msi_domain = xen_create_pci_msi_domain;
+-	/*
+-	 * With XEN PIRQ/Eventchannels in use PCI/MSI[-X] masking is solely
+-	 * controlled by the hypervisor.
+-	 */
+-	pci_msi_ignore_mask = 1;
+ }
+ 
+ #else /* CONFIG_PCI_MSI */
+diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
+index 2f647cac4cae3..4c8c2b57b5f61 100644
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -10,12 +10,12 @@
+ #include <linux/err.h>
+ #include <linux/export.h>
+ #include <linux/irq.h>
++#include <linux/irqdomain.h>
+ 
+ #include "../pci.h"
+ #include "msi.h"
+ 
+ int pci_msi_enable = 1;
+-int pci_msi_ignore_mask;
+ 
+ /**
+  * pci_msi_supported - check whether MSI may be enabled on a device
+@@ -285,6 +285,8 @@ static void pci_msi_set_enable(struct pci_dev *dev, int enable)
+ static int msi_setup_msi_desc(struct pci_dev *dev, int nvec,
+ 			      struct irq_affinity_desc *masks)
+ {
++	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
++	const struct msi_domain_info *info = d->host_data;
+ 	struct msi_desc desc;
+ 	u16 control;
+ 
+@@ -295,8 +297,7 @@ static int msi_setup_msi_desc(struct pci_dev *dev, int nvec,
+ 	/* Lies, damned lies, and MSIs */
+ 	if (dev->dev_flags & PCI_DEV_FLAGS_HAS_MSI_MASKING)
+ 		control |= PCI_MSI_FLAGS_MASKBIT;
+-	/* Respect XEN's mask disabling */
+-	if (pci_msi_ignore_mask)
++	if (info->flags & MSI_FLAG_NO_MASK)
+ 		control &= ~PCI_MSI_FLAGS_MASKBIT;
+ 
+ 	desc.nvec_used			= nvec;
+@@ -604,12 +605,15 @@ static void __iomem *msix_map_region(struct pci_dev *dev,
+  */
+ void msix_prepare_msi_desc(struct pci_dev *dev, struct msi_desc *desc)
+ {
++	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
++	const struct msi_domain_info *info = d->host_data;
++
+ 	desc->nvec_used				= 1;
+ 	desc->pci.msi_attrib.is_msix		= 1;
+ 	desc->pci.msi_attrib.is_64		= 1;
+ 	desc->pci.msi_attrib.default_irq	= dev->irq;
+ 	desc->pci.mask_base			= dev->msix_base;
+-	desc->pci.msi_attrib.can_mask		= !pci_msi_ignore_mask &&
++	desc->pci.msi_attrib.can_mask		= !(info->flags & MSI_FLAG_NO_MASK) &&
+ 						  !desc->pci.msi_attrib.is_virtual;
+ 
+ 	if (desc->pci.msi_attrib.can_mask) {
+@@ -659,9 +663,6 @@ static void msix_mask_all(void __iomem *base, int tsize)
+ 	u32 ctrl = PCI_MSIX_ENTRY_CTRL_MASKBIT;
+ 	int i;
+ 
+-	if (pci_msi_ignore_mask)
+-		return;
 -
- config ARCH_SUPPORTS_UPROBES
- 	def_bool y
+ 	for (i = 0; i < tsize; i++, base += PCI_MSIX_ENTRY_SIZE)
+ 		writel(ctrl, base + PCI_MSIX_ENTRY_VECTOR_CTRL);
+ }
+@@ -714,6 +715,8 @@ static int msix_setup_interrupts(struct pci_dev *dev, struct msix_entry *entries
+ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
+ 				int nvec, struct irq_affinity *affd)
+ {
++	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
++	const struct msi_domain_info *info = d->host_data;
+ 	int ret, tsize;
+ 	u16 control;
  
-@@ -237,6 +234,7 @@ config S390
- 	select PCI_DOMAINS		if PCI
- 	select PCI_MSI			if PCI
- 	select PCI_MSI_ARCH_FALLBACKS	if PCI_MSI
-+	select PCI_QUIRKS		if PCI
- 	select SPARSE_IRQ
- 	select SWIOTLB
- 	select SYSCTL_EXCEPTION_TRACE
-diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
-index 83789e39d1d5e..8b11d37fd0349 100644
---- a/arch/s390/include/asm/pci.h
-+++ b/arch/s390/include/asm/pci.h
-@@ -11,6 +11,9 @@
- #include <asm/pci_insn.h>
- #include <asm/sclp.h>
+@@ -744,15 +747,17 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
+ 	/* Disable INTX */
+ 	pci_intx_for_msi(dev, 0);
  
-+#define ARCH_GENERIC_PCI_MMAP_RESOURCE	1
-+#define arch_can_pci_mmap_wc()		1
-+
- #define PCIBIOS_MIN_IO		0x1000
- #define PCIBIOS_MIN_MEM		0x10000000
+-	/*
+-	 * Ensure that all table entries are masked to prevent
+-	 * stale entries from firing in a crash kernel.
+-	 *
+-	 * Done late to deal with a broken Marvell NVME device
+-	 * which takes the MSI-X mask bits into account even
+-	 * when MSI-X is disabled, which prevents MSI delivery.
+-	 */
+-	msix_mask_all(dev->msix_base, tsize);
++	if (!(info->flags & MSI_FLAG_NO_MASK)) {
++		/*
++		 * Ensure that all table entries are masked to prevent
++		 * stale entries from firing in a crash kernel.
++		 *
++		 * Done late to deal with a broken Marvell NVME device
++		 * which takes the MSI-X mask bits into account even
++		 * when MSI-X is disabled, which prevents MSI delivery.
++		 */
++		msix_mask_all(dev->msix_base, tsize);
++	}
+ 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL, 0);
  
-diff --git a/arch/s390/pci/Makefile b/arch/s390/pci/Makefile
-index df73c5182990a..1810e0944a4ed 100644
---- a/arch/s390/pci/Makefile
-+++ b/arch/s390/pci/Makefile
-@@ -5,6 +5,6 @@
+ 	pcibios_free_irq(dev);
+diff --git a/include/linux/msi.h b/include/linux/msi.h
+index b10093c4d00ea..59a421fc42bf0 100644
+--- a/include/linux/msi.h
++++ b/include/linux/msi.h
+@@ -73,7 +73,6 @@ struct msi_msg {
+ 	};
+ };
  
- obj-$(CONFIG_PCI)	+= pci.o pci_irq.o pci_clp.o \
- 			   pci_event.o pci_debug.o pci_insn.o pci_mmio.o \
--			   pci_bus.o pci_kvm_hook.o pci_report.o
-+			   pci_bus.o pci_kvm_hook.o pci_report.o pci_fixup.o
- obj-$(CONFIG_PCI_IOV)	+= pci_iov.o
- obj-$(CONFIG_SYSFS)	+= pci_sysfs.o
-diff --git a/arch/s390/pci/pci_fixup.c b/arch/s390/pci/pci_fixup.c
-new file mode 100644
-index 0000000000000..35688b6450983
---- /dev/null
-+++ b/arch/s390/pci/pci_fixup.c
-@@ -0,0 +1,23 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Exceptions for specific devices,
-+ *
-+ * Copyright IBM Corp. 2025
-+ *
-+ * Author(s):
-+ *   Niklas Schnelle <schnelle@linux.ibm.com>
-+ */
-+#include <linux/pci.h>
-+
-+static void zpci_ism_bar_no_mmap(struct pci_dev *pdev)
-+{
-+	/*
-+	 * ISM's BAR is special. Drivers written for ISM know
-+	 * how to handle this but others need to be aware of their
-+	 * special nature e.g. to prevent attempts to mmap() it.
-+	 */
-+	pdev->non_mappable_bars = 1;
-+}
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_IBM,
-+			PCI_DEVICE_ID_IBM_ISM,
-+			zpci_ism_bar_no_mmap);
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index 2f34761e64135..60ed70a39d2cc 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -20,7 +20,6 @@
- MODULE_DESCRIPTION("ISM driver for s390");
- MODULE_LICENSE("GPL");
+-extern int pci_msi_ignore_mask;
+ /* Helper functions */
+ struct msi_desc;
+ struct pci_dev;
+@@ -556,6 +555,8 @@ enum {
+ 	MSI_FLAG_PCI_MSIX_ALLOC_DYN	= (1 << 20),
+ 	/* PCI MSIs cannot be steered separately to CPU cores */
+ 	MSI_FLAG_NO_AFFINITY		= (1 << 21),
++	/* Inhibit usage of entry masking */
++	MSI_FLAG_NO_MASK		= (1 << 22),
+ };
  
--#define PCI_DEVICE_ID_IBM_ISM 0x04ED
- #define DRV_NAME "ism"
+ /**
+diff --git a/kernel/irq/msi.c b/kernel/irq/msi.c
+index 396a067a8a56b..7682c36cbccc6 100644
+--- a/kernel/irq/msi.c
++++ b/kernel/irq/msi.c
+@@ -1143,7 +1143,7 @@ static bool msi_check_reservation_mode(struct irq_domain *domain,
+ 	if (!(info->flags & MSI_FLAG_MUST_REACTIVATE))
+ 		return false;
  
- static const struct pci_device_id ism_device_table[] = {
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index c395b3c5c05cf..89896e82e40d8 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -517,6 +517,7 @@
- #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM	0x0251
- #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM_PCIE 0x0361
- #define PCI_DEVICE_ID_IBM_ICOM_FOUR_PORT_MODEL	0x252
-+#define PCI_DEVICE_ID_IBM_ISM		0x04ed
+-	if (IS_ENABLED(CONFIG_PCI_MSI) && pci_msi_ignore_mask)
++	if (info->flags & MSI_FLAG_NO_MASK)
+ 		return false;
  
- #define PCI_SUBVENDOR_ID_IBM		0x1014
- #define PCI_SUBDEVICE_ID_IBM_SATURN_SERIAL_ONE_PORT	0x03d4
+ 	/*
 -- 
 2.39.5
 
