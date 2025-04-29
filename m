@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BDA82C60;
-	Tue, 29 Apr 2025 17:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0562C233713;
+	Tue, 29 Apr 2025 17:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947978; cv=none; b=bbRlagEN5kbfgsYvtcUgEbcQDje3JdasteUm2d4/NRwqJxAoh6+qw44USchb1yKfqFRtHqlyqakqsmFEFQgG61psikupx5yQfUPUbwueTevaGwa3Na6mXY1Tl9s2eyryITNOeVu+ai2q+NyyzVMOOHF7ERMrcwKZC+O7bcgjcIU=
+	t=1745947981; cv=none; b=r5D4TINwa7/UTnbvcyTCvBrOs5mBOGZfFj9AdLxWvK8huNc8u1F+gckNb0Z69f0YLlB5s4SaSXZX/U2gaPGm6eIeSgJVF36Ek2GYLrfO/9eylydAontywVuEKjm9b8u0yNP1iHmdJF+HbM07F4LD8+0u7MvCAkJXF/1n85iwsEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947978; c=relaxed/simple;
-	bh=Vze6bYeuMALB0JmaSX8QKxSat5+gnc+i6Bda3f2mw/Y=;
+	s=arc-20240116; t=1745947981; c=relaxed/simple;
+	bh=NLDF6N5p3Gw7xC6nyHFSfV+71wbxB7sSbBCvOC6N5Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paKUCuyk/QH5ERVByLbirMIIzOGKklYpPhzP3M03dHfM2M/oSxfJNvb/O0CeV4MCUaqI9f6JbvuJmxpJsfEZGtsXe2tiDxqgUAP6UStt89fE9/oFisPjhVD2jTEbxX2q26mf22jCOMTtyryWEJpFb0LTFFhG4DrKOlnBKO8Hsfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTK0wvPJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D83jn5E8LvtXNDzyh58BEivfW3757qD0raNgEGmjF5A+Bit1s0pV+0hWk3bIf2IkGNGLSh4LJaocwW8WflMKQP4mhvfB41C4O1/FCeFeOM9K/5fVnmCZDDxulqSZkpZGTkEWJMEM+Uoosx82BD2zcZhgyDtTEvl+Qw3Sj7xoxUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmkt7G9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTK0wvPJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB38C4CEE3;
-	Tue, 29 Apr 2025 17:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmkt7G9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B93EC4CEE3;
+	Tue, 29 Apr 2025 17:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947977;
-	bh=Vze6bYeuMALB0JmaSX8QKxSat5+gnc+i6Bda3f2mw/Y=;
+	s=korg; t=1745947980;
+	bh=NLDF6N5p3Gw7xC6nyHFSfV+71wbxB7sSbBCvOC6N5Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTK0wvPJnRZqQgG5+ZsD6m1//y4S9MS6LSutZPTbV4cC8LLVRlm8Lm9DfgBF986xn
-	 biSIus4Tdv6z58M281eK4mZJeaWcrvOis/0nJSBcakfltYzAPcVbLkIMhay2DnLRcr
-	 SnDe2PHI+NCyPk5KLNAJrdyHSNQz34CCiMuWlb/4=
+	b=gmkt7G9JNj33jbZQh2q7Mvk4LhnNHn/fl2rI/6IttjpOVIRdrdX1qDIKRvMafuel3
+	 X74ZnrvdHbqa6xeikyVDTxcg0jcU1GsC7HaMeVOOhiOyvdwLDT3hEZfY4iaLsKEvwE
+	 mdcaBkjMqOEmduLE6hky3gbM0yoIeKk+NC67hIMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Poenaru <thevlad@meta.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/280] bpf: Fix kmemleak warning for percpu hashmap
-Date: Tue, 29 Apr 2025 18:41:40 +0200
-Message-ID: <20250429161121.624105327@linuxfoundation.org>
+Subject: [PATCH 6.12 160/280] bpf: Fix deadlock between rcu_tasks_trace and event_mutex.
+Date: Tue, 29 Apr 2025 18:41:41 +0200
+Message-ID: <20250429161121.664735750@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,89 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 11ba7ce076e5903e7bdc1fd1498979c331b3c286 ]
+[ Upstream commit 4580f4e0ebdf8dc8d506ae926b88510395a0c1d1 ]
 
-Vlad Poenaru reported the following kmemleak issue:
+Fix the following deadlock:
+CPU A
+_free_event()
+  perf_kprobe_destroy()
+    mutex_lock(&event_mutex)
+      perf_trace_event_unreg()
+        synchronize_rcu_tasks_trace()
 
-  unreferenced object 0x606fd7c44ac8 (size 32):
-    backtrace (crc 0):
-      pcpu_alloc_noprof+0x730/0xeb0
-      bpf_map_alloc_percpu+0x69/0xc0
-      prealloc_init+0x9d/0x1b0
-      htab_map_alloc+0x363/0x510
-      map_create+0x215/0x3a0
-      __sys_bpf+0x16b/0x3e0
-      __x64_sys_bpf+0x18/0x20
-      do_syscall_64+0x7b/0x150
-      entry_SYSCALL_64_after_hwframe+0x4b/0x53
+There are several paths where _free_event() grabs event_mutex
+and calls sync_rcu_tasks_trace. Above is one such case.
 
-Further investigation shows the reason is due to not 8-byte aligned
-store of percpu pointer in htab_elem_set_ptr():
-  *(void __percpu **)(l->key + key_size) = pptr;
+CPU B
+bpf_prog_test_run_syscall()
+  rcu_read_lock_trace()
+    bpf_prog_run_pin_on_cpu()
+      bpf_prog_load()
+        bpf_tracing_func_proto()
+          trace_set_clr_event()
+            mutex_lock(&event_mutex)
 
-Note that the whole htab_elem alignment is 8 (for x86_64). If the key_size
-is 4, that means pptr is stored in a location which is 4 byte aligned but
-not 8 byte aligned. In mm/kmemleak.c, scan_block() scans the memory based
-on 8 byte stride, so it won't detect above pptr, hence reporting the memory
-leak.
+Delegate trace_set_clr_event() to workqueue to avoid
+such lock dependency.
 
-In htab_map_alloc(), we already have
-
-        htab->elem_size = sizeof(struct htab_elem) +
-                          round_up(htab->map.key_size, 8);
-        if (percpu)
-                htab->elem_size += sizeof(void *);
-        else
-                htab->elem_size += round_up(htab->map.value_size, 8);
-
-So storing pptr with 8-byte alignment won't cause any problem and can fix
-kmemleak too.
-
-The issue can be reproduced with bpf selftest as well:
-  1. Enable CONFIG_DEBUG_KMEMLEAK config
-  2. Add a getchar() before skel destroy in test_hash_map() in prog_tests/for_each.c.
-     The purpose is to keep map available so kmemleak can be detected.
-  3. run './test_progs -t for_each/hash_map &' and a kmemleak should be reported.
-
-Reported-by: Vlad Poenaru <thevlad@meta.com>
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20250224175514.2207227-1-yonghong.song@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250224221637.4780-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/bpf_trace.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 3ec941a0ea41c..bb3ba8ebaf3d2 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -198,12 +198,12 @@ static bool htab_is_percpu(const struct bpf_htab *htab)
- static inline void htab_elem_set_ptr(struct htab_elem *l, u32 key_size,
- 				     void __percpu *pptr)
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 55f279ddfd63d..e5c063fc8ef97 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -403,7 +403,7 @@ static const struct bpf_func_proto bpf_trace_printk_proto = {
+ 	.arg2_type	= ARG_CONST_SIZE,
+ };
+ 
+-static void __set_printk_clr_event(void)
++static void __set_printk_clr_event(struct work_struct *work)
  {
--	*(void __percpu **)(l->key + key_size) = pptr;
-+	*(void __percpu **)(l->key + roundup(key_size, 8)) = pptr;
+ 	/*
+ 	 * This program might be calling bpf_trace_printk,
+@@ -416,10 +416,11 @@ static void __set_printk_clr_event(void)
+ 	if (trace_set_clr_event("bpf_trace", "bpf_trace_printk", 1))
+ 		pr_warn_ratelimited("could not enable bpf_trace_printk events");
+ }
++static DECLARE_WORK(set_printk_work, __set_printk_clr_event);
+ 
+ const struct bpf_func_proto *bpf_get_trace_printk_proto(void)
+ {
+-	__set_printk_clr_event();
++	schedule_work(&set_printk_work);
+ 	return &bpf_trace_printk_proto;
  }
  
- static inline void __percpu *htab_elem_get_ptr(struct htab_elem *l, u32 key_size)
- {
--	return *(void __percpu **)(l->key + key_size);
-+	return *(void __percpu **)(l->key + roundup(key_size, 8));
- }
+@@ -462,7 +463,7 @@ static const struct bpf_func_proto bpf_trace_vprintk_proto = {
  
- static void *fd_htab_map_get_ptr(const struct bpf_map *map, struct htab_elem *l)
-@@ -2355,7 +2355,7 @@ static int htab_percpu_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn
- 	*insn++ = BPF_EMIT_CALL(__htab_map_lookup_elem);
- 	*insn++ = BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 3);
- 	*insn++ = BPF_ALU64_IMM(BPF_ADD, BPF_REG_0,
--				offsetof(struct htab_elem, key) + map->key_size);
-+				offsetof(struct htab_elem, key) + roundup(map->key_size, 8));
- 	*insn++ = BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_0, 0);
- 	*insn++ = BPF_MOV64_PERCPU_REG(BPF_REG_0, BPF_REG_0);
+ const struct bpf_func_proto *bpf_get_trace_vprintk_proto(void)
+ {
+-	__set_printk_clr_event();
++	schedule_work(&set_printk_work);
+ 	return &bpf_trace_vprintk_proto;
+ }
  
 -- 
 2.39.5
