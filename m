@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B319478F58;
-	Tue, 29 Apr 2025 17:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59282459EA;
+	Tue, 29 Apr 2025 17:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947666; cv=none; b=rbUI/CRv69zi3VuB5hcJhEiSl3LkEQNwzIEda2DO+YMlODBlxBrwfv4sISVWDE/3me7yadgw8unu8YU5/wfSNKHQQiNnYpQ2kwWLWUpeUI9bYxJUF7LJJLkWqypPq+0QAiArNboje0fZGY7ucN0pQFLcYxPFgYmZwzyRX6K3ZvE=
+	t=1745947669; cv=none; b=MZy9iEUvZvyuah2XoL7C8OrzEIbwGhk7FBUpjyd069idGdVwVJ0CtWWZrp4cg6BBg56vLxmVG3VTAo/bVTOpGXWVXlH6UGmbC227H98jzvvTciIJLOiJgqZD23QAEYdOn28VuyxAvKIHlfJ51+T77hCZU0GoI7pLBdYCeqNFXYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947666; c=relaxed/simple;
-	bh=vYHFNuKOJKhntA6IiFM+ixNkER/hUywVT9rHhNxwKz8=;
+	s=arc-20240116; t=1745947669; c=relaxed/simple;
+	bh=66vtz+YKf/LRzi6A4WJ/9ouaWV/RyQKYIY1LXmjZ5VA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kM2mAmuGSP8i2tTs03uUR91KAyvnlqwAqNYdzu4lpjHqSaxsK7ZLteBQlsjXngxP+OCI0kv6m69eRoayQMpTPgOJlG2fs0owdySiRwlVWH/LZeWUa0pw1ca1pauS9e3G+6oXKNRgx7KdXopOeXxbjfOHR889fprXVXOAP+siEb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10Omeq/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JFOP3HPSoOO4xZbaFoABd/5TI6y2+VDYPTCkM0BKr5PMvuyY72kWTsn4133V6rqKOJc1FvNBQ7ZsAccT/LXmi1I1La+HrgjTL3MsZ97Bles+W+9rq25KKVQw2nLwrrtwS5mhYnblegu4oLt4wY3jquwnLsSDlICwGGR0SivsdWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fK5b/anT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10Omeq/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4706AC4CEE3;
-	Tue, 29 Apr 2025 17:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK5b/anT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58054C4CEE3;
+	Tue, 29 Apr 2025 17:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947666;
-	bh=vYHFNuKOJKhntA6IiFM+ixNkER/hUywVT9rHhNxwKz8=;
+	s=korg; t=1745947669;
+	bh=66vtz+YKf/LRzi6A4WJ/9ouaWV/RyQKYIY1LXmjZ5VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10Omeq/32HT5SR3d+J+Y+vMnctlUQCr1of3x6nTIzsppXasxPtVLcGRF5ucVez+td
-	 ZSo8r8B3EhxxS0cbt0/gp4td79/GNpI28Dgco3yef1tA0oD+Kvd4WqHU8rG8xrSyXw
-	 DcQHxhQsNpxoIp0P0z5TarFwzF8pfL0LaeQoSLo8=
+	b=fK5b/anTE677NSntnz65QHukgvkxlHSIqgWUw777HK62oNyPQkSk+FSRcgVNxFUd8
+	 8cNyGnsF/nEJy6KR4P3KGRgGxnidOVn3hLFYiBrfTDBzrIiN/tIEPduYg4wN5fIqyI
+	 fBu2J23mdmTWeANuOg/EHFQ26wfyPT89U4qEPY3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/280] net/mlx5: Move ttc allocation after switch case to prevent leaks
-Date: Tue, 29 Apr 2025 18:40:08 +0200
-Message-ID: <20250429161117.851780176@linuxfoundation.org>
+Subject: [PATCH 6.12 068/280] scsi: core: Clear flags for scsi_cmnd that did not complete
+Date: Tue, 29 Apr 2025 18:40:09 +0200
+Message-ID: <20250429161117.893206243@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,75 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-[ Upstream commit fa8fd315127ca48c65e7e6692a84ffcf3d07168e ]
+[ Upstream commit 54bebe46871d4e56e05fcf55c1a37e7efa24e0a8 ]
 
-Relocate the memory allocation for ttc table after the switch statement
-that validates params->ns_type in both mlx5_create_inner_ttc_table() and
-mlx5_create_ttc_table(). This ensures memory is only allocated after
-confirming valid input, eliminating potential memory leaks when invalid
-ns_type cases occur.
+Commands that have not been completed with scsi_done() do not clear the
+SCMD_INITIALIZED flag and therefore will not be properly reinitialized.
+Thus, the next time the scsi_cmnd structure is used, the command may
+fail in scsi_cmd_runtime_exceeded() due to the old jiffies_at_alloc
+value:
 
-Fixes: 137f3d50ad2a ("net/mlx5: Support matching on l4_type for ttc_table")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250418023814.71789-3-bsdhenrymartin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  kernel: sd 16:0:1:84: [sdts] tag#405 timing out command, waited 720s
+  kernel: sd 16:0:1:84: [sdts] tag#405 FAILED Result: hostbyte=DID_OK driverbyte=DRIVER_OK cmd_age=66636s
+
+Clear flags for commands that have not been completed by SCSI.
+
+Fixes: 4abafdc4360d ("block: remove the initialize_rq_fn blk_mq_ops method")
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Link: https://lore.kernel.org/r/20250324084933.15932-2-a.kovaleva@yadro.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/scsi/scsi_lib.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
-index 510879e1ba30e..43b2216bc0a22 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
-@@ -618,10 +618,6 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
- 	bool use_l4_type;
- 	int err;
- 
--	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
--	if (!ttc)
--		return ERR_PTR(-ENOMEM);
--
- 	switch (params->ns_type) {
- 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
- 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
-@@ -635,6 +631,10 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
- 		return ERR_PTR(-EINVAL);
- 	}
- 
-+	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
-+	if (!ttc)
-+		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 3023b07dc483b..ce4b428b63f83 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1237,8 +1237,12 @@ EXPORT_SYMBOL_GPL(scsi_alloc_request);
+  */
+ static void scsi_cleanup_rq(struct request *rq)
+ {
++	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(rq);
 +
- 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
- 	if (!ns) {
- 		kvfree(ttc);
-@@ -696,10 +696,6 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
- 	bool use_l4_type;
- 	int err;
- 
--	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
--	if (!ttc)
--		return ERR_PTR(-ENOMEM);
--
- 	switch (params->ns_type) {
- 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
- 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
-@@ -713,6 +709,10 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
- 		return ERR_PTR(-EINVAL);
- 	}
- 
-+	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
-+	if (!ttc)
-+		return ERR_PTR(-ENOMEM);
++	cmd->flags = 0;
 +
- 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
- 	if (!ns) {
- 		kvfree(ttc);
+ 	if (rq->rq_flags & RQF_DONTPREP) {
+-		scsi_mq_uninit_cmd(blk_mq_rq_to_pdu(rq));
++		scsi_mq_uninit_cmd(cmd);
+ 		rq->rq_flags &= ~RQF_DONTPREP;
+ 	}
+ }
 -- 
 2.39.5
 
