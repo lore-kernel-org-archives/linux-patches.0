@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE9E242934;
-	Tue, 29 Apr 2025 16:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5494F251798;
+	Tue, 29 Apr 2025 16:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945919; cv=none; b=QMvK5waSdAXL6zdr1TBhHrg8vMzKH7+B8CaKLkFy8ok3x3EazgC7feDWLTwGFY8SksMyhPHorZzCjugK7yIl0rlEnJR5BbmkMyh6HgGfKd6OVHn5lhMP3h5BhWBYyVLFy8lnf/m3BNTAH2sIia6ZEimQZ8vPf2sHtxbqjojP9X8=
+	t=1745945922; cv=none; b=KS/I3ZYpahqqIHNp8P1AEZ+lgnkyySbYlEoWY+d9x2v8FRACJy9fF8QmOkETnX3Xitbk3X1jSIQqqjTpyleebm1uQdwMLkekRTxlVSZ6ilam9VXb04yYHpMsvkb+A6EyMvNcGAlrcwVqKDVWBtH0qvFDut18pwyW2/y6C8Ctvhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945919; c=relaxed/simple;
-	bh=9I0B8w/G4c0/64z6orstxrhfxO1RYiHHdJxmzo3eeC4=;
+	s=arc-20240116; t=1745945922; c=relaxed/simple;
+	bh=yMUv/OaV+hPS6y446mTGvemzs911IU9mW/GsFSc5hmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imGFkXBBKixWhnmo1jkZyZdEqP9iy9egmpWxKgXEFSfO3VXvuKE7Pf+tll+CSYZTs4C5TfeH7yL+17fTds1lNkRTcFozQL4axQO27040rpD4/rNa9Tc1QgBSvtJqhzHh5NZS3HFJqpeoUgF6tpejiQtBXyudzlfT+UuAIEEmMUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKF3w5VP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEP1vdklN+h10BplVpL60KHYX6+hgBrZh9N8NKUXAnibSrJjKTuMjZ+6lD51Nl7Vgt/Fx47yvdglDL68wsu5wUemHMRKcgnCTMRa0UkaY6Btp0bwWAnwABvOL5T/wIst+ypkPK9+hKVr+TpAKENpYlSu8vTuxVEfaL3IrTBcUjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcsAIIst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKF3w5VP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C23C4CEEA;
-	Tue, 29 Apr 2025 16:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcsAIIst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1C1C4CEE9;
+	Tue, 29 Apr 2025 16:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945919;
-	bh=9I0B8w/G4c0/64z6orstxrhfxO1RYiHHdJxmzo3eeC4=;
+	s=korg; t=1745945922;
+	bh=yMUv/OaV+hPS6y446mTGvemzs911IU9mW/GsFSc5hmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKF3w5VPQg1AQ+i11RUQoib9Qn9lQsZ4AZ6wZ5x3OvQN1rf9Q9Lmgxkqmyy6wBCr6
-	 3rpHICxRuHKLbHUOJ8iFVhR5qXkO7fkHHoZQZRWbArZKVn5F/y87Y+vn+Y8gHyFNHQ
-	 q0hNYVX5EjIbeyj8O2WIkPFlHXsvW/DXx9sZEUK0=
+	b=rcsAIIstFHc7wyLEjBLNykci2g1aqYr3ohB75wriCEFz+jTsKO/oFSWWsQOTDa3Fx
+	 WUdy70Mi3ginclS1KYUvOXc3hg1BKRmSs2FxwokwbDkWij9xrl3OSrUvvO2BA+tZii
+	 RorY4M3mQDvM8VIJ/aDGsqM5MXelpWzvDD5dzLds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 094/311] fs/xattr: Fix handling of AT_FDCWD in setxattrat(2) and getxattrat(2)
-Date: Tue, 29 Apr 2025 18:38:51 +0200
-Message-ID: <20250429161124.895028009@linuxfoundation.org>
+Subject: [PATCH 6.14 095/311] bpf: Add namespace to BPF internal symbols
+Date: Tue, 29 Apr 2025 18:38:52 +0200
+Message-ID: <20250429161124.934140651@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,45 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit f520bed25d17bb31c2d2d72b0a785b593a4e3179 ]
+[ Upstream commit f88886de0927a2adf4c1b4c5c1f1d31d2023ef74 ]
 
-Currently, setxattrat(2) and getxattrat(2) are wrongly handling the
-calls of the from setxattrat(AF_FDCWD, NULL, AT_EMPTY_PATH, ...) and
-fail with -EBADF error instead of operating on CWD. Fix it.
+Add namespace to BPF internal symbols used by light skeleton
+to prevent abuse and document with the code their allowed usage.
 
-Fixes: 6140be90ec70 ("fs/xattr: add *at family syscalls")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/20250424132246.16822-2-jack@suse.cz
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: b1d18a7574d0 ("bpf: Extend sys_bpf commands for bpf_syscall programs.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/20250425014542.62385-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/bpf/bpf_devel_QA.rst    | 8 ++++++++
+ kernel/bpf/preload/bpf_preload_kern.c | 1 +
+ kernel/bpf/syscall.c                  | 6 +++---
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/fs/xattr.c b/fs/xattr.c
-index 02bee149ad967..fabb2a04501ee 100644
---- a/fs/xattr.c
-+++ b/fs/xattr.c
-@@ -703,7 +703,7 @@ static int path_setxattrat(int dfd, const char __user *pathname,
- 		return error;
+diff --git a/Documentation/bpf/bpf_devel_QA.rst b/Documentation/bpf/bpf_devel_QA.rst
+index de27e1620821c..0acb4c9b8d90f 100644
+--- a/Documentation/bpf/bpf_devel_QA.rst
++++ b/Documentation/bpf/bpf_devel_QA.rst
+@@ -382,6 +382,14 @@ In case of new BPF instructions, once the changes have been accepted
+ into the Linux kernel, please implement support into LLVM's BPF back
+ end. See LLVM_ section below for further information.
  
- 	filename = getname_maybe_null(pathname, at_flags);
--	if (!filename) {
-+	if (!filename && dfd >= 0) {
- 		CLASS(fd, f)(dfd);
- 		if (fd_empty(f))
- 			error = -EBADF;
-@@ -847,7 +847,7 @@ static ssize_t path_getxattrat(int dfd, const char __user *pathname,
- 		return error;
++Q: What "BPF_INTERNAL" symbol namespace is for?
++-----------------------------------------------
++A: Symbols exported as BPF_INTERNAL can only be used by BPF infrastructure
++like preload kernel modules with light skeleton. Most symbols outside
++of BPF_INTERNAL are not expected to be used by code outside of BPF either.
++Symbols may lack the designation because they predate the namespaces,
++or due to an oversight.
++
+ Stable submission
+ =================
  
- 	filename = getname_maybe_null(pathname, at_flags);
--	if (!filename) {
-+	if (!filename && dfd >= 0) {
- 		CLASS(fd, f)(dfd);
- 		if (fd_empty(f))
- 			return -EBADF;
+diff --git a/kernel/bpf/preload/bpf_preload_kern.c b/kernel/bpf/preload/bpf_preload_kern.c
+index 0c63bc2cd895a..56a81df7a9d7c 100644
+--- a/kernel/bpf/preload/bpf_preload_kern.c
++++ b/kernel/bpf/preload/bpf_preload_kern.c
+@@ -89,4 +89,5 @@ static void __exit fini(void)
+ }
+ late_initcall(load);
+ module_exit(fini);
++MODULE_IMPORT_NS("BPF_INTERNAL");
+ MODULE_LICENSE("GPL");
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index e1e42e918ba7f..1c2caae0d8946 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1562,7 +1562,7 @@ struct bpf_map *bpf_map_get(u32 ufd)
+ 
+ 	return map;
+ }
+-EXPORT_SYMBOL(bpf_map_get);
++EXPORT_SYMBOL_NS(bpf_map_get, "BPF_INTERNAL");
+ 
+ struct bpf_map *bpf_map_get_with_uref(u32 ufd)
+ {
+@@ -3345,7 +3345,7 @@ struct bpf_link *bpf_link_get_from_fd(u32 ufd)
+ 	bpf_link_inc(link);
+ 	return link;
+ }
+-EXPORT_SYMBOL(bpf_link_get_from_fd);
++EXPORT_SYMBOL_NS(bpf_link_get_from_fd, "BPF_INTERNAL");
+ 
+ static void bpf_tracing_link_release(struct bpf_link *link)
+ {
+@@ -5981,7 +5981,7 @@ int kern_sys_bpf(int cmd, union bpf_attr *attr, unsigned int size)
+ 		return ____bpf_sys_bpf(cmd, attr, size);
+ 	}
+ }
+-EXPORT_SYMBOL(kern_sys_bpf);
++EXPORT_SYMBOL_NS(kern_sys_bpf, "BPF_INTERNAL");
+ 
+ static const struct bpf_func_proto bpf_sys_bpf_proto = {
+ 	.func		= bpf_sys_bpf,
 -- 
 2.39.5
 
