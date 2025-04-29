@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603761C6B4;
-	Tue, 29 Apr 2025 17:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FAF215F7C;
+	Tue, 29 Apr 2025 17:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948184; cv=none; b=N38UlrQvQIzUTrmQvtFT/QcjTxOzEWHWqqTNALaymIAzYUzU/px6J9/NOxhCRlmV57+QB6+/aODTt7zjP1kgXKnPTkFqs/M10QsRtAMpHZDpNkGXgE4C33KE27TiwwJxB+rpuHKZb3vRzs2ur8MoXVQr3Zvs316LSlk84lxE99w=
+	t=1745948190; cv=none; b=TgU+8FcUkCo6NaduivEI4kwchAcNeGf6pjX+utp4ydPEW8MzeW8FxdEITa4pePuADOFNcBRrVdXLjHaXMn5zgjEPTHfKkbd/sFKgc5X+T6+mMmc/8rTIXGusaZIOLlsuHcnR0oECnAc0vfnMSzRog3KDiycjSPugwBycYF04JWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948184; c=relaxed/simple;
-	bh=v5tnPKNglulc8Kh7hiMymUbgFcIqwqP6d+Odg9Nmqgw=;
+	s=arc-20240116; t=1745948190; c=relaxed/simple;
+	bh=nP6hhQ2AwJNz4sZVtcEOte9LFRQGbR/4mafVumfBPEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AahoJGAY5/iRoFd9BjRbrm73n3DdPCJ4i3TB20IBzo4UxyDl1O22YGIb7iMlecU+/uDOfT9jQFLvlZspWqr1dabm45LzHLI5UcKUtmIRklC7OjTXOKhq5Imnu3TFG6RNXwRyFWcgfie8utF6RdCsJ4yOrHlyqFV9Th3DJtJZlic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIW+QpS5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OIUguIq2CdsHX4cee+GrknuATJFrnOBB3PoLdSxUQkN9kX8qfAYppmF5ldafblI7Qb1x2bBQ1xA0jxmaMwj7HJqP3gU/Su9TbxAvFkC27RMkJw/pSq47Xiv6hFc08m7UdXDSRQg36Lr7TitxlyCYB8dqniRWq2vTtHvIZW0TSG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBdwQRMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIW+QpS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FA0C4CEE3;
-	Tue, 29 Apr 2025 17:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBdwQRMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B0CC4CEE3;
+	Tue, 29 Apr 2025 17:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948184;
-	bh=v5tnPKNglulc8Kh7hiMymUbgFcIqwqP6d+Odg9Nmqgw=;
+	s=korg; t=1745948189;
+	bh=nP6hhQ2AwJNz4sZVtcEOte9LFRQGbR/4mafVumfBPEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIW+QpS50ILvcwLzImCll1aN3TK3kqkI1K5qFksJY7o4APPb5Vx/rcsszgVKP4pLU
-	 1R207/xgwX0DzLIREHrGY4ubJQSA1vAtJxwdMT4Lh0bhp54eTc0ePPV8P8CCKxpFl3
-	 6wTVBmuRO+xOlDrTaSOwUWs6THqugDfTLzIAjPK8=
+	b=xBdwQRMkptbxb5mV2QGpu5CwFwtIYC5GXVVlGtuDSPIxWF4hU4o+dSiQithsNZkC5
+	 iWHzpnzgbHaTF89Hi8iKX0irEkTnVbMSqQm97vZqEO9lK7J7U9BDb1a7PPUcPaLfLE
+	 P9srPFbEGQ6y69UtXnAunmMr6r7pycdFc1XhHbic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/280] objtool: Stop UNRET validation on UD2
-Date: Tue, 29 Apr 2025 18:42:35 +0200
-Message-ID: <20250429161123.882198294@linuxfoundation.org>
+Subject: [PATCH 6.12 215/280] gpiolib: of: Move Atmel HSMCI quirk up out of the regulator comment
+Date: Tue, 29 Apr 2025 18:42:36 +0200
+Message-ID: <20250429161123.922246782@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,36 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9f9cc012c2cbac4833746a0182e06a8eec940d19 ]
+[ Upstream commit b8c7a1ac884cc267d1031f8de07f1a689a69fbab ]
 
-In preparation for simplifying INSN_SYSCALL, make validate_unret()
-terminate control flow on UD2 just like validate_branch() already does.
+The regulator comment in of_gpio_set_polarity_by_property()
+made on top of a couple of the cases, while Atmel HSMCI quirk
+is not related to that. Make it clear by moving Atmel HSMCI
+quirk up out of the scope of the regulator comment.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/ce841269e7e28c8b7f32064464a9821034d724ff.1744095216.git.jpoimboe@kernel.org
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250402122058.1517393-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpiolib-of.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index bab1f22fd50a1..9e6a934329dc8 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4014,6 +4014,9 @@ static int validate_unret(struct objtool_file *file, struct instruction *insn)
- 			break;
- 		}
- 
-+		if (insn->dead_end)
-+			return 0;
-+
- 		if (!next) {
- 			WARN_INSN(insn, "teh end!");
- 			return -1;
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index e543129d36050..626daedb01698 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -259,6 +259,9 @@ static void of_gpio_set_polarity_by_property(const struct device_node *np,
+ 		{ "fsl,imx8qm-fec",  "phy-reset-gpios", "phy-reset-active-high" },
+ 		{ "fsl,s32v234-fec", "phy-reset-gpios", "phy-reset-active-high" },
+ #endif
++#if IS_ENABLED(CONFIG_MMC_ATMELMCI)
++		{ "atmel,hsmci",       "cd-gpios",     "cd-inverted" },
++#endif
+ #if IS_ENABLED(CONFIG_PCI_IMX6)
+ 		{ "fsl,imx6q-pcie",  "reset-gpio", "reset-gpio-active-high" },
+ 		{ "fsl,imx6sx-pcie", "reset-gpio", "reset-gpio-active-high" },
+@@ -284,9 +287,6 @@ static void of_gpio_set_polarity_by_property(const struct device_node *np,
+ #if IS_ENABLED(CONFIG_REGULATOR_GPIO)
+ 		{ "regulator-gpio",    "enable-gpio",  "enable-active-high" },
+ 		{ "regulator-gpio",    "enable-gpios", "enable-active-high" },
+-#endif
+-#if IS_ENABLED(CONFIG_MMC_ATMELMCI)
+-		{ "atmel,hsmci",       "cd-gpios",     "cd-inverted" },
+ #endif
+ 	};
+ 	unsigned int i;
 -- 
 2.39.5
 
