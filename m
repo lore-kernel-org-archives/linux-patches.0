@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F49243364;
-	Tue, 29 Apr 2025 17:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF6422AE68;
+	Tue, 29 Apr 2025 17:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949215; cv=none; b=t3g93WktW4ZQbd/lzwKQVzbiDXpguvkCagGeeMgkDz4wZITQcKpIcq1avZ1bCWOe4dTjSzWO3/wjqUNB5HF1pK1ODRB26+6CMe42G+UN8BQoqLXeZDZkCukJpzHZ1yyLhpJA1gSJE56kjdG3wgVjTwXWXLEAPJaEWO1Np078Z0s=
+	t=1745949218; cv=none; b=tHuVpxO2M0l/+h1L7Hed1PHSbsJKxdt9aQNlpL086zr8AUBoJ3gE8U1ENc9CXTk7IVdr8lWYnIDeuYzlxpV/QWCNvGi2N1LfpakyyGOP1cyXnhjn3cnbdSR0K82Wy+EMOyFXu+2+kmXuV3zgSBfmRVqWSiXsWfmQb9xiNpSas2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949215; c=relaxed/simple;
-	bh=I1NlgHPwswv4OeATSi2GUg08zdJxO86n4cpLqb7N69o=;
+	s=arc-20240116; t=1745949218; c=relaxed/simple;
+	bh=oQXWjnKZDIUNCG1R2PB0X5ApgArVH+v6ttUJ3WKFO7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNKp2UdKU9UbL/TiZ3PJvL189WlTRDSifw36kwIjh/YjUDimRUQfFCHGDZDk6/vbA+ZE1Y6le2L2yOPsUa/vq61WmkHOZcdOoqp5pTdNwVSvX03J47J45eTWwyVnr/1Y9pLlQ1g8yHRBfgBTGXqfZ4pkqOP6elv9kGZvPxce4RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIsiV5rV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9iKYMiUJ9+82TubNmoSDvykdn8G6URA4ZW4Ch7j//hk3S7clcG2R4YhR2eEHAdCr53fG7EQURCDzpK/0jzR+/aQ1WtjFZkCocXhQbqKF28go7fVM2DXprie+5Qx4YMxSr4igMIWmoIbySsbpTLJ7YlnVGwkAS2ycB1G0mVjtUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6jRuOp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIsiV5rV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0E3C4CEE3;
-	Tue, 29 Apr 2025 17:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6jRuOp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772E3C4CEE3;
+	Tue, 29 Apr 2025 17:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949214;
-	bh=I1NlgHPwswv4OeATSi2GUg08zdJxO86n4cpLqb7N69o=;
+	s=korg; t=1745949217;
+	bh=oQXWjnKZDIUNCG1R2PB0X5ApgArVH+v6ttUJ3WKFO7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIsiV5rVJNNxCGY7o+8f/DmNP8ngH1/w/1UZhNs+EBkad+vOmRojyNKUDk1WPh3Yv
-	 EozjwA8UZdv9MOxcViVY36DZfEIeQhsRhH+3MG37H4uypcsQ3SzQQCkiLOFCGMe/3S
-	 6HvyYtTxkBSVK26r8CY4ZqBm9Q++pDRYer/g5Ee8=
+	b=I6jRuOp2ozoNE2EkyZcdtxmr1ev6NUWsnoZm2QGCVrjrD+8IaLvy4DpM27oqEl7Xg
+	 TeyfCfbS+CNwOCwnKWhGKgorEeaGp+T/t7x2iSoWvDi2WnjTeFfjrWp/yZZ0k53vbc
+	 NiUtDMmj0lkJoZ41nIBb28e2RdssVF8Z5n4qhHwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 219/373] smb: client: fix potential UAF in cifs_dump_full_key()
-Date: Tue, 29 Apr 2025 18:41:36 +0200
-Message-ID: <20250429161132.163977179@linuxfoundation.org>
+Subject: [PATCH 5.15 220/373] ksmbd: fix potencial out-of-bounds when buffer offset is invalid
+Date: Tue, 29 Apr 2025 18:41:37 +0200
+Message-ID: <20250429161132.204661261@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,37 +52,302 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 58acd1f497162e7d282077f816faa519487be045 upstream.
+commit c6cd2e8d2d9aa7ee35b1fa6a668e32a22a9753da upstream.
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+I found potencial out-of-bounds when buffer offset fields of a few requests
+is invalid. This patch set the minimum value of buffer offset field to
+->Buffer offset to validate buffer length.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-[ This patch removes lock/unlock operation in routine cifs_dump_full_key()
-  for ses_lock is not present in v5.15 and not ported yet. ses->status
-  is protected by a global lock, cifs_tcp_ses_lock, in v5.15.  ]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/ioctl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2misc.c |   22 ++++++++++++++++------
+ fs/ksmbd/smb2pdu.c  |   47 +++++++++++++++++++++++++----------------------
+ 2 files changed, 41 insertions(+), 28 deletions(-)
 
---- a/fs/cifs/ioctl.c
-+++ b/fs/cifs/ioctl.c
-@@ -232,7 +232,8 @@ static int cifs_dump_full_key(struct cif
- 		spin_lock(&cifs_tcp_ses_lock);
- 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
- 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
--				if (ses_it->Suid == out.session_id) {
-+				if (ses_it->status != CifsExiting &&
-+				    ses_it->Suid == out.session_id) {
- 					ses = ses_it;
- 					/*
- 					 * since we are using the session outside the crit
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -102,7 +102,9 @@ static int smb2_get_data_area_len(unsign
+ 		*len = le16_to_cpu(((struct smb2_sess_setup_req *)hdr)->SecurityBufferLength);
+ 		break;
+ 	case SMB2_TREE_CONNECT:
+-		*off = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset);
++		*off = max_t(unsigned short int,
++			     le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset),
++			     offsetof(struct smb2_tree_connect_req, Buffer));
+ 		*len = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathLength);
+ 		break;
+ 	case SMB2_CREATE:
+@@ -129,11 +131,15 @@ static int smb2_get_data_area_len(unsign
+ 		break;
+ 	}
+ 	case SMB2_QUERY_INFO:
+-		*off = le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset);
++		*off = max_t(unsigned int,
++			     le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset),
++			     offsetof(struct smb2_query_info_req, Buffer));
+ 		*len = le32_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferLength);
+ 		break;
+ 	case SMB2_SET_INFO:
+-		*off = le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset);
++		*off = max_t(unsigned int,
++			     le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset),
++			     offsetof(struct smb2_set_info_req, Buffer));
+ 		*len = le32_to_cpu(((struct smb2_set_info_req *)hdr)->BufferLength);
+ 		break;
+ 	case SMB2_READ:
+@@ -143,7 +149,7 @@ static int smb2_get_data_area_len(unsign
+ 	case SMB2_WRITE:
+ 		if (((struct smb2_write_req *)hdr)->DataOffset ||
+ 		    ((struct smb2_write_req *)hdr)->Length) {
+-			*off = max_t(unsigned int,
++			*off = max_t(unsigned short int,
+ 				     le16_to_cpu(((struct smb2_write_req *)hdr)->DataOffset),
+ 				     offsetof(struct smb2_write_req, Buffer) - 4);
+ 			*len = le32_to_cpu(((struct smb2_write_req *)hdr)->Length);
+@@ -154,7 +160,9 @@ static int smb2_get_data_area_len(unsign
+ 		*len = le16_to_cpu(((struct smb2_write_req *)hdr)->WriteChannelInfoLength);
+ 		break;
+ 	case SMB2_QUERY_DIRECTORY:
+-		*off = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset);
++		*off = max_t(unsigned short int,
++			     le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset),
++			     offsetof(struct smb2_query_directory_req, Buffer));
+ 		*len = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameLength);
+ 		break;
+ 	case SMB2_LOCK:
+@@ -169,7 +177,9 @@ static int smb2_get_data_area_len(unsign
+ 		break;
+ 	}
+ 	case SMB2_IOCTL:
+-		*off = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset);
++		*off = max_t(unsigned int,
++			     le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset),
++			     offsetof(struct smb2_ioctl_req, Buffer));
+ 		*len = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputCount);
+ 		break;
+ 	default:
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1967,7 +1967,7 @@ int smb2_tree_connect(struct ksmbd_work
+ 
+ 	WORK_BUFFERS(work, req, rsp);
+ 
+-	treename = smb_strndup_from_utf16(req->Buffer,
++	treename = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->PathOffset),
+ 					  le16_to_cpu(req->PathLength), true,
+ 					  conn->local_nls);
+ 	if (IS_ERR(treename)) {
+@@ -2714,7 +2714,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			goto err_out2;
+ 		}
+ 
+-		name = smb2_get_name(req->Buffer,
++		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
+ 				     le16_to_cpu(req->NameLength),
+ 				     work->conn->local_nls);
+ 		if (IS_ERR(name)) {
+@@ -4086,7 +4086,7 @@ int smb2_query_dir(struct ksmbd_work *wo
+ 	}
+ 
+ 	srch_flag = req->Flags;
+-	srch_ptr = smb_strndup_from_utf16(req->Buffer,
++	srch_ptr = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->FileNameOffset),
+ 					  le16_to_cpu(req->FileNameLength), 1,
+ 					  conn->local_nls);
+ 	if (IS_ERR(srch_ptr)) {
+@@ -4346,7 +4346,8 @@ static int smb2_get_ea(struct ksmbd_work
+ 		    sizeof(struct smb2_ea_info_req))
+ 			return -EINVAL;
+ 
+-		ea_req = (struct smb2_ea_info_req *)req->Buffer;
++		ea_req = (struct smb2_ea_info_req *)((char *)req +
++						     le16_to_cpu(req->InputBufferOffset));
+ 	} else {
+ 		/* need to send all EAs, if no specific EA is requested*/
+ 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
+@@ -5952,6 +5953,7 @@ static int smb2_set_info_file(struct ksm
+ 			      struct ksmbd_share_config *share)
+ {
+ 	unsigned int buf_len = le32_to_cpu(req->BufferLength);
++	char *buffer = (char *)req + le16_to_cpu(req->BufferOffset);
+ 
+ 	switch (req->FileInfoClass) {
+ 	case FILE_BASIC_INFORMATION:
+@@ -5959,7 +5961,7 @@ static int smb2_set_info_file(struct ksm
+ 		if (buf_len < sizeof(struct smb2_file_basic_info))
+ 			return -EINVAL;
+ 
+-		return set_file_basic_info(fp, (struct smb2_file_basic_info *)req->Buffer, share);
++		return set_file_basic_info(fp, (struct smb2_file_basic_info *)buffer, share);
+ 	}
+ 	case FILE_ALLOCATION_INFORMATION:
+ 	{
+@@ -5967,7 +5969,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
+ 
+ 		return set_file_allocation_info(work, fp,
+-						(struct smb2_file_alloc_info *)req->Buffer);
++						(struct smb2_file_alloc_info *)buffer);
+ 	}
+ 	case FILE_END_OF_FILE_INFORMATION:
+ 	{
+@@ -5975,7 +5977,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
+ 
+ 		return set_end_of_file_info(work, fp,
+-					    (struct smb2_file_eof_info *)req->Buffer);
++					    (struct smb2_file_eof_info *)buffer);
+ 	}
+ 	case FILE_RENAME_INFORMATION:
+ 	{
+@@ -5983,7 +5985,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
+ 
+ 		return set_rename_info(work, fp,
+-				       (struct smb2_file_rename_info *)req->Buffer,
++				       (struct smb2_file_rename_info *)buffer,
+ 				       buf_len);
+ 	}
+ 	case FILE_LINK_INFORMATION:
+@@ -5992,7 +5994,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
+ 
+ 		return smb2_create_link(work, work->tcon->share_conf,
+-					(struct smb2_file_link_info *)req->Buffer,
++					(struct smb2_file_link_info *)buffer,
+ 					buf_len, fp->filp,
+ 					work->conn->local_nls);
+ 	}
+@@ -6002,7 +6004,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
+ 
+ 		return set_file_disposition_info(fp,
+-						 (struct smb2_file_disposition_info *)req->Buffer);
++						 (struct smb2_file_disposition_info *)buffer);
+ 	}
+ 	case FILE_FULL_EA_INFORMATION:
+ 	{
+@@ -6015,7 +6017,7 @@ static int smb2_set_info_file(struct ksm
+ 		if (buf_len < sizeof(struct smb2_ea_info))
+ 			return -EINVAL;
+ 
+-		return smb2_set_ea((struct smb2_ea_info *)req->Buffer,
++		return smb2_set_ea((struct smb2_ea_info *)buffer,
+ 				   buf_len, &fp->filp->f_path, true);
+ 	}
+ 	case FILE_POSITION_INFORMATION:
+@@ -6023,14 +6025,14 @@ static int smb2_set_info_file(struct ksm
+ 		if (buf_len < sizeof(struct smb2_file_pos_info))
+ 			return -EINVAL;
+ 
+-		return set_file_position_info(fp, (struct smb2_file_pos_info *)req->Buffer);
++		return set_file_position_info(fp, (struct smb2_file_pos_info *)buffer);
+ 	}
+ 	case FILE_MODE_INFORMATION:
+ 	{
+ 		if (buf_len < sizeof(struct smb2_file_mode_info))
+ 			return -EINVAL;
+ 
+-		return set_file_mode_info(fp, (struct smb2_file_mode_info *)req->Buffer);
++		return set_file_mode_info(fp, (struct smb2_file_mode_info *)buffer);
+ 	}
+ 	}
+ 
+@@ -6111,7 +6113,7 @@ int smb2_set_info(struct ksmbd_work *wor
+ 		}
+ 		rc = smb2_set_info_sec(fp,
+ 				       le32_to_cpu(req->AdditionalInformation),
+-				       req->Buffer,
++				       (char *)req + le16_to_cpu(req->BufferOffset),
+ 				       le32_to_cpu(req->BufferLength));
+ 		ksmbd_revert_fsids(work);
+ 		break;
+@@ -7563,7 +7565,7 @@ static int fsctl_pipe_transceive(struct
+ 				 struct smb2_ioctl_rsp *rsp)
+ {
+ 	struct ksmbd_rpc_command *rpc_resp;
+-	char *data_buf = (char *)&req->Buffer[0];
++	char *data_buf = (char *)req + le32_to_cpu(req->InputOffset);
+ 	int nbytes = 0;
+ 
+ 	rpc_resp = ksmbd_rpc_ioctl(work->sess, id, data_buf,
+@@ -7676,6 +7678,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	u64 id = KSMBD_NO_FID;
+ 	struct ksmbd_conn *conn = work->conn;
+ 	int ret = 0;
++	char *buffer;
+ 
+ 	if (work->next_smb2_rcv_hdr_off) {
+ 		req = ksmbd_req_buf_next(work);
+@@ -7698,6 +7701,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		goto out;
+ 	}
+ 
++	buffer = (char *)req + le32_to_cpu(req->InputOffset);
+ 	cnt_code = le32_to_cpu(req->CntCode);
+ 	ret = smb2_calc_max_out_buf_len(work, 48,
+ 					le32_to_cpu(req->MaxOutputResponse));
+@@ -7755,7 +7759,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		}
+ 
+ 		ret = fsctl_validate_negotiate_info(conn,
+-			(struct validate_negotiate_info_req *)&req->Buffer[0],
++			(struct validate_negotiate_info_req *)buffer,
+ 			(struct validate_negotiate_info_rsp *)&rsp->Buffer[0],
+ 			in_buf_len);
+ 		if (ret < 0)
+@@ -7808,7 +7812,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		rsp->VolatileFileId = req->VolatileFileId;
+ 		rsp->PersistentFileId = req->PersistentFileId;
+ 		fsctl_copychunk(work,
+-				(struct copychunk_ioctl_req *)&req->Buffer[0],
++				(struct copychunk_ioctl_req *)buffer,
+ 				le32_to_cpu(req->CntCode),
+ 				le32_to_cpu(req->InputCount),
+ 				req->VolatileFileId,
+@@ -7821,8 +7825,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			goto out;
+ 		}
+ 
+-		ret = fsctl_set_sparse(work, id,
+-				       (struct file_sparse *)&req->Buffer[0]);
++		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
+ 		if (ret < 0)
+ 			goto out;
+ 		break;
+@@ -7845,7 +7848,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		}
+ 
+ 		zero_data =
+-			(struct file_zero_data_information *)&req->Buffer[0];
++			(struct file_zero_data_information *)buffer;
+ 
+ 		off = le64_to_cpu(zero_data->FileOffset);
+ 		bfz = le64_to_cpu(zero_data->BeyondFinalZero);
+@@ -7876,7 +7879,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		}
+ 
+ 		ret = fsctl_query_allocated_ranges(work, id,
+-			(struct file_allocated_range_buffer *)&req->Buffer[0],
++			(struct file_allocated_range_buffer *)buffer,
+ 			(struct file_allocated_range_buffer *)&rsp->Buffer[0],
+ 			out_buf_len /
+ 			sizeof(struct file_allocated_range_buffer), &nbytes);
+@@ -7920,7 +7923,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			goto out;
+ 		}
+ 
+-		dup_ext = (struct duplicate_extents_to_file *)&req->Buffer[0];
++		dup_ext = (struct duplicate_extents_to_file *)buffer;
+ 
+ 		fp_in = ksmbd_lookup_fd_slow(work, dup_ext->VolatileFileHandle,
+ 					     dup_ext->PersistentFileHandle);
 
 
