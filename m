@@ -1,125 +1,101 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75461F4736
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 18:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05468255231
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 19:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745953064; cv=none; b=N3fgY6zVm10UrmkLYnTAacLil6H9oVh6GjF3cKAtdLO2t3QkZxVgbMFtiYYyFvTQvDrQ0fKN3OFgKRSp8/pl/RFKjNU43GtFTzfFjyKsgmAizqsFvTzaH+3VDTI8YXa8Bnb9Wci2XV+aA0+D+f7CP3SSOVbGhIQrkyA/8qItAMs=
+	t=1745953536; cv=none; b=PA9lM0XFNnXx+85bWiHOz7O+1vyaE0NgQ+BhfBeYfDpSIRsYi2oLDJ7LsdaJSMR7sZf0ULR265rRXzH7N9aKNKvLnh5cJHIyaRzfuGIb9RNMsbEIn/0W9B/B6S5J/SGeeNBxgG+9Muz+nnTUFpZZRoIM2dxgLd74JrI1qv7hXEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745953064; c=relaxed/simple;
-	bh=neW8JICaEEWUIk+9rBwbn5iIXjtiSl0sUhd8RTSSX8Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bEnG5OTA3XjZQyPYxKD0A9xR44bTdNlZxFaVc0Nd9v9xaFmFiRVEqOp/lh/0mjUPhfgfT7H/1OsktcZXUa4hGLgyq580cVAeJweBfNrCb0S8OI2Cx2h21xjT8LiNq/caWE+HogV6n2c2iyQlBhNgs4fWPkPJm/Vlh5kDI5KUxjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TCoYvwXF; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1745953536; c=relaxed/simple;
+	bh=Cf/1Zs3LvoHH9crR8mIsN9S6Tq8TBj0Y0gYogsqqD/8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F5H+9suO2OUmdINLYXsNioNNPwee9E2ZQl+l162rjnb8bUWwt3QsdkrXNFyAfIrIRqmfRAmH7ix5+Qcka9QqDXypVU3DdoYdf+vUEXME4/C5uorTYdm8jSq463w1X6F9wR+dm0ScLQnR9229IhRsw36qyKqiP5zZDdsAb1o1d50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RF2la0fX; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TCoYvwXF"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2242ac37caeso53785ad.1
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 11:57:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RF2la0fX"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2240ff0bd6eso12996135ad.0
+        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 12:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1745953062; x=1746557862; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fdXV/8C/yQUJ8I+wtd2Z/G5iaXapJqIY6nj11Km1s7M=;
-        b=TCoYvwXFmxXPT+ficSgwU2vV3w7Lqfopg4u9YDmQ7zoDdcKaRfrlqZ5bZgqxf4lxTl
-         +QfgV6R8uryU1lR8KpqmM2tlK14sEpxbsjKKA1kf2UnzyZQxgrJIGkg8y1vsiTrHwWiS
-         uJlzKPT8PFePNRxL8Q2RSi1XhMfXuJrlrbNW8lVBoejgCdnqJ9JDSXbgiLbhbj4lg5Js
-         5/Xwr9fpCMdcW+NRcvDH3oiu0elZoMNw7CwhiVly6r2vXyVwlLmtfTkybIWd/TCht4e0
-         OSLCJPlPvEO1nNcnn8AsHpppIowHAIf+zlP4iCWTVgnBpOupURaMlL8rHjN5PVRaPJ9T
-         iXfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745953062; x=1746557862;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1745953534; x=1746558334; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fdXV/8C/yQUJ8I+wtd2Z/G5iaXapJqIY6nj11Km1s7M=;
-        b=tabJp5BQQU7qusQ+wOoBHndvApssOKE6Xk9fOGA6M2Ygcz/FS01poiOKsNeE8Mzo3U
-         dwHWbJe7sR44w/fd9M4AukR12jP/x/ByHiPvDSusqv/jA9Ll0E03yI0BrZKg/tCCosVA
-         7sVTW7PcfOA86Q+qnhwzZpQvKCgsec8EUoHqaJHv/6UqtLtw0yeSb0MRZcEZbqaM/LHf
-         bXYEoMZXhgxCZPRxnK65WtFgxx6PC5KrpruLCz9T3wXtQQGl5DdtePJDjbjnH4waXWOX
-         bZHli2Y6Cm9odArYBV2yGO9eVsyOx5oVPV1TLIK23XlDbrlXtZD5gK4DPEUWVAIgw/LR
-         gE7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUT8i+SFXs4eC4pIxQ+AIVTT0LNs8aggmeCJZ20bdRKoSf8UUiOe7DDrq3GzWwg5m1rcBIo1CmS@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz7gteZJZpu/2K1iiYRVD99JExn4L3MqEpwZqpx+xdL7LdG65K8
-	8uDtZ05BGAr2LaYVpASk017ZGw8lWihGXIvM2tZP7cHBK+/vg7MMSCVL31XfAA==
-X-Gm-Gg: ASbGncuLBOncGWjvmvo9HqjNPYOjhWkpH8+SNnfJZESk9Enzie5a7YMGKDZ7NFmG081
-	M00Vi2RMnalSHa2xTr0SvvG++Y+mp3gC9wHQI4PYirVvoE6YEN80TrARNUq5Ljm2/u6eZhUmICh
-	OXkECQPuh3huFun5XbNJ/8086Vw32pQRGdzO217evxHAfmzD0qwcGJOp5qN4ugsvYMq67eZiv5W
-	4a5V8L7xNh35cExcRACP6VSoBqaHTGyo0OXhIC6c6Pl0xQ4STWgbFl3RURx/7u4slbBfV/67VES
-	nf1xk9dIU1beSApNZ+Z5SlaFMEmKIncYHc9iS0X3zCRtJrL0jdYuE2SP1p79c/3ToW9yThUZ
-X-Google-Smtp-Source: AGHT+IGgXGpqrHCfuif7QcKDzCUp9vTefuXFD3aLx4LdLjCaDTVmYgt+1uOwojrpCvF02XNkiYlVaw==
-X-Received: by 2002:a17:903:248:b0:215:7ced:9d66 with SMTP id d9443c01a7336-22df3f77b8cmr333515ad.10.1745953061819;
-        Tue, 29 Apr 2025 11:57:41 -0700 (PDT)
-Received: from google.com (2.210.143.34.bc.googleusercontent.com. [34.143.210.2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-309ef097e0csm11594174a91.25.2025.04.29.11.57.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 11:57:41 -0700 (PDT)
-Date: Tue, 29 Apr 2025 18:57:30 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
-	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
-	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
-	zhangzekun11@huawei.com, iommu@lists.linux.dev,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
-	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-Subject: Re: [PATCH v2 10/22] iommufd/viommmu: Add IOMMUFD_CMD_VCMDQ_ALLOC
- ioctl
-Message-ID: <aBEhGmoh0E865PxF@google.com>
-References: <cover.1745646960.git.nicolinc@nvidia.com>
- <094992b874190ffdcf6012104b419c8649b5e4b4.1745646960.git.nicolinc@nvidia.com>
- <aA_0TV0RkVOHk7Qj@google.com>
- <aBAEuP9962XweHPc@Asurada-Nvidia>
- <aBCNkcLp6XZpjYYT@google.com>
- <aBEWFw2wq40SHjTn@google.com>
- <aBEXJFnLalIh788i@Asurada-Nvidia>
+        bh=r16Su1sCCYhnqNXeOKW7XODWPW+w2pTNIqFTeu9Mb/g=;
+        b=RF2la0fXupSyW7cs7g/5AQNqVAiLUotl/weUZ5F/rrHuHMhdl1PHgVjDvXrbAycjZ7
+         jTZJ4JckviX0Kl4VW7GXMM/Ra5T4+OFT1JblzIfmPR0J9HzmcmdcW/P6Ds74q1gdgi9B
+         x48fuEiPBOkfTiSLviL6CGCOptZW4aRGsHzWujTDe7DW2LT8jj1lybNCPi36sG2yiSxO
+         1imSZKRgxiFKT5V4SDMSoModYb2LlRgSNZCSeE8aW54eOFkewX2KVfvgw7y+25X0ak8m
+         RbV1iBVoeNllRkOkyLDe39BJhQBkD4t4o6xMut5BQRZK1nqstSp5jlfbhR8Fa4/I0X9K
+         kW0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745953534; x=1746558334;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=r16Su1sCCYhnqNXeOKW7XODWPW+w2pTNIqFTeu9Mb/g=;
+        b=F1mfvQTKMN+PLJJ0vevnzEHdLpiHnvyOp0je244KvVp7orLXTAv4rq49dYHPQJA1AD
+         4aJIKH3JrbfcTaolI/gAiEOoltqh0LX9Z8XWutAfmDY7d4vLJNPbIc4pon6Vys2opZfS
+         jd6wFXpLT6UX8PNZRZyXm1mAAdTsRjpVUnVMRxZI+m/Jirp0DJgcKYkMSipzupVENmpO
+         tIa0fVHH8zy95q8yCMAk9cdd6fdpit5tOyLIjMowieLIJOaOT1lf6D18MUQUXD+7xR7+
+         o1DahTuqmVDDoa+Pon9U2K4pdwF6kjGnBufmLsG+nfwfABjAwkFYtRs3ZG1cjQ/WMPC/
+         DzBg==
+X-Forwarded-Encrypted: i=1; AJvYcCWuKdxPteUX2kCiYYoM1nRRcRclfcWnYzlXZBe0EZE6njTVPKnljii2sTy+iN5ZCqjQUbO2ikh6@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9QIAMeCvZyi7q/ap5Xw7IM6UEjc4UijLImUZS0UYRyD1aTRs6
+	2LWCB9pHyds33kz/Or5+HgiECBYGkZrHLfflCLMVjemrne1ygieG3O0z7F9K+VSX2gVZ51xbDIk
+	2qo9hJX+REdlpdUFZGMDEXRWB6eI=
+X-Gm-Gg: ASbGncuKvKduLjBx8im9ggdsIwWTevwC5XkkzldrcsE4Gx9lBeXv3VxxjGtZWsskfWH
+	lVoV0WBul75vLgqaSFeyIFjIOURXsmMHjUap3C1TjPoM6KF2Sl3CQrYAFwWwQgoWv35kDX+HeYw
+	Fjcc9H2pJ7XzMkDE55IlicUA==
+X-Google-Smtp-Source: AGHT+IHsGrvtNSu7zfAedzBqY74ny6UZBQfdnfghG/iiXxqtFrqxbDJyig015Pgn2rGVH3TXRtMbDQ9gB4KjH3DpDTY=
+X-Received: by 2002:a17:90b:1d08:b0:305:5f25:59ad with SMTP id
+ 98e67ed59e1d1-30a3337c9e3mr114359a91.7.1745953534031; Tue, 29 Apr 2025
+ 12:05:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aBEXJFnLalIh788i@Asurada-Nvidia>
+References: <20250429150346.392050-1-ojeda@kernel.org> <aBEXUG7QH0ymRuLm@pollux>
+In-Reply-To: <aBEXUG7QH0ymRuLm@pollux>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 29 Apr 2025 21:05:21 +0200
+X-Gm-Features: ATxdqUGcOr3gxJsr8USoDtVzfAIDvZ5RlCaobjuVVIdgjgS6lnLZdSU5M8Bwyt4
+Message-ID: <CANiq72nf86+OcMTNPQVnF=pXuaJVw0bFixMxs6qwS5vTh7RWxw@mail.gmail.com>
+Subject: Re: [PATCH] rust: device: allow `dead_code` for `Device<>::parent()`
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 29, 2025 at 11:15:00AM -0700, Nicolin Chen wrote:
-> On Tue, Apr 29, 2025 at 06:10:31PM +0000, Pranjal Shrivastava wrote:
-> > On Tue, Apr 29, 2025 at 08:28:01AM +0000, Pranjal Shrivastava wrote:
-> > > On Mon, Apr 28, 2025 at 03:44:08PM -0700, Nicolin Chen wrote:
-> > > > On Mon, Apr 28, 2025 at 09:34:05PM +0000, Pranjal Shrivastava wrote:
-> > > > > On Fri, Apr 25, 2025 at 10:58:05PM -0700, Nicolin Chen wrote:
-> > > [...] 
-> > > > > IIUC, one vintf can have multiple lvcmdqs and looking at the series
-> > > > > it looks like the vcmdq_alloc allocates a single lvcmdq. Is the plan to
-> > > > > dedicate one lvcmdq to per VM? Which means VMs can share a vintf?
-> > > > 
-> > > > VINTF is a vSMMU instance per SMMU. Each VINTF can have multiple
-> > > > LVCMDQs. Each vCMDQ is allocated per IOMMUFD_CMD_VCMDQ_ALLOC. In
-> > > > other word, VM can issue multiple IOMMUFD_CMD_VCMDQ_ALLOC calls
-> > > > for each VTINF/vSMMU.
-> > > > 
-> > > 
-> > > Ack. I'm just wondering why would a single VM want more than one vCMDQ
-> > > per vSMMU?
-> > > [...]
-> > 
-> > I guess the only thing on this patch from me was to understand why
-> > would a single VM want more than one vCMDQ per vSMMU? (Just curious to
-> > know :) )
-> 
-> It gives some perf gain since it has two portals to fill commands.
+On Tue, Apr 29, 2025 at 8:15=E2=80=AFPM Danilo Krummrich <dakr@kernel.org> =
+wrote:
+>
+> Maybe there is a much better solution I don't know about.
 
-Ohh! I'm imagining concurrent invalidations / commands! Interesting!
+There is `cfg_attr` for that, and we use it in a couple places, e.g.
 
-> 
-> Nicolin
+    #[cfg_attr(not(CONFIG_AUXILIARY_BUS), expect(dead_code))]
 
-Thanks!
-Praan
+But unless we are more or less sure the condition will only ever
+depend on a single `cfg` or so, I am not sure if it is worth the
+complexity (and even then reasonable people could disagree).
+
+I wrote about that approach in the "Conditional compilation" in one of
+the bullets of:
+
+    https://docs.kernel.org/rust/coding-guidelines.html#lints
+
+I hope that helps!
+
+Cheers,
+Miguel
