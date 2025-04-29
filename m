@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AF720C488;
-	Tue, 29 Apr 2025 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358C720C488;
+	Tue, 29 Apr 2025 18:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950172; cv=none; b=XCeyCaDk7asuTBzlszzAyqi1HUy4XJU7spwnW1XEiJzX3oR0Vcpn7NLFDYbXaQ96BV1Q5l1feg41FNFpnV6SNd2n4vCbpA80FrGPePZ0rRw/VWK0AnQuDgzBvtaK0fNEob4JiNvIRgoERkXPv7jDOmmtw0S1lTxjZy33vP1TGkc=
+	t=1745950176; cv=none; b=QtBIaMlUKBfG8P6tOpqnyqMwg7hSpC3C+kVKQ3yUSDPiQ0rf5u1BIZ0R6dAIeMperR6y9MMllMGFdY8a/cHKjEPKwF+ujm+HOviHbfqOPjXERW5ECbtmuUJJEPM3itn6q/AU6/I+LR6VLw1v5zULu4oXirpCJ/GyoPjN1K1tlDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950172; c=relaxed/simple;
-	bh=4cOQ1uTfE2dYqM4596mA33RaOn3viq327blScGu4igY=;
+	s=arc-20240116; t=1745950176; c=relaxed/simple;
+	bh=2ju8fdc9RMW7J2103NuV6TQvXzKUj++Kmx05fMZhcTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GpnOYh/sL+d09J+cJo9rhAaqKzIK0Ggv6DPGsbIAFJE+BI03dDaAGbfIBUDz7/SC3U/JGd2SXfNAcU7eyt9hcDUH9/ggvwHTQvKwYgODUJK1QImdLVH8zhhE5gpSeTflvMo4hACKMtpdD5PA025niwIRknIcGrJ3s4TwUp2ieHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBD0EKEN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjoocKvTmCZ/B2jEuapF7bwrPZyFzBi/RvL7Jj51wnUIzpbATVX4Xy28P35JQLxY36K+8T5OEOH8yhQfXifZBxvUlQNiQQQrGREnOkk+ZQEQFUzIuIrZoGCYSg9icYc9LjmgqO9YUMjAVqQRT5+VGnuk9fITQ2aTAvxNdIcInHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdto9L4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBD0EKEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3FBC4CEE3;
-	Tue, 29 Apr 2025 18:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdto9L4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C297C4CEE3;
+	Tue, 29 Apr 2025 18:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950172;
-	bh=4cOQ1uTfE2dYqM4596mA33RaOn3viq327blScGu4igY=;
+	s=korg; t=1745950175;
+	bh=2ju8fdc9RMW7J2103NuV6TQvXzKUj++Kmx05fMZhcTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBD0EKENfp3uuFT4TX4xv2LzDJ3yeaZ3bYvfNS5CFJ2x0p7O/eEHg0rwcQK8zbQHQ
-	 hlU95/tSBvxT2e5+z8Se4Ro9V9Xw4Q3nIPNTnO6gt+qhdabSfKp9asEdmjPzA4nH8R
-	 rtR4UsmnPulM+U0OqHS7Ah8xtvjtWkvztRnHOsDQ=
+	b=Tdto9L4+aC2DYfTsUkc14PenKM8PH0BAiMwv/f7Pjnbn3atJLMV2MvPEGfMZQZxbW
+	 A/MOj4Wo9ua5RL2AD1gfdXWA/QxBkhMmFQ3FC3fUM+MPop3veWvjoWOJTPe6T9oFz2
+	 iWRJ5H5xCdWXsEUWiKqoaO4T1N2UF+KtKAEhY2rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5bcd7c809d365e14c4df@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/204] media: vimc: skip .s_stream() for stopped entities
-Date: Tue, 29 Apr 2025 18:41:39 +0200
-Message-ID: <20250429161059.864008032@linuxfoundation.org>
+Subject: [PATCH 6.6 012/204] soc: qcom: ice: introduce devm_of_qcom_ice_get
+Date: Tue, 29 Apr 2025 18:41:40 +0200
+Message-ID: <20250429161059.903587522@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,75 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 36cef585e2a31e4ddf33a004b0584a7a572246de ]
+[ Upstream commit 1c13d6060d612601a61423f2e8fbf9e48126acca ]
 
-Syzbot reported [1] a warning prompted by a check in call_s_stream()
-that checks whether .s_stream() operation is warranted for unstarted
-or stopped subdevs.
+Callers of of_qcom_ice_get() leak the device reference taken by
+of_find_device_by_node(). Introduce devm variant for of_qcom_ice_get().
+Existing consumers need the ICE instance for the entire life of their
+device, thus exporting qcom_ice_put() is not required.
 
-Add a simple fix in vimc_streamer_pipeline_terminate() ensuring that
-entities skip a call to .s_stream() unless they have been previously
-properly started.
-
-[1] Syzbot report:
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 5933 at drivers/media/v4l2-core/v4l2-subdev.c:460 call_s_stream+0x2df/0x350 drivers/media/v4l2-core/v4l2-subdev.c:460
-Modules linked in:
-CPU: 0 UID: 0 PID: 5933 Comm: syz-executor330 Not tainted 6.13.0-rc2-syzkaller-00362-g2d8308bf5b67 #0
-...
-Call Trace:
- <TASK>
- vimc_streamer_pipeline_terminate+0x218/0x320 drivers/media/test-drivers/vimc/vimc-streamer.c:62
- vimc_streamer_pipeline_init drivers/media/test-drivers/vimc/vimc-streamer.c:101 [inline]
- vimc_streamer_s_stream+0x650/0x9a0 drivers/media/test-drivers/vimc/vimc-streamer.c:203
- vimc_capture_start_streaming+0xa1/0x130 drivers/media/test-drivers/vimc/vimc-capture.c:256
- vb2_start_streaming+0x15f/0x5a0 drivers/media/common/videobuf2/videobuf2-core.c:1789
- vb2_core_streamon+0x2a7/0x450 drivers/media/common/videobuf2/videobuf2-core.c:2348
- vb2_streamon drivers/media/common/videobuf2/videobuf2-v4l2.c:875 [inline]
- vb2_ioctl_streamon+0xf4/0x170 drivers/media/common/videobuf2/videobuf2-v4l2.c:1118
- __video_do_ioctl+0xaf0/0xf00 drivers/media/v4l2-core/v4l2-ioctl.c:3122
- video_usercopy+0x4d2/0x1620 drivers/media/v4l2-core/v4l2-ioctl.c:3463
- v4l2_ioctl+0x1ba/0x250 drivers/media/v4l2-core/v4l2-dev.c:366
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f2b85c01b19
-...
-
-Reported-by: syzbot+5bcd7c809d365e14c4df@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5bcd7c809d365e14c4df
-Fixes: adc589d2a208 ("media: vimc: Add vimc-streamer for stream control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: cbef7442fba5 ("mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vimc/vimc-streamer.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/soc/qcom/ice.c | 48 ++++++++++++++++++++++++++++++++++++++++++
+ include/soc/qcom/ice.h |  2 ++
+ 2 files changed, 50 insertions(+)
 
-diff --git a/drivers/media/test-drivers/vimc/vimc-streamer.c b/drivers/media/test-drivers/vimc/vimc-streamer.c
-index 807551a5143b7..15d863f97cbf9 100644
---- a/drivers/media/test-drivers/vimc/vimc-streamer.c
-+++ b/drivers/media/test-drivers/vimc/vimc-streamer.c
-@@ -59,6 +59,12 @@ static void vimc_streamer_pipeline_terminate(struct vimc_stream *stream)
- 			continue;
- 
- 		sd = media_entity_to_v4l2_subdev(ved->ent);
-+		/*
-+		 * Do not call .s_stream() to stop an already
-+		 * stopped/unstarted subdev.
-+		 */
-+		if (!v4l2_subdev_is_streaming(sd))
-+			continue;
- 		v4l2_subdev_call(sd, video, s_stream, 0);
- 	}
+diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+index fbab7fe5c652b..d6e205e3812a9 100644
+--- a/drivers/soc/qcom/ice.c
++++ b/drivers/soc/qcom/ice.c
+@@ -10,6 +10,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
++#include <linux/device.h>
+ #include <linux/iopoll.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+@@ -328,6 +329,53 @@ struct qcom_ice *of_qcom_ice_get(struct device *dev)
  }
+ EXPORT_SYMBOL_GPL(of_qcom_ice_get);
+ 
++static void qcom_ice_put(const struct qcom_ice *ice)
++{
++	struct platform_device *pdev = to_platform_device(ice->dev);
++
++	if (!platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice"))
++		platform_device_put(pdev);
++}
++
++static void devm_of_qcom_ice_put(struct device *dev, void *res)
++{
++	qcom_ice_put(*(struct qcom_ice **)res);
++}
++
++/**
++ * devm_of_qcom_ice_get() - Devres managed helper to get an ICE instance from
++ * a DT node.
++ * @dev: device pointer for the consumer device.
++ *
++ * This function will provide an ICE instance either by creating one for the
++ * consumer device if its DT node provides the 'ice' reg range and the 'ice'
++ * clock (for legacy DT style). On the other hand, if consumer provides a
++ * phandle via 'qcom,ice' property to an ICE DT, the ICE instance will already
++ * be created and so this function will return that instead.
++ *
++ * Return: ICE pointer on success, NULL if there is no ICE data provided by the
++ * consumer or ERR_PTR() on error.
++ */
++struct qcom_ice *devm_of_qcom_ice_get(struct device *dev)
++{
++	struct qcom_ice *ice, **dr;
++
++	dr = devres_alloc(devm_of_qcom_ice_put, sizeof(*dr), GFP_KERNEL);
++	if (!dr)
++		return ERR_PTR(-ENOMEM);
++
++	ice = of_qcom_ice_get(dev);
++	if (!IS_ERR_OR_NULL(ice)) {
++		*dr = ice;
++		devres_add(dev, dr);
++	} else {
++		devres_free(dr);
++	}
++
++	return ice;
++}
++EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
++
+ static int qcom_ice_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_ice *engine;
+diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+index 5870a94599a25..d5f6a228df659 100644
+--- a/include/soc/qcom/ice.h
++++ b/include/soc/qcom/ice.h
+@@ -34,4 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
+ 			 int slot);
+ int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
+ struct qcom_ice *of_qcom_ice_get(struct device *dev);
++struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
++
+ #endif /* __QCOM_ICE_H__ */
 -- 
 2.39.5
 
