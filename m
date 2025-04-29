@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7E82135DD;
-	Tue, 29 Apr 2025 17:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E934B221DA7;
+	Tue, 29 Apr 2025 17:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948799; cv=none; b=TnGcV9Vb3b/GkLSRbXojN8koGET0axkwzuoM7x/smqqLuMDZo3sFRgoxgLt0tZRciOIrzkv+dPrw3VJi3pzfUmfHSYvCfZEv9quxSaDwQzq12kgIj2a84AZWvoUuEc8cVQS4N7yGO756iUaNiQJeIVkG/6zFSNI0mNDf8M+km2g=
+	t=1745948802; cv=none; b=r8eFNNlBKK0eSfPUBiSaIa2lcNkQb5ixCNZf9AxFVzVU20s7QFa07mr0U+2NRj7JGq/94beawLtGCTCMvNS1yBFX6HI78CAEXMQFItbk9JeeBU3KZS6ssSeFesMnvDd2L+cbd0Ds04CJ/8eEce+6Lwrod1WPUim5kf8EtG8m4Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948799; c=relaxed/simple;
-	bh=aZE5adbCD6RDAst8yfM5re99tV+6V7YHzp3I/KXB8Y0=;
+	s=arc-20240116; t=1745948802; c=relaxed/simple;
+	bh=AgC5GTJseNshcFaWeYgHMm4sRLmdG8gPXuQitfYw9Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqlcHoAvPgb7lCT3HakhFMAfKVsGn/LK1er8RAL+FN/oT+TcKfG4LeuGxz6iRCnSkpCudcz7isu46GVCRbTuTNcLywIeMsyT6ICZLvlc1Ykf5JxNIIUh7HbtWoiR+wNvHafoLg3m/xABuSjUsuCKodtGJo7x84C/SLmnr+lilVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCvV10XV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AACgeKzJLInFXdBcbp5XNASnea5WWkmios/lLH1Gzyg5f6fIJ+D3sSMGQ8NhXe9rHo+ojjZyig914hJMp/ou4sOVARe6YxB64QMSeDqghWuwZ9b6w3zyyzS3hZiWO9OYZA4Hs6ym01eg/rVffVRErwDqjGizzSlXyMd61H0yf5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJP3nKOj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCvV10XV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AD6C4CEE3;
-	Tue, 29 Apr 2025 17:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJP3nKOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3FC4CEE3;
+	Tue, 29 Apr 2025 17:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948799;
-	bh=aZE5adbCD6RDAst8yfM5re99tV+6V7YHzp3I/KXB8Y0=;
+	s=korg; t=1745948801;
+	bh=AgC5GTJseNshcFaWeYgHMm4sRLmdG8gPXuQitfYw9Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCvV10XVHyq2KCNhsgah7ITL+sS6GV7uEOIlRr0T51pL9y77HZUZkyAC58M+puxBD
-	 GTmSp8PLI3UwVZ0cKwKiLwsa9X9USzJxo/ldbuYpX2Rj8Zl16bc5OWUzTXk4B2RVoC
-	 v/pZGtuE1XMCf3lvc66Eny5FB0o5XBhH1reN01X4=
+	b=XJP3nKOjH5UxeVr54357SMxh1ZH8aEM2e25iiBukmiTu2PQ0prWzPgj+tRPJKo+MS
+	 xvECETrg8b1I69cYP+YgCSqIPrW+AnecTwf5RQQ9+XCsPw54cCp3FduG40KYIm/TY6
+	 MPWfefoGlWzV0lr86w2atI1e1/DoqLkLiuP1f2a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Rowley <lkml@johnrowley.me>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 117/373] ACPI: platform-profile: Fix CFI violation when accessing sysfs files
-Date: Tue, 29 Apr 2025 18:39:54 +0200
-Message-ID: <20250429161127.988785617@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>
+Subject: [PATCH 5.15 091/373] mfd: ene-kb3930: Fix a potential NULL pointer dereference
+Date: Tue, 29 Apr 2025 18:39:28 +0200
+Message-ID: <20250429161126.903404330@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,105 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-commit dd4f730b557ce701a2cd4f604bf1e57667bd8b6e upstream.
+commit 4cdf1d2a816a93fa02f7b6b5492dc7f55af2a199 upstream.
 
-When an attribute group is created with sysfs_create_group(), the
-->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
-and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
-respectively. These functions use container_of() to get the respective
-callback from the passed attribute, meaning that these callbacks need to
-be of the same type as the callbacks in 'struct kobj_attribute'.
+The off_gpios could be NULL. Add missing check in the kb3930_probe().
+This is similar to the issue fixed in commit b1ba8bcb2d1f
+("backlight: hx8357: Fix potential NULL pointer dereference").
 
-However, ->show() and ->store() in the platform_profile driver are
-defined for struct device_attribute with the help of DEVICE_ATTR_RO()
-and DEVICE_ATTR_RW(), which results in a CFI violation when accessing
-platform_profile or platform_profile_choices under /sys/firmware/acpi
-because the types do not match:
+This was detected by our static analysis tool.
 
-  CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
-
-There is no functional issue from the type mismatch because the layout
-of 'struct kobj_attribute' and 'struct device_attribute' are the same,
-so the container_of() cast does not break anything aside from CFI.
-
-Change the type of platform_profile_choices_show() and
-platform_profile_{show,store}() to match the callbacks in
-'struct kobj_attribute' and update the attribute variables to
-match, which resolves the CFI violation.
-
-Cc: All applicable <stable@vger.kernel.org>
-Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
-Reported-by: John Rowley <lkml@johnrowley.me>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
-Tested-by: John Rowley <lkml@johnrowley.me>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[nathan: Fix conflicts in older stable branches]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: ede6b2d1dfc0 ("mfd: ene-kb3930: Add driver for ENE KB3930 Embedded Controller")
+Suggested-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250224233736.1919739-1-chenyuan0y@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/platform_profile.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/mfd/ene-kb3930.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/platform_profile.c
-+++ b/drivers/acpi/platform_profile.c
-@@ -22,8 +22,8 @@ static const char * const profile_names[
- };
- static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
- 
--static ssize_t platform_profile_choices_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_choices_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
- {
- 	int len = 0;
-@@ -49,8 +49,8 @@ static ssize_t platform_profile_choices_
- 	return len;
- }
- 
--static ssize_t platform_profile_show(struct device *dev,
--					struct device_attribute *attr,
-+static ssize_t platform_profile_show(struct kobject *kobj,
-+					struct kobj_attribute *attr,
- 					char *buf)
- {
- 	enum platform_profile_option profile = PLATFORM_PROFILE_BALANCED;
-@@ -77,8 +77,8 @@ static ssize_t platform_profile_show(str
- 	return sysfs_emit(buf, "%s\n", profile_names[profile]);
- }
- 
--static ssize_t platform_profile_store(struct device *dev,
--			    struct device_attribute *attr,
-+static ssize_t platform_profile_store(struct kobject *kobj,
-+			    struct kobj_attribute *attr,
- 			    const char *buf, size_t count)
- {
- 	int err, i;
-@@ -115,12 +115,12 @@ static ssize_t platform_profile_store(st
- 	return count;
- }
- 
--static DEVICE_ATTR_RO(platform_profile_choices);
--static DEVICE_ATTR_RW(platform_profile);
-+static struct kobj_attribute attr_platform_profile_choices = __ATTR_RO(platform_profile_choices);
-+static struct kobj_attribute attr_platform_profile = __ATTR_RW(platform_profile);
- 
- static struct attribute *platform_profile_attrs[] = {
--	&dev_attr_platform_profile_choices.attr,
--	&dev_attr_platform_profile.attr,
-+	&attr_platform_profile_choices.attr,
-+	&attr_platform_profile.attr,
- 	NULL
- };
- 
+--- a/drivers/mfd/ene-kb3930.c
++++ b/drivers/mfd/ene-kb3930.c
+@@ -162,7 +162,7 @@ static int kb3930_probe(struct i2c_clien
+ 			devm_gpiod_get_array_optional(dev, "off", GPIOD_IN);
+ 		if (IS_ERR(ddata->off_gpios))
+ 			return PTR_ERR(ddata->off_gpios);
+-		if (ddata->off_gpios->ndescs < 2) {
++		if (ddata->off_gpios && ddata->off_gpios->ndescs < 2) {
+ 			dev_err(dev, "invalid off-gpios property\n");
+ 			return -EINVAL;
+ 		}
 
 
