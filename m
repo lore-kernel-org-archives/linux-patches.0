@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4ED245007;
-	Tue, 29 Apr 2025 17:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54943245007;
+	Tue, 29 Apr 2025 17:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947332; cv=none; b=V2rxmmyCJGWLGQq4yYN+S3cxNSkbu75U4nU5SKby52+aDCGQM5TJyyds0/x6uNoQBd0TYIvoctu20AODucSppTWUYdoPBbQi8xjcOaOTw+ZDomni6O8kC0WTGJBhmRa97m1/rvCjU8d4qNj5B1Q4JRgyCKCfNgSeYTP2FDbUigs=
+	t=1745947335; cv=none; b=o3lwBnY78Iiz9C0kXJcW3Pq8ADeeZ2nz5gtJwzn2CXiI91HQc5kfxYkUS5bRW4eiLMbXTAuP6ew85EsOLemYtFiWqu3pM66nPCcG2NjYP5iumTQMKDTpnYm5NOb4TNdMPRYDaHHoT7ZdVY+ICqPI0mdNa6YLvL5YYlIlFqZCkXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947332; c=relaxed/simple;
-	bh=LnLtBrAxlveGvJP9rBe5f3izs7H/rpRIKEGNAGlVyy4=;
+	s=arc-20240116; t=1745947335; c=relaxed/simple;
+	bh=PyhcafT2aeN8peGpOob+ooSIsnWn46ZcjLD3M/Z0N64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqcrGln/pBOZCAHVAfb+NrjIDp1PA0CGp7RPREdQRPn3ZTvFXDjisfVNEAdZxP1ED3FKiMXP1/fVTATfrpCvwt1jmzhvckoiJKTv7Ig8JPAxOF16gIybSLgBPZCF86hZyCwVYJjpXK3JYU4HFz1QbvGukUVGgSPgkpC3q5MFv7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frvXP8Mh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cltxh1qmEgbLkrQmNjGHQuglDibba110Cw+VgH4E5dFRf76Ofq8P/eWg7pwhZjjTItpMoGR2J4+8zeV4dU5tVXdkjE3ZRwvuZXGmaLP7/7jqhb6RV/Cbf7kZ6ty2m6xJ6PAq6bggTkO7vbmSibm8AvZh5ID6ygkrBngCmGNQBFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVzNZZ/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frvXP8Mh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AAFC4CEE3;
-	Tue, 29 Apr 2025 17:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVzNZZ/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1969C4CEE3;
+	Tue, 29 Apr 2025 17:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947332;
-	bh=LnLtBrAxlveGvJP9rBe5f3izs7H/rpRIKEGNAGlVyy4=;
+	s=korg; t=1745947335;
+	bh=PyhcafT2aeN8peGpOob+ooSIsnWn46ZcjLD3M/Z0N64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frvXP8MhSa9RSDTB3xdTsfjY7y/yWTb1wlvM0lwibfPSbxiGTvxU9QZFZc9HA/bqJ
-	 dWnlrbCgCvBDC7VGd+BkgsAF94QgFms8qvxyz1r4ntPdkDOeSPinX/TENMjGc006W0
-	 pyhDV+I0a3ly6NJyunaevaZoa5/FaFfCWp5YDiNc=
+	b=MVzNZZ/J86BUTk5B4UupE6iUYSwdz8Vg2ZPcUzMKDO+6E0hHvIiFkskSOZ0FYBAji
+	 1EWPkUAdeawhNUMFUavU4VCMO79EEBMMKC4ynMZoarNmXvD5V2fS9BK6rvEVNnLLnt
+	 kcuomSnn4A2ciUEADJ0VVzRLzsgyYNdhIUerdIvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Craig Hesling <craig@hesling.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 246/286] USB: serial: simple: add OWON HDS200 series oscilloscope support
-Date: Tue, 29 Apr 2025 18:42:30 +0200
-Message-ID: <20250429161118.050510248@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.10 247/286] usb: cdns3: Fix deadlock when using NCM gadget
+Date: Tue, 29 Apr 2025 18:42:31 +0200
+Message-ID: <20250429161118.089752730@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,129 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Craig Hesling <craig@hesling.com>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-commit 4cc01410e1c1dd075df10f750775c81d1cb6672b upstream.
+commit a1059896f2bfdcebcdc7153c3be2307ea319501f upstream.
 
-Add serial support for OWON HDS200 series oscilloscopes and likely
-many other pieces of OWON test equipment.
+The cdns3 driver has the same NCM deadlock as fixed in cdnsp by commit
+58f2fcb3a845 ("usb: cdnsp: Fix deadlock issue during using NCM gadget").
 
-OWON HDS200 series devices host two USB endpoints, designed to
-facilitate bidirectional SCPI. SCPI is a predominately ASCII text
-protocol for test/measurement equipment. Having a serial/tty interface
-for these devices lowers the barrier to entry for anyone trying to
-write programs to communicate with them.
+Under PREEMPT_RT the deadlock can be readily triggered by heavy network
+traffic, for example using "iperf --bidir" over NCM ethernet link.
 
-The following shows the USB descriptor for the OWON HDS272S running
-firmware V5.7.1:
+The deadlock occurs because the threaded interrupt handler gets
+preempted by a softirq, but both are protected by the same spinlock.
+Prevent deadlock by disabling softirq during threaded irq handler.
 
-Bus 001 Device 068: ID 5345:1234 Owon PDS6062T Oscilloscope
-Negotiated speed: Full Speed (12Mbps)
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass            0 [unknown]
-  bDeviceSubClass         0 [unknown]
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x5345 Owon
-  idProduct          0x1234 PDS6062T Oscilloscope
-  bcdDevice            1.00
-  iManufacturer           1 oscilloscope
-  iProduct                2 oscilloscope
-  iSerial                 3 oscilloscope
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0029
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass         5 Physical Interface Device
-      bInterfaceSubClass      0 [unknown]
-      bInterfaceProtocol      0
-      iInterface              0
-      ** UNRECOGNIZED:  09 21 11 01 00 01 22 5f 00
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x81  EP 1 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval              32
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval              32
-Device Status:     0x0000
-  (Bus Powered)
-
-OWON appears to be using the same USB Vendor and Product ID for many
-of their oscilloscopes. Looking at the discussion about the USB
-vendor/product ID, in the link bellow, suggests that this VID/PID is
-shared with VDS, SDS, PDS, and now the HDS series oscilloscopes.
-Available documentation for these devices seems to indicate that all
-use a similar SCPI protocol, some with RS232 options. It is likely that
-this same simple serial setup would work correctly for them all.
-
-Link: https://usb-ids.gowdy.us/read/UD/5345/1234
-Signed-off-by: Craig Hesling <craig@hesling.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250318-rfs-cdns3-deadlock-v2-1-bfd9cfcee732@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial-simple.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/cdns3/gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/usb-serial-simple.c
-+++ b/drivers/usb/serial/usb-serial-simple.c
-@@ -101,6 +101,11 @@ DEVICE(nokia, NOKIA_IDS);
- 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
- DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -1961,6 +1961,7 @@ static irqreturn_t cdns3_device_thread_i
+ 	unsigned int bit;
+ 	unsigned long reg;
  
-+/* OWON electronic test and measurement equipment driver */
-+#define OWON_IDS()			\
-+	{ USB_DEVICE(0x5345, 0x1234) } /* HDS200 oscilloscopes and others */
-+DEVICE(owon, OWON_IDS);
-+
- /* Siemens USB/MPI adapter */
- #define SIEMENS_IDS()			\
- 	{ USB_DEVICE(0x908, 0x0004) }
-@@ -135,6 +140,7 @@ static struct usb_serial_driver * const
- 	&motorola_tetra_device,
- 	&nokia_device,
- 	&novatel_gps_device,
-+	&owon_device,
- 	&siemens_mpi_device,
- 	&suunto_device,
- 	&vivopay_device,
-@@ -154,6 +160,7 @@ static const struct usb_device_id id_tab
- 	MOTOROLA_TETRA_IDS(),
- 	NOKIA_IDS(),
- 	NOVATEL_IDS(),
-+	OWON_IDS(),
- 	SIEMENS_IDS(),
- 	SUUNTO_IDS(),
- 	VIVOPAY_IDS(),
++	local_bh_disable();
+ 	spin_lock_irqsave(&priv_dev->lock, flags);
+ 
+ 	reg = readl(&priv_dev->regs->usb_ists);
+@@ -2002,6 +2003,7 @@ static irqreturn_t cdns3_device_thread_i
+ irqend:
+ 	writel(~0, &priv_dev->regs->ep_ien);
+ 	spin_unlock_irqrestore(&priv_dev->lock, flags);
++	local_bh_enable();
+ 
+ 	return ret;
+ }
 
 
