@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B849F155A4E;
-	Tue, 29 Apr 2025 18:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C0D219A63;
+	Tue, 29 Apr 2025 18:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950684; cv=none; b=Ndb2q0dTHONVHdJiIXN9CAbDkMDW3QHid2Rrhg5grNJfmnNiwzNsJ2j9H21ewfLgVlWtW2NfkHqtY3OF54VAjv8xyVHTY4jduau+FTeoIsQ/ebz3e0TBPUhZ07W6z3ifqLTEeO+bsN81ASFzf9EMrILP2PmkGug5jig2k90qdqI=
+	t=1745950689; cv=none; b=t5b4VJ2ysSnlpWSMoWw1SFgGv6DoKG4g9/y27Q9WHxSRJR7Ui598gBwrGezAAN0wu+Tuj5Qm3XEVr2uj9k1cRpw2pe7ssgOfxYZqThHSGONQjp+/rPzNPvBtojyH+e4a+HhQxgPWExYwilBHh3pJ1+Mhi5odvvgRubhff8CcQAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950684; c=relaxed/simple;
-	bh=6V0WTA4g7637Mw2x3CthB9AVLfIX7lBeWNL9hBLiQXg=;
+	s=arc-20240116; t=1745950689; c=relaxed/simple;
+	bh=fL6mIV2+qM61ivc+VW3P9y5lIEq1kEQyfP8+lJ40Z3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TesTdyrDu/k+n8Fcket+WSAM+0YYvSmr5iKyEPHkJctp+oJm8d7mB8SHDq+YssN5ZPQ7E/jPWdOGVKH+XsivQ0ZCtwWzsRSWbBIJShakqmpYcgg99m3LvZGlL8lVJzhD0Dhnrl6PcmEX2aiSdZnQoMwwDgTnj9FX+A2/o/B5ecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIElRP1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R0ObeyUFqWHeVfIf7aJfYdtiH5qWOMe+TVT0bWAmyE8op729EPsgUpRO+JNh3HKidFtBJ6Ci8EeS9YR4XKfoCEBdeccJDyE0lFoEd/yUojJcnCHv5iT1sHYWsI4o3vFh3M3KEDcuSDIu76axtyGBTH9vU3Kxzc4ctPM1MLoJb0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ep3fu7/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIElRP1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5750C4CEE3;
-	Tue, 29 Apr 2025 18:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ep3fu7/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C4EC4CEE9;
+	Tue, 29 Apr 2025 18:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950684;
-	bh=6V0WTA4g7637Mw2x3CthB9AVLfIX7lBeWNL9hBLiQXg=;
+	s=korg; t=1745950689;
+	bh=fL6mIV2+qM61ivc+VW3P9y5lIEq1kEQyfP8+lJ40Z3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JIElRP1qy4WmTl3HhJsoSbcsyr4lK4A8+RuerKkByWWRSB0vwT1loceV3v78IN6su
-	 S9B10lTQ9Bb3dVmTpDaNK9c4BpepJlKcHtF/YOI3KhOfQJ0jGwKwRoXHPki52kku3F
-	 1JmkUS3awno1J9jrUAw4tnWGG3GglU6ygV9Fv8as=
+	b=Ep3fu7/cTBXTkbdp2EWvrmSm5vdr9/2iWoMvZdcDBq0wid7HYlG/gz/DQwpS+++Vi
+	 TCqfY6Kd+ragQPPBxcAafefqxuA9d6x/tMOYbndcNyei1d6EO7uwBfc5iXqyc69zYV
+	 TNEzZJLD9i1SKuGAdqlgmwIUhvZN1mpq+t/vkUdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/204] timekeeping: Add a lockdep override in tick_freeze()
-Date: Tue, 29 Apr 2025 18:44:21 +0200
-Message-ID: <20250429161106.483698315@linuxfoundation.org>
+Subject: [PATCH 6.6 174/204] cifs: Fix querying of WSL CHR and BLK reparse points over SMB1
+Date: Tue, 29 Apr 2025 18:44:22 +0200
+Message-ID: <20250429161106.522410041@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -48,89 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 92e250c624ea37fde64bfd624fd2556f0d846f18 ]
+[ Upstream commit ef86ab131d9127dfbfa8f06e12441d05fdfb090b ]
 
-tick_freeze() acquires a raw spinlock (tick_freeze_lock). Later in the
-callchain (timekeeping_suspend() -> mc146818_avoid_UIP()) the RTC driver
-acquires a spinlock which becomes a sleeping lock on PREEMPT_RT.  Lockdep
-complains about this lock nesting.
+When reparse point in SMB1 query_path_info() callback was detected then
+query also for EA $LXDEV. In this EA are stored device major and minor
+numbers used by WSL CHR and BLK reparse points. Without major and minor
+numbers, stat() syscall does not work for char and block devices.
 
-Add a lockdep override for this special case and a comment explaining
-why it is okay.
+Similar code is already in SMB2+ query_path_info() callback function.
 
-Reported-by: Borislav Petkov <bp@alien8.de>
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/20250404133429.pnAzf-eF@linutronix.de
-Closes: https://lore.kernel.org/all/20250330113202.GAZ-krsjAnurOlTcp-@fat_crate.local/
-Closes: https://lore.kernel.org/all/CAP-bSRZ0CWyZZsMtx046YV8L28LhY0fson2g4EqcwRAVN1Jk+Q@mail.gmail.com/
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-common.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/smb/client/smb1ops.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
-index 7f2b17fc8ce40..ecdb8c2b2cab2 100644
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -495,6 +495,7 @@ void tick_resume(void)
- 
- #ifdef CONFIG_SUSPEND
- static DEFINE_RAW_SPINLOCK(tick_freeze_lock);
-+static DEFINE_WAIT_OVERRIDE_MAP(tick_freeze_map, LD_WAIT_SLEEP);
- static unsigned int tick_freeze_depth;
- 
- /**
-@@ -514,9 +515,22 @@ void tick_freeze(void)
- 	if (tick_freeze_depth == num_online_cpus()) {
- 		trace_suspend_resume(TPS("timekeeping_freeze"),
- 				     smp_processor_id(), true);
-+		/*
-+		 * All other CPUs have their interrupts disabled and are
-+		 * suspended to idle. Other tasks have been frozen so there
-+		 * is no scheduling happening. This means that there is no
-+		 * concurrency in the system at this point. Therefore it is
-+		 * okay to acquire a sleeping lock on PREEMPT_RT, such as a
-+		 * spinlock, because the lock cannot be held by other CPUs
-+		 * or threads and acquiring it cannot block.
-+		 *
-+		 * Inform lockdep about the situation.
-+		 */
-+		lock_map_acquire_try(&tick_freeze_map);
- 		system_state = SYSTEM_SUSPEND;
- 		sched_clock_suspend();
- 		timekeeping_suspend();
-+		lock_map_release(&tick_freeze_map);
- 	} else {
- 		tick_suspend_local();
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index bc1bac36c1b29..caa1d852ece49 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -597,6 +597,42 @@ static int cifs_query_path_info(const unsigned int xid,
+ 			CIFSSMBClose(xid, tcon, fid.netfid);
  	}
-@@ -538,8 +552,16 @@ void tick_unfreeze(void)
- 	raw_spin_lock(&tick_freeze_lock);
  
- 	if (tick_freeze_depth == num_online_cpus()) {
-+		/*
-+		 * Similar to tick_freeze(). On resumption the first CPU may
-+		 * acquire uncontended sleeping locks while other CPUs block on
-+		 * tick_freeze_lock.
-+		 */
-+		lock_map_acquire_try(&tick_freeze_map);
- 		timekeeping_resume();
- 		sched_clock_resume();
-+		lock_map_release(&tick_freeze_map);
++#ifdef CONFIG_CIFS_XATTR
++	/*
++	 * For WSL CHR and BLK reparse points it is required to fetch
++	 * EA $LXDEV which contains major and minor device numbers.
++	 */
++	if (!rc && data->reparse_point) {
++		struct smb2_file_full_ea_info *ea;
 +
- 		system_state = SYSTEM_RUNNING;
- 		trace_suspend_resume(TPS("timekeeping_freeze"),
- 				     smp_processor_id(), false);
++		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
++		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_DEV,
++				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
++				    SMB2_WSL_XATTR_DEV_SIZE, cifs_sb);
++		if (rc == SMB2_WSL_XATTR_DEV_SIZE) {
++			ea->next_entry_offset = cpu_to_le32(0);
++			ea->flags = 0;
++			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
++			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
++			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
++			data->wsl.eas_len = sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
++					    SMB2_WSL_XATTR_DEV_SIZE;
++			rc = 0;
++		} else if (rc >= 0) {
++			/* It is an error if EA $LXDEV has wrong size. */
++			rc = -EINVAL;
++		} else {
++			/*
++			 * In all other cases ignore error if fetching
++			 * of EA $LXDEV failed. It is needed only for
++			 * WSL CHR and BLK reparse points and wsl_to_fattr()
++			 * handle the case when EA is missing.
++			 */
++			rc = 0;
++		}
++	}
++#endif
++
+ 	return rc;
+ }
+ 
 -- 
 2.39.5
 
