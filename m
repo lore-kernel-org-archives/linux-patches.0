@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50293155A4E;
-	Tue, 29 Apr 2025 18:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75761219A63;
+	Tue, 29 Apr 2025 18:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950699; cv=none; b=Flb4eVoWChpYlJgpNHydpIsmIig4eXtaPBjTikBzeo8ehcAFpYUfhWabk9uvJHtQ8GngOLYJu0RhKHGvDn6mdcbEybXmkbptfyfCavstusSBKPeKU2moQ4egO0qhbxh9o/uPN1Wq8fxJ/5rme39kqJ7ZqyChWFzah5fQTjnNVOI=
+	t=1745950702; cv=none; b=LgOcDjCjmTABcUGrt+xFgbW0rE6CJpvmpYa1ZnYKui5tTrzKKPPZMjSGjl9ryGusmhtvAKS8Y4YMXlB3z7b5t/AArzRN/igLzUmnN3wDC9l0kEdwq7YifRA+SSfwQok8Zg0TB40wV+KumI9RdfGlChgBZFLDOXlOfuI1hl6dfI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950699; c=relaxed/simple;
-	bh=yIxrS9BYN7x+QnLSjHuOtEFyPRlIyd1qYHusHeXsDRQ=;
+	s=arc-20240116; t=1745950702; c=relaxed/simple;
+	bh=eyDc49tMJcHYYP/Cv8hDoQwukqiwJ2/3BOMs9b3YVmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5HsANLZFY8PTPH1PCuLpzw3EUecpC0JKbLBtcEebKAVxe8YP2mV1gIFMcja4xBz/hLM/MtMLWE/2iHU6wpCCGyNnkv2qZqKzNdX4Xstxkvw/vBRZbbIISLDE4DWqdP6VTpdtMLpkUyjFuMI1rUSB1MgeynM+r/CAEYvG3Mb/bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ0BxJtb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePE0eLlecbpTPMiVmgCwU1lL6dVV6tICwCC2VGWzh8fRi4ULW3RCjR4NAVzm7CLw7rntkVJAGJRh5iNsOMBMeiurRgWtlz2WjvVzh/aCvbGHgO6EybrbO/Kv3LojPFVdfyq0vlj7XZXIXBU9rDvkTw1RifVeMqFcqMyqPHD2ZP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX1hMKKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ0BxJtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0575C4CEE3;
-	Tue, 29 Apr 2025 18:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX1hMKKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1A0C4CEE3;
+	Tue, 29 Apr 2025 18:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950699;
-	bh=yIxrS9BYN7x+QnLSjHuOtEFyPRlIyd1qYHusHeXsDRQ=;
+	s=korg; t=1745950702;
+	bh=eyDc49tMJcHYYP/Cv8hDoQwukqiwJ2/3BOMs9b3YVmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZ0BxJtbuvQN2uBnvQeekk95ClP92xEDnod3oolv5iFKvWeNSGm2Et7gULUE9dy7l
-	 NwGVGyoHY068Nv5jsGN4I+pHwmPE6DpRtcovsOn3eI5Z9iCwMasswKb7iG+NjRrUMl
-	 OWpgtEToQlICYORK9FB8wdjAsZ2MrZgdR5C1LETE=
+	b=PX1hMKKi2uHUAtNfIwHfThAZD7psybIZryVtoRBwXnvveZucZYufCDoaVL/GJMK/4
+	 fV5R3E6H0E6/rdmLA66tQd1FOQRPA6XdRhA/SBSDKH0U3LCubXLvUDF+tofOv9il7p
+	 Wm87KOoijYO0rnm9vwaMlC1jvQQ5Qv1pHUlpRswU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Salomon Dushimirimana <salomondush@google.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 177/204] scsi: ufs: exynos: Ensure pre_link() executes before exynos_ufs_phy_init()
-Date: Tue, 29 Apr 2025 18:44:25 +0200
-Message-ID: <20250429161106.641454817@linuxfoundation.org>
+Subject: [PATCH 6.6 178/204] scsi: pm80xx: Set phy_attached to zero when device is gone
+Date: Tue, 29 Apr 2025 18:44:26 +0200
+Message-ID: <20250429161106.681727471@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,55 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 3d101165e72316775947d71321d97194f03dfef3 ]
+[ Upstream commit f7b705c238d1483f0a766e2b20010f176e5c0fb7 ]
 
-Ensure clocks are enabled before configuring unipro. Additionally move
-the pre_link() hook before the exynos_ufs_phy_init() calls. This means
-the register write sequence more closely resembles the ordering of the
-downstream driver.
+When a fatal error occurs, a phy down event may not be received to set
+phy->phy_attached to zero.
 
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-1-96722cc2ba1b@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
+Link: https://lore.kernel.org/r/20250319230305.3172920-1-salomondush@google.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/pm8001/pm8001_sas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index d138b66d5e350..f61126189876e 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -990,9 +990,14 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
- 	exynos_ufs_config_intr(ufs, DFES_DEF_L4_ERRS, UNIPRO_L4);
- 	exynos_ufs_set_unipro_pclk_div(ufs);
- 
-+	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
-+
- 	/* unipro */
- 	exynos_ufs_config_unipro(ufs);
- 
-+	if (ufs->drv_data->pre_link)
-+		ufs->drv_data->pre_link(ufs);
-+
- 	/* m-phy */
- 	exynos_ufs_phy_init(ufs);
- 	if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR)) {
-@@ -1000,11 +1005,6 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
- 		exynos_ufs_config_phy_cap_attr(ufs);
- 	}
- 
--	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
--
--	if (ufs->drv_data->pre_link)
--		ufs->drv_data->pre_link(ufs);
--
- 	return 0;
- }
- 
+diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
+index ee2da8e49d4cf..a9d6dac413346 100644
+--- a/drivers/scsi/pm8001/pm8001_sas.c
++++ b/drivers/scsi/pm8001/pm8001_sas.c
+@@ -719,6 +719,7 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
+ 			spin_lock_irqsave(&pm8001_ha->lock, flags);
+ 		}
+ 		PM8001_CHIP_DISP->dereg_dev_req(pm8001_ha, device_id);
++		pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
+ 		pm8001_free_dev(pm8001_dev);
+ 	} else {
+ 		pm8001_dbg(pm8001_ha, DISC, "Found dev has gone.\n");
 -- 
 2.39.5
 
