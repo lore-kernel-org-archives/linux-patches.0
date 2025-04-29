@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375CE25485B;
-	Tue, 29 Apr 2025 17:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C6224E016;
+	Tue, 29 Apr 2025 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946974; cv=none; b=fcQZLOTtxoIxlWaH0tq1q8ufdCzFJztvEBu/moE8NKgubacyHIW937CpXqZ5ip4pYAUluehtEt3u7YxwhPZZJxoi6uDCZQpi7zpRx7B1Ht96OYecN4H1KT073J5P7wp41S4V0Grd8vQ8buoiojij8+o8q07GDNeyo9jy528Wsm4=
+	t=1745946976; cv=none; b=H1C8k1iS2i/2WmWF8vTaswfMLWgdN52JaYRuM0fweTMf4NJWyZE9yO6TAgEFWdQgEDxa3YPOq3vpK68YrArdobNkCTNzUXXQJ+D2HaqoI7Kp6QuYo+jh+O5OvYX+jjfjJ3o4r9t/yGKNbc8k92r/wGrvgzJWaQeOnuMXPIL4pAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946974; c=relaxed/simple;
-	bh=QBpKRBwAWXnY6h+pF2gMG9LrINXsuDeNOTh3F+ydBKg=;
+	s=arc-20240116; t=1745946976; c=relaxed/simple;
+	bh=popHIAKToT7oJkRzUb0pE7Afnt1rop0G1FQWwG4g4Z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pv1Q88zqAq+q8fcx8PQyU40AJx2e9ghN73V6/8Gj5r45EOdaumYZ+YMoODOrEd5vHILiuNo8opqtm40J3yZsOgd+qKbTf52qow877zB0eX42//22kNQR5iru6tA4tH+aBgaLN5qT2pnsjmx4PrgI4ZMO4vkFiomc7IW4LKjs6rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FI1iZQyg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G0Nbnxav7lb/MZQAY9Zq5h8goQUE0lfyKL0Di3KHpau+Yr7HMA7an1uZZtDmePzeKDf8zdGYNGtDZEIxaAHqR8/N+6q2B1tesooTcUsbsby7LaAF2m/0UIVdrKAvVaPfUrCekPH7jU6Zn3KmMrMsnou20x5Ti+zV5hWF74bK2As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYuaAgEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FI1iZQyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C15CC4CEE3;
-	Tue, 29 Apr 2025 17:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYuaAgEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2CEC4CEE3;
+	Tue, 29 Apr 2025 17:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946973;
-	bh=QBpKRBwAWXnY6h+pF2gMG9LrINXsuDeNOTh3F+ydBKg=;
+	s=korg; t=1745946976;
+	bh=popHIAKToT7oJkRzUb0pE7Afnt1rop0G1FQWwG4g4Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FI1iZQyguFa24UKcBNfbyYVdeiXSusnuBVA+aGAHMEmqiARkQE8BwPTOjMMaxwGrZ
-	 jCVK77l9SlypUruQoeCyI0VtT3Ysye3bLAgq1tMJPl0gaiSoWYzSIfTfRskIXI1Ox4
-	 8zFvV7iTPuwLIIG+apg8tJwAepn+scJO2uaFiaZ8=
+	b=hYuaAgEafZnZzo93fJSqFXPFjeVezn/ftXrSwDZAB+ple8mjKY8EXcZXL3quxhv4e
+	 cNsuJQgCPQ/MKzR5eIuYXndgOMckkNxBMU76IikXnBsItzESWTzWTCG254HD11Cvrv
+	 7zRB7bvgh0kMygbMSzThhWYOZ7m6/3u1uudP8KdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 128/286] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
-Date: Tue, 29 Apr 2025 18:40:32 +0200
-Message-ID: <20250429161113.124500592@linuxfoundation.org>
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 5.10 100/286] pwm: mediatek: always use bus clock for PWM on MT7622
+Date: Tue, 29 Apr 2025 18:40:04 +0200
+Message-ID: <20250429161111.968711540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -46,95 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
+commit aa3c668f2f98856af96e13f44da6ca4f26f0b98c upstream.
 
-Syzbot reported an issue in hfs subsystem:
+According to MT7622 Reference Manual for Development Board v1.0 the PWM
+unit found in the MT7622 SoC also comes with the PWM_CK_26M_SEL register
+at offset 0x210 just like other modern MediaTek ARM64 SoCs.
+And also MT7622 sets that register to 0x00000001 on reset which is
+described as 'Select 26M fix CLK as BCLK' in the datasheet.
+Hence set has_ck_26m_sel to true also for MT7622 which results in the
+driver writing 0 to the PWM_CK_26M_SEL register which is described as
+'Select bus CLK as BCLK'.
 
-BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
-Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
-
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- memcpy_from_page include/linux/highmem.h:423 [inline]
- hfs_bnode_read fs/hfs/bnode.c:35 [inline]
- hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
- hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
- hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
- hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
- vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
- do_mkdirat+0x264/0x3a0 fs/namei.c:4280
- __do_sys_mkdir fs/namei.c:4300 [inline]
- __se_sys_mkdir fs/namei.c:4298 [inline]
- __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fbdd6057a99
-
-Add a check for key length in hfs_bnode_read_key to prevent
-out-of-bounds memory access. If the key length is invalid, the
-key buffer is cleared, improving stability and reliability.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
-Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 0c0ead76235db0 ("pwm: mediatek: Always use bus clock")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/Y1iF2slvSblf6bYK@makrotopia.org
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c     |    6 ++++++
- fs/hfsplus/bnode.c |    6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/pwm/pwm-mediatek.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -70,6 +70,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 1;
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -297,7 +297,7 @@ static const struct pwm_mediatek_of_data
+ static const struct pwm_mediatek_of_data mt7622_pwm_data = {
+ 	.num_pwms = 6,
+ 	.pwm45_fixup = false,
+-	.has_ck_26m_sel = false,
++	.has_ck_26m_sel = true,
+ };
  
-+	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfs_btree_key));
-+		pr_err("hfs: Invalid key length: %d\n", key_len);
-+		return;
-+	}
-+
- 	hfs_bnode_read(node, key, off, key_len);
- }
- 
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -69,6 +69,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 2;
- 
-+	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfsplus_btree_key));
-+		pr_err("hfsplus: Invalid key length: %d\n", key_len);
-+		return;
-+	}
-+
- 	hfs_bnode_read(node, key, off, key_len);
- }
- 
+ static const struct pwm_mediatek_of_data mt7623_pwm_data = {
 
 
