@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4159F216605;
-	Tue, 29 Apr 2025 17:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F9251783;
+	Tue, 29 Apr 2025 17:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949418; cv=none; b=uBGAL28ZlzN21pU8/Aon4S0Q0Gh+LCj3s/Ar19xxT3lQviOz9dPZBLSyWNl0wyg+IUhrhmLBfjHovhF06gW0/Y5e/c2UxJGmAfA7CTP9c3gaaZfom8kxhulc6eLjop1CMqLU1CoJsMp42HoLuvJ3lzpZZjbZay44Ia7DpbWcUW4=
+	t=1745949421; cv=none; b=MMyNMMGGVC1H5xAyhjiNEHxv8YBb/UGEYIMnlDaZd86ktg433KviDIuibnZEpwD0qsVjqdvwkk9jMEWskYznE3LlQohB1TrKYq8424TSqf6hAvx9Az86Pm1hUncldTG8I3TRbKmjZ62WLt0FBu2vhmoFx7qDmGojMoQ4CDL4sGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949418; c=relaxed/simple;
-	bh=4eKRWPyi0xJBsS8A47+j7OQDLGsPgqrQwRIe4GBMEbw=;
+	s=arc-20240116; t=1745949421; c=relaxed/simple;
+	bh=CzQ1O7fAW5VGQTMa9XailTYjKR+gvwxE6Px/UnRzs2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRgTC+LZZcAjLKUqkT8cqi3zOAw2CU5D5GKhGw88bY5+hYVPfUE0fpogJsfBltQEkweUKXfXQurkIuhD1WBN6rHeGf8DzPi1CC1aWE/CwtFV+YLVsPLZ1et49DTl+dJpdwmj7GYbTexDeVHNpLZLhqKFlR881LB/WgN0DhPHbuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R66RTB4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9BhcaRBQBf3rNgW2ooPr9/R1IcQr/3bSetKpO2vWaIwU8RDm2Kkr3o5TAECzvSF7SslqUSWzNjs5Hcp2OWbnwAcOWQU28WiYFQZaOfWyIuIvKH/jbCdWS4IFG2Ze9NbZpNuV5Y8IrHyQUMKBehV8qIBUbFx3M1KzSlmrbyRI4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZMq78KP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R66RTB4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F1C4CEE3;
-	Tue, 29 Apr 2025 17:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZMq78KP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6F8C4CEE3;
+	Tue, 29 Apr 2025 17:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949417;
-	bh=4eKRWPyi0xJBsS8A47+j7OQDLGsPgqrQwRIe4GBMEbw=;
+	s=korg; t=1745949420;
+	bh=CzQ1O7fAW5VGQTMa9XailTYjKR+gvwxE6Px/UnRzs2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R66RTB4kUB6TN+LiVEN9PNrWSecY1KNxet5H/zPn5G6MNB1C3ASwhxeze2X097FeD
-	 zytK+iak3Ay3ni+6uPCcKEvjVRga0ZarsfC79GV1vwdHDMTjGfS/1wAQV7uJ1s9B0n
-	 OinPgmocYZCXFWJreQI4jAgi1NfCFNKCxTE6d0O0=
+	b=rZMq78KPRtZkMBX3pj703M/xMBJknexqcSGPWP4EZI++1JbAiJW1bjjEKUDu2mUq7
+	 QTNcBa7tuuNdgTtkQxB+3AcfMXrtEgusUZPq8x6YgMgyQpMKoBjX7Sgf4ikAlKpl0p
+	 uomxNbYywo0a9eyP9D3Rfugnt+pl69+IaSW6Ip9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 284/373] drm/msm/a6xx: Avoid gx gbit halt during rpm suspend
-Date: Tue, 29 Apr 2025 18:42:41 +0200
-Message-ID: <20250429161134.792722529@linuxfoundation.org>
+Subject: [PATCH 5.15 285/373] drm/msm/a6xx: Fix stale rpmh votes from GPU
+Date: Tue, 29 Apr 2025 18:42:42 +0200
+Message-ID: <20250429161134.832663216@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,107 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-[ Upstream commit f4a75b5933c998e60fd812a7680e0971eb1c7cee ]
+[ Upstream commit f561db72a663f8a73c2250bf3244ce1ce221bed7 ]
 
-As per the downstream driver, gx gbif halt is required only during
-recovery sequence. So lets avoid it during regular rpm suspend.
+It was observed on sc7180 (A618 gpu) that GPU votes for GX rail and CNOC
+BCM nodes were not removed after GPU suspend. This was because we
+skipped sending 'prepare-slumber' request to gmu during suspend sequence
+in some cases. So, make sure we always call prepare-slumber hfi during
+suspend. Also, calling prepare-slumber without a prior oob-gpu handshake
+messes up gmu firmware's internal state. So, do that when required.
 
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Cc: stable@vger.kernel.org
 Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/515279/
-Link: https://lore.kernel.org/r/20221216223253.1.Ice9c47bfeb1fddb8dc377a3491a043a3ee7fca7d@changeid
+Patchwork: https://patchwork.freedesktop.org/patch/639569/
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Stable-dep-of: f561db72a663 ("drm/msm/a6xx: Fix stale rpmh votes from GPU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 15 +++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  7 +++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 72 +++++++++++++++------------
+ 1 file changed, 39 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 65ba58c712c93..ea59c54437dec 100644
+index ea59c54437dec..f1daa923f3469 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -872,7 +872,8 @@ static void a6xx_gmu_rpmh_off(struct a6xx_gmu *gmu)
- #define GBIF_CLIENT_HALT_MASK             BIT(0)
- #define GBIF_ARB_HALT_MASK                BIT(1)
+@@ -1066,49 +1066,50 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	u32 val;
++	int ret;
  
--static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
-+static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu,
-+		bool gx_off)
- {
- 	struct msm_gpu *gpu = &adreno_gpu->base;
+ 	/*
+-	 * The GMU may still be in slumber unless the GPU started so check and
+-	 * skip putting it back into slumber if so
++	 * GMU firmware's internal power state gets messed up if we send "prepare_slumber" hfi when
++	 * oob_gpu handshake wasn't done after the last wake up. So do a dummy handshake here when
++	 * required
+ 	 */
+-	val = gmu_read(gmu, REG_A6XX_GPU_GMU_CX_GMU_RPMH_POWER_STATE);
++	if (adreno_gpu->base.needs_hw_init) {
++		if (a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET))
++			goto force_off;
  
-@@ -885,9 +886,11 @@ static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
- 		return;
- 	}
- 
--	/* Halt the gx side of GBIF */
--	gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 1);
--	spin_until(gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT_ACK) & 1);
-+	if (gx_off) {
-+		/* Halt the gx side of GBIF */
-+		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 1);
-+		spin_until(gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT_ACK) & 1);
+-	if (val != 0xf) {
+-		int ret = a6xx_gmu_wait_for_idle(gmu);
++		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
 +	}
  
- 	/* Halt new client requests on GBIF */
- 	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_CLIENT_HALT_MASK);
-@@ -925,7 +928,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	/* Halt the gmu cm3 core */
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
+-		/* If the GMU isn't responding assume it is hung */
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
++	ret = a6xx_gmu_wait_for_idle(gmu);
  
--	a6xx_bus_clear_pending_transactions(adreno_gpu);
-+	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
+-		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
++	/* If the GMU isn't responding assume it is hung */
++	if (ret)
++		goto force_off;
  
- 	/* Reset GPU core blocks */
- 	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
-@@ -1079,7 +1082,7 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- 			return;
- 		}
+-		/* tell the GMU we want to slumber */
+-		ret = a6xx_gmu_notify_slumber(gmu);
+-		if (ret) {
+-			a6xx_gmu_force_off(gmu);
+-			return;
+-		}
++	a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
  
--		a6xx_bus_clear_pending_transactions(adreno_gpu);
-+		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
+-		ret = gmu_poll_timeout(gmu,
+-			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
+-			!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
+-			100, 10000);
++	/* tell the GMU we want to slumber */
++	ret = a6xx_gmu_notify_slumber(gmu);
++	if (ret)
++		goto force_off;
  
- 		/* tell the GMU we want to slumber */
- 		ret = a6xx_gmu_notify_slumber(gmu);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index a1dff22b02a7a..1c38c3acacbeb 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1178,6 +1178,12 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	if (hang_debug)
- 		a6xx_dump(gpu);
+-		/*
+-		 * Let the user know we failed to slumber but don't worry too
+-		 * much because we are powering down anyway
+-		 */
++	ret = gmu_poll_timeout(gmu,
++		REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
++		!(val & A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS_GPUBUSYIGNAHB),
++		100, 10000);
  
+-		if (ret)
+-			DRM_DEV_ERROR(gmu->dev,
+-				"Unable to slumber GMU: status = 0%x/0%x\n",
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
+-				gmu_read(gmu,
+-					REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
+-	}
 +	/*
-+	 * To handle recovery specific sequences during the rpm suspend we are
-+	 * about to trigger
++	 * Let the user know we failed to slumber but don't worry too
++	 * much because we are powering down anyway
 +	 */
-+	a6xx_gpu->hung = true;
 +
- 	/* Halt SQE first */
- 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 3);
++	if (ret)
++		DRM_DEV_ERROR(gmu->dev,
++			"Unable to slumber GMU: status = 0%x/0%x\n",
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS),
++			gmu_read(gmu,
++				REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS2));
  
-@@ -1191,6 +1197,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	gpu->funcs->pm_resume(gpu);
+ 	/* Turn off HFI */
+ 	a6xx_hfi_stop(gmu);
+@@ -1118,6 +1119,11 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
  
- 	msm_gpu_hw_init(gpu);
-+	a6xx_gpu->hung = false;
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
++
++	return;
++
++force_off:
++	a6xx_gmu_force_off(gmu);
  }
  
- static const char *a6xx_uche_fault_block(struct msm_gpu *gpu, u32 mid)
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 86e0a7c3fe6df..79d0cecff8e91 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -32,6 +32,7 @@ struct a6xx_gpu {
- 	void *llc_slice;
- 	void *htw_llc_slice;
- 	bool have_mmu500;
-+	bool hung;
- };
  
- #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
 -- 
 2.39.5
 
