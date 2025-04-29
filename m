@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FDA2472AA;
-	Tue, 29 Apr 2025 16:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5237824168A;
+	Tue, 29 Apr 2025 16:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945550; cv=none; b=YMNL/5i+HhK/FhWrxqV5xMOrMZlfbqLzoL1Enq0/SMZNE9bgqNvz3j14Q+14mNTTuYbYtlHM3dOgUdkzCJsjqflSlnucIDZLDyjqPJsc9o56dvD0SGXCuGa/XFfGDrqPbBif6nzyfz74cuuJHo0AMUHnX9Vrk6Wff3VDvqTBm6U=
+	t=1745945553; cv=none; b=PhBH0KNO2INYFDZHGjbeYp01wiFYjEn7kL8GRKaLAF0wmalWF/H1f7hh5QtxtR1D4AUVDt/llB4KcZaeqnCq2Kxs4ljQlFouhzXCeSjQmTEVjVQZYTO6eJq0IJ/INeiPPskbSwwwldqDWahwKD++LjLme7P8nPrqdhAG9kyRoLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945550; c=relaxed/simple;
-	bh=Ixu+0A6CGraahTMimgqtV9p6ZsT8cq+7LMkCE6cWgxg=;
+	s=arc-20240116; t=1745945553; c=relaxed/simple;
+	bh=uKQ9hEtI2wAx0xQvgtXEOBLBkJcAGmfCMSj8NW/PVJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKY4ZPluhrWvyOKMiXf3xvWfBBfPBV8iZn/eBp8zoZlay/IDoa+U9iytoxmMre02RC/q+v5ZYPiJHCIVs1me6/3nrpbH3mofbvBjAetvZVInC3n2cWtmYdP16/RdWVhofzxgExUpwjkt4s0DMVLfj6ZIsNmP8c0vYuOnnBet0iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEsOijfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ITmYnaQfw77gR7217aOJkcvamiFLCAfk9klR95MBAKFTTJucjgehmr0wtupDtbKKU/HbWsZ1NORw+vsy+Z6hNURlwXw/lTUXCgKptWA1rX7hw5yFefJg+aMf+Z68H4kKkLPrIXzaDkv8wtocZj0OY3PEWdqVVZJkAOB/sAnzyKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXPxCsK5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEsOijfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A422BC4CEE3;
-	Tue, 29 Apr 2025 16:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXPxCsK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECE7C4CEE3;
+	Tue, 29 Apr 2025 16:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945550;
-	bh=Ixu+0A6CGraahTMimgqtV9p6ZsT8cq+7LMkCE6cWgxg=;
+	s=korg; t=1745945553;
+	bh=uKQ9hEtI2wAx0xQvgtXEOBLBkJcAGmfCMSj8NW/PVJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEsOijfMM1LLcNFDN6PD2Gk9IeItqC6yi5izCr1lr7kbn0VTjlifUQURpPqvtuTTs
-	 ZA/85cTBHRNxFQybQXmYqvRA5gZYZ5biO2istkEMtMSnaVoP/cti4N2k73nWpegCMH
-	 sXt1PIN4Tm77uz7N3T2nQ2NlWneJp2SF4clJRh4M=
+	b=qXPxCsK54pqQuzcuUqy4Pi2TCIQS3Qfc5UtiKq43oKpaDbu+CMoTEJt8hjoHry0jS
+	 VSxNQH9Q0QQdMMpUNNDmT1BGrdpz5v/4azgrgZqDaCYtz6NdV9lexmZyuJWhrpSE5E
+	 cxc/GIQcdTk1DQreiCEIUQxbLhyu+ym8QAgb0EfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Weber <f.weber@proxmox.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Carlos Soto <carlos.soto@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.4 121/179] openvswitch: fix lockup on tx to unregistering netdev with carrier
-Date: Tue, 29 Apr 2025 18:41:02 +0200
-Message-ID: <20250429161054.295457602@linuxfoundation.org>
+	LiHonggang <honggangli@163.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>
+Subject: [PATCH 5.4 122/179] RDMA/srpt: Support specifying the srpt_service_guid parameter
+Date: Tue, 29 Apr 2025 18:41:03 +0200
+Message-ID: <20250429161054.333640390@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -55,77 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 47e55e4b410f7d552e43011baa5be1aab4093990 upstream.
+commit fdfa083549de5d50ebf7f6811f33757781e838c0 upstream.
 
-Commit in a fixes tag attempted to fix the issue in the following
-sequence of calls:
+Make loading ib_srpt with this parameter set work. The current behavior is
+that setting that parameter while loading the ib_srpt kernel module
+triggers the following kernel crash:
 
-    do_output
-    -> ovs_vport_send
-       -> dev_queue_xmit
-          -> __dev_queue_xmit
-             -> netdev_core_pick_tx
-                -> skb_tx_hash
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+Call Trace:
+ <TASK>
+ parse_one+0x18c/0x1d0
+ parse_args+0xe1/0x230
+ load_module+0x8de/0xa60
+ init_module_from_file+0x8b/0xd0
+ idempotent_init_module+0x181/0x240
+ __x64_sys_finit_module+0x5a/0xb0
+ do_syscall_64+0x5f/0xe0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-When device is unregistering, the 'dev->real_num_tx_queues' goes to
-zero and the 'while (unlikely(hash >= qcount))' loop inside the
-'skb_tx_hash' becomes infinite, locking up the core forever.
-
-But unfortunately, checking just the carrier status is not enough to
-fix the issue, because some devices may still be in unregistering
-state while reporting carrier status OK.
-
-One example of such device is a net/dummy.  It sets carrier ON
-on start, but it doesn't implement .ndo_stop to set the carrier off.
-And it makes sense, because dummy doesn't really have a carrier.
-Therefore, while this device is unregistering, it's still easy to hit
-the infinite loop in the skb_tx_hash() from the OVS datapath.  There
-might be other drivers that do the same, but dummy by itself is
-important for the OVS ecosystem, because it is frequently used as a
-packet sink for tcpdump while debugging OVS deployments.  And when the
-issue is hit, the only way to recover is to reboot.
-
-Fix that by also checking if the device is running.  The running
-state is handled by the net core during unregistering, so it covers
-unregistering case better, and we don't really need to send packets
-to devices that are not running anyway.
-
-While only checking the running state might be enough, the carrier
-check is preserved.  The running and the carrier states seem disjoined
-throughout the code and different drivers.  And other core functions
-like __dev_direct_xmit() check both before attempting to transmit
-a packet.  So, it seems safer to check both flags in OVS as well.
-
-Fixes: 066b86787fa3 ("net: openvswitch: fix race on port output")
-Reported-by: Friedrich Weber <f.weber@proxmox.com>
-Closes: https://mail.openvswitch.org/pipermail/ovs-discuss/2025-January/053423.html
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Friedrich Weber <f.weber@proxmox.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250109122225.4034688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Carlos Soto <carlos.soto@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: LiHonggang <honggangli@163.com>
+Reported-by: LiHonggang <honggangli@163.com>
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240205004207.17031-1-bvanassche@acm.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ Alok: Backport to 5.4.y since the commit has already been backported to
+  5.15y, 5.10.y, and 4.19.y ]
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/srpt/ib_srpt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -920,7 +920,9 @@ static void do_output(struct datapath *d
- {
- 	struct vport *vport = ovs_vport_rcu(dp, out_port);
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -79,12 +79,16 @@ module_param(srpt_srq_size, int, 0444);
+ MODULE_PARM_DESC(srpt_srq_size,
+ 		 "Shared receive queue (SRQ) size.");
  
--	if (likely(vport && netif_carrier_ok(vport->dev))) {
-+	if (likely(vport &&
-+		   netif_running(vport->dev) &&
-+		   netif_carrier_ok(vport->dev))) {
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
++static int srpt_set_u64_x(const char *buffer, const struct kernel_param *kp)
++{
++	return kstrtou64(buffer, 16, (u64 *)kp->arg);
++}
+ static int srpt_get_u64_x(char *buffer, const struct kernel_param *kp)
+ {
+ 	return sprintf(buffer, "0x%016llx", *(u64 *)kp->arg);
+ }
+-module_param_call(srpt_service_guid, NULL, srpt_get_u64_x, &srpt_service_guid,
+-		  0444);
++module_param_call(srpt_service_guid, srpt_set_u64_x, srpt_get_u64_x,
++		  &srpt_service_guid, 0444);
+ MODULE_PARM_DESC(srpt_service_guid,
+ 		 "Using this value for ioc_guid, id_ext, and cm_listen_id instead of using the node_guid of the first HCA.");
  
 
 
