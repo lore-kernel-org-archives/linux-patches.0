@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C592AE96;
-	Tue, 29 Apr 2025 17:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43A9215F6C;
+	Tue, 29 Apr 2025 17:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949452; cv=none; b=rlOIstSZ55ffq02dPHVF2+KgzTi621f3oGZ5mW8BVOEcCinvVzdUkmzcPXbTdhsNyisHwHCOKaEZjLYjW8tRZ58pNkppNKcyxDXPgIznnFMbMlVOBEApTN4C9za2ME/xf/7e10kiJhspwmHArmC8B0siWdVe3LPLeQN2JYAsfXY=
+	t=1745949455; cv=none; b=m+zlr91ukDSpUfgcqBzr57CctxSGLC4T8Ha3yMmqqpPy96TX1D6g4zLRfFkzxlBBJWnxb7HkdVstqsAURpLV7FUiLDBzugp0RtXTgs+h8j3cP54wsxQrhUSulWmLpuHq9dw9zRuZT6/A+TFATyFZsnNV9GIwU0+QmPP9FKiZrwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949452; c=relaxed/simple;
-	bh=JtdYv72pVGDV95VrpGRYu2IMTwQ32bQYHtm+Kepb+ME=;
+	s=arc-20240116; t=1745949455; c=relaxed/simple;
+	bh=nUZrymyCbLA0C/g/SORRUSYiq/+urrdJbexRvZjMvCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KB2dxo8mNLfrCSew2vmbdSBu8mmcdNrKziuvdCADPwArsi5o8cP1JvS+QVzgCQO4fo6F/ZejEgcMoNsVy5U5g5xFeFWJW1M1doSFehUMxN+oVGWjFkdkEEaYDajSIhqT6a15Ji4jzIdhGFgz03baTkFvnsvsW6dOphlAl1ob6W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPsaKbs5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EnIJa2kygEj2h61rDblJnVd10qthQlchrAGWWr6jeLZ0E4c9Dq5SF5xnjOXyPvWRHStCC09CwT5b+3Cf3EmLRl31FWHOMxw+P5KwRaBo64qHTREsE9RhsuqBghwrDM11rAChlYI5VHwIudRr+lNYtVGllToGv3xeR7NHkljNUoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IThvcUlz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPsaKbs5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F052CC4CEE3;
-	Tue, 29 Apr 2025 17:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IThvcUlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD1CC4CEE3;
+	Tue, 29 Apr 2025 17:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949452;
-	bh=JtdYv72pVGDV95VrpGRYu2IMTwQ32bQYHtm+Kepb+ME=;
+	s=korg; t=1745949455;
+	bh=nUZrymyCbLA0C/g/SORRUSYiq/+urrdJbexRvZjMvCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPsaKbs5ksrKTRKcguMSaZRw/hYLRcxf3PVpCkJBXbfyWtyrpPdfvi25iE6MZHTUs
-	 /4ii6nEzHM+T2cxjOzaYm5SapUl0G66vBdRDTfZcxICRQQ7IdGTcYmwpJrvRd6pcx7
-	 PfNLNJ57q7FqqsbJEyA69y7Pq9TojcqgcTCwdNiU=
+	b=IThvcUlzyJWK2xDTDj52rOIuoJQcBZrnj3rnmk+w6riE3xlkI9BJaJ1sC3EV3RYKO
+	 efb9PI6TnSKYrIgx9b56H7vFLAmiDTtyEgqIWSscQnq0A4Qc/WaPwxxATFjM8/gBDE
+	 qklz7Xbydjfcx3BcilBSuuynFef7Mt4TZeeDA4Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 324/373] crypto: null - Use spin lock instead of mutex
-Date: Tue, 29 Apr 2025 18:43:21 +0200
-Message-ID: <20250429161136.464968764@linuxfoundation.org>
+Subject: [PATCH 5.15 325/373] clk: check for disabled clock-provider in of_clk_get_hw_from_clkspec()
+Date: Tue, 29 Apr 2025 18:43:22 +0200
+Message-ID: <20250429161136.505379848@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,99 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit dcc47a028c24e793ce6d6efebfef1a1e92f80297 ]
+[ Upstream commit b20150d499b3ee5c2d632fbc5ac94f98dd33accf ]
 
-As the null algorithm may be freed in softirq context through
-af_alg, use spin locks instead of mutexes to protect the default
-null algorithm.
+of_clk_get_hw_from_clkspec() checks all available clock-providers by
+comparing their of nodes to the one from the clkspec. If no matching
+clock provider is found, the function returns -EPROBE_DEFER to cause a
+re-check at a later date. If a matching clock provider is found, an
+authoritative answer can be retrieved from it whether the clock exists
+or not.
 
-Reported-by: syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This does not take into account that the clock-provider may never
+appear, because it's node is disabled. This can happen when a clock is
+optional, provided by a separate block which never gets enabled.
+
+One example of this happening is the rk3588's VOP, which has optional
+additional display clocks coming from PLLs inside the hdmiphy blocks.
+These can be used for better rates, but the system will also work
+without them.
+
+The problem around that is described in the followups to[1]. As we
+already know the of node of the presumed clock provider, add a check via
+of_device_is_available() whether this is a "valid" device node. This
+prevents eternal defer loops.
+
+Link: https://lore.kernel.org/dri-devel/20250215-vop2-hdmi1-disp-modes-v1-3-81962a7151d6@collabora.com/ [1]
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Tested-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250222223733.2990179-1-heiko@sntech.de
+[sboyd@kernel.org: Reword commit text a bit]
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/crypto_null.c | 39 ++++++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ drivers/clk/clk.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/crypto/crypto_null.c b/crypto/crypto_null.c
-index 5b84b0f7cc178..3378670286535 100644
---- a/crypto/crypto_null.c
-+++ b/crypto/crypto_null.c
-@@ -17,10 +17,10 @@
- #include <crypto/internal/skcipher.h>
- #include <linux/init.h>
- #include <linux/module.h>
--#include <linux/mm.h>
-+#include <linux/spinlock.h>
- #include <linux/string.h>
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index dc2bcf58fc107..13f7e2ea644d9 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4993,6 +4993,10 @@ of_clk_get_hw_from_clkspec(struct of_phandle_args *clkspec)
+ 	if (!clkspec)
+ 		return ERR_PTR(-EINVAL);
  
--static DEFINE_MUTEX(crypto_default_null_skcipher_lock);
-+static DEFINE_SPINLOCK(crypto_default_null_skcipher_lock);
- static struct crypto_sync_skcipher *crypto_default_null_skcipher;
- static int crypto_default_null_skcipher_refcnt;
- 
-@@ -152,23 +152,32 @@ MODULE_ALIAS_CRYPTO("cipher_null");
- 
- struct crypto_sync_skcipher *crypto_get_default_null_skcipher(void)
- {
-+	struct crypto_sync_skcipher *ntfm = NULL;
- 	struct crypto_sync_skcipher *tfm;
- 
--	mutex_lock(&crypto_default_null_skcipher_lock);
-+	spin_lock_bh(&crypto_default_null_skcipher_lock);
- 	tfm = crypto_default_null_skcipher;
- 
- 	if (!tfm) {
--		tfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
--		if (IS_ERR(tfm))
--			goto unlock;
--
--		crypto_default_null_skcipher = tfm;
-+		spin_unlock_bh(&crypto_default_null_skcipher_lock);
++	/* Check if node in clkspec is in disabled/fail state */
++	if (!of_device_is_available(clkspec->np))
++		return ERR_PTR(-ENOENT);
 +
-+		ntfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
-+		if (IS_ERR(ntfm))
-+			return ntfm;
-+
-+		spin_lock_bh(&crypto_default_null_skcipher_lock);
-+		tfm = crypto_default_null_skcipher;
-+		if (!tfm) {
-+			tfm = ntfm;
-+			ntfm = NULL;
-+			crypto_default_null_skcipher = tfm;
-+		}
- 	}
- 
- 	crypto_default_null_skcipher_refcnt++;
-+	spin_unlock_bh(&crypto_default_null_skcipher_lock);
- 
--unlock:
--	mutex_unlock(&crypto_default_null_skcipher_lock);
-+	crypto_free_sync_skcipher(ntfm);
- 
- 	return tfm;
- }
-@@ -176,12 +185,16 @@ EXPORT_SYMBOL_GPL(crypto_get_default_null_skcipher);
- 
- void crypto_put_default_null_skcipher(void)
- {
--	mutex_lock(&crypto_default_null_skcipher_lock);
-+	struct crypto_sync_skcipher *tfm = NULL;
-+
-+	spin_lock_bh(&crypto_default_null_skcipher_lock);
- 	if (!--crypto_default_null_skcipher_refcnt) {
--		crypto_free_sync_skcipher(crypto_default_null_skcipher);
-+		tfm = crypto_default_null_skcipher;
- 		crypto_default_null_skcipher = NULL;
- 	}
--	mutex_unlock(&crypto_default_null_skcipher_lock);
-+	spin_unlock_bh(&crypto_default_null_skcipher_lock);
-+
-+	crypto_free_sync_skcipher(tfm);
- }
- EXPORT_SYMBOL_GPL(crypto_put_default_null_skcipher);
- 
+ 	mutex_lock(&of_clk_mutex);
+ 	list_for_each_entry(provider, &of_clk_providers, link) {
+ 		if (provider->node == clkspec->np) {
 -- 
 2.39.5
 
