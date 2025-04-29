@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A88724BD02;
-	Tue, 29 Apr 2025 17:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1965121ABC1;
+	Tue, 29 Apr 2025 17:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948919; cv=none; b=gqZ62OK9uFgCw7DhPiGumyP58huzOu4JpLQu0z6Ov0qiA2yksUSzLAMCOFlhngzhI/j9MPDrPHUmcefgjzHaHHhitN+LwINw5qR/sVAh1PirN6ZRdGZANDQ4e8J2MQxSwDa0Y1+wu9IE+GVZIo/vO4FQmAuU33P981TRm4w0x/g=
+	t=1745948922; cv=none; b=NSz2RfsUPpDxK7W+RA0ZGNUnuFT4StKMyHxBSN7cFGujjyRNQ9bCUaHRY6S2Bwqheg2pty99LY0LmxFL2Wn9zVmvHyfzoQfPOllq9HWKVSWXhHx5C1lwOG1RtRIzFuUfsGoIWokI46NtG4jZ35QCCxFxLgmMzcIo9GyIWnk72Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948919; c=relaxed/simple;
-	bh=/g8XxKqH/bEbSAFfguprWCCW5AgTGLLmIeGkDA975Vg=;
+	s=arc-20240116; t=1745948922; c=relaxed/simple;
+	bh=NkhNXFt9kXJjlcCzLVL7POCRWr21LkE0+O5C/TNqm6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgcPCJVylN7iLQ5I/+zWIzLj4KRWL3OI6heS084HZVJ6XAdrOYzT1ImLmmjQYRzYQsyB4UHZMBbiHE0bdqvtdnPN6gP4YHwq7Q83fRiITc9DmqN/0ekVI4jWxNyvwpUaNb6Ow96090xoH3VN4P60a7NhYJ8G30FbBY9wbm9mGBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFJjo3QH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ha36B7a4A5yLx7VL2IZdV6Vy8E1jwdabiESFhG9I2MRbrTgW1LZNNQKdbJwO7yfmWIAxz8Um7XiV2BnYzT/HsLBVFosfZz5ApBz6vNk+8aaq1exAS+l5EsNYUTE/JkCDt5Y5wiebuYGg+5J1/xIuOnq67JnHdG9XbhuHYSkO1Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udZ8P191; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFJjo3QH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2663C4CEE9;
-	Tue, 29 Apr 2025 17:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udZ8P191"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429E6C4CEE3;
+	Tue, 29 Apr 2025 17:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948919;
-	bh=/g8XxKqH/bEbSAFfguprWCCW5AgTGLLmIeGkDA975Vg=;
+	s=korg; t=1745948921;
+	bh=NkhNXFt9kXJjlcCzLVL7POCRWr21LkE0+O5C/TNqm6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFJjo3QH2S27s21nwURUEAvRiXIwDir7t9KEKGvhQ3DIHvjvLzgIgQZTX/CMuifIS
-	 E1nSZIx1WG7QQ8w79aT+NqLQYD16FnXmKPewUgHxo48QmvF8JgNZ86mnXeFobfTSJl
-	 c8yqYJFrejkUbpapXXUd5DfF3J5REv8Y2z7ieEXo=
+	b=udZ8P191stZmDWoqIWEHg3bpKWGm8LRaweaOH3wwyKJua3TT4SRSRPRr96b7zJ1e2
+	 LZWZqrZvT3upTaVSlkqEWDZYqOUUR41jOVcF+dSG6vNRJ4EfqDNMI6Wa1qXbBHtMih
+	 BGBz5DLwjHMRpymc0Klj9Oe/FPRs+YsL400xSkgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 164/373] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
-Date: Tue, 29 Apr 2025 18:40:41 +0200
-Message-ID: <20250429161129.899608952@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.15 165/373] i2c: cros-ec-tunnel: defer probe if parent EC is not present
+Date: Tue, 29 Apr 2025 18:40:42 +0200
+Message-ID: <20250429161129.955657672@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,89 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
+commit 424eafe65647a8d6c690284536e711977153195a upstream.
 
-Syzbot reported an issue in hfs subsystem:
+When i2c-cros-ec-tunnel and the EC driver are built-in, the EC parent
+device will not be found, leading to NULL pointer dereference.
 
-BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
-BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
-Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
+That can also be reproduced by unbinding the controller driver and then
+loading i2c-cros-ec-tunnel module (or binding the device).
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- memcpy_from_page include/linux/highmem.h:423 [inline]
- hfs_bnode_read fs/hfs/bnode.c:35 [inline]
- hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
- hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
- hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
- hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
- vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
- do_mkdirat+0x264/0x3a0 fs/namei.c:4280
- __do_sys_mkdir fs/namei.c:4300 [inline]
- __se_sys_mkdir fs/namei.c:4298 [inline]
- __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fbdd6057a99
+[  271.991245] BUG: kernel NULL pointer dereference, address: 0000000000000058
+[  271.998215] #PF: supervisor read access in kernel mode
+[  272.003351] #PF: error_code(0x0000) - not-present page
+[  272.008485] PGD 0 P4D 0
+[  272.011022] Oops: Oops: 0000 [#1] SMP NOPTI
+[  272.015207] CPU: 0 UID: 0 PID: 3859 Comm: insmod Tainted: G S                  6.15.0-rc1-00004-g44722359ed83 #30 PREEMPT(full)  3c7fb39a552e7d949de2ad921a7d6588d3a4fdc5
+[  272.030312] Tainted: [S]=CPU_OUT_OF_SPEC
+[  272.034233] Hardware name: HP Berknip/Berknip, BIOS Google_Berknip.13434.356.0 05/17/2021
+[  272.042400] RIP: 0010:ec_i2c_probe+0x2b/0x1c0 [i2c_cros_ec_tunnel]
+[  272.048577] Code: 1f 44 00 00 41 57 41 56 41 55 41 54 53 48 83 ec 10 65 48 8b 05 06 a0 6c e7 48 89 44 24 08 4c 8d 7f 10 48 8b 47 50 4c 8b 60 78 <49> 83 7c 24 58 00 0f 84 2f 01 00 00 48 89 fb be 30 06 00 00 4c 9
+[  272.067317] RSP: 0018:ffffa32082a03940 EFLAGS: 00010282
+[  272.072541] RAX: ffff969580b6a810 RBX: ffff969580b68c10 RCX: 0000000000000000
+[  272.079672] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff969580b68c00
+[  272.086804] RBP: 00000000fffffdfb R08: 0000000000000000 R09: 0000000000000000
+[  272.093936] R10: 0000000000000000 R11: ffffffffc0600000 R12: 0000000000000000
+[  272.101067] R13: ffffffffa666fbb8 R14: ffffffffc05b5528 R15: ffff969580b68c10
+[  272.108198] FS:  00007b930906fc40(0000) GS:ffff969603149000(0000) knlGS:0000000000000000
+[  272.116282] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  272.122024] CR2: 0000000000000058 CR3: 000000012631c000 CR4: 00000000003506f0
+[  272.129155] Call Trace:
+[  272.131606]  <TASK>
+[  272.133709]  ? acpi_dev_pm_attach+0xdd/0x110
+[  272.137985]  platform_probe+0x69/0xa0
+[  272.141652]  really_probe+0x152/0x310
+[  272.145318]  __driver_probe_device+0x77/0x110
+[  272.149678]  driver_probe_device+0x1e/0x190
+[  272.153864]  __driver_attach+0x10b/0x1e0
+[  272.157790]  ? driver_attach+0x20/0x20
+[  272.161542]  bus_for_each_dev+0x107/0x150
+[  272.165553]  bus_add_driver+0x15d/0x270
+[  272.169392]  driver_register+0x65/0x110
+[  272.173232]  ? cleanup_module+0xa80/0xa80 [i2c_cros_ec_tunnel 3a00532f3f4af4a9eade753f86b0f8dd4e4e5698]
+[  272.182617]  do_one_initcall+0x110/0x350
+[  272.186543]  ? security_kernfs_init_security+0x49/0xd0
+[  272.191682]  ? __kernfs_new_node+0x1b9/0x240
+[  272.195954]  ? security_kernfs_init_security+0x49/0xd0
+[  272.201093]  ? __kernfs_new_node+0x1b9/0x240
+[  272.205365]  ? kernfs_link_sibling+0x105/0x130
+[  272.209810]  ? kernfs_next_descendant_post+0x1c/0xa0
+[  272.214773]  ? kernfs_activate+0x57/0x70
+[  272.218699]  ? kernfs_add_one+0x118/0x160
+[  272.222710]  ? __kernfs_create_file+0x71/0xa0
+[  272.227069]  ? sysfs_add_bin_file_mode_ns+0xd6/0x110
+[  272.232033]  ? internal_create_group+0x453/0x4a0
+[  272.236651]  ? __vunmap_range_noflush+0x214/0x2d0
+[  272.241355]  ? __free_frozen_pages+0x1dc/0x420
+[  272.245799]  ? free_vmap_area_noflush+0x10a/0x1c0
+[  272.250505]  ? load_module+0x1509/0x16f0
+[  272.254431]  do_init_module+0x60/0x230
+[  272.258181]  __se_sys_finit_module+0x27a/0x370
+[  272.262627]  do_syscall_64+0x6a/0xf0
+[  272.266206]  ? do_syscall_64+0x76/0xf0
+[  272.269956]  ? irqentry_exit_to_user_mode+0x79/0x90
+[  272.274836]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
+[  272.279887] RIP: 0033:0x7b9309168d39
+[  272.283466] Code: 5b 41 5c 5d c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d af 40 0c 00 f7 d8 64 89 01 8
+[  272.302210] RSP: 002b:00007fff50f1a288 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+[  272.309774] RAX: ffffffffffffffda RBX: 000058bf9b50f6d0 RCX: 00007b9309168d39
+[  272.316905] RDX: 0000000000000000 RSI: 000058bf6c103a77 RDI: 0000000000000003
+[  272.324036] RBP: 00007fff50f1a2e0 R08: 00007fff50f19218 R09: 0000000021ec4150
+[  272.331166] R10: 000058bf9b50f7f0 R11: 0000000000000246 R12: 0000000000000000
+[  272.338296] R13: 00000000fffffffe R14: 0000000000000000 R15: 000058bf6c103a77
+[  272.345428]  </TASK>
+[  272.347617] Modules linked in: i2c_cros_ec_tunnel(+)
+[  272.364585] gsmi: Log Shutdown Reason 0x03
 
-Add a check for key length in hfs_bnode_read_key to prevent
-out-of-bounds memory access. If the key length is invalid, the
-key buffer is cleared, improving stability and reliability.
+Returning -EPROBE_DEFER will allow the device to be bound once the
+controller is bound, in the case of built-in drivers.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
-Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9d230c9e4f4e ("i2c: ChromeOS EC tunnel driver")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: <stable@vger.kernel.org> # v3.16+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250407-null-ec-parent-v1-1-f7dda62d3110@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c     |    6 ++++++
- fs/hfsplus/bnode.c |    6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/i2c/busses/i2c-cros-ec-tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -70,6 +70,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 1;
+--- a/drivers/i2c/busses/i2c-cros-ec-tunnel.c
++++ b/drivers/i2c/busses/i2c-cros-ec-tunnel.c
+@@ -247,6 +247,9 @@ static int ec_i2c_probe(struct platform_
+ 	u32 remote_bus;
+ 	int err;
  
-+	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfs_btree_key));
-+		pr_err("hfs: Invalid key length: %d\n", key_len);
-+		return;
-+	}
++	if (!ec)
++		return dev_err_probe(dev, -EPROBE_DEFER, "couldn't find parent EC device\n");
 +
- 	hfs_bnode_read(node, key, off, key_len);
- }
- 
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -69,6 +69,12 @@ void hfs_bnode_read_key(struct hfs_bnode
- 	else
- 		key_len = tree->max_key_len + 2;
- 
-+	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
-+		memset(key, 0, sizeof(hfsplus_btree_key));
-+		pr_err("hfsplus: Invalid key length: %d\n", key_len);
-+		return;
-+	}
-+
- 	hfs_bnode_read(node, key, off, key_len);
- }
- 
+ 	if (!ec->cmd_xfer) {
+ 		dev_err(dev, "Missing sendrecv\n");
+ 		return -EINVAL;
 
 
