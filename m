@@ -1,62 +1,62 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2222726FA42
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 21:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6D32550CC
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 21:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745962521; cv=none; b=NLmhfIRT8ekkFwgoo5/TYs9xQYzNb/v3T1h3caQatCJ5hO82IlFHtHrT4fY3WFS4CmhuyTXxh1sHGQP50bCLUg456n+xJRuqdbVJg9rW5HQcoI/gOHrpjgWMEoYpNRyp8QZ9Q2s7xIwPJ9bk6fkaUYfisALpxnDJQLTg7LSsUtg=
+	t=1745962582; cv=none; b=RBNkAJjncxuvGqybDduz/wVNJ+bHlLNuT5L/Ljjv9ozYt+k4dHDPZ9gOWEbUEu6hMDwCcp//07QJS+wG8bLGJ4F+XXY7BArz1jAo2YDn+Vbjc5ThFQL2YyPXvvu7vFgt03pk3GaiNVYhk6PYzpZsGlrX6wyErW1Y6CZkM+9nRWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745962521; c=relaxed/simple;
-	bh=JFtp/04AN6971ALn40g4bC8CVWUHKgt3AbR5wojCJVw=;
+	s=arc-20240116; t=1745962582; c=relaxed/simple;
+	bh=pjG0WRYPmuFXgp5l4sOIxBPQ0JCTtzB9fn/bSzP4aws=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o3LNrHe4+EcV4Qrsj1L7ijwAjZVFMqu3b4jdvJ7h2+DA0GAf/Ss5VT6oPrlLyZ4rJ/JLUjbgE24w0xydArRysWxyFcy/9KV6jDnOCcO9eJeaUbyALbsRqYtUOjnUcOvc4cQ88Xq6uHA7aLWGnq46nxKKHwkwJs1zRlNQHqViKwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4AfRXEFl; arc=none smtp.client-ip=209.85.214.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=phXdd4iT58CNkCGW3DcrM+3psP6Pk7KYcKE+YhRYlxbP6ZlA5iveLmJgSQxJXwOGrjhaO/tIRyFJAGCpdY7QvIiR1w2WKa1XmNb+yDuQbE+hOKenuaL21FSIZ86xCOOizHGlGNV0kjNR1Fk5+Yq6vQCJEqhoD/DEReo8BSWFzQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CCRUrEJn; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4AfRXEFl"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2240aad70f2so240445ad.0
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 14:35:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CCRUrEJn"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2264c9d0295so238305ad.0
+        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 14:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1745962519; x=1746567319; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1745962580; x=1746567380; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mpYoUff4tpb7ZnYnv11tnvX2uEPBYr9ascXUqkCwOTE=;
-        b=4AfRXEFlmjF4rs+0nBURTHheo/Y+qXkS99Xu93tztwDoC6TFF3f4nPY4+wMeIH+Vsh
-         enTUCxhPlnv/ENz0yucRvLayJpDj7zPdTODe6+mgroBMNola8L7iwtJ15kn8BEnhJJAw
-         TiDtnwEdKWwK6TsP6ema4MJbj/YGvUbQ7koMGOtidXoZdZDneC4tIE0BSocnZXv7NYPd
-         rZ/G6BroCkVlHACWP5sPBBF7lj0nfmHjqUK+rCqTUpUfHtEzQ4h3dNGTAUmRdMB18sSC
-         FHVVNmBBTrnaXE36NApIGCsAvbyWAACNYOwl9pG3pM/2MuCVqse/DU2k1uzWSLSl182I
-         wv6w==
+        bh=VFHhD4L18F4DbheB1ANr+oLMK0ky8CpJtw12v2WCTVo=;
+        b=CCRUrEJng05XUkBo50iIH5tihCSCm4Ig/+trwl+LmFMN6nNBZy4E5q04GmoXxJf20N
+         F0rWuqpFtsMwV6xZV4qSr1eFfCAlyQ05i+tm3AFS27G8tspa4rISG2KFqb97EvmFWBVb
+         2xjrwoEPNmdOBa30mSopsA5+jmiuDf77cKRz7+yO6sbDY5NB0DjPwAA5VEgPXFabCVSh
+         6nanD5Vh20WEdmGfpx+eaX/zH4nwu14qV2VSBCOaQB2GVNPQWn/5R0JQktlg7itN8uCS
+         wmjOlJZVBabD7Ft6emD+Pi/aUevuI45vNuC1V2FA4Kj0KuF0/tuuXFMMBrQdjRcwOyft
+         q+lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745962519; x=1746567319;
+        d=1e100.net; s=20230601; t=1745962580; x=1746567380;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mpYoUff4tpb7ZnYnv11tnvX2uEPBYr9ascXUqkCwOTE=;
-        b=ITz8W9C8rhlCzE9bSI3UF1ww3dtyWniW0jX0tunt1Q8CFIm5U1UX8zLL4G69RSh/Hl
-         chGxaV1Ko1sAvuTPxo8b/2t2dgUZ7vxojtVMz0c2F7c4Zz8y/5X5LbPrNEQ8pDyNdBuP
-         oEHAQPBuxnycwfPjujhVFBoTEChZk9onHE1e+yQlr9brKHDTMb/itP+UGbbUKkEKEHaF
-         ZtdIv25yS8zbMxwbVxpQsLlnarFII9FnWL7IaLDaCWNaQR3SwPJfnfqIBLd4Mw0YDQWD
-         FvrRaWBfsP22Tar93eqizuhVZH5M0CnKO216f195cV20h2nisv95RpN/DL9Mg8hBpyzk
-         fYqw==
-X-Forwarded-Encrypted: i=1; AJvYcCXyVeU+t6mOvMV+2Mfxmk7hOsMrTz5ORHYfGi8bUSDX7s51NJWNJWQW0imzg47Hu7DBBkI0Tu+5@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw8NbKQa7qCSTmiBRmYgQPY3FJqtZtkl59Z3BGaCBlLlXoLRA94
-	Vi2BEOKi0X/EnmF0snPise3Lz6LJeZZYnKB3kuYFUxHUtYJeZiQIcVht8NsjXA==
-X-Gm-Gg: ASbGncuQE6NuM2ahCWL4LHPntnWQAPdUTRhqj7C8PKGTog7gXIvXpDVr4aJaw1XJBhF
-	jEC557hWgegxBk7TqeuJm5urOd8hKQPY04Jr+b8H6kBN3NybJ2kQIbMki79StaNJYKtl+bRXEOB
-	doKb9tewnVu8dsDMeWh7EBdVOZHQkmweVsM1Bx5A+f0dd/MSwuENG4usIyLlB8wSm5EqNE5f3zK
-	iUcHSbaghqvuKBNI/97ABT3W0IatbEohxH8wcqz+7v0eRc5InaSL38JszioClSaEoJO7KXzR44P
-	B480FFFYpacL7J1UN87VJ6Efgkq1WrrTrLDiJGlDFLMHRVOmIdnoeAZJta+OttcRM1vFtBIL
-X-Google-Smtp-Source: AGHT+IEiAc8Ows6C4iR4kgPCFAlWxuerupIBpLK64UuYqayp18C/qOLe733Vqo0YiAcQG8JFaBI7KQ==
-X-Received: by 2002:a17:902:f681:b0:200:97b5:dc2b with SMTP id d9443c01a7336-22df54469b2mr228275ad.15.1745962518918;
-        Tue, 29 Apr 2025 14:35:18 -0700 (PDT)
+        bh=VFHhD4L18F4DbheB1ANr+oLMK0ky8CpJtw12v2WCTVo=;
+        b=Bb5wo/E/S2kLv845T0E4atbTN/6z2RqmKjBIqIAhkyXhLjMJg9ydATG+gAkxyOU0IB
+         KWG7cF2R+XC26iVmjjbtP2TZwNPX00RdX4JGOJuLtr+GQlg32Nwe3SJSt9P+PCvb0ujh
+         C4QYE4WDlDGEjpq7Mcf5wy/EZb04mJC/Ube9gV1k7gZNvQtXhMiJQW3TiU5K+B/g6G80
+         1F+5etlyqLjrd+AQnGI41kLvwbJmGCXeI6F3Y0FkUTGDBR37qzl6z+aaw205BvEUISa4
+         G28z64IbqUxAmama/INUZ6hCcZVA2J/RhD7rVewei03d57ox4cSy95fqg0bQLkBmyNQH
+         jaDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUyNyCJYGYeqpe8Uz0CNXzSq3qLA6W/A2qFoIIGHbfHc1WC7KtrTeuGRV/e7Uv6CT176CdQ+z54@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywx9aX1pLJeuDuph169K69GYDt8AQwlfiyQ7YeWv6i4c5FvwP2s
+	eiXUh7prRgwgL9FJfMvSBwEw56jRz5rNPP9lmRvbF/RHmtp9ejZS91o+XRDpgg==
+X-Gm-Gg: ASbGncvxhUpFHwPIzIkXyn3myQ5YSdCABrbl+oElaiZdicKo8lsZMy9bzFo1a87IRHm
+	y56tUj+y9GciSoZPBXtGbMZxPb2LF9iKJrpSD+6z5SBym8eyGBoDoyUBcyXtkG7nM0KdpmS+Q0K
+	vYI+lray28qNZv8pVscawdxsnj0qKZ8X5nbnSZFQfY3mv5A1fMirdChVfwYcVylmIbrz+gyLMOI
+	n6FT90BOLBfIH540RyhXNOMt6PsW9eOUhYIvCYVSJtuQDloNOKq3QQiaZX30ccp6E6Q+RWMSqCw
+	qluIs92AnW3pgYd8hgk49FrzRNvNHBRTlMoLFl/lw9cPxAL1pfREUwjfpYUmmoRkISmjBCLg
+X-Google-Smtp-Source: AGHT+IHMqNgjircjCmAkmKl5VbBskPIbU47nTYxADS2hK6tD9L6Ge4YAR4USLtbPpDWqfiuVVAQ0lQ==
+X-Received: by 2002:a17:903:144f:b0:21f:3f5c:d24c with SMTP id d9443c01a7336-22df3dda537mr1044155ad.0.1745962580224;
+        Tue, 29 Apr 2025 14:36:20 -0700 (PDT)
 Received: from google.com (2.210.143.34.bc.googleusercontent.com. [34.143.210.2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30a3480f08csm42489a91.39.2025.04.29.14.35.13
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db4d76d34sm108297185ad.39.2025.04.29.14.36.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 14:35:18 -0700 (PDT)
-Date: Tue, 29 Apr 2025 21:35:07 +0000
+        Tue, 29 Apr 2025 14:36:19 -0700 (PDT)
+Date: Tue, 29 Apr 2025 21:36:09 +0000
 From: Pranjal Shrivastava <praan@google.com>
 To: Nicolin Chen <nicolinc@nvidia.com>
 Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
@@ -69,15 +69,11 @@ Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
 	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
 	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
 	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-Subject: Re: [PATCH v2 13/22] iommufd: Add mmap interface
-Message-ID: <aBFGCxcTh54pecsk@google.com>
+Subject: Re: [PATCH v2 16/22] iommu/arm-smmu-v3-iommufd: Add vsmmu_alloc impl
+ op
+Message-ID: <aBFGSRGcIsCDU1Zj@google.com>
 References: <cover.1745646960.git.nicolinc@nvidia.com>
- <7be26560c604b0cbc2fd218997b97a47e4ed11ff.1745646960.git.nicolinc@nvidia.com>
- <aBE1gUz9y415EuBQ@google.com>
- <aBE38GwvGBnpRNLc@google.com>
- <aBE47aySzDp2lsAz@Asurada-Nvidia>
- <aBE800DsAOOZ4ybv@google.com>
- <aBE/CD4Ilbydnmud@Asurada-Nvidia>
+ <73b1fc34b07f2ac42d542dd996c7119ae5f8939c.1745646960.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -86,52 +82,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBE/CD4Ilbydnmud@Asurada-Nvidia>
+In-Reply-To: <73b1fc34b07f2ac42d542dd996c7119ae5f8939c.1745646960.git.nicolinc@nvidia.com>
 
-On Tue, Apr 29, 2025 at 02:05:12PM -0700, Nicolin Chen wrote:
-> On Tue, Apr 29, 2025 at 08:55:47PM +0000, Pranjal Shrivastava wrote:
-> > On Tue, Apr 29, 2025 at 01:39:09PM -0700, Nicolin Chen wrote:
-> > > On Tue, Apr 29, 2025 at 08:34:56PM +0000, Pranjal Shrivastava wrote:
-> > > > On Tue, Apr 29, 2025 at 08:24:33PM +0000, Pranjal Shrivastava wrote:
-> > > > > On Fri, Apr 25, 2025 at 10:58:08PM -0700, Nicolin Chen wrote:
-> > > > > > +	struct iommufd_mmap *immap;
-> > > > > > +	int rc;
-> > > > > > +
-> > > > > > +	if (WARN_ON_ONCE(!immap_id))
-> > > > > > +		return -EINVAL;
-> > > > > > +	if (base & ~PAGE_MASK)
-> > > > > > +		return -EINVAL;
-> > > > > > +	if (!size || size & ~PAGE_MASK)
-> > > > > > +		return -EINVAL;
-> > > > > > +
-> > > > > > +	immap = kzalloc(sizeof(*immap), GFP_KERNEL);
-> > > > > > +	if (!immap)
-> > > > > > +		return -ENOMEM;
-> > > > > > +	immap->pfn_start = base >> PAGE_SHIFT;
-> > > > > > +	immap->pfn_end = immap->pfn_start + (size >> PAGE_SHIFT) - 1;
-> > > > > > +
-> > > > > > +	rc = mtree_alloc_range(&ictx->mt_mmap, immap_id, immap, sizeof(immap),
-> > > > > 
-> > > > > I believe this should be sizeof(*immap) ?
-> > > > 
-> > > > Ugh, Sorry, shouldn't this be size >> PAGE_SHIFT (num_indices to alloc) ?
-> > > 
-> > > mtree_load() returns a "struct iommufd_map *" pointer.
-> > 
-> > I'm not talking about mtree_load. I meant mtree_alloc_range takes in a
-> > "size" parameter, which is being passed as sizeof(imap) in this patch.
-> > IIUC, the mtree_alloc_range, via mas_empty_area, gets a range that is
-> > sufficient for the given "size". 
-> > 
-> > Now in this case, "size" would be the no. of pfns which are mmap-able.
-> > By passing sizeof(immap), we're simply reserving sizeof(ptr) i.e. 8 pfns
-> > for a 64-bit machine. Whereas we really, just want to reserve a range
-> > for size >> PAGE_SHIFT pfns.
+On Fri, Apr 25, 2025 at 10:58:11PM -0700, Nicolin Chen wrote:
+> An impl driver might support its own vIOMMU object, as tegra241-cmdqv will
+> add IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV.
 > 
-> But we are not storing pfns but the immap pointer..
-
-Ohh... so we are storing the raw pointer in the mtree.. I got confused
-with the `LONG_MAX >> PAGE_SHIFT`.. Sorry about the confusion!
-
+> Add a vsmmu_alloc op to give impl a try, upon failure fallback to standard
+> vsmmu allocation for IOMMU_VIOMMU_TYPE_ARM_SMMUV3.
 > 
-> Nicolin
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+
+Reviewd-by: Pranjal Shrivastava <praan@google.com>
+
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h     |  6 ++++++
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c | 17 +++++++++++------
+>  2 files changed, 17 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> index 6b8f0d20dac3..a5835af72417 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -16,6 +16,7 @@
+>  #include <linux/sizes.h>
+>  
+>  struct arm_smmu_device;
+> +struct arm_smmu_domain;
+>  
+>  /* MMIO registers */
+>  #define ARM_SMMU_IDR0			0x0
+> @@ -720,6 +721,11 @@ struct arm_smmu_impl_ops {
+>  	int (*init_structures)(struct arm_smmu_device *smmu);
+>  	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
+>  		struct arm_smmu_device *smmu, struct arm_smmu_cmdq_ent *ent);
+> +	struct arm_vsmmu *(*vsmmu_alloc)(
+> +		struct arm_smmu_device *smmu,
+> +		struct arm_smmu_domain *smmu_domain, struct iommufd_ctx *ictx,
+> +		unsigned int viommu_type,
+> +		const struct iommu_user_data *user_data);
+>  };
+>  
+>  /* An SMMUv3 instance */
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> index 66855cae775e..a8a78131702d 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> @@ -392,10 +392,7 @@ struct iommufd_viommu *arm_vsmmu_alloc(struct device *dev,
+>  		iommu_get_iommu_dev(dev, struct arm_smmu_device, iommu);
+>  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+>  	struct arm_smmu_domain *s2_parent = to_smmu_domain(parent);
+> -	struct arm_vsmmu *vsmmu;
+> -
+> -	if (viommu_type != IOMMU_VIOMMU_TYPE_ARM_SMMUV3)
+> -		return ERR_PTR(-EOPNOTSUPP);
+> +	struct arm_vsmmu *vsmmu = ERR_PTR(-EOPNOTSUPP);
+>  
+>  	if (!(smmu->features & ARM_SMMU_FEAT_NESTING))
+>  		return ERR_PTR(-EOPNOTSUPP);
+> @@ -423,8 +420,16 @@ struct iommufd_viommu *arm_vsmmu_alloc(struct device *dev,
+>  	    !(smmu->features & ARM_SMMU_FEAT_S2FWB))
+>  		return ERR_PTR(-EOPNOTSUPP);
+>  
+> -	vsmmu = iommufd_viommu_alloc(ictx, struct arm_vsmmu, core,
+> -				     &arm_vsmmu_ops);
+> +	if (master->smmu->impl_ops && master->smmu->impl_ops->vsmmu_alloc)
+> +		vsmmu = master->smmu->impl_ops->vsmmu_alloc(
+> +			master->smmu, s2_parent, ictx, viommu_type, user_data);
+> +	if (PTR_ERR(vsmmu) == -EOPNOTSUPP) {
+> +		if (viommu_type != IOMMU_VIOMMU_TYPE_ARM_SMMUV3)
+> +			return ERR_PTR(-EOPNOTSUPP);
+> +		/* Fallback to standard SMMUv3 type if viommu_type matches */
+> +		vsmmu = iommufd_viommu_alloc(ictx, struct arm_vsmmu, core,
+> +					     &arm_vsmmu_ops);
+> +	}
+>  	if (IS_ERR(vsmmu))
+>  		return ERR_CAST(vsmmu);
+>  
+> -- 
+> 2.43.0
+> 
