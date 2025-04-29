@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A50A3FFD;
-	Tue, 29 Apr 2025 18:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E71CA5A;
+	Tue, 29 Apr 2025 18:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950453; cv=none; b=rIzjUe22F0FgV4y6fgHDJOxdqWzp+OCfzOT47zK0S9Iax244VwWXQ5eXnJRLfrjEfOTYtKbnvKQ8sjLQLKhOyNKAtoHuHax6qUDyWfUv6csr1LFDTHrFsyISKyNL4V+15fv/DDqMtd7kmbEdBbcA+aBY1Pd8auKuZJ7i+8PM8kU=
+	t=1745950456; cv=none; b=T6TtIc+WTckHKgCNFgwnrLjno6FdGpsGapWOWkrGpA5XqVWUbtq/o+J7WvYHSsrOnHQrSwNQMkltyCn81cYt38UJUZygVhUhBU3YHUk5xjwp12w0O497oJl05p6QCf9oOYx27n76E7IAH7KDZ7z2NrsS+JGq6Oe514sQUcX+wdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950453; c=relaxed/simple;
-	bh=d7qjuBgFzkq+Z/fbmlRVGUxmmGiQ56dsOau17e5Ym6s=;
+	s=arc-20240116; t=1745950456; c=relaxed/simple;
+	bh=AQx/Og7OBvzO+I4PHRoXGNk7Pg7Jz18SXcg85st2mhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOGpXI2yJmdYvj00eIfQ3d3h9djoEbivgvUKxtyW6xFJFbGQlgxnXLpujVOxc9XAhqjQAYIFZJRzCbgErzYIoTjq10akBepHmSAqquzMc1M5OXxcP6w/g21gLgKp8uN3t3nbgUjKcOd8fnEH/VYvR7ettNP9btiA6qzrubpME2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5XuhHA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsT5fAhNEhhM1fjHeZzXL/Zz0caHblpfQr4Clc+hAWefgvwjo2tJC5qbj48mirL/Y+7/HmEoZBl52+YKr+lfzJ9eWyZXyN/LvtTulLHSm9a1yqg4FD7r+atHiwpOw5abRkYHOUfUQpJlD5J7sNLmqxxE1YbkKc4cHGgXggIvP60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/8jBxuR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5XuhHA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1370C4CEE3;
-	Tue, 29 Apr 2025 18:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/8jBxuR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20992C4CEE3;
+	Tue, 29 Apr 2025 18:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950453;
-	bh=d7qjuBgFzkq+Z/fbmlRVGUxmmGiQ56dsOau17e5Ym6s=;
+	s=korg; t=1745950456;
+	bh=AQx/Og7OBvzO+I4PHRoXGNk7Pg7Jz18SXcg85st2mhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5XuhHA9KkknVNV2gAVrcewgc3+iI6lAbaIMXVnw5OeBK3g0CxyFxC1tNrCvZrXwK
-	 oZEDbwHG69+/xp429hyoaiK9YjonG3amo6251wE87oYkwpIhUkzx/u0xpwd94khAg6
-	 PQFuNmZCxa6vbdwzLfcKa8PaEBtRSklHAP4IPwRo=
+	b=q/8jBxuRFE9v3YfjQZ8bhqzkBuIysqbZjqN0JS0TUFSC2YzGw1SQ0LP1GgMRe/HA4
+	 NKe8hPISURp2WzJti4YKpLzJB9Ce4JsFRWBFxlhRB+uxge/+CykTwFIqbjaw1OujLy
+	 RtKYpU9DyfLEtA9jITC4g1uXgu4vu31CNND2SGvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinyang He <hejinyang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/204] LoongArch: Make do_xyz() exception handlers more robust
-Date: Tue, 29 Apr 2025 18:42:39 +0200
-Message-ID: <20250429161102.331866836@linuxfoundation.org>
+	Halil Pasic <pasic@linux.ibm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.6 072/204] virtio_console: fix missing byte order handling for cols and rows
+Date: Tue, 29 Apr 2025 18:42:40 +0200
+Message-ID: <20250429161102.371122018@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -53,140 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit cc73cc6bcdb5f959670e3ff9abdc62461452ddff ]
+commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
 
-Currently, interrupts need to be disabled before single-step mode is
-set, it requires that CSR_PRMD_PIE be cleared in save_local_irqflag()
-which is called by setup_singlestep(), this is reasonable.
+As per virtio spec the fields cols and rows are specified as little
+endian. Although there is no legacy interface requirement that would
+state that cols and rows need to be handled as native endian when legacy
+interface is used, unlike for the fields of the adjacent struct
+virtio_console_control, I decided to err on the side of caution based
+on some non-conclusive virtio spec repo archaeology and opt for using
+virtio16_to_cpu() much like for virtio_console_control.event. Strictly
+by the letter of the spec virtio_le_to_cpu() would have been sufficient.
+But when the legacy interface is not used, it boils down to the same.
 
-But in the first kprobe breakpoint exception, if the irq is enabled at
-the beginning of do_bp(), it will not be disabled at the end of do_bp()
-due to the CSR_PRMD_PIE has been cleared in save_local_irqflag(). So for
-this case, it may corrupt exception context when restoring the exception
-after do_bp() in handle_bp(), this is not reasonable.
+And when using the legacy interface, the device formatting these as
+little endian when the guest is big endian would surprise me more than
+it using guest native byte order (which would make it compatible with
+the current implementation). Nevertheless somebody trying to implement
+the spec following it to the letter could end up forcing little endian
+byte order when the legacy interface is in use. So IMHO this ultimately
+needs a judgement call by the maintainers.
 
-In order to restore exception safely in handle_bp(), it needs to ensure
-the irq is disabled at the end of do_bp(), so just add a local variable
-to record the original interrupt status in the parent context, then use
-it as the check condition to enable and disable irq in do_bp().
-
-While at it, do the similar thing for other do_xyz() exception handlers
-to make them more robust.
-
-Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
-Suggested-by: Jinyang He <hejinyang@loongson.cn>
-Suggested-by: Huacai Chen <chenhuacai@loongson.cn>
-Co-developed-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Cc: stable@vger.kernel.org # v2.6.35+
+Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/traps.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/char/virtio_console.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/kernel/traps.c b/arch/loongarch/kernel/traps.c
-index d59052c03d9b7..2b4b99b4e6c94 100644
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -527,9 +527,10 @@ asmlinkage void noinstr do_ale(struct pt_regs *regs)
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
- #else
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned int *pc;
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1612,8 +1612,8 @@ static void handle_control_message(struc
+ 		break;
+ 	case VIRTIO_CONSOLE_RESIZE: {
+ 		struct {
+-			__u16 rows;
+-			__u16 cols;
++			__virtio16 rows;
++			__virtio16 cols;
+ 		} size;
  
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
+ 		if (!is_console_port(port))
+@@ -1621,7 +1621,8 @@ static void handle_control_message(struc
  
- 	perf_sw_event(PERF_COUNT_SW_ALIGNMENT_FAULTS, 1, regs, regs->csr_badvaddr);
-@@ -556,7 +557,7 @@ asmlinkage void noinstr do_ale(struct pt_regs *regs)
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- #endif
- 	irqentry_exit(regs, state);
-@@ -588,12 +589,13 @@ static void bug_handler(struct pt_regs *regs)
- asmlinkage void noinstr do_bce(struct pt_regs *regs)
- {
- 	bool user = user_mode(regs);
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned long era = exception_era(regs);
- 	u64 badv = 0, lower = 0, upper = ULONG_MAX;
- 	union loongarch_instruction insn;
- 	irqentry_state_t state = irqentry_enter(regs);
+ 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
+ 		       sizeof(size));
+-		set_console_size(port, size.rows, size.cols);
++		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
++				 virtio16_to_cpu(vdev, size.cols));
  
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
- 
- 	current->thread.trap_nr = read_csr_excode();
-@@ -659,7 +661,7 @@ asmlinkage void noinstr do_bce(struct pt_regs *regs)
- 	force_sig_bnderr((void __user *)badv, (void __user *)lower, (void __user *)upper);
- 
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- 
- 	irqentry_exit(regs, state);
-@@ -677,11 +679,12 @@ asmlinkage void noinstr do_bce(struct pt_regs *regs)
- asmlinkage void noinstr do_bp(struct pt_regs *regs)
- {
- 	bool user = user_mode(regs);
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned int opcode, bcode;
- 	unsigned long era = exception_era(regs);
- 	irqentry_state_t state = irqentry_enter(regs);
- 
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
- 
- 	if (__get_inst(&opcode, (u32 *)era, user))
-@@ -747,7 +750,7 @@ asmlinkage void noinstr do_bp(struct pt_regs *regs)
- 	}
- 
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- 
- 	irqentry_exit(regs, state);
-@@ -982,6 +985,7 @@ static void init_restore_lbt(void)
- 
- asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- {
-+	bool pie = regs_irqs_disabled(regs);
- 	irqentry_state_t state = irqentry_enter(regs);
- 
- 	/*
-@@ -991,7 +995,7 @@ asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- 	 * (including the user using 'MOVGR2GCSR' to turn on TM, which
- 	 * will not trigger the BTE), we need to check PRMD first.
- 	 */
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
- 
- 	if (!cpu_has_lbt) {
-@@ -1005,7 +1009,7 @@ asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- 	preempt_enable();
- 
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- 
- 	irqentry_exit(regs, state);
--- 
-2.39.5
-
+ 		port->cons.hvc->irq_requested = 1;
+ 		resize_console(port);
 
 
