@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC99721ADC7;
-	Tue, 29 Apr 2025 17:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0C824466C;
+	Tue, 29 Apr 2025 17:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947226; cv=none; b=YA99EOS+G4diV9d4JgH6AwoAjZ0QGe5bPgemS41FE6oHLwEveN6KijKtZCx4ZjkRrdyje1k6DXIRbJPd/hbg88gOdf5aNgJkXvlT6lqIHNHtC8jIjAs5OtvZE90TPb891p+x62Jmtn2Oa7gCa+GjVWXqWhyAbWSE9DVfiKirsUs=
+	t=1745947230; cv=none; b=eQiU/2tuEmOjR9Y4E8fcVP5qDHAza0t1/2KNptYCGnDvfhSRZRsGCmWO/EEUuc+o/yawMLAh1ThcpOBaVwsLNVnRIaPLWJ1yr+3I33xvQj74GaETBnNgG0w5d1ZIcxNZ+zgLVPdEf0wlbiYSXUPPrXcewijNy1fk5vRE/fVkIq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947226; c=relaxed/simple;
-	bh=3MBDPuu411X5wyGS0az8dU+jsD3yVqqaiP2U/4Prx5E=;
+	s=arc-20240116; t=1745947230; c=relaxed/simple;
+	bh=XGZFgJ3IuGuA1PELuqpb7AGS0jR+nywRwNGlbQCEE9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrR8PnjHH2Sg0oMfWpvpy91lPyTV4EmF0Xlk3y7/r3XTgIbgB5pm4Rw3KsqorpQW7CE0KkiMnRLbMarRoZJxqWQ8CGG1fYZ/0LxiMYps5tlZOLb4iGL3bXhMsrSuQESo6EJagEuiVEKTFUij+vp4gYVOxekxLbY/7KzjuqkwI0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrzlAeIB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TN4OPxMX/M2dYA4Wlp+rxrbS4dc1wiNsESnx9eug2hw63GWEgmFfa0v75IbDoJzc9MAo7ut3rCoVcyu1aCsGr6d7RaKOu3DXOyZL6jUbv6oUOzDqBg6nR3zaprmP4CILrkh3SSEnRmk4lKrogVC+hbPxtc+zrqvp2nuogmlk/mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4mclVRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrzlAeIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478ECC4CEE3;
-	Tue, 29 Apr 2025 17:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4mclVRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3ACCC4CEE3;
+	Tue, 29 Apr 2025 17:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947226;
-	bh=3MBDPuu411X5wyGS0az8dU+jsD3yVqqaiP2U/4Prx5E=;
+	s=korg; t=1745947230;
+	bh=XGZFgJ3IuGuA1PELuqpb7AGS0jR+nywRwNGlbQCEE9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrzlAeIBf+AsspMBcmKw4BxMN8RFAeA25glznfR9PWw5F5rGxy8YdtLEg86Nr+Bb3
-	 F7Th7vGqhs/zuIdoswbbP7rENYXNS8sc1GPSG26fmoUZc0siUxYsezdeLlYf8aDhzI
-	 1b/19v0nXToNaLvVg28WTRAtrtxG1yBFk/75z3fs=
+	b=C4mclVRkKPx2AXXJF36UmqJ2vEU9k7m8IW6IkbFtnvvo0ifiRAEWDNXTetkxM+rBQ
+	 S4VxzkdWdoAaw7yhTaYuHiTAkPs4cR8ilx70CrTctOnc7TjQQIqapFkbEeJCWJB/QG
+	 Q4enXnQqbh1gha5CzMmY+lEcSRt1JtEjFnrVPgaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Ross Zwisler <zwisler@google.com>,
-	Ching-lin Yu <chinglinyu@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Pankaj Dubey <pankaj.dubey@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 195/286] tracing: Allow synthetic events to pass around stacktraces
-Date: Tue, 29 Apr 2025 18:41:39 +0200
-Message-ID: <20250429161115.986254655@linuxfoundation.org>
+Subject: [PATCH 5.10 213/286] soc: samsung: exynos-chipid: convert to driver and merge exynos-asv
+Date: Tue, 29 Apr 2025 18:41:57 +0200
+Message-ID: <20250429161116.711114025@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,280 +51,368 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 00cf3d672a9dd409418647e9f98784c339c3ff63 ]
+[ Upstream commit 352bfbb3e0230c96b2bce00d2ac3f0de303cc7b6 ]
 
-Allow a stacktrace from one event to be displayed by the end event of a
-synthetic event. This is very useful when looking for the longest latency
-of a sleep or something blocked on I/O.
+The Exynos Chip ID driver on Exynos SoCs has so far only informational
+purpose - to expose the SoC device in sysfs.  No other drivers depend on
+it so there is really no benefit of initializing it early.
 
- # cd /sys/kernel/tracing/
- # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
- # echo 'hist:keys=next_pid:ts=common_timestamp.usecs,st=stacktrace  if prev_state == 1||prev_state == 2' > events/sched/sched_switch/trigger
- # echo 'hist:keys=prev_pid:delta=common_timestamp.usecs-$ts,s=$st:onmax($delta).trace(block_lat,prev_pid,$delta,$s)' >> events/sched/sched_switch/trigger
+The code would be the most flexible if converted to a regular driver.
+However there is already another driver - Exynos ASV (Adaptive Supply
+Voltage) - which binds to the device node of Chip ID.
 
-The above creates a "block_lat" synthetic event that take the stacktrace of
-when a task schedules out in either the interruptible or uninterruptible
-states, and on a new per process max $delta (the time it was scheduled
-out), will print the process id and the stacktrace.
+The solution is to convert the Exynos Chip ID to a built in driver and
+merge the Exynos ASV into it.
 
-  # echo 1 > events/synthetic/block_lat/enable
-  # cat trace
- #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
- #              | |         |   |||||     |         |
-    kworker/u16:0-767     [006] d..4.   560.645045: block_lat: pid=767 delta=66 stack=STACK:
- => __schedule
- => schedule
- => pipe_read
- => vfs_read
- => ksys_read
- => do_syscall_64
- => 0x966000aa
+This has several benefits:
+1. Although the Exynos ASV driver binds to a device node present in all
+   Exynos DTS (generic compatible), it fails to probe except on the
+   supported ones (only Exynos5422).  This means that the regular boot
+   process has a planned/normal device probe failure.
 
-           <idle>-0       [003] d..4.   561.132117: block_lat: pid=0 delta=413787 stack=STACK:
- => __schedule
- => schedule
- => schedule_hrtimeout_range_clock
- => do_sys_poll
- => __x64_sys_poll
- => do_syscall_64
- => 0x966000aa
+   Merging the ASV into Chip ID will remove this probe failure because
+   the final driver will always bind, just with disabled ASV features.
 
-            <...>-153     [006] d..4.   562.068407: block_lat: pid=153 delta=54 stack=STACK:
- => __schedule
- => schedule
- => io_schedule
- => rq_qos_wait
- => wbt_wait
- => __rq_qos_throttle
- => blk_mq_submit_bio
- => submit_bio_noacct_nocheck
- => ext4_bio_write_page
- => mpage_submit_page
- => mpage_process_page_bufs
- => mpage_prepare_extent_to_map
- => ext4_do_writepages
- => ext4_writepages
- => do_writepages
- => __writeback_single_inode
+2. Allows to use dev_info() as the SoC bus is present (since
+   core_initcall).
 
-Link: https://lkml.kernel.org/r/20230117152236.010941267@goodmis.org
+3. Could speed things up because of execution of Chip ID code in a SMP
+   environment (after bringing up secondary CPUs, unlike early_initcall),
+   This reduces the amount of work to be done early, when the kernel has
+   to bring up critical devices.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Ching-lin Yu <chinglinyu@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 4d38328eb442 ("tracing: Fix synth event printk format for str fields")
+5. Makes the Chip ID code defer-probe friendly,
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20201207190517.262051-5-krzk@kernel.org
+Reviewed-by: Pankaj Dubey <pankaj.dubey@samsung.com>
+Stable-dep-of: c8222ef6cf29 ("soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.h              |  4 ++
- kernel/trace/trace_events_hist.c  |  7 ++-
- kernel/trace/trace_events_synth.c | 80 ++++++++++++++++++++++++++++++-
- kernel/trace/trace_synth.h        |  1 +
- 4 files changed, 87 insertions(+), 5 deletions(-)
+ arch/arm/mach-exynos/Kconfig        |  1 -
+ drivers/soc/samsung/Kconfig         | 12 +++--
+ drivers/soc/samsung/Makefile        |  3 +-
+ drivers/soc/samsung/exynos-asv.c    | 45 +++++--------------
+ drivers/soc/samsung/exynos-asv.h    |  2 +
+ drivers/soc/samsung/exynos-chipid.c | 69 ++++++++++++++++++++---------
+ 6 files changed, 67 insertions(+), 65 deletions(-)
 
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 7c90872f2435d..f47938d8401a2 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -109,6 +109,10 @@ enum trace_type {
- 	unlikely(__ret_warn_once);				\
- })
+diff --git a/arch/arm/mach-exynos/Kconfig b/arch/arm/mach-exynos/Kconfig
+index b5df98ee5d176..4b554cc8fa58a 100644
+--- a/arch/arm/mach-exynos/Kconfig
++++ b/arch/arm/mach-exynos/Kconfig
+@@ -13,7 +13,6 @@ menuconfig ARCH_EXYNOS
+ 	select ARM_GIC
+ 	select EXYNOS_IRQ_COMBINER
+ 	select COMMON_CLK_SAMSUNG
+-	select EXYNOS_ASV
+ 	select EXYNOS_CHIPID
+ 	select EXYNOS_THERMAL
+ 	select EXYNOS_PMU
+diff --git a/drivers/soc/samsung/Kconfig b/drivers/soc/samsung/Kconfig
+index fc7f48a922881..5745d7e5908e9 100644
+--- a/drivers/soc/samsung/Kconfig
++++ b/drivers/soc/samsung/Kconfig
+@@ -7,21 +7,19 @@ menuconfig SOC_SAMSUNG
  
-+#define HIST_STACKTRACE_DEPTH	16
-+#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
-+#define HIST_STACKTRACE_SKIP	5
-+
- /*
-  * syscalls are special, and need special handling, this is why
-  * they are not included in trace_entries.h
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 059a106e62bec..a0342b45a06da 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -282,10 +282,6 @@ DEFINE_HIST_FIELD_FN(u8);
- #define for_each_hist_key_field(i, hist_data)	\
- 	for ((i) = (hist_data)->n_vals; (i) < (hist_data)->n_fields; (i)++)
+ if SOC_SAMSUNG
  
--#define HIST_STACKTRACE_DEPTH	16
--#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
--#define HIST_STACKTRACE_SKIP	5
+-config EXYNOS_ASV
+-	bool "Exynos Adaptive Supply Voltage support" if COMPILE_TEST
+-	depends on (ARCH_EXYNOS && EXYNOS_CHIPID) || COMPILE_TEST
+-	select EXYNOS_ASV_ARM if ARM && ARCH_EXYNOS
 -
- #define HITCOUNT_IDX		0
- #define HIST_KEY_SIZE_MAX	(MAX_FILTER_STR_VAL + HIST_STACKTRACE_SIZE)
+ # There is no need to enable these drivers for ARMv8
+ config EXYNOS_ASV_ARM
+ 	bool "Exynos ASV ARMv7-specific driver extensions" if COMPILE_TEST
+-	depends on EXYNOS_ASV
++	depends on EXYNOS_CHIPID
  
-@@ -3356,6 +3352,9 @@ static int check_synth_field(struct synth_event *event,
- 	    && field->is_dynamic)
- 		return 0;
+ config EXYNOS_CHIPID
+-	bool "Exynos Chipid controller driver" if COMPILE_TEST
++	bool "Exynos ChipID controller and ASV driver" if COMPILE_TEST
+ 	depends on ARCH_EXYNOS || COMPILE_TEST
++	select EXYNOS_ASV_ARM if ARM && ARCH_EXYNOS
+ 	select MFD_SYSCON
+ 	select SOC_BUS
++	help
++	  Support for Samsung Exynos SoC ChipID and Adaptive Supply Voltage.
  
-+	if (strstr(hist_field->type, "long[") && field->is_stack)
-+		return 0;
-+
- 	if (strcmp(field->type, hist_field->type) != 0) {
- 		if (field->size != hist_field->size ||
- 		    (!field->is_string && field->is_signed != hist_field->is_signed))
-diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
-index e43426aa12830..4878758ceea2a 100644
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -162,6 +162,14 @@ static int synth_field_is_string(char *type)
- 	return false;
+ config EXYNOS_PMU
+ 	bool "Exynos PMU controller driver" if COMPILE_TEST
+diff --git a/drivers/soc/samsung/Makefile b/drivers/soc/samsung/Makefile
+index 59e8e9453f27c..0c523a8de4ebf 100644
+--- a/drivers/soc/samsung/Makefile
++++ b/drivers/soc/samsung/Makefile
+@@ -1,9 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-obj-$(CONFIG_EXYNOS_ASV)	+= exynos-asv.o
+ obj-$(CONFIG_EXYNOS_ASV_ARM)	+= exynos5422-asv.o
+ 
+-obj-$(CONFIG_EXYNOS_CHIPID)	+= exynos-chipid.o
++obj-$(CONFIG_EXYNOS_CHIPID)	+= exynos-chipid.o exynos-asv.o
+ obj-$(CONFIG_EXYNOS_PMU)	+= exynos-pmu.o
+ 
+ obj-$(CONFIG_EXYNOS_PMU_ARM_DRIVERS)	+= exynos3250-pmu.o exynos4-pmu.o \
+diff --git a/drivers/soc/samsung/exynos-asv.c b/drivers/soc/samsung/exynos-asv.c
+index 5daeadc363829..d60af8acc3916 100644
+--- a/drivers/soc/samsung/exynos-asv.c
++++ b/drivers/soc/samsung/exynos-asv.c
+@@ -2,7 +2,9 @@
+ /*
+  * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+  *	      http://www.samsung.com/
++ * Copyright (c) 2020 Krzysztof Kozlowski <krzk@kernel.org>
+  * Author: Sylwester Nawrocki <s.nawrocki@samsung.com>
++ * Author: Krzysztof Kozlowski <krzk@kernel.org>
+  *
+  * Samsung Exynos SoC Adaptive Supply Voltage support
+  */
+@@ -10,12 +12,7 @@
+ #include <linux/cpu.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+-#include <linux/init.h>
+-#include <linux/mfd/syscon.h>
+-#include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+-#include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/regmap.h>
+ #include <linux/soc/samsung/exynos-chipid.h>
+@@ -111,7 +108,7 @@ static int exynos_asv_update_opps(struct exynos_asv *asv)
+ 	return	0;
  }
  
-+static int synth_field_is_stack(char *type)
-+{
-+	if (strstr(type, "long[") != NULL)
-+		return true;
-+
-+	return false;
-+}
-+
- static int synth_field_string_size(char *type)
+-static int exynos_asv_probe(struct platform_device *pdev)
++int exynos_asv_init(struct device *dev, struct regmap *regmap)
  {
- 	char buf[4], *end, *start;
-@@ -237,6 +245,8 @@ static int synth_field_size(char *type)
- 		size = sizeof(gfp_t);
- 	else if (synth_field_is_string(type))
- 		size = synth_field_string_size(type);
-+	else if (synth_field_is_stack(type))
-+		size = 0;
+ 	int (*probe_func)(struct exynos_asv *asv);
+ 	struct exynos_asv *asv;
+@@ -119,21 +116,16 @@ static int exynos_asv_probe(struct platform_device *pdev)
+ 	u32 product_id = 0;
+ 	int ret, i;
  
- 	return size;
- }
-@@ -281,6 +291,8 @@ static const char *synth_field_fmt(char *type)
- 		fmt = "%x";
- 	else if (synth_field_is_string(type))
- 		fmt = "%.*s";
-+	else if (synth_field_is_stack(type))
-+		fmt = "%s";
+-	asv = devm_kzalloc(&pdev->dev, sizeof(*asv), GFP_KERNEL);
++	asv = devm_kzalloc(dev, sizeof(*asv), GFP_KERNEL);
+ 	if (!asv)
+ 		return -ENOMEM;
  
- 	return fmt;
+-	asv->chipid_regmap = device_node_to_regmap(pdev->dev.of_node);
+-	if (IS_ERR(asv->chipid_regmap)) {
+-		dev_err(&pdev->dev, "Could not find syscon regmap\n");
+-		return PTR_ERR(asv->chipid_regmap);
+-	}
+-
++	asv->chipid_regmap = regmap;
++	asv->dev = dev;
+ 	ret = regmap_read(asv->chipid_regmap, EXYNOS_CHIPID_REG_PRO_ID,
+ 			  &product_id);
+ 	if (ret < 0) {
+-		dev_err(&pdev->dev, "Cannot read revision from ChipID: %d\n",
+-			ret);
++		dev_err(dev, "Cannot read revision from ChipID: %d\n", ret);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -142,7 +134,9 @@ static int exynos_asv_probe(struct platform_device *pdev)
+ 		probe_func = exynos5422_asv_init;
+ 		break;
+ 	default:
+-		return -ENODEV;
++		dev_dbg(dev, "No ASV support for this SoC\n");
++		devm_kfree(dev, asv);
++		return 0;
+ 	}
+ 
+ 	cpu_dev = get_cpu_device(0);
+@@ -150,14 +144,11 @@ static int exynos_asv_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return -EPROBE_DEFER;
+ 
+-	ret = of_property_read_u32(pdev->dev.of_node, "samsung,asv-bin",
++	ret = of_property_read_u32(dev->of_node, "samsung,asv-bin",
+ 				   &asv->of_bin);
+ 	if (ret < 0)
+ 		asv->of_bin = -EINVAL;
+ 
+-	asv->dev = &pdev->dev;
+-	dev_set_drvdata(&pdev->dev, asv);
+-
+ 	for (i = 0; i < ARRAY_SIZE(asv->subsys); i++)
+ 		asv->subsys[i].asv = asv;
+ 
+@@ -167,17 +158,3 @@ static int exynos_asv_probe(struct platform_device *pdev)
+ 
+ 	return exynos_asv_update_opps(asv);
  }
-@@ -360,6 +372,23 @@ static enum print_line_t print_synth_event(struct trace_iterator *iter,
- 						 i == se->n_fields - 1 ? "" : " ");
- 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
- 			}
-+		} else if (se->fields[i]->is_stack) {
-+			u32 offset, data_offset, len;
-+			unsigned long *p, *end;
-+
-+			offset = (u32)entry->fields[n_u64];
-+			data_offset = offset & 0xffff;
-+			len = offset >> 16;
-+
-+			p = (void *)entry + data_offset;
-+			end = (void *)p + len - (sizeof(long) - 1);
-+
-+			trace_seq_printf(s, "%s=STACK:\n", se->fields[i]->name);
-+
-+			for (; *p && p < end; p++)
-+				trace_seq_printf(s, "=> %pS\n", (void *)*p);
-+			n_u64++;
-+
- 		} else {
- 			struct trace_print_flags __flags[] = {
- 			    __def_gfpflag_names, {-1, NULL} };
-@@ -427,6 +456,43 @@ static unsigned int trace_string(struct synth_trace_event *entry,
- 	return len;
+-
+-static const struct of_device_id exynos_asv_of_device_ids[] = {
+-	{ .compatible = "samsung,exynos4210-chipid" },
+-	{}
+-};
+-
+-static struct platform_driver exynos_asv_driver = {
+-	.driver = {
+-		.name = "exynos-asv",
+-		.of_match_table = exynos_asv_of_device_ids,
+-	},
+-	.probe	= exynos_asv_probe,
+-};
+-module_platform_driver(exynos_asv_driver);
+diff --git a/drivers/soc/samsung/exynos-asv.h b/drivers/soc/samsung/exynos-asv.h
+index 3fd1f2acd9995..dcbe154db31e0 100644
+--- a/drivers/soc/samsung/exynos-asv.h
++++ b/drivers/soc/samsung/exynos-asv.h
+@@ -68,4 +68,6 @@ static inline u32 exynos_asv_opp_get_frequency(const struct exynos_asv_subsys *s
+ 	return __asv_get_table_entry(&subsys->table, level, 0);
  }
  
-+static unsigned int trace_stack(struct synth_trace_event *entry,
-+				 struct synth_event *event,
-+				 long *stack,
-+				 unsigned int data_size,
-+				 unsigned int *n_u64)
++int exynos_asv_init(struct device *dev, struct regmap *regmap);
++
+ #endif /* __LINUX_SOC_EXYNOS_ASV_H */
+diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
+index 0f2de1b016a59..2ab6ce71e9be5 100644
+--- a/drivers/soc/samsung/exynos-chipid.c
++++ b/drivers/soc/samsung/exynos-chipid.c
+@@ -2,20 +2,28 @@
+ /*
+  * Copyright (c) 2019 Samsung Electronics Co., Ltd.
+  *	      http://www.samsung.com/
++ * Copyright (c) 2020 Krzysztof Kozlowski <krzk@kernel.org>
+  *
+  * Exynos - CHIP ID support
+  * Author: Pankaj Dubey <pankaj.dubey@samsung.com>
+  * Author: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
++ * Author: Krzysztof Kozlowski <krzk@kernel.org>
++ *
++ * Samsung Exynos SoC Adaptive Supply Voltage and Chip ID support
+  */
+ 
+-#include <linux/io.h>
++#include <linux/device.h>
++#include <linux/errno.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/of.h>
++#include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ #include <linux/soc/samsung/exynos-chipid.h>
+ #include <linux/sys_soc.h>
+ 
++#include "exynos-asv.h"
++
+ static const struct exynos_soc_id {
+ 	const char *name;
+ 	unsigned int id;
+@@ -45,25 +53,17 @@ static const char * __init product_id_to_soc_id(unsigned int product_id)
+ 	return NULL;
+ }
+ 
+-static int __init exynos_chipid_early_init(void)
++static int exynos_chipid_probe(struct platform_device *pdev)
+ {
+ 	struct soc_device_attribute *soc_dev_attr;
+ 	struct soc_device *soc_dev;
+ 	struct device_node *root;
+-	struct device_node *syscon;
+ 	struct regmap *regmap;
+ 	u32 product_id;
+ 	u32 revision;
+ 	int ret;
+ 
+-	syscon = of_find_compatible_node(NULL, NULL,
+-					 "samsung,exynos4210-chipid");
+-	if (!syscon)
+-		return -ENODEV;
+-
+-	regmap = device_node_to_regmap(syscon);
+-	of_node_put(syscon);
+-
++	regmap = device_node_to_regmap(pdev->dev.of_node);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+@@ -73,7 +73,8 @@ static int __init exynos_chipid_early_init(void)
+ 
+ 	revision = product_id & EXYNOS_REV_MASK;
+ 
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr),
++				    GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
+ 
+@@ -83,20 +84,24 @@ static int __init exynos_chipid_early_init(void)
+ 	of_property_read_string(root, "model", &soc_dev_attr->machine);
+ 	of_node_put(root);
+ 
+-	soc_dev_attr->revision = kasprintf(GFP_KERNEL, "%x", revision);
++	soc_dev_attr->revision = devm_kasprintf(&pdev->dev, GFP_KERNEL,
++						"%x", revision);
+ 	soc_dev_attr->soc_id = product_id_to_soc_id(product_id);
+ 	if (!soc_dev_attr->soc_id) {
+ 		pr_err("Unknown SoC\n");
+-		ret = -ENODEV;
+-		goto err;
++		return -ENODEV;
+ 	}
+ 
+ 	/* please note that the actual registration will be deferred */
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		ret = PTR_ERR(soc_dev);
++	if (IS_ERR(soc_dev))
++		return PTR_ERR(soc_dev);
++
++	ret = exynos_asv_init(&pdev->dev, regmap);
++	if (ret)
+ 		goto err;
+-	}
++
++	platform_set_drvdata(pdev, soc_dev);
+ 
+ 	dev_info(soc_device_to_device(soc_dev),
+ 		 "Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
+@@ -105,9 +110,31 @@ static int __init exynos_chipid_early_init(void)
+ 	return 0;
+ 
+ err:
+-	kfree(soc_dev_attr->revision);
+-	kfree(soc_dev_attr);
++	soc_device_unregister(soc_dev);
++
+ 	return ret;
+ }
+ 
+-arch_initcall(exynos_chipid_early_init);
++static int exynos_chipid_remove(struct platform_device *pdev)
 +{
-+	unsigned int len;
-+	u32 data_offset;
-+	void *data_loc;
++	struct soc_device *soc_dev = platform_get_drvdata(pdev);
 +
-+	data_offset = struct_size(entry, fields, event->n_u64);
-+	data_offset += data_size;
++	soc_device_unregister(soc_dev);
 +
-+	for (len = 0; len < HIST_STACKTRACE_DEPTH; len++) {
-+		if (!stack[len])
-+			break;
-+	}
-+
-+	/* Include the zero'd element if it fits */
-+	if (len < HIST_STACKTRACE_DEPTH)
-+		len++;
-+
-+	len *= sizeof(long);
-+
-+	/* Find the dynamic section to copy the stack into. */
-+	data_loc = (void *)entry + data_offset;
-+	memcpy(data_loc, stack, len);
-+
-+	/* Fill in the field that holds the offset/len combo */
-+	data_offset |= len << 16;
-+	*(u32 *)&entry->fields[*n_u64] = data_offset;
-+
-+	(*n_u64)++;
-+
-+	return len;
++	return 0;
 +}
 +
- static notrace void trace_event_raw_event_synth(void *__data,
- 						u64 *var_ref_vals,
- 						unsigned int *var_ref_idx)
-@@ -479,6 +545,12 @@ static notrace void trace_event_raw_event_synth(void *__data,
- 					   event->fields[i]->is_dynamic,
- 					   data_size, &n_u64);
- 			data_size += len; /* only dynamic string increments */
-+		} if (event->fields[i]->is_stack) {
-+		        long *stack = (long *)(long)var_ref_vals[val_idx];
++static const struct of_device_id exynos_chipid_of_device_ids[] = {
++	{ .compatible = "samsung,exynos4210-chipid" },
++	{}
++};
 +
-+			len = trace_stack(entry, event, stack,
-+					   data_size, &n_u64);
-+			data_size += len;
- 		} else {
- 			struct synth_field *field = event->fields[i];
- 			u64 val = var_ref_vals[val_idx];
-@@ -541,6 +613,9 @@ static int __set_synth_event_print_fmt(struct synth_event *event,
- 		    event->fields[i]->is_dynamic)
- 			pos += snprintf(buf + pos, LEN_OR_ZERO,
- 				", __get_str(%s)", event->fields[i]->name);
-+		else if (event->fields[i]->is_stack)
-+			pos += snprintf(buf + pos, LEN_OR_ZERO,
-+				", __get_stacktrace(%s)", event->fields[i]->name);
- 		else
- 			pos += snprintf(buf + pos, LEN_OR_ZERO,
- 					", REC->%s", event->fields[i]->name);
-@@ -660,7 +735,8 @@ static struct synth_field *parse_synth_field(int argc, const char **argv,
- 		ret = -EINVAL;
- 		goto free;
- 	} else if (size == 0) {
--		if (synth_field_is_string(field->type)) {
-+		if (synth_field_is_string(field->type) ||
-+		    synth_field_is_stack(field->type)) {
- 			char *type;
- 
- 			len = sizeof("__data_loc ") + strlen(field->type) + 1;
-@@ -691,6 +767,8 @@ static struct synth_field *parse_synth_field(int argc, const char **argv,
- 
- 	if (synth_field_is_string(field->type))
- 		field->is_string = true;
-+	else if (synth_field_is_stack(field->type))
-+		field->is_stack = true;
- 
- 	field->is_signed = synth_field_signed(field->type);
-  out:
-diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
-index 4007fe95cf42c..077c748a8b3a6 100644
---- a/kernel/trace/trace_synth.h
-+++ b/kernel/trace/trace_synth.h
-@@ -18,6 +18,7 @@ struct synth_field {
- 	bool is_signed;
- 	bool is_string;
- 	bool is_dynamic;
-+	bool is_stack;
- };
- 
- struct synth_event {
++static struct platform_driver exynos_chipid_driver = {
++	.driver = {
++		.name = "exynos-chipid",
++		.of_match_table = exynos_chipid_of_device_ids,
++	},
++	.probe	= exynos_chipid_probe,
++	.remove	= exynos_chipid_remove,
++};
++builtin_platform_driver(exynos_chipid_driver);
 -- 
 2.39.5
 
