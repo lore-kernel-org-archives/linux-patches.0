@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABDB211A0B;
-	Tue, 29 Apr 2025 17:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A80211A0B;
+	Tue, 29 Apr 2025 17:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946427; cv=none; b=RWlMZQjx/1IdpL5HJRNjFvJnmf0nSakVZAj3FbBu+N5RMlZ7YbNBkeIo4f2YbX+DTmKCMw73Dds04iGNTWeGXpgJtWCL24tFj2Upeu9S6RJEtN/zjs3EsEbI6gOQHz4uJXJ4ccV+vQaHi0R/AiST3021/t/19bfvsropAqB9cJw=
+	t=1745946430; cv=none; b=fRUCBcvg1XKQmt0GDmUMNRwS9xWzyv4CqvPJTHdQ6dkEpLDTU8xY7iXnbJkVrobGOzHrIFcBk9Hrcpu8hNBxDVxjkFmUlntXv1SZ/Dg3scAZuZVRLWPK4My/gyzLSabE3gLpS2lZsSoknTW7j8M7odTsINO2KGbhT6uCllAdYAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946427; c=relaxed/simple;
-	bh=e1+qZuNcUGiD1pG35DsswmbHAcJjCZfh5YZk7G72brw=;
+	s=arc-20240116; t=1745946430; c=relaxed/simple;
+	bh=PNY1mPED5HWJojudthxCYO5GKgvPV7SbtRwp+ldhnBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UVDDWa7S8pSTp03rCVZnioPWLwVHGE4plo1Z5ILNswANEjHHl4e92kwWzB5IA53WwyQWB2dUZuszk4Kf7mrC7QsoZR3qmHuwktDF2XRpnnlA5+dhaE7s7GnyAWKj/IoilrLDV4hff04Ea3ck67tTHkA/BesD3uqXYdQNQ1mYEgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOHpTfHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6tqxpwotf75nVIpXydIYtkjCnzz9uUwBIwDVnciYXLlfC0lDsnIgiXdfgRfcOP0wXsPN/uo5pwEHdeqs/Yp05AclOApEjMb+1y1LhCJTEmDYi0kD2I9ALd4EMkJ2OUODQLk3ka3i6exq6l9l1ObHvogsM1f+DexT9cFK6tBc+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRerBwp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOHpTfHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29968C4CEE3;
-	Tue, 29 Apr 2025 17:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRerBwp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3B8C4CEE3;
+	Tue, 29 Apr 2025 17:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946427;
-	bh=e1+qZuNcUGiD1pG35DsswmbHAcJjCZfh5YZk7G72brw=;
+	s=korg; t=1745946430;
+	bh=PNY1mPED5HWJojudthxCYO5GKgvPV7SbtRwp+ldhnBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOHpTfHD0HD/C1vCoTQ32j+rLqoazYjADjYGORog+WT70qNebzM/qAQRahGxsfDIh
-	 7yX2jynD5c8z2h8ps8sS+0gBtgtYOHAhnSH6YlAKOXI7SaVQ3Lez9NI3I5GOKze856
-	 uzhtbfxZ3VIW11gTqT/l0Hm7LqpzFC/emqFGz7KI=
+	b=TRerBwp0t5dWKjOfO5WydmWPZDbXIOvxCpFK3D5t/bgWwHWirtyhXcVEhsGLqkgne
+	 emhhWGH+2ql7HHfZCFxp8z0p3fzYfwN36Y/CMpf4gg6i2bagQv8rrQ64fspA1NIzKo
+	 45V8QV6cyCLnGaX31wuKLqkq/cZlZKtgYGj7Ex/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 264/311] cifs: Fix encoding of SMB1 Session Setup Kerberos Request in non-UNICODE mode
-Date: Tue, 29 Apr 2025 18:41:41 +0200
-Message-ID: <20250429161131.843132110@linuxfoundation.org>
+Subject: [PATCH 6.14 265/311] timekeeping: Add a lockdep override in tick_freeze()
+Date: Tue, 29 Apr 2025 18:41:42 +0200
+Message-ID: <20250429161131.883329566@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -45,136 +48,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 16cb6b0509b65ac89187e9402e0b7a9ddf1765ef ]
+[ Upstream commit 92e250c624ea37fde64bfd624fd2556f0d846f18 ]
 
-Like in UNICODE mode, SMB1 Session Setup Kerberos Request contains oslm and
-domain strings.
+tick_freeze() acquires a raw spinlock (tick_freeze_lock). Later in the
+callchain (timekeeping_suspend() -> mc146818_avoid_UIP()) the RTC driver
+acquires a spinlock which becomes a sleeping lock on PREEMPT_RT.  Lockdep
+complains about this lock nesting.
 
-Extract common code into ascii_oslm_strings() and ascii_domain_string()
-functions (similar to unicode variants) and use these functions in
-non-UNICODE code path in sess_auth_kerberos().
+Add a lockdep override for this special case and a comment explaining
+why it is okay.
 
-Decision if non-UNICODE or UNICODE mode is used is based on the
-SMBFLG2_UNICODE flag in Flags2 packed field, and not based on the
-capabilities of server. Fix this check too.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Borislav Petkov <bp@alien8.de>
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/20250404133429.pnAzf-eF@linutronix.de
+Closes: https://lore.kernel.org/all/20250330113202.GAZ-krsjAnurOlTcp-@fat_crate.local/
+Closes: https://lore.kernel.org/all/CAP-bSRZ0CWyZZsMtx046YV8L28LhY0fson2g4EqcwRAVN1Jk+Q@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c | 60 +++++++++++++++++++++++++++++---------------
- 1 file changed, 40 insertions(+), 20 deletions(-)
+ kernel/time/tick-common.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index eb70ebf38464b..9d6b1a4704773 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -679,6 +679,22 @@ unicode_oslm_strings(char **pbcc_area, const struct nls_table *nls_cp)
- 	*pbcc_area = bcc_ptr;
- }
+diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
+index a47bcf71defcf..9a3859443c042 100644
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -509,6 +509,7 @@ void tick_resume(void)
  
-+static void
-+ascii_oslm_strings(char **pbcc_area, const struct nls_table *nls_cp)
-+{
-+	char *bcc_ptr = *pbcc_area;
-+
-+	strcpy(bcc_ptr, "Linux version ");
-+	bcc_ptr += strlen("Linux version ");
-+	strcpy(bcc_ptr, init_utsname()->release);
-+	bcc_ptr += strlen(init_utsname()->release) + 1;
-+
-+	strcpy(bcc_ptr, CIFS_NETWORK_OPSYS);
-+	bcc_ptr += strlen(CIFS_NETWORK_OPSYS) + 1;
-+
-+	*pbcc_area = bcc_ptr;
-+}
-+
- static void unicode_domain_string(char **pbcc_area, struct cifs_ses *ses,
- 				   const struct nls_table *nls_cp)
- {
-@@ -703,6 +719,25 @@ static void unicode_domain_string(char **pbcc_area, struct cifs_ses *ses,
- 	*pbcc_area = bcc_ptr;
- }
+ #ifdef CONFIG_SUSPEND
+ static DEFINE_RAW_SPINLOCK(tick_freeze_lock);
++static DEFINE_WAIT_OVERRIDE_MAP(tick_freeze_map, LD_WAIT_SLEEP);
+ static unsigned int tick_freeze_depth;
  
-+static void ascii_domain_string(char **pbcc_area, struct cifs_ses *ses,
-+				const struct nls_table *nls_cp)
-+{
-+	char *bcc_ptr = *pbcc_area;
-+	int len;
-+
-+	/* copy domain */
-+	if (ses->domainName != NULL) {
-+		len = strscpy(bcc_ptr, ses->domainName, CIFS_MAX_DOMAINNAME_LEN);
-+		if (WARN_ON_ONCE(len < 0))
-+			len = CIFS_MAX_DOMAINNAME_LEN - 1;
-+		bcc_ptr += len;
-+	} /* else we send a null domain name so server will default to its own domain */
-+	*bcc_ptr = 0;
-+	bcc_ptr++;
-+
-+	*pbcc_area = bcc_ptr;
-+}
-+
- static void unicode_ssetup_strings(char **pbcc_area, struct cifs_ses *ses,
- 				   const struct nls_table *nls_cp)
- {
-@@ -748,25 +783,10 @@ static void ascii_ssetup_strings(char **pbcc_area, struct cifs_ses *ses,
- 	*bcc_ptr = 0;
- 	bcc_ptr++; /* account for null termination */
- 
--	/* copy domain */
--	if (ses->domainName != NULL) {
--		len = strscpy(bcc_ptr, ses->domainName, CIFS_MAX_DOMAINNAME_LEN);
--		if (WARN_ON_ONCE(len < 0))
--			len = CIFS_MAX_DOMAINNAME_LEN - 1;
--		bcc_ptr += len;
--	} /* else we send a null domain name so server will default to its own domain */
--	*bcc_ptr = 0;
--	bcc_ptr++;
--
- 	/* BB check for overflow here */
- 
--	strcpy(bcc_ptr, "Linux version ");
--	bcc_ptr += strlen("Linux version ");
--	strcpy(bcc_ptr, init_utsname()->release);
--	bcc_ptr += strlen(init_utsname()->release) + 1;
--
--	strcpy(bcc_ptr, CIFS_NETWORK_OPSYS);
--	bcc_ptr += strlen(CIFS_NETWORK_OPSYS) + 1;
-+	ascii_domain_string(&bcc_ptr, ses, nls_cp);
-+	ascii_oslm_strings(&bcc_ptr, nls_cp);
- 
- 	*pbcc_area = bcc_ptr;
- }
-@@ -1569,7 +1589,7 @@ sess_auth_kerberos(struct sess_data *sess_data)
- 	sess_data->iov[1].iov_len = msg->secblob_len;
- 	pSMB->req.SecurityBlobLength = cpu_to_le16(sess_data->iov[1].iov_len);
- 
--	if (ses->capabilities & CAP_UNICODE) {
-+	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
- 		/* unicode strings must be word aligned */
- 		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
- 			*bcc_ptr = 0;
-@@ -1578,8 +1598,8 @@ sess_auth_kerberos(struct sess_data *sess_data)
- 		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
- 		unicode_domain_string(&bcc_ptr, ses, sess_data->nls_cp);
+ /**
+@@ -528,9 +529,22 @@ void tick_freeze(void)
+ 	if (tick_freeze_depth == num_online_cpus()) {
+ 		trace_suspend_resume(TPS("timekeeping_freeze"),
+ 				     smp_processor_id(), true);
++		/*
++		 * All other CPUs have their interrupts disabled and are
++		 * suspended to idle. Other tasks have been frozen so there
++		 * is no scheduling happening. This means that there is no
++		 * concurrency in the system at this point. Therefore it is
++		 * okay to acquire a sleeping lock on PREEMPT_RT, such as a
++		 * spinlock, because the lock cannot be held by other CPUs
++		 * or threads and acquiring it cannot block.
++		 *
++		 * Inform lockdep about the situation.
++		 */
++		lock_map_acquire_try(&tick_freeze_map);
+ 		system_state = SYSTEM_SUSPEND;
+ 		sched_clock_suspend();
+ 		timekeeping_suspend();
++		lock_map_release(&tick_freeze_map);
  	} else {
--		/* BB: is this right? */
--		ascii_ssetup_strings(&bcc_ptr, ses, sess_data->nls_cp);
-+		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
-+		ascii_domain_string(&bcc_ptr, ses, sess_data->nls_cp);
+ 		tick_suspend_local();
  	}
+@@ -552,8 +566,16 @@ void tick_unfreeze(void)
+ 	raw_spin_lock(&tick_freeze_lock);
  
- 	sess_data->iov[2].iov_len = (long) bcc_ptr -
+ 	if (tick_freeze_depth == num_online_cpus()) {
++		/*
++		 * Similar to tick_freeze(). On resumption the first CPU may
++		 * acquire uncontended sleeping locks while other CPUs block on
++		 * tick_freeze_lock.
++		 */
++		lock_map_acquire_try(&tick_freeze_map);
+ 		timekeeping_resume();
+ 		sched_clock_resume();
++		lock_map_release(&tick_freeze_map);
++
+ 		system_state = SYSTEM_RUNNING;
+ 		trace_suspend_resume(TPS("timekeeping_freeze"),
+ 				     smp_processor_id(), false);
 -- 
 2.39.5
 
