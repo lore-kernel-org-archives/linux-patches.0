@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055B9253321;
-	Tue, 29 Apr 2025 17:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82B7215F7C;
+	Tue, 29 Apr 2025 17:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948040; cv=none; b=otAFewy6jLQBaprU+I4bHI57h8zIZS3onM7wXPNKHnK79LGNlBNKFTNnbJgUFOSQYs8MSPLciI2RKabe0vRWRdg1/ZYjkve7NQBbAbOlZFB73OTdHFPI4CD/hQpz9KCUrrXjeNoUpKEOneHcX9N1eGPf1UhsB6siswANxJwWvTw=
+	t=1745948042; cv=none; b=b1aPh36JZl71ByjUypyJ0clbYkEmLWFBx2mqPJP5ORn0KL8ia94Bvg4WokXXlfPL2VZw4fisO8hjABDSqBV8RfasaqCEdtPQxow8fenqsserv/1IpFSeat7vd1EjC7oitWcy9eIKUUqL5+2JwsaZSBkGqayq8T5adOM267WUC30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948040; c=relaxed/simple;
-	bh=vwg81pvt1kdF4iPlgQKh745zK0GBslZHxJIvu4aX9dY=;
+	s=arc-20240116; t=1745948042; c=relaxed/simple;
+	bh=X6nZXCwuWkydgbONGjLsdRE2uTkFxspzLEZ1los9m68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwpNk4cbM4acxTt522QuMWC0pNtRdtMuM2tComqfskp0RrCbSkH+RA4Lx+BSImsDPdyraIarzvinFG3/fklw6RsyAUlf0n6Ah7y8M2lX2b2PpVsfc9DINipVmzFoY6rPIiuYAZ6Rrefz5M9ETgxoUo4cLqd4sA8/il0OxLxtLtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vx9UOXnx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4dhqkp15THbX5b97I8TZvm/UvaNp3mkW0IIBxU+P9v6omNZzTVSQ9PK2KM8e7eVSGYc0g1ckLWIFeekAE9V/TUnReL9ZM8Mm7rkoqZTcNRC3TWrPW/hdCuh1ubETDOB4ZXZpvfT2TPrY45iw6K85E1s2lPv9sTDp5l6PwUEv5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Py8ZwP9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vx9UOXnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5D8C4CEE3;
-	Tue, 29 Apr 2025 17:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Py8ZwP9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52724C4CEE3;
+	Tue, 29 Apr 2025 17:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948039;
-	bh=vwg81pvt1kdF4iPlgQKh745zK0GBslZHxJIvu4aX9dY=;
+	s=korg; t=1745948042;
+	bh=X6nZXCwuWkydgbONGjLsdRE2uTkFxspzLEZ1los9m68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vx9UOXnxzJkJb3xs11xobbgUwTrEiFMqhMUJo7iq3H75zC6EzewcyvzRSgBbHygh1
-	 pEelES7+PIqHefiFkJTCN2aJnaRVAT5qxSL0U0EVoV4gciSd5HxxL8ow0Nl3AJE8nt
-	 WmZzTtBt6HKy4/uActBcA6iLDAmxpxIOU68wLLwo=
+	b=Py8ZwP9n/NR8zt1ljhS/8lE/jeaoL1QjO++mlQ2ViDmcrB2nPCtCCLj4dhIjF8Mp1
+	 61FHhvUPuWXL0SZ4aVK8sy8zOhU1S8OwbM2BT7K27+lRPrhME94FMoG8+/xBtkTC76
+	 y/+9McmYg9eYJkv6flBLNer5dx+cn7DurWcjsmco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Robbie King <robbiek@xsightlabs.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/280] mailbox: pcc: Fix the possible race in updation of chan_in_use flag
-Date: Tue, 29 Apr 2025 18:41:49 +0200
-Message-ID: <20250429161121.985841656@linuxfoundation.org>
+Subject: [PATCH 6.12 177/280] usb: xhci: Fix isochronous Ring Underrun/Overrun event handling
+Date: Tue, 29 Apr 2025 18:41:58 +0200
+Message-ID: <20250429161122.350363777@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,95 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 9779d45c749340ab461d595c1a4a664cb28f3007 ]
+[ Upstream commit 906dec15b9b321b546fd31a3c99ffc13724c7af4 ]
 
-The function mbox_chan_received_data() calls the Rx callback of the
-mailbox client driver. The callback might set chan_in_use flag from
-pcc_send_data(). This flag's status determines whether the PCC channel
-is in use.
+The TRB pointer of these events points at enqueue at the time of error
+occurrence on xHCI 1.1+ HCs or it's NULL on older ones. By the time we
+are handling the event, a new TD may be queued at this ring position.
 
-However, there is a potential race condition where chan_in_use is
-updated incorrectly due to concurrency between the interrupt handler
-(pcc_mbox_irq()) and the command sender(pcc_send_data()).
+I can trigger this race by rising interrupt moderation to increase IRQ
+handling delay. Similar delay may occur naturally due to system load.
 
-The 'chan_in_use' flag of a channel is set to true after sending a
-command. And the flag of the new command may be cleared erroneous by
-the interrupt handler afer mbox_chan_received_data() returns,
+If this ever happens after a Missed Service Error, missed TDs will be
+skipped and the new TD processed as if it matched the event. It could
+be given back prematurely, risking data loss or buffer UAF by the xHC.
 
-As a result, the interrupt being level triggered can't be cleared in
-pcc_mbox_irq() and it will be disabled after the number of handled times
-exceeds the specified value. The error log is as follows:
+Don't complete TDs on xrun events and don't warn if queued TDs don't
+match the event's TRB pointer, which can be NULL or a link/no-op TRB.
+Don't warn if there are no queued TDs at all.
 
-  |  kunpeng_hccs HISI04B2:00: PCC command executed timeout!
-  |  kunpeng_hccs HISI04B2:00: get port link status info failed, ret = -110
-  |  irq 13: nobody cared (try booting with the "irqpoll" option)
-  |  Call trace:
-  |   dump_backtrace+0x0/0x210
-  |   show_stack+0x1c/0x2c
-  |   dump_stack+0xec/0x130
-  |   __report_bad_irq+0x50/0x190
-  |   note_interrupt+0x1e4/0x260
-  |   handle_irq_event+0x144/0x17c
-  |   handle_fasteoi_irq+0xd0/0x240
-  |   __handle_domain_irq+0x80/0xf0
-  |   gic_handle_irq+0x74/0x2d0
-  |   el1_irq+0xbc/0x140
-  |   mnt_clone_write+0x0/0x70
-  |   file_update_time+0xcc/0x160
-  |   fault_dirty_shared_page+0xe8/0x150
-  |   do_shared_fault+0x80/0x1d0
-  |   do_fault+0x118/0x1a4
-  |   handle_pte_fault+0x154/0x230
-  |   __handle_mm_fault+0x1ac/0x390
-  |   handle_mm_fault+0xf0/0x250
-  |   do_page_fault+0x184/0x454
-  |   do_translation_fault+0xac/0xd4
-  |   do_mem_abort+0x44/0xb4
-  |   el0_da+0x40/0x74
-  |   el0_sync_handler+0x60/0xb4
-  |   el0_sync+0x168/0x180
-  |  handlers:
-  |   pcc_mbox_irq
-  |  Disabling IRQ #13
+Now that it's safe, also handle xrun events if the skip flag is clear.
+This ensures completion of any TD stuck in 'error mid TD' state right
+before the xrun event, which could happen if a driver submits a finite
+number of URBs to a buggy HC and then an error occurs on the last TD.
 
-To solve this issue, pcc_mbox_irq() must clear 'chan_in_use' flag before
-the call to mbox_chan_received_data().
-
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Tested-by: Robbie King <robbiek@xsightlabs.com>
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-(sudeep.holla: Minor updates to the subject, commit message and comment)
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250306144954.3507700-6-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 82102a4c5d688..8fd4d0f79b090 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -333,10 +333,16 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
- 		return IRQ_NONE;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 7001f9725cf7c..6eb297b168fa4 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2662,6 +2662,7 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 	int status = -EINPROGRESS;
+ 	struct xhci_ep_ctx *ep_ctx;
+ 	u32 trb_comp_code;
++	bool ring_xrun_event = false;
  
-+	/*
-+	 * Clear this flag after updating interrupt ack register and just
-+	 * before mbox_chan_received_data() which might call pcc_send_data()
-+	 * where the flag is set again to start new transfer. This is
-+	 * required to avoid any possible race in updatation of this flag.
-+	 */
-+	pchan->chan_in_use = false;
- 	mbox_chan_received_data(chan, NULL);
+ 	slot_id = TRB_TO_SLOT_ID(le32_to_cpu(event->flags));
+ 	ep_index = TRB_TO_EP_ID(le32_to_cpu(event->flags)) - 1;
+@@ -2768,14 +2769,12 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 		 * Underrun Event for OUT Isoch endpoint.
+ 		 */
+ 		xhci_dbg(xhci, "Underrun event on slot %u ep %u\n", slot_id, ep_index);
+-		if (ep->skip)
+-			break;
+-		return 0;
++		ring_xrun_event = true;
++		break;
+ 	case COMP_RING_OVERRUN:
+ 		xhci_dbg(xhci, "Overrun event on slot %u ep %u\n", slot_id, ep_index);
+-		if (ep->skip)
+-			break;
+-		return 0;
++		ring_xrun_event = true;
++		break;
+ 	case COMP_MISSED_SERVICE_ERROR:
+ 		/*
+ 		 * When encounter missed service error, one or more isoc tds
+@@ -2851,6 +2850,7 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 		 */
+ 		if (trb_comp_code != COMP_STOPPED &&
+ 		    trb_comp_code != COMP_STOPPED_LENGTH_INVALID &&
++		    !ring_xrun_event &&
+ 		    !ep_ring->last_td_was_short) {
+ 			xhci_warn(xhci, "Event TRB for slot %u ep %u with no TDs queued\n",
+ 				  slot_id, ep_index);
+@@ -2885,6 +2885,10 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 				goto check_endpoint_halted;
+ 			}
  
- 	check_and_ack(pchan, chan);
--	pchan->chan_in_use = false;
++			/* TD was queued after xrun, maybe xrun was on a link, don't panic yet */
++			if (ring_xrun_event)
++				return 0;
++
+ 			/*
+ 			 * Skip the Force Stopped Event. The 'ep_trb' of FSE is not in the current
+ 			 * TD pointed by 'ep_ring->dequeue' because that the hardware dequeue
+@@ -2931,6 +2935,10 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 	 */
+ 	} while (ep->skip);
  
- 	return IRQ_HANDLED;
- }
++	/* Get out if a TD was queued at enqueue after the xrun occurred */
++	if (ring_xrun_event)
++		return 0;
++
+ 	if (trb_comp_code == COMP_SHORT_PACKET)
+ 		ep_ring->last_td_was_short = true;
+ 	else
 -- 
 2.39.5
 
