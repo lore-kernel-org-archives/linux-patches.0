@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9AF2528F3;
-	Tue, 29 Apr 2025 17:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10F824C098;
+	Tue, 29 Apr 2025 17:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947688; cv=none; b=njYMoJ4k/7f2/OO9rbbSGavbScIKeYc8WgF4oQG1wDtY14g5gzdNSMvIx9BZDkX8IXH0/PdtA1I+JXSbLDCLuTFhIBEf6YhyhxfO7ncyik3AWkdXom/gvFisGZIEoim86UEliOLAP/gYyUs66YXw9/KcNyRxBYb5Uq0ZkrBNX7k=
+	t=1745947691; cv=none; b=qZPrDVv4zSkL/oTr5b1unD5qrYH+4AqLk0XiMo6rQEHwda48TOvk7mw91wALJZh9QT6c3BA3B+8kI7zHQ6/F1fd1byQKANJh5AluZBs0XfII2zlDsqVLdf16CrcuqvO4V43UrIyPD2NuYTLpzepIj97QWDy3Ic+UC3V7IglnrNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947688; c=relaxed/simple;
-	bh=Qrqmpu+oCEG1sUxIscpKSHKkR62T5G5vPhilv+yTLaI=;
+	s=arc-20240116; t=1745947691; c=relaxed/simple;
+	bh=p8gbg2jOKpX6fxMe4XPINKyc41oLkJX6C4HYv6WC8Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyBmfYoky2Hc/pxEm+TgndpELhB9tIjwyyE+QsgkAV0TMOfdfdIr1Eir3o+Ox3vpPpQkfmstyp/f5dSsr7ERXuC9pi3al1bSOGt81B4/Jvvo9T1qJymrPIfSO5wq1XxXW6pdzgyX+0JMbLxVcpfO8LN7fhSSkk3hzqEHv/DK4CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2sa3dUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAVsh9lMyL21rIYQKIu91tyIc2rCL/8flbEW7iskoop6UDaa6f3UrP9D8CxLirqu3H/nw+nxrh2h9JjK/HthTf3UUYKMpPFM4QE1QyNJpiQFkC4xaHv+V/FWNValz4IBFNl0mi3fkZ+s4/3uX7ItUJRBETkN0UKnw1E4OPfjT74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiCIzmYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2sa3dUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF34C4CEF1;
-	Tue, 29 Apr 2025 17:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiCIzmYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E06C4CEEE;
+	Tue, 29 Apr 2025 17:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947688;
-	bh=Qrqmpu+oCEG1sUxIscpKSHKkR62T5G5vPhilv+yTLaI=;
+	s=korg; t=1745947691;
+	bh=p8gbg2jOKpX6fxMe4XPINKyc41oLkJX6C4HYv6WC8Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2sa3dUi43rMXp1vPIqg6V4w7CTi4rDuqmBbEXYKfAZ/8Ttik2UtFECiu6A6N4kb4
-	 9HOwEGTu7nX0xOX1NNpMTrB+BjZb3Wca6f9xhszVAbsUflycjZfQcZiKWVuU7hJZLa
-	 a7LS86itA8wPZiBFHqhH0GKymC6f0pJakuEC0gog=
+	b=yiCIzmYXULBlIxQKFoijgKDicEiT9DsSNnWiTT43AuO4MuFYVacns5YDsexTiTH3c
+	 RSYo7lW0aELo6kroGocHQs2iDpnVD+EXItCZnxLUJ0PVSb0q4g1MjZ45jp1O8JteSG
+	 XSA+W1iKyDtAKmrWx/+mmNOViIapO5HBaOHyW7fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clint Taylor <Clinton.A.Taylor@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/280] drm/xe/bmg: Add one additional PCI ID
-Date: Tue, 29 Apr 2025 18:39:47 +0200
-Message-ID: <20250429161117.002653535@linuxfoundation.org>
+Subject: [PATCH 6.12 037/280] ksmbd: add netdev-up/down event debug print
+Date: Tue, 29 Apr 2025 18:39:38 +0200
+Message-ID: <20250429161116.639916303@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,38 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 5529df92b8e8cbb4b14a226665888f74648260ad ]
+[ Upstream commit 5f3f274e2ce68999b49901de4794c4b04125b154 ]
 
-One additional BMG PCI ID has been added to the spec; make sure our
-driver recognizes devices with this ID properly.
+Add netdev-up/down event debug print to find what netdev is connected or
+disconnected.
 
-Bspec: 68090
-Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Clint Taylor <Clinton.A.Taylor@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250325224709.4073080-2-matthew.d.roper@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit cca9734ebe55f6af11ce8d57ca1afdc4d158c808)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 21a4e47578d4 ("ksmbd: fix use-after-free in __smb2_lease_break_noti()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/intel/i915_pciids.h | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/transport_tcp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/drm/intel/i915_pciids.h b/include/drm/intel/i915_pciids.h
-index dacea289acaf5..1ff00e3d4418e 100644
---- a/include/drm/intel/i915_pciids.h
-+++ b/include/drm/intel/i915_pciids.h
-@@ -810,6 +810,7 @@
- 	MACRO__(0xE20C, ## __VA_ARGS__), \
- 	MACRO__(0xE20D, ## __VA_ARGS__), \
- 	MACRO__(0xE210, ## __VA_ARGS__), \
-+	MACRO__(0xE211, ## __VA_ARGS__), \
- 	MACRO__(0xE212, ## __VA_ARGS__), \
- 	MACRO__(0xE215, ## __VA_ARGS__), \
- 	MACRO__(0xE216, ## __VA_ARGS__)
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index cc77ad4f765a9..0d9007285e30b 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -521,6 +521,8 @@ static int ksmbd_netdev_event(struct notifier_block *nb, unsigned long event,
+ 				found = 1;
+ 				if (iface->state != IFACE_STATE_DOWN)
+ 					break;
++				ksmbd_debug(CONN, "netdev-up event: netdev(%s) is going up\n",
++					    iface->name);
+ 				ret = create_socket(iface);
+ 				if (ret)
+ 					return NOTIFY_OK;
+@@ -531,6 +533,8 @@ static int ksmbd_netdev_event(struct notifier_block *nb, unsigned long event,
+ 			iface = alloc_iface(kstrdup(netdev->name, KSMBD_DEFAULT_GFP));
+ 			if (!iface)
+ 				return NOTIFY_OK;
++			ksmbd_debug(CONN, "netdev-up event: netdev(%s) is going up\n",
++				    iface->name);
+ 			ret = create_socket(iface);
+ 			if (ret)
+ 				break;
+@@ -540,6 +544,8 @@ static int ksmbd_netdev_event(struct notifier_block *nb, unsigned long event,
+ 		list_for_each_entry(iface, &iface_list, entry) {
+ 			if (!strcmp(iface->name, netdev->name) &&
+ 			    iface->state == IFACE_STATE_CONFIGURED) {
++				ksmbd_debug(CONN, "netdev-down event: netdev(%s) is going down\n",
++						iface->name);
+ 				tcp_stop_kthread(iface->ksmbd_kthread);
+ 				iface->ksmbd_kthread = NULL;
+ 				mutex_lock(&iface->sock_release_lock);
 -- 
 2.39.5
 
