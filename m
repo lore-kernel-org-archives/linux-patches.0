@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675D9253B42;
-	Tue, 29 Apr 2025 18:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FC12517A8;
+	Tue, 29 Apr 2025 18:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950563; cv=none; b=XjEHURqma/fteOTODZNW73q+PllmUpB73z3zzna7GQIafvZi0cTKnZgQigZW8ayfJ3i4EDON6D4D9sdn+lY2YeGzwIp84ydEcglkIMhSr+j83eJl/9+dHXR2suGdP9rkhameu61kkAgoodW5FJyy4lJ0KdXnRwu4VhFnzbjGtIw=
+	t=1745950566; cv=none; b=I7TSn5cRqfUojnbX0qvX2nDwxWWMW3r8NCa6xRJ0QvCRqcVBI5TZS1vKwDJox3ftWnz2QjSHU9lzWWDB2cdXU/l27TM5G/zTqNK3ss281wVJRF/6VDEFpNK0kzkbXgqmfBl6ssl/636V6tONBLniVPLhZQnZVfTUZlvbSGkcbeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950563; c=relaxed/simple;
-	bh=ZtmkJp0cJDDZ5i4FzO43rccvqSvz3jm1Mxg+MLd9Iic=;
+	s=arc-20240116; t=1745950566; c=relaxed/simple;
+	bh=/U0NU/NV4B+0kILY+pWBLQr/ol1Q91mGEIPzk9yNmNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0/83FzZyvBp/JGirGEOpW/ScPb7S3us0apW8Ji3UyXfmZh0M9qm6RlNyUOizZOEcj8B35PNSon59YkXzkOLoYH8BZs2VaKQXWoCa/ljALoD6SQrfKVNPv6mK3RHlqpe5QtLnjSLsS1uslo0NT7t2LRBPRw96Q5cLuztZ7/WRSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGTta4Cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HuHXVILQlJ6qPk71Sck7mpb6+bjYUyWy5E4GPRMlfrL0R9ICTqeQYqA4m9VeZtsKC4LNHefFEHtZJlfEm7xZo8okSd5msWx/aETHewtMhaTNnBsgQrqnJai2+jGKb3Fkn3pxLMjw/WMpZ4qHrXig9HWxsamajs78ZxgdWm234LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygcUwpgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGTta4Cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E4EC4CEE3;
-	Tue, 29 Apr 2025 18:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygcUwpgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DD9C4CEE3;
+	Tue, 29 Apr 2025 18:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950563;
-	bh=ZtmkJp0cJDDZ5i4FzO43rccvqSvz3jm1Mxg+MLd9Iic=;
+	s=korg; t=1745950566;
+	bh=/U0NU/NV4B+0kILY+pWBLQr/ol1Q91mGEIPzk9yNmNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGTta4CrhEk36IqIxsBa2TPeCaylu67zCoKJPv5whxzT71GG++YkvZpqU8AVatbjE
-	 Zi7LajM3lqhk9MRR/H8v7ahaP04oCextVbmMldAyqi4l8+fD4nAP5NuJv1EBEfsIr2
-	 Bb/EwYr8HuJ2jtFvVCDhUiK0JLShegx374v3HPOE=
+	b=ygcUwpgl84AOjBgb7377rydxtI4G9UaZk9HTfw9C248sKJ6CCTd16MZ3PAxjkaORR
+	 8zpmJ0Ko98oBLCPp7VyGkP1jTOw0D9um1ynYYgjVsn2HDNBFxsHQZ6tq+mg3UK47IH
+	 0+GJiWsftkVrMG+1RafqAhDJv2WfuH/6vQ4l52Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>
-Subject: [PATCH 6.6 095/204] misc: microchip: pci1xxxx: Fix Kernel panic during IRQ handler registration
-Date: Tue, 29 Apr 2025 18:43:03 +0200
-Message-ID: <20250429161103.324495041@linuxfoundation.org>
+	Yafang Shao <laoar.shao@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/204] bpf: Reject attaching fexit/fmod_ret to __noreturn functions
+Date: Tue, 29 Apr 2025 18:43:36 +0200
+Message-ID: <20250429161104.668878672@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -50,58 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-commit 18eb77c75ed01439f96ae5c0f33461eb5134b907 upstream.
+[ Upstream commit cfe816d469dce9c0864062cf65dd7b3c42adc6f8 ]
 
-Resolve kernel panic while accessing IRQ handler associated with the
-generated IRQ. This is done by acquiring the spinlock and storing the
-current interrupt state before handling the interrupt request using
-generic_handle_irq.
+If we attach fexit/fmod_ret to __noreturn functions, it will cause an
+issue that the bpf trampoline image will be left over even if the bpf
+link has been destroyed. Take attaching do_exit() with fexit for example.
+The fexit works as follows,
 
-A previous fix patch was submitted where 'generic_handle_irq' was
-replaced with 'handle_nested_irq'. However, this change also causes
-the kernel panic where after determining which GPIO triggered the
-interrupt and attempting to call handle_nested_irq with the mapped
-IRQ number, leads to a failure in locating the registered handler.
+  bpf_trampoline
+  + __bpf_tramp_enter
+    + percpu_ref_get(&tr->pcref);
 
-Fixes: 194f9f94a516 ("misc: microchip: pci1xxxx: Resolve kernel panic during GPIO IRQ handling")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20250313170856.20868-2-rengarajan.s@microchip.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  + call do_exit()
+
+  + __bpf_tramp_exit
+    + percpu_ref_put(&tr->pcref);
+
+Since do_exit() never returns, the refcnt of the trampoline image is
+never decremented, preventing it from being freed. That can be verified
+with as follows,
+
+  $ bpftool link show                                   <<<< nothing output
+  $ grep "bpf_trampoline_[0-9]" /proc/kallsyms
+  ffffffffc04cb000 t bpf_trampoline_6442526459    [bpf] <<<< leftover
+
+In this patch, all functions annotated with __noreturn are rejected, except
+for the following cases:
+- Functions that result in a system reboot, such as panic,
+  machine_real_restart and rust_begin_unwind
+- Functions that are never executed by tasks, such as rest_init and
+  cpu_startup_entry
+- Functions implemented in assembly, such as rewind_stack_and_make_dead and
+  xen_cpu_bringup_again, lack an associated BTF ID.
+
+With this change, attaching fexit probes to functions like do_exit() will
+be rejected.
+
+$ ./fexit
+libbpf: prog 'fexit': BPF program load failed: -EINVAL
+libbpf: prog 'fexit': -- BEGIN PROG LOAD LOG --
+Attaching fexit/fmod_ret to __noreturn functions is rejected.
+
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Link: https://lore.kernel.org/r/20250318114447.75484-2-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-@@ -37,6 +37,7 @@
- struct pci1xxxx_gpio {
- 	struct auxiliary_device *aux_dev;
- 	void __iomem *reg_base;
-+	raw_spinlock_t wa_lock;
- 	struct gpio_chip gpio;
- 	spinlock_t lock;
- 	int irq_base;
-@@ -254,6 +255,7 @@ static irqreturn_t pci1xxxx_gpio_irq_han
- 	struct pci1xxxx_gpio *priv = dev_id;
- 	struct gpio_chip *gc =  &priv->gpio;
- 	unsigned long int_status = 0;
-+	unsigned long wa_flags;
- 	unsigned long flags;
- 	u8 pincount;
- 	int bit;
-@@ -277,7 +279,9 @@ static irqreturn_t pci1xxxx_gpio_irq_han
- 			writel(BIT(bit), priv->reg_base + INTR_STATUS_OFFSET(gpiobank));
- 			spin_unlock_irqrestore(&priv->lock, flags);
- 			irq = irq_find_mapping(gc->irq.domain, (bit + (gpiobank * 32)));
--			handle_nested_irq(irq);
-+			raw_spin_lock_irqsave(&priv->wa_lock, wa_flags);
-+			generic_handle_irq(irq);
-+			raw_spin_unlock_irqrestore(&priv->wa_lock, wa_flags);
- 		}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index d6a4102312fad..e443506b0a65a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -20106,6 +20106,33 @@ BTF_ID(func, __rcu_read_unlock)
+ #endif
+ BTF_SET_END(btf_id_deny)
+ 
++/* fexit and fmod_ret can't be used to attach to __noreturn functions.
++ * Currently, we must manually list all __noreturn functions here. Once a more
++ * robust solution is implemented, this workaround can be removed.
++ */
++BTF_SET_START(noreturn_deny)
++#ifdef CONFIG_IA32_EMULATION
++BTF_ID(func, __ia32_sys_exit)
++BTF_ID(func, __ia32_sys_exit_group)
++#endif
++#ifdef CONFIG_KUNIT
++BTF_ID(func, __kunit_abort)
++BTF_ID(func, kunit_try_catch_throw)
++#endif
++#ifdef CONFIG_MODULES
++BTF_ID(func, __module_put_and_kthread_exit)
++#endif
++#ifdef CONFIG_X86_64
++BTF_ID(func, __x64_sys_exit)
++BTF_ID(func, __x64_sys_exit_group)
++#endif
++BTF_ID(func, do_exit)
++BTF_ID(func, do_group_exit)
++BTF_ID(func, kthread_complete_and_exit)
++BTF_ID(func, kthread_exit)
++BTF_ID(func, make_task_dead)
++BTF_SET_END(noreturn_deny)
++
+ static bool can_be_sleepable(struct bpf_prog *prog)
+ {
+ 	if (prog->type == BPF_PROG_TYPE_TRACING) {
+@@ -20194,6 +20221,11 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 	} else if (prog->type == BPF_PROG_TYPE_TRACING &&
+ 		   btf_id_set_contains(&btf_id_deny, btf_id)) {
+ 		return -EINVAL;
++	} else if ((prog->expected_attach_type == BPF_TRACE_FEXIT ||
++		   prog->expected_attach_type == BPF_MODIFY_RETURN) &&
++		   btf_id_set_contains(&noreturn_deny, btf_id)) {
++		verbose(env, "Attaching fexit/fmod_ret to __noreturn functions is rejected.\n");
++		return -EINVAL;
  	}
- 	spin_lock_irqsave(&priv->lock, flags);
+ 
+ 	key = bpf_trampoline_compute_key(tgt_prog, prog->aux->attach_btf, btf_id);
+-- 
+2.39.5
+
 
 
