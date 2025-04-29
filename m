@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692AF253F27;
-	Tue, 29 Apr 2025 17:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E6625334D;
+	Tue, 29 Apr 2025 17:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949236; cv=none; b=dlt5KQGzxV9sm8xSDPmYFc1oPVxDI0JgYN2l4hsTUxrNulb5gpDU0nriHrQ7XvRcvENZm1CmGqgSubke5SPfKuRtvGoHCto0+0aLvFDxQ2CN5IEnCD5H3kKrAF0LXcGNcuO0J3jghKJR7npvqsywCL7PLH+ue9tgqWUXDDP84bQ=
+	t=1745949239; cv=none; b=Y34yEZdTcBvWBDSFTmhg38fsmXaQ+TA2FpJCrV1++Vlimt0VtOoPGXYLD5/CPSHSUTSkSZM9WGZJLEq5gW/Y1TmPqKA1gXP8G2mftadj4yBuhRWt/JE2DvlwBcXrNZ3U5yqI1hdTTiBPp8+BWDaPxwYEtOQf24X3m4xO5XGOMBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949236; c=relaxed/simple;
-	bh=3XvXLXKEj8KM340idEwMW6OdiADseoQc4JbB7N7cquQ=;
+	s=arc-20240116; t=1745949239; c=relaxed/simple;
+	bh=oJe3wzJbcYpWk58fynZKC3T1zvgLMVHlOI2afqdavFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuE9QV3WM9VMjkz4F3nYBG/O00zf2hyEkeb0dy2njN8ZJc4c0f6oljODHa0fR8uIHyZhx5dwg0UObxuqIZC7UwssFACXLHlV6IMP1SjKNDd1JzWQoGQH+wvsG0iRJ12XnLKgkKNMdpH0GG+PBAl7FZBQUYMSitVAQViH2qtUNpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfxKZ41j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGsqJ2f6nBjZKPEOBNyq8A+PtvuATHKwOX54HkeDa+VIX6NF1G/u2VolW5i86WXY7GrN7oSufcu19959GSA+yEmc4ZZP8v4NDDshYLIjpVLoVe9kgLcXzH9Vl64frSSn3rcY5o7RodYA5K08aqXZemi2vghyMXvo7PIx7KH1SsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgtPOuiQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfxKZ41j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1671C4CEE3;
-	Tue, 29 Apr 2025 17:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgtPOuiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C274CC4CEE3;
+	Tue, 29 Apr 2025 17:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949236;
-	bh=3XvXLXKEj8KM340idEwMW6OdiADseoQc4JbB7N7cquQ=;
+	s=korg; t=1745949239;
+	bh=oJe3wzJbcYpWk58fynZKC3T1zvgLMVHlOI2afqdavFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfxKZ41j4ydF9yTMLHeSJ58SzhuY0ltgNkV+h7l+swLU50E0RKPwYXtIlZEVqy+Vx
-	 BXUUEYbHN3SzC9EunJ+onFhBuuzyBS6tpkI5C3N5QN0q0QFpUaCX55etbrlwXmhDme
-	 UgFu0k9ggX4BL+b9cUMbDSmNTc2Hn5ZQLUB0Xka0=
+	b=FgtPOuiQmTdqH60fxc1omyaRoffkapnFOUbiN6gK8hdqr3Blrxl2wmO6IEdixtBpB
+	 Q2LyFkxqTIzith/CgplUIFWDecCFtj5bez4zeKx4PFM4Ktu0OotfFtqJ1LkiK7YvYX
+	 rdDik5V7OV4Zhw8TLyPBgpsINlVOdHU6VOhHxhQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Daniel Axtens <dja@axtens.net>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 248/373] mm: fix apply_to_existing_page_range()
-Date: Tue, 29 Apr 2025 18:42:05 +0200
-Message-ID: <20250429161133.326434189@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 257/373] media: streamzap: less chatter
+Date: Tue, 29 Apr 2025 18:42:14 +0200
+Message-ID: <20250429161133.695496320@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,55 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Sean Young <sean@mess.org>
 
-commit a995199384347261bb3f21b2e171fa7f988bd2f8 upstream.
+[ Upstream commit 35088717ad24140b6ab0ec00ef357709be607526 ]
 
-In the case of apply_to_existing_page_range(), apply_to_pte_range() is
-reached with 'create' set to false.  When !create, the loop over the PTE
-page table is broken.
+Remove superfluous messages which add no information.
 
-apply_to_pte_range() will only move to the next PTE entry if 'create' is
-true or if the current entry is not pte_none().
-
-This means that the user of apply_to_existing_page_range() will not have
-'fn' called for any entries after the first pte_none() in the PTE page
-table.
-
-Fix the loop logic in apply_to_pte_range().
-
-There are no known runtime issues from this, but the fix is trivial enough
-for stable@ even without a known buggy user.
-
-Link: https://lkml.kernel.org/r/20250409094043.1629234-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: be1db4753ee6 ("mm/memory.c: add apply_to_existing_page_range() helper")
-Cc: Daniel Axtens <dja@axtens.net>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: f656cfbc7a29 ("media: streamzap: fix race between device disconnection and urb callback")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/rc/streamzap.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2570,11 +2570,11 @@ static int apply_to_pte_range(struct mm_
- 	if (fn) {
- 		do {
- 			if (create || !pte_none(*pte)) {
--				err = fn(pte++, addr, data);
-+				err = fn(pte, addr, data);
- 				if (err)
- 					break;
- 			}
--		} while (addr += PAGE_SIZE, addr != end);
-+		} while (pte++, addr += PAGE_SIZE, addr != end);
- 	}
- 	*mask |= PGTBL_PTE_MODIFIED;
+diff --git a/drivers/media/rc/streamzap.c b/drivers/media/rc/streamzap.c
+index 9ef6260d2dfd2..aff4dfb99a827 100644
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -26,7 +26,6 @@
+ #include <linux/usb/input.h>
+ #include <media/rc-core.h>
  
+-#define DRIVER_VERSION	"1.61"
+ #define DRIVER_NAME	"streamzap"
+ #define DRIVER_DESC	"Streamzap Remote Control driver"
+ 
+@@ -279,10 +278,8 @@ static struct rc_dev *streamzap_init_rc_dev(struct streamzap_ir *sz)
+ 	int ret;
+ 
+ 	rdev = rc_allocate_device(RC_DRIVER_IR_RAW);
+-	if (!rdev) {
+-		dev_err(dev, "remote dev allocation failed\n");
++	if (!rdev)
+ 		goto out;
+-	}
+ 
+ 	usb_make_path(sz->usbdev, sz->phys, sizeof(sz->phys));
+ 	strlcat(sz->phys, "/input0", sizeof(sz->phys));
+@@ -322,7 +319,6 @@ static int streamzap_probe(struct usb_interface *intf,
+ 	struct usb_device *usbdev = interface_to_usbdev(intf);
+ 	struct usb_host_interface *iface_host;
+ 	struct streamzap_ir *sz = NULL;
+-	char buf[63], name[128] = "";
+ 	int retval = -ENOMEM;
+ 	int pipe, maxp;
+ 
+@@ -381,17 +377,6 @@ static int streamzap_probe(struct usb_interface *intf,
+ 	sz->dev = &intf->dev;
+ 	sz->buf_in_len = maxp;
+ 
+-	if (usbdev->descriptor.iManufacturer
+-	    && usb_string(usbdev, usbdev->descriptor.iManufacturer,
+-			  buf, sizeof(buf)) > 0)
+-		strscpy(name, buf, sizeof(name));
+-
+-	if (usbdev->descriptor.iProduct
+-	    && usb_string(usbdev, usbdev->descriptor.iProduct,
+-			  buf, sizeof(buf)) > 0)
+-		snprintf(name + strlen(name), sizeof(name) - strlen(name),
+-			 " %s", buf);
+-
+ 	sz->rdev = streamzap_init_rc_dev(sz);
+ 	if (!sz->rdev)
+ 		goto rc_dev_fail;
+@@ -422,9 +407,6 @@ static int streamzap_probe(struct usb_interface *intf,
+ 	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
+ 		dev_err(sz->dev, "urb submit failed\n");
+ 
+-	dev_info(sz->dev, "Registered %s on usb%d:%d\n", name,
+-		 usbdev->bus->busnum, usbdev->devnum);
+-
+ 	return 0;
+ 
+ rc_dev_fail:
+-- 
+2.39.5
+
 
 
