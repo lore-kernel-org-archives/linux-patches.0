@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27F9241664;
-	Tue, 29 Apr 2025 17:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1601FE468;
+	Tue, 29 Apr 2025 17:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946252; cv=none; b=tD+Nez8KndDvCb7Yi3MECLIo6dBLMSiPJg+8O47Tc0EfGCyniJBUkFvAlGwWgXb1x2Ug5NaNwCqchlYjES2qurNbZ0in1QL+olRXlwigcNBO5MRiIphz6qrTaj4KedRLkow7y0653nGQf19DBdqY3SCPfmsCzCWTTKsDnYsdS3g=
+	t=1745946256; cv=none; b=kdBLbJnGC3VB7yKhszs0/6pgyH6PcaZ3WxZnzRQ+qryQS3AQQ/qqq8xCD4BtLvXrNhhnjmrS9sAh6vkgk7y+jhbP7iSH0GY+f+oiDIy3GZjxyKUBdb0aCWhxMNb3JmequC5+zwpSjmM/5knlLOs4WOttq0aGVDvwmQeFTLwnDaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946252; c=relaxed/simple;
-	bh=YdJ2ANrBEeNexRBEYjxQFPz7t2ZKuETomhQbVDUcLC0=;
+	s=arc-20240116; t=1745946256; c=relaxed/simple;
+	bh=40dPpLyuKH01apMRkdlfieL8/E1YQp6EHISTtwhq68w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQc9d2ogbAqB6fnWjc/Q41Gz9Bnc4LnG1yRN7KXL5L+lT2KMJbUe6OZEGyiAJK/rZrSmo1wEHjR7RTo9OTekAaguEoqmvCvj4XVQo9NkpGDCGXj127+VYjI5OuBcOTsQ9q2+9Si3nTg36VwO5uhxIq67Buy6wx49MMPfscjv50Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WY8Q2DJW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AHPIMPUjL+PJeZnEWCRvg3a5lQhfloqquj/ul/LtPXwI059LiNZXvsAZX2+cVqw/ungsgc3ttzowV+8e3ws2P2kZSSiuoW5ffS9dIOAyw0at2jrYWCnkgvbeJc/u5W9GFrzEUg39CBjH5GVwNbk46WLUgHwceCoawZW7TVfR1UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQh4SoqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WY8Q2DJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C43C4CEE3;
-	Tue, 29 Apr 2025 17:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQh4SoqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35016C4CEE3;
+	Tue, 29 Apr 2025 17:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946252;
-	bh=YdJ2ANrBEeNexRBEYjxQFPz7t2ZKuETomhQbVDUcLC0=;
+	s=korg; t=1745946255;
+	bh=40dPpLyuKH01apMRkdlfieL8/E1YQp6EHISTtwhq68w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WY8Q2DJWeKEjfiA4CdORRYK2gX1IyXRhg/5qsZX+KpqG0MG3EY1sja6JqDCuavBgI
-	 pgQCRNUP3uFNPqMJx5ZKRallxrm4NctsYGoRqgOZFzjlCgIoSWX3CYm6GFdhsRu/3y
-	 DWfY8Knkipr+aHvkyVuncaKicEAy0fN9FVsMXhsQ=
+	b=MQh4SoqPDzllfn3RW3kxIw9cHH7EDFt9sAdzq+/NWTpcGLpf6W+SnHBwNHl/b9A5N
+	 6pTrYo47lWqKpYYhX1nMq8+VDT+UNK2IfnB4cOPkBW0mbaAdkMzEWshqfyjpzLidyN
+	 87u5PqOugGn3l/NgScpxtH6SQc6Zx9h9Q99Db/Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ferry Toth <fntoth@gmail.com>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 205/311] usb: dwc3: gadget: Refactor loop to avoid NULL endpoints
-Date: Tue, 29 Apr 2025 18:40:42 +0200
-Message-ID: <20250429161129.406182449@linuxfoundation.org>
+Subject: [PATCH 6.14 206/311] usb: dwc3: gadget: Avoid using reserved endpoints on Intel Merrifield
+Date: Tue, 29 Apr 2025 18:40:43 +0200
+Message-ID: <20250429161129.446796861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
@@ -54,85 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit eafba0205426091354f050381c32ad1567c35844 ]
+[ Upstream commit 461f24bff86808ee5fbfe74751a825f8a7ab24e0 ]
 
-Prepare the gadget driver to handle the reserved endpoints that will be
-not allocated at the initialisation time.
+Intel Merrifield SoC uses these endpoints for tracing and they cannot
+be re-allocated if being used because the side band flow control signals
+are hard wired to certain endpoints:
 
-While at it, add a warning where the NULL endpoint should never happen.
+• 1 High BW Bulk IN (IN#1) (RTIT)
+• 1 1KB BW Bulk IN (IN#8) + 1 1KB BW Bulk OUT (Run Control) (OUT#8)
+
+In device mode, since RTIT (EP#1) and EXI/RunControl (EP#8) uses
+External Buffer Control (EBC) mode, these endpoints are to be mapped to
+EBC mode (to be done by EXI target driver). Additionally TRB for RTIT
+and EXI are maintained in STM (System Trace Module) unit and the EXI
+target driver will as well configure the TRB location for EP #1 IN
+and EP#8 (IN and OUT). Since STM/PTI and EXI hardware blocks manage
+these endpoints and interface to OTG3 controller through EBC interface,
+there is no need to enable any events (such as XferComplete etc)
+for these end points.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Tested-by: Ferry Toth <fntoth@gmail.com>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250212193116.2487289-3-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20250212193116.2487289-5-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/dwc3-pci.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index b75b4c5ca7fcf..c6761fe89cfae 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -547,6 +547,7 @@ static int dwc3_gadget_set_xfer_resource(struct dwc3_ep *dep)
- int dwc3_gadget_start_config(struct dwc3 *dwc, unsigned int resource_index)
- {
- 	struct dwc3_gadget_ep_cmd_params params;
-+	struct dwc3_ep		*dep;
- 	u32			cmd;
- 	int			i;
- 	int			ret;
-@@ -563,8 +564,13 @@ int dwc3_gadget_start_config(struct dwc3 *dwc, unsigned int resource_index)
- 		return ret;
+diff --git a/drivers/usb/dwc3/dwc3-pci.c b/drivers/usb/dwc3/dwc3-pci.c
+index 052852f801467..54a4ee2b90b7f 100644
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -148,11 +148,21 @@ static const struct property_entry dwc3_pci_intel_byt_properties[] = {
+ 	{}
+ };
  
- 	/* Reset resource allocation flags */
--	for (i = resource_index; i < dwc->num_eps && dwc->eps[i]; i++)
--		dwc->eps[i]->flags &= ~DWC3_EP_RESOURCE_ALLOCATED;
-+	for (i = resource_index; i < dwc->num_eps; i++) {
-+		dep = dwc->eps[i];
-+		if (!dep)
-+			continue;
++/*
++ * Intel Merrifield SoC uses these endpoints for tracing and they cannot
++ * be re-allocated if being used because the side band flow control signals
++ * are hard wired to certain endpoints:
++ * - 1 High BW Bulk IN (IN#1) (RTIT)
++ * - 1 1KB BW Bulk IN (IN#8) + 1 1KB BW Bulk OUT (Run Control) (OUT#8)
++ */
++static const u8 dwc3_pci_mrfld_reserved_endpoints[] = { 3, 16, 17 };
 +
-+		dep->flags &= ~DWC3_EP_RESOURCE_ALLOCATED;
-+	}
- 
- 	return 0;
- }
-@@ -751,9 +757,11 @@ void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
- 
- 	dwc->last_fifo_depth = fifo_depth;
- 	/* Clear existing TXFIFO for all IN eps except ep0 */
--	for (num = 3; num < min_t(int, dwc->num_eps, DWC3_ENDPOINTS_NUM);
--	     num += 2) {
-+	for (num = 3; num < min_t(int, dwc->num_eps, DWC3_ENDPOINTS_NUM); num += 2) {
- 		dep = dwc->eps[num];
-+		if (!dep)
-+			continue;
-+
- 		/* Don't change TXFRAMNUM on usb31 version */
- 		size = DWC3_IP_IS(DWC3) ? 0 :
- 			dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
-@@ -3703,6 +3711,8 @@ static bool dwc3_gadget_endpoint_trbs_complete(struct dwc3_ep *dep,
- 
- 		for (i = 0; i < DWC3_ENDPOINTS_NUM; i++) {
- 			dep = dwc->eps[i];
-+			if (!dep)
-+				continue;
- 
- 			if (!(dep->flags & DWC3_EP_ENABLED))
- 				continue;
-@@ -3852,6 +3862,10 @@ static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
- 	u8			epnum = event->endpoint_number;
- 
- 	dep = dwc->eps[epnum];
-+	if (!dep) {
-+		dev_warn(dwc->dev, "spurious event, endpoint %u is not allocated\n", epnum);
-+		return;
-+	}
- 
- 	if (!(dep->flags & DWC3_EP_ENABLED)) {
- 		if ((epnum > 1) && !(dep->flags & DWC3_EP_TRANSFER_STARTED))
+ static const struct property_entry dwc3_pci_mrfld_properties[] = {
+ 	PROPERTY_ENTRY_STRING("dr_mode", "otg"),
+ 	PROPERTY_ENTRY_STRING("linux,extcon-name", "mrfld_bcove_pwrsrc"),
+ 	PROPERTY_ENTRY_BOOL("snps,dis_u3_susphy_quirk"),
+ 	PROPERTY_ENTRY_BOOL("snps,dis_u2_susphy_quirk"),
++	PROPERTY_ENTRY_U8_ARRAY("snps,reserved-endpoints", dwc3_pci_mrfld_reserved_endpoints),
+ 	PROPERTY_ENTRY_BOOL("snps,usb2-gadget-lpm-disable"),
+ 	PROPERTY_ENTRY_BOOL("linux,sysdev_is_parent"),
+ 	{}
 -- 
 2.39.5
 
