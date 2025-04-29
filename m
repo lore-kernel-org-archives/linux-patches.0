@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8292324E00D;
-	Tue, 29 Apr 2025 16:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A04824BC04;
+	Tue, 29 Apr 2025 16:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945122; cv=none; b=oVq+KagWj03NLwHo50QETEiKlnaJYsDq2tKOokhwOatbKF0tMeW0oSQo11peJWTtFr8bpaSU0gl/aNuLnSSQ+WUEXIUD5/+bnPz6Erzlew+dNwpYLORisrZDbLx01FQ8FUKZHWMATHiVTRWC8F7yDBBrCY7M5LeT9Agtty9JjZY=
+	t=1745945125; cv=none; b=rzdOl5CMnYBiBTs9q0GUjxw+ZIbhg0lfBuA5HXdkKWzCFxQabfBuBAEwOzbX++ClFqhCfXvCRPpY3to9xCjTZElVU6yV2BDuz/40EDUuvxhK3IsA2g7QPj/8N9/TtxRMwD4ojOAsTySdyE8Agde5BwXIbuogbhXjMyfxqXwOpVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945122; c=relaxed/simple;
-	bh=uVWb+9vYKZx4C11uqxnz8wBIKTWyB+WpusofSc9siIA=;
+	s=arc-20240116; t=1745945125; c=relaxed/simple;
+	bh=eeAeEonLrNWCIiVRTIaWpy8EQ+5O3hduLc4DrEEn4PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6PaiIYUoXKwA2IFRJz6DH789UwH+qrmbVCFbwb13TSdF6Z2bfK1J82YjKrUl7DhQdS0KCF00dPwoL6MCVVdTQ85g3WKwvvixNjl6Lsxy5HtXIrak0JKEmp4INF5qy3DkLbgMhsF+cfBEfonltgdESKEtY+rzlCZsnQsgd7xqUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nh9UA8F1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nF2+d86vwZLx8IipACF0aqNTybN7wZnfbXF9Dsd6qwAJcW05a3CEY/d32UjahbAm4LloMxtuhPmwfShqYn6m34EWp4S1uKftq3DBqBLRV/O3YJ01akEoM15KluM7epZeB3BO1B1lLy+dC73sB6GsPYC8Ziy0x4g7nJN3BHvxbvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m0phUgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nh9UA8F1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A908C4CEEF;
-	Tue, 29 Apr 2025 16:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m0phUgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9323BC4CEED;
+	Tue, 29 Apr 2025 16:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945122;
-	bh=uVWb+9vYKZx4C11uqxnz8wBIKTWyB+WpusofSc9siIA=;
+	s=korg; t=1745945125;
+	bh=eeAeEonLrNWCIiVRTIaWpy8EQ+5O3hduLc4DrEEn4PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nh9UA8F194Xon0JHTCBjy4QTISdLkCIJZ4zm0kd/q4Hrx2SacnduHVl5htv93Bz4V
-	 CMujeCeht6gh83msJ5yjl643u0uFCqvHcIPK2YZC9IUx8etfOZBevwvKu4v9kCz4n6
-	 Bqa6nOMEWtJDiEMcqoXXo5rq38Gaerl8wfDJltpk=
+	b=0m0phUgYrmMf0lqXM6NOo3sH81MH9VgXcCv5HcLfhuRDGNd0THSOUvCT85kQ9ED/P
+	 M1jhbCGiQb/KPvQ+lu1G/HMNwW2uMFCEWfc83v7m66M3BPrRUUJZveLHreUpOMu33a
+	 s4K4eEOBCJmaOGDH81x1xN/PuoKFS6ruDaASwGA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	xen-devel@lists.xenproject.org,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 001/179] ata: pata_pxa: Fix potential NULL pointer dereference in pxa_ata_probe()
-Date: Tue, 29 Apr 2025 18:39:02 +0200
-Message-ID: <20250429161049.451637381@linuxfoundation.org>
+Subject: [PATCH 5.4 010/179] xen/mcelog: Add __nonstring annotations for unterminated strings
+Date: Tue, 29 Apr 2025 18:39:11 +0200
+Message-ID: <20250429161049.810888896@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,44 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit ad320e408a8c95a282ab9c05cdf0c9b95e317985 ]
+[ Upstream commit 1c3dfc7c6b0f551fdca3f7c1f1e4c73be8adb17d ]
 
-devm_ioremap() returns NULL on error. Currently, pxa_ata_probe() does
-not check for this case, which can result in a NULL pointer dereference.
+When a character array without a terminating NUL character has a static
+initializer, GCC 15's -Wunterminated-string-initialization will only
+warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
+with __nonstring to and correctly identify the char array as "not a C
+string" and thereby eliminate the warning.
 
-Add NULL check after devm_ioremap() to prevent this issue.
-
-Fixes: 2dc6c6f15da9 ("[ARM] pata_pxa: DMA-capable PATA driver")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117178 [1]
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Cc: xen-devel@lists.xenproject.org
+Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250310222234.work.473-kees@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_pxa.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/xen/interface/xen-mca.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_pxa.c b/drivers/ata/pata_pxa.c
-index 41430f79663c1..3502bfb03c56c 100644
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -223,10 +223,16 @@ static int pxa_ata_probe(struct platform_device *pdev)
+diff --git a/include/xen/interface/xen-mca.h b/include/xen/interface/xen-mca.h
+index 73a4ea714d937..5db6116cd042c 100644
+--- a/include/xen/interface/xen-mca.h
++++ b/include/xen/interface/xen-mca.h
+@@ -365,7 +365,7 @@ struct xen_mce {
+ #define XEN_MCE_LOG_LEN 32
  
- 	ap->ioaddr.cmd_addr	= devm_ioremap(&pdev->dev, cmd_res->start,
- 						resource_size(cmd_res));
-+	if (!ap->ioaddr.cmd_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.ctl_addr	= devm_ioremap(&pdev->dev, ctl_res->start,
- 						resource_size(ctl_res));
-+	if (!ap->ioaddr.ctl_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.bmdma_addr	= devm_ioremap(&pdev->dev, dma_res->start,
- 						resource_size(dma_res));
-+	if (!ap->ioaddr.bmdma_addr)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Adjust register offsets
+ struct xen_mce_log {
+-	char signature[12]; /* "MACHINECHECK" */
++	char signature[12] __nonstring; /* "MACHINECHECK" */
+ 	unsigned len;	    /* = XEN_MCE_LOG_LEN */
+ 	unsigned next;
+ 	unsigned flags;
 -- 
 2.39.5
 
