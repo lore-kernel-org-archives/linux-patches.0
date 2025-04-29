@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626D4241664;
-	Tue, 29 Apr 2025 17:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89D7241664;
+	Tue, 29 Apr 2025 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946531; cv=none; b=H2qZvndyLjGy2TNvDvAoHhsA/4cHw5/IQV0dfGMiD5mleGzv0a4TqpSKU8FpxceM0IzN44h8FeO2rqi9HaBrEcE8sLf9BxIyYZEA9l4iRTgqNHRLIx5KXRG1FtwoKoKjV/Q8NM1rhW34YI1F8yth5blbYDMsasSfx2qMwCrChCM=
+	t=1745946535; cv=none; b=OdM7hUaPRpnCZGdp7U63hp8z/Zk7WpsVwxk3JKrTUw4EgA/b5xZ5mD5JioAorY7AmFZTDVCG98A3cTFBY+cSf8HxhZ+IkekTbg2D6KLQEVHo/UyI1b2EfU5ejkL+4/MKMRU1WRps38XDSdLSRxLa0Xq/J6mOE+xnYkaDgQNojyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946531; c=relaxed/simple;
-	bh=tRjibftkoSSl4wzwsMzFYzCdIz8MXxFLp37LgwvLZVk=;
+	s=arc-20240116; t=1745946535; c=relaxed/simple;
+	bh=mzsb1DrgRBwSsSLdOzoyPf3Bk7yWPn/FUuoAuvKiX6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYISLqfBV9tAL2UjNCX8y91BF9P52XNkZr52yXtatfFEeLUbMwLg9QUZ1aD3zsFi5nnGN05ksqBZB1G5InIi1tMksm39vttM2oy08JyklQNxwvJFBnZFVQsiRYDxRwMinND21h/khJ+NmYLPBn0RxLss0IVNK5nEfBMnvShA02w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYdPKMKT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDz1hpQZ6g35p5hrTfdaC5UcCL/ibUQ93WTxo9ETDTPCMOetUtxquYbWYio4VTJkOe4LJmDDo0fiQB4rak9VzQyhzKljfclq8Yr9ibdUTBVXj2PyWWMXbKjvp+hdHoDffsEuvPQxdxacxgWs9dpA3CcahhRz2kBusYhVGMf2prU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmeh0OBS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYdPKMKT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71F0C4CEE3;
-	Tue, 29 Apr 2025 17:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmeh0OBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7348DC4CEE3;
+	Tue, 29 Apr 2025 17:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946531;
-	bh=tRjibftkoSSl4wzwsMzFYzCdIz8MXxFLp37LgwvLZVk=;
+	s=korg; t=1745946534;
+	bh=mzsb1DrgRBwSsSLdOzoyPf3Bk7yWPn/FUuoAuvKiX6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYdPKMKTG/s7Dy6I6OZtf5hzfTd18KgZGqtFybfOeMTkXVuIZdl54L96i58tMO5XQ
-	 vIbi3q1YGNsCvckWKBT6N+IG52YO9feAb+0/RNVrCeIvYdQIwcFymbIpP/5njHfmLv
-	 1KL+9/n1m63k9yGBuhfcB/WP1lahmHIPgmZ1Rx2E=
+	b=lmeh0OBSVkgXV7xnEIWoz3+4hAx9RUMSrvkyMB08keM1bL6UCOIgJ6/C6pmZtpvor
+	 wdLmwwnKEkfyjssQixGYdsCQWsmm3JroVxdSdekI3KWIyUy9E0JmZ8koV1+HNWKKCV
+	 xHj1DKDFXoqP26hSwS1BTeDaoXTigDtjZMdJJ/f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 280/311] netfs: Only create /proc/fs/netfs with CONFIG_PROC_FS
-Date: Tue, 29 Apr 2025 18:41:57 +0200
-Message-ID: <20250429161132.481944696@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.14 298/311] driver core: fix potential NULL pointer dereference in dev_uevent()
+Date: Tue, 29 Apr 2025 18:42:15 +0200
+Message-ID: <20250429161133.209321190@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,117 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 40cb48eba3b4b79e110c1a35d33a48cac54507a2 ]
+commit 18daa52418e7e4629ed1703b64777294209d2622 upstream.
 
-When testing a special config:
+If userspace reads "uevent" device attribute at the same time as another
+threads unbinds the device from its driver, change to dev->driver from a
+valid pointer to NULL may result in crash. Fix this by using READ_ONCE()
+when fetching the pointer, and take bus' drivers klist lock to make sure
+driver instance will not disappear while we access it.
 
-CONFIG_NETFS_SUPPORTS=y
-CONFIG_PROC_FS=n
+Use WRITE_ONCE() when setting the driver pointer to ensure there is no
+tearing.
 
-The system crashes with something like:
-
-[    3.766197] ------------[ cut here ]------------
-[    3.766484] kernel BUG at mm/mempool.c:560!
-[    3.766789] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[    3.767123] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W
-[    3.767777] Tainted: [W]=WARN
-[    3.767968] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-[    3.768523] RIP: 0010:mempool_alloc_slab.cold+0x17/0x19
-[    3.768847] Code: 50 fe ff 58 5b 5d 41 5c 41 5d 41 5e 41 5f e9 93 95 13 00
-[    3.769977] RSP: 0018:ffffc90000013998 EFLAGS: 00010286
-[    3.770315] RAX: 000000000000002f RBX: ffff888100ba8640 RCX: 0000000000000000
-[    3.770749] RDX: 0000000000000000 RSI: 0000000000000003 RDI: 00000000ffffffff
-[    3.771217] RBP: 0000000000092880 R08: 0000000000000000 R09: ffffc90000013828
-[    3.771664] R10: 0000000000000001 R11: 00000000ffffffea R12: 0000000000092cc0
-[    3.772117] R13: 0000000000000400 R14: ffff8881004b1620 R15: ffffea0004ef7e40
-[    3.772554] FS:  0000000000000000(0000) GS:ffff8881b5f3c000(0000) knlGS:0000000000000000
-[    3.773061] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    3.773443] CR2: ffffffff830901b4 CR3: 0000000004296001 CR4: 0000000000770ef0
-[    3.773884] PKRU: 55555554
-[    3.774058] Call Trace:
-[    3.774232]  <TASK>
-[    3.774371]  mempool_alloc_noprof+0x6a/0x190
-[    3.774649]  ? _printk+0x57/0x80
-[    3.774862]  netfs_alloc_request+0x85/0x2ce
-[    3.775147]  netfs_readahead+0x28/0x170
-[    3.775395]  read_pages+0x6c/0x350
-[    3.775623]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.775928]  page_cache_ra_unbounded+0x1bd/0x2a0
-[    3.776247]  filemap_get_pages+0x139/0x970
-[    3.776510]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.776820]  filemap_read+0xf9/0x580
-[    3.777054]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.777368]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.777674]  ? find_held_lock+0x32/0x90
-[    3.777929]  ? netfs_start_io_read+0x19/0x70
-[    3.778221]  ? netfs_start_io_read+0x19/0x70
-[    3.778489]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.778800]  ? lock_acquired+0x1e6/0x450
-[    3.779054]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    3.779379]  netfs_buffered_read_iter+0x57/0x80
-[    3.779670]  __kernel_read+0x158/0x2c0
-[    3.779927]  bprm_execve+0x300/0x7a0
-[    3.780185]  kernel_execve+0x10c/0x140
-[    3.780423]  ? __pfx_kernel_init+0x10/0x10
-[    3.780690]  kernel_init+0xd5/0x150
-[    3.780910]  ret_from_fork+0x2d/0x50
-[    3.781156]  ? __pfx_kernel_init+0x10/0x10
-[    3.781414]  ret_from_fork_asm+0x1a/0x30
-[    3.781677]  </TASK>
-[    3.781823] Modules linked in:
-[    3.782065] ---[ end trace 0000000000000000 ]---
-
-This is caused by the following error path in netfs_init():
-
-        if (!proc_mkdir("fs/netfs", NULL))
-                goto error_proc;
-
-Fix this by adding ifdef in netfs_main(), so that /proc/fs/netfs is only
-created with CONFIG_PROC_FS.
-
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/20250409170015.2651829-1-song@kernel.org
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20250311052417.1846985-3-dmitry.torokhov@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/base.h |   13 ++++++++++++-
+ drivers/base/bus.c  |    2 +-
+ drivers/base/core.c |   33 +++++++++++++++++++++++++++++++--
+ 3 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/fs/netfs/main.c b/fs/netfs/main.c
-index 4e3e620408314..70ecc8f5f2103 100644
---- a/fs/netfs/main.c
-+++ b/fs/netfs/main.c
-@@ -127,11 +127,13 @@ static int __init netfs_init(void)
- 	if (mempool_init_slab_pool(&netfs_subrequest_pool, 100, netfs_subrequest_slab) < 0)
- 		goto error_subreqpool;
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -73,6 +73,7 @@ static inline void subsys_put(struct sub
+ 		kset_put(&sp->subsys);
+ }
  
-+#ifdef CONFIG_PROC_FS
- 	if (!proc_mkdir("fs/netfs", NULL))
- 		goto error_proc;
- 	if (!proc_create_seq("fs/netfs/requests", S_IFREG | 0444, NULL,
- 			     &netfs_requests_seq_ops))
- 		goto error_procfile;
-+#endif
- #ifdef CONFIG_FSCACHE_STATS
- 	if (!proc_create_single("fs/netfs/stats", S_IFREG | 0444, NULL,
- 				netfs_stats_show))
-@@ -144,9 +146,11 @@ static int __init netfs_init(void)
- 	return 0;
++struct subsys_private *bus_to_subsys(const struct bus_type *bus);
+ struct subsys_private *class_to_subsys(const struct class *class);
  
- error_fscache:
-+#ifdef CONFIG_PROC_FS
- error_procfile:
- 	remove_proc_subtree("fs/netfs", NULL);
- error_proc:
-+#endif
- 	mempool_exit(&netfs_subrequest_pool);
- error_subreqpool:
- 	kmem_cache_destroy(netfs_subrequest_slab);
--- 
-2.39.5
-
+ struct driver_private {
+@@ -182,8 +183,18 @@ void device_driver_detach(struct device
+ 
+ static inline void device_set_driver(struct device *dev, const struct device_driver *drv)
+ {
++	/*
++	 * Majority (all?) read accesses to dev->driver happens either
++	 * while holding device lock or in bus/driver code that is only
++	 * invoked when the device is bound to a driver and there is no
++	 * concern of the pointer being changed while it is being read.
++	 * However when reading device's uevent file we read driver pointer
++	 * without taking device lock (so we do not block there for
++	 * arbitrary amount of time). We use WRITE_ONCE() here to prevent
++	 * tearing so that READ_ONCE() can safely be used in uevent code.
++	 */
+ 	// FIXME - this cast should not be needed "soon"
+-	dev->driver = (struct device_driver *)drv;
++	WRITE_ONCE(dev->driver, (struct device_driver *)drv);
+ }
+ 
+ int devres_release_all(struct device *dev);
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -57,7 +57,7 @@ static int __must_check bus_rescan_devic
+  * NULL.  A call to subsys_put() must be done when finished with the pointer in
+  * order for it to be properly freed.
+  */
+-static struct subsys_private *bus_to_subsys(const struct bus_type *bus)
++struct subsys_private *bus_to_subsys(const struct bus_type *bus)
+ {
+ 	struct subsys_private *sp = NULL;
+ 	struct kobject *kobj;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2624,6 +2624,35 @@ static const char *dev_uevent_name(const
+ 	return NULL;
+ }
+ 
++/*
++ * Try filling "DRIVER=<name>" uevent variable for a device. Because this
++ * function may race with binding and unbinding the device from a driver,
++ * we need to be careful. Binding is generally safe, at worst we miss the
++ * fact that the device is already bound to a driver (but the driver
++ * information that is delivered through uevents is best-effort, it may
++ * become obsolete as soon as it is generated anyways). Unbinding is more
++ * risky as driver pointer is transitioning to NULL, so READ_ONCE() should
++ * be used to make sure we are dealing with the same pointer, and to
++ * ensure that driver structure is not going to disappear from under us
++ * we take bus' drivers klist lock. The assumption that only registered
++ * driver can be bound to a device, and to unregister a driver bus code
++ * will take the same lock.
++ */
++static void dev_driver_uevent(const struct device *dev, struct kobj_uevent_env *env)
++{
++	struct subsys_private *sp = bus_to_subsys(dev->bus);
++
++	if (sp) {
++		scoped_guard(spinlock, &sp->klist_drivers.k_lock) {
++			struct device_driver *drv = READ_ONCE(dev->driver);
++			if (drv)
++				add_uevent_var(env, "DRIVER=%s", drv->name);
++		}
++
++		subsys_put(sp);
++	}
++}
++
+ static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	const struct device *dev = kobj_to_dev(kobj);
+@@ -2655,8 +2684,8 @@ static int dev_uevent(const struct kobje
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
+ 
+-	if (dev->driver)
+-		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
++	/* Add "DRIVER=%s" variable if the device is bound to a driver */
++	dev_driver_uevent(dev, env);
+ 
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
 
 
