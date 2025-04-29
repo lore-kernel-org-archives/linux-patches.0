@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB210211A0B;
-	Tue, 29 Apr 2025 17:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABDB211A0B;
+	Tue, 29 Apr 2025 17:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946424; cv=none; b=cGiYM16gOt8N2ThcLAEKovTy01mF9qi8iXWcqLYju/4b/OBykQuiVOsoe1BzidtOWquEOEbEbyY7+KR+UNGQgKES4xuor63JhufbUlf/gcM+B0loc47U1ceC1bXG6ggQ/F5QUBaBSBliWO9Y7InkzSB0MnGOzvs/gPJVHHWDxVQ=
+	t=1745946427; cv=none; b=RWlMZQjx/1IdpL5HJRNjFvJnmf0nSakVZAj3FbBu+N5RMlZ7YbNBkeIo4f2YbX+DTmKCMw73Dds04iGNTWeGXpgJtWCL24tFj2Upeu9S6RJEtN/zjs3EsEbI6gOQHz4uJXJ4ccV+vQaHi0R/AiST3021/t/19bfvsropAqB9cJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946424; c=relaxed/simple;
-	bh=1OPrn4Ug/OJdeo7wdyVPX/PW0D4XyDH1EBbouYKNiCk=;
+	s=arc-20240116; t=1745946427; c=relaxed/simple;
+	bh=e1+qZuNcUGiD1pG35DsswmbHAcJjCZfh5YZk7G72brw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkMcbPt/VS7wydqTclHNwr2PiL630cpSvr+eEtEHtkjGb3RNyAG32PtehVA9ydYk8yhxFHCejD93/WogRDUfObHAetazcDijV4VbcFrfpKjObGeYOfhgp+mp6suHEHPiPz47NTuJSU3XwjP8WO14GjDdgLK+nagYxtQkn8IyqGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6HB379T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UVDDWa7S8pSTp03rCVZnioPWLwVHGE4plo1Z5ILNswANEjHHl4e92kwWzB5IA53WwyQWB2dUZuszk4Kf7mrC7QsoZR3qmHuwktDF2XRpnnlA5+dhaE7s7GnyAWKj/IoilrLDV4hff04Ea3ck67tTHkA/BesD3uqXYdQNQ1mYEgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOHpTfHD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6HB379T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EA5C4CEE3;
-	Tue, 29 Apr 2025 17:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOHpTfHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29968C4CEE3;
+	Tue, 29 Apr 2025 17:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946424;
-	bh=1OPrn4Ug/OJdeo7wdyVPX/PW0D4XyDH1EBbouYKNiCk=;
+	s=korg; t=1745946427;
+	bh=e1+qZuNcUGiD1pG35DsswmbHAcJjCZfh5YZk7G72brw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I6HB379Tt3DuiX6ygEG9CH/vfHKcvmmyntszTvVPsHuB/oldtaT3mPaBpzY2nyIrX
-	 QSU8EjDxbA3niIv8kxnncdBS7b8l7+iLStsWyeslXlJnBRe4bOramLh1DT4vOQhYC1
-	 c86iNluCYWgUo+j3d6iJEkQKIochi+j21TNdAwm8=
+	b=wOHpTfHD0HD/C1vCoTQ32j+rLqoazYjADjYGORog+WT70qNebzM/qAQRahGxsfDIh
+	 7yX2jynD5c8z2h8ps8sS+0gBtgtYOHAhnSH6YlAKOXI7SaVQ3Lez9NI3I5GOKze856
+	 uzhtbfxZ3VIW11gTqT/l0Hm7LqpzFC/emqFGz7KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <wagi@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 263/311] nvmet-fc: put ref when assoc->del_work is already scheduled
-Date: Tue, 29 Apr 2025 18:41:40 +0200
-Message-ID: <20250429161131.803930799@linuxfoundation.org>
+Subject: [PATCH 6.14 264/311] cifs: Fix encoding of SMB1 Session Setup Kerberos Request in non-UNICODE mode
+Date: Tue, 29 Apr 2025 18:41:41 +0200
+Message-ID: <20250429161131.843132110@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -46,40 +45,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 70289ae5cac4d3a39575405aaf63330486cea030 ]
+[ Upstream commit 16cb6b0509b65ac89187e9402e0b7a9ddf1765ef ]
 
-Do not leak the tgtport reference when the work is already scheduled.
+Like in UNICODE mode, SMB1 Session Setup Kerberos Request contains oslm and
+domain strings.
 
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Extract common code into ascii_oslm_strings() and ascii_domain_string()
+functions (similar to unicode variants) and use these functions in
+non-UNICODE code path in sess_auth_kerberos().
+
+Decision if non-UNICODE or UNICODE mode is used is based on the
+SMBFLG2_UNICODE flag in Flags2 packed field, and not based on the
+capabilities of server. Fix this check too.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/sess.c | 60 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 78c4a417f477e..ef8c5961e10c8 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1089,7 +1089,8 @@ static void
- nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
- {
- 	nvmet_fc_tgtport_get(assoc->tgtport);
--	queue_work(nvmet_wq, &assoc->del_work);
-+	if (!queue_work(nvmet_wq, &assoc->del_work))
-+		nvmet_fc_tgtport_put(assoc->tgtport);
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index eb70ebf38464b..9d6b1a4704773 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -679,6 +679,22 @@ unicode_oslm_strings(char **pbcc_area, const struct nls_table *nls_cp)
+ 	*pbcc_area = bcc_ptr;
  }
  
- static bool
++static void
++ascii_oslm_strings(char **pbcc_area, const struct nls_table *nls_cp)
++{
++	char *bcc_ptr = *pbcc_area;
++
++	strcpy(bcc_ptr, "Linux version ");
++	bcc_ptr += strlen("Linux version ");
++	strcpy(bcc_ptr, init_utsname()->release);
++	bcc_ptr += strlen(init_utsname()->release) + 1;
++
++	strcpy(bcc_ptr, CIFS_NETWORK_OPSYS);
++	bcc_ptr += strlen(CIFS_NETWORK_OPSYS) + 1;
++
++	*pbcc_area = bcc_ptr;
++}
++
+ static void unicode_domain_string(char **pbcc_area, struct cifs_ses *ses,
+ 				   const struct nls_table *nls_cp)
+ {
+@@ -703,6 +719,25 @@ static void unicode_domain_string(char **pbcc_area, struct cifs_ses *ses,
+ 	*pbcc_area = bcc_ptr;
+ }
+ 
++static void ascii_domain_string(char **pbcc_area, struct cifs_ses *ses,
++				const struct nls_table *nls_cp)
++{
++	char *bcc_ptr = *pbcc_area;
++	int len;
++
++	/* copy domain */
++	if (ses->domainName != NULL) {
++		len = strscpy(bcc_ptr, ses->domainName, CIFS_MAX_DOMAINNAME_LEN);
++		if (WARN_ON_ONCE(len < 0))
++			len = CIFS_MAX_DOMAINNAME_LEN - 1;
++		bcc_ptr += len;
++	} /* else we send a null domain name so server will default to its own domain */
++	*bcc_ptr = 0;
++	bcc_ptr++;
++
++	*pbcc_area = bcc_ptr;
++}
++
+ static void unicode_ssetup_strings(char **pbcc_area, struct cifs_ses *ses,
+ 				   const struct nls_table *nls_cp)
+ {
+@@ -748,25 +783,10 @@ static void ascii_ssetup_strings(char **pbcc_area, struct cifs_ses *ses,
+ 	*bcc_ptr = 0;
+ 	bcc_ptr++; /* account for null termination */
+ 
+-	/* copy domain */
+-	if (ses->domainName != NULL) {
+-		len = strscpy(bcc_ptr, ses->domainName, CIFS_MAX_DOMAINNAME_LEN);
+-		if (WARN_ON_ONCE(len < 0))
+-			len = CIFS_MAX_DOMAINNAME_LEN - 1;
+-		bcc_ptr += len;
+-	} /* else we send a null domain name so server will default to its own domain */
+-	*bcc_ptr = 0;
+-	bcc_ptr++;
+-
+ 	/* BB check for overflow here */
+ 
+-	strcpy(bcc_ptr, "Linux version ");
+-	bcc_ptr += strlen("Linux version ");
+-	strcpy(bcc_ptr, init_utsname()->release);
+-	bcc_ptr += strlen(init_utsname()->release) + 1;
+-
+-	strcpy(bcc_ptr, CIFS_NETWORK_OPSYS);
+-	bcc_ptr += strlen(CIFS_NETWORK_OPSYS) + 1;
++	ascii_domain_string(&bcc_ptr, ses, nls_cp);
++	ascii_oslm_strings(&bcc_ptr, nls_cp);
+ 
+ 	*pbcc_area = bcc_ptr;
+ }
+@@ -1569,7 +1589,7 @@ sess_auth_kerberos(struct sess_data *sess_data)
+ 	sess_data->iov[1].iov_len = msg->secblob_len;
+ 	pSMB->req.SecurityBlobLength = cpu_to_le16(sess_data->iov[1].iov_len);
+ 
+-	if (ses->capabilities & CAP_UNICODE) {
++	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
+ 		/* unicode strings must be word aligned */
+ 		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
+ 			*bcc_ptr = 0;
+@@ -1578,8 +1598,8 @@ sess_auth_kerberos(struct sess_data *sess_data)
+ 		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
+ 		unicode_domain_string(&bcc_ptr, ses, sess_data->nls_cp);
+ 	} else {
+-		/* BB: is this right? */
+-		ascii_ssetup_strings(&bcc_ptr, ses, sess_data->nls_cp);
++		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
++		ascii_domain_string(&bcc_ptr, ses, sess_data->nls_cp);
+ 	}
+ 
+ 	sess_data->iov[2].iov_len = (long) bcc_ptr -
 -- 
 2.39.5
 
