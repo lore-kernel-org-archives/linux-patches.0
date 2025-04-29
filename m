@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5285A2AE96;
-	Tue, 29 Apr 2025 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7318122AE68;
+	Tue, 29 Apr 2025 17:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949570; cv=none; b=vC/egTDi6d7Av2RW1v0xSCWTmfa9eMqmUscpSxWctRNqc5rO/ONbwkX1xJIkPgDx7w4C0o9bzPO2cqhuAhIOsl3ClYwZhs0rnk/pBkHGOUo5s7IEL0UKv5aXH/WSKFjbUalTW2Be/0CBijWn+B1zs0Fa8dRs6FVDnnF8oIOjd/w=
+	t=1745949573; cv=none; b=oricgqXeBfdBLkyHZKYUgzEVAHDILdJv6geXr+4/rMKg5S08yJ2GBuoxqe77OeyVSuB2/AY7foXSIWwvkmdPC6Ui701EAUupfdIqmLy4X76WMIPyr95J9LTSBhfugDGggCWbmOUMbilzAlnH6GD2a06rdSSvAcSbUaPDSU5eIL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949570; c=relaxed/simple;
-	bh=12YoUSXXcSJJdk6bVEwXkVWtp9KU1ajXAybskaF+dDw=;
+	s=arc-20240116; t=1745949573; c=relaxed/simple;
+	bh=FeSgW7woHjXNcHdOGe2pqrPcPMj+1is7fbNp7j5M6w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzkdQbkgtwONBspMDMCPTCGyGZ6PSnEkpAV3Txowron3hZuYqhhr2egfkdiCyY13Co3hjw8q+oy+gswoI4vZPw8MempR9tAFsVXRWOHW52+MCZw0h0xE8S68W2T16jYhZBg+ABCfXzvoSfADmzSuOfdfXIeRLN1KYeHM8Sw5t6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWxU9w8+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Plm3URwICPg84WfeZGeAnlMvSYszZuXTDqV/NyxfjlPudBENIowQwrPWeRJ+pbT52YWzs8ZX1Cg3tSNJEz2w1b+8ExXHAgcB3q9KLdJ1EGaRptAFJ+diC2cZrA6rDVoe6O4u4YI/Z3Rcd56RnxU6kcEwG5hsA9C0DamLAt7hty0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMg2rVIh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWxU9w8+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BCAC4CEE3;
-	Tue, 29 Apr 2025 17:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMg2rVIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8F7C4CEE3;
+	Tue, 29 Apr 2025 17:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949569;
-	bh=12YoUSXXcSJJdk6bVEwXkVWtp9KU1ajXAybskaF+dDw=;
+	s=korg; t=1745949573;
+	bh=FeSgW7woHjXNcHdOGe2pqrPcPMj+1is7fbNp7j5M6w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWxU9w8+kGpJX6SaasTvzLfx98/M5Brq225GZ9sX0xJDS6VmfgxLQFkB9FeZMF355
-	 Frp33JiPPeK3t37GXviMKKvA7IiIvfc1hnW3/5t2q41Th7Uj/yl9Rdg3j0DPPt8kgt
-	 PQDEGvynTQqW6ENTmMqhWGw+LRiRFtzunA6MRU38=
+	b=tMg2rVIhf7C2jpiQxaWPBq6ERpCcVgiQzhVIDhx8V5O3W5UVnfb5xZrQPyB3xT+fx
+	 om0Ai1IK0rMzoR6PPNoK4eeX/UMatBXnAKV40vYIaKMIRSpqX8k8RgxyAt51lvUJiU
+	 /FqljzPoKAHrjkhuK2zP6QlMTDa310uFqInQRfYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Manas Ghandat <ghandatmanas@gmail.com>,
-	syzbot+ccb458b6679845ee0bae@syzkaller.appspotmail.com,
-	Aditya Dutt <duttaditya18@gmail.com>
-Subject: [PATCH 5.15 361/373] jfs: define xtree root and page independently
-Date: Tue, 29 Apr 2025 18:43:58 +0200
-Message-ID: <20250429161137.979814374@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 362/373] comedi: jr3_pci: Fix synchronous deletion of timer
+Date: Tue, 29 Apr 2025 18:43:59 +0200
+Message-ID: <20250429161138.024280132@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,168 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Kleikamp <dave.kleikamp@oracle.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit a779ed754e52d582b8c0e17959df063108bd0656 upstream.
+commit 44d9b3f584c59a606b521e7274e658d5b866c699 upstream.
 
-In order to make array bounds checking sane, provide a separate
-definition of the in-inode xtree root and the external xtree page.
+When `jr3_pci_detach()` is called during device removal, it calls
+`timer_delete_sync()` to stop the timer, but the timer expiry function
+always reschedules the timer, so the synchronization is ineffective.
 
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Tested-by: Manas Ghandat <ghandatmanas@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=ccb458b6679845ee0bae
-Reported-by: syzbot+ccb458b6679845ee0bae@syzkaller.appspotmail.com
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
+Call `timer_shutdown_sync()` instead.  It does not matter that the timer
+expiry function pointer is cleared, because the device is being removed.
+
+Fixes: 07b509e6584a5 ("Staging: comedi: add jr3_pci driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250415123901.13483-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dinode.h |    2 +-
- fs/jfs/jfs_imap.c   |    6 +++---
- fs/jfs/jfs_incore.h |    2 +-
- fs/jfs/jfs_txnmgr.c |    4 ++--
- fs/jfs/jfs_xtree.c  |    4 ++--
- fs/jfs/jfs_xtree.h  |   37 +++++++++++++++++++++++--------------
- 6 files changed, 32 insertions(+), 23 deletions(-)
+ drivers/comedi/drivers/jr3_pci.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/jfs/jfs_dinode.h
-+++ b/fs/jfs/jfs_dinode.h
-@@ -96,7 +96,7 @@ struct dinode {
- #define di_gengen	u._file._u1._imap._gengen
+--- a/drivers/comedi/drivers/jr3_pci.c
++++ b/drivers/comedi/drivers/jr3_pci.c
+@@ -88,6 +88,7 @@ struct jr3_pci_poll_delay {
+ struct jr3_pci_dev_private {
+ 	struct timer_list timer;
+ 	struct comedi_device *dev;
++	bool timer_enable;
+ };
  
- 			union {
--				xtpage_t _xtroot;
-+				xtroot_t _xtroot;
- 				struct {
- 					u8 unused[16];	/* 16: */
- 					dxd_t _dxd;	/* 16: */
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -673,7 +673,7 @@ int diWrite(tid_t tid, struct inode *ip)
- 		 * This is the special xtree inside the directory for storing
- 		 * the directory table
- 		 */
--		xtpage_t *p, *xp;
-+		xtroot_t *p, *xp;
- 		xad_t *xad;
- 
- 		jfs_ip->xtlid = 0;
-@@ -687,7 +687,7 @@ int diWrite(tid_t tid, struct inode *ip)
- 		 * copy xtree root from inode to dinode:
- 		 */
- 		p = &jfs_ip->i_xtroot;
--		xp = (xtpage_t *) &dp->di_dirtable;
-+		xp = (xtroot_t *) &dp->di_dirtable;
- 		lv = ilinelock->lv;
- 		for (n = 0; n < ilinelock->index; n++, lv++) {
- 			memcpy(&xp->xad[lv->offset], &p->xad[lv->offset],
-@@ -716,7 +716,7 @@ int diWrite(tid_t tid, struct inode *ip)
- 	 *	regular file: 16 byte (XAD slot) granularity
- 	 */
- 	if (type & tlckXTREE) {
--		xtpage_t *p, *xp;
-+		xtroot_t *p, *xp;
- 		xad_t *xad;
- 
- 		/*
---- a/fs/jfs/jfs_incore.h
-+++ b/fs/jfs/jfs_incore.h
-@@ -66,7 +66,7 @@ struct jfs_inode_info {
- 	lid_t	xtlid;		/* lid of xtree lock on directory */
- 	union {
- 		struct {
--			xtpage_t _xtroot;	/* 288: xtree root */
-+			xtroot_t _xtroot;	/* 288: xtree root */
- 			struct inomap *_imap;	/* 4: inode map header	*/
- 		} file;
- 		struct {
---- a/fs/jfs/jfs_txnmgr.c
-+++ b/fs/jfs/jfs_txnmgr.c
-@@ -783,7 +783,7 @@ struct tlock *txLock(tid_t tid, struct i
- 			if (mp->xflag & COMMIT_PAGE)
- 				p = (xtpage_t *) mp->data;
- 			else
--				p = &jfs_ip->i_xtroot;
-+				p = (xtpage_t *) &jfs_ip->i_xtroot;
- 			xtlck->lwm.offset =
- 			    le16_to_cpu(p->header.nextindex);
+ union jr3_pci_single_range {
+@@ -597,10 +598,11 @@ static void jr3_pci_poll_dev(struct time
+ 				delay = sub_delay.max;
  		}
-@@ -1710,7 +1710,7 @@ static void xtLog(struct jfs_log * log,
+ 	}
++	if (devpriv->timer_enable) {
++		devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
++		add_timer(&devpriv->timer);
++	}
+ 	spin_unlock_irqrestore(&dev->spinlock, flags);
+-
+-	devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
+-	add_timer(&devpriv->timer);
+ }
  
- 	if (tlck->type & tlckBTROOT) {
- 		lrd->log.redopage.type |= cpu_to_le16(LOG_BTROOT);
--		p = &JFS_IP(ip)->i_xtroot;
-+		p = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
- 		if (S_ISDIR(ip->i_mode))
- 			lrd->log.redopage.type |=
- 			    cpu_to_le16(LOG_DIR_XTREE);
---- a/fs/jfs/jfs_xtree.c
-+++ b/fs/jfs/jfs_xtree.c
-@@ -1224,7 +1224,7 @@ xtSplitRoot(tid_t tid,
- 	struct xtlock *xtlck;
- 	int rc;
+ static struct jr3_pci_subdev_private *
+@@ -749,6 +751,7 @@ static int jr3_pci_auto_attach(struct co
+ 	devpriv->dev = dev;
+ 	timer_setup(&devpriv->timer, jr3_pci_poll_dev, 0);
+ 	devpriv->timer.expires = jiffies + msecs_to_jiffies(1000);
++	devpriv->timer_enable = true;
+ 	add_timer(&devpriv->timer);
  
--	sp = &JFS_IP(ip)->i_xtroot;
-+	sp = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
- 
- 	INCREMENT(xtStat.split);
- 
-@@ -3059,7 +3059,7 @@ static int xtRelink(tid_t tid, struct in
-  */
- void xtInitRoot(tid_t tid, struct inode *ip)
+ 	return 0;
+@@ -758,8 +761,12 @@ static void jr3_pci_detach(struct comedi
  {
--	xtpage_t *p;
-+	xtroot_t *p;
+ 	struct jr3_pci_dev_private *devpriv = dev->private;
  
- 	/*
- 	 * acquire a transaction lock on the root
---- a/fs/jfs/jfs_xtree.h
-+++ b/fs/jfs/jfs_xtree.h
-@@ -65,24 +65,33 @@ struct xadlist {
- #define XTPAGEMAXSLOT	256
- #define XTENTRYSTART	2
+-	if (devpriv)
+-		del_timer_sync(&devpriv->timer);
++	if (devpriv) {
++		spin_lock_bh(&dev->spinlock);
++		devpriv->timer_enable = false;
++		spin_unlock_bh(&dev->spinlock);
++		timer_delete_sync(&devpriv->timer);
++	}
  
-+struct xtheader {
-+	__le64 next;	/* 8: */
-+	__le64 prev;	/* 8: */
-+
-+	u8 flag;	/* 1: */
-+	u8 rsrvd1;	/* 1: */
-+	__le16 nextindex;	/* 2: next index = number of entries */
-+	__le16 maxentry;	/* 2: max number of entries */
-+	__le16 rsrvd2;	/* 2: */
-+
-+	pxd_t self;	/* 8: self */
-+};
-+
- /*
-- *	xtree page:
-+ *	xtree root (in inode):
-  */
- typedef union {
--	struct xtheader {
--		__le64 next;	/* 8: */
--		__le64 prev;	/* 8: */
--
--		u8 flag;	/* 1: */
--		u8 rsrvd1;	/* 1: */
--		__le16 nextindex;	/* 2: next index = number of entries */
--		__le16 maxentry;	/* 2: max number of entries */
--		__le16 rsrvd2;	/* 2: */
--
--		pxd_t self;	/* 8: self */
--	} header;		/* (32) */
--
-+	struct xtheader header;
- 	xad_t xad[XTROOTMAXSLOT];	/* 16 * maxentry: xad array */
-+} xtroot_t;
-+
-+/*
-+ *	xtree page:
-+ */
-+typedef union {
-+	struct xtheader header;
-+	xad_t xad[XTPAGEMAXSLOT];	/* 16 * maxentry: xad array */
- } xtpage_t;
- 
- /*
+ 	comedi_pci_detach(dev);
+ }
 
 
