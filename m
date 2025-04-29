@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105CA2517A6;
-	Tue, 29 Apr 2025 17:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9B239072;
+	Tue, 29 Apr 2025 17:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949068; cv=none; b=Dq9/zywrbdHWGGa3T1Rfe/KubMCv1Nc4M9lF5RBrQPxipUc7UU1iAUPkw1RDeixqkU7GFtcHFTo0RIuUDB2uTbxnNmin4v/G/7QR5Tq+g2w9A4XZLqYqyNT2gzIdIfliIYa2MMxY+Nb33iIaCBPKOf9KGgpbcW8aZzFWokPDnV8=
+	t=1745949071; cv=none; b=Zdt92SNK1hv25sJvfKEsA9kNtwS6XccWoAt5gtRCudUbgeItKtPsf1YPJgUPZGihmiG3C0Tgi7yB7G05e6mDrjePe0vki6bcvxRTDYiEH77kl2eYUY3dXleVusjMvB1e/COmID7qUnf/r/pp0Js8kmttRjrTXh3B5H/C+7danKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949068; c=relaxed/simple;
-	bh=uCBLZ4nU5hTq08akN5YnnvLO4lsKa0bYK9+SRvjDPHo=;
+	s=arc-20240116; t=1745949071; c=relaxed/simple;
+	bh=PNqyWHymR0wOZ0k/qOzZbhgusK+lKCykqF9ltot5UlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=isE2+PUCkVy8rctdZkV1Wnwc9wON4f+B/LZ/qNiJjyVB3DSep8ClK7o/kYIe22W8HFUYosHggwLOyHJVkyQxt/eRv/hVeqKAGHGgdOTdHyiXgPDhX1AgPufPGVMfT59+Fp5+LNkIfeJcgVClVQAKI5qhHZA8CbOiGJMcVwWzTog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbgz9YjN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cl/1U1abCtrd8KrWlNYSMc2VxHyZGFFAVapeKoofyyWEmmzfDXZliDhzdw6rMkGDS9ZOxm86fe4GDo45KFPmZJWI3MIeRByDFtmjPHzP+BtLXGsPif7Jmf83MVJKALUJIXRNXP2DbdRzQVfvYSRW0JjtG6RNG/UkpzWCReOpIX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZOUgZBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbgz9YjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B99CC4CEE3;
-	Tue, 29 Apr 2025 17:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZOUgZBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7125DC4CEE3;
+	Tue, 29 Apr 2025 17:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949067;
-	bh=uCBLZ4nU5hTq08akN5YnnvLO4lsKa0bYK9+SRvjDPHo=;
+	s=korg; t=1745949070;
+	bh=PNqyWHymR0wOZ0k/qOzZbhgusK+lKCykqF9ltot5UlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbgz9YjNnRPGEJGwpu9C0DEjrLZ4dkMCYF3pE3vsB22ncJ3ApGd0AP9o5XE/Dz5qV
-	 JXgwepkFAjSlT+bsmK3UTIJ28ND2qZyQggtTqlQGSsuBny9v07HniNmUu5mcbp2MDd
-	 2c2Hb3KcxOWFgQbrE0x+0zlIayqe1U9oAnaORYeA=
+	b=ZZOUgZBAC4AguIt1yBZGzjfRm6uIkwhdRtdqHMM2MUKamgkRnfuQf9bGhnkOOmPQ0
+	 Rhzh6jU7Xu/8zJXW3NM8vX0g+x/u4vjgK55PLtSUIKLMoCbTL9phE6bYe/Bk8BNEK8
+	 GhUumxPQsTU1DgJs1O9VQTtIA+2na3VhRTlGL2Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	Sasha Levin <sashal@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 204/373] net: fix crash when config small gso_max_size/gso_ipv4_max_size
-Date: Tue, 29 Apr 2025 18:41:21 +0200
-Message-ID: <20250429161131.555999310@linuxfoundation.org>
+Subject: [PATCH 5.15 205/373] filemap: Fix bounds checking in filemap_read()
+Date: Tue, 29 Apr 2025 18:41:22 +0200
+Message-ID: <20250429161131.597706216@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,50 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 9ab5cf19fb0e4680f95e506d6c544259bf1111c4 ]
+[ Upstream commit ace149e0830c380ddfce7e466fe860ca502fe4ee ]
 
-Config a small gso_max_size/gso_ipv4_max_size will lead to an underflow
-in sk_dst_gso_max_size(), which may trigger a BUG_ON crash,
-because sk->sk_gso_max_size would be much bigger than device limits.
-Call Trace:
-tcp_write_xmit
-    tso_segs = tcp_init_tso_segs(skb, mss_now);
-        tcp_set_skb_tso_segs
-            tcp_skb_pcount_set
-                // skb->len = 524288, mss_now = 8
-                // u16 tso_segs = 524288/8 = 65535 -> 0
-                tso_segs = DIV_ROUND_UP(skb->len, mss_now)
-    BUG_ON(!tso_segs)
-Add check for the minimum value of gso_max_size and gso_ipv4_max_size.
+If the caller supplies an iocb->ki_pos value that is close to the
+filesystem upper limit, and an iterator with a count that causes us to
+overflow that limit, then filemap_read() enters an infinite loop.
 
-Fixes: 46e6b992c250 ("rtnetlink: allow GSO maximums to be set on device creation")
-Fixes: 9eefedd58ae1 ("net: add gso_ipv4_max_size and gro_ipv4_max_size per device")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241023035213.517386-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Resolve minor conflicts to fix CVE-2024-50258 ]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[Harshit: Clean cherrypick from 6.1.y commit]
+This behaviour was discovered when testing xfstests generic/525 with the
+"localio" optimisation for loopback NFS mounts.
+
+Reported-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: c2a9737f45e2 ("vfs,mm: fix a dead loop in truncate_inode_pages_range()")
+Tested-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+(cherry picked from commit ace149e0830c380ddfce7e466fe860ca502fe4ee)
+[Harshit: Minor conflict resolved due to missing commit: 25d6a23e8d28
+("filemap: Convert filemap_get_read_batch() to use a folio_batch") in
+5.15.y]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    2 +-
+ mm/filemap.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1899,7 +1899,7 @@ static const struct nla_policy ifla_poli
- 	[IFLA_NUM_TX_QUEUES]	= { .type = NLA_U32 },
- 	[IFLA_NUM_RX_QUEUES]	= { .type = NLA_U32 },
- 	[IFLA_GSO_MAX_SEGS]	= { .type = NLA_U32 },
--	[IFLA_GSO_MAX_SIZE]	= { .type = NLA_U32 },
-+	[IFLA_GSO_MAX_SIZE]	= NLA_POLICY_MIN(NLA_U32, MAX_TCP_HEADER + 1),
- 	[IFLA_PHYS_PORT_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
- 	[IFLA_CARRIER_CHANGES]	= { .type = NLA_U32 },  /* ignored */
- 	[IFLA_PHYS_SWITCH_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2617,7 +2617,7 @@ ssize_t filemap_read(struct kiocb *iocb,
+ 	if (unlikely(!iov_iter_count(iter)))
+ 		return 0;
+ 
+-	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
++	iov_iter_truncate(iter, inode->i_sb->s_maxbytes - iocb->ki_pos);
+ 	pagevec_init(&pvec);
+ 
+ 	do {
 
 
