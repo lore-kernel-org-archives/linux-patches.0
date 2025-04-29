@@ -1,39 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7837D20C488;
-	Tue, 29 Apr 2025 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1372524C098;
+	Tue, 29 Apr 2025 18:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950238; cv=none; b=sRxfPUt1X6MT0TsPEns7VialXJT/v25Yh7H5amPQ4NHtY3yJODZ1Y5b7lweLhTpcmqLLfFK0PEYZCeKAIQJhhkvpRHWd8pM5oMz23WVm0j3DIXGKeWCePZdg9m5PM3rB2rmJsO2oYmCssk6jg7YDtatO5uXYuONYrMgiTAeuaEc=
+	t=1745950241; cv=none; b=EzvJb3znO/P+jUnmWIDYLTNzsAVQjgkYeeadzmhzVAhAnjoMz6jBvK5s3FpZYu+cUhj+EMCLHH5tfCan/QSXmsr2b/I+rLqJa+cpsIZo8Sr3cqYRwFLrivb+IMl+ofvRINNIWS875OKfXcWl0ySeFsnw0EXw79ofkL8Faq+mQYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950238; c=relaxed/simple;
-	bh=fXjlj7BOO4YTOKO76dBKHDS4Wpe/wHJj1Xfg05yPRWw=;
+	s=arc-20240116; t=1745950241; c=relaxed/simple;
+	bh=+idx8h2VoiPk4i8zL2KeW1otE3q0meyKn/nRLuapqR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APZVXy9w0UFjHA7I49GML1rGML1kWzVgQ6+xCP9t46c9zP3echQKJxJApRCULxgLfAT0RTATfW4QBDKqQOw62eWSXoE2IbF5Ok9ZJwAJNjAnLUpHCKTgdwpaEmtImLkevuEJECMOSNIKMfmfHq04wquSk928DJSR7OIi4oRkmPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOCs46t4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=InxFnoVJiJrXI2MyWuPG6/d/AGnN3XomhgyIVIKs6xFripoK32xY6bOO/IsW5jND7d0JRdkj0vTOiOsY8gz0eKShat5+qltxbpiXsBAwlVG/Y/N3v3TuCMZNHUJ6xQxt2cRDu0NgRpphka9jGjXNnD2QC+tOgYov1Z0KLY7HjAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lfwe2Zhk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOCs46t4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625A7C4CEE3;
-	Tue, 29 Apr 2025 18:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lfwe2Zhk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE84C4CEE3;
+	Tue, 29 Apr 2025 18:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950237;
-	bh=fXjlj7BOO4YTOKO76dBKHDS4Wpe/wHJj1Xfg05yPRWw=;
+	s=korg; t=1745950240;
+	bh=+idx8h2VoiPk4i8zL2KeW1otE3q0meyKn/nRLuapqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOCs46t4CRP9/8VhVfqarzBDaXfEfmSvaPVcSKuhWgvp4nWgtP4Z5kwzZxEpR7Tjr
-	 E2XlCdFds7JxgfE0S61ACcZ+Y7EDQzk9pi1b8B3W5jIjcfshasnpUBir+67gS9j59m
-	 fbjqSsZdqQ7w3JN/YkHdlvtDpcFWNx1HFPF3sgHE=
+	b=Lfwe2Zhk1sZnFd5PSNNrxU2E8+N5CUoHzS1SWeaYEzESoGxDMdlFpeyWyUkjr8rnf
+	 Rrdk0XQ2HVAtu4A0ehcKGFJQg0LKhSHSgzBEo9Fx5O/oEuVCgT7LKMqLdndzTe9EtH
+	 uFNMRmiR4XJVoYDTILr76HGbIRv+o0kURBVthgCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/204] clk: renesas: r9a07g04[34]: Use SEL_SDHI1_STS status configuration for SD1 mux
-Date: Tue, 29 Apr 2025 18:41:58 +0200
-Message-ID: <20250429161100.650001038@linuxfoundation.org>
+Subject: [PATCH 6.6 004/204] x86/mce: use is_copy_from_user() to determine copy-from-user context
+Date: Tue, 29 Apr 2025 18:41:32 +0200
+Message-ID: <20250429161059.579736213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,51 +68,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 9b2a11c83859c06233049b134bd8ee974b284559 ]
+[ Upstream commit 1a15bb8303b6b104e78028b6c68f76a0d4562134 ]
 
-The status configuration for SD1 mux clock is SEL_SDHI1_STS. Fix it.
+Patch series "mm/hwpoison: Fix regressions in memory failure handling",
+v4.
 
-Fixes: 16b86e5c03c5 ("clk: renesas: rzg2l: Refactor SD mux driver")
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20240131102930.1841901-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: 7f22a298d926 ("clk: renesas: r9a07g043: Fix HP clock source for RZ/Five")
+## 1. What am I trying to do:
+
+This patchset resolves two critical regressions related to memory failure
+handling that have appeared in the upstream kernel since version 5.17, as
+compared to 5.10 LTS.
+
+    - copyin case: poison found in user page while kernel copying from user space
+    - instr case: poison found while instruction fetching in user space
+
+## 2. What is the expected outcome and why
+
+- For copyin case:
+
+Kernel can recover from poison found where kernel is doing get_user() or
+copy_from_user() if those places get an error return and the kernel return
+-EFAULT to the process instead of crashing.  More specifily, MCE handler
+checks the fixup handler type to decide whether an in kernel #MC can be
+recovered.  When EX_TYPE_UACCESS is found, the PC jumps to recovery code
+specified in _ASM_EXTABLE_FAULT() and return a -EFAULT to user space.
+
+- For instr case:
+
+If a poison found while instruction fetching in user space, full recovery
+is possible.  User process takes #PF, Linux allocates a new page and fills
+by reading from storage.
+
+## 3. What actually happens and why
+
+- For copyin case: kernel panic since v5.17
+
+Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
+extable fixup type, EX_TYPE_EFAULT_REG, and later patches updated the
+extable fixup type for copy-from-user operations, changing it from
+EX_TYPE_UACCESS to EX_TYPE_EFAULT_REG.  It breaks previous EX_TYPE_UACCESS
+handling when posion found in get_user() or copy_from_user().
+
+- For instr case: user process is killed by a SIGBUS signal due to #CMCI
+  and #MCE race
+
+When an uncorrected memory error is consumed there is a race between the
+CMCI from the memory controller reporting an uncorrected error with a UCNA
+signature, and the core reporting and SRAR signature machine check when
+the data is about to be consumed.
+
+### Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
+
+Prior to Icelake memory controllers reported patrol scrub events that
+detected a previously unseen uncorrected error in memory by signaling a
+broadcast machine check with an SRAO (Software Recoverable Action
+Optional) signature in the machine check bank.  This was overkill because
+it's not an urgent problem that no core is on the verge of consuming that
+bad data.  It's also found that multi SRAO UCE may cause nested MCE
+interrupts and finally become an IERR.
+
+Hence, Intel downgrades the machine check bank signature of patrol scrub
+from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
+#CMCI.  Just to add to the confusion, Linux does take an action (in
+uc_decode_notifier()) to try to offline the page despite the UC*NA*
+signature name.
+
+### Background: why #CMCI and #MCE race when poison is consuming in
+    Intel platform [1]
+
+Having decided that CMCI/UCNA is the best action for patrol scrub errors,
+the memory controller uses it for reads too.  But the memory controller is
+executing asynchronously from the core, and can't tell the difference
+between a "real" read and a speculative read.  So it will do CMCI/UCNA if
+an error is found in any read.
+
+Thus:
+
+1) Core is clever and thinks address A is needed soon, issues a
+   speculative read.
+
+2) Core finds it is going to use address A soon after sending the read
+   request
+
+3) The CMCI from the memory controller is in a race with MCE from the
+   core that will soon try to retire the load from address A.
+
+Quite often (because speculation has got better) the CMCI from the memory
+controller is delivered before the core is committed to the instruction
+reading address A, so the interrupt is taken, and Linux offlines the page
+(marking it as poison).
+
+## Why user process is killed for instr case
+
+Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
+"not recovered"") tries to fix noise message "Memory error not recovered"
+and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
+that kill_accessing_process() return -EHWPOISON for instr case, as result,
+kill_me_maybe() send a SIGBUS to user process.
+
+# 4. The fix, in my opinion, should be:
+
+- For copyin case:
+
+The key point is whether the error context is in a read from user memory.
+We do not care about the ex-type if we know its a MOV reading from
+userspace.
+
+is_copy_from_user() return true when both of the following two checks are
+true:
+
+    - the current instruction is copy
+    - source address is user memory
+
+If copy_user is true, we set
+
+m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
+
+Then do_machine_check() will try fixup_exception() first.
+
+- For instr case: let kill_accessing_process() return 0 to prevent a SIGBUS.
+
+- For patch 3:
+
+The return value of memory_failure() is quite important while discussed
+instr case regression with Tony and Miaohe for patch 2, so add comment
+about the return value.
+
+This patch (of 3):
+
+Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
+extable fixup type, EX_TYPE_EFAULT_REG, and commit 4c132d1d844a
+("x86/futex: Remove .fixup usage") updated the extable fixup type for
+copy-from-user operations, changing it from EX_TYPE_UACCESS to
+EX_TYPE_EFAULT_REG.  The error context for copy-from-user operations no
+longer functions as an in-kernel recovery context.  Consequently, the
+error context for copy-from-user operations no longer functions as an
+in-kernel recovery context, resulting in kernel panics with the message:
+"Machine check: Data load in unrecoverable area of kernel."
+
+To address this, it is crucial to identify if an error context involves a
+read operation from user memory.  The function is_copy_from_user() can be
+utilized to determine:
+
+    - the current operation is copy
+    - when reading user memory
+
+When these conditions are met, is_copy_from_user() will return true,
+confirming that it is indeed a direct copy from user memory.  This check
+is essential for correctly handling the context of errors in these
+operations without relying on the extable fixup types that previously
+allowed for in-kernel recovery.
+
+So, use is_copy_from_user() to determine if a context is copy user directly.
+
+Link: https://lkml.kernel.org/r/20250312112852.82415-1-xueshuai@linux.alibaba.com
+Link: https://lkml.kernel.org/r/20250312112852.82415-2-xueshuai@linux.alibaba.com
+Fixes: 4c132d1d844a ("x86/futex: Remove .fixup usage")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c | 2 +-
- drivers/clk/renesas/r9a07g044-cpg.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/mce/severity.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
-index 55c58b9a9b804..9ad7ceb3ab1ba 100644
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -138,7 +138,7 @@ static const struct cpg_core_clk r9a07g043_core_clks[] __initconst = {
- 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
- 	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
- 		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
--	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, SEL_SDHI0_STS, sel_shdi,
-+	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_shdi,
- 		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 	DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G043_CLK_SD0, 1, 4),
- 	DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G043_CLK_SD1, 1, 4),
-diff --git a/drivers/clk/renesas/r9a07g044-cpg.c b/drivers/clk/renesas/r9a07g044-cpg.c
-index 1047278c9079a..bc822b9fd7ce6 100644
---- a/drivers/clk/renesas/r9a07g044-cpg.c
-+++ b/drivers/clk/renesas/r9a07g044-cpg.c
-@@ -178,7 +178,7 @@ static const struct {
- 		DEF_FIXED("SPI1", R9A07G044_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
- 		DEF_SD_MUX("SD0", R9A07G044_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
- 			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
--		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, SEL_SDHI0_STS, sel_shdi,
-+		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_shdi,
- 			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 		DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G044_CLK_SD0, 1, 4),
- 		DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G044_CLK_SD1, 1, 4),
+diff --git a/arch/x86/kernel/cpu/mce/severity.c b/arch/x86/kernel/cpu/mce/severity.c
+index bca780fa5e577..9c5754229d6ed 100644
+--- a/arch/x86/kernel/cpu/mce/severity.c
++++ b/arch/x86/kernel/cpu/mce/severity.c
+@@ -288,13 +288,12 @@ static noinstr int error_context(struct mce *m, struct pt_regs *regs)
+ 	copy_user  = is_copy_from_user(regs);
+ 	instrumentation_end();
+ 
+-	switch (fixup_type) {
+-	case EX_TYPE_UACCESS:
+-		if (!copy_user)
+-			return IN_KERNEL;
+-		m->kflags |= MCE_IN_KERNEL_COPYIN;
+-		fallthrough;
++	if (copy_user) {
++		m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
++		return IN_KERNEL_RECOV;
++	}
+ 
++	switch (fixup_type) {
+ 	case EX_TYPE_FAULT_MCE_SAFE:
+ 	case EX_TYPE_DEFAULT_MCE_SAFE:
+ 		m->kflags |= MCE_IN_KERNEL_RECOV;
 -- 
 2.39.5
 
