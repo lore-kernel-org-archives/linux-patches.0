@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3F01FE468;
-	Tue, 29 Apr 2025 17:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA2924503E;
+	Tue, 29 Apr 2025 17:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947725; cv=none; b=pp/Pw0Skblcj7CwNbjfx0uXXN/2UqhD1/fF5ZbGP5c8+OdF1PN4DwBzudV9GwoXXRN+bfWX/FXsciaImmn2fEZKvBVbH9R/bXuETjh//YR0psq3yN6+IdMEAKxI5MHcYvaYepJPSbHm7myrkIsGEM8ExUtn+vR9hsnyIC/VZt3c=
+	t=1745947728; cv=none; b=at9lhB73uDv2NHcn8tSHA15Rkx3P5PKOA+SMq4NHRef1HB2H18fgBOq/S4RwiRxBgT5W9Pc2HbAC3cJBPZbMU2q8iMnmfWIBOB/lxfIO3HMJK2X2FAxp9/mhDbnJ6gAIZtJhuedgQkpdndyWuj8NdlaZAnGxFkFkCQPlDdLrfF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947725; c=relaxed/simple;
-	bh=wujIosWUttdoZxQ+kQlYJ7cfzDWjilgB0Tz9sx8i554=;
+	s=arc-20240116; t=1745947728; c=relaxed/simple;
+	bh=yjTCV7PVfF+4EsFXN6ADst08EqydfgE2FyrqyMKXXeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gc5bQvjoC5VPEuV3fFCbzDJ963RoQlgTJSSEOhqQPLNAWRfvcSuhB9+xj9+h7f0zYtbjHsHRIA3U/nf7QHN7HXPForTEn7ffZjlK91ufCdlgF/Hw1c8M+Ckr/GnlWDmJN3Nammzi0zX/FJbC4MtiUwanb4TPtdH2+EtvFCv88So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgLx8EO+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJVZaqUVINpO9BMzf4uAdMLrsaZmnF0+ESV2l43wTydf0MjzCmhtk87njQxaS8eHUccVqW2eUWAN5ss5134QxJwGjbUZhxnG6e2s1pI+y6H0oSiWiN5v1Ea1NhigA3DR1GdJrTkfuqqAFrI6s3kcBFeRmLWABhc/OrN8P/44nuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6GyaRST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgLx8EO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630C8C4CEE9;
-	Tue, 29 Apr 2025 17:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6GyaRST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E484C4CEE9;
+	Tue, 29 Apr 2025 17:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947725;
-	bh=wujIosWUttdoZxQ+kQlYJ7cfzDWjilgB0Tz9sx8i554=;
+	s=korg; t=1745947728;
+	bh=yjTCV7PVfF+4EsFXN6ADst08EqydfgE2FyrqyMKXXeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgLx8EO+aNrwqkLFH9V0tIThLF0DscCA76LcXQoiPQDzfyBaQA+jiW3oMBpqVoize
-	 2RqhJW/x3Eez6MEdes12geMLVx0n8pV3CWjqr7qSgH9ECceCnNzlkQn8bZXi5DJpRt
-	 UxQUaMa7fYcde1yfVfdr4sRNGomIZxGW8F5tIdFc=
+	b=i6GyaRSThaAzRKzxeZQsS7QaRLKQkBtHLFv27lFPmJvp2gB1a2rhvzAC5NZRHdreS
+	 EteOLdpGkfgzJJk/GCcvMq+6Y8OgNjnfLeQfplaR2Kcuq/J/JfjixyHJ9mkdB/H+xB
+	 m6XEYAxOkl/kbMdwbcMfP+sO2OUPgRr+cPYA8dOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/280] bpf: Add namespace to BPF internal symbols
-Date: Tue, 29 Apr 2025 18:40:28 +0200
-Message-ID: <20250429161118.669603433@linuxfoundation.org>
+Subject: [PATCH 6.12 088/280] perf/x86: Fix non-sampling (counting) events on certain x86 platforms
+Date: Tue, 29 Apr 2025 18:40:29 +0200
+Message-ID: <20250429161118.711565947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,78 +59,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Luo Gengkun <luogengkun@huaweicloud.com>
 
-[ Upstream commit f88886de0927a2adf4c1b4c5c1f1d31d2023ef74 ]
+[ Upstream commit 1a97fea9db9e9b9c4839d4232dde9f505ff5b4cc ]
 
-Add namespace to BPF internal symbols used by light skeleton
-to prevent abuse and document with the code their allowed usage.
+Perf doesn't work at perf stat for hardware events on certain x86 platforms:
 
-Fixes: b1d18a7574d0 ("bpf: Extend sys_bpf commands for bpf_syscall programs.")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/bpf/20250425014542.62385-1-alexei.starovoitov@gmail.com
+ $perf stat -- sleep 1
+ Performance counter stats for 'sleep 1':
+             16.44 msec task-clock                       #    0.016 CPUs utilized
+                 2      context-switches                 #  121.691 /sec
+                 0      cpu-migrations                   #    0.000 /sec
+                54      page-faults                      #    3.286 K/sec
+   <not supported>	cycles
+   <not supported>	instructions
+   <not supported>	branches
+   <not supported>	branch-misses
+
+The reason is that the check in x86_pmu_hw_config() for sampling events is
+unexpectedly applied to counting events as well.
+
+It should only impact x86 platforms with limit_period used for non-PEBS
+events. For Intel platforms, it should only impact some older platforms,
+e.g., HSW, BDW and NHM.
+
+Fixes: 88ec7eedbbd2 ("perf/x86: Fix low freqency setting issue")
+Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Jiri Olsa <jolsa@redhat.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20250423064724.3716211-1-luogengkun@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/bpf/bpf_devel_QA.rst    |    8 ++++++++
- kernel/bpf/preload/bpf_preload_kern.c |    1 +
- kernel/bpf/syscall.c                  |    6 +++---
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ arch/x86/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/bpf/bpf_devel_QA.rst
-+++ b/Documentation/bpf/bpf_devel_QA.rst
-@@ -382,6 +382,14 @@ In case of new BPF instructions, once th
- into the Linux kernel, please implement support into LLVM's BPF back
- end. See LLVM_ section below for further information.
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 0d33c85da4535..d737d53d03aa9 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -628,7 +628,7 @@ int x86_pmu_hw_config(struct perf_event *event)
+ 	if (event->attr.type == event->pmu->type)
+ 		event->hw.config |= x86_pmu_get_event_config(event);
  
-+Q: What "BPF_INTERNAL" symbol namespace is for?
-+-----------------------------------------------
-+A: Symbols exported as BPF_INTERNAL can only be used by BPF infrastructure
-+like preload kernel modules with light skeleton. Most symbols outside
-+of BPF_INTERNAL are not expected to be used by code outside of BPF either.
-+Symbols may lack the designation because they predate the namespaces,
-+or due to an oversight.
-+
- Stable submission
- =================
- 
---- a/kernel/bpf/preload/bpf_preload_kern.c
-+++ b/kernel/bpf/preload/bpf_preload_kern.c
-@@ -89,4 +89,5 @@ static void __exit fini(void)
- }
- late_initcall(load);
- module_exit(fini);
-+MODULE_IMPORT_NS("BPF_INTERNAL");
- MODULE_LICENSE("GPL");
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1457,7 +1457,7 @@ struct bpf_map *bpf_map_get(u32 ufd)
- 
- 	return map;
- }
--EXPORT_SYMBOL(bpf_map_get);
-+EXPORT_SYMBOL_NS(bpf_map_get, BPF_INTERNAL);
- 
- struct bpf_map *bpf_map_get_with_uref(u32 ufd)
- {
-@@ -3223,7 +3223,7 @@ struct bpf_link *bpf_link_get_from_fd(u3
- 	bpf_link_inc(link);
- 	return link;
- }
--EXPORT_SYMBOL(bpf_link_get_from_fd);
-+EXPORT_SYMBOL_NS(bpf_link_get_from_fd, BPF_INTERNAL);
- 
- static void bpf_tracing_link_release(struct bpf_link *link)
- {
-@@ -5853,7 +5853,7 @@ int kern_sys_bpf(int cmd, union bpf_attr
- 		return ____bpf_sys_bpf(cmd, attr, size);
- 	}
- }
--EXPORT_SYMBOL(kern_sys_bpf);
-+EXPORT_SYMBOL_NS(kern_sys_bpf, BPF_INTERNAL);
- 
- static const struct bpf_func_proto bpf_sys_bpf_proto = {
- 	.func		= bpf_sys_bpf,
+-	if (!event->attr.freq && x86_pmu.limit_period) {
++	if (is_sampling_event(event) && !event->attr.freq && x86_pmu.limit_period) {
+ 		s64 left = event->attr.sample_period;
+ 		x86_pmu.limit_period(event, &left);
+ 		if (left > event->attr.sample_period)
+-- 
+2.39.5
+
 
 
