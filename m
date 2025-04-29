@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AE282C60;
-	Tue, 29 Apr 2025 17:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4062782C60;
+	Tue, 29 Apr 2025 17:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946289; cv=none; b=O2+MSx+GCd6bdAZn8uVbcflMf4rLrpmFTYjnEJfpfPiqZOCywbrX7sjmfGj7j+Wzmu1+WEnUfm1A+SIxIy3gw+2ApwdDTdkG4k23m8WFmmjmV9aMaqLaXEl3+Xi048O8IqWS/KCnZBbEHuNgZMnRqWJnSFhZ6dzJxDq5MLrdvoE=
+	t=1745946292; cv=none; b=D0dldVOuyh/9fDoa+RH1pfeFegmqbMEyBdnyWV8/pZKIH+umRXAnb93aQpXyBVwind79Dn3ba7eiCBQr/4ayg3NbYzpSFfjow2H0kqMZhftwdL9++5Pa8K8+XCTq2RqjB+5axpNhpeu1hXgityQIU0l/cqJjmU3reHGfHbo3w0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946289; c=relaxed/simple;
-	bh=mnGDyU/RFt8/JUYEgbzGvEmeRMSneSUB86vRxBvTDCA=;
+	s=arc-20240116; t=1745946292; c=relaxed/simple;
+	bh=49IfSOYqYvpLJE64F17FwhURUwRmuVrSv3l0mfssrnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSHNLifERF6/1YCSzQfFPFHwh7Xrf5rdImEHAY8LBr/UBav/Ho54/e9dLqINsbWIi2sGnIyfYylA1UPKd//QYtE8fC/GenIYbFICKPbvq7kAKTEq5qJKLs2T7sZJv/eRuEGaa06N+olomN/0ljemS5kVlZC7YJFpi/tx3Ikse7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp1ROMaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvYFLsb56lD7BbZ+7bbBb9j1wSshduX8kkAhmk4Y7a8QIFLNxMpsASS7ZNjfWHeu4kdEFur23ZpkPYV9HBzazF2IF5LRWjcqVSoYVv/jFxDagsdMjMcYsFSYeUT3nvwIClfIC4T4epvyNcfHtXM5+DsyvbykP6NNNBFXMjGZpyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFtAdYBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp1ROMaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47A0C4CEE3;
-	Tue, 29 Apr 2025 17:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFtAdYBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFACC4CEE3;
+	Tue, 29 Apr 2025 17:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946289;
-	bh=mnGDyU/RFt8/JUYEgbzGvEmeRMSneSUB86vRxBvTDCA=;
+	s=korg; t=1745946292;
+	bh=49IfSOYqYvpLJE64F17FwhURUwRmuVrSv3l0mfssrnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mp1ROMaBmzGiDGXBx/JNl6kH0IXXhqVQktOil/PvZ+mwmWiJqWNKZLggfUV9Q0Z+U
-	 w6A6MfI/gHJgdRJK+RZo3CVbPlcjXEoSDSYAbBN9w2PNxPdPaJEVfPrRwwaIqmi6JV
-	 8b2URg0etaiDILDIN4Zegv6iKTvpmXBPKXkSRM70=
+	b=UFtAdYBRhhYuF9fI1qCf0bwTsJyyxYxiRxYteChVzz9l4hOO26ZmqVgmFkJ6232cR
+	 dSMFxjwzvo0eGoFmonAsQqT04ovYV3OwC/JyMCvI0uEFfML3CVTe+HAHAPLw5Hjjl7
+	 RT4yC/rp/n/bFtCF3ngH6AdTIK1MJhMS5Wn9JEiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 187/311] clk: check for disabled clock-provider in of_clk_get_hw_from_clkspec()
-Date: Tue, 29 Apr 2025 18:40:24 +0200
-Message-ID: <20250429161128.676147564@linuxfoundation.org>
+Subject: [PATCH 6.14 188/311] parisc: PDT: Fix missing prototype warning
+Date: Tue, 29 Apr 2025 18:40:25 +0200
+Message-ID: <20250429161128.716168060@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,58 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit b20150d499b3ee5c2d632fbc5ac94f98dd33accf ]
+[ Upstream commit b899981750dcb958ceffa4462d903963ee494aa2 ]
 
-of_clk_get_hw_from_clkspec() checks all available clock-providers by
-comparing their of nodes to the one from the clkspec. If no matching
-clock provider is found, the function returns -EPROBE_DEFER to cause a
-re-check at a later date. If a matching clock provider is found, an
-authoritative answer can be retrieved from it whether the clock exists
-or not.
+As reported by the kernel test robot, the following error occurs:
 
-This does not take into account that the clock-provider may never
-appear, because it's node is disabled. This can happen when a clock is
-optional, provided by a separate block which never gets enabled.
+arch/parisc/kernel/pdt.c:65:6: warning: no previous prototype for 'arch_report_meminfo' [-Wmissing-prototypes]
+      65 | void arch_report_meminfo(struct seq_file *m)
+         |      ^~~~~~~~~~~~~~~~~~~
 
-One example of this happening is the rk3588's VOP, which has optional
-additional display clocks coming from PLLs inside the hdmiphy blocks.
-These can be used for better rates, but the system will also work
-without them.
+arch_report_meminfo() is declared in include/linux/proc_fs.h and only
+defined when CONFIG_PROC_FS is enabled. Wrap its definition in #ifdef
+CONFIG_PROC_FS to fix the -Wmissing-prototypes warning.
 
-The problem around that is described in the followups to[1]. As we
-already know the of node of the presumed clock provider, add a check via
-of_device_is_available() whether this is a "valid" device node. This
-prevents eternal defer loops.
-
-Link: https://lore.kernel.org/dri-devel/20250215-vop2-hdmi1-disp-modes-v1-3-81962a7151d6@collabora.com/ [1]
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Tested-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250222223733.2990179-1-heiko@sntech.de
-[sboyd@kernel.org: Reword commit text a bit]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502082315.IPaHaTyM-lkp@intel.com/
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/parisc/kernel/pdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index cf7720b9172ff..50faafbf5dda5 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -5258,6 +5258,10 @@ of_clk_get_hw_from_clkspec(struct of_phandle_args *clkspec)
- 	if (!clkspec)
- 		return ERR_PTR(-EINVAL);
+diff --git a/arch/parisc/kernel/pdt.c b/arch/parisc/kernel/pdt.c
+index 0f9b3b5914cf6..b70b67adb855f 100644
+--- a/arch/parisc/kernel/pdt.c
++++ b/arch/parisc/kernel/pdt.c
+@@ -63,6 +63,7 @@ static unsigned long pdt_entry[MAX_PDT_ENTRIES] __page_aligned_bss;
+ #define PDT_ADDR_PERM_ERR	(pdt_type != PDT_PDC ? 2UL : 0UL)
+ #define PDT_ADDR_SINGLE_ERR	1UL
  
-+	/* Check if node in clkspec is in disabled/fail state */
-+	if (!of_device_is_available(clkspec->np))
-+		return ERR_PTR(-ENOENT);
-+
- 	mutex_lock(&of_clk_mutex);
- 	list_for_each_entry(provider, &of_clk_providers, link) {
- 		if (provider->node == clkspec->np) {
++#ifdef CONFIG_PROC_FS
+ /* report PDT entries via /proc/meminfo */
+ void arch_report_meminfo(struct seq_file *m)
+ {
+@@ -74,6 +75,7 @@ void arch_report_meminfo(struct seq_file *m)
+ 	seq_printf(m, "PDT_cur_entries: %7lu\n",
+ 			pdt_status.pdt_entries);
+ }
++#endif
+ 
+ static int get_info_pat_new(void)
+ {
 -- 
 2.39.5
 
