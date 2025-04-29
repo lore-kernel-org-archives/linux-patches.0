@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0DB241667;
-	Tue, 29 Apr 2025 16:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C3C251792;
+	Tue, 29 Apr 2025 16:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945592; cv=none; b=M1q/BdPTJ2fdz25oFPVi1UWEZqw6yOo1USshM8ALeQV5f0tB5EfzqJLLBuQq0WIb2dMhnjPU+g7i8CTYokWGwKA6/+pXxsBh8KWsYy3vQNzNEbGgVhf5id7eezdr9vUh80cILwHRFqV2JFtUirCssKBr67Gn2fIJO/pNL+jn0AI=
+	t=1745945596; cv=none; b=KWvpIEOwjsSM20IsnQzMJiRsz01ucorQH5oh6aldPVhXVdgg1YZFy6Zwj05SLTCHnZlKR2fvDzW1X+rL3FZbP7y7J/Wo3vP7homZhornkPub9VLfXW4ULC5jeNAH7BsxOyxLc2qt3JrrSbUDJYGiVsGJa4H7gJ1TzYe/nwqfeQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945592; c=relaxed/simple;
-	bh=DCpFpP5klCWdmj4hHlRG+a4OwMFvM4dn1isN4y48P44=;
+	s=arc-20240116; t=1745945596; c=relaxed/simple;
+	bh=hm/Hyiw0lPgeGvfNghySOhCaiHLWwT9udt+FzRSupws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9EUiiNUmhFd5M51wpKBsh5nBgnoMCzRELjE+VSkslRMDH2msh80VnfyxE+1HuCTThwmTn/svObbpDepZNEPnYD5XVYyhGwIoI9VzmXiJ/MXmdxLP/1t8b+8O0OElPpv97nrNt+aCMnshmnkqtVCDdqIUmQlu4yhJ69j1rcCaOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQB/ys//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqdY4Rp9E0OGEttXBL5bDfCCYg11RXM8UwzDrUJOc/8+MCBuQ99cDcUG+aiRybvchwEoimMwaIi21n302rvA9S5GL8EJ0cPUM13v3GuIkdVUVx5bcf1xSvgUnYWFE95Ey+ZKRcoiuDW2ykQpxFojIgNPF3FaWQKgAH5HfFkQb/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu5T4U2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQB/ys//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C48C4CEE3;
-	Tue, 29 Apr 2025 16:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu5T4U2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0213BC4CEE3;
+	Tue, 29 Apr 2025 16:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945592;
-	bh=DCpFpP5klCWdmj4hHlRG+a4OwMFvM4dn1isN4y48P44=;
+	s=korg; t=1745945595;
+	bh=hm/Hyiw0lPgeGvfNghySOhCaiHLWwT9udt+FzRSupws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQB/ys//iJid8nZPBL5WlnUhBkcbQsH3KHRpKy9PHrHqKz8IDxcWkKDqeq4uRz9Ca
-	 15afr+o7Lf9jw2nGsKfK7p80O3Hk175wsddEQ6QCt2TdKst5yviU0oOCk6RijfdA1l
-	 vgfEwl/bLH4e0FE02cfYfY3tfATs9PCJ2UXKPjxI=
+	b=xu5T4U2iPiT4DTrvNQc/F8Ep9UzN3EsN8htYTJxDM7Htnfe8v/CFQQMKLlk2P3JqJ
+	 mxucWYHeXPAuH+C58FoYoU1cwvtJrMWJTiYMNlBzz5F3Kwk5mX/e/ZynIbjXoJDAcE
+	 zKrEbH1clbZRirUnXH0/ecasYML3vcChK5PlJ/Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 165/179] usb: gadget: aspeed: Add NULL pointer check in ast_vhub_init_dev()
-Date: Tue, 29 Apr 2025 18:41:46 +0200
-Message-ID: <20250429161056.056410339@linuxfoundation.org>
+Subject: [PATCH 5.4 166/179] qibfs: fix _another_ leak
+Date: Tue, 29 Apr 2025 18:41:47 +0200
+Message-ID: <20250429161056.097108021@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,39 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 8c75f3e6a433d92084ad4e78b029ae680865420f ]
+[ Upstream commit bdb43af4fdb39f844ede401bdb1258f67a580a27 ]
 
-The variable d->name, returned by devm_kasprintf(), could be NULL.
-A pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+failure to allocate inode => leaked dentry...
 
-This issue is found by our static analysis tool
+this one had been there since the initial merge; to be fair,
+if we are that far OOM, the odds of failing at that particular
+allocation are low...
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250311012705.1233829-1-chenyuan0y@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/dev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/qib/qib_fs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-index 4008e7a511889..89d7d3b24718d 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-@@ -542,6 +542,9 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx)
- 	d->vhub = vhub;
- 	d->index = idx;
- 	d->name = devm_kasprintf(parent, GFP_KERNEL, "port%d", idx+1);
-+	if (!d->name)
-+		return -ENOMEM;
-+
- 	d->regs = vhub->regs + 0x100 + 0x10 * idx;
+diff --git a/drivers/infiniband/hw/qib/qib_fs.c b/drivers/infiniband/hw/qib/qib_fs.c
+index e336d778e076e..5ec67e3c2d03c 100644
+--- a/drivers/infiniband/hw/qib/qib_fs.c
++++ b/drivers/infiniband/hw/qib/qib_fs.c
+@@ -56,6 +56,7 @@ static int qibfs_mknod(struct inode *dir, struct dentry *dentry,
+ 	struct inode *inode = new_inode(dir->i_sb);
  
- 	ast_vhub_init_ep0(vhub, &d->ep0, d);
+ 	if (!inode) {
++		dput(dentry);
+ 		error = -EPERM;
+ 		goto bail;
+ 	}
 -- 
 2.39.5
 
