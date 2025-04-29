@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0805424E00F;
-	Tue, 29 Apr 2025 18:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19A624E00F;
+	Tue, 29 Apr 2025 18:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950273; cv=none; b=nsVKlWEKVz9LntzM25wSvOwQNB2KnmnU6tKn7kwOB+YGkRw55vbK4oOwt+SkACPN+a62gjvhR7u7z/SERu/j8nrSvNHgw9a7nht/Jsjrvegn2u9yET5OGOf7ENRfiS+ekqD4ib7wILAmlbijJg5A4sjpUB7f3ITFGmSyo1E+M+o=
+	t=1745950275; cv=none; b=IqZxSHmI9fKhs6RxOEv3xYxUPhN5sYGeW93q+btEmNNnIuluZ5nbCns3ag1U+lVtdY3+sbZFllXeqSNwCrP+LRTLH2pq9rDH1eRXXSV/A7nbJ16/ooiHBPzm1CMgFR/EHXNy5628+NbKsNcFdISL6nDbd+jb65skF3nX2UQV7LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950273; c=relaxed/simple;
-	bh=cYANfxkpd68dhYYND1AA2mhR+cV9PdxOBhKOkzRqg04=;
+	s=arc-20240116; t=1745950275; c=relaxed/simple;
+	bh=hFLmkmR17Z6TrAT6o2KMMD8/IojQ54jh7bzoNAG0hwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/rHsPV6wEWddwMmSS0WQjfU1apdc6LuFLIpWT0TavuXmexrqwOefG0UAA3zcwipoJ5dgzpIa9/5b9r1dDL006NiT+gLgscum+sDhw2Gg3iZUUlTu8c6wmx/h4BE0b8LjjGiTkBIH9x4+8SpWs5G7nFEKR+4kx/z6vuU5qtSm4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqvKxSE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBomoSA6sxN+7xMlHtSZVMHYfFj8+PAh4PIu0mllYdGtZ/M05JaDaRHpt5Y6/3NyUps85NaS7CJ7srJch3EUGhu72g6peQOKSIhln3JjNolUXfT+7U/YXINHkadxVA86Jp0FMFiXlyq69cG9nyN4WXR3z6AUKglU3xN+rwadQGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQyNJJ+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqvKxSE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CEFC4CEE3;
-	Tue, 29 Apr 2025 18:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQyNJJ+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6177DC4CEE3;
+	Tue, 29 Apr 2025 18:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950272;
-	bh=cYANfxkpd68dhYYND1AA2mhR+cV9PdxOBhKOkzRqg04=;
+	s=korg; t=1745950275;
+	bh=hFLmkmR17Z6TrAT6o2KMMD8/IojQ54jh7bzoNAG0hwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqvKxSE6W+IMOkQjZqA6zDvwiVYQ8q6ofOmg/AC5AGAxczbD1DoOt7NE+ss6SSgiE
-	 rSejVDgQajuYL+tX6521zYX0YEkhyFNURb8bbI6oOC3k2z3yYEVHVugYZvd9CZRbgX
-	 4v+/BdLBSlDmX1q7H+UxscYqan64FnF0QPARCAHo=
+	b=SQyNJJ+GyxnySWXNCFcz/RLorN7RFCSkLRuq68TSbK8v4rA5UH0+8jq5WvSBwDutX
+	 0q482o3Fatgu1IDCxcmL2vItdd61wQ4P/gY6rPbe9lhoOlYO+P/Y5pySY7N1Zuct5l
+	 ioXsZ/dxWVesxPwLfbTGtaBdeio9cb/zFysyJf1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/204] sched/cpufreq: Rework schedutil governor performance estimation
-Date: Tue, 29 Apr 2025 18:42:11 +0200
-Message-ID: <20250429161101.172854376@linuxfoundation.org>
+Subject: [PATCH 6.6 044/204] cpufreq/sched: Explicitly synchronize limits_changed flag handling
+Date: Tue, 29 Apr 2025 18:42:12 +0200
+Message-ID: <20250429161101.214034065@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,373 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9c0b4bb7f6303c9c4e2e34984c46f5a86478f84d ]
+[ Upstream commit 79443a7e9da3c9f68290a8653837e23aba0fa89f ]
 
-The current method to take into account uclamp hints when estimating the
-target frequency can end in a situation where the selected target
-frequency is finally higher than uclamp hints, whereas there are no real
-needs. Such cases mainly happen because we are currently mixing the
-traditional scheduler utilization signal with the uclamp performance
-hints. By adding these 2 metrics, we loose an important information when
-it comes to select the target frequency, and we have to make some
-assumptions which can't fit all cases.
+The handling of the limits_changed flag in struct sugov_policy needs to
+be explicitly synchronized to ensure that cpufreq policy limits updates
+will not be missed in some cases.
 
-Rework the interface between the scheduler and schedutil governor in order
-to propagate all information down to the cpufreq governor.
+Without that synchronization it is theoretically possible that
+the limits_changed update in sugov_should_update_freq() will be
+reordered with respect to the reads of the policy limits in
+cpufreq_driver_resolve_freq() and in that case, if the limits_changed
+update in sugov_limits() clobbers the one in sugov_should_update_freq(),
+the new policy limits may not take effect for a long time.
 
-effective_cpu_util() interface changes and now returns the actual
-utilization of the CPU with 2 optional inputs:
+Likewise, the limits_changed update in sugov_limits() may theoretically
+get reordered with respect to the updates of the policy limits in
+cpufreq_set_policy() and if sugov_should_update_freq() runs between
+them, the policy limits change may be missed.
 
-- The minimum performance for this CPU; typically the capacity to handle
-  the deadline task and the interrupt pressure. But also uclamp_min
-  request when available.
+To ensure that the above situations will not take place, add memory
+barriers preventing the reordering in question from taking place and
+add READ_ONCE() and WRITE_ONCE() annotations around all of the
+limits_changed flag updates to prevent the compiler from messing up
+with that code.
 
-- The maximum targeting performance for this CPU which reflects the
-  maximum level that we would like to not exceed. By default it will be
-  the CPU capacity but can be reduced because of some performance hints
-  set with uclamp. The value can be lower than actual utilization and/or
-  min performance level.
-
-A new sugov_effective_cpu_perf() interface is also available to compute
-the final performance level that is targeted for the CPU, after applying
-some cpufreq headroom and taking into account all inputs.
-
-With these 2 functions, schedutil is now able to decide when it must go
-above uclamp hints. It now also has a generic way to get the min
-performance level.
-
-The dependency between energy model and cpufreq governor and its headroom
-policy doesn't exist anymore.
-
-eenv_pd_max_util() asks schedutil for the targeted performance after
-applying the impact of the waking task.
-
-[ mingo: Refined the changelog & C comments. ]
-
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://lore.kernel.org/r/20231122133904.446032-2-vincent.guittot@linaro.org
-Stable-dep-of: 79443a7e9da3 ("cpufreq/sched: Explicitly synchronize limits_changed flag handling")
+Fixes: 600f5badb78c ("cpufreq: schedutil: Don't skip freq update when limits change")
+Cc: 5.3+ <stable@vger.kernel.org> # 5.3+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/3376719.44csPzL39Z@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/energy_model.h     |  1 -
- kernel/sched/core.c              | 90 ++++++++++++++------------------
- kernel/sched/cpufreq_schedutil.c | 35 +++++++++----
- kernel/sched/fair.c              | 22 ++++++--
- kernel/sched/sched.h             | 24 +++------
- 5 files changed, 89 insertions(+), 83 deletions(-)
+ kernel/sched/cpufreq_schedutil.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/energy_model.h b/include/linux/energy_model.h
-index b9caa01dfac48..adec808b371a1 100644
---- a/include/linux/energy_model.h
-+++ b/include/linux/energy_model.h
-@@ -243,7 +243,6 @@ static inline unsigned long em_cpu_energy(struct em_perf_domain *pd,
- 	scale_cpu = arch_scale_cpu_capacity(cpu);
- 	ps = &pd->table[pd->nr_perf_states - 1];
- 
--	max_util = map_util_perf(max_util);
- 	max_util = min(max_util, allowed_cpu_cap);
- 	freq = map_util_freq(max_util, ps->frequency, scale_cpu);
- 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 41f035744683b..760a6c3781cbf 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7406,18 +7406,13 @@ int sched_core_idle_cpu(int cpu)
-  * required to meet deadlines.
-  */
- unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
--				 enum cpu_util_type type,
--				 struct task_struct *p)
-+				 unsigned long *min,
-+				 unsigned long *max)
- {
--	unsigned long dl_util, util, irq, max;
-+	unsigned long util, irq, scale;
- 	struct rq *rq = cpu_rq(cpu);
- 
--	max = arch_scale_cpu_capacity(cpu);
--
--	if (!uclamp_is_used() &&
--	    type == FREQUENCY_UTIL && rt_rq_is_runnable(&rq->rt)) {
--		return max;
--	}
-+	scale = arch_scale_cpu_capacity(cpu);
- 
- 	/*
- 	 * Early check to see if IRQ/steal time saturates the CPU, can be
-@@ -7425,45 +7420,49 @@ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
- 	 * update_irq_load_avg().
- 	 */
- 	irq = cpu_util_irq(rq);
--	if (unlikely(irq >= max))
--		return max;
-+	if (unlikely(irq >= scale)) {
-+		if (min)
-+			*min = scale;
-+		if (max)
-+			*max = scale;
-+		return scale;
-+	}
-+
-+	if (min) {
-+		/*
-+		 * The minimum utilization returns the highest level between:
-+		 * - the computed DL bandwidth needed with the IRQ pressure which
-+		 *   steals time to the deadline task.
-+		 * - The minimum performance requirement for CFS and/or RT.
-+		 */
-+		*min = max(irq + cpu_bw_dl(rq), uclamp_rq_get(rq, UCLAMP_MIN));
-+
-+		/*
-+		 * When an RT task is runnable and uclamp is not used, we must
-+		 * ensure that the task will run at maximum compute capacity.
-+		 */
-+		if (!uclamp_is_used() && rt_rq_is_runnable(&rq->rt))
-+			*min = max(*min, scale);
-+	}
- 
- 	/*
- 	 * Because the time spend on RT/DL tasks is visible as 'lost' time to
- 	 * CFS tasks and we use the same metric to track the effective
- 	 * utilization (PELT windows are synchronized) we can directly add them
- 	 * to obtain the CPU's actual utilization.
--	 *
--	 * CFS and RT utilization can be boosted or capped, depending on
--	 * utilization clamp constraints requested by currently RUNNABLE
--	 * tasks.
--	 * When there are no CFS RUNNABLE tasks, clamps are released and
--	 * frequency will be gracefully reduced with the utilization decay.
- 	 */
- 	util = util_cfs + cpu_util_rt(rq);
--	if (type == FREQUENCY_UTIL)
--		util = uclamp_rq_util_with(rq, util, p);
--
--	dl_util = cpu_util_dl(rq);
-+	util += cpu_util_dl(rq);
- 
- 	/*
--	 * For frequency selection we do not make cpu_util_dl() a permanent part
--	 * of this sum because we want to use cpu_bw_dl() later on, but we need
--	 * to check if the CFS+RT+DL sum is saturated (ie. no idle time) such
--	 * that we select f_max when there is no idle time.
--	 *
--	 * NOTE: numerical errors or stop class might cause us to not quite hit
--	 * saturation when we should -- something for later.
-+	 * The maximum hint is a soft bandwidth requirement, which can be lower
-+	 * than the actual utilization because of uclamp_max requirements.
- 	 */
--	if (util + dl_util >= max)
--		return max;
-+	if (max)
-+		*max = min(scale, uclamp_rq_get(rq, UCLAMP_MAX));
- 
--	/*
--	 * OTOH, for energy computation we need the estimated running time, so
--	 * include util_dl and ignore dl_bw.
--	 */
--	if (type == ENERGY_UTIL)
--		util += dl_util;
-+	if (util >= scale)
-+		return scale;
- 
- 	/*
- 	 * There is still idle time; further improve the number by using the
-@@ -7474,28 +7473,15 @@ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
- 	 *   U' = irq + --------- * U
- 	 *                 max
- 	 */
--	util = scale_irq_capacity(util, irq, max);
-+	util = scale_irq_capacity(util, irq, scale);
- 	util += irq;
- 
--	/*
--	 * Bandwidth required by DEADLINE must always be granted while, for
--	 * FAIR and RT, we use blocked utilization of IDLE CPUs as a mechanism
--	 * to gracefully reduce the frequency when no tasks show up for longer
--	 * periods of time.
--	 *
--	 * Ideally we would like to set bw_dl as min/guaranteed freq and util +
--	 * bw_dl as requested freq. However, cpufreq is not yet ready for such
--	 * an interface. So, we only do the latter for now.
--	 */
--	if (type == FREQUENCY_UTIL)
--		util += cpu_bw_dl(rq);
--
--	return min(max, util);
-+	return min(scale, util);
- }
- 
- unsigned long sched_cpu_util(int cpu)
- {
--	return effective_cpu_util(cpu, cpu_util_cfs(cpu), ENERGY_UTIL, NULL);
-+	return effective_cpu_util(cpu, cpu_util_cfs(cpu), NULL, NULL);
- }
- #endif /* CONFIG_SMP */
- 
 diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index 259521b179aa1..f84473f73ed00 100644
+index f84473f73ed00..776be0549162c 100644
 --- a/kernel/sched/cpufreq_schedutil.c
 +++ b/kernel/sched/cpufreq_schedutil.c
-@@ -47,7 +47,7 @@ struct sugov_cpu {
- 	u64			last_update;
+@@ -81,9 +81,20 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ 	if (!cpufreq_this_cpu_can_update(sg_policy->policy))
+ 		return false;
  
- 	unsigned long		util;
--	unsigned long		bw_dl;
-+	unsigned long		bw_min;
- 
- 	/* The field below is for single-CPU policies only: */
- #ifdef CONFIG_NO_HZ_COMMON
-@@ -155,7 +155,6 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
- 	unsigned int freq = arch_scale_freq_invariant() ?
- 				policy->cpuinfo.max_freq : policy->cur;
- 
--	util = map_util_perf(util);
- 	freq = map_util_freq(util, freq, max);
- 
- 	if (freq == sg_policy->cached_raw_freq && !sg_policy->need_freq_update)
-@@ -165,14 +164,30 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
- 	return cpufreq_driver_resolve_freq(policy, freq);
- }
- 
-+unsigned long sugov_effective_cpu_perf(int cpu, unsigned long actual,
-+				 unsigned long min,
-+				 unsigned long max)
-+{
-+	/* Add dvfs headroom to actual utilization */
-+	actual = map_util_perf(actual);
-+	/* Actually we don't need to target the max performance */
-+	if (actual < max)
-+		max = actual;
+-	if (unlikely(sg_policy->limits_changed)) {
+-		sg_policy->limits_changed = false;
++	if (unlikely(READ_ONCE(sg_policy->limits_changed))) {
++		WRITE_ONCE(sg_policy->limits_changed, false);
+ 		sg_policy->need_freq_update = true;
 +
-+	/*
-+	 * Ensure at least minimum performance while providing more compute
-+	 * capacity when possible.
-+	 */
-+	return max(min, max);
-+}
++		/*
++		 * The above limits_changed update must occur before the reads
++		 * of policy limits in cpufreq_driver_resolve_freq() or a policy
++		 * limits update might be missed, so use a memory barrier to
++		 * ensure it.
++		 *
++		 * This pairs with the write memory barrier in sugov_limits().
++		 */
++		smp_mb();
 +
- static void sugov_get_util(struct sugov_cpu *sg_cpu)
- {
--	unsigned long util = cpu_util_cfs_boost(sg_cpu->cpu);
--	struct rq *rq = cpu_rq(sg_cpu->cpu);
-+	unsigned long min, max, util = cpu_util_cfs_boost(sg_cpu->cpu);
+ 		return true;
+ 	}
  
--	sg_cpu->bw_dl = cpu_bw_dl(rq);
--	sg_cpu->util = effective_cpu_util(sg_cpu->cpu, util,
--					  FREQUENCY_UTIL, NULL);
-+	util = effective_cpu_util(sg_cpu->cpu, util, &min, &max);
-+	sg_cpu->bw_min = min;
-+	sg_cpu->util = sugov_effective_cpu_perf(sg_cpu->cpu, util, min, max);
- }
- 
- /**
-@@ -318,7 +333,7 @@ static inline bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu) { return false; }
-  */
+@@ -334,7 +345,7 @@ static inline bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu) { return false; }
  static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
  {
--	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_dl)
-+	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_min)
- 		sg_cpu->sg_policy->limits_changed = true;
+ 	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_min)
+-		sg_cpu->sg_policy->limits_changed = true;
++		WRITE_ONCE(sg_cpu->sg_policy->limits_changed, true);
  }
  
-@@ -419,8 +434,8 @@ static void sugov_update_single_perf(struct update_util_data *hook, u64 time,
- 	    sugov_cpu_is_busy(sg_cpu) && sg_cpu->util < prev_util)
- 		sg_cpu->util = prev_util;
+ static inline bool sugov_update_single_common(struct sugov_cpu *sg_cpu,
+@@ -844,7 +855,16 @@ static void sugov_limits(struct cpufreq_policy *policy)
+ 		mutex_unlock(&sg_policy->work_lock);
+ 	}
  
--	cpufreq_driver_adjust_perf(sg_cpu->cpu, map_util_perf(sg_cpu->bw_dl),
--				   map_util_perf(sg_cpu->util), max_cap);
-+	cpufreq_driver_adjust_perf(sg_cpu->cpu, sg_cpu->bw_min,
-+				   sg_cpu->util, max_cap);
- 
- 	sg_cpu->sg_policy->last_freq_update_time = time;
+-	sg_policy->limits_changed = true;
++	/*
++	 * The limits_changed update below must take place before the updates
++	 * of policy limits in cpufreq_set_policy() or a policy limits update
++	 * might be missed, so use a memory barrier to ensure it.
++	 *
++	 * This pairs with the memory barrier in sugov_should_update_freq().
++	 */
++	smp_wmb();
++
++	WRITE_ONCE(sg_policy->limits_changed, true);
  }
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 050cc41585f8b..268e2a49b964e 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7859,7 +7859,7 @@ static inline void eenv_pd_busy_time(struct energy_env *eenv,
- 	for_each_cpu(cpu, pd_cpus) {
- 		unsigned long util = cpu_util(cpu, p, -1, 0);
  
--		busy_time += effective_cpu_util(cpu, util, ENERGY_UTIL, NULL);
-+		busy_time += effective_cpu_util(cpu, util, NULL, NULL);
- 	}
- 
- 	eenv->pd_busy_time = min(eenv->pd_cap, busy_time);
-@@ -7882,7 +7882,7 @@ eenv_pd_max_util(struct energy_env *eenv, struct cpumask *pd_cpus,
- 	for_each_cpu(cpu, pd_cpus) {
- 		struct task_struct *tsk = (cpu == dst_cpu) ? p : NULL;
- 		unsigned long util = cpu_util(cpu, p, dst_cpu, 1);
--		unsigned long eff_util;
-+		unsigned long eff_util, min, max;
- 
- 		/*
- 		 * Performance domain frequency: utilization clamping
-@@ -7891,7 +7891,23 @@ eenv_pd_max_util(struct energy_env *eenv, struct cpumask *pd_cpus,
- 		 * NOTE: in case RT tasks are running, by default the
- 		 * FREQUENCY_UTIL's utilization can be max OPP.
- 		 */
--		eff_util = effective_cpu_util(cpu, util, FREQUENCY_UTIL, tsk);
-+		eff_util = effective_cpu_util(cpu, util, &min, &max);
-+
-+		/* Task's uclamp can modify min and max value */
-+		if (tsk && uclamp_is_used()) {
-+			min = max(min, uclamp_eff_value(p, UCLAMP_MIN));
-+
-+			/*
-+			 * If there is no active max uclamp constraint,
-+			 * directly use task's one, otherwise keep max.
-+			 */
-+			if (uclamp_rq_is_idle(cpu_rq(cpu)))
-+				max = uclamp_eff_value(p, UCLAMP_MAX);
-+			else
-+				max = max(max, uclamp_eff_value(p, UCLAMP_MAX));
-+		}
-+
-+		eff_util = sugov_effective_cpu_perf(cpu, eff_util, min, max);
- 		max_util = max(max_util, eff_util);
- 	}
- 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index f84b2e9feeb6d..60dc51f43dd91 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2984,24 +2984,14 @@ static inline void cpufreq_update_util(struct rq *rq, unsigned int flags) {}
- #endif
- 
- #ifdef CONFIG_SMP
--/**
-- * enum cpu_util_type - CPU utilization type
-- * @FREQUENCY_UTIL:	Utilization used to select frequency
-- * @ENERGY_UTIL:	Utilization used during energy calculation
-- *
-- * The utilization signals of all scheduling classes (CFS/RT/DL) and IRQ time
-- * need to be aggregated differently depending on the usage made of them. This
-- * enum is used within effective_cpu_util() to differentiate the types of
-- * utilization expected by the callers, and adjust the aggregation accordingly.
-- */
--enum cpu_util_type {
--	FREQUENCY_UTIL,
--	ENERGY_UTIL,
--};
--
- unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
--				 enum cpu_util_type type,
--				 struct task_struct *p);
-+				 unsigned long *min,
-+				 unsigned long *max);
-+
-+unsigned long sugov_effective_cpu_perf(int cpu, unsigned long actual,
-+				 unsigned long min,
-+				 unsigned long max);
-+
- 
- /*
-  * Verify the fitness of task @p to run on @cpu taking into account the
+ struct cpufreq_governor schedutil_gov = {
 -- 
 2.39.5
 
