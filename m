@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536122AE96;
-	Tue, 29 Apr 2025 18:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EB22AE96;
+	Tue, 29 Apr 2025 18:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950009; cv=none; b=ifacgBZ4jE2DQ1bmJORu0E8UT+0XrYPwZcL60dGirYFwXe5fzihxQ7jFSJVjWkyY5V6D5S8NTZeZF8LwYROJDBKCrVY1g569sJU+M9uCOWNZJjOgH5AMwjR/xTqmVLNw2k1qH7fTVNC5ahyY8TXgmX/H509J+gOBSrf4li/bMOw=
+	t=1745950012; cv=none; b=JOzme0HCkJkwfdMeztmPrCwTj9Ik1cqDWR4tkshj1XvEu4NWiDuzPxVWbBJY97L2TCoEGc+9LjTUSuYH5KWKszv93jeopMR3Rz1Yb6Lx+F+tfNVz97aUk/+oiisfY7VaHCqtirMclPzx1eB/XNE+muPRJLS4cIqpxdGzALKwPS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950009; c=relaxed/simple;
-	bh=KeEHWttNwzuONz8rfPjWz7iZdxMcjlg5Yi69QUhqn+Q=;
+	s=arc-20240116; t=1745950012; c=relaxed/simple;
+	bh=Ebs28hNrZ3dbAnTBrsjae0QXFzdjSwn33c0QTrLnT/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gnaf8VH7NI7RwP1gFzw3cWPUS098jtZpQiflI91PwjSdY0WT3Fmm/9wzixjDdYtnNs06YFhaJzKE91g6e9GJqtFfSvrI39Qhy1dp70f0toERMsy7jFnQ2B2Q4sdR0IQmAZc3FaHXeQrXfFUdTJvtLHgfrTnSECff9DtABUe2ldM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctwSe2Uv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRhUOYSTN2tt6R3XjsLedFEAbj8qwZYqf6K+/pJbFu3Cg+dEMDlfMpVtx/5gyQ0fJpmWV/xHesCXvituoCknxLpmuqEqSfr7oDHQ8hzsArUA3F7pTFBpxQAKDNSXh3SLTOrh4aVtkD60ryQ64CRYN+zBHXplaO3VYySaWlKDBqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xsp5Pcj3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctwSe2Uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CC4C4CEE3;
-	Tue, 29 Apr 2025 18:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xsp5Pcj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A86C4CEE3;
+	Tue, 29 Apr 2025 18:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950009;
-	bh=KeEHWttNwzuONz8rfPjWz7iZdxMcjlg5Yi69QUhqn+Q=;
+	s=korg; t=1745950012;
+	bh=Ebs28hNrZ3dbAnTBrsjae0QXFzdjSwn33c0QTrLnT/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctwSe2UvVnMxE+iIRM/jAAORMSzM4QOoxv8jHDmum5mTLMG0RcqJge30eQymsKkWm
-	 UdPPlzUoK6TPO68bXhFBhMX/boeTGXHW3KsdBdGFqeAiivJJBf3YAfnc0jq1rU1ysy
-	 TpayDs+npcETJnOoneJnQavbh9p934PltShrU0tM=
+	b=Xsp5Pcj3PDdRi4cr9Koy7gPH/Vb/pUbudzJODel9cV1M4BuMQS1m4ITLMnPYlJOX4
+	 12xYRTbdhSGwtFhrMaRmnnmBPDD1cw86OB8R75liHFNzmmTusZcVEDIr/5SUQTMTNd
+	 zDlPc4Z021Zh0MtSlub7qp2YX95RmegqfZKdqOd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/167] pinctrl: renesas: rza2: Fix potential NULL pointer dereference
-Date: Tue, 29 Apr 2025 18:43:25 +0200
-Message-ID: <20250429161055.678277557@linuxfoundation.org>
+Subject: [PATCH 6.1 098/167] MIPS: cm: Detect CM quirks from device tree
+Date: Tue, 29 Apr 2025 18:43:26 +0200
+Message-ID: <20250429161055.717468740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -52,37 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit f752ee5b5b86b5f88a5687c9eb0ef9b39859b908 ]
+[ Upstream commit e27fbe16af5cfc40639de4ced67d1a866a1953e9 ]
 
-`chip.label` in rza2_gpio_register() could be NULL.
-Add the missing check.
+Some information that should be retrieved at runtime for the Coherence
+Manager can be either absent or wrong. This patch allows checking if
+some of this information is available from the device tree and updates
+the internal variable accordingly.
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/20250210232552.1545887-1-chenyuan0y@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+For now, only the compatible string associated with the broken HCI is
+being retrieved.
+
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rza2.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/mips/include/asm/mips-cm.h | 22 ++++++++++++++++++++++
+ arch/mips/kernel/mips-cm.c      | 14 ++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rza2.c b/drivers/pinctrl/renesas/pinctrl-rza2.c
-index 2d6072e9f5a87..6f0d3fda61c24 100644
---- a/drivers/pinctrl/renesas/pinctrl-rza2.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rza2.c
-@@ -242,6 +242,9 @@ static int rza2_gpio_register(struct rza2_pinctrl_priv *priv)
- 	int ret;
+diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
+index 696b40beb774f..0f31324998c0a 100644
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -47,6 +47,16 @@ extern phys_addr_t __mips_cm_phys_base(void);
+  */
+ extern int mips_cm_is64;
  
- 	chip.label = devm_kasprintf(priv->dev, GFP_KERNEL, "%pOFn", np);
-+	if (!chip.label)
-+		return -ENOMEM;
++/*
++ * mips_cm_is_l2_hci_broken  - determine if HCI is broken
++ *
++ * Some CM reports show that Hardware Cache Initialization is
++ * complete, but in reality it's not the case. They also incorrectly
++ * indicate that Hardware Cache Initialization is supported. This
++ * flags allows warning about this broken feature.
++ */
++extern bool mips_cm_is_l2_hci_broken;
 +
- 	chip.parent = priv->dev;
- 	chip.ngpio = priv->npins;
+ /**
+  * mips_cm_error_report - Report CM cache errors
+  */
+@@ -85,6 +95,18 @@ static inline bool mips_cm_present(void)
+ #endif
+ }
  
++/**
++ * mips_cm_update_property - update property from the device tree
++ *
++ * Retrieve the properties from the device tree if a CM node exist and
++ * update the internal variable based on this.
++ */
++#ifdef CONFIG_MIPS_CM
++extern void mips_cm_update_property(void);
++#else
++static void mips_cm_update_property(void) {}
++#endif
++
+ /**
+  * mips_cm_has_l2sync - determine whether an L2-only sync region is present
+  *
+diff --git a/arch/mips/kernel/mips-cm.c b/arch/mips/kernel/mips-cm.c
+index b4f7d950c8468..e21c2fd761674 100644
+--- a/arch/mips/kernel/mips-cm.c
++++ b/arch/mips/kernel/mips-cm.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/errno.h>
++#include <linux/of.h>
+ #include <linux/percpu.h>
+ #include <linux/spinlock.h>
+ 
+@@ -14,6 +15,7 @@
+ void __iomem *mips_gcr_base;
+ void __iomem *mips_cm_l2sync_base;
+ int mips_cm_is64;
++bool mips_cm_is_l2_hci_broken;
+ 
+ static char *cm2_tr[8] = {
+ 	"mem",	"gcr",	"gic",	"mmio",
+@@ -238,6 +240,18 @@ static void mips_cm_probe_l2sync(void)
+ 	mips_cm_l2sync_base = ioremap(addr, MIPS_CM_L2SYNC_SIZE);
+ }
+ 
++void mips_cm_update_property(void)
++{
++	struct device_node *cm_node;
++
++	cm_node = of_find_compatible_node(of_root, NULL, "mobileye,eyeq6-cm");
++	if (!cm_node)
++		return;
++	pr_info("HCI (Hardware Cache Init for the L2 cache) in GCR_L2_RAM_CONFIG from the CM3 is broken");
++	mips_cm_is_l2_hci_broken = true;
++	of_node_put(cm_node);
++}
++
+ int mips_cm_probe(void)
+ {
+ 	phys_addr_t addr;
 -- 
 2.39.5
 
