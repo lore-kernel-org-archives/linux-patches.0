@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D368253F28;
-	Tue, 29 Apr 2025 18:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7069222AE68;
+	Tue, 29 Apr 2025 18:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950291; cv=none; b=IIpay+o4COn6LCIur6nt0qhinaD+3Xux/ju4qlqhEakHpgmSB2SK3RQ3H+4tX+WLjOGy+krTymj+ZOVQu9oM8PDyOdTrtcDO1nkDRe5YIuI6/Z+rAXtr2sKX8jv+zMPKDW5d2GA6cLq1ksPx7IAvZRJCYaS4QOE+TE/vK7bgDuY=
+	t=1745950294; cv=none; b=FQi/5vnJaKw0jikjZVRs/Ix5rMDbZmA74atSW3SqxkiZVGM8Tf+dT/032Ts5lN+5NfQggYT12DXyDpTm3LW40y1pcAnXn+pSAMVvOTuhLhyNZUjbBUgOGiMQJ/Lj3Dq0Keq1yO+3LcQjOJ2RAQaVvClxTWht5KgUtIh2tCa8kAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950291; c=relaxed/simple;
-	bh=X98L+CujK/K0wJrxoIJixCSzP+1YQ0W1F4TFouJmwUU=;
+	s=arc-20240116; t=1745950294; c=relaxed/simple;
+	bh=5VpjnhmgHLqJRnD9dj/vReGQXb8twnSevk9HurDrXok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKSzRA3v2afHTKrcAJeqc0YAnP2W96Wzq/7VgNyY3SelC3acvj4jV1ev8s2zwCnxRgOWJoha7BzLJOa7NSKH6HHjb5N6Da58geoFh0Y/QB+VK6ftKGePu0516ne5yNmhnx0PC/mLfSzo1Y3stwq4Ny67vsWSHJVysuKp8rUtswA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nqljosrc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzZdwzOBrHmAEtUkWfOdabiKCzNUJRjn+sBaZTei+s3TUs3FNBz23JseCN7V+DL3rZ3FK5tlGn9IH/XN+R+fiLzJvQZdpw/OxaLGvcUB7CUKlUMOnXd1uafnR3c5n+Y7Y1hCJc0fecaWIvCENizVSG8F3rSNyUNeABKQmKpe0BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYPweh8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqljosrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9C8C4CEE3;
-	Tue, 29 Apr 2025 18:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYPweh8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA40FC4CEE3;
+	Tue, 29 Apr 2025 18:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950291;
-	bh=X98L+CujK/K0wJrxoIJixCSzP+1YQ0W1F4TFouJmwUU=;
+	s=korg; t=1745950294;
+	bh=5VpjnhmgHLqJRnD9dj/vReGQXb8twnSevk9HurDrXok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NqljosrcWmJarws2CEQpaqif0dTUlRs/RtnDjqU7irYr8+AmRVWTpIN8RRaXF26dp
-	 Kf06LNVEtAlk4yE7SSytoPTE5SgJMJb6tDty/78Ew1698JZ8Ff8xv8IYiSd1sMf5Ha
-	 n7VrfHlLAUssSgQTNyqFQOgzcTLFTyRUSyaS46/o=
+	b=vYPweh8StupyvIlepK2fpbTnWVJ3v5pNovFuwv2tHCwI53nK2wpb3KUSuDpdZVuUC
+	 fgpaYnliuwFaOqNCrwlFQBcE7ou/7xzyGXnYSc46VcOnpNg/E+X852B/BOLp62fb7z
+	 mcDOmKQauS+yFtZziaNR9xWaL/ADfPTXCZHCLF/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/204] cpufreq: scpi: Fix null-ptr-deref in scpi_cpufreq_get_rate()
-Date: Tue, 29 Apr 2025 18:42:17 +0200
-Message-ID: <20250429161101.413354523@linuxfoundation.org>
+Subject: [PATCH 6.6 050/204] scsi: ufs: mcq: Add NULL check in ufshcd_mcq_abort()
+Date: Tue, 29 Apr 2025 18:42:18 +0200
+Message-ID: <20250429161101.451933628@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,47 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 73b24dc731731edf762f9454552cb3a5b7224949 ]
+[ Upstream commit 4c324085062919d4e21c69e5e78456dcec0052fe ]
 
-cpufreq_cpu_get_raw() can return NULL when the target CPU is not present
-in the policy->cpus mask. scpi_cpufreq_get_rate() does not check for
-this case, which results in a NULL pointer dereference.
+A race can occur between the MCQ completion path and the abort handler:
+once a request completes, __blk_mq_free_request() sets rq->mq_hctx to
+NULL, meaning the subsequent ufshcd_mcq_req_to_hwq() call in
+ufshcd_mcq_abort() can return a NULL pointer. If this NULL pointer is
+dereferenced, the kernel will crash.
 
-Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Acked-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Add a NULL check for the returned hwq pointer. If hwq is NULL, log an
+error and return FAILED, preventing a potential NULL-pointer
+dereference.  As suggested by Bart, the ufshcd_cmd_inflight() check is
+removed.
+
+This is similar to the fix in commit 74736103fb41 ("scsi: ufs: core: Fix
+ufshcd_abort_one racing issue").
+
+This is found by our static analysis tool KNighter.
+
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250410001320.2219341-1-chenyuan0y@gmail.com
+Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scpi-cpufreq.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/ufs/core/ufs-mcq.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
-index bfc2e65e1e502..2aef39bff7d6f 100644
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -29,9 +29,16 @@ static struct scpi_ops *scpi_ops;
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index da8c1734d3335..411109a5ebbff 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -632,13 +632,6 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
+ 	unsigned long flags;
+ 	int err;
  
- static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
- {
--	struct cpufreq_policy *policy = cpufreq_cpu_get_raw(cpu);
--	struct scpi_data *priv = policy->driver_data;
--	unsigned long rate = clk_get_rate(priv->clk);
-+	struct cpufreq_policy *policy;
-+	struct scpi_data *priv;
-+	unsigned long rate;
-+
-+	policy = cpufreq_cpu_get_raw(cpu);
-+	if (unlikely(!policy))
-+		return 0;
-+
-+	priv = policy->driver_data;
-+	rate = clk_get_rate(priv->clk);
+-	if (!ufshcd_cmd_inflight(lrbp->cmd)) {
+-		dev_err(hba->dev,
+-			"%s: skip abort. cmd at tag %d already completed.\n",
+-			__func__, tag);
+-		return FAILED;
+-	}
+-
+ 	/* Skip task abort in case previous aborts failed and report failure */
+ 	if (lrbp->req_abort_skip) {
+ 		dev_err(hba->dev, "%s: skip abort. tag %d failed earlier\n",
+@@ -647,6 +640,11 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
+ 	}
  
- 	return rate / 1000;
- }
+ 	hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
++	if (!hwq) {
++		dev_err(hba->dev, "%s: skip abort. cmd at tag %d already completed.\n",
++			__func__, tag);
++		return FAILED;
++	}
+ 
+ 	if (ufshcd_mcq_sqe_search(hba, hwq, tag)) {
+ 		/*
 -- 
 2.39.5
 
