@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B6C2512FD;
-	Tue, 29 Apr 2025 18:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9FB253322;
+	Tue, 29 Apr 2025 18:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949604; cv=none; b=DNH4tRQXYu2tkUvb1pOXHl/ehm2HrFlG8/9C1qqGg0NM7lE6zHePdPd7SCKAKQZLza7GXilM+hnj0dpg+KezlwnltQdqe+TZMbcQ7kcAvxYPOD7iXzqsOVrt4zqXJNPdWseDEWYXMB9D5OHpyhSc/7WJLeCCDp4MowLIPholYJg=
+	t=1745949607; cv=none; b=U+U+uwgHRD+dDvFpWkjUaGr3W5gXMiX3xx79AHVdks8qidIrjX4qY8pYCRY6143feiw2jvBU2PGF9PO0mhLiQjAjgdZUYHS1h5zypfcYyHqAumysg/4dbaUKuOGkG6xmSlzo6daHrj7EzFzDNL5f2rRH2lIAGRs79kNkZDtbY90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949604; c=relaxed/simple;
-	bh=wugiKlXezYI3AHMB0S1c5CsspWqSPMOSfP5qL1oFwLc=;
+	s=arc-20240116; t=1745949607; c=relaxed/simple;
+	bh=/uJr6sJVKcsAHECI7+vigOZTePLAiaQs1+7ftHZsi3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mTV6paxTQRni8GTySW/ywUmS/7uorMG20aw8IedpAGOts8PfbXkynMdxJOFoMZD046iE/PdL0trgFKE/7PXWo/1b37ena+CkxyxxqCegaFH6L1fLhQMlMekZdNOnY7VrmYoTJVjG9K29s7V4cLvQtjuHXRdbmENb7iC8zC+5fWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUxYkuhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUh7lP9KJ4uJePMYI+Yk1L6zv8XUsod30yKjGexLq8bEU3xH9HjFjYOXgtEMKKX5gENd1B2AFVSipD+zNNQtxmSV2vT2zKhjwk1CKUdQcSAELk0u9YFIMwUq/aVE1mOQOy26veFH5BikM8bM4Ad+zzwT4Xg3q/lW0UqUDBd2lKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXUQnEcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUxYkuhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D564C4CEE3;
-	Tue, 29 Apr 2025 18:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXUQnEcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01EBC4CEE3;
+	Tue, 29 Apr 2025 18:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949604;
-	bh=wugiKlXezYI3AHMB0S1c5CsspWqSPMOSfP5qL1oFwLc=;
+	s=korg; t=1745949607;
+	bh=/uJr6sJVKcsAHECI7+vigOZTePLAiaQs1+7ftHZsi3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUxYkuhOQ7iLXRFvhXOuj6Yei/CUFeIWoZQi5lVoQG2CwBM2Atz0+nNpKnlMU91zD
-	 ZgTBA7vc3Jeh67ExxaMmHSf6yqLymU3FL/+Bq2lup0kGXXts08n6Aa6jTE+UPJY5e4
-	 XCeelt24mADm0Q2iKHl+ME+u3fLpAv9on9mCq8Lk=
+	b=XXUQnEcqztNqHlPgh6qgCXR7SADtfKdSJpLPTgcckjxmwNkJeGohKjpGTQlsn+zVx
+	 8F2P4DuUHsHZM8hLaEUOP5XsnCTl6RecjExr8t8zGI3hrNmiAC2+i0zOwFm0sbR3Ic
+	 z98Fls9LcZS3g4tYGN/FZz31+anzd8VNVBqH9vsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Rob Herring <robh@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
-Subject: [PATCH 5.15 371/373] PCI: Fix use-after-free in pci_bus_release_domain_nr()
-Date: Tue, 29 Apr 2025 18:44:08 +0200
-Message-ID: <20250429161138.390217404@linuxfoundation.org>
+	Kai-Heng Feng <kai.heng.feng@canonical.com>
+Subject: [PATCH 5.15 372/373] PCI: Fix dropping valid root bus resources with .end = zero
+Date: Tue, 29 Apr 2025 18:44:09 +0200
+Message-ID: <20250429161138.434186275@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -47,104 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 30ba2d09edb5ea857a1473ae3d820911347ada62 upstream.
+commit 9d8ba74a181b1c81def21168795ed96cbe6f05ed upstream.
 
-Commit c14f7ccc9f5d ("PCI: Assign PCI domain IDs by ida_alloc()")
-introduced a use-after-free bug in the bus removal cleanup. The issue was
-found with kfence:
+On r8a7791/koelsch:
 
-  [   19.293351] BUG: KFENCE: use-after-free read in pci_bus_release_domain_nr+0x10/0x70
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  # cat /sys/kernel/debug/kmemleak
+  unreferenced object 0xc3a34e00 (size 64):
+    comm "swapper/0", pid 1, jiffies 4294937460 (age 199.080s)
+    hex dump (first 32 bytes):
+      b4 5d 81 f0 b4 5d 81 f0 c0 b0 a2 c3 00 00 00 00  .]...]..........
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<fe3aa979>] __kmalloc+0xf0/0x140
+      [<34bd6bc0>] resource_list_create_entry+0x18/0x38
+      [<767046bc>] pci_add_resource_offset+0x20/0x68
+      [<b3f3edf2>] devm_of_pci_get_host_bridge_resources.constprop.0+0xb0/0x390
 
-  [   19.302817] Use-after-free read at 0x000000007f3b80eb (in kfence-#115):
-  [   19.309677]  pci_bus_release_domain_nr+0x10/0x70
-  [   19.309691]  dw_pcie_host_deinit+0x28/0x78
-  [   19.309702]  tegra_pcie_deinit_controller+0x1c/0x38 [pcie_tegra194]
-  [   19.309734]  tegra_pcie_dw_probe+0x648/0xb28 [pcie_tegra194]
-  [   19.309752]  platform_probe+0x90/0xd8
-  ...
+When coalescing two resources for a contiguous aperture, the second
+resource is enlarged to cover the full contiguous range, while the first
+resource is marked invalid.  This invalidation is done by clearing the
+flags, start, and end members.
 
-  [   19.311457] kfence-#115: 0x00000000063a155a-0x00000000ba698da8, size=1072, cache=kmalloc-2k
+When adding the initial resources to the bus later, invalid resources are
+skipped.  Unfortunately, the check for an invalid resource considers only
+the end member, causing false positives.
 
-  [   19.311469] allocated by task 96 on cpu 10 at 19.279323s:
-  [   19.311562]  __kmem_cache_alloc_node+0x260/0x278
-  [   19.311571]  kmalloc_trace+0x24/0x30
-  [   19.311580]  pci_alloc_bus+0x24/0xa0
-  [   19.311590]  pci_register_host_bridge+0x48/0x4b8
-  [   19.311601]  pci_scan_root_bus_bridge+0xc0/0xe8
-  [   19.311613]  pci_host_probe+0x18/0xc0
-  [   19.311623]  dw_pcie_host_init+0x2c0/0x568
-  [   19.311630]  tegra_pcie_dw_probe+0x610/0xb28 [pcie_tegra194]
-  [   19.311647]  platform_probe+0x90/0xd8
-  ...
+E.g. on r8a7791/koelsch, root bus resource 0 ("bus 00") is skipped, and no
+longer registered with pci_bus_insert_busn_res() (causing the memory leak),
+nor printed:
 
-  [   19.311782] freed by task 96 on cpu 10 at 19.285833s:
-  [   19.311799]  release_pcibus_dev+0x30/0x40
-  [   19.311808]  device_release+0x30/0x90
-  [   19.311814]  kobject_put+0xa8/0x120
-  [   19.311832]  device_unregister+0x20/0x30
-  [   19.311839]  pci_remove_bus+0x78/0x88
-  [   19.311850]  pci_remove_root_bus+0x5c/0x98
-  [   19.311860]  dw_pcie_host_deinit+0x28/0x78
-  [   19.311866]  tegra_pcie_deinit_controller+0x1c/0x38 [pcie_tegra194]
-  [   19.311883]  tegra_pcie_dw_probe+0x648/0xb28 [pcie_tegra194]
-  [   19.311900]  platform_probe+0x90/0xd8
-  ...
+   pci-rcar-gen2 ee090000.pci: host bridge /soc/pci@ee090000 ranges:
+   pci-rcar-gen2 ee090000.pci:      MEM 0x00ee080000..0x00ee08ffff -> 0x00ee080000
+   pci-rcar-gen2 ee090000.pci: PCI: revision 11
+   pci-rcar-gen2 ee090000.pci: PCI host bridge to bus 0000:00
+  -pci_bus 0000:00: root bus resource [bus 00]
+   pci_bus 0000:00: root bus resource [mem 0xee080000-0xee08ffff]
 
-  [   19.313579] CPU: 10 PID: 96 Comm: kworker/u24:2 Not tainted 6.2.0 #4
-  [   19.320171] Hardware name:  /, BIOS 1.0-d7fb19b 08/10/2022
-  [   19.325852] Workqueue: events_unbound deferred_probe_work_func
+Fix this by only skipping resources where all of the flags, start, and end
+members are zero.
 
-The stack trace is a bit misleading as dw_pcie_host_deinit() doesn't
-directly call pci_bus_release_domain_nr(). The issue turns out to be in
-pci_remove_root_bus() which first calls pci_remove_bus() which frees the
-struct pci_bus when its struct device is released. Then
-pci_bus_release_domain_nr() is called and accesses the freed struct
-pci_bus. Reordering these fixes the issue.
-
-Fixes: c14f7ccc9f5d ("PCI: Assign PCI domain IDs by ida_alloc()")
-Link: https://lore.kernel.org/r/20230329123835.2724518-1-robh@kernel.org
-Link: https://lore.kernel.org/r/b529cb69-0602-9eed-fc02-2f068707a006@nvidia.com
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 7c3855c423b17f6c ("PCI: Coalesce host bridge contiguous apertures")
+Link: https://lore.kernel.org/r/da0fcd5e86c74239be79c7cb03651c0fce31b515.1676036673.git.geert+renesas@glider.be
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Cc: stable@vger.kernel.org	# v6.2+
-Cc: Pali Rohár <pali@kernel.org>
+Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/remove.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pci/probe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/remove.c
-+++ b/drivers/pci/remove.c
-@@ -157,8 +157,6 @@ void pci_remove_root_bus(struct pci_bus
- 	list_for_each_entry_safe(child, tmp,
- 				 &bus->devices, bus_list)
- 		pci_remove_bus_device(child);
--	pci_remove_bus(bus);
--	host_bridge->bus = NULL;
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -999,7 +999,7 @@ static int pci_register_host_bridge(stru
+ 	resource_list_for_each_entry_safe(window, n, &resources) {
+ 		offset = window->offset;
+ 		res = window->res;
+-		if (!res->end)
++		if (!res->flags && !res->start && !res->end)
+ 			continue;
  
- #ifdef CONFIG_PCI_DOMAINS_GENERIC
- 	/* Release domain_nr if it was dynamically allocated */
-@@ -166,6 +164,9 @@ void pci_remove_root_bus(struct pci_bus
- 		pci_bus_release_domain_nr(bus, host_bridge->dev.parent);
- #endif
- 
-+	pci_remove_bus(bus);
-+	host_bridge->bus = NULL;
-+
- 	/* remove the host bridge */
- 	device_del(&host_bridge->dev);
- }
+ 		list_move_tail(&window->node, &bridge->windows);
 
 
