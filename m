@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40001DF73C;
-	Tue, 29 Apr 2025 17:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149F722A81D;
+	Tue, 29 Apr 2025 17:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946547; cv=none; b=kl5xCvHyYkU/rfrf00E+Gt7jlziBNevfncB9xkIzwqn0ezpTyafaWi+AiOB7cxK33UT5BQKwgu+cHvbEbzspjfqRPN8EmLwg4fg8iaB6iZ3f4NlOBcEu7vL6saGuZvK2eTMpp9WytxXRvRNhnM1efZqqc5LYBuvrbk1Jul8EQ1o=
+	t=1745946550; cv=none; b=OCDwmjFUBZwjOhCmskoTbFmlmn2LpUQH1FJ5xgwBMaToBfNzVKPOf5PR7MBG6Gq12E7NcUGiIeqoIa89CgOEw+WqqZvmLkPLz3AvaUknTHCtALPG7YnyS9w+3MJgJoC6SMqhzn4vj7bcNPuMBokPBLyJGR6Es55f8RTYzaBW7IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946547; c=relaxed/simple;
-	bh=/Uk6irhhN/6yJvQUK0RoYStfczVZkfABxiO0kztV0ao=;
+	s=arc-20240116; t=1745946550; c=relaxed/simple;
+	bh=GHT2t/uo60a9BaQi2CvxZPerzjUNxym9JZZtbPKOps4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qjO9dJgPbfAcwt18Muh+pSOV1vE2/lBykOTAn3jXqnXVUJQzowV/wqjEz04MpLeUKIrwHvMzcxI4ETykEZ17/ph1zk8u7ZOJpQ/7B3TmQxl5YEir6/0PdCt9hjjxHlYxdNoznc/GY4ei2eBpcqy9J+nhOoRNJuBuJzuxwGH5RI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vhkqgktx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fR31A0tPl0uwGWNi7EXfjlBLljCAQgcEDRLn03jXB5ZOYhGmivVg5VmUeZWi1XR6E9RUnE1hM+M30dJhxp/RwD3XhZrCohBOcmyqZ2XZJvocOYEC0QfMNiyaU8I5iO8PpswK34D1g5VM04ZzTLCaFCh3r/nd4lrFCVDe36AbtAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07HjeJ7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vhkqgktx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D122BC4CEE3;
-	Tue, 29 Apr 2025 17:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07HjeJ7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B63FC4CEE3;
+	Tue, 29 Apr 2025 17:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946547;
-	bh=/Uk6irhhN/6yJvQUK0RoYStfczVZkfABxiO0kztV0ao=;
+	s=korg; t=1745946550;
+	bh=GHT2t/uo60a9BaQi2CvxZPerzjUNxym9JZZtbPKOps4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhkqgktxJMS04et12RhzzXV6hYjrxafv9bggtpgCxlHFEYtUQaxVEqxt4cK+yFb5L
-	 86cBHjuRl5CYiSsgGkHtD/DPue9c64EwYA7wKgefeij1JUUJTwvX09VMCw3MGjzUHy
-	 l0wqiMYHA0CmabOa3BoqJ1PmZJylmPVnRUZX4WPs=
+	b=07HjeJ7SiLwU/kVjfWKulyaEXo80DBhE34ZkXXOxiUmfrBEaw5k44fOe8CX/QgHjB
+	 DbMZ2Nf1E+fafmzWyOVqpehRr15EO1u03yOJvvC46YpzXJ0UN98OBTwnYGVKVZCl8x
+	 q5g9kWNNqIhKvN6YRT9h24/CvuOHVm82bT4SuIjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.14 302/311] media: i2c: imx214: Fix uninitialized variable in imx214_set_ctrl()
-Date: Tue, 29 Apr 2025 18:42:19 +0200
-Message-ID: <20250429161133.371587561@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.14 303/311] MIPS: cm: Fix warning if MIPS_CM is disabled
+Date: Tue, 29 Apr 2025 18:42:20 +0200
+Message-ID: <20250429161133.410809673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,33 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-commit 38985a25682c66d1a7599b0e95ceeb9c7ba89f84 upstream.
+commit b73c3ccdca95c237750c981054997c71d33e09d7 upstream.
 
-You can't pass uninitialized "ret" variables to cci_write().  It has to
-start as zero.
+Commit e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+introduced
 
-Fixes: 4f0aeba4f155 ("media: i2c: imx214: Convert to CCI register access helpers")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: André Apitzsch <git@apitzsch.eu>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+arch/mips/include/asm/mips-cm.h:119:13: error: ‘mips_cm_update_property’
+	defined but not used [-Werror=unused-function]
+
+Fix this by making empty function implementation inline
+
+Fixes: e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx214.c |    2 +-
+ arch/mips/include/asm/mips-cm.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/imx214.c
-+++ b/drivers/media/i2c/imx214.c
-@@ -840,7 +840,7 @@ static int imx214_s_stream(struct v4l2_s
- {
- 	struct imx214 *imx214 = to_imx214(subdev);
- 	struct v4l2_subdev_state *state;
--	int ret;
-+	int ret = 0;
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -116,7 +116,7 @@ static inline bool mips_cm_present(void)
+ #ifdef CONFIG_MIPS_CM
+ extern void mips_cm_update_property(void);
+ #else
+-static void mips_cm_update_property(void) {}
++static inline void mips_cm_update_property(void) {}
+ #endif
  
- 	if (enable) {
- 		ret = pm_runtime_resume_and_get(imx214->dev);
+ /**
 
 
