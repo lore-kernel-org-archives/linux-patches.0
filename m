@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9A42472B9;
-	Tue, 29 Apr 2025 16:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8012472BC;
+	Tue, 29 Apr 2025 16:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945902; cv=none; b=id4WhPMk3BR9vGpGwEjAOg6o6duYIYr06Rh5tAXizsas/TAtqTCZaHBF7ZGa/0skgqFp3EdWhCT60zg+nNIgq4Tm5YWiVQrM3BfSQdNZpWeuzfEb/ZV6ggMZIqNPAlP8H+ZQI6OWWVnijBDlhNnryUNFNAtqR/VrswhyN1x+dPA=
+	t=1745945905; cv=none; b=ijsEEjyxWUEvoL0APAQRb9dWHPvgbDNGxIqnlOEUwxdfiNMAPpvYKdsKHMFIZff5r6Y5mKDz6xV9DDUWJx8HXPavkv65shNdX0lhXpvmmWnzjihoymCTyBUfiegrJN/0aRL1vIXrZ6ZpC4eqODUBWRk9ig1fhqbdo6tmtiO1ROA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945902; c=relaxed/simple;
-	bh=3Iv8kOz0/ibC27lJh8Zv19DkUsRphhops5mmt+lvLnQ=;
+	s=arc-20240116; t=1745945905; c=relaxed/simple;
+	bh=yjs88DAZtbz7hZ+JcZ60FSyoQkqXoz2l97retabuaS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XExhFmccitXBayIhXTE/b+zg5vri281tQez+D57srAixr+1voHHo/ViGe5gEmeysDtn7YIfOXG9Kce9U/ZKqCsENjgLN12GimviBJdglBBMOk/1qyn8fbagFPeHpW4SHr4mTboNe+AWpN/4xq4aD3X2sH7LFXswkzTgFIThd4qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jvr0kxS5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6QA3V8DdY5hvJYwKlOwYhlrYJmLJMR+vT7Xd9yon03n0qPQ0dCucWrov1U0q3FJfTvaJR3GY7LfDt1mmmR99dQdf6MmG3SmSm2jsgYtNIK7QXVlepep7s0OXV5h02UC3Vs0a5BVzRxBj4je7Is2RwVgTe90Ye/DJQpls4ISPfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH3fuRZN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jvr0kxS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6DAC4CEE9;
-	Tue, 29 Apr 2025 16:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH3fuRZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7854CC4CEE9;
+	Tue, 29 Apr 2025 16:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945901;
-	bh=3Iv8kOz0/ibC27lJh8Zv19DkUsRphhops5mmt+lvLnQ=;
+	s=korg; t=1745945904;
+	bh=yjs88DAZtbz7hZ+JcZ60FSyoQkqXoz2l97retabuaS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jvr0kxS5nsr+ti7qenH+N0UgGEZfENll6jlMPs7sfq3j0F6l4lE4/4lANEXRHJd1c
-	 tftKmvYclRB/2QIqQP25/CS516ZzYvDF4ccSXJcP4mOP3F2g1jyMXMlLIAJ74Frc7f
-	 IeNjtQ0AOG+CIHBE6ulwORVA7wAsMxcSi2ZzaJiQ=
+	b=KH3fuRZNJyppaE7KL7V/BIBiT65IN9UlkHZHsmCKT5NX2ATqsVRcgZE1lHN++Bg5a
+	 X/S9FWuTnX/CTrOkkVmz29B0t3rgCHPtHu4Jh6YeRihJfJxbYjmu7BbmrDX1sJXfx4
+	 i0gROAxSB9BaT9xouQg4Wr+CTpcw+kJdwW4/UDnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 058/311] net: lwtunnel: disable BHs when required
-Date: Tue, 29 Apr 2025 18:38:15 +0200
-Message-ID: <20250429161123.417212905@linuxfoundation.org>
+Subject: [PATCH 6.14 059/311] net: phylink: force link down on major_config failure
+Date: Tue, 29 Apr 2025 18:38:16 +0200
+Message-ID: <20250429161123.460641019@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -54,118 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit c03a49f3093a4903c8a93c8b5c9a297b5343b169 ]
+[ Upstream commit f1ae32a709e0b525d7963207eb3a4747626f4818 ]
 
-In lwtunnel_{output|xmit}(), dev_xmit_recursion() may be called in
-preemptible scope for PREEMPT kernels. This patch disables BHs before
-calling dev_xmit_recursion(). BHs are re-enabled only at the end, since
-we must ensure the same CPU is used for both dev_xmit_recursion_inc()
-and dev_xmit_recursion_dec() (and any other recursion levels in some
-cases) in order to maintain valid per-cpu counters.
+If we fail to configure the MAC or PCS according to the desired mode,
+do not allow the network link to come up until we have successfully
+configured the MAC and PCS. This improves phylink's behaviour when an
+error occurs.
 
-Reported-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAADnVQJFWn3dBFJtY+ci6oN1pDFL=TzCmNbRgey7MdYxt_AP2g@mail.gmail.com/
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Closes: https://lore.kernel.org/netdev/m2h62qwf34.fsf@gmail.com/
-Fixes: 986ffb3a57c5 ("net: lwtunnel: fix recursion loops")
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250416160716.8823-1-justin.iurman@uliege.be
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/E1twkqO-0006FI-Gm@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4c8925cb9db1 ("net: phylink: fix suspend/resume with WoL enabled and link down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwtunnel.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/net/phy/phylink.c | 42 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
-index 4417a18b3e951..f63586c9ce021 100644
---- a/net/core/lwtunnel.c
-+++ b/net/core/lwtunnel.c
-@@ -332,6 +332,8 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index b00a315de0601..b74b1c3365000 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -82,6 +82,7 @@ struct phylink {
+ 	unsigned int pcs_state;
  
-+	local_bh_disable();
+ 	bool link_failed;
++	bool major_config_failed;
+ 	bool mac_supports_eee_ops;
+ 	bool mac_supports_eee;
+ 	bool phy_enable_tx_lpi;
+@@ -1360,12 +1361,16 @@ static void phylink_major_config(struct phylink *pl, bool restart,
+ 		    phylink_an_mode_str(pl->req_link_an_mode),
+ 		    phy_modes(state->interface));
+ 
++	pl->major_config_failed = false;
 +
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
-@@ -347,8 +349,10 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	lwtstate = dst->lwtstate;
+ 	if (pl->mac_ops->mac_select_pcs) {
+ 		pcs = pl->mac_ops->mac_select_pcs(pl->config, state->interface);
+ 		if (IS_ERR(pcs)) {
+ 			phylink_err(pl,
+ 				    "mac_select_pcs unexpectedly failed: %pe\n",
+ 				    pcs);
++
++			pl->major_config_failed = true;
+ 			return;
+ 		}
  
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
--	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
--		return 0;
-+	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
-+		ret = 0;
-+		goto out;
+@@ -1387,6 +1392,7 @@ static void phylink_major_config(struct phylink *pl, bool restart,
+ 		if (err < 0) {
+ 			phylink_err(pl, "mac_prepare failed: %pe\n",
+ 				    ERR_PTR(err));
++			pl->major_config_failed = true;
+ 			return;
+ 		}
+ 	}
+@@ -1410,8 +1416,15 @@ static void phylink_major_config(struct phylink *pl, bool restart,
+ 
+ 	phylink_mac_config(pl, state);
+ 
+-	if (pl->pcs)
+-		phylink_pcs_post_config(pl->pcs, state->interface);
++	if (pl->pcs) {
++		err = phylink_pcs_post_config(pl->pcs, state->interface);
++		if (err < 0) {
++			phylink_err(pl, "pcs_post_config failed: %pe\n",
++				    ERR_PTR(err));
++
++			pl->major_config_failed = true;
++		}
 +	}
  
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
-@@ -363,11 +367,13 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	if (ret == -EOPNOTSUPP)
- 		goto drop;
+ 	if (pl->pcs_state == PCS_STATE_STARTING || pcs_changed)
+ 		phylink_pcs_enable(pl->pcs);
+@@ -1422,11 +1435,12 @@ static void phylink_major_config(struct phylink *pl, bool restart,
  
--	return ret;
-+	goto out;
- 
- drop:
- 	kfree_skb(skb);
- 
-+out:
-+	local_bh_enable();
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(lwtunnel_output);
-@@ -379,6 +385,8 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
- 
-+	local_bh_disable();
-+
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
-@@ -395,8 +403,10 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	lwtstate = dst->lwtstate;
- 
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
--	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
--		return 0;
-+	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
-+		ret = 0;
-+		goto out;
+ 	err = phylink_pcs_config(pl->pcs, neg_mode, state,
+ 				 !!(pl->link_config.pause & MLO_PAUSE_AN));
+-	if (err < 0)
+-		phylink_err(pl, "pcs_config failed: %pe\n",
+-			    ERR_PTR(err));
+-	else if (err > 0)
++	if (err < 0) {
++		phylink_err(pl, "pcs_config failed: %pe\n", ERR_PTR(err));
++		pl->major_config_failed = true;
++	} else if (err > 0) {
+ 		restart = true;
 +	}
  
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
-@@ -411,11 +421,13 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	if (ret == -EOPNOTSUPP)
- 		goto drop;
- 
--	return ret;
-+	goto out;
- 
- drop:
- 	kfree_skb(skb);
- 
-+out:
-+	local_bh_enable();
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(lwtunnel_xmit);
-@@ -427,6 +439,8 @@ int lwtunnel_input(struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
- 
-+	DEBUG_NET_WARN_ON_ONCE(!in_softirq());
+ 	if (restart)
+ 		phylink_pcs_an_restart(pl);
+@@ -1434,16 +1448,22 @@ static void phylink_major_config(struct phylink *pl, bool restart,
+ 	if (pl->mac_ops->mac_finish) {
+ 		err = pl->mac_ops->mac_finish(pl->config, pl->act_link_an_mode,
+ 					      state->interface);
+-		if (err < 0)
++		if (err < 0) {
+ 			phylink_err(pl, "mac_finish failed: %pe\n",
+ 				    ERR_PTR(err));
 +
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
++			pl->major_config_failed = true;
++		}
+ 	}
+ 
+ 	if (pl->phydev && pl->phy_ib_mode) {
+ 		err = phy_config_inband(pl->phydev, pl->phy_ib_mode);
+-		if (err < 0)
++		if (err < 0) {
+ 			phylink_err(pl, "phy_config_inband: %pe\n",
+ 				    ERR_PTR(err));
++
++			pl->major_config_failed = true;
++		}
+ 	}
+ 
+ 	if (pl->sfp_bus) {
+@@ -1795,6 +1815,12 @@ static void phylink_resolve(struct work_struct *w)
+ 		}
+ 	}
+ 
++	/* If configuration of the interface failed, force the link down
++	 * until we get a successful configuration.
++	 */
++	if (pl->major_config_failed)
++		link_state.link = false;
++
+ 	if (link_state.link != cur_link_state) {
+ 		pl->old_link_state = link_state.link;
+ 		if (!link_state.link)
 -- 
 2.39.5
 
