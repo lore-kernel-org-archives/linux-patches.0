@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53123FC7D;
-	Tue, 29 Apr 2025 17:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CCC21ABDB;
+	Tue, 29 Apr 2025 17:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947176; cv=none; b=WcDuafZ8c7aV70es54q9WnVDQpANQ4gKsxBFNmm+BXzmJg+ZO3q4mvWVGA0+N4eL+0Xgb6WI4wlj6F4ObARKZeB7+8Bu2h5Qy3W4k2soFjhiBV/VY+vCQmtazblqlROfkX6eMrva4VAQHjFPW6BZbxoRt8EuAZ5kvcHXzIZlnYc=
+	t=1745947179; cv=none; b=bDRDtvHMrxrpFblELuImlAMQcz9uqJwDoDsBnwrFvOmi5rrlpOvGL5AF/UImnU1DerdWBQRbCbysopvYS7kCwFE1HTV6bDECiqMfFDH8qqCCbFiEqnmgicMAa8pSqNcMNlUAjYAzsVJlMxzE8vSddKES77rLh87mI8EHD6t9kec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947176; c=relaxed/simple;
-	bh=+v12JGePtrgBV5AcjarQF9892crG+pb5GefqDsh5Z68=;
+	s=arc-20240116; t=1745947179; c=relaxed/simple;
+	bh=ToDGcpWW9rFrxz28jviBQbJbab/hZQ7SoB2srYysP0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UID9LPmCBak7fdD4NNn1iZpZszZo+AAhD77vnzRtbRf4EfCJG1Q3VfMlEMIUqZEIeFHmq5dwBgeKm4SscghS+jYM1u7W/jPXoBvBsNqrR6Ln+AJt75hHvOgmE10N+wy45tHrcpgANcmdbRULYLwQWY8pxsx4MvUrATdhCmOtqkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeK7STpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qA2omwRsQzAyeNyzwEtd019ZWrB8S0DMXn+sBaNOPf+8/WUth+0PjaMxRFGIYL2bhQGxqEvHigfeCAfSvCNlyPiAvdKqQ4pMCyX+NClvI+SI34ayOEe3S3BaP322Mqzfl6VHXMVdC2LVb+fNgYisWaFqrLhyTwHjByGutdqbaZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ntaE9ox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeK7STpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B67C4CEE3;
-	Tue, 29 Apr 2025 17:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ntaE9ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AA8C4CEE3;
+	Tue, 29 Apr 2025 17:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947175;
-	bh=+v12JGePtrgBV5AcjarQF9892crG+pb5GefqDsh5Z68=;
+	s=korg; t=1745947179;
+	bh=ToDGcpWW9rFrxz28jviBQbJbab/hZQ7SoB2srYysP0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeK7STpuPF3ATZp4V3SIN6A7UEvYtbKDtYkoAjRIDobygaLA++QMf7VsKQJeT3P8S
-	 O932xW5HYd1D7V6PJq2f1TyqkragOvU3reOpWMX91XkPkBsbJQA55zLuL4yy3Vse04
-	 0OOmq0sAnal3owaNpuXAzzfBmoq8ITQNG9OKZgUE=
+	b=1ntaE9oxWdwdUekOUT6v3BmYBYVHwv4gF4Bx9maGp3Vt048mi71BqASg4lqNCnPXo
+	 0c0TKaodviHnLbvMn9z6mUjl0bxKpDSElDGzHjDBrXb59P/cC+5180RzIef82RW32p
+	 f7VyZzAAC7MKxp/mUmRQy5Z3pJRKWiDtv2WTaHMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Jianhong Yin <jiyin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 167/286] smb: client: fix NULL ptr deref in crypto_aead_setkey()
-Date: Tue, 29 Apr 2025 18:41:11 +0200
-Message-ID: <20250429161114.754592352@linuxfoundation.org>
+	syzbot+4dc041c686b7c816a71e@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	David Sauerwein <dssauerw@amazon.de>
+Subject: [PATCH 5.10 168/286] bpf: avoid holding freeze_mutex during mmap operation
+Date: Tue, 29 Apr 2025 18:41:12 +0200
+Message-ID: <20250429161114.797114463@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,127 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
+commit bc27c52eea189e8f7492d40739b7746d67b65beb upstream.
 
-Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
-when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
-the client uses AES-128-CCM as the default cipher.  See MS-SMB2
-3.3.5.4.
+We use map->freeze_mutex to prevent races between map_freeze() and
+memory mapping BPF map contents with writable permissions. The way we
+naively do this means we'll hold freeze_mutex for entire duration of all
+the mm and VMA manipulations, which is completely unnecessary. This can
+potentially also lead to deadlocks, as reported by syzbot in [0].
 
-Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
-a @server->cipher_type check to conditionally call
-smb3_crypto_aead_allocate(), but that check would always be false as
-@server->cipher_type is unset for SMB3.02.
+So, instead, hold freeze_mutex only during writeability checks, bump
+(proactively) "write active" count for the map, unlock the mutex and
+proceed with mmap logic. And only if something went wrong during mmap
+logic, then undo that "write active" counter increment.
 
-Fix the following KASAN splat by setting @server->cipher_type for
-SMB3.02 as well.
+  [0] https://lore.kernel.org/bpf/678dcbc9.050a0220.303755.0066.GAE@google.com/
 
-mount.cifs //srv/share /mnt -o vers=3.02,seal,...
-
-BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
-Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
-CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- ? crypto_aead_setkey+0x2c/0x130
- kasan_report+0xda/0x110
- ? crypto_aead_setkey+0x2c/0x130
- crypto_aead_setkey+0x2c/0x130
- crypt_message+0x258/0xec0 [cifs]
- ? __asan_memset+0x23/0x50
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? mark_lock+0xb0/0x6a0
- ? hlock_class+0x32/0xb0
- ? mark_lock+0xb0/0x6a0
- smb3_init_transform_rq+0x352/0x3f0 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- smb_send_rqst+0x144/0x230 [cifs]
- ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
- ? hlock_class+0x32/0xb0
- ? smb2_setup_request+0x225/0x3a0 [cifs]
- ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
- compound_send_recv+0x59b/0x1140 [cifs]
- ? __pfx_compound_send_recv+0x10/0x10 [cifs]
- ? __create_object+0x5e/0x90
- ? hlock_class+0x32/0xb0
- ? do_raw_spin_unlock+0x9a/0xf0
- cifs_send_recv+0x23/0x30 [cifs]
- SMB2_tcon+0x3ec/0xb30 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_trylock+0xc6/0x120
- ? lock_acquire+0x3f/0x90
- ? _get_xid+0x16/0xd0 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
- ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
- cifs_mount_get_session+0x8a/0x210 [cifs]
- dfs_mount_share+0x1b0/0x11d0 [cifs]
- ? __pfx___lock_acquire+0x10/0x10
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? find_held_lock+0x8a/0xa0
- ? hlock_class+0x32/0xb0
- ? lock_release+0x203/0x5d0
- cifs_mount+0xb3/0x3d0 [cifs]
- ? do_raw_spin_trylock+0xc6/0x120
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? lock_acquire+0x3f/0x90
- ? find_nls+0x16/0xa0
- ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
- cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
- smb3_get_tree+0x1bf/0x330 [cifs]
- vfs_get_tree+0x4a/0x160
- path_mount+0x3c1/0xfb0
- ? kasan_quarantine_put+0xc7/0x1d0
- ? __pfx_path_mount+0x10/0x10
- ? kmem_cache_free+0x118/0x3e0
- ? user_path_at+0x74/0xa0
- __x64_sys_mount+0x1a6/0x1e0
- ? __pfx___x64_sys_mount+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Cc: Tom Talpey <tom@talpey.com>
-Reported-by: Jianhong Yin <jiyin@redhat.com>
-Cc: stable@vger.kernel.org # v6.12
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-  fixes CVE-2024-50047 but brings NULL-pointer dereferebce. So
-  commit 4bdec0d1f658 ("smb: client: fix NULL ptr deref in crypto_aead_setkey()")
-  should be backported too. ]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: fc9702273e2e ("bpf: Add mmap() support for BPF_MAP_TYPE_ARRAY")
+Reported-by: syzbot+4dc041c686b7c816a71e@syzkaller.appspotmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250129012246.1515826-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: David Sauerwein <dssauerw@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2pdu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/syscall.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -963,7 +963,9 @@ SMB2_negotiate(const unsigned int xid, s
- 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
- 	 * Set the cipher type manually.
- 	 */
--	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
-+	if ((server->dialect == SMB30_PROT_ID ||
-+	     server->dialect == SMB302_PROT_ID) &&
-+	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
- 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -647,7 +647,7 @@ static const struct vm_operations_struct
+ static int bpf_map_mmap(struct file *filp, struct vm_area_struct *vma)
+ {
+ 	struct bpf_map *map = filp->private_data;
+-	int err;
++	int err = 0;
  
- 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
+ 	if (!map->ops->map_mmap || map_value_has_spin_lock(map))
+ 		return -ENOTSUPP;
+@@ -671,7 +671,12 @@ static int bpf_map_mmap(struct file *fil
+ 			err = -EACCES;
+ 			goto out;
+ 		}
++		bpf_map_write_active_inc(map);
+ 	}
++out:
++	mutex_unlock(&map->freeze_mutex);
++	if (err)
++		return err;
+ 
+ 	/* set default open/close callbacks */
+ 	vma->vm_ops = &bpf_map_default_vmops;
+@@ -682,13 +687,11 @@ static int bpf_map_mmap(struct file *fil
+ 		vma->vm_flags &= ~VM_MAYWRITE;
+ 
+ 	err = map->ops->map_mmap(map, vma);
+-	if (err)
+-		goto out;
++	if (err) {
++		if (vma->vm_flags & VM_WRITE)
++			bpf_map_write_active_dec(map);
++	}
+ 
+-	if (vma->vm_flags & VM_MAYWRITE)
+-		bpf_map_write_active_inc(map);
+-out:
+-	mutex_unlock(&map->freeze_mutex);
+ 	return err;
+ }
+ 
 
 
