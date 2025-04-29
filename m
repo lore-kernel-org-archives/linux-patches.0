@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6995243364;
-	Tue, 29 Apr 2025 17:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A8C25484F;
+	Tue, 29 Apr 2025 17:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949244; cv=none; b=JT3gMbmyUb9G+1nwmUwOyzqR5O2yExW0bREcXEdTd4Bt8kB+EXg4i8MsTFzqgf7bt2xnwLgbqA7cp8ZTe0yLKiwO4pMTclDEkFNc0JgR6i+9zfYMQVSVTDADGoEduM6PPrKYrCJY4mzsHp8C7afOT2JkINY1PtWcP5t1SEORrRI=
+	t=1745949248; cv=none; b=IZJEQWcXTtLJzdtPNz9Mq0DwgS6LcLr5oc2oLuSkAj9XUyosMai+TgkePPjsOURaujnHNM7v4BzbjCVmaL9bs5Ebf7dDJz2saEJq32BSRymqwnvLUhWjTdhQEZJWqaDNtNWZ3h456Ch2pxMcmZR+NNnGcy4S3rz95PEWyuQiBmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949244; c=relaxed/simple;
-	bh=pukrLrJ2MbAhzcRzw3EKKH12Q7lk06L2fYVxuYRbo1M=;
+	s=arc-20240116; t=1745949248; c=relaxed/simple;
+	bh=pO+0CGhKLmxoBVGKSoYzZNUZm5hoYfqdRTdVoLloqd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOSRAnQa7QbkWwe3WpfvqrpBhPQFJzThaCyFBMFxjgwGXdgcDeQAQkbULESN6zv4QA97Boc8eM1XlVbdMbwVXcyRxFRI2a0ud2Z/QgEQPgrhEnlIl4fL8tTCNm+PawAOsPwvMMPQd7nf5LTd31/M5w+tU1hmddy6b2VPWqFKZzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiwQmAkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d046rEH+MxiCIXUDPLyhoS7xT+jB+xWwLQnSVlae5iNHb0ebXUzflfnwVYkEC5VQZiXqy9bmOqsgOOtSg8hRctHvoJnQsY9zxlVjIn4P3vgWacZ10l1kUk13p7zMGlGK0Le1wubJ1FBEjsc1kL+BwwdvA6XKbQ7ESqVW0/2X/Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktHQFvZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiwQmAkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16265C4CEE3;
-	Tue, 29 Apr 2025 17:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktHQFvZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46190C4CEE9;
+	Tue, 29 Apr 2025 17:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949243;
-	bh=pukrLrJ2MbAhzcRzw3EKKH12Q7lk06L2fYVxuYRbo1M=;
+	s=korg; t=1745949248;
+	bh=pO+0CGhKLmxoBVGKSoYzZNUZm5hoYfqdRTdVoLloqd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiwQmAkrYehvsQNdfP5tdXbgDCX0UqlPGGeR9xch+Kdq2TEEVIOMrOnVKFxKzRSao
-	 OuVmJYWzEG8wN11J7mSNSk/p5notMWTZFEKFTksafQAhTedWdZ8dU1DZHlaMWuUuvu
-	 GOOZ9aK/Urc+hS/Fa8/gNctqudokm0eQHpEt8gGg=
+	b=ktHQFvZxQDkUsqVFq8PaXDQRc1okVfAUFbDO61yKVfyWdmCkzzOMMsiO/RDxFOIrH
+	 lIp/olohSJX6MhSpRxzwMLYepRGVNzDXYQN6TWDpXmfZzUm+m8VwtrFB07VOviV/dK
+	 6DgMAOA0igjzW96kn5Z8M53JRKOFLav4fEkdJEfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
 	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 258/373] media: streamzap: remove unused struct members
-Date: Tue, 29 Apr 2025 18:42:15 +0200
-Message-ID: <20250429161133.735500826@linuxfoundation.org>
+Subject: [PATCH 5.15 259/373] media: streamzap: fix race between device disconnection and urb callback
+Date: Tue, 29 Apr 2025 18:42:16 +0200
+Message-ID: <20250429161133.775380874@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,158 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 4df69e46c352df9bdbe859824da33428a3ce8a1d ]
+[ Upstream commit f656cfbc7a293a039d6a0c7100e1c846845148c1 ]
 
-These struct members do not serve any purpose.
+Syzkaller has reported a general protection fault at function
+ir_raw_event_store_with_filter(). This crash is caused by a NULL pointer
+dereference of dev->raw pointer, even though it is checked for NULL in
+the same function, which means there is a race condition. It occurs due
+to the incorrect order of actions in the streamzap_disconnect() function:
+rc_unregister_device() is called before usb_kill_urb(). The dev->raw
+pointer is freed and set to NULL in rc_unregister_device(), and only
+after that usb_kill_urb() waits for in-progress requests to finish.
 
+If rc_unregister_device() is called while streamzap_callback() handler is
+not finished, this can lead to accessing freed resources. Thus
+rc_unregister_device() should be called after usb_kill_urb().
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 8e9e60640067 ("V4L/DVB: staging/lirc: port lirc_streamzap to ir-core")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=34008406ee9a31b13c73
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
 Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: f656cfbc7a29 ("media: streamzap: fix race between device disconnection and urb callback")
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/streamzap.c | 37 ++++++++++++++----------------------
- 1 file changed, 14 insertions(+), 23 deletions(-)
+ drivers/media/rc/streamzap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/media/rc/streamzap.c b/drivers/media/rc/streamzap.c
-index aff4dfb99a827..d4b38532c7b44 100644
+index d4b38532c7b44..d31ee190301b3 100644
 --- a/drivers/media/rc/streamzap.c
 +++ b/drivers/media/rc/streamzap.c
-@@ -66,9 +66,6 @@ struct streamzap_ir {
- 	struct device *dev;
- 
- 	/* usb */
--	struct usb_device	*usbdev;
--	struct usb_interface	*interface;
--	struct usb_endpoint_descriptor *endpoint;
- 	struct urb		*urb_in;
- 
- 	/* buffer & dma */
-@@ -85,7 +82,6 @@ struct streamzap_ir {
- 	/* start time of signal; necessary for gap tracking */
- 	ktime_t			signal_last;
- 	ktime_t			signal_start;
--	bool			timeout_enabled;
- 
- 	char			phys[64];
- };
-@@ -211,8 +207,7 @@ static void sz_process_ir_data(struct streamzap_ir *sz, int len)
- 					.duration = sz->rdev->timeout
- 				};
- 				sz->idle = true;
--				if (sz->timeout_enabled)
--					sz_push(sz, rawir);
-+				sz_push(sz, rawir);
- 			} else {
- 				sz_push_full_space(sz, sz->buf_in[i]);
- 			}
-@@ -271,7 +266,8 @@ static void streamzap_callback(struct urb *urb)
- 	usb_submit_urb(urb, GFP_ATOMIC);
- }
- 
--static struct rc_dev *streamzap_init_rc_dev(struct streamzap_ir *sz)
-+static struct rc_dev *streamzap_init_rc_dev(struct streamzap_ir *sz,
-+					    struct usb_device *usbdev)
- {
- 	struct rc_dev *rdev;
- 	struct device *dev = sz->dev;
-@@ -281,12 +277,12 @@ static struct rc_dev *streamzap_init_rc_dev(struct streamzap_ir *sz)
- 	if (!rdev)
- 		goto out;
- 
--	usb_make_path(sz->usbdev, sz->phys, sizeof(sz->phys));
-+	usb_make_path(usbdev, sz->phys, sizeof(sz->phys));
- 	strlcat(sz->phys, "/input0", sizeof(sz->phys));
- 
- 	rdev->device_name = "Streamzap PC Remote Infrared Receiver";
- 	rdev->input_phys = sz->phys;
--	usb_to_input_id(sz->usbdev, &rdev->input_id);
-+	usb_to_input_id(usbdev, &rdev->input_id);
- 	rdev->dev.parent = dev;
- 	rdev->priv = sz;
- 	rdev->allowed_protocols = RC_PROTO_BIT_ALL_IR_DECODER;
-@@ -317,6 +313,7 @@ static int streamzap_probe(struct usb_interface *intf,
- 			   const struct usb_device_id *id)
- {
- 	struct usb_device *usbdev = interface_to_usbdev(intf);
-+	struct usb_endpoint_descriptor *endpoint;
- 	struct usb_host_interface *iface_host;
- 	struct streamzap_ir *sz = NULL;
- 	int retval = -ENOMEM;
-@@ -327,9 +324,6 @@ static int streamzap_probe(struct usb_interface *intf,
- 	if (!sz)
- 		return -ENOMEM;
- 
--	sz->usbdev = usbdev;
--	sz->interface = intf;
--
- 	/* Check to ensure endpoint information matches requirements */
- 	iface_host = intf->cur_altsetting;
- 
-@@ -340,22 +334,22 @@ static int streamzap_probe(struct usb_interface *intf,
- 		goto free_sz;
- 	}
- 
--	sz->endpoint = &(iface_host->endpoint[0].desc);
--	if (!usb_endpoint_dir_in(sz->endpoint)) {
-+	endpoint = &iface_host->endpoint[0].desc;
-+	if (!usb_endpoint_dir_in(endpoint)) {
- 		dev_err(&intf->dev, "%s: endpoint doesn't match input device 02%02x\n",
--			__func__, sz->endpoint->bEndpointAddress);
-+			__func__, endpoint->bEndpointAddress);
- 		retval = -ENODEV;
- 		goto free_sz;
- 	}
- 
--	if (!usb_endpoint_xfer_int(sz->endpoint)) {
-+	if (!usb_endpoint_xfer_int(endpoint)) {
- 		dev_err(&intf->dev, "%s: endpoint attributes don't match xfer 02%02x\n",
--			__func__, sz->endpoint->bmAttributes);
-+			__func__, endpoint->bmAttributes);
- 		retval = -ENODEV;
- 		goto free_sz;
- 	}
- 
--	pipe = usb_rcvintpipe(usbdev, sz->endpoint->bEndpointAddress);
-+	pipe = usb_rcvintpipe(usbdev, endpoint->bEndpointAddress);
- 	maxp = usb_maxpacket(usbdev, pipe, usb_pipeout(pipe));
- 
- 	if (maxp == 0) {
-@@ -377,14 +371,13 @@ static int streamzap_probe(struct usb_interface *intf,
- 	sz->dev = &intf->dev;
- 	sz->buf_in_len = maxp;
- 
--	sz->rdev = streamzap_init_rc_dev(sz);
-+	sz->rdev = streamzap_init_rc_dev(sz, usbdev);
- 	if (!sz->rdev)
- 		goto rc_dev_fail;
- 
- 	sz->idle = true;
- 	sz->decoder_state = PulseSpace;
- 	/* FIXME: don't yet have a way to set this */
--	sz->timeout_enabled = true;
- 	sz->rdev->timeout = SZ_TIMEOUT * SZ_RESOLUTION;
- 	#if 0
- 	/* not yet supported, depends on patches from maxim */
-@@ -397,8 +390,7 @@ static int streamzap_probe(struct usb_interface *intf,
- 
- 	/* Complete final initialisations */
- 	usb_fill_int_urb(sz->urb_in, usbdev, pipe, sz->buf_in,
--			 maxp, (usb_complete_t)streamzap_callback,
--			 sz, sz->endpoint->bInterval);
-+			 maxp, streamzap_callback, sz, endpoint->bInterval);
- 	sz->urb_in->transfer_dma = sz->dma_in;
- 	sz->urb_in->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
- 
-@@ -439,7 +431,6 @@ static void streamzap_disconnect(struct usb_interface *interface)
+@@ -431,8 +431,8 @@ static void streamzap_disconnect(struct usb_interface *interface)
  	if (!sz)
  		return;
  
--	sz->usbdev = NULL;
- 	rc_unregister_device(sz->rdev);
+-	rc_unregister_device(sz->rdev);
  	usb_kill_urb(sz->urb_in);
++	rc_unregister_device(sz->rdev);
  	usb_free_urb(sz->urb_in);
+ 	usb_free_coherent(usbdev, sz->buf_in_len, sz->buf_in, sz->dma_in);
+ 
 -- 
 2.39.5
 
