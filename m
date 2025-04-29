@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E857221DA7;
-	Tue, 29 Apr 2025 17:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EBE243964;
+	Tue, 29 Apr 2025 17:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949049; cv=none; b=pvxrE56trt741mz3aICnARFtRmaTYefLvXHPrNL6yqe8rHFK3qvp4Qq1U/oSbrrrH9ALaLpyWY1VEOmPzdZd3ietJJ2JZkaWORu/u8fmspYzQLKxePY4tGuvcUDLXRvDXm1xwZkt4FUQ1S3QRx2L8aYZfdbPJjJhIs/F9l1Quqk=
+	t=1745949054; cv=none; b=VA9/Ia1yrIYonQxlyGzewpxf7NHbm2GhwmMbtSmmDXgaPfPIchnuvxTNxKuR3sKb/2ZEyfbf/M+rngcgIZ8KrIru1avzrdM66NEiF5mqm3snvV/zKqvnt0zyIXsSZbVa2bfG+8TIWpJDa35W3R5wkvlVOi8jHu2ah018nfv0IY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949049; c=relaxed/simple;
-	bh=AjhRstLQ3bkyH6Mo+TSRnoxLMEqgj2Sjxhx1UgcOpzI=;
+	s=arc-20240116; t=1745949054; c=relaxed/simple;
+	bh=jvnVXPGgWrFVZR1nqEVlYdqC7cAxQf05aSXdH3VYVrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEOtu6mgF4DhttxzmaivSrPDTMjOLSka7Wb//BfIrFiU7mJyDZ8GdBHq5dfTkAGyzWoJhYU9+EffbazR0p41cDGP4ipof/KLOzx7RKHKHrWS9WbQHl3ys9XihNYgwLkchxglCe3ypFm1G/65+OE0xE7jaNJt2lib/KsY85ZL+Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmZ1WwzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bABcyawTYjraRPgF/rSn+SKV38tGzMDbBfpyVB/FmXnEY9dC64OhMSYpk85FiNHRW+qAbyeHATxxUOuPPGFetMPWlWDOaZIvSEDAgN/tgHPkxYo/yXKSEicFX86adB0EaK0ZCcJ/8t85JUaC1RbXWi4hil88xLUhQQupDEYDlTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFVGKKmf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmZ1WwzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B00C4CEE3;
-	Tue, 29 Apr 2025 17:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFVGKKmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6689CC4CEE3;
+	Tue, 29 Apr 2025 17:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949049;
-	bh=AjhRstLQ3bkyH6Mo+TSRnoxLMEqgj2Sjxhx1UgcOpzI=;
+	s=korg; t=1745949053;
+	bh=jvnVXPGgWrFVZR1nqEVlYdqC7cAxQf05aSXdH3VYVrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmZ1WwzWrLy5m2Vyips50Sa+Dc0YuAHO6c5utio0uDZo9Vqb8ZcnzB/pUs79yacQY
-	 Z4fdK/vTkz8uKOH47PImPOrr5WIxvjDI20jZ1+hYr94e8IPGup8tgK9sbHvthEdr+O
-	 XNfy1KMgAL8JacmzC/3VbKGNbazDfxLlGX6hFPTQ=
+	b=DFVGKKmfeeWiKJmxqEIGvkEslsUvxDFa4TsXWB5wAKNFZSwlAf/lQ6hDkDp0r6Glz
+	 63qAiPfaVRy+t0Of3AsCYy2Rl0pNtdY//At9WPCC65ZzJedzI3lTjW0A3pQ7aqypKZ
+	 LYExqVX2mXlxhXiwBhHUA+oicxYB4l3bM6p0HveU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 199/373] mptcp: sockopt: fix getting IPV6_V6ONLY
-Date: Tue, 29 Apr 2025 18:41:16 +0200
-Message-ID: <20250429161131.354131679@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 5.15 200/373] misc: pci_endpoint_test: Avoid issue of interrupts remaining after request_irq error
+Date: Tue, 29 Apr 2025 18:41:17 +0200
+Message-ID: <20250429161131.395387437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,85 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 8c39633759885b6ff85f6d96cf445560e74df5e8 upstream.
+commit f6cb7828c8e17520d4f5afb416515d3fae1af9a9 upstream.
 
-When adding a socket option support in MPTCP, both the get and set parts
-are supposed to be implemented.
+After devm_request_irq() fails with error in pci_endpoint_test_request_irq(),
+the pci_endpoint_test_free_irq_vectors() is called assuming that all IRQs
+have been released.
 
-IPV6_V6ONLY support for the setsockopt part has been added a while ago,
-but it looks like the get part got forgotten. It should have been
-present as a way to verify a setting has been set as expected, and not
-to act differently from TCP or any other socket types.
+However, some requested IRQs remain unreleased, so there are still
+/proc/irq/* entries remaining, and this results in WARN() with the
+following message:
 
-Not supporting this getsockopt(IPV6_V6ONLY) blocks some apps which want
-to check the default value, before doing extra actions. On Linux, the
-default value is 0, but this can be changed with the net.ipv6.bindv6only
-sysctl knob. On Windows, it is set to 1 by default. So supporting the
-get part, like for all other socket options, is important.
+  remove_proc_entry: removing non-empty directory 'irq/30', leaking at least 'pci-endpoint-test.0'
+  WARNING: CPU: 0 PID: 202 at fs/proc/generic.c:719 remove_proc_entry +0x190/0x19c
 
-Everything was in place to expose it, just the last step was missing.
-Only new code is added to cover this specific getsockopt(), that seems
-safe.
+To solve this issue, set the number of remaining IRQs to test->num_irqs,
+and release IRQs in advance by calling pci_endpoint_test_release_irq().
 
-Fixes: c9b95a135987 ("mptcp: support IPV6_V6ONLY setsockopt")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/550
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250314-net-mptcp-fix-data-stream-corr-sockopt-v1-2-122dbb249db3@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in sockopt.c in the context, because commit 3b1e21eb60e8
-  ("mptcp: getsockopt: add support for IP_TOS") is not in this release.
-  The conflicts are in the context, the new helper can be added without
-  issue. It depends on mptcp_put_int_option() which has been added via
-  another backport, see commit 874aae15fbef ("mptcp: fix full TCP
-  keep-alive support"). ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20250225110252.28866-3-hayashi.kunihiko@socionext.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/misc/pci_endpoint_test.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -793,6 +793,20 @@ static int mptcp_getsockopt_sol_tcp(stru
- 	return -EOPNOTSUPP;
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -262,6 +262,9 @@ fail:
+ 		break;
+ 	}
+ 
++	test->num_irqs = i;
++	pci_endpoint_test_release_irq(test);
++
+ 	return false;
  }
  
-+static int mptcp_getsockopt_v6(struct mptcp_sock *msk, int optname,
-+			       char __user *optval, int __user *optlen)
-+{
-+	struct sock *sk = (void *)msk;
-+
-+	switch (optname) {
-+	case IPV6_V6ONLY:
-+		return mptcp_put_int_option(msk, optval, optlen,
-+					    sk->sk_ipv6only);
-+	}
-+
-+	return -EOPNOTSUPP;
-+}
-+
- int mptcp_getsockopt(struct sock *sk, int level, int optname,
- 		     char __user *optval, int __user *option)
- {
-@@ -813,6 +827,8 @@ int mptcp_getsockopt(struct sock *sk, in
- 	if (ssk)
- 		return tcp_getsockopt(ssk, level, optname, optval, option);
- 
-+	if (level == SOL_IPV6)
-+		return mptcp_getsockopt_v6(msk, optname, optval, option);
- 	if (level == SOL_TCP)
- 		return mptcp_getsockopt_sol_tcp(msk, optname, optval, option);
- 	return -EOPNOTSUPP;
 
 
