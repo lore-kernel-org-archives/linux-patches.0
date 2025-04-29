@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F36D2AE96;
-	Tue, 29 Apr 2025 18:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536122AE96;
+	Tue, 29 Apr 2025 18:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950006; cv=none; b=mp72a+eMpDPFcjt5OGvKgVcwX1f/LfnDmY54TIHGOYu7Bg+sG2dGgEjsvHfvlGkxIaL0x5+agr7WINhWebKpfrh9Je/QDyqaQNSDN4yJCxixdxCtZi51krZseAEjnyUPuSJZCrGMd+ZTn9liQ6ue1Csc6AX9uru83uXRA/ALgzk=
+	t=1745950009; cv=none; b=ifacgBZ4jE2DQ1bmJORu0E8UT+0XrYPwZcL60dGirYFwXe5fzihxQ7jFSJVjWkyY5V6D5S8NTZeZF8LwYROJDBKCrVY1g569sJU+M9uCOWNZJjOgH5AMwjR/xTqmVLNw2k1qH7fTVNC5ahyY8TXgmX/H509J+gOBSrf4li/bMOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950006; c=relaxed/simple;
-	bh=mkPDP5SBfE8lPzHwEvTAm3igCPpDJl1nzeU9QBt20bY=;
+	s=arc-20240116; t=1745950009; c=relaxed/simple;
+	bh=KeEHWttNwzuONz8rfPjWz7iZdxMcjlg5Yi69QUhqn+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dB8IVoOOIPdgIBquUM1/h7UILct7hPb8pCS9QX3z3LKti9cwkha01ux03gx2wbHE6QSGhN2EhHb8q7RhMvwohsVGOiFhUZ2sWCU7mPkAw3siAgVfNTHITuMFvNeTXhOLE5nMH+XA/Eh98+uh5SATdeWgUFkOV9ude0eP06Xreag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQmb/XjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnaf8VH7NI7RwP1gFzw3cWPUS098jtZpQiflI91PwjSdY0WT3Fmm/9wzixjDdYtnNs06YFhaJzKE91g6e9GJqtFfSvrI39Qhy1dp70f0toERMsy7jFnQ2B2Q4sdR0IQmAZc3FaHXeQrXfFUdTJvtLHgfrTnSECff9DtABUe2ldM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctwSe2Uv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQmb/XjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C16C4CEE9;
-	Tue, 29 Apr 2025 18:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctwSe2Uv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CC4C4CEE3;
+	Tue, 29 Apr 2025 18:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950006;
-	bh=mkPDP5SBfE8lPzHwEvTAm3igCPpDJl1nzeU9QBt20bY=;
+	s=korg; t=1745950009;
+	bh=KeEHWttNwzuONz8rfPjWz7iZdxMcjlg5Yi69QUhqn+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQmb/XjDSSG/7V2XlQFlBWNaeLsE7qyqbFdrpY9Wlzf2v9UdcZvs018AKBLc2LSuo
-	 VLVt5LAa+YsKjYf1xXujWDk1ex5pem0QODHtll/UOyUJ/HKceFmIacpBtIYyP29bvs
-	 0Fp/YKQcN+DgssxwnNhYUogfVUqtRTdHid2vLgBA=
+	b=ctwSe2UvVnMxE+iIRM/jAAORMSzM4QOoxv8jHDmum5mTLMG0RcqJge30eQymsKkWm
+	 UdPPlzUoK6TPO68bXhFBhMX/boeTGXHW3KsdBdGFqeAiivJJBf3YAfnc0jq1rU1ysy
+	 TpayDs+npcETJnOoneJnQavbh9p934PltShrU0tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.1 096/167] USB: wdm: add annotation
-Date: Tue, 29 Apr 2025 18:43:24 +0200
-Message-ID: <20250429161055.638563089@linuxfoundation.org>
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 097/167] pinctrl: renesas: rza2: Fix potential NULL pointer dereference
+Date: Tue, 29 Apr 2025 18:43:25 +0200
+Message-ID: <20250429161055.678277557@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,31 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-commit 73e9cc1ffd3650b12c4eb059dfdafd56e725ceda upstream.
+[ Upstream commit f752ee5b5b86b5f88a5687c9eb0ef9b39859b908 ]
 
-This is not understandable without a comment on endianness
+`chip.label` in rza2_gpio_register() could be NULL.
+Add the missing check.
 
-Fixes: afba937e540c9 ("USB: CDC WDM driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250401084749.175246-5-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/20250210232552.1545887-1-chenyuan0y@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-wdm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rza2.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -909,7 +909,7 @@ static int wdm_wwan_port_tx(struct wwan_
- 	req->bRequestType = (USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE);
- 	req->bRequest = USB_CDC_SEND_ENCAPSULATED_COMMAND;
- 	req->wValue = 0;
--	req->wIndex = desc->inum;
-+	req->wIndex = desc->inum; /* already converted */
- 	req->wLength = cpu_to_le16(skb->len);
+diff --git a/drivers/pinctrl/renesas/pinctrl-rza2.c b/drivers/pinctrl/renesas/pinctrl-rza2.c
+index 2d6072e9f5a87..6f0d3fda61c24 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rza2.c
++++ b/drivers/pinctrl/renesas/pinctrl-rza2.c
+@@ -242,6 +242,9 @@ static int rza2_gpio_register(struct rza2_pinctrl_priv *priv)
+ 	int ret;
  
- 	skb_shinfo(skb)->destructor_arg = desc;
+ 	chip.label = devm_kasprintf(priv->dev, GFP_KERNEL, "%pOFn", np);
++	if (!chip.label)
++		return -ENOMEM;
++
+ 	chip.parent = priv->dev;
+ 	chip.ngpio = priv->npins;
+ 
+-- 
+2.39.5
+
 
 
