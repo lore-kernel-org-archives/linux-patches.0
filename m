@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B20247DF9;
-	Tue, 29 Apr 2025 16:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D55E21772B;
+	Tue, 29 Apr 2025 16:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945511; cv=none; b=haEB8chjRjt1YwvkjaOTdfoQfiecIIAuWnXGcnyynmFCyYNvW3irk5jJiKf+910smvOpwMuwcJrXgiz9gN9Pe6ig9rabbQeRt8AX51yvxRmR5PdnGKT6pyNUsRUatgdoOr31UgCSEof7RbiDz+0lWBKsy+UyMsBAyGdytaCciVk=
+	t=1745945514; cv=none; b=FLcuAXkAYYtpuYEwvNwUdImsnJfYqXgg2568+tE8vJxAIVUj/HZwUmNAq6D4pE5RdLSO1X2Vt2pdVhYT0TRJAOo7OhkrR/x6kl058S34AKQoeyyHPnbL8v+P6eRjsNB9xzZRYOdMdgoC4Y6fEpyJugbTW0ZitR3wthaxhJU2Zw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945511; c=relaxed/simple;
-	bh=30Fge9rsALukdcua7z3ZPogNAJPP3egD3BXqJ2lso7w=;
+	s=arc-20240116; t=1745945514; c=relaxed/simple;
+	bh=uJg60AbQ+ZzMNbrgCrpTZkESrAqAFl1Q7RqrhsxpJgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1/5N7//NNL0dZw5b80TinGaQ/0jG6psonKu/B5WVi6Rtq+4L1mPJxCAWH4L/EIcpfWcCpJGB7RhRvJ6gOrUHTKDcnm3pq/A+nvg+fuH9f2PFeY4BLqZ7GG1SFYlL9TEB+68vgIb5qkm07D2j9FxRc2XZowfj6YFq0BYEZbrzd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBHDUM9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y6mx6Uy9vOMVUqBkIAe0h/+DPRRBADYaeYuwb8/mx/4ZD4AI3jyEsBuRTdc3mb0Djt/vMyfmB4buBNtT+qiSETo04S554/BY+RylYv3Lq1VYQcF1/JoELaBBwrUuyNA67XPOPr2InZaszbOPhzYF9NsxWY32lbAIiVtF8a6L/lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlwF7C6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBHDUM9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2814C4CEE3;
-	Tue, 29 Apr 2025 16:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlwF7C6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5E1C4CEE3;
+	Tue, 29 Apr 2025 16:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945511;
-	bh=30Fge9rsALukdcua7z3ZPogNAJPP3egD3BXqJ2lso7w=;
+	s=korg; t=1745945514;
+	bh=uJg60AbQ+ZzMNbrgCrpTZkESrAqAFl1Q7RqrhsxpJgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBHDUM9cPCUOfR+pB6iP0IXgmXdprMNGKx+yecZaqsLuaSnYwRzDx1fNW4zFT2+tV
-	 Iw0b1KXkqP+VcQGJ1Ks4kJvR6Bb0Px7hOfmWtGVFkN/vcV4T3DWihsf2poWVWPVhkg
-	 pr5/ZEvtYXUAwTQancCL9ZDu5nB9igfytk9OEVqo=
+	b=PlwF7C6A12+iFsktzWMF2tWM56Ln8PNNSNHQzdktx42JAFROp33pv8EROn+etB0nq
+	 nrWNuibeVd5Sl7VjLf+l0/V4eV1HIWu0UCaFSLAAJyftw/RBAnK+a7ejTUHdSPGwZb
+	 IkzsjowcKfszMhwhWzYfeSxsBObWOnbLahSYzXPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 137/179] PCI: Rename PCI_IRQ_LEGACY to PCI_IRQ_INTX
-Date: Tue, 29 Apr 2025 18:41:18 +0200
-Message-ID: <20250429161054.939945498@linuxfoundation.org>
+Subject: [PATCH 5.4 138/179] misc: pci_endpoint_test: Use INTX instead of LEGACY
+Date: Tue, 29 Apr 2025 18:41:19 +0200
+Message-ID: <20250429161054.979163820@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -56,49 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 58ff9c5acb4aef58e118bbf39736cc4d6c11a3d3 ]
+[ Upstream commit acd288666979a49538d70e0c0d86e1118b445058 ]
 
-Rename PCI_IRQ_LEGACY to PCI_IRQ_INTX to be more explicit about the type
-of IRQ being referenced as well as to match the PCI specifications
-terms. Redefine PCI_IRQ_LEGACY as an alias to PCI_IRQ_INTX to avoid the
-need for doing the renaming tree-wide. New drivers and new code should
-now prefer using PCI_IRQ_INTX instead of PCI_IRQ_LEGACY.
+In the root complex pci endpoint test function driver, change macros and
+functions names using the term "legacy" to use "intx" instead to
+match the term used in the PCI specifications.
 
-Link: https://lore.kernel.org/r/20231122060406.14695-2-dlemoal@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20231122060406.14695-6-dlemoal@kernel.org
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Stable-dep-of: 919d14603dab ("misc: pci_endpoint_test: Fix displaying 'irq_type' after 'request_irq' error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/pci_endpoint_test.c | 30 +++++++++++++++---------------
+ include/uapi/linux/pcitest.h     |  3 ++-
+ 2 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 7edc6de9e88c2..f2f92eb950cc6 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -935,11 +935,13 @@ enum {
- 	PCI_SCAN_ALL_PCIE_DEVS	= 0x00000040,	/* Scan all, not just dev 0 */
- };
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index f9dd3e6546a50..fcb7dc8e79d43 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -27,14 +27,14 @@
+ #define DRV_MODULE_NAME				"pci-endpoint-test"
  
--#define PCI_IRQ_LEGACY		(1 << 0) /* Allow legacy interrupts */
-+#define PCI_IRQ_INTX		(1 << 0) /* Allow INTx interrupts */
- #define PCI_IRQ_MSI		(1 << 1) /* Allow MSI interrupts */
- #define PCI_IRQ_MSIX		(1 << 2) /* Allow MSI-X interrupts */
- #define PCI_IRQ_AFFINITY	(1 << 3) /* Auto-assign affinity */
+ #define IRQ_TYPE_UNDEFINED			-1
+-#define IRQ_TYPE_LEGACY				0
++#define IRQ_TYPE_INTX				0
+ #define IRQ_TYPE_MSI				1
+ #define IRQ_TYPE_MSIX				2
  
-+#define PCI_IRQ_LEGACY		PCI_IRQ_INTX /* Deprecated! Use PCI_IRQ_INTX */
-+
- /* These external functions are only available when PCI support is enabled */
- #ifdef CONFIG_PCI
+ #define PCI_ENDPOINT_TEST_MAGIC			0x0
  
+ #define PCI_ENDPOINT_TEST_COMMAND		0x4
+-#define COMMAND_RAISE_LEGACY_IRQ		BIT(0)
++#define COMMAND_RAISE_INTX_IRQ			BIT(0)
+ #define COMMAND_RAISE_MSI_IRQ			BIT(1)
+ #define COMMAND_RAISE_MSIX_IRQ			BIT(2)
+ #define COMMAND_READ				BIT(3)
+@@ -170,8 +170,8 @@ static bool pci_endpoint_test_alloc_irq_vectors(struct pci_endpoint_test *test,
+ 	bool res = true;
+ 
+ 	switch (type) {
+-	case IRQ_TYPE_LEGACY:
+-		irq = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_LEGACY);
++	case IRQ_TYPE_INTX:
++		irq = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_INTX);
+ 		if (irq < 0)
+ 			dev_err(dev, "Failed to get Legacy interrupt\n");
+ 		break;
+@@ -231,7 +231,7 @@ static bool pci_endpoint_test_request_irq(struct pci_endpoint_test *test)
+ 
+ fail:
+ 	switch (irq_type) {
+-	case IRQ_TYPE_LEGACY:
++	case IRQ_TYPE_INTX:
+ 		dev_err(dev, "Failed to request IRQ %d for Legacy\n",
+ 			pci_irq_vector(pdev, i));
+ 		break;
+@@ -281,15 +281,15 @@ static bool pci_endpoint_test_bar(struct pci_endpoint_test *test,
+ 	return true;
+ }
+ 
+-static bool pci_endpoint_test_legacy_irq(struct pci_endpoint_test *test)
++static bool pci_endpoint_test_intx_irq(struct pci_endpoint_test *test)
+ {
+ 	u32 val;
+ 
+ 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_IRQ_TYPE,
+-				 IRQ_TYPE_LEGACY);
++				 IRQ_TYPE_INTX);
+ 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_IRQ_NUMBER, 0);
+ 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_COMMAND,
+-				 COMMAND_RAISE_LEGACY_IRQ);
++				 COMMAND_RAISE_INTX_IRQ);
+ 	val = wait_for_completion_timeout(&test->irq_raised,
+ 					  msecs_to_jiffies(1000));
+ 	if (!val)
+@@ -344,7 +344,7 @@ static bool pci_endpoint_test_copy(struct pci_endpoint_test *test, size_t size)
+ 	if (size > SIZE_MAX - alignment)
+ 		goto err;
+ 
+-	if (irq_type < IRQ_TYPE_LEGACY || irq_type > IRQ_TYPE_MSIX) {
++	if (irq_type < IRQ_TYPE_INTX || irq_type > IRQ_TYPE_MSIX) {
+ 		dev_err(dev, "Invalid IRQ type option\n");
+ 		goto err;
+ 	}
+@@ -440,7 +440,7 @@ static bool pci_endpoint_test_write(struct pci_endpoint_test *test, size_t size)
+ 	if (size > SIZE_MAX - alignment)
+ 		goto err;
+ 
+-	if (irq_type < IRQ_TYPE_LEGACY || irq_type > IRQ_TYPE_MSIX) {
++	if (irq_type < IRQ_TYPE_INTX || irq_type > IRQ_TYPE_MSIX) {
+ 		dev_err(dev, "Invalid IRQ type option\n");
+ 		goto err;
+ 	}
+@@ -509,7 +509,7 @@ static bool pci_endpoint_test_read(struct pci_endpoint_test *test, size_t size)
+ 	if (size > SIZE_MAX - alignment)
+ 		goto err;
+ 
+-	if (irq_type < IRQ_TYPE_LEGACY || irq_type > IRQ_TYPE_MSIX) {
++	if (irq_type < IRQ_TYPE_INTX || irq_type > IRQ_TYPE_MSIX) {
+ 		dev_err(dev, "Invalid IRQ type option\n");
+ 		goto err;
+ 	}
+@@ -560,7 +560,7 @@ static bool pci_endpoint_test_set_irq(struct pci_endpoint_test *test,
+ 	struct pci_dev *pdev = test->pdev;
+ 	struct device *dev = &pdev->dev;
+ 
+-	if (req_irq_type < IRQ_TYPE_LEGACY || req_irq_type > IRQ_TYPE_MSIX) {
++	if (req_irq_type < IRQ_TYPE_INTX || req_irq_type > IRQ_TYPE_MSIX) {
+ 		dev_err(dev, "Invalid IRQ type option\n");
+ 		return false;
+ 	}
+@@ -607,8 +607,8 @@ static long pci_endpoint_test_ioctl(struct file *file, unsigned int cmd,
+ 			goto ret;
+ 		ret = pci_endpoint_test_bar(test, bar);
+ 		break;
+-	case PCITEST_LEGACY_IRQ:
+-		ret = pci_endpoint_test_legacy_irq(test);
++	case PCITEST_INTX_IRQ:
++		ret = pci_endpoint_test_intx_irq(test);
+ 		break;
+ 	case PCITEST_MSI:
+ 	case PCITEST_MSIX:
+@@ -668,7 +668,7 @@ static int pci_endpoint_test_probe(struct pci_dev *pdev,
+ 	test->irq_type = IRQ_TYPE_UNDEFINED;
+ 
+ 	if (no_msi)
+-		irq_type = IRQ_TYPE_LEGACY;
++		irq_type = IRQ_TYPE_INTX;
+ 
+ 	data = (struct pci_endpoint_test_data *)ent->driver_data;
+ 	if (data) {
+diff --git a/include/uapi/linux/pcitest.h b/include/uapi/linux/pcitest.h
+index cbf422e566962..1f358a135de04 100644
+--- a/include/uapi/linux/pcitest.h
++++ b/include/uapi/linux/pcitest.h
+@@ -11,7 +11,8 @@
+ #define __UAPI_LINUX_PCITEST_H
+ 
+ #define PCITEST_BAR		_IO('P', 0x1)
+-#define PCITEST_LEGACY_IRQ	_IO('P', 0x2)
++#define PCITEST_INTX_IRQ	_IO('P', 0x2)
++#define PCITEST_LEGACY_IRQ	PCITEST_INTX_IRQ
+ #define PCITEST_MSI		_IOW('P', 0x3, int)
+ #define PCITEST_WRITE		_IOW('P', 0x4, unsigned long)
+ #define PCITEST_READ		_IOW('P', 0x5, unsigned long)
 -- 
 2.39.5
 
