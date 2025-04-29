@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5224421ADC7;
-	Tue, 29 Apr 2025 17:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779BD21ABDB;
+	Tue, 29 Apr 2025 17:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947211; cv=none; b=RlUQrCBRz6iJm+/7ywzkE27ixxBKRn9S2wr5fg354XhxGUVAqE6xVvbtFK4JKEGb1SNyuZB2dEfTp5I6re87X7iyGx/lpLi5KoPaZLkekNr9IyuRm1sW7GKwotD9aE9DAy1YBdci6Nx1IeszkjVfiqMLGdESaGvVYGd8Yd9BaYo=
+	t=1745947214; cv=none; b=W3V+vfYJalgbmNXiMMhUO4RcUhNmwz+gc7Ish0Dt7igejaix+v53HZX0oBRChjw7q66q9ZtYKcpuFNqpMkwSXlytHveaS1uyhf/9d8oEn7lxazvs7aew2jmepKJLi+HlfKMA5o4Rf88Fazzq3ZGZsu5LTAB9z0c3Q0GVl/V6oSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947211; c=relaxed/simple;
-	bh=62wo0MnCj3Irl8F+fWF/VgK6gxJEVydVmwQzk6LIFAk=;
+	s=arc-20240116; t=1745947214; c=relaxed/simple;
+	bh=x6ZilYUKeLZ1r6iKlLYNXZbQ2xRpXpQTKUXWLlDFOic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+I8AXOpaGRUNzE3H6FO2oVCHe0AFVGk0fCdybMd3UWegDv+VGT2mM5MIki/FSr7FkloxQUgYcDrn4pLHtxIEyNwGu4owX+FgT0/rxyQFqQWkew6ZFd0WJI6jmBCJfN6jzitdtHUOzOL9WmbJwOD7Be9K48Hy7Jv0IHHXaRMG5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtRYu52U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+pXRMfQI2cG/nKuab7K8K5trvUrjXc6OD6Q40CE6Huz6L7aQu0JxVQdB6gPTuVbZ8C03XRzP5X/2XLNUFBRLQHSQbJR0CKweaNG+hcBhvR3T6jy33fpytqIkQbhwN4pWh4AXwzdvbFTmuQk+G/OpmPQ17Iqa/Xr5tjZdmru3/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV0hCc5e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtRYu52U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E10C4CEE9;
-	Tue, 29 Apr 2025 17:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV0hCc5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8E3C4CEE9;
+	Tue, 29 Apr 2025 17:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947211;
-	bh=62wo0MnCj3Irl8F+fWF/VgK6gxJEVydVmwQzk6LIFAk=;
+	s=korg; t=1745947214;
+	bh=x6ZilYUKeLZ1r6iKlLYNXZbQ2xRpXpQTKUXWLlDFOic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtRYu52UtIArgVii8w2QZXPC/PI2zuObMwMP7Xl81S6lQ3ptSG2pWf6qJStrSFBbj
-	 YlWvQ8JYPQjRmxUiGuGaKtodz/OgwPkQXnPggg5enBb1tTe5cfAtyN0sH1DrJnhMxt
-	 LxUg48C0JtmQHzk82Ck+69RBBosrhLZmCT84uqp0=
+	b=UV0hCc5ep5cAAjnLoSmVP3oaf3Fy3rx85A21+/hGix1IanewKD3eHafsQ/4ZeCgVV
+	 RKKNQxSd3A2SsplfrPxotCvWWAXc0JvU3RxxUX4XamlLADrw5V671wvlSYKkRegwt9
+	 a5UaJxvM/ZMO69quCCd360LWZ0R0XUC4Klw/BGD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 208/286] media: venus: hfi_plat: Add codecs and capabilities ops
-Date: Tue, 29 Apr 2025 18:41:52 +0200
-Message-ID: <20250429161116.508942854@linuxfoundation.org>
+Subject: [PATCH 5.10 209/286] media: venus: Get codecs and capabilities from hfi platform
+Date: Tue, 29 Apr 2025 18:41:53 +0200
+Message-ID: <20250429161116.549426789@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -53,31 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit 9822291e031f6d7149ae4f3fc00bd9c33ac2a084 ]
+[ Upstream commit e29929266be1ac0e40121f56b5c13b52c281db06 ]
 
-Add ops to get the supported by the platform codecs and capabilities.
+Wire up hfi platform codec and capabilities instead of
+getting them from firmware.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/hfi_platform.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../media/platform/qcom/venus/hfi_parser.c    | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-index 6794232322557..50512d142662f 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.h
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-@@ -47,6 +47,8 @@ struct hfi_platform_codec_freq_data {
- struct hfi_platform {
- 	unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec);
- 	unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec);
-+	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
-+	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
- };
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index be9a58ef04d86..7a2915befdb83 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -245,11 +245,49 @@ static void parser_fini(struct venus_inst *inst, u32 codecs, u32 domain)
+ 	}
+ }
  
- extern const struct hfi_platform hfi_plat_v4;
++static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
++{
++	const struct hfi_platform *plat;
++	const struct hfi_plat_caps *caps = NULL;
++	u32 enc_codecs, dec_codecs, count;
++	unsigned int entries;
++
++	if (inst)
++		return 0;
++
++	plat = hfi_platform_get(core->res->hfi_version);
++	if (!plat)
++		return -EINVAL;
++
++	if (plat->codecs)
++		plat->codecs(&enc_codecs, &dec_codecs, &count);
++
++	if (plat->capabilities)
++		caps = plat->capabilities(&entries);
++
++	if (!caps || !entries || !count)
++		return -EINVAL;
++
++	core->enc_codecs = enc_codecs;
++	core->dec_codecs = dec_codecs;
++	core->codecs_count = count;
++	core->max_sessions_supported = MAX_SESSIONS;
++	memset(core->caps, 0, sizeof(*caps) * MAX_CODEC_NUM);
++	memcpy(core->caps, caps, sizeof(*caps) * entries);
++
++	return 0;
++}
++
+ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+ 	       u32 size)
+ {
+ 	unsigned int words_count = size >> 2;
+ 	u32 *word = buf, *data, codecs = 0, domain = 0;
++	int ret;
++
++	ret = hfi_platform_parser(core, inst);
++	if (!ret)
++		return HFI_ERR_NONE;
+ 
+ 	if (size % 4)
+ 		return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
 -- 
 2.39.5
 
