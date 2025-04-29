@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A042472B9;
-	Tue, 29 Apr 2025 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF312472B9;
+	Tue, 29 Apr 2025 16:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945829; cv=none; b=H23ueVmkFGDF5ynXVRTFaQOz0dI66xH4exBQaKjQfI1QBqI6bnFFHIxEPD3IoVI5dIfKTGX/tq/fG9Kxuax+uGzM1AI5mawNMTHtunrP8rgf5MZSK6Ww1/dwGM+tDB+1qEWrm/0PLuRtudq4zbVyDE/JUs54g3P/fT2sNJM5tHA=
+	t=1745945832; cv=none; b=aQkp8gRaapColIMIlcz2o0swGSk9LGXF8EuR85FQfAdTg0wDKWEc3czMMOWE8KkMRSa9/IuF5vl8gxff0h4mikgxgom3W7gS1X7ISu9cNooJYDIpoX5mGxuJaC9OOdAsdgq4/3o8yhKQcBx8PK18gmGliAtZVBcRVeE+VF82amA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945829; c=relaxed/simple;
-	bh=7hJqpmhpyD8boIXLfd5J4pBMCuoV0vxS4A9ebKX3f14=;
+	s=arc-20240116; t=1745945832; c=relaxed/simple;
+	bh=fugs0xe/obFqU6wbqbm5+7nduWckGHWczFnahg6fqWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uX7QzeX4tPE+H5lCxlyVjmr2bH9RTrzO0r2lNFk5iLJDTn/IIFoS8WqHqZ5ChZmA+RO3f1irsg0hZx7m3DtdDAC86oYlJ+H7A88Pff1+f/Efww/w70+xSdc5Wm06Ar9EwE9ZlikYde73XP8YSd6uf+X9+x3jahbYcutpJ57aGbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo2g5tCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTuJNCq57BZo2NyI9pWfYx/n1v4anKHfOD0B2VjpEzqdaGKcBgpL5pcKqFJhJ9LL3PMgkRwTvzPXp0GYTQREg5w6GILgf495lGeHPRg7eDiMJisYzAsnMp1/HOpJo2O1ZDiavsqofHEafWj/UwUFas47s6iHAYbzChdyGLocUdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vESKu5Rz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo2g5tCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95ABBC4CEE3;
-	Tue, 29 Apr 2025 16:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vESKu5Rz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751F0C4CEE3;
+	Tue, 29 Apr 2025 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945828;
-	bh=7hJqpmhpyD8boIXLfd5J4pBMCuoV0vxS4A9ebKX3f14=;
+	s=korg; t=1745945831;
+	bh=fugs0xe/obFqU6wbqbm5+7nduWckGHWczFnahg6fqWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eo2g5tCwoxHJyDVdxbBLw4HtqDSwVytb8Kc6S1p8anDC85rWtj1hneAz7zsvp9gmu
-	 hu8xy/xepNYvAVz8TQHPRWbf3gKnzHSskwWREsQEfU7Q+LlCYt6//cPpC2lkiIdKDY
-	 f+WGIVZqUsduuEEJzLzyoSPgtDYnhZzTothPrQ78=
+	b=vESKu5RzJ3/i+wBMYEpE6anE3ZqnGFEs2HXIn+irho/IiExPLZgduHRdPw5s8KSLJ
+	 6othQiFZ7QgB+r9bEXqVFkaxjSUS1vVLgBkmEEU+28bJdBXoKWmXwYsGnj02OzRRqc
+	 UEEW4xnrFuJbfrR0oHRL9e4sJ7QrhxsnT0g3VRxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
+	syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 064/311] virtio-net: disable delayed refill when pausing rx
-Date: Tue, 29 Apr 2025 18:38:21 +0200
-Message-ID: <20250429161123.661836655@linuxfoundation.org>
+Subject: [PATCH 6.14 065/311] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
+Date: Tue, 29 Apr 2025 18:38:22 +0200
+Message-ID: <20250429161123.703277352@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,164 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit 4bc12818b363bd30f0f7348dd9ab077290a637ae ]
+[ Upstream commit d63527e109e811ef11abb1c2985048fdb528b4cb ]
 
-When pausing rx (e.g. set up xdp, xsk pool, rx resize), we call
-napi_disable() on the receive queue's napi. In delayed refill_work, it
-also calls napi_disable() on the receive queue's napi.  When
-napi_disable() is called on an already disabled napi, it will sleep in
-napi_disable_locked while still holding the netdev_lock. As a result,
-later napi_enable gets stuck too as it cannot acquire the netdev_lock.
-This leads to refill_work and the pause-then-resume tx are stuck
-altogether.
+syzbot reported:
 
-This scenario can be reproducible by binding a XDP socket to virtio-net
-interface without setting up the fill ring. As a result, try_fill_recv
-will fail until the fill ring is set up and refill_work is scheduled.
+tipc: Node number set to 1055423674
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 3 UID: 0 PID: 6017 Comm: kworker/3:5 Not tainted 6.15.0-rc1-syzkaller-00246-g900241a5cc15 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: events tipc_net_finalize_work
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tipc_net_finalize+0x10b/0x180 net/tipc/net.c:140
+ process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3319 [inline]
+ worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
+ kthread+0x3c2/0x780 kernel/kthread.c:464
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+...
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
-This commit adds virtnet_rx_(pause/resume)_all helpers and fixes up the
-virtnet_rx_resume to disable future and cancel all inflights delayed
-refill_work before calling napi_disable() to pause the rx.
+There is a racing condition between workqueue created when enabling
+bearer and another thread created when disabling bearer right after
+that as follow:
 
-Fixes: 413f0271f396 ("net: protect NAPI enablement with netdev_lock()")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://patch.msgid.link/20250417072806.18660-2-minhquangbui99@gmail.com
+enabling_bearer                          | disabling_bearer
+---------------                          | ----------------
+tipc_disc_timeout()                      |
+{                                        | bearer_disable()
+ ...                                     | {
+ schedule_work(&tn->work);               |  tipc_mon_delete()
+ ...                                     |  {
+}                                        |   ...
+                                         |   write_lock_bh(&mon->lock);
+                                         |   mon->self = NULL;
+                                         |   write_unlock_bh(&mon->lock);
+                                         |   ...
+                                         |  }
+tipc_net_finalize_work()                 | }
+{                                        |
+ ...                                     |
+ tipc_net_finalize()                     |
+ {                                       |
+  ...                                    |
+  tipc_mon_reinit_self()                 |
+  {                                      |
+   ...                                   |
+   write_lock_bh(&mon->lock);            |
+   mon->self->addr = tipc_own_addr(net); |
+   write_unlock_bh(&mon->lock);          |
+   ...                                   |
+  }                                      |
+  ...                                    |
+ }                                       |
+ ...                                     |
+}                                        |
+
+'mon->self' is set to NULL in disabling_bearer thread and dereferenced
+later in enabling_bearer thread.
+
+This commit fixes this issue by validating 'mon->self' before assigning
+node address to it.
+
+Reported-by: syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com
+Fixes: 46cb01eeeb86 ("tipc: update mon's self addr when node addr generated")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250417074826.578115-1-tung.quang.nguyen@est.tech
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 69 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 57 insertions(+), 12 deletions(-)
+ net/tipc/monitor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 44dbb991787ed..3e4896d9537ee 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3318,7 +3318,8 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	return NETDEV_TX_OK;
- }
- 
--static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
-+static void __virtnet_rx_pause(struct virtnet_info *vi,
-+			       struct receive_queue *rq)
- {
- 	bool running = netif_running(vi->dev);
- 
-@@ -3328,17 +3329,63 @@ static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
+diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
+index e2f19627e43d5..b45c5b91bc7af 100644
+--- a/net/tipc/monitor.c
++++ b/net/tipc/monitor.c
+@@ -716,7 +716,8 @@ void tipc_mon_reinit_self(struct net *net)
+ 		if (!mon)
+ 			continue;
+ 		write_lock_bh(&mon->lock);
+-		mon->self->addr = tipc_own_addr(net);
++		if (mon->self)
++			mon->self->addr = tipc_own_addr(net);
+ 		write_unlock_bh(&mon->lock);
  	}
  }
- 
--static void virtnet_rx_resume(struct virtnet_info *vi, struct receive_queue *rq)
-+static void virtnet_rx_pause_all(struct virtnet_info *vi)
-+{
-+	int i;
-+
-+	/*
-+	 * Make sure refill_work does not run concurrently to
-+	 * avoid napi_disable race which leads to deadlock.
-+	 */
-+	disable_delayed_refill(vi);
-+	cancel_delayed_work_sync(&vi->refill);
-+	for (i = 0; i < vi->max_queue_pairs; i++)
-+		__virtnet_rx_pause(vi, &vi->rq[i]);
-+}
-+
-+static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
-+{
-+	/*
-+	 * Make sure refill_work does not run concurrently to
-+	 * avoid napi_disable race which leads to deadlock.
-+	 */
-+	disable_delayed_refill(vi);
-+	cancel_delayed_work_sync(&vi->refill);
-+	__virtnet_rx_pause(vi, rq);
-+}
-+
-+static void __virtnet_rx_resume(struct virtnet_info *vi,
-+				struct receive_queue *rq,
-+				bool refill)
- {
- 	bool running = netif_running(vi->dev);
- 
--	if (!try_fill_recv(vi, rq, GFP_KERNEL))
-+	if (refill && !try_fill_recv(vi, rq, GFP_KERNEL))
- 		schedule_delayed_work(&vi->refill, 0);
- 
- 	if (running)
- 		virtnet_napi_enable(rq);
- }
- 
-+static void virtnet_rx_resume_all(struct virtnet_info *vi)
-+{
-+	int i;
-+
-+	enable_delayed_refill(vi);
-+	for (i = 0; i < vi->max_queue_pairs; i++) {
-+		if (i < vi->curr_queue_pairs)
-+			__virtnet_rx_resume(vi, &vi->rq[i], true);
-+		else
-+			__virtnet_rx_resume(vi, &vi->rq[i], false);
-+	}
-+}
-+
-+static void virtnet_rx_resume(struct virtnet_info *vi, struct receive_queue *rq)
-+{
-+	enable_delayed_refill(vi);
-+	__virtnet_rx_resume(vi, rq, true);
-+}
-+
- static int virtnet_rx_resize(struct virtnet_info *vi,
- 			     struct receive_queue *rq, u32 ring_num)
- {
-@@ -5939,12 +5986,12 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 	if (prog)
- 		bpf_prog_add(prog, vi->max_queue_pairs - 1);
- 
-+	virtnet_rx_pause_all(vi);
-+
- 	/* Make sure NAPI is not using any XDP TX queues for RX. */
- 	if (netif_running(dev)) {
--		for (i = 0; i < vi->max_queue_pairs; i++) {
--			virtnet_napi_disable(&vi->rq[i]);
-+		for (i = 0; i < vi->max_queue_pairs; i++)
- 			virtnet_napi_tx_disable(&vi->sq[i]);
--		}
- 	}
- 
- 	if (!prog) {
-@@ -5976,13 +6023,12 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 		vi->xdp_enabled = false;
- 	}
- 
-+	virtnet_rx_resume_all(vi);
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		if (old_prog)
- 			bpf_prog_put(old_prog);
--		if (netif_running(dev)) {
--			virtnet_napi_enable(&vi->rq[i]);
-+		if (netif_running(dev))
- 			virtnet_napi_tx_enable(&vi->sq[i]);
--		}
- 	}
- 
- 	return 0;
-@@ -5994,11 +6040,10 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 			rcu_assign_pointer(vi->rq[i].xdp_prog, old_prog);
- 	}
- 
-+	virtnet_rx_resume_all(vi);
- 	if (netif_running(dev)) {
--		for (i = 0; i < vi->max_queue_pairs; i++) {
--			virtnet_napi_enable(&vi->rq[i]);
-+		for (i = 0; i < vi->max_queue_pairs; i++)
- 			virtnet_napi_tx_enable(&vi->sq[i]);
--		}
- 	}
- 	if (prog)
- 		bpf_prog_sub(prog, vi->max_queue_pairs - 1);
 -- 
 2.39.5
 
