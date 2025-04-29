@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8CA2512C0;
-	Tue, 29 Apr 2025 17:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C6F24887D;
+	Tue, 29 Apr 2025 17:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946006; cv=none; b=h6nbWu1/+VS8JvZVragOGCZDXmWeSvI65uSM4ui8NG4tixAIPScfUauLMUGGcUTo+RTo9OCJQ3AV5cUS7bYxQoXkb6bkPBkyFmvjLess0IkF9cN+oJBRKe9SBONocPeQuVHqg/3w4pF3iJqQOLwDMx8FL98iQ3654Qp3oPRlF9o=
+	t=1745946009; cv=none; b=STZxiszweoxbJb7RfhIOVe5swDxDhWDtX4zYsy7HdnqjayXuvimAQyTqORnmz5nHb/qFeoyccQMPMCjHcpnL4Q8kucwCEPqOkX3Q3MKp0CxryG7/lTu4uNzpi201EnD5cny/3s3OHHeYy8wNt++eUIuqjyOtgLBcIGBuTZOh0Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946006; c=relaxed/simple;
-	bh=C/SyIL3tkAGiUFJB4WuJnJGSbK5QXXjajqLmTP8L6kY=;
+	s=arc-20240116; t=1745946009; c=relaxed/simple;
+	bh=TpNeRAfc/r/Qx9pAtWjPNjatl+YPrccEBSZQnkskDCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/LfcCUwAY8sR0V/k0V8Lq5sMNtzQ/J5xRZPa+i7+neDHi1RdmlsdPx18gadEZdqT+OmfiI4G8XdDqK6btvWlr0tvtXh3nIJTc4CeUZYv9yURslVaM5lph6Gu/RKJpO9AifllrYakS9QxNKypcyItraQ2p3lCVAg5OdtB8omCv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEVFfS/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LUxnK4gcpRsLg2GHXr8Bc7Gu8Oen4m1wCloigLZ2RsQt7z4nbwir+ARZIZWqwxiXOHqp41iOT9Ie4g+w02W8R1t3DalrLJtc0Rgop7Svntu8awb0CXDw4/i357Kz3dDPPjOu+8CzUkFt/J9ccGdExHyo331i+7inpw16MoEfy9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQxeaCbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEVFfS/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A02C4CEE3;
-	Tue, 29 Apr 2025 17:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQxeaCbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DE7C4CEE3;
+	Tue, 29 Apr 2025 17:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946006;
-	bh=C/SyIL3tkAGiUFJB4WuJnJGSbK5QXXjajqLmTP8L6kY=;
+	s=korg; t=1745946008;
+	bh=TpNeRAfc/r/Qx9pAtWjPNjatl+YPrccEBSZQnkskDCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEVFfS/oxBTz+Sn0BxQi0YGrulZp1E/lI9HpMPU9rpaeT4OFnWuVZHsXZG+NWB0LG
-	 VMKa1+odoCQt7oIftLT1/0oGcfzjQ6TWk6U3AjwevhHfsf07/ivxorPzDLhmmTHYEY
-	 JKX5bRGPOYv7bhF/NgsdhaFj1X+WBNwY1ze5emA8=
+	b=MQxeaCbT8gNRvXY/dUn8JPydgW1HMoRkbpYbtIP+qKSr/k4gvGlAF2AH/xJkjskwe
+	 sbM46a882aL/T3jDk6eilK43h6dE5tjnFFvczvLRRVroG1ITMpVKyo7hnSA6Yb2Obq
+	 cIzCwPTF/s7tLqfL7cDVjjLAE7755BoJwCeF3kpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 082/311] block: move blkdev_{get,put} _no_open prototypes out of blkdev.h
-Date: Tue, 29 Apr 2025 18:38:39 +0200
-Message-ID: <20250429161124.416020541@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 116/311] mptcp: pm: Defer freeing of MPTCP userspace path manager entries
+Date: Tue, 29 Apr 2025 18:39:13 +0200
+Message-ID: <20250429161125.793667154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Mat Martineau <martineau@kernel.org>
 
-[ Upstream commit c63202140d4b411d27380805c4d68eb11407b7f2 ]
+commit 13b4ece33cf9def67966bb8716783c42cec20617 upstream.
 
-These are only to be used by block internal code.  Remove the comment
-as we grew more users due to reworking block device node opening.
+When path manager entries are deleted from the local address list, they
+are first unlinked from the address list using list_del_rcu(). The
+entries must not be freed until after the RCU grace period, but the
+existing code immediately frees the entry.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20250423053810.1683309-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 5f33b5226c9d ("block: don't autoload drivers on stat")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use kfree_rcu_mightsleep() and adjust sk_omem_alloc in open code instead
+of using the sock_kfree_s() helper. This code path is only called in a
+netlink handler, so the "might sleep" function is preferable to adding
+a rarely-used rcu_head member to struct mptcp_pm_addr_entry.
+
+Fixes: 88d097316371 ("mptcp: drop free_list for deleting entries")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250421-net-mptcp-pm-defer-freeing-v1-1-e731dc6e86b9@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk.h            | 3 +++
- include/linux/blkdev.h | 4 ----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ net/mptcp/pm_userspace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk.h b/block/blk.h
-index 9cf9a0099416d..c0120a3d9dc57 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -94,6 +94,9 @@ static inline void blk_wait_io(struct completion *done)
- 		wait_for_completion_io(done);
- }
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -352,7 +352,11 @@ int mptcp_pm_nl_remove_doit(struct sk_bu
  
-+struct block_device *blkdev_get_no_open(dev_t dev);
-+void blkdev_put_no_open(struct block_device *bdev);
-+
- #define BIO_INLINE_VECS 4
- struct bio_vec *bvec_alloc(mempool_t *pool, unsigned short *nr_vecs,
- 		gfp_t gfp_mask);
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index d37751789bf58..6aa67e9b2ec08 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1649,10 +1649,6 @@ int bd_prepare_to_claim(struct block_device *bdev, void *holder,
- 		const struct blk_holder_ops *hops);
- void bd_abort_claiming(struct block_device *bdev, void *holder);
+ 	release_sock(sk);
  
--/* just for blk-cgroup, don't use elsewhere */
--struct block_device *blkdev_get_no_open(dev_t dev);
--void blkdev_put_no_open(struct block_device *bdev);
--
- struct block_device *I_BDEV(struct inode *inode);
- struct block_device *file_bdev(struct file *bdev_file);
- bool disk_live(struct gendisk *disk);
--- 
-2.39.5
-
+-	sock_kfree_s(sk, match, sizeof(*match));
++	kfree_rcu_mightsleep(match);
++	/* Adjust sk_omem_alloc like sock_kfree_s() does, to match
++	 * with allocation of this memory by sock_kmemdup()
++	 */
++	atomic_sub(sizeof(*match), &sk->sk_omem_alloc);
+ 
+ 	err = 0;
+ out:
 
 
