@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91900229B05;
-	Tue, 29 Apr 2025 17:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EAD1FE468;
+	Tue, 29 Apr 2025 17:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946185; cv=none; b=kzBoN7Ja/pitXbCEihNe8kn9R7AWTlQ/t3GPPXDNlavAURIJjKmdHyTKNmpA3On1enm8Efga8AD8HvU1+6BeLxVSEm1lsgxn+HmWl8mlQt4Wi2l3aUt2Pi3XwWU9GWUFONY78L9gC9Q6lT5NwzsgxxG+3O95GDuklr36euP4gzg=
+	t=1745946188; cv=none; b=ckYE3azcCTt/LCFi4tBYazCuOeTfZgyX/oEwOyg/+84c4jWf/z9GtgiZ9JaWlnLopR5ufJYN+pttErCLhRzPmH0L7yXN78O5k9fKAjNybEd8rNYd0MTAvM6QO3QLMY572YR+VP7uuV05tdIiSnz+9J/X65L+O0lPdYOkBsfjycQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946185; c=relaxed/simple;
-	bh=WVT2/Rh3Ecj++8d/NjJU52xtnpaiPLdMR4yQ3utzeHM=;
+	s=arc-20240116; t=1745946188; c=relaxed/simple;
+	bh=nAh1pD8owDDkYfuJehcDzRKfvsvMLuSzsJu1woA+XVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FV8UmsXcvkui0X9P0l1Zsn+X3n9qxeMOMjpZqq0PnIW0Uc7LpzflsMrXPVEXPfh66PrygVModRyfVZTVevrkmy99boCXphmB1DgNjjr4c8XFluZDKU7m8k9gNW19UdF1luv9l4c0RgSSy63mCn3dI91MPOgM+7mnxZOM+x5o/Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndBViScG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juTQMMt+BA+coHZLBT3n8fM2rbbGBW6VEglQah49CbHvLB+bqCTAjYgjb8M7zfVhT4DbeUnVlCVoY3h9N5EQ4LX0nA4aIgCBInbfDfz/1jYg51yE1eqhw7GbnJDnF0UGGt5dGiW/UlPAVWlJjvSpDz5e7iH01i35NFClql4be70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO3HPhPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndBViScG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED193C4CEE3;
-	Tue, 29 Apr 2025 17:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO3HPhPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A44BC4CEE3;
+	Tue, 29 Apr 2025 17:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946185;
-	bh=WVT2/Rh3Ecj++8d/NjJU52xtnpaiPLdMR4yQ3utzeHM=;
+	s=korg; t=1745946188;
+	bh=nAh1pD8owDDkYfuJehcDzRKfvsvMLuSzsJu1woA+XVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndBViScGH1/Qv80lwvvDE3G08XeMYdZHd/PhmZaRAeRG6OmAct/y8MBXURctsrk+I
-	 7kS6+G6MZ/oKg9hAWcClFXnyOg6yEOa3/anBE0ZV1PwZ2I6z7qHW+nFCi9rLNEypg8
-	 lvfIwmIv4ikBKC3FaAsrG50cWlxPigeuSYFz2Lfw=
+	b=fO3HPhPy4aY4lJuCgC0P3Dc5sMl42cJen90gpZByXBXTf/7iDxr8W0RaEGr8AUSCI
+	 AZR+HE7OrQ9UlDW++ES+Lxs3UrnIlTTlKjt1eshRom8WHQOglDcaYhiBUTs7gR6wLh
+	 IVjgWyWYnQaIsEuXdPCZywm+IlTl09L8+qvyAMRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryo Takakura <ryotkkr98@gmail.com>,
-	Petr Mladek <pmladek@suse.com>,
-	John Ogness <john.ogness@linutronix.de>
-Subject: [PATCH 6.14 154/311] serial: sifive: lock port in startup()/shutdown() callbacks
-Date: Tue, 29 Apr 2025 18:39:51 +0200
-Message-ID: <20250429161127.342995168@linuxfoundation.org>
+	Michael Ehrenreich <michideep@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.14 155/311] USB: serial: ftdi_sio: add support for Abacus Electrics Optical Probe
+Date: Tue, 29 Apr 2025 18:39:52 +0200
+Message-ID: <20250429161127.382431268@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,59 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryo Takakura <ryotkkr98@gmail.com>
+From: Michael Ehrenreich <michideep@gmail.com>
 
-commit e1ca3ff28ab1e2c1e70713ef3fa7943c725742c3 upstream.
+commit b399078f882b6e5d32da18b6c696cc84b12f90d5 upstream.
 
-startup()/shutdown() callbacks access SIFIVE_SERIAL_IE_OFFS.
-The register is also accessed from write() callback.
+Abacus Electrics makes optical probes for interacting with smart meters
+over an optical interface.
 
-If console were printing and startup()/shutdown() callback
-gets called, its access to the register could be overwritten.
+At least one version uses an FT232B chip (as detected by ftdi_sio) with
+a custom USB PID, which needs to be added to the list to make the device
+work in a plug-and-play fashion.
 
-Add port->lock to startup()/shutdown() callbacks to make sure
-their access to SIFIVE_SERIAL_IE_OFFS is synchronized against
-write() callback.
-
-Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
-Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Michael Ehrenreich <michideep@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Rule: add
-Link: https://lore.kernel.org/stable/20250330003522.386632-1-ryotkkr98%40gmail.com
-Link: https://lore.kernel.org/r/20250412001847.183221-1-ryotkkr98@gmail.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sifive.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/ftdi_sio.c     |    2 ++
+ drivers/usb/serial/ftdi_sio_ids.h |    5 +++++
+ 2 files changed, 7 insertions(+)
 
---- a/drivers/tty/serial/sifive.c
-+++ b/drivers/tty/serial/sifive.c
-@@ -563,8 +563,11 @@ static void sifive_serial_break_ctl(stru
- static int sifive_serial_startup(struct uart_port *port)
- {
- 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
-+	unsigned long flags;
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1093,6 +1093,8 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 1) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 2) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 3) },
++	/* Abacus Electrics */
++	{ USB_DEVICE(FTDI_VID, ABACUS_OPTICAL_PROBE_PID) },
+ 	{ }					/* Terminating entry */
+ };
  
-+	uart_port_lock_irqsave(&ssp->port, &flags);
- 	__ssp_enable_rxwm(ssp);
-+	uart_port_unlock_irqrestore(&ssp->port, flags);
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -443,6 +443,11 @@
+ #define LINX_FUTURE_2_PID   0xF44C	/* Linx future device */
  
- 	return 0;
- }
-@@ -572,9 +575,12 @@ static int sifive_serial_startup(struct
- static void sifive_serial_shutdown(struct uart_port *port)
- {
- 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
-+	unsigned long flags;
- 
-+	uart_port_lock_irqsave(&ssp->port, &flags);
- 	__ssp_disable_rxwm(ssp);
- 	__ssp_disable_txwm(ssp);
-+	uart_port_unlock_irqrestore(&ssp->port, flags);
- }
- 
- /**
+ /*
++ * Abacus Electrics
++ */
++#define ABACUS_OPTICAL_PROBE_PID	0xf458 /* ABACUS ELECTRICS Optical Probe */
++
++/*
+  * Oceanic product ids
+  */
+ #define FTDI_OCEANIC_PID	0xF460  /* Oceanic dive instrument */
 
 
