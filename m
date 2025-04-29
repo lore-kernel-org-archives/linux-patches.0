@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5BF253328;
-	Tue, 29 Apr 2025 17:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65FC252284;
+	Tue, 29 Apr 2025 17:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949591; cv=none; b=caOx3Le/HljaNLuTpdKb0JEEJIpYwgkImmon6hLmlVskqL7TnDSRnNG5z6+4YkCmb3k2uhxYiJKV/sgiaqgPwtB/co0li+oNrDyEeSLO98XNiZegujbMNnuZeClLZZLLbupyrzPf4xqNXNsfhn4r7PrbPo3WZ1av+1xRjMtLr8Q=
+	t=1745949594; cv=none; b=sEM7bYsfv6oAjznL7B142MTwHKpZzBWq0jcYZmMdIe6w5DZJeoMfr/G4pV5HSqAOrFp6j+Ic4ffbW6IgBb8A4Rwr86ywDjHZiDB96DhmW37QlQFYq7St9+hCiJdnHzmD/HbBS2jnFHdYF+SALQOIjhqvSjcbyBflZXJSwdUrZKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949591; c=relaxed/simple;
-	bh=nH4pZf2gwrynkRI1tbzBMsWw1ZXwCN675ymiFSPHIR4=;
+	s=arc-20240116; t=1745949594; c=relaxed/simple;
+	bh=6U0FyAaThMMvevzNemwdUcptYXZNxDBUGV5rn+CWjpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ov6SfyIJ9YxvX8maDsOD5cKq1FG3GAV86bvTUxYmdMx0CNSd9jdyx5c0qphwVb4sGhz4UOZO7FlofiLd0Mt1ReC9Hkr7IaPjHD1Fp6uJ+kGWvZVoKy0Nc/IS2jJ+TKyEsedJMj+nB6JtnK3KL2Z5sIa8Wgb9FgPT5dUnj3JrF6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnaqU6YJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t0g8qOsL0ccVPAIF00tJXGg3o2P5dwfE3xF5QrDtd1foa9s14G/iNQvn/j2K9D4kpjtumBEl6Fl6AwG0shdpg72i4+k20EMTzrVuN5mpHdxOGlg/2LI27+Vnfo+ogZWrxipC1noW5DMEboLMGbUU5yF3+Gm+J8dyay+CoeHnnT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nQoBLmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnaqU6YJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D97C4CEEE;
-	Tue, 29 Apr 2025 17:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nQoBLmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C6CC4CEE3;
+	Tue, 29 Apr 2025 17:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949591;
-	bh=nH4pZf2gwrynkRI1tbzBMsWw1ZXwCN675ymiFSPHIR4=;
+	s=korg; t=1745949594;
+	bh=6U0FyAaThMMvevzNemwdUcptYXZNxDBUGV5rn+CWjpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnaqU6YJhViDKX2bTLnEm/pHTkfYg5miHPqilmKc6KnSayv82Z4739iqYS5UhwEEe
-	 L5BMz2ay8dTVU++CgjJijimey+bbjd31/TaQvqraH8SL7JQJ/Khf1dMJGSw2o/dLha
-	 P1j1OUON9gAEXgPVFfWJzSIHx28Nl6TtcMr4zMjs=
+	b=1nQoBLmzWzzHYc/lcFhlw76qU5q4v1a00Tzbk8o+M4xdDczTIxH8b98GFUlJphoR9
+	 vJMdu62ZszBKJGLo70yvw5nIXN3Wxy63jgZDgeGXBtPXdH86Uru4kr4TUw4rJMkphu
+	 IPLOSKn9RDjtHJva4xMb0G6S0LHFxyg+UX9cgoC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Tim Huang <tim.huang@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 367/373] drm/amd/display: fix double free issue during amdgpu module unload
-Date: Tue, 29 Apr 2025 18:44:04 +0200
-Message-ID: <20250429161138.226045444@linuxfoundation.org>
+	=?UTF-8?q?Toke=20H=F8iland-J=F8rgensen?= <toke@kernel.org>,
+	=?UTF-8?q?Ricardo=20Ca=F1uelo=20Navarro?= <rcn@igalia.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.15 368/373] xdp: Reset bpf_redirect_info before running a xdps BPF prog.
+Date: Tue, 29 Apr 2025 18:44:05 +0200
+Message-ID: <20250429161138.267799200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -49,85 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Huang <tim.huang@amd.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 20b5a8f9f4670a8503aa9fa95ca632e77c6bf55d upstream.
+Ricardo reported a KASAN discovered use after free in v6.6-stable.
 
-Flexible endpoints use DIGs from available inflexible endpoints,
-so only the encoders of inflexible links need to be freed.
-Otherwise, a double free issue may occur when unloading the
-amdgpu module.
+The syzbot starts a BPF program via xdp_test_run_batch() which assigns
+ri->tgt_value via dev_hash_map_redirect() and the return code isn't
+XDP_REDIRECT it looks like nonsense. So the output in
+bpf_warn_invalid_xdp_action() appears once.
+Then the TUN driver runs another BPF program (on the same CPU) which
+returns XDP_REDIRECT without setting ri->tgt_value first. It invokes
+bpf_trace_printk() to print four characters and obtain the required
+return value. This is enough to get xdp_do_redirect() invoked which
+then accesses the pointer in tgt_value which might have been already
+deallocated.
 
-[  279.190523] RIP: 0010:__slab_free+0x152/0x2f0
-[  279.190577] Call Trace:
-[  279.190580]  <TASK>
-[  279.190582]  ? show_regs+0x69/0x80
-[  279.190590]  ? die+0x3b/0x90
-[  279.190595]  ? do_trap+0xc8/0xe0
-[  279.190601]  ? do_error_trap+0x73/0xa0
-[  279.190605]  ? __slab_free+0x152/0x2f0
-[  279.190609]  ? exc_invalid_op+0x56/0x70
-[  279.190616]  ? __slab_free+0x152/0x2f0
-[  279.190642]  ? asm_exc_invalid_op+0x1f/0x30
-[  279.190648]  ? dcn10_link_encoder_destroy+0x19/0x30 [amdgpu]
-[  279.191096]  ? __slab_free+0x152/0x2f0
-[  279.191102]  ? dcn10_link_encoder_destroy+0x19/0x30 [amdgpu]
-[  279.191469]  kfree+0x260/0x2b0
-[  279.191474]  dcn10_link_encoder_destroy+0x19/0x30 [amdgpu]
-[  279.191821]  link_destroy+0xd7/0x130 [amdgpu]
-[  279.192248]  dc_destruct+0x90/0x270 [amdgpu]
-[  279.192666]  dc_destroy+0x19/0x40 [amdgpu]
-[  279.193020]  amdgpu_dm_fini+0x16e/0x200 [amdgpu]
-[  279.193432]  dm_hw_fini+0x26/0x40 [amdgpu]
-[  279.193795]  amdgpu_device_fini_hw+0x24c/0x400 [amdgpu]
-[  279.194108]  amdgpu_driver_unload_kms+0x4f/0x70 [amdgpu]
-[  279.194436]  amdgpu_pci_remove+0x40/0x80 [amdgpu]
-[  279.194632]  pci_device_remove+0x3a/0xa0
-[  279.194638]  device_remove+0x40/0x70
-[  279.194642]  device_release_driver_internal+0x1ad/0x210
-[  279.194647]  driver_detach+0x4e/0xa0
-[  279.194650]  bus_remove_driver+0x6f/0xf0
-[  279.194653]  driver_unregister+0x33/0x60
-[  279.194657]  pci_unregister_driver+0x44/0x90
-[  279.194662]  amdgpu_exit+0x19/0x1f0 [amdgpu]
-[  279.194939]  __do_sys_delete_module.isra.0+0x198/0x2f0
-[  279.194946]  __x64_sys_delete_module+0x16/0x20
-[  279.194950]  do_syscall_64+0x58/0x120
-[  279.194954]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
-[  279.194980]  </TASK>
+This problem does not affect upstream because since commit
+	401cb7dae8130 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ dc_link_destruct() moved from core/dc_link.c to link/link_factory.c since
-commit: 54618888d1ea ("drm/amd/display: break down dc_link.c"), so modified
-the path to apply on 5.15.y ]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+the per-CPU variable is referenced via task's task_struct and exists on
+the stack during NAPI callback. Therefore it is cleared once before the
+first invocation and remains valid within the RCU section of the NAPI
+callback.
+
+Instead of performing the huge backport of the commit (plus its fix ups)
+here is an alternative version which only resets the variable in
+question prior invoking the BPF program.
+
+Acked-by: Toke Høiland-Jørgensen <toke@kernel.org>
+Reported-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Closes: https://lore.kernel.org/all/20250226-20250204-kasan-slab-use-after-free-read-in-dev_map_enqueue__submit-v3-0-360efec441ba@igalia.com/
+Fixes: 97f91a7cf04ff ("bpf: add bpf_redirect_map helper routine")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/filter.h |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-@@ -79,7 +79,7 @@ static void dc_link_destruct(struct dc_l
- 	if (link->panel_cntl)
- 		link->panel_cntl->funcs->destroy(&link->panel_cntl);
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -800,7 +800,14 @@ static __always_inline u32 bpf_prog_run_
+ 	 * under local_bh_disable(), which provides the needed RCU protection
+ 	 * for accessing map entries.
+ 	 */
+-	u32 act = __bpf_prog_run(prog, xdp, BPF_DISPATCHER_FUNC(xdp));
++	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
++	u32 act;
++
++	if (ri->map_id || ri->map_type) {
++		ri->map_id = 0;
++		ri->map_type = BPF_MAP_TYPE_UNSPEC;
++	}
++	act = __bpf_prog_run(prog, xdp, BPF_DISPATCHER_FUNC(xdp));
  
--	if (link->link_enc) {
-+	if (link->link_enc && !link->is_dig_mapping_flexible) {
- 		/* Update link encoder resource tracking variables. These are used for
- 		 * the dynamic assignment of link encoders to streams. Virtual links
- 		 * are not assigned encoder resources on creation.
+ 	if (static_branch_unlikely(&bpf_master_redirect_enabled_key)) {
+ 		if (act == XDP_TX && netif_is_bond_slave(xdp->rxq->dev))
 
 
