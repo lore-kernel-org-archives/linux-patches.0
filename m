@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFAD221570;
-	Tue, 29 Apr 2025 17:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE0B250C15;
+	Tue, 29 Apr 2025 17:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947801; cv=none; b=PFeVoByckrIsRgwQBv/bAKL/mwCvsye9DyYwJpWAN4F+49k9z/X3rGuVto5QxkTBj4TBXTj5jRt3ayS6Sc3MSQYccLXiSAabo5hzwJlmwCHxG8Zdf4GLQQXnBygeJYYSgUlzRMTxHPcj/t6okmlba/FI+u3zMAnZIEzCfFjPO2o=
+	t=1745947806; cv=none; b=kjGXsMfR0PK6oHY9Hd6FnBiVKzHX/15Yr+6B++lEqNFqbBV1jEw/JjG+N+u8UgsXK5dZfI0a0ZLA7UcIUDG+OCbgAHnmtpLoaWbzAvq6YsuvOl+MxW/354SgRsKGN4brgkPmi1gu1+qEVydVYzpmyHgy364PUXL+W5vtT8jFvjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947801; c=relaxed/simple;
-	bh=vYnH6LW6pFc54DzDzQpiPwBS37JJZs9zHMb8p5A+bNQ=;
+	s=arc-20240116; t=1745947806; c=relaxed/simple;
+	bh=vhFkYV2OctWCFRjegOV6zCGarRv3J58+eT+HrwBfXeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qV+nQi+ModjexI5ilcd7AXeY4CTUdBD4ng7XBMRpNkUP5KP6gOl0TdWBYwAwiNnt5mIJDpKiS5p6BwWC7SJLZHG8yERrch12Zl1fyaSNybfRKHFfJ1Yi2nseoAzAMKf36AUCaNcYsKQtKZ3YMS7/WdSFSpIsfPbM1vsCaytHuiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cssjk4sT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9oO8gdQXGhSEnukQZUkgv0bQ7MvXAaKdSnpG6JAVmvUbkixnH/GQtsbX/JUluMLL7xkUxPNSlP3gmUD3TXEPQ4mLns8qHdDhm7b6PBMGgzcV1SmaS9sY4pV3D/kvWiALIFC+tsWafJTLls0OwAKDKilGZI2419gpHObTF9habI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kraNvAKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cssjk4sT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C75C4CEE9;
-	Tue, 29 Apr 2025 17:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kraNvAKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88290C4CEE9;
+	Tue, 29 Apr 2025 17:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947801;
-	bh=vYnH6LW6pFc54DzDzQpiPwBS37JJZs9zHMb8p5A+bNQ=;
+	s=korg; t=1745947805;
+	bh=vhFkYV2OctWCFRjegOV6zCGarRv3J58+eT+HrwBfXeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cssjk4sTi0aR32to8gORIF+Us9sp8Oz+gNOXBOK3yK6BNeQ5jU4OdUBoHXtLowV7s
-	 taD78NVi+WUIK54wQucqDqvkIxvxPypCm8DJrJpqa14tPUUdsv5nUWKXFQkVirW6RS
-	 g9ZYtpUndil63cs3feyjjj2FZEqlJ2CnRh8QvsAM=
+	b=kraNvAKoXalngOA6pIlUZzoc6aqY6/0F7gR5nq7FlTAAumRq3j/Fd5KRiB9Ze7zfA
+	 COF5/cNo/WwwQ4lsSUzZp8l6gvv/Pm9yhDCDtow0k9WOwWjKwT9AvH7zrohM8hSFpi
+	 MuyZpiXWQHZgfjcoUDodzzf30cfW6CpleTUgBZOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/280] net: dsa: mt7530: sync driver-specific behavior of MT7531 variants
-Date: Tue, 29 Apr 2025 18:40:18 +0200
-Message-ID: <20250429161118.258758807@linuxfoundation.org>
+Subject: [PATCH 6.12 078/280] pds_core: Prevent possible adminq overflow/stuck condition
+Date: Tue, 29 Apr 2025 18:40:19 +0200
+Message-ID: <20250429161118.307395807@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,55 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
+[ Upstream commit d9e2f070d8af60f2c8c02b2ddf0a9e90b4e9220c ]
 
-MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
-most basic properties. Despite that, assisted_learning_on_cpu_port and
-mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
-or EN7581, causing the expected issues on MMIO devices.
+The pds_core's adminq is protected by the adminq_lock, which prevents
+more than 1 command to be posted onto it at any one time. This makes it
+so the client drivers cannot simultaneously post adminq commands.
+However, the completions happen in a different context, which means
+multiple adminq commands can be posted sequentially and all waiting
+on completion.
 
-Apply both settings equally also for MT7988 and EN7581 by moving both
-assignments form mt7531_setup() to mt7531_setup_common().
+On the FW side, the backing adminq request queue is only 16 entries
+long and the retry mechanism and/or overflow/stuck prevention is
+lacking. This can cause the adminq to get stuck, so commands are no
+longer processed and completions are no longer sent by the FW.
 
-This fixes unwanted flooding of packets due to unknown unicast
-during DA lookup, as well as issues with heterogenous MTU settings.
+As an initial fix, prevent more than 16 outstanding adminq commands so
+there's no way to cause the adminq from getting stuck. This works
+because the backing adminq request queue will never have more than 16
+pending adminq commands, so it will never overflow. This is done by
+reducing the adminq depth to 16.
 
-Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Link: https://patch.msgid.link/89ed7ec6d4fa0395ac53ad2809742bb1ce61ed12.1745290867.git.daniel@makrotopia.org
+Fixes: 45d76f492938 ("pds_core: set up device and adminq")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250421174606.3892-2-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 5 +----
+ drivers/net/ethernet/amd/pds_core/core.h | 2 +-
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index abc979fbb45d1..93bf085a61d39 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2540,6 +2540,9 @@ mt7531_setup_common(struct dsa_switch *ds)
- 	struct mt7530_priv *priv = ds->priv;
- 	int ret, i;
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index 536635e577279..4830292d5f879 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -325,10 +325,7 @@ static int pdsc_core_init(struct pdsc *pdsc)
+ 	size_t sz;
+ 	int err;
  
-+	ds->assisted_learning_on_cpu_port = true;
-+	ds->mtu_enforcement_ingress = true;
-+
- 	mt753x_trap_frames(priv);
+-	/* Scale the descriptor ring length based on number of CPUs and VFs */
+-	numdescs = max_t(int, PDSC_ADMINQ_MIN_LENGTH, num_online_cpus());
+-	numdescs += 2 * pci_sriov_get_totalvfs(pdsc->pdev);
+-	numdescs = roundup_pow_of_two(numdescs);
++	numdescs = PDSC_ADMINQ_MAX_LENGTH;
+ 	err = pdsc_qcq_alloc(pdsc, PDS_CORE_QTYPE_ADMINQ, 0, "adminq",
+ 			     PDS_CORE_QCQ_F_CORE | PDS_CORE_QCQ_F_INTR,
+ 			     numdescs,
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index 14522d6d5f86b..543097983bf60 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -16,7 +16,7 @@
  
- 	/* Enable and reset MIB counters */
-@@ -2687,9 +2690,6 @@ mt7531_setup(struct dsa_switch *ds)
- 	if (ret)
- 		return ret;
- 
--	ds->assisted_learning_on_cpu_port = true;
--	ds->mtu_enforcement_ingress = true;
--
- 	return 0;
- }
- 
+ #define PDSC_WATCHDOG_SECS	5
+ #define PDSC_QUEUE_NAME_MAX_SZ  16
+-#define PDSC_ADMINQ_MIN_LENGTH	16	/* must be a power of two */
++#define PDSC_ADMINQ_MAX_LENGTH	16	/* must be a power of two */
+ #define PDSC_NOTIFYQ_LENGTH	64	/* must be a power of two */
+ #define PDSC_TEARDOWN_RECOVERY	false
+ #define PDSC_TEARDOWN_REMOVING	true
 -- 
 2.39.5
 
