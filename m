@@ -1,167 +1,172 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2068.outbound.protection.outlook.com [40.107.244.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CD42441A6;
-	Tue, 29 Apr 2025 17:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946652; cv=none; b=RF77dp2Z8slc4PegJAIlXj854JDGhxOV8uMNMTH6sPziila1ucB/8z3WF3nZceA6jDdPnW67MDDO6byESq8r9uTFpmZdiinYDHhAorYv4zdjJ21uBomqgfNsowVkG3gFPRDS+up88e7oUfVZrrUkmjNFjB9PNqHlu02i1zH67aU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946652; c=relaxed/simple;
-	bh=Sq1Gs639mZkaLVhifDyZ6etZHeWOwDDd7s2HPCNBFHA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dw60cX1kmgU/BbSThVwR9+KX22LU/FVhfMV5qC8uyBoqmPtb2VX7SHHqSwtxWzWrdxEorRob8NmU1OlPTdyFJtzuycNoQyE8l0fu+3jwvJD7h+UgnhFyeY+46EjwvAjUpYhlVYF6w0Nug5+jsYZA8TN8nnjH5T+MDl5LlL36/sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QncTcdEs; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QncTcdEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D14C4CEE3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6637F241664;
 	Tue, 29 Apr 2025 17:10:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946651;
-	bh=Sq1Gs639mZkaLVhifDyZ6etZHeWOwDDd7s2HPCNBFHA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QncTcdEsmF8GL1rdLy2In9y1GPlNuX79U8YFT8WqS1HIItdyoIl9Bu3r5NTGoRuSZ
-	 ai9WnG7YQDWMO+sfc6t1XFtkKjhu1th4j2EDV3JyyPQkURFXpHzA8TtSU41Ql2V1St
-	 3KlRVLVoswklIUlucYWcy4SekiYhpJQ5+GwkOmzU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+355da3b3a74881008e8f@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/286] jfs: Prevent copying of nlink with value 0 from disk inode
-Date: Tue, 29 Apr 2025 18:38:48 +0200
-Message-ID: <20250429161108.846289813@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
-References: <20250429161107.848008295@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.68
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745946652; cv=fail; b=E4Eyn9AJyW+2SkRrfbERn5/Yo+9WeYYnIKKKfG1B51Qkq7AF57dbyj/GsYypVj7JHClwXUsdt20oePgvmNBR4B02cGtNShvi2zPTLo397af4ID/QvlY17QKWnMuBGq6AWxUvMrnomlhLOaSGzgEDSboWmfgg6/K6qvbM7mUT+Yw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745946652; c=relaxed/simple;
+	bh=3Qm5oojHNGMyDGQe3QFz7Hhhp5HTrhg7CIldgoM2mJE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jdv1wVWLyOu9xg13HOqqRk8fqg9uBYjRqLbvLnuyGitDZmZVSxxrpsoFlAor5UC2f9t04fyAi6cjiDg6ttQPfaP/rXI6YZvq3DM0iVhDGs0VASbxt9NPlSRDSQI2QdtSOT9yQVN2nnN8XNAiTveubthheTGryd2vwd2ntw104ZQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=sORLEGud; arc=fail smtp.client-ip=40.107.244.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="sORLEGud"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MAPtA37D2HG2n8Fv27VB33FpBdPsGVZ17giWDv1hb4G4QivTwLT2gpC1sGGBSQlUNxJ2otnUP2h2g/kSkvly51hs1rh+CQ3S9aIDWnXLkTdt6qoZlFfdRgJb9IIVh3iWeaLOsFg1blZlt1Y64Ga8Lzq9XumcEOcbD0/xX4E6jZgT/G5T7E/ephjY2bN093ludzVczYFLCUDOlZhshQqqcRFdklARsKILjcNN2dH4t9UQzAXfdT5/o9SRv7nwv379SZjsBCshKSw9P+p8kUqGHI7beFWLLjhjsaPeSVc8u1bbp2VTRHLLzJeDLG2sfX2uM/pKSxQCL7pJnc35Q5EfYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xH//tbfB8ZvbQC2Z7CBZ43RpuiqFuQWtDv72Nrv6IMw=;
+ b=EaYapucddJRIgIXTcxdM3JeiaXFPRJBv4kGSU2tl6gc1ISMEEXAYe70Gok/mx4mP2vjwRUJMevNpNI7bvQwvQAQw+D4C7sgfuXxmgkxOhAjUmf2LFo/7BBXw1zE4G8HiXfCxjq0X7XZV89EpXduXzlNqiE144xIbNISw2U8A8lUqJ3Z6EO52oNBdje1Dn2aKDq0AhlfLrmyiTqXHirGsVgZJBLlpAS81yPYO28hrH7fIK6EvOpZCrXEV6K7xkbO4N04BpME91AmfXvkVd4H+Voh1GL9eOIRYjRk2P+CUPD54oSBzPWHKCmVztTZBwa+Fz6kjGBunDdFPugRFsonYXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=google.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xH//tbfB8ZvbQC2Z7CBZ43RpuiqFuQWtDv72Nrv6IMw=;
+ b=sORLEGudqfCA/CG12jJj84M0WjpdJ8QxVKvaY8BSp7uMG7cirix2PVSb4NEQTc5Y1+xrVUBA3xaAsQGse8PfEv/d1W9aQh3/FNUBzjkck6+93U3y/0c1XI30fzFIWfS0Zcc6caXrj2NbOqRnBYvQd3I721cPPeTald2aDCH34NOXA72RJ5zFWUeI1PpFigqJW1M6KnBEF5qvMFFeWra1o3+WN3rtjlpD9H8r5O4W6tTL4ZQEI7lmv1uhHCuQ6s16MhrhV33DGCmPy83XHgihhL7v+ppRKHwZHK8I0mOfyUWQRDMMduMzd6pO3ssuTRJThT+UkdVnzEee6KEaUJG1uQ==
+Received: from BN0PR04CA0171.namprd04.prod.outlook.com (2603:10b6:408:eb::26)
+ by SJ2PR12MB9192.namprd12.prod.outlook.com (2603:10b6:a03:55d::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.30; Tue, 29 Apr
+ 2025 17:10:47 +0000
+Received: from BN3PEPF0000B06B.namprd21.prod.outlook.com
+ (2603:10b6:408:eb:cafe::7a) by BN0PR04CA0171.outlook.office365.com
+ (2603:10b6:408:eb::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.25 via Frontend Transport; Tue,
+ 29 Apr 2025 17:10:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BN3PEPF0000B06B.mail.protection.outlook.com (10.167.243.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8722.2 via Frontend Transport; Tue, 29 Apr 2025 17:10:46 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 29 Apr
+ 2025 10:10:33 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 29 Apr 2025 10:10:32 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 29 Apr 2025 10:10:30 -0700
+Date: Tue, 29 Apr 2025 10:10:28 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Pranjal Shrivastava <praan@google.com>
+CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
+	<will@kernel.org>, <bagasdotme@gmail.com>, <robin.murphy@arm.com>,
+	<joro@8bytes.org>, <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
+	<jonathanh@nvidia.com>, <shuah@kernel.org>, <jsnitsel@redhat.com>,
+	<nathan@kernel.org>, <peterz@infradead.org>, <yi.l.liu@intel.com>,
+	<mshavit@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
+	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 11/22] iommufd: Add for-driver helpers
+ iommufd_vcmdq_depend/undepend()
+Message-ID: <aBEIBKdjuecVHgpU@Asurada-Nvidia>
+References: <cover.1745646960.git.nicolinc@nvidia.com>
+ <a25c9454c17663f9e79b37bc2908bf3a99856be6.1745646960.git.nicolinc@nvidia.com>
+ <aBDIpz7w8wxIn_AF@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aBDIpz7w8wxIn_AF@google.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06B:EE_|SJ2PR12MB9192:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d970dde-838e-42d9-25f8-08dd8740c8a4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|36860700013|1800799024|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?cpJ6GwYTmxqcWzqVV9pMy+n9hLpHKru4eML91WqCZDwatEmIGSXcuFq+RMSK?=
+ =?us-ascii?Q?H2LGxbP+eklnY3udutrOAOW1fGKaaIiI1HQjBziKE+xvheHW4EyUJrf//qFC?=
+ =?us-ascii?Q?bV+KXYRemhSt24Mz/AvirCMi2k/ija9eks4iLAY6QwR2Mbyyo8chFNi/xQIG?=
+ =?us-ascii?Q?ChG/o6gn7zSCNHL+l/ahMuJhzv/Eupiz7QeDbNyHklYCCSC1Pw5dyi/dXXyz?=
+ =?us-ascii?Q?leaZH9M6C3KMfwWaaqS8DZBxJhQ9i8+D5OoBUhLnbI/jga5a+VR4CaUm4ABk?=
+ =?us-ascii?Q?/Y45vaeydC8hy6UU7ODSAwuCHWs3g8n/WC8rcGQA60lMU3DpdmK8X01rGD7u?=
+ =?us-ascii?Q?1mMbQr4eHmoWaYXi3zA0o8nVG1fMZCpfsIgujyPk15fP0qjckd+Yl1zAQ1nI?=
+ =?us-ascii?Q?0VhuJ66nknA7OmxwlpdCrG+MPKMJ65q7tbD2/+ZM/Y+lEdSQe9wolVNiQsNn?=
+ =?us-ascii?Q?dQT/pcWwFFVNYkRQozVjSSABy2P5MccS7U84UMOEPUgS4TdcAy/3661DqcQa?=
+ =?us-ascii?Q?btbRP4K6mgQnV7z1ZpDBr8evVvdkO6O6H0oTYuw7f4liQ/ZEBDWqVv20RMU2?=
+ =?us-ascii?Q?Z9XmZX0Yix7sz1MXxWDE29Zkt+FviFS6AlwXuQnFtDvUciLBwisHlwRw2l2i?=
+ =?us-ascii?Q?1W/kPVMOdwQDGY9+RxSaKzDB1hYM6TG6rEb7gnqgpNJ+N/PRQCMDspiw0h/1?=
+ =?us-ascii?Q?vF9Ii/c2udyO/dLxPHoc9cfE01YQR+kLM7jbZApLhJZnLKduqxvbhyxkjv4b?=
+ =?us-ascii?Q?bI1ebEGQIfuXHdear7lbmmB8zk5tBWMwd44RRfOYqi65SlzW/XvNyC8szceP?=
+ =?us-ascii?Q?x84cbacf6CnLx63Rhx2mgwhWYp9xLxQl/9nTsmSXv4Ee9gFnyXiQJsKW+9E0?=
+ =?us-ascii?Q?wj+d6pav6judJ4Hl7yJ0R8Y312X/mDR99ahPvrFplENLK+U8bMiZ/7vKI/Ng?=
+ =?us-ascii?Q?VFjQv19c/ySSpzopwTZFJXsMMxvQSLsBM4EkSlCyuFwDxvd59LtpPzlgvflB?=
+ =?us-ascii?Q?Uj+hvY3OGhS8BNOSpeiWAQNf2e/RDS7IK2WGus7UKkaNFiDV8wYsOQtT4KBH?=
+ =?us-ascii?Q?RenK+NxWD9ztzA+kbD6+KUIgfLXmm1CI1amxNpuTmmy/Fpc7gnBRJfv7G97Y?=
+ =?us-ascii?Q?FhBUk2vcqu+pvoYFh37dPk+kFQK4IXEZWg9Kp2M109MU4tNS+WG7MnQ4SrDS?=
+ =?us-ascii?Q?AmXlxKYcJPK8Au10oHRz+ib6FMz2EU0pmO1K55tMJoGfe+Sj1NDvDoNrRokb?=
+ =?us-ascii?Q?0/Bsb1ZHGuHa1Dfz4Zqf5nt175rysamu9XN4dslcI+pkjPE7smBHh/LIFcrV?=
+ =?us-ascii?Q?QRwmiGMlqCKF8ojF4jKWGnkgU8Jo0wmXsu1ND+lncw7L+6cX1IWXkkVNJC9A?=
+ =?us-ascii?Q?MXEUfD9mbEG2ZU9cMCf8ZmPwghOM3DsnDoIhexNPY8YvD8XbwIC6dV8zGPKJ?=
+ =?us-ascii?Q?NIIREMomObprfeKum4DcOr0DYZV+7JTOAsTBicQsQMcIHgasJHsGU8ZM8Yob?=
+ =?us-ascii?Q?Tl7+D1XNO9d+0cS2pnaTa4KTmAPyyzXw28rK?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(36860700013)(1800799024)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 17:10:46.8461
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d970dde-838e-42d9-25f8-08dd8740c8a4
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B06B.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9192
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Apr 29, 2025 at 12:40:07PM +0000, Pranjal Shrivastava wrote:
+> On Fri, Apr 25, 2025 at 10:58:06PM -0700, Nicolin Chen wrote:
+> >  /* Caller should xa_lock(&viommu->vdevs) to protect the return value */
+> >  struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+> >  				       unsigned long vdev_id)
+> 
+> If I'm getting this right, I think we are setting up dependencies like:
+> vcmdq[2] -> vcmdq[1] -> vcmdq[0] based on refcounts of each object,
+> which ensures that the unmaps happen in descending order..
 
-------------------
+Yes.
 
-From: Edward Adam Davis <eadavis@qq.com>
+> If that's right, Is it fair to have iommufd_vcmdq_depend/undepend in the
+> core code itself? Since it's a driver-level limitation, I think we
+> should just have iommufd_object_depend/undepend in the core code and the
+> iommufd_vcmdq_depend/undepend can move into the CMDQV driver?
 
-[ Upstream commit b61e69bb1c049cf507e3c654fa3dc1568231bd07 ]
+The moment we added iommufd_object_depend/undepend, we already had
+a blur boundary here since we had no choice to handle in the driver
+but to ask core for help.
 
-syzbot report a deadlock in diFree. [1]
+The iommufd_vcmdq_depend/undepend is just a pair of macros to help
+validating the structure inputs that are core defined. It is quite
+fair to put next to the raw functions. I also had the notes on top
+of the raw functions suggesting callers to use the macros instead.
 
-When calling "ioctl$LOOP_SET_STATUS64", the offset value passed in is 4,
-which does not match the mounted loop device, causing the mapping of the
-mounted loop device to be invalidated.
-
-When creating the directory and creating the inode of iag in diReadSpecial(),
-read the page of fixed disk inode (AIT) in raw mode in read_metapage(), the
-metapage data it returns is corrupted, which causes the nlink value of 0 to be
-assigned to the iag inode when executing copy_from_dinode(), which ultimately
-causes a deadlock when entering diFree().
-
-To avoid this, first check the nlink value of dinode before setting iag inode.
-
-[1]
-WARNING: possible recursive locking detected
-6.12.0-rc7-syzkaller-00212-g4a5df3796467 #0 Not tainted
---------------------------------------------
-syz-executor301/5309 is trying to acquire lock:
-ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diFree+0x37c/0x2fb0 fs/jfs/jfs_imap.c:889
-
-but task is already holding lock:
-ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diAlloc+0x1b6/0x1630
-
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&(imap->im_aglock[index]));
-  lock(&(imap->im_aglock[index]));
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-5 locks held by syz-executor301/5309:
- #0: ffff8880422a4420 (sb_writers#9){.+.+}-{0:0}, at: mnt_want_write+0x3f/0x90 fs/namespace.c:515
- #1: ffff88804755b390 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}, at: inode_lock_nested include/linux/fs.h:850 [inline]
- #1: ffff88804755b390 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}, at: filename_create+0x260/0x540 fs/namei.c:4026
- #2: ffff888044548920 (&(imap->im_aglock[index])){+.+.}-{3:3}, at: diAlloc+0x1b6/0x1630
- #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diNewIAG fs/jfs/jfs_imap.c:2460 [inline]
- #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
- #3: ffff888044548890 (&imap->im_freelock){+.+.}-{3:3}, at: diAllocAG+0x4b7/0x1e50 fs/jfs/jfs_imap.c:1669
- #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diNewIAG fs/jfs/jfs_imap.c:2477 [inline]
- #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
- #4: ffff88804755a618 (&jfs_ip->rdwrlock/1){++++}-{3:3}, at: diAllocAG+0x869/0x1e50 fs/jfs/jfs_imap.c:1669
-
-stack backtrace:
-CPU: 0 UID: 0 PID: 5309 Comm: syz-executor301 Not tainted 6.12.0-rc7-syzkaller-00212-g4a5df3796467 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_deadlock_bug+0x483/0x620 kernel/locking/lockdep.c:3037
- check_deadlock kernel/locking/lockdep.c:3089 [inline]
- validate_chain+0x15e2/0x5920 kernel/locking/lockdep.c:3891
- __lock_acquire+0x1384/0x2050 kernel/locking/lockdep.c:5202
- lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5825
- __mutex_lock_common kernel/locking/mutex.c:608 [inline]
- __mutex_lock+0x136/0xd70 kernel/locking/mutex.c:752
- diFree+0x37c/0x2fb0 fs/jfs/jfs_imap.c:889
- jfs_evict_inode+0x32d/0x440 fs/jfs/inode.c:156
- evict+0x4e8/0x9b0 fs/inode.c:725
- diFreeSpecial fs/jfs/jfs_imap.c:552 [inline]
- duplicateIXtree+0x3c6/0x550 fs/jfs/jfs_imap.c:3022
- diNewIAG fs/jfs/jfs_imap.c:2597 [inline]
- diAllocExt fs/jfs/jfs_imap.c:1905 [inline]
- diAllocAG+0x17dc/0x1e50 fs/jfs/jfs_imap.c:1669
- diAlloc+0x1d2/0x1630 fs/jfs/jfs_imap.c:1590
- ialloc+0x8f/0x900 fs/jfs/jfs_inode.c:56
- jfs_mkdir+0x1c5/0xba0 fs/jfs/namei.c:225
- vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
- do_mkdirat+0x264/0x3a0 fs/namei.c:4280
- __do_sys_mkdirat fs/namei.c:4295 [inline]
- __se_sys_mkdirat fs/namei.c:4293 [inline]
- __x64_sys_mkdirat+0x87/0xa0 fs/namei.c:4293
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reported-by: syzbot+355da3b3a74881008e8f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=355da3b3a74881008e8f
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/jfs/jfs_imap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index da3a1c27d3498..84e2c67c9070f 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -458,7 +458,7 @@ struct inode *diReadSpecial(struct super_block *sb, ino_t inum, int secondary)
- 	dp += inum % 8;		/* 8 inodes per 4K page */
- 
- 	/* copy on-disk inode to in-memory inode */
--	if ((copy_from_dinode(dp, ip)) != 0) {
-+	if ((copy_from_dinode(dp, ip) != 0) || (ip->i_nlink == 0)) {
- 		/* handle bad return by returning NULL for ip */
- 		set_nlink(ip, 1);	/* Don't want iput() deleting it */
- 		iput(ip);
--- 
-2.39.5
-
-
-
+Thanks
+Nicolin
