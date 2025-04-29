@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDFA233735;
-	Tue, 29 Apr 2025 17:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE5A2459C5;
+	Tue, 29 Apr 2025 17:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949433; cv=none; b=WDuY8+O2IMJbP6u1UbU2twfIVbLQxExlh1+qG/KqGf7PTvQ/8um0Otoqyuv5O8iVE7Mz9BV2vxbT8TjwjJKPk3hJ14h8M24/YJuuVqGXbdlNXO5FoYH61Vu1WMl6SADp5/FZPHyHBMRzpzQjNPpruL/QMwiD8tL2QM3FYYWnVrU=
+	t=1745949436; cv=none; b=geHxIvZ3fyEE2PzlgJfK+nlq/2cEyhlQ91991OJcdUHqx7ELmLMDYYsd0Ch24mPw6RC50WnCRQQuG9MDWz/DRDERwgwYYcFiLawGI8E0L2hPJ+MZUvUUAgsikI7L1ft4+uvoMaE2rwTEIErUI25g4g/j8n1UDaSknNr3UazzVkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949433; c=relaxed/simple;
-	bh=zK5fJvbhA1f80mpoloJzlYHwVTEZ+3b86sIAMzOAo0U=;
+	s=arc-20240116; t=1745949436; c=relaxed/simple;
+	bh=lcfeS8NqzUnPya10mc++yo+EUu9GhAF+yHF99f4am/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPKsB8U7smyWm+x4s0guaZytHRPEhnjAoZ4qdaVyNthfjbBjpFrml3m432HgOktxNhsLOvExBntGrONvt1GUzfnB7i8Bwp9yEy1CQZTkRGgl0v6xS4P2csBMVY9ux4J2dpR/4Kw+ciB9D/FzkLk/JagcZjXnq6SQT4fPH5BupPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/5vA4xe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KozjCltoDtFYXHQ8QrfrtQtr7IE7FHS6VnONUc6uf99o3Km7XWLtMzQVgEus04sZ2mPCRnnl8y+YUXb30Oc2lXk5XDG4Ye+lGoAxa13q4EDW9X/Hx3tHF2JKHD4JulEsBp1s45obrqAuH7qkAsRKIM6tPoM9/xNv6x3ruyb3D2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R03P4MFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/5vA4xe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285FFC4CEE3;
-	Tue, 29 Apr 2025 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R03P4MFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B51AC4CEE3;
+	Tue, 29 Apr 2025 17:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949433;
-	bh=zK5fJvbhA1f80mpoloJzlYHwVTEZ+3b86sIAMzOAo0U=;
+	s=korg; t=1745949436;
+	bh=lcfeS8NqzUnPya10mc++yo+EUu9GhAF+yHF99f4am/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/5vA4xeu0sk2i5cAodGAl8uDUkdgZKAVEZnLehXGx3B0Diw/oPjyEyybL0mNdxQP
-	 ZOqe0lF0ii7CkAaDiUTVzEKIMdi0zHjcUmTu8P+G1mqliz8wAj/ph8sdjQjxJQ1ZG7
-	 Hk6kBkAx3f2nk+tzds1mbM8WUf384gnefjQ2Lvio=
+	b=R03P4MFmOAK6bDhiBOHAVNGzZONHAQSytzFi02CL/hP81luTaHNthJPwl3LnKhIEz
+	 C22sueB8nRcUlY3ZAWGbTy7iqzk8HKX25sfUF6AkXvVWJKkUqvjXj/tUNy0iB03A+i
+	 zHSqFcb1R78JomNYntZToL2bO7j8ekEXjtkKp/QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 279/373] selftests/mm: generate a temporary mountpoint for cgroup filesystem
-Date: Tue, 29 Apr 2025 18:42:36 +0200
-Message-ID: <20250429161134.594542323@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 311/373] usb: chipidea: ci_hdrc_imx: fix usbmisc handling
+Date: Tue, 29 Apr 2025 18:43:08 +0200
+Message-ID: <20250429161135.902203607@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -55,79 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 9c02223e2d9df5cb37c51aedb78f3960294e09b5 ]
+commit 4e28f79e3dffa52d327b46d1a78dac16efb5810b upstream.
 
-Currently if the filesystem for the cgroups version it wants to use is not
-mounted charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh tests
-will attempt to mount it on the hard coded path /dev/cgroup/memory,
-deleting that directory when the test finishes.  This will fail if there
-is not a preexisting directory at that path, and since the directory is
-deleted subsequent runs of the test will fail.  Instead of relying on this
-hard coded directory name use mktemp to generate a temporary directory to
-use as a mountpoint, fixing both the assumption and the disruption caused
-by deleting a preexisting directory.
+usbmisc is an optional device property so it is totally valid for the
+corresponding data->usbmisc_data to have a NULL value.
 
-This means that if the relevant cgroup filesystem is not already mounted
-then we rely on having coreutils (which provides mktemp) installed.  I
-suspect that many current users are relying on having things automounted
-by default, and given that the script relies on bash it's probably not an
-unreasonable requirement.
+Check that before dereferencing the pointer.
 
-Link: https://lkml.kernel.org/r/20250404-kselftest-mm-cgroup2-detection-v1-1-3dba6d32ba8c@kernel.org
-Fixes: 209376ed2a84 ("selftests/vm: make charge_reserved_hugetlb.sh work with existing cgroup setting")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Aishwarya TCV <aishwarya.tcv@arm.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
+
+Fixes: 74adad500346 ("usb: chipidea: ci_hdrc_imx: decrement device's refcount in .remove() and in the error path of .probe()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20250316102658.490340-2-pchelkin@ispras.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/charge_reserved_hugetlb.sh  | 4 ++--
- tools/testing/selftests/vm/hugetlb_reparenting_test.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_imx.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-index 8e00276b4e69b..dc3fc438b3d9e 100644
---- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-@@ -27,7 +27,7 @@ fi
- if [[ $cgroup2 ]]; then
-   cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
-   if [[ -z "$cgroup_path" ]]; then
--    cgroup_path=/dev/cgroup/memory
-+    cgroup_path=$(mktemp -d)
-     mount -t cgroup2 none $cgroup_path
-     do_umount=1
-   fi
-@@ -35,7 +35,7 @@ if [[ $cgroup2 ]]; then
- else
-   cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
-   if [[ -z "$cgroup_path" ]]; then
--    cgroup_path=/dev/cgroup/memory
-+    cgroup_path=$(mktemp -d)
-     mount -t cgroup memory,hugetlb $cgroup_path
-     do_umount=1
-   fi
-diff --git a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
-index 14d26075c8635..302f2c7003f03 100644
---- a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
-+++ b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
-@@ -22,7 +22,7 @@ fi
- if [[ $cgroup2 ]]; then
-   CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
-   if [[ -z "$CGROUP_ROOT" ]]; then
--    CGROUP_ROOT=/dev/cgroup/memory
-+    CGROUP_ROOT=$(mktemp -d)
-     mount -t cgroup2 none $CGROUP_ROOT
-     do_umount=1
-   fi
--- 
-2.39.5
-
+--- a/drivers/usb/chipidea/ci_hdrc_imx.c
++++ b/drivers/usb/chipidea/ci_hdrc_imx.c
+@@ -509,7 +509,8 @@ disable_hsic_regulator:
+ 		cpu_latency_qos_remove_request(&data->pm_qos_req);
+ 	data->ci_pdev = NULL;
+ err_put:
+-	put_device(data->usbmisc_data->dev);
++	if (data->usbmisc_data)
++		put_device(data->usbmisc_data->dev);
+ 	return ret;
+ }
+ 
+@@ -533,7 +534,8 @@ static void ci_hdrc_imx_remove(struct pl
+ 		if (data->hsic_pad_regulator)
+ 			regulator_disable(data->hsic_pad_regulator);
+ 	}
+-	put_device(data->usbmisc_data->dev);
++	if (data->usbmisc_data)
++		put_device(data->usbmisc_data->dev);
+ }
+ 
+ static void ci_hdrc_imx_shutdown(struct platform_device *pdev)
 
 
