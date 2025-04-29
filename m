@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B951C215060;
-	Tue, 29 Apr 2025 16:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F3A247291;
+	Tue, 29 Apr 2025 16:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945571; cv=none; b=r6C/kKVJ4e6zWJ+/2e23ezw4CtXivYJUY0814yJlcFssZtf0Fn9mX3hyRxEZsy45Bs4oXhd7tUbXZwCux2IbwZ3FYoQ6NBQox/BESTjtaA9SHtJOZJIle1RPt7wDmAcjazMklcXjYVGkg9D1VPdLvzIKpFfzq96fnvTPo1VjKQw=
+	t=1745945574; cv=none; b=JgYNheDd+ZtJAgSeFAGylrt7yyEJW3RlYgk4+89G10abSTbBsThJ/ClLcAiUz5uIlnJIJJD1V1Q8JvJf38Q4YK62HzeenJhX18RC1SuCTsbmrmPoOl4MajjOF4SZY0DWrfJTKJUeHyrNtRffQT2oleXNE1eCVqwyzE11vyOq9Oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945571; c=relaxed/simple;
-	bh=MBSKMlrpqHX72pE/XOXXOY2mDQbwF8jXuKEO14+fjgw=;
+	s=arc-20240116; t=1745945574; c=relaxed/simple;
+	bh=Ruq+zF/1mWmPfqPgPkaCbVgj5w2omGcA52QkM7UOrHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYRKyOT0ZW7mJCt62qflbFBmQyENYwVQJdiIZ+xZ8vrLjrywl6LInaxy45b97qjQZhCBCpKEJ3waGZJUzr2a6UlPMEvW66G/SpYtN+50kXwAcBIt1sB7JtQEAGTs+ghtdspDGKbO98Q+w16189DQpHNwJCf+/mhRRlu8GYmA11w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxhsHumI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3scDAcuBV49qStuavcBqPuJwNDdT7FjZGTpzdiZ/nQU9dTeKJqbCkEE/Ng5jmZ0lXRfyNMOON2fEfRal9E0Fkks95JqVA8rel7nD0bS9+FpyD5C6GU0vbK5fNpcI1uyRigTdjrCrFX62XMe+ClBBvs8mlnVHdF1euLc1fXvpp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkyU+6oH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxhsHumI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E38CC4CEE3;
-	Tue, 29 Apr 2025 16:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkyU+6oH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C08DC4CEE3;
+	Tue, 29 Apr 2025 16:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945571;
-	bh=MBSKMlrpqHX72pE/XOXXOY2mDQbwF8jXuKEO14+fjgw=;
+	s=korg; t=1745945574;
+	bh=Ruq+zF/1mWmPfqPgPkaCbVgj5w2omGcA52QkM7UOrHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxhsHumIXC4z5DiV5h7oswKafEePLeI8CR4RCWdVa0vRNuzajIBHYQiSWHKmpwMxQ
-	 fCJn6PVBS26dTG6dEaSNTeU7osJfNlTq85N66f7a29N/0fOQBduVokhChJjL0MLvPY
-	 UTxle5Y2lFvwD4ctizfvNRJiUapbVHXWXdy0dtRA=
+	b=LkyU+6oHmWSYJmPuTczuDj8heUsN9jhUtIM828X0Lq+V/AJ/a3/iA3iDiVM6oEv1M
+	 MZOo47QHhalRWORt+wsDCtlS2aa8lJM8uUx6JMwMIP+eNWlXBxYjCGtluew6AxqOoB
+	 vW0INrwCONoQdTxgEiTkW1zLiHhSDD9FLo3uFstw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ehrenreich <michideep@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 150/179] USB: serial: ftdi_sio: add support for Abacus Electrics Optical Probe
-Date: Tue, 29 Apr 2025 18:41:31 +0200
-Message-ID: <20250429161055.455763473@linuxfoundation.org>
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 159/179] MIPS: cm: Detect CM quirks from device tree
+Date: Tue, 29 Apr 2025 18:41:40 +0200
+Message-ID: <20250429161055.813048620@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,50 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ehrenreich <michideep@gmail.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-commit b399078f882b6e5d32da18b6c696cc84b12f90d5 upstream.
+[ Upstream commit e27fbe16af5cfc40639de4ced67d1a866a1953e9 ]
 
-Abacus Electrics makes optical probes for interacting with smart meters
-over an optical interface.
+Some information that should be retrieved at runtime for the Coherence
+Manager can be either absent or wrong. This patch allows checking if
+some of this information is available from the device tree and updates
+the internal variable accordingly.
 
-At least one version uses an FT232B chip (as detected by ftdi_sio) with
-a custom USB PID, which needs to be added to the list to make the device
-work in a plug-and-play fashion.
+For now, only the compatible string associated with the broken HCI is
+being retrieved.
 
-Signed-off-by: Michael Ehrenreich <michideep@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    2 ++
- drivers/usb/serial/ftdi_sio_ids.h |    5 +++++
- 2 files changed, 7 insertions(+)
+ arch/mips/include/asm/mips-cm.h | 22 ++++++++++++++++++++++
+ arch/mips/kernel/mips-cm.c      | 14 ++++++++++++++
+ 2 files changed, 36 insertions(+)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -1071,6 +1071,8 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 2) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 3) },
-+	/* Abacus Electrics */
-+	{ USB_DEVICE(FTDI_VID, ABACUS_OPTICAL_PROBE_PID) },
- 	{ }					/* Terminating entry */
- };
- 
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -436,6 +436,11 @@
- #define LINX_FUTURE_2_PID   0xF44C	/* Linx future device */
- 
- /*
-+ * Abacus Electrics
-+ */
-+#define ABACUS_OPTICAL_PROBE_PID	0xf458 /* ABACUS ELECTRICS Optical Probe */
-+
-+/*
-  * Oceanic product ids
+diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
+index 696b40beb774f..0f31324998c0a 100644
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -47,6 +47,16 @@ extern phys_addr_t __mips_cm_phys_base(void);
   */
- #define FTDI_OCEANIC_PID	0xF460  /* Oceanic dive instrument */
+ extern int mips_cm_is64;
+ 
++/*
++ * mips_cm_is_l2_hci_broken  - determine if HCI is broken
++ *
++ * Some CM reports show that Hardware Cache Initialization is
++ * complete, but in reality it's not the case. They also incorrectly
++ * indicate that Hardware Cache Initialization is supported. This
++ * flags allows warning about this broken feature.
++ */
++extern bool mips_cm_is_l2_hci_broken;
++
+ /**
+  * mips_cm_error_report - Report CM cache errors
+  */
+@@ -85,6 +95,18 @@ static inline bool mips_cm_present(void)
+ #endif
+ }
+ 
++/**
++ * mips_cm_update_property - update property from the device tree
++ *
++ * Retrieve the properties from the device tree if a CM node exist and
++ * update the internal variable based on this.
++ */
++#ifdef CONFIG_MIPS_CM
++extern void mips_cm_update_property(void);
++#else
++static void mips_cm_update_property(void) {}
++#endif
++
+ /**
+  * mips_cm_has_l2sync - determine whether an L2-only sync region is present
+  *
+diff --git a/arch/mips/kernel/mips-cm.c b/arch/mips/kernel/mips-cm.c
+index 611ef512c0b81..159354ac9335b 100644
+--- a/arch/mips/kernel/mips-cm.c
++++ b/arch/mips/kernel/mips-cm.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/errno.h>
++#include <linux/of.h>
+ #include <linux/percpu.h>
+ #include <linux/spinlock.h>
+ 
+@@ -14,6 +15,7 @@
+ void __iomem *mips_gcr_base;
+ void __iomem *mips_cm_l2sync_base;
+ int mips_cm_is64;
++bool mips_cm_is_l2_hci_broken;
+ 
+ static char *cm2_tr[8] = {
+ 	"mem",	"gcr",	"gic",	"mmio",
+@@ -196,6 +198,18 @@ static void mips_cm_probe_l2sync(void)
+ 	mips_cm_l2sync_base = ioremap_nocache(addr, MIPS_CM_L2SYNC_SIZE);
+ }
+ 
++void mips_cm_update_property(void)
++{
++	struct device_node *cm_node;
++
++	cm_node = of_find_compatible_node(of_root, NULL, "mobileye,eyeq6-cm");
++	if (!cm_node)
++		return;
++	pr_info("HCI (Hardware Cache Init for the L2 cache) in GCR_L2_RAM_CONFIG from the CM3 is broken");
++	mips_cm_is_l2_hci_broken = true;
++	of_node_put(cm_node);
++}
++
+ int mips_cm_probe(void)
+ {
+ 	phys_addr_t addr;
+-- 
+2.39.5
+
 
 
