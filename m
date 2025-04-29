@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F83227E95;
-	Tue, 29 Apr 2025 17:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB04244686;
+	Tue, 29 Apr 2025 17:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948450; cv=none; b=ELAhL1wXeLt3lmOEKvwXGruPYdDG0KTX+PKYEaDYZJPpFL5ZeUPwHr9fZ8emmA3HZ7MI7qR0xa15gGYCqkevoOVHO2y3eIcEmLOzQVHim5pnVwlc6Any15paCODKZnSoN7S1L9mKqN+BjLAxfrMl4QnK+a+YyBGw64v8svfJDtc=
+	t=1745948453; cv=none; b=RQSrfIWzmOzLfJbs2QfEffa1++9N/tTrSmFnIpC45xLq1CdZ90vg9vbPsufspI0NpgHvZ0h5o3aJbUdlFRHXQkbto/RnUHpI7P9gmy2rqMeQHCKm+An+v62xFaC26kWF7VMJ4dTMolVKLVTxt9M+HZ49PMiZfDaBRTZ5TJhH6Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948450; c=relaxed/simple;
-	bh=H2FPHnH4KV+ld/XhjCM7wnZ7Ni+1cTv6AhFEhn93zjQ=;
+	s=arc-20240116; t=1745948453; c=relaxed/simple;
+	bh=GAredgzsRt9CVbZkxIjsYQN5RQ5qoCQgqzw6+i+3Dp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4xj/9kABDMGY7VW+lzhYrc48rjiWudma+YkcsHWWRKX7vHFQZbNWJmwMRH7Wg4q8Wgt8M+e3Rug/ZsV4OjbXaQ1XLA4ndTN8/w/ffVfqJy7OKjrzoWhsLhsOJhwM26/owJQsA/HYoulLZ8g7rkumjmHkz97mwab+v//RCPVx+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEnjVAgw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOW6Jv8cehFWaiHMd7v0dBBpU8DRQ5JYlwos172FxWx9QhqudGcsp+O0SReTENSDpJuj/NhOdG328i8X8I1DdUc/JO5Ie6acFNTKSbNjxmS0scQ31oCCRb015mSQoSMw9wTvtD0JnHGZoOEvGWePeguliory2nzqIWXxORVRpDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2vauu/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEnjVAgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D51C4CEE3;
-	Tue, 29 Apr 2025 17:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2vauu/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C78C4CEE3;
+	Tue, 29 Apr 2025 17:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948450;
-	bh=H2FPHnH4KV+ld/XhjCM7wnZ7Ni+1cTv6AhFEhn93zjQ=;
+	s=korg; t=1745948453;
+	bh=GAredgzsRt9CVbZkxIjsYQN5RQ5qoCQgqzw6+i+3Dp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEnjVAgwGhSBV0LrilrVR84VsdZyQ43kVWr1EMSPznBx4loM0yyPIRzzx81UZMFmw
-	 7go0oH22xBH8ER0RpuqVoWv46lQXxT9X0bzSNQ6yjANQRXy0d93jp+rUQLIRCEexqt
-	 X3NQGGSc1aq+gMtXlACigLhr27N/oYHypPa8N5Yw=
+	b=A2vauu/AIf4ysDOWuhnbDaG8oV9S+FDDH2t0gvQ0GqdjA5bhSm3NUt7QcIR5I5rSG
+	 hihw5O+Z181yBXzC0tz16IDVhrjLOYDX1RLTeFaAWSouZljcJyiTRYyCk1LgPPcsFh
+	 t0eoizcqzczu0QO/ZYEq2AtnRvmE9/ehmyoYtgJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/373] umount: Allow superblock owners to force umount
-Date: Tue, 29 Apr 2025 18:38:08 +0200
-Message-ID: <20250429161123.598595551@linuxfoundation.org>
+Subject: [PATCH 5.15 012/373] pm: cpupower: bench: Prevent NULL dereference on malloc failure
+Date: Tue, 29 Apr 2025 18:38:09 +0200
+Message-ID: <20250429161123.639718071@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit e1ff7aa34dec7e650159fd7ca8ec6af7cc428d9f ]
+[ Upstream commit 208baa3ec9043a664d9acfb8174b332e6b17fb69 ]
 
-Loosen the permission check on forced umount to allow users holding
-CAP_SYS_ADMIN privileges in namespaces that are privileged with respect
-to the userns that originally mounted the filesystem.
+If malloc returns NULL due to low memory, 'config' pointer can be NULL.
+Add a check to prevent NULL dereference.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Link: https://lore.kernel.org/r/12f212d4ef983714d065a6bb372fbb378753bf4c.1742315194.git.trond.myklebust@hammerspace.com
-Acked-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/20250219122715.3892223-1-quic_zhonhan@quicinc.com
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/power/cpupower/bench/parse.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 22af4b6c737f4..642baef4d9aaa 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -1734,6 +1734,7 @@ static void warn_mandlock(void)
- static int can_umount(const struct path *path, int flags)
+diff --git a/tools/power/cpupower/bench/parse.c b/tools/power/cpupower/bench/parse.c
+index e63dc11fa3a53..48e25be6e1635 100644
+--- a/tools/power/cpupower/bench/parse.c
++++ b/tools/power/cpupower/bench/parse.c
+@@ -120,6 +120,10 @@ FILE *prepare_output(const char *dirname)
+ struct config *prepare_default_config()
  {
- 	struct mount *mnt = real_mount(path->mnt);
-+	struct super_block *sb = path->dentry->d_sb;
+ 	struct config *config = malloc(sizeof(struct config));
++	if (!config) {
++		perror("malloc");
++		return NULL;
++	}
  
- 	if (!may_mount())
- 		return -EPERM;
-@@ -1743,7 +1744,7 @@ static int can_umount(const struct path *path, int flags)
- 		return -EINVAL;
- 	if (mnt->mnt.mnt_flags & MNT_LOCKED) /* Check optimistically */
- 		return -EINVAL;
--	if (flags & MNT_FORCE && !capable(CAP_SYS_ADMIN))
-+	if (flags & MNT_FORCE && !ns_capable(sb->s_user_ns, CAP_SYS_ADMIN))
- 		return -EPERM;
- 	return 0;
- }
+ 	dprintf("loading defaults\n");
+ 
 -- 
 2.39.5
 
