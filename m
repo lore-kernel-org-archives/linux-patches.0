@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C0D219A63;
-	Tue, 29 Apr 2025 18:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4816C155A4E;
+	Tue, 29 Apr 2025 18:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950689; cv=none; b=t5b4VJ2ysSnlpWSMoWw1SFgGv6DoKG4g9/y27Q9WHxSRJR7Ui598gBwrGezAAN0wu+Tuj5Qm3XEVr2uj9k1cRpw2pe7ssgOfxYZqThHSGONQjp+/rPzNPvBtojyH+e4a+HhQxgPWExYwilBHh3pJ1+Mhi5odvvgRubhff8CcQAo=
+	t=1745950693; cv=none; b=PLCvBGvvfYQEMn5aO3sRPJeaX5kBagwqKp2dbBz0bij8cfvhb2FMzNd49oJGqy7nJizQ9YUQII/eK1vCwASk56Ph9rAq9K+ac6JbM5qpc9rlSJM8d32i9GpO9wKPfLNLeRi+PsgK5BlHJ0LFSlHHFr/u7TOfOvkCP5si+EHu/8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950689; c=relaxed/simple;
-	bh=fL6mIV2+qM61ivc+VW3P9y5lIEq1kEQyfP8+lJ40Z3I=;
+	s=arc-20240116; t=1745950693; c=relaxed/simple;
+	bh=mOVd+vJDUqKOOM5ZPOTHCHPssWySwlWtZgJmfFjlAE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R0ObeyUFqWHeVfIf7aJfYdtiH5qWOMe+TVT0bWAmyE8op729EPsgUpRO+JNh3HKidFtBJ6Ci8EeS9YR4XKfoCEBdeccJDyE0lFoEd/yUojJcnCHv5iT1sHYWsI4o3vFh3M3KEDcuSDIu76axtyGBTH9vU3Kxzc4ctPM1MLoJb0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ep3fu7/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMWQapkjmkW5bzew7glXELGCuXj3+pH0qf/gF2ivjVmTxTAdmb0LYJtx297iK2HundbPNQgQsX0X7rwueD6pFdVXVFe5cSN87a4vyTPrj73DiZNsOGXoyHFecQl4ykSsrMeZWX57zj8EMP639QCE5/+LFAAyYBsL4n4V0nmH1hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjtFWopI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ep3fu7/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C4EC4CEE9;
-	Tue, 29 Apr 2025 18:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjtFWopI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D7AC4CEE3;
+	Tue, 29 Apr 2025 18:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950689;
-	bh=fL6mIV2+qM61ivc+VW3P9y5lIEq1kEQyfP8+lJ40Z3I=;
+	s=korg; t=1745950692;
+	bh=mOVd+vJDUqKOOM5ZPOTHCHPssWySwlWtZgJmfFjlAE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ep3fu7/cTBXTkbdp2EWvrmSm5vdr9/2iWoMvZdcDBq0wid7HYlG/gz/DQwpS+++Vi
-	 TCqfY6Kd+ragQPPBxcAafefqxuA9d6x/tMOYbndcNyei1d6EO7uwBfc5iXqyc69zYV
-	 TNEzZJLD9i1SKuGAdqlgmwIUhvZN1mpq+t/vkUdc=
+	b=TjtFWopIHhuGRQGXYsQQyTi8S7cLItkJDIBjePFukNMzdgCyEXA+9+YoOnaugtxle
+	 4X3OkUx7Q7jkx87egk3uloPrRpkm2v1kaVyUIXApSO7MllJKh4QaEqNSL/9DethfGv
+	 pYsbmKK/TzDOhMhE4nZygQB3jQ+m7q6WfU0KtYsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 174/204] cifs: Fix querying of WSL CHR and BLK reparse points over SMB1
-Date: Tue, 29 Apr 2025 18:44:22 +0200
-Message-ID: <20250429161106.522410041@linuxfoundation.org>
+Subject: [PATCH 6.6 175/204] ext4: make block validity check resistent to sb bh corruption
+Date: Tue, 29 Apr 2025 18:44:23 +0200
+Message-ID: <20250429161106.562347838@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -45,78 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit ef86ab131d9127dfbfa8f06e12441d05fdfb090b ]
+[ Upstream commit ccad447a3d331a239477c281533bacb585b54a98 ]
 
-When reparse point in SMB1 query_path_info() callback was detected then
-query also for EA $LXDEV. In this EA are stored device major and minor
-numbers used by WSL CHR and BLK reparse points. Without major and minor
-numbers, stat() syscall does not work for char and block devices.
+Block validity checks need to be skipped in case they are called
+for journal blocks since they are part of system's protected
+zone.
 
-Similar code is already in SMB2+ query_path_info() callback function.
+Currently, this is done by checking inode->ino against
+sbi->s_es->s_journal_inum, which is a direct read from the ext4 sb
+buffer head. If someone modifies this underneath us then the
+s_journal_inum field might get corrupted. To prevent against this,
+change the check to directly compare the inode with journal->j_inode.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+**Slight change in behavior**: During journal init path,
+check_block_validity etc might be called for journal inode when
+sbi->s_journal is not set yet. In this case we now proceed with
+ext4_inode_block_valid() instead of returning early. Since systems zones
+have not been set yet, it is okay to proceed so we can perform basic
+checks on the blocks.
+
+Suggested-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/0c06bc9ebfcd6ccfed84a36e79147bf45ff5adc1.1743142920.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb1ops.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ fs/ext4/block_validity.c | 5 ++---
+ fs/ext4/inode.c          | 7 ++++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index bc1bac36c1b29..caa1d852ece49 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -597,6 +597,42 @@ static int cifs_query_path_info(const unsigned int xid,
- 			CIFSSMBClose(xid, tcon, fid.netfid);
- 	}
+diff --git a/fs/ext4/block_validity.c b/fs/ext4/block_validity.c
+index 6fe3c941b5651..4d6ba140276b5 100644
+--- a/fs/ext4/block_validity.c
++++ b/fs/ext4/block_validity.c
+@@ -351,10 +351,9 @@ int ext4_check_blockref(const char *function, unsigned int line,
+ {
+ 	__le32 *bref = p;
+ 	unsigned int blk;
++	journal_t *journal = EXT4_SB(inode->i_sb)->s_journal;
  
-+#ifdef CONFIG_CIFS_XATTR
-+	/*
-+	 * For WSL CHR and BLK reparse points it is required to fetch
-+	 * EA $LXDEV which contains major and minor device numbers.
-+	 */
-+	if (!rc && data->reparse_point) {
-+		struct smb2_file_full_ea_info *ea;
-+
-+		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
-+		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_DEV,
-+				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
-+				    SMB2_WSL_XATTR_DEV_SIZE, cifs_sb);
-+		if (rc == SMB2_WSL_XATTR_DEV_SIZE) {
-+			ea->next_entry_offset = cpu_to_le32(0);
-+			ea->flags = 0;
-+			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
-+			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
-+			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
-+			data->wsl.eas_len = sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
-+					    SMB2_WSL_XATTR_DEV_SIZE;
-+			rc = 0;
-+		} else if (rc >= 0) {
-+			/* It is an error if EA $LXDEV has wrong size. */
-+			rc = -EINVAL;
-+		} else {
-+			/*
-+			 * In all other cases ignore error if fetching
-+			 * of EA $LXDEV failed. It is needed only for
-+			 * WSL CHR and BLK reparse points and wsl_to_fattr()
-+			 * handle the case when EA is missing.
-+			 */
-+			rc = 0;
-+		}
-+	}
-+#endif
-+
- 	return rc;
- }
+-	if (ext4_has_feature_journal(inode->i_sb) &&
+-	    (inode->i_ino ==
+-	     le32_to_cpu(EXT4_SB(inode->i_sb)->s_es->s_journal_inum)))
++	if (journal && inode == journal->j_inode)
+ 		return 0;
  
+ 	while (bref < p+max) {
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index ddfeaf19bff1b..f2b60fb0b937b 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -378,10 +378,11 @@ static int __check_block_validity(struct inode *inode, const char *func,
+ 				unsigned int line,
+ 				struct ext4_map_blocks *map)
+ {
+-	if (ext4_has_feature_journal(inode->i_sb) &&
+-	    (inode->i_ino ==
+-	     le32_to_cpu(EXT4_SB(inode->i_sb)->s_es->s_journal_inum)))
++	journal_t *journal = EXT4_SB(inode->i_sb)->s_journal;
++
++	if (journal && inode == journal->j_inode)
+ 		return 0;
++
+ 	if (!ext4_inode_block_valid(inode, map->m_pblk, map->m_len)) {
+ 		ext4_error_inode(inode, func, line, map->m_pblk,
+ 				 "lblock %lu mapped to illegal pblock %llu "
 -- 
 2.39.5
 
