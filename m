@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773B7240611;
-	Tue, 29 Apr 2025 18:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AFE219A63;
+	Tue, 29 Apr 2025 18:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950731; cv=none; b=vA+1XqWF2EhbWFNCbEAjPUHpJaYzpIvxW4rh6TCDwNBaK7hTlHuTdUFV0oCcdj85LiuzZmbMk8pSzBIYRo4QczRmIb1bqDuOrvUV9DuUwq2p91umVSQ60dfrIDeSBA0lS9Io5vUXzwlryidwZNFGhmirOF6/vY+6fIUJtrRnWkQ=
+	t=1745950734; cv=none; b=gsoxW+BuVmk38PZOOu1FsOeKzeiCgvbkbYo5VzWQTeLLhc5zCJdRLYLdhYcHU+TFW/uUwcAOW3SCI1+PAnjHR0pkqelON4vTNekTAjX8rdSt3WJ7le/yvDXXDLWFbDXgQ6XN2kO4QWuojqYgV3dh6k0od52d1vuP3/YMRXjowPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950731; c=relaxed/simple;
-	bh=nEwHaSZOEAhkBct8JurOTjvC7W5GF1Vkgv3kLo+Ic5s=;
+	s=arc-20240116; t=1745950734; c=relaxed/simple;
+	bh=/5dzz4sd09AA3rJRaC6KLikkbO8MCHBIioMBqQpN7oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOr/GN7i97mAma8LDSFsXh1pE2FjKf7CvKFIPH5tbq/cJ3y9v3/+ifHaVY0LBI1lq6LHfDYVNaBcWaoqGIb7c/V0TMkaWsn5yDP7EEzuDU+ypDfTWXPQAeNTR35rLKnRy9H0gB6rDoWC9HrqcB6hNCJMraq0OtGaZBslHXPxLFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/CqVcGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FkvFWbAPe/Ed6TWtmPJo15ozbN0gLVu8bUHu3XkiTcem58jiGtnf83tD+nRQCwB7H1xn6fHcBplen5FYac8jwXyznZqlLd4HNGRBaODwRVZUMZB4Pvp1+2kgcAeNLGfysCRfSu2EFRzGXJvlxaNIGXhuTuHAVtdc1T2WpHX6Uno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDOCbfG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/CqVcGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ACBC4CEE3;
-	Tue, 29 Apr 2025 18:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDOCbfG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C832C4CEE3;
+	Tue, 29 Apr 2025 18:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950730;
-	bh=nEwHaSZOEAhkBct8JurOTjvC7W5GF1Vkgv3kLo+Ic5s=;
+	s=korg; t=1745950734;
+	bh=/5dzz4sd09AA3rJRaC6KLikkbO8MCHBIioMBqQpN7oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/CqVcGq0cNKlr0M5Vy8DV/yrRrYsdd/9nki9c9jUL0wMn0/I6wPw+s3/DSS8d00g
-	 477+H5Y3awZL+HPTHQo/BQMecZI4ApTUXuwhl//3+RVOCoXv729J1UGccaq0EVYIP4
-	 qPodcu7cmah3AfUQCEdzyWRA+ii42dyjxxZys840=
+	b=IDOCbfG1FD6TehBLqUSFZuA9tQlmRW80aFWt2ji87Xm5LgWauhM9iwbt8TaFBcO8r
+	 4bWSD7Sl/ZB8DvasPDYFGgIx5zrH/EOxuu9iD6SFi09B+r8orYHqXYW6rHHqGMe5ay
+	 61t6GwbpcfZjWoN5/PazotRr2aZJjHgmt1bnIvaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pi Xiange <xiange.pi@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Christian Ludloff <ludloff@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tony Luck <tony.luck@intel.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	x86-cpuid@lists.linux.dev,
+	Meir Elisha <meir.elisha@volumez.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/204] x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
-Date: Tue, 29 Apr 2025 18:44:34 +0200
-Message-ID: <20250429161106.997841961@linuxfoundation.org>
+Subject: [PATCH 6.6 187/204] md/raid1: Add check for missing source disk in process_checks()
+Date: Tue, 29 Apr 2025 18:44:35 +0200
+Message-ID: <20250429161107.038489573@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -59,44 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pi Xiange <xiange.pi@intel.com>
+From: Meir Elisha <meir.elisha@volumez.com>
 
-[ Upstream commit d466304c4322ad391797437cd84cca7ce1660de0 ]
+[ Upstream commit b7c178d9e57c8fd4238ff77263b877f6f16182ba ]
 
-Bartlett Lake has a P-core only product with Raptor Cove.
+During recovery/check operations, the process_checks function loops
+through available disks to find a 'primary' source with successfully
+read data.
 
-[ mingo: Switch around the define as pointed out by Christian Ludloff:
-         Ratpr Cove is the core, Bartlett Lake is the product.
+If no suitable source disk is found after checking all possibilities,
+the 'primary' index will reach conf->raid_disks * 2. Add an explicit
+check for this condition after the loop. If no source disk was found,
+print an error message and return early to prevent further processing
+without a valid primary source.
 
-Signed-off-by: Pi Xiange <xiange.pi@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Christian Ludloff <ludloff@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250414032839.5368-1-xiange.pi@intel.com
+Link: https://lore.kernel.org/linux-raid/20250408143808.1026534-1-meir.elisha@volumez.com
+Signed-off-by: Meir Elisha <meir.elisha@volumez.com>
+Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/raid1.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index f81a851c46dca..652c0137e909f 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -159,6 +159,8 @@
- #define INTEL_FAM6_GRANITERAPIDS_D	0xAE
- #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
- 
-+#define INTEL_BARTLETTLAKE		IFM(6, 0xD7) /* Raptor Cove */
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 65309da1dca34..8b25287c89ed6 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -2061,14 +2061,9 @@ static int fix_sync_read_error(struct r1bio *r1_bio)
+ 				if (!rdev_set_badblocks(rdev, sect, s, 0))
+ 					abort = 1;
+ 			}
+-			if (abort) {
+-				conf->recovery_disabled =
+-					mddev->recovery_disabled;
+-				set_bit(MD_RECOVERY_INTR, &mddev->recovery);
+-				md_done_sync(mddev, r1_bio->sectors, 0);
+-				put_buf(r1_bio);
++			if (abort)
+ 				return 0;
+-			}
 +
- /* "Hybrid" Processors (P-Core/E-Core) */
+ 			/* Try next page */
+ 			sectors -= s;
+ 			sect += s;
+@@ -2207,10 +2202,21 @@ static void sync_request_write(struct mddev *mddev, struct r1bio *r1_bio)
+ 	int disks = conf->raid_disks * 2;
+ 	struct bio *wbio;
  
- #define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
+-	if (!test_bit(R1BIO_Uptodate, &r1_bio->state))
+-		/* ouch - failed to read all of that. */
+-		if (!fix_sync_read_error(r1_bio))
++	if (!test_bit(R1BIO_Uptodate, &r1_bio->state)) {
++		/*
++		 * ouch - failed to read all of that.
++		 * No need to fix read error for check/repair
++		 * because all member disks are read.
++		 */
++		if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery) ||
++		    !fix_sync_read_error(r1_bio)) {
++			conf->recovery_disabled = mddev->recovery_disabled;
++			set_bit(MD_RECOVERY_INTR, &mddev->recovery);
++			md_done_sync(mddev, r1_bio->sectors, 0);
++			put_buf(r1_bio);
+ 			return;
++		}
++	}
+ 
+ 	if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery))
+ 		process_checks(r1_bio);
 -- 
 2.39.5
 
