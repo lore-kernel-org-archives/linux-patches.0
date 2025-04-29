@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DC0227E95;
-	Tue, 29 Apr 2025 18:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA120C488;
+	Tue, 29 Apr 2025 18:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950156; cv=none; b=dDTAYBjO3ItgfGgNa2p4CL4HojMueuDHGnLxHh23ZGLsRRQdjzzE5iTapdbkNclMNJJ9V3btvxqPOn7OVfTFGsRa9JoxYTqpsvC277XsR6BGG9ragEcIkJYZ/Rfvxf59BDAR3PwjlCGHqB8C8ww3f/IL+nuCEXsiPvSTEww45pY=
+	t=1745950159; cv=none; b=t7LUwWbGfGfyaydM/BqHrW4Rz9F1DZYTlB2fHOtECg4QwkLBTi6fbtmxY2LaP/zboE9KtPJIXB0Yp1pq5CEJ0JskiQVh649PRv+Bj8cV1c6JAg/nc33Ty4S2IbWHHeseuSHPdRq2Ax8uYG0E8d2agH89c3Wb/LCCQZhwuP2JcsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950156; c=relaxed/simple;
-	bh=nX9LIAqYYKtWXVHqDkLMWhnrN3NpJZYWeutBkOchVI0=;
+	s=arc-20240116; t=1745950159; c=relaxed/simple;
+	bh=HL/2BcVi+bImFtcSQFumLNUZ+qGozjMiv7kKJ5S3ni4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6Q8hxiYgoPF3OqX1nanX58KgX+Q6HuUr1soKF0jBgz7RG06RmL6HJtcl81EL7IxsgEjWage0iJzRDXWwr8ZHK36eRoxn/jp5ZuULbgX7o0qkHOMYvoOzbXfb16nUnrOqrKn66kiulgH/HYmH6oAY6yt+EXpCUUc7/Q44f01FUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYErmcID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adyKlVZRUReV91ff4OEr0vovskxs/iWf1YATRGamPgh/T/bvE3iAjfDkDOkNcxDWizI/G5NQFRSx9ckKNAc+5m5EyqFrvT9iqOSo2FnY/28Eh94SVslpXDwwFn5rrN8I889DglZIHNbu++jgvhndPCHipYYIJXnazLegC07/kpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+vKTWQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYErmcID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95BAC4CEE3;
-	Tue, 29 Apr 2025 18:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+vKTWQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2780C4CEE3;
+	Tue, 29 Apr 2025 18:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950156;
-	bh=nX9LIAqYYKtWXVHqDkLMWhnrN3NpJZYWeutBkOchVI0=;
+	s=korg; t=1745950159;
+	bh=HL/2BcVi+bImFtcSQFumLNUZ+qGozjMiv7kKJ5S3ni4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYErmcIDtV6o0xfRGFjjQjW5EhZe+722aux3ko6aAcKkBoRU93sTBPLxO3+ohlv23
-	 m30rwkcM7f1XtoQeYDLYYCsIEW52m9eZ8f3GPEQ5FcLlymcefk6REpRB81SpVDOgqW
-	 PiCuKUU93v/Z2LK6AMA0mf7JO3ds3+tek4d4JhaI=
+	b=m+vKTWQOHswMCNHofcJ/cKieL7f5/3HObtinPfVA6iPnAmWlwiwpUdnmbForvB85I
+	 ai4jZBwWfyCEWiXb3GQoKCFd63VJtzsbzDnbJbMQFEd8sI+z4hDfq7aKJiuGEG/+Fk
+	 Hfmewf0MPEQVTs5zA2TxzkjJSbm6yUHJnx66ZqDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Richard Zhu <hongxing.zhu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Marek Vasut <marex@denx.de>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 162/167] phy: freescale: imx8m-pcie: Do CMN_RST just before PHY PLL lock check
-Date: Tue, 29 Apr 2025 18:44:30 +0200
-Message-ID: <20250429161058.280269348@linuxfoundation.org>
+Subject: [PATCH 6.1 163/167] phy: freescale: imx8m-pcie: Add one missing error return
+Date: Tue, 29 Apr 2025 18:44:31 +0200
+Message-ID: <20250429161058.320485973@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -53,90 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Zhu <hongxing.zhu@nxp.com>
 
-commit f89263b69731e0144d275fff777ee0dd92069200 upstream.
+commit b574baa64cf84e7793fe79f4491ae36c16e65a0b upstream.
 
-When enable initcall_debug together with higher debug level below.
-CONFIG_CONSOLE_LOGLEVEL_DEFAULT=9
-CONFIG_CONSOLE_LOGLEVEL_QUIET=9
-CONFIG_MESSAGE_LOGLEVEL_DEFAULT=7
-
-The initialization of i.MX8MP PCIe PHY might be timeout failed randomly.
-To fix this issue, adjust the sequence of the resets refer to the power
-up sequence listed below.
-
-i.MX8MP PCIe PHY power up sequence:
-                          /---------------------------------------------
-1.8v supply     ---------/
-                    /---------------------------------------------------
-0.8v supply     ---/
-
-                ---\ /--------------------------------------------------
-                    X        REFCLK Valid
-Reference Clock ---/ \--------------------------------------------------
-                             -------------------------------------------
-                             |
-i_init_restn    --------------
-                                    ------------------------------------
-                                    |
-i_cmn_rstn      ---------------------
-                                         -------------------------------
-                                         |
-o_pll_lock_done --------------------------
-
-Logs:
-imx6q-pcie 33800000.pcie: host bridge /soc@0/pcie@33800000 ranges:
-imx6q-pcie 33800000.pcie:       IO 0x001ff80000..0x001ff8ffff -> 0x0000000000
-imx6q-pcie 33800000.pcie:      MEM 0x0018000000..0x001fefffff -> 0x0018000000
-probe of clk_imx8mp_audiomix.reset.0 returned 0 after 1052 usecs
-probe of 30e20000.clock-controller returned 0 after 32971 usecs
-phy phy-32f00000.pcie-phy.4: phy poweron failed --> -110
-probe of 30e10000.dma-controller returned 0 after 10235 usecs
-imx6q-pcie 33800000.pcie: waiting for PHY ready timeout!
-dwhdmi-imx 32fd8000.hdmi: Detected HDMI TX controller v2.13a with HDCP (samsung_dw_hdmi_phy2)
-imx6q-pcie 33800000.pcie: probe with driver imx6q-pcie failed with error -110
+There should be one error return when fail to fetch the perst reset.
+Add the missing error return.
 
 Fixes: dce9edff16ee ("phy: freescale: imx8m-pcie: Add i.MX8MP PCIe PHY support")
-Cc: stable@vger.kernel.org
+
 Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-v2 changes:
-- Rebase to latest fixes branch of linux-phy git repo.
-- Richard's environment have problem and can't sent out patch. So I help
-post this fix patch.
-
-Link: https://lore.kernel.org/r/20241021155241.943665-1-Frank.Li@nxp.com
+Reviewed-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/1671433941-2037-1-git-send-email-hongxing.zhu@nxp.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8m-pcie.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
 +++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
-@@ -143,11 +143,6 @@ static int imx8_pcie_phy_power_on(struct
- 			   IMX8MM_GPR_PCIE_REF_CLK_PLL);
- 	usleep_range(100, 200);
- 
--	/* Do the PHY common block reset */
--	regmap_update_bits(imx8_phy->iomuxc_gpr, IOMUXC_GPR14,
--			   IMX8MM_GPR_PCIE_CMN_RST,
--			   IMX8MM_GPR_PCIE_CMN_RST);
--
- 	switch (imx8_phy->drvdata->variant) {
- 	case IMX8MP:
- 		reset_control_deassert(imx8_phy->perst);
-@@ -158,6 +153,11 @@ static int imx8_pcie_phy_power_on(struct
- 		break;
+@@ -271,7 +271,7 @@ static int imx8_pcie_phy_probe(struct pl
+ 		imx8_phy->perst =
+ 			devm_reset_control_get_exclusive(dev, "perst");
+ 		if (IS_ERR(imx8_phy->perst))
+-			dev_err_probe(dev, PTR_ERR(imx8_phy->perst),
++			return dev_err_probe(dev, PTR_ERR(imx8_phy->perst),
+ 				      "Failed to get PCIE PHY PERST control\n");
  	}
  
-+	/* Do the PHY common block reset */
-+	regmap_update_bits(imx8_phy->iomuxc_gpr, IOMUXC_GPR14,
-+			   IMX8MM_GPR_PCIE_CMN_RST,
-+			   IMX8MM_GPR_PCIE_CMN_RST);
-+
- 	/* Polling to check the phy is ready or not. */
- 	ret = readl_poll_timeout(imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG75,
- 				 val, val == PCIE_PHY_CMN_REG75_PLL_DONE,
 
 
