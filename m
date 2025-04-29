@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C0778F58;
-	Tue, 29 Apr 2025 17:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEBB78F58;
+	Tue, 29 Apr 2025 17:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947766; cv=none; b=GcbJrHYDcvcL/u2LjPtgQmLvSz7rbmJ96+cJmJqi2W199427hNOhRgNk8ZKZiTqFVAkONCQw1IsECJ1Sox5tIBrB8zBmCgu0drhXYcDuBkT9QoEEr7zJ/cB8Pw52OD1WDZgr5sx5NPeCb960ZbrTrFi4Bj+zS3pth5j6E1VMC04=
+	t=1745947769; cv=none; b=CMHtHYUnkr7gzpxwZlflRP9B2AP3rfiLe9Rpi52t1R84sje2lkUdc2UvYruscEXfNtVNZmh8HEgVfvfiOS6YLSb+fd8AHnP/drwoYuvDotA9czLa/9eI7hmqpLhezBGSR8iCJx6DjkkBuin6Dpq+8M5nizt28TbzvQk8Vbp8aME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947766; c=relaxed/simple;
-	bh=UYYNHDv6r5vT5WG9XELNZYW3ySMdAfJgoPhTEDl7OYo=;
+	s=arc-20240116; t=1745947769; c=relaxed/simple;
+	bh=BTBsK2DVaKwCCzd/MnL7KiiEwxkLVBH536xApcG/7xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkwNLYaJrB7wnJPP5LOsxqEFxlHHAY95mEiO3bq54+63rCxv+yd0aC8xKsLPbogwBz8S0Or179nECnAaSGU1zsY2KhALrI9wkpKklk8eGH/i8rV3stXsWhaMvyRqZ3wlePX8kudzoQ/jVJwbPCcz5YBGJBS4YuUZbpbQH3lSyWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjMvK2KL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Drfw2/hTym1NePyJgH4G+1tHN6j8sFIievx1wDbMQ16X4vvep+lc2r44ugCZuKqML9sL/VSOOL+SX6YaHgMrJfl+5+N4TrSTQXbpLb4ZWmhk8/lAYIzbqzlwvmGqO3dkYi/XhMhwm4iWlUI3AZZLPKRUaarZM0ZvlYtU2/5Ln5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lr1MVXyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjMvK2KL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC16C4CEE9;
-	Tue, 29 Apr 2025 17:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lr1MVXyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20B1C4CEE9;
+	Tue, 29 Apr 2025 17:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947766;
-	bh=UYYNHDv6r5vT5WG9XELNZYW3ySMdAfJgoPhTEDl7OYo=;
+	s=korg; t=1745947769;
+	bh=BTBsK2DVaKwCCzd/MnL7KiiEwxkLVBH536xApcG/7xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjMvK2KLroc45meIJoLWsvPSltb3U8R71mEkI2JJoY0xXoeixWBwmu/hH7uqP5/6D
-	 c0XwOQ6cgvKlIlV7xY04hLlcBkdI2LOfjk0ZdQG3xGT010XtfBs7AEqXYd4lj0XtSR
-	 Hb9QvZqDJYoE0/+f+b58nXHbCrj16ngFbtMHw1Bc=
+	b=lr1MVXywnA6XCWtWk3RDJDU0QURH/FhwoFqGtxumY+LvommdyDQU02CozlA7EDry0
+	 5LpyzzLqgmRdQrrRFE2IWs/OxOIcWpzUVV37zCvqZk8cK7S9AU0xi0nNttRxP7E7be
+	 UphAwsix+qPCni0O7ABAuMmkrht/vs/9lB7JAoAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 098/280] net: selftests: initialize TCP header and skb payload with zero
-Date: Tue, 29 Apr 2025 18:40:39 +0200
-Message-ID: <20250429161119.122555782@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 072/280] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
+Date: Tue, 29 Apr 2025 18:40:13 +0200
+Message-ID: <20250429161118.060635861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,64 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-commit 9e8d1013b0c38910cbc9e60de74dbe883878469d upstream.
+[ Upstream commit d63527e109e811ef11abb1c2985048fdb528b4cb ]
 
-Zero-initialize TCP header via memset() to avoid garbage values that
-may affect checksum or behavior during test transmission.
+syzbot reported:
 
-Also zero-fill allocated payload and padding regions using memset()
-after skb_put(), ensuring deterministic content for all outgoing
-test packets.
+tipc: Node number set to 1055423674
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 3 UID: 0 PID: 6017 Comm: kworker/3:5 Not tainted 6.15.0-rc1-syzkaller-00246-g900241a5cc15 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: events tipc_net_finalize_work
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tipc_net_finalize+0x10b/0x180 net/tipc/net.c:140
+ process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3319 [inline]
+ worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
+ kthread+0x3c2/0x780 kernel/kthread.c:464
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+...
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
-Fixes: 3e1e58d64c3d ("net: add generic selftest support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: stable@vger.kernel.org
+There is a racing condition between workqueue created when enabling
+bearer and another thread created when disabling bearer right after
+that as follow:
+
+enabling_bearer                          | disabling_bearer
+---------------                          | ----------------
+tipc_disc_timeout()                      |
+{                                        | bearer_disable()
+ ...                                     | {
+ schedule_work(&tn->work);               |  tipc_mon_delete()
+ ...                                     |  {
+}                                        |   ...
+                                         |   write_lock_bh(&mon->lock);
+                                         |   mon->self = NULL;
+                                         |   write_unlock_bh(&mon->lock);
+                                         |   ...
+                                         |  }
+tipc_net_finalize_work()                 | }
+{                                        |
+ ...                                     |
+ tipc_net_finalize()                     |
+ {                                       |
+  ...                                    |
+  tipc_mon_reinit_self()                 |
+  {                                      |
+   ...                                   |
+   write_lock_bh(&mon->lock);            |
+   mon->self->addr = tipc_own_addr(net); |
+   write_unlock_bh(&mon->lock);          |
+   ...                                   |
+  }                                      |
+  ...                                    |
+ }                                       |
+ ...                                     |
+}                                        |
+
+'mon->self' is set to NULL in disabling_bearer thread and dereferenced
+later in enabling_bearer thread.
+
+This commit fixes this issue by validating 'mon->self' before assigning
+node address to it.
+
+Reported-by: syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com
+Fixes: 46cb01eeeb86 ("tipc: update mon's self addr when node addr generated")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250416160125.2914724-1-o.rempel@pengutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250417074826.578115-1-tung.quang.nguyen@est.tech
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/selftests.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/tipc/monitor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/core/selftests.c
-+++ b/net/core/selftests.c
-@@ -100,10 +100,10 @@ static struct sk_buff *net_test_get_skb(
- 	ehdr->h_proto = htons(ETH_P_IP);
- 
- 	if (attr->tcp) {
-+		memset(thdr, 0, sizeof(*thdr));
- 		thdr->source = htons(attr->sport);
- 		thdr->dest = htons(attr->dport);
- 		thdr->doff = sizeof(struct tcphdr) / 4;
--		thdr->check = 0;
- 	} else {
- 		uhdr->source = htons(attr->sport);
- 		uhdr->dest = htons(attr->dport);
-@@ -144,10 +144,18 @@ static struct sk_buff *net_test_get_skb(
- 	attr->id = net_test_next_id;
- 	shdr->id = net_test_next_id++;
- 
--	if (attr->size)
--		skb_put(skb, attr->size);
--	if (attr->max_size && attr->max_size > skb->len)
--		skb_put(skb, attr->max_size - skb->len);
-+	if (attr->size) {
-+		void *payload = skb_put(skb, attr->size);
-+
-+		memset(payload, 0, attr->size);
-+	}
-+
-+	if (attr->max_size && attr->max_size > skb->len) {
-+		size_t pad_len = attr->max_size - skb->len;
-+		void *pad = skb_put(skb, pad_len);
-+
-+		memset(pad, 0, pad_len);
-+	}
- 
- 	skb->csum = 0;
- 	skb->ip_summed = CHECKSUM_PARTIAL;
+diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
+index e2f19627e43d5..b45c5b91bc7af 100644
+--- a/net/tipc/monitor.c
++++ b/net/tipc/monitor.c
+@@ -716,7 +716,8 @@ void tipc_mon_reinit_self(struct net *net)
+ 		if (!mon)
+ 			continue;
+ 		write_lock_bh(&mon->lock);
+-		mon->self->addr = tipc_own_addr(net);
++		if (mon->self)
++			mon->self->addr = tipc_own_addr(net);
+ 		write_unlock_bh(&mon->lock);
+ 	}
+ }
+-- 
+2.39.5
+
 
 
