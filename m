@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26007155A4E;
-	Tue, 29 Apr 2025 18:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF78224234;
+	Tue, 29 Apr 2025 18:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950737; cv=none; b=UWAbadFFpPXUJqLFwDffRbwiMYrNk3MBOwuTI96WtyK37eytQpPzEoH4OjRoJgdj6/SQmVgYAVlw9U60Tb7gfgeYBYB11HCDOIUl8erD3gzXg+DOYotpHvtuBBx062f6X0maLqSjtAbNxT+ZGkc4JP0PXVp84sXaQT6Fn4N4B+Y=
+	t=1745950740; cv=none; b=gzGiZA4gYPAQdZ31UDwA1POYt3Kr590JV3pQdFgupV4e7Ir8rTh5azVIaI61i3StDsG3JSFBcCuWxd2tVG1JNKd1jSFMycvpAsCZPS86q/lP/FpbJdL3TRWv1y56PiO8qwnWPAkpP62dCEfpNRLm8UmUqsKZaBpXs2ng/A8wCp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950737; c=relaxed/simple;
-	bh=MQV7VVe4djKJN83oYg9O7vWRqIxiHRe6ayCPmwPct7Q=;
+	s=arc-20240116; t=1745950740; c=relaxed/simple;
+	bh=L41ACuxOtcULNcPtyStOE5FKa6kwqoD0MwR040dbvJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MbsvyLuFVl3Zto5jpjfjo5eya/V7oq5pNABu1a3EV+sdjurxfy2n17PjZqhUW0FqHy2Xhkzf6MA+hJg5ZOPeEsiUZ/GxfUka5ysl8s9dCSNiu4PIhlMfVPRokFUDpyagF+5VytxVQv//RhEL9AcBsfpD498CVAkFuft2C6ekdfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNOQiLwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pYSfCZWhQVopllJINzheKZ96BWsmSijcByeXpl4i9WGzyG8HGBIn4AfNuOPJ7p07MLxb/4zR4lxqsgEuZZsIH5FtWWHKMeWr/Twoocp0uB0tR3jb1FLYHJnPHXi/U+aGjSCQX031Q+K1I34YMDQM31jcgmXFeTH4iMB7X6saLSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjgWUHyt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNOQiLwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FDAC4CEE3;
-	Tue, 29 Apr 2025 18:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjgWUHyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0BAC4CEE3;
+	Tue, 29 Apr 2025 18:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950737;
-	bh=MQV7VVe4djKJN83oYg9O7vWRqIxiHRe6ayCPmwPct7Q=;
+	s=korg; t=1745950740;
+	bh=L41ACuxOtcULNcPtyStOE5FKa6kwqoD0MwR040dbvJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNOQiLwApzHBw0+cBuhSGFU8BJk8iDOoi6RLKmp0ZpSS9gCUjbfkAU4ikLt1b9kpF
-	 34LOpfo0K3GoBqC6o+2HY7td1KISq/ThR3WQFzjT3ejtpMMMn6DRLHqB/QyEzMi9c4
-	 LoOh9Q9xyTIt8HyM4Xu9NcCujtywDwye2xKvJx5c=
+	b=PjgWUHytVnKGDHQwCu/Z15guQ2vCWR0H7f/pvlBxrjf/171fyTorDSLPlIvJQeEUy
+	 nGr98NEnDL9JWBajmqUujl5tno8IzrJc5TWYZPPTQ7L16K4rxdmywjNxDW1yGcNn6F
+	 aeSsDBKLSIkIahSQ0+bSbuuzxKmfVEGcjGeDQFuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamura Dai <kirinode0@gmail.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 188/204] spi: spi-imx: Add check for spi_imx_setupxfer()
-Date: Tue, 29 Apr 2025 18:44:36 +0200
-Message-ID: <20250429161107.076426913@linuxfoundation.org>
+Subject: [PATCH 6.6 162/204] nvme: re-read ANA log page after ns scan completes
+Date: Tue, 29 Apr 2025 18:44:10 +0200
+Message-ID: <20250429161106.040608542@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamura Dai <kirinode0@gmail.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 951a04ab3a2db4029debfa48d380ef834b93207e ]
+[ Upstream commit 62baf70c327444338c34703c71aa8cc8e4189bd6 ]
 
-Add check for the return value of spi_imx_setupxfer().
-spi_imx->rx and spi_imx->tx function pointer can be NULL when
-spi_imx_setupxfer() return error, and make NULL pointer dereference.
+When scanning for new namespaces we might have missed an ANA AEN.
 
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
- Call trace:
-  0x0
-  spi_imx_pio_transfer+0x50/0xd8
-  spi_imx_transfer_one+0x18c/0x858
-  spi_transfer_one_message+0x43c/0x790
-  __spi_pump_transfer_message+0x238/0x5d4
-  __spi_sync+0x2b0/0x454
-  spi_write_then_read+0x11c/0x200
+The NVMe base spec (NVMe Base Specification v2.1, Figure 151 'Asynchonous
+Event Information - Notice': Asymmetric Namespace Access Change) states:
 
-Signed-off-by: Tamura Dai <kirinode0@gmail.com>
-Reviewed-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20250417011700.14436-1-kirinode0@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  A controller shall not send this even if an Attached Namespace
+  Attribute Changed asynchronous event [...] is sent for the same event.
+
+so we need to re-read the ANA log page after we rescanned the namespace
+list to update the ANA states of the new namespaces.
+
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index daa32bde61556..da4442954375b 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1614,10 +1614,13 @@ static int spi_imx_transfer_one(struct spi_controller *controller,
- 				struct spi_device *spi,
- 				struct spi_transfer *transfer)
- {
-+	int ret;
- 	struct spi_imx_data *spi_imx = spi_controller_get_devdata(spi->controller);
- 	unsigned long hz_per_byte, byte_limit;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index e36c6fcab1eed..8827614ab8c63 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3976,6 +3976,11 @@ static void nvme_scan_work(struct work_struct *work)
+ 	/* Requeue if we have missed AENs */
+ 	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
+ 		nvme_queue_scan(ctrl);
++#ifdef CONFIG_NVME_MULTIPATH
++	else
++		/* Re-read the ANA log page to not miss updates */
++		queue_work(nvme_wq, &ctrl->ana_work);
++#endif
+ }
  
--	spi_imx_setupxfer(spi, transfer);
-+	ret = spi_imx_setupxfer(spi, transfer);
-+	if (ret < 0)
-+		return ret;
- 	transfer->effective_speed_hz = spi_imx->spi_bus_clk;
- 
- 	/* flush rxfifo before transfer */
+ /*
 -- 
 2.39.5
 
