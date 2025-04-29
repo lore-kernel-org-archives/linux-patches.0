@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992B92459FA;
-	Tue, 29 Apr 2025 17:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609FE242D68;
+	Tue, 29 Apr 2025 17:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948401; cv=none; b=qcn8K81P4ADeNTRZmQOvZW6rG5YxFIzcNt+Dqzr3ADCN9Xxem5L/5z5IOSjFSFUlB4FuEMNdK2NrJe0ztARYkk+U6NTBhUe/X00yECv6cvvGl9owts78G0XIgbOW1JP3QRrvZuC9g7iRLHMLDfcY/IRS+u1JnycWFnPQRS86DhY=
+	t=1745948404; cv=none; b=Ssq8bfyPZCaBbiqTfQi+r+vgNU+vPNTVrcABRLFBM/sgtt8P9r9WK9hQ825uon5R3XA4QeHJBXSA9Nfnhc55SqJz/509y/i9lh5ClfO51+Z1AP4ctYDhjzkNWp/9F1E1E9C9Vjuvt77ROHi/3An+IVhwPYpPXVMswBSPnxlr3gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948401; c=relaxed/simple;
-	bh=6l6/8lIaV30cEsf2xDJMY4cAhCB2BagjTaNWHetHp2M=;
+	s=arc-20240116; t=1745948404; c=relaxed/simple;
+	bh=rCJjrf5ApUhG4LSPxd6/Xo7zIeAe6GuKvaqdy3HHD3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9s3kiMHM8+b34U+cUUeaEK2wfcBl6JEgNhW8xVngr1bharhtq0JKTVfjGXNppfUL0MGWww8BfhnUZSWL497WRFm1xaG4kx69GbiD1GjcSBs3vvHK84yNXQLM5py57xwLg0q9xKiJ30Qms66YrMyCKXh7RifFlxExMyklRmvXYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdgycj58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y52xwKJkWCjhF/g0Z4+axc9F9iBQpz0EcroRwlsA11P/vF2un8F6vhgtWLlc6kRvD/zYe860LMtyKDGwhAYsxiyJ0Owmh761OsSZsRlDPqGQoWX4JWDslVLqbPgFqoeXXgdEH7MUDmsDaRC9GoGkZSio+qtAl10hXdAo/cA8Oxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEiS27fm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdgycj58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015CFC4CEE3;
-	Tue, 29 Apr 2025 17:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEiS27fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB83C4CEE3;
+	Tue, 29 Apr 2025 17:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948401;
-	bh=6l6/8lIaV30cEsf2xDJMY4cAhCB2BagjTaNWHetHp2M=;
+	s=korg; t=1745948404;
+	bh=rCJjrf5ApUhG4LSPxd6/Xo7zIeAe6GuKvaqdy3HHD3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdgycj58mGIWQUTJyJ891rYPjhTZMNG3dZfjpoaWwYTGRzEWGdScT+DCd5nIFDoKB
-	 mnDHXaElA92p0r2lDAoOq1HJZvnd+IrOlWWTl0bCgXtmFwfwCMJxRLtEckgeBDmo6Q
-	 eLAHNit4rZTTCpwHGDSB2Hht1W17eBCyK8vKpySs=
+	b=JEiS27fmiTK5pmaAArvS78OLJuq8Inqk5FA28HLomaZ7gW+eeCoAbrgDDlG8L/MjO
+	 QYfO1HV5GLnPNKJ+Qlqehu34v1Gr5ZT5ahw0/MxN6JX1prTnBHgD6bRoZKytvSoxCc
+	 Pop0m7cwQ5EzyoaXuJCVK5RyqYuXS/FF8Dc+iYTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 277/280] usb: typec: class: Unlocked on error in typec_register_partner()
-Date: Tue, 29 Apr 2025 18:43:38 +0200
-Message-ID: <20250429161126.465452362@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 278/280] crypto: Kconfig - Select LIB generic option
+Date: Tue, 29 Apr 2025 18:43:39 +0200
+Message-ID: <20250429161126.507624175@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,32 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 429a98abfc01d3d4378b7a00969437dc3e8f647c upstream.
+commit 98330b9a61506de7df0d1725122111909c157864 upstream.
 
-We recently added some locking to this function but this error path
-was accidentally missed.  Unlock before returning.
+Select the generic LIB options if the Crypto API algorithm is
+enabled.  Otherwise this may lead to a build failure as the Crypto
+API algorithm always uses the generic implementation.
 
-Fixes: ec27386de23a ("usb: typec: class: Fix NULL pointer access")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/Z_44tOtmml89wQcM@stanley.mountain
+Fixes: 17ec3e71ba79 ("crypto: lib/Kconfig - Hide arch options from user")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202503022113.79uEtUuy-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202503022115.9OOyDR5A-lkp@intel.com/
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ crypto/Kconfig |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -936,6 +936,7 @@ struct typec_partner *typec_register_par
- 	ret = device_register(&partner->dev);
- 	if (ret) {
- 		dev_err(&port->dev, "failed to register partner (%d)\n", ret);
-+		mutex_unlock(&port->partner_link_lock);
- 		put_device(&partner->dev);
- 		return ERR_PTR(ret);
- 	}
+--- a/crypto/Kconfig
++++ b/crypto/Kconfig
+@@ -316,6 +316,7 @@ config CRYPTO_ECRDSA
+ config CRYPTO_CURVE25519
+ 	tristate "Curve25519"
+ 	select CRYPTO_KPP
++	select CRYPTO_LIB_CURVE25519_GENERIC
+ 	select CRYPTO_LIB_CURVE25519_INTERNAL
+ 	help
+ 	  Curve25519 elliptic curve (RFC7748)
+@@ -614,6 +615,7 @@ config CRYPTO_ARC4
+ 
+ config CRYPTO_CHACHA20
+ 	tristate "ChaCha"
++	select CRYPTO_LIB_CHACHA_GENERIC
+ 	select CRYPTO_LIB_CHACHA_INTERNAL
+ 	select CRYPTO_SKCIPHER
+ 	help
+@@ -943,6 +945,7 @@ config CRYPTO_POLYVAL
+ config CRYPTO_POLY1305
+ 	tristate "Poly1305"
+ 	select CRYPTO_HASH
++	select CRYPTO_LIB_POLY1305_GENERIC
+ 	select CRYPTO_LIB_POLY1305_INTERNAL
+ 	help
+ 	  Poly1305 authenticator algorithm (RFC7539)
 
 
