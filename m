@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9105219A63;
-	Tue, 29 Apr 2025 18:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989BA245022;
+	Tue, 29 Apr 2025 18:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950743; cv=none; b=fN6ip76ChanHi2OqC4DfQjwmISAqrsWW3n7CR4XJpyfW5nP+ZgJyEnpqwYA+buelOeKt07cVEAV+6D47sWVEmWfpyCqCiry1VgOBm8cij/5/GnXQZAFNqQWJ7aR0d9alShZebibLLauFSyEuO+ByTXjr99s+/pXvbSHElLBm1RE=
+	t=1745950746; cv=none; b=tT0cCG279n0SkioL+m04e0j1F3kqqN10K2RRrsmvVxge6joLSQbo/n7Ii5+HBbCV20mXRYXEA27gNnpT1R+CssGyiK82DISsGoJtNOLDy+MFVEz7nVqYNtSe6D90IhaG/ERbkjGt0ktrKRs1jU5GCEEleAL5lK/sUH2ZSPQfOEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950743; c=relaxed/simple;
-	bh=8DVz515NtWxBPvpn+9XUS6Tbf4RB850uaMedIwx4/Kg=;
+	s=arc-20240116; t=1745950746; c=relaxed/simple;
+	bh=nCyUJqAys04/4bf+Y9dOS3OTZI0nGtA+PDnJ7Hr6jIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V22CsM91zrpBGBrAAG0ROb4k/xeSUg5Yz2zY9h2D7U01bR/dngrXoR2UURHAqhxc2AOlojBZT9uJ5vXHj3+qgbEkpgPrCBwCyakFoepve0N8eFo1laRStUjMomFko+elPKO80ml4cANqEWFcHbbyY8fHHWSfgpC1GXFUd76BMXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M04m4ub2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sr6lCUH1rtrI7yfPTG1vWMj8czPf7FmK/IbNJwTQBY1imez4Mi90DU7JZfdJRz79NphvOyFYJYcUVliLB06AZZBlW3K5HJEtu+VTz2k62ffABsnWZfe+hSmOkw/nvKXvUMWN7h0y4eSM9JOI5EUYn5nT6kOPbN3Dqy8f2oaY7tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08RstVyx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M04m4ub2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BB2C4CEE3;
-	Tue, 29 Apr 2025 18:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08RstVyx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080D3C4CEE3;
+	Tue, 29 Apr 2025 18:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950743;
-	bh=8DVz515NtWxBPvpn+9XUS6Tbf4RB850uaMedIwx4/Kg=;
+	s=korg; t=1745950746;
+	bh=nCyUJqAys04/4bf+Y9dOS3OTZI0nGtA+PDnJ7Hr6jIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M04m4ub2mZvQAzhJd/nsckyAOmDUZz+kGHoi4hYBIvc9KIV/d490tEmC26YK+iI8m
-	 3BBeVI9Xu3AqaaPUTXwArFXbRce/aPI18JQFFDLVIW0RL0d2TCmZGyNIKdQWV5Emjv
-	 XviHFoeIoM5LOfp1/pZWGclh2ds20CrlPoi9Exys=
+	b=08RstVyx+4Nb1RUpptsnkS76HlykkwZ4WhuDEI5arcRhcanKousYgK2ElMeK5EmNN
+	 r0OVy5TfduDBaHNuDaBOXIIN0g2jX1MuByJ4VrAB6HVhnr/hBONFgOG9uJNRjlrv8D
+	 GVnr2ckvF9UBLfORZWxHHaAxHVf3vKFIK2t4X6+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 189/204] x86/pvh: Call C code via the kernel virtual mapping
-Date: Tue, 29 Apr 2025 18:44:37 +0200
-Message-ID: <20250429161107.115398187@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.6 190/204] Revert "drivers: core: synchronize really_probe() and dev_uevent()"
+Date: Tue, 29 Apr 2025 18:44:38 +0200
+Message-ID: <20250429161107.154454440@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -51,49 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit e8fbc0d9cab6c1ee6403f42c0991b0c1d5dbc092 upstream.
+commit dc1771f718548f7d4b93991b174c6e7b5e1ba410 upstream.
 
-Calling C code via a different mapping than it was linked at is
-problematic, because the compiler assumes that RIP-relative and absolute
-symbol references are interchangeable. GCC in particular may use
-RIP-relative per-CPU variable references even when not using -fpic.
+This reverts commit c0a40097f0bc81deafc15f9195d1fb54595cd6d0.
 
-So call xen_prepare_pvh() via its kernel virtual mapping on x86_64, so
-that those RIP-relative references produce the correct values. This
-matches the pre-existing behavior for i386, which also invokes
-xen_prepare_pvh() via the kernel virtual mapping before invoking
-startup_32 with paging disabled again.
+Probing a device can take arbitrary long time. In the field we observed
+that, for example, probing a bad micro-SD cards in an external USB card
+reader (or maybe cards were good but cables were flaky) sometimes takes
+longer than 2 minutes due to multiple retries at various levels of the
+stack. We can not block uevent_show() method for that long because udev
+is reading that attribute very often and that blocks udev and interferes
+with booting of the system.
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Tested-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Message-ID: <20241009160438.3884381-8-ardb+git@google.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-[ Stable context update ]
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+The change that introduced locking was concerned with dev_uevent()
+racing with unbinding the driver. However we can handle it without
+locking (which will be done in subsequent patch).
+
+There was also claim that synchronization with probe() is needed to
+properly load USB drivers, however this is a red herring: the change
+adding the lock was introduced in May of last year and USB loading and
+probing worked properly for many years before that.
+
+Revert the harmful locking.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20250311052417.1846985-1-dmitry.torokhov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/platform/pvh/head.S |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/base/core.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/arch/x86/platform/pvh/head.S
-+++ b/arch/x86/platform/pvh/head.S
-@@ -100,7 +100,12 @@ SYM_CODE_START_LOCAL(pvh_start_xen)
- 	xor %edx, %edx
- 	wrmsr
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2672,11 +2672,8 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
  
--	call xen_prepare_pvh
-+	/* Call xen_prepare_pvh() via the kernel virtual mapping */
-+	leaq xen_prepare_pvh(%rip), %rax
-+	subq phys_base(%rip), %rax
-+	addq $__START_KERNEL_map, %rax
-+	ANNOTATE_RETPOLINE_SAFE
-+	call *%rax
+-	/* Synchronize with really_probe() */
+-	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
+-	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
  
- 	/* startup_64 expects boot_params in %rsi. */
- 	mov $_pa(pvh_bootparams), %rsi
 
 
