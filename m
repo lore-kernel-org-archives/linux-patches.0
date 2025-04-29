@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E3423F413;
-	Tue, 29 Apr 2025 17:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB9C24BD02;
+	Tue, 29 Apr 2025 17:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946436; cv=none; b=BO/PKtHdywkjE8B9acsxbXuVVn18RP0qY1H5+8LilY1BLL/6WxUtDebM6/1o5+blXkAlssMeuxFT/HTRV42G4ypy09sHoWg/H1aJ2dDBlTaWtvC5db4VfVRTEWz62jcEVBrIP0N+XEvYPqxBl3t+zLo5YyBYvuXjYypdB5wsjOA=
+	t=1745946439; cv=none; b=Sm7WTfOc37J0Rz+kidogWDo1NZ9iNh0+JeriZl+HhjxYovxDUZ4R83+rEN6SlM0I4cmMZr0vzQw7letWvkzwXYwKHfu5iRp0YP1ODqwUdqdxGmr703EixlJufUQt/BmyVsjhcAKEIyERY7r6vVLiHXZOfSYBVQwPYWMtnuOdQV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946436; c=relaxed/simple;
-	bh=4BJ6s/YR51Mdmcu6rOHuM3nrHkHMYfQug1A9DnXCaFc=;
+	s=arc-20240116; t=1745946439; c=relaxed/simple;
+	bh=Zkuk6hTP8ve8VN9VBe02HV5jAYCj2jLmNtSPZvQ5GwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=srmrRZuY1RBnCWsJZxrMAND/LGFmsispW9hH+kuQIDrHAl6rsQacPYnxE+VWov/ZEU/jPpbQoxBClqoQp68Zl5bGoRUNqdBrDqMEvD8dwEfzYq9aOKU3U8Y5KbdwJt471QNyMxr4FDfUipeke1k1sMA9Tm+aSnQdURKve8S/R9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McTBNgSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+6+rH3dx/FTeARrszmcJotdzLL2vj2L3xOuIuvb8Bnj4mKxxysyn9ZtN7GT46o93qdXVLKHCx3qjxQFQyyaiNI8qpEYQh/By30FZiibs704jFFbOj7GhPzIV1l18Ytt7pJsxx/bL/UKkaLEoAm9nSymw+Lhx3iWl7kYttTu29E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSWsMEXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McTBNgSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7368C4CEE3;
-	Tue, 29 Apr 2025 17:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSWsMEXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2724C4CEE9;
+	Tue, 29 Apr 2025 17:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946436;
-	bh=4BJ6s/YR51Mdmcu6rOHuM3nrHkHMYfQug1A9DnXCaFc=;
+	s=korg; t=1745946439;
+	bh=Zkuk6hTP8ve8VN9VBe02HV5jAYCj2jLmNtSPZvQ5GwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=McTBNgSXgya+XoMu3j4V0GMe91g5lKgACkXMAiCVzji9G6fqb2z1siZgs5+cg19Hw
-	 TD09POjiROw2/ujfmNOyZxrhf+yosT1lBp3JwI1Mji/oN8nlUdvdi/IFh7uu/qFrIV
-	 RG5+py8fRTnZ+I5sJfgHbp9pp5CUODVgC1I3SCZ8=
+	b=pSWsMEXBEwJLv41V6A0mtfyK2PTFPlvcPWxRNdth1xS2uXBVd2Ug6dHGm5+zof8ni
+	 y0EpVBxj5vOo3HQDc/bnFMDR6s5VSltYQLcMQvr/+dX37V8KV+ksUfRcLxQHYZ0Zti
+	 j91EoPJ/GtpaKp1uwMKkfTygMEDZPRKMxqhjKsJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 266/311] cifs: Fix querying of WSL CHR and BLK reparse points over SMB1
-Date: Tue, 29 Apr 2025 18:41:43 +0200
-Message-ID: <20250429161131.925387299@linuxfoundation.org>
+Subject: [PATCH 6.14 267/311] iommu: Clear iommu-dma ops on cleanup
+Date: Tue, 29 Apr 2025 18:41:44 +0200
+Message-ID: <20250429161131.965605044@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -45,78 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit ef86ab131d9127dfbfa8f06e12441d05fdfb090b ]
+[ Upstream commit 280e5a30100578106a4305ce0118e0aa9b866f12 ]
 
-When reparse point in SMB1 query_path_info() callback was detected then
-query also for EA $LXDEV. In this EA are stored device major and minor
-numbers used by WSL CHR and BLK reparse points. Without major and minor
-numbers, stat() syscall does not work for char and block devices.
+If iommu_device_register() encounters an error, it can end up tearing
+down already-configured groups and default domains, however this
+currently still leaves devices hooked up to iommu-dma (and even
+historically the behaviour in this area was at best inconsistent across
+architectures/drivers...) Although in the case that an IOMMU is present
+whose driver has failed to probe, users cannot necessarily expect DMA to
+work anyway, it's still arguable that we should do our best to put
+things back as if the IOMMU driver was never there at all, and certainly
+the potential for crashing in iommu-dma itself is undesirable. Make sure
+we clean up the dev->dma_iommu flag along with everything else.
 
-Similar code is already in SMB2+ query_path_info() callback function.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Closes: https://lore.kernel.org/all/CAGXv+5HJpTYmQ2h-GD7GjyeYT7bL9EBCvu0mz5LgpzJZtzfW0w@mail.gmail.com/
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/e788aa927f6d827dd4ea1ed608fada79f2bab030.1744284228.git.robin.murphy@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb1ops.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/iommu/iommu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index d6e2fb669c401..808970e4a7142 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -573,6 +573,42 @@ static int cifs_query_path_info(const unsigned int xid,
- 		data->reparse_point = le32_to_cpu(fi.Attributes) & ATTR_REPARSE;
- 	}
- 
-+#ifdef CONFIG_CIFS_XATTR
-+	/*
-+	 * For WSL CHR and BLK reparse points it is required to fetch
-+	 * EA $LXDEV which contains major and minor device numbers.
-+	 */
-+	if (!rc && data->reparse_point) {
-+		struct smb2_file_full_ea_info *ea;
-+
-+		ea = (struct smb2_file_full_ea_info *)data->wsl.eas;
-+		rc = CIFSSMBQAllEAs(xid, tcon, full_path, SMB2_WSL_XATTR_DEV,
-+				    &ea->ea_data[SMB2_WSL_XATTR_NAME_LEN + 1],
-+				    SMB2_WSL_XATTR_DEV_SIZE, cifs_sb);
-+		if (rc == SMB2_WSL_XATTR_DEV_SIZE) {
-+			ea->next_entry_offset = cpu_to_le32(0);
-+			ea->flags = 0;
-+			ea->ea_name_length = SMB2_WSL_XATTR_NAME_LEN;
-+			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
-+			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
-+			data->wsl.eas_len = sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
-+					    SMB2_WSL_XATTR_DEV_SIZE;
-+			rc = 0;
-+		} else if (rc >= 0) {
-+			/* It is an error if EA $LXDEV has wrong size. */
-+			rc = -EINVAL;
-+		} else {
-+			/*
-+			 * In all other cases ignore error if fetching
-+			 * of EA $LXDEV failed. It is needed only for
-+			 * WSL CHR and BLK reparse points and wsl_to_fattr()
-+			 * handle the case when EA is missing.
-+			 */
-+			rc = 0;
-+		}
-+	}
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index e3df1f06afbeb..1efe7cddb4fe3 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -508,6 +508,9 @@ static void iommu_deinit_device(struct device *dev)
+ 	dev->iommu_group = NULL;
+ 	module_put(ops->owner);
+ 	dev_iommu_free(dev);
++#ifdef CONFIG_IOMMU_DMA
++	dev->dma_iommu = false;
 +#endif
-+
- 	return rc;
  }
  
+ DEFINE_MUTEX(iommu_probe_device_lock);
 -- 
 2.39.5
 
