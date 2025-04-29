@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED9E2AE96;
-	Tue, 29 Apr 2025 17:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11EB216605;
+	Tue, 29 Apr 2025 17:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949504; cv=none; b=OStWp31jmtJwTUkI9COP2GHBhFFjv4+CpkbCop3p9qxfUlo4WdqsWlUNO/EPlnIH+K83kLw86f6mM6G/X/6vclMbaCDQgrRLcNULPlGr1X5ZD6T4uSe9FzctAGxJUJ3bGkMUk8HWvp6JfYdhk39tHy/hn4g/AvK+SV5dh/rS8Yw=
+	t=1745949506; cv=none; b=FAyoivcYuxTzCheQeS+suqE+969MVLwZ5e8f371j1BtlTmnW3Qsa+nVujGbnqqFAaPVeceCrTE60a+I0GpZYI0qBJFeXU9ZRlbaISYe+EhG/QCkoODyiG7UgohtQbJ3wZi78B9QkJ2nvpm3KhqaQIauau8jGan445ycHiTZ3HgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949504; c=relaxed/simple;
-	bh=HAH2yo4p2xhlDJVA1gU0AGUsOsah+PSzXsRjJVOZF6g=;
+	s=arc-20240116; t=1745949506; c=relaxed/simple;
+	bh=h6AXX1zofSaBzuQPqFjJVSUV3T246lIKx+UIme0KeGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QR3XcK5mKv5+dhJTkZWjazjcUu/mNQoq44DBTWb7Ker36M+0NpjoiQavoD2oI7vZlto1xPA7szIUcAHSiJgXN6xWjyWFzXySTH/+IALDjf8tTxLHEDdv5Oj0vgrP0Ayd6wAV6GbaPFyW9ixOZwzmlccbgimbRqZPmnPk1HMmdQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmDsAgvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEuLH5olcnHO2dUoHF6BZFOFFWeOIFsTF4RrpXQmAyY8oKQLBI+MTpRJBHXZUE8f6oTXuieJETznEdu2RnwEESKgB3jZFw/hFUjqMi3/1PrdpJ87LPu1ayimK1fd3yRinYDZmUdvtTldb+XN9raQlQaUwx7F7FWKnZUB7c1djeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=er+m39SZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmDsAgvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA4AC4CEE3;
-	Tue, 29 Apr 2025 17:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="er+m39SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE2FC4CEE3;
+	Tue, 29 Apr 2025 17:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949503;
-	bh=HAH2yo4p2xhlDJVA1gU0AGUsOsah+PSzXsRjJVOZF6g=;
+	s=korg; t=1745949506;
+	bh=h6AXX1zofSaBzuQPqFjJVSUV3T246lIKx+UIme0KeGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmDsAgvqjUv63gPSLUvehpMkMNjykZ+mFFHeAP3EhRhEU/BroliwDBAFGBsbKgie8
-	 A1TUQGgNTeZtNoREtgWH9fQx5csvItta07lfhuzjOfHlYUI2XNjMd0eXDX6ze43w3M
-	 5VfZmnyKOoxnQbPo2Zwq+hHWztRwme1WxtTXU2QE=
+	b=er+m39SZDG1MG5DbGKXAjm3bLZjDKZuiHkUOGpZ4fhwGrkLLeYhx+BT9zboXs9ksu
+	 m7trj45UYk8CgI8dbAh51UfhKs/JzG2kCzZrsgCSb3EETBE6HO69aoHqMcnn/+bQXU
+	 X8rg47kmBZ0zaY9YlyKi3ccEPRonzt66nNPtjNl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/373] sched/isolation: Make CONFIG_CPU_ISOLATION depend on CONFIG_SMP
-Date: Tue, 29 Apr 2025 18:43:36 +0200
-Message-ID: <20250429161137.075900893@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 313/373] usb: chipidea: ci_hdrc_imx: implement usb_phy_init() error handling
+Date: Tue, 29 Apr 2025 18:43:10 +0200
+Message-ID: <20250429161135.983596332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,46 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 975776841e689dd8ba36df9fa72ac3eca3c2957a ]
+commit 8c531e0a8c2d82509ad97c6d3a1e6217c7ed136d upstream.
 
-kernel/sched/isolation.c obviously makes no sense without CONFIG_SMP, but
-the Kconfig entry we have right now:
+usb_phy_init() may return an error code if e.g. its implementation fails
+to prepare/enable some clocks. And properly rollback on probe error path
+by calling the counterpart usb_phy_shutdown().
 
-	config CPU_ISOLATION
-		bool "CPU isolation"
-		depends on SMP || COMPILE_TEST
+Found by Linux Verification Center (linuxtesting.org).
 
-allows the creation of pointless .config's which cause
-build failures.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250330134955.GA7910@redhat.com
-
-Closes: https://lore.kernel.org/oe-kbuild-all/202503260646.lrUqD3j5-lkp@intel.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: be9cae2479f4 ("usb: chipidea: imx: Fix ULPI on imx53")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20250316102658.490340-4-pchelkin@ispras.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/chipidea/ci_hdrc_imx.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 4c9cacc866d4c..b66259bfd2352 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -674,7 +674,7 @@ endmenu # "CPU/Task time and stats accounting"
+--- a/drivers/usb/chipidea/ci_hdrc_imx.c
++++ b/drivers/usb/chipidea/ci_hdrc_imx.c
+@@ -461,7 +461,11 @@ static int ci_hdrc_imx_probe(struct plat
+ 	    of_usb_get_phy_mode(np) == USBPHY_INTERFACE_MODE_ULPI) {
+ 		pdata.flags |= CI_HDRC_OVERRIDE_PHY_CONTROL;
+ 		data->override_phy_control = true;
+-		usb_phy_init(pdata.usb_phy);
++		ret = usb_phy_init(pdata.usb_phy);
++		if (ret) {
++			dev_err(dev, "Failed to init phy\n");
++			goto err_clk;
++		}
+ 	}
  
- config CPU_ISOLATION
- 	bool "CPU isolation"
--	depends on SMP || COMPILE_TEST
-+	depends on SMP
- 	default y
- 	help
- 	  Make sure that CPUs running critical tasks are not disturbed by
--- 
-2.39.5
-
+ 	if (pdata.flags & CI_HDRC_SUPPORTS_RUNTIME_PM)
+@@ -470,7 +474,7 @@ static int ci_hdrc_imx_probe(struct plat
+ 	ret = imx_usbmisc_init(data->usbmisc_data);
+ 	if (ret) {
+ 		dev_err(dev, "usbmisc init failed, ret=%d\n", ret);
+-		goto err_clk;
++		goto phy_shutdown;
+ 	}
+ 
+ 	data->ci_pdev = ci_hdrc_add_device(dev,
+@@ -479,7 +483,7 @@ static int ci_hdrc_imx_probe(struct plat
+ 	if (IS_ERR(data->ci_pdev)) {
+ 		ret = PTR_ERR(data->ci_pdev);
+ 		dev_err_probe(dev, ret, "ci_hdrc_add_device failed\n");
+-		goto err_clk;
++		goto phy_shutdown;
+ 	}
+ 
+ 	if (data->usbmisc_data) {
+@@ -513,6 +517,9 @@ static int ci_hdrc_imx_probe(struct plat
+ 
+ disable_device:
+ 	ci_hdrc_remove_device(data->ci_pdev);
++phy_shutdown:
++	if (data->override_phy_control)
++		usb_phy_shutdown(data->phy);
+ err_clk:
+ 	imx_disable_unprepare_clks(dev);
+ qos_remove_request:
 
 
