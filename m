@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A34211A0B;
-	Tue, 29 Apr 2025 17:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3D122A81D;
+	Tue, 29 Apr 2025 17:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946371; cv=none; b=EcV5uEiXjSDDPBFcoGalM4d5p4gYW8+ASXprQQeJ+ObmgvULnPQmpedTxdO/K1cwegvCEm56UtVSOVN0wZU4TFM4rePZKIld8VBFUpWKgO+ce/oVTuBSUuAPdXjy+hAZPoIJv5xrg3MOTzv2fXuCPKt5NciZX9wlB0ljw8slHL0=
+	t=1745946374; cv=none; b=lM1FsT+ej8QKe4KdAdmnRYhtEmI03Tqrl5P5WSbKF5p5f2HLW0CurY05WYsE0OGabMd82Ob8oL9BfNuT+hZ+b+gbwv6111QjG8qa0n2WmQDLcaFyhB8HF4aAkUXOBMt8pVVj4Y4Fb4Ljt/7jyq1GcywwPyl65NSYVwgkMWZqC+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946371; c=relaxed/simple;
-	bh=2SLbZ/88Adf+qgJQK5sohBYultp0dJrPMrr1+LjJKlU=;
+	s=arc-20240116; t=1745946374; c=relaxed/simple;
+	bh=3V0TpQYY25r0KEpfQ+qOVAXtF57FUdp4WFYMdQkEJQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5gEoZjPafCINgJcyg77hRnkxuzU7DSwePF7H7hmOd0drzJQsfRCdNuY75E3MouIBu4x0vE56+3YXlQmX6Y3YO/q6ahgoL6oNMiKFl80cVYvhWaE14gnztJtFuZq0lO23ud0DLUOyGrL7FHEHF9lK36WiQ1zgl1P2upyH115F/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdCIoKl2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kz7PWxWil3sVdvXGVEvPeOH7Jnk/unU3QJAC9cJ1/39IlBDFbx+bycyRXg+WpZMI1dS6Fpg9Z2Rq/0bat7DmMhDANslGkVn9RWGCE1dE99TtrUgP8ZE+dIxUQD4+MGUGLcsaOZ6bI65oeela95Gh0CyKcIkrqtDywJ12PhP03ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5iwNNyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdCIoKl2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB702C4CEE3;
-	Tue, 29 Apr 2025 17:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5iwNNyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4467C4CEE3;
+	Tue, 29 Apr 2025 17:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946371;
-	bh=2SLbZ/88Adf+qgJQK5sohBYultp0dJrPMrr1+LjJKlU=;
+	s=korg; t=1745946374;
+	bh=3V0TpQYY25r0KEpfQ+qOVAXtF57FUdp4WFYMdQkEJQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdCIoKl2MYatjLWKbpNHcRpMfbc4uMCmGNaEo827sUha4TD/VBFZ1qTuHY0Fzu144
-	 cpVYax4mZm7prbAtRXDkDx0w9kD99NL5OyRMN7fZxTNQ4YvAbmq8CXAxob4vH6silg
-	 SeWAg16O41yv4LYfuIPSw10ZPI+8KHn54Mx2ht6E=
+	b=w5iwNNyuSnGGJ1zFJWasWBWj15xkq9ryd4GO7hP+tCLydqIyddV26QeROAoiOcXrf
+	 0Y8VovP3ay/zQhEUbzHbfcWU7NdZWILwRMDGtLHU8flRQ66lX1fMlCErPSoAmxQDK5
+	 Wqcl7A8SP2nyRhL6FRha6by0xptWnpWMIBRhSKHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ff3aa851d46ab82953a3@syzkaller.appspotmail.com,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 243/311] perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init
-Date: Tue, 29 Apr 2025 18:41:20 +0200
-Message-ID: <20250429161130.975253883@linuxfoundation.org>
+Subject: [PATCH 6.14 244/311] xen: Change xen-acpi-processor dom0 dependency
+Date: Tue, 29 Apr 2025 18:41:21 +0200
+Message-ID: <20250429161131.025431542@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -57,88 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit 0ba3a4ab76fd3367b9cb680cad70182c896c795c ]
+[ Upstream commit 0f2946bb172632e122d4033e0b03f85230a29510 ]
 
-Move the get_ctx(child_ctx) call and the child_event->ctx assignment to
-occur immediately after the child event is allocated. Ensure that
-child_event->ctx is non-NULL before any subsequent error path within
-inherit_event calls free_event(), satisfying the assumptions of the
-cleanup code.
+xen-acpi-processor functions under a PVH dom0 with only a
+xen_initial_domain() runtime check.  Change the Kconfig dependency from
+PV dom0 to generic dom0 to reflect that.
 
-Details:
-
-There's no clear Fixes tag, because this bug is a side-effect of
-multiple interacting commits over time (up to 15 years old), not
-a single regression.
-
-The code initially incremented refcount then assigned context
-immediately after the child_event was created. Later, an early
-validity check for child_event was added before the
-refcount/assignment. Even later, a WARN_ON_ONCE() cleanup check was
-added, assuming event->ctx is valid if the pmu_ctx is valid.
-The problem is that the WARN_ON_ONCE() could trigger after the initial
-check passed but before child_event->ctx was assigned, violating its
-precondition. The solution is to assign child_event->ctx right after
-its initial validation. This ensures the context exists for any
-subsequent checks or cleanup routines, resolving the WARN_ON_ONCE().
-
-To resolve it, defer the refcount update and child_event->ctx assignment
-directly after child_event->pmu_ctx is set but before checking if the
-parent event is orphaned. The cleanup routine depends on
-event->pmu_ctx being non-NULL before it verifies event->ctx is
-non-NULL. This also maintains the author's original intent of passing
-in child_ctx to find_get_pmu_context before its refcount/assignment.
-
-[ mingo: Expanded the changelog from another email by Gabriel Shahrouzi. ]
-
-Reported-by: syzbot+ff3aa851d46ab82953a3@syzkaller.appspotmail.com
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Link: https://lore.kernel.org/r/20250405203036.582721-1-gshahrouzi@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ff3aa851d46ab82953a3
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250331172913.51240-1-jason.andryuk@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/xen/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ee6b7281a1994..93ce810384c92 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13701,6 +13701,9 @@ inherit_event(struct perf_event *parent_event,
- 	if (IS_ERR(child_event))
- 		return child_event;
+diff --git a/drivers/xen/Kconfig b/drivers/xen/Kconfig
+index f7d6f47971fdf..24f485827e039 100644
+--- a/drivers/xen/Kconfig
++++ b/drivers/xen/Kconfig
+@@ -278,7 +278,7 @@ config XEN_PRIVCMD_EVENTFD
  
-+	get_ctx(child_ctx);
-+	child_event->ctx = child_ctx;
-+
- 	pmu_ctx = find_get_pmu_context(child_event->pmu, child_ctx, child_event);
- 	if (IS_ERR(pmu_ctx)) {
- 		free_event(child_event);
-@@ -13723,8 +13726,6 @@ inherit_event(struct perf_event *parent_event,
- 		return NULL;
- 	}
- 
--	get_ctx(child_ctx);
--
- 	/*
- 	 * Make the child state follow the state of the parent event,
- 	 * not its attr.disabled bit.  We hold the parent's mutex,
-@@ -13745,7 +13746,6 @@ inherit_event(struct perf_event *parent_event,
- 		local64_set(&hwc->period_left, sample_period);
- 	}
- 
--	child_event->ctx = child_ctx;
- 	child_event->overflow_handler = parent_event->overflow_handler;
- 	child_event->overflow_handler_context
- 		= parent_event->overflow_handler_context;
+ config XEN_ACPI_PROCESSOR
+ 	tristate "Xen ACPI processor"
+-	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
++	depends on XEN && XEN_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
+ 	default m
+ 	help
+ 	  This ACPI processor uploads Power Management information to the Xen
 -- 
 2.39.5
 
