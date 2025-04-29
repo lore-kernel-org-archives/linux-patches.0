@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2069B22172E;
-	Tue, 29 Apr 2025 17:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415AA22DF91;
+	Tue, 29 Apr 2025 17:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948288; cv=none; b=l4fQ0RYrHna08YsyjsL9+Kh0KQxtjgwj03cyY2CPOI9JA/Z8Fy64u5eD+1gaEjOVMXJ0dBH863wHBjyuVqiMObKIifwzr/lK6gFrKk0z9TdHNVU1wqWbLFalASi9OqXZ1sTN7HHdgDDAeHnwawLwZF34mEt7uJ0E2TQlUHKLLyQ=
+	t=1745948291; cv=none; b=i6rg+dOaPIR0fnrvq4PKZFypYbQ5TB6fnz3VH+5cDeG8ZvYJgz+lxZ3ofoz3CytRhxLfI72TB9TPxd6GlKpaUtUMhRwgL2pMwvj0P9ANoc6U/B1mmHxxWG/j3ISfShY6/cKlrQBWxFBa+wNoZ9gDzzW0uwGDgygb2VH4QuQyyVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948288; c=relaxed/simple;
-	bh=isEw3xkvzfcKcLb0zXbpxUvDox4XxMAmBYVemyO+Muc=;
+	s=arc-20240116; t=1745948291; c=relaxed/simple;
+	bh=Rz8TOQoceIVMs0jnICwryYKbTCele+69KkUzpU78bYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VeFf1GHIHHv2S5hiGdktDzvFM639yYNmjmAk4noCC3ah9pMdU8tAUgtRBgKbd+sRHHsKKx8rwHQ1VJKsG9rRRRWsTWhcWvpKdGXa95kqQC8RrA6W2e7zdCaiXszAEhbNKVWSSUvSEEm1Bsf26KBHbJEweu4recCn5TNWGm04iFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kW9rrtjU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KZyaSJZ187L9Fohm3q3o6YAynAqPYdaVtciFBICTm6z8re1r0LqiNLb2TjFg4rwfhjJzZob6Evt7qUeq+dOV29IUhzEKRhUe8vQWUIGlRrJyPULM9sRLVMaQAcE0h/QAbOk1RaQHr25Do3k/2XVK52IwOBzAoLu6Eu5c6nJ6HJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyAuw1ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW9rrtjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7204C4CEE3;
-	Tue, 29 Apr 2025 17:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyAuw1ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82AFC4CEE3;
+	Tue, 29 Apr 2025 17:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948288;
-	bh=isEw3xkvzfcKcLb0zXbpxUvDox4XxMAmBYVemyO+Muc=;
+	s=korg; t=1745948291;
+	bh=Rz8TOQoceIVMs0jnICwryYKbTCele+69KkUzpU78bYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kW9rrtjUr6H/iz68zzxVD+vLEBnDOg+CGEtHOPk4ofEJDmjDCj1RDsG6ZIjEkDLzl
-	 Uo6TLWRwcOxiIYIRFDfFeTeM6v6KOKYcAhHUpn7aJuQ1z3HIIVV4I+MgirZjp4g/A/
-	 rxRMrBHC6sUIcISbhX33lJZ188vhLifoRYRDYD24=
+	b=jyAuw1juer1zYlgLPQLtkha/6hHW2RZC7AIZR7mCTXIWXcY94v2BtzIdEWS4s3WC4
+	 4pm7Qn6/zfm+vtfWp9P7+TakDI6P/c0NRFhjRLrzPgnlZ33LAeUarVoZ+HpZDipCsq
+	 15JrxhD6fuaxHUN/TVnX5JIjW3tsyUbgOUfzNOWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meir Elisha <meir.elisha@volumez.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/280] md/raid1: Add check for missing source disk in process_checks()
-Date: Tue, 29 Apr 2025 18:43:05 +0200
-Message-ID: <20250429161125.109376778@linuxfoundation.org>
+Subject: [PATCH 6.12 245/280] drm/amdgpu: use a dummy owner for sysfs triggered cleaner shaders v4
+Date: Tue, 29 Apr 2025 18:43:06 +0200
+Message-ID: <20250429161125.149411945@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -45,81 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Meir Elisha <meir.elisha@volumez.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit b7c178d9e57c8fd4238ff77263b877f6f16182ba ]
+[ Upstream commit 447fab30955cf7dba7dd563f42b67c02284860c8 ]
 
-During recovery/check operations, the process_checks function loops
-through available disks to find a 'primary' source with successfully
-read data.
+Otherwise triggering sysfs multiple times without other submissions in
+between only runs the shader once.
 
-If no suitable source disk is found after checking all possibilities,
-the 'primary' index will reach conf->raid_disks * 2. Add an explicit
-check for this condition after the loop. If no source disk was found,
-print an error message and return early to prevent further processing
-without a valid primary source.
+v2: add some comment
+v3: re-add missing cast
+v4: squash in semicolon fix
 
-Link: https://lore.kernel.org/linux-raid/20250408143808.1026534-1-meir.elisha@volumez.com
-Signed-off-by: Meir Elisha <meir.elisha@volumez.com>
-Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8b2ae7d492675e8af8902f103364bef59382b935)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 8a994a1975ca7..6b6cd753d61a9 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -2156,14 +2156,9 @@ static int fix_sync_read_error(struct r1bio *r1_bio)
- 				if (!rdev_set_badblocks(rdev, sect, s, 0))
- 					abort = 1;
- 			}
--			if (abort) {
--				conf->recovery_disabled =
--					mddev->recovery_disabled;
--				set_bit(MD_RECOVERY_INTR, &mddev->recovery);
--				md_done_sync(mddev, r1_bio->sectors, 0);
--				put_buf(r1_bio);
-+			if (abort)
- 				return 0;
--			}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index 05ebb8216a55a..3c2ac5f4e814b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -1426,9 +1426,11 @@ static int amdgpu_gfx_run_cleaner_shader_job(struct amdgpu_ring *ring)
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct drm_gpu_scheduler *sched = &ring->sched;
+ 	struct drm_sched_entity entity;
++	static atomic_t counter;
+ 	struct dma_fence *f;
+ 	struct amdgpu_job *job;
+ 	struct amdgpu_ib *ib;
++	void *owner;
+ 	int i, r;
+ 
+ 	/* Initialize the scheduler entity */
+@@ -1439,9 +1441,15 @@ static int amdgpu_gfx_run_cleaner_shader_job(struct amdgpu_ring *ring)
+ 		goto err;
+ 	}
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, NULL,
+-				     64, 0,
+-				     &job);
++	/*
++	 * Use some unique dummy value as the owner to make sure we execute
++	 * the cleaner shader on each submission. The value just need to change
++	 * for each submission and is otherwise meaningless.
++	 */
++	owner = (void *)(unsigned long)atomic_inc_return(&counter);
 +
- 			/* Try next page */
- 			sectors -= s;
- 			sect += s;
-@@ -2302,10 +2297,21 @@ static void sync_request_write(struct mddev *mddev, struct r1bio *r1_bio)
- 	int disks = conf->raid_disks * 2;
- 	struct bio *wbio;
++	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, owner,
++				     64, 0, &job);
+ 	if (r)
+ 		goto err;
  
--	if (!test_bit(R1BIO_Uptodate, &r1_bio->state))
--		/* ouch - failed to read all of that. */
--		if (!fix_sync_read_error(r1_bio))
-+	if (!test_bit(R1BIO_Uptodate, &r1_bio->state)) {
-+		/*
-+		 * ouch - failed to read all of that.
-+		 * No need to fix read error for check/repair
-+		 * because all member disks are read.
-+		 */
-+		if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery) ||
-+		    !fix_sync_read_error(r1_bio)) {
-+			conf->recovery_disabled = mddev->recovery_disabled;
-+			set_bit(MD_RECOVERY_INTR, &mddev->recovery);
-+			md_done_sync(mddev, r1_bio->sectors, 0);
-+			put_buf(r1_bio);
- 			return;
-+		}
-+	}
- 
- 	if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery))
- 		process_checks(r1_bio);
 -- 
 2.39.5
 
