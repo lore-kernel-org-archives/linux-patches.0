@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EB22AE96;
-	Tue, 29 Apr 2025 18:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ADB2AE96;
+	Tue, 29 Apr 2025 18:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950012; cv=none; b=JOzme0HCkJkwfdMeztmPrCwTj9Ik1cqDWR4tkshj1XvEu4NWiDuzPxVWbBJY97L2TCoEGc+9LjTUSuYH5KWKszv93jeopMR3Rz1Yb6Lx+F+tfNVz97aUk/+oiisfY7VaHCqtirMclPzx1eB/XNE+muPRJLS4cIqpxdGzALKwPS8=
+	t=1745950015; cv=none; b=rgco6lNpz5wsoLikut6jl0X+UcAlhczzFEnfZhQonw+//WEyk44f2IfJWzK6ICbIsbVNiDrv75dyCmtTbYFv+GsmiYizJ8G7vWaKAhgmaYnXs+KqACQ7/GTV6N8gkzvj0DFsUv4dHwWgodFjvyc6lPTx17u304TN5vIWIslzFH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950012; c=relaxed/simple;
-	bh=Ebs28hNrZ3dbAnTBrsjae0QXFzdjSwn33c0QTrLnT/8=;
+	s=arc-20240116; t=1745950015; c=relaxed/simple;
+	bh=5jOqHz4vaNzTnGPC/56DE3KLaOJ2Jlc4mE/tZzE0HBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRhUOYSTN2tt6R3XjsLedFEAbj8qwZYqf6K+/pJbFu3Cg+dEMDlfMpVtx/5gyQ0fJpmWV/xHesCXvituoCknxLpmuqEqSfr7oDHQ8hzsArUA3F7pTFBpxQAKDNSXh3SLTOrh4aVtkD60ryQ64CRYN+zBHXplaO3VYySaWlKDBqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xsp5Pcj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Es+rReb6mrUnyH1yIRrU03iS7VmOi9kWnetFjfPeUM3wJp8L1vR9Z4s8LoeVRakgUu8bbk1CIzPR/AmcOQF/iTYYT25Me3/MZ9DTRv9q76TGunyVUuT5tuW0vh/vj55bzPuS7ql8orRH5sYSqkdBtzseHPU+/BD8LZBjqbjIh7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlVrV0Fk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xsp5Pcj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A86C4CEE3;
-	Tue, 29 Apr 2025 18:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlVrV0Fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10A3C4CEE3;
+	Tue, 29 Apr 2025 18:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950012;
-	bh=Ebs28hNrZ3dbAnTBrsjae0QXFzdjSwn33c0QTrLnT/8=;
+	s=korg; t=1745950015;
+	bh=5jOqHz4vaNzTnGPC/56DE3KLaOJ2Jlc4mE/tZzE0HBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xsp5Pcj3PDdRi4cr9Koy7gPH/Vb/pUbudzJODel9cV1M4BuMQS1m4ITLMnPYlJOX4
-	 12xYRTbdhSGwtFhrMaRmnnmBPDD1cw86OB8R75liHFNzmmTusZcVEDIr/5SUQTMTNd
-	 zDlPc4Z021Zh0MtSlub7qp2YX95RmegqfZKdqOd4=
+	b=mlVrV0FkbRUxyYmpgx5xdFNnRFkmfjXcL5KgptHfzCI4yzR0ZbdxZupTrTfy5rKPC
+	 f2c853FJ4bx8FMqK2pJ3EupVIMgzAvFUlaoo2S2dM1CaTm62CwhvFYQjgXUDHIZspO
+	 UzHKoeFakkVjd9kgKIn/2Px2AMQlDvAKZ4TND16g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/167] MIPS: cm: Detect CM quirks from device tree
-Date: Tue, 29 Apr 2025 18:43:26 +0200
-Message-ID: <20250429161055.717468740@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mike Looijmans <mike.looijmans@topic.nl>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 089/167] usb: dwc3: xilinx: Prevent spike in reset signal
+Date: Tue, 29 Apr 2025 18:43:17 +0200
+Message-ID: <20250429161055.353567805@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -51,107 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
+From: Mike Looijmans <mike.looijmans@topic.nl>
 
-[ Upstream commit e27fbe16af5cfc40639de4ced67d1a866a1953e9 ]
+commit 38d6e60b6f3a99f8f13bee22eab616136c2c0675 upstream.
 
-Some information that should be retrieved at runtime for the Coherence
-Manager can be either absent or wrong. This patch allows checking if
-some of this information is available from the device tree and updates
-the internal variable accordingly.
+The "reset" GPIO controls the RESET signal to an external, usually
+ULPI PHY, chip. The original code path acquires the signal in LOW
+state, and then immediately asserts it HIGH again, if the reset
+signal defaulted to asserted, there'd be a short "spike" before the
+reset.
 
-For now, only the compatible string associated with the broken HCI is
-being retrieved.
+Here is what happens depending on the pre-existing state of the reset
+signal:
+Reset (previously asserted):   ~~~|_|~~~~|_______
+Reset (previously deasserted): _____|~~~~|_______
+                                  ^ ^    ^
+                                  A B    C
 
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+At point A, the low going transition is because the reset line is
+requested using GPIOD_OUT_LOW. If the line is successfully requested,
+the first thing we do is set it high _without_ any delay. This is
+point B. So, a glitch occurs between A and B.
+
+Requesting the line using GPIOD_OUT_HIGH eliminates the A and B
+transitions. Instead we get:
+
+Reset (previously asserted)  : ~~~~~~~~~~|______
+Reset (previously deasserted): ____|~~~~~|______
+                                   ^     ^
+                                   A     C
+
+Where A and C are the points described above in the code. Point B
+has been eliminated.
+
+The issue was found during code inspection.
+
+Also remove the cryptic "toggle ulpi .." comment.
+
+Fixes: ca05b38252d7 ("usb: dwc3: xilinx: Add gpio-reset support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250318064518.9320-1-mike.looijmans@topic.nl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mips-cm.h | 22 ++++++++++++++++++++++
- arch/mips/kernel/mips-cm.c      | 14 ++++++++++++++
- 2 files changed, 36 insertions(+)
+ drivers/usb/dwc3/dwc3-xilinx.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
-index 696b40beb774f..0f31324998c0a 100644
---- a/arch/mips/include/asm/mips-cm.h
-+++ b/arch/mips/include/asm/mips-cm.h
-@@ -47,6 +47,16 @@ extern phys_addr_t __mips_cm_phys_base(void);
-  */
- extern int mips_cm_is64;
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -208,15 +208,13 @@ static int dwc3_xlnx_init_zynqmp(struct
  
-+/*
-+ * mips_cm_is_l2_hci_broken  - determine if HCI is broken
-+ *
-+ * Some CM reports show that Hardware Cache Initialization is
-+ * complete, but in reality it's not the case. They also incorrectly
-+ * indicate that Hardware Cache Initialization is supported. This
-+ * flags allows warning about this broken feature.
-+ */
-+extern bool mips_cm_is_l2_hci_broken;
-+
- /**
-  * mips_cm_error_report - Report CM cache errors
-  */
-@@ -85,6 +95,18 @@ static inline bool mips_cm_present(void)
- #endif
- }
+ skip_usb3_phy:
+ 	/* ulpi reset via gpio-modepin or gpio-framework driver */
+-	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
++	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(reset_gpio)) {
+ 		return dev_err_probe(dev, PTR_ERR(reset_gpio),
+ 				     "Failed to request reset GPIO\n");
+ 	}
  
-+/**
-+ * mips_cm_update_property - update property from the device tree
-+ *
-+ * Retrieve the properties from the device tree if a CM node exist and
-+ * update the internal variable based on this.
-+ */
-+#ifdef CONFIG_MIPS_CM
-+extern void mips_cm_update_property(void);
-+#else
-+static void mips_cm_update_property(void) {}
-+#endif
-+
- /**
-  * mips_cm_has_l2sync - determine whether an L2-only sync region is present
-  *
-diff --git a/arch/mips/kernel/mips-cm.c b/arch/mips/kernel/mips-cm.c
-index b4f7d950c8468..e21c2fd761674 100644
---- a/arch/mips/kernel/mips-cm.c
-+++ b/arch/mips/kernel/mips-cm.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <linux/errno.h>
-+#include <linux/of.h>
- #include <linux/percpu.h>
- #include <linux/spinlock.h>
- 
-@@ -14,6 +15,7 @@
- void __iomem *mips_gcr_base;
- void __iomem *mips_cm_l2sync_base;
- int mips_cm_is64;
-+bool mips_cm_is_l2_hci_broken;
- 
- static char *cm2_tr[8] = {
- 	"mem",	"gcr",	"gic",	"mmio",
-@@ -238,6 +240,18 @@ static void mips_cm_probe_l2sync(void)
- 	mips_cm_l2sync_base = ioremap(addr, MIPS_CM_L2SYNC_SIZE);
- }
- 
-+void mips_cm_update_property(void)
-+{
-+	struct device_node *cm_node;
-+
-+	cm_node = of_find_compatible_node(of_root, NULL, "mobileye,eyeq6-cm");
-+	if (!cm_node)
-+		return;
-+	pr_info("HCI (Hardware Cache Init for the L2 cache) in GCR_L2_RAM_CONFIG from the CM3 is broken");
-+	mips_cm_is_l2_hci_broken = true;
-+	of_node_put(cm_node);
-+}
-+
- int mips_cm_probe(void)
- {
- 	phys_addr_t addr;
--- 
-2.39.5
-
+ 	if (reset_gpio) {
+-		/* Toggle ulpi to reset the phy. */
+-		gpiod_set_value_cansleep(reset_gpio, 1);
+ 		usleep_range(5000, 10000);
+ 		gpiod_set_value_cansleep(reset_gpio, 0);
+ 		usleep_range(5000, 10000);
 
 
