@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6D3215060;
-	Tue, 29 Apr 2025 16:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F69126BF7;
+	Tue, 29 Apr 2025 16:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945403; cv=none; b=Nsl5gYqYqDAIjwG4GB7LUIEJYMDrmUHgqWkDj58LMrl0Pttujaq9Mt+YSikm5T/4SnWGBqTGdh/FlnpKbtKjdDX2nJE1RB1TA4lbY5McSMTuJSBTNRlNsQJV1oorxc8tZdGXpbj6F0uentF/DQpG4gqSNHg194/mhj76JzjcSCc=
+	t=1745945407; cv=none; b=IddCUwNbYBrj3lvxu/yL6l3tkZAjZO/zV7+AvqH76d4xtkiPt+XlP6+HFTfyTurCtBpBg37gr/T1w6sV3CTSVUS6SiLtA+o5eCxjeZj2lUEklIIaKLJiZFySIOFPjhVAFpwaxE5O9GimFVYi5h6NpEGPI47ROJ2albpdLhIyTu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945403; c=relaxed/simple;
-	bh=sj2ks5V0GgpmI+IsdE1gTYj7M7nzbC51JXV3LnN7xLo=;
+	s=arc-20240116; t=1745945407; c=relaxed/simple;
+	bh=sW4wsm5YdhqOhg40bq8dK1e39o0iaPgRx/SBl0KvLMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5KqcHh8T97Uc8VKyGzUDBJNbfqHYtWBK5HwDlI6fQR17ZE4s87PvGmUlP5qg+oIQ+ZKa4/89qY5tGjEdWN5yJMv+HbOvKn0bmfsxM48333K7nB5DsZHJAoK3ycbpy20CVnm4fh6Pl9DXcCiOyWqNE4spwsmz7SJbw9IhqnX+zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uopDN5Zj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gRyOJCbxfjzCshlHSk6ijHLUmp15n+fklQCHtYO9IO649eReEiRVj5C/Ny/aO5pQUc0eBC3ekDZRzRNzbjQmBDAGzHrFxinFxiyfgduX4OlG8SJaOlo07sH/3CKXkWkSb5HJOKzyZIsy9aLqii0xI6Mspq0l2mc1Lg0TZllr2ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV+zLhty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uopDN5Zj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B147AC4CEE3;
-	Tue, 29 Apr 2025 16:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV+zLhty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC06AC4CEE3;
+	Tue, 29 Apr 2025 16:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945403;
-	bh=sj2ks5V0GgpmI+IsdE1gTYj7M7nzbC51JXV3LnN7xLo=;
+	s=korg; t=1745945406;
+	bh=sW4wsm5YdhqOhg40bq8dK1e39o0iaPgRx/SBl0KvLMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uopDN5ZjqiWbDlah6E2V1c0DP+rfX0Y8cCh/CbuTerR8K5pmierDiJZ9wSXQXXcYo
-	 oga6qPFWiK/rZ/6IQhlQpyvBkuTRguYohCMZ440eUTQcx/np8qinQ6W5MWAZumCIde
-	 pdQ8i5vwFoUshlI7y01kV5qM714wVYvNYdPt5JPc=
+	b=CV+zLhtytWC7LpVSgmlpk7ocUTTSoPsOCkpQzV7ee6uBCZs+0JnuupsEQTn2KSd2h
+	 eUvQtdfXwQtiFlAhnOv+kM2gbvF+onfgdhpVs8kVay53evR7OAO2MFLfzNnHQLPsMg
+	 6DMn3bm9cXk9EOuYnS02nh36KcLz/tbt0ECO97hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.4 101/179] i2c: cros-ec-tunnel: defer probe if parent EC is not present
-Date: Tue, 29 Apr 2025 18:40:42 +0200
-Message-ID: <20250429161053.486415338@linuxfoundation.org>
+	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 102/179] isofs: Prevent the use of too small fid
+Date: Tue, 29 Apr 2025 18:40:43 +0200
+Message-ID: <20250429161053.529971351@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,106 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 424eafe65647a8d6c690284536e711977153195a upstream.
+commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
 
-When i2c-cros-ec-tunnel and the EC driver are built-in, the EC parent
-device will not be found, leading to NULL pointer dereference.
+syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
 
-That can also be reproduced by unbinding the controller driver and then
-loading i2c-cros-ec-tunnel module (or binding the device).
+The handle_bytes value passed in by the reproducing program is equal to 12.
+In handle_to_path(), only 12 bytes of memory are allocated for the structure
+file_handle->f_handle member, which causes an out-of-bounds access when
+accessing the member parent_block of the structure isofs_fid in isofs,
+because accessing parent_block requires at least 16 bytes of f_handle.
+Here, fh_len is used to indirectly confirm that the value of handle_bytes
+is greater than 3 before accessing parent_block.
 
-[  271.991245] BUG: kernel NULL pointer dereference, address: 0000000000000058
-[  271.998215] #PF: supervisor read access in kernel mode
-[  272.003351] #PF: error_code(0x0000) - not-present page
-[  272.008485] PGD 0 P4D 0
-[  272.011022] Oops: Oops: 0000 [#1] SMP NOPTI
-[  272.015207] CPU: 0 UID: 0 PID: 3859 Comm: insmod Tainted: G S                  6.15.0-rc1-00004-g44722359ed83 #30 PREEMPT(full)  3c7fb39a552e7d949de2ad921a7d6588d3a4fdc5
-[  272.030312] Tainted: [S]=CPU_OUT_OF_SPEC
-[  272.034233] Hardware name: HP Berknip/Berknip, BIOS Google_Berknip.13434.356.0 05/17/2021
-[  272.042400] RIP: 0010:ec_i2c_probe+0x2b/0x1c0 [i2c_cros_ec_tunnel]
-[  272.048577] Code: 1f 44 00 00 41 57 41 56 41 55 41 54 53 48 83 ec 10 65 48 8b 05 06 a0 6c e7 48 89 44 24 08 4c 8d 7f 10 48 8b 47 50 4c 8b 60 78 <49> 83 7c 24 58 00 0f 84 2f 01 00 00 48 89 fb be 30 06 00 00 4c 9
-[  272.067317] RSP: 0018:ffffa32082a03940 EFLAGS: 00010282
-[  272.072541] RAX: ffff969580b6a810 RBX: ffff969580b68c10 RCX: 0000000000000000
-[  272.079672] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff969580b68c00
-[  272.086804] RBP: 00000000fffffdfb R08: 0000000000000000 R09: 0000000000000000
-[  272.093936] R10: 0000000000000000 R11: ffffffffc0600000 R12: 0000000000000000
-[  272.101067] R13: ffffffffa666fbb8 R14: ffffffffc05b5528 R15: ffff969580b68c10
-[  272.108198] FS:  00007b930906fc40(0000) GS:ffff969603149000(0000) knlGS:0000000000000000
-[  272.116282] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  272.122024] CR2: 0000000000000058 CR3: 000000012631c000 CR4: 00000000003506f0
-[  272.129155] Call Trace:
-[  272.131606]  <TASK>
-[  272.133709]  ? acpi_dev_pm_attach+0xdd/0x110
-[  272.137985]  platform_probe+0x69/0xa0
-[  272.141652]  really_probe+0x152/0x310
-[  272.145318]  __driver_probe_device+0x77/0x110
-[  272.149678]  driver_probe_device+0x1e/0x190
-[  272.153864]  __driver_attach+0x10b/0x1e0
-[  272.157790]  ? driver_attach+0x20/0x20
-[  272.161542]  bus_for_each_dev+0x107/0x150
-[  272.165553]  bus_add_driver+0x15d/0x270
-[  272.169392]  driver_register+0x65/0x110
-[  272.173232]  ? cleanup_module+0xa80/0xa80 [i2c_cros_ec_tunnel 3a00532f3f4af4a9eade753f86b0f8dd4e4e5698]
-[  272.182617]  do_one_initcall+0x110/0x350
-[  272.186543]  ? security_kernfs_init_security+0x49/0xd0
-[  272.191682]  ? __kernfs_new_node+0x1b9/0x240
-[  272.195954]  ? security_kernfs_init_security+0x49/0xd0
-[  272.201093]  ? __kernfs_new_node+0x1b9/0x240
-[  272.205365]  ? kernfs_link_sibling+0x105/0x130
-[  272.209810]  ? kernfs_next_descendant_post+0x1c/0xa0
-[  272.214773]  ? kernfs_activate+0x57/0x70
-[  272.218699]  ? kernfs_add_one+0x118/0x160
-[  272.222710]  ? __kernfs_create_file+0x71/0xa0
-[  272.227069]  ? sysfs_add_bin_file_mode_ns+0xd6/0x110
-[  272.232033]  ? internal_create_group+0x453/0x4a0
-[  272.236651]  ? __vunmap_range_noflush+0x214/0x2d0
-[  272.241355]  ? __free_frozen_pages+0x1dc/0x420
-[  272.245799]  ? free_vmap_area_noflush+0x10a/0x1c0
-[  272.250505]  ? load_module+0x1509/0x16f0
-[  272.254431]  do_init_module+0x60/0x230
-[  272.258181]  __se_sys_finit_module+0x27a/0x370
-[  272.262627]  do_syscall_64+0x6a/0xf0
-[  272.266206]  ? do_syscall_64+0x76/0xf0
-[  272.269956]  ? irqentry_exit_to_user_mode+0x79/0x90
-[  272.274836]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
-[  272.279887] RIP: 0033:0x7b9309168d39
-[  272.283466] Code: 5b 41 5c 5d c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d af 40 0c 00 f7 d8 64 89 01 8
-[  272.302210] RSP: 002b:00007fff50f1a288 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-[  272.309774] RAX: ffffffffffffffda RBX: 000058bf9b50f6d0 RCX: 00007b9309168d39
-[  272.316905] RDX: 0000000000000000 RSI: 000058bf6c103a77 RDI: 0000000000000003
-[  272.324036] RBP: 00007fff50f1a2e0 R08: 00007fff50f19218 R09: 0000000021ec4150
-[  272.331166] R10: 000058bf9b50f7f0 R11: 0000000000000246 R12: 0000000000000000
-[  272.338296] R13: 00000000fffffffe R14: 0000000000000000 R15: 000058bf6c103a77
-[  272.345428]  </TASK>
-[  272.347617] Modules linked in: i2c_cros_ec_tunnel(+)
-[  272.364585] gsmi: Log Shutdown Reason 0x03
+[1]
+BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
+CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0x198/0x550 mm/kasan/report.c:521
+ kasan_report+0xd8/0x138 mm/kasan/report.c:634
+ __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
+ isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
+ exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
+ do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
+ handle_to_path fs/fhandle.c:385 [inline]
+ do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-Returning -EPROBE_DEFER will allow the device to be bound once the
-controller is bound, in the case of built-in drivers.
+Allocated by task 6466:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4294 [inline]
+ __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ handle_to_path fs/fhandle.c:357 [inline]
+ do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
+ __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
+ __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
+ __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+ el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
 
-Fixes: 9d230c9e4f4e ("i2c: ChromeOS EC tunnel driver")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Cc: <stable@vger.kernel.org> # v3.16+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250407-null-ec-parent-v1-1-f7dda62d3110@igalia.com
+Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
+Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-cros-ec-tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/isofs/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-cros-ec-tunnel.c
-+++ b/drivers/i2c/busses/i2c-cros-ec-tunnel.c
-@@ -247,6 +247,9 @@ static int ec_i2c_probe(struct platform_
- 	u32 remote_bus;
- 	int err;
+--- a/fs/isofs/export.c
++++ b/fs/isofs/export.c
+@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
+ 		return NULL;
  
-+	if (!ec)
-+		return dev_err_probe(dev, -EPROBE_DEFER, "couldn't find parent EC device\n");
-+
- 	if (!ec->cmd_xfer) {
- 		dev_err(dev, "Missing sendrecv\n");
- 		return -EINVAL;
+ 	return isofs_export_iget(sb,
+-			fh_len > 2 ? ifid->parent_block : 0,
++			fh_len > 3 ? ifid->parent_block : 0,
+ 			ifid->parent_offset,
+ 			fh_len > 4 ? ifid->parent_generation : 0);
+ }
 
 
