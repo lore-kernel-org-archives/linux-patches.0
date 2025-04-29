@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F61C21883E;
-	Tue, 29 Apr 2025 17:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F48242D6E;
+	Tue, 29 Apr 2025 17:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946860; cv=none; b=g5Yqei4HcrEXmkJHeC0KASzG305E+9+PkmAHbszZK5DdRbwqEwUjqvpHCNzBHzGulj3g3plx6Rb2FFgwqA0ldziKgWChNzP2yeTgbFvjtm9m+WFwfA4RSY8xRSpRgbJ921OjRDnXtPewPXbJbahYWkPuCV9wyrxQpq+ZXHIDeR8=
+	t=1745946863; cv=none; b=iPrMIn2cifI6Pkz4vPM8NIESv2Fs1geEGRrIF0HQL00f5v3Qq1HsiqqPMcPIcZb3MfVNSNGBiCKba9q9yl8HBdtP00h6a5nv6x7SueO86fHcjXoHBKBth9k86ed+5wtlsbP/H53RgnnNQBFnBHJiZpV7ZcIx9fsmO6t5HnjrKa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946860; c=relaxed/simple;
-	bh=yDlJv2bsZ75TXkLTlUFdcTHoB5QZ2b7u7FS/oY4BXso=;
+	s=arc-20240116; t=1745946863; c=relaxed/simple;
+	bh=Ye6zvPFo7XPLiCVIYX8MP9OMK+1HKKUoqHkSBEogh40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0JDR2jGsMKFXaVIrgst/fiEM5oSq3fXYmB9vRypPxNrhvQqV/WbibZAnvfFc4LNB/cDvOT7rTeDZHYiN5J0QBHuU5pJ0logUmRkFHnczJ6UQBu9E5qVW5aCJCDEdNG6N2A6GiGXcG1FW+yBgU5cu8dFq4ibdn7mkwO07oXqAek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSxQSD+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sf/NdXyCYEO5w5gJ1Oe66sPTB9k9QTIIRsTIN0EodfKMLu4T4/JUh+e3ZqW0nnsCGNFN6Z61qC/MkV17lqDStKrzkrAoJdb75oZTcVxemf3m8YWyzhglUpzGlIlXjl6qTnRS0kNn3NtlawNxWcBIr7dUuRGG0N5OoDD5s3DurzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Umav8Y0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSxQSD+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5693C4CEE3;
-	Tue, 29 Apr 2025 17:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Umav8Y0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C8AC4CEE3;
+	Tue, 29 Apr 2025 17:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946860;
-	bh=yDlJv2bsZ75TXkLTlUFdcTHoB5QZ2b7u7FS/oY4BXso=;
+	s=korg; t=1745946863;
+	bh=Ye6zvPFo7XPLiCVIYX8MP9OMK+1HKKUoqHkSBEogh40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSxQSD+utDxFGqinaTB3Jki4Xd/CxGMP/4iHWD6MPuJJJkX4Rcl9SsZ7+DZ3JguRb
-	 Pcz3KOCXd7UBr5yeqBrrbx4m6tleIFhjpiJArLNoJf0H1v9UFzMg2q5/wqoFk76Q1D
-	 Z2ain0aHJOQE3WcU5TMbR3VkZFCVj8aSiTAU/vY4=
+	b=2Umav8Y0qAablVbgIQ1b4dL1IvWTiJNnJ1FmWaDrtZ5Ba/kqi64rgoT/ymekzW6kg
+	 8qB5nJwkiYRugvq0+QHjUDjnMBzyzPBu0RbcR/H34W2jDNzlR0eGHWdDouUt9uC9RZ
+	 upMe1mA5pddanE0WKgo7+rE5ObADkT1/r5vLL8dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.10 092/286] of/irq: Fix device node refcount leakages in of_irq_count()
-Date: Tue, 29 Apr 2025 18:39:56 +0200
-Message-ID: <20250429161111.639731065@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 066/286] media: i2c: ov7251: Introduce 1 ms delay between regulators and en GPIO
+Date: Tue, 29 Apr 2025 18:39:30 +0200
+Message-ID: <20250429161110.557429219@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,40 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit bbf71f44aaf241d853759a71de7e7ebcdb89be3d upstream.
+commit 3d391292cdd53984ec1b9a1f6182a62a62751e03 upstream.
 
-of_irq_count() invokes of_irq_parse_one() to count IRQs, and successful
-invocation of the later will get device node @irq.np refcount, but the
-former does not put the refcount before next iteration invocation, hence
-causes device node refcount leakages.
+Lift the xshutdown (enable) GPIO 1 ms after enabling the regulators, as
+required by the sensor's power-up sequence.
 
-Fix by putting @irq.np refcount before the next iteration invocation.
-
-Fixes: 3da5278727a8 ("of/irq: Rework of_irq_count()")
+Fixes: d30bb512da3d ("media: Add a driver for the ov7251 camera sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-5-93e3a2659aa7@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov7251.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -443,8 +443,10 @@ int of_irq_count(struct device_node *dev
- 	struct of_phandle_args irq;
- 	int nr = 0;
+--- a/drivers/media/i2c/ov7251.c
++++ b/drivers/media/i2c/ov7251.c
+@@ -748,6 +748,8 @@ static int ov7251_set_power_on(struct ov
+ 		return ret;
+ 	}
  
--	while (of_irq_parse_one(dev, nr, &irq) == 0)
-+	while (of_irq_parse_one(dev, nr, &irq) == 0) {
-+		of_node_put(irq.np);
- 		nr++;
-+	}
++	usleep_range(1000, 1100);
++
+ 	gpiod_set_value_cansleep(ov7251->enable_gpio, 1);
  
- 	return nr;
- }
+ 	/* wait at least 65536 external clock cycles */
 
 
