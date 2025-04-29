@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1AA238C21;
-	Tue, 29 Apr 2025 17:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE61238C21;
+	Tue, 29 Apr 2025 17:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948355; cv=none; b=BWMbGlikWxKYniGWIVOic4GGx/fJyXOmbQij7o1KXNhoXwq/QHCXbe5mO77iZEuGx701xDKKfGkzxwgCD6yQnQraScowlga5U8zZ+fRWiVz9ZPILISj3A615B3DBOXP78sLnp9HAKH4DD7DV+DWbtiGmcPVGZr/0wl5Z1clhVeg=
+	t=1745948358; cv=none; b=BiHdFd8mNgSlGMlm5QFdqGYGz6JC+vfWd2xdKAt7LMagQkqpJOTrhCDUJPeczXKdMdwtmq4xkcpHRmBuE/gGsFKvK3UAx9N+tzQEnau8Vsj6XnGbpUWrr5BUHeiWkYNtyGYgdn7Mr75AP1qo/fiPy2xdTrgRDJvcEB3M/AB0SYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948355; c=relaxed/simple;
-	bh=rmEWZLlZjbnpO0EAkTGZ4SoMpdGmdIbXOnq+jgmXLlo=;
+	s=arc-20240116; t=1745948358; c=relaxed/simple;
+	bh=lOaIqLZr2pim7GrkWJRBsiyka6XVJlj4ZKd4dS8iXZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBFDDipH1rTxpdOnu9Jv/2lY1SEDjSa+0b58hoxtP+Pnl6iTW6PhtG2cCcXVY2YqvIso69EghSyt3hD8GTAHFXPKvBIl061KE1XZWY+d2IqZTL611KV6voisMVZe5iUAQd+opLqErsF4JGm9lV0ykanCZZRP+bDBdppZWvNhKUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwEMIZ6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IDmHYmmdaBU9ERZwG7giqiB5VfeJljU39MGoSbn6YmJAU7Jx4rOjPYsy3mMdzWz26Pb7iuNRO+z6ra+lfVzgzzsUgn0PH/j0HFZtYtjxWbWs+mXGDD6X237eYjEzclciy96tvxhF/wITyc1jK0907vKgbweHszfnpw0Muck6fic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOCyq8j+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwEMIZ6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08180C4CEE3;
-	Tue, 29 Apr 2025 17:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOCyq8j+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C900C4CEE3;
+	Tue, 29 Apr 2025 17:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948355;
-	bh=rmEWZLlZjbnpO0EAkTGZ4SoMpdGmdIbXOnq+jgmXLlo=;
+	s=korg; t=1745948358;
+	bh=lOaIqLZr2pim7GrkWJRBsiyka6XVJlj4ZKd4dS8iXZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwEMIZ6Pqsw0wvJKQQNC+pR0OQBVYCJQmzOrgFkSGpuBJKicytok2cjqwsZ/KMn++
-	 CC/JMcUCOjvNM/j66aMoPGgOhQP6o1CI0B2/2jR35L3QqVRVJdhz3780zK2yZXJpq3
-	 016SzKBK1EdM1ukVJwDMYSwURBYBogoMY87Zpcq0=
+	b=cOCyq8j+dM4ZMVW++Ms/RQ0dtgOy76eKAeRgvvWhHlYK9T/VZ3YslWsqH5q89CcqH
+	 5NIHQW7Hp9VfgcinQk7xj2szQdXJLkazuuzUnE4V2V4toLi2yv2G9riUPbk9OjeWin
+	 cqnMh4F6d7DeATy7PIYRHsuGgRxdTZKL6RWx47wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Fernando Fernandez Mancera <ffmancera@riseup.net>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/280] x86/i8253: Call clockevent_i8253_disable() with interrupts disabled
-Date: Tue, 29 Apr 2025 18:42:56 +0200
-Message-ID: <20250429161124.733296013@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Brian Foster <bfoster@redhat.com>,
+	Theodore Tso <tytso@mit.edu>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>
+Subject: [PATCH 6.12 262/280] ext4: goto right label out_mmap_sem in ext4_setattr()
+Date: Tue, 29 Apr 2025 18:43:23 +0200
+Message-ID: <20250429161125.853844998@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -46,79 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Fernandez Mancera <ffmancera@riseup.net>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 3940f5349b476197fb079c5aa19c9a988de64efb ]
+commit 7e91ae31e2d264155dfd102101afc2de7bd74a64 upstream.
 
-There's a lockdep false positive warning related to i8253_lock:
+Otherwise, if ext4_inode_attach_jinode() fails, a hung task will
+happen because filemap_invalidate_unlock() isn't called to unlock
+mapping->invalidate_lock. Like this:
 
-  WARNING: HARDIRQ-safe -> HARDIRQ-unsafe lock order detected
-  ...
-  systemd-sleep/3324 [HC0[0]:SC0[0]:HE0:SE1] is trying to acquire:
-  ffffffffb2c23398 (i8253_lock){+.+.}-{2:2}, at: pcspkr_event+0x3f/0xe0 [pcspkr]
+EXT4-fs error (device sda) in ext4_setattr:5557: Out of memory
+INFO: task fsstress:374 blocked for more than 122 seconds.
+      Not tainted 6.14.0-rc1-next-20250206-xfstests-dirty #726
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:fsstress state:D stack:0     pid:374   tgid:374   ppid:373
+                                  task_flags:0x440140 flags:0x00000000
+Call Trace:
+ <TASK>
+ __schedule+0x2c9/0x7f0
+ schedule+0x27/0xa0
+ schedule_preempt_disabled+0x15/0x30
+ rwsem_down_read_slowpath+0x278/0x4c0
+ down_read+0x59/0xb0
+ page_cache_ra_unbounded+0x65/0x1b0
+ filemap_get_pages+0x124/0x3e0
+ filemap_read+0x114/0x3d0
+ vfs_read+0x297/0x360
+ ksys_read+0x6c/0xe0
+ do_syscall_64+0x4b/0x110
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-  ...
-  ... which became HARDIRQ-irq-unsafe at:
-  ...
-    lock_acquire+0xd0/0x2f0
-    _raw_spin_lock+0x30/0x40
-    clockevent_i8253_disable+0x1c/0x60
-    pit_timer_init+0x25/0x50
-    hpet_time_init+0x46/0x50
-    x86_late_time_init+0x1b/0x40
-    start_kernel+0x962/0xa00
-    x86_64_start_reservations+0x24/0x30
-    x86_64_start_kernel+0xed/0xf0
-    common_startup_64+0x13e/0x141
-  ...
-
-Lockdep complains due pit_timer_init() using the lock in an IRQ-unsafe
-fashion, but it's a false positive, because there is no deadlock
-possible at that point due to init ordering: at the point where
-pit_timer_init() is called there is no other possible usage of
-i8253_lock because the system is still in the very early boot stage
-with no interrupts.
-
-But in any case, pit_timer_init() should disable interrupts before
-calling clockevent_i8253_disable() out of general principle, and to
-keep lockdep working even in this scenario.
-
-Use scoped_guard() for that, as suggested by Thomas Gleixner.
-
-[ mingo: Cleaned up the changelog. ]
-
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Fernando Fernandez Mancera <ffmancera@riseup.net>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/Z-uwd4Bnn7FcCShX@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c7fc0366c656 ("ext4: partial zero eof block on unaligned inode size extension")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Link: https://patch.msgid.link/20250213112247.3168709-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/i8253.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/i8253.c b/arch/x86/kernel/i8253.c
-index 80e262bb627fe..cb9852ad60989 100644
---- a/arch/x86/kernel/i8253.c
-+++ b/arch/x86/kernel/i8253.c
-@@ -46,7 +46,8 @@ bool __init pit_timer_init(void)
- 		 * VMMs otherwise steal CPU time just to pointlessly waggle
- 		 * the (masked) IRQ.
- 		 */
--		clockevent_i8253_disable();
-+		scoped_guard(irq)
-+			clockevent_i8253_disable();
- 		return false;
- 	}
- 	clockevent_i8253_init(true);
--- 
-2.39.5
-
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5468,7 +5468,7 @@ int ext4_setattr(struct mnt_idmap *idmap
+ 			    oldsize & (inode->i_sb->s_blocksize - 1)) {
+ 				error = ext4_inode_attach_jinode(inode);
+ 				if (error)
+-					goto err_out;
++					goto out_mmap_sem;
+ 			}
+ 
+ 			handle = ext4_journal_start(inode, EXT4_HT_INODE, 3);
 
 
