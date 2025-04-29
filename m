@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F7125335F;
-	Tue, 29 Apr 2025 17:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D0A25335F;
+	Tue, 29 Apr 2025 17:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949296; cv=none; b=mhlyLkF99zeTYomg5ihyEnZJxCBy3KN3JA6QwnedcZc50UjHqm/BdqZkt5cflPmVjbj3Iafw0/ASsiIZb9Jfxt/Us1SRi+EN6+BpNbddm1KlEu7eCC/bqOK1Y5oM5tPcAKY/ZonsJTzRpyvrL7wsXc2qz4ty2I8BXBzKXTDm5q8=
+	t=1745949299; cv=none; b=bX6pAfSqj/yzMThk7c0jjpqAOKJ6xvNwDF0Y1Zp/pomaYHduHxoe3nu7KrXqPsJmDEbys3qb3kFSbVBwykbCT62+3/oHHa/7pJ+lGV4NFSs1AaU16mpHGLY5dj63C9OIq613nz2eJSfxFfE0QCJr3NCdWekNFDuVfeOqUouG4bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949296; c=relaxed/simple;
-	bh=Upe9tVPwks4hZKZIzzljHUw+/o+YEVaSCXx4ia6ZdXw=;
+	s=arc-20240116; t=1745949299; c=relaxed/simple;
+	bh=pndw5YK8vUz8lZBaDk8yPehDnsru6FSR5v+5PPXpDGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaaq1vLk12fft8pwABVzQEKGrsa0FUUH0FxQZ4xrLCoBFrAc6BgEL10McIcHc1fVSAnnsewow/RGA8UucH8IQjz8h6OHD/D3I3hyG0q06LCm3yyy3uGQfHStIBHfOQa0lX1RJ7qALHrAds15d4y7dq1sv3u4GreJagQ15Esb734=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOD4wplz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EM96lQmCiA056QjU9j5YnAnN1qvZ5gbeZWekkCt9NIa1NWrPu9jgSJ7Xli/ueFEBZi1Pj3rrHcoz6diHa1bMV2U6brGrYbsc8T2MzqRqOdbkx4QjVrBLionGcyuilUEUleCVWl+XRL2/EZOHiT48JMsh1C+pElfKJ/KJzQOzAec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aip2WVr4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOD4wplz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBB7C4CEE3;
-	Tue, 29 Apr 2025 17:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aip2WVr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5F3C4CEE3;
+	Tue, 29 Apr 2025 17:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949296;
-	bh=Upe9tVPwks4hZKZIzzljHUw+/o+YEVaSCXx4ia6ZdXw=;
+	s=korg; t=1745949298;
+	bh=pndw5YK8vUz8lZBaDk8yPehDnsru6FSR5v+5PPXpDGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOD4wplzkLfxzaGDWsFN2UTt82dMsuDtV8RQCyvPhx1NWL6E5AlHuQSZIYbccuv2r
-	 MP7CZgQZP5L1kEwKviUyMhswbGUpuIJNLTaYYU83MyX0HpPzVnuLh3yPG052NIHH+i
-	 Kw4IGRP96cJXLn7KnDxVap+NEXe9AHaaUkTWO+Js=
+	b=Aip2WVr4QIzohfHrMjnCUfBqe5918oZpjWkqb3I6qNmqqJw32roxutD4HY6e7Dpmu
+	 xHLIwEQd4BiVU2xy0o20K9Htjjo8P1szdlQPtUHW/ot8uY2nGYkljCQUzNqGrp8C+n
+	 +2hWdUgY7IhJtY2xuVCp98O6/K6nO8lAKRXg8S4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/373] gpio: tegra186: Force one interrupt per bank
-Date: Tue, 29 Apr 2025 18:42:30 +0200
-Message-ID: <20250429161134.358837825@linuxfoundation.org>
+Subject: [PATCH 5.15 274/373] gpio: tegra186: fix resource handling in ACPI probe path
+Date: Tue, 29 Apr 2025 18:42:31 +0200
+Message-ID: <20250429161134.398802221@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,147 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit ca038748068f454d20ad1bb120cbe36599f81db6 ]
+[ Upstream commit 8323f3a69de6f6e96bf22f32dd8e2920766050c2 ]
 
-Newer chips support up to 8 interrupts per bank, which can be useful to
-balance the load and decrease latency. However, it also required a very
-complicated interrupt routing to be set up. To keep things simple for
-now, ensure that a single interrupt per bank is enforced, even if all
-possible interrupts are described in device tree.
+When the Tegra186 GPIO controller is probed through ACPI matching,
+the driver emits two error messages during probing:
+  "tegra186-gpio NVDA0508:00: invalid resource (null)"
+  "tegra186-gpio NVDA0508:00: invalid resource (null)"
 
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
-Stable-dep-of: 8323f3a69de6 ("gpio: tegra186: fix resource handling in ACPI probe path")
+Fix this by getting resource first and then do the ioremap.
+
+Fixes: 2606e7c9f5fc ("gpio: tegra186: Add ACPI support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250327032349.78809-1-kanie@linux.alibaba.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tegra186.c | 68 ++++++++++++++++++++++++++++++++----
- 1 file changed, 62 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-tegra186.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index 00762de3d4096..52e08bc2f0530 100644
+index 52e08bc2f0530..da310b20fad00 100644
 --- a/drivers/gpio/gpio-tegra186.c
 +++ b/drivers/gpio/gpio-tegra186.c
-@@ -81,6 +81,8 @@ struct tegra_gpio {
- 	unsigned int *irq;
+@@ -630,6 +630,7 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
+ 	struct gpio_irq_chip *irq;
+ 	struct tegra_gpio *gpio;
+ 	struct device_node *np;
++	struct resource *res;
+ 	char **names;
+ 	int err;
  
- 	const struct tegra_gpio_soc *soc;
-+	unsigned int num_irqs_per_bank;
-+	unsigned int num_banks;
+@@ -649,19 +650,19 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
+ 	gpio->num_banks++;
  
- 	void __iomem *secure;
- 	void __iomem *base;
-@@ -600,6 +602,28 @@ static void tegra186_gpio_init_route_mapping(struct tegra_gpio *gpio)
- 	}
- }
- 
-+static unsigned int tegra186_gpio_irqs_per_bank(struct tegra_gpio *gpio)
-+{
-+	struct device *dev = gpio->gpio.parent;
-+
-+	if (gpio->num_irq > gpio->num_banks) {
-+		if (gpio->num_irq % gpio->num_banks != 0)
-+			goto error;
-+	}
-+
-+	if (gpio->num_irq < gpio->num_banks)
-+		goto error;
-+
-+	gpio->num_irqs_per_bank = gpio->num_irq / gpio->num_banks;
-+
-+	return 0;
-+
-+error:
-+	dev_err(dev, "invalid number of interrupts (%u) for %u banks\n",
-+		gpio->num_irq, gpio->num_banks);
-+	return -EINVAL;
-+}
-+
- static int tegra186_gpio_probe(struct platform_device *pdev)
- {
- 	unsigned int i, j, offset;
-@@ -614,7 +638,17 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	gpio->soc = device_get_match_data(&pdev->dev);
-+	gpio->gpio.label = gpio->soc->name;
-+	gpio->gpio.parent = &pdev->dev;
-+
-+	/* count the number of banks in the controller */
-+	for (i = 0; i < gpio->soc->num_ports; i++)
-+		if (gpio->soc->ports[i].bank > gpio->num_banks)
-+			gpio->num_banks = gpio->soc->ports[i].bank;
-+
-+	gpio->num_banks++;
- 
-+	/* get register apertures */
- 	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
- 	if (IS_ERR(gpio->secure)) {
- 		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
-@@ -635,6 +669,10 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
- 
- 	gpio->num_irq = err;
- 
-+	err = tegra186_gpio_irqs_per_bank(gpio);
-+	if (err < 0)
-+		return err;
-+
- 	gpio->irq = devm_kcalloc(&pdev->dev, gpio->num_irq, sizeof(*gpio->irq),
- 				 GFP_KERNEL);
- 	if (!gpio->irq)
-@@ -648,9 +686,6 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
- 		gpio->irq[i] = err;
- 	}
- 
--	gpio->gpio.label = gpio->soc->name;
--	gpio->gpio.parent = &pdev->dev;
+ 	/* get register apertures */
+-	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
+-	if (IS_ERR(gpio->secure)) {
+-		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
+-		if (IS_ERR(gpio->secure))
+-			return PTR_ERR(gpio->secure);
+-	}
 -
- 	gpio->gpio.request = gpiochip_generic_request;
- 	gpio->gpio.free = gpiochip_generic_free;
- 	gpio->gpio.get_direction = tegra186_gpio_get_direction;
-@@ -714,7 +749,30 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
- 	irq->parent_handler = tegra186_gpio_irq;
- 	irq->parent_handler_data = gpio;
- 	irq->num_parents = gpio->num_irq;
--	irq->parents = gpio->irq;
+-	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
+-	if (IS_ERR(gpio->base)) {
+-		gpio->base = devm_platform_ioremap_resource(pdev, 1);
+-		if (IS_ERR(gpio->base))
+-			return PTR_ERR(gpio->base);
+-	}
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "security");
++	if (!res)
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	gpio->secure = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(gpio->secure))
++		return PTR_ERR(gpio->secure);
 +
-+	/*
-+	 * To simplify things, use a single interrupt per bank for now. Some
-+	 * chips support up to 8 interrupts per bank, which can be useful to
-+	 * distribute the load and decrease the processing latency for GPIOs
-+	 * but it also requires a more complicated interrupt routing than we
-+	 * currently program.
-+	 */
-+	if (gpio->num_irqs_per_bank > 1) {
-+		irq->parents = devm_kcalloc(&pdev->dev, gpio->num_banks,
-+					    sizeof(*irq->parents), GFP_KERNEL);
-+		if (!irq->parents)
-+			return -ENOMEM;
-+
-+		for (i = 0; i < gpio->num_banks; i++)
-+			irq->parents[i] = gpio->irq[i * gpio->num_irqs_per_bank];
-+
-+		irq->num_parents = gpio->num_banks;
-+	} else {
-+		irq->num_parents = gpio->num_irq;
-+		irq->parents = gpio->irq;
-+	}
-+
-+	tegra186_gpio_init_route_mapping(gpio);
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gpio");
++	if (!res)
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++	gpio->base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(gpio->base))
++		return PTR_ERR(gpio->base);
  
- 	np = of_find_matching_node(NULL, tegra186_pmc_of_match);
- 	if (np) {
-@@ -725,8 +783,6 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
- 			return -EPROBE_DEFER;
- 	}
- 
--	tegra186_gpio_init_route_mapping(gpio);
--
- 	irq->map = devm_kcalloc(&pdev->dev, gpio->gpio.ngpio,
- 				sizeof(*irq->map), GFP_KERNEL);
- 	if (!irq->map)
+ 	err = platform_irq_count(pdev);
+ 	if (err < 0)
 -- 
 2.39.5
 
