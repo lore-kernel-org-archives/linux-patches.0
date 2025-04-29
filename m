@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351FA242D9A;
-	Tue, 29 Apr 2025 17:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1045A24BD02;
+	Tue, 29 Apr 2025 17:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946701; cv=none; b=PkS4N9UAnfGuIzcn5XimaFX93aWgKO92SL6ch7yln3lOqEa2iBl3zaipMOCiMW0Zq4Po+qtmR5JAboxPDrZAAepzKwHvmw0OdGzW+H3L3pfAJoZW9irKXzBgbZ4zadOtsyg5Rmw91cdtibOngAz99orA5eW0EsLTXVbVjXySCGg=
+	t=1745946704; cv=none; b=OAHN56HvVZWygB8ICWSHz5axDui+KfX+8jmYzKmL3lEo9YYYfkkmSQVGl2clpho7nuLbSooheRQ5fHzi0jya4g01Zz1Ncc8JLSRG6xdhIpPNRXKhrF+TvOCsoXu+yjUx7KO2NtHFIlUQS87OtNUNeBnZRtSbVIdadIJlH4nYwp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946701; c=relaxed/simple;
-	bh=zqxZOAFb3tbjVFsJDmDFmgHBzxChgBVkSh2YIsKuQeo=;
+	s=arc-20240116; t=1745946704; c=relaxed/simple;
+	bh=Jbqo84+24d+rIgZJRavemNu51hBQe0RW4Q36HqAk1cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYE73m2FahiYJGwR3+lOlWCa4xFlPnUQ5OlDdfEDKUyM2IR0SG50I+VQtTsnq3HGTy3xG39e5Ze9C63/hxsClfYfH9i2U69+Lv7ameNMm7Rb7mA6Csj3QA7sK6oHbbeCRBro3X2p1STEFU/cIsBybbE53dPLO4FLRK5DIC9bajk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKW+QFG2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWvu2V0LL4ZzrRdl3tSsmTiMT1uYM69TIuNDtwKevSbE2z75xywQP/L+IM0JSrRf0BqhrUdghVjjYlexP6HQGQPRulotbxLQt9Rm2y6DKf36LDLMZqVdgA6rQrbli+cv5MK78L+9f3ALcO3AdSeUF/yKREWDBEPYN+8CxnMYK0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUPOrPbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKW+QFG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F6CC4CEE3;
-	Tue, 29 Apr 2025 17:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUPOrPbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844DEC4CEE3;
+	Tue, 29 Apr 2025 17:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946701;
-	bh=zqxZOAFb3tbjVFsJDmDFmgHBzxChgBVkSh2YIsKuQeo=;
+	s=korg; t=1745946703;
+	bh=Jbqo84+24d+rIgZJRavemNu51hBQe0RW4Q36HqAk1cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKW+QFG2TrA99v+1VMI9kzmaOzcm3QRPrHmrhmlg6Fhru6ciUAi15vu6sXsDU1w15
-	 Vk1j0wxSEtzRFJ0aHSFkTN9CyOLmIyEwMUts8hPwJsB95UrnMavUP7Pbg8pjM6TBXx
-	 G+h70wEbd4lzWPykJcKmsK2D5lYWKQ48guzNDEP8=
+	b=QUPOrPbDUOy/hewQY/uPADAEGNy1E2+VF8jSFogqdGH2EtuzWu4f/1bgMzgNRiHY+
+	 tNnj+vcuYNUvzB1uoKs447HN5Y99IIwCEEfZSC80xJmVjWxmD2HivKImIPVO4PjPyi
+	 QmW8MbcVkzc6coOHrkdsg4GvCEMwyD10mFzN69lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/286] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
-Date: Tue, 29 Apr 2025 18:39:05 +0200
-Message-ID: <20250429161109.552346515@linuxfoundation.org>
+Subject: [PATCH 5.10 042/286] drm/mediatek: mtk_dpi: Explicitly manage TVD clock in power on/off
+Date: Tue, 29 Apr 2025 18:39:06 +0200
+Message-ID: <20250429161109.592571411@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,34 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
+[ Upstream commit 473c33f5ce651365468503c76f33158aaa1c7dd2 ]
 
-If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
-delete the queue from process_queue_list and free the resource.
+In preparation for adding support for MT8195's HDMI reserved
+DPI, add calls to clk_prepare_enable() / clk_disable_unprepare()
+for the TVD clock: in this particular case, the aforementioned
+clock is not (and cannot be) parented to neither pixel or engine
+clocks hence it won't get enabled automatically by the clock
+framework.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Please note that on all of the currently supported MediaTek
+platforms, the TVD clock is always a parent of either pixel or
+engine clocks, and this means that the common clock framework
+is already enabling this clock before the children.
+On such platforms, this commit will only increase the refcount
+of the TVD clock without any functional change.
+
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-10-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_dpi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index 43c07ac2c6fce..cabe0012ab5b1 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -384,7 +384,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
- 			pr_err("Pasid 0x%x destroy queue %d failed, ret %d\n",
- 				pqm->process->pasid,
- 				pqn->q->properties.queue_id, retval);
--			if (retval != -ETIME)
-+			if (retval != -ETIME && retval != -EIO)
- 				goto err_destroy_queue;
- 		}
+diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
+index aa3d472c79d77..ac75c10aed2f6 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dpi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
+@@ -369,6 +369,7 @@ static void mtk_dpi_power_off(struct mtk_dpi *dpi)
  
+ 	mtk_dpi_disable(dpi);
+ 	clk_disable_unprepare(dpi->pixel_clk);
++	clk_disable_unprepare(dpi->tvd_clk);
+ 	clk_disable_unprepare(dpi->engine_clk);
+ }
+ 
+@@ -385,6 +386,12 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
+ 		goto err_refcount;
+ 	}
+ 
++	ret = clk_prepare_enable(dpi->tvd_clk);
++	if (ret) {
++		dev_err(dpi->dev, "Failed to enable tvd pll: %d\n", ret);
++		goto err_engine;
++	}
++
+ 	ret = clk_prepare_enable(dpi->pixel_clk);
+ 	if (ret) {
+ 		dev_err(dpi->dev, "Failed to enable pixel clock: %d\n", ret);
+@@ -394,6 +401,8 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
+ 	return 0;
+ 
+ err_pixel:
++	clk_disable_unprepare(dpi->tvd_clk);
++err_engine:
+ 	clk_disable_unprepare(dpi->engine_clk);
+ err_refcount:
+ 	dpi->refcount--;
 -- 
 2.39.5
 
