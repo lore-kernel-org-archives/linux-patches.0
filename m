@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A2919F424;
-	Tue, 29 Apr 2025 18:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC0319F424;
+	Tue, 29 Apr 2025 18:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950324; cv=none; b=bCRy6xchbHQykEInxtuR7z1h6xIVc3udeYbPAKIdKa8du8BuFoQw7Jz45PtQ4hSz3ITEX9XMLLnLYCJRyiQH8uJpV4PmghiI1wSDmwoiYuBtbHz79uBkA9tYMYid1aWikLLmC82QSUGBJoWnoEXj7aQ3YWbXcFnrRKYzJ/ioWoY=
+	t=1745950327; cv=none; b=lcbgYxZaKJQ60E8dBLHkKp2bxYsSmOcfgqYQ0f7mam0IR+jPK/g9hpqNY7/svrJ64fWQPwHjhzYg3r0vw0iZnD7ViTN3InN3+kQYyrSxgsjXkGtAnaL8vxsNu5J4z/mobbqmu28ac8obyAt9ldHERMYelCnR8aoHFziLbbSjLcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950324; c=relaxed/simple;
-	bh=x4GCasmyFpfjncNNmfQ5G+IcbH8WtAAAH66dRaXEunU=;
+	s=arc-20240116; t=1745950327; c=relaxed/simple;
+	bh=MqX9JngJvbZ8Lgq+fuIG9k43SZl1IzIRP9DdsispUa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0dpSWeTw5a1W2nkLevOI1mZ/bZXx7ttyp1XoTDd9meAoqhnnep+ccb5JrB6aidi8TA9fdjCpTNBWEjnHy9jSblq1/s+tRf0IJK5lLgAy2CPCWrRuBpNswyogYPWS2N1o8MWOOB8kSUujHS93ziPtS+N9eVoDrJk0wu8gI+/7m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXYWM2Wf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XsMJGfw9zpT01ZLPCssCa8OUuOOCuX6PJNb7wr/uoOjgJTLvcVIgc8SqmJAKM0ZVFZ0Xm/wdvPEHyGyomZqkfk8tyrwNn7np6uXeLdBmj+XkvLlG8UpQhwhXbi9Z4t6X7oJ3Hoy9M1VRA/UzENR8PU31yoGxxjRPx5N3aja3Sqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8/z5W63; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXYWM2Wf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80324C4CEE3;
-	Tue, 29 Apr 2025 18:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8/z5W63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9147FC4CEE3;
+	Tue, 29 Apr 2025 18:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950323;
-	bh=x4GCasmyFpfjncNNmfQ5G+IcbH8WtAAAH66dRaXEunU=;
+	s=korg; t=1745950327;
+	bh=MqX9JngJvbZ8Lgq+fuIG9k43SZl1IzIRP9DdsispUa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXYWM2WfOMTFLHAjKlgVGikSHbSz0Ze/2yyUM/K7kP3fAHspUmCYuH6DZ8ReSfnVM
-	 2mapx07OFL6Bsw2/SQNG1WcJcZnG/AJ860gFIbhaTEs5rV1pnsfNcFH11GjkvuCNVl
-	 XOIb4OxqLBS8bBncHel2ajMip53VkVKeQccRJ9OU=
+	b=z8/z5W630VuoahbnJBqlBPZTlyiz/h+ZzrfsXgdos3IGmaqvdcl9NOrJjCqS7Mh2n
+	 cezYcrjLyMSj4IYA6YUsCBUMxPg/eht5TAQQG1w1ymtQ9FA1Jzqah3zQ2gA7tCeD7j
+	 yYRTB/2Wb2Fkofu1Hw06ZdtOWt1R+fT15cyeSHu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Konstantin Khlebnikov <koct9i@gmail.com>,
 	Cong Wang <xiyou.wangcong@gmail.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/204] net_sched: hfsc: Fix a UAF vulnerability in class handling
-Date: Tue, 29 Apr 2025 18:42:27 +0200
-Message-ID: <20250429161101.847551724@linuxfoundation.org>
+Subject: [PATCH 6.6 060/204] net_sched: hfsc: Fix a potential UAF in hfsc_dequeue() too
+Date: Tue, 29 Apr 2025 18:42:28 +0200
+Message-ID: <20250429161101.888589464@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -56,66 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 3df275ef0a6ae181e8428a6589ef5d5231e58b5c ]
+[ Upstream commit 6ccbda44e2cc3d26fd22af54c650d6d5d801addf ]
 
-This patch fixes a Use-After-Free vulnerability in the HFSC qdisc class
-handling. The issue occurs due to a time-of-check/time-of-use condition
-in hfsc_change_class() when working with certain child qdiscs like netem
-or codel.
+Similarly to the previous patch, we need to safe guard hfsc_dequeue()
+too. But for this one, we don't have a reliable reproducer.
 
-The vulnerability works as follows:
-1. hfsc_change_class() checks if a class has packets (q.qlen != 0)
-2. It then calls qdisc_peek_len(), which for certain qdiscs (e.g.,
-   codel, netem) might drop packets and empty the queue
-3. The code continues assuming the queue is still non-empty, adding
-   the class to vttree
-4. This breaks HFSC scheduler assumptions that only non-empty classes
-   are in vttree
-5. Later, when the class is destroyed, this can lead to a Use-After-Free
-
-The fix adds a second queue length check after qdisc_peek_len() to verify
-the queue wasn't emptied.
-
-Fixes: 21f4d5cc25ec ("net_sched/hfsc: fix curve activation in hfsc_change_class()")
+Fixes: 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 ("Linux-2.6.12-rc2")
 Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Reviewed-by: Konstantin Khlebnikov <koct9i@gmail.com>
 Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20250417184732.943057-2-xiyou.wangcong@gmail.com
+Link: https://patch.msgid.link/20250417184732.943057-3-xiyou.wangcong@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sched/sch_hfsc.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 880c5f16b29cc..90801b6fe2b08 100644
+index 90801b6fe2b08..371255e624332 100644
 --- a/net/sched/sch_hfsc.c
 +++ b/net/sched/sch_hfsc.c
-@@ -958,6 +958,7 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 
- 	if (cl != NULL) {
- 		int old_flags;
-+		int len = 0;
- 
- 		if (parentid) {
- 			if (cl->cl_parent &&
-@@ -988,9 +989,13 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 		if (usc != NULL)
- 			hfsc_change_usc(cl, usc, cur_time);
- 
-+		if (cl->qdisc->q.qlen != 0)
-+			len = qdisc_peek_len(cl->qdisc);
-+		/* Check queue length again since some qdisc implementations
-+		 * (e.g., netem/codel) might empty the queue during the peek
-+		 * operation.
-+		 */
+@@ -1638,10 +1638,16 @@ hfsc_dequeue(struct Qdisc *sch)
  		if (cl->qdisc->q.qlen != 0) {
--			int len = qdisc_peek_len(cl->qdisc);
--
- 			if (cl->cl_flags & HFSC_RSC) {
- 				if (old_flags & HFSC_RSC)
- 					update_ed(cl, len);
+ 			/* update ed */
+ 			next_len = qdisc_peek_len(cl->qdisc);
+-			if (realtime)
+-				update_ed(cl, next_len);
+-			else
+-				update_d(cl, next_len);
++			/* Check queue length again since some qdisc implementations
++			 * (e.g., netem/codel) might empty the queue during the peek
++			 * operation.
++			 */
++			if (cl->qdisc->q.qlen != 0) {
++				if (realtime)
++					update_ed(cl, next_len);
++				else
++					update_d(cl, next_len);
++			}
+ 		} else {
+ 			/* the class becomes passive */
+ 			eltree_remove(cl);
 -- 
 2.39.5
 
