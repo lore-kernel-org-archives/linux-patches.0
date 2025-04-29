@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA54A250C0C;
-	Tue, 29 Apr 2025 17:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B35227E95;
+	Tue, 29 Apr 2025 17:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949268; cv=none; b=B+iKtBoFwB9fG/BocpEg11CeTnp5r87BfbuZIqb3YlE9xTft4LEfLPxgSsJ7aD9f/JIO74yHEWbkr/NNF35W/UbwN5UUMF0afUryElCTc6uU9XbHgIQfVUzrGUUvXFZLYZIcg57f3NYvOxdtKglifXPqQyLRDSUzs9wLQTaex3I=
+	t=1745949271; cv=none; b=hs2ddWtWJiFyYSPkPrD3hAgR78deg9PFbgN4i1oBhaFkfebZ2VyLR4dD5G5hSFOHWkEDeMLxnnjbgxz4SBf+L7VfKcAhoRAIGooVZNNXmRJU8r3xV5B1eDZD7o0dC7rDLdl6oBAjJ29oxxOyMl3OdgQpPfuV4QZyw3Lb/zW5Ib8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949268; c=relaxed/simple;
-	bh=GCh565sKjbgCJoRzzrGsZWJPa8d2yEgptN5iBAbgp4Q=;
+	s=arc-20240116; t=1745949271; c=relaxed/simple;
+	bh=JCYi8IlQ9+Kv0WRkdeuWLGRGnM3oO3fawsyisr4Kqds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCrAzB46fcKkqg0YgpvADZ3aFwRv7xO7jMsIOzExAtAdOFZX+dUq8ODov+3Lo1KaCLUv5SfQrfr+02f+BBJNSwhjXi6DDCKTcH3Q3eukt3d+0shy3iBL8F1uQdPS+CLw9f1l7Tg/i+L9b9QOhaOcRhGfZvQYZIL4H4pNQOD2m9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6WseMqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cj6G+4eQinUP8pEcNqqQwwog4Tj9sO2ftXuP8dze/OqHvvG3XQlOoG6xHWYM7RngJmeDc+RuHeXbW32OJqD4sT8759nJiCLA1cWfDNp0p5VuRZ1y0TTAOFK477xUJFUyt/mvSTzO8SqTaNTb9I5tn+O0fNfShWheQabMqH783qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4BPN0Qt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6WseMqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A823C4CEE9;
-	Tue, 29 Apr 2025 17:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4BPN0Qt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEC4C4CEE3;
+	Tue, 29 Apr 2025 17:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949268;
-	bh=GCh565sKjbgCJoRzzrGsZWJPa8d2yEgptN5iBAbgp4Q=;
+	s=korg; t=1745949271;
+	bh=JCYi8IlQ9+Kv0WRkdeuWLGRGnM3oO3fawsyisr4Kqds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6WseMqyziIs9pBkF9MHGP+LaR3cKpOlGOGXJgn8a2t+42PX+5Quh9d+ovab/iV0U
-	 B3uh069aWT7auFha50H+L4IkxPazDLoZ3z/tmsXiWfsZ1LyI/gjeo3bEKQtHMzu+Ct
-	 hrPNu6x4qf7bnv2UUVYoibICJPDutbLXIyS/TVoM=
+	b=x4BPN0Qt7MkJmGM14hDkab/KTaB9+85cKrOBKMQB3vJhYe9jyO6BhXCEfhlkfBNQd
+	 FKNGhPOU6z4AlDW63HTQRreme2ssNd+64UJsU7cJuzlZyTLtIg15hhJNynlNYmdCPq
+	 SVgl5lG6mcJerGJep4OkWW95HcHYA65fhRoZT1lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/373] soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()
-Date: Tue, 29 Apr 2025 18:42:22 +0200
-Message-ID: <20250429161134.020576890@linuxfoundation.org>
+Subject: [PATCH 5.15 266/373] iio: adc: ad7768-1: Move setting of val a bit later to avoid unnecessary return value check
+Date: Tue, 29 Apr 2025 18:42:23 +0200
+Message-ID: <20250429161134.061735879@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,46 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit c8222ef6cf29dd7cad21643228f96535cc02b327 ]
+[ Upstream commit 0af1c801a15225304a6328258efbf2bee245c654 ]
 
-soc_dev_attr->revision could be NULL, thus,
-a pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+The data used is all in local variables so there is no advantage
+in setting *val = ret with the direct mode claim held.
+Move it later to after error check.
 
-This issue is found by our static analysis tool.
-
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250212213518.69432-1-chenyuan0y@gmail.com
-Fixes: 3253b7b7cd44 ("soc: samsung: Add exynos chipid driver support")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250217141630.897334-13-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 8236644f5ecb ("iio: adc: ad7768-1: Fix conversion result sign")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/samsung/exynos-chipid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ad7768-1.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-index 133654f21251f..edcae687cd2a2 100644
---- a/drivers/soc/samsung/exynos-chipid.c
-+++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -125,6 +125,8 @@ static int exynos_chipid_probe(struct platform_device *pdev)
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index aa42ba759fa1a..22c0303587b07 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -370,12 +370,11 @@ static int ad7768_read_raw(struct iio_dev *indio_dev,
+ 			return ret;
  
- 	soc_dev_attr->revision = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 						"%x", soc_info.revision);
-+	if (!soc_dev_attr->revision)
-+		return -ENOMEM;
- 	soc_dev_attr->soc_id = product_id_to_soc_id(soc_info.product_id);
- 	if (!soc_dev_attr->soc_id) {
- 		pr_err("Unknown SoC\n");
+ 		ret = ad7768_scan_direct(indio_dev);
+-		if (ret >= 0)
+-			*val = ret;
+ 
+ 		iio_device_release_direct_mode(indio_dev);
+ 		if (ret < 0)
+ 			return ret;
++		*val = ret;
+ 
+ 		return IIO_VAL_INT;
+ 
 -- 
 2.39.5
 
