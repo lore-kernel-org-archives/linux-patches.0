@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8490C82C60;
-	Tue, 29 Apr 2025 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FDA24889B;
+	Tue, 29 Apr 2025 16:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945195; cv=none; b=aGYbj5jCIxu/sLItBOwkQyIaos9+v8RtZBJMbKwzQXjSI6t8VbU6DI4S6Bl6SkrewO8CftiMLImAeSpVLXk4nS3PVXv3n4U5G7vxhn6YsT8QKHWbWBLMQ0jGHZmsVks6ztlLKGVHnBjpnx7ZkF96zhKCIlUAhuR6H4WvV4ybllI=
+	t=1745945198; cv=none; b=tS7fdFg/Wxgog8CGiu0FGEgVx9VeE/I6M6HJf4ZACUYc+niI4A9bbWTfM8RFULDqhKY3LS27s/FzyG5dGzajt5B36L8I8ZDpiJRt7EZiSObNRpeM1Es7UYSlvn55dEnDKq2iwtmGZ9/FHg7cxDgnjVGv0T/maUcnSXSHEUeDWuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945195; c=relaxed/simple;
-	bh=T6HiDsI73nq16zSxlvFFHfwkOuZIUr8HrG8/wjOBTso=;
+	s=arc-20240116; t=1745945198; c=relaxed/simple;
+	bh=3PwovqhGi0YUD0IgtHTw/YycYLg+lh4YU1Hrbj2BXpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8/1n7aXYTxZEQY++gbYB0Q6Pbpk4RZx8cQALutdcC32qW88xyDhL8ucdIGQnQYY2HZhqAHsjlGEqrX6yFo10m1oYpLjFcDkRqps2steanavQFBOjobg0pI1w71HfArmOqhAU3O2oXW6fRQKbrnm/OY8D4RcWTYbIvOkNQyAT1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzQXNtdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qc4Ju3q861iwfZ+n4aMuSHU1AUnlcIUQ6tD2P4qkAu29pbuPxQxvwvHC1NLmy2/Q/wzA5bE78qToLsh5XYx7s6MISgD+mQ9s4wigWyGC+gE7pFA/PXnCGZyAOeYwesz9LpvqOCxq7ItCl0B5vPjsn7/dQkGevmYzUYQoaEuUDvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqlpoA+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzQXNtdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB63C4CEE3;
-	Tue, 29 Apr 2025 16:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqlpoA+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BACC4CEE3;
+	Tue, 29 Apr 2025 16:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945195;
-	bh=T6HiDsI73nq16zSxlvFFHfwkOuZIUr8HrG8/wjOBTso=;
+	s=korg; t=1745945198;
+	bh=3PwovqhGi0YUD0IgtHTw/YycYLg+lh4YU1Hrbj2BXpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzQXNtdR2z/agoR0es/2OVnTb6pp4L3yy2R3YTIy8wBssiZQrg0KqAAjWnZ4WEdLd
-	 E2GQCNkKd9V7tZtcWYA9qdaC5T9eY+Q9KmBezKoTjp0e9+HGr2dIccrmLmruSe+ZRa
-	 6J8SMiNE0kuidy4zFlwEBERD6sV/ij0izcpP8vTE=
+	b=oqlpoA+ly877AlhCfgz0xZrB8EX2fro1HmBfcD8wO4SLGxhV9T+DzoB8y1o/gWGRn
+	 Ld/10/0D2HP5LJC7eJK1YXdvmQF8nJNkJVmRM1uAJtvV69qb67aX/yjmTgJBPVq2dp
+	 vNiSOydmSa8ehSanUNQFZDXQEBjo/7RsCs2ABNyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yat Sin <David.YatSin@amd.com>,
-	Jay Cornwall <jay.cornwall@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 033/179] drm/amdkfd: clamp queue size to minimum
-Date: Tue, 29 Apr 2025 18:39:34 +0200
-Message-ID: <20250429161050.750593709@linuxfoundation.org>
+Subject: [PATCH 5.4 034/179] drm/amdkfd: Fix pqm_destroy_queue race with GPU reset
+Date: Tue, 29 Apr 2025 18:39:35 +0200
+Message-ID: <20250429161050.791407831@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -53,64 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yat Sin <David.YatSin@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit e90711946b53590371ecce32e8fcc381a99d6333 ]
+[ Upstream commit 7919b4cad5545ed93778f11881ceee72e4dbed66 ]
 
-If queue size is less than minimum, clamp it to minimum to prevent
-underflow when writing queue mqd.
+If GPU in reset, destroy_queue return -EIO, pqm_destroy_queue should
+delete the queue from process_queue_list and free the resource.
 
-Signed-off-by: David Yat Sin <David.YatSin@amd.com>
-Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 10 ++++++++++
- include/uapi/linux/kfd_ioctl.h           |  2 ++
- 2 files changed, 12 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index b99e6b2e0acac..a845eda14ece3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -169,6 +169,11 @@ static int set_queue_properties_from_user(struct queue_properties *q_properties,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 7e6c3ee82f5b2..234a09b60c552 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -380,7 +380,7 @@ int pqm_destroy_queue(struct process_queue_manager *pqm, unsigned int qid)
+ 			pr_err("Pasid %d destroy queue %d failed, ret %d\n",
+ 				pqm->process->pasid,
+ 				pqn->q->properties.queue_id, retval);
+-			if (retval != -ETIME)
++			if (retval != -ETIME && retval != -EIO)
+ 				goto err_destroy_queue;
+ 		}
  
-+	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
-+		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
-+		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
-+	}
-+
- 	if (!access_ok((const void __user *) args->read_pointer_address,
- 			sizeof(uint32_t))) {
- 		pr_err("Can't access read pointer\n");
-@@ -373,6 +378,11 @@ static int kfd_ioctl_update_queue(struct file *filp, struct kfd_process *p,
- 		return -EINVAL;
- 	}
- 
-+	if (args->ring_size < KFD_MIN_QUEUE_RING_SIZE) {
-+		args->ring_size = KFD_MIN_QUEUE_RING_SIZE;
-+		pr_debug("Size lower. clamped to KFD_MIN_QUEUE_RING_SIZE");
-+	}
-+
- 	properties.queue_address = args->ring_base_address;
- 	properties.queue_size = args->ring_size;
- 	properties.queue_percent = args->queue_percentage;
-diff --git a/include/uapi/linux/kfd_ioctl.h b/include/uapi/linux/kfd_ioctl.h
-index 20917c59f39c9..899e7c0f5f669 100644
---- a/include/uapi/linux/kfd_ioctl.h
-+++ b/include/uapi/linux/kfd_ioctl.h
-@@ -43,6 +43,8 @@ struct kfd_ioctl_get_version_args {
- #define KFD_MAX_QUEUE_PERCENTAGE	100
- #define KFD_MAX_QUEUE_PRIORITY		15
- 
-+#define KFD_MIN_QUEUE_RING_SIZE		1024
-+
- struct kfd_ioctl_create_queue_args {
- 	__u64 ring_base_address;	/* to KFD */
- 	__u64 write_pointer_address;	/* from KFD */
 -- 
 2.39.5
 
