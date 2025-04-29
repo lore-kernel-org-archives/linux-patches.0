@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BE8233735;
-	Tue, 29 Apr 2025 17:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C62E25392F;
+	Tue, 29 Apr 2025 17:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949283; cv=none; b=SJWR+tnfWNqeiGNj2at0iCmCqz9e31xA4iwe6jrOLqfBztGmoAvDdvnPAvkj+8eAmCsEmN+o9FD20qtNDUeVfbVP8nxBg0RTRzuuY2vlyG2MtXpztDpObEKvctYMRNOuxPycmyXXd0PNu61NQS/wixUOfj/fhkwCFaDXKjg8jUQ=
+	t=1745949287; cv=none; b=V73ybwmuYJl64nT5/wxkuZLe1OaEsQO6vc5U8aGteI+jkM6PPr+LRY3WSs0LR1zs2OQ6FzvPHNLEEl7XPXnMrlsI3MA68B25ewKRafMiLn9b6YjzEAZcnLe9Do0EGWdohH2tf3rkE6EEjMM7C6txJwzLTYL56NXqNtPrgT1geuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949283; c=relaxed/simple;
-	bh=QVLKmQATUUHhW0bYkpGih3rOCjp+LWK4CTlmAThMzUk=;
+	s=arc-20240116; t=1745949287; c=relaxed/simple;
+	bh=tgQukymdsI5znZszaY9qaUUDonaK04D53Edu+It52SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CynkeMxCePuA8e4lmOCXKXuMQaSdhLR2ZFb8avJff9zlf8gkzkuZFObYwWTlcBOciKqAI2EpHCClK1RjVAV4Jkhy9yM6hw7D161PVR+oGBVwkd7+v/FckEPIiKKQyRg7TuryTLqM3R66qL0WXvqfK2olIDYQqtirsiSPJsylxnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxixMpTF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a4KJhiNCUcQepb++jjf2h4wSc4+bnJzO/juwf4e+BCPm3PlDfpiohu1ZbMMvBZHpoRcE1GMXqWM8NHOcIB94iAZFORfWMr9ADdRxuXs0r0TM4CJRkml9oUd5LkxdpxO9qAxKWNkTnAxmnqBsWZbtbIv70XZxIVLjZMIo/JmNz8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUQ8ad7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxixMpTF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37831C4CEE3;
-	Tue, 29 Apr 2025 17:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUQ8ad7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F49C4CEE3;
+	Tue, 29 Apr 2025 17:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949283;
-	bh=QVLKmQATUUHhW0bYkpGih3rOCjp+LWK4CTlmAThMzUk=;
+	s=korg; t=1745949286;
+	bh=tgQukymdsI5znZszaY9qaUUDonaK04D53Edu+It52SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxixMpTFfv6PtXnkgSkBl+czJjomkiz+UA0yaVF8LD+h3T3Qh8LqFd7KdsbDo+coT
-	 oc114wrtmQxD14S74nW403q2RcQRatVCku67Mct+f4DcQeKN6L+02/dzV0bKoo0cjr
-	 20Cu9+DhxHQCqOC7NS5HEG6HT9nfdSGelY8KZSDU=
+	b=RUQ8ad7ol0nUI8kcGPzXFyKtNPC9oYnwYOzNCHVebo9GKoaQUKBUCMP5L9k5R1KUM
+	 zp0Msta1heMbHn4GO50ilDMp6Zubn+lNcsXfQaW/E2uDTJBHb3e4pRISJtQtRmhrdS
+	 5k6KGi2xeuWreo3FrEyglyJf1ZxY9e6jD/Et0x5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Lee Jones <lee@kernel.org>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 269/373] backlight: led_bl: Hold led_access lock when calling led_sysfs_disable()
-Date: Tue, 29 Apr 2025 18:42:26 +0200
-Message-ID: <20250429161134.185051478@linuxfoundation.org>
+Subject: [PATCH 5.15 270/373] cifs: print TIDs as hex
+Date: Tue, 29 Apr 2025 18:42:27 +0200
+Message-ID: <20250429161134.225447722@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,53 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-[ Upstream commit 276822a00db3c1061382b41e72cafc09d6a0ec30 ]
+[ Upstream commit 71081e7ac16c93acdd18afa65daa468620bb1b64 ]
 
-Lockdep detects the following issue on led-backlight removal:
-  [  142.315935] ------------[ cut here ]------------
-  [  142.315954] WARNING: CPU: 2 PID: 292 at drivers/leds/led-core.c:455 led_sysfs_enable+0x54/0x80
-  ...
-  [  142.500725] Call trace:
-  [  142.503176]  led_sysfs_enable+0x54/0x80 (P)
-  [  142.507370]  led_bl_remove+0x80/0xa8 [led_bl]
-  [  142.511742]  platform_remove+0x30/0x58
-  [  142.515501]  device_remove+0x54/0x90
-  ...
+Makes these debug messages easier to read
 
-Indeed, led_sysfs_enable() has to be called with the led_access
-lock held.
-
-Hold the lock when calling led_sysfs_disable().
-
-Fixes: ae232e45acf9 ("backlight: add led-backlight driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20250122091914.309533-1-herve.codina@bootlin.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: b4885bd5935b ("cifs: avoid NULL pointer dereference in dbg call")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/led_bl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/cifs/connect.c  | 2 +-
+ fs/cifs/smb2misc.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
-index a1b6a2ad73a07..589dae9ebb638 100644
---- a/drivers/video/backlight/led_bl.c
-+++ b/drivers/video/backlight/led_bl.c
-@@ -226,8 +226,11 @@ static void led_bl_remove(struct platform_device *pdev)
- 	backlight_device_unregister(bl);
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 96788385e1e73..51ceaf9ea3151 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1683,7 +1683,7 @@ cifs_setup_ipc(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+ 		goto out;
+ 	}
  
- 	led_bl_power_off(priv);
--	for (i = 0; i < priv->nb_leds; i++)
-+	for (i = 0; i < priv->nb_leds; i++) {
-+		mutex_lock(&priv->leds[i]->led_access);
- 		led_sysfs_enable(priv->leds[i]);
-+		mutex_unlock(&priv->leds[i]->led_access);
-+	}
- }
+-	cifs_dbg(FYI, "IPC tcon rc = %d ipc tid = %d\n", rc, tcon->tid);
++	cifs_dbg(FYI, "IPC tcon rc=%d ipc tid=0x%x\n", rc, tcon->tid);
  
- static const struct of_device_id led_bl_of_match[] = {
+ 	ses->tcon_ipc = tcon;
+ out:
+diff --git a/fs/cifs/smb2misc.c b/fs/cifs/smb2misc.c
+index 89a2f38f17f37..12b6684f2d372 100644
+--- a/fs/cifs/smb2misc.c
++++ b/fs/cifs/smb2misc.c
+@@ -791,7 +791,7 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
+ 		if (tcon->ses)
+ 			server = tcon->ses->server;
+ 
+-		cifs_server_dbg(FYI, "tid=%u: tcon is closing, skipping async close retry of fid %llu %llu\n",
++		cifs_server_dbg(FYI, "tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
+ 				tcon->tid, persistent_fid, volatile_fid);
+ 
+ 		return 0;
 -- 
 2.39.5
 
