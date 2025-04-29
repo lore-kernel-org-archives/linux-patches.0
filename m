@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E934B221DA7;
-	Tue, 29 Apr 2025 17:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D03421ABC1;
+	Tue, 29 Apr 2025 17:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948802; cv=none; b=r8eFNNlBKK0eSfPUBiSaIa2lcNkQb5ixCNZf9AxFVzVU20s7QFa07mr0U+2NRj7JGq/94beawLtGCTCMvNS1yBFX6HI78CAEXMQFItbk9JeeBU3KZS6ssSeFesMnvDd2L+cbd0Ds04CJ/8eEce+6Lwrod1WPUim5kf8EtG8m4Hg=
+	t=1745948804; cv=none; b=KrS+ryndTPz997X/8Ig1e92XO88cQYDsKbr4F3yy03cWS7i31wadx9Cd7YqWK0nRVJRy4tTe01XGopuNErMMOiSw/+/JUqMuHetsqfwCe7xxoD/g8Spi3Ql3YxDi6gQ5f9PVUk8ZCCOHz/S0MTvDDUMsEHSDPkR8m3UwhsKjgjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948802; c=relaxed/simple;
-	bh=AgC5GTJseNshcFaWeYgHMm4sRLmdG8gPXuQitfYw9Xc=;
+	s=arc-20240116; t=1745948804; c=relaxed/simple;
+	bh=aFoT2K9xbqE8cl3gr8+C/rSnwtHSGRCyjtnkX8NaofM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AACgeKzJLInFXdBcbp5XNASnea5WWkmios/lLH1Gzyg5f6fIJ+D3sSMGQ8NhXe9rHo+ojjZyig914hJMp/ou4sOVARe6YxB64QMSeDqghWuwZ9b6w3zyyzS3hZiWO9OYZA4Hs6ym01eg/rVffVRErwDqjGizzSlXyMd61H0yf5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJP3nKOj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjyE3WiqRYu4Rj5WDkKVrKzUVCgsKZVTNshfQvpLvAcugEBcN5hAPc6o2jLNJQZ7KIn09A27gi/Lcm6LNdDTOYyOCT4xovTOtD69xcEDEj87kDwRxN5lgPzDYHk7L4HGnjHyGb0hF5Pq0xRpMV8IMG+dHlHKraIiB00uGdMh4tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r362Nhlf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJP3nKOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3FC4CEE3;
-	Tue, 29 Apr 2025 17:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r362Nhlf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE5FC4CEE3;
+	Tue, 29 Apr 2025 17:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948801;
-	bh=AgC5GTJseNshcFaWeYgHMm4sRLmdG8gPXuQitfYw9Xc=;
+	s=korg; t=1745948804;
+	bh=aFoT2K9xbqE8cl3gr8+C/rSnwtHSGRCyjtnkX8NaofM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJP3nKOjH5UxeVr54357SMxh1ZH8aEM2e25iiBukmiTu2PQ0prWzPgj+tRPJKo+MS
-	 xvECETrg8b1I69cYP+YgCSqIPrW+AnecTwf5RQQ9+XCsPw54cCp3FduG40KYIm/TY6
-	 MPWfefoGlWzV0lr86w2atI1e1/DoqLkLiuP1f2a8=
+	b=r362NhlfZHfrRUM98yASeQjsqIMocWHBnfuI+x9hn1ax9MSHrJ6wGga1oa6IJkjHF
+	 oT0ff7aIiph+qoCcHrI7CRw37MkmiXfW2AtOIb5KDlKRL/1TWWHZ4NZEqD3zsRqArD
+	 gsYBH1OC6nB8HnXY2q4pEZP4Zkuyh0T1zaYmRK+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Chenyuan Yang <chenyuan0y@gmail.com>
-Subject: [PATCH 5.15 091/373] mfd: ene-kb3930: Fix a potential NULL pointer dereference
-Date: Tue, 29 Apr 2025 18:39:28 +0200
-Message-ID: <20250429161126.903404330@linuxfoundation.org>
+	Roberto Ricci <io@r-ricci.it>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Len Brown <len.brown@intel.com>
+Subject: [PATCH 5.15 118/373] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
+Date: Tue, 29 Apr 2025 18:39:55 +0200
+Message-ID: <20250429161128.029138592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -50,37 +58,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit 4cdf1d2a816a93fa02f7b6b5492dc7f55af2a199 upstream.
+commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
 
-The off_gpios could be NULL. Add missing check in the kb3930_probe().
-This is similar to the issue fixed in commit b1ba8bcb2d1f
-("backlight: hx8357: Fix potential NULL pointer dereference").
+While debugging kexec/hibernation hangs and crashes, it turned out that
+the current implementation of e820__register_nosave_regions() suffers from
+multiple serious issues:
 
-This was detected by our static analysis tool.
+ - The end of last region is tracked by PFN, causing it to find holes
+   that aren't there if two consecutive subpage regions are present
 
+ - The nosave PFN ranges derived from holes are rounded out (instead of
+   rounded in) which makes it inconsistent with how explicitly reserved
+   regions are handled
+
+Fix this by:
+
+ - Treating reserved regions as if they were holes, to ensure consistent
+   handling (rounding out nosave PFN ranges is more correct as the
+   kernel does not use partial pages)
+
+ - Tracking the end of the last RAM region by address instead of pages
+   to detect holes more precisely
+
+These bugs appear to have been introduced about ~18 years ago with the very
+first version of e820_mark_nosave_regions(), and its flawed assumptions were
+carried forward uninterrupted through various waves of rewrites and renames.
+
+[ mingo: Added Git archeology details, for kicks and giggles. ]
+
+Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Tested-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Len Brown <len.brown@intel.com>
 Cc: stable@vger.kernel.org
-Fixes: ede6b2d1dfc0 ("mfd: ene-kb3930: Add driver for ENE KB3930 Embedded Controller")
-Suggested-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250224233736.1919739-1-chenyuan0y@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
+Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/ene-kb3930.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/e820.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/mfd/ene-kb3930.c
-+++ b/drivers/mfd/ene-kb3930.c
-@@ -162,7 +162,7 @@ static int kb3930_probe(struct i2c_clien
- 			devm_gpiod_get_array_optional(dev, "off", GPIOD_IN);
- 		if (IS_ERR(ddata->off_gpios))
- 			return PTR_ERR(ddata->off_gpios);
--		if (ddata->off_gpios->ndescs < 2) {
-+		if (ddata->off_gpios && ddata->off_gpios->ndescs < 2) {
- 			dev_err(dev, "invalid off-gpios property\n");
- 			return -EINVAL;
- 		}
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -753,22 +753,21 @@ void __init e820__memory_setup_extended(
+ void __init e820__register_nosave_regions(unsigned long limit_pfn)
+ {
+ 	int i;
+-	unsigned long pfn = 0;
++	u64 last_addr = 0;
+ 
+ 	for (i = 0; i < e820_table->nr_entries; i++) {
+ 		struct e820_entry *entry = &e820_table->entries[i];
+ 
+-		if (pfn < PFN_UP(entry->addr))
+-			register_nosave_region(pfn, PFN_UP(entry->addr));
+-
+-		pfn = PFN_DOWN(entry->addr + entry->size);
+-
+ 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
+-			register_nosave_region(PFN_UP(entry->addr), pfn);
++			continue;
+ 
+-		if (pfn >= limit_pfn)
+-			break;
++		if (last_addr < entry->addr)
++			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
++
++		last_addr = entry->addr + entry->size;
+ 	}
++
++	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
+ }
+ 
+ #ifdef CONFIG_ACPI
 
 
