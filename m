@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49BE1FE468;
-	Tue, 29 Apr 2025 17:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9AF2528F3;
+	Tue, 29 Apr 2025 17:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947684; cv=none; b=Qv1D0GRKDMSEVnpvBUVWCsGoiD2rA5y3GIaX/8sF0OlhiAbgxt2tMwiIcBL5q4kV+IF4kYlmvFUtEOUCCb7i0paQhiMhoyJFgsgxU+F19zU4qWhBHIBD1EAr/yeVzYAFREHrqgJL/P+xHTPomVRlZpEdHiy7kBNeMwqxSx9QDBo=
+	t=1745947688; cv=none; b=njYMoJ4k/7f2/OO9rbbSGavbScIKeYc8WgF4oQG1wDtY14g5gzdNSMvIx9BZDkX8IXH0/PdtA1I+JXSbLDCLuTFhIBEf6YhyhxfO7ncyik3AWkdXom/gvFisGZIEoim86UEliOLAP/gYyUs66YXw9/KcNyRxBYb5Uq0ZkrBNX7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947684; c=relaxed/simple;
-	bh=xZGiiTfWWjd1Eh0JXN/0XbyafyR/4iR4FH5jQ7s7/fQ=;
+	s=arc-20240116; t=1745947688; c=relaxed/simple;
+	bh=Qrqmpu+oCEG1sUxIscpKSHKkR62T5G5vPhilv+yTLaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1MrgjMswGYI3NmmTGH86tK0K82zOs4OgLjM+IiWrnDrbabxXjyS25ljBDPAD1tDrSEe3im+rxKFokXVaFgKZK0hU6Tlj40ZPkCzN4UcaJa/67Sk5EkUW/krWd5BwXaoJFS5iyu3PUcXSFG5AZrF16NGuwOiGoOIHdIQ6kAOUZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAKmyiIb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hyBmfYoky2Hc/pxEm+TgndpELhB9tIjwyyE+QsgkAV0TMOfdfdIr1Eir3o+Ox3vpPpQkfmstyp/f5dSsr7ERXuC9pi3al1bSOGt81B4/Jvvo9T1qJymrPIfSO5wq1XxXW6pdzgyX+0JMbLxVcpfO8LN7fhSSkk3hzqEHv/DK4CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2sa3dUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAKmyiIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA633C4CEE9;
-	Tue, 29 Apr 2025 17:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2sa3dUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF34C4CEF1;
+	Tue, 29 Apr 2025 17:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947684;
-	bh=xZGiiTfWWjd1Eh0JXN/0XbyafyR/4iR4FH5jQ7s7/fQ=;
+	s=korg; t=1745947688;
+	bh=Qrqmpu+oCEG1sUxIscpKSHKkR62T5G5vPhilv+yTLaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JAKmyiIbVPxyVJhW7lz1/UrHlnmc5ZujgZD3mQ6KF6uehA37ujLxJJTvFIak5ciVz
-	 /+pxlCLC0In+sLqJKp5AWWHgWJLZOStVv93JlXpfJvPb8YIfKpDo7+acTEPQVph97c
-	 +kEyAX4JCwhp59hKIQqJFk+PXjuNbdYqEVcy/PhU=
+	b=f2sa3dUi43rMXp1vPIqg6V4w7CTi4rDuqmBbEXYKfAZ/8Ttik2UtFECiu6A6N4kb4
+	 9HOwEGTu7nX0xOX1NNpMTrB+BjZb3Wca6f9xhszVAbsUflycjZfQcZiKWVuU7hJZLa
+	 a7LS86itA8wPZiBFHqhH0GKymC6f0pJakuEC0gog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Currier <dullfire@yahoo.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Clint Taylor <Clinton.A.Taylor@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/280] net/niu: Niu requires MSIX ENTRY_DATA fields touch before entry reads
-Date: Tue, 29 Apr 2025 18:39:46 +0200
-Message-ID: <20250429161116.962915167@linuxfoundation.org>
+Subject: [PATCH 6.12 046/280] drm/xe/bmg: Add one additional PCI ID
+Date: Tue, 29 Apr 2025 18:39:47 +0200
+Message-ID: <20250429161117.002653535@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,84 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Currier <dullfire@yahoo.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit fbb429ddff5c8e479edcc7dde5a542c9295944e6 ]
+[ Upstream commit 5529df92b8e8cbb4b14a226665888f74648260ad ]
 
-Fix niu_try_msix() to not cause a fatal trap on sparc systems.
+One additional BMG PCI ID has been added to the spec; make sure our
+driver recognizes devices with this ID properly.
 
-Set PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST on the struct pci_dev to
-work around a bug in the hardware or firmware.
-
-For each vector entry in the msix table, niu chips will cause a fatal
-trap if any registers in that entry are read before that entries'
-ENTRY_DATA register is written to. Testing indicates writes to other
-registers are not sufficient to prevent the fatal trap, however the value
-does not appear to matter. This only needs to happen once after power up,
-so simply rebooting into a kernel lacking this fix will NOT cause the
-trap.
-
-NON-RESUMABLE ERROR: Reporting on cpu 64
-NON-RESUMABLE ERROR: TPC [0x00000000005f6900] <msix_prepare_msi_desc+0x90/0xa0>
-NON-RESUMABLE ERROR: RAW [4010000000000016:00000e37f93e32ff:0000000202000080:ffffffffffffffff
-NON-RESUMABLE ERROR:      0000000800000000:0000000000000000:0000000000000000:0000000000000000]
-NON-RESUMABLE ERROR: handle [0x4010000000000016] stick [0x00000e37f93e32ff]
-NON-RESUMABLE ERROR: type [precise nonresumable]
-NON-RESUMABLE ERROR: attrs [0x02000080] < ASI sp-faulted priv >
-NON-RESUMABLE ERROR: raddr [0xffffffffffffffff]
-NON-RESUMABLE ERROR: insn effective address [0x000000c50020000c]
-NON-RESUMABLE ERROR: size [0x8]
-NON-RESUMABLE ERROR: asi [0x00]
-CPU: 64 UID: 0 PID: 745 Comm: kworker/64:1 Not tainted 6.11.5 #63
-Workqueue: events work_for_cpu_fn
-TSTATE: 0000000011001602 TPC: 00000000005f6900 TNPC: 00000000005f6904 Y: 00000000    Not tainted
-TPC: <msix_prepare_msi_desc+0x90/0xa0>
-g0: 00000000000002e9 g1: 000000000000000c g2: 000000c50020000c g3: 0000000000000100
-g4: ffff8000470307c0 g5: ffff800fec5be000 g6: ffff800047a08000 g7: 0000000000000000
-o0: ffff800014feb000 o1: ffff800047a0b620 o2: 0000000000000011 o3: ffff800047a0b620
-o4: 0000000000000080 o5: 0000000000000011 sp: ffff800047a0ad51 ret_pc: 00000000005f7128
-RPC: <__pci_enable_msix_range+0x3cc/0x460>
-l0: 000000000000000d l1: 000000000000c01f l2: ffff800014feb0a8 l3: 0000000000000020
-l4: 000000000000c000 l5: 0000000000000001 l6: 0000000020000000 l7: ffff800047a0b734
-i0: ffff800014feb000 i1: ffff800047a0b730 i2: 0000000000000001 i3: 000000000000000d
-i4: 0000000000000000 i5: 0000000000000000 i6: ffff800047a0ae81 i7: 00000000101888b0
-I7: <niu_try_msix.constprop.0+0xc0/0x130 [niu]>
-Call Trace:
-[<00000000101888b0>] niu_try_msix.constprop.0+0xc0/0x130 [niu]
-[<000000001018f840>] niu_get_invariants+0x183c/0x207c [niu]
-[<00000000101902fc>] niu_pci_init_one+0x27c/0x2fc [niu]
-[<00000000005ef3e4>] local_pci_probe+0x28/0x74
-[<0000000000469240>] work_for_cpu_fn+0x8/0x1c
-[<000000000046b008>] process_scheduled_works+0x144/0x210
-[<000000000046b518>] worker_thread+0x13c/0x1c0
-[<00000000004710e0>] kthread+0xb8/0xc8
-[<00000000004060c8>] ret_from_fork+0x1c/0x2c
-[<0000000000000000>] 0x0
-Kernel panic - not syncing: Non-resumable error.
-
-Fixes: 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries")
-Signed-off-by: Jonathan Currier <dullfire@yahoo.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241117234843.19236-3-dullfire@yahoo.com
+Bspec: 68090
+Cc: stable@vger.kernel.org # v6.12+
+Reviewed-by: Clint Taylor <Clinton.A.Taylor@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://lore.kernel.org/r/20250325224709.4073080-2-matthew.d.roper@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit cca9734ebe55f6af11ce8d57ca1afdc4d158c808)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/niu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/drm/intel/i915_pciids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
-index 41a27ae58cedf..f5449b73b9a76 100644
---- a/drivers/net/ethernet/sun/niu.c
-+++ b/drivers/net/ethernet/sun/niu.c
-@@ -9058,6 +9058,8 @@ static void niu_try_msix(struct niu *np, u8 *ldg_num_map)
- 		msi_vec[i].entry = i;
- 	}
- 
-+	pdev->dev_flags |= PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST;
-+
- 	num_irqs = pci_enable_msix_range(pdev, msi_vec, 1, num_irqs);
- 	if (num_irqs < 0) {
- 		np->flags &= ~NIU_FLAGS_MSIX;
+diff --git a/include/drm/intel/i915_pciids.h b/include/drm/intel/i915_pciids.h
+index dacea289acaf5..1ff00e3d4418e 100644
+--- a/include/drm/intel/i915_pciids.h
++++ b/include/drm/intel/i915_pciids.h
+@@ -810,6 +810,7 @@
+ 	MACRO__(0xE20C, ## __VA_ARGS__), \
+ 	MACRO__(0xE20D, ## __VA_ARGS__), \
+ 	MACRO__(0xE210, ## __VA_ARGS__), \
++	MACRO__(0xE211, ## __VA_ARGS__), \
+ 	MACRO__(0xE212, ## __VA_ARGS__), \
+ 	MACRO__(0xE215, ## __VA_ARGS__), \
+ 	MACRO__(0xE216, ## __VA_ARGS__)
 -- 
 2.39.5
 
