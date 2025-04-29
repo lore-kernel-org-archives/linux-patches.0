@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF5C1FE468;
-	Tue, 29 Apr 2025 17:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49BE1FE468;
+	Tue, 29 Apr 2025 17:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947681; cv=none; b=ET6R1QHbj8xynvw0dLYimu4o5gRu9USirFKMK8c8IhAy/ZQssdBqK/aUx7xB8qosfeaJegqhBVe/QhNQVYgHfPi4djP3vZqeZ6zfwb9vWYNBqyQZYK7CJRWW+0ciUPhvl//pWQKrTBKAwjZa0f5dc2xYXyCotbAnkCp+rLZxyK4=
+	t=1745947684; cv=none; b=Qv1D0GRKDMSEVnpvBUVWCsGoiD2rA5y3GIaX/8sF0OlhiAbgxt2tMwiIcBL5q4kV+IF4kYlmvFUtEOUCCb7i0paQhiMhoyJFgsgxU+F19zU4qWhBHIBD1EAr/yeVzYAFREHrqgJL/P+xHTPomVRlZpEdHiy7kBNeMwqxSx9QDBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947681; c=relaxed/simple;
-	bh=zTARzdI1Ikc0B2a3YeAEgCKl/huQw9DBJgMHWhoN7dY=;
+	s=arc-20240116; t=1745947684; c=relaxed/simple;
+	bh=xZGiiTfWWjd1Eh0JXN/0XbyafyR/4iR4FH5jQ7s7/fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4gnbXS/tZJ70xifAB2JC2WHE3rgtTEorpEHDK5PXe/YLh+36+JqNoFtEZwd6+ZgMCodVCXGPgnyURdE7/FE72j1T8oay8T75Od+9j68XnZRVxhlWVNZ7vptsYCtvPmzqBhuEwNg/JKQn+5Y/aVFpUoChxl52lLbGobNEHjRyMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSi9oCya; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1MrgjMswGYI3NmmTGH86tK0K82zOs4OgLjM+IiWrnDrbabxXjyS25ljBDPAD1tDrSEe3im+rxKFokXVaFgKZK0hU6Tlj40ZPkCzN4UcaJa/67Sk5EkUW/krWd5BwXaoJFS5iyu3PUcXSFG5AZrF16NGuwOiGoOIHdIQ6kAOUZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAKmyiIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSi9oCya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E219DC4CEE9;
-	Tue, 29 Apr 2025 17:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAKmyiIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA633C4CEE9;
+	Tue, 29 Apr 2025 17:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947681;
-	bh=zTARzdI1Ikc0B2a3YeAEgCKl/huQw9DBJgMHWhoN7dY=;
+	s=korg; t=1745947684;
+	bh=xZGiiTfWWjd1Eh0JXN/0XbyafyR/4iR4FH5jQ7s7/fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSi9oCyalY9P7ChtVSFuRmG8iPUQBhkYi97XdCnMEw1djceuWoezBO4H9FfsULlex
-	 wTyhOq1A+kPeQTpAaSjY3s4G35AgKcTvT3D40rKda4/XcLZ0O8f3VhIc/1tqn8VYPN
-	 CaUODT6tU3T6o8wD587UWyDJF2XsGrQ95HXvCcfM=
+	b=JAKmyiIbVPxyVJhW7lz1/UrHlnmc5ZujgZD3mQ6KF6uehA37ujLxJJTvFIak5ciVz
+	 /+pxlCLC0In+sLqJKp5AWWHgWJLZOStVv93JlXpfJvPb8YIfKpDo7+acTEPQVph97c
+	 +kEyAX4JCwhp59hKIQqJFk+PXjuNbdYqEVcy/PhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Chanho Park <chanho61.park@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jonathan Currier <dullfire@yahoo.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/280] scsi: ufs: exynos: Disable iocc if dma-coherent property isnt set
-Date: Tue, 29 Apr 2025 18:39:45 +0200
-Message-ID: <20250429161116.922860311@linuxfoundation.org>
+Subject: [PATCH 6.12 045/280] net/niu: Niu requires MSIX ENTRY_DATA fields touch before entry reads
+Date: Tue, 29 Apr 2025 18:39:46 +0200
+Message-ID: <20250429161116.962915167@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,84 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Jonathan Currier <dullfire@yahoo.com>
 
-[ Upstream commit f92bb7436802f8eb7ee72dc911a33c8897fde366 ]
+[ Upstream commit fbb429ddff5c8e479edcc7dde5a542c9295944e6 ]
 
-If dma-coherent property isn't set then descriptors are non-cacheable
-and the iocc shareability bits should be disabled. Without this UFS can
-end up in an incompatible configuration and suffer from random cache
-related stability issues.
+Fix niu_try_msix() to not cause a fatal trap on sparc systems.
 
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Fixes: cc52e15397cc ("scsi: ufs: ufs-exynos: Support ExynosAuto v9 UFS")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-3-96722cc2ba1b@linaro.org
-Cc: Chanho Park <chanho61.park@samsung.com>
+Set PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST on the struct pci_dev to
+work around a bug in the hardware or firmware.
+
+For each vector entry in the msix table, niu chips will cause a fatal
+trap if any registers in that entry are read before that entries'
+ENTRY_DATA register is written to. Testing indicates writes to other
+registers are not sufficient to prevent the fatal trap, however the value
+does not appear to matter. This only needs to happen once after power up,
+so simply rebooting into a kernel lacking this fix will NOT cause the
+trap.
+
+NON-RESUMABLE ERROR: Reporting on cpu 64
+NON-RESUMABLE ERROR: TPC [0x00000000005f6900] <msix_prepare_msi_desc+0x90/0xa0>
+NON-RESUMABLE ERROR: RAW [4010000000000016:00000e37f93e32ff:0000000202000080:ffffffffffffffff
+NON-RESUMABLE ERROR:      0000000800000000:0000000000000000:0000000000000000:0000000000000000]
+NON-RESUMABLE ERROR: handle [0x4010000000000016] stick [0x00000e37f93e32ff]
+NON-RESUMABLE ERROR: type [precise nonresumable]
+NON-RESUMABLE ERROR: attrs [0x02000080] < ASI sp-faulted priv >
+NON-RESUMABLE ERROR: raddr [0xffffffffffffffff]
+NON-RESUMABLE ERROR: insn effective address [0x000000c50020000c]
+NON-RESUMABLE ERROR: size [0x8]
+NON-RESUMABLE ERROR: asi [0x00]
+CPU: 64 UID: 0 PID: 745 Comm: kworker/64:1 Not tainted 6.11.5 #63
+Workqueue: events work_for_cpu_fn
+TSTATE: 0000000011001602 TPC: 00000000005f6900 TNPC: 00000000005f6904 Y: 00000000    Not tainted
+TPC: <msix_prepare_msi_desc+0x90/0xa0>
+g0: 00000000000002e9 g1: 000000000000000c g2: 000000c50020000c g3: 0000000000000100
+g4: ffff8000470307c0 g5: ffff800fec5be000 g6: ffff800047a08000 g7: 0000000000000000
+o0: ffff800014feb000 o1: ffff800047a0b620 o2: 0000000000000011 o3: ffff800047a0b620
+o4: 0000000000000080 o5: 0000000000000011 sp: ffff800047a0ad51 ret_pc: 00000000005f7128
+RPC: <__pci_enable_msix_range+0x3cc/0x460>
+l0: 000000000000000d l1: 000000000000c01f l2: ffff800014feb0a8 l3: 0000000000000020
+l4: 000000000000c000 l5: 0000000000000001 l6: 0000000020000000 l7: ffff800047a0b734
+i0: ffff800014feb000 i1: ffff800047a0b730 i2: 0000000000000001 i3: 000000000000000d
+i4: 0000000000000000 i5: 0000000000000000 i6: ffff800047a0ae81 i7: 00000000101888b0
+I7: <niu_try_msix.constprop.0+0xc0/0x130 [niu]>
+Call Trace:
+[<00000000101888b0>] niu_try_msix.constprop.0+0xc0/0x130 [niu]
+[<000000001018f840>] niu_get_invariants+0x183c/0x207c [niu]
+[<00000000101902fc>] niu_pci_init_one+0x27c/0x2fc [niu]
+[<00000000005ef3e4>] local_pci_probe+0x28/0x74
+[<0000000000469240>] work_for_cpu_fn+0x8/0x1c
+[<000000000046b008>] process_scheduled_works+0x144/0x210
+[<000000000046b518>] worker_thread+0x13c/0x1c0
+[<00000000004710e0>] kthread+0xb8/0xc8
+[<00000000004060c8>] ret_from_fork+0x1c/0x2c
+[<0000000000000000>] 0x0
+Kernel panic - not syncing: Non-resumable error.
+
+Fixes: 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries")
+Signed-off-by: Jonathan Currier <dullfire@yahoo.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/all/20241117234843.19236-3-dullfire@yahoo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 17 +++++++++++++----
- drivers/ufs/host/ufs-exynos.h |  3 ++-
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/sun/niu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 453f1dee103c8..fd1ebb4fcd96c 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -210,8 +210,8 @@ static int exynos_ufs_shareability(struct exynos_ufs *ufs)
- 	/* IO Coherency setting */
- 	if (ufs->sysreg) {
- 		return regmap_update_bits(ufs->sysreg,
--					  ufs->shareability_reg_offset,
--					  ufs->iocc_mask, ufs->iocc_mask);
-+					  ufs->iocc_offset,
-+					  ufs->iocc_mask, ufs->iocc_val);
+diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
+index 41a27ae58cedf..f5449b73b9a76 100644
+--- a/drivers/net/ethernet/sun/niu.c
++++ b/drivers/net/ethernet/sun/niu.c
+@@ -9058,6 +9058,8 @@ static void niu_try_msix(struct niu *np, u8 *ldg_num_map)
+ 		msi_vec[i].entry = i;
  	}
  
- 	attr->tx_dif_p_nsec = 3200000;
-@@ -1147,13 +1147,22 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
- 		ufs->sysreg = NULL;
- 	else {
- 		if (of_property_read_u32_index(np, "samsung,sysreg", 1,
--					       &ufs->shareability_reg_offset)) {
-+					       &ufs->iocc_offset)) {
- 			dev_warn(dev, "can't get an offset from sysreg. Set to default value\n");
--			ufs->shareability_reg_offset = UFS_SHAREABILITY_OFFSET;
-+			ufs->iocc_offset = UFS_SHAREABILITY_OFFSET;
- 		}
- 	}
- 
- 	ufs->iocc_mask = ufs->drv_data->iocc_mask;
-+	/*
-+	 * no 'dma-coherent' property means the descriptors are
-+	 * non-cacheable so iocc shareability should be disabled.
-+	 */
-+	if (of_dma_is_coherent(dev->of_node))
-+		ufs->iocc_val = ufs->iocc_mask;
-+	else
-+		ufs->iocc_val = 0;
++	pdev->dev_flags |= PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST;
 +
- 	ufs->pclk_avail_min = PCLK_AVAIL_MIN;
- 	ufs->pclk_avail_max = PCLK_AVAIL_MAX;
- 
-diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
-index ad49d9cdd5c12..d0b3df221503c 100644
---- a/drivers/ufs/host/ufs-exynos.h
-+++ b/drivers/ufs/host/ufs-exynos.h
-@@ -231,8 +231,9 @@ struct exynos_ufs {
- 	ktime_t entry_hibern8_t;
- 	const struct exynos_ufs_drv_data *drv_data;
- 	struct regmap *sysreg;
--	u32 shareability_reg_offset;
-+	u32 iocc_offset;
- 	u32 iocc_mask;
-+	u32 iocc_val;
- 
- 	u32 opts;
- #define EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL		BIT(0)
+ 	num_irqs = pci_enable_msix_range(pdev, msi_vec, 1, num_irqs);
+ 	if (num_irqs < 0) {
+ 		np->flags &= ~NIU_FLAGS_MSIX;
 -- 
 2.39.5
 
