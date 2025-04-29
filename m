@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D0B253358;
-	Tue, 29 Apr 2025 17:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C7A1D7E35;
+	Tue, 29 Apr 2025 17:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948713; cv=none; b=IEEmI0eXu+SIpIuNnObW3I1OSh53UKJjlpk2bKinU73HZurf5BmzABHZDo3mc7DFw02uXSUZSkrqikydXur65MeSmBmmrptLWHPjMTLPNpuPABhNiV8jKy7ReiA/9GUEvFeHyFStK/2pC4V0oPiieRFOMyUkNp+CqbUFZwsQ0Yg=
+	t=1745948716; cv=none; b=X2fCe+BiVtP2JaMbAzYLjr14Q+gRQqrjxLIb6qHZPXwkOUonbCQXvpGssXugJEW6zMJQBcqGaTMDrMD9xv7h0ZPFWo4S6Hk/S6xcSKaWqPSPmjq5mjivXHopvIWkPPHLKUnS32mBPitbzZIzIVswQmiKey4P8T/06BvaRgS9xkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948713; c=relaxed/simple;
-	bh=6HJT8s8WoGC5/psz9MEzDfD3KFu6f+fVMOEBIhWyoVo=;
+	s=arc-20240116; t=1745948716; c=relaxed/simple;
+	bh=a0barJ5Ic9R2xok7rAx3tBdXlNlKZUH0G9t80ZPRBDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKQiHePx660cHOgb9eqg8Kgt5ooES4RAVI6UtChg2Ye8pSKGQIqbWmOL6lsJEDQPuTInKb0d7Jrem9fXGs0Kecda4d+0uxxHDJEjXQJ1l0rx8Ymh5UpF1NCWRZrLZl1ZwqUF8dp+tiTdv8vjGfc2n4y2EtH8GYJvuB8BnDpHl80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beL1lGdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfoLS1WWTJtJScds9MYJrip9hz9RYwVRaRrjLbUV2Zn5izeXetfjgIJmHA/eBvwOW4IR8pXeaFtFTYpTmWYYGkOlWab3XNCMmrgTRtuzCoNbdaIHvTqJhkujyCGzxxC8FH4oA3lnhYRaQxTKIxbjNLltg8vZlk6oSWW2WXOQvKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGu5ozAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beL1lGdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8504EC4CEEE;
-	Tue, 29 Apr 2025 17:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGu5ozAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18A8C4CEE9;
+	Tue, 29 Apr 2025 17:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948712;
-	bh=6HJT8s8WoGC5/psz9MEzDfD3KFu6f+fVMOEBIhWyoVo=;
+	s=korg; t=1745948716;
+	bh=a0barJ5Ic9R2xok7rAx3tBdXlNlKZUH0G9t80ZPRBDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beL1lGdbH8O3bSt95EqchtZwveP1LKMKKV9Owqva62kTyH16DSf5lg07Am8ebjHvt
-	 L71zkRKoVeMlLeh2FgB+y62A3OOGohw5UrZeNhgDsBCdMUydg6eoKivI4+7FCBo49E
-	 BQj6PG9lH+FtUlnEiWvmW32/cQq46dsu3/f4kLz0=
+	b=EGu5ozABEvSGuUf0+LgWI2CVbF35cxWuPO6ROs87qbLkNYNiDIbe/WMAmPd5BIXGv
+	 //Ku1FLdsxeRAlF30HTDMYDJ2eJ/4QQH4HJFawyTGInPlp6SWdBsn3CEiI0+UZhA++
+	 h8hoi2QQ7toEPmR+NHk6S72ZADyswulQylBwT25c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 059/373] media: venus: hfi: add a check to handle OOB in sfr region
-Date: Tue, 29 Apr 2025 18:38:56 +0200
-Message-ID: <20250429161125.553644404@linuxfoundation.org>
+Subject: [PATCH 5.15 060/373] media: venus: hfi: add check to handle incorrect queue size
+Date: Tue, 29 Apr 2025 18:38:57 +0200
+Message-ID: <20250429161125.594068618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,11 +53,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit f4b211714bcc70effa60c34d9fa613d182e3ef1e upstream.
+commit 69baf245b23e20efda0079238b27fc63ecf13de1 upstream.
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer. Cap the size to allocated size for such cases.
+qsize represents size of shared queued between driver and video
+firmware. Firmware can modify this value to an invalid large value. In
+such situation, empty_space will be bigger than the space actually
+available. Since new_wr_idx is not checked, so the following code will
+result in an OOB write.
+...
+qsize = qhdr->q_size
+
+if (wr_idx >= rd_idx)
+ empty_space = qsize - (wr_idx - rd_idx)
+....
+if (new_wr_idx < qsize) {
+ memcpy(wr_ptr, packet, dwords << 2) --> OOB write
+
+Add check to ensure qsize is within the allocated size while
+reading and writing packets into the queue.
 
 Cc: stable@vger.kernel.org
 Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
@@ -66,39 +79,30 @@ Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/media/platform/qcom/venus/hfi_venus.c
 +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1023,18 +1023,26 @@ static void venus_sfr_print(struct venus
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
+@@ -187,6 +187,9 @@ static int venus_write_queue(struct venu
+ 	/* ensure rd/wr indices's are read from memory */
+ 	rmb();
  
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (!size)
-+		return;
++	if (qsize > IFACEQ_QUEUE_SIZE / 4)
++		return -EINVAL;
 +
-+	if (size > ALIGNED_SFR_SIZE)
-+		size = ALIGNED_SFR_SIZE;
-+
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
+ 	if (wr_idx >= rd_idx)
+ 		empty_space = qsize - (wr_idx - rd_idx);
+ 	else
+@@ -255,6 +258,9 @@ static int venus_read_queue(struct venus
+ 	wr_idx = qhdr->write_idx;
+ 	qsize = qhdr->q_size;
  
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
++	if (qsize > IFACEQ_QUEUE_SIZE / 4)
++		return -EINVAL;
++
+ 	/* make sure data is valid before using it */
+ 	rmb();
+ 
 
 
