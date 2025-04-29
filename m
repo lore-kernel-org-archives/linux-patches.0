@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F71211A0B;
-	Tue, 29 Apr 2025 17:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B8211A0B;
+	Tue, 29 Apr 2025 17:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946388; cv=none; b=XeqJU+bLn5MakMusbw0S2qRTCp85ESgozW7R/TmGdq4aXfB6YW2lUVK9g2NJscz7z3A6jl20y0UX3mZSqeT2N0M/l6vQXnWqpypaOeTw3ivIvrnh1YQlT8bjzFJTwTVsqPvAc08j+BNTyaSOuyyZLuRH6alRjT58YXaFzs5qyMw=
+	t=1745946391; cv=none; b=CCQ8oPr4yMDklgBmX8jlYGOnBkNsxmLLG8UixaQcf1St+xtbc07nxEwPG8QJl8+yyLinsfbEVljsL5kPD9Ork8h6FQOo/jufeIhQjduhG5XHkNaxMRsoEQcmsrLoW+Sl20grm8TF76dDZQw9dniEZoN1rX4+p/TE8l9GAfMV3FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946388; c=relaxed/simple;
-	bh=flDUYLgVDQ8Oqy4mCugBshXGxVUcIFLx7AsxP0gZKqk=;
+	s=arc-20240116; t=1745946391; c=relaxed/simple;
+	bh=9vD1Tshq2693gFqSUektjmnjqg8/4y6QZkWWp6u9r+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i843uR34SMydg99JupWVgLOsaauZflGAfX/j605Wj2yf6+S7mynSocfnQc0s1f+yIJ5sMDWGc5NoCbVLC0ZhD8nPjop7TVa3LwgtgVXs6u/m1H/EAnPdVlXIf+bQh59wscOlGXVON9sb6XkQ/vOpSPbOWf9TkrbfT9mHp0EU4uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hp2ClIgi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEOTCtDbm0zINyUTK85glxLKrlVgMG7+j9CU7m4tdwrDBAngvxt+20d/Bt/P65vuoWhd0M1M4wt9sjGqrHjx/mXIXl4mMkRk7sF2EVn7oyA/+QUoNIFyqSK3yrm6GyaG6XW48bbAiIZsVtooz3n15hYYodSD4BlDvgh3xmU6OTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWc/Q8lD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hp2ClIgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00B3C4CEE3;
-	Tue, 29 Apr 2025 17:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWc/Q8lD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5AFC4CEE3;
+	Tue, 29 Apr 2025 17:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946388;
-	bh=flDUYLgVDQ8Oqy4mCugBshXGxVUcIFLx7AsxP0gZKqk=;
+	s=korg; t=1745946390;
+	bh=9vD1Tshq2693gFqSUektjmnjqg8/4y6QZkWWp6u9r+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hp2ClIgiTRSUFdh0CN5kJRl3EPqNXAkK7KD/3QQlmYaqRJBCYC1FaEUg/PpABBkNJ
-	 J7ikKmvFxygUFOIy/3yjLsQ3RCb3p5a12vptaFTMv3xeKBNN1tBV8IT37NTsvQam65
-	 F7gFti1hG41S+oJZUHekwiSuwcHHfwoSgBszEcR0=
+	b=LWc/Q8lDYD1VnZvcb0RUHPldP/Gcwog0qyfEWQi5+XXez2XDY75Q9UGkZL/0MKXAZ
+	 uZfzcFQkQVYYegIazlJzQkDBoqo5N5zA8b+L62JamZTcsj5S5btVMJxdTQntWZJfbX
+	 gTJwub5hcNm1TanCk8RxDgZjBOlFvVaQRva5wZb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 220/311] iommu/arm-smmu-v3: Set MEV bit in nested STE for DoS mitigations
-Date: Tue, 29 Apr 2025 18:40:57 +0200
-Message-ID: <20250429161130.030879058@linuxfoundation.org>
+Subject: [PATCH 6.14 221/311] objtool: Silence more KCOV warnings
+Date: Tue, 29 Apr 2025 18:40:58 +0200
+Message-ID: <20250429161130.072034407@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,82 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit da0c56520e880441d0503d0cf0d6853dcfb5f1a4 ]
+[ Upstream commit 6b023c7842048c4bbeede802f3cf36b96c7a8b25 ]
 
-There is a DoS concern on the shared hardware event queue among devices
-passed through to VMs, that too many translation failures that belong to
-VMs could overflow the shared hardware event queue if those VMs or their
-VMMs don't handle/recover the devices properly.
+In the past there were issues with KCOV triggering unreachable
+instruction warnings, which is why unreachable warnings are now disabled
+with CONFIG_KCOV.
 
-The MEV bit in the STE allows to configure the SMMU HW to merge similar
-event records, though there is no guarantee. Set it in a nested STE for
-DoS mitigations.
+Now some new KCOV warnings are showing up with GCC 14:
 
-In the future, we might want to enable the MEV for non-nested cases too
-such as domain->type == IOMMU_DOMAIN_UNMANAGED or even IOMMU_DOMAIN_DMA.
+  vmlinux.o: warning: objtool: cpuset_write_resmask() falls through to next function cpuset_update_active_cpus.cold()
+  drivers/usb/core/driver.o: error: objtool: usb_deregister() falls through to next function usb_match_device()
+  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
 
-Link: https://patch.msgid.link/r/8ed12feef67fc65273d0f5925f401a81f56acebe.1741719725.git.nicolinc@nvidia.com
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+All are caused by GCC KCOV not finishing an optimization, leaving behind
+a never-taken conditional branch to a basic block which falls through to
+the next function (or end of section).
+
+At a high level this is similar to the unreachable warnings mentioned
+above, in that KCOV isn't fully removing dead code.  Treat it the same
+way by adding these to the list of warnings to ignore with CONFIG_KCOV.
+
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/66a61a0b65d74e072d3dc02384e395edb2adc3c5.1742852846.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/Z9iTsI09AEBlxlHC@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c | 2 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c         | 4 ++--
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h         | 1 +
- 3 files changed, 5 insertions(+), 2 deletions(-)
+ tools/objtool/check.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index 5aa2e7af58b47..34a0be59cd919 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -43,6 +43,8 @@ static void arm_smmu_make_nested_cd_table_ste(
- 	target->data[0] |= nested_domain->ste[0] &
- 			   ~cpu_to_le64(STRTAB_STE_0_CFG);
- 	target->data[1] |= nested_domain->ste[1];
-+	/* Merge events for DoS mitigations on eventq */
-+	target->data[1] |= cpu_to_le64(STRTAB_STE_1_MEV);
- }
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 7b535e119cafa..0ca83c74c1f38 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3490,6 +3490,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			    !strncmp(func->name, "__pfx_", 6))
+ 				return 0;
  
- /*
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 358072b4e293e..59749e8180afc 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1052,7 +1052,7 @@ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
- 			cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |
- 				    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |
- 				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW |
--				    STRTAB_STE_1_EATS);
-+				    STRTAB_STE_1_EATS | STRTAB_STE_1_MEV);
- 		used_bits[2] |= cpu_to_le64(STRTAB_STE_2_S2VMID);
- 
- 		/*
-@@ -1068,7 +1068,7 @@ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
- 	if (cfg & BIT(1)) {
- 		used_bits[1] |=
- 			cpu_to_le64(STRTAB_STE_1_S2FWB | STRTAB_STE_1_EATS |
--				    STRTAB_STE_1_SHCFG);
-+				    STRTAB_STE_1_SHCFG | STRTAB_STE_1_MEV);
- 		used_bits[2] |=
- 			cpu_to_le64(STRTAB_STE_2_S2VMID | STRTAB_STE_2_VTCR |
- 				    STRTAB_STE_2_S2AA64 | STRTAB_STE_2_S2ENDI |
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index bd9d7c85576a2..7290bd4c2bb0a 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -266,6 +266,7 @@ static inline u32 arm_smmu_strtab_l2_idx(u32 sid)
- #define STRTAB_STE_1_S1COR		GENMASK_ULL(5, 4)
- #define STRTAB_STE_1_S1CSH		GENMASK_ULL(7, 6)
- 
-+#define STRTAB_STE_1_MEV		(1UL << 19)
- #define STRTAB_STE_1_S2FWB		(1UL << 25)
- #define STRTAB_STE_1_S1STALLD		(1UL << 27)
- 
++			if (file->ignore_unreachables)
++				return 0;
++
+ 			WARN("%s() falls through to next function %s()",
+ 			     func->name, insn_func(insn)->name);
+ 			return 1;
+@@ -3709,6 +3712,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 		if (!next_insn) {
+ 			if (state.cfi.cfa.base == CFI_UNDEFINED)
+ 				return 0;
++			if (file->ignore_unreachables)
++				return 0;
++
+ 			WARN("%s: unexpected end of section", sec->name);
+ 			return 1;
+ 		}
 -- 
 2.39.5
 
