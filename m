@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC0D242934;
-	Tue, 29 Apr 2025 16:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135EA24E01F;
+	Tue, 29 Apr 2025 16:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945535; cv=none; b=e6veuwH6IlkFWleSoXEzJPUdKmzphLwibMCZKzvTAq+lfUzzlFplJaOQ/rkfwV+wD0QtzSyJT7WwNqAe8BMAbRq3DH3j6tCel3/4CKJCcR41CHT9KIQPTV1RgCvV4fbbDxiiLqIbG/YK8TChbBoRwTOBxQ7j6WlOKV6AYxWm/3k=
+	t=1745945538; cv=none; b=azqkrz2QQv89RdQWhVW/+hW13Mjbl0DCBgKeWUJspsmdiGoAmeEx2jLVTGHKJgC0pDVlCT3rHcd8nHZGo2oYI1Ol5jIA43DgqnQCvNFSH38uMe+ax9N7SegNVOzk3b2Sp5CVrbFeaZ2j+1vLqzk3itoNsu0KRbZGqm30Co4HcIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945535; c=relaxed/simple;
-	bh=tI8XnZSZW/hT79RGEI4gmiv2ffwYbBsTKFVUiC3q+lo=;
+	s=arc-20240116; t=1745945538; c=relaxed/simple;
+	bh=5po0s5EpCphNcIvne1ojZG59f4aiTuSJUX+DeNPFsXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaBTde6Yl2SX4em+j52RPdnHI2Rm2YdcWKU0KVaeDjqVQW/O43nwLXhyuC+jaacSYo7DGF8eAVCC1lrK78Pjz6opsL2QSQiCkltiPl4cQn7LWdjUB5xfouM4FgQRmb3NIoA2nnCA4U6grdO/2bRZhWUDHL6FJlIFagARE1iUFG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4Gj+qJt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4BLCjzYck8Dpqe1Li11QxEPgFAflgA/JHnaYVhCWZMLLpx/daDRXcM6BumV1o5vZtEMvVoGLAiHxs/+t8leDroN0TcoY4T7yLVMLwd8ugQVVErdwFgMHhpfuJj6sPKdExbhO5+dtShXnYkIkwYZuwnfEedPN9r4NQK1kOazF1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HG9dzD2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4Gj+qJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C657C4CEE3;
-	Tue, 29 Apr 2025 16:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HG9dzD2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BA6C4CEE9;
+	Tue, 29 Apr 2025 16:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945535;
-	bh=tI8XnZSZW/hT79RGEI4gmiv2ffwYbBsTKFVUiC3q+lo=;
+	s=korg; t=1745945537;
+	bh=5po0s5EpCphNcIvne1ojZG59f4aiTuSJUX+DeNPFsXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4Gj+qJtouyf+ycSxg3XZ2XwRunvcmm9zmcS4rVhH/PUQ+qHJkxl5JkxTtJ1DM8ua
-	 uyrISLX2I8iT6EwB98x+tMbvwzOaToQTJ5Mya89dH/zpiqMKJ8knf2oLx5iGvIBScK
-	 5davkRyNBNXVRkeKBblTMn/O12TK9SfbAcowd55c=
+	b=HG9dzD2CR/R76t+MrwlF3gvsUZACcwN1MDzx5+qFHmCrsG8VZvCmZBhUqZJgI976l
+	 rq/EwKg3PPPEo5irkCoSMnyJ8rBCpWfGiQuRiG2Ip9qCNqG09da3bWpqnxpJ65atqo
+	 WA6L2lWhwsczWpXy9PDV3PKjDJw+SM1cJ7xQf1Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 145/179] net_sched: hfsc: Fix a potential UAF in hfsc_dequeue() too
-Date: Tue, 29 Apr 2025 18:41:26 +0200
-Message-ID: <20250429161055.257618417@linuxfoundation.org>
+	Halil Pasic <pasic@linux.ibm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.4 146/179] virtio_console: fix missing byte order handling for cols and rows
+Date: Tue, 29 Apr 2025 18:41:27 +0200
+Message-ID: <20250429161055.296332593@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -53,51 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 6ccbda44e2cc3d26fd22af54c650d6d5d801addf ]
+commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
 
-Similarly to the previous patch, we need to safe guard hfsc_dequeue()
-too. But for this one, we don't have a reliable reproducer.
+As per virtio spec the fields cols and rows are specified as little
+endian. Although there is no legacy interface requirement that would
+state that cols and rows need to be handled as native endian when legacy
+interface is used, unlike for the fields of the adjacent struct
+virtio_console_control, I decided to err on the side of caution based
+on some non-conclusive virtio spec repo archaeology and opt for using
+virtio16_to_cpu() much like for virtio_console_control.event. Strictly
+by the letter of the spec virtio_le_to_cpu() would have been sufficient.
+But when the legacy interface is not used, it boils down to the same.
 
-Fixes: 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 ("Linux-2.6.12-rc2")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20250417184732.943057-3-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+And when using the legacy interface, the device formatting these as
+little endian when the guest is big endian would surprise me more than
+it using guest native byte order (which would make it compatible with
+the current implementation). Nevertheless somebody trying to implement
+the spec following it to the letter could end up forcing little endian
+byte order when the legacy interface is in use. So IMHO this ultimately
+needs a judgement call by the maintainers.
+
+Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Cc: stable@vger.kernel.org # v2.6.35+
+Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hfsc.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/char/virtio_console.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index eabc62df6f4e4..79c63c4610d3a 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -1645,10 +1645,16 @@ hfsc_dequeue(struct Qdisc *sch)
- 		if (cl->qdisc->q.qlen != 0) {
- 			/* update ed */
- 			next_len = qdisc_peek_len(cl->qdisc);
--			if (realtime)
--				update_ed(cl, next_len);
--			else
--				update_d(cl, next_len);
-+			/* Check queue length again since some qdisc implementations
-+			 * (e.g., netem/codel) might empty the queue during the peek
-+			 * operation.
-+			 */
-+			if (cl->qdisc->q.qlen != 0) {
-+				if (realtime)
-+					update_ed(cl, next_len);
-+				else
-+					update_d(cl, next_len);
-+			}
- 		} else {
- 			/* the class becomes passive */
- 			eltree_remove(cl);
--- 
-2.39.5
-
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1619,8 +1619,8 @@ static void handle_control_message(struc
+ 		break;
+ 	case VIRTIO_CONSOLE_RESIZE: {
+ 		struct {
+-			__u16 rows;
+-			__u16 cols;
++			__virtio16 rows;
++			__virtio16 cols;
+ 		} size;
+ 
+ 		if (!is_console_port(port))
+@@ -1628,7 +1628,8 @@ static void handle_control_message(struc
+ 
+ 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
+ 		       sizeof(size));
+-		set_console_size(port, size.rows, size.cols);
++		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
++				 virtio16_to_cpu(vdev, size.cols));
+ 
+ 		port->cons.hvc->irq_requested = 1;
+ 		resize_console(port);
 
 
