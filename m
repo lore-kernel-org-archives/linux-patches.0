@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E05D25334C;
-	Tue, 29 Apr 2025 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCFE2512C6;
+	Tue, 29 Apr 2025 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947366; cv=none; b=ibImrTUTfggFbOBk/hD6FQJf9t+QFG2glXUICVHna5eLDJnpek6J9RNnMS8HPEodLNPrKKkW9ZE2aJjDMvXQ/I/Mnu+pH5EfacjuFR8+g10Fxxy/pRkQyaqYK8e6tbiQcgGQhR/PSjutHSvAjbzBOsbCBu5xoQ7N3RMQXWo/Srw=
+	t=1745947368; cv=none; b=lU3Nbe6cdSpO57gYmfCBQ1pCN0Tsg3BK8AS6afu8zoLVRyRssPWqSAtKmX3Lm2sqpqWmsuhLieRdXca0f3Rtw5k8cOtEoFAi04i2x3sugjrtGtro1bwpCQLO+kqWK7K3HfmLt9u60XR+33K1OPNNTT1/RHl6ERMeOvDBACptE+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947366; c=relaxed/simple;
-	bh=ccbyw7ebxQwd0Obuz3Urs6eUF85m8kEZEs+vAGf4Xug=;
+	s=arc-20240116; t=1745947368; c=relaxed/simple;
+	bh=Brt8DJ2TidKPqupRKjpX6VielThd9dK627G1jz3Q9eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJVL5J5KQM11QGE9OP3DgP1dpokRGflh+zRG0Abys6YsDAOIeB+IBGl8STkbHKjkRYuNyQNEXpp9E6FBTYxTst08ERmbGxC1pt9XWJJsfYDNC3EKLlfPQmbyVskNw+jo2ADl0flxj+QTP/NTw/rF4IQs5ut+NdsT7TAbUAqGqgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tTu2Egr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSDjtvPFjtphj+e9EnmGI9XOqWyspDYjhsjscEtWhLy8glT75K45E/lEjl3T6qwbOAZ3ew+eAeKEImtjTGjQH+zSpGUqeFqGoMTrUqYWUoVtChRA/3tPttsh8A0X+fyuFc6NbddeOTxV+AMzTDtlRDBdKa+IgLTwn5XN156MVk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CJ870V3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tTu2Egr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B08C4CEE3;
-	Tue, 29 Apr 2025 17:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CJ870V3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5C3C4CEE3;
+	Tue, 29 Apr 2025 17:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947365;
-	bh=ccbyw7ebxQwd0Obuz3Urs6eUF85m8kEZEs+vAGf4Xug=;
+	s=korg; t=1745947368;
+	bh=Brt8DJ2TidKPqupRKjpX6VielThd9dK627G1jz3Q9eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tTu2EgrwVJOLmodOr+RUkJRBNZQaUVmAa9ts+y2rXZzNDc1EqZ1SR00G/H56eQNy
-	 vjg/PVnQWlGDJ+8r/tfQLO9aCl0YN5wSAGx8rUBzW+Xf77wP2TRnWxmpEOV9VeUk5q
-	 8xJmG5sdibvH0qeVf1moUYirGX1hUSKep2NCCPAE=
+	b=0CJ870V3LvWAktmVh72izHcK2CXQRJcasmVSfXYpX8yMLarpj+S9ObQvt9KSVI5rj
+	 Yv2FUa5ww1JwyWv8pZKt7b66iI0nz18ifE52EsQ+JD4raCn8FS0gnSvth7gGhsE1oH
+	 iS3FXkm9lyKzIGDFQNY+/ovi4RvOY/aqY8PqMSsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Alexander Stein <alexander.stein@mailbox.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/286] parisc: PDT: Fix missing prototype warning
-Date: Tue, 29 Apr 2025 18:42:40 +0200
-Message-ID: <20250429161118.449840419@linuxfoundation.org>
+Subject: [PATCH 5.10 257/286] usb: host: max3421-hcd: Add missing spi_device_id table
+Date: Tue, 29 Apr 2025 18:42:41 +0200
+Message-ID: <20250429161118.489971785@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,49 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Chun Lin <eleanor15x@gmail.com>
+From: Alexander Stein <alexander.stein@mailbox.org>
 
-[ Upstream commit b899981750dcb958ceffa4462d903963ee494aa2 ]
+[ Upstream commit 41d5e3806cf589f658f92c75195095df0b66f66a ]
 
-As reported by the kernel test robot, the following error occurs:
+"maxim,max3421" DT compatible is missing its SPI device ID entry, not
+allowing module autoloading and leading to the following message:
+ "SPI driver max3421-hcd has no spi_device_id for maxim,max3421"
 
-arch/parisc/kernel/pdt.c:65:6: warning: no previous prototype for 'arch_report_meminfo' [-Wmissing-prototypes]
-      65 | void arch_report_meminfo(struct seq_file *m)
-         |      ^~~~~~~~~~~~~~~~~~~
+Fix this by adding the spi_device_id table.
 
-arch_report_meminfo() is declared in include/linux/proc_fs.h and only
-defined when CONFIG_PROC_FS is enabled. Wrap its definition in #ifdef
-CONFIG_PROC_FS to fix the -Wmissing-prototypes warning.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202502082315.IPaHaTyM-lkp@intel.com/
-Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Alexander Stein <alexander.stein@mailbox.org>
+Link: https://lore.kernel.org/r/20250128195114.56321-1-alexander.stein@mailbox.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/pdt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/max3421-hcd.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/parisc/kernel/pdt.c b/arch/parisc/kernel/pdt.c
-index fcc761b0e11b9..d20e8283c5b8a 100644
---- a/arch/parisc/kernel/pdt.c
-+++ b/arch/parisc/kernel/pdt.c
-@@ -62,6 +62,7 @@ static unsigned long pdt_entry[MAX_PDT_ENTRIES] __page_aligned_bss;
- #define PDT_ADDR_PERM_ERR	(pdt_type != PDT_PDC ? 2UL : 0UL)
- #define PDT_ADDR_SINGLE_ERR	1UL
- 
-+#ifdef CONFIG_PROC_FS
- /* report PDT entries via /proc/meminfo */
- void arch_report_meminfo(struct seq_file *m)
- {
-@@ -73,6 +74,7 @@ void arch_report_meminfo(struct seq_file *m)
- 	seq_printf(m, "PDT_cur_entries: %7lu\n",
- 			pdt_status.pdt_entries);
+diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
+index 44a35629d68c6..db1b73486e90b 100644
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -1956,6 +1956,12 @@ max3421_remove(struct spi_device *spi)
+ 	return 0;
  }
-+#endif
  
- static int get_info_pat_new(void)
- {
++static const struct spi_device_id max3421_spi_ids[] = {
++	{ "max3421" },
++	{ },
++};
++MODULE_DEVICE_TABLE(spi, max3421_spi_ids);
++
+ static const struct of_device_id max3421_of_match_table[] = {
+ 	{ .compatible = "maxim,max3421", },
+ 	{},
+@@ -1965,6 +1971,7 @@ MODULE_DEVICE_TABLE(of, max3421_of_match_table);
+ static struct spi_driver max3421_driver = {
+ 	.probe		= max3421_probe,
+ 	.remove		= max3421_remove,
++	.id_table	= max3421_spi_ids,
+ 	.driver		= {
+ 		.name	= "max3421-hcd",
+ 		.of_match_table = of_match_ptr(max3421_of_match_table),
 -- 
 2.39.5
 
