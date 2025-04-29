@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A5982C60;
-	Tue, 29 Apr 2025 17:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E247215F7C;
+	Tue, 29 Apr 2025 17:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948064; cv=none; b=SQyy500pcCSjIBkvQBiwvDU7Njvs5KRBJ+Vz+OykZpSI/3F5jtZt/zJHdlMWypQ5iilxnlpsssvveiA4g6J8YajdYvf7hE0xXBBIiKIB25rkcatj7PpekOWM9luMnBr500sDj4vjzqvuFwZkbJDFkMLpjJrnoQNhpBMVW57tSes=
+	t=1745948067; cv=none; b=mPnqtC3EYw4MY5BKEJCECTfOFwoV7JehI52g8StWn1aXu+h/3b17FFHngSNDccIeZn8n/hTny3LRjROf4H7akHuo3EgvpUaXLSLBTXacAX/Ui1rWaisribJLQ4KNdBlPQO9CVHDJ+dd+PQgf/+STEc3Sa6RpHmYyV6zCGbxy6y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948064; c=relaxed/simple;
-	bh=dV7otym06O1vR2wG/yWgZRkj83j34WW/3tbXV0y5VlE=;
+	s=arc-20240116; t=1745948067; c=relaxed/simple;
+	bh=88CJpDiiqLrpe8diGmUlTPTmI7nC9w25DQ/Lup4WX8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3MrdTZWAWup1STAT3abnr09Lrma7jVP4pCH0TXEvxpo7aSoQRsB+HD4j3dD6tE6tnln2R8zrUV5DqrnjRbFr8WkO3uG2pN5DMLgEWjNjOjey8b5x5A/YT21XRU8aeFrbtOX0wO8GZWsg4tMjq4qg2kexYDrclJfWESHf+guL30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2OlHghr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=scKkWRWJ3JrkgTNRS8pPSPYDbw3xXSpe592WVqYGiGcokvWBYyCtWKK12aIUoZN6WRJA+m6Tfa5hs2G1IayaAocQvmTwrl2KOz07gkGJfQvsfgrCQPPTFmxhOllluOHxTKqhfuGnOZJRp3WrQX0KUmc+TXA0KBc9exTacaRqREE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufaop5uN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2OlHghr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99940C4CEE3;
-	Tue, 29 Apr 2025 17:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufaop5uN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45006C4CEE3;
+	Tue, 29 Apr 2025 17:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948064;
-	bh=dV7otym06O1vR2wG/yWgZRkj83j34WW/3tbXV0y5VlE=;
+	s=korg; t=1745948066;
+	bh=88CJpDiiqLrpe8diGmUlTPTmI7nC9w25DQ/Lup4WX8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2OlHghrJ/Ad+ksLy0CcS7akM/6xjVjxt4uhNJQfhhVLqFGSnzGvU15WacLPmUq9Q
-	 cPLl3Y9zh3MtUNUrLuQul9FE7o919OEsupQr35QhDedwWbLCDk6ilgLUboq7PmNPkb
-	 BG7gF0X39Yb+qK1qSea6ieJj3lSMx+gD4FcT7x1k=
+	b=Ufaop5uNHQKhU7Lw0teExQSCvQUjCEFEh3GLtr4ptUQyjWvSegRbJCU0uNWGgHSHM
+	 p+lZAUExy4dFUiKnKFhFYdzVzqZ+iTiETuAouUx8i47LQP8adqRGrQXj8zALqdll6b
+	 CciAmcQSuDqZ+aPPyO5OajCuhBhsWMDwmtFLFpOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 181/280] usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running
-Date: Tue, 29 Apr 2025 18:42:02 +0200
-Message-ID: <20250429161122.513672692@linuxfoundation.org>
+Subject: [PATCH 6.12 182/280] phy: rockchip: usbdp: Avoid call hpd_event_trigger in dp_phy_init
+Date: Tue, 29 Apr 2025 18:42:03 +0200
+Message-ID: <20250429161122.555838975@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,54 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 28a76fcc4c85dd39633fb96edb643c91820133e3 ]
+[ Upstream commit 28dc672a1a877c77b000c896abd8f15afcdc1b0c ]
 
-Nothing prevents a broken HC from claiming that an endpoint is Running
-and repeatedly rejecting Stop Endpoint with Context State Error.
+Function rk_udphy_dp_hpd_event_trigger will set vogrf let it
+trigger HPD interrupt to DP by Type-C. This configuration is only
+required when the DP work in Alternate Mode, and called by
+typec_mux_set. In standard DP mode, such settings will prevent
+the DP from receiving HPD interrupts.
 
-Avoid infinite retries and give back cancelled TDs.
-
-No such cases known so far, but HCs have bugs.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250311154551.4035726-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Link: https://lore.kernel.org/r/20250302115257.188774-1-andyshrk@163.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 653e24bb3e9ad..cb2a047213075 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1190,16 +1190,19 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 			 * Stopped state, but it will soon change to Running.
- 			 *
- 			 * Assume this bug on unexpected Stop Endpoint failures.
--			 * Keep retrying until the EP starts and stops again, on
--			 * chips where this is known to help. Wait for 100ms.
-+			 * Keep retrying until the EP starts and stops again.
- 			 */
--			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
--				break;
- 			fallthrough;
- 		case EP_STATE_RUNNING:
- 			/* Race, HW handled stop ep cmd before ep was running */
- 			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
- 					GET_EP_CTX_STATE(ep_ctx));
-+			/*
-+			 * Don't retry forever if we guessed wrong or a defective HC never starts
-+			 * the EP or says 'Running' but fails the command. We must give back TDs.
-+			 */
-+			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
-+				break;
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 2c51e5c62d3eb..f5c6d264d89ed 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -1045,7 +1045,6 @@ static int rk_udphy_dp_phy_init(struct phy *phy)
+ 	mutex_lock(&udphy->mutex);
  
- 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 			if (!command) {
+ 	udphy->dp_in_use = true;
+-	rk_udphy_dp_hpd_event_trigger(udphy, udphy->dp_sink_hpd_cfg);
+ 
+ 	mutex_unlock(&udphy->mutex);
+ 
 -- 
 2.39.5
 
