@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5240C03;
-	Tue, 29 Apr 2025 18:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EE421ABC6;
+	Tue, 29 Apr 2025 18:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949970; cv=none; b=WlTn0jGGBvsJVSFp5hEydMA8q0AP2Mr/f32VIJ3nYXH4JNHfdblGgk88aiGyPZ0VGLc69Kcq4J2tbgSTCPYZF8+qmafoVddcKhmxpgmhShaNwwAXUF0iCVMC2zp/jwlbd+dC3szDWHaOjgggLoy+bDgvMiRc4TdnRO61sOb0D+Y=
+	t=1745949973; cv=none; b=EiwfF7HXUS8Ijw7CVL2f4h1B5qWEzJc/Mrbaigf43J4eNHipfjZNohB67lgKZ5129ZYnOZ1ui2PDgjkMEwDfQFMWYUEd+9CuxZLBVI1db0f8lZffzuBsndIAnG/76aCUjW+qZXlALrV5mAzsCkn+u+OgtK1iMGmnQjz0tp5F5yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949970; c=relaxed/simple;
-	bh=rB2+jNARo4qHbCMhqm1OhL6QPde4khc9NPJp8hIhngI=;
+	s=arc-20240116; t=1745949973; c=relaxed/simple;
+	bh=Y4TPz2ChioS+BiS83iMWz07EesnqSCOahG9unETglHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsuwK+iA0ly77nr6SDov+IjaepieOt1655wbjS1/AGwja8BYHHZdvf8eSMyPq5FLTmUwl6xAxnbDaNEypYN7YAGpbINE5tzS/xGOH9whUG9Z9+H99FJXbOPk4qBZP6Vnx2dXwhSWGpSytr0DjGCsn7mfHjIbtbQn+7u2U4no3T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6tkc8rF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sc9wvmajlNDNyRiXQOEKhe0AguWDRCp+cmnZ2WgJzRTF22luQsIEkVnjjM9ZPTlt9xJc+J6m8NiBhz8Yqme6Uup3NHdbHSBoEUgGzZkYz4oLlmoYgUM11zmczzAlFTS2P4nhkP+AiPIiERL5ci725uvjJdYJ2yO5aPgKiwm4VFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8/Q1CVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6tkc8rF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1516C4CEE9;
-	Tue, 29 Apr 2025 18:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8/Q1CVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AD9C4CEE3;
+	Tue, 29 Apr 2025 18:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949970;
-	bh=rB2+jNARo4qHbCMhqm1OhL6QPde4khc9NPJp8hIhngI=;
+	s=korg; t=1745949973;
+	bh=Y4TPz2ChioS+BiS83iMWz07EesnqSCOahG9unETglHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6tkc8rFT4UaegwCdkaAFs+5GzotDQwcO3aB44xRwyqE5++oO4nmVQukvRC+Dzviu
-	 WchpiE3HkPdWulMhzINL6jH8WdZ+64TX0+rv2cpAcz9mp3EUw/j4ne7mDGBWbOEzYD
-	 8xppgpQ00QNidDL6oO5eZXo1wHz5uuZhADCgcEjg=
+	b=Z8/Q1CVDCqvQfutzCwvCpIzQADo0BqmZEiBVWu1JxXGFGRRyv4g/fpXJA4SOt69Ns
+	 LsKtjFXU81B7xndnxgbbr0wj5j2zcTb9j9PHPjEZT5sAAgUiJjURK+u501MaZBlWa6
+	 E59673LyVqEX6YgJ4ZY+OHxjYD/acVdV/ROi93/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lynema <lyz27@yahoo.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/167] thunderbolt: Scan retimers after device router has been enumerated
-Date: Tue, 29 Apr 2025 18:43:42 +0200
-Message-ID: <20250429161056.351216157@linuxfoundation.org>
+Subject: [PATCH 6.1 115/167] objtool: Silence more KCOV warnings
+Date: Tue, 29 Apr 2025 18:43:43 +0200
+Message-ID: <20250429161056.391391374@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -52,66 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 75749d2c1d8cef439f8b69fa1f4f36d0fc3193e6 ]
+[ Upstream commit 6b023c7842048c4bbeede802f3cf36b96c7a8b25 ]
 
-Thomas reported connection issues on AMD system with Pluggable UD-4VPD
-dock. After some experiments it looks like the device has some sort of
-internal timeout that triggers reconnect. This is completely against the
-USB4 spec, as there is no requirement for the host to enumerate the
-device right away or even at all.
+In the past there were issues with KCOV triggering unreachable
+instruction warnings, which is why unreachable warnings are now disabled
+with CONFIG_KCOV.
 
-In Linux case the delay is caused by scanning of retimers on the link so
-we can work this around by doing the scanning after the device router
-has been enumerated.
+Now some new KCOV warnings are showing up with GCC 14:
 
-Reported-by: Thomas Lynema <lyz27@yahoo.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219748
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+  vmlinux.o: warning: objtool: cpuset_write_resmask() falls through to next function cpuset_update_active_cpus.cold()
+  drivers/usb/core/driver.o: error: objtool: usb_deregister() falls through to next function usb_match_device()
+  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
+
+All are caused by GCC KCOV not finishing an optimization, leaving behind
+a never-taken conditional branch to a basic block which falls through to
+the next function (or end of section).
+
+At a high level this is similar to the unreachable warnings mentioned
+above, in that KCOV isn't fully removing dead code.  Treat it the same
+way by adding these to the list of warnings to ignore with CONFIG_KCOV.
+
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/66a61a0b65d74e072d3dc02384e395edb2adc3c5.1742852846.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/Z9iTsI09AEBlxlHC@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ tools/objtool/check.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-index c592032657a1e..0668e1645bc50 100644
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -640,11 +640,15 @@ static void tb_scan_port(struct tb_port *port)
- 		goto out_rpm_put;
- 	}
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 6ea78612635ba..b6c91bb5ce3e3 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3368,6 +3368,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			if (!strncmp(func->name, "__cfi_", 6))
+ 				return 0;
  
--	tb_retimer_scan(port, true);
--
- 	sw = tb_switch_alloc(port->sw->tb, &port->sw->dev,
- 			     tb_downstream_route(port));
- 	if (IS_ERR(sw)) {
-+		/*
-+		 * Make the downstream retimers available even if there
-+		 * is no router connected.
-+		 */
-+		tb_retimer_scan(port, true);
++			if (file->ignore_unreachables)
++				return 0;
 +
- 		/*
- 		 * If there is an error accessing the connected switch
- 		 * it may be connected to another domain. Also we allow
-@@ -704,6 +708,14 @@ static void tb_scan_port(struct tb_port *port)
- 	tb_switch_lane_bonding_enable(sw);
- 	/* Set the link configured */
- 	tb_switch_configure_link(sw);
-+	/*
-+	 * Scan for downstream retimers. We only scan them after the
-+	 * router has been enumerated to avoid issues with certain
-+	 * Pluggable devices that expect the host to enumerate them
-+	 * within certain timeout.
-+	 */
-+	tb_retimer_scan(port, true);
+ 			WARN("%s() falls through to next function %s()",
+ 			     func->name, insn->func->name);
+ 			return 1;
+@@ -3582,6 +3585,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 		if (!next_insn) {
+ 			if (state.cfi.cfa.base == CFI_UNDEFINED)
+ 				return 0;
++			if (file->ignore_unreachables)
++				return 0;
 +
- 	/*
- 	 * CL0s and CL1 are enabled and supported together.
- 	 * Silently ignore CLx enabling in case CLx is not supported.
+ 			WARN("%s: unexpected end of section", sec->name);
+ 			return 1;
+ 		}
 -- 
 2.39.5
 
