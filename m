@@ -1,116 +1,109 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B952528E9
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 17:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C40253B42;
+	Tue, 29 Apr 2025 17:21:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947296; cv=none; b=ff1J1ww8Dm5Ysxn8xg5DFJSI6qV61sVt2QoFjzYb+t8Ymvo1xOzgoKzRlI8yUqS2GTDsdz+CR2Ps237sMWPfaxvyx6HgP8JRCl/Ru3IiR6SFCQeV9tvBb1QAUY5iJcu/WwRXIoHrALJNsNJ6SQnNN/lV/CHuWfCBG+r5uJBUUUY=
+	t=1745947298; cv=none; b=GxY546hPGjy3dEdTKqbTBoZabhfJEvELvwlZ2WjVXy0coYKysid5GKacmJQOMbI0UU2YqIqISeI97PgpH7INXJgJmE35IzTlE5LNrkgMwnNKsckS5Fb72T5OQr7pAfPwf4saBcLqnKk39/mgDpVBk+ZJHR+McRbxbvI4q+n9GKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947296; c=relaxed/simple;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tc+yVO1FaqwaT0KGs2729xULKJlw33ocMoEaeTGrK6nJwYd3XTObOn0cQmVbZCyHPoyviYZKz3onnmCNF6QVsesFRB15qAMV/Hh67NOba8W8OeQ38rAS8BzVxpHGf/jsw2SaKfTc45CJ5ThSe9EKDPzfLta+FaQ6XKtqqvVWpbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=FpeMG7gL; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1745947298; c=relaxed/simple;
+	bh=aWh/88J3YPWsgBisVtfLbO068pCUakhcBaK4l7Gz8gY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=E2o1S8/UZS5dPZWqd+f5xNW7FBWDJgwwtOvzNcknHEIQGenEa7DS78QviZgkNucVBWREktEn9C/FqDgOkte/mvRmAhCwRfjsmrTpVyyC5BkgjHTcvO8PLBWVNMnQvb4YT2JA8xmSvUAcxFD1eKnIL/1VQntC+Xj7ADKSKzpc5+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGqvrrUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="FpeMG7gL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1745947270; x=1746552070; i=rwarsow@gmx.de;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=FpeMG7gL8bQcwbzGPSPEHrCekH5szayaNULqmusJiwx9NxW3oLppX/w9gZmwEI/E
-	 PAK4rlVveDMFuIRLzeHUOE9GGSXEACybl3fa2ljMoYeqWtoSOLancCrXQ4SM6ifdj
-	 lkdmqKR4JxmZIy+V2QVbNfzeqowPpbfQWISP/9kS+OeaRZrMQ2oNPmJX+UbfG/ceI
-	 /2mS+TULOSehtMKuT1FpzZA2w+r6V0jaf1yu9VHWhXzGOOQGsrVPPFbbCSGH3fN/J
-	 ZOVimmDz8yAEXAr1GP46q4k0hfWkR99+doRcQyQdH8o99tZOqkj/LqjtNzHVXcerC
-	 7qYw6Vd33JNldhp6TA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.200.20] ([46.142.35.117]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1My32L-1v00OP2QZD-00wOEo; Tue, 29
- Apr 2025 19:21:10 +0200
-Message-ID: <79f5c0c6-1c7e-4831-bd81-2b466e73d860@gmx.de>
-Date: Tue, 29 Apr 2025 19:21:09 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGqvrrUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4513EC4CEE9;
+	Tue, 29 Apr 2025 17:21:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1745947298;
+	bh=aWh/88J3YPWsgBisVtfLbO068pCUakhcBaK4l7Gz8gY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BGqvrrUAh9oberVN0QSPHGu2TBqTpdg+sdZ/OR77VGBlEBcnsiQZMhhDPxk0IZmpo
+	 aAax1T6ymUyExqQc5dNftga4LfgD7dcoTv0ci9Z6LZTRuUTIJgbv/AJpW+OvZiBVI6
+	 T5eiS9zUT+ghtZxiKG+2UnuEJwbm8wwXNwMnOVOw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Halil Pasic <pasic@linux.ibm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.10 237/286] virtio_console: fix missing byte order handling for cols and rows
+Date: Tue, 29 Apr 2025 18:42:21 +0200
+Message-ID: <20250429161117.677470753@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
+References: <20250429161107.848008295@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/311] 6.14.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250429161121.011111832@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:S/Tmqmk8K4T3moxT2efv1fQ/D3NqiiDg3lKrT57XhcZHkvLzRfm
- +Ci+79znFMsajcWWcODOvnuqK/j2H5lylGiI+HYXEblythjq31KDMEdg78V04wA5ge7BoJm
- UElf0Itcoitep2TyP70SjLe2nyAo/FKG/4sVXJmt0QfQt74e/V5Vt4qTlpReEV1pWYiixRv
- 1RSbdbqKLY+bKhnwAe/zA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tsiHcWhUleg=;W7ZRkMH00Sxrcl56CoiQCkKwt3F
- 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
- lUR3lJNeac+Gl526ByEtuLl/s/m9yGs=
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+------------------
 
-Thanks
+From: Halil Pasic <pasic@linux.ibm.com>
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
+
+As per virtio spec the fields cols and rows are specified as little
+endian. Although there is no legacy interface requirement that would
+state that cols and rows need to be handled as native endian when legacy
+interface is used, unlike for the fields of the adjacent struct
+virtio_console_control, I decided to err on the side of caution based
+on some non-conclusive virtio spec repo archaeology and opt for using
+virtio16_to_cpu() much like for virtio_console_control.event. Strictly
+by the letter of the spec virtio_le_to_cpu() would have been sufficient.
+But when the legacy interface is not used, it boils down to the same.
+
+And when using the legacy interface, the device formatting these as
+little endian when the guest is big endian would surprise me more than
+it using guest native byte order (which would make it compatible with
+the current implementation). Nevertheless somebody trying to implement
+the spec following it to the letter could end up forcing little endian
+byte order when the legacy interface is in use. So IMHO this ultimately
+needs a judgement call by the maintainers.
+
+Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Cc: stable@vger.kernel.org # v2.6.35+
+Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/char/virtio_console.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1617,8 +1617,8 @@ static void handle_control_message(struc
+ 		break;
+ 	case VIRTIO_CONSOLE_RESIZE: {
+ 		struct {
+-			__u16 rows;
+-			__u16 cols;
++			__virtio16 rows;
++			__virtio16 cols;
+ 		} size;
+ 
+ 		if (!is_console_port(port))
+@@ -1626,7 +1626,8 @@ static void handle_control_message(struc
+ 
+ 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
+ 		       sizeof(size));
+-		set_console_size(port, size.rows, size.cols);
++		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
++				 virtio16_to_cpu(vdev, size.cols));
+ 
+ 		port->cons.hvc->irq_requested = 1;
+ 		resize_console(port);
+
 
