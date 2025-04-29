@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3E121ABC6;
-	Tue, 29 Apr 2025 18:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E4B21ABC8;
+	Tue, 29 Apr 2025 18:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949938; cv=none; b=eIEcp+nWuxHgIkkpUDgBAKbvO1/zsR0f3PxNryYOMO21eiOSf7NwcB70sd0YHUpwqnMUdcdHBazZeb5E16Okgi/xaoMdYMrjIqaqNWGohpAuTeKAIqyUeMW6QQKkgrhe85ASo2MdVH8s+RnHTTisNSCYvTqO8T0ELtPNVsxt6XM=
+	t=1745949942; cv=none; b=dePR/YPtlS7IMHS43cU2VFpXSjAO2PDbrqYaXP+qbkoSDP0r9J0PJIELH3o/GpEkQp9aiB0PLyKkd8XPb6n14ADkOfzYfTVuoDOoZ9Yu3TuE+H6UVQgX4QYciJIzfp0T5Ug6n4yYj13FY/YNBkhGvhlAFcmu3i0zg3n1V+IVtuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949938; c=relaxed/simple;
-	bh=O+bA6K/fspM+49XFcBCTVDjw+uKjNfhpw5320+5NNQI=;
+	s=arc-20240116; t=1745949942; c=relaxed/simple;
+	bh=AHqcK4mrqYJrgNk3h1GAd6vVztWwS+qOsoHWBuSn5b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPC0ViQSjvIXpEsOdwrH3oM9MgxxY838f2WwRUbIkdL9+DuExRauQo00MWV4uIyGGDAuXM/al3WB5GBbtVoC+C2Zuo9XGGoGj/r0TsdoAhITEZ9icfL3ALC1HxQwpNSu5AQzQP5MrrGCTznwleIAxu5b9TRG5vtMkfubfyZ59x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxrX7SKF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtp+eZxJcHyqyG0dxIlhKKHVR62z2P/rrowN8OJ+0/RVKtMDifIUc81YkVxzFzriVV1m11j/dvP04khZ4tEzpBK3MWnVYN+coRrQtk+efR9J7Xf9fMepOdsh6IKXs6k9IX5aHGdNYotz2TInTSe9nqoNhx7k66UpwYQezfrRWrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4zbPEex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxrX7SKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F284C4CEE3;
-	Tue, 29 Apr 2025 18:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4zbPEex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710CDC4CEEA;
+	Tue, 29 Apr 2025 18:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949938;
-	bh=O+bA6K/fspM+49XFcBCTVDjw+uKjNfhpw5320+5NNQI=;
+	s=korg; t=1745949941;
+	bh=AHqcK4mrqYJrgNk3h1GAd6vVztWwS+qOsoHWBuSn5b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxrX7SKFmBpBTUf0lqerHnxijLWtyPPtOEhCJI6MudmKQGfbWffh0FvwdiPkveBkW
-	 8qQgcdlapon3Ub7gc5cfDpQwS7jMYZXWVAwro0p4S0Te2o2gicXNzqgUQ2O3hN3JFu
-	 ma+UENLH/zKTXYxBGlPtHXVnF6mJIi/xA4+1BqCI=
+	b=x4zbPEexOjIikIWHSIgeP7jjH0pwUrVDcJDU3HvKjjN/8+J7Iq0hxlOrU/L4pky39
+	 t5DIe76LFMGwDnSJGx3fik2y1jlfVcnZMb3nkCA8M0kT4hXyNuwDAVA4DPfWRkay4f
+	 keHkpAw9gl5/6hyDtQmmc/EKf77xu9Azv9nbb+kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@mailbox.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/167] usb: host: max3421-hcd: Add missing spi_device_id table
-Date: Tue, 29 Apr 2025 18:43:33 +0200
-Message-ID: <20250429161055.995553059@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 106/167] fs/ntfs3: Fix WARNING in ntfs_extend_initialized_size
+Date: Tue, 29 Apr 2025 18:43:34 +0200
+Message-ID: <20250429161056.033285991@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@mailbox.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 41d5e3806cf589f658f92c75195095df0b66f66a ]
+[ Upstream commit ff355926445897cc9fdea3b00611e514232c213c ]
 
-"maxim,max3421" DT compatible is missing its SPI device ID entry, not
-allowing module autoloading and leading to the following message:
- "SPI driver max3421-hcd has no spi_device_id for maxim,max3421"
+Syzbot reported a WARNING in ntfs_extend_initialized_size.
+The data type of in->i_valid and to is u64 in ntfs_file_mmap().
+If their values are greater than LLONG_MAX, overflow will occur because
+the data types of the parameters valid and new_valid corresponding to
+the function ntfs_extend_initialized_size() are loff_t.
 
-Fix this by adding the spi_device_id table.
+Before calling ntfs_extend_initialized_size() in the ntfs_file_mmap(),
+the "ni->i_valid < to" has been determined, so the same WARN_ON determination
+is not required in ntfs_extend_initialized_size().
+Just execute the ntfs_extend_initialized_size() in ntfs_extend() to make
+a WARN_ON check.
 
-Signed-off-by: Alexander Stein <alexander.stein@mailbox.org>
-Link: https://lore.kernel.org/r/20250128195114.56321-1-alexander.stein@mailbox.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-and-tested-by: syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e37dd1dfc814b10caa55
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ntfs3/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
-index ab12d76b01fbe..8aaafba058aa9 100644
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -1955,6 +1955,12 @@ max3421_remove(struct spi_device *spi)
- 	usb_put_hcd(hcd);
- }
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 72e25842f5dc9..46eec986ec9ca 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -354,6 +354,7 @@ static int ntfs_extend(struct inode *inode, loff_t pos, size_t count,
+ 	}
  
-+static const struct spi_device_id max3421_spi_ids[] = {
-+	{ "max3421" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, max3421_spi_ids);
-+
- static const struct of_device_id max3421_of_match_table[] = {
- 	{ .compatible = "maxim,max3421", },
- 	{},
-@@ -1964,6 +1970,7 @@ MODULE_DEVICE_TABLE(of, max3421_of_match_table);
- static struct spi_driver max3421_driver = {
- 	.probe		= max3421_probe,
- 	.remove		= max3421_remove,
-+	.id_table	= max3421_spi_ids,
- 	.driver		= {
- 		.name	= "max3421-hcd",
- 		.of_match_table = of_match_ptr(max3421_of_match_table),
+ 	if (extend_init && !is_compressed(ni)) {
++		WARN_ON(ni->i_valid >= pos);
+ 		err = ntfs_extend_initialized_size(file, ni, ni->i_valid, pos);
+ 		if (err)
+ 			goto out;
 -- 
 2.39.5
 
