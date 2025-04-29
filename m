@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9833C21772B;
-	Tue, 29 Apr 2025 16:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976CC248866;
+	Tue, 29 Apr 2025 16:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945942; cv=none; b=N+5zsKurY0vSeBQ5L38ufjREq19jdrpH7AYwGkT85co2swl9AhxES+JhO7u3ZrYDEiHc8KJ4TGC1zWgNGeQzjqiRvWcMFLPMFBPPiU7qt8eotJODBHQ+3tK5e97DyPF97hiC96OcF0FES/cAMFLjY/D9OV5+jLSvrjYgclWFayY=
+	t=1745945945; cv=none; b=spS+0h/X2FGTP9O0TRVv6X6y6eKX/OePNLHkaIjg+VjVJSgRakDBNJdu7OCTtu95GiMlYWJp/cqzhCwXA1pipwZDwqtmj1ghixqSlsdywJQ6gCHgL2GOFr9tgdCzwpjDIyW3TgSXiJtqDwkwOeTTEG8B85vYjrJm6aSSY7fE4OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945942; c=relaxed/simple;
-	bh=i8CbdBT6LSG9l1ncl6iqw/tRES+Jp7w0T80AeIjZvP4=;
+	s=arc-20240116; t=1745945945; c=relaxed/simple;
+	bh=z9bDdnp9gZxTNNJquiDaxb4iKmUmOw7sowIRA4JPP5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpojWj/ot1pCS+RWWxnNNQTh5t0xd1Vv5z8m+WtjDvn3XOcdaBv7cfR82OUeaXFDUPDdwElHUfg6vYjFbYDGbUwiv9JFww0rJSZNAX4l2Xn4WetPYbUHRJ39zpvKhVC8ZipaCKd/3Q1j+XVdwSWUOG3iDpkkMEfNZ3eXGQ43A+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZGbMAxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLUGcSFl4T2aPImspBYnpxruuVMWK0kS09tHsnz6/mhJTlynQHZfMOXqFYyuhvaMxlIKRB1rVAfWTUkVbbA57Yty3mAHtqx67t2D0RQtSYn42IYYD41wg5BCVyyWJy92iXCCdaNfWt9l/wVIQLXAJmOSxj71lsYm+Fn6Cff8lVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eraz9dk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZGbMAxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE57C4CEE3;
-	Tue, 29 Apr 2025 16:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eraz9dk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A889C4CEE3;
+	Tue, 29 Apr 2025 16:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945942;
-	bh=i8CbdBT6LSG9l1ncl6iqw/tRES+Jp7w0T80AeIjZvP4=;
+	s=korg; t=1745945945;
+	bh=z9bDdnp9gZxTNNJquiDaxb4iKmUmOw7sowIRA4JPP5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZGbMAxnl3nCyOqi5svgAdL3auH6ZXYYPX+kkXJvKOO+MN8Cbi3UFVpzXdmszokLR
-	 i9pRVcYn3BKKhILR6FZzT5RAaE9gf+Xv7XZ2KqBsm2nFvEHDoTle5uLcyipKp9TFRP
-	 LOAzDWolS6yHEdb6y6nMYHYCxC+rjz7+Xy+idb64=
+	b=Eraz9dk2bTHJXTVgLRP+9mcqhY54MCLZFEL5L7LLSti4J7aqBZSCc3GbwSLNu7Ghu
+	 T7fwqpABtLoHFFgkQgj0uY55PDRI+rHA/bzOd6TpQon3qpxWu3acsJl/nrm8QMjRNz
+	 zAwvy5lVwXBKq/bPB6ElYwTrBrkwFW4m8FIsf7EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Omar Sandoval <osandov@fb.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 084/311] block: dont autoload drivers on stat
-Date: Tue, 29 Apr 2025 18:38:41 +0200
-Message-ID: <20250429161124.493922058@linuxfoundation.org>
+Subject: [PATCH 6.14 102/311] sched/eevdf: Fix se->slice being set to U64_MAX and resulting crash
+Date: Tue, 29 Apr 2025 18:38:59 +0200
+Message-ID: <20250429161125.215831187@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,104 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Omar Sandoval <osandov@fb.com>
 
-[ Upstream commit 5f33b5226c9d92359e58e91ad0bf0c1791da36a1 ]
+[ Upstream commit bbce3de72be56e4b5f68924b7da9630cc89aa1a8 ]
 
-blkdev_get_no_open can trigger the legacy autoload of block drivers.  A
-simple stat of a block device has not historically done that, so disable
-this behavior again.
+There is a code path in dequeue_entities() that can set the slice of a
+sched_entity to U64_MAX, which sometimes results in a crash.
 
-Fixes: 9abcfbd235f5 ("block: Add atomic write support for statx")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20250423053810.1683309-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The offending case is when dequeue_entities() is called to dequeue a
+delayed group entity, and then the entity's parent's dequeue is delayed.
+In that case:
+
+1. In the if (entity_is_task(se)) else block at the beginning of
+   dequeue_entities(), slice is set to
+   cfs_rq_min_slice(group_cfs_rq(se)). If the entity was delayed, then
+   it has no queued tasks, so cfs_rq_min_slice() returns U64_MAX.
+2. The first for_each_sched_entity() loop dequeues the entity.
+3. If the entity was its parent's only child, then the next iteration
+   tries to dequeue the parent.
+4. If the parent's dequeue needs to be delayed, then it breaks from the
+   first for_each_sched_entity() loop _without updating slice_.
+5. The second for_each_sched_entity() loop sets the parent's ->slice to
+   the saved slice, which is still U64_MAX.
+
+This throws off subsequent calculations with potentially catastrophic
+results. A manifestation we saw in production was:
+
+6. In update_entity_lag(), se->slice is used to calculate limit, which
+   ends up as a huge negative number.
+7. limit is used in se->vlag = clamp(vlag, -limit, limit). Because limit
+   is negative, vlag > limit, so se->vlag is set to the same huge
+   negative number.
+8. In place_entity(), se->vlag is scaled, which overflows and results in
+   another huge (positive or negative) number.
+9. The adjusted lag is subtracted from se->vruntime, which increases or
+   decreases se->vruntime by a huge number.
+10. pick_eevdf() calls entity_eligible()/vruntime_eligible(), which
+    incorrectly returns false because the vruntime is so far from the
+    other vruntimes on the queue, causing the
+    (vruntime - cfs_rq->min_vruntime) * load calulation to overflow.
+11. Nothing appears to be eligible, so pick_eevdf() returns NULL.
+12. pick_next_entity() tries to dereference the return value of
+    pick_eevdf() and crashes.
+
+Dumping the cfs_rq states from the core dumps with drgn showed tell-tale
+huge vruntime ranges and bogus vlag values, and I also traced se->slice
+being set to U64_MAX on live systems (which was usually "benign" since
+the rest of the runqueue needed to be in a particular state to crash).
+
+Fix it in dequeue_entities() by always setting slice from the first
+non-empty cfs_rq.
+
+Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lkml.kernel.org/r/f0c2d1072be229e1bdddc73c0703919a8b00c652.1745570998.git.osandov@fb.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c       | 8 ++++----
- block/blk-cgroup.c | 2 +-
- block/blk.h        | 2 +-
- block/fops.c       | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ kernel/sched/fair.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 89235796e51a5..5aebcf437f17c 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -773,13 +773,13 @@ static void blkdev_put_part(struct block_device *part)
- 	blkdev_put_whole(whole);
- }
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 89c7260103e18..3d9b68a347b76 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7083,9 +7083,6 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 		h_nr_idle = task_has_idle_policy(p);
+ 		if (task_sleep || task_delayed || !se->sched_delayed)
+ 			h_nr_runnable = 1;
+-	} else {
+-		cfs_rq = group_cfs_rq(se);
+-		slice = cfs_rq_min_slice(cfs_rq);
+ 	}
  
--struct block_device *blkdev_get_no_open(dev_t dev)
-+struct block_device *blkdev_get_no_open(dev_t dev, bool autoload)
- {
- 	struct block_device *bdev;
- 	struct inode *inode;
+ 	for_each_sched_entity(se) {
+@@ -7095,6 +7092,7 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 			if (p && &p->se == se)
+ 				return -1;
  
- 	inode = ilookup(blockdev_superblock, dev);
--	if (!inode && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
-+	if (!inode && autoload && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
- 		blk_request_module(dev);
- 		inode = ilookup(blockdev_superblock, dev);
- 		if (inode)
-@@ -1001,7 +1001,7 @@ struct file *bdev_file_open_by_dev(dev_t dev, blk_mode_t mode, void *holder,
- 	if (ret)
- 		return ERR_PTR(ret);
- 
--	bdev = blkdev_get_no_open(dev);
-+	bdev = blkdev_get_no_open(dev, true);
- 	if (!bdev)
- 		return ERR_PTR(-ENXIO);
- 
-@@ -1279,7 +1279,7 @@ void bdev_statx(struct path *path, struct kstat *stat,
- 	 * use I_BDEV() here; the block device has to be looked up by i_rdev
- 	 * instead.
- 	 */
--	bdev = blkdev_get_no_open(d_backing_inode(path->dentry)->i_rdev);
-+	bdev = blkdev_get_no_open(d_backing_inode(path->dentry)->i_rdev, false);
- 	if (!bdev)
- 		return;
- 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 9ed93d91d754a..c94efae5bcfaf 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -796,7 +796,7 @@ int blkg_conf_open_bdev(struct blkg_conf_ctx *ctx)
- 		return -EINVAL;
- 	input = skip_spaces(input);
- 
--	bdev = blkdev_get_no_open(MKDEV(major, minor));
-+	bdev = blkdev_get_no_open(MKDEV(major, minor), true);
- 	if (!bdev)
- 		return -ENODEV;
- 	if (bdev_is_partition(bdev)) {
-diff --git a/block/blk.h b/block/blk.h
-index c0120a3d9dc57..9dcc92c7f2b50 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -94,7 +94,7 @@ static inline void blk_wait_io(struct completion *done)
- 		wait_for_completion_io(done);
- }
- 
--struct block_device *blkdev_get_no_open(dev_t dev);
-+struct block_device *blkdev_get_no_open(dev_t dev, bool autoload);
- void blkdev_put_no_open(struct block_device *bdev);
- 
- #define BIO_INLINE_VECS 4
-diff --git a/block/fops.c b/block/fops.c
-index be9f1dbea9ce0..d23ddb2dc1138 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -642,7 +642,7 @@ static int blkdev_open(struct inode *inode, struct file *filp)
- 	if (ret)
- 		return ret;
- 
--	bdev = blkdev_get_no_open(inode->i_rdev);
-+	bdev = blkdev_get_no_open(inode->i_rdev, true);
- 	if (!bdev)
- 		return -ENXIO;
++			slice = cfs_rq_min_slice(cfs_rq);
+ 			break;
+ 		}
  
 -- 
 2.39.5
