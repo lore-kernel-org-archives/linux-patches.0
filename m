@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8CB221D92;
-	Tue, 29 Apr 2025 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8A040C03;
+	Tue, 29 Apr 2025 18:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949897; cv=none; b=g3LejluQ2eoC3pppURLuZHTQtge/Ne9HmKnM/Fn1Y3sbiKmng8eK/fXbjkK4T8PIqlsEyfLRe/C4F15/Z9MyAuxik4sRlAGDMlba4vBilGi9grp1tOMJw05RyWw+98Kk75VZ29QmqrW1J2ZNuw577APg9LSVYzefihOxnbnsENI=
+	t=1745949900; cv=none; b=KzlYrye1LegPyMLjGAE9FH5N3F2l+lHX0FZaAKKk0PAzZf1zQ62BUlKMq446Gy1y856CShl7BTmxlcfbw9aZCi5IC5B1l+5W2NYdFGuVlDIEcYN7ZWuDB9aVPjAytmLB12Q0fsQqPogsKAejTzVTnH2p6pu+8yzRMKSZWGQN8i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949897; c=relaxed/simple;
-	bh=Mtplip4B8dYPwIQipH/PIwQU4vIbmgsHGR6gmucz3/4=;
+	s=arc-20240116; t=1745949900; c=relaxed/simple;
+	bh=HfAwzIa23iAa2rifIYEyQl83J5jO1cW04Hst4HrIbxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzR8XXwcNZ1xhUM/SkQKoawEFU+5F2iITceA9E2PuDUcLOB1LkInynlfWkhAyIdnIldtDJyMjJVf3IocDsY+szoZgOdQf/XTI/jaCAMq8+fgL9XAQKlgC+YbH8wVW+SqUssV59vgxeV0ZU5d1AN2v0o2/3+R6Lln/VqpVyQCDpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0Ygqasv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTeLk0mS8TVrhkeorNUclrgkt2PgORn6JIz/3/1mpApD7JGnAnckUjl5oV8zl74Rzzmce+VLJJg2P3Ez+N8rdtSagNOBTOexUcthIQRfQ9LU3CM2+pMpgKX0pfk/U3qX7znAP4sCC/dH1aMyv/d2ZFVPO+UlVDF2ECwF6DTiHd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBimpIbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0Ygqasv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DBBC4CEE3;
-	Tue, 29 Apr 2025 18:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBimpIbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2640EC4CEE3;
+	Tue, 29 Apr 2025 18:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949897;
-	bh=Mtplip4B8dYPwIQipH/PIwQU4vIbmgsHGR6gmucz3/4=;
+	s=korg; t=1745949900;
+	bh=HfAwzIa23iAa2rifIYEyQl83J5jO1cW04Hst4HrIbxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0YgqasvYbGACr0VIK9jsZIhoXMX4tFwagHQvyoxI2Dq5g7naiyN2KLk6fHCClySo
-	 q3vvA2iswOoNHT9iHzoOpQK5jHpVCer1IqyEDfaWuEGyTq/COS0Tb8OdIMk5rm11EF
-	 Dh+WXD5gw/qWTmJf30g4FUi4QJR06E0fKLPq74uE=
+	b=lBimpIbLpCC6u2yah+GC/Ww9WY36Gy60REjh6HIGnCYi+B3ZehcN8XQxAJQlFbjjI
+	 tiyVWkxPatDkewZ+WyHGr1L/aejn5q5GGsj5K628Y46k38Ry87TMf4mBevfpSPqNPq
+	 6ONIUcuz2TxcAdqdYhFpmVNG9Pkl2eQp25rX03UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.1 062/167] virtio_console: fix missing byte order handling for cols and rows
-Date: Tue, 29 Apr 2025 18:42:50 +0200
-Message-ID: <20250429161054.282223969@linuxfoundation.org>
+	Alexey Nepomnyashih <sdl@nppct.ru>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 063/167] xen-netfront: handle NULL returned by xdp_convert_buff_to_frame()
+Date: Tue, 29 Apr 2025 18:42:51 +0200
+Message-ID: <20250429161054.324576700@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,60 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
+commit cc3628dcd851ddd8d418bf0c897024b4621ddc92 upstream.
 
-As per virtio spec the fields cols and rows are specified as little
-endian. Although there is no legacy interface requirement that would
-state that cols and rows need to be handled as native endian when legacy
-interface is used, unlike for the fields of the adjacent struct
-virtio_console_control, I decided to err on the side of caution based
-on some non-conclusive virtio spec repo archaeology and opt for using
-virtio16_to_cpu() much like for virtio_console_control.event. Strictly
-by the letter of the spec virtio_le_to_cpu() would have been sufficient.
-But when the legacy interface is not used, it boils down to the same.
+The function xdp_convert_buff_to_frame() may return NULL if it fails
+to correctly convert the XDP buffer into an XDP frame due to memory
+constraints, internal errors, or invalid data. Failing to check for NULL
+may lead to a NULL pointer dereference if the result is used later in
+processing, potentially causing crashes, data corruption, or undefined
+behavior.
 
-And when using the legacy interface, the device formatting these as
-little endian when the guest is big endian would surprise me more than
-it using guest native byte order (which would make it compatible with
-the current implementation). Nevertheless somebody trying to implement
-the spec following it to the letter could end up forcing little endian
-byte order when the legacy interface is in use. So IMHO this ultimately
-needs a judgement call by the maintainers.
+On XDP redirect failure, the associated page must be released explicitly
+if it was previously retained via get_page(). Failing to do so may result
+in a memory leak, as the pages reference count is not decremented.
 
-Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Cc: stable@vger.kernel.org # v2.6.35+
-Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Cc: stable@vger.kernel.org # v5.9+
+Fixes: 6c5aa6fc4def ("xen networking: add basic XDP support for xen-netfront")
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
+Link: https://patch.msgid.link/20250417122118.1009824-1-sdl@nppct.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/virtio_console.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/xen-netfront.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1615,8 +1615,8 @@ static void handle_control_message(struc
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -985,20 +985,27 @@ static u32 xennet_run_xdp(struct netfron
+ 	act = bpf_prog_run_xdp(prog, xdp);
+ 	switch (act) {
+ 	case XDP_TX:
+-		get_page(pdata);
+ 		xdpf = xdp_convert_buff_to_frame(xdp);
++		if (unlikely(!xdpf)) {
++			trace_xdp_exception(queue->info->netdev, prog, act);
++			break;
++		}
++		get_page(pdata);
+ 		err = xennet_xdp_xmit(queue->info->netdev, 1, &xdpf, 0);
+-		if (unlikely(!err))
++		if (unlikely(err <= 0)) {
++			if (err < 0)
++				trace_xdp_exception(queue->info->netdev, prog, act);
+ 			xdp_return_frame_rx_napi(xdpf);
+-		else if (unlikely(err < 0))
+-			trace_xdp_exception(queue->info->netdev, prog, act);
++		}
  		break;
- 	case VIRTIO_CONSOLE_RESIZE: {
- 		struct {
--			__u16 rows;
--			__u16 cols;
-+			__virtio16 rows;
-+			__virtio16 cols;
- 		} size;
- 
- 		if (!is_console_port(port))
-@@ -1624,7 +1624,8 @@ static void handle_control_message(struc
- 
- 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
- 		       sizeof(size));
--		set_console_size(port, size.rows, size.cols);
-+		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
-+				 virtio16_to_cpu(vdev, size.cols));
- 
- 		port->cons.hvc->irq_requested = 1;
- 		resize_console(port);
+ 	case XDP_REDIRECT:
+ 		get_page(pdata);
+ 		err = xdp_do_redirect(queue->info->netdev, xdp, prog);
+ 		*need_xdp_flush = true;
+-		if (unlikely(err))
++		if (unlikely(err)) {
+ 			trace_xdp_exception(queue->info->netdev, prog, act);
++			xdp_return_buff(xdp);
++		}
+ 		break;
+ 	case XDP_PASS:
+ 	case XDP_DROP:
 
 
