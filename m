@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A1021ADC7;
-	Tue, 29 Apr 2025 17:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98972206AA;
+	Tue, 29 Apr 2025 17:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947072; cv=none; b=fw0veAYv83FwsZ6X46TvvfkaM/rXmb04WVmxPJEjjofyQgnbI5khrOIwhR8TIqktawjwMOue27I809PFERV5qCoKsbH2MOluzrW0blTjwolae4Xr6Bkigw+5y8FKlerWAdUY/0vXiLisCmB68E/oAaanwqjwodh84uDSwdFB+N8=
+	t=1745947075; cv=none; b=J7v8/RHYYPuWzmiIPgi0ywegu8E0fCa1LLdnQRvxDLQ0p30oN8phmHC/jqa4ShPqs9fDhI+l0HHOWcqB83nduFdijSev5AvTI1YUIXz8GJyVvo1pCG9MLpTkuMs6grQpXmrYikHghW4+Cffj7eJCcwn5KAg8GUc/hznZ8eKrXkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947072; c=relaxed/simple;
-	bh=AbDMKLXvvHrU9LAHR6uGB20JWFHtxFYvwNCvtLYC8l8=;
+	s=arc-20240116; t=1745947075; c=relaxed/simple;
+	bh=1SAJyvFRXfG3A55dgAeTEed+HJYYneDGgPYiroAWRKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdfQtD2t6vh2ZTRJ/8Nlu/iJqCW4YTY26RRMeqJKfiYsXq+h0dlEk+fL7mi6aecXZ8GSFEFky6aaOlddC+CnzPEMD+x4jKiQFDtAr8nKfigo5hxnc2C3Vr90/iJ7tCr2bt8Z8d6gfFVxnaP5a7j1yQ3fkE7sZeiSqWss2NAwcFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiH2sejA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H1eGHRaCgRQQXGiPWiu/9cHpzZ5LR4tSwJcpyv8AXxXp4/hFQfqxHajK6SGBNesIJ2P/8ptFUxNflGlucJSmSVZIbF1olaaXRcCuDOEOmKzAe4eaowPMxm3aQEA4c9kumRrVxERscxwj2i7LSRMSLSkcFBtPIfQ7MbE9aFpuCdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tM1EQLzq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiH2sejA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1761C4CEE3;
-	Tue, 29 Apr 2025 17:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tM1EQLzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA90C4CEE3;
+	Tue, 29 Apr 2025 17:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947072;
-	bh=AbDMKLXvvHrU9LAHR6uGB20JWFHtxFYvwNCvtLYC8l8=;
+	s=korg; t=1745947075;
+	bh=1SAJyvFRXfG3A55dgAeTEed+HJYYneDGgPYiroAWRKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MiH2sejAuyeyH1hLS+hUlviiiYeSradqZLWvRCjVZScnYLYwsxx/dlzmwiEXEL0Xe
-	 aqfnmViECu9ElbmYdBPbU6qUWDSUyUwZXadog2hDVEms6FQrE35vcdvTp8xfxBFzQ1
-	 nBl+6Ae3t9VAJwymzyBdgmyNLca3Sp0UOeNOMXoE=
+	b=tM1EQLzqA2SHCyx9ewYrjOJQ7a7eRCxbCnqayHY2AI1yL2qqyvPBTrNmE9Y97mXw3
+	 saKdVZTZIl2pEw4YW71cGKOFxlhskSHeg5He+U37XUsc0NT0Fk6/pmcd4wDOJu7hNi
+	 omIZ+OslVx8vTCcq78dSeZaout0YzZFN2J3IDmq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangsheng Hou <xiangsheng.hou@mediatek.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 133/286] virtiofs: add filesystem context source name check
-Date: Tue, 29 Apr 2025 18:40:37 +0200
-Message-ID: <20250429161113.339240408@linuxfoundation.org>
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 5.10 134/286] perf/x86/intel: Allow to update user space GPRs from PEBS records
+Date: Tue, 29 Apr 2025 18:40:38 +0200
+Message-ID: <20250429161113.380384558@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,35 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-commit a94fd938df2b1628da66b498aa0eeb89593bc7a2 upstream.
+commit 71dcc11c2cd9e434c34a63154ecadca21c135ddd upstream.
 
-In certain scenarios, for example, during fuzz testing, the source
-name may be NULL, which could lead to a kernel panic. Therefore, an
-extra check for the source name should be added.
+Currently when a user samples user space GPRs (--user-regs option) with
+PEBS, the user space GPRs actually always come from software PMI
+instead of from PEBS hardware. This leads to the sampled GPRs to
+possibly be inaccurate for single PEBS record case because of the
+skid between counter overflow and GPRs sampling on PMI.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: <stable@vger.kernel.org> # all LTS kernels
-Signed-off-by: Xiangsheng Hou <xiangsheng.hou@mediatek.com>
-Link: https://lore.kernel.org/20250407115111.25535-1-xiangsheng.hou@mediatek.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+For the large PEBS case, it is even worse. If user sets the
+exclude_kernel attribute, large PEBS would be used to sample user space
+GPRs, but since PEBS GPRs group is not really enabled, it leads to all
+samples in the large PEBS record to share the same piece of user space
+GPRs, like this reproducer shows:
+
+  $ perf record -e branches:pu --user-regs=ip,ax -c 100000 ./foo
+  $ perf report -D | grep "AX"
+
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+  .... AX    0x000000003a0d4ead
+
+So enable GPRs group for user space GPRs sampling and prioritize reading
+GPRs from PEBS. If the PEBS sampled GPRs is not user space GPRs (single
+PEBS record case), perf_sample_regs_user() modifies them to user space
+GPRs.
+
+[ mingo: Clarified the changelog. ]
+
+Fixes: c22497f5838c ("perf/x86/intel: Support adaptive PEBS v4")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250415104135.318169-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/virtio_fs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/events/intel/ds.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -1447,6 +1447,9 @@ static int virtio_fs_get_tree(struct fs_
- 	unsigned int virtqueue_size;
- 	int err = -EIO;
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -988,8 +988,10 @@ static u64 pebs_update_adaptive_cfg(stru
+ 	 * + precise_ip < 2 for the non event IP
+ 	 * + For RTM TSX weight we need GPRs for the abort code.
+ 	 */
+-	gprs = (sample_type & PERF_SAMPLE_REGS_INTR) &&
+-	       (attr->sample_regs_intr & PEBS_GP_REGS);
++	gprs = ((sample_type & PERF_SAMPLE_REGS_INTR) &&
++		(attr->sample_regs_intr & PEBS_GP_REGS)) ||
++	       ((sample_type & PERF_SAMPLE_REGS_USER) &&
++		(attr->sample_regs_user & PEBS_GP_REGS));
  
-+	if (!fsc->source)
-+		return invalf(fsc, "No source specified");
-+
- 	/* This gets a reference on virtio_fs object. This ptr gets installed
- 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
- 	 * to drop the reference to this object.
+ 	tsx_weight = (sample_type & PERF_SAMPLE_WEIGHT) &&
+ 		     ((attr->config & INTEL_ARCH_EVENT_MASK) ==
+@@ -1572,7 +1574,7 @@ static void setup_pebs_adaptive_sample_d
+ 			regs->flags &= ~PERF_EFLAGS_EXACT;
+ 		}
+ 
+-		if (sample_type & PERF_SAMPLE_REGS_INTR)
++		if (sample_type & (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER))
+ 			adaptive_pebs_save_regs(regs, gprs);
+ 	}
+ 
 
 
