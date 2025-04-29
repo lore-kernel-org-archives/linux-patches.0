@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89F215060;
-	Tue, 29 Apr 2025 16:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DC921772B;
+	Tue, 29 Apr 2025 16:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945441; cv=none; b=R2nC6sBKBk3Rt+qWy4i98oKx5FeN3jrE1+hrf7AbTaO2UVFoLLXOK8AH8g4TUt2nq8pTjTNIYXBzh1pV3y+CvgLatjlGYSiaaluBN8bzQ2jZNjSy0hT69+kPeaNL18ffkBRoef9DW4qRnQk5zCcUhe8qutfSbJxQLM99tLxO7VY=
+	t=1745945444; cv=none; b=HBipfuIJvjlfkOxEJGdAhBptePExF6De5eBE5mlHv0EQO6brYMrRYJ8uvPoiRJVCdIdMg82FRWzZAR0nVJZjw9I1GxGrGxikHzFbvP6MUJT1KQ+BRXo3ckoRhIDUmvFWaiu3jao4nQ1Ef+8PuuMMssfewVO8KkPK3uFjjzHbyQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945441; c=relaxed/simple;
-	bh=VpkalxLZsGgvIMANy0Q5UGoBRz+a4Gsq6/zpQXVrI+4=;
+	s=arc-20240116; t=1745945444; c=relaxed/simple;
+	bh=8VxMrqlhw7fWFHUTQARcemdzpojW7gt7JnUI38s6oGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcHVM3Phfgt43QsfC4oC1y2iDbeZ4WNZ56R0AJ/pc++zI/vEwL4cCA5+ozq9HnzHUfvVOcvmZ7zn578qB8j6b/iDQL+QV8O/l8ae1KpLilyXH+Pf7gjZjyXky9ZWTneCLZYCI98iecks+oCRm4WmKKk3G9eWxF8fhtNQjp7n8ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFL7OTgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8aHmpN3HGZHasG12SchbAUpXEvy8M1S9fsNH8s44IZtlR272qu5leItkEUB69j207jBZl6qN39jVumCxKIvUU/biRd7xUE8v3tLtThxaByD1Z5QDeYONOuy7dtIixo4SUxux1eeAiF16k4tdt4ZvAOz0/kqRbx5oPw4UfRQXws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7nNAvLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFL7OTgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB445C4CEE3;
-	Tue, 29 Apr 2025 16:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7nNAvLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E546C4CEE3;
+	Tue, 29 Apr 2025 16:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945441;
-	bh=VpkalxLZsGgvIMANy0Q5UGoBRz+a4Gsq6/zpQXVrI+4=;
+	s=korg; t=1745945443;
+	bh=8VxMrqlhw7fWFHUTQARcemdzpojW7gt7JnUI38s6oGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFL7OTgM9Et6A5jiwZU7j0rw+fdEsGslnQ3QShmiQlv+jZEMRqcLcofOciaoWoxW3
-	 wsmz3ETYdxuZGerqDWhvucxb2UA5B0PE7VmYO/tZj4RGsxzlz0Ys0ZT2Sdcd3HZcma
-	 q6J0QBhCspzipri6yOuwNt+oxm7zrlQZdRDtN5v8=
+	b=C7nNAvLjV+l9pAMvCFhtqXlgqQ7KapIRfaQP2TPrlLrrk5Z5am8D8Z09pkdRajRTb
+	 QoanhzhXG2wtz4/c51ydeyJpMPvtj7pvXqtT+LU/qaWWYSd6eU/dx7nCDD9G5dSH0T
+	 dYZfKJiHcpBndTiw7vHhXPwO3Hcsyl1XrP2VG5Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulneris <ndesaulniers@google.com>,
-	Nathan Chancellor <natechancellor@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.4 113/179] powerpc/prom_init: Use -ffreestanding to avoid a reference to bcmp
-Date: Tue, 29 Apr 2025 18:40:54 +0200
-Message-ID: <20250429161053.978458168@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 087/179] scsi: iscsi: Fix missing scsi_host_put() in error path
+Date: Tue, 29 Apr 2025 18:40:28 +0200
+Message-ID: <20250429161052.922611570@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,48 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <natechancellor@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 8dcd71b45df34d9b903450fab147ee8c1e6c16b5 upstream.
+[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
 
-LLVM revision r374662 gives LLVM the ability to convert certain loops
-into a reference to bcmp as an optimization; this breaks
-prom_init_check.sh:
+Add goto to ensure scsi_host_put() is called in all error paths of
+iscsi_set_host_param() function. This fixes a potential memory leak when
+strlen() check fails.
 
-    CALL    arch/powerpc/kernel/prom_init_check.sh
-  Error: External symbol 'bcmp' referenced from prom_init.c
-  make[2]: *** [arch/powerpc/kernel/Makefile:196: prom_init_check] Error 1
-
-bcmp is defined in lib/string.c as a wrapper for memcmp so this could
-be added to the whitelist. However, commit
-450e7dd4001f ("powerpc/prom_init: don't use string functions from
-lib/") copied memcmp as prom_memcmp to avoid KASAN instrumentation so
-having bcmp be resolved to regular memcmp would break that assumption.
-Furthermore, because the compiler is the one that inserted bcmp, we
-cannot provide something like prom_bcmp.
-
-To prevent LLVM from being clever with optimizations like this, use
--ffreestanding to tell LLVM we are not hosted so it is not free to
-make transformations like this.
-
-Reviewed-by: Nick Desaulneris <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20191119045712.39633-4-natechancellor@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/Makefile
-+++ b/arch/powerpc/kernel/Makefile
-@@ -21,6 +21,7 @@ CFLAGS_prom.o += $(DISABLE_LATENT_ENTROP
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index 9ef242d2a2c9d..d75097f13efcc 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -2924,11 +2924,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
+ 	}
  
- CFLAGS_prom_init.o += $(call cc-option, -fno-stack-protector)
- CFLAGS_prom_init.o += -DDISABLE_BRANCH_PROFILING
-+CFLAGS_prom_init.o += -ffreestanding
+ 	/* see similar check in iscsi_if_set_param() */
+-	if (strlen(data) > ev->u.set_host_param.len)
+-		return -EINVAL;
++	if (strlen(data) > ev->u.set_host_param.len) {
++		err = -EINVAL;
++		goto out;
++	}
  
- ifdef CONFIG_FUNCTION_TRACER
- # Do not trace early boot code
+ 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
+ 					data, ev->u.set_host_param.len);
++out:
+ 	scsi_host_put(shost);
+ 	return err;
+ }
+-- 
+2.39.5
+
 
 
