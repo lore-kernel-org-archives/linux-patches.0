@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B63E2522A1;
-	Tue, 29 Apr 2025 17:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81F253952;
+	Tue, 29 Apr 2025 17:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949370; cv=none; b=NeO1TJXBuN9negzjXIEPWFN7c/7kSFCmmBVG6d73cXzqkMhk6C5XT75J5G9ffpHv9nmhXu+HXo9r24PekJdqfYMo4lLlptbzWZstWmb2ck/lpaoiVUPxn+qjst36Pzb0/7wxBQ2NMBoMu24j4PLLkPlfXbpKjGHwXD0zRx78jrk=
+	t=1745949373; cv=none; b=pAzJ12eyL3XAS1XwRb+WK/VWt/dYQIISwOXzpknE1h/55wh2WAy2rjkUOcvJFKIHiAEetUvVC+kD7824UeU6QEFpD/YZ7I2KScxmuuLLUyc+bFLRTVsmwgmQq+IdYVa6593Fi2wQPHop+EXGkMyLoLOqAevobyaUJY9hh+U7ci0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949370; c=relaxed/simple;
-	bh=OLjq3wRhvHgdLSsC4nRAE4pr4R/M2rSHlJoewUsyHq8=;
+	s=arc-20240116; t=1745949373; c=relaxed/simple;
+	bh=ngIuoiTSg1qODhi6V60qIoCXOWSqjjGR6uzB3zKlTnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8vfcWr05as40MiyZFuHb1hjYK/q1jbIrmoY+TTbzrMj89R7nYR+Of4vZbqX2EMd7SpULfRIehZwoc+UE0WSlkYunB5cYBV53LrfABeMJouWQCvXpO5ZT0k3PBFO/yBqPTNebtfVPH4RK8fELrxw4423LQo+uF26d8rCKSDISb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGkyfCUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bRuiSUFOPnZWVUHmWnBMpKuRmXQ5OQPNUbvaVB/1MKjDpe5R1Z42xHfKapYyICjApusCV9xXWQiN4rqk7sl3PPzswu1X2h3JeUQTQ2t4+bzEftA2htXDWOcVGbstMBk3Na4ygy6q0/vEs0m+ohr4fqWAsp9dR6H2dhgfPehIRuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1+oJOpj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGkyfCUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B4EC4CEEA;
-	Tue, 29 Apr 2025 17:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1+oJOpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B65C4CEEA;
+	Tue, 29 Apr 2025 17:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949370;
-	bh=OLjq3wRhvHgdLSsC4nRAE4pr4R/M2rSHlJoewUsyHq8=;
+	s=korg; t=1745949372;
+	bh=ngIuoiTSg1qODhi6V60qIoCXOWSqjjGR6uzB3zKlTnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGkyfCUyiumlmzEwvc+EcKtvZNvTKtkWO7cDAfnBNtgSGgfUAdcWyaE4AIP7tgkKX
-	 odMLchMJXoMmQRTTKMcyUDGOUf1E3kYyUUjMli3OmDnI9QaprgA3G5yzzUgw3MZ/dT
-	 11OGfArYt1aVbYkW0YUIRcqUqOPrKKnI0ndFrtmw=
+	b=n1+oJOpjWxHksDQxcudMgifQa/OWvLrmX5Uj7dMRBBnRuOYKQcHoYrH26TLbs44ty
+	 DMizEns68lrkRJp37k30HMH6VyhbiGH27JJ9cO7gb/+NuO0Ckd7rNE8hACbZcGg2CW
+	 50LtgDXi02qvS/t/efgEsfPUT/Ei1+RWG/uq46RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 298/373] net: selftests: initialize TCP header and skb payload with zero
-Date: Tue, 29 Apr 2025 18:42:55 +0200
-Message-ID: <20250429161135.371175732@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 281/373] string: Add load_unaligned_zeropad() code path to sized_strscpy()
+Date: Tue, 29 Apr 2025 18:42:38 +0200
+Message-ID: <20250429161134.674478467@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,64 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 9e8d1013b0c38910cbc9e60de74dbe883878469d upstream.
+[ Upstream commit d94c12bd97d567de342fd32599e7cd9e50bfa140 ]
 
-Zero-initialize TCP header via memset() to avoid garbage values that
-may affect checksum or behavior during test transmission.
+The call to read_word_at_a_time() in sized_strscpy() is problematic
+with MTE because it may trigger a tag check fault when reading
+across a tag granule (16 bytes) boundary. To make this code
+MTE compatible, let's start using load_unaligned_zeropad()
+on architectures where it is available (i.e. architectures that
+define CONFIG_DCACHE_WORD_ACCESS). Because load_unaligned_zeropad()
+takes care of page boundaries as well as tag granule boundaries,
+also disable the code preventing crossing page boundaries when using
+load_unaligned_zeropad().
 
-Also zero-fill allocated payload and padding regions using memset()
-after skb_put(), ensuring deterministic content for all outgoing
-test packets.
-
-Fixes: 3e1e58d64c3d ("net: add generic selftest support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Link: https://linux-review.googlesource.com/id/If4b22e43b5a4ca49726b4bf98ada827fdf755548
+Fixes: 94ab5b61ee16 ("kasan, arm64: enable CONFIG_KASAN_HW_TAGS")
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250416160125.2914724-1-o.rempel@pengutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250403000703.2584581-2-pcc@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/selftests.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ lib/string.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/net/core/selftests.c
-+++ b/net/core/selftests.c
-@@ -100,10 +100,10 @@ static struct sk_buff *net_test_get_skb(
- 	ehdr->h_proto = htons(ETH_P_IP);
+diff --git a/lib/string.c b/lib/string.c
+index 9fb9be19a95d7..7c0c69bb5b689 100644
+--- a/lib/string.c
++++ b/lib/string.c
+@@ -186,6 +186,7 @@ ssize_t strscpy(char *dest, const char *src, size_t count)
+ 	if (count == 0 || WARN_ON_ONCE(count > INT_MAX))
+ 		return -E2BIG;
  
- 	if (attr->tcp) {
-+		memset(thdr, 0, sizeof(*thdr));
- 		thdr->source = htons(attr->sport);
- 		thdr->dest = htons(attr->dport);
- 		thdr->doff = sizeof(struct tcphdr) / 4;
--		thdr->check = 0;
- 	} else {
- 		uhdr->source = htons(attr->sport);
- 		uhdr->dest = htons(attr->dport);
-@@ -144,10 +144,18 @@ static struct sk_buff *net_test_get_skb(
- 	attr->id = net_test_next_id;
- 	shdr->id = net_test_next_id++;
++#ifndef CONFIG_DCACHE_WORD_ACCESS
+ #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
+ 	/*
+ 	 * If src is unaligned, don't cross a page boundary,
+@@ -200,12 +201,14 @@ ssize_t strscpy(char *dest, const char *src, size_t count)
+ 	/* If src or dest is unaligned, don't do word-at-a-time. */
+ 	if (((long) dest | (long) src) & (sizeof(long) - 1))
+ 		max = 0;
++#endif
+ #endif
  
--	if (attr->size)
--		skb_put(skb, attr->size);
--	if (attr->max_size && attr->max_size > skb->len)
--		skb_put(skb, attr->max_size - skb->len);
-+	if (attr->size) {
-+		void *payload = skb_put(skb, attr->size);
-+
-+		memset(payload, 0, attr->size);
-+	}
-+
-+	if (attr->max_size && attr->max_size > skb->len) {
-+		size_t pad_len = attr->max_size - skb->len;
-+		void *pad = skb_put(skb, pad_len);
-+
-+		memset(pad, 0, pad_len);
-+	}
+ 	/*
+-	 * read_word_at_a_time() below may read uninitialized bytes after the
+-	 * trailing zero and use them in comparisons. Disable this optimization
+-	 * under KMSAN to prevent false positive reports.
++	 * load_unaligned_zeropad() or read_word_at_a_time() below may read
++	 * uninitialized bytes after the trailing zero and use them in
++	 * comparisons. Disable this optimization under KMSAN to prevent
++	 * false positive reports.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_KMSAN))
+ 		max = 0;
+@@ -213,7 +216,11 @@ ssize_t strscpy(char *dest, const char *src, size_t count)
+ 	while (max >= sizeof(unsigned long)) {
+ 		unsigned long c, data;
  
- 	skb->csum = 0;
- 	skb->ip_summed = CHECKSUM_PARTIAL;
++#ifdef CONFIG_DCACHE_WORD_ACCESS
++		c = load_unaligned_zeropad(src+res);
++#else
+ 		c = read_word_at_a_time(src+res);
++#endif
+ 		if (has_zero(c, &data, &constants)) {
+ 			data = prep_zero_mask(c, data, &constants);
+ 			data = create_zero_mask(data);
+-- 
+2.39.5
+
 
 
