@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C911233713;
-	Tue, 29 Apr 2025 17:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B079521883E;
+	Tue, 29 Apr 2025 17:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947954; cv=none; b=RagIbs3I7tJdzLvMPHTRlvhvVQKIh4eXKry/ouARl7RXMTCe50RnaaijMCUcFzdy4ZHhr8MR3dC4dhKh/HNwADSwJr0DU9iEmdb5XoIoIDLZ4ynQoj9mByUX/V54+utlA4Ug1xxxJL7fAOS9GvyuVvekQohglbENQE2g+z2ydik=
+	t=1745947957; cv=none; b=BP+YDTLW5GtaJw1KyzOQ/URYHBKXxcpdK3iVNpvmr71psKbZrVqB2CyT2ES1nfZPd9qIcuO4f5Uzf41t2c2NYMmGnke7CMDbgfCX3L9wu8a5qaPEn61zR7d2ZOhG689i3je5sRUBC+yGmCVA6FZPKZpRTDj/wffGGPnZx1qfE2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947954; c=relaxed/simple;
-	bh=P8/HawAHZumGTfHtNIvLiryIQXdgtAMDvPdF54cQN0g=;
+	s=arc-20240116; t=1745947957; c=relaxed/simple;
+	bh=jwb+n96BlzMW/EVRE8Kxq2GS34zomoftIuUqtfQl0ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxRrobd8qAiZppz4VBHajpZXj9aVsS1akeD4WKp7Cau1TRV4tBcYwV4K8bvoUtvsZC4pb0dutVNDthIaizbHEEQI+IsUmENxjOmuoGRtz44bXVI/yFzJqnUgHpQ0M1jobwy8gmo0uEfGSv28x4ZvAwjp953nbn1DexPHW36r72c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjGpzcq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tsxswpd2GcIknk9n9ZOOgr+3FgnoIYzimM90Vim75Ar01efBH9It2W/sDhIF3rtX8rJcRT7GA3k+TD0xZG0kX62bKsxdvdXGwD9UGJS0B8RJQaksghpcZ3tVrbxsaMCIS00onYq/mJOL2mqLBjgfvTsC6urBL8pyyxzUfNdZJpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWkrhZyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjGpzcq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A97FC4CEE3;
-	Tue, 29 Apr 2025 17:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWkrhZyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A11EC4CEE3;
+	Tue, 29 Apr 2025 17:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947954;
-	bh=P8/HawAHZumGTfHtNIvLiryIQXdgtAMDvPdF54cQN0g=;
+	s=korg; t=1745947957;
+	bh=jwb+n96BlzMW/EVRE8Kxq2GS34zomoftIuUqtfQl0ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjGpzcq3YMNO2LkoA88dSqTwTYp1cftJP0AiTDooa5XhUrnuNGDgm8dcs0wZHYnJb
-	 X9V+ZKb8je2dDsACKdbigsc36LbMXiLsjw32wNTMFQ/onZjUs3Sh/un7tLeuWdu/Yg
-	 4pRHWhxRjz4Ml9oS1l9fBAaf4vbAMwEghAvByjt8=
+	b=sWkrhZyyctT8TC44ICr+QbCWjPBGJdmfH3Ok0ATF42nh8/afz2Fyzk6UOfqT+aUQs
+	 sF0ICITfXROmyCFLL7xV6Wqwn+hqRup2aW3ASnJlToibNwqENtU+7S1ZsD88TTyIaU
+	 QQQTf4Ev/Wd9r0RQSnj9BJTtOumfMu02vgw8hPLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devyn Liu <liudingyuan@huawei.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 136/280] xhci: Limit time spent with xHC interrupts disabled during bus resume
-Date: Tue, 29 Apr 2025 18:41:17 +0200
-Message-ID: <20250429161120.693407353@linuxfoundation.org>
+	Dmitry Mastykin <mastichi@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 154/280] pinctrl: mcp23s08: Get rid of spurious level interrupts
+Date: Tue, 29 Apr 2025 18:41:35 +0200
+Message-ID: <20250429161121.422116357@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,140 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Dmitry Mastykin <mastichi@gmail.com>
 
-commit bea5892d0ed274e03655223d1977cf59f9aff2f2 upstream.
+[ Upstream commit 7b0671b97f0872d6950ccc925e210cb3f67721bf ]
 
-Current xhci bus resume implementation prevents xHC host from generating
-interrupts during high-speed USB 2 and super-speed USB 3 bus resume.
+irq_mask()/irq_unmask() are not called for nested interrupts. So level
+interrupts are never masked, chip's interrupt output is not cleared on
+INTCAP or GPIO read, the irq handler is uselessly called again. Nested
+irq handler is not called again, because interrupt reason is cleared by
+its first call.
+/proc/interrupts shows that number of chip's irqs is greater than
+number of nested irqs.
 
-Only reason to disable interrupts during bus resume would be to prevent
-the interrupt handler from interfering with the resume process of USB 2
-ports.
+This patch adds masking and unmasking level interrupts inside irq handler.
 
-Host initiated resume of USB 2 ports is done in two stages.
-
-The xhci driver first transitions the port from 'U3' to 'Resume' state,
-then wait in Resume for 20ms, and finally moves port to U0 state.
-xhci driver can't prevent interrupts by keeping the xhci spinlock
-due to this 20ms sleep.
-
-Limit interrupt disabling to the USB 2 port resume case only.
-resuming USB 2 ports in bus resume is only done in special cases where
-USB 2 ports had to be forced to suspend during bus suspend.
-
-The current way of preventing interrupts by clearing the 'Interrupt
-Enable' (INTE) bit in USBCMD register won't prevent the Interrupter
-registers 'Interrupt Pending' (IP), 'Event Handler Busy' (EHB) and
-USBSTS register Event Interrupt (EINT) bits from being set.
-
-New interrupts can't be issued before those bits are properly clered.
-
-Disable interrupts by clearing the interrupter register 'Interrupt
-Enable' (IE) bit instead. This way IP, EHB and INTE won't be set
-before IE is enabled again and a new interrupt is triggered.
-
-Reported-by: Devyn Liu <liudingyuan@huawei.com>
-Closes: https://lore.kernel.org/linux-usb/b1a9e2d51b4d4ff7a304f77c5be8164e@huawei.com/
-Cc: stable@vger.kernel.org
-Tested-by: Devyn Liu <liudingyuan@huawei.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250410151828.2868740-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dmitry Mastykin <mastichi@gmail.com>
+Link: https://lore.kernel.org/20250122120504.1279790-1-mastichi@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-hub.c |   30 ++++++++++++++++--------------
- drivers/usb/host/xhci.c     |    4 ++--
- drivers/usb/host/xhci.h     |    2 ++
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ drivers/pinctrl/pinctrl-mcp23s08.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-hub.c
-+++ b/drivers/usb/host/xhci-hub.c
-@@ -1878,9 +1878,10 @@ int xhci_bus_resume(struct usb_hcd *hcd)
- 	int max_ports, port_index;
- 	int sret;
- 	u32 next_state;
--	u32 temp, portsc;
-+	u32 portsc;
- 	struct xhci_hub *rhub;
- 	struct xhci_port **ports;
-+	bool disabled_irq = false;
- 
- 	rhub = xhci_get_rhub(hcd);
- 	ports = rhub->ports;
-@@ -1896,17 +1897,20 @@ int xhci_bus_resume(struct usb_hcd *hcd)
- 		return -ESHUTDOWN;
+diff --git a/drivers/pinctrl/pinctrl-mcp23s08.c b/drivers/pinctrl/pinctrl-mcp23s08.c
+index f384c72d95545..70d7485ada364 100644
+--- a/drivers/pinctrl/pinctrl-mcp23s08.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08.c
+@@ -382,6 +382,7 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
+ {
+ 	struct mcp23s08 *mcp = data;
+ 	int intcap, intcon, intf, i, gpio, gpio_orig, intcap_mask, defval, gpinten;
++	bool need_unmask = false;
+ 	unsigned long int enabled_interrupts;
+ 	unsigned int child_irq;
+ 	bool intf_set, intcap_changed, gpio_bit_changed,
+@@ -396,9 +397,6 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
+ 		goto unlock;
  	}
  
--	/* delay the irqs */
--	temp = readl(&xhci->op_regs->command);
--	temp &= ~CMD_EIE;
--	writel(temp, &xhci->op_regs->command);
+-	if (mcp_read(mcp, MCP_INTCAP, &intcap))
+-		goto unlock;
 -
- 	/* bus specific resume for ports we suspended at bus_suspend */
--	if (hcd->speed >= HCD_USB3)
-+	if (hcd->speed >= HCD_USB3) {
- 		next_state = XDEV_U0;
--	else
-+	} else {
- 		next_state = XDEV_RESUME;
--
-+		if (bus_state->bus_suspended) {
-+			/*
-+			 * prevent port event interrupts from interfering
-+			 * with usb2 port resume process
-+			 */
-+			xhci_disable_interrupter(xhci->interrupters[0]);
-+			disabled_irq = true;
-+		}
+ 	if (mcp_read(mcp, MCP_INTCON, &intcon))
+ 		goto unlock;
+ 
+@@ -408,6 +406,16 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
+ 	if (mcp_read(mcp, MCP_DEFVAL, &defval))
+ 		goto unlock;
+ 
++	/* Mask level interrupts to avoid their immediate reactivation after clearing */
++	if (intcon) {
++		need_unmask = true;
++		if (mcp_write(mcp, MCP_GPINTEN, gpinten & ~intcon))
++			goto unlock;
 +	}
- 	port_index = max_ports;
- 	while (port_index--) {
- 		portsc = readl(ports[port_index]->addr);
-@@ -1974,11 +1978,9 @@ int xhci_bus_resume(struct usb_hcd *hcd)
- 	(void) readl(&xhci->op_regs->command);
++
++	if (mcp_read(mcp, MCP_INTCAP, &intcap))
++		goto unlock;
++
+ 	/* This clears the interrupt(configurable on S18) */
+ 	if (mcp_read(mcp, MCP_GPIO, &gpio))
+ 		goto unlock;
+@@ -470,9 +478,18 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
+ 		}
+ 	}
  
- 	bus_state->next_statechange = jiffies + msecs_to_jiffies(5);
--	/* re-enable irqs */
--	temp = readl(&xhci->op_regs->command);
--	temp |= CMD_EIE;
--	writel(temp, &xhci->op_regs->command);
--	temp = readl(&xhci->op_regs->command);
-+	/* re-enable interrupter */
-+	if (disabled_irq)
-+		xhci_enable_interrupter(xhci->interrupters[0]);
++	if (need_unmask) {
++		mutex_lock(&mcp->lock);
++		goto unlock;
++	}
++
+ 	return IRQ_HANDLED;
  
- 	spin_unlock_irqrestore(&xhci->lock, flags);
- 	return 0;
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -321,7 +321,7 @@ static void xhci_zero_64b_regs(struct xh
- 		xhci_info(xhci, "Fault detected\n");
+ unlock:
++	if (need_unmask)
++		if (mcp_write(mcp, MCP_GPINTEN, gpinten))
++			dev_err(mcp->chip.parent, "can't unmask GPINTEN\n");
++
+ 	mutex_unlock(&mcp->lock);
+ 	return IRQ_HANDLED;
  }
- 
--static int xhci_enable_interrupter(struct xhci_interrupter *ir)
-+int xhci_enable_interrupter(struct xhci_interrupter *ir)
- {
- 	u32 iman;
- 
-@@ -334,7 +334,7 @@ static int xhci_enable_interrupter(struc
- 	return 0;
- }
- 
--static int xhci_disable_interrupter(struct xhci_interrupter *ir)
-+int xhci_disable_interrupter(struct xhci_interrupter *ir)
- {
- 	u32 iman;
- 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1881,6 +1881,8 @@ int xhci_alloc_tt_info(struct xhci_hcd *
- 		struct usb_tt *tt, gfp_t mem_flags);
- int xhci_set_interrupter_moderation(struct xhci_interrupter *ir,
- 				    u32 imod_interval);
-+int xhci_enable_interrupter(struct xhci_interrupter *ir);
-+int xhci_disable_interrupter(struct xhci_interrupter *ir);
- 
- /* xHCI ring, segment, TRB, and TD functions */
- dma_addr_t xhci_trb_virt_to_dma(struct xhci_segment *seg, union xhci_trb *trb);
+-- 
+2.39.5
+
 
 
