@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13997253B7E;
-	Tue, 29 Apr 2025 18:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0805424E00F;
+	Tue, 29 Apr 2025 18:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950270; cv=none; b=Cr/JXLSBPbTTpcFLV2VYyA9Qe80Qt4dwC+iwwJrUjv1XPcyvtnY6YIRqt5nzeUhRxkCB9fkLkzJZNbQ1hCHn7q2jbig9A9kDrDTVX+WaE8BDC9vc4PI3tM4NzUc7BLLGwK+HN9ATLQA477cZ635LU0c1QRHbRAy7mE3Q4KY4ZVs=
+	t=1745950273; cv=none; b=nsVKlWEKVz9LntzM25wSvOwQNB2KnmnU6tKn7kwOB+YGkRw55vbK4oOwt+SkACPN+a62gjvhR7u7z/SERu/j8nrSvNHgw9a7nht/Jsjrvegn2u9yET5OGOf7ENRfiS+ekqD4ib7wILAmlbijJg5A4sjpUB7f3ITFGmSyo1E+M+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950270; c=relaxed/simple;
-	bh=BEi/E6WzJE638lrwAfYKISuZ8OA7F50My/w1EkUgOeA=;
+	s=arc-20240116; t=1745950273; c=relaxed/simple;
+	bh=cYANfxkpd68dhYYND1AA2mhR+cV9PdxOBhKOkzRqg04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYh7rJBPGP5L6ZaN85MgiR6HM3HPt/fJEnsvDh6woxN5zHdqiEeYlTxHOfqRQaslXuhpbgZqlX1tDuDCHUtU/qYPoqtiHR3GZB4QzOWDwFEpSflxScqR8k7rP3hO7RX4D2vdbpuBnW1BWaZQIwXY2VFyBy/L+46yf1ke9rjs0EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnJfkXL/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/rHsPV6wEWddwMmSS0WQjfU1apdc6LuFLIpWT0TavuXmexrqwOefG0UAA3zcwipoJ5dgzpIa9/5b9r1dDL006NiT+gLgscum+sDhw2Gg3iZUUlTu8c6wmx/h4BE0b8LjjGiTkBIH9x4+8SpWs5G7nFEKR+4kx/z6vuU5qtSm4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqvKxSE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnJfkXL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F128C4CEE9;
-	Tue, 29 Apr 2025 18:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqvKxSE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CEFC4CEE3;
+	Tue, 29 Apr 2025 18:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950269;
-	bh=BEi/E6WzJE638lrwAfYKISuZ8OA7F50My/w1EkUgOeA=;
+	s=korg; t=1745950272;
+	bh=cYANfxkpd68dhYYND1AA2mhR+cV9PdxOBhKOkzRqg04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BnJfkXL/IIMWK2nYGOIwjpbmCq1HgjXWc1FQ5/Qss4/Tnco7Cz8KBh3ZKb9SNZwtk
-	 2vzxvNhjsEUYJlmrn95xELRJRShTxG6312EYb18NyQK5u+wozIo1jjlurO7V+zhJKs
-	 5YXik7fh6lGdLLn211ugYNYw9yoV8MMuzG7/51+A=
+	b=eqvKxSE6W+IMOkQjZqA6zDvwiVYQ8q6ofOmg/AC5AGAxczbD1DoOt7NE+ss6SSgiE
+	 rSejVDgQajuYL+tX6521zYX0YEkhyFNURb8bbI6oOC3k2z3yYEVHVugYZvd9CZRbgX
+	 4v+/BdLBSlDmX1q7H+UxscYqan64FnF0QPARCAHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/204] sched/topology: Consolidate and clean up access to a CPUs max compute capacity
-Date: Tue, 29 Apr 2025 18:42:10 +0200
-Message-ID: <20250429161101.132702300@linuxfoundation.org>
+Subject: [PATCH 6.6 043/204] sched/cpufreq: Rework schedutil governor performance estimation
+Date: Tue, 29 Apr 2025 18:42:11 +0200
+Message-ID: <20250429161101.172854376@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -54,271 +54,371 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 7bc263840bc3377186cb06b003ac287bb2f18ce2 ]
+[ Upstream commit 9c0b4bb7f6303c9c4e2e34984c46f5a86478f84d ]
 
-Remove the rq::cpu_capacity_orig field and use arch_scale_cpu_capacity()
-instead.
+The current method to take into account uclamp hints when estimating the
+target frequency can end in a situation where the selected target
+frequency is finally higher than uclamp hints, whereas there are no real
+needs. Such cases mainly happen because we are currently mixing the
+traditional scheduler utilization signal with the uclamp performance
+hints. By adding these 2 metrics, we loose an important information when
+it comes to select the target frequency, and we have to make some
+assumptions which can't fit all cases.
 
-The scheduler uses 3 methods to get access to a CPU's max compute capacity:
+Rework the interface between the scheduler and schedutil governor in order
+to propagate all information down to the cpufreq governor.
 
- - arch_scale_cpu_capacity(cpu) which is the default way to get a CPU's capacity.
+effective_cpu_util() interface changes and now returns the actual
+utilization of the CPU with 2 optional inputs:
 
- - cpu_capacity_orig field which is periodically updated with
-   arch_scale_cpu_capacity().
+- The minimum performance for this CPU; typically the capacity to handle
+  the deadline task and the interrupt pressure. But also uclamp_min
+  request when available.
 
- - capacity_orig_of(cpu) which encapsulates rq->cpu_capacity_orig.
+- The maximum targeting performance for this CPU which reflects the
+  maximum level that we would like to not exceed. By default it will be
+  the CPU capacity but can be reduced because of some performance hints
+  set with uclamp. The value can be lower than actual utilization and/or
+  min performance level.
 
-There is no real need to save the value returned by arch_scale_cpu_capacity()
-in struct rq. arch_scale_cpu_capacity() returns:
+A new sugov_effective_cpu_perf() interface is also available to compute
+the final performance level that is targeted for the CPU, after applying
+some cpufreq headroom and taking into account all inputs.
 
- - either a per_cpu variable.
+With these 2 functions, schedutil is now able to decide when it must go
+above uclamp hints. It now also has a generic way to get the min
+performance level.
 
- - or a const value for systems which have only one capacity.
+The dependency between energy model and cpufreq governor and its headroom
+policy doesn't exist anymore.
 
-Remove rq::cpu_capacity_orig and use arch_scale_cpu_capacity() everywhere.
+eenv_pd_max_util() asks schedutil for the targeted performance after
+applying the impact of the waking task.
 
-No functional changes.
-
-Some performance tests on Arm64:
-
-  - small SMP device (hikey): no noticeable changes
-  - HMP device (RB5):         hackbench shows minor improvement (1-2%)
-  - large smp (thx2):         hackbench and tbench shows minor improvement (1%)
+[ mingo: Refined the changelog & C comments. ]
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Link: https://lore.kernel.org/r/20231009103621.374412-2-vincent.guittot@linaro.org
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20231122133904.446032-2-vincent.guittot@linaro.org
 Stable-dep-of: 79443a7e9da3 ("cpufreq/sched: Explicitly synchronize limits_changed flag handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/scheduler/sched-capacity.rst | 13 +++++++------
- kernel/sched/core.c                        |  2 +-
- kernel/sched/cpudeadline.c                 |  2 +-
- kernel/sched/deadline.c                    |  4 ++--
- kernel/sched/fair.c                        | 18 ++++++++----------
- kernel/sched/rt.c                          |  2 +-
- kernel/sched/sched.h                       |  6 ------
- kernel/sched/topology.c                    |  7 +++++--
- 8 files changed, 25 insertions(+), 29 deletions(-)
+ include/linux/energy_model.h     |  1 -
+ kernel/sched/core.c              | 90 ++++++++++++++------------------
+ kernel/sched/cpufreq_schedutil.c | 35 +++++++++----
+ kernel/sched/fair.c              | 22 ++++++--
+ kernel/sched/sched.h             | 24 +++------
+ 5 files changed, 89 insertions(+), 83 deletions(-)
 
-diff --git a/Documentation/scheduler/sched-capacity.rst b/Documentation/scheduler/sched-capacity.rst
-index e2c1cf7431588..de414b33dd2ab 100644
---- a/Documentation/scheduler/sched-capacity.rst
-+++ b/Documentation/scheduler/sched-capacity.rst
-@@ -39,14 +39,15 @@ per Hz, leading to::
- -------------------
+diff --git a/include/linux/energy_model.h b/include/linux/energy_model.h
+index b9caa01dfac48..adec808b371a1 100644
+--- a/include/linux/energy_model.h
++++ b/include/linux/energy_model.h
+@@ -243,7 +243,6 @@ static inline unsigned long em_cpu_energy(struct em_perf_domain *pd,
+ 	scale_cpu = arch_scale_cpu_capacity(cpu);
+ 	ps = &pd->table[pd->nr_perf_states - 1];
  
- Two different capacity values are used within the scheduler. A CPU's
--``capacity_orig`` is its maximum attainable capacity, i.e. its maximum
--attainable performance level. A CPU's ``capacity`` is its ``capacity_orig`` to
--which some loss of available performance (e.g. time spent handling IRQs) is
--subtracted.
-+``original capacity`` is its maximum attainable capacity, i.e. its maximum
-+attainable performance level. This original capacity is returned by
-+the function arch_scale_cpu_capacity(). A CPU's ``capacity`` is its ``original
-+capacity`` to which some loss of available performance (e.g. time spent
-+handling IRQs) is subtracted.
+-	max_util = map_util_perf(max_util);
+ 	max_util = min(max_util, allowed_cpu_cap);
+ 	freq = map_util_freq(max_util, ps->frequency, scale_cpu);
  
- Note that a CPU's ``capacity`` is solely intended to be used by the CFS class,
--while ``capacity_orig`` is class-agnostic. The rest of this document will use
--the term ``capacity`` interchangeably with ``capacity_orig`` for the sake of
-+while ``original capacity`` is class-agnostic. The rest of this document will use
-+the term ``capacity`` interchangeably with ``original capacity`` for the sake of
- brevity.
- 
- 1.3 Platform examples
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8c5f75af07db0..41f035744683b 100644
+index 41f035744683b..760a6c3781cbf 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -10048,7 +10048,7 @@ void __init sched_init(void)
- #ifdef CONFIG_SMP
- 		rq->sd = NULL;
- 		rq->rd = NULL;
--		rq->cpu_capacity = rq->cpu_capacity_orig = SCHED_CAPACITY_SCALE;
-+		rq->cpu_capacity = SCHED_CAPACITY_SCALE;
- 		rq->balance_callback = &balance_push_callback;
- 		rq->active_balance = 0;
- 		rq->next_balance = jiffies;
-diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
-index 57c92d751bcd7..95baa12a10293 100644
---- a/kernel/sched/cpudeadline.c
-+++ b/kernel/sched/cpudeadline.c
-@@ -131,7 +131,7 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
- 			if (!dl_task_fits_capacity(p, cpu)) {
- 				cpumask_clear_cpu(cpu, later_mask);
- 
--				cap = capacity_orig_of(cpu);
-+				cap = arch_scale_cpu_capacity(cpu);
- 
- 				if (cap > max_cap ||
- 				    (cpu == task_cpu(p) && cap == max_cap)) {
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 6c639e48e49a9..a15cf7969953a 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -132,7 +132,7 @@ static inline unsigned long __dl_bw_capacity(const struct cpumask *mask)
- 	int i;
- 
- 	for_each_cpu_and(i, mask, cpu_active_mask)
--		cap += capacity_orig_of(i);
-+		cap += arch_scale_cpu_capacity(i);
- 
- 	return cap;
- }
-@@ -144,7 +144,7 @@ static inline unsigned long __dl_bw_capacity(const struct cpumask *mask)
- static inline unsigned long dl_bw_capacity(int i)
+@@ -7406,18 +7406,13 @@ int sched_core_idle_cpu(int cpu)
+  * required to meet deadlines.
+  */
+ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
+-				 enum cpu_util_type type,
+-				 struct task_struct *p)
++				 unsigned long *min,
++				 unsigned long *max)
  {
- 	if (!sched_asym_cpucap_active() &&
--	    capacity_orig_of(i) == SCHED_CAPACITY_SCALE) {
-+	    arch_scale_cpu_capacity(i) == SCHED_CAPACITY_SCALE) {
- 		return dl_bw_cpus(i) << SCHED_CAPACITY_SHIFT;
- 	} else {
- 		RCU_LOCKDEP_WARN(!rcu_read_lock_sched_held(),
+-	unsigned long dl_util, util, irq, max;
++	unsigned long util, irq, scale;
+ 	struct rq *rq = cpu_rq(cpu);
+ 
+-	max = arch_scale_cpu_capacity(cpu);
+-
+-	if (!uclamp_is_used() &&
+-	    type == FREQUENCY_UTIL && rt_rq_is_runnable(&rq->rt)) {
+-		return max;
+-	}
++	scale = arch_scale_cpu_capacity(cpu);
+ 
+ 	/*
+ 	 * Early check to see if IRQ/steal time saturates the CPU, can be
+@@ -7425,45 +7420,49 @@ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
+ 	 * update_irq_load_avg().
+ 	 */
+ 	irq = cpu_util_irq(rq);
+-	if (unlikely(irq >= max))
+-		return max;
++	if (unlikely(irq >= scale)) {
++		if (min)
++			*min = scale;
++		if (max)
++			*max = scale;
++		return scale;
++	}
++
++	if (min) {
++		/*
++		 * The minimum utilization returns the highest level between:
++		 * - the computed DL bandwidth needed with the IRQ pressure which
++		 *   steals time to the deadline task.
++		 * - The minimum performance requirement for CFS and/or RT.
++		 */
++		*min = max(irq + cpu_bw_dl(rq), uclamp_rq_get(rq, UCLAMP_MIN));
++
++		/*
++		 * When an RT task is runnable and uclamp is not used, we must
++		 * ensure that the task will run at maximum compute capacity.
++		 */
++		if (!uclamp_is_used() && rt_rq_is_runnable(&rq->rt))
++			*min = max(*min, scale);
++	}
+ 
+ 	/*
+ 	 * Because the time spend on RT/DL tasks is visible as 'lost' time to
+ 	 * CFS tasks and we use the same metric to track the effective
+ 	 * utilization (PELT windows are synchronized) we can directly add them
+ 	 * to obtain the CPU's actual utilization.
+-	 *
+-	 * CFS and RT utilization can be boosted or capped, depending on
+-	 * utilization clamp constraints requested by currently RUNNABLE
+-	 * tasks.
+-	 * When there are no CFS RUNNABLE tasks, clamps are released and
+-	 * frequency will be gracefully reduced with the utilization decay.
+ 	 */
+ 	util = util_cfs + cpu_util_rt(rq);
+-	if (type == FREQUENCY_UTIL)
+-		util = uclamp_rq_util_with(rq, util, p);
+-
+-	dl_util = cpu_util_dl(rq);
++	util += cpu_util_dl(rq);
+ 
+ 	/*
+-	 * For frequency selection we do not make cpu_util_dl() a permanent part
+-	 * of this sum because we want to use cpu_bw_dl() later on, but we need
+-	 * to check if the CFS+RT+DL sum is saturated (ie. no idle time) such
+-	 * that we select f_max when there is no idle time.
+-	 *
+-	 * NOTE: numerical errors or stop class might cause us to not quite hit
+-	 * saturation when we should -- something for later.
++	 * The maximum hint is a soft bandwidth requirement, which can be lower
++	 * than the actual utilization because of uclamp_max requirements.
+ 	 */
+-	if (util + dl_util >= max)
+-		return max;
++	if (max)
++		*max = min(scale, uclamp_rq_get(rq, UCLAMP_MAX));
+ 
+-	/*
+-	 * OTOH, for energy computation we need the estimated running time, so
+-	 * include util_dl and ignore dl_bw.
+-	 */
+-	if (type == ENERGY_UTIL)
+-		util += dl_util;
++	if (util >= scale)
++		return scale;
+ 
+ 	/*
+ 	 * There is still idle time; further improve the number by using the
+@@ -7474,28 +7473,15 @@ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
+ 	 *   U' = irq + --------- * U
+ 	 *                 max
+ 	 */
+-	util = scale_irq_capacity(util, irq, max);
++	util = scale_irq_capacity(util, irq, scale);
+ 	util += irq;
+ 
+-	/*
+-	 * Bandwidth required by DEADLINE must always be granted while, for
+-	 * FAIR and RT, we use blocked utilization of IDLE CPUs as a mechanism
+-	 * to gracefully reduce the frequency when no tasks show up for longer
+-	 * periods of time.
+-	 *
+-	 * Ideally we would like to set bw_dl as min/guaranteed freq and util +
+-	 * bw_dl as requested freq. However, cpufreq is not yet ready for such
+-	 * an interface. So, we only do the latter for now.
+-	 */
+-	if (type == FREQUENCY_UTIL)
+-		util += cpu_bw_dl(rq);
+-
+-	return min(max, util);
++	return min(scale, util);
+ }
+ 
+ unsigned long sched_cpu_util(int cpu)
+ {
+-	return effective_cpu_util(cpu, cpu_util_cfs(cpu), ENERGY_UTIL, NULL);
++	return effective_cpu_util(cpu, cpu_util_cfs(cpu), NULL, NULL);
+ }
+ #endif /* CONFIG_SMP */
+ 
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 259521b179aa1..f84473f73ed00 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -47,7 +47,7 @@ struct sugov_cpu {
+ 	u64			last_update;
+ 
+ 	unsigned long		util;
+-	unsigned long		bw_dl;
++	unsigned long		bw_min;
+ 
+ 	/* The field below is for single-CPU policies only: */
+ #ifdef CONFIG_NO_HZ_COMMON
+@@ -155,7 +155,6 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
+ 	unsigned int freq = arch_scale_freq_invariant() ?
+ 				policy->cpuinfo.max_freq : policy->cur;
+ 
+-	util = map_util_perf(util);
+ 	freq = map_util_freq(util, freq, max);
+ 
+ 	if (freq == sg_policy->cached_raw_freq && !sg_policy->need_freq_update)
+@@ -165,14 +164,30 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
+ 	return cpufreq_driver_resolve_freq(policy, freq);
+ }
+ 
++unsigned long sugov_effective_cpu_perf(int cpu, unsigned long actual,
++				 unsigned long min,
++				 unsigned long max)
++{
++	/* Add dvfs headroom to actual utilization */
++	actual = map_util_perf(actual);
++	/* Actually we don't need to target the max performance */
++	if (actual < max)
++		max = actual;
++
++	/*
++	 * Ensure at least minimum performance while providing more compute
++	 * capacity when possible.
++	 */
++	return max(min, max);
++}
++
+ static void sugov_get_util(struct sugov_cpu *sg_cpu)
+ {
+-	unsigned long util = cpu_util_cfs_boost(sg_cpu->cpu);
+-	struct rq *rq = cpu_rq(sg_cpu->cpu);
++	unsigned long min, max, util = cpu_util_cfs_boost(sg_cpu->cpu);
+ 
+-	sg_cpu->bw_dl = cpu_bw_dl(rq);
+-	sg_cpu->util = effective_cpu_util(sg_cpu->cpu, util,
+-					  FREQUENCY_UTIL, NULL);
++	util = effective_cpu_util(sg_cpu->cpu, util, &min, &max);
++	sg_cpu->bw_min = min;
++	sg_cpu->util = sugov_effective_cpu_perf(sg_cpu->cpu, util, min, max);
+ }
+ 
+ /**
+@@ -318,7 +333,7 @@ static inline bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu) { return false; }
+  */
+ static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
+ {
+-	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_dl)
++	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_min)
+ 		sg_cpu->sg_policy->limits_changed = true;
+ }
+ 
+@@ -419,8 +434,8 @@ static void sugov_update_single_perf(struct update_util_data *hook, u64 time,
+ 	    sugov_cpu_is_busy(sg_cpu) && sg_cpu->util < prev_util)
+ 		sg_cpu->util = prev_util;
+ 
+-	cpufreq_driver_adjust_perf(sg_cpu->cpu, map_util_perf(sg_cpu->bw_dl),
+-				   map_util_perf(sg_cpu->util), max_cap);
++	cpufreq_driver_adjust_perf(sg_cpu->cpu, sg_cpu->bw_min,
++				   sg_cpu->util, max_cap);
+ 
+ 	sg_cpu->sg_policy->last_freq_update_time = time;
+ }
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2808dbdd03847..050cc41585f8b 100644
+index 050cc41585f8b..268e2a49b964e 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -4951,7 +4951,7 @@ static inline void util_est_update(struct cfs_rq *cfs_rq,
- 	 * To avoid overestimation of actual task utilization, skip updates if
- 	 * we cannot grant there is idle time in this CPU.
- 	 */
--	if (task_util(p) > capacity_orig_of(cpu_of(rq_of(cfs_rq))))
-+	if (task_util(p) > arch_scale_cpu_capacity(cpu_of(rq_of(cfs_rq))))
- 		return;
+@@ -7859,7 +7859,7 @@ static inline void eenv_pd_busy_time(struct energy_env *eenv,
+ 	for_each_cpu(cpu, pd_cpus) {
+ 		unsigned long util = cpu_util(cpu, p, -1, 0);
  
- 	/*
-@@ -4999,14 +4999,14 @@ static inline int util_fits_cpu(unsigned long util,
- 		return fits;
- 
- 	/*
--	 * We must use capacity_orig_of() for comparing against uclamp_min and
-+	 * We must use arch_scale_cpu_capacity() for comparing against uclamp_min and
- 	 * uclamp_max. We only care about capacity pressure (by using
- 	 * capacity_of()) for comparing against the real util.
- 	 *
- 	 * If a task is boosted to 1024 for example, we don't want a tiny
- 	 * pressure to skew the check whether it fits a CPU or not.
- 	 *
--	 * Similarly if a task is capped to capacity_orig_of(little_cpu), it
-+	 * Similarly if a task is capped to arch_scale_cpu_capacity(little_cpu), it
- 	 * should fit a little cpu even if there's some pressure.
- 	 *
- 	 * Only exception is for thermal pressure since it has a direct impact
-@@ -5018,7 +5018,7 @@ static inline int util_fits_cpu(unsigned long util,
- 	 * For uclamp_max, we can tolerate a drop in performance level as the
- 	 * goal is to cap the task. So it's okay if it's getting less.
- 	 */
--	capacity_orig = capacity_orig_of(cpu);
-+	capacity_orig = arch_scale_cpu_capacity(cpu);
- 	capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
- 
- 	/*
-@@ -7515,7 +7515,7 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- 		 * Look for the CPU with best capacity.
- 		 */
- 		else if (fits < 0)
--			cpu_cap = capacity_orig_of(cpu) - thermal_load_avg(cpu_rq(cpu));
-+			cpu_cap = arch_scale_cpu_capacity(cpu) - thermal_load_avg(cpu_rq(cpu));
- 
- 		/*
- 		 * First, select CPU which fits better (-1 being better than 0).
-@@ -7757,7 +7757,7 @@ cpu_util(int cpu, struct task_struct *p, int dst_cpu, int boost)
- 		util = max(util, util_est);
+-		busy_time += effective_cpu_util(cpu, util, ENERGY_UTIL, NULL);
++		busy_time += effective_cpu_util(cpu, util, NULL, NULL);
  	}
  
--	return min(util, capacity_orig_of(cpu));
-+	return min(util, arch_scale_cpu_capacity(cpu));
- }
+ 	eenv->pd_busy_time = min(eenv->pd_cap, busy_time);
+@@ -7882,7 +7882,7 @@ eenv_pd_max_util(struct energy_env *eenv, struct cpumask *pd_cpus,
+ 	for_each_cpu(cpu, pd_cpus) {
+ 		struct task_struct *tsk = (cpu == dst_cpu) ? p : NULL;
+ 		unsigned long util = cpu_util(cpu, p, dst_cpu, 1);
+-		unsigned long eff_util;
++		unsigned long eff_util, min, max;
  
- unsigned long cpu_util_cfs(int cpu)
-@@ -9544,8 +9544,6 @@ static void update_cpu_capacity(struct sched_domain *sd, int cpu)
- 	unsigned long capacity = scale_rt_capacity(cpu);
- 	struct sched_group *sdg = sd->groups;
+ 		/*
+ 		 * Performance domain frequency: utilization clamping
+@@ -7891,7 +7891,23 @@ eenv_pd_max_util(struct energy_env *eenv, struct cpumask *pd_cpus,
+ 		 * NOTE: in case RT tasks are running, by default the
+ 		 * FREQUENCY_UTIL's utilization can be max OPP.
+ 		 */
+-		eff_util = effective_cpu_util(cpu, util, FREQUENCY_UTIL, tsk);
++		eff_util = effective_cpu_util(cpu, util, &min, &max);
++
++		/* Task's uclamp can modify min and max value */
++		if (tsk && uclamp_is_used()) {
++			min = max(min, uclamp_eff_value(p, UCLAMP_MIN));
++
++			/*
++			 * If there is no active max uclamp constraint,
++			 * directly use task's one, otherwise keep max.
++			 */
++			if (uclamp_rq_is_idle(cpu_rq(cpu)))
++				max = uclamp_eff_value(p, UCLAMP_MAX);
++			else
++				max = max(max, uclamp_eff_value(p, UCLAMP_MAX));
++		}
++
++		eff_util = sugov_effective_cpu_perf(cpu, eff_util, min, max);
+ 		max_util = max(max_util, eff_util);
+ 	}
  
--	cpu_rq(cpu)->cpu_capacity_orig = arch_scale_cpu_capacity(cpu);
--
- 	if (!capacity)
- 		capacity = 1;
- 
-@@ -9621,7 +9619,7 @@ static inline int
- check_cpu_capacity(struct rq *rq, struct sched_domain *sd)
- {
- 	return ((rq->cpu_capacity * sd->imbalance_pct) <
--				(rq->cpu_capacity_orig * 100));
-+				(arch_scale_cpu_capacity(cpu_of(rq)) * 100));
- }
- 
- /*
-@@ -9632,7 +9630,7 @@ check_cpu_capacity(struct rq *rq, struct sched_domain *sd)
- static inline int check_misfit_status(struct rq *rq, struct sched_domain *sd)
- {
- 	return rq->misfit_task_load &&
--		(rq->cpu_capacity_orig < rq->rd->max_cpu_capacity ||
-+		(arch_scale_cpu_capacity(rq->cpu) < rq->rd->max_cpu_capacity ||
- 		 check_cpu_capacity(rq, sd));
- }
- 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index b89223a973168..91b1ee0d81fce 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -519,7 +519,7 @@ static inline bool rt_task_fits_capacity(struct task_struct *p, int cpu)
- 	min_cap = uclamp_eff_value(p, UCLAMP_MIN);
- 	max_cap = uclamp_eff_value(p, UCLAMP_MAX);
- 
--	cpu_cap = capacity_orig_of(cpu);
-+	cpu_cap = arch_scale_cpu_capacity(cpu);
- 
- 	return cpu_cap >= min(min_cap, max_cap);
- }
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index d48c6a292a83d..f84b2e9feeb6d 100644
+index f84b2e9feeb6d..60dc51f43dd91 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
-@@ -1048,7 +1048,6 @@ struct rq {
- 	struct sched_domain __rcu	*sd;
- 
- 	unsigned long		cpu_capacity;
--	unsigned long		cpu_capacity_orig;
- 
- 	struct balance_callback *balance_callback;
- 
-@@ -2985,11 +2984,6 @@ static inline void cpufreq_update_util(struct rq *rq, unsigned int flags) {}
+@@ -2984,24 +2984,14 @@ static inline void cpufreq_update_util(struct rq *rq, unsigned int flags) {}
  #endif
  
  #ifdef CONFIG_SMP
--static inline unsigned long capacity_orig_of(int cpu)
--{
--	return cpu_rq(cpu)->cpu_capacity_orig;
--}
+-/**
+- * enum cpu_util_type - CPU utilization type
+- * @FREQUENCY_UTIL:	Utilization used to select frequency
+- * @ENERGY_UTIL:	Utilization used during energy calculation
+- *
+- * The utilization signals of all scheduling classes (CFS/RT/DL) and IRQ time
+- * need to be aggregated differently depending on the usage made of them. This
+- * enum is used within effective_cpu_util() to differentiate the types of
+- * utilization expected by the callers, and adjust the aggregation accordingly.
+- */
+-enum cpu_util_type {
+-	FREQUENCY_UTIL,
+-	ENERGY_UTIL,
+-};
 -
- /**
-  * enum cpu_util_type - CPU utilization type
-  * @FREQUENCY_UTIL:	Utilization used to select frequency
-diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 2ed884bb36213..c61698cff0f3a 100644
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -2486,12 +2486,15 @@ build_sched_domains(const struct cpumask *cpu_map, struct sched_domain_attr *att
- 	/* Attach the domains */
- 	rcu_read_lock();
- 	for_each_cpu(i, cpu_map) {
-+		unsigned long capacity;
+ unsigned long effective_cpu_util(int cpu, unsigned long util_cfs,
+-				 enum cpu_util_type type,
+-				 struct task_struct *p);
++				 unsigned long *min,
++				 unsigned long *max);
 +
- 		rq = cpu_rq(i);
- 		sd = *per_cpu_ptr(d.sd, i);
++unsigned long sugov_effective_cpu_perf(int cpu, unsigned long actual,
++				 unsigned long min,
++				 unsigned long max);
++
  
-+		capacity = arch_scale_cpu_capacity(i);
- 		/* Use READ_ONCE()/WRITE_ONCE() to avoid load/store tearing: */
--		if (rq->cpu_capacity_orig > READ_ONCE(d.rd->max_cpu_capacity))
--			WRITE_ONCE(d.rd->max_cpu_capacity, rq->cpu_capacity_orig);
-+		if (capacity > READ_ONCE(d.rd->max_cpu_capacity))
-+			WRITE_ONCE(d.rd->max_cpu_capacity, capacity);
- 
- 		cpu_attach_domain(sd, d.rd, i);
- 	}
+ /*
+  * Verify the fitness of task @p to run on @cpu taking into account the
 -- 
 2.39.5
 
