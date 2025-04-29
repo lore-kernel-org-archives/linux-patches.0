@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F19248878;
-	Tue, 29 Apr 2025 16:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052CD21772B;
+	Tue, 29 Apr 2025 16:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945616; cv=none; b=ncPDDlf5RMNY+Lf9Xi3JRLpefWL21ThIDyatijR8i/r71iB2gnnSPqnJyXrq+V0eFx9UJNDbH/LlQvZq7zj/t5QBuSvpDCGxz/Ua1IQBR/xh58dQTpYhWl8KwKpWyShgaGvKHOYzidyeNVyUEETvjohq/8xoUJ+2NcugjsKCRgg=
+	t=1745945620; cv=none; b=HrdRpmT98A3So5gNLJzZJdAixVPoh5/NNCyspQsUWGG3oyIOOu0mDNbfmRAUMp6Gsvbl70GbT6jeSEdRkx46UvCkKM+rhZZTdFCOcHmUZd2ce/AfXgyj+wEaDBDobruHmz6VU9Zy/vpBoebyWuQWrfuPVqlxZ7vJCNNSGnUSx5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945616; c=relaxed/simple;
-	bh=pXLfMNw9TwSBmF+FikWqUATitGy13XDUzr+hRQjl8I8=;
+	s=arc-20240116; t=1745945620; c=relaxed/simple;
+	bh=inuRLI9xkoKFOKHm2I76b56dKxL8l/BiZL59RStelFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiMMUOEcF+hE35PAkSmx6t9iYoo13NN3zYcCrBQ2vtDTJ3W7ykHD4eDQqMrchQs07j7I+Sy++3do5q0Hiy+chrvIQALPqpVEf9PA7ca0t8LXTB0fpfYGCB70fSRIZQ/EmGydHl5JTJNIEYiBOFkL32DAQHUz2frspxmDj6aEmrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiqSL7XI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8wx5n1CcT/lxx2MESz+UdA4aqzVP+rFYyf9dW8Z8SPnHN3QOibhze7ud8kCwqMISBrJr9k/nCH/WN1FpoR6EbhcrzeGN43xySedRNQ1tedPZRUVUO0Miwo2HAMAP+TRbZVpk/J18x8LVtnEgNBe1AwU4VLIvnm1dEg+n7tGM7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SabriPpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiqSL7XI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACA1C4CEE3;
-	Tue, 29 Apr 2025 16:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SabriPpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1835FC4CEE3;
+	Tue, 29 Apr 2025 16:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945616;
-	bh=pXLfMNw9TwSBmF+FikWqUATitGy13XDUzr+hRQjl8I8=;
+	s=korg; t=1745945619;
+	bh=inuRLI9xkoKFOKHm2I76b56dKxL8l/BiZL59RStelFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wiqSL7XIAyAqoEwZ08RLXg8dnZDJGYo/YXCmidK3NzbsE+OHQlneDzpqFM9gXFkSL
-	 iUCC6nBh0sLrTN4Da7gzJNxmytjoZPCsEuLleX0Ej39gsew/jZw1LgMKLKKkDrLaHB
-	 A4Lsa4xmJYLiwg0zdL6doPJwjfAAFIUYulRNxPz4=
+	b=SabriPpnZRxtxF0rOvWzk8zt8LgttoyOqFzT9cYPOADj2qdfdZWOX25v0eQ6+mOe1
+	 0uWK9FUsqC6zgf6n/9AbwYjljoj3l9fNX8CSiE3gek2a8YY4G3UNO7ldgpkRE/OWql
+	 Df4Y2EiNCrvwfDLOrQ5f090Mt9EzD2sldaMeTmUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Marc Eurin <jmeurin@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Amit Shah <amit.shah@amd.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 172/179] ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls
-Date: Tue, 29 Apr 2025 18:41:53 +0200
-Message-ID: <20250429161056.355340331@linuxfoundation.org>
+Subject: [PATCH 5.4 173/179] x86/bugs: Dont fill RSB on VMEXIT with eIBRS+retpoline
+Date: Tue, 29 Apr 2025 18:41:54 +0200
+Message-ID: <20250429161056.394306314@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,44 +58,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Marc Eurin <jmeurin@google.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 7ab4f0e37a0f4207e742a8de69be03984db6ebf0 ]
+[ Upstream commit 18bae0dfec15b24ec14ca17dc18603372f5f254f ]
 
-The end of table checks should be done with the structure size,
-but 2 of the 3 similar calls use the pointer size.
+eIBRS protects against guest->host RSB underflow/poisoning attacks.
+Adding retpoline to the mix doesn't change that.  Retpoline has a
+balanced CALL/RET anyway.
 
-Signed-off-by: Jean-Marc Eurin <jmeurin@google.com>
-Link: https://patch.msgid.link/20250402001542.2600671-1-jmeurin@google.com
-[ rjw: Subject edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+So the current full RSB filling on VMEXIT with eIBRS+retpoline is
+overkill.  Disable it or do the VMEXIT_LITE mitigation if needed.
+
+Suggested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Reviewed-by: Amit Shah <amit.shah@amd.com>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: David Woodhouse <dwmw2@infradead.org>
+Link: https://lore.kernel.org/r/84a1226e5c9e2698eae1b5ade861f1b8bf3677dc.1744148254.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pptt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/pptt.c b/drivers/acpi/pptt.c
-index f31544d3656e3..c1c7727ab9324 100644
---- a/drivers/acpi/pptt.c
-+++ b/drivers/acpi/pptt.c
-@@ -216,7 +216,7 @@ static int acpi_pptt_leaf_node(struct acpi_table_header *table_hdr,
- 	node_entry = ACPI_PTR_DIFF(node, table_hdr);
- 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
- 			     sizeof(struct acpi_table_pptt));
--	proc_sz = sizeof(struct acpi_pptt_processor *);
-+	proc_sz = sizeof(struct acpi_pptt_processor);
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index af748d1c78d41..4f803aed2ef0e 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1348,20 +1348,20 @@ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_
+ 	case SPECTRE_V2_NONE:
+ 		return;
  
- 	while ((unsigned long)entry + proc_sz < table_end) {
- 		cpu_node = (struct acpi_pptt_processor *)entry;
-@@ -257,7 +257,7 @@ static struct acpi_pptt_processor *acpi_find_processor_node(struct acpi_table_he
- 	table_end = (unsigned long)table_hdr + table_hdr->length;
- 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
- 			     sizeof(struct acpi_table_pptt));
--	proc_sz = sizeof(struct acpi_pptt_processor *);
-+	proc_sz = sizeof(struct acpi_pptt_processor);
+-	case SPECTRE_V2_EIBRS_LFENCE:
+ 	case SPECTRE_V2_EIBRS:
++	case SPECTRE_V2_EIBRS_LFENCE:
++	case SPECTRE_V2_EIBRS_RETPOLINE:
+ 		if (boot_cpu_has_bug(X86_BUG_EIBRS_PBRSB)) {
+-			setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT_LITE);
+ 			pr_info("Spectre v2 / PBRSB-eIBRS: Retire a single CALL on VMEXIT\n");
++			setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT_LITE);
+ 		}
+ 		return;
  
- 	/* find the processor structure associated with this cpuid */
- 	while ((unsigned long)entry + proc_sz < table_end) {
+-	case SPECTRE_V2_EIBRS_RETPOLINE:
+ 	case SPECTRE_V2_RETPOLINE:
+ 	case SPECTRE_V2_LFENCE:
+ 	case SPECTRE_V2_IBRS:
+-		setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 		pr_info("Spectre v2 / SpectreRSB : Filling RSB on VMEXIT\n");
++		setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 		return;
+ 	}
+ 
 -- 
 2.39.5
 
