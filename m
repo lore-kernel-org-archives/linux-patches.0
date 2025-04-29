@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D53221719;
-	Tue, 29 Apr 2025 17:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F3422A81D;
+	Tue, 29 Apr 2025 17:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946586; cv=none; b=o2gkZD4Cg6JZYUA4NfRzgVsW4nMVXX/L1fW+pSd4//UU6mqg4hFNS+CbRtAnEJKOecIyB0rEBIjLeDYAdbyQ86Id7E76qwWkKlvvGrgus9yACi9q4eTB1P+U2zddqzKLPuVmJMuCBk/7cMh7zY6dKscy+erjBsUJSyjYj7ThtHE=
+	t=1745946589; cv=none; b=RwUk9r56+33Ouw47escYm1QddAUVQk699WcUzZ0RQrqbDpZb/AmW1qQl+PCFxJfWDhU+HW/kQ6poTH2uJV4yoVzVOrcfvrUjwC8Z46hSP54evX0kAT0tMb7im0Ybz8ZOR9RPGqYUgak9vm9pLV9XTsG19dfSz9ILH2C89427QJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946586; c=relaxed/simple;
-	bh=Eh23O9ts3WmVGrOyF/28KL1mFCICbDSf0pb3mBwkUHA=;
+	s=arc-20240116; t=1745946589; c=relaxed/simple;
+	bh=sBuDtDvAN7iEFAzc3KaObJKEtYtjbMLmq/B3C0hKasY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Je8uwDR8XHyvM+00IWD/y8JB9YJqmHDZgX5i3JMJlgjkRoUuCJndmJXXnKmGTdte2NJGaiIhOYmSa+cT4pCq+iDxkmWQhP2I3qnn19NflyP55KbcybX24DtpxEJbdzE/uPJLWsHU7eStU7rDTaLlh56TiLU1aZS10oBmY58sRrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9tIV/Qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIgEvGJbOY1dVzg4P4Hc2qLoQovzIFoW9Yv/geHLvl0p+2Uh8rKk9khU0Jn1G4uWbLm4hopBl3678MSwvBP7iP2c39214r97TvzQU0ycGK/k4WgzMIRqh9kAf0KiDdtx5avWSMIR1919mE92JbN/TjB15WzasXz7vnUtybch5ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOGvPwzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9tIV/Qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1922C4CEE3;
-	Tue, 29 Apr 2025 17:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOGvPwzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B436DC4CEE3;
+	Tue, 29 Apr 2025 17:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946586;
-	bh=Eh23O9ts3WmVGrOyF/28KL1mFCICbDSf0pb3mBwkUHA=;
+	s=korg; t=1745946589;
+	bh=sBuDtDvAN7iEFAzc3KaObJKEtYtjbMLmq/B3C0hKasY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9tIV/Qu6sI5zSvFytqVesWFeUt4+oM3Ik1louYs4t5asyHtDuRQN5pT5hapeqFXW
-	 PAJPZWF11WqbB/pyX6Bh4xKCbbzt1TIps5/4vLQMNZtFTY7mOmxRYqrr62s5NOSymO
-	 uqpyWoJ6mwJv/XuSMbjDKiMFUeEM8NCeCmlTR3so=
+	b=YOGvPwzXM290alcfrjUdUNwAZbPhxXaucOHv7ol7Cgta1vo6cjm4QnsiE2p+isehx
+	 m6W+mZrBVr8EVbZ1tR+Ad/4X1qkpCeZtARXSTJUT0Cj2RjmlNlRfUc38ZUO4N5ODla
+	 sxgIHTOhPn+FkfwGhfC1SyYz06jJAk8UC6xavnUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 286/311] ubsan: Fix panic from test_ubsan_out_of_bounds
-Date: Tue, 29 Apr 2025 18:42:03 +0200
-Message-ID: <20250429161132.721882597@linuxfoundation.org>
+Subject: [PATCH 6.14 287/311] nvmet: pci-epf: cleanup link state management
+Date: Tue, 29 Apr 2025 18:42:04 +0200
+Message-ID: <20250429161132.761928673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,88 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 9b044614be12d78d3a93767708b8d02fb7dfa9b0 ]
+[ Upstream commit ad91308d3bdeb9d90ef4a400f379ce461f0fb6a7 ]
 
-Running lib_ubsan.ko on arm64 (without CONFIG_UBSAN_TRAP) panics the
-kernel:
+Since the link_up boolean field of struct nvmet_pci_epf_ctrl is always
+set to true when nvmet_pci_epf_start_ctrl() is called, assign true to
+this field in nvmet_pci_epf_start_ctrl(). Conversely, since this field
+is set to false when nvmet_pci_epf_stop_ctrl() is called, set this field
+to false directly inside that function.
 
-[   31.616546] Kernel panic - not syncing: stack-protector: Kernel stack is corrupted in: test_ubsan_out_of_bounds+0x158/0x158 [test_ubsan]
-[   31.646817] CPU: 3 UID: 0 PID: 179 Comm: insmod Not tainted 6.15.0-rc2 #1 PREEMPT
-[   31.648153] Hardware name: linux,dummy-virt (DT)
-[   31.648970] Call trace:
-[   31.649345]  show_stack+0x18/0x24 (C)
-[   31.650960]  dump_stack_lvl+0x40/0x84
-[   31.651559]  dump_stack+0x18/0x24
-[   31.652264]  panic+0x138/0x3b4
-[   31.652812]  __ktime_get_real_seconds+0x0/0x10
-[   31.653540]  test_ubsan_load_invalid_value+0x0/0xa8 [test_ubsan]
-[   31.654388]  init_module+0x24/0xff4 [test_ubsan]
-[   31.655077]  do_one_initcall+0xd4/0x280
-[   31.655680]  do_init_module+0x58/0x2b4
+While at it, also add information messages to notify the user of the PCI
+link state changes to help troubleshoot any link stability issues
+without needing to enable debug messages.
 
-That happens because the test corrupts other data in the stack:
-400:   d5384108        mrs     x8, sp_el0
-404:   f9426d08        ldr     x8, [x8, #1240]
-408:   f85f83a9        ldur    x9, [x29, #-8]
-40c:   eb09011f        cmp     x8, x9
-410:   54000301        b.ne    470 <test_ubsan_out_of_bounds+0x154>  // b.any
-
-As there is no guarantee the compiler will order the local variables
-as declared in the module:
-        volatile char above[4] = { }; /* Protect surrounding memory. */
-        volatile int arr[4];
-        volatile char below[4] = { }; /* Protect surrounding memory. */
-
-There is another problem where the out-of-bound index is 5 which is larger
-than the extra surrounding memory for protection.
-
-So, use a struct to enforce the ordering, and fix the index to be 4.
-Also, remove some of the volatiles and rely on OPTIMIZER_HIDE_VAR()
-
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Link: https://lore.kernel.org/r/20250415203354.4109415-1-smostafa@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_ubsan.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/nvme/target/pci-epf.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/lib/test_ubsan.c b/lib/test_ubsan.c
-index 5d7b10e986107..63b7566e78639 100644
---- a/lib/test_ubsan.c
-+++ b/lib/test_ubsan.c
-@@ -68,18 +68,22 @@ static void test_ubsan_shift_out_of_bounds(void)
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index 5c4c4c1f535d4..bc1daa9aede9d 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -2109,11 +2109,18 @@ static int nvmet_pci_epf_create_ctrl(struct nvmet_pci_epf *nvme_epf,
  
- static void test_ubsan_out_of_bounds(void)
+ static void nvmet_pci_epf_start_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
  {
--	volatile int i = 4, j = 5, k = -1;
--	volatile char above[4] = { }; /* Protect surrounding memory. */
--	volatile int arr[4];
--	volatile char below[4] = { }; /* Protect surrounding memory. */
-+	int i = 4, j = 4, k = -1;
-+	volatile struct {
-+		char above[4]; /* Protect surrounding memory. */
-+		int arr[4];
-+		char below[4]; /* Protect surrounding memory. */
-+	} data;
- 
--	above[0] = below[0];
-+	OPTIMIZER_HIDE_VAR(i);
-+	OPTIMIZER_HIDE_VAR(j);
-+	OPTIMIZER_HIDE_VAR(k);
- 
- 	UBSAN_TEST(CONFIG_UBSAN_BOUNDS, "above");
--	arr[j] = i;
-+	data.arr[j] = i;
- 
- 	UBSAN_TEST(CONFIG_UBSAN_BOUNDS, "below");
--	arr[k] = i;
-+	data.arr[k] = i;
++
++	dev_info(ctrl->dev, "PCI link up\n");
++	ctrl->link_up = true;
++
+ 	schedule_delayed_work(&ctrl->poll_cc, NVMET_PCI_EPF_CC_POLL_INTERVAL);
  }
  
- enum ubsan_test_enum {
+ static void nvmet_pci_epf_stop_ctrl(struct nvmet_pci_epf_ctrl *ctrl)
+ {
++	dev_info(ctrl->dev, "PCI link down\n");
++	ctrl->link_up = false;
++
+ 	cancel_delayed_work_sync(&ctrl->poll_cc);
+ 
+ 	nvmet_pci_epf_disable_ctrl(ctrl, false);
+@@ -2340,10 +2347,8 @@ static int nvmet_pci_epf_epc_init(struct pci_epf *epf)
+ 	if (ret)
+ 		goto out_clear_bar;
+ 
+-	if (!epc_features->linkup_notifier) {
+-		ctrl->link_up = true;
++	if (!epc_features->linkup_notifier)
+ 		nvmet_pci_epf_start_ctrl(&nvme_epf->ctrl);
+-	}
+ 
+ 	return 0;
+ 
+@@ -2359,7 +2364,6 @@ static void nvmet_pci_epf_epc_deinit(struct pci_epf *epf)
+ 	struct nvmet_pci_epf *nvme_epf = epf_get_drvdata(epf);
+ 	struct nvmet_pci_epf_ctrl *ctrl = &nvme_epf->ctrl;
+ 
+-	ctrl->link_up = false;
+ 	nvmet_pci_epf_destroy_ctrl(ctrl);
+ 
+ 	nvmet_pci_epf_deinit_dma(nvme_epf);
+@@ -2371,7 +2375,6 @@ static int nvmet_pci_epf_link_up(struct pci_epf *epf)
+ 	struct nvmet_pci_epf *nvme_epf = epf_get_drvdata(epf);
+ 	struct nvmet_pci_epf_ctrl *ctrl = &nvme_epf->ctrl;
+ 
+-	ctrl->link_up = true;
+ 	nvmet_pci_epf_start_ctrl(ctrl);
+ 
+ 	return 0;
+@@ -2382,7 +2385,6 @@ static int nvmet_pci_epf_link_down(struct pci_epf *epf)
+ 	struct nvmet_pci_epf *nvme_epf = epf_get_drvdata(epf);
+ 	struct nvmet_pci_epf_ctrl *ctrl = &nvme_epf->ctrl;
+ 
+-	ctrl->link_up = false;
+ 	nvmet_pci_epf_stop_ctrl(ctrl);
+ 
+ 	return 0;
 -- 
 2.39.5
 
