@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C15244686;
-	Tue, 29 Apr 2025 17:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6371927453;
+	Tue, 29 Apr 2025 17:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946781; cv=none; b=ZTXZr7ocjl7ub5K8qDXdN1Ic68kgoLjgC0SPNHg6xkxMtc4iBGlAJ+SCn+2Q67oV3e6uSBX99gbJ+II+5RPzu38/Q2DHCGYleLcLEdy6t09cN/7t+DQyy1ZYhN0eDzjsQ89nx6Es4ZrrsZdQxboPwRrkJFk0+jwkPotRPp5Cd10=
+	t=1745946784; cv=none; b=JftLAt9EtEFCoBIVBk6hGbhNaTeriSyna6UcI8RDSN0YowEVl3KR0XzalVOOFRpfI5vyUF5BECTMtOMW2fiArFKVlWWmnrJRUelibd/n6+6ftZei7jBFJZprPlarnIaU5P25bemNtXFuCyfDAUNKHRD12QsR37DlBiK3aKtOWFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946781; c=relaxed/simple;
-	bh=eAQ9Zq3LftOxzwuGuk1NVBN2dP62f3Qipn+9sTj8Vfs=;
+	s=arc-20240116; t=1745946784; c=relaxed/simple;
+	bh=i2O2S8T4NYQw51QWnlLJHx33v519ZfC4ns6MsKy9WTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8Z2HiI30KSOMnIMsz5cJGOdLB7n6S5Qg8LsEqMyvMzwmWUQobgWfarrHGw21ONIUOCPYS7pyKbyE7IioMNufhwDBDLBnOCEOfOBqhRVD8Uer0qYAfZKlbS8I3co2Oj9kcla/zrvXCHbH5OMScHhpx/peJeZo4SbDaSaC1FatWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHeKYsJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMOrAnuQo0ClDay3z2BIvnAZIWT9Ihy9CgtHQS523HMfMKl6kcOldGxduFCWKoRQzDrM3cPW94B7Z2JSoHlSnItMSou0YJlrK/1i9v9SL31mKPy3ANVxJC6eoiHzonWafwvT3c+/h1GvwrWQj59Aa9ePG/qR3NwxcDTOxXvQhm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPQfpSKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHeKYsJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E10C4CEE3;
-	Tue, 29 Apr 2025 17:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPQfpSKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BBCC4CEE3;
+	Tue, 29 Apr 2025 17:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946780;
-	bh=eAQ9Zq3LftOxzwuGuk1NVBN2dP62f3Qipn+9sTj8Vfs=;
+	s=korg; t=1745946783;
+	bh=i2O2S8T4NYQw51QWnlLJHx33v519ZfC4ns6MsKy9WTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHeKYsJGwZtPuJLlTgMkRG1886vlKmgkadK1WF2/bsyAg8x/WuItZRq+QerZnZ4TZ
-	 dWIu7v/+tjjqvnlkbp0Ki+16Fw0EPHwYKCUHAhWo4Nk5Fcitkn5ZnsgotFKt7XW8tF
-	 3KfpA6WbRAEtT5x3o2xO6i1tm5JHHq2lcORHZiOI=
+	b=CPQfpSKMSI5nLd6D/FKw5znPAS8aA1z8A4/BLNra3PWvMc1m43U7PwgR+/K5juPGy
+	 WSXRWuTmc9h3aYGXP4Ksg6r8pW/h0ZOQDJ/2x5sMzvifKYOo6bdAw9BR1U7AKopnpI
+	 3kDfuoE8aEs4CYHK+Y+3kuBrnryeS+SFrrGp1RCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Wyatt <fewtarius@steamfork.org>,
-	John Edwards <uejji@uejji.net>,
-	Paco Avelar <pacoavelar@hotmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/286] drm: panel-orientation-quirks: Add new quirk for GPD Win 2
-Date: Tue, 29 Apr 2025 18:39:02 +0200
-Message-ID: <20250429161109.425784819@linuxfoundation.org>
+Subject: [PATCH 5.10 039/286] drm/bridge: panel: forbid initializing a panel with unknown connector type
+Date: Tue, 29 Apr 2025 18:39:03 +0200
+Message-ID: <20250429161109.471739436@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,43 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Wyatt <fewtarius@steamfork.org>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit a860eb9c6ba6cdbf32e3e01a606556e5a90a2931 ]
+[ Upstream commit b296955b3a740ecc8b3b08e34fd64f1ceabb8fb4 ]
 
-Some GPD Win 2 units shipped with the correct DMI strings.
+Having an DRM_MODE_CONNECTOR_Unknown connector type is considered bad, and
+drm_panel_bridge_add_typed() and derivatives are deprecated for this.
 
-Add a DMI match to correctly rotate the panel on these units.
+drm_panel_init() won't prevent initializing a panel with a
+DRM_MODE_CONNECTOR_Unknown connector type. Luckily there are no in-tree
+users doing it, so take this as an opportinuty to document a valid
+connector type must be passed.
 
-Signed-off-by: Andrew Wyatt <fewtarius@steamfork.org>
-Signed-off-by: John Edwards <uejji@uejji.net>
-Tested-by: Paco Avelar <pacoavelar@hotmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213222455.93533-5-uejji@uejji.net
+Returning an error if this rule is violated is not possible because
+drm_panel_init() is a void function. Add at least a warning to make any
+violations noticeable, especially to non-upstream drivers.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250214-drm-assorted-cleanups-v7-5-88ca5827d7af@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/drm_panel.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 6bb8d4502ca8e..6fc9d638ccd23 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -235,6 +235,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
- 		},
- 		.driver_data = (void *)&gpd_win2,
-+	}, {	/* GPD Win 2 (correct DMI strings) */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "WIN2")
-+		},
-+		.driver_data = (void *)&lcd720x1280_rightside_up,
- 	}, {	/* GPD Win 3 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
+diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+index 7fd3de89ed079..acd29b4f43f84 100644
+--- a/drivers/gpu/drm/drm_panel.c
++++ b/drivers/gpu/drm/drm_panel.c
+@@ -49,7 +49,7 @@ static LIST_HEAD(panel_list);
+  * @dev: parent device of the panel
+  * @funcs: panel operations
+  * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
+- *	the panel interface
++ *	the panel interface (must NOT be DRM_MODE_CONNECTOR_Unknown)
+  *
+  * Initialize the panel structure for subsequent registration with
+  * drm_panel_add().
+@@ -57,6 +57,9 @@ static LIST_HEAD(panel_list);
+ void drm_panel_init(struct drm_panel *panel, struct device *dev,
+ 		    const struct drm_panel_funcs *funcs, int connector_type)
+ {
++	if (connector_type == DRM_MODE_CONNECTOR_Unknown)
++		DRM_WARN("%s: %s: a valid connector type is required!\n", __func__, dev_name(dev));
++
+ 	INIT_LIST_HEAD(&panel->list);
+ 	panel->dev = dev;
+ 	panel->funcs = funcs;
 -- 
 2.39.5
 
