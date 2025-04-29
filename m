@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA4F40C03;
-	Tue, 29 Apr 2025 18:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293811A5BBB;
+	Tue, 29 Apr 2025 18:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950130; cv=none; b=luqP/2921gIwbnyoS6+RalRjvkFxaDcQssdVev1kCcumXNKV43Hrt7+0z0m77I0vf4Cl26IC1TXSF4ugC+q0xrzkPFKTCVZo/G27KXpRO+foMQFobev7ojsUDw7r7fzfKJz0+8XtDcXiqWkurK0f41rVlJ0tck6oxN1d0SeXjF4=
+	t=1745950134; cv=none; b=Rk09Y9W7cR7swujHXRoT9u/lE7lgGiMHQCGlE5Z7FgAbVuG4VhzrhWvMz1W82BNhK5rTa0zme4fO9a5eHqNUn/AD78PTcifwV6FjrIARSANtVoYwEQQ8sSHYb9/0kYq2FjVTxhuRjvhPYLB8AkwYrS7xPpMfGk8kerPoK4+t3Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950130; c=relaxed/simple;
-	bh=WXKanP/Wma2fJKNcQaSN6rk3MH7cvaPJrsR9dlwpTIs=;
+	s=arc-20240116; t=1745950134; c=relaxed/simple;
+	bh=jWi6o9xs1PEyPCzYzEPgMSksuOXnncqbr/zV1XljZzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHTX5cLi2+czDokfXEKGdUYsg582KyOiGl9LotwZuzhG7+pQJamjwD8fCmltvzIM+rYWgiLw9Yj40H8JVtImHapZvNb/5mruhL276PlARH97S6O+M44AD+tMwg/RMks+LfiiKMgjSEBnifVzTcqvecKRNNtzWJd+V9qgBJMOz3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoNPVcWU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6qqg10lur+/kM+8R7xhqp6r+Cbb8pwFauFrkHtp0WUxyi43ynl1oM+Bgbmbt5lxobIT3NruG7GpHaSSb9ghUBzPcIG7KRNcTVSSBTI+1fDlMqRAe7ed9jwi3EIUAnejw+ZLYcw6fabJHExaYE5r9o829Tui93J/5puFxYqNzTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRFOKsEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoNPVcWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFF2C4CEE3;
-	Tue, 29 Apr 2025 18:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRFOKsEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FE9C4CEE3;
+	Tue, 29 Apr 2025 18:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950130;
-	bh=WXKanP/Wma2fJKNcQaSN6rk3MH7cvaPJrsR9dlwpTIs=;
+	s=korg; t=1745950133;
+	bh=jWi6o9xs1PEyPCzYzEPgMSksuOXnncqbr/zV1XljZzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoNPVcWUbEbxu3W44UFWgmRbWuMVaA+dRr1qbg0uWlFlzFkohTe8yTHzu8dbjySqg
-	 BFEt3uPeNtLlrxs+JzlvDX48m0Y7868t2/ibfc2Xom/qrdT/NHcCGLPjU4NfKmY99i
-	 O+ydhBG4tY89RWbpFLWTELTyC+1cY03QCx27yQs8=
+	b=VRFOKsEMcVXWfTl4ZrlJfFdmLbbwOMA9jZJXx1DNFc9Nb2h6FQ6z5SQIBBnf35bgI
+	 agPnJj9q8dPsWUYHk3AWiBaEdmbTlx31g/9w2bKGP2p1nXXSDI3iUpd7D8eGYL4Y9r
+	 890p/ANQM4kMqPkxjxhBRB/nyDLIbijhwPEe9KVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 166/167] ASoC: qcom: q6afe-dai: fix Display Port Playback stream name
-Date: Tue, 29 Apr 2025 18:44:34 +0200
-Message-ID: <20250429161058.440880340@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 167/167] objtool: Silence more KCOV warnings, part 2
+Date: Tue, 29 Apr 2025 18:44:35 +0200
+Message-ID: <20250429161058.480439491@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -51,37 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 4f3fcf5f6dc8ab561e152c8747fd7e502b32266c upstream.
+commit 55c78035a1a8dfb05f1472018ce2a651701adb7d upstream.
 
-With recent changes to add more display ports did not change the Stream
-name in q6afe-dai. This results in below error
-"ASoC: Failed to add route DISPLAY_PORT_RX -> Display Port Playback(*)"
-and sound card fails to probe.
+Similar to GCOV, KCOV can leave behind dead code and undefined behavior.
+Warnings related to those should be ignored.
 
-Fix this by adding correct stream name.
+The previous commit:
 
-Fixes: 90848a2557fe ("ASoC: qcom: q6dsp: add support to more display ports")
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230705124850.40069-1-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  6b023c784204 ("objtool: Silence more KCOV warnings")
+
+... only did so for CONFIG_CGOV_KERNEL.  Also do it for CONFIG_KCOV, but
+for real this time.
+
+Fixes the following warning:
+
+  vmlinux.o: warning: objtool: synaptics_report_mt_data: unexpected end of section .text.synaptics_report_mt_data
+
+Fixes: 6b023c784204 ("objtool: Silence more KCOV warnings")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/a44ba16e194bcbc52c1cef3d3cd9051a62622723.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202503282236.UhfRsF3B-lkp@intel.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6afe-dai.c |    2 +-
+ scripts/Makefile.lib |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6afe-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6afe-dai.c
-@@ -496,7 +496,7 @@ static int q6afe_mi2s_set_sysclk(struct
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -263,7 +263,7 @@ objtool-args-$(CONFIG_SLS)				+= --sls
+ objtool-args-$(CONFIG_STACK_VALIDATION)			+= --stackval
+ objtool-args-$(CONFIG_HAVE_STATIC_CALL_INLINE)		+= --static-call
+ objtool-args-$(CONFIG_HAVE_UACCESS_VALIDATION)		+= --uaccess
+-objtool-args-$(CONFIG_GCOV_KERNEL)			+= --no-unreachable
++objtool-args-$(or $(CONFIG_GCOV_KERNEL),$(CONFIG_KCOV))	+= --no-unreachable
  
- static const struct snd_soc_dapm_route q6afe_dapm_routes[] = {
- 	{"HDMI Playback", NULL, "HDMI_RX"},
--	{"Display Port Playback", NULL, "DISPLAY_PORT_RX"},
-+	{"DISPLAY_PORT_RX_0 Playback", NULL, "DISPLAY_PORT_RX"},
- 	{"Slimbus Playback", NULL, "SLIMBUS_0_RX"},
- 	{"Slimbus1 Playback", NULL, "SLIMBUS_1_RX"},
- 	{"Slimbus2 Playback", NULL, "SLIMBUS_2_RX"},
+ objtool-args = $(objtool-args-y)					\
+ 	$(if $(delay-objtool), --link)					\
 
 
