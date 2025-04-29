@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671632517AB;
-	Tue, 29 Apr 2025 17:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF652517AB;
+	Tue, 29 Apr 2025 17:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947390; cv=none; b=Z9WsMy49/h/mZgPEkCYBA23dHe7SMsaFFy+ICCIPE/fXFOePbID0A/QnVLtFzRtIzqxlQfibg7X0QuiuowHQeqeTqGzZqN0/whoHGEFxglQ9Fe5n1WC2/WXsoPheTKmDHddYdF+WR9dLNXXaL88VsVOO4WUAOLohIFyEfMRyrT4=
+	t=1745947394; cv=none; b=dnUUZ26A5iexe6tu+d6nKf3jrWwX8P+23lowfsdiymk345DKgzhVmgJq3r8vN9Su/RbzJv6x4I4KYm0Xn5txERLIH7YfCPJvNgdI1WecuW5IePVUM8AzVPsBcPZ3z99mVz/VGp0FYuPtOLPf7LpliBpMbLBpWss2D4bMwUaThgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947390; c=relaxed/simple;
-	bh=qLkos9oujeK89+QgcbIVNVN6KicJpS8xlQKgvcUcQl4=;
+	s=arc-20240116; t=1745947394; c=relaxed/simple;
+	bh=4vmcc47sv9t5ZUDwuX0tBxjqDYkg5t8wtRnCHBJtacY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaIioiS+XIPNqKw4ifPaqctXKGoTL1zJDGTGUxoyvBrmsy+MCqcqAIB/zSF2wlBVj1DVX1+U3A6KrYYyNE+6q4C9DiBKlRlbA7QmnRN2mFnDgGm4n+13ItEykqKjlig12DHwisxBuRNcLDUY9Hp9miSCUCaVdhEMMy/5VU3PP4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpORfH7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcKkzH+8VrCkFbb4nJWFx1fl3e57FgQMU9Utg7gjPd2YDCg+uvAecVJvgkysJavZGzqDXZSNw/rUJGnP5X0IkzSL0ItByCRXiIB5y/i1XREmGNJoapmYq0lRFqoV+T8DONHZ+r7Bg+lcx14fiLg2DiFnOn/0otD1b+1PALDDpN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct8nGRin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpORfH7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96A0C4CEE3;
-	Tue, 29 Apr 2025 17:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct8nGRin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ACBC4CEE3;
+	Tue, 29 Apr 2025 17:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947390;
-	bh=qLkos9oujeK89+QgcbIVNVN6KicJpS8xlQKgvcUcQl4=;
+	s=korg; t=1745947393;
+	bh=4vmcc47sv9t5ZUDwuX0tBxjqDYkg5t8wtRnCHBJtacY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpORfH7v/dLPuQmJKZDZrBwb0szhTIW2BB7OQJ/qTQoKjMY2nYdzkEUuJy3ucuAjN
-	 1k/R+Hi7VkcKkv3kso5jZOB/hUXnjT+jD62y5jCpuTnf3IvxvCKz5oivXFMqEkoUxJ
-	 Waw2Xkf8ozgLlvWXaJQ19gunmL93aOu+aCmuLK8U=
+	b=Ct8nGRin7xMVy+mGvQ2nLSSFBegA6y8mOpt4V3OJm0DtCZyd7H3098koz67iMQpZm
+	 21Ua2gsXHyuuODTsFtuRUSG6M3T2gIy7k5iWOhkMki8QT/uXv5kMJEE32utw0+4zvi
+	 dRUe/UTN/0pU0N60tTIVOQgZpalLy1SzY7/vmP7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/286] PCI: Fix reference leak in pci_register_host_bridge()
-Date: Tue, 29 Apr 2025 18:42:09 +0200
-Message-ID: <20250429161117.196644688@linuxfoundation.org>
+Subject: [PATCH 5.10 259/286] usb: gadget: aspeed: Add NULL pointer check in ast_vhub_init_dev()
+Date: Tue, 29 Apr 2025 18:42:43 +0200
+Message-ID: <20250429161118.572954959@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,65 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 804443c1f27883926de94c849d91f5b7d7d696e9 ]
+[ Upstream commit 8c75f3e6a433d92084ad4e78b029ae680865420f ]
 
-If device_register() fails, call put_device() to give up the reference to
-avoid a memory leak, per the comment at device_register().
+The variable d->name, returned by devm_kasprintf(), could be NULL.
+A pointer check is added to prevent potential NULL pointer dereference.
+This is similar to the fix in commit 3027e7b15b02
+("ice: Fix some null pointer dereference issues in ice_ptp.c").
 
-Found by code review.
+This issue is found by our static analysis tool
 
-Link: https://lore.kernel.org/r/20250225021440.3130264-1-make24@iscas.ac.cn
-Fixes: 37d6a0a6f470 ("PCI: Add pci_register_host_bridge() interface")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-[bhelgaas: squash Dan Carpenter's double free fix from
-https://lore.kernel.org/r/db806a6c-a91b-4e5a-a84b-6b7e01bdac85@stanley.mountain]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250311012705.1233829-1-chenyuan0y@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index 012ca242bedf4..7f3d10957eca7 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -883,6 +883,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
- 	resource_size_t offset, next_offset;
- 	LIST_HEAD(resources);
- 	struct resource *res, *next_res;
-+	bool bus_registered = false;
- 	char addr[64], *fmt;
- 	const char *name;
- 	int err;
-@@ -944,6 +945,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
- 	name = dev_name(&bus->dev);
- 
- 	err = device_register(&bus->dev);
-+	bus_registered = true;
- 	if (err)
- 		goto unregister;
- 
-@@ -1024,12 +1026,15 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
- unregister:
- 	put_device(&bridge->dev);
- 	device_del(&bridge->dev);
--
- free:
- #ifdef CONFIG_PCI_DOMAINS_GENERIC
- 	pci_bus_release_domain_nr(bus, parent);
- #endif
--	kfree(bus);
-+	if (bus_registered)
-+		put_device(&bus->dev);
-+	else
-+		kfree(bus);
+diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+index d268306a7bfee..92755a2fe4ff7 100644
+--- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+@@ -543,6 +543,9 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx)
+ 	d->vhub = vhub;
+ 	d->index = idx;
+ 	d->name = devm_kasprintf(parent, GFP_KERNEL, "port%d", idx+1);
++	if (!d->name)
++		return -ENOMEM;
 +
- 	return err;
- }
+ 	d->regs = vhub->regs + 0x100 + 0x10 * idx;
  
+ 	ast_vhub_init_ep0(vhub, &d->ep0, d);
 -- 
 2.39.5
 
