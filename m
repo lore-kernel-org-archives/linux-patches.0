@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBCE82C60;
-	Tue, 29 Apr 2025 17:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5F1FE468;
+	Tue, 29 Apr 2025 17:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947639; cv=none; b=iSbHXyhU3x+ICEZfIm6tzFR6ZGTtoJDeR4RWiOXolWkiaVfVgAgt/WWnCm+666rickeIjXpJQDOiTUFNtJrvv/K6lAE8oCD8Bj1N0CuevjzzZqYVCYt27z8oCIVHeYxWf7MH6i6goONVNbVJQ/2DsLscPFzirhmGF1yMpCaAwSg=
+	t=1745947642; cv=none; b=KdzGpFc4ozOjBb1PFmiBEovnSt68DhtOHLwMe71rKf/AsIIWsFPC0phD+nUIVME/ti6o1FZHg/uGcww2Zh3Kjmr3WlWmUYw135vrWeomSOYr12jsy64LF/D82VTyGoJPDwAtQoDOnCYt1TjsDTPtedUAnGePAd/aXy77WeujgBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947639; c=relaxed/simple;
-	bh=XEgV/arYb4KvN1lYw5GrhHeB0j4d+2ZrvJi6rVBgAS0=;
+	s=arc-20240116; t=1745947642; c=relaxed/simple;
+	bh=iWxH48q/JGlshqoJdhVehW6AkAGaaCFQF1arfJmpJg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alx/uST2cuUhDXQVGL/Uny6Y8VD5QwsgEy88z5XquGk0s25oPy1LCoBoiEnzDe3zCSSG/XyUnI+NjALdCssscKeoCh1zc1Z/icqPKG+8HYn+VmeMzZrSVRyU9q3OuSHas8Zss0Vjbab18mBonjl3jfM/CJOjzzaHaNuOF6S3PoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGkXv7cN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1wa9NAQXQxJ2VBlvG+STSCRPmOrm4WRdLxlcEW5JeFbIDe1Fy/l/bvVl0w7zqJr1Gc2ovnQ3u1VK5ofYRYWb2CYIG0/8gGxidA1MoHNXigV68KVScSOoB3JMJw33WCvmuppjP9xo/2eIiD/bf0BHaPQwQfn61nJ+/DS7VtEZyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLIY7a7R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGkXv7cN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4CCC4CEE3;
-	Tue, 29 Apr 2025 17:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLIY7a7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F1EC4CEE3;
+	Tue, 29 Apr 2025 17:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947639;
-	bh=XEgV/arYb4KvN1lYw5GrhHeB0j4d+2ZrvJi6rVBgAS0=;
+	s=korg; t=1745947642;
+	bh=iWxH48q/JGlshqoJdhVehW6AkAGaaCFQF1arfJmpJg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGkXv7cN3BRMuMTNZ/rezP8WlmV1s5Uikgd+4iwTj0sOlGYJcXKPprfHTUS2rz1nb
-	 2WjhB6CzefXzpmoAbXaEB5mrRHD1BxkA37DwUb6tiLlJiX2jjVZT33ljTDUYPIfW5V
-	 1QIC20gaxpORCaaDPVHXTPhMevjyGWAosdriYkVk=
+	b=WLIY7a7R3kWOIvKJJ9CIaiLgryg0QS3+SNlfBVTwK2R8vbGAPlCz8QUiSG2QpUL3p
+	 Ot+mFfCIFGWxhK5WZlcM30JTQV2XaPP0gp29prCPWmV2CJpTk1dK9VAejgiDY73gi4
+	 BpsaYN1GOMkmmFziQ9yYkdrFPX0nH6U+latpIpuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/280] cpufreq: fix compile-test defaults
-Date: Tue, 29 Apr 2025 18:40:00 +0200
-Message-ID: <20250429161117.528235976@linuxfoundation.org>
+Subject: [PATCH 6.12 060/280] btrfs: avoid page_lockend underflow in btrfs_punch_hole_lock_range()
+Date: Tue, 29 Apr 2025 18:40:01 +0200
+Message-ID: <20250429161117.567277689@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,78 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit a374f28700abd20e8a7d026f89aa26f759445918 ]
+[ Upstream commit bc2dbc4983afedd198490cca043798f57c93e9bf ]
 
-Commit 3f66425a4fc8 ("cpufreq: Enable COMPILE_TEST on Arm drivers")
-enabled compile testing of most Arm CPUFreq drivers but left the
-existing default values unchanged so that many drivers are enabled by
-default whenever COMPILE_TEST is selected.
+[BUG]
+When running btrfs/004 with 4K fs block size and 64K page size,
+sometimes fsstress workload can take 100% CPU for a while, but not long
+enough to trigger a 120s hang warning.
 
-This specifically results in the S3C64XX CPUFreq driver being enabled
-and initialised during boot of non-S3C64XX platforms with the following
-error logged:
+[CAUSE]
+When such 100% CPU usage happens, btrfs_punch_hole_lock_range() is
+always in the call trace.
 
-	cpufreq: Unable to obtain ARMCLK: -2
+One example when this problem happens, the function
+btrfs_punch_hole_lock_range() got the following parameters:
 
-Commit d4f610a9bafd ("cpufreq: Do not enable by default during compile
-testing") recently fixed most of the default values, but two entries
-were missed and two could use a more specific default condition.
+  lock_start = 4096, lockend = 20469
 
-Fix the default values for drivers that can be compile tested and that
-should be enabled by default when not compile testing.
+Then we calculate @page_lockstart by rounding up lock_start to page
+boundary, which is 64K (page size is 64K).
 
-Fixes: 3f66425a4fc8 ("cpufreq: Enable COMPILE_TEST on Arm drivers")
-Cc: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+For @page_lockend, we round down the value towards page boundary, which
+result 0.  Then since we need to pass an inclusive end to
+filemap_range_has_page(), we subtract 1 from the rounded down value,
+resulting in (u64)-1.
+
+In the above case, the range is inside the same page, and we do not even
+need to call filemap_range_has_page(), not to mention to call it with
+(u64)-1 at the end.
+
+This behavior will cause btrfs_punch_hole_lock_range() to busy loop
+waiting for irrelevant range to have its pages dropped.
+
+[FIX]
+Calculate @page_lockend by just rounding down @lockend, without
+decreasing the value by one.  So @page_lockend will no longer overflow.
+
+Then exit early if @page_lockend is no larger than @page_lockstart.
+As it means either the range is inside the same page, or the two pages
+are adjacent already.
+
+Finally only decrease @page_lockend when calling filemap_range_has_page().
+
+Fixes: 0528476b6ac7 ("btrfs: fix the filemap_range_has_page() call in btrfs_punch_hole_lock_range()")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/Kconfig.arm | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/file.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/Kconfig.arm b/drivers/cpufreq/Kconfig.arm
-index f6e6066e2e64b..71f4b612dd971 100644
---- a/drivers/cpufreq/Kconfig.arm
-+++ b/drivers/cpufreq/Kconfig.arm
-@@ -67,7 +67,7 @@ config ARM_VEXPRESS_SPC_CPUFREQ
- config ARM_BRCMSTB_AVS_CPUFREQ
- 	tristate "Broadcom STB AVS CPUfreq driver"
- 	depends on (ARCH_BRCMSTB && !ARM_SCMI_CPUFREQ) || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	default y if ARCH_BRCMSTB && !ARM_SCMI_CPUFREQ
- 	help
- 	  Some Broadcom STB SoCs use a co-processor running proprietary firmware
- 	  ("AVS") to handle voltage and frequency scaling. This driver provides
-@@ -79,7 +79,7 @@ config ARM_HIGHBANK_CPUFREQ
- 	tristate "Calxeda Highbank-based"
- 	depends on ARCH_HIGHBANK || COMPILE_TEST
- 	depends on CPUFREQ_DT && REGULATOR && PL320_MBOX
--	default m
-+	default m if ARCH_HIGHBANK
- 	help
- 	  This adds the CPUFreq driver for Calxeda Highbank SoC
- 	  based boards.
-@@ -124,7 +124,7 @@ config ARM_MEDIATEK_CPUFREQ
- config ARM_MEDIATEK_CPUFREQ_HW
- 	tristate "MediaTek CPUFreq HW driver"
- 	depends on ARCH_MEDIATEK || COMPILE_TEST
--	default m
-+	default m if ARCH_MEDIATEK
- 	help
- 	  Support for the CPUFreq HW driver.
- 	  Some MediaTek chipsets have a HW engine to offload the steps
-@@ -247,7 +247,7 @@ config ARM_TEGRA194_CPUFREQ
- 	tristate "Tegra194 CPUFreq support"
- 	depends on ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC || (64BIT && COMPILE_TEST)
- 	depends on TEGRA_BPMP
--	default ARCH_TEGRA
-+	default ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC
- 	help
- 	  This adds CPU frequency driver support for Tegra194 SOCs.
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 78c4a3765002e..eaa991e698049 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2235,15 +2235,20 @@ static void btrfs_punch_hole_lock_range(struct inode *inode,
+ 	 * will always return true.
+ 	 * So here we need to do extra page alignment for
+ 	 * filemap_range_has_page().
++	 *
++	 * And do not decrease page_lockend right now, as it can be 0.
+ 	 */
+ 	const u64 page_lockstart = round_up(lockstart, PAGE_SIZE);
+-	const u64 page_lockend = round_down(lockend + 1, PAGE_SIZE) - 1;
++	const u64 page_lockend = round_down(lockend + 1, PAGE_SIZE);
  
+ 	while (1) {
+ 		truncate_pagecache_range(inode, lockstart, lockend);
+ 
+ 		lock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
+ 			    cached_state);
++		/* The same page or adjacent pages. */
++		if (page_lockend <= page_lockstart)
++			break;
+ 		/*
+ 		 * We can't have ordered extents in the range, nor dirty/writeback
+ 		 * pages, because we have locked the inode's VFS lock in exclusive
+@@ -2255,7 +2260,7 @@ static void btrfs_punch_hole_lock_range(struct inode *inode,
+ 		 * we do, unlock the range and retry.
+ 		 */
+ 		if (!filemap_range_has_page(inode->i_mapping, page_lockstart,
+-					    page_lockend))
++					    page_lockend - 1))
+ 			break;
+ 
+ 		unlock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
 -- 
 2.39.5
 
