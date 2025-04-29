@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAD4238C21;
-	Tue, 29 Apr 2025 17:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166F5238C21;
+	Tue, 29 Apr 2025 17:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948209; cv=none; b=aWCeo9hFzIdA5RNMzszAR0h7vc2QIRNJk/TIplCrVTZTmTCCme4EO18vRQEiCkXLVyzE9HOd/bB16Y3jCwqp2VxmwaNMZKCAzBhUxaPxtANammX4ibSqw0WrgYm7w2q23dru32k8ymhB5A12WZLxQIBNGOu/x9730iE0BGhnsuc=
+	t=1745948212; cv=none; b=GInqtEU0MtbxLiIO6AQHpot4KaymebfhtCBFoewdXr88eo910DhKmNjl2m/tmOXGDh21CE0+z7gxpKwZAhZpaDTrOMob7Pl+g/1/scRNDy5xPFlibvzubVN2rVFgdsjpHq+gDTlhmZsTbprjHOE/1gida1rLWycUGuNm/73x8ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948209; c=relaxed/simple;
-	bh=EGbPXemyuJFssqM8cEJmk3XO7P4CBgcNYDV8vU/oQu8=;
+	s=arc-20240116; t=1745948212; c=relaxed/simple;
+	bh=p16gotB4ufRFlHzPVIiXs4QVtbQWXMBq7ON5pAR6AvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXKC1YMgWWTBy5ocvNe7BtjfYS1JejxCQRiRIwaFa0CanUTGTsMXjcwf5R78wa2d4WqlvjVUGVpsecab+V6cplf11HYppCL7cDHV9QJwHsAZUypAlIBg/QiWOXEf0pxP3hWuyHBDY6+lkByCC8FzOBGbW/7PKBujaXMVwnivvC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJyFHGEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUWv0y99DXglT6WX7psP4sskVENd4rBdmgx15guhzGJa7oxim8P0xBTyK4Q3pKBIFd0bKE8lBZfEP7mbp25meNljnp8ySAqRiOaNRj6zKKgUhWx3CFZJIeV2CsWzXCmvcMuHtWOKyK1gYN9+BrGrMts+q18EU5UOFu0PBuP2nos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3nKMf68; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJyFHGEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE8CC4CEE3;
-	Tue, 29 Apr 2025 17:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3nKMf68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85940C4CEE3;
+	Tue, 29 Apr 2025 17:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948208;
-	bh=EGbPXemyuJFssqM8cEJmk3XO7P4CBgcNYDV8vU/oQu8=;
+	s=korg; t=1745948212;
+	bh=p16gotB4ufRFlHzPVIiXs4QVtbQWXMBq7ON5pAR6AvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJyFHGEpBis9PZo4Kte0vWcRut+SYBkpqqNkUh8rlBqsDwyPn8EtkNrQmDO1WlEyZ
-	 iW4zGS8vp4CJcT0v64KQybEtN6gpCAsQS5DUfnY2yLZC08jCC7FQBedcAyx8paNwyb
-	 5KUcDpux+mCSe4cysH3KGnDdlfICyZeiRp+zbZ7Y=
+	b=h3nKMf68F0XCKSQa/FveKp9sDsX8nj4ybY+7uuq747jO870cNRfBYjiIHEAhpltie
+	 vw6s9DS14ObfQHNV/nzrNrL3gMKbkOTnYysda/1WqXa6DkUQ9cjixog0BaH9VbF5Sr
+	 ai7sIkn6floGjuW8sjNxNGjzqJu3wmUQu4HRPEMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Amit Shah <amit.shah@amd.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
+	Daniel Wagner <wagi@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/280] x86/bugs: Dont fill RSB on context switch with eIBRS
-Date: Tue, 29 Apr 2025 18:42:41 +0200
-Message-ID: <20250429161124.123308078@linuxfoundation.org>
+Subject: [PATCH 6.12 221/280] nvmet-fc: take tgtport reference only once
+Date: Tue, 29 Apr 2025 18:42:42 +0200
+Message-ID: <20250429161124.163472384@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,111 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 27ce8299bc1ec6df8306073785ff82b30b3cc5ee ]
+[ Upstream commit b0b26ad0e1943de25ce82a7e5af3574f31b1cf99 ]
 
-User->user Spectre v2 attacks (including RSB) across context switches
-are already mitigated by IBPB in cond_mitigation(), if enabled globally
-or if either the prev or the next task has opted in to protection.  RSB
-filling without IBPB serves no purpose for protecting user space, as
-indirect branches are still vulnerable.
+The reference counting code can be simplified. Instead taking a tgtport
+refrerence at the beginning of nvmet_fc_alloc_hostport and put it back
+if not a new hostport object is allocated, only take it when a new
+hostport object is allocated.
 
-User->kernel RSB attacks are mitigated by eIBRS.  In which case the RSB
-filling on context switch isn't needed, so remove it.
-
-Suggested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Reviewed-by: Amit Shah <amit.shah@amd.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://lore.kernel.org/r/98cdefe42180358efebf78e3b80752850c7a3e1b.1744148254.git.jpoimboe@kernel.org
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 24 ++++++++++++------------
- arch/x86/mm/tlb.c          |  6 +++---
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ drivers/nvme/target/fc.c | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 589e34c0b70b5..46bddb5bb15ff 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1578,7 +1578,7 @@ static void __init spec_ctrl_disable_kernel_rrsba(void)
- 	rrsba_disabled = true;
- }
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 7318b736d4141..78c4a417f477e 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1028,33 +1028,24 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
+ 	struct nvmet_fc_hostport *newhost, *match = NULL;
+ 	unsigned long flags;
  
--static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_mitigation mode)
-+static void __init spectre_v2_select_rsb_mitigation(enum spectre_v2_mitigation mode)
- {
- 	/*
- 	 * Similar to context switches, there are two types of RSB attacks
-@@ -1602,7 +1602,7 @@ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_
- 	 */
- 	switch (mode) {
- 	case SPECTRE_V2_NONE:
--		return;
-+		break;
++	/*
++	 * Caller holds a reference on tgtport.
++	 */
++
+ 	/* if LLDD not implemented, leave as NULL */
+ 	if (!hosthandle)
+ 		return NULL;
  
- 	case SPECTRE_V2_EIBRS:
- 	case SPECTRE_V2_EIBRS_LFENCE:
-@@ -1611,18 +1611,21 @@ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_
- 			pr_info("Spectre v2 / PBRSB-eIBRS: Retire a single CALL on VMEXIT\n");
- 			setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT_LITE);
- 		}
--		return;
-+		break;
- 
- 	case SPECTRE_V2_RETPOLINE:
- 	case SPECTRE_V2_LFENCE:
- 	case SPECTRE_V2_IBRS:
--		pr_info("Spectre v2 / SpectreRSB : Filling RSB on VMEXIT\n");
-+		pr_info("Spectre v2 / SpectreRSB: Filling RSB on context switch and VMEXIT\n");
-+		setup_force_cpu_cap(X86_FEATURE_RSB_CTXSW);
- 		setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT);
--		return;
--	}
-+		break;
- 
--	pr_warn_once("Unknown Spectre v2 mode, disabling RSB mitigation at VM exit");
--	dump_stack();
-+	default:
-+		pr_warn_once("Unknown Spectre v2 mode, disabling RSB mitigation\n");
-+		dump_stack();
-+		break;
-+	}
- }
- 
- /*
-@@ -1854,10 +1857,7 @@ static void __init spectre_v2_select_mitigation(void)
- 	 *
- 	 * FIXME: Is this pointless for retbleed-affected AMD?
- 	 */
--	setup_force_cpu_cap(X86_FEATURE_RSB_CTXSW);
--	pr_info("Spectre v2 / SpectreRSB mitigation: Filling RSB on context switch\n");
+-	/*
+-	 * take reference for what will be the newly allocated hostport if
+-	 * we end up using a new allocation
+-	 */
+-	if (!nvmet_fc_tgtport_get(tgtport))
+-		return ERR_PTR(-EINVAL);
 -
--	spectre_v2_determine_rsb_fill_type_at_vmexit(mode);
-+	spectre_v2_select_rsb_mitigation(mode);
+ 	spin_lock_irqsave(&tgtport->lock, flags);
+ 	match = nvmet_fc_match_hostport(tgtport, hosthandle);
+ 	spin_unlock_irqrestore(&tgtport->lock, flags);
  
- 	/*
- 	 * Retpoline protects the kernel, but doesn't protect firmware.  IBRS
-diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
-index 00ffa74d0dd0b..27d81cb049ff8 100644
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -389,9 +389,9 @@ static void cond_mitigation(struct task_struct *next)
- 	prev_mm = this_cpu_read(cpu_tlbstate.last_user_mm_spec);
+-	if (match) {
+-		/* no new allocation - release reference */
+-		nvmet_fc_tgtport_put(tgtport);
++	if (match)
+ 		return match;
+-	}
  
- 	/*
--	 * Avoid user/user BTB poisoning by flushing the branch predictor
--	 * when switching between processes. This stops one process from
--	 * doing Spectre-v2 attacks on another.
-+	 * Avoid user->user BTB/RSB poisoning by flushing them when switching
-+	 * between processes. This stops one process from doing Spectre-v2
-+	 * attacks on another.
- 	 *
- 	 * Both, the conditional and the always IBPB mode use the mm
- 	 * pointer to avoid the IBPB when switching between tasks of the
+ 	newhost = kzalloc(sizeof(*newhost), GFP_KERNEL);
+-	if (!newhost) {
+-		/* no new allocation - release reference */
+-		nvmet_fc_tgtport_put(tgtport);
++	if (!newhost)
+ 		return ERR_PTR(-ENOMEM);
+-	}
+ 
+ 	spin_lock_irqsave(&tgtport->lock, flags);
+ 	match = nvmet_fc_match_hostport(tgtport, hosthandle);
+@@ -1063,6 +1054,7 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
+ 		kfree(newhost);
+ 		newhost = match;
+ 	} else {
++		nvmet_fc_tgtport_get(tgtport);
+ 		newhost->tgtport = tgtport;
+ 		newhost->hosthandle = hosthandle;
+ 		INIT_LIST_HEAD(&newhost->host_list);
 -- 
 2.39.5
 
