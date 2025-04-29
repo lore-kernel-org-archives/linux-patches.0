@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E18251798;
-	Tue, 29 Apr 2025 16:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE9E242934;
+	Tue, 29 Apr 2025 16:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945917; cv=none; b=SGsmFu3Xoiw6Zvw2G4MOOrhpJOXTu2zu/NWX/D3W6HIFDy0nlJPff2NMQbBiqwDfMByIc7afVWqyBPr9Y4G0S4AIcPdYV9Lu7R/XpLgzs4a20dpiAVhTGbm0WaxWgS5CiCQ3p2F1+nO5uSnZK6w8+9c9msZARMThj8sID5Z11Qg=
+	t=1745945919; cv=none; b=QMvK5waSdAXL6zdr1TBhHrg8vMzKH7+B8CaKLkFy8ok3x3EazgC7feDWLTwGFY8SksMyhPHorZzCjugK7yIl0rlEnJR5BbmkMyh6HgGfKd6OVHn5lhMP3h5BhWBYyVLFy8lnf/m3BNTAH2sIia6ZEimQZ8vPf2sHtxbqjojP9X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945917; c=relaxed/simple;
-	bh=FReJPVNOEGEkWOUzQkrPE+tIpVmbelHioeVS01U44/o=;
+	s=arc-20240116; t=1745945919; c=relaxed/simple;
+	bh=9I0B8w/G4c0/64z6orstxrhfxO1RYiHHdJxmzo3eeC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoRVnfq4DxloZkIlKgNcIJYDezWjHIBXyLiDee8paXL4cmRbKNu2Pv/T+zkJlYDQ6d65CKnwXcPz0vIkg+eJMsFwFjL3w0P6V2Vzm5lL8iVc0Y4QGF/N6YdaU4Cyufod/ZVFyr4fvgaDTv+RiLCAg9aW4aAOOVA+1KVhngxmGCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbYuUE19; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imGFkXBBKixWhnmo1jkZyZdEqP9iy9egmpWxKgXEFSfO3VXvuKE7Pf+tll+CSYZTs4C5TfeH7yL+17fTds1lNkRTcFozQL4axQO27040rpD4/rNa9Tc1QgBSvtJqhzHh5NZS3HFJqpeoUgF6tpejiQtBXyudzlfT+UuAIEEmMUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKF3w5VP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbYuUE19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7A2C4CEE9;
-	Tue, 29 Apr 2025 16:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKF3w5VP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C23C4CEEA;
+	Tue, 29 Apr 2025 16:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945916;
-	bh=FReJPVNOEGEkWOUzQkrPE+tIpVmbelHioeVS01U44/o=;
+	s=korg; t=1745945919;
+	bh=9I0B8w/G4c0/64z6orstxrhfxO1RYiHHdJxmzo3eeC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbYuUE198xCEAzYK/8leAr+RVAQWZIxlQMpWtClJMpo8iuFh1O9j5zpviLmxkxZX8
-	 x4FuC5FG/SlTBBzNPy3wOCUOdv3MH0pAaJq6YBxab4JVfFSbNNjrcmfeEb0UOHsCiv
-	 ZiKqa9u7VgHRN3QIpWpsCBQShlx2BYmzouJfUpog=
+	b=cKF3w5VPQg1AQ+i11RUQoib9Qn9lQsZ4AZ6wZ5x3OvQN1rf9Q9Lmgxkqmyy6wBCr6
+	 3rpHICxRuHKLbHUOJ8iFVhR5qXkO7fkHHoZQZRWbArZKVn5F/y87Y+vn+Y8gHyFNHQ
+	 q0hNYVX5EjIbeyj8O2WIkPFlHXsvW/DXx9sZEUK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 093/311] splice: remove duplicate noinline from pipe_clear_nowait
-Date: Tue, 29 Apr 2025 18:38:50 +0200
-Message-ID: <20250429161124.855569848@linuxfoundation.org>
+Subject: [PATCH 6.14 094/311] fs/xattr: Fix handling of AT_FDCWD in setxattrat(2) and getxattrat(2)
+Date: Tue, 29 Apr 2025 18:38:51 +0200
+Message-ID: <20250429161124.895028009@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit e6f141b332ddd9007756751b6afd24f799488fd8 ]
+[ Upstream commit f520bed25d17bb31c2d2d72b0a785b593a4e3179 ]
 
-pipe_clear_nowait has two noinline macros, but we only need one.
+Currently, setxattrat(2) and getxattrat(2) are wrongly handling the
+calls of the from setxattrat(AF_FDCWD, NULL, AT_EMPTY_PATH, ...) and
+fail with -EBADF error instead of operating on CWD. Fix it.
 
-I checked the whole tree, and this is the only occurrence:
-
-$ grep -r "noinline .* noinline"
-fs/splice.c:static noinline void noinline pipe_clear_nowait(struct file *file)
-$
-
-Fixes: 0f99fc513ddd ("splice: clear FMODE_NOWAIT on file if splice/vmsplice is used")
-Signed-off-by: "T.J. Mercier" <tjmercier@google.com>
-Link: https://lore.kernel.org/20250423180025.2627670-1-tjmercier@google.com
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 6140be90ec70 ("fs/xattr: add *at family syscalls")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/20250424132246.16822-2-jack@suse.cz
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xattr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index 23fa5561b9441..bd6e889133f5c 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -45,7 +45,7 @@
-  * here if set to avoid blocking other users of this pipe if splice is
-  * being done on it.
-  */
--static noinline void noinline pipe_clear_nowait(struct file *file)
-+static noinline void pipe_clear_nowait(struct file *file)
- {
- 	fmode_t fmode = READ_ONCE(file->f_mode);
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 02bee149ad967..fabb2a04501ee 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -703,7 +703,7 @@ static int path_setxattrat(int dfd, const char __user *pathname,
+ 		return error;
  
+ 	filename = getname_maybe_null(pathname, at_flags);
+-	if (!filename) {
++	if (!filename && dfd >= 0) {
+ 		CLASS(fd, f)(dfd);
+ 		if (fd_empty(f))
+ 			error = -EBADF;
+@@ -847,7 +847,7 @@ static ssize_t path_getxattrat(int dfd, const char __user *pathname,
+ 		return error;
+ 
+ 	filename = getname_maybe_null(pathname, at_flags);
+-	if (!filename) {
++	if (!filename && dfd >= 0) {
+ 		CLASS(fd, f)(dfd);
+ 		if (fd_empty(f))
+ 			return -EBADF;
 -- 
 2.39.5
 
