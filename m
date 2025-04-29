@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AD242905;
-	Tue, 29 Apr 2025 16:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE46215060;
+	Tue, 29 Apr 2025 16:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945390; cv=none; b=AD1ZGw/m7NoTiWJEHHeRE6hBcKSnRyQCYktWdyzE8c6F80axTYmBNBIjtCVkM2gT2D6RePdUeGMIXTo3gCOnn7BVQ0qkDemN/f0LcGjem4T6i+Z/7KogmG/yb9XuRhXlMf8dRgiinHJ9zxARMM5lCd1+WHl2yI3mWRdtmhietAQ=
+	t=1745945392; cv=none; b=RAG2XUeoJUucLPiRAxL00NLk4vh9fhFVUUEBBSRZGG5iBEgv7J4M9K0I7emVX/SmRz/sKVoA4O601N5kmxGnnKXV4GXlIr8BlCsRkp7fkYE/sX0o7WiHTR8dqrw6yi/831TXiPXTprf2bhaO0L3qYRhTVm315PsksSq4e9aXY/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945390; c=relaxed/simple;
-	bh=c8tEyyIqjTvCjUHi23tPeZFdwk670ftRwQBRLSXP1JU=;
+	s=arc-20240116; t=1745945392; c=relaxed/simple;
+	bh=NgGXARZUv0/23C2O4XkRAxnjkXuWlYKb9e0xnBYZLW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAOf8p0B79D+0rCg9ulO1JeOJ49wqJLgwjN4Le3T9fmLA6QY10Y6BdrSNuJs5MnBEn/tzNEouODgbNrykxO2CaN2gSLHIRhWoRvvsws+o0oZY2lVJvMe/w3dzZM7/MDMBzifgSdsEcJFVZ+QvhS/rz1nBrQy7d3AANctgu4CzVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdOiDpNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoOEPLiJtvFP99levbH3HgumrV7ooOgzp04IeE22Ua3xJqNLDC3iDiFgdHqXeLMs1VKX/xU/1/0A6hr9IwV+j19OTgqGJwrmNXk6rl/VilKdvdaToWIh4IWzbETvjeoQQKyxQ2clRpZRucWQCk0mFV2gsF883nux1ClC2rjrSjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwYU48Td; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdOiDpNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D856AC4CEE3;
-	Tue, 29 Apr 2025 16:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwYU48Td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96135C4CEE3;
+	Tue, 29 Apr 2025 16:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945389;
-	bh=c8tEyyIqjTvCjUHi23tPeZFdwk670ftRwQBRLSXP1JU=;
+	s=korg; t=1745945391;
+	bh=NgGXARZUv0/23C2O4XkRAxnjkXuWlYKb9e0xnBYZLW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdOiDpNZ7oS1iupx0Ed7cdLrErW8AI6awvKxmNPyxOHuocwfxe9tbGKBqDNPncWeI
-	 vkkyQW40DPaBQNY5qMtl8YheHgdrHY+mbB82pXV9Fl10bbsvize8QUnaAGQwYQ25/G
-	 /flf3eZAsuxStYbfi2WN1zfbIgewXc78hNGVhE0I=
+	b=RwYU48TdOwwul7/vfFKpYSgD6yydP/TTpVgW0TsIqVMs8V3mRx8La0GJtDOFtsmVW
+	 syQyspEmrjINMZw99eyJo7cBSTwBInCiTaP9VsNnc09fisljX65I9df1Rcw9Zo1oA7
+	 jlm/HG0WgAY3T7tNxQqphEeK6YsjCfbWF/uVj+5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/179] NFSD: Constify @fh argument of knfsd_fh_hash()
-Date: Tue, 29 Apr 2025 18:40:37 +0200
-Message-ID: <20250429161053.281491418@linuxfoundation.org>
+Subject: [PATCH 5.4 097/179] nfs: move nfs_fhandle_hash to common include file
+Date: Tue, 29 Apr 2025 18:40:38 +0200
+Message-ID: <20250429161053.321027287@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,43 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 1736aec82a15cb5d4b3bbe0b2fbae0ede66b1a1a ]
+[ Upstream commit e59fb6749ed833deee5b3cfd7e89925296d41f49 ]
 
-Enable knfsd_fh_hash() to be invoked in functions where the
-filehandle pointer is a const.
+lockd needs to be able to hash filehandles for tracepoints. Move the
+nfs_fhandle_hash() helper to a common nfs include file.
 
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Stable-dep-of: cd35b6cb4664 ("nfs: add missing selections of CONFIG_CRC32")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsfh.h | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/nfs/internal.h   | 15 ---------------
+ include/linux/nfs.h | 20 ++++++++++++++++++++
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
-index 755e256a91039..42c168ac6b934 100644
---- a/fs/nfsd/nfsfh.h
-+++ b/fs/nfsd/nfsfh.h
-@@ -216,15 +216,12 @@ static inline bool fh_fsid_match(struct knfsd_fh *fh1, struct knfsd_fh *fh2)
-  * returns a crc32 hash for the filehandle that is compatible with
-  * the one displayed by "wireshark".
-  */
--
--static inline u32
--knfsd_fh_hash(struct knfsd_fh *fh)
-+static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index e8b692d41b26e..5c9166357ae7c 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -721,27 +721,12 @@ u64 nfs_timespec_to_change_attr(const struct timespec *ts)
+ }
+ 
+ #ifdef CONFIG_CRC32
+-/**
+- * nfs_fhandle_hash - calculate the crc32 hash for the filehandle
+- * @fh - pointer to filehandle
+- *
+- * returns a crc32 hash for the filehandle that is compatible with
+- * the one displayed by "wireshark".
+- */
+-static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
+-{
+-	return ~crc32_le(0xFFFFFFFF, &fh->data[0], fh->size);
+-}
+ static inline u32 nfs_stateid_hash(const nfs4_stateid *stateid)
  {
- 	return ~crc32_le(0xFFFFFFFF, (unsigned char *)&fh->fh_base, fh->fh_size);
+ 	return ~crc32_le(0xFFFFFFFF, &stateid->other[0],
+ 				NFS4_STATEID_OTHER_SIZE);
  }
  #else
--static inline u32
--knfsd_fh_hash(struct knfsd_fh *fh)
-+static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
+-static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
+-{
+-	return 0;
+-}
+ static inline u32 nfs_stateid_hash(nfs4_stateid *stateid)
  {
  	return 0;
- }
+diff --git a/include/linux/nfs.h b/include/linux/nfs.h
+index 0dc7ad38a0da4..a8b62a08e784f 100644
+--- a/include/linux/nfs.h
++++ b/include/linux/nfs.h
+@@ -10,6 +10,7 @@
+ 
+ #include <linux/sunrpc/msg_prot.h>
+ #include <linux/string.h>
++#include <linux/crc32.h>
+ #include <uapi/linux/nfs.h>
+ 
+ /*
+@@ -52,4 +53,23 @@ enum nfs3_stable_how {
+ 	/* used by direct.c to mark verf as invalid */
+ 	NFS_INVALID_STABLE_HOW = -1
+ };
++
++#ifdef CONFIG_CRC32
++/**
++ * nfs_fhandle_hash - calculate the crc32 hash for the filehandle
++ * @fh - pointer to filehandle
++ *
++ * returns a crc32 hash for the filehandle that is compatible with
++ * the one displayed by "wireshark".
++ */
++static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
++{
++	return ~crc32_le(0xFFFFFFFF, &fh->data[0], fh->size);
++}
++#else /* CONFIG_CRC32 */
++static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
++{
++	return 0;
++}
++#endif /* CONFIG_CRC32 */
+ #endif /* _LINUX_NFS_H */
 -- 
 2.39.5
 
