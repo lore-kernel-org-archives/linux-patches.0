@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EA921CA0E
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 20:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465ED2641DE
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 20:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745958263; cv=none; b=fi7mK27NO677sOJm1ox+p4w8WPzMB587UTq6ekvKpEoNmm/iqL6SCQmnC58NFYET5FNhBqhKGqTYFyrePATS1M00pZubnZIoEdaNnxZ5IOLnwATVDFUYvB+kSSHg5TPs7Bz3azJcxX9YT9+7bL1zmR4u3Jkv8qHoLY1Y32OVSsI=
+	t=1745958264; cv=none; b=sQx5n/NCo0u4ncsQC+COJCav/DuwehLf32VkBM6ZOqyPiEO8kBUXokJPg+1xLr5kk8I9jANa6HFYkA5XLWiMqqS666k/xmfAnP6Mixy8vcpGW1eUVFPvnK3nNwCmjz/e1wkE5aGAYfHDkzsoapgIWadsXHhglH+ZMlUGr2PlM84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745958263; c=relaxed/simple;
-	bh=pTiWjc5obwfd6KjattuPQp58CMusIzJRX+fwlUKvvXY=;
+	s=arc-20240116; t=1745958264; c=relaxed/simple;
+	bh=Mzf4z3JjeUDeBLBOc9nbGSbBtSvIhz9Znl+rjIhT6PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7Y2zJv4RRxavkOj8ILtEvXXWgxMH+SXi6yF9gsw+dEGSXyOVpod4nqNsZ02wI7Ik/T16SiG/NfL2d+vbxSYkGUmpY2KuwHpDnqDDcbAbpI9se4+QV4oP/AqyKFNW8ZariXp+L6D4FsfMLnBWL/ndoqQPKUfXVFiSc9PMeemDSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VlaqrMlb; arc=none smtp.client-ip=198.175.65.20
+	 MIME-Version; b=JXQxsFxGkTIPRF2Hb/O+cLXJdtWYVdjUNwCAKcKVFlM3PUTbAppbuHUsH51J+6ok26f0h197xep2Gj6cymsqBuRMbThbZoG8rCXZhvaVedNUDTFQl4F7NAtb5aV57/GPTnQFReDpmjx8jmsnKMXLFl2ChOKgHoKoWtSvgym0LMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IGBXkxLc; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VlaqrMlb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IGBXkxLc"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745958262; x=1777494262;
+  t=1745958264; x=1777494264;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=pTiWjc5obwfd6KjattuPQp58CMusIzJRX+fwlUKvvXY=;
-  b=VlaqrMlbppMpE+E4aqcyQg6OHCYRnt0UrYkbGXZkDIfORAXUK14nWhjZ
-   xz1f8tCryPTXZ49jV1rGzTV7OKp0pmzZgIOKCNda6iq90VwIC3jFjni0N
-   1IEkg5eF8556hfQ+w/B5mmSex3bdlmj2lpOon9FWWkAas51BGLL7sMJ0P
-   TSmoxa7w5zAvObqA22NuC1VOks78qpUHVGnTi+QJ8O2Ql66UqBTe2qgoA
-   fO8aqEu35o2fa+GaLx7kfN3uBApNXh/kHX+BX+FT1QzvpE2LkzeipaFeM
-   Xq4mhc1IjItEyGkF3CnuNsLg/XTwjvHxylwOVbKin7rBCVb3By5Y0HCtX
-   Q==;
-X-CSE-ConnectionGUID: 8OWxPWaTRNGll4RaNZvC+w==
-X-CSE-MsgGUID: YGZFhBhpSL2e2FNo8MWe1Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="47314065"
+  bh=Mzf4z3JjeUDeBLBOc9nbGSbBtSvIhz9Znl+rjIhT6PU=;
+  b=IGBXkxLcwB//PnxoizvDfaAkgEz8t0ZfN3cwroqSixtpKYcrdwRaUlwD
+   M5QvJHGZkIQseVrhhc3tHaM4SyApgnsbI+vvWWfzCCShoNjCzm6v3n28J
+   8Cxhgrn0RLIkjHYTEXsyH/g/D2qs3WKASjry++3qNoUv4H8bcqYdBTIQP
+   Vxe18jG/LcHTzxp3lM7qVO1V+Q1pHcUxJKpXe8fSSJhnnlRZ+YKXLjU9H
+   7wq4LJDbLcsKj9XRyuVk3RauIjLLtjC94beJnFVb6nN/TMBIAtF5ZnwCr
+   sDv9Eg92vzRmtZ46fxhbNfXjh5C3pteTlY4m5DMS9KpfPJWWgAaH+YhyZ
+   A==;
+X-CSE-ConnectionGUID: VPYQ9zfDRoiaDLgvAiH69w==
+X-CSE-MsgGUID: Upu0qL7rSBS2sLR1s2SoLQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="47314070"
 X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
-   d="scan'208";a="47314065"
+   d="scan'208";a="47314070"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
   by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 13:24:19 -0700
-X-CSE-ConnectionGUID: s8oumlQ0Th6IMaswpYdGHA==
-X-CSE-MsgGUID: 6QlcBOYVQFuDjJrr4R7ELQ==
+X-CSE-ConnectionGUID: 32uMB13fTMuHcSEcrV7dmg==
+X-CSE-MsgGUID: 3nUPlzM9Roy3ySo/10bv7Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
-   d="scan'208";a="139036131"
+   d="scan'208";a="139036137"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 13:24:18 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -51,9 +51,9 @@ Cc: lenb@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 2/4] ACPI/MRRM: Minimal parse of ACPI MRRM table
-Date: Tue, 29 Apr 2025 13:24:09 -0700
-Message-ID: <20250429202412.380637-3-tony.luck@intel.com>
+Subject: [PATCH v4 4/4] ACPI: Add documentation for exposing MRRM data
+Date: Tue, 29 Apr 2025 13:24:11 -0700
+Message-ID: <20250429202412.380637-5-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250429202412.380637-1-tony.luck@intel.com>
 References: <20250429202412.380637-1-tony.luck@intel.com>
@@ -65,135 +65,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The resctrl file system code needs to know how many region tags
-are supported. Parse the ACPI MRRM table and save the max_mem_region
-value.
-
-Provide a function for resctrl to collect that value.
+Initial implementation provides enumeration of the address ranges
+NUMA node numbers, and BIOS assigned region IDs for each range.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/acpi.h     |  9 +++++++++
- drivers/acpi/acpi_mrrm.c | 42 ++++++++++++++++++++++++++++++++++++++++
- arch/x86/Kconfig         |  1 +
- drivers/acpi/Kconfig     |  3 +++
- drivers/acpi/Makefile    |  1 +
- 5 files changed, 56 insertions(+)
- create mode 100644 drivers/acpi/acpi_mrrm.c
+ Documentation/ABI/testing/sysfs-firmware-acpi | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 3f2e93ed9730..c409f4cecb09 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -772,6 +772,10 @@ int acpi_get_local_u64_address(acpi_handle handle, u64 *addr);
- int acpi_get_local_address(acpi_handle handle, u32 *addr);
- const char *acpi_get_subsystem_id(acpi_handle handle);
+diff --git a/Documentation/ABI/testing/sysfs-firmware-acpi b/Documentation/ABI/testing/sysfs-firmware-acpi
+index 5249ad5a96d9..fffba38f9ce1 100644
+--- a/Documentation/ABI/testing/sysfs-firmware-acpi
++++ b/Documentation/ABI/testing/sysfs-firmware-acpi
+@@ -248,3 +248,24 @@ Description:
+ 		  # cat ff_pwr_btn
+ 		  7	enabled
  
-+#ifdef CONFIG_ACPI_MRRM
-+int acpi_mrrm_max_mem_region(void);
-+#endif
++What:		/sys/firmware/acpi/memory_ranges/rangeX
++Date:		February 2025
++Contact:	Tony Luck <tony.luck@intel.com>
++Description:
++		On systems with the ACPI MRRM table reports the
++		parameters for each range.
 +
- #else	/* !CONFIG_ACPI */
- 
- #define acpi_disabled 1
-@@ -1092,6 +1096,11 @@ static inline acpi_handle acpi_get_processor_handle(int cpu)
- 	return NULL;
- }
- 
-+static inline int acpi_mrrm_max_mem_region(void)
-+{
-+	return -ENOENT;
-+}
++		base: Starting system physical address.
 +
- #endif	/* !CONFIG_ACPI */
- 
- #ifdef CONFIG_ACPI_HMAT
-diff --git a/drivers/acpi/acpi_mrrm.c b/drivers/acpi/acpi_mrrm.c
-new file mode 100644
-index 000000000000..ab8022e58da5
---- /dev/null
-+++ b/drivers/acpi/acpi_mrrm.c
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2025, Intel Corporation.
-+ *
-+ * Memory Range and Region Mapping (MRRM) structure
-+ */
++		length: Length of this range in bytes.
 +
-+#define pr_fmt(fmt) "acpi/mrrm: " fmt
++		node: NUMA node that this range belongs to. Negative numbers
++		indicate that the node number could not be determined (e.g
++		for an address range that is reserved for future hot add of
++		memory).
 +
-+#include <linux/acpi.h>
-+#include <linux/init.h>
++		local_region_id: ID associated with access by agents
++		local to this range of addresses.
 +
-+static int max_mem_region = -ENOENT;
-+
-+/* Access for use by resctrl file system */
-+int acpi_mrrm_max_mem_region(void)
-+{
-+	return max_mem_region;
-+}
-+
-+static __init int acpi_parse_mrrm(struct acpi_table_header *table)
-+{
-+	struct acpi_table_mrrm *mrrm;
-+
-+	mrrm = (struct acpi_table_mrrm *)table;
-+	if (!mrrm)
-+		return -ENODEV;
-+
-+	max_mem_region = mrrm->max_mem_region;
-+
-+	return 0;
-+}
-+
-+static __init int mrrm_init(void)
-+{
-+	int ret;
-+
-+	ret = acpi_table_parse(ACPI_SIG_MRRM, acpi_parse_mrrm);
-+
-+	return ret;
-+}
-+device_initcall(mrrm_init);
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 4b9f378e05f6..0e43069082df 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -38,6 +38,7 @@ config X86_64
- 	select ARCH_HAS_ELFCORE_COMPAT
- 	select ZONE_DMA32
- 	select EXECMEM if DYNAMIC_FTRACE
-+	select ACPI_MRRM if ACPI
- 
- config FORCE_DYNAMIC_FTRACE
- 	def_bool y
-diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
-index 7f10aa38269d..7bc40c2735ac 100644
---- a/drivers/acpi/Kconfig
-+++ b/drivers/acpi/Kconfig
-@@ -576,6 +576,9 @@ config ACPI_FFH
- 	  Enable this feature if you want to set up and install the FFH Address
- 	  Space handler to handle FFH OpRegion in the firmware.
- 
-+config ACPI_MRRM
-+	bool
-+
- source "drivers/acpi/pmic/Kconfig"
- 
- config ACPI_VIOT
-diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-index 797070fc9a3f..d1b0affb844f 100644
---- a/drivers/acpi/Makefile
-+++ b/drivers/acpi/Makefile
-@@ -66,6 +66,7 @@ acpi-$(CONFIG_ACPI_WATCHDOG)	+= acpi_watchdog.o
- acpi-$(CONFIG_ACPI_PRMT)	+= prmt.o
- acpi-$(CONFIG_ACPI_PCC)		+= acpi_pcc.o
- acpi-$(CONFIG_ACPI_FFH)		+= acpi_ffh.o
-+acpi-$(CONFIG_ACPI_MRRM)	+= acpi_mrrm.o
- 
- # Address translation
- acpi-$(CONFIG_ACPI_ADXL)	+= acpi_adxl.o
++		remote_region_id: ID associated with access by agents
++		non-local to this range of addresses.
 -- 
 2.48.1
 
