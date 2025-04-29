@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C223C8D6;
-	Tue, 29 Apr 2025 16:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB7621772B;
+	Tue, 29 Apr 2025 16:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945505; cv=none; b=mnS79DNlU0myy7nEbw0DUOqKFN1kZUFYKEnphufE0aleENtxprnM4vElLBSxjtWfLNF6qbVyjf4Bcvhf+osAB8mnWjHfw1w4GDGZwfdxc6N4R34wuPRNMRpWhoSJgHpvFRsFajyoil85RZFfQVmjyoU2cVG3R30RAl8fo4+HI1I=
+	t=1745945508; cv=none; b=tHjxSK3YoT5K8Tjmh8gw5MBHrVQqMOjEfGMboGDlR+ioRfZ/zPDMC5Ox3vT1PJ2XfZ0YxqP0YVezALwYL84FkVm0XeBlNX7mysuhNSIE20tUYW9ULXE2eGQ2m7hPydiDQQ3IdpW2/3YxLwXpZ8p+CerzN3679K5qWJob49exawM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945505; c=relaxed/simple;
-	bh=11hC+VpcsSdNix8oF3wYi5wrGYm9U0T1ZuekGajUkFw=;
+	s=arc-20240116; t=1745945508; c=relaxed/simple;
+	bh=hRIixV9ecQgXZvV71zeHkqjUiR27hHPFgRa7XOm8Snk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BR35956B44u+jBomlnToMHf3v9H63SqevPBlZWmaeBOUnXYArpjKNj1CvhABTNDmJIsR4Whfd8r4iJ1H1QPL2OgtIQHcTgc4zJYbjdsHnKiQQqDZ+ogQWlX9LxY5/9BccstbimcRZfeZXu2prxSNTfwv7NSR38H7GcY4eRcCdS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjoKnjpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkeDVNslS0j5c9PLMavwwZrrUlABSgg3RCvkNL/i90BbDHfcWTok740qgnj34twUjOrP09QuSF5EJ/vHNWZ/7yXUeU7rlPjP4DQ+kgoFc5/OfzLKccVhOHyeSVGkG2vunNzNAUHSqV2sqN4p9X4BzneqnWosc4uQ605Mi1FjZcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ckg1EK4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjoKnjpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA75C4CEE3;
-	Tue, 29 Apr 2025 16:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ckg1EK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34E9C4CEE3;
+	Tue, 29 Apr 2025 16:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945505;
-	bh=11hC+VpcsSdNix8oF3wYi5wrGYm9U0T1ZuekGajUkFw=;
+	s=korg; t=1745945508;
+	bh=hRIixV9ecQgXZvV71zeHkqjUiR27hHPFgRa7XOm8Snk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjoKnjpVgz7xmxp8MLgI7EbUqqjNDOD0QRiBiGTC7ytEU5rXua91OoUF+QPwWjOsm
-	 riw3Inrn0ioq03RNvGprASyghgy8Y+BR1g33egubJHl3ftiCT1styn6D49t3+j2YUO
-	 o2pwFWgUvGfpnwZSuBOuFqtFskGcm0mG8quo+XDE=
+	b=2ckg1EK470RdrNnrYwA/zl4TrWkDgoLYyCsSQaShwjhHEpoS5GXUCxdLoyBbGFS14
+	 itBL9ObQgdBLCf6LMvx2GPavL31MALa2gaVMsiWq7VJ3ZrFr6s1jBVttzmtZKeIVn5
+	 sDHTPR5Pph9zAleL5yXJplBSrPZCmeI6zvQ3MBGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Sergiu Cuciurean <sergiu.cuciurean@analog.com>,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 136/179] iio: adc: ad7768-1: Fix conversion result sign
-Date: Tue, 29 Apr 2025 18:41:17 +0200
-Message-ID: <20250429161054.898844349@linuxfoundation.org>
+	Seunghwan Baek <sh8267.baek@samsung.com>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>
+Subject: [PATCH 5.4 119/179] mmc: cqhci: Fix checking of CQHCI_HALT state
+Date: Tue, 29 Apr 2025 18:41:00 +0200
+Message-ID: <20250429161054.217276826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -55,55 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
+From: Seunghwan Baek <sh8267.baek@samsung.com>
 
-[ Upstream commit 8236644f5ecb180e80ad92d691c22bc509b747bb ]
+commit aea62c744a9ae2a8247c54ec42138405216414da upstream.
 
-The ad7768-1 ADC output code is two's complement, meaning that the voltage
-conversion result is a signed value.. Since the value is a 24 bit one,
-stored in a 32 bit variable, the sign should be extended in order to get
-the correct representation.
+To check if mmc cqe is in halt state, need to check set/clear of CQHCI_HALT
+bit. At this time, we need to check with &, not &&.
 
-Also the channel description has been updated to signed representation,
-to match the ADC specifications.
-
-Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Signed-off-by: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Cc: <Stable@vger.kernel.org>
-Link: https://patch.msgid.link/505994d3b71c2aa38ba714d909a68e021f12124c.1741268122.git.Jonathan.Santos@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Cc: stable@vger.kernel.org
+Signed-off-by: Seunghwan Baek <sh8267.baek@samsung.com>
+Reviewed-by: Ritesh Harjani <ritesh.list@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240829061823.3718-2-sh8267.baek@samsung.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7768-1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/cqhci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 9b9956c0b076f..c1adb95f2a464 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -142,7 +142,7 @@ static const struct iio_chan_spec ad7768_channels[] = {
- 		.channel = 0,
- 		.scan_index = 0,
- 		.scan_type = {
--			.sign = 'u',
-+			.sign = 's',
- 			.realbits = 24,
- 			.storagebits = 32,
- 			.shift = 8,
-@@ -373,7 +373,7 @@ static int ad7768_read_raw(struct iio_dev *indio_dev,
- 		iio_device_release_direct_mode(indio_dev);
- 		if (ret < 0)
- 			return ret;
--		*val = ret;
-+		*val = sign_extend32(ret, chan->scan_type.realbits - 1);
- 
- 		return IIO_VAL_INT;
- 
--- 
-2.39.5
-
+--- a/drivers/mmc/host/cqhci.c
++++ b/drivers/mmc/host/cqhci.c
+@@ -580,7 +580,7 @@ static int cqhci_request(struct mmc_host
+ 		cqhci_writel(cq_host, 0, CQHCI_CTL);
+ 		mmc->cqe_on = true;
+ 		pr_debug("%s: cqhci: CQE on\n", mmc_hostname(mmc));
+-		if (cqhci_readl(cq_host, CQHCI_CTL) && CQHCI_HALT) {
++		if (cqhci_readl(cq_host, CQHCI_CTL) & CQHCI_HALT) {
+ 			pr_err("%s: cqhci: CQE failed to exit halt state\n",
+ 			       mmc_hostname(mmc));
+ 		}
 
 
