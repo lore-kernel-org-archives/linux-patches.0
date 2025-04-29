@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA4B2472AC;
-	Tue, 29 Apr 2025 16:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F032251788;
+	Tue, 29 Apr 2025 16:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945639; cv=none; b=S8+6CXonoRPA1gYfzBUVnn3rWuFG7Q0lzdRtaYKG9Nc7k3Okz8bOppcj3owWi9s71vcYlAYLV8IKi/TxrABwNpFsLGmNWxJX2j5PErnRy0I57qigtG6UHF8rqVlTd6g0YhgfIzxDuiNVBkK9q1B/CtPYGXI5ESnnIjAc5UME4KU=
+	t=1745945643; cv=none; b=bFGwX82EFSqkoF3JUv4PHUYzWsbwHriATqu0O25xpLh4O8AHbjXBvdrpgLSA0Z9yuaMjB+dHzPWs+pbCFr+fw4p8ZXez5vVl1yHoMDBQDjtlfDsMpFNcr5Ps/M31Bir137KL7v5LieDE0vhMCebtYGEovda5v2az5cxO8NlSP1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945639; c=relaxed/simple;
-	bh=Iz2699moQUojacuLDXOw2JhOY1C5Gs+tdbzo3AG4rS0=;
+	s=arc-20240116; t=1745945643; c=relaxed/simple;
+	bh=Iq0EdHNZ3J4agLhKd2KGDbEJ3ANRR2sUybJQjQqBYMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1xBpbGKWi4dJ+v93MpkKaxXh/z3uS4RWKT/xXArZ8SZpSKdFmw2j4k15lO65smsM1//lyRetWLw7MGXTpa8+2bLWHaq27WoxJRoZieGZ1lDMt/0SrKk/0pCD6BRskQocs3XBS+PFMGq+Qg+iRjHt8Wn1uPVyQkUyZUkoKOwfWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPssi4Yl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pnw0eWErG92OirRtT4hrkxj8y6aYAPZii3COLHyWNl4ySgi+cJ7Lx228ylnQ1TXrBw+uHOlFqLWa/eL/+IF8W1MZy0Yrw+oUTKLw3ET3knWKcQqJB9nS3N4XvqEazUeffYr+VCshcAcObgjySg2qxhHkDjxxrz+6RSQfthvDCEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qjt48XEj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPssi4Yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF9C4CEE3;
-	Tue, 29 Apr 2025 16:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qjt48XEj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93969C4AF09;
+	Tue, 29 Apr 2025 16:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945639;
-	bh=Iz2699moQUojacuLDXOw2JhOY1C5Gs+tdbzo3AG4rS0=;
+	s=korg; t=1745945643;
+	bh=Iq0EdHNZ3J4agLhKd2KGDbEJ3ANRR2sUybJQjQqBYMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPssi4YlACKFD140i7MVaYzCAul+EAwMLoVVdJsj6OEFu3ANdRwD45WcG8T+DfeSi
-	 XYjdWpty1X48P3gV507xNj4S5cVS/TS6fwhZnKB08bWE99JB0awiYTzkZmvz6PBC/P
-	 Pi5iNrkWS0RpHeXLTq7lyTxcrs/8leY3hQKrvrys=
+	b=Qjt48XEjAGgIoFGTnXA0dG5hpCUJ82gZCTxWKx493HmeeRUTL62njQ0w8fFaEAoE6
+	 wLhOIbQB8oZ6jWEoYQSQB5fqgT/XONWjm19Svl2dIXhMRYB4Q4NxIdoOlZKm9J+HNc
+	 b3Q5FtCw7Y5iG5CTWrlR3AmpvS6iQmVtud/3BAQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Craig Hesling <craig@hesling.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 152/179] USB: serial: simple: add OWON HDS200 series oscilloscope support
-Date: Tue, 29 Apr 2025 18:41:33 +0200
-Message-ID: <20250429161055.533332082@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.4 179/179] MIPS: cm: Fix warning if MIPS_CM is disabled
+Date: Tue, 29 Apr 2025 18:42:00 +0200
+Message-ID: <20250429161056.636773338@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -44,135 +43,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Craig Hesling <craig@hesling.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-commit 4cc01410e1c1dd075df10f750775c81d1cb6672b upstream.
+commit b73c3ccdca95c237750c981054997c71d33e09d7 upstream.
 
-Add serial support for OWON HDS200 series oscilloscopes and likely
-many other pieces of OWON test equipment.
+Commit e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+introduced
 
-OWON HDS200 series devices host two USB endpoints, designed to
-facilitate bidirectional SCPI. SCPI is a predominately ASCII text
-protocol for test/measurement equipment. Having a serial/tty interface
-for these devices lowers the barrier to entry for anyone trying to
-write programs to communicate with them.
+arch/mips/include/asm/mips-cm.h:119:13: error: ‘mips_cm_update_property’
+	defined but not used [-Werror=unused-function]
 
-The following shows the USB descriptor for the OWON HDS272S running
-firmware V5.7.1:
+Fix this by making empty function implementation inline
 
-Bus 001 Device 068: ID 5345:1234 Owon PDS6062T Oscilloscope
-Negotiated speed: Full Speed (12Mbps)
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass            0 [unknown]
-  bDeviceSubClass         0 [unknown]
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x5345 Owon
-  idProduct          0x1234 PDS6062T Oscilloscope
-  bcdDevice            1.00
-  iManufacturer           1 oscilloscope
-  iProduct                2 oscilloscope
-  iSerial                 3 oscilloscope
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0029
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass         5 Physical Interface Device
-      bInterfaceSubClass      0 [unknown]
-      bInterfaceProtocol      0
-      iInterface              0
-      ** UNRECOGNIZED:  09 21 11 01 00 01 22 5f 00
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x81  EP 1 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval              32
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval              32
-Device Status:     0x0000
-  (Bus Powered)
-
-OWON appears to be using the same USB Vendor and Product ID for many
-of their oscilloscopes. Looking at the discussion about the USB
-vendor/product ID, in the link bellow, suggests that this VID/PID is
-shared with VDS, SDS, PDS, and now the HDS series oscilloscopes.
-Available documentation for these devices seems to indicate that all
-use a similar SCPI protocol, some with RS232 options. It is likely that
-this same simple serial setup would work correctly for them all.
-
-Link: https://usb-ids.gowdy.us/read/UD/5345/1234
-Signed-off-by: Craig Hesling <craig@hesling.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial-simple.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/mips/include/asm/mips-cm.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/usb-serial-simple.c
-+++ b/drivers/usb/serial/usb-serial-simple.c
-@@ -101,6 +101,11 @@ DEVICE(nokia, NOKIA_IDS);
- 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
- DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -104,7 +104,7 @@ static inline bool mips_cm_present(void)
+ #ifdef CONFIG_MIPS_CM
+ extern void mips_cm_update_property(void);
+ #else
+-static void mips_cm_update_property(void) {}
++static inline void mips_cm_update_property(void) {}
+ #endif
  
-+/* OWON electronic test and measurement equipment driver */
-+#define OWON_IDS()			\
-+	{ USB_DEVICE(0x5345, 0x1234) } /* HDS200 oscilloscopes and others */
-+DEVICE(owon, OWON_IDS);
-+
- /* Siemens USB/MPI adapter */
- #define SIEMENS_IDS()			\
- 	{ USB_DEVICE(0x908, 0x0004) }
-@@ -135,6 +140,7 @@ static struct usb_serial_driver * const
- 	&motorola_tetra_device,
- 	&nokia_device,
- 	&novatel_gps_device,
-+	&owon_device,
- 	&siemens_mpi_device,
- 	&suunto_device,
- 	&vivopay_device,
-@@ -154,6 +160,7 @@ static const struct usb_device_id id_tab
- 	MOTOROLA_TETRA_IDS(),
- 	NOKIA_IDS(),
- 	NOVATEL_IDS(),
-+	OWON_IDS(),
- 	SIEMENS_IDS(),
- 	SUUNTO_IDS(),
- 	VIVOPAY_IDS(),
+ /**
 
 
