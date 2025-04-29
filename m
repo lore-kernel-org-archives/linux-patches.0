@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDB2233713;
-	Tue, 29 Apr 2025 17:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD1982C60;
+	Tue, 29 Apr 2025 17:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947843; cv=none; b=RxSoCVfQORFRX6X/B72YlTJOFR/9uBT5z/fG+Tn7PtpMMhEcYhPEv+zrUhD0aO8Y5YdqhrDVrjZU+WF0LxLnJaVmhMmOmFV0rkSzQoxTegAtD1DhYAGGzrtYu0sCUEkrQArkvKQN6ju8+RDk2nW3mqICq2K+PRQiIlEWV5FqpRI=
+	t=1745947846; cv=none; b=Q1/lRWyYj1kfD/iOrhpSR/bF+XR8fJBS9F3HalFTXyGvZShofx34mdwy20vXExurFkFJTD1jvGaEVLS8JANkjqv4R3RULRHirxwnagGNmNutQEdQlAJemWYiV4azhKhNtg1f7wRfyJbRLlVyXnayTasxXBF1ndwDRFrayhxbDgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947843; c=relaxed/simple;
-	bh=XX5gmygOuNW4Ve2tr0AU70L9oGRVw1ZFitHk4T5sI6U=;
+	s=arc-20240116; t=1745947846; c=relaxed/simple;
+	bh=kp8RwjHHfzCBccdxbGuqtA70Xa6IQppwFi+4BKTY4Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yp+jIf1gS2f94ljKTlq9ZBw8Y0f99FHnZpF1E9EoLKy+yf38PFcj18dAjAOA/TKFkkllsk/GA2nJWymXpkaSbndWBF11Ro02NnXp+y5Z6K0Yny5k88Dryu9ztrYFZbfC3nW/Zd+B8nJPa/mw5taf51shcvvXd8sTdO1xRHMV5uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSVW8aBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQxF7RCmXWTGXY4WY8AX/g3NL6X4ZTxf7r2mvwCErm2rDup1nWePROtgvSEOyjcKnO29l0HRI+jAtv5pU9rQBjB5dNXlsfpji7UoRs7Grso9+duKJSDKnw/cbJpwOxbgLSx+8DmYe7QlEhU3osPedTExHQ0iLqiPI+wBnGHYLUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zL71p3+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSVW8aBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40196C4CEE9;
-	Tue, 29 Apr 2025 17:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zL71p3+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0249DC4CEE9;
+	Tue, 29 Apr 2025 17:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947843;
-	bh=XX5gmygOuNW4Ve2tr0AU70L9oGRVw1ZFitHk4T5sI6U=;
+	s=korg; t=1745947846;
+	bh=kp8RwjHHfzCBccdxbGuqtA70Xa6IQppwFi+4BKTY4Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSVW8aBRUNErmQmaY6vPAVz7/HNFLXdu6SoBeokWoJt5lK6BmLeRyXaTcLvdCtuqW
-	 v13wQnRaegNUH10siTY4zJBNQNdug6dtySWv/wQTRVYWAcwueQIdwE+bAdZw6occCO
-	 8HIAuOwX+dCOUHHKIYyhlE0/S775HNMG2Is5OCnE=
+	b=zL71p3+BmyhSpeIdB+c+JWGFPelnPsrhzK7jPk7kjyA4S5rAJ4pqzBpyoVEkvh43O
+	 9dHgGI02WHGN3h52UoyLWu0oMzH/igZPJmkLZg/fBrFoba5yYfoa4K6IWQzAIOU9TE
+	 j1D36Xfg9O5WyqGOYQ2eEBa6dZgT58W2mXOIuO8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 120/280] scsi: Improve CDL control
-Date: Tue, 29 Apr 2025 18:41:01 +0200
-Message-ID: <20250429161120.019918415@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tomas Winkler <tomasw@gmail.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.12 121/280] mei: me: add panther lake H DID
+Date: Tue, 29 Apr 2025 18:41:02 +0200
+Message-ID: <20250429161120.061690660@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,121 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 14a3cc755825ef7b34c986aa2786ea815023e9c5 upstream.
+commit 86ce5c0a1dec02e21b4c864b2bc0cc5880a2c13c upstream.
 
-With ATA devices supporting the CDL feature, using CDL requires that the
-feature be enabled with a SET FEATURES command. This command is issued
-as the translated command for the MODE SELECT command issued by
-scsi_cdl_enable() when the user enables CDL through the device
-cdl_enable sysfs attribute.
+Add Panther Lake H device id.
 
-However, the implementation of scsi_cdl_enable() always issues a MODE
-SELECT command for ATA devices when the enable argument is true, even if
-CDL is already enabled on the device. While this does not cause any
-issue with using CDL descriptors with read/write commands (the CDL
-feature will be enabled on the drive), issuing the MODE SELECT command
-even when the device CDL feature is already enabled will cause a reset
-of the ATA device CDL statistics log page (as defined in ACS, any CDL
-enable action must reset the device statistics).
-
-Avoid this needless actions (and the implied statistics log page reset)
-by modifying scsi_cdl_enable() to issue the MODE SELECT command to
-enable CDL if and only if CDL is not reported as already enabled on the
-device.
-
-And while at it, simplify the initialization of the is_ata boolean
-variable and move the declaration of the scsi mode data and sense header
-variables to within the scope of ATA device handling.
-
-Fixes: 1b22cfb14142 ("scsi: core: Allow enabling and disabling command duration limits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable <stable@kernel.org>
+Co-developed-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://lore.kernel.org/r/20250408130005.1358140-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c |   36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    1 +
+ drivers/misc/mei/pci-me.c     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -695,26 +695,23 @@ void scsi_cdl_check(struct scsi_device *
-  */
- int scsi_cdl_enable(struct scsi_device *sdev, bool enable)
- {
--	struct scsi_mode_data data;
--	struct scsi_sense_hdr sshdr;
--	struct scsi_vpd *vpd;
--	bool is_ata = false;
- 	char buf[64];
-+	bool is_ata;
- 	int ret;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -117,6 +117,7 @@
  
- 	if (!sdev->cdl_supported)
- 		return -EOPNOTSUPP;
+ #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
  
- 	rcu_read_lock();
--	vpd = rcu_dereference(sdev->vpd_pg89);
--	if (vpd)
--		is_ata = true;
-+	is_ata = rcu_dereference(sdev->vpd_pg89);
- 	rcu_read_unlock();
++#define MEI_DEV_ID_PTL_H      0xE370  /* Panther Lake H */
+ #define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
  
- 	/*
- 	 * For ATA devices, CDL needs to be enabled with a SET FEATURES command.
- 	 */
- 	if (is_ata) {
-+		struct scsi_mode_data data;
-+		struct scsi_sense_hdr sshdr;
- 		char *buf_data;
- 		int len;
+ /*
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -124,6 +124,7 @@ static const struct pci_device_id mei_me
  
-@@ -723,16 +720,30 @@ int scsi_cdl_enable(struct scsi_device *
- 		if (ret)
- 			return -EINVAL;
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
  
--		/* Enable CDL using the ATA feature page */
-+		/* Enable or disable CDL using the ATA feature page */
- 		len = min_t(size_t, sizeof(buf),
- 			    data.length - data.header_length -
- 			    data.block_descriptor_length);
- 		buf_data = buf + data.header_length +
- 			data.block_descriptor_length;
--		if (enable)
--			buf_data[4] = 0x02;
--		else
--			buf_data[4] = 0;
-+
-+		/*
-+		 * If we want to enable CDL and CDL is already enabled on the
-+		 * device, do nothing. This avoids needlessly resetting the CDL
-+		 * statistics on the device as that is implied by the CDL enable
-+		 * action. Similar to this, there is no need to do anything if
-+		 * we want to disable CDL and CDL is already disabled.
-+		 */
-+		if (enable) {
-+			if ((buf_data[4] & 0x03) == 0x02)
-+				goto out;
-+			buf_data[4] &= ~0x03;
-+			buf_data[4] |= 0x02;
-+		} else {
-+			if ((buf_data[4] & 0x03) == 0x00)
-+				goto out;
-+			buf_data[4] &= ~0x03;
-+		}
++	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_H, MEI_ME_PCH15_CFG)},
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
  
- 		ret = scsi_mode_select(sdev, 1, 0, buf_data, len, 5 * HZ, 3,
- 				       &data, &sshdr);
-@@ -744,6 +755,7 @@ int scsi_cdl_enable(struct scsi_device *
- 		}
- 	}
- 
-+out:
- 	sdev->cdl_enable = enable;
- 
- 	return 0;
+ 	/* required last entry */
 
 
