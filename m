@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C71215060;
-	Tue, 29 Apr 2025 16:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF292459C9;
+	Tue, 29 Apr 2025 16:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945398; cv=none; b=jtrWmY7NKLgvmaVIMYpnGeOmX8z17p+xK0Im41pfdDNLZxjchmvSkVbUF9xxu300hwdF7hRlbkjv4Oek63ENjjnGLW01j0xI025WfxOlCsaxM6Scz+ck5vu+p5jKrha1oz3c8hKrkHNu/Hows+bFX8WOJu5bGo4i0Z0E00Qe5Ao=
+	t=1745945400; cv=none; b=Q8N2BDZX+cFvPtLQAYyOVk+gIv4Kju+j/7/M0c1HrDdectr3vlGBe2SaR0HONcDkRpIF3fZweCYjZ+npYM1CsDcpBvI21f0r89o+bHs6DoG6XcPFouCElfdDmbx0HBV1TfRi0qf30QyCbTJxE/rEAs9MY6m01MxHXGMhzQbZJL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945398; c=relaxed/simple;
-	bh=bN5StPvi+KQxsEzJ+VrVYx76CbKjmLgIOwZ22V8S/78=;
+	s=arc-20240116; t=1745945400; c=relaxed/simple;
+	bh=kJgfoueXQ28rLrqGNrJr8ODUQjKNYTF//kczDLNyFVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmkiampAuS2jRfADeD2POsdXjH77J8gjz0dlUfwbrrbB/sBddrHSSIhxTOR11LSnrCXSCuxjfsksJvwRCFQm9FH7iQ6VBoB0JIB/8M5Ij/tw+ZCfM0YtjuqW4oUv7scTqswSTKM1vq6tjMMtJIjP5Jpgt+0Pmfolwlum/KBfy4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzJfZyZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0dfNbgCO/1VbWtBxQo8/cCECmvLI37vxUBWPxcbU6bEf+oSv2SiJjn+vfoJkitJ3mF3hPyRCgv7VXm+kO6Sh/NXCXs664gYzpoTSEM/DztTx5aaHjyG/71PMOdwtJa+TIs9sUOFc5Zajyg4wcBAhnBrQh1rTC7T4uGhvbkdTOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFi/Za6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzJfZyZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2566FC4CEE3;
-	Tue, 29 Apr 2025 16:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFi/Za6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA980C4CEEA;
+	Tue, 29 Apr 2025 16:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945397;
-	bh=bN5StPvi+KQxsEzJ+VrVYx76CbKjmLgIOwZ22V8S/78=;
+	s=korg; t=1745945400;
+	bh=kJgfoueXQ28rLrqGNrJr8ODUQjKNYTF//kczDLNyFVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzJfZyZ5igvSWPJEZj3r3s4pxNF1l/YMrQE1qA9cXHQPoq3wKZWkKbTtu3EKO9yRn
-	 OqO0x/zatxJMNFALWHJVBQ4k2oRZLlc0Owj0pJmyDVgrZRGchUyD/P+gj6z/nDJDI4
-	 w9N5XVyxh+MbMktLpR+4jYKdJOYLCVec0Qu2E/UQ=
+	b=kFi/Za6F2shpqj7I2lNWidwoO6rSIqiwme+GD3EmGPvq+PZPrx/24qoYqqj1kNMHG
+	 AIP6P1E2MUElQD2E6hd4e2zuUNqptpqNeDN8uv2B29EKxmbuPstvhUE6SPF8VyPbCW
+	 Gc9YN38m2/CcXZmlg9JzzMiCzFHykMsBGGqkqioM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Walton <calvin.walton@kepstin.ca>,
-	Johannes Kimmel <kernel@bareminimum.eu>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 099/179] btrfs: correctly escape subvol in btrfs_show_options()
-Date: Tue, 29 Apr 2025 18:40:40 +0200
-Message-ID: <20250429161053.404274738@linuxfoundation.org>
+	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.4 100/179] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
+Date: Tue, 29 Apr 2025 18:40:41 +0200
+Message-ID: <20250429161053.447069737@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,41 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Kimmel <kernel@bareminimum.eu>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit dc08c58696f8555e4a802f1f23c894a330d80ab7 upstream.
+commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
 
-Currently, displaying the btrfs subvol mount option doesn't escape ','.
-This makes parsing /proc/self/mounts and /proc/self/mountinfo
-ambiguous for subvolume names that contain commas. The text after the
-comma could be mistaken for another option (think "subvol=foo,ro", where
-ro is actually part of the subvolumes name).
+Syzbot reported an issue in hfs subsystem:
 
-Replace the manual escape characters list with a call to
-seq_show_option(). Thanks to Calvin Walton for suggesting this approach.
+BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
 
-Fixes: c8d3fe028f64 ("Btrfs: show subvol= and subvolid= in /proc/mounts")
-CC: stable@vger.kernel.org # 5.4+
-Suggested-by: Calvin Walton <calvin.walton@kepstin.ca>
-Signed-off-by: Johannes Kimmel <kernel@bareminimum.eu>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ memcpy_from_page include/linux/highmem.h:423 [inline]
+ hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+ hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+ hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
+ hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
+ hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
+ vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+ do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+ __do_sys_mkdir fs/namei.c:4300 [inline]
+ __se_sys_mkdir fs/namei.c:4298 [inline]
+ __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fbdd6057a99
+
+Add a check for key length in hfs_bnode_read_key to prevent
+out-of-bounds memory access. If the key length is invalid, the
+key buffer is cleared, improving stability and reliability.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/hfs/bnode.c     |    6 ++++++
+ fs/hfsplus/bnode.c |    6 ++++++
+ 2 files changed, 12 insertions(+)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1380,8 +1380,7 @@ static int btrfs_show_options(struct seq
- 	subvol_name = btrfs_get_subvol_name_from_objectid(info,
- 			BTRFS_I(d_inode(dentry))->root->root_key.objectid);
- 	if (!IS_ERR(subvol_name)) {
--		seq_puts(seq, ",subvol=");
--		seq_escape(seq, subvol_name, " \t\n\\");
-+		seq_show_option(seq, "subvol", subvol_name);
- 		kfree(subvol_name);
- 	}
- 	return 0;
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -70,6 +70,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 1;
+ 
++	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfs_btree_key));
++		pr_err("hfs: Invalid key length: %d\n", key_len);
++		return;
++	}
++
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -69,6 +69,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 2;
+ 
++	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfsplus_btree_key));
++		pr_err("hfsplus: Invalid key length: %d\n", key_len);
++		return;
++	}
++
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
 
 
