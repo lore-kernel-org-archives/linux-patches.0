@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9713E27453;
-	Tue, 29 Apr 2025 17:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D76327453;
+	Tue, 29 Apr 2025 17:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946729; cv=none; b=tDBsVpYs5f8lMAbMslhE7FxlLT42Z1k6ZRgBiCgaoiYwj+sWpe1cS/fGTniai6h+y1xv3OK8ZCH5JdUih3JI+qPcKmC1PWnugxzaFWWcirzcIJnCEIPEJ2NuzCokobMWSdVH+HZsqUeiiLnyQQqifLPmm1QBCTvWwWXzIcXfyIk=
+	t=1745946732; cv=none; b=Mvhb5HWGDeCNK586wqTtyr/gaDYHVRQ+YsSWFJbcP016gTxcnlaF47gPhqe92WRTSJiN7P21H4WirA/tzClXbKYI+B7IELOOfWVLoXFXROt/BbOrm2iSXH4GmSVId2Epc2D7o6duF0AuATVy/B8O6vXe/N/N5DdrkoPHGIuKcic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946729; c=relaxed/simple;
-	bh=XP1Hb0Bzj0hMN3eDOuChv57oRLx+gsO4CTPGzSJMFyo=;
+	s=arc-20240116; t=1745946732; c=relaxed/simple;
+	bh=o6ZRuLa9gSXqQuMm0S3t45sNdCAdh/mw/3Bdl82xVpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDy7kxKOYmxPh4c8nZbhIYn+74rxVH2E6icNdUnx+lkuUaZITgJYpL8IdM7ZOAo0I+gPjFd5FMZF706Vb2xhbF8RSZX4CRV8uJEvDR8xW9J1SYv7IOwygYXoqnleG2SAmMbAsmthigkAddr3cWnTgeWgyuH/ccr88dbamF/c/Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdShENsj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DkvKMmQRAmfoI3DTX3TL7J+rLvmFamV27SStnYV4XOsGuXNN202eQrfwgQddG2834I599NCRVky0+OukOaqFDiV319AjVK/vJPYur1d0KwkIBJG+RR7bGj/YN+axIY/xfa0GszRDBfQcXt+85KeWM5OYE31+TV8mm4rd8zNeRS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtDXQuwa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdShENsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDBDC4CEE3;
-	Tue, 29 Apr 2025 17:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtDXQuwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA32C4CEF1;
+	Tue, 29 Apr 2025 17:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946729;
-	bh=XP1Hb0Bzj0hMN3eDOuChv57oRLx+gsO4CTPGzSJMFyo=;
+	s=korg; t=1745946732;
+	bh=o6ZRuLa9gSXqQuMm0S3t45sNdCAdh/mw/3Bdl82xVpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdShENsjivTti8UPFBsJdQSNuRpDmwi17PL0/dbdqwb2KzXYvSYy78Ja36Up2a0gZ
-	 MQxQoMTs4gAinGZW5pgCPg0K/Qjj6t1yS6k4OWu939fyUJC7Ilcfh2gWkol1edlvGp
-	 urqiD1O9w5vVsnoWdCemwIw/fdOjPvpmg98rNSOQ=
+	b=CtDXQuwa4wmlpTWZ0vlW2G3lFaDcOThUp8yQGFaB5m9zxcRaTyOxLZky0xhW5gQ2f
+	 1KUmMgJemIT81LfvVXjBsUMDIOJxxN3D3qXIrCQXaYI+xFhYAKPEjD8xNVtoxm9ioM
+	 M5r8n40fV2e+jF+BVUWahrAwJje5Fp3LRiAjui1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/286] net: vlan: dont propagate flags on open
-Date: Tue, 29 Apr 2025 18:38:57 +0200
-Message-ID: <20250429161109.219481166@linuxfoundation.org>
+Subject: [PATCH 5.10 051/286] ext4: reject casefold inode flag without casefold feature
+Date: Tue, 29 Apr 2025 18:39:15 +0200
+Message-ID: <20250429161109.953905352@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -53,180 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 27b918007d96402aba10ed52a6af8015230f1793 ]
+[ Upstream commit 8216776ccff6fcd40e3fdaa109aa4150ebe760b3 ]
 
-With the device instance lock, there is now a possibility of a deadlock:
+It is invalid for the casefold inode flag to be set without the casefold
+superblock feature flag also being set.  e2fsck already considers this
+case to be invalid and handles it by offering to clear the casefold flag
+on the inode.  __ext4_iget() also already considered this to be invalid,
+sort of, but it only got so far as logging an error message; it didn't
+actually reject the inode.  Make it reject the inode so that other code
+doesn't have to handle this case.  This matches what f2fs does.
 
-[    1.211455] ============================================
-[    1.211571] WARNING: possible recursive locking detected
-[    1.211687] 6.14.0-rc5-01215-g032756b4ca7a-dirty #5 Not tainted
-[    1.211823] --------------------------------------------
-[    1.211936] ip/184 is trying to acquire lock:
-[    1.212032] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_set_allmulti+0x4e/0xb0
-[    1.212207]
-[    1.212207] but task is already holding lock:
-[    1.212332] ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
-[    1.212487]
-[    1.212487] other info that might help us debug this:
-[    1.212626]  Possible unsafe locking scenario:
-[    1.212626]
-[    1.212751]        CPU0
-[    1.212815]        ----
-[    1.212871]   lock(&dev->lock);
-[    1.212944]   lock(&dev->lock);
-[    1.213016]
-[    1.213016]  *** DEADLOCK ***
-[    1.213016]
-[    1.213143]  May be due to missing lock nesting notation
-[    1.213143]
-[    1.213294] 3 locks held by ip/184:
-[    1.213371]  #0: ffffffff838b53e0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x1b/0xa0
-[    1.213543]  #1: ffffffff84e5fc70 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_nets_lock+0x37/0xa0
-[    1.213727]  #2: ffff8881024a4c30 (&dev->lock){+.+.}-{4:4}, at: dev_open+0x50/0xb0
-[    1.213895]
-[    1.213895] stack backtrace:
-[    1.213991] CPU: 0 UID: 0 PID: 184 Comm: ip Not tainted 6.14.0-rc5-01215-g032756b4ca7a-dirty #5
-[    1.213993] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-[    1.213994] Call Trace:
-[    1.213995]  <TASK>
-[    1.213996]  dump_stack_lvl+0x8e/0xd0
-[    1.214000]  print_deadlock_bug+0x28b/0x2a0
-[    1.214020]  lock_acquire+0xea/0x2a0
-[    1.214027]  __mutex_lock+0xbf/0xd40
-[    1.214038]  dev_set_allmulti+0x4e/0xb0 # real_dev->flags & IFF_ALLMULTI
-[    1.214040]  vlan_dev_open+0xa5/0x170 # ndo_open on vlandev
-[    1.214042]  __dev_open+0x145/0x270
-[    1.214046]  __dev_change_flags+0xb0/0x1e0
-[    1.214051]  netif_change_flags+0x22/0x60 # IFF_UP vlandev
-[    1.214053]  dev_change_flags+0x61/0xb0 # for each device in group from dev->vlan_info
-[    1.214055]  vlan_device_event+0x766/0x7c0 # on netdevsim0
-[    1.214058]  notifier_call_chain+0x78/0x120
-[    1.214062]  netif_open+0x6d/0x90
-[    1.214064]  dev_open+0x5b/0xb0 # locks netdevsim0
-[    1.214066]  bond_enslave+0x64c/0x1230
-[    1.214075]  do_set_master+0x175/0x1e0 # on netdevsim0
-[    1.214077]  do_setlink+0x516/0x13b0
-[    1.214094]  rtnl_newlink+0xaba/0xb80
-[    1.214132]  rtnetlink_rcv_msg+0x440/0x490
-[    1.214144]  netlink_rcv_skb+0xeb/0x120
-[    1.214150]  netlink_unicast+0x1f9/0x320
-[    1.214153]  netlink_sendmsg+0x346/0x3f0
-[    1.214157]  __sock_sendmsg+0x86/0xb0
-[    1.214160]  ____sys_sendmsg+0x1c8/0x220
-[    1.214164]  ___sys_sendmsg+0x28f/0x2d0
-[    1.214179]  __x64_sys_sendmsg+0xef/0x140
-[    1.214184]  do_syscall_64+0xec/0x1d0
-[    1.214190]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[    1.214191] RIP: 0033:0x7f2d1b4a7e56
+Note: we could check 's_encoding != NULL' instead of
+ext4_has_feature_casefold().  This would make the check robust against
+the casefold feature being enabled by userspace writing to the page
+cache of the mounted block device.  However, it's unsolvable in general
+for filesystems to be robust against concurrent writes to the page cache
+of the mounted block device.  Though this very particular scenario
+involving the casefold feature is solvable, we should not pretend that
+we can support this model, so let's just check the casefold feature.
+tune2fs already forbids enabling casefold on a mounted filesystem.
 
-Device setup:
-
-     netdevsim0 (down)
-     ^        ^
-  bond        netdevsim1.100@netdevsim1 allmulticast=on (down)
-
-When we enslave the lower device (netdevsim0) which has a vlan, we
-propagate vlan's allmuti/promisc flags during ndo_open. This causes
-(re)locking on of the real_dev.
-
-Propagate allmulti/promisc on flags change, not on the open. There
-is a slight semantics change that vlans that are down now propagate
-the flags, but this seems unlikely to result in the real issues.
-
-Reproducer:
-
-  echo 0 1 > /sys/bus/netdevsim/new_device
-
-  dev_path=$(ls -d /sys/bus/netdevsim/devices/netdevsim0/net/*)
-  dev=$(echo $dev_path | rev | cut -d/ -f1 | rev)
-
-  ip link set dev $dev name netdevsim0
-  ip link set dev netdevsim0 up
-
-  ip link add link netdevsim0 name netdevsim0.100 type vlan id 100
-  ip link set dev netdevsim0.100 allmulticast on down
-  ip link add name bond1 type bond mode 802.3ad
-  ip link set dev netdevsim0 down
-  ip link set dev netdevsim0 master bond1
-  ip link set dev bond1 up
-  ip link show
-
-Reported-by: syzbot+b0c03d76056ef6cd12a6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/Z9CfXjLMKn6VLG5d@mini-arch/T/#m15ba130f53227c883e79fb969687d69d670337a0
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250313100657.2287455-1-sdf@fomichev.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230814182903.37267-2-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 642335f3ea2b ("ext4: don't treat fhandle lookup of ea_inode as FS corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 31 ++++---------------------------
- 1 file changed, 4 insertions(+), 27 deletions(-)
+ fs/ext4/inode.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index b7cf430006e55..c134f8210b21b 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -272,17 +272,6 @@ static int vlan_dev_open(struct net_device *dev)
- 			goto out;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index c991955412a49..d0fcf91ec9d62 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5004,9 +5004,12 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 				 "iget: bogus i_mode (%o)", inode->i_mode);
+ 		goto bad_inode;
  	}
- 
--	if (dev->flags & IFF_ALLMULTI) {
--		err = dev_set_allmulti(real_dev, 1);
--		if (err < 0)
--			goto del_unicast;
--	}
--	if (dev->flags & IFF_PROMISC) {
--		err = dev_set_promiscuity(real_dev, 1);
--		if (err < 0)
--			goto clear_allmulti;
--	}
--
- 	ether_addr_copy(vlan->real_dev_addr, real_dev->dev_addr);
- 
- 	if (vlan->flags & VLAN_FLAG_GVRP)
-@@ -296,12 +285,6 @@ static int vlan_dev_open(struct net_device *dev)
- 		netif_carrier_on(dev);
- 	return 0;
- 
--clear_allmulti:
--	if (dev->flags & IFF_ALLMULTI)
--		dev_set_allmulti(real_dev, -1);
--del_unicast:
--	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
--		dev_uc_del(real_dev, dev->dev_addr);
- out:
- 	netif_carrier_off(dev);
- 	return err;
-@@ -314,10 +297,6 @@ static int vlan_dev_stop(struct net_device *dev)
- 
- 	dev_mc_unsync(real_dev, dev);
- 	dev_uc_unsync(real_dev, dev);
--	if (dev->flags & IFF_ALLMULTI)
--		dev_set_allmulti(real_dev, -1);
--	if (dev->flags & IFF_PROMISC)
--		dev_set_promiscuity(real_dev, -1);
- 
- 	if (!ether_addr_equal(dev->dev_addr, real_dev->dev_addr))
- 		dev_uc_del(real_dev, dev->dev_addr);
-@@ -474,12 +453,10 @@ static void vlan_dev_change_rx_flags(struct net_device *dev, int change)
- {
- 	struct net_device *real_dev = vlan_dev_priv(dev)->real_dev;
- 
--	if (dev->flags & IFF_UP) {
--		if (change & IFF_ALLMULTI)
--			dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
--		if (change & IFF_PROMISC)
--			dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
--	}
-+	if (change & IFF_ALLMULTI)
-+		dev_set_allmulti(real_dev, dev->flags & IFF_ALLMULTI ? 1 : -1);
-+	if (change & IFF_PROMISC)
-+		dev_set_promiscuity(real_dev, dev->flags & IFF_PROMISC ? 1 : -1);
- }
- 
- static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
+-	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
++	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb)) {
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
++		ret = -EFSCORRUPTED;
++		goto bad_inode;
++	}
+ 	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
+ 		ext4_error_inode(inode, function, line, 0, err_str);
+ 		ret = -EFSCORRUPTED;
 -- 
 2.39.5
 
