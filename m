@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AFE219A63;
-	Tue, 29 Apr 2025 18:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26007155A4E;
+	Tue, 29 Apr 2025 18:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950734; cv=none; b=gsoxW+BuVmk38PZOOu1FsOeKzeiCgvbkbYo5VzWQTeLLhc5zCJdRLYLdhYcHU+TFW/uUwcAOW3SCI1+PAnjHR0pkqelON4vTNekTAjX8rdSt3WJ7le/yvDXXDLWFbDXgQ6XN2kO4QWuojqYgV3dh6k0od52d1vuP3/YMRXjowPw=
+	t=1745950737; cv=none; b=UWAbadFFpPXUJqLFwDffRbwiMYrNk3MBOwuTI96WtyK37eytQpPzEoH4OjRoJgdj6/SQmVgYAVlw9U60Tb7gfgeYBYB11HCDOIUl8erD3gzXg+DOYotpHvtuBBx062f6X0maLqSjtAbNxT+ZGkc4JP0PXVp84sXaQT6Fn4N4B+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950734; c=relaxed/simple;
-	bh=/5dzz4sd09AA3rJRaC6KLikkbO8MCHBIioMBqQpN7oU=;
+	s=arc-20240116; t=1745950737; c=relaxed/simple;
+	bh=MQV7VVe4djKJN83oYg9O7vWRqIxiHRe6ayCPmwPct7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkvFWbAPe/Ed6TWtmPJo15ozbN0gLVu8bUHu3XkiTcem58jiGtnf83tD+nRQCwB7H1xn6fHcBplen5FYac8jwXyznZqlLd4HNGRBaODwRVZUMZB4Pvp1+2kgcAeNLGfysCRfSu2EFRzGXJvlxaNIGXhuTuHAVtdc1T2WpHX6Uno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDOCbfG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MbsvyLuFVl3Zto5jpjfjo5eya/V7oq5pNABu1a3EV+sdjurxfy2n17PjZqhUW0FqHy2Xhkzf6MA+hJg5ZOPeEsiUZ/GxfUka5ysl8s9dCSNiu4PIhlMfVPRokFUDpyagF+5VytxVQv//RhEL9AcBsfpD498CVAkFuft2C6ekdfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNOQiLwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDOCbfG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C832C4CEE3;
-	Tue, 29 Apr 2025 18:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNOQiLwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FDAC4CEE3;
+	Tue, 29 Apr 2025 18:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950734;
-	bh=/5dzz4sd09AA3rJRaC6KLikkbO8MCHBIioMBqQpN7oU=;
+	s=korg; t=1745950737;
+	bh=MQV7VVe4djKJN83oYg9O7vWRqIxiHRe6ayCPmwPct7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDOCbfG1FD6TehBLqUSFZuA9tQlmRW80aFWt2ji87Xm5LgWauhM9iwbt8TaFBcO8r
-	 4bWSD7Sl/ZB8DvasPDYFGgIx5zrH/EOxuu9iD6SFi09B+r8orYHqXYW6rHHqGMe5ay
-	 61t6GwbpcfZjWoN5/PazotRr2aZJjHgmt1bnIvaA=
+	b=aNOQiLwApzHBw0+cBuhSGFU8BJk8iDOoi6RLKmp0ZpSS9gCUjbfkAU4ikLt1b9kpF
+	 34LOpfo0K3GoBqC6o+2HY7td1KISq/ThR3WQFzjT3ejtpMMMn6DRLHqB/QyEzMi9c4
+	 LoOh9Q9xyTIt8HyM4Xu9NcCujtywDwye2xKvJx5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meir Elisha <meir.elisha@volumez.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Tamura Dai <kirinode0@gmail.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 187/204] md/raid1: Add check for missing source disk in process_checks()
-Date: Tue, 29 Apr 2025 18:44:35 +0200
-Message-ID: <20250429161107.038489573@linuxfoundation.org>
+Subject: [PATCH 6.6 188/204] spi: spi-imx: Add check for spi_imx_setupxfer()
+Date: Tue, 29 Apr 2025 18:44:36 +0200
+Message-ID: <20250429161107.076426913@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -51,75 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meir Elisha <meir.elisha@volumez.com>
+From: Tamura Dai <kirinode0@gmail.com>
 
-[ Upstream commit b7c178d9e57c8fd4238ff77263b877f6f16182ba ]
+[ Upstream commit 951a04ab3a2db4029debfa48d380ef834b93207e ]
 
-During recovery/check operations, the process_checks function loops
-through available disks to find a 'primary' source with successfully
-read data.
+Add check for the return value of spi_imx_setupxfer().
+spi_imx->rx and spi_imx->tx function pointer can be NULL when
+spi_imx_setupxfer() return error, and make NULL pointer dereference.
 
-If no suitable source disk is found after checking all possibilities,
-the 'primary' index will reach conf->raid_disks * 2. Add an explicit
-check for this condition after the loop. If no source disk was found,
-print an error message and return early to prevent further processing
-without a valid primary source.
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+ Call trace:
+  0x0
+  spi_imx_pio_transfer+0x50/0xd8
+  spi_imx_transfer_one+0x18c/0x858
+  spi_transfer_one_message+0x43c/0x790
+  __spi_pump_transfer_message+0x238/0x5d4
+  __spi_sync+0x2b0/0x454
+  spi_write_then_read+0x11c/0x200
 
-Link: https://lore.kernel.org/linux-raid/20250408143808.1026534-1-meir.elisha@volumez.com
-Signed-off-by: Meir Elisha <meir.elisha@volumez.com>
-Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Tamura Dai <kirinode0@gmail.com>
+Reviewed-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20250417011700.14436-1-kirinode0@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/spi/spi-imx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 65309da1dca34..8b25287c89ed6 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -2061,14 +2061,9 @@ static int fix_sync_read_error(struct r1bio *r1_bio)
- 				if (!rdev_set_badblocks(rdev, sect, s, 0))
- 					abort = 1;
- 			}
--			if (abort) {
--				conf->recovery_disabled =
--					mddev->recovery_disabled;
--				set_bit(MD_RECOVERY_INTR, &mddev->recovery);
--				md_done_sync(mddev, r1_bio->sectors, 0);
--				put_buf(r1_bio);
-+			if (abort)
- 				return 0;
--			}
-+
- 			/* Try next page */
- 			sectors -= s;
- 			sect += s;
-@@ -2207,10 +2202,21 @@ static void sync_request_write(struct mddev *mddev, struct r1bio *r1_bio)
- 	int disks = conf->raid_disks * 2;
- 	struct bio *wbio;
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index daa32bde61556..da4442954375b 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1614,10 +1614,13 @@ static int spi_imx_transfer_one(struct spi_controller *controller,
+ 				struct spi_device *spi,
+ 				struct spi_transfer *transfer)
+ {
++	int ret;
+ 	struct spi_imx_data *spi_imx = spi_controller_get_devdata(spi->controller);
+ 	unsigned long hz_per_byte, byte_limit;
  
--	if (!test_bit(R1BIO_Uptodate, &r1_bio->state))
--		/* ouch - failed to read all of that. */
--		if (!fix_sync_read_error(r1_bio))
-+	if (!test_bit(R1BIO_Uptodate, &r1_bio->state)) {
-+		/*
-+		 * ouch - failed to read all of that.
-+		 * No need to fix read error for check/repair
-+		 * because all member disks are read.
-+		 */
-+		if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery) ||
-+		    !fix_sync_read_error(r1_bio)) {
-+			conf->recovery_disabled = mddev->recovery_disabled;
-+			set_bit(MD_RECOVERY_INTR, &mddev->recovery);
-+			md_done_sync(mddev, r1_bio->sectors, 0);
-+			put_buf(r1_bio);
- 			return;
-+		}
-+	}
+-	spi_imx_setupxfer(spi, transfer);
++	ret = spi_imx_setupxfer(spi, transfer);
++	if (ret < 0)
++		return ret;
+ 	transfer->effective_speed_hz = spi_imx->spi_bus_clk;
  
- 	if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery))
- 		process_checks(r1_bio);
+ 	/* flush rxfifo before transfer */
 -- 
 2.39.5
 
