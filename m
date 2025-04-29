@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75761219A63;
-	Tue, 29 Apr 2025 18:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921C5240611;
+	Tue, 29 Apr 2025 18:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950702; cv=none; b=LgOcDjCjmTABcUGrt+xFgbW0rE6CJpvmpYa1ZnYKui5tTrzKKPPZMjSGjl9ryGusmhtvAKS8Y4YMXlB3z7b5t/AArzRN/igLzUmnN3wDC9l0kEdwq7YifRA+SSfwQok8Zg0TB40wV+KumI9RdfGlChgBZFLDOXlOfuI1hl6dfI8=
+	t=1745950705; cv=none; b=fDjdkobcBmCF99Kc5yLL1NLFh4gz9/RjuI4MiMEcwNscm+rFgMiDzm47W2cGAMJco+cxJ1Pfg8F0i4wXYf6Rawwg/JdYhqryqkr8DP0S3/CsYW4+yK0sjUfZlZIYBksohskXPjaNrL2ChYw9OPq5XSahkmGcTC4x55IisG5VV8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950702; c=relaxed/simple;
-	bh=eyDc49tMJcHYYP/Cv8hDoQwukqiwJ2/3BOMs9b3YVmQ=;
+	s=arc-20240116; t=1745950705; c=relaxed/simple;
+	bh=UIlUIrj5VmW6z1dIDPI5xvLDYoY02638FQEKZSlHtxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePE0eLlecbpTPMiVmgCwU1lL6dVV6tICwCC2VGWzh8fRi4ULW3RCjR4NAVzm7CLw7rntkVJAGJRh5iNsOMBMeiurRgWtlz2WjvVzh/aCvbGHgO6EybrbO/Kv3LojPFVdfyq0vlj7XZXIXBU9rDvkTw1RifVeMqFcqMyqPHD2ZP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX1hMKKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FROwwQFfZaC7Y1qXjIu/XLiOTmDCBodxfgN5ggNrDM8JPsanx+9jmcXC5i1NjOcflfdGxOUEMJjh154K2qCJAglX+J5MAy7Pbq5UEYgY0qv0kPVa13XZh7JtM9qUgApJqrtGB33QwIuzeUWCsYQwhzCBS62RAopInLlpLBPMUN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su9+Pa1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX1hMKKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1A0C4CEE3;
-	Tue, 29 Apr 2025 18:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su9+Pa1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E20C4CEE3;
+	Tue, 29 Apr 2025 18:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950702;
-	bh=eyDc49tMJcHYYP/Cv8hDoQwukqiwJ2/3BOMs9b3YVmQ=;
+	s=korg; t=1745950705;
+	bh=UIlUIrj5VmW6z1dIDPI5xvLDYoY02638FQEKZSlHtxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PX1hMKKi2uHUAtNfIwHfThAZD7psybIZryVtoRBwXnvveZucZYufCDoaVL/GJMK/4
-	 fV5R3E6H0E6/rdmLA66tQd1FOQRPA6XdRhA/SBSDKH0U3LCubXLvUDF+tofOv9il7p
-	 Wm87KOoijYO0rnm9vwaMlC1jvQQ5Qv1pHUlpRswU=
+	b=Su9+Pa1AXXIiXclCsjC8c+DRXa20GS71DXksVc28enAkDvlHYSpTJ6Ph8ONBgHawd
+	 1q52a024e7gUhg3hxTlU3e9l1WLD9DdJG1p6gq4CBvr/SnRRTRqMOSpbUvuwsqD85i
+	 H7HyVDWCdPjosjGNhsVWAKeWQKS6EnVDXsEqfr9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Salomon Dushimirimana <salomondush@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jean-Marc Eurin <jmeurin@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/204] scsi: pm80xx: Set phy_attached to zero when device is gone
-Date: Tue, 29 Apr 2025 18:44:26 +0200
-Message-ID: <20250429161106.681727471@linuxfoundation.org>
+Subject: [PATCH 6.6 161/204] ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls
+Date: Tue, 29 Apr 2025 18:44:09 +0200
+Message-ID: <20250429161106.000787194@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,34 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Jean-Marc Eurin <jmeurin@google.com>
 
-[ Upstream commit f7b705c238d1483f0a766e2b20010f176e5c0fb7 ]
+[ Upstream commit 7ab4f0e37a0f4207e742a8de69be03984db6ebf0 ]
 
-When a fatal error occurs, a phy down event may not be received to set
-phy->phy_attached to zero.
+The end of table checks should be done with the structure size,
+but 2 of the 3 similar calls use the pointer size.
 
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
-Link: https://lore.kernel.org/r/20250319230305.3172920-1-salomondush@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jean-Marc Eurin <jmeurin@google.com>
+Link: https://patch.msgid.link/20250402001542.2600671-1-jmeurin@google.com
+[ rjw: Subject edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/pptt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index ee2da8e49d4cf..a9d6dac413346 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -719,6 +719,7 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 			spin_lock_irqsave(&pm8001_ha->lock, flags);
- 		}
- 		PM8001_CHIP_DISP->dereg_dev_req(pm8001_ha, device_id);
-+		pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
- 		pm8001_free_dev(pm8001_dev);
- 	} else {
- 		pm8001_dbg(pm8001_ha, DISC, "Found dev has gone.\n");
+diff --git a/drivers/acpi/pptt.c b/drivers/acpi/pptt.c
+index a35dd0e41c270..f73ce6e13065d 100644
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -229,7 +229,7 @@ static int acpi_pptt_leaf_node(struct acpi_table_header *table_hdr,
+ 	node_entry = ACPI_PTR_DIFF(node, table_hdr);
+ 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
+ 			     sizeof(struct acpi_table_pptt));
+-	proc_sz = sizeof(struct acpi_pptt_processor *);
++	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+ 	while ((unsigned long)entry + proc_sz < table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
+@@ -270,7 +270,7 @@ static struct acpi_pptt_processor *acpi_find_processor_node(struct acpi_table_he
+ 	table_end = (unsigned long)table_hdr + table_hdr->length;
+ 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
+ 			     sizeof(struct acpi_table_pptt));
+-	proc_sz = sizeof(struct acpi_pptt_processor *);
++	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+ 	/* find the processor structure associated with this cpuid */
+ 	while ((unsigned long)entry + proc_sz < table_end) {
 -- 
 2.39.5
 
