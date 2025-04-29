@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E47215060;
-	Tue, 29 Apr 2025 16:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA4B2472AC;
+	Tue, 29 Apr 2025 16:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945636; cv=none; b=jgb/GcH1H8UYl0TgS8opCNP5pvVYp58prXFITogWG3iYkvBnKpc+bmXuANln7UfUjusRsBUgLVcBsDDRtpjcbbJ2j2OVn19bjQCJCtzqNnSSIjoHxBFq0B66in/j3uJszuUkKGmDvUswFTuwokrkD90xnTJBp1chtYXAMjKhxjg=
+	t=1745945639; cv=none; b=S8+6CXonoRPA1gYfzBUVnn3rWuFG7Q0lzdRtaYKG9Nc7k3Okz8bOppcj3owWi9s71vcYlAYLV8IKi/TxrABwNpFsLGmNWxJX2j5PErnRy0I57qigtG6UHF8rqVlTd6g0YhgfIzxDuiNVBkK9q1B/CtPYGXI5ESnnIjAc5UME4KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945636; c=relaxed/simple;
-	bh=72iSI5YbYeJxWTYj1vjoHeb0sdGvLppmXT/U2v+Iy1I=;
+	s=arc-20240116; t=1745945639; c=relaxed/simple;
+	bh=Iz2699moQUojacuLDXOw2JhOY1C5Gs+tdbzo3AG4rS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SOisGN90hfD3hzEmbDu8nuutE+KrMprOgo2kuBxxCc089iOCP2mWivUrfxkU1aYife6m10ebllXBTLWg3kzdV7aSysyImwNtYJmUPeNrI3MYWK2GbnXNSk3DNPWyD740P3XzvYogRHwHOM53P1SAZqklHiPU6M8pFAo5rdC8Vwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT6AMcBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1xBpbGKWi4dJ+v93MpkKaxXh/z3uS4RWKT/xXArZ8SZpSKdFmw2j4k15lO65smsM1//lyRetWLw7MGXTpa8+2bLWHaq27WoxJRoZieGZ1lDMt/0SrKk/0pCD6BRskQocs3XBS+PFMGq+Qg+iRjHt8Wn1uPVyQkUyZUkoKOwfWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPssi4Yl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT6AMcBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522E7C4CEE3;
-	Tue, 29 Apr 2025 16:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPssi4Yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF9C4CEE3;
+	Tue, 29 Apr 2025 16:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945635;
-	bh=72iSI5YbYeJxWTYj1vjoHeb0sdGvLppmXT/U2v+Iy1I=;
+	s=korg; t=1745945639;
+	bh=Iz2699moQUojacuLDXOw2JhOY1C5Gs+tdbzo3AG4rS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eT6AMcBxmRTVqK+8ISwh1QYDM74uEIMbKzGiHbOZOIz618C9+H+z8Wtjko8F0r11u
-	 SjN7u3akeXodAo1w24e2vy/MXmxsAGJwR18ePmA4LAePfbupxnE1cicHmTcyq4EdHQ
-	 BMxryVg0s1gMmzKl3tD6WJ4LL4mANm1CTz3vqDUo=
+	b=KPssi4YlACKFD140i7MVaYzCAul+EAwMLoVVdJsj6OEFu3ANdRwD45WcG8T+DfeSi
+	 XYjdWpty1X48P3gV507xNj4S5cVS/TS6fwhZnKB08bWE99JB0awiYTzkZmvz6PBC/P
+	 Pi5iNrkWS0RpHeXLTq7lyTxcrs/8leY3hQKrvrys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.4 178/179] crypto: atmel-sha204a - Set hwrng quality to lowest possible
-Date: Tue, 29 Apr 2025 18:41:59 +0200
-Message-ID: <20250429161056.595296761@linuxfoundation.org>
+	Craig Hesling <craig@hesling.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 152/179] USB: serial: simple: add OWON HDS200 series oscilloscope support
+Date: Tue, 29 Apr 2025 18:41:33 +0200
+Message-ID: <20250429161055.533332082@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -46,51 +44,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Craig Hesling <craig@hesling.com>
 
-commit 8006aff15516a170640239c5a8e6696c0ba18d8e upstream.
+commit 4cc01410e1c1dd075df10f750775c81d1cb6672b upstream.
 
-According to the review by Bill Cox [1], the Atmel SHA204A random number
-generator produces random numbers with very low entropy.
+Add serial support for OWON HDS200 series oscilloscopes and likely
+many other pieces of OWON test equipment.
 
-Set the lowest possible entropy for this chip just to be safe.
+OWON HDS200 series devices host two USB endpoints, designed to
+facilitate bidirectional SCPI. SCPI is a predominately ASCII text
+protocol for test/measurement equipment. Having a serial/tty interface
+for these devices lowers the barrier to entry for anyone trying to
+write programs to communicate with them.
 
-[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+The following shows the USB descriptor for the OWON HDS272S running
+firmware V5.7.1:
 
-Fixes: da001fb651b00e1d ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Bus 001 Device 068: ID 5345:1234 Owon PDS6062T Oscilloscope
+Negotiated speed: Full Speed (12Mbps)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x5345 Owon
+  idProduct          0x1234 PDS6062T Oscilloscope
+  bcdDevice            1.00
+  iManufacturer           1 oscilloscope
+  iProduct                2 oscilloscope
+  iSerial                 3 oscilloscope
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0029
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         5 Physical Interface Device
+      bInterfaceSubClass      0 [unknown]
+      bInterfaceProtocol      0
+      iInterface              0
+      ** UNRECOGNIZED:  09 21 11 01 00 01 22 5f 00
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+Device Status:     0x0000
+  (Bus Powered)
+
+OWON appears to be using the same USB Vendor and Product ID for many
+of their oscilloscopes. Looking at the discussion about the USB
+vendor/product ID, in the link bellow, suggests that this VID/PID is
+shared with VDS, SDS, PDS, and now the HDS series oscilloscopes.
+Available documentation for these devices seems to indicate that all
+use a similar SCPI protocol, some with RS232 options. It is likely that
+this same simple serial setup would work correctly for them all.
+
+Link: https://usb-ids.gowdy.us/read/UD/5345/1234
+Signed-off-by: Craig Hesling <craig@hesling.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Marek Behún <kabel@kernel.org>
 ---
- drivers/crypto/atmel-sha204a.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/serial/usb-serial-simple.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -107,7 +107,12 @@ static int atmel_sha204a_probe(struct i2
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -101,6 +101,11 @@ DEVICE(nokia, NOKIA_IDS);
+ 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
+ DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
  
- 	i2c_priv->hwrng.name = dev_name(&client->dev);
- 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
--	i2c_priv->hwrng.quality = 1024;
++/* OWON electronic test and measurement equipment driver */
++#define OWON_IDS()			\
++	{ USB_DEVICE(0x5345, 0x1234) } /* HDS200 oscilloscopes and others */
++DEVICE(owon, OWON_IDS);
 +
-+	/*
-+	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
-+	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
-+	 */
-+	i2c_priv->hwrng.quality = 1;
- 
- 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
- 	if (ret)
+ /* Siemens USB/MPI adapter */
+ #define SIEMENS_IDS()			\
+ 	{ USB_DEVICE(0x908, 0x0004) }
+@@ -135,6 +140,7 @@ static struct usb_serial_driver * const
+ 	&motorola_tetra_device,
+ 	&nokia_device,
+ 	&novatel_gps_device,
++	&owon_device,
+ 	&siemens_mpi_device,
+ 	&suunto_device,
+ 	&vivopay_device,
+@@ -154,6 +160,7 @@ static const struct usb_device_id id_tab
+ 	MOTOROLA_TETRA_IDS(),
+ 	NOKIA_IDS(),
+ 	NOVATEL_IDS(),
++	OWON_IDS(),
+ 	SIEMENS_IDS(),
+ 	SUUNTO_IDS(),
+ 	VIVOPAY_IDS(),
 
 
