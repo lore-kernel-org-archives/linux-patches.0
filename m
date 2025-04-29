@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B363127453;
-	Tue, 29 Apr 2025 17:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93555221DA7;
+	Tue, 29 Apr 2025 17:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946866; cv=none; b=qlevXTmKcBN02rfajFAeVtQxi5WvXWuSK0nzcub15yJWHTu7W2iQnFJAnetlAsLaVqj1wIKN+ldTvkVfHEvu1su+7OEfa134ga1QIv2mtk8rMex8HsCLHEjxJQH/8WCRq/meT+DQnfgYSq41oVH2Cb9Sk+rfRB1trbWPGobVtlM=
+	t=1745946869; cv=none; b=cBW35YoHiZMRL+02Wc4NGMVNcYiKoW6gnQTJaoCBlM7hZ/XsCkWLLgqe+UjkjuUpsLIdbeIq3futYzxOz2M0nkDgsJDdpv+fCfYb9cihx9bKekVd9s3fTBYo1PgWGCQgXq6GmTjyS5k8AWFiBrEb0HGOHFhfLZVJy5wVf26f4TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946866; c=relaxed/simple;
-	bh=ttGup0R1wAu+9pFI/tJKEj1hLbXWmcF35AJ10nG9NG4=;
+	s=arc-20240116; t=1745946869; c=relaxed/simple;
+	bh=MhppqgZSy2wsMCtJftDtB41tnFq7+HC+WE4rrGPGkxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2dL4AbvkgBkfi5YZztS1zSElwFjlL+hKgcCGyyKyC4zj51fgs0jBmFDVgNF45A/cxnkIPUy6jeokJvYCPsUzQosmQxqE67atzZa9ke4kHjCxvD+l8Wr76dCWBU3h2lbmofvZCSxIn8wDrtsuZtNy4cB0VpfsG2WqmOsFJcoFwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqXKvtOu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vDY1BNTgzyKon1g0Gi74qrNQmWO6KDG/2/cOhlt0zwQPab8vMoQOqT9uSskj+pJelH6KD1/FDB8iTaaojNLqezbpPW85gLFiaH23jY7Ho4byBakoYskEuzKrEr3hJA2KcjL6eAXbFUWnLuUt+vzlJcnUQMDjanxBU+vgMF89vrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXiCGqj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqXKvtOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC365C4CEE3;
-	Tue, 29 Apr 2025 17:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXiCGqj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE44C4CEE3;
+	Tue, 29 Apr 2025 17:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946866;
-	bh=ttGup0R1wAu+9pFI/tJKEj1hLbXWmcF35AJ10nG9NG4=;
+	s=korg; t=1745946869;
+	bh=MhppqgZSy2wsMCtJftDtB41tnFq7+HC+WE4rrGPGkxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OqXKvtOu/aua1E21dnJGMBDDOpTJstKht08pay+4V2wCf1aCuN5h+mwHte5jOQWVV
-	 p+DMJiJOiSc9yskwfG6IXflGGeL9Mp7rthnH87RIO4j5ZgZ9uZGUIWK4Yc4tC1fb9F
-	 Gq0OxFPjnSf03QLBj3Jcg/g2VDik4Pd3CGYXLsQ0=
+	b=QXiCGqj0/552k+GuERzmykQrvQOYcD9KwJcLlaAA8WdtJM0MYEd7hTmopQ1bdJoVi
+	 m2aDYwF02t1TCp+TDjSmdEnZgI056bX348xT6x5Hr0WMyVpSOdk0lrtYAqIDao78qE
+	 wXlop76K1PLMbvypS5r3ab3s2QghsPUfK27K4RnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zijun Hu <quic_zijuhu@quicinc.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.10 093/286] of/irq: Fix device node refcount leakage in API irq_of_parse_and_map()
-Date: Tue, 29 Apr 2025 18:39:57 +0200
-Message-ID: <20250429161111.680517296@linuxfoundation.org>
+Subject: [PATCH 5.10 094/286] of/irq: Fix device node refcount leakages in of_irq_init()
+Date: Tue, 29 Apr 2025 18:39:58 +0200
+Message-ID: <20250429161111.721925064@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 962a2805e47b933876ba0e4c488d9e89ced2dd29 upstream.
+commit 708124d9e6e7ac5ebf927830760679136b23fdf0 upstream.
 
-In irq_of_parse_and_map(), refcount of device node @oirq.np was got
-by successful of_irq_parse_one() invocation, but it does not put the
-refcount before return, so causes @oirq.np refcount leakage.
+of_irq_init() will leak interrupt controller device node refcounts
+in two places as explained below:
 
-Fix by putting @oirq.np refcount before return.
+1) Leak refcounts of both @desc->dev and @desc->interrupt_parent when
+   suffers @desc->irq_init_cb() failure.
+2) Leak refcount of @desc->interrupt_parent when cleans up list
+   @intc_desc_list in the end.
 
-Fixes: e3873444990d ("of/irq: Move irq_of_parse_and_map() to common code")
+Refcounts of both @desc->dev and @desc->interrupt_parent were got in
+the first loop, but of_irq_init() does not put them before kfree(@desc)
+in places mentioned above, so causes refcount leakages.
+
+Fix by putting refcounts involved before kfree(@desc).
+
+Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
+Fixes: c71a54b08201 ("of/irq: introduce of_irq_init")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-6-93e3a2659aa7@quicinc.com
+Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-7-93e3a2659aa7@quicinc.com
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/of/irq.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/of/irq.c
 +++ b/drivers/of/irq.c
-@@ -36,11 +36,15 @@
- unsigned int irq_of_parse_and_map(struct device_node *dev, int index)
- {
- 	struct of_phandle_args oirq;
-+	unsigned int ret;
- 
- 	if (of_irq_parse_one(dev, index, &oirq))
- 		return 0;
- 
--	return irq_create_of_mapping(&oirq);
-+	ret = irq_create_of_mapping(&oirq);
-+	of_node_put(oirq.np);
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(irq_of_parse_and_map);
- 
+@@ -555,6 +555,8 @@ void __init of_irq_init(const struct of_
+ 						desc->interrupt_parent);
+ 			if (ret) {
+ 				of_node_clear_flag(desc->dev, OF_POPULATED);
++				of_node_put(desc->interrupt_parent);
++				of_node_put(desc->dev);
+ 				kfree(desc);
+ 				continue;
+ 			}
+@@ -585,6 +587,7 @@ void __init of_irq_init(const struct of_
+ err:
+ 	list_for_each_entry_safe(desc, temp_desc, &intc_desc_list, list) {
+ 		list_del(&desc->list);
++		of_node_put(desc->interrupt_parent);
+ 		of_node_put(desc->dev);
+ 		kfree(desc);
+ 	}
 
 
