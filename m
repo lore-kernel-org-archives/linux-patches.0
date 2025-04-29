@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA68F245007;
-	Tue, 29 Apr 2025 17:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2448882C60;
+	Tue, 29 Apr 2025 17:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947260; cv=none; b=ZMCZ2Kp2KfMuzO4GND4PD4vJJclCVrvmmF9oeWuX9GUgPg5qCsnn6A+H+6j2At5IhTHvGiSkMtBx0vFLglC5nwaLvsZ/4yGFWkfNrOsktbVE/QjaRt24+RryzaZraSs+TRtq5wvkbrX186FJ6wCgANK5drb1HbHh/3iU6IOjTDw=
+	t=1745947264; cv=none; b=aD7LK+mPt+Z9Pd7B4hR2qZY7D+0LjZZs7hXW6Bu4Dk0N3vleznEU79Ro7WX9YBVrwCq3GupYn2aGrNmRd53LOv9joGKByaVFiUsEKn24veHY+AhDHAwwRXJlrs+3b8l8cINkpWwXMsYrsPAUyXotVTk6R0NfAJwCIKxjYP9cQTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947260; c=relaxed/simple;
-	bh=0wan7wTzfs6I0+86HrgXeZVyH51tPsR0UfgQSJIPG60=;
+	s=arc-20240116; t=1745947264; c=relaxed/simple;
+	bh=ixyYSAJAgnhgsPD4/L22k9Xu1iKXJpmYy6zDMCONMYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSKsdxtfRXW61cGMtFXbfq94dfeXjJyWZyjJJVOdXTIASUaNiOByTYA+oed3UljJDYbLQ2vBJZuT5yxvWef9mOj+CjSUW5WMZNcrjGAQyvOY1pMqOtitML+8q6YlXlgw2hcx0LnweJL5E2CkPLXn8DJZL7PmEHGUZZSOFqHK/L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyhk+gC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gk2h8srWnp2Lp/0HvSkSASkBuiZT69X1PMqTY4FwCNcSPFtXpWkvMbULvQ/+UNYz43FPx+49YP5yWkhZKkA+OkyNBfJykg6YTQZ5VRIWSKEUB2G/+T6wAFUF3moU8GrE19frSztAmzUyPKNLs7uRTSQUbRUfnlFd+IAu7lemfiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK9Tkuys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyhk+gC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEF7C4CEE3;
-	Tue, 29 Apr 2025 17:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK9Tkuys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DBC4CEEE;
+	Tue, 29 Apr 2025 17:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947260;
-	bh=0wan7wTzfs6I0+86HrgXeZVyH51tPsR0UfgQSJIPG60=;
+	s=korg; t=1745947264;
+	bh=ixyYSAJAgnhgsPD4/L22k9Xu1iKXJpmYy6zDMCONMYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyhk+gC022GtFJaUuVfD9irbrCouBWJ6kId5uzqr+2kBxwI7zsT5tFKZ1SYfhlfr7
-	 eBBZywkRrmKf7CGSH74gBhRMvazsA6U8cbpH9eoGidCNz+FTpRT2Diq1gSNakLKHnb
-	 miCCyS+Qg1HQ7feTogj5yI5Q+EYtoqQp1Z2UgCcI=
+	b=AK9TkuysdZEyp4PhgOuPufVt4UHm3ylgvsHkkN6xP5uxkeI2Gle8LT9vVVNFaZLv9
+	 F6wkmSUbdQv/5ElcqnxpoIHd8+Q/jfTDtqyv+xxPbQBrcraWwz2alJ5LE22NwFZpcF
+	 OiLuJCOzbrgiNGpnD1WZrt2Xsw+ciqIQKgX/AEGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 196/286] tracing: Fix synth event printk format for str fields
-Date: Tue, 29 Apr 2025 18:41:40 +0200
-Message-ID: <20250429161116.026183122@linuxfoundation.org>
+Subject: [PATCH 5.10 223/286] PCI: Coalesce host bridge contiguous apertures
+Date: Tue, 29 Apr 2025 18:42:07 +0200
+Message-ID: <20250429161117.115356093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -53,44 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Raillard <douglas.raillard@arm.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-[ Upstream commit 4d38328eb442dc06aec4350fd9594ffa6488af02 ]
+[ Upstream commit 65db04053efea3f3e412a7e0cc599962999c96b4 ]
 
-The printk format for synth event uses "%.*s" to print string fields,
-but then only passes the pointer part as var arg.
+Built-in graphics on HP EliteDesk 805 G6 doesn't work because graphics
+can't get the BAR it needs:
 
-Replace %.*s with %s as the C string is guaranteed to be null-terminated.
+  pci_bus 0000:00: root bus resource [mem 0x10020200000-0x100303fffff window]
+  pci_bus 0000:00: root bus resource [mem 0x10030400000-0x100401fffff window]
 
-The output in print fmt should never have been updated as __get_str()
-handles the string limit because it can access the length of the string in
-the string meta data that is saved in the ring buffer.
+  pci 0000:00:08.1:   bridge window [mem 0xd2000000-0xd23fffff]
+  pci 0000:00:08.1:   bridge window [mem 0x10030000000-0x100401fffff 64bit pref]
+  pci 0000:00:08.1: can't claim BAR 15 [mem 0x10030000000-0x100401fffff 64bit pref]: no compatible bridge window
+  pci 0000:00:08.1: [mem 0x10030000000-0x100401fffff 64bit pref] clipped to [mem 0x10030000000-0x100303fffff 64bit pref]
+  pci 0000:00:08.1:   bridge window [mem 0x10030000000-0x100303fffff 64bit pref]
+  pci 0000:07:00.0: can't claim BAR 0 [mem 0x10030000000-0x1003fffffff 64bit pref]: no compatible bridge window
+  pci 0000:07:00.0: can't claim BAR 2 [mem 0x10040000000-0x100401fffff 64bit pref]: no compatible bridge window
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 8db4d6bfbbf92 ("tracing: Change synthetic event string format to limit printed length")
-Link: https://lore.kernel.org/20250325165202.541088-1-douglas.raillard@arm.com
-Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+However, the root bus has two contiguous apertures that can contain the
+child resource requested.
+
+Coalesce contiguous apertures so we can allocate from the entire contiguous
+region.
+
+[bhelgaas: fold in https://lore.kernel.org/r/20210528170242.1564038-1-kai.heng.feng@canonical.com]
+Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=212013
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20210401131252.531935-1-kai.heng.feng@canonical.com
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: 804443c1f278 ("PCI: Fix reference leak in pci_register_host_bridge()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_synth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/probe.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
-index 4878758ceea2a..613d45e7b608d 100644
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -290,7 +290,7 @@ static const char *synth_field_fmt(char *type)
- 	else if (strcmp(type, "gfp_t") == 0)
- 		fmt = "%x";
- 	else if (synth_field_is_string(type))
--		fmt = "%.*s";
-+		fmt = "%s";
- 	else if (synth_field_is_stack(type))
- 		fmt = "%s";
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index be7973e249cd7..a2c53f6d1848a 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -878,11 +878,11 @@ static void pci_set_bus_msi_domain(struct pci_bus *bus)
+ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
+ {
+ 	struct device *parent = bridge->dev.parent;
+-	struct resource_entry *window, *n;
++	struct resource_entry *window, *next, *n;
+ 	struct pci_bus *bus, *b;
+-	resource_size_t offset;
++	resource_size_t offset, next_offset;
+ 	LIST_HEAD(resources);
+-	struct resource *res;
++	struct resource *res, *next_res;
+ 	char addr[64], *fmt;
+ 	const char *name;
+ 	int err;
+@@ -962,11 +962,34 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
+ 	if (nr_node_ids > 1 && pcibus_to_node(bus) == NUMA_NO_NODE)
+ 		dev_warn(&bus->dev, "Unknown NUMA node; performance will be reduced\n");
  
++	/* Coalesce contiguous windows */
++	resource_list_for_each_entry_safe(window, n, &resources) {
++		if (list_is_last(&window->node, &resources))
++			break;
++
++		next = list_next_entry(window, node);
++		offset = window->offset;
++		res = window->res;
++		next_offset = next->offset;
++		next_res = next->res;
++
++		if (res->flags != next_res->flags || offset != next_offset)
++			continue;
++
++		if (res->end + 1 == next_res->start) {
++			next_res->start = res->start;
++			res->flags = res->start = res->end = 0;
++		}
++	}
++
+ 	/* Add initial resources to the bus */
+ 	resource_list_for_each_entry_safe(window, n, &resources) {
+-		list_move_tail(&window->node, &bridge->windows);
+ 		offset = window->offset;
+ 		res = window->res;
++		if (!res->end)
++			continue;
++
++		list_move_tail(&window->node, &bridge->windows);
+ 
+ 		if (res->flags & IORESOURCE_BUS)
+ 			pci_bus_insert_busn_res(bus, bus->number, res->end);
 -- 
 2.39.5
 
