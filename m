@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589EE7E110;
-	Tue, 29 Apr 2025 17:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A34211A0B;
+	Tue, 29 Apr 2025 17:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946368; cv=none; b=PcWtgR1B49bAZOBCpO4wwc0GYxAQ062+gZjVpBfGx+cOh5HcYmTw/dbEfuV1wlnLTWi/B9oKh9YDURf2tpKISftvzI3CorkTI6F4R5iQnYf6po7AYekGONN5tnyCMnkinKmtPtWIlBMfKWul5KyIrXARNsMeuDEDRkkUE/xSM9A=
+	t=1745946371; cv=none; b=EcV5uEiXjSDDPBFcoGalM4d5p4gYW8+ASXprQQeJ+ObmgvULnPQmpedTxdO/K1cwegvCEm56UtVSOVN0wZU4TFM4rePZKIld8VBFUpWKgO+ce/oVTuBSUuAPdXjy+hAZPoIJv5xrg3MOTzv2fXuCPKt5NciZX9wlB0ljw8slHL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946368; c=relaxed/simple;
-	bh=CdaYYYlc1Q8vvhjweixPexjUovSPdyZbT9e/+1wxBaQ=;
+	s=arc-20240116; t=1745946371; c=relaxed/simple;
+	bh=2SLbZ/88Adf+qgJQK5sohBYultp0dJrPMrr1+LjJKlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=al6X1vODAViihgL4+RK9C76WawozTIxED8M4yd9TqJu/Bwx8bF4f9vHc03zcCZ7jRyvclI19YvRo4UliwCP1eO1Hu1y+oBcww8pKNA1APBHBs1HYvFwhfGRXzFOeqITSS/wWAUcEnuHRRlhbw7CZ5yPGI35qIJNRg+qjXX2IdWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkYwB6rb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5gEoZjPafCINgJcyg77hRnkxuzU7DSwePF7H7hmOd0drzJQsfRCdNuY75E3MouIBu4x0vE56+3YXlQmX6Y3YO/q6ahgoL6oNMiKFl80cVYvhWaE14gnztJtFuZq0lO23ud0DLUOyGrL7FHEHF9lK36WiQ1zgl1P2upyH115F/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdCIoKl2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkYwB6rb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD03C4CEE3;
-	Tue, 29 Apr 2025 17:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdCIoKl2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB702C4CEE3;
+	Tue, 29 Apr 2025 17:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946368;
-	bh=CdaYYYlc1Q8vvhjweixPexjUovSPdyZbT9e/+1wxBaQ=;
+	s=korg; t=1745946371;
+	bh=2SLbZ/88Adf+qgJQK5sohBYultp0dJrPMrr1+LjJKlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkYwB6rbvD37pwrNj9ZUKrYhqWN5B/sO/3EtIox8wBYhst3xxsMxf2kEetUWudtdm
-	 bdakwovuJgHryekecthKQLYndPOi3iDuT/aSd0Lsr4XgFGQdZ1ptkObNGbhtvqngJM
-	 cL2eJSjgq0C5g15pwINks7i86aJ3moppEjALk5b0=
+	b=OdCIoKl2MYatjLWKbpNHcRpMfbc4uMCmGNaEo827sUha4TD/VBFZ1qTuHY0Fzu144
+	 cpVYax4mZm7prbAtRXDkDx0w9kD99NL5OyRMN7fZxTNQ4YvAbmq8CXAxob4vH6silg
+	 SeWAg16O41yv4LYfuIPSw10ZPI+8KHn54Mx2ht6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
+	syzbot+ff3aa851d46ab82953a3@syzkaller.appspotmail.com,
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 216/311] usb: gadget: aspeed: Add NULL pointer check in ast_vhub_init_dev()
-Date: Tue, 29 Apr 2025 18:40:53 +0200
-Message-ID: <20250429161129.844561794@linuxfoundation.org>
+Subject: [PATCH 6.14 243/311] perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init
+Date: Tue, 29 Apr 2025 18:41:20 +0200
+Message-ID: <20250429161130.975253883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -50,39 +57,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-[ Upstream commit 8c75f3e6a433d92084ad4e78b029ae680865420f ]
+[ Upstream commit 0ba3a4ab76fd3367b9cb680cad70182c896c795c ]
 
-The variable d->name, returned by devm_kasprintf(), could be NULL.
-A pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+Move the get_ctx(child_ctx) call and the child_event->ctx assignment to
+occur immediately after the child event is allocated. Ensure that
+child_event->ctx is non-NULL before any subsequent error path within
+inherit_event calls free_event(), satisfying the assumptions of the
+cleanup code.
 
-This issue is found by our static analysis tool
+Details:
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250311012705.1233829-1-chenyuan0y@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+There's no clear Fixes tag, because this bug is a side-effect of
+multiple interacting commits over time (up to 15 years old), not
+a single regression.
+
+The code initially incremented refcount then assigned context
+immediately after the child_event was created. Later, an early
+validity check for child_event was added before the
+refcount/assignment. Even later, a WARN_ON_ONCE() cleanup check was
+added, assuming event->ctx is valid if the pmu_ctx is valid.
+The problem is that the WARN_ON_ONCE() could trigger after the initial
+check passed but before child_event->ctx was assigned, violating its
+precondition. The solution is to assign child_event->ctx right after
+its initial validation. This ensures the context exists for any
+subsequent checks or cleanup routines, resolving the WARN_ON_ONCE().
+
+To resolve it, defer the refcount update and child_event->ctx assignment
+directly after child_event->pmu_ctx is set but before checking if the
+parent event is orphaned. The cleanup routine depends on
+event->pmu_ctx being non-NULL before it verifies event->ctx is
+non-NULL. This also maintains the author's original intent of passing
+in child_ctx to find_get_pmu_context before its refcount/assignment.
+
+[ mingo: Expanded the changelog from another email by Gabriel Shahrouzi. ]
+
+Reported-by: syzbot+ff3aa851d46ab82953a3@syzkaller.appspotmail.com
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Link: https://lore.kernel.org/r/20250405203036.582721-1-gshahrouzi@gmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ff3aa851d46ab82953a3
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/dev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/events/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-index 573109ca5b799..a09f72772e6e9 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-@@ -548,6 +548,9 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx)
- 	d->vhub = vhub;
- 	d->index = idx;
- 	d->name = devm_kasprintf(parent, GFP_KERNEL, "port%d", idx+1);
-+	if (!d->name)
-+		return -ENOMEM;
-+
- 	d->regs = vhub->regs + 0x100 + 0x10 * idx;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index ee6b7281a1994..93ce810384c92 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13701,6 +13701,9 @@ inherit_event(struct perf_event *parent_event,
+ 	if (IS_ERR(child_event))
+ 		return child_event;
  
- 	ast_vhub_init_ep0(vhub, &d->ep0, d);
++	get_ctx(child_ctx);
++	child_event->ctx = child_ctx;
++
+ 	pmu_ctx = find_get_pmu_context(child_event->pmu, child_ctx, child_event);
+ 	if (IS_ERR(pmu_ctx)) {
+ 		free_event(child_event);
+@@ -13723,8 +13726,6 @@ inherit_event(struct perf_event *parent_event,
+ 		return NULL;
+ 	}
+ 
+-	get_ctx(child_ctx);
+-
+ 	/*
+ 	 * Make the child state follow the state of the parent event,
+ 	 * not its attr.disabled bit.  We hold the parent's mutex,
+@@ -13745,7 +13746,6 @@ inherit_event(struct perf_event *parent_event,
+ 		local64_set(&hwc->period_left, sample_period);
+ 	}
+ 
+-	child_event->ctx = child_ctx;
+ 	child_event->overflow_handler = parent_event->overflow_handler;
+ 	child_event->overflow_handler_context
+ 		= parent_event->overflow_handler_context;
 -- 
 2.39.5
 
