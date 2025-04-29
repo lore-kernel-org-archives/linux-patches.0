@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D2A248883;
-	Tue, 29 Apr 2025 17:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D362AE96;
+	Tue, 29 Apr 2025 17:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949516; cv=none; b=j938i3f/xtpCc3DeyzncQJRWa/sXUNrbQhUCy+3q9BPAu3poy3H51wfiQmWo2Hl4ofIB2r304qUaD83uV4EE5Z2uBLcdnL0nyidwLa//CUgbbIStDhyTaSji27NCmuMDUAMJZEd/I9l0LEkQS5eP0OOHxA9zwy4UtwOrpRqQfKU=
+	t=1745949519; cv=none; b=RBdshM/m6ZNsq1u8gIvhBX1aTsvuk/OK/7N+43gIaBqFyGEl1+WjmsF+ynwPWoUQzTT3I7Pf+QbSMP+ZxBZEr2Ujw9jVbF7g/WTM9EoZizZSo5AEI3pt31RKwLDUGNN4TkJziCqtWpsF1YPusXluBYIxntYkFFfs3YvumcReI7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949516; c=relaxed/simple;
-	bh=z8ikxCwoR1eTesylxJ4DopokDtQ1X7eawigPC4OCn8I=;
+	s=arc-20240116; t=1745949519; c=relaxed/simple;
+	bh=l93JLlq/4MOvxyd6rqIiRR/Oo0ok6U92f9X4gZkcGRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhOz1qNOcmAJjPT3PyvlN94nJZgeMVZ2XvdfE8pk1bBfCJLtgWlEDJFUDRDAKKtCL+lL640X2TOEGWnkxSjzHjr5hTPRWou3TaQ/z0IYNx/16++IKWePum8pk6tGq1vDfZiY/CdiVTaIecQqCqf3PkVNf7iOoP0nenN/gC4L6p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+eRUWOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SF4ci4Y7VXX7tjzOjY+BIOH2Ta6tTCh3/u+Y9Z9jGRdz9zSVY9Rw44OGMWCXxjIsGyH+M0GAVpgaUeKqPT052MmgnvX2BP+rNLs9rb6LejS7xMejBJgAtuagYaNgClQ3bYlRkmYYVast9p+AMJ85tBELSP/7KiRtBtE32fLOu8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oj20NRZb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+eRUWOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69146C4CEE3;
-	Tue, 29 Apr 2025 17:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oj20NRZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C36CC4CEE3;
+	Tue, 29 Apr 2025 17:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949515;
-	bh=z8ikxCwoR1eTesylxJ4DopokDtQ1X7eawigPC4OCn8I=;
+	s=korg; t=1745949518;
+	bh=l93JLlq/4MOvxyd6rqIiRR/Oo0ok6U92f9X4gZkcGRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+eRUWOzPwzMT4kM637SlIB9ypVKtC1MNiGO72y88s9LZIMibaEGSFKJkXo5lpz0U
-	 lGVN2yIWo6td8IM2Xe/5xUwSjNrG5G90xpMyXYlp8nSqBlU82cDtDGkYyeGUVYdyE2
-	 uPKyWkjPC4UXUDP3y1Y6ivWYURfuBVCpOg6QIDRI=
+	b=oj20NRZbhaUraeOV4YcqfYCw1sVKdnpCARAt0ARif5AzjTP484FblPtYd/8/8pbfO
+	 6X0WQ91vMuA59Nypkv0nyJxfuu1Fea/tQRj+Fh79oSnxWXrm9v2pIzBIybILsEjxlz
+	 Sr3jjpTtreo8/1LOApmJDRVYQot+LZjv4CL3Njg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 342/373] selftests: ublk: fix test_stripe_04
-Date: Tue, 29 Apr 2025 18:43:39 +0200
-Message-ID: <20250429161137.207740305@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mingcong Bai <baimingcong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 5.15 314/373] USB: OHCI: Add quirk for LS7A OHCI controller (rev 0x02)
+Date: Tue, 29 Apr 2025 18:43:11 +0200
+Message-ID: <20250429161136.024137065@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,58 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 72070e57b0a518ec8e562a2b68fdfc796ef5c040 ]
+commit bcb60d438547355b8f9ad48645909139b64d3482 upstream.
 
-Commit 57ed58c13256 ("selftests: ublk: enable zero copy for stripe target")
-added test entry of test_stripe_04, but forgot to add the test script.
+The OHCI controller (rev 0x02) under LS7A PCI host has a hardware flaw.
+MMIO register with offset 0x60/0x64 is treated as legacy PS2-compatible
+keyboard/mouse interface, which confuse the OHCI controller. Since OHCI
+only use a 4KB BAR resource indeed, the LS7A OHCI controller's 32KB BAR
+is wrapped around (the second 4KB BAR space is the same as the first 4KB
+internally). So we can add an 4KB offset (0x1000) to the OHCI registers
+(from the PCI BAR resource) as a quirk.
 
-So fix the test by adding the script file.
-
-Reported-by: Uday Shankar <ushankar@purestorage.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Uday Shankar <ushankar@purestorage.com>
-Link: https://lore.kernel.org/r/20250404001849.1443064-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Mingcong Bai <baimingcong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20250328040059.3672979-1-chenhuacai@loongson.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../testing/selftests/ublk/test_stripe_04.sh  | 24 +++++++++++++++++++
- 1 file changed, 24 insertions(+)
- create mode 100755 tools/testing/selftests/ublk/test_stripe_04.sh
+ drivers/usb/host/ohci-pci.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/tools/testing/selftests/ublk/test_stripe_04.sh b/tools/testing/selftests/ublk/test_stripe_04.sh
-new file mode 100755
-index 0000000000000..1f2b642381d17
---- /dev/null
-+++ b/tools/testing/selftests/ublk/test_stripe_04.sh
-@@ -0,0 +1,24 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
+--- a/drivers/usb/host/ohci-pci.c
++++ b/drivers/usb/host/ohci-pci.c
+@@ -165,6 +165,25 @@ static int ohci_quirk_amd700(struct usb_
+ 	return 0;
+ }
+ 
++static int ohci_quirk_loongson(struct usb_hcd *hcd)
++{
++	struct pci_dev *pdev = to_pci_dev(hcd->self.controller);
 +
-+. "$(cd "$(dirname "$0")" && pwd)"/test_common.sh
++	/*
++	 * Loongson's LS7A OHCI controller (rev 0x02) has a
++	 * flaw. MMIO register with offset 0x60/64 is treated
++	 * as legacy PS2-compatible keyboard/mouse interface.
++	 * Since OHCI only use 4KB BAR resource, LS7A OHCI's
++	 * 32KB BAR is wrapped around (the 2nd 4KB BAR space
++	 * is the same as the 1st 4KB internally). So add 4KB
++	 * offset (0x1000) to the OHCI registers as a quirk.
++	 */
++	if (pdev->revision == 0x2)
++		hcd->regs += SZ_4K;	/* SZ_4K = 0x1000 */
 +
-+TID="stripe_04"
-+ERR_CODE=0
++	return 0;
++}
 +
-+_prep_test "stripe" "mkfs & mount & umount on zero copy"
-+
-+backfile_0=$(_create_backfile 256M)
-+backfile_1=$(_create_backfile 256M)
-+dev_id=$(_add_ublk_dev -t stripe -z -q 2 "$backfile_0" "$backfile_1")
-+_check_add_dev $TID $? "$backfile_0" "$backfile_1"
-+
-+_mkfs_mount_test /dev/ublkb"${dev_id}"
-+ERR_CODE=$?
-+
-+_cleanup_test "stripe"
-+
-+_remove_backfile "$backfile_0"
-+_remove_backfile "$backfile_1"
-+
-+_show_result $TID $ERR_CODE
--- 
-2.39.5
-
+ static int ohci_quirk_qemu(struct usb_hcd *hcd)
+ {
+ 	struct ohci_hcd *ohci = hcd_to_ohci(hcd);
+@@ -225,6 +244,10 @@ static const struct pci_device_id ohci_p
+ 		.driver_data = (unsigned long)ohci_quirk_amd700,
+ 	},
+ 	{
++		PCI_DEVICE(PCI_VENDOR_ID_LOONGSON, 0x7a24),
++		.driver_data = (unsigned long)ohci_quirk_loongson,
++	},
++	{
+ 		.vendor		= PCI_VENDOR_ID_APPLE,
+ 		.device		= 0x003f,
+ 		.subvendor	= PCI_SUBVENDOR_ID_REDHAT_QUMRANET,
 
 
