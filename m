@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF652517AB;
-	Tue, 29 Apr 2025 17:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD30E2512E8;
+	Tue, 29 Apr 2025 17:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947394; cv=none; b=dnUUZ26A5iexe6tu+d6nKf3jrWwX8P+23lowfsdiymk345DKgzhVmgJq3r8vN9Su/RbzJv6x4I4KYm0Xn5txERLIH7YfCPJvNgdI1WecuW5IePVUM8AzVPsBcPZ3z99mVz/VGp0FYuPtOLPf7LpliBpMbLBpWss2D4bMwUaThgo=
+	t=1745947397; cv=none; b=ZdIy+XBMv8hLsjdyUHHuyKIqH85QXMDq2wKUHDn5gOZjUWQEsqNUQsdFlQ7A1HKLBKcNx0VIQLY01dzS951RM6+luUpeHSTJ4pIVFbBuaj4iQTdDfSDNPabBaukdlDNCfk1nkPmhV9D3Lb3D2uB3GmSS7WFK/apSlC00hpcRMu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947394; c=relaxed/simple;
-	bh=4vmcc47sv9t5ZUDwuX0tBxjqDYkg5t8wtRnCHBJtacY=;
+	s=arc-20240116; t=1745947397; c=relaxed/simple;
+	bh=71WXt4rDMILQ1w5XbqnHx5JJlzljTq2ccsmVUWzeHk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcKkzH+8VrCkFbb4nJWFx1fl3e57FgQMU9Utg7gjPd2YDCg+uvAecVJvgkysJavZGzqDXZSNw/rUJGnP5X0IkzSL0ItByCRXiIB5y/i1XREmGNJoapmYq0lRFqoV+T8DONHZ+r7Bg+lcx14fiLg2DiFnOn/0otD1b+1PALDDpN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct8nGRin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DN8t84tMoADhrzwOUeCksVnDmiPqPJ5/LynThBGBrBvTPDunYuYqN9xI+EyBZSxS43C3aA3o2gg8zWp9FzaZ+SInxjwt031jYHwUyCh020beKnmG8X0SUDgv7+Sa+zHJoMbY3giqvsZ3vOKaJM40g7D3jzc6xASUMwAtlenNyw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07LOrLeZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct8nGRin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ACBC4CEE3;
-	Tue, 29 Apr 2025 17:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07LOrLeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C406C4CEEF;
+	Tue, 29 Apr 2025 17:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947393;
-	bh=4vmcc47sv9t5ZUDwuX0tBxjqDYkg5t8wtRnCHBJtacY=;
+	s=korg; t=1745947396;
+	bh=71WXt4rDMILQ1w5XbqnHx5JJlzljTq2ccsmVUWzeHk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ct8nGRin7xMVy+mGvQ2nLSSFBegA6y8mOpt4V3OJm0DtCZyd7H3098koz67iMQpZm
-	 21Ua2gsXHyuuODTsFtuRUSG6M3T2gIy7k5iWOhkMki8QT/uXv5kMJEE32utw0+4zvi
-	 dRUe/UTN/0pU0N60tTIVOQgZpalLy1SzY7/vmP7w=
+	b=07LOrLeZrST0aqTU0EekmK0l9a1SGqBVV5ULSIHeU2LTrvqddhSR8pO9Dyv0WweDi
+	 EBidUcfY6mo/zWg866Iqvh+w9ZuAjSeuUgMYv6iJTsL5hkQ4kkDdxoG5l+GbixlLRM
+	 KlHcdMYF3hiLpbxjayFZo8myk2xHgas8udv1aRBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Jean-Marc Eurin <jmeurin@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 259/286] usb: gadget: aspeed: Add NULL pointer check in ast_vhub_init_dev()
-Date: Tue, 29 Apr 2025 18:42:43 +0200
-Message-ID: <20250429161118.572954959@linuxfoundation.org>
+Subject: [PATCH 5.10 268/286] ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls
+Date: Tue, 29 Apr 2025 18:42:52 +0200
+Message-ID: <20250429161118.946032354@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,39 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Jean-Marc Eurin <jmeurin@google.com>
 
-[ Upstream commit 8c75f3e6a433d92084ad4e78b029ae680865420f ]
+[ Upstream commit 7ab4f0e37a0f4207e742a8de69be03984db6ebf0 ]
 
-The variable d->name, returned by devm_kasprintf(), could be NULL.
-A pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+The end of table checks should be done with the structure size,
+but 2 of the 3 similar calls use the pointer size.
 
-This issue is found by our static analysis tool
-
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250311012705.1233829-1-chenyuan0y@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jean-Marc Eurin <jmeurin@google.com>
+Link: https://patch.msgid.link/20250402001542.2600671-1-jmeurin@google.com
+[ rjw: Subject edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/dev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/pptt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-index d268306a7bfee..92755a2fe4ff7 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-@@ -543,6 +543,9 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx)
- 	d->vhub = vhub;
- 	d->index = idx;
- 	d->name = devm_kasprintf(parent, GFP_KERNEL, "port%d", idx+1);
-+	if (!d->name)
-+		return -ENOMEM;
-+
- 	d->regs = vhub->regs + 0x100 + 0x10 * idx;
+diff --git a/drivers/acpi/pptt.c b/drivers/acpi/pptt.c
+index 4ae93350b70de..38581001811b4 100644
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -217,7 +217,7 @@ static int acpi_pptt_leaf_node(struct acpi_table_header *table_hdr,
+ 	node_entry = ACPI_PTR_DIFF(node, table_hdr);
+ 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
+ 			     sizeof(struct acpi_table_pptt));
+-	proc_sz = sizeof(struct acpi_pptt_processor *);
++	proc_sz = sizeof(struct acpi_pptt_processor);
  
- 	ast_vhub_init_ep0(vhub, &d->ep0, d);
+ 	while ((unsigned long)entry + proc_sz < table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
+@@ -258,7 +258,7 @@ static struct acpi_pptt_processor *acpi_find_processor_node(struct acpi_table_he
+ 	table_end = (unsigned long)table_hdr + table_hdr->length;
+ 	entry = ACPI_ADD_PTR(struct acpi_subtable_header, table_hdr,
+ 			     sizeof(struct acpi_table_pptt));
+-	proc_sz = sizeof(struct acpi_pptt_processor *);
++	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+ 	/* find the processor structure associated with this cpuid */
+ 	while ((unsigned long)entry + proc_sz < table_end) {
 -- 
 2.39.5
 
