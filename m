@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D499E21A43D;
-	Tue, 29 Apr 2025 17:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AE821A43D;
+	Tue, 29 Apr 2025 17:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946043; cv=none; b=fAfSV4f7OCGC19xHQiL8jqBdGyMb5MdXPYaD1aHpGRW0kQX09WFHWeR7XuE3sC8SkfLJ5RiYDuDN7p9DFPh/kuJePWdHa6EuE+TiCYcX2nWCv+8biEcK0A52OlC+Ei+2CAOyWi5iPIEHzKRQpHmPQZejgbTZI4z6scpKnOMI4mU=
+	t=1745946046; cv=none; b=AwO2cArISYN4VH9f3lLjTOwBcg6B++lrEe0juZh7AKYqa+QFAf16S1cPXYCKz7kcdvsBEQCxPlOVZL6NFuhFHcsMvAnXTwFKIoBTVuN2o6kfUhQ4XfpE31hmpaqRfpFH7vxOkuXXC22BoHwhopO+pSyXIXO2GtMXvptjOfc3gLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946043; c=relaxed/simple;
-	bh=/cRymtbJ2UbgLeUVwtaLrpJSo7Eagwkf0fUVL76/NvU=;
+	s=arc-20240116; t=1745946046; c=relaxed/simple;
+	bh=RodFU/Wq4nt8Vkm2G6BlakxMW38gbzzBFkQeOqeczzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+hWcI4/5sD82n4pib5iT5IkmhQ7lHRGPiiEpZ8PM69TEOPWo+9ustJ5WuT3u3KdDN3FDSVOkqfsrAxtFifvPZAlSSVkRnflbZWe3eNcpGTF1rP0PfnvSlLiGNXWv0d+vHd1MFMfohHbaTF/VlcHpMP/WAap8F7MTAAMNhUTCxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXzvUJ92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IY9YRwjfgO9BRAJpfmhCof47YbtmxQmqbIIbMhcFMeSkGRXdzC6fHn2IntZIWmkp2uwiXoEzZjeBDK6D6b7n5oKv3XlRScYx6EMpUQ+tzmzsfIEXMaz6TX1SWPpKLctHQBy21KKWNskRcRzqHm5v5NOYUyGnx9Mi5dcjUBoV1R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xx3gs3+v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXzvUJ92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DC9C4CEE3;
-	Tue, 29 Apr 2025 17:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xx3gs3+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCF0C4CEE3;
+	Tue, 29 Apr 2025 17:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946043;
-	bh=/cRymtbJ2UbgLeUVwtaLrpJSo7Eagwkf0fUVL76/NvU=;
+	s=korg; t=1745946046;
+	bh=RodFU/Wq4nt8Vkm2G6BlakxMW38gbzzBFkQeOqeczzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXzvUJ922LYhEQPQEcgZ56uma0Vj47FW/PNQimC/WMfK5rHvB9oNTq7FHCBNWRw99
-	 OX/bJCYR7XsImrOQs09CTD0NPKIiMMTpsgeC/shzLpskOEYl1pk2gkOXJEGIdDOc6a
-	 97oMxooC4IxKXKHcmVNdOgDmxcqprP8XTm1qsp9g=
+	b=Xx3gs3+vgHU7AD46uGEwl3lz7ZLUeNfhYJ/WdFM8L+WQG+nQZhva8Zv/6iUGyy7GX
+	 AwOEwYzLmp2bl5aJTsd/0NI4rq1zbkiOs2d69+c1Q6xTpHxPXENdf1CKCd1HP8XqxH
+	 L8pDqWRxd7Xt6cE5HQvRZl27dKv1OhIfpKhW9Qz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.14 135/311] KVM: SVM: Allocate IR data using atomic allocation
-Date: Tue, 29 Apr 2025 18:39:32 +0200
-Message-ID: <20250429161126.570906009@linuxfoundation.org>
+	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Robert Richter <rrichter@amd.com>
+Subject: [PATCH 6.14 136/311] cxl/core/regs.c: Skip Memory Space Enable check for RCD and RCH Ports
+Date: Tue, 29 Apr 2025 18:39:33 +0200
+Message-ID: <20250429161126.610877675@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -50,34 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-commit 7537deda36521fa8fff9133b39c46e31893606f2 upstream.
+commit 078d3ee7c162cd66d76171579c02d7890bd77daf upstream.
 
-Allocate SVM's interrupt remapping metadata using GFP_ATOMIC as
-svm_ir_list_add() is called with IRQs are disabled and irqfs.lock held
-when kvm_irq_routing_update() reacts to GSI routing changes.
+According to CXL r3.2 section 8.2.1.2, the PCI_COMMAND register fields,
+including Memory Space Enable bit, have no effect on the behavior of an
+RCD Upstream Port. Retaining this check may incorrectly cause
+cxl_pci_probe() to fail on a valid RCD upstream Port.
 
-Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20250404193923.1413163-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+While the specification is explicit only for RCD Upstream Ports, this
+check is solely for accessing the RCRB, which is always mapped through
+memory space. Therefore, its safe to remove the check entirely. In
+practice, firmware reliably enables the Memory Space Enable bit for
+RCH Downstream Ports and no failures have been observed.
+
+Removing the check simplifies the code and avoids unnecessary
+special-casing, while relying on BIOS/firmware to configure devices
+correctly. Moreover, any failures due to inaccessible RCRB regions
+will still be caught either in __rcrb_to_component() or while
+parsing the component register block.
+
+The following failure was observed in dmesg when the check was present:
+	cxl_pci 0000:7f:00.0: No component registers (-6)
+
+Fixes: d5b1a27143cb ("cxl/acpi: Extract component registers of restricted hosts from RCRB")
+Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Terry Bowman <terry.bowman@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Robert Richter <rrichter@amd.com>
+Link: https://patch.msgid.link/20250407192734.70631-1-Smita.KoralahalliChannabasappa@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/regs.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -820,7 +820,7 @@ static int svm_ir_list_add(struct vcpu_s
- 	 * Allocating new amd_iommu_pi_data, which will get
- 	 * add to the per-vcpu ir_list.
- 	 */
--	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_KERNEL_ACCOUNT);
-+	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_ATOMIC | __GFP_ACCOUNT);
- 	if (!ir) {
- 		ret = -ENOMEM;
- 		goto out;
+--- a/drivers/cxl/core/regs.c
++++ b/drivers/cxl/core/regs.c
+@@ -581,7 +581,6 @@ resource_size_t __rcrb_to_component(stru
+ 	resource_size_t rcrb = ri->base;
+ 	void __iomem *addr;
+ 	u32 bar0, bar1;
+-	u16 cmd;
+ 	u32 id;
+ 
+ 	if (which == CXL_RCRB_UPSTREAM)
+@@ -603,7 +602,6 @@ resource_size_t __rcrb_to_component(stru
+ 	}
+ 
+ 	id = readl(addr + PCI_VENDOR_ID);
+-	cmd = readw(addr + PCI_COMMAND);
+ 	bar0 = readl(addr + PCI_BASE_ADDRESS_0);
+ 	bar1 = readl(addr + PCI_BASE_ADDRESS_1);
+ 	iounmap(addr);
+@@ -618,8 +616,6 @@ resource_size_t __rcrb_to_component(stru
+ 			dev_err(dev, "Failed to access Downstream Port RCRB\n");
+ 		return CXL_RESOURCE_NONE;
+ 	}
+-	if (!(cmd & PCI_COMMAND_MEMORY))
+-		return CXL_RESOURCE_NONE;
+ 	/* The RCRB is a Memory Window, and the MEM_TYPE_1M bit is obsolete */
+ 	if (bar0 & (PCI_BASE_ADDRESS_MEM_TYPE_1M | PCI_BASE_ADDRESS_SPACE_IO))
+ 		return CXL_RESOURCE_NONE;
 
 
