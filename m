@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A7B1DF73C;
-	Tue, 29 Apr 2025 17:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E55324E4AF;
+	Tue, 29 Apr 2025 17:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946610; cv=none; b=lwd568FxJQOTJ/YBZ9LIDYZ+zAscZnIylY4x/Maw+TW02mQrbXLpFK4h1vVPKyuxvUrdStO8u3cti1E2fQv9O4RORYZKsF4kGl/Vmz2DOHRakRIUfQ9+F7W3NL+zbxtisDKGvFMdlzL19B9T5S2/fBSbwOibY5AmuN7W1UJF5fM=
+	t=1745946613; cv=none; b=LwUvwch+6k6z2WDb5Z2u01N3087TEEgX1HHPQ16byoAmlTigZh8MlJQuyUVHn7OpIffV2G6yfKWBgK7tNGPDXu6OLfz1fPoBndaVC4SbhZRVhEKKRfR0Wjo3hk8hGmNk0pph8yHvyronzO8P9G8Ed8E4Jq1DcJoF18FA2k6SUd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946610; c=relaxed/simple;
-	bh=lADPbhiKG0z3i47u2cGgCB0Xa+zoWFmODShud75S2zg=;
+	s=arc-20240116; t=1745946613; c=relaxed/simple;
+	bh=m9RK/eABfgx/NXEroODhCdjP9VtpHF3ixqv457ich2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NGubbKUaCDP1I6ZsIG5aFjXJerYvn3jMhbnPQBlt1XPyEuHWechX/Yf4SjI2/M1vnc7eb2UQRaBk7nvkDuF51VJmHNRlhppS177/GXhQYQJIIcHLqbMYDIFeqxdNHqnCUw1fd/dr68Io6Ca//iSF78ZEbMEnOViUw06gEqYjKV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh7O59n7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=podlP8VtgmhK5SDIzb8ZtMzvSSw0LMzkrpYRLa53AFqMqhyQNgIO5UyYkHZmmQC8m1p6A4EEW5oNQG7MKqAzpwS6TAfY9PQyPSG7bNJUFuiBwRN7v1BgUOaCmG0K2ryLjyAX7JDwsi2MpfBe5SY1vAhupEAT6gQnqjuidpx+snw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaQb1cz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh7O59n7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A909EC4CEE3;
-	Tue, 29 Apr 2025 17:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaQb1cz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0A9C4CEE9;
+	Tue, 29 Apr 2025 17:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946610;
-	bh=lADPbhiKG0z3i47u2cGgCB0Xa+zoWFmODShud75S2zg=;
+	s=korg; t=1745946613;
+	bh=m9RK/eABfgx/NXEroODhCdjP9VtpHF3ixqv457ich2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kh7O59n7ztMuvMcvFGSY/DzhpEmkBJOfs8Ol101wAzzn5rztG+Y1GnzkRQSNSWIgK
-	 h9hjr1SZK+xQ8u/R3OPC2X1VcNa8whOLOBL1r+VRjT+78GaHV/aZ9rIJuSItw0+Dy3
-	 Hh47wSIyCfYVx7ht9fE2ZjDuUHCq3fIP5NbniLoI=
+	b=uaQb1cz7A3Kobl3jOQ+E9Yn2uRqlDPODbTkU4MQaHKqUAq8ZKnEJbMoEFMoyqMsl2
+	 b173VLFfdr+7inI9WNuor97DdRRziPuxE+9FltwK2qUkIX6eCDueN1HTWcjxGCdBJb
+	 peGm7wzfB117irgA4fLlntFyNKCBM+4BKNd5y9tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Grobecker <max@grobecker.info>,
-	Ingo Molnar <mingo@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Borislav Petkov <bp@alien8.de>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/286] x86/cpu: Dont clear X86_FEATURE_LAHF_LM flag in init_amd_k8() on AMD when running in a virtual machine
-Date: Tue, 29 Apr 2025 18:38:36 +0200
-Message-ID: <20250429161108.358465874@linuxfoundation.org>
+Subject: [PATCH 5.10 013/286] perf: arm_pmu: Dont disable counter in armpmu_add()
+Date: Tue, 29 Apr 2025 18:38:37 +0200
+Message-ID: <20250429161108.397961314@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -47,104 +48,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Grobecker <max@grobecker.info>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit a4248ee16f411ac1ea7dfab228a6659b111e3d65 ]
+[ Upstream commit dcca27bc1eccb9abc2552aab950b18a9742fb8e7 ]
 
-When running in a virtual machine, we might see the original hardware CPU
-vendor string (i.e. "AuthenticAMD"), but a model and family ID set by the
-hypervisor. In case we run on AMD hardware and the hypervisor sets a model
-ID < 0x14, the LAHF cpu feature is eliminated from the the list of CPU
-capabilities present to circumvent a bug with some BIOSes in conjunction with
-AMD K8 processors.
+Currently armpmu_add() tries to handle a newly-allocated counter having
+a stale associated event, but this should not be possible, and if this
+were to happen the current mitigation is insufficient and potentially
+expensive. It would be better to warn if we encounter the impossible
+case.
 
-Parsing the flags list from /proc/cpuinfo seems to be happening mostly in
-bash scripts and prebuilt Docker containers, as it does not need to have
-additionals tools present – even though more reliable ways like using "kcpuid",
-which calls the CPUID instruction instead of parsing a list, should be preferred.
-Scripts, that use /proc/cpuinfo to determine if the current CPU is
-"compliant" with defined microarchitecture levels like x86-64-v2 will falsely
-claim the CPU is incapable of modern CPU instructions when "lahf_lm" is missing
-in that flags list.
+Calls to pmu::add() and pmu::del() are serialized by the core perf code,
+and armpmu_del() clears the relevant slot in pmu_hw_events::events[]
+before clearing the bit in pmu_hw_events::used_mask such that the
+counter can be reallocated. Thus when armpmu_add() allocates a counter
+index from pmu_hw_events::used_mask, it should not be possible to observe
+a stale even in pmu_hw_events::events[] unless either
+pmu_hw_events::used_mask or pmu_hw_events::events[] have been corrupted.
 
-This can prevent some docker containers from starting or build scripts to create
-unoptimized binaries.
+If this were to happen, we'd end up with two events with the same
+event->hw.idx, which would clash with each other during reprogramming,
+deletion, etc, and produce bogus results. Add a WARN_ON_ONCE() for this
+case so that we can detect if this ever occurs in practice.
 
-Admittably, this is more a small inconvenience than a severe bug in the kernel
-and the shoddy scripts that rely on parsing /proc/cpuinfo
-should be fixed instead.
+That possiblity aside, there's no need to call arm_pmu::disable(event)
+for the new event. The PMU reset code initialises the counter in a
+disabled state, and armpmu_del() will disable the counter before it can
+be reused. Remove the redundant disable.
 
-This patch adds an additional check to see if we're running inside a
-virtual machine (X86_FEATURE_HYPERVISOR is present), which, to my
-understanding, can't be present on a real K8 processor as it was introduced
-only with the later/other Athlon64 models.
-
-Example output with the "lahf_lm" flag missing in the flags list
-(should be shown between "hypervisor" and "abm"):
-
-    $ cat /proc/cpuinfo
-    processor       : 0
-    vendor_id       : AuthenticAMD
-    cpu family      : 15
-    model           : 6
-    model name      : Common KVM processor
-    stepping        : 1
-    microcode       : 0x1000065
-    cpu MHz         : 2599.998
-    cache size      : 512 KB
-    physical id     : 0
-    siblings        : 1
-    core id         : 0
-    cpu cores       : 1
-    apicid          : 0
-    initial apicid  : 0
-    fpu             : yes
-    fpu_exception   : yes
-    cpuid level     : 13
-    wp              : yes
-    flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca
-                      cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx rdtscp
-                      lm rep_good nopl cpuid extd_apicid tsc_known_freq pni
-                      pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt
-                      tsc_deadline_timer aes xsave avx f16c hypervisor abm
-                      3dnowprefetch vmmcall bmi1 avx2 bmi2 xsaveopt
-
-... while kcpuid shows the feature to be present in the CPU:
-
-    # kcpuid -d | grep lahf
-         lahf_lm             - LAHF/SAHF available in 64-bit mode
-
-[ mingo: Updated the comment a bit, incorporated Boris's review feedback. ]
-
-Signed-off-by: Max Grobecker <max@grobecker.info>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250218-arm-brbe-v19-v20-2-4e9922fc2e8e@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/arm_pmu.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index c10f7dcaa7b7c..5f0bdb53b0067 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -839,7 +839,7 @@ static void init_amd_k8(struct cpuinfo_x86 *c)
- 	 * (model = 0x14) and later actually support it.
- 	 * (AMD Erratum #110, docId: 25759).
- 	 */
--	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM)) {
-+	if (c->x86_model < 0x14 && cpu_has(c, X86_FEATURE_LAHF_LM) && !cpu_has(c, X86_FEATURE_HYPERVISOR)) {
- 		clear_cpu_cap(c, X86_FEATURE_LAHF_LM);
- 		if (!rdmsrl_amd_safe(0xc001100d, &value)) {
- 			value &= ~BIT_64(32);
+diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
+index 7fd11ef5cb8a2..8568b5a78c45b 100644
+--- a/drivers/perf/arm_pmu.c
++++ b/drivers/perf/arm_pmu.c
+@@ -338,12 +338,10 @@ armpmu_add(struct perf_event *event, int flags)
+ 	if (idx < 0)
+ 		return idx;
+ 
+-	/*
+-	 * If there is an event in the counter we are going to use then make
+-	 * sure it is disabled.
+-	 */
++	/* The newly-allocated counter should be empty */
++	WARN_ON_ONCE(hw_events->events[idx]);
++
+ 	event->hw.idx = idx;
+-	armpmu->disable(event);
+ 	hw_events->events[idx] = event;
+ 
+ 	hwc->state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
 -- 
 2.39.5
 
