@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9172240611;
-	Tue, 29 Apr 2025 18:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC65253334;
+	Tue, 29 Apr 2025 18:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950614; cv=none; b=Z951ssSAJA/XW5J9KdEumcowXLwX2Mts1XzyXYmv+gYQBzQf9XsCHs5LYTWFMZpdYf7ILVfyih8Fzph4QKm+y3+zioGt84SrFrMt3p7lHhezdC1hdeCw25rInFAbBtp/B8DZDdeR7gyC8m2t8LOfrKPl0XW8RdXlYfXR8MbFcYA=
+	t=1745950618; cv=none; b=rceUD+v6pyp4YY9Xt+sAxgS/NTqW8gRoSpnkf5V0uREIZF0bfz0yApuBgSCb9z2Y4OIPTTk77uTAYBFbPYLZ8x78TbWcswV5uvTme8XDYYwTRx9xIXqFTmBrNi6un6MyzFIo57ve/SG31e35dPgfPl4oBcGRoVwo7pm1oxjhz+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950614; c=relaxed/simple;
-	bh=J5R48IU8fuxmOAx9EAoUzKk3CfgqSALa4vT8IrBgiis=;
+	s=arc-20240116; t=1745950618; c=relaxed/simple;
+	bh=zJOCUCcMDayc2RYoepOeO1eOzyaBT8qac+nb7vSVsnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6FcRvBHxTXV4smYWH9O+k+gO9mfTpBXsmCRIYTA0fRVYkKKnYug6qobulLDcDNlcOGvZjoeDYiPtY4NdyNSLqQL8Txqrx0whQw0eCuj/FOci0hn3yveteP19TWAQLlqdtygvXM52184AWn4L5ayV0Boe3vfhCPvr+nHyIHvU54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjRIxBXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJmRYE6nDXyLEMD/RqsnoLtpFiMl+/SvozBUN5a9FKgBpB65luI0y7CLfuUfrsXeX2ryA9qx3rWmD7XPro7+gy9m8HRfId79RiM3kihA6duRSxDXXAQH191IYpQ8lwJeOhMsgLpl44U2fw13B0pkvA1F+lZ8MrrUt3IyPmN1rHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjjAD6Fo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjRIxBXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542C9C4CEE3;
-	Tue, 29 Apr 2025 18:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjjAD6Fo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9425FC4CEE3;
+	Tue, 29 Apr 2025 18:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950614;
-	bh=J5R48IU8fuxmOAx9EAoUzKk3CfgqSALa4vT8IrBgiis=;
+	s=korg; t=1745950618;
+	bh=zJOCUCcMDayc2RYoepOeO1eOzyaBT8qac+nb7vSVsnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjRIxBXvCpkLUGV6hrMXz89SN/eLQ+Kn5wTk10qZPXQuNVYMKnEfwy2XG6GSn/QCS
-	 8B5t8wGzUqfhTTTybzQIJQVJLq5sLDIBH9eX4z3/hjlVUsKOM7H7ZSKoMzYLqyqcOg
-	 70kCWi6RkFfpKKLiaPx7eRoKGX9s1VewHIZf5p4s=
+	b=OjjAD6FoCdYIb06bdnWixnheCFcZ2Hytxm2XoQWPZCUK3tflN9mR4lupvtj+Bb5oF
+	 0rhcLWna7DzgOAlY3KFutjn+5MSBUnl+bz+kw0w3YM+2CNQrj4Gof2ofFg8H/2fBhy
+	 rXWZ9LDXfRlQfxrf061qYBPbAFuyHXEgRKIA8Ms0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+903a2ad71fb3f1e47cf5@syzkaller.appspotmail.com,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/204] io_uring: always do atomic put from iowq
-Date: Tue, 29 Apr 2025 18:43:59 +0200
-Message-ID: <20250429161105.598450712@linuxfoundation.org>
+Subject: [PATCH 6.6 152/204] sched/isolation: Make CONFIG_CPU_ISOLATION depend on CONFIG_SMP
+Date: Tue, 29 Apr 2025 18:44:00 +0200
+Message-ID: <20250429161105.638813566@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,65 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 390513642ee6763c7ada07f0a1470474986e6c1c ]
+[ Upstream commit 975776841e689dd8ba36df9fa72ac3eca3c2957a ]
 
-io_uring always switches requests to atomic refcounting for iowq
-execution before there is any parallilism by setting REQ_F_REFCOUNT,
-and the flag is not cleared until the request completes. That should be
-fine as long as the compiler doesn't make up a non existing value for
-the flags, however KCSAN still complains when the request owner changes
-oter flag bits:
+kernel/sched/isolation.c obviously makes no sense without CONFIG_SMP, but
+the Kconfig entry we have right now:
 
-BUG: KCSAN: data-race in io_req_task_cancel / io_wq_free_work
-...
-read to 0xffff888117207448 of 8 bytes by task 3871 on cpu 0:
- req_ref_put_and_test io_uring/refs.h:22 [inline]
+	config CPU_ISOLATION
+		bool "CPU isolation"
+		depends on SMP || COMPILE_TEST
 
-Skip REQ_F_REFCOUNT checks for iowq, we know it's set.
+allows the creation of pointless .config's which cause
+build failures.
 
-Reported-by: syzbot+903a2ad71fb3f1e47cf5@syzkaller.appspotmail.com
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/d880bc27fb8c3209b54641be4ff6ac02b0e5789a.1743679736.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250330134955.GA7910@redhat.com
+
+Closes: https://lore.kernel.org/oe-kbuild-all/202503260646.lrUqD3j5-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 2 +-
- io_uring/refs.h     | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ init/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 9883fd16cde44..3ce93418e0151 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1917,7 +1917,7 @@ struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
- 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
- 	struct io_kiocb *nxt = NULL;
+diff --git a/init/Kconfig b/init/Kconfig
+index 1105cb53f391a..8b630143c720f 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -689,7 +689,7 @@ endmenu # "CPU/Task time and stats accounting"
  
--	if (req_ref_put_and_test(req)) {
-+	if (req_ref_put_and_test_atomic(req)) {
- 		if (req->flags & IO_REQ_LINK_FLAGS)
- 			nxt = io_req_find_next(req);
- 		io_free_req(req);
-diff --git a/io_uring/refs.h b/io_uring/refs.h
-index 1336de3f2a30a..21a379b0f22d6 100644
---- a/io_uring/refs.h
-+++ b/io_uring/refs.h
-@@ -17,6 +17,13 @@ static inline bool req_ref_inc_not_zero(struct io_kiocb *req)
- 	return atomic_inc_not_zero(&req->refs);
- }
- 
-+static inline bool req_ref_put_and_test_atomic(struct io_kiocb *req)
-+{
-+	WARN_ON_ONCE(!(data_race(req->flags) & REQ_F_REFCOUNT));
-+	WARN_ON_ONCE(req_ref_zero_or_close_to_overflow(req));
-+	return atomic_dec_and_test(&req->refs);
-+}
-+
- static inline bool req_ref_put_and_test(struct io_kiocb *req)
- {
- 	if (likely(!(req->flags & REQ_F_REFCOUNT)))
+ config CPU_ISOLATION
+ 	bool "CPU isolation"
+-	depends on SMP || COMPILE_TEST
++	depends on SMP
+ 	default y
+ 	help
+ 	  Make sure that CPUs running critical tasks are not disturbed by
 -- 
 2.39.5
 
