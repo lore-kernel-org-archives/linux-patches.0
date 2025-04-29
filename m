@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AD42517A8;
-	Tue, 29 Apr 2025 18:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685F824889B;
+	Tue, 29 Apr 2025 18:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950708; cv=none; b=FjwZnT+NRXdaOLG+KxjVwvPdIUOMuLXZf/9icA8ESsm0vQeifzpekJnbvQ8pehUtrorD9qZg5fgb5NZG3vgjpV0TEsFA22RtNZl3K/tME1AcwkuzBcS1cEcnNPFeqQQ8jNJxm9e5HV8ItuQ22turZxw/81vthzs8CsyCcajBHyg=
+	t=1745950712; cv=none; b=FPD8PcgIcLViSTb1zMUGn08myEynaF87QfxHjgcnu6qHKKtZe4tuxM4lwXS6km2AklRnA0zEOvwiGlsKkKgy+x5ihexsXGS1sA0S+p6W66k9GcxpeUEHDbrP3e68cWE01lqQA9TbC9feBqGDP/yRMz5WC0Orc+5v9//HHFpJQUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950708; c=relaxed/simple;
-	bh=tDnr/S2bUhwXrmkCTWmyu8nAGjFfqhJZ+WYgm54Iu2k=;
+	s=arc-20240116; t=1745950712; c=relaxed/simple;
+	bh=cRL7TCffumZHGrQO9qTKfg74LcwoGBnavBHb/86S4H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkntbcbzwdmuAH6Pz1xpDiEGUAES/KdiwdsOpxN76rdSoY5FcPBC8lKj2DU5PM4suk24bglbBjqYcl3+u0nWKt/QwAtJrQCEgKkFJDEcODTiOe6a+69tUyUq9xPf65RJaAIcR32Q6IeX+ELsvvCIfx44A7JBkcBkUDGxF557g9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyLLpf7/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNQ4XTxOHa7+qyudre5wyMe8GafD4baKOxHJplIHoBFz+V1Co5dbUjJ/+IBylNWuC+RbSxKH8JAq4FgKY0XhcjElOfq3cX+qJsNIQJ3Ehrii1YmLnuhPBWY6/kv+jrurslX/FCNBhQiGdYEuWoK7YRzLrv30K6WXqRF8rgXlBZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ri1B+G9C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyLLpf7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2322AC4CEE3;
-	Tue, 29 Apr 2025 18:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri1B+G9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6708EC4CEE3;
+	Tue, 29 Apr 2025 18:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950708;
-	bh=tDnr/S2bUhwXrmkCTWmyu8nAGjFfqhJZ+WYgm54Iu2k=;
+	s=korg; t=1745950711;
+	bh=cRL7TCffumZHGrQO9qTKfg74LcwoGBnavBHb/86S4H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyLLpf7/eG46SLhS7dppi8if4YrhwC9es41DYU10fuwBF9di+xCFuDe5OJyw3zAjd
-	 lp4sAua+S/qXfu16HH5p8BWKNLyc1knE8IBhcvYejvcnt9rh+n1Tv8tOC+MpBRpmAQ
-	 Q/5g2tfUDHOo8RtBwU0heGGe5Lvbb70YJJ32K55E=
+	b=Ri1B+G9CCHJXwyTPdfnOL16VNXOf/bNM0sjlqxEBnvXlRKqN/ON2k6JapvNfydVKA
+	 H6TQ6S841DAM1q2biPJJeo33uFXaY4yr0ZjFWwq5iae7r7CxyceArS2i8uGC0I44Qe
+	 a1hxiVFVj2aBegvUdEkFQCGHbLeTHnqf86cPDiCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Fernando Fernandez Mancera <ffmancera@riseup.net>,
-	Ingo Molnar <mingo@kernel.org>,
+	Gou Hao <gouhao@uniontech.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/204] x86/i8253: Call clockevent_i8253_disable() with interrupts disabled
-Date: Tue, 29 Apr 2025 18:44:27 +0200
-Message-ID: <20250429161106.720471296@linuxfoundation.org>
+Subject: [PATCH 6.6 180/204] iomap: skip unnecessary ifs_block_is_uptodate check
+Date: Tue, 29 Apr 2025 18:44:28 +0200
+Message-ID: <20250429161106.759721278@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,71 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <ffmancera@riseup.net>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 3940f5349b476197fb079c5aa19c9a988de64efb ]
+[ Upstream commit 8e3c15ee0d292c413c66fe10201d1b035a0bea72 ]
 
-There's a lockdep false positive warning related to i8253_lock:
+In iomap_adjust_read_range, i is either the first !uptodate block, or it
+is past last for the second loop looking for trailing uptodate blocks.
+Assuming there's no overflow (there's no combination of huge folios and
+tiny blksize) then yeah, there is no point in retesting that the same
+block pointed to by i is uptodate since we hold the folio lock so nobody
+else could have set it uptodate.
 
-  WARNING: HARDIRQ-safe -> HARDIRQ-unsafe lock order detected
-  ...
-  systemd-sleep/3324 [HC0[0]:SC0[0]:HE0:SE1] is trying to acquire:
-  ffffffffb2c23398 (i8253_lock){+.+.}-{2:2}, at: pcspkr_event+0x3f/0xe0 [pcspkr]
-
-  ...
-  ... which became HARDIRQ-irq-unsafe at:
-  ...
-    lock_acquire+0xd0/0x2f0
-    _raw_spin_lock+0x30/0x40
-    clockevent_i8253_disable+0x1c/0x60
-    pit_timer_init+0x25/0x50
-    hpet_time_init+0x46/0x50
-    x86_late_time_init+0x1b/0x40
-    start_kernel+0x962/0xa00
-    x86_64_start_reservations+0x24/0x30
-    x86_64_start_kernel+0xed/0xf0
-    common_startup_64+0x13e/0x141
-  ...
-
-Lockdep complains due pit_timer_init() using the lock in an IRQ-unsafe
-fashion, but it's a false positive, because there is no deadlock
-possible at that point due to init ordering: at the point where
-pit_timer_init() is called there is no other possible usage of
-i8253_lock because the system is still in the very early boot stage
-with no interrupts.
-
-But in any case, pit_timer_init() should disable interrupts before
-calling clockevent_i8253_disable() out of general principle, and to
-keep lockdep working even in this scenario.
-
-Use scoped_guard() for that, as suggested by Thomas Gleixner.
-
-[ mingo: Cleaned up the changelog. ]
-
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Fernando Fernandez Mancera <ffmancera@riseup.net>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/Z-uwd4Bnn7FcCShX@gmail.com
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Link: https://lore.kernel.org/20250410071236.16017-1-gouhao@uniontech.com
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/i8253.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/i8253.c b/arch/x86/kernel/i8253.c
-index 80e262bb627fe..cb9852ad60989 100644
---- a/arch/x86/kernel/i8253.c
-+++ b/arch/x86/kernel/i8253.c
-@@ -46,7 +46,8 @@ bool __init pit_timer_init(void)
- 		 * VMMs otherwise steal CPU time just to pointlessly waggle
- 		 * the (masked) IRQ.
- 		 */
--		clockevent_i8253_disable();
-+		scoped_guard(irq)
-+			clockevent_i8253_disable();
- 		return false;
- 	}
- 	clockevent_i8253_init(true);
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index e7e6701806ad2..7ffdf0d037fae 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -224,7 +224,7 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
+ 		}
+ 
+ 		/* truncate len if we find any trailing uptodate block(s) */
+-		for ( ; i <= last; i++) {
++		while (++i <= last) {
+ 			if (ifs_block_is_uptodate(ifs, i)) {
+ 				plen -= (last - i + 1) * block_size;
+ 				last = i - 1;
 -- 
 2.39.5
 
