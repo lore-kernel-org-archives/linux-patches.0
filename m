@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1E5215060;
-	Tue, 29 Apr 2025 16:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D9F24DFF3;
+	Tue, 29 Apr 2025 16:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945797; cv=none; b=Q/xeQ9GYiXqNMUrHMlyrE9W4gxz7i3vXog9G5FGFAClp2cJd/bNjrHnaqtcNEBZ/Kxu0FieTGO8f/hPEjEGiv8XLK5Q18FN5M/l6/65qU3su7/EMMYanznUEe0uwaNvUKLfQHvegmVFCVopju+QMnjHnKgmNMfvGT1/nyOBcAdM=
+	t=1745945799; cv=none; b=sj1qmkmN9HT0o6Wq7oMPpqJght0z0A3PlYdIz0Wmo5hRhOYAYHwVMWEe5LiIEwVkaz4VvRt2YFR7MOMgAggnDaCnYrp4a9eyLy7HkYsSFH2fpxUh5Ywo3vQMQy2nvuw/17AxPDPZMpk9Hyvb3Vc5lwGHESx7smU53HzVA5K53v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945797; c=relaxed/simple;
-	bh=bD59qvbaCFO7KEZNHneRj4N2VSNGeTuglSuhao1qv9A=;
+	s=arc-20240116; t=1745945799; c=relaxed/simple;
+	bh=bbDIvewczexdM6hqaUxJSSRvreW66+maSpRECFMWniM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJgxra7zDnV4seU44Q/GMuy6Z6A+CTw2cnI8QmI17aq9pBa7vhrrYbuvvInRn1F23kCn1NUBo8qLLpcs9FGgwh/yGLcpLc+2kYa5K7s68vVPPh0TU8Hw9tgwH4ZyF9gkIBXogJaIqBqcWqk2FM5lVMPS8jYc+SVjpBAI5BeiiFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAcGk/Xy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KywxcbMKXpkGB+l/fFX+fiRhhhTrchoAKS1Leefmn7M3UUmKB1Sahb9+zMGDVvX1k6cBQ6kG8hFsQXzPHHqaJClKbETwgug3QmNYTYGyAkeHmjOUN1rlUr5lza9teRvONE4Fm5DtdDS9mwsxHP7xH7bWxJQRKQVTSmSQ4PxjXMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swLGS846; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAcGk/Xy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D71C4CEE3;
-	Tue, 29 Apr 2025 16:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swLGS846"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B08C4CEE9;
+	Tue, 29 Apr 2025 16:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945796;
-	bh=bD59qvbaCFO7KEZNHneRj4N2VSNGeTuglSuhao1qv9A=;
+	s=korg; t=1745945799;
+	bh=bbDIvewczexdM6hqaUxJSSRvreW66+maSpRECFMWniM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAcGk/Xypekb8hu81dc4IaICMWOgO5Vaid8on55y5cTmZWE+tHZaoRWcofhVxI1dW
-	 /DRL0hx9lvdHCJRH8nS+NKeMjxtzwCy1s2nE/FQ6gqSM4JIpkGgcfhWgXTiPfU+6TA
-	 ekhmRbyBNpzj9bpRZXDG3fpJK+YfI9CzM2Rju68w=
+	b=swLGS846nU8RS37Yi/9mcXX8tVJ4A1BlXIkdXp+0F2gjiX120+J4GPGV3OZEfm8AN
+	 Vn5HgVexOeqht40JPOCXvvDhsLxEmH8tRvYVgWM9RGj/qhVQAmVyzlQlM8Xa3KfsdA
+	 LuIDX2IugIp4HFOZa9kglUilo19ktBZw/nZw43WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Biju Das <biju.das.jz@bp.renesas.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 023/311] irqchip/renesas-rzv2h: Simplify rzv2h_icu_init()
-Date: Tue, 29 Apr 2025 18:37:40 +0200
-Message-ID: <20250429161121.979513648@linuxfoundation.org>
+Subject: [PATCH 6.14 024/311] irqchip/renesas-rzv2h: Add struct rzv2h_hw_info with t_offs variable
+Date: Tue, 29 Apr 2025 18:37:41 +0200
+Message-ID: <20250429161122.020047791@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -55,106 +56,175 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit f5de95438834a3bc3ad747f67c9da93cd08e5008 ]
+[ Upstream commit 0a9d6ef64e5e917f93db98935cd09bac38507ebf ]
 
-Use devm_add_action_or_reset() for calling put_device in error path of
-rzv2h_icu_init() to simplify the code by using the recently added devm_*
-helpers.
+The ICU block on the RZ/G3E SoC is almost identical to the one found on
+the RZ/V2H SoC, with the following differences:
+
+ - The TINT register base offset is 0x800 instead of zero.
+ - The number of GPIO interrupts for TINT selection is 141 instead of 86.
+ - The pin index and TINT selection index are not in the 1:1 map
+ - The number of TSSR registers is 16 instead of 8
+ - Each TSSR register can program 2 TINTs instead of 4 TINTs
+
+Introduce struct rzv2h_hw_info to describe the SoC properties and refactor
+the code by moving rzv2h_icu_init() into rzv2h_icu_init_common() and pass
+the variable containing hw difference to support both these SoCs.
+
+As a first step add t_offs to the new struct and replace the hardcoded
+constants in the code.
 
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://lore.kernel.org/all/20250224131253.134199-5-biju.das.jz@bp.renesas.com
+Link: https://lore.kernel.org/all/20250224131253.134199-8-biju.das.jz@bp.renesas.com
 Stable-dep-of: 28e89cdac648 ("irqchip/renesas-rzv2h: Prevent TINT spurious interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzv2h.c | 37 +++++++++++++++--------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ drivers/irqchip/irq-renesas-rzv2h.c | 46 +++++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/irqchip/irq-renesas-rzv2h.c b/drivers/irqchip/irq-renesas-rzv2h.c
-index f6363246a71a0..6be38aa86f9b8 100644
+index 6be38aa86f9b8..5fcc6ed4086cd 100644
 --- a/drivers/irqchip/irq-renesas-rzv2h.c
 +++ b/drivers/irqchip/irq-renesas-rzv2h.c
-@@ -421,6 +421,11 @@ static int rzv2h_icu_parse_interrupts(struct rzv2h_icu_priv *priv, struct device
+@@ -80,18 +80,28 @@
+ #define ICU_TINT_EXTRACT_GPIOINT(x)		FIELD_GET(GENMASK(31, 16), (x))
+ #define ICU_PB5_TINT				0x55
+ 
++/**
++ * struct rzv2h_hw_info - Interrupt Control Unit controller hardware info structure.
++ * @t_offs:		TINT offset
++ */
++struct rzv2h_hw_info {
++	u16		t_offs;
++};
++
+ /**
+  * struct rzv2h_icu_priv - Interrupt Control Unit controller private data structure.
+  * @base:	Controller's base address
+  * @irqchip:	Pointer to struct irq_chip
+  * @fwspec:	IRQ firmware specific data
+  * @lock:	Lock to serialize access to hardware registers
++ * @info:	Pointer to struct rzv2h_hw_info
+  */
+ struct rzv2h_icu_priv {
+ 	void __iomem			*base;
+ 	const struct irq_chip		*irqchip;
+ 	struct irq_fwspec		fwspec[ICU_NUM_IRQ];
+ 	raw_spinlock_t			lock;
++	const struct rzv2h_hw_info	*info;
+ };
+ 
+ static inline struct rzv2h_icu_priv *irq_data_to_priv(struct irq_data *data)
+@@ -111,7 +121,7 @@ static void rzv2h_icu_eoi(struct irq_data *d)
+ 			tintirq_nr = hw_irq - ICU_TINT_START;
+ 			bit = BIT(tintirq_nr);
+ 			if (!irqd_is_level_type(d))
+-				writel_relaxed(bit, priv->base + ICU_TSCLR);
++				writel_relaxed(bit, priv->base + priv->info->t_offs + ICU_TSCLR);
+ 		} else if (hw_irq >= ICU_IRQ_START) {
+ 			tintirq_nr = hw_irq - ICU_IRQ_START;
+ 			bit = BIT(tintirq_nr);
+@@ -139,12 +149,12 @@ static void rzv2h_tint_irq_endisable(struct irq_data *d, bool enable)
+ 	tssel_n = ICU_TSSR_TSSEL_N(tint_nr);
+ 
+ 	guard(raw_spinlock)(&priv->lock);
+-	tssr = readl_relaxed(priv->base + ICU_TSSR(k));
++	tssr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TSSR(k));
+ 	if (enable)
+ 		tssr |= ICU_TSSR_TIEN(tssel_n);
+ 	else
+ 		tssr &= ~ICU_TSSR_TIEN(tssel_n);
+-	writel_relaxed(tssr, priv->base + ICU_TSSR(k));
++	writel_relaxed(tssr, priv->base + priv->info->t_offs + ICU_TSSR(k));
+ }
+ 
+ static void rzv2h_icu_irq_disable(struct irq_data *d)
+@@ -247,8 +257,8 @@ static void rzv2h_clear_tint_int(struct rzv2h_icu_priv *priv, unsigned int hwirq
+ 	u32 bit = BIT(tint_nr);
+ 	int k = tint_nr / 16;
+ 
+-	tsctr = readl_relaxed(priv->base + ICU_TSCTR);
+-	titsr = readl_relaxed(priv->base + ICU_TITSR(k));
++	tsctr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TSCTR);
++	titsr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TITSR(k));
+ 	titsel = ICU_TITSR_TITSEL_GET(titsr, titsel_n);
+ 
+ 	/*
+@@ -257,7 +267,7 @@ static void rzv2h_clear_tint_int(struct rzv2h_icu_priv *priv, unsigned int hwirq
+ 	 */
+ 	if ((tsctr & bit) && ((titsel == ICU_TINT_EDGE_RISING) ||
+ 			      (titsel == ICU_TINT_EDGE_FALLING)))
+-		writel_relaxed(bit, priv->base + ICU_TSCLR);
++		writel_relaxed(bit, priv->base + priv->info->t_offs + ICU_TSCLR);
+ }
+ 
+ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+@@ -308,21 +318,21 @@ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+ 
+ 	guard(raw_spinlock)(&priv->lock);
+ 
+-	tssr = readl_relaxed(priv->base + ICU_TSSR(tssr_k));
++	tssr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
+ 	tssr &= ~(ICU_TSSR_TSSEL_MASK(tssel_n) | tien);
+ 	tssr |= ICU_TSSR_TSSEL_PREP(tint, tssel_n);
+ 
+-	writel_relaxed(tssr, priv->base + ICU_TSSR(tssr_k));
++	writel_relaxed(tssr, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
+ 
+-	titsr = readl_relaxed(priv->base + ICU_TITSR(titsr_k));
++	titsr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TITSR(titsr_k));
+ 	titsr &= ~ICU_TITSR_TITSEL_MASK(titsel_n);
+ 	titsr |= ICU_TITSR_TITSEL_PREP(sense, titsel_n);
+ 
+-	writel_relaxed(titsr, priv->base + ICU_TITSR(titsr_k));
++	writel_relaxed(titsr, priv->base + priv->info->t_offs + ICU_TITSR(titsr_k));
+ 
+ 	rzv2h_clear_tint_int(priv, hwirq);
+ 
+-	writel_relaxed(tssr | tien, priv->base + ICU_TSSR(tssr_k));
++	writel_relaxed(tssr | tien, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
+ 
  	return 0;
  }
+@@ -426,7 +436,8 @@ static void rzv2h_icu_put_device(void *data)
+ 	put_device(data);
+ }
  
-+static void rzv2h_icu_put_device(void *data)
-+{
-+	put_device(data);
-+}
-+
- static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
+-static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
++static int rzv2h_icu_init_common(struct device_node *node, struct device_node *parent,
++				 const struct rzv2h_hw_info *hw_info)
  {
  	struct irq_domain *irq_domain, *parent_domain;
-@@ -433,43 +438,41 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
- 	if (!pdev)
- 		return -ENODEV;
+ 	struct rzv2h_icu_priv *rzv2h_icu_data;
+@@ -492,6 +503,8 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
+ 		goto pm_put;
+ 	}
  
-+	ret = devm_add_action_or_reset(&pdev->dev, rzv2h_icu_put_device,
-+				       &pdev->dev);
-+	if (ret < 0)
-+		return ret;
++	rzv2h_icu_data->info = hw_info;
 +
- 	parent_domain = irq_find_host(parent);
- 	if (!parent_domain) {
- 		dev_err(&pdev->dev, "cannot find parent domain\n");
--		ret = -ENODEV;
--		goto put_dev;
-+		return -ENODEV;
- 	}
- 
- 	rzv2h_icu_data = devm_kzalloc(&pdev->dev, sizeof(*rzv2h_icu_data), GFP_KERNEL);
--	if (!rzv2h_icu_data) {
--		ret = -ENOMEM;
--		goto put_dev;
--	}
-+	if (!rzv2h_icu_data)
-+		return -ENOMEM;
- 
- 	rzv2h_icu_data->irqchip = &rzv2h_icu_chip;
- 
- 	rzv2h_icu_data->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
--	if (IS_ERR(rzv2h_icu_data->base)) {
--		ret = PTR_ERR(rzv2h_icu_data->base);
--		goto put_dev;
--	}
-+	if (IS_ERR(rzv2h_icu_data->base))
-+		return PTR_ERR(rzv2h_icu_data->base);
- 
- 	ret = rzv2h_icu_parse_interrupts(rzv2h_icu_data, node);
- 	if (ret) {
- 		dev_err(&pdev->dev, "cannot parse interrupts: %d\n", ret);
--		goto put_dev;
-+		return ret;
- 	}
- 
- 	resetn = devm_reset_control_get_exclusive(&pdev->dev, NULL);
--	if (IS_ERR(resetn)) {
--		ret = PTR_ERR(resetn);
--		goto put_dev;
--	}
-+	if (IS_ERR(resetn))
-+		return PTR_ERR(resetn);
- 
- 	ret = reset_control_deassert(resetn);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to deassert resetn pin, %d\n", ret);
--		goto put_dev;
-+		return ret;
- 	}
- 
- 	pm_runtime_enable(&pdev->dev);
-@@ -500,8 +503,6 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
- pm_disable:
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(resetn);
--put_dev:
--	put_device(&pdev->dev);
- 
+ 	/*
+ 	 * coccicheck complains about a missing put_device call before returning, but it's a false
+ 	 * positive. We still need &pdev->dev after successfully returning from this function.
+@@ -507,6 +520,15 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
  	return ret;
  }
+ 
++static const struct rzv2h_hw_info rzv2h_hw_params = {
++	.t_offs		= 0,
++};
++
++static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
++{
++	return rzv2h_icu_init_common(node, parent, &rzv2h_hw_params);
++}
++
+ IRQCHIP_PLATFORM_DRIVER_BEGIN(rzv2h_icu)
+ IRQCHIP_MATCH("renesas,r9a09g057-icu", rzv2h_icu_init)
+ IRQCHIP_PLATFORM_DRIVER_END(rzv2h_icu)
 -- 
 2.39.5
 
