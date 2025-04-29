@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697481C6B4;
-	Tue, 29 Apr 2025 17:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BA221ABB7;
+	Tue, 29 Apr 2025 17:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948242; cv=none; b=nUAGnfsTJ5xndfWCdHpjt18lrSlWYLrwhZc0anNnLUHgcHUmJuNogkiJ3b/KxEZG7rxNvRzsVJ4Y4v5ELg6OMfZnzD3EY/sIrjW5WGdgHPuH48XuPiR/iQEsjZFoTRU9pL10fdR1tvEauMkDukkcGx6V5amQ9g8oko0fb5+TMZ8=
+	t=1745948246; cv=none; b=qIgthUa6Xiu1Ey40jl8vHs5BiT0yY5q1XsJehu54Zw54l2UXKoyiAYkArtjatFOkrcDGOmAWcWZHgIdEcq5F9qEI3jDyzy+8PeQZNHW3lwFl9zCMUlYctLqampGCQvSSXgYlFGgPTZkaf9DiYCYAhlej65RkdMhqZguMVHbmMXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948242; c=relaxed/simple;
-	bh=wZjTnaDIC82VNt2J106oe4kBt8sF0m4Tgs14MQtN12Y=;
+	s=arc-20240116; t=1745948246; c=relaxed/simple;
+	bh=6CDYcRv/r2df/0DrE8qkTFBUhZXaEmCbBCqUreOX7t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6oGSaBiEdsa7GlYf4JUI6GiN38/Nxc18KtU3EoB64ErJmJs2wz3bsEtkjiS5K7i0b5oatjwUNv8viekkD2iTjboP8sAxXW2YkY3JnS5wFAFY/CKIKJ7sZuyMQH/WiVrOoipi4Mn9CX7zK6X0I+88tGFvmDxKyxTUM2AvZKczDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQD5WEsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Za6DiEfIthK9ERLyk6dLRkID7IbgfNYF/UmdL1w2G/QMQyZa0hxCg2+vc0iM8FkUyipgsBpTgPWkGkAym+gq5oPJmtfl+aR96xFdvYoZTphwBQPSPDo9dHTGNSQYw7m18H68RN+oVHuECmpGEiCvnGD2NS/k1EtGRNPTjAhMLJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aQ6TL6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQD5WEsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAF4C4CEE3;
-	Tue, 29 Apr 2025 17:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aQ6TL6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BFCC4CEE3;
+	Tue, 29 Apr 2025 17:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948242;
-	bh=wZjTnaDIC82VNt2J106oe4kBt8sF0m4Tgs14MQtN12Y=;
+	s=korg; t=1745948246;
+	bh=6CDYcRv/r2df/0DrE8qkTFBUhZXaEmCbBCqUreOX7t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQD5WEsL35mZ0aOZUOjBsTNTa3aigYci0/6YKb+EuwosczPqukGd08LH+v8ZV2bNC
-	 uKojBcRwa+sTdYmETykBDWVtquhDqeMqFHxlSR2facegHcFO1MZ4+9FZfO94t7aFx4
-	 qx+tdUGS1GM9v21WoFuJbGtdLWfqgmfdSQ/HWCQc=
+	b=2aQ6TL6az+f/v6UkGZlWFDBP3YT+AFkxby9cHYCi8re43V17e8tgin3Vuw45B7mS5
+	 YrT3iKgzIH/G5O025n8BYGpxqwiZyaZdrtvT7qPJSm2Dyz/B/oMCx/+1oKNhDV96Gf
+	 pyFlvnJ2CQxMMv0qS69KLmoYx9Zt4DPmNYv/FNks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/280] cgroup/cpuset: Dont allow creation of local partition over a remote one
-Date: Tue, 29 Apr 2025 18:42:24 +0200
-Message-ID: <20250429161123.438565674@linuxfoundation.org>
+Subject: [PATCH 6.12 230/280] scsi: ufs: exynos: Enable PRDT pre-fetching with UFSHCD_CAP_CRYPTO
+Date: Tue, 29 Apr 2025 18:42:51 +0200
+Message-ID: <20250429161124.531605230@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,75 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit 6da580ec656a5ed135db2cdf574b47635611a4d7 ]
+[ Upstream commit deac9ad496ec17e1ec06848964ecc635bdaca703 ]
 
-Currently, we don't allow the creation of a remote partition underneath
-another local or remote partition. However, it is currently possible to
-create a new local partition with an existing remote partition underneath
-it if top_cpuset is the parent. However, the current cpuset code does
-not set the effective exclusive CPUs correctly to account for those
-that are taken by the remote partition.
+PRDT_PREFETCH_ENABLE[31] bit should be set when desctype field of
+fmpsecurity0 register is type2 (double file encryption) or type3
+(support for file and disk encryption). Setting this bit enables PRDT
+pre-fetching on both TXPRDT and RXPRDT.
 
-Changing the code to properly account for those remote partition CPUs
-under all possible circumstances can be complex. It is much easier to
-not allow such a configuration which is not that useful. So forbid
-that by making sure that exclusive_cpus mask doesn't overlap with
-subpartitions_cpus and invalidate the partition if that happens.
-
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-5-96722cc2ba1b@linaro.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset-internal.h |  1 +
- kernel/cgroup/cpuset.c          | 14 ++++++++++++++
- 2 files changed, 15 insertions(+)
+ drivers/ufs/host/ufs-exynos.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
-index 976a8bc3ff603..383963e28ac69 100644
---- a/kernel/cgroup/cpuset-internal.h
-+++ b/kernel/cgroup/cpuset-internal.h
-@@ -33,6 +33,7 @@ enum prs_errcode {
- 	PERR_CPUSEMPTY,
- 	PERR_HKEEPING,
- 	PERR_ACCESS,
-+	PERR_REMOTE,
- };
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index 75bb0ff07b07e..626187100316b 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -34,7 +34,7 @@
+  * Exynos's Vendor specific registers for UFSHCI
+  */
+ #define HCI_TXPRDT_ENTRY_SIZE	0x00
+-#define PRDT_PREFECT_EN		BIT(31)
++#define PRDT_PREFETCH_EN	BIT(31)
+ #define HCI_RXPRDT_ENTRY_SIZE	0x04
+ #define HCI_1US_TO_CNT_VAL	0x0C
+ #define CNT_VAL_1US_MASK	0x3FF
+@@ -1066,12 +1066,17 @@ static int exynos_ufs_post_link(struct ufs_hba *hba)
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 	struct phy *generic_phy = ufs->phy;
+ 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
++	u32 val = ilog2(DATA_UNIT_SIZE);
  
- /* bits in struct cpuset flags field */
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 839f88ba17f7d..c709a05023cd9 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -62,6 +62,7 @@ static const char * const perr_strings[] = {
- 	[PERR_CPUSEMPTY] = "cpuset.cpus and cpuset.cpus.exclusive are empty",
- 	[PERR_HKEEPING]  = "partition config conflicts with housekeeping setup",
- 	[PERR_ACCESS]    = "Enable partition not permitted",
-+	[PERR_REMOTE]    = "Have remote partition underneath",
- };
+ 	exynos_ufs_establish_connt(ufs);
+ 	exynos_ufs_fit_aggr_timeout(ufs);
  
- /*
-@@ -2824,6 +2825,19 @@ static int update_prstate(struct cpuset *cs, int new_prs)
- 			goto out;
- 		}
- 
-+		/*
-+		 * We don't support the creation of a new local partition with
-+		 * a remote partition underneath it. This unsupported
-+		 * setting can happen only if parent is the top_cpuset because
-+		 * a remote partition cannot be created underneath an existing
-+		 * local or remote partition.
-+		 */
-+		if ((parent == &top_cpuset) &&
-+		    cpumask_intersects(cs->exclusive_cpus, subpartitions_cpus)) {
-+			err = PERR_REMOTE;
-+			goto out;
-+		}
+ 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
+-	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_TXPRDT_ENTRY_SIZE);
 +
- 		/*
- 		 * If parent is valid partition, enable local partiion.
- 		 * Otherwise, enable a remote partition.
++	if (hba->caps & UFSHCD_CAP_CRYPTO)
++		val |= PRDT_PREFETCH_EN;
++	hci_writel(ufs, val, HCI_TXPRDT_ENTRY_SIZE);
++
+ 	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_RXPRDT_ENTRY_SIZE);
+ 	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
+ 	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
 -- 
 2.39.5
 
