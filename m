@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0E220F06C
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 00:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6475214230
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 00:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745886868; cv=none; b=T9lJmrbAuTOyq0ksfoOsxqbxArH64dxZmr5mzBHwhRzrDwzvQloCoMDvNixX+rITMX52ShmYYO4RuBuatRpakn2fW0fyaTleUxOYZ/yd0Q2Vh70IXcuDzdHnvhlMdPpxnlNO6haRqOrNVsfNg0e7DhjmEXKNQPazokgyiAz/B8Y=
+	t=1745886869; cv=none; b=LCCwXwnlnyi8W7Bxf4RT8ObMxZD7AswlAIRzVEle93BhyPLC+D7PN2iY6CTcGaWGZGOPzzbF8B24PU1HBBhHo5tj1z408Z2B1I52Z6Lc74nQ/lAZWOFdhLqSd7CD8FRlWgCtwltWCbpPZkDIIK1FK29CF1B6gGqakQCBnRApYMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745886868; c=relaxed/simple;
-	bh=8U+X+AdbxvgBo9oLxgDF886iRXiEr6TfU7ORbMoBQ1Y=;
+	s=arc-20240116; t=1745886869; c=relaxed/simple;
+	bh=g3YsS9Ba5gWLVPZVGSbNAWbF90rXvwt3rICU9VNcUdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqOV7/pq5noyRLF4WWyeARF1Qf7nWVYuqbPz0ATDkLM8P92dkKoZTUa8sf6FD7wQXIGc48sPxP9Mdb3xbHf0lLwP5agtenilaZibFQkNEoJwHaFYUE0MYNvWW3UffuaOdOxIDRVF5aVkp7nlSgXI2dy0O8Yz8Q9Jz96qivVArCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Xq/VFjwv; arc=none smtp.client-ip=192.198.163.9
+	 MIME-Version; b=DCbzhuOV6Bo9SWwLFb1fvR4V1TACpGs39ZF5nGCGRaQDwARCc8F6g7PHPvzEtT8JmyTErjjS45LmKLa/0CfmeQgie7wSlVpwKNxm6rqALYrZzIO0lgk5a8VCF3e7s4HgU4uW3XPAuBw8hhtjF5Mr58PNZLo8PQyVZlk0NzVOWVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dJWFqNjz; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Xq/VFjwv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dJWFqNjz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1745886867; x=1777422867;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8U+X+AdbxvgBo9oLxgDF886iRXiEr6TfU7ORbMoBQ1Y=;
-  b=Xq/VFjwvbPPQxbb8HPdHw6TXBqtqScHOPO04QcBHAAeJwBlWATLAn0TC
-   4NiR804gHOhDLelXyQamsEZJxyoEFqUp82JHuqOIn4EeExovwLV95Twxo
-   FcXKC3b2uA3OtDw1zZP3TIxULDZBtUlyC5Q1bbUMEBHG8SZ5S1Y5+RxKD
-   L/hn6TNs4YPyMW64IptuYukRjfQPHL2pVtGGhAsR6Gk1QLDCX4RHWHg0G
-   OLDVkfhvS1vad3YKJhuIZCXi6x0qoUSsWc13cNoWX51c5K+ObwUaft30n
-   v+FCHO3TvjCIU4m2W+9Rq8YwXkAkTKvBS2RSNRsywNo0hluEf5viFNQRZ
-   Q==;
-X-CSE-ConnectionGUID: etn3eVk8Q+qi/WaE0G5X4g==
-X-CSE-MsgGUID: T67vIntpSr26oiLZ5PgsDw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58148236"
+  bh=g3YsS9Ba5gWLVPZVGSbNAWbF90rXvwt3rICU9VNcUdM=;
+  b=dJWFqNjzqj2fxeLizNdJinAtX5Eu0bs++Y2mpyQxb5af4sI5bRxnblx/
+   nRN0WMwvt8n3HSfvqIZ9CEbth+8nj/4BNXTRIOfiBl9xMtPkbHhBsmQYl
+   GFKQtkm5nHzp3T3hz3u6bOFzee4LWXjTLt33wtIYCa6ap+yVxoVm4mCyl
+   33qVb3oFLk+T14h8Oc5yMJhSWliLpoLWFjY0NlcANl+8TiIx+Kj5ClYIc
+   2XRxJNbZyhK7JvCJeGbTCj6ZWce3FfTcvipgmSIatvZstH/GVudE6O3Jy
+   WfD4BSWbUWUKs7eAeZdbVqKdB+/lvoviVI/R3o7F7jBgXw5TETksQ08FC
+   A==;
+X-CSE-ConnectionGUID: cIhbEE/qQ1q+9aabfTQS9w==
+X-CSE-MsgGUID: 2M8OWb3dRUCxTCZeDqc/yg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58148244"
 X-IronPort-AV: E=Sophos;i="6.15,247,1739865600"; 
-   d="scan'208";a="58148236"
+   d="scan'208";a="58148244"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:19 -0700
-X-CSE-ConnectionGUID: NmOB4kMNSv2CB59XVCKEkQ==
-X-CSE-MsgGUID: cTtCIv9xTvWV7XZ7G9inEw==
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:20 -0700
+X-CSE-ConnectionGUID: +6bIUJcYQWeJfw0FKNCM8A==
+X-CSE-MsgGUID: L7bfGbOBSSS8PG7+BavF/A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,247,1739865600"; 
-   d="scan'208";a="133394040"
+   d="scan'208";a="133394047"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:19 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 21/31] x86/resctrl: Add fourth part of telemetry event enumeration
-Date: Mon, 28 Apr 2025 17:33:47 -0700
-Message-ID: <20250429003359.375508-22-tony.luck@intel.com>
+Subject: [PATCH v4 22/31] x86/resctrl: Read core telemetry events
+Date: Mon, 28 Apr 2025 17:33:48 -0700
+Message-ID: <20250429003359.375508-23-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250429003359.375508-1-tony.luck@intel.com>
 References: <20250429003359.375508-1-tony.luck@intel.com>
@@ -72,58 +72,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At run time when a user reads an event file the file system code
-provides the enum resctrl_event_id for the event.
+The resctrl file system passes requests to read event monitor files to
+the architecture resctrl_arch_rmid_read() function to collect values
+from hardware counters.
 
-Create a lookup table indexed by event id to provide the telem_entry
-structure and the event index into MMIO space.
+Use the resctrl resource to differentiate between calls to read legacy
+L3 events from the new telemetry events (which are attached to
+RDT_RESOURCE_PERF_PKG).
 
-Enable the events marked as readable from any CPU.
+There may be multiple devices tracking each package, so scan all of them
+and add up all counters.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/internal.h  |  5 ++++
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 34 +++++++++++++++++++++++++
+ arch/x86/kernel/cpu/resctrl/monitor.c   |  3 +++
+ 3 files changed, 42 insertions(+)
 
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 571db665eca6..dd5fe8a98304 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -170,9 +170,14 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ #ifdef CONFIG_INTEL_AET_RESCTRL
+ bool intel_aet_get_events(void);
+ void __exit intel_aet_exit(void);
++int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid, u64 *val);
+ #else
+ static inline bool intel_aet_get_events(void) { return false; }
+ static inline void intel_aet_exit(void) { };
++static inline int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid, u64 *val)
++{
++	return -EINVAL;
++}
+ #endif
+ 
+ #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
 diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 37dd493df250..e1cb6bd4788d 100644
+index e1cb6bd4788d..0bbf991da981 100644
 --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
 +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -97,6 +97,16 @@ static struct event_group *known_event_groups[] = {
+@@ -13,6 +13,7 @@
  
- #define NUM_KNOWN_GROUPS ARRAY_SIZE(known_event_groups)
+ #include <linux/cleanup.h>
+ #include <linux/cpu.h>
++#include <linux/io.h>
+ #include <linux/resctrl.h>
  
-+/**
-+ * struct evtinfo - lookup table from resctrl_event_id to useful information
-+ * @event_group:	Pointer to the telem_entry structure for this event
-+ * @idx:		Counter index within each per-RMID block of counters
-+ */
-+static struct evtinfo {
-+	struct event_group	*event_group;
-+	int			idx;
-+} evtinfo[QOS_NUM_EVENTS];
-+
- static void free_mmio_info(struct mmio_info **mmi)
- {
- 	int num_pkgs = topology_max_packages();
-@@ -167,7 +177,16 @@ static bool configure_events(struct event_group *e, struct pmt_feature_group *p)
+ /* Temporary - delete from final version */
+@@ -246,3 +247,36 @@ void __exit intel_aet_exit(void)
+ 		free_mmio_info((*peg)->pkginfo);
  	}
- 	e->pkginfo = no_free_ptr(pkginfo);
- 
--	return false;
-+	for (int i = 0; i < e->num_events; i++) {
-+		enum resctrl_event_id evt;
+ }
 +
-+		evt = e->evts[i].evtid;
-+		evtinfo[evt].event_group = e;
-+		evtinfo[evt].idx = e->evts[i].evt_idx;
-+		resctrl_enable_mon_event(evt, true);
++#define VALID_BIT	BIT_ULL(63)
++#define DATA_BITS	GENMASK_ULL(62, 0)
++
++/*
++ * Read counter for an event on a domain (summing all aggregators
++ * on the domain).
++ */
++int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid, u64 *val)
++{
++	struct evtinfo *info = &evtinfo[evtid];
++	struct mmio_info *mmi;
++	u64 evtcount;
++	int idx;
++
++	idx = rmid * info->event_group->num_events;
++	idx += info->idx;
++	mmi = info->event_group->pkginfo[domid];
++
++	if (idx * sizeof(u64) > info->event_group->mmio_size) {
++		pr_warn_once("MMIO index %d out of range\n", idx);
++		return -EINVAL;
 +	}
 +
-+	return true;
- }
++	for (int i = 0; i < mmi->count; i++) {
++		evtcount = readq(mmi->addrs[i] + idx * sizeof(u64));
++		if (!(evtcount & VALID_BIT))
++			return -EINVAL;
++		*val += evtcount & DATA_BITS;
++	}
++
++	return 0;
++}
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 8d8ec86929fa..04214585824b 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -237,6 +237,9 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
  
- DEFINE_FREE(intel_pmt_put_feature_group, struct pmt_feature_group *,	\
+ 	resctrl_arch_rmid_read_context_check();
+ 
++	if (r->rid == RDT_RESOURCE_PERF_PKG)
++		return intel_aet_read_event(d->hdr.id, rmid, eventid, val);
++
+ 	prmid = logical_rmid_to_physical_rmid(cpu, rmid);
+ 	ret = __rmid_read_phys(prmid, eventid, &msr_val);
+ 	if (ret)
 -- 
 2.48.1
 
