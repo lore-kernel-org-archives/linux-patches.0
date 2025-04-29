@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468C22528E9;
-	Tue, 29 Apr 2025 17:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F69253358;
+	Tue, 29 Apr 2025 17:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947356; cv=none; b=BXEfgDyQAqMPGkLrYNl4Sk/RaG1z9CnSRThqHgSWgnBdRM+B6JILrC1urJeJGGECec3FypJlxWmH78tMMrIVa2m17Cy59HLwo69jrVZv+XmuppMBoZiZs3Xf/cpuv8XR7hQiL7DhP8XSaXuePwSCCU/F75qLPCr8rVK5URccoiI=
+	t=1745947359; cv=none; b=iRGAC4fGgKB4ECM7lZNdb88O7jRYjKVSoMuouaNG9qZ1VMQIHZcPj/qMV8lpc9VrWmJEhdfgwUsF1B46rWbvAI4UAbbAQVGaDQjZHiSv/Cl7saUSWVqzlb8AVlgiYcNEfqF0b1isjnRLviXbI4hisIzuW3wYSHDKX5V67dLEs1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947356; c=relaxed/simple;
-	bh=B5LXtBGupVbfzgFmH6rFnf39D4qpstOjXbg5e4oVDC0=;
+	s=arc-20240116; t=1745947359; c=relaxed/simple;
+	bh=AoOLKmORzRebcz+vbpVvtGcoskGB0ToTNDuOiqYTlfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDDsiSaSS1wgwWY4e+SeMixu7GTSFFG835c3for835NWUxY+h0LrOklcToC/IjVzNOpKxbWbXeO2Ty/CxmwMJ+ATHLtsC7SjGO+s/g1VbaOBqTqKUv+bGDp/8aHZUxf2c7vKjsKbD7h9vIw40LOcLxPvJEUjHtpYgFcmwSlkXM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1bBO9Ut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tEb6OWHm5WnyJGzff3FFvg6Tmlaul+i+OH0F5gzA2SlVT1bM5Wci2FV8pN2pd74JIF4hiR+NbQZeToIBBjtsPLRjHzH7goW4en+6e3jVeF/hVASeGZKK50vjcU6hrIePmHcTZSuEhk5p+A6q7JyWJUItgUK6eftsynuVBTWT4j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuYVkmW5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1bBO9Ut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA31DC4CEEA;
-	Tue, 29 Apr 2025 17:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuYVkmW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC9CC4CEF0;
+	Tue, 29 Apr 2025 17:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947356;
-	bh=B5LXtBGupVbfzgFmH6rFnf39D4qpstOjXbg5e4oVDC0=;
+	s=korg; t=1745947359;
+	bh=AoOLKmORzRebcz+vbpVvtGcoskGB0ToTNDuOiqYTlfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1bBO9UteZaKHVYE1XsbH660RTML5KFlaQYpkey+0mfrKYhS9nWSec+Tjr3LcrdJi
-	 /cACZmDuiH//kRacVX/CwC75So3u5V5ulR+KOMZyFFwBPjw4KTE7c5ALtiQtVQJcXH
-	 BE38qGK3b9Hwc2yYsKsVPg0xhb0opq6jVheQDuQI=
+	b=ZuYVkmW50izFA4BPcjZxNpXwcRhCC2KvjCbm0yXWPiXXBgGyHaJiUuMd+tr5yztT8
+	 x/kcePZQs7BuBRSnOtlqGORSsAHRO4y1pWmXX8wJBvzP/AFoO03vpK7kEwQhCVYs1C
+	 X+7sDrY7bajS48LDYReo542kWSrC5F4MeeLHiYwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Ramesh Errabolu <Ramesh.Errabolu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/286] crypto: null - Use spin lock instead of mutex
-Date: Tue, 29 Apr 2025 18:42:38 +0200
-Message-ID: <20250429161118.369594628@linuxfoundation.org>
+Subject: [PATCH 5.10 228/286] drm/amdgpu: Remove amdgpu_device arg from free_sgt api (v2)
+Date: Tue, 29 Apr 2025 18:42:12 +0200
+Message-ID: <20250429161117.315852744@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -45,105 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ramesh Errabolu <Ramesh.Errabolu@amd.com>
 
-[ Upstream commit dcc47a028c24e793ce6d6efebfef1a1e92f80297 ]
+[ Upstream commit 5392b2af97dc5802991f953eb2687e538da4688c ]
 
-As the null algorithm may be freed in softirq context through
-af_alg, use spin locks instead of mutexes to protect the default
-null algorithm.
+Currently callers have to provide handle of amdgpu_device,
+which is not used by the implementation. It is unlikely this
+parameter will become useful in future, thus removing it
 
-Reported-by: syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+v2: squash in unused variable fix
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Ramesh Errabolu <Ramesh.Errabolu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c0dd8a9253fa ("drm/amdgpu/dma_buf: fix page_link check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/crypto_null.c | 39 ++++++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c  | 7 +------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h      | 3 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 4 +---
+ 3 files changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/crypto/crypto_null.c b/crypto/crypto_null.c
-index 5b84b0f7cc178..3378670286535 100644
---- a/crypto/crypto_null.c
-+++ b/crypto/crypto_null.c
-@@ -17,10 +17,10 @@
- #include <crypto/internal/skcipher.h>
- #include <linux/init.h>
- #include <linux/module.h>
--#include <linux/mm.h>
-+#include <linux/spinlock.h>
- #include <linux/string.h>
- 
--static DEFINE_MUTEX(crypto_default_null_skcipher_lock);
-+static DEFINE_SPINLOCK(crypto_default_null_skcipher_lock);
- static struct crypto_sync_skcipher *crypto_default_null_skcipher;
- static int crypto_default_null_skcipher_refcnt;
- 
-@@ -152,23 +152,32 @@ MODULE_ALIAS_CRYPTO("cipher_null");
- 
- struct crypto_sync_skcipher *crypto_get_default_null_skcipher(void)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+index e93ccdc5faf4e..bbbacc7b6c463 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -357,17 +357,12 @@ static void amdgpu_dma_buf_unmap(struct dma_buf_attachment *attach,
+ 				 struct sg_table *sgt,
+ 				 enum dma_data_direction dir)
  {
-+	struct crypto_sync_skcipher *ntfm = NULL;
- 	struct crypto_sync_skcipher *tfm;
- 
--	mutex_lock(&crypto_default_null_skcipher_lock);
-+	spin_lock_bh(&crypto_default_null_skcipher_lock);
- 	tfm = crypto_default_null_skcipher;
- 
- 	if (!tfm) {
--		tfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
--		if (IS_ERR(tfm))
--			goto unlock;
+-	struct dma_buf *dma_buf = attach->dmabuf;
+-	struct drm_gem_object *obj = dma_buf->priv;
+-	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
+-	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
 -
--		crypto_default_null_skcipher = tfm;
-+		spin_unlock_bh(&crypto_default_null_skcipher_lock);
-+
-+		ntfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
-+		if (IS_ERR(ntfm))
-+			return ntfm;
-+
-+		spin_lock_bh(&crypto_default_null_skcipher_lock);
-+		tfm = crypto_default_null_skcipher;
-+		if (!tfm) {
-+			tfm = ntfm;
-+			ntfm = NULL;
-+			crypto_default_null_skcipher = tfm;
-+		}
+ 	if (sgt->sgl->page_link) {
+ 		dma_unmap_sgtable(attach->dev, sgt, dir, 0);
+ 		sg_free_table(sgt);
+ 		kfree(sgt);
+ 	} else {
+-		amdgpu_vram_mgr_free_sgt(adev, attach->dev, dir, sgt);
++		amdgpu_vram_mgr_free_sgt(attach->dev, dir, sgt);
  	}
- 
- 	crypto_default_null_skcipher_refcnt++;
-+	spin_unlock_bh(&crypto_default_null_skcipher_lock);
- 
--unlock:
--	mutex_unlock(&crypto_default_null_skcipher_lock);
-+	crypto_free_sync_skcipher(ntfm);
- 
- 	return tfm;
  }
-@@ -176,12 +185,16 @@ EXPORT_SYMBOL_GPL(crypto_get_default_null_skcipher);
  
- void crypto_put_default_null_skcipher(void)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
+index a87951b2f06dd..bd873b1b760cf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
+@@ -113,8 +113,7 @@ int amdgpu_vram_mgr_alloc_sgt(struct amdgpu_device *adev,
+ 			      struct device *dev,
+ 			      enum dma_data_direction dir,
+ 			      struct sg_table **sgt);
+-void amdgpu_vram_mgr_free_sgt(struct amdgpu_device *adev,
+-			      struct device *dev,
++void amdgpu_vram_mgr_free_sgt(struct device *dev,
+ 			      enum dma_data_direction dir,
+ 			      struct sg_table *sgt);
+ uint64_t amdgpu_vram_mgr_usage(struct ttm_resource_manager *man);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+index 2c3a94e939bab..ad72db21b8d62 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -530,15 +530,13 @@ int amdgpu_vram_mgr_alloc_sgt(struct amdgpu_device *adev,
+ /**
+  * amdgpu_vram_mgr_alloc_sgt - allocate and fill a sg table
+  *
+- * @adev: amdgpu device pointer
+  * @dev: device pointer
+  * @dir: data direction of resource to unmap
+  * @sgt: sg table to free
+  *
+  * Free a previously allocate sg table.
+  */
+-void amdgpu_vram_mgr_free_sgt(struct amdgpu_device *adev,
+-			      struct device *dev,
++void amdgpu_vram_mgr_free_sgt(struct device *dev,
+ 			      enum dma_data_direction dir,
+ 			      struct sg_table *sgt)
  {
--	mutex_lock(&crypto_default_null_skcipher_lock);
-+	struct crypto_sync_skcipher *tfm = NULL;
-+
-+	spin_lock_bh(&crypto_default_null_skcipher_lock);
- 	if (!--crypto_default_null_skcipher_refcnt) {
--		crypto_free_sync_skcipher(crypto_default_null_skcipher);
-+		tfm = crypto_default_null_skcipher;
- 		crypto_default_null_skcipher = NULL;
- 	}
--	mutex_unlock(&crypto_default_null_skcipher_lock);
-+	spin_unlock_bh(&crypto_default_null_skcipher_lock);
-+
-+	crypto_free_sync_skcipher(tfm);
- }
- EXPORT_SYMBOL_GPL(crypto_put_default_null_skcipher);
- 
 -- 
 2.39.5
 
