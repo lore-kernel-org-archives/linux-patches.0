@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771811DF73C;
-	Tue, 29 Apr 2025 17:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCDE1DF73C;
+	Tue, 29 Apr 2025 17:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946676; cv=none; b=tiqqkrNfxpSWdD9qeIHfwlygqknM/cwKhLIm1Ov0lFmyZ/54dxkVgBcLpLKu72Fn1kUE7BCf0TlFY07046YUHnimqFuWAUx3gFXR11nyZfsnboBaddSaDiS//aqG2GngtdomtF4DpfVg/eWmAU5OgtqzUpjTN1PE6z8KgWIKGak=
+	t=1745946679; cv=none; b=NwNQdNJBOHT/odaBh81PLYrg1RUbWhOM3JiYkojLOPDA2xuo+58ebx22MzrD3gcFy7CymyTTJhx8mrbFXfZ/aSHxf4A5+6ZmaSiDhFdbWDGWS8NeB/nC9FSQ4aYNOq5k2aEv/2Eu7/LT61Tv66usgbuT5hfbyXTZ8fXeBGFL6o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946676; c=relaxed/simple;
-	bh=4jr5cyL8lorZiWfUplsg7HcdZ/xtPJ4GtEG3L0ioaDM=;
+	s=arc-20240116; t=1745946679; c=relaxed/simple;
+	bh=B4eHYS9/KP+sd5I/YXfi2Utg4VhnqNZOCCU0HMC6FQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoyau1fq2tofxzG6fA0RMT625Y+OMtZJTja8XNaMTid1+Rbg7bO2QXDrho752eh3N8DuOYSApM6/86rKq9C/Uz29f55PPQ7TTRf+sqiPX/mTbDn6rln/LndI/ML9wYqMhM68LDOQ8SAFtdiKXifDtvFxPf//9WiBLk0r+JKxOks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVJBSfWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZ7KMwNd7BSn95KuXPe4hF60cEofRHo5tIe231fNpUIjKDmMcwcFY5boMAIEz8LWI0zhwdwTIk3uo8DOort1NqifrJkxwfarH41bjzrahcIRcsB1a8SihpXXjqz9v4/uVuohMW7kYuGR3Q8c3WVpazst7oEg+eXJMYuiv9XT1Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=danJT2ta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVJBSfWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31C0C4CEE3;
-	Tue, 29 Apr 2025 17:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="danJT2ta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4000AC4CEE3;
+	Tue, 29 Apr 2025 17:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946676;
-	bh=4jr5cyL8lorZiWfUplsg7HcdZ/xtPJ4GtEG3L0ioaDM=;
+	s=korg; t=1745946679;
+	bh=B4eHYS9/KP+sd5I/YXfi2Utg4VhnqNZOCCU0HMC6FQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVJBSfWqtYGB41D+lsI6KStoP70Jo46NPFS1ShXZlVCdsMk8f6lbxdG42b8N3r+H2
-	 orX7SqXBGbLiLcZchyHp2DjsP3XCfqL/ltS4jXZOtZgXbSUN+WM6csq3UqYWIUpag1
-	 fcfsoJG4lMkJwgkg3k9JGZsdy9sd2iJKzHGJYLH8=
+	b=danJT2ta2umDZiL6uD0hp/kjhbgTA5Jyy/1n7IgMBwH+QgmuzKsqwQWWO+1MMwMWV
+	 S4O4NHCz+PUD2CVMmGVpiM9Fs6OgwdwervCahU7fsa0Z5ifWbfaOuLzpJNwqHeHKDx
+	 uJgTOaf7yn5W0rY+3UPBK+puEmG5yOtlvSEh2pJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/286] net: tls: explicitly disallow disconnect
-Date: Tue, 29 Apr 2025 18:38:28 +0200
-Message-ID: <20250429161108.036398905@linuxfoundation.org>
+Subject: [PATCH 5.10 005/286] ata: sata_sx4: Drop pointless VPRINTK() calls and convert the remaining ones
+Date: Tue, 29 Apr 2025 18:38:29 +0200
+Message-ID: <20250429161108.079161832@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,67 +51,355 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 5071a1e606b30c0c11278d3c6620cd6a24724cf6 ]
+[ Upstream commit bc21c1056d08525d9c5a5d74db4b8f14e6691991 ]
 
-syzbot discovered that it can disconnect a TLS socket and then
-run into all sort of unexpected corner cases. I have a vague
-recollection of Eric pointing this out to us a long time ago.
-Supporting disconnect is really hard, for one thing if offload
-is enabled we'd need to wait for all packets to be _acked_.
-Disconnect is not commonly used, disallow it.
+Drop pointless VPRINTK() calls for setting up SG tables
+and convert the remaining calls to structured logging.
 
-The immediate problem syzbot run into is the warning in the strp,
-but that's just the easiest bug to trigger:
-
-  WARNING: CPU: 0 PID: 5834 at net/tls/tls_strp.c:486 tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  RIP: 0010:tls_strp_msg_load+0x72e/0xa80 net/tls/tls_strp.c:486
-  Call Trace:
-   <TASK>
-   tls_rx_rec_wait+0x280/0xa60 net/tls/tls_sw.c:1363
-   tls_sw_recvmsg+0x85c/0x1c30 net/tls/tls_sw.c:2043
-   inet6_recvmsg+0x2c9/0x730 net/ipv6/af_inet6.c:678
-   sock_recvmsg_nosec net/socket.c:1023 [inline]
-   sock_recvmsg+0x109/0x280 net/socket.c:1045
-   __sys_recvfrom+0x202/0x380 net/socket.c:2237
-
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Reported-by: syzbot+b4cd76826045a1eb93c1@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250404180334.3224206-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Stable-dep-of: 8d46a2708503 ("ata: sata_sx4: Add error handling in pdc20621_i2c_read()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/ata/sata_sx4.c | 105 +++++++++++++----------------------------
+ 1 file changed, 34 insertions(+), 71 deletions(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index ebf856cf821da..9d7b52370155b 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -623,6 +623,11 @@ static int tls_setsockopt(struct sock *sk, int level, int optname,
- 	return do_tls_setsockopt(sk, optname, optval, optlen);
+diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
+index c95685f693a68..7b28334aa26a2 100644
+--- a/drivers/ata/sata_sx4.c
++++ b/drivers/ata/sata_sx4.c
+@@ -308,15 +308,9 @@ static inline void pdc20621_ata_sg(u8 *buf, unsigned int portno,
+ 	/* output ATA packet S/G table */
+ 	addr = PDC_20621_DIMM_BASE + PDC_20621_DIMM_DATA +
+ 	       (PDC_DIMM_DATA_STEP * portno);
+-	VPRINTK("ATA sg addr 0x%x, %d\n", addr, addr);
++
+ 	buf32[dw] = cpu_to_le32(addr);
+ 	buf32[dw + 1] = cpu_to_le32(total_len | ATA_PRD_EOT);
+-
+-	VPRINTK("ATA PSG @ %x == (0x%x, 0x%x)\n",
+-		PDC_20621_DIMM_BASE +
+-		       (PDC_DIMM_WINDOW_STEP * portno) +
+-		       PDC_DIMM_APKT_PRD,
+-		buf32[dw], buf32[dw + 1]);
  }
  
-+static int tls_disconnect(struct sock *sk, int flags)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- struct tls_context *tls_ctx_create(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
-@@ -717,6 +722,7 @@ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
- 	prot[TLS_BASE][TLS_BASE] = *base;
- 	prot[TLS_BASE][TLS_BASE].setsockopt	= tls_setsockopt;
- 	prot[TLS_BASE][TLS_BASE].getsockopt	= tls_getsockopt;
-+	prot[TLS_BASE][TLS_BASE].disconnect	= tls_disconnect;
- 	prot[TLS_BASE][TLS_BASE].close		= tls_sk_proto_close;
+ static inline void pdc20621_host_sg(u8 *buf, unsigned int portno,
+@@ -332,12 +326,6 @@ static inline void pdc20621_host_sg(u8 *buf, unsigned int portno,
  
- 	prot[TLS_SW][TLS_BASE] = prot[TLS_BASE][TLS_BASE];
+ 	buf32[dw] = cpu_to_le32(addr);
+ 	buf32[dw + 1] = cpu_to_le32(total_len | ATA_PRD_EOT);
+-
+-	VPRINTK("HOST PSG @ %x == (0x%x, 0x%x)\n",
+-		PDC_20621_DIMM_BASE +
+-		       (PDC_DIMM_WINDOW_STEP * portno) +
+-		       PDC_DIMM_HPKT_PRD,
+-		buf32[dw], buf32[dw + 1]);
+ }
+ 
+ static inline unsigned int pdc20621_ata_pkt(struct ata_taskfile *tf,
+@@ -351,7 +339,6 @@ static inline unsigned int pdc20621_ata_pkt(struct ata_taskfile *tf,
+ 	unsigned int dimm_sg = PDC_20621_DIMM_BASE +
+ 			       (PDC_DIMM_WINDOW_STEP * portno) +
+ 			       PDC_DIMM_APKT_PRD;
+-	VPRINTK("ENTER, dimm_sg == 0x%x, %d\n", dimm_sg, dimm_sg);
+ 
+ 	i = PDC_DIMM_ATA_PKT;
+ 
+@@ -406,8 +393,6 @@ static inline void pdc20621_host_pkt(struct ata_taskfile *tf, u8 *buf,
+ 	unsigned int dimm_sg = PDC_20621_DIMM_BASE +
+ 			       (PDC_DIMM_WINDOW_STEP * portno) +
+ 			       PDC_DIMM_HPKT_PRD;
+-	VPRINTK("ENTER, dimm_sg == 0x%x, %d\n", dimm_sg, dimm_sg);
+-	VPRINTK("host_sg == 0x%x, %d\n", host_sg, host_sg);
+ 
+ 	dw = PDC_DIMM_HOST_PKT >> 2;
+ 
+@@ -424,14 +409,6 @@ static inline void pdc20621_host_pkt(struct ata_taskfile *tf, u8 *buf,
+ 	buf32[dw + 1] = cpu_to_le32(host_sg);
+ 	buf32[dw + 2] = cpu_to_le32(dimm_sg);
+ 	buf32[dw + 3] = 0;
+-
+-	VPRINTK("HOST PKT @ %x == (0x%x 0x%x 0x%x 0x%x)\n",
+-		PDC_20621_DIMM_BASE + (PDC_DIMM_WINDOW_STEP * portno) +
+-			PDC_DIMM_HOST_PKT,
+-		buf32[dw + 0],
+-		buf32[dw + 1],
+-		buf32[dw + 2],
+-		buf32[dw + 3]);
+ }
+ 
+ static void pdc20621_dma_prep(struct ata_queued_cmd *qc)
+@@ -447,8 +424,6 @@ static void pdc20621_dma_prep(struct ata_queued_cmd *qc)
+ 
+ 	WARN_ON(!(qc->flags & ATA_QCFLAG_DMAMAP));
+ 
+-	VPRINTK("ata%u: ENTER\n", ap->print_id);
+-
+ 	/* hard-code chip #0 */
+ 	mmio += PDC_CHIP0_OFS;
+ 
+@@ -492,7 +467,8 @@ static void pdc20621_dma_prep(struct ata_queued_cmd *qc)
+ 
+ 	readl(dimm_mmio);	/* MMIO PCI posting flush */
+ 
+-	VPRINTK("ata pkt buf ofs %u, prd size %u, mmio copied\n", i, sgt_len);
++	ata_port_dbg(ap, "ata pkt buf ofs %u, prd size %u, mmio copied\n",
++		     i, sgt_len);
+ }
+ 
+ static void pdc20621_nodata_prep(struct ata_queued_cmd *qc)
+@@ -504,8 +480,6 @@ static void pdc20621_nodata_prep(struct ata_queued_cmd *qc)
+ 	unsigned int portno = ap->port_no;
+ 	unsigned int i;
+ 
+-	VPRINTK("ata%u: ENTER\n", ap->print_id);
+-
+ 	/* hard-code chip #0 */
+ 	mmio += PDC_CHIP0_OFS;
+ 
+@@ -527,7 +501,7 @@ static void pdc20621_nodata_prep(struct ata_queued_cmd *qc)
+ 
+ 	readl(dimm_mmio);	/* MMIO PCI posting flush */
+ 
+-	VPRINTK("ata pkt buf ofs %u, mmio copied\n", i);
++	ata_port_dbg(ap, "ata pkt buf ofs %u, mmio copied\n", i);
+ }
+ 
+ static enum ata_completion_errors pdc20621_qc_prep(struct ata_queued_cmd *qc)
+@@ -633,8 +607,6 @@ static void pdc20621_packet_start(struct ata_queued_cmd *qc)
+ 	/* hard-code chip #0 */
+ 	mmio += PDC_CHIP0_OFS;
+ 
+-	VPRINTK("ata%u: ENTER\n", ap->print_id);
+-
+ 	wmb();			/* flush PRD, pkt writes */
+ 
+ 	port_ofs = PDC_20621_DIMM_BASE + (PDC_DIMM_WINDOW_STEP * port_no);
+@@ -645,7 +617,7 @@ static void pdc20621_packet_start(struct ata_queued_cmd *qc)
+ 
+ 		pdc20621_dump_hdma(qc);
+ 		pdc20621_push_hdma(qc, seq, port_ofs + PDC_DIMM_HOST_PKT);
+-		VPRINTK("queued ofs 0x%x (%u), seq %u\n",
++		ata_port_dbg(ap, "queued ofs 0x%x (%u), seq %u\n",
+ 			port_ofs + PDC_DIMM_HOST_PKT,
+ 			port_ofs + PDC_DIMM_HOST_PKT,
+ 			seq);
+@@ -656,7 +628,7 @@ static void pdc20621_packet_start(struct ata_queued_cmd *qc)
+ 		writel(port_ofs + PDC_DIMM_ATA_PKT,
+ 		       ap->ioaddr.cmd_addr + PDC_PKT_SUBMIT);
+ 		readl(ap->ioaddr.cmd_addr + PDC_PKT_SUBMIT);
+-		VPRINTK("submitted ofs 0x%x (%u), seq %u\n",
++		ata_port_dbg(ap, "submitted ofs 0x%x (%u), seq %u\n",
+ 			port_ofs + PDC_DIMM_ATA_PKT,
+ 			port_ofs + PDC_DIMM_ATA_PKT,
+ 			seq);
+@@ -696,14 +668,12 @@ static inline unsigned int pdc20621_host_intr(struct ata_port *ap,
+ 	u8 status;
+ 	unsigned int handled = 0;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	if ((qc->tf.protocol == ATA_PROT_DMA) &&	/* read */
+ 	    (!(qc->tf.flags & ATA_TFLAG_WRITE))) {
+ 
+ 		/* step two - DMA from DIMM to host */
+ 		if (doing_hdma) {
+-			VPRINTK("ata%u: read hdma, 0x%x 0x%x\n", ap->print_id,
++			ata_port_dbg(ap, "read hdma, 0x%x 0x%x\n",
+ 				readl(mmio + 0x104), readl(mmio + PDC_HDMA_CTLSTAT));
+ 			/* get drive status; clear intr; complete txn */
+ 			qc->err_mask |= ac_err_mask(ata_wait_idle(ap));
+@@ -714,7 +684,7 @@ static inline unsigned int pdc20621_host_intr(struct ata_port *ap,
+ 		/* step one - exec ATA command */
+ 		else {
+ 			u8 seq = (u8) (port_no + 1 + 4);
+-			VPRINTK("ata%u: read ata, 0x%x 0x%x\n", ap->print_id,
++			ata_port_dbg(ap, "read ata, 0x%x 0x%x\n",
+ 				readl(mmio + 0x104), readl(mmio + PDC_HDMA_CTLSTAT));
+ 
+ 			/* submit hdma pkt */
+@@ -729,7 +699,7 @@ static inline unsigned int pdc20621_host_intr(struct ata_port *ap,
+ 		/* step one - DMA from host to DIMM */
+ 		if (doing_hdma) {
+ 			u8 seq = (u8) (port_no + 1);
+-			VPRINTK("ata%u: write hdma, 0x%x 0x%x\n", ap->print_id,
++			ata_port_dbg(ap, "write hdma, 0x%x 0x%x\n",
+ 				readl(mmio + 0x104), readl(mmio + PDC_HDMA_CTLSTAT));
+ 
+ 			/* submit ata pkt */
+@@ -742,7 +712,7 @@ static inline unsigned int pdc20621_host_intr(struct ata_port *ap,
+ 
+ 		/* step two - execute ATA command */
+ 		else {
+-			VPRINTK("ata%u: write ata, 0x%x 0x%x\n", ap->print_id,
++			ata_port_dbg(ap, "write ata, 0x%x 0x%x\n",
+ 				readl(mmio + 0x104), readl(mmio + PDC_HDMA_CTLSTAT));
+ 			/* get drive status; clear intr; complete txn */
+ 			qc->err_mask |= ac_err_mask(ata_wait_idle(ap));
+@@ -755,7 +725,7 @@ static inline unsigned int pdc20621_host_intr(struct ata_port *ap,
+ 	} else if (qc->tf.protocol == ATA_PROT_NODATA) {
+ 
+ 		status = ata_sff_busy_wait(ap, ATA_BUSY | ATA_DRQ, 1000);
+-		DPRINTK("BUS_NODATA (drv_stat 0x%X)\n", status);
++		ata_port_dbg(ap, "BUS_NODATA (drv_stat 0x%X)\n", status);
+ 		qc->err_mask |= ac_err_mask(status);
+ 		ata_qc_complete(qc);
+ 		handled = 1;
+@@ -781,29 +751,21 @@ static irqreturn_t pdc20621_interrupt(int irq, void *dev_instance)
+ 	unsigned int handled = 0;
+ 	void __iomem *mmio_base;
+ 
+-	VPRINTK("ENTER\n");
+-
+-	if (!host || !host->iomap[PDC_MMIO_BAR]) {
+-		VPRINTK("QUICK EXIT\n");
++	if (!host || !host->iomap[PDC_MMIO_BAR])
+ 		return IRQ_NONE;
+-	}
+ 
+ 	mmio_base = host->iomap[PDC_MMIO_BAR];
+ 
+ 	/* reading should also clear interrupts */
+ 	mmio_base += PDC_CHIP0_OFS;
+ 	mask = readl(mmio_base + PDC_20621_SEQMASK);
+-	VPRINTK("mask == 0x%x\n", mask);
+ 
+-	if (mask == 0xffffffff) {
+-		VPRINTK("QUICK EXIT 2\n");
++	if (mask == 0xffffffff)
+ 		return IRQ_NONE;
+-	}
++
+ 	mask &= 0xffff;		/* only 16 tags possible */
+-	if (!mask) {
+-		VPRINTK("QUICK EXIT 3\n");
++	if (!mask)
+ 		return IRQ_NONE;
+-	}
+ 
+ 	spin_lock(&host->lock);
+ 
+@@ -816,7 +778,8 @@ static irqreturn_t pdc20621_interrupt(int irq, void *dev_instance)
+ 		else
+ 			ap = host->ports[port_no];
+ 		tmp = mask & (1 << i);
+-		VPRINTK("seq %u, port_no %u, ap %p, tmp %x\n", i, port_no, ap, tmp);
++		if (ap)
++			ata_port_dbg(ap, "seq %u, tmp %x\n", i, tmp);
+ 		if (tmp && ap) {
+ 			struct ata_queued_cmd *qc;
+ 
+@@ -829,10 +792,6 @@ static irqreturn_t pdc20621_interrupt(int irq, void *dev_instance)
+ 
+ 	spin_unlock(&host->lock);
+ 
+-	VPRINTK("mask == 0x%x\n", mask);
+-
+-	VPRINTK("EXIT\n");
+-
+ 	return IRQ_RETVAL(handled);
+ }
+ 
+@@ -1272,7 +1231,7 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 	/* Initialize Time Period Register */
+ 	writel(0xffffffff, mmio + PDC_TIME_PERIOD);
+ 	time_period = readl(mmio + PDC_TIME_PERIOD);
+-	VPRINTK("Time Period Register (0x40): 0x%x\n", time_period);
++	dev_dbg(host->dev, "Time Period Register (0x40): 0x%x\n", time_period);
+ 
+ 	/* Enable timer */
+ 	writel(PDC_TIMER_DEFAULT, mmio + PDC_TIME_CONTROL);
+@@ -1287,7 +1246,7 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 	*/
+ 
+ 	tcount = readl(mmio + PDC_TIME_COUNTER);
+-	VPRINTK("Time Counter Register (0x44): 0x%x\n", tcount);
++	dev_dbg(host->dev, "Time Counter Register (0x44): 0x%x\n", tcount);
+ 
+ 	/*
+ 	   If SX4 is on PCI-X bus, after 3 seconds, the timer counter
+@@ -1295,17 +1254,19 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 	*/
+ 	if (tcount >= PCI_X_TCOUNT) {
+ 		ticks = (time_period - tcount);
+-		VPRINTK("Num counters 0x%x (%d)\n", ticks, ticks);
++		dev_dbg(host->dev, "Num counters 0x%x (%d)\n", ticks, ticks);
+ 
+ 		clock = (ticks / 300000);
+-		VPRINTK("10 * Internal clk = 0x%x (%d)\n", clock, clock);
++		dev_dbg(host->dev, "10 * Internal clk = 0x%x (%d)\n",
++			clock, clock);
+ 
+ 		clock = (clock * 33);
+-		VPRINTK("10 * Internal clk * 33 = 0x%x (%d)\n", clock, clock);
++		dev_dbg(host->dev, "10 * Internal clk * 33 = 0x%x (%d)\n",
++			clock, clock);
+ 
+ 		/* PLL F Param (bit 22:16) */
+ 		fparam = (1400000 / clock) - 2;
+-		VPRINTK("PLL F Param: 0x%x (%d)\n", fparam, fparam);
++		dev_dbg(host->dev, "PLL F Param: 0x%x (%d)\n", fparam, fparam);
+ 
+ 		/* OD param = 0x2 (bit 31:30), R param = 0x5 (bit 29:25) */
+ 		pci_status = (0x8a001824 | (fparam << 16));
+@@ -1313,7 +1274,7 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 		pci_status = PCI_PLL_INIT;
+ 
+ 	/* Initialize PLL. */
+-	VPRINTK("pci_status: 0x%x\n", pci_status);
++	dev_dbg(host->dev, "pci_status: 0x%x\n", pci_status);
+ 	writel(pci_status, mmio + PDC_CTL_STATUS);
+ 	readl(mmio + PDC_CTL_STATUS);
+ 
+@@ -1325,15 +1286,16 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 		printk(KERN_ERR "Detect Local DIMM Fail\n");
+ 		return 1;	/* DIMM error */
+ 	}
+-	VPRINTK("Local DIMM Speed = %d\n", speed);
++	dev_dbg(host->dev, "Local DIMM Speed = %d\n", speed);
+ 
+ 	/* Programming DIMM0 Module Control Register (index_CID0:80h) */
+ 	size = pdc20621_prog_dimm0(host);
+-	VPRINTK("Local DIMM Size = %dMB\n", size);
++	dev_dbg(host->dev, "Local DIMM Size = %dMB\n", size);
+ 
+ 	/* Programming DIMM Module Global Control Register (index_CID0:88h) */
+ 	if (pdc20621_prog_dimm_global(host)) {
+-		printk(KERN_ERR "Programming DIMM Module Global Control Register Fail\n");
++		dev_err(host->dev,
++			"Programming DIMM Module Global Control Register Fail\n");
+ 		return 1;
+ 	}
+ 
+@@ -1370,13 +1332,14 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 
+ 	if (!pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
+ 			       PDC_DIMM_SPD_TYPE, &spd0)) {
+-		pr_err("Failed in i2c read: device=%#x, subaddr=%#x\n",
++		dev_err(host->dev,
++			"Failed in i2c read: device=%#x, subaddr=%#x\n",
+ 		       PDC_DIMM0_SPD_DEV_ADDRESS, PDC_DIMM_SPD_TYPE);
+ 		return 1;
+ 	}
+ 	if (spd0 == 0x02) {
+ 		void *buf;
+-		VPRINTK("Start ECC initialization\n");
++		dev_dbg(host->dev, "Start ECC initialization\n");
+ 		addr = 0;
+ 		length = size * 1024 * 1024;
+ 		buf = kzalloc(ECC_ERASE_BUF_SZ, GFP_KERNEL);
+@@ -1388,7 +1351,7 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
+ 			addr += ECC_ERASE_BUF_SZ;
+ 		}
+ 		kfree(buf);
+-		VPRINTK("Finish ECC initialization\n");
++		dev_dbg(host->dev, "Finish ECC initialization\n");
+ 	}
+ 	return 0;
+ }
 -- 
 2.39.5
 
