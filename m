@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1520540C03;
-	Tue, 29 Apr 2025 18:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F30F40C03;
+	Tue, 29 Apr 2025 18:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950037; cv=none; b=nPMz0Qxmxh2eqwULNN/v1AeF7dhs9OkMm5WyoClVFPj99bmYLgsvwePeoZ4pn2zo2C5YKn99FRPT7UqO30OkayA/fYVZC/Ry/1Kl1OXvY8/MeJmcKJdZeOqgXoEaQuIqbmohJyqh+2zuizfHvKvaiaJTwH2tro3sleL00NUVi9s=
+	t=1745950040; cv=none; b=njG3F6ad+mTPI1Cpe2lGV19kqKHmZrEIfb6ZYZNXcsnyolNZEEgnR0VbPrjz8G9rNHbD3QtkGg2dyDogCgi614XHcZi9IEbmAm3SBs98mVfIPiQZBOmAHhisxflTK1nqj7Sx2Cjm3balh3Fz1y8kxVbKwhyQ9QhFx4olKiVK1Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950037; c=relaxed/simple;
-	bh=2f2BFX0ix6FYTAjaHFLSpPt2UGs3zlou4/dHcTY0zxQ=;
+	s=arc-20240116; t=1745950040; c=relaxed/simple;
+	bh=MLZ32R8dqj19H184XbTIA+MhLmtmzCTmee7gIi10zLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDeeMLg1sTPpMEM6pVdgn1+fJoJaZi4wPpveo+gTOWJ2T0/DyVmFwmxbPf4/Si+orUn0EW8QvGDtB5cbridWjqjmDoRNqS0oS9SxBo8fc6eT1nNsA7pe8KPCMxJUoSao/LEDGVodBRYP5JmtOxPIIUq43j4pcLM6RnQGmYkJiCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UELRJItz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WckZZRcCSUFEqSSmpVphhL8hRSLUbedP5PB303Yqkctxews7RIlijuPjWq6gQ6hSXRBqE7gWbkjOAkLnxlWTVhNPtkazsFMlb7KjjofYze2rwsGP1C44cvFrkZ8M40vEUT0JqU2mMQ5/2JXpszOjwkuvCz7RNX1JwZfWug9PhDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIhPevMZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UELRJItz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78838C4CEE3;
-	Tue, 29 Apr 2025 18:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIhPevMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E65C4CEEA;
+	Tue, 29 Apr 2025 18:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950037;
-	bh=2f2BFX0ix6FYTAjaHFLSpPt2UGs3zlou4/dHcTY0zxQ=;
+	s=korg; t=1745950040;
+	bh=MLZ32R8dqj19H184XbTIA+MhLmtmzCTmee7gIi10zLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UELRJItzKEExkGIUb5vj5m4p5C5sDXKx3ZG2fGAzLLfJs0vnU3hoDG0i9JGoj6yeJ
-	 pyfEhYqyMHJQz4r85jIKdIy+BL1BtTS8LeQcSuR/W8dZgYnUGW75Adx50y01QKyZIS
-	 1ZDM4A8XLznaNVgtr6s58G9MLnL3A1SbEk+rFhQA=
+	b=tIhPevMZURHbBgqvzW4Re+Ok6ec6kgUy9C1aRJD2MKUtKwrGepUPK6s/QN292WTzZ
+	 lSUD0cPom+85eVwdH/iY9+Ov5b4DsjlDCVchF554pjKFm8N0AFP+hPDQ13EKZ+rsWA
+	 aLJGHGyqdCNzA8rny/sy3wsX/t7ZBkyls+e0OkmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/167] nvmet-fc: take tgtport reference only once
-Date: Tue, 29 Apr 2025 18:44:05 +0200
-Message-ID: <20250429161057.272460283@linuxfoundation.org>
+Subject: [PATCH 6.1 138/167] nvmet-fc: put ref when assoc->del_work is already scheduled
+Date: Tue, 29 Apr 2025 18:44:06 +0200
+Message-ID: <20250429161057.312006062@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -54,73 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit b0b26ad0e1943de25ce82a7e5af3574f31b1cf99 ]
+[ Upstream commit 70289ae5cac4d3a39575405aaf63330486cea030 ]
 
-The reference counting code can be simplified. Instead taking a tgtport
-refrerence at the beginning of nvmet_fc_alloc_hostport and put it back
-if not a new hostport object is allocated, only take it when a new
-hostport object is allocated.
+Do not leak the tgtport reference when the work is already scheduled.
 
 Signed-off-by: Daniel Wagner <wagi@kernel.org>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/nvme/target/fc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index d40d5a4ea932e..68ff9540e2d13 100644
+index 68ff9540e2d13..570c58d2b5a58 100644
 --- a/drivers/nvme/target/fc.c
 +++ b/drivers/nvme/target/fc.c
-@@ -1030,33 +1030,24 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
- 	struct nvmet_fc_hostport *newhost, *match = NULL;
- 	unsigned long flags;
+@@ -1091,7 +1091,8 @@ static void
+ nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
+ {
+ 	nvmet_fc_tgtport_get(assoc->tgtport);
+-	queue_work(nvmet_wq, &assoc->del_work);
++	if (!queue_work(nvmet_wq, &assoc->del_work))
++		nvmet_fc_tgtport_put(assoc->tgtport);
+ }
  
-+	/*
-+	 * Caller holds a reference on tgtport.
-+	 */
-+
- 	/* if LLDD not implemented, leave as NULL */
- 	if (!hosthandle)
- 		return NULL;
- 
--	/*
--	 * take reference for what will be the newly allocated hostport if
--	 * we end up using a new allocation
--	 */
--	if (!nvmet_fc_tgtport_get(tgtport))
--		return ERR_PTR(-EINVAL);
--
- 	spin_lock_irqsave(&tgtport->lock, flags);
- 	match = nvmet_fc_match_hostport(tgtport, hosthandle);
- 	spin_unlock_irqrestore(&tgtport->lock, flags);
- 
--	if (match) {
--		/* no new allocation - release reference */
--		nvmet_fc_tgtport_put(tgtport);
-+	if (match)
- 		return match;
--	}
- 
- 	newhost = kzalloc(sizeof(*newhost), GFP_KERNEL);
--	if (!newhost) {
--		/* no new allocation - release reference */
--		nvmet_fc_tgtport_put(tgtport);
-+	if (!newhost)
- 		return ERR_PTR(-ENOMEM);
--	}
- 
- 	spin_lock_irqsave(&tgtport->lock, flags);
- 	match = nvmet_fc_match_hostport(tgtport, hosthandle);
-@@ -1065,6 +1056,7 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
- 		kfree(newhost);
- 		newhost = match;
- 	} else {
-+		nvmet_fc_tgtport_get(tgtport);
- 		newhost->tgtport = tgtport;
- 		newhost->hosthandle = hosthandle;
- 		INIT_LIST_HEAD(&newhost->host_list);
+ static struct nvmet_fc_tgt_assoc *
 -- 
 2.39.5
 
