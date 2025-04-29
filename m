@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E962528E4;
-	Tue, 29 Apr 2025 16:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3858E253334;
+	Tue, 29 Apr 2025 16:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945847; cv=none; b=E8bqPvH4mOto1xZN8mUdpGwBiS5KC1+FW1G5DT1i/WMYqFU7sk+ou1pRgx8XFNDFHqDXam0PI3JfC7ssY1M+INKlyw38wrfQM5KZgL/FpEQhHw6Q73Ql2JpvgFuwvXoRcE4m0uhUoz1S+/Cg/SuhUVPaMjRH2ceY1nwGJFMQPGg=
+	t=1745945850; cv=none; b=XuirPXrndFSMvHucNKaNl0V5Wrtlkg+dFHZEFJyRDC1rMr0szlZlZtjDPcK7hwhBnQPB4+MZvKzeXuQjozTPtv6n4vzNxf4GH0rtkOFBTKGQT1eA23lcPdOFXLTSXqsreXS3Tdq0aMfrWhuXjlfuEgHgacDm/INhfxu/FbZQSsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945847; c=relaxed/simple;
-	bh=qmqFfx2CPot2lqoD1qgdVZ0b4rboO4XRkpVkKiaDJL4=;
+	s=arc-20240116; t=1745945850; c=relaxed/simple;
+	bh=hsA7nAGmkRh/Q9eC7kcwnzBzmaThCwd+71SBWmY3pxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOH5tpHfQhMoWpisN4d8fVsrjJpVSTeP4XyA14OCiV5zzd+0PxGbiKpuqvlL5uIrTg7QFL+oT9vw6pnn8KlNAnLlH0Zb7QUgN7BMGNV8Yv9SWo8UQNE1e/k097JNbNxnFJKJrY95vOXCtwu6vJASGkR/hwYCiL7WxTYx6iZdPM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4pwB7/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1BLhxfl1IvOHAM8Xy/MU2Wf2Vm1wblv/2fpGtaNDlmk/HympcPcgW+7XF8boJ1ISmSZoHIoTYXgGbxBxSPneQMfjEbMakrkmiFhItNji0Ipx5xqgxjHE6XYH5w7KrFl4Z/0KHN1Pd/EDORTCzW/OBwmCtWC2/7TgV/HDIGr5rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VL6gL8xU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4pwB7/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941F0C4CEE3;
-	Tue, 29 Apr 2025 16:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VL6gL8xU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDE0C4CEE9;
+	Tue, 29 Apr 2025 16:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945847;
-	bh=qmqFfx2CPot2lqoD1qgdVZ0b4rboO4XRkpVkKiaDJL4=;
+	s=korg; t=1745945850;
+	bh=hsA7nAGmkRh/Q9eC7kcwnzBzmaThCwd+71SBWmY3pxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4pwB7/+lPBijvAwsUzLhhBBP4eyklib9CLT1tKGrYsBNabutoV9TwNjL1O3O6Mnd
-	 3MF0Gy1k7gpFltNUtMOkKQ4XKNtHEAy+6YWw5BPQ38j1/P0FX3N1t2MCchmSJCbfEw
-	 fMPAW8iMTVwefyVsrXSM+MlBqLTrM57Z+BrHmr+c=
+	b=VL6gL8xU2nOwynJCawmzMSh9sX6BBDw+8oW/QnDyXsjcdSZi24gig8glUNNjVXNBV
+	 Uqh4WuW+eFDD05ZcgkhSDORQg9gGTSjVvqmoKqtt1a4xtTRq1lUK2HeYwGCt1Bh3k6
+	 MxNUoIqOObsy3u/DHsKj/gK552ZO0myfEORKiux0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Kovaleva <a.kovaleva@yadro.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 052/311] scsi: core: Clear flags for scsi_cmnd that did not complete
-Date: Tue, 29 Apr 2025 18:38:09 +0200
-Message-ID: <20250429161123.170442790@linuxfoundation.org>
+Subject: [PATCH 6.14 070/311] net: dsa: mt7530: sync driver-specific behavior of MT7531 variants
+Date: Tue, 29 Apr 2025 18:38:27 +0200
+Message-ID: <20250429161123.910557898@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,48 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Kovaleva <a.kovaleva@yadro.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 54bebe46871d4e56e05fcf55c1a37e7efa24e0a8 ]
+[ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
 
-Commands that have not been completed with scsi_done() do not clear the
-SCMD_INITIALIZED flag and therefore will not be properly reinitialized.
-Thus, the next time the scsi_cmnd structure is used, the command may
-fail in scsi_cmd_runtime_exceeded() due to the old jiffies_at_alloc
-value:
+MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
+most basic properties. Despite that, assisted_learning_on_cpu_port and
+mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
+or EN7581, causing the expected issues on MMIO devices.
 
-  kernel: sd 16:0:1:84: [sdts] tag#405 timing out command, waited 720s
-  kernel: sd 16:0:1:84: [sdts] tag#405 FAILED Result: hostbyte=DID_OK driverbyte=DRIVER_OK cmd_age=66636s
+Apply both settings equally also for MT7988 and EN7581 by moving both
+assignments form mt7531_setup() to mt7531_setup_common().
 
-Clear flags for commands that have not been completed by SCSI.
+This fixes unwanted flooding of packets due to unknown unicast
+during DA lookup, as well as issues with heterogenous MTU settings.
 
-Fixes: 4abafdc4360d ("block: remove the initialize_rq_fn blk_mq_ops method")
-Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
-Link: https://lore.kernel.org/r/20250324084933.15932-2-a.kovaleva@yadro.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Link: https://patch.msgid.link/89ed7ec6d4fa0395ac53ad2809742bb1ce61ed12.1745290867.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index f1cfe0bb89b20..7a31dae9aa82d 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1253,8 +1253,12 @@ EXPORT_SYMBOL_GPL(scsi_alloc_request);
-  */
- static void scsi_cleanup_rq(struct request *rq)
- {
-+	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(rq);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 5883eb93efb11..22513f3d56db1 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2541,6 +2541,9 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 	struct mt7530_priv *priv = ds->priv;
+ 	int ret, i;
+ 
++	ds->assisted_learning_on_cpu_port = true;
++	ds->mtu_enforcement_ingress = true;
 +
-+	cmd->flags = 0;
-+
- 	if (rq->rq_flags & RQF_DONTPREP) {
--		scsi_mq_uninit_cmd(blk_mq_rq_to_pdu(rq));
-+		scsi_mq_uninit_cmd(cmd);
- 		rq->rq_flags &= ~RQF_DONTPREP;
- 	}
+ 	mt753x_trap_frames(priv);
+ 
+ 	/* Enable and reset MIB counters */
+@@ -2688,9 +2691,6 @@ mt7531_setup(struct dsa_switch *ds)
+ 	if (ret)
+ 		return ret;
+ 
+-	ds->assisted_learning_on_cpu_port = true;
+-	ds->mtu_enforcement_ingress = true;
+-
+ 	return 0;
  }
+ 
 -- 
 2.39.5
 
