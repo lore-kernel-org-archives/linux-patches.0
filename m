@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48B121772B;
-	Tue, 29 Apr 2025 16:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3BA244668;
+	Tue, 29 Apr 2025 16:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945473; cv=none; b=Jo3jiTvnqpbR8tQetNVxcOI/sW9TWqFNvYslnKjxVv0TK1Pk9dc2cH/0Cey+JcMlsXJsQP5p6nFvujmZGsXtUdTCkeOasK6bftBZzFseWCrkAbVRwYBA++FA8Na6iHV0BYJLqNKYjP6q0t9TiA9/agx7Vzx/OjswWQo6mFUIJdA=
+	t=1745945476; cv=none; b=n7iixkDWO0Yv0hj27ulv143rg59cyzJ8WOfMQUwHtv26dKPGUPLuqqrmY5PrH8mOc/swSzou7gWDZ2enGqJbbeXQCbaGL3yk7+mhqYwKRw4mIavIZbHsAB/IitVsFSOIhdkvtjdlr4QKT7ihbVY1hBmkALYOqzyxOVZjPxOQG/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945473; c=relaxed/simple;
-	bh=MR2xS2sIswyVqmBjFEZTuUhc1I/M02WUZrI3yz/nveE=;
+	s=arc-20240116; t=1745945476; c=relaxed/simple;
+	bh=dppGJTzn2kqnwbVdX/mHpA+96jw3gfFKUUApwUxOhOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDjlSvWOlqUCo/fs6Sx/dVlM5ED+nE0Y1gSdXg5t4OLC5is5VbddmO3bDPq9/Y7ZNjxo2VdRy34EOjCjv7hnvmfa4Hlh59lgcLEkFOBM+IYCTgRpzZS8Ae+FbQjtCnmQrmOx7/Il3U5iLBz5Sp9p6xYWz7AlKYyLUaKXx2C/Ho0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGP9FddJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXa1J/FwoBwG9GZJ3qpSnTq868VeDxanaMvbSpfp7uBvHy4MI8aVF82uKfXT9Bg6j4GqmlBeOuhS91dOxshQpnq0zvSwAWWv75HvUGOViVkFvHUhTb5ACxwT6Sn/kt/i+iXe2+l1ul0FUMZWV2998Uh1C5wcFo2iwiQcFMVvpAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+7vtFQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGP9FddJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D823C4CEE3;
-	Tue, 29 Apr 2025 16:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+7vtFQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5273FC4CEE3;
+	Tue, 29 Apr 2025 16:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945473;
-	bh=MR2xS2sIswyVqmBjFEZTuUhc1I/M02WUZrI3yz/nveE=;
+	s=korg; t=1745945476;
+	bh=dppGJTzn2kqnwbVdX/mHpA+96jw3gfFKUUApwUxOhOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGP9FddJA8Jlyi87PUShYGcPZOzgIODBUMtQpD1GUScDNfhlyLJjNIBxEIna5FE3y
-	 okU44NrE+LVWjmYFjwDP8NK0v9Wk4R+GaLnidpIBkq6UKFFimN1gG+yKrsGwZlP8Du
-	 kLZ/qTXOoHSksrdxt/hjzlR0TBAUAJGZSkIH5o7o=
+	b=P+7vtFQhvxSx7J53r4rhHOAzz1OuEAc47fKiblDb9oKBUroiwLxW3I/7TCF5B0Q5M
+	 qapP/ykjmC0715i5DoY0UhX5CKSq7xg2FITFWHSBJApnPBH67hh2yr/En4qkp/ArF7
+	 gx+6o7Ha/0qZvMTf9rVDajs//wfpynSRoPQAv0Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 084/179] wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()
-Date: Tue, 29 Apr 2025 18:40:25 +0200
-Message-ID: <20250429161052.804135240@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.4 118/179] nvmet-fc: Remove unused functions
+Date: Tue, 29 Apr 2025 18:40:59 +0200
+Message-ID: <20250429161054.176327916@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,99 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit a104042e2bf6528199adb6ca901efe7b60c2c27f ]
+commit 1b304c006b0fb4f0517a8c4ba8c46e88f48a069c upstream.
 
-The ieee80211 skb control block key (set when skb was queued) could have
-been removed before ieee80211_tx_dequeue() call. ieee80211_tx_dequeue()
-already called ieee80211_tx_h_select_key() to get the current key, but
-the latter do not update the key in skb control block in case it is
-NULL. Because some drivers actually use this key in their TX callbacks
-(e.g. ath1{1,2}k_mac_op_tx()) this could lead to the use after free
-below:
+The functions nvmet_fc_iodnum() and nvmet_fc_fodnum() are currently
+unutilized.
 
-  BUG: KASAN: slab-use-after-free in ath11k_mac_op_tx+0x590/0x61c
-  Read of size 4 at addr ffffff803083c248 by task kworker/u16:4/1440
+Following commit c53432030d86 ("nvme-fabrics: Add target support for FC
+transport"), which introduced these two functions, they have not been
+used at all in practice.
 
-  CPU: 3 UID: 0 PID: 1440 Comm: kworker/u16:4 Not tainted 6.13.0-ge128f627f404 #2
-  Hardware name: HW (DT)
-  Workqueue: bat_events batadv_send_outstanding_bcast_packet
-  Call trace:
-   show_stack+0x14/0x1c (C)
-   dump_stack_lvl+0x58/0x74
-   print_report+0x164/0x4c0
-   kasan_report+0xac/0xe8
-   __asan_report_load4_noabort+0x1c/0x24
-   ath11k_mac_op_tx+0x590/0x61c
-   ieee80211_handle_wake_tx_queue+0x12c/0x1c8
-   ieee80211_queue_skb+0xdcc/0x1b4c
-   ieee80211_tx+0x1ec/0x2bc
-   ieee80211_xmit+0x224/0x324
-   __ieee80211_subif_start_xmit+0x85c/0xcf8
-   ieee80211_subif_start_xmit+0xc0/0xec4
-   dev_hard_start_xmit+0xf4/0x28c
-   __dev_queue_xmit+0x6ac/0x318c
-   batadv_send_skb_packet+0x38c/0x4b0
-   batadv_send_outstanding_bcast_packet+0x110/0x328
-   process_one_work+0x578/0xc10
-   worker_thread+0x4bc/0xc7c
-   kthread+0x2f8/0x380
-   ret_from_fork+0x10/0x20
+Remove them to resolve the compiler warnings.
 
-  Allocated by task 1906:
-   kasan_save_stack+0x28/0x4c
-   kasan_save_track+0x1c/0x40
-   kasan_save_alloc_info+0x3c/0x4c
-   __kasan_kmalloc+0xac/0xb0
-   __kmalloc_noprof+0x1b4/0x380
-   ieee80211_key_alloc+0x3c/0xb64
-   ieee80211_add_key+0x1b4/0x71c
-   nl80211_new_key+0x2b4/0x5d8
-   genl_family_rcv_msg_doit+0x198/0x240
-  <...>
+Fix follow errors with clang-19 when W=1e:
+  drivers/nvme/target/fc.c:177:1: error: unused function 'nvmet_fc_iodnum' [-Werror,-Wunused-function]
+    177 | nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
+        | ^~~~~~~~~~~~~~~
+  drivers/nvme/target/fc.c:183:1: error: unused function 'nvmet_fc_fodnum' [-Werror,-Wunused-function]
+    183 | nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
+        | ^~~~~~~~~~~~~~~
+  2 errors generated.
+  make[8]: *** [scripts/Makefile.build:207: drivers/nvme/target/fc.o] Error 1
+  make[7]: *** [scripts/Makefile.build:465: drivers/nvme/target] Error 2
+  make[6]: *** [scripts/Makefile.build:465: drivers/nvme] Error 2
+  make[6]: *** Waiting for unfinished jobs....
 
-  Freed by task 1494:
-   kasan_save_stack+0x28/0x4c
-   kasan_save_track+0x1c/0x40
-   kasan_save_free_info+0x48/0x94
-   __kasan_slab_free+0x48/0x60
-   kfree+0xc8/0x31c
-   kfree_sensitive+0x70/0x80
-   ieee80211_key_free_common+0x10c/0x174
-   ieee80211_free_keys+0x188/0x46c
-   ieee80211_stop_mesh+0x70/0x2cc
-   ieee80211_leave_mesh+0x1c/0x60
-   cfg80211_leave_mesh+0xe0/0x280
-   cfg80211_leave+0x1e0/0x244
-  <...>
-
-Reset SKB control block key before calling ieee80211_tx_h_select_key()
-to avoid that.
-
-Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://patch.msgid.link/06aa507b853ca385ceded81c18b0a6dd0f081bc8.1742833382.git.repk@triplefau.lt
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/fc.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 461cff7b94ad7..f8d72f3e4def8 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3661,6 +3661,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
- 	 * The key can be removed while the packet was queued, so need to call
- 	 * this here to get the current key.
- 	 */
-+	info->control.hw_key = NULL;
- 	r = ieee80211_tx_h_select_key(&tx);
- 	if (r != TX_CONTINUE) {
- 		ieee80211_free_txskb(&local->hw, skb);
--- 
-2.39.5
-
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -146,20 +146,6 @@ struct nvmet_fc_tgt_assoc {
+ 	struct work_struct		del_work;
+ };
+ 
+-
+-static inline int
+-nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
+-{
+-	return (iodptr - iodptr->tgtport->iod);
+-}
+-
+-static inline int
+-nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
+-{
+-	return (fodptr - fodptr->queue->fod);
+-}
+-
+-
+ /*
+  * Association and Connection IDs:
+  *
 
 
