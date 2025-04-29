@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E283A254B19;
-	Tue, 29 Apr 2025 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FE4253328;
+	Tue, 29 Apr 2025 18:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950198; cv=none; b=DKAW7cWZTOWwI5WYS7FsHBhZ4K6YxAADVASJ1RDdM30of3KjwdTw6kbX/nQLX708w28sf1WuOrxgWQ73a/PoKstSVAG9zO9tZJE+rZKahAbl+5G0u03cHq55qyavq6xwULe3XRJ1HNYjuVLgcJ74VbmpAiWYqbbHfzT0naIhW0I=
+	t=1745950200; cv=none; b=qR1gE+4216W0w6h6kRk9XmASXut3Tm+lMBMkR/YfJFWSQ8jxZIZGeGHHFnOygoDMDOuewa/wg9OHEyD+o1FPQ6f8drSXz4ySXVanc5nIbRCusT7//lhWZlb5or0n19HruR5rgDcVKcI79QOElS5OXlxXYdxBb1U5/c8O50+J8tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950198; c=relaxed/simple;
-	bh=jMOExkdAgV94XL0UAdQT19C7/t2T0K9gjqTmrNX9AKo=;
+	s=arc-20240116; t=1745950200; c=relaxed/simple;
+	bh=chntxT41UW8FJB2wdsd+nQyoh4YCNrH18LRxFtDLcBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1lTvp1PAEzWDkr+1sH6i1x3npx2lw5OBRQeu1Cc+Mgu9SN6lnzq1ZbcrkUxzy6KJIuofqhE+vEihgoODm8ktfSmjMMe3XiPKXpEYBnWig6y5IqE645LBmiUHaUx+4wNMzbVfkVdJbkfiElCDXqSqyplSE09THaFBDSzPsC7GFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlD4evRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljRI+jBdomGltwFCiEFu96FFrxbV5P+cnupb7ztGQHlXzS7Vn52UqrBb6+5m40SgCJeWqItAoLoFM38etaVBwk7U5t8uggSWBbUMByLQ9ZL1d3wsUU+lO0Xirhym6YLID5uh/O+h6pk6T51kIHMw6gkzxXV6jSW7w+1jW7A+KEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJCQnftk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlD4evRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05713C4CEF0;
-	Tue, 29 Apr 2025 18:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJCQnftk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200AAC4CEE9;
+	Tue, 29 Apr 2025 18:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950197;
-	bh=jMOExkdAgV94XL0UAdQT19C7/t2T0K9gjqTmrNX9AKo=;
+	s=korg; t=1745950200;
+	bh=chntxT41UW8FJB2wdsd+nQyoh4YCNrH18LRxFtDLcBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlD4evRJ77cbQ/4UsdtqS4QeUdfOO6olLc12F5zBXxDQ0XP4iFLs2BKze5dhdcKbh
-	 ly9yDGrOlVSOmdSuAtw8p9TAxJ47GhKsDPFFxvtf7skBDlo5k6n27H/CUBw1wkaMQp
-	 oOlCg5RpzJbpM+9LsxSX5CjsnUC4oTTApvmorvjs=
+	b=yJCQnftk8vesZ8aXZ8HaY4693AnoxDqdb1XxQUl18yd59VrTWs4lcy2oH4BljybQK
+	 yvyc9TWTdRUrTl0S80yT5wH8UOFaAWezS+v8yuUDijf4twSbBeuliDHgVBG/LU4pGA
+	 aflDgTn0934M+gKjkXIQfWsyiVSmNvcR7/tlSYlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/204] ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs
-Date: Tue, 29 Apr 2025 18:41:47 +0200
-Message-ID: <20250429161100.212265110@linuxfoundation.org>
+Subject: [PATCH 6.6 002/204] memcg: drain obj stock on cpu hotplug teardown
+Date: Tue, 29 Apr 2025 18:41:30 +0200
+Message-ID: <20250429161059.501454979@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -53,98 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 3d4a4411aa8bbc3653ff22a1ff0432eb93d22ae0 ]
+[ Upstream commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb ]
 
-With the existing code, we are only setting up one period at a time, in a
-ping-pong buffer style. This triggers lot of underruns in the dsp
-leading to jitter noise during audio playback.
+Currently on cpu hotplug teardown, only memcg stock is drained but we
+need to drain the obj stock as well otherwise we will miss the stats
+accumulated on the target cpu as well as the nr_bytes cached. The stats
+include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
+addition we are leaking reference to struct obj_cgroup object.
 
-Fix this by scheduling all available periods, this will ensure that the dsp
-has enough buffer feed and ultimatley fixing the underruns and audio
-distortion.
-
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-Cc: stable@vger.kernel.org
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://patch.msgid.link/20250314174800.10142-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
+Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ mm/memcontrol.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index 5573802e480ba..f188d00825c03 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -70,6 +70,7 @@ struct q6apm_dai_rtd {
- 	unsigned int bytes_received;
- 	unsigned int copied_total;
- 	uint16_t bits_per_sample;
-+	snd_pcm_uframes_t queue_ptr;
- 	bool next_track;
- 	enum stream_state state;
- 	struct q6apm_graph *graph;
-@@ -134,8 +135,6 @@ static void event_handler(uint32_t opcode, uint32_t token, uint32_t *payload, vo
- 		prtd->pos += prtd->pcm_count;
- 		spin_unlock_irqrestore(&prtd->lock, flags);
- 		snd_pcm_period_elapsed(substream);
--		if (prtd->state == Q6APM_STREAM_RUNNING)
--			q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 9bf5a69e20d87..ab9afcd372a93 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2378,9 +2378,18 @@ static void drain_all_stock(struct mem_cgroup *root_memcg)
+ static int memcg_hotplug_cpu_dead(unsigned int cpu)
+ {
+ 	struct memcg_stock_pcp *stock;
++	struct obj_cgroup *old;
++	unsigned long flags;
  
- 		break;
- 	case APM_CLIENT_EVENT_DATA_READ_DONE:
-@@ -293,6 +292,27 @@ static int q6apm_dai_prepare(struct snd_soc_component *component,
+ 	stock = &per_cpu(memcg_stock, cpu);
++
++	/* drain_obj_stock requires stock_lock */
++	local_lock_irqsave(&memcg_stock.stock_lock, flags);
++	old = drain_obj_stock(stock);
++	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
++
+ 	drain_stock(stock);
++	obj_cgroup_put(old);
+ 
  	return 0;
  }
- 
-+static int q6apm_dai_ack(struct snd_soc_component *component, struct snd_pcm_substream *substream)
-+{
-+	struct snd_pcm_runtime *runtime = substream->runtime;
-+	struct q6apm_dai_rtd *prtd = runtime->private_data;
-+	int i, ret = 0, avail_periods;
-+
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+		avail_periods = (runtime->control->appl_ptr - prtd->queue_ptr)/runtime->period_size;
-+		for (i = 0; i < avail_periods; i++) {
-+			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, NO_TIMESTAMP);
-+			if (ret < 0) {
-+				dev_err(component->dev, "Error queuing playback buffer %d\n", ret);
-+				return ret;
-+			}
-+			prtd->queue_ptr += runtime->period_size;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int q6apm_dai_trigger(struct snd_soc_component *component,
- 			     struct snd_pcm_substream *substream, int cmd)
- {
-@@ -304,9 +324,6 @@ static int q6apm_dai_trigger(struct snd_soc_component *component,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
--		 /* start writing buffers for playback only as we already queued capture buffers */
--		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
- 		/* TODO support be handled via SoftPause Module */
-@@ -834,6 +851,7 @@ static const struct snd_soc_component_driver q6apm_fe_dai_component = {
- 	.hw_params	= q6apm_dai_hw_params,
- 	.pointer	= q6apm_dai_pointer,
- 	.trigger	= q6apm_dai_trigger,
-+	.ack		= q6apm_dai_ack,
- 	.compress_ops	= &q6apm_dai_compress_ops,
- 	.use_dai_pcm_id = true,
- };
 -- 
 2.39.5
 
