@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C025178B;
-	Tue, 29 Apr 2025 16:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9A42472B9;
+	Tue, 29 Apr 2025 16:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945899; cv=none; b=p0vu3jIL1CkZLJYzDeuHI1eOxvhMzn1LedfhCofpvZLnxWAH91nuiuyZ9+pWT99gdSI4R3BSnAvuv7DYvcza+xrgflgOel8jXYHuD1Wz5uKLNKTTeqjjHgcAvAp4/ne0h6QLs42DErQZAyJ1jCWR3WPkrLUNxSA4nWppvVVi+Wc=
+	t=1745945902; cv=none; b=id4WhPMk3BR9vGpGwEjAOg6o6duYIYr06Rh5tAXizsas/TAtqTCZaHBF7ZGa/0skgqFp3EdWhCT60zg+nNIgq4Tm5YWiVQrM3BfSQdNZpWeuzfEb/ZV6ggMZIqNPAlP8H+ZQI6OWWVnijBDlhNnryUNFNAtqR/VrswhyN1x+dPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945899; c=relaxed/simple;
-	bh=mL98ytNfwguR2+BvsYZzlYljUFk2g5lk9trgZ5y9EoI=;
+	s=arc-20240116; t=1745945902; c=relaxed/simple;
+	bh=3Iv8kOz0/ibC27lJh8Zv19DkUsRphhops5mmt+lvLnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foGsIGdGHVLU5OmQLS/CLfaGKK8KPxdpFRApAnxZk8bgYDDuk6eJKRlYhjsvxMIuHPcTc++tekscRl/yJlVqxMo6bvC4agAofk2fKfqgcYQsnkCfv3M2YeCTC18Q0GqSd4zkSTw+zNPvoWH0jy6WYnfrTdLk8zrP3/wfMXnyR4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJVEo83t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XExhFmccitXBayIhXTE/b+zg5vri281tQez+D57srAixr+1voHHo/ViGe5gEmeysDtn7YIfOXG9Kce9U/ZKqCsENjgLN12GimviBJdglBBMOk/1qyn8fbagFPeHpW4SHr4mTboNe+AWpN/4xq4aD3X2sH7LFXswkzTgFIThd4qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jvr0kxS5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJVEo83t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D85C4CEE9;
-	Tue, 29 Apr 2025 16:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jvr0kxS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6DAC4CEE9;
+	Tue, 29 Apr 2025 16:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945899;
-	bh=mL98ytNfwguR2+BvsYZzlYljUFk2g5lk9trgZ5y9EoI=;
+	s=korg; t=1745945901;
+	bh=3Iv8kOz0/ibC27lJh8Zv19DkUsRphhops5mmt+lvLnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJVEo83tCTN6JjbWq6S1A9NKSb+cTwM0+LzgMPdsyQ/pQQnMBvrA1wpMsSNjlHOiw
-	 8v0rTObxKzYWxiRMA1uXAz3uMqPJHukdmGDQDGDwn4PT6sdPpfzWRFxXGjxTAgVNhj
-	 8jUDxIk/iIOcze2gN0evf2/wCUYxpkvwyDh2zQF0=
+	b=Jvr0kxS5nsr+ti7qenH+N0UgGEZfENll6jlMPs7sfq3j0F6l4lE4/4lANEXRHJd1c
+	 tftKmvYclRB/2QIqQP25/CS516ZzYvDF4ccSXJcP4mOP3F2g1jyMXMlLIAJ74Frc7f
+	 IeNjtQ0AOG+CIHBE6ulwORVA7wAsMxcSi2ZzaJiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Weinberger <richard@nod.at>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 057/311] nvmet: fix out-of-bounds access in nvmet_enable_port
-Date: Tue, 29 Apr 2025 18:38:14 +0200
-Message-ID: <20250429161123.376182715@linuxfoundation.org>
+Subject: [PATCH 6.14 058/311] net: lwtunnel: disable BHs when required
+Date: Tue, 29 Apr 2025 18:38:15 +0200
+Message-ID: <20250429161123.417212905@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,47 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Weinberger <richard@nod.at>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 3d7aa0c7b4e96cd460826d932e44710cdeb3378b ]
+[ Upstream commit c03a49f3093a4903c8a93c8b5c9a297b5343b169 ]
 
-When trying to enable a port that has no transport configured yet,
-nvmet_enable_port() uses NVMF_TRTYPE_MAX (255) to query the transports
-array, causing an out-of-bounds access:
+In lwtunnel_{output|xmit}(), dev_xmit_recursion() may be called in
+preemptible scope for PREEMPT kernels. This patch disables BHs before
+calling dev_xmit_recursion(). BHs are re-enabled only at the end, since
+we must ensure the same CPU is used for both dev_xmit_recursion_inc()
+and dev_xmit_recursion_dec() (and any other recursion levels in some
+cases) in order to maintain valid per-cpu counters.
 
-[  106.058694] BUG: KASAN: global-out-of-bounds in nvmet_enable_port+0x42/0x1da
-[  106.058719] Read of size 8 at addr ffffffff89dafa58 by task ln/632
-[...]
-[  106.076026] nvmet: transport type 255 not supported
-
-Since commit 200adac75888, NVMF_TRTYPE_MAX is the default state as configured by
-nvmet_ports_make().
-Avoid this by checking for NVMF_TRTYPE_MAX before proceeding.
-
-Fixes: 200adac75888 ("nvme: Add PCI transport type")
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reported-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAADnVQJFWn3dBFJtY+ci6oN1pDFL=TzCmNbRgey7MdYxt_AP2g@mail.gmail.com/
+Reported-by: Eduard Zingerman <eddyz87@gmail.com>
+Closes: https://lore.kernel.org/netdev/m2h62qwf34.fsf@gmail.com/
+Fixes: 986ffb3a57c5 ("net: lwtunnel: fix recursion loops")
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250416160716.8823-1-justin.iurman@uliege.be
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/lwtunnel.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 2e741696f3712..6ccce0ee51573 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -324,6 +324,9 @@ int nvmet_enable_port(struct nvmet_port *port)
+diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
+index 4417a18b3e951..f63586c9ce021 100644
+--- a/net/core/lwtunnel.c
++++ b/net/core/lwtunnel.c
+@@ -332,6 +332,8 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	struct dst_entry *dst;
+ 	int ret;
  
- 	lockdep_assert_held(&nvmet_config_sem);
- 
-+	if (port->disc_addr.trtype == NVMF_TRTYPE_MAX)
-+		return -EINVAL;
++	local_bh_disable();
 +
- 	ops = nvmet_transports[port->disc_addr.trtype];
- 	if (!ops) {
- 		up_write(&nvmet_config_sem);
+ 	if (dev_xmit_recursion()) {
+ 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
+ 				     __func__);
+@@ -347,8 +349,10 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	lwtstate = dst->lwtstate;
+ 
+ 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
+-	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
+-		return 0;
++	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
++		ret = 0;
++		goto out;
++	}
+ 
+ 	ret = -EOPNOTSUPP;
+ 	rcu_read_lock();
+@@ -363,11 +367,13 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	if (ret == -EOPNOTSUPP)
+ 		goto drop;
+ 
+-	return ret;
++	goto out;
+ 
+ drop:
+ 	kfree_skb(skb);
+ 
++out:
++	local_bh_enable();
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(lwtunnel_output);
+@@ -379,6 +385,8 @@ int lwtunnel_xmit(struct sk_buff *skb)
+ 	struct dst_entry *dst;
+ 	int ret;
+ 
++	local_bh_disable();
++
+ 	if (dev_xmit_recursion()) {
+ 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
+ 				     __func__);
+@@ -395,8 +403,10 @@ int lwtunnel_xmit(struct sk_buff *skb)
+ 	lwtstate = dst->lwtstate;
+ 
+ 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
+-	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
+-		return 0;
++	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
++		ret = 0;
++		goto out;
++	}
+ 
+ 	ret = -EOPNOTSUPP;
+ 	rcu_read_lock();
+@@ -411,11 +421,13 @@ int lwtunnel_xmit(struct sk_buff *skb)
+ 	if (ret == -EOPNOTSUPP)
+ 		goto drop;
+ 
+-	return ret;
++	goto out;
+ 
+ drop:
+ 	kfree_skb(skb);
+ 
++out:
++	local_bh_enable();
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(lwtunnel_xmit);
+@@ -427,6 +439,8 @@ int lwtunnel_input(struct sk_buff *skb)
+ 	struct dst_entry *dst;
+ 	int ret;
+ 
++	DEBUG_NET_WARN_ON_ONCE(!in_softirq());
++
+ 	if (dev_xmit_recursion()) {
+ 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
+ 				     __func__);
 -- 
 2.39.5
 
