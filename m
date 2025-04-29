@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36575252296;
-	Tue, 29 Apr 2025 16:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC890242934;
+	Tue, 29 Apr 2025 16:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945785; cv=none; b=XZ1iBJrFSlkgJncIAhTH6U9V4eVOYmC0gm1WRNLZ/wjbPNMNQKruPJtdOrUF6Su6O7yAk8k6J/U8oghSeuy48t2cvjKdw8/c9doG+ePuQXBMoUDnC9grFbDSywxtX10aVDM2ZLhv+VP9OxYMuHRWRc9athr1K2no/dM6Kb3jdF4=
+	t=1745945788; cv=none; b=q+7orphl/pjPpoPk4eCU3ZvHYdNM1wJswaMWlPoMwNkkL/h4vRp9Wgm8ZerIkwHUV1JYhAoYTO3JIdGtx8U4utWwcTJkV8aLLJ5zUu9i7w7WftmUNfmhQZ+UT7s4BgPf25aItHHK5KFddWiRa8wTpCGfHQhK+J7svp+GExByblM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945785; c=relaxed/simple;
-	bh=77LSz5Jh72s+MjE84bDNNHJRdNw2YYB16qb2EqB1qw8=;
+	s=arc-20240116; t=1745945788; c=relaxed/simple;
+	bh=7kLr7SunNzVfdwnbhRtdHg2YdyCKrro8XqrhKhqxV/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/fzTcP6kxwgXT5nW4arOaN1TvBvDfu4qxxPPMCM+xosyfj5kUehGioflhDkj6xrPjtKzIYot69ayzbuUjuL1V3uOY8tPNfPqVFQn90P2yQGgDzE+aAKPE2EfnZ92IeNSFW+Qr0VCjoQY3IqoAPGL05hRF+Om8B0tHs2sy8f6nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16Jm/1ae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BA6n2hhoRDBdS1mp9o1vfLlchdM043oS1ET23FNprCD4iMI/IFxniaqmuanAAZKOw3MM78F1bduscV58m1l314Y7CQgEEmGW+9TyQAHIoh10P7LRiJ+p5Di5THmmgyH9RxcI/2QWDoAci1gF/TP1OdkOSBr4ZD3sU0O4VUrKitg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqaWB2Xw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16Jm/1ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF13BC4CEE3;
-	Tue, 29 Apr 2025 16:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqaWB2Xw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4D2C4CEE3;
+	Tue, 29 Apr 2025 16:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945785;
-	bh=77LSz5Jh72s+MjE84bDNNHJRdNw2YYB16qb2EqB1qw8=;
+	s=korg; t=1745945787;
+	bh=7kLr7SunNzVfdwnbhRtdHg2YdyCKrro8XqrhKhqxV/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16Jm/1aeH4awiPTOZwKBO2gRK7kT6LCiAu0yWDnYTTR+VksLb3gzpItea0vtsaotZ
-	 5QJJFZRaMnymjK+VTGdBYGu3Bsv3FzkbNq3MoX9sW+OBX9hpmOZqd8pkjhWK9Zgm6P
-	 rkRbfopFg1sQOxd5XjNPMmkTve+XoZDOCyfvcMcQ=
+	b=BqaWB2XwLuo5BVn6lsYc27rdrLMs0OWnrz9OnhvYq4tMicZt7DoFxx116Q6xE4m1y
+	 +sV1Z0Pwtt2czGpl55nWLzJAsSywXpDSamjniCqPAvOemRfcMiiar3FPaBQVpaT80/
+	 JyXvVrES6rgJgsaVjGFyM7k02PYy+NudYYojmD1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Juergen Gross <jgross@suse.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 021/311] PCI/MSI: Handle the NOMASK flag correctly for all PCI/MSI backends
-Date: Tue, 29 Apr 2025 18:37:38 +0200
-Message-ID: <20250429161121.899368095@linuxfoundation.org>
+Subject: [PATCH 6.14 048/311] vhost-scsi: Fix vhost_scsi_send_bad_target()
+Date: Tue, 29 Apr 2025 18:38:05 +0200
+Message-ID: <20250429161122.992386841@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -54,103 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit 3ece3e8e5976c49c3f887e5923f998eabd54ff40 ]
+[ Upstream commit b182687135474d7ed905a07cc6cb2734b359e13e ]
 
-The conversion of the XEN specific global variable pci_msi_ignore_mask to a
-MSI domain flag, missed the facts that:
+Although the support of VIRTIO_F_ANY_LAYOUT + VIRTIO_F_VERSION_1 was
+signaled by the commit 664ed90e621c ("vhost/scsi: Set
+VIRTIO_F_ANY_LAYOUT + VIRTIO_F_VERSION_1 feature bits"),
+vhost_scsi_send_bad_target() still assumes the response in a single
+descriptor.
 
-    1) Legacy architectures do not provide a interrupt domain
-    2) Parent MSI domains do not necessarily have a domain info attached
+In addition, although vhost_scsi_send_bad_target() is used by both I/O
+queue and control queue, the response header is always
+virtio_scsi_cmd_resp. It is required to use virtio_scsi_ctrl_tmf_resp or
+virtio_scsi_ctrl_an_resp for control queue.
 
-Both cases result in an unconditional NULL pointer dereference. This was
-unfortunatly missed in review and testing revealed it late.
-
-Cure this by using the existing pci_msi_domain_supports() helper, which
-handles all possible cases correctly.
-
-Fixes: c3164d2e0d18 ("PCI/MSI: Convert pci_msi_ignore_mask to per MSI domain flag")
-Reported-by: Daniel Gomez <da.gomez@kernel.org>
-Reported-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Borislav Petkov <bp@alien8.de>
-Tested-by: Daniel Gomez <da.gomez@kernel.org>
-Link: https://lore.kernel.org/all/87iknwyp2o.ffs@tglx
-Closes: https://lore.kernel.org/all/qn7fzggcj6qe6r6gdbwcz23pzdz2jx64aldccmsuheabhmjgrt@tawf5nfwuvw7
-Stable-dep-of: cf761e3dacc6 ("PCI/MSI: Add an option to write MSIX ENTRY_DATA before any reads")
+Fixes: 664ed90e621c ("vhost/scsi: Set VIRTIO_F_ANY_LAYOUT + VIRTIO_F_VERSION_1 feature bits")
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Message-Id: <20250403063028.16045-3-dongli.zhang@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/msi/msi.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ drivers/vhost/scsi.c | 48 ++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index 4c8c2b57b5f61..6569ba3577fe6 100644
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -285,8 +285,6 @@ static void pci_msi_set_enable(struct pci_dev *dev, int enable)
- static int msi_setup_msi_desc(struct pci_dev *dev, int nvec,
- 			      struct irq_affinity_desc *masks)
- {
--	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
--	const struct msi_domain_info *info = d->host_data;
- 	struct msi_desc desc;
- 	u16 control;
- 
-@@ -297,7 +295,7 @@ static int msi_setup_msi_desc(struct pci_dev *dev, int nvec,
- 	/* Lies, damned lies, and MSIs */
- 	if (dev->dev_flags & PCI_DEV_FLAGS_HAS_MSI_MASKING)
- 		control |= PCI_MSI_FLAGS_MASKBIT;
--	if (info->flags & MSI_FLAG_NO_MASK)
-+	if (pci_msi_domain_supports(dev, MSI_FLAG_NO_MASK, DENY_LEGACY))
- 		control &= ~PCI_MSI_FLAGS_MASKBIT;
- 
- 	desc.nvec_used			= nvec;
-@@ -605,20 +603,18 @@ static void __iomem *msix_map_region(struct pci_dev *dev,
-  */
- void msix_prepare_msi_desc(struct pci_dev *dev, struct msi_desc *desc)
- {
--	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
--	const struct msi_domain_info *info = d->host_data;
--
- 	desc->nvec_used				= 1;
- 	desc->pci.msi_attrib.is_msix		= 1;
- 	desc->pci.msi_attrib.is_64		= 1;
- 	desc->pci.msi_attrib.default_irq	= dev->irq;
- 	desc->pci.mask_base			= dev->msix_base;
--	desc->pci.msi_attrib.can_mask		= !(info->flags & MSI_FLAG_NO_MASK) &&
--						  !desc->pci.msi_attrib.is_virtual;
- 
--	if (desc->pci.msi_attrib.can_mask) {
-+
-+	if (!pci_msi_domain_supports(dev, MSI_FLAG_NO_MASK, DENY_LEGACY) &&
-+	    !desc->pci.msi_attrib.is_virtual) {
- 		void __iomem *addr = pci_msix_desc_addr(desc);
- 
-+		desc->pci.msi_attrib.can_mask = 1;
- 		desc->pci.msix_ctrl = readl(addr + PCI_MSIX_ENTRY_VECTOR_CTRL);
- 	}
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index ad7fa5bc0f5fc..7bfe5e5865fe9 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -947,23 +947,46 @@ vhost_scsi_send_status(struct vhost_scsi *vs, struct vhost_virtqueue *vq,
+ 		pr_err("Faulted on virtio_scsi_cmd_resp\n");
  }
-@@ -715,8 +711,6 @@ static int msix_setup_interrupts(struct pci_dev *dev, struct msix_entry *entries
- static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
- 				int nvec, struct irq_affinity *affd)
+ 
++#define TYPE_IO_CMD    0
++#define TYPE_CTRL_TMF  1
++#define TYPE_CTRL_AN   2
++
+ static void
+ vhost_scsi_send_bad_target(struct vhost_scsi *vs,
+ 			   struct vhost_virtqueue *vq,
+-			   int head, unsigned out)
++			   struct vhost_scsi_ctx *vc, int type)
  {
--	const struct irq_domain *d = dev_get_msi_domain(&dev->dev);
--	const struct msi_domain_info *info = d->host_data;
- 	int ret, tsize;
- 	u16 control;
+-	struct virtio_scsi_cmd_resp __user *resp;
+-	struct virtio_scsi_cmd_resp rsp;
++	union {
++		struct virtio_scsi_cmd_resp cmd;
++		struct virtio_scsi_ctrl_tmf_resp tmf;
++		struct virtio_scsi_ctrl_an_resp an;
++	} rsp;
++	struct iov_iter iov_iter;
++	size_t rsp_size;
+ 	int ret;
  
-@@ -747,7 +741,7 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
- 	/* Disable INTX */
- 	pci_intx_for_msi(dev, 0);
+ 	memset(&rsp, 0, sizeof(rsp));
+-	rsp.response = VIRTIO_SCSI_S_BAD_TARGET;
+-	resp = vq->iov[out].iov_base;
+-	ret = __copy_to_user(resp, &rsp, sizeof(rsp));
+-	if (!ret)
+-		vhost_add_used_and_signal(&vs->dev, vq, head, 0);
++
++	if (type == TYPE_IO_CMD) {
++		rsp_size = sizeof(struct virtio_scsi_cmd_resp);
++		rsp.cmd.response = VIRTIO_SCSI_S_BAD_TARGET;
++	} else if (type == TYPE_CTRL_TMF) {
++		rsp_size = sizeof(struct virtio_scsi_ctrl_tmf_resp);
++		rsp.tmf.response = VIRTIO_SCSI_S_BAD_TARGET;
++	} else {
++		rsp_size = sizeof(struct virtio_scsi_ctrl_an_resp);
++		rsp.an.response = VIRTIO_SCSI_S_BAD_TARGET;
++	}
++
++	iov_iter_init(&iov_iter, ITER_DEST, &vq->iov[vc->out], vc->in,
++		      rsp_size);
++
++	ret = copy_to_iter(&rsp, rsp_size, &iov_iter);
++
++	if (likely(ret == rsp_size))
++		vhost_add_used_and_signal(&vs->dev, vq, vc->head, 0);
+ 	else
+-		pr_err("Faulted on virtio_scsi_cmd_resp\n");
++		pr_err("Faulted on virtio scsi type=%d\n", type);
+ }
  
--	if (!(info->flags & MSI_FLAG_NO_MASK)) {
-+	if (!pci_msi_domain_supports(dev, MSI_FLAG_NO_MASK, DENY_LEGACY)) {
- 		/*
- 		 * Ensure that all table entries are masked to prevent
- 		 * stale entries from firing in a crash kernel.
+ static int
+@@ -1277,7 +1300,7 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 		if (ret == -ENXIO)
+ 			break;
+ 		else if (ret == -EIO)
+-			vhost_scsi_send_bad_target(vs, vq, vc.head, vc.out);
++			vhost_scsi_send_bad_target(vs, vq, &vc, TYPE_IO_CMD);
+ 		else if (ret == -ENOMEM)
+ 			vhost_scsi_send_status(vs, vq, vc.head, vc.out,
+ 					       SAM_STAT_TASK_SET_FULL);
+@@ -1510,7 +1533,10 @@ vhost_scsi_ctl_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 		if (ret == -ENXIO)
+ 			break;
+ 		else if (ret == -EIO)
+-			vhost_scsi_send_bad_target(vs, vq, vc.head, vc.out);
++			vhost_scsi_send_bad_target(vs, vq, &vc,
++						   v_req.type == VIRTIO_SCSI_T_TMF ?
++						   TYPE_CTRL_TMF :
++						   TYPE_CTRL_AN);
+ 	} while (likely(!vhost_exceeds_weight(vq, ++c, 0)));
+ out:
+ 	mutex_unlock(&vq->mutex);
 -- 
 2.39.5
 
