@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD8224729E;
-	Tue, 29 Apr 2025 17:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A91524729E;
+	Tue, 29 Apr 2025 17:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948079; cv=none; b=ZAOZI0fQ+9vewNfxunUoHpguZemMSJrbQVAlf2u1N/ZatTDJyHgdV3xVq2d8VaNu8sNp3ky6mUUuMAlVAwgLBwX4P+NpVDnEXeSQnW+mQAi0sKJVeffKoUok3zqojoK1rlbF6OHpxS3yNST3csZ92Ew+S+wfpaHNEl7lELeaUug=
+	t=1745948082; cv=none; b=AcPVJzL7zWA4BhRB+eNgA+m7Y9VrQLoOjKRnd36L2J8QOjencXcQnaiSCW9UkyH9JhpDKFIiAWKJ4obd9+Wmt+ZAR++XwPSG5JjLkvRcSRh+CWxRdiMpX0U7GZFFMiyrCbT5YPQl72fdCMddxapl3ZbkLkZOlgFpwZ2cQfaEw7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948079; c=relaxed/simple;
-	bh=nzvQWpEYxhBkIIXgB5anVf8Ge0Tnf3UKS+LFKch4Wkg=;
+	s=arc-20240116; t=1745948082; c=relaxed/simple;
+	bh=TEfCvMM0grEnEoOtMP6EEUOfbHhBYNENUDZKs9AfQs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otTXSPaOCJb8NpPhhN7A1T6QcFIkr7srdo8iU3vo+0KpiYRagljMujNp4iNky1eZS8M4IT04jjVs8VzHivFH9mW3qQuCSZrtCy/WJQH6ycZ7tjKORakJHASRk8Bs1pBNcgB+iW+0OuXkh3/I++d7/Gvyyd1/eAuQxo/gPbtpF5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/yPbx9R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZWl9A0hvvCa0NdmTKz66iBFfHaIMz5AIJNWWV8d9zxlFwwptcgdZNzi6qwkb5U82HD2cRLUzG0y26AG1k2TBODOE7GptryCfpHZ0OzNlagZzdfUBM5jBe68T8tJ0hE7JzvtC2BheOiYR4ajdw2qg/i+pxX2ovpRCiyDVTz/BWC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVbpbjRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/yPbx9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74473C4CEE9;
-	Tue, 29 Apr 2025 17:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVbpbjRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DF8C4CEE3;
+	Tue, 29 Apr 2025 17:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948078;
-	bh=nzvQWpEYxhBkIIXgB5anVf8Ge0Tnf3UKS+LFKch4Wkg=;
+	s=korg; t=1745948081;
+	bh=TEfCvMM0grEnEoOtMP6EEUOfbHhBYNENUDZKs9AfQs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/yPbx9RRdtpG0JD3eSLh0aGP7ywQ3p/UCe6Wz2WwzAdJXcE7CECLpoRp6md4QPU6
-	 /XxQYg3VPJoS1JCmC//F0CHwZbPmaIEA97DMRVVxF/NWo6eXFrjgeQg4Kctix16Ai8
-	 Aa13z7A7nbcQERPI/jQhPgI5KVETfKgn9bzD4vmE=
+	b=nVbpbjREWhEEhYnK/HCAJO+p+PASXe6NtyofK78Aw790/G1nYNLrdMEkI6b51jqAs
+	 vm28nbrFK7cCWKET4bcfkcZaCBYQPazMYWZ5BmE+ZuQFWqmzzhAG2iiyy9dDrdK3qq
+	 zH8ZwKSQS9nIRGr41PzZX6sSGYh+sSSa/S3qK1iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lynema <lyz27@yahoo.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/280] thunderbolt: Scan retimers after device router has been enumerated
-Date: Tue, 29 Apr 2025 18:42:06 +0200
-Message-ID: <20250429161122.677801681@linuxfoundation.org>
+Subject: [PATCH 6.12 186/280] um: work around sched_yield not yielding in time-travel mode
+Date: Tue, 29 Apr 2025 18:42:07 +0200
+Message-ID: <20250429161122.718302896@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,66 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 75749d2c1d8cef439f8b69fa1f4f36d0fc3193e6 ]
+[ Upstream commit 887c5c12e80c8424bd471122d2e8b6b462e12874 ]
 
-Thomas reported connection issues on AMD system with Pluggable UD-4VPD
-dock. After some experiments it looks like the device has some sort of
-internal timeout that triggers reconnect. This is completely against the
-USB4 spec, as there is no requirement for the host to enumerate the
-device right away or even at all.
+sched_yield by a userspace may not actually cause scheduling in
+time-travel mode as no time has passed. In the case seen it appears to
+be a badly implemented userspace spinlock in ASAN. Unfortunately, with
+time-travel it causes an extreme slowdown or even deadlock depending on
+the kernel configuration (CONFIG_UML_MAX_USERSPACE_ITERATIONS).
 
-In Linux case the delay is caused by scanning of retimers on the link so
-we can work this around by doing the scanning after the device router
-has been enumerated.
+Work around it by accounting time to the process whenever it executes a
+sched_yield syscall.
 
-Reported-by: Thomas Lynema <lyz27@yahoo.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219748
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20250314130815.226872-1-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/um/include/linux/time-internal.h |  2 ++
+ arch/um/kernel/skas/syscall.c         | 11 +++++++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-index a7c6919fbf978..e1da433a9e7fb 100644
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1295,11 +1295,15 @@ static void tb_scan_port(struct tb_port *port)
- 		goto out_rpm_put;
- 	}
+diff --git a/arch/um/include/linux/time-internal.h b/arch/um/include/linux/time-internal.h
+index b22226634ff60..138908b999d76 100644
+--- a/arch/um/include/linux/time-internal.h
++++ b/arch/um/include/linux/time-internal.h
+@@ -83,6 +83,8 @@ extern void time_travel_not_configured(void);
+ #define time_travel_del_event(...) time_travel_not_configured()
+ #endif /* CONFIG_UML_TIME_TRAVEL_SUPPORT */
  
--	tb_retimer_scan(port, true);
--
- 	sw = tb_switch_alloc(port->sw->tb, &port->sw->dev,
- 			     tb_downstream_route(port));
- 	if (IS_ERR(sw)) {
-+		/*
-+		 * Make the downstream retimers available even if there
-+		 * is no router connected.
-+		 */
-+		tb_retimer_scan(port, true);
++extern unsigned long tt_extra_sched_jiffies;
 +
- 		/*
- 		 * If there is an error accessing the connected switch
- 		 * it may be connected to another domain. Also we allow
-@@ -1349,6 +1353,14 @@ static void tb_scan_port(struct tb_port *port)
- 	upstream_port = tb_upstream_port(sw);
- 	tb_configure_link(port, upstream_port, sw);
+ /*
+  * Without CONFIG_UML_TIME_TRAVEL_SUPPORT this is a linker error if used,
+  * which is intentional since we really shouldn't link it in that case.
+diff --git a/arch/um/kernel/skas/syscall.c b/arch/um/kernel/skas/syscall.c
+index b09e85279d2b8..a5beaea2967ec 100644
+--- a/arch/um/kernel/skas/syscall.c
++++ b/arch/um/kernel/skas/syscall.c
+@@ -31,6 +31,17 @@ void handle_syscall(struct uml_pt_regs *r)
+ 		goto out;
  
+ 	syscall = UPT_SYSCALL_NR(r);
++
 +	/*
-+	 * Scan for downstream retimers. We only scan them after the
-+	 * router has been enumerated to avoid issues with certain
-+	 * Pluggable devices that expect the host to enumerate them
-+	 * within certain timeout.
++	 * If no time passes, then sched_yield may not actually yield, causing
++	 * broken spinlock implementations in userspace (ASAN) to hang for long
++	 * periods of time.
 +	 */
-+	tb_retimer_scan(port, true);
++	if ((time_travel_mode == TT_MODE_INFCPU ||
++	     time_travel_mode == TT_MODE_EXTERNAL) &&
++	    syscall == __NR_sched_yield)
++		tt_extra_sched_jiffies += 1;
 +
- 	/*
- 	 * CL0s and CL1 are enabled and supported together.
- 	 * Silently ignore CLx enabling in case CLx is not supported.
+ 	if (syscall >= 0 && syscall < __NR_syscalls) {
+ 		unsigned long ret = EXECUTE_SYSCALL(syscall, regs);
+ 
 -- 
 2.39.5
 
