@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25238250C15;
-	Tue, 29 Apr 2025 17:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7C62528F1;
+	Tue, 29 Apr 2025 17:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947810; cv=none; b=ucEbRIKlxiqC7/4Y7CrDyfhs2IpgYvG7FoIpBP9s4RjN+oDE9JnBukL0XoBW32Gn7h53Kh7NG8rGXoMYbkRsp88jpUSwCU0ldkgWkuWciaVxlRcCGshhCyXNpx4XvJYJ8uKr5b0sqgmycV3XNheSBze4uAeDQIvO0ONr4emwTWY=
+	t=1745947814; cv=none; b=mzcEyoB4SKh0czvBG581vZclExLbp0PluXKgs7/e9yBAdESNu8frekq8pd88yzyrp0nIBk2SnmEHLOzj20U4mhezlUsp2WRifF0RezAMIyRbzizRgiC/IgHEGwOTaiW6y6RvW0lSPiVoayBje/Eld7DrJ8Sekf4dcnKDnqhu3J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947810; c=relaxed/simple;
-	bh=Pnqej/TGd8CeXl3hXA8/yFyJpZXlKM9OgsSm+ZV8reI=;
+	s=arc-20240116; t=1745947814; c=relaxed/simple;
+	bh=x2RyMzI1D986YTZZqoUTcwssvqSgPRaTlrnG/EUErj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/LqyNtJ+dMSngJqaAjurWFNemMx4ruKV9uoNXCn67JLaCrXv2Yjw5m2qDThLJTPyt7bZRxTZlDyyBkGAQGVhdCquPU4exWx4/n3Y6fDRnhcVLQkgHG7+7fg9vy8SSsJ+5uy0dzFmdRLr2U6GuQ3np15VCgIgac7UQAaDOe3xBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANcDy8Vz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Arf2uMIJeKBZPI/LCLGAGkfrydUJxX4gEdZ5WZ9uWUmTZMWYgxe3/A9mEYbgPGNVmZTLO2ddDmraUME09rzavoHtOZO6b9ddXc+A0JybOQIosoMFfYppaYoCJMXaTpKlVbK1adVi+U+v/qbefp4jTNnYg0CDIcg9PaHbdmTzyg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbWWpIk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANcDy8Vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4171C4CEEA;
-	Tue, 29 Apr 2025 17:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbWWpIk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E4AC4CEE9;
+	Tue, 29 Apr 2025 17:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947810;
-	bh=Pnqej/TGd8CeXl3hXA8/yFyJpZXlKM9OgsSm+ZV8reI=;
+	s=korg; t=1745947813;
+	bh=x2RyMzI1D986YTZZqoUTcwssvqSgPRaTlrnG/EUErj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANcDy8VzZE1/bynFOAEsjTA1tIHAiYska9wfuUXU9NvK+aVnAqujPNvY3hLTz24Sb
-	 xVVEadbMuEF4M9AppsR9jDtQMw6aCFmyCNIPwbg/VN7OB70H/A4WCxqzKncbhPCsdw
-	 duq50d7KumBF/Yikk/7X5r2Er0KKZCTGao1q3yA0=
+	b=CbWWpIk3aJH4BeT8xIL0TwZ/CKqyW0Ug4Ni07+d2wU1D+zef3KzXbCt8COe1jTjE/
+	 FuZAiOcqirng003L03bSeGveCZZNL7XY25m2vMglx/VH9UpCzmuqeLKViy1B8rFeEX
+	 Ib2KXyeUfCQ5uTqiW7+BCm6OEcYQhALhVLEwJCXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/280] scsi: ufs: core: Add NULL check in ufshcd_mcq_compl_pending_transfer()
-Date: Tue, 29 Apr 2025 18:40:10 +0200
-Message-ID: <20250429161117.932958542@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 103/280] drm/amd/display: Fix gpu reset in multidisplay config
+Date: Tue, 29 Apr 2025 18:40:44 +0200
+Message-ID: <20250429161119.325402207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,41 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit 08a966a917fe3d92150fa3cc15793ad5e57051eb ]
+commit 7eb287beeb60be1e4437be2b4e4e9f0da89aab97 upstream.
 
-Add a NULL check for the returned hwq pointer by ufshcd_mcq_req_to_hwq().
+[Why]
+The indexing of stream_status in dm_gpureset_commit_state() is incorrect.
+That leads to asserts in multi-display configuration after gpu reset.
 
-This is similar to the fix in commit 74736103fb41 ("scsi: ufs: core: Fix
-ufshcd_abort_one racing issue").
+[How]
+Adjust the indexing logic to align stream_status with surface_updates.
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250412195909.315418-1-chenyuan0y@gmail.com
-Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cdaae8371aa9 ("drm/amd/display: Handle GPU reset for DC block")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3808
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d91bc901398741d317d9b55c59ca949d4bc7394b)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 89fc0b5662919..8d4a5b8371b63 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5689,6 +5689,8 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
- 			continue;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3216,16 +3216,16 @@ static void dm_gpureset_commit_state(str
+ 	for (k = 0; k < dc_state->stream_count; k++) {
+ 		bundle->stream_update.stream = dc_state->streams[k];
  
- 		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
-+		if (!hwq)
-+			continue;
+-		for (m = 0; m < dc_state->stream_status->plane_count; m++) {
++		for (m = 0; m < dc_state->stream_status[k].plane_count; m++) {
+ 			bundle->surface_updates[m].surface =
+-				dc_state->stream_status->plane_states[m];
++				dc_state->stream_status[k].plane_states[m];
+ 			bundle->surface_updates[m].surface->force_full_update =
+ 				true;
+ 		}
  
- 		if (force_compl) {
- 			ufshcd_mcq_compl_all_cqes_lock(hba, hwq);
--- 
-2.39.5
-
+ 		update_planes_and_stream_adapter(dm->dc,
+ 					 UPDATE_TYPE_FULL,
+-					 dc_state->stream_status->plane_count,
++					 dc_state->stream_status[k].plane_count,
+ 					 dc_state->streams[k],
+ 					 &bundle->stream_update,
+ 					 bundle->surface_updates);
 
 
