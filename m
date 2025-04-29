@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BF0367;
-	Tue, 29 Apr 2025 18:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE5F24729A;
+	Tue, 29 Apr 2025 18:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950393; cv=none; b=FrRse02kPIkz4VAkoOg26AAHjmhdBdMBnRPiPimM3ZWvoitocdA9vNqH8EnJrXdhWa2S1vInwExc4Mp2vnDgQdWn5xeffgxWOiTVKvV0tOkMAMSuVywaaM8oJWdJOnZAtzShoXDxWIFbrncUNmIFq4SxdaRHgCQ8t+g3pKQ1x/A=
+	t=1745950396; cv=none; b=u1Pylfv7EpbexhYDuTiadhfoUxIKQdzw2JF8bKiErxkUnp3kZp7+sFbcA6t1Id6SfnEPx0daF1kqVbBbko4mjU53aYpnegKu/UcGefHNyOqqne31WYzxjQGoYXnqTicRbuUahO9QCxxmN9qPxYFSm0q2ufT123iu5TWXar4WCVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950393; c=relaxed/simple;
-	bh=t0v/hTLFyn/g7TNdbUikbM0GcjiXlTdnXHKrQT+/j0w=;
+	s=arc-20240116; t=1745950396; c=relaxed/simple;
+	bh=HiNFoV7djFrQt5+uBeQQqOu2A2iKgjU8UFOef4VzJTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+7Ue13k1dyhK9pPmcdX7IAkJqWSb76LLR7AXENY+cARKjmFxZvVwezWKfnW8EP6OIU2MEQNGz2OMX1h/anHfznnu9tbVw3MsMkp9RhLSHYbKhywQlyYNkvfrBQezYQfzF27xGYwpzwOpx49XwtA6CsSSn/kGR/t0eWjzocT7/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rER1AMz0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BO5wrSJSgiCJ7Qo+qrnP3ZvAsXzD9YfT+Ofv0npMEnZAaMoFscdFN5ZV+u9FqoAMzqcIJG5aTId6ijeGESHGiR11jhhc7rVt82+C6ie5lHepLCjKqWqtDnLgSkEY7OO+M6fzxyuK9kQ7XHvDCeanw79T2GebrZnDJ7joPbmfZW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXlDKobF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rER1AMz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E798C4CEE9;
-	Tue, 29 Apr 2025 18:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXlDKobF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38901C4CEE9;
+	Tue, 29 Apr 2025 18:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950393;
-	bh=t0v/hTLFyn/g7TNdbUikbM0GcjiXlTdnXHKrQT+/j0w=;
+	s=korg; t=1745950396;
+	bh=HiNFoV7djFrQt5+uBeQQqOu2A2iKgjU8UFOef4VzJTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rER1AMz0ANdj/mc3l6MGPOen8m8OQzLa4oE8s9jfFmDHBUxLAdcXh9vwVMvaSjVWw
-	 eTXN4WGz6z19G55kPtxfchCIRgT0srxUaakfO1GK/xbrodN04akomb2FfNiOt/mHL0
-	 Q4bD01oQASKpTKv/DX2WGMlOzlPV6taPrMnBjTGM=
+	b=NXlDKobFzzouMANJS9T71zZT6VCEGk+Q1+0FJeZMFRTkcn//fmWO5T1Y22FoEIvNS
+	 ZDfPo0cEC7N67N8bDABdci2AFS1EokTAJRol4CavELY8mEyCwl9qR/GNTRzNBRiTqb
+	 J7EK/iRFNv80DctTwzXflnAVDTaxpe8BpBOsy/94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 082/204] io_uring: fix sync handling of io_fallback_tw()
-Date: Tue, 29 Apr 2025 18:42:50 +0200
-Message-ID: <20250429161102.776038302@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 065/204] iommu/amd: Return an error if vCPU affinity is set for non-vCPU IRTE
+Date: Tue, 29 Apr 2025 18:42:33 +0200
+Message-ID: <20250429161102.086830589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -49,53 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Sean Christopherson <seanjc@google.com>
 
-commit edd43f4d6f50ec3de55a0c9e9df6348d1da51965 upstream.
+[ Upstream commit 07172206a26dcf3f0bf7c3ecaadd4242b008ea54 ]
 
-A previous commit added a 'sync' parameter to io_fallback_tw(), which if
-true, means the caller wants to wait on the fallback thread handling it.
-But the logic is somewhat messed up, ensure that ctxs are swapped and
-flushed appropriately.
+Return -EINVAL instead of success if amd_ir_set_vcpu_affinity() is
+invoked without use_vapic; lying to KVM about whether or not the IRTE was
+configured to post IRQs is all kinds of bad.
 
-Cc: stable@vger.kernel.org
-Fixes: dfbe5561ae93 ("io_uring: flush offloaded and delayed task_work on exit")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d98de49a53e4 ("iommu/amd: Enable vAPIC interrupt remapping mode by default")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-6-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/iommu/amd/iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1247,21 +1247,22 @@ static __cold void io_fallback_tw(struct
- 	while (node) {
- 		req = container_of(node, struct io_kiocb, io_task_work.node);
- 		node = node->next;
--		if (sync && last_ctx != req->ctx) {
-+		if (last_ctx != req->ctx) {
- 			if (last_ctx) {
--				flush_delayed_work(&last_ctx->fallback_work);
-+				if (sync)
-+					flush_delayed_work(&last_ctx->fallback_work);
- 				percpu_ref_put(&last_ctx->refs);
- 			}
- 			last_ctx = req->ctx;
- 			percpu_ref_get(&last_ctx->refs);
- 		}
--		if (llist_add(&req->io_task_work.node,
--			      &req->ctx->fallback_llist))
--			schedule_delayed_work(&req->ctx->fallback_work, 1);
-+		if (llist_add(&req->io_task_work.node, &last_ctx->fallback_llist))
-+			schedule_delayed_work(&last_ctx->fallback_work, 1);
- 	}
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 95bd7c25ba6f3..83c5d786686d0 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -3619,7 +3619,7 @@ static int amd_ir_set_vcpu_affinity(struct irq_data *data, void *vcpu_info)
+ 	 * we should not modify the IRTE
+ 	 */
+ 	if (!dev_data || !dev_data->use_vapic)
+-		return 0;
++		return -EINVAL;
  
- 	if (last_ctx) {
--		flush_delayed_work(&last_ctx->fallback_work);
-+		if (sync)
-+			flush_delayed_work(&last_ctx->fallback_work);
- 		percpu_ref_put(&last_ctx->refs);
- 	}
- }
+ 	ir_data->cfg = irqd_cfg(data);
+ 	pi_data->ir_data = ir_data;
+-- 
+2.39.5
+
 
 
