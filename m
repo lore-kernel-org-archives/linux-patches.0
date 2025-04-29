@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDE724C067;
-	Tue, 29 Apr 2025 17:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E560582C60;
+	Tue, 29 Apr 2025 17:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946146; cv=none; b=hv+BoR3aWqbitFLQMxAY3h/YhucVCUhU8SsgbR9acXzr6Yvy4bNCtu3V7ARdzYvLGlnJbPtlu58PDa7Eh6vHp0KT03zXHDOsQX3LEpbxwvsCYV8qskpCqe4fWjCv5yVqvDwnLNBmIQgRi6QKQPj1DI0uVu528pgTnwTxRQjdeKk=
+	t=1745946149; cv=none; b=hTP6Cl5/gOYHjbOuBxWxMHuV+mvQ9CQ9WqFS6UHwYH154mwpAsHJ9f1OHYxTixA1UTEDd+Ov21mjEro+NIPWzc8gkgS15B/ut7a7wB5H1QN25f9sYZbIYGu2PxBlPkO2s1pb1Qmhejy7G17ctljzeA9onEsryJ/8A3H+KBMwLas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946146; c=relaxed/simple;
-	bh=KnRgxKU+TPgpiFI1UtnaMQJhB3ZXUiEDLBGbFToESI0=;
+	s=arc-20240116; t=1745946149; c=relaxed/simple;
+	bh=a/OyIXTUuEMXr9SIdeywt6hVL+UlUdh5myPtHAio6/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj6sdF+P/Q+CFVoHGL3lednJt160y9NvlkZAjnkAS90QBpH0lbLxpp7DjmuxS0N9Ma+YdaI4CWM4Z53JcxuygS5S8Q28yZtc2HxOFhgaA6TEmZxX3riZDcqThYNfeXsFiBWLUmRUTyvfPmjaJ4Xff1PrlO1Kq0ZPleyKeI8Qmtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijbxhPSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlK8a9WIFdtGBQrUTbe+va4Q096KBxyR8Do06KkFJuZiH1IPLM9TOKt2QDclpZ60MzJFOU4DrDheIb8w5UtimsiZ26UufR+eXqUsX9Z/uPshb9xKzOZrPvNoHNuvaeYlwIshNJ1Hntm5a34Ow6TBwWwnliYY+ZyTlS3lZJUpggE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXrHl/oJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijbxhPSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3FAC4CEE3;
-	Tue, 29 Apr 2025 17:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXrHl/oJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D35BC4CEE3;
+	Tue, 29 Apr 2025 17:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946145;
-	bh=KnRgxKU+TPgpiFI1UtnaMQJhB3ZXUiEDLBGbFToESI0=;
+	s=korg; t=1745946148;
+	bh=a/OyIXTUuEMXr9SIdeywt6hVL+UlUdh5myPtHAio6/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijbxhPSm1JRFP4cqeWGueOBJlzuecq0IWlUyNEZog6B3ePRJlsShTdOQmlyca6tCX
-	 VHDA1+yhQjO+MG9QWWkPCzPIFlDD72r3tUCLuyQlrCl4kh6nGhq+8a/5JWeTwx3rFk
-	 tml3K92xMtgGAhfjmACxL8RNB/KuZX6uahLiacik=
+	b=pXrHl/oJ+l07o2IHKhCZXpgvZCubeUpO2FkTJkDDpu5oMVkJDlH/k80aaYokrPO+q
+	 vaaL9XhhoUxCVWzfoZMwqB6U2AK/czhN/5wwWzzl4ujzLQUsLpvxUx40v0IeksSn7C
+	 pB2YCvUkmI97JhbOgtIXbMSzKSx8UMNH6NLThN0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.14 170/311] usb: typec: class: Fix NULL pointer access
-Date: Tue, 29 Apr 2025 18:40:07 +0200
-Message-ID: <20250429161127.999088659@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Benson Leung <bleung@chromium.org>
+Subject: [PATCH 6.14 171/311] usb: typec: class: Invalidate USB device pointers on partner unregistration
+Date: Tue, 29 Apr 2025 18:40:08 +0200
+Message-ID: <20250429161128.038251891@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,120 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit ec27386de23a511008c53aa2f3434ad180a3ca9a upstream.
+commit 66e1a887273c6b89f09bc11a40d0a71d5a081a8e upstream.
 
-Concurrent calls to typec_partner_unlink_device can lead to a NULL pointer
-dereference. This patch adds a mutex to protect USB device pointers and
-prevent this issue. The same mutex protects both the device pointers and
-the partner device registration.
+To avoid using invalid USB device pointers after a Type-C partner
+disconnects, this patch clears the pointers upon partner unregistration.
+This ensures a clean state for future connections.
 
 Cc: stable@vger.kernel.org
 Fixes: 59de2a56d127 ("usb: typec: Link enumerated USB devices with Type-C partner")
 Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250321143728.4092417-2-akuchynski@chromium.org
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://lore.kernel.org/r/20250321143728.4092417-3-akuchynski@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |   15 +++++++++++++--
- drivers/usb/typec/class.h |    1 +
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/usb/typec/class.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/typec/class.c
 +++ b/drivers/usb/typec/class.c
-@@ -1052,6 +1052,7 @@ struct typec_partner *typec_register_par
- 		partner->usb_mode = USB_MODE_USB3;
- 	}
- 
-+	mutex_lock(&port->partner_link_lock);
- 	ret = device_register(&partner->dev);
- 	if (ret) {
- 		dev_err(&port->dev, "failed to register partner (%d)\n", ret);
-@@ -1063,6 +1064,7 @@ struct typec_partner *typec_register_par
- 		typec_partner_link_device(partner, port->usb2_dev);
- 	if (port->usb3_dev)
- 		typec_partner_link_device(partner, port->usb3_dev);
-+	mutex_unlock(&port->partner_link_lock);
- 
- 	return partner;
- }
-@@ -1083,12 +1085,14 @@ void typec_unregister_partner(struct typ
- 
+@@ -1086,10 +1086,14 @@ void typec_unregister_partner(struct typ
  	port = to_typec_port(partner->dev.parent);
  
-+	mutex_lock(&port->partner_link_lock);
- 	if (port->usb2_dev)
+ 	mutex_lock(&port->partner_link_lock);
+-	if (port->usb2_dev)
++	if (port->usb2_dev) {
  		typec_partner_unlink_device(partner, port->usb2_dev);
- 	if (port->usb3_dev)
+-	if (port->usb3_dev)
++		port->usb2_dev = NULL;
++	}
++	if (port->usb3_dev) {
  		typec_partner_unlink_device(partner, port->usb3_dev);
++		port->usb3_dev = NULL;
++	}
  
  	device_unregister(&partner->dev);
-+	mutex_unlock(&port->partner_link_lock);
- }
- EXPORT_SYMBOL_GPL(typec_unregister_partner);
- 
-@@ -2041,10 +2045,11 @@ static struct typec_partner *typec_get_p
- static void typec_partner_attach(struct typec_connector *con, struct device *dev)
- {
- 	struct typec_port *port = container_of(con, struct typec_port, con);
--	struct typec_partner *partner = typec_get_partner(port);
-+	struct typec_partner *partner;
- 	struct usb_device *udev = to_usb_device(dev);
- 	enum usb_mode usb_mode;
- 
-+	mutex_lock(&port->partner_link_lock);
- 	if (udev->speed < USB_SPEED_SUPER) {
- 		usb_mode = USB_MODE_USB2;
- 		port->usb2_dev = dev;
-@@ -2053,18 +2058,22 @@ static void typec_partner_attach(struct
- 		port->usb3_dev = dev;
- 	}
- 
-+	partner = typec_get_partner(port);
- 	if (partner) {
- 		typec_partner_set_usb_mode(partner, usb_mode);
- 		typec_partner_link_device(partner, dev);
- 		put_device(&partner->dev);
- 	}
-+	mutex_unlock(&port->partner_link_lock);
- }
- 
- static void typec_partner_deattach(struct typec_connector *con, struct device *dev)
- {
- 	struct typec_port *port = container_of(con, struct typec_port, con);
--	struct typec_partner *partner = typec_get_partner(port);
-+	struct typec_partner *partner;
- 
-+	mutex_lock(&port->partner_link_lock);
-+	partner = typec_get_partner(port);
- 	if (partner) {
- 		typec_partner_unlink_device(partner, dev);
- 		put_device(&partner->dev);
-@@ -2074,6 +2083,7 @@ static void typec_partner_deattach(struc
- 		port->usb2_dev = NULL;
- 	else if (port->usb3_dev == dev)
- 		port->usb3_dev = NULL;
-+	mutex_unlock(&port->partner_link_lock);
- }
- 
- /**
-@@ -2614,6 +2624,7 @@ struct typec_port *typec_register_port(s
- 
- 	ida_init(&port->mode_ids);
- 	mutex_init(&port->port_type_lock);
-+	mutex_init(&port->partner_link_lock);
- 
- 	port->id = id;
- 	port->ops = cap->ops;
---- a/drivers/usb/typec/class.h
-+++ b/drivers/usb/typec/class.h
-@@ -59,6 +59,7 @@ struct typec_port {
- 	enum typec_port_type		port_type;
- 	enum usb_mode			usb_mode;
- 	struct mutex			port_type_lock;
-+	struct mutex			partner_link_lock;
- 
- 	enum typec_orientation		orientation;
- 	struct typec_switch		*sw;
+ 	mutex_unlock(&port->partner_link_lock);
 
 
