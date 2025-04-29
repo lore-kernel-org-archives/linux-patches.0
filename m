@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6CD82C60;
-	Tue, 29 Apr 2025 17:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0622C7E110;
+	Tue, 29 Apr 2025 17:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946058; cv=none; b=XkD052JLy4uHhpBkn6fVqy7cRNQSzNAGWGjfptUb1EBFQFfOmiP9plikH+/rctvUymY4QMAVLqn9NBMELWaBS51A52ohT4C6VglnkTWdGYUOCv7ZfC/uGO+m2UU8MFgHOqxtVKFzmUQ3QBWLbSwybfoYTdTEXP9k8v1//qxPhgw=
+	t=1745946061; cv=none; b=DhUMlFhuV//rAYFnUilf1jDoL1fwuzEZ8cZpR24Hal7TpfkAjzWVolL6+UoW5jQmXWzJtbtgyH5us4qopxQWxXbJ2oUuqhesuRZpsotYpllctivzyks+XFGIsWXrTfE81ibc/rENGJHBmQss81kDejeSO3jnqjeRqcw6DuR+WZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946058; c=relaxed/simple;
-	bh=C/G+jSAXFdewQr2gqITiZYZUTb+2aVxzbik76UQInLA=;
+	s=arc-20240116; t=1745946061; c=relaxed/simple;
+	bh=cFHHZJTbvRJObdDHim3kZdQQheIYmYqj90UbJWf+3qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWIwHlAxNuAIiye5xMnvIlTjLrPJvz3JQJgMFuH3/j1aV0ubB7tB0Gcc1H874XB91DO4IiJso84+1bwP7VNmeo4bLrekpGq3yntzUu8PfB3ghDckm6ZDk60W/0ckdkBw8ZURw2NVTRrf7UjvOKclnKl9hwjtQVnx2E0nfweRwms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDXMCrGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pw9JCTRoZrxx1t0X6/gL7SRK37lfq2v1CORT8AaUoExn91tCfVuz1bJOOd199AmMnD/ybhRVrrsBQYsLPkfYi0AjSwhGZVmHkNsBF2k17L+A7eeoeF2UFE6duCqveU9QoNpJRDmNzUGvkcjzudSZYvXdIsIGRYwZ5Mozp6xxltE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpCKtcij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDXMCrGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE712C4CEE3;
-	Tue, 29 Apr 2025 17:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpCKtcij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830F0C4CEE3;
+	Tue, 29 Apr 2025 17:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946058;
-	bh=C/G+jSAXFdewQr2gqITiZYZUTb+2aVxzbik76UQInLA=;
+	s=korg; t=1745946060;
+	bh=cFHHZJTbvRJObdDHim3kZdQQheIYmYqj90UbJWf+3qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDXMCrGHl2o4Q9ktvdNGf0NPy5qtd1Vp/oxd/CvFLA0NIsvUlLuo2FbkxMvPglozR
-	 DrgJk3p5f7M2k5RsAQyW/rB5U9J0ZjaikC5H7ppO4fv4DWliezGV+sVpDyH1VJ1nKI
-	 zWJuxnutaur3gplIyVvsA3rmAkRCvkSKogFgdtdg=
+	b=vpCKtcijnu3mjL/jjCzdh+kKsQHkim65N/4VoLC74pW8jSioPW9coUP/SYmRPML2K
+	 hH77Xd0Q2xz/YBNXJp8+wiY0GdY7gl5/sc3LNfag/WHbhTauZBnAxrIhEE1x45XeVL
+	 +la0YkZWjUqdog0n3cJKfryf5fgUzLdET8XHZFGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>
-Subject: [PATCH 6.14 140/311] ata: libata-scsi: Fix ata_msense_control_ata_feature()
-Date: Tue, 29 Apr 2025 18:39:37 +0200
-Message-ID: <20250429161126.770552285@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.14 141/311] USB: storage: quirk for ADATA Portable HDD CH94
+Date: Tue, 29 Apr 2025 18:39:38 +0200
+Message-ID: <20250429161126.813342093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,50 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 88474ad734fb2000805c63e01cc53ea930adf2c7 upstream.
+commit 9ab75eee1a056f896b87d139044dd103adc532b9 upstream.
 
-For the ATA features subpage of the control mode page, the T10 SAT-6
-specifications state that:
+Version 1.60 specifically needs this quirk.
+Version 2.00 is known good.
 
-For a MODE SENSE command, the SATL shall return the CDL_CTRL field value
-that was last set by an application client.
-
-However, the function ata_msense_control_ata_feature() always sets the
-CDL_CTRL field to the 0x02 value to indicate support for the CDL T2A and
-T2B pages. This is thus incorrect and the value 0x02 must be reported
-only after the user enables the CDL feature, which is indicated with the
-ATA_DFLAG_CDL_ENABLED device flag. When this flag is not set, the
-CDL_CTRL field of the ATA feature subpage of the control mode page must
-report a value of 0x00.
-
-Fix ata_msense_control_ata_feature() to report the correct values for
-the CDL_CTRL field, according to the enable/disable state of the device
-CDL feature.
-
-Fixes: df60f9c64576 ("scsi: ata: libata: Add ATA feature control sub-page translation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250403180004.343133-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -2453,8 +2453,8 @@ static unsigned int ata_msense_control_a
- 	 */
- 	put_unaligned_be16(ATA_FEATURE_SUB_MPAGE_LEN - 4, &buf[2]);
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -83,6 +83,13 @@ UNUSUAL_DEV(0x0bc2, 0x331a, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_LUNS),
  
--	if (dev->flags & ATA_DFLAG_CDL)
--		buf[4] = 0x02; /* Support T2A and T2B pages */
-+	if (dev->flags & ATA_DFLAG_CDL_ENABLED)
-+		buf[4] = 0x02; /* T2A and T2B pages enabled */
- 	else
- 		buf[4] = 0;
- 
++/* Reported-by: Oliver Neukum <oneukum@suse.com> */
++UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
++		"ADATA",
++		"Portable HDD CH94",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_ATA_1X),
++
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+ UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
+ 		"Initio Corporation",
 
 
