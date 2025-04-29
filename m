@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11EB216605;
-	Tue, 29 Apr 2025 17:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0710A2512C6;
+	Tue, 29 Apr 2025 17:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949506; cv=none; b=FAyoivcYuxTzCheQeS+suqE+969MVLwZ5e8f371j1BtlTmnW3Qsa+nVujGbnqqFAaPVeceCrTE60a+I0GpZYI0qBJFeXU9ZRlbaISYe+EhG/QCkoODyiG7UgohtQbJ3wZi78B9QkJ2nvpm3KhqaQIauau8jGan445ycHiTZ3HgE=
+	t=1745949510; cv=none; b=hWZ3min1Y5iV79kZTQLJWB75dZ/7z7Ef1Jnn8r7I2higAoAijrN+xKZuBySBTrrNz2e3Qlj+lYdcCgXjL8t1IYgGPCU4LDlgMTSFFdLNICukvFFOtmxeyL3iDqRjO/g/TGoNLR/m4OwkdbpcdwYlA2msEon0ofkCHHeqJcxaKa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949506; c=relaxed/simple;
-	bh=h6AXX1zofSaBzuQPqFjJVSUV3T246lIKx+UIme0KeGE=;
+	s=arc-20240116; t=1745949510; c=relaxed/simple;
+	bh=aeuVLOPCkJZ7Mscr8vKlwdqUbHUKw98kfNTa+QQMhPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEuLH5olcnHO2dUoHF6BZFOFFWeOIFsTF4RrpXQmAyY8oKQLBI+MTpRJBHXZUE8f6oTXuieJETznEdu2RnwEESKgB3jZFw/hFUjqMi3/1PrdpJ87LPu1ayimK1fd3yRinYDZmUdvtTldb+XN9raQlQaUwx7F7FWKnZUB7c1djeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=er+m39SZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kVbz4N+8NJ6mg4EmF8hG1Te2B1MyBRjBqRC/KYF/LNRf8AWRUbqHXkWlnHdhFgFbhplXiKearTECXMM5OOlmutkn7cIMpGpMgCz3cwsuX3E4eKlJvF/RjqYN8hoNLP348glBsZtewEbv7lr3sdOIzavHJIHxy0xcMR1wTQ6K21U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9PmNj/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="er+m39SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE2FC4CEE3;
-	Tue, 29 Apr 2025 17:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9PmNj/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78603C4CEE3;
+	Tue, 29 Apr 2025 17:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949506;
-	bh=h6AXX1zofSaBzuQPqFjJVSUV3T246lIKx+UIme0KeGE=;
+	s=korg; t=1745949509;
+	bh=aeuVLOPCkJZ7Mscr8vKlwdqUbHUKw98kfNTa+QQMhPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=er+m39SZDG1MG5DbGKXAjm3bLZjDKZuiHkUOGpZ4fhwGrkLLeYhx+BT9zboXs9ksu
-	 m7trj45UYk8CgI8dbAh51UfhKs/JzG2kCzZrsgCSb3EETBE6HO69aoHqMcnn/+bQXU
-	 X8rg47kmBZ0zaY9YlyKi3ccEPRonzt66nNPtjNl4=
+	b=k9PmNj/v27aqIabEzR+fMNbEG1NS1PMOHzVBulC2duwQ1d5kVTe9OUYirlevXgugj
+	 l67+MnZWfQH5ecxJOyefD01MVQw5MRu4+xMlzMzcB3JusUTyoIH2rw81++Ayiz6kLk
+	 J9Z7aoVMg9RxeknjzoOz62AE6Q/6nLXcR92/Y6j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 313/373] usb: chipidea: ci_hdrc_imx: implement usb_phy_init() error handling
-Date: Tue, 29 Apr 2025 18:43:10 +0200
-Message-ID: <20250429161135.983596332@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Michael Mueller <mimu@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 340/373] KVM: s390: Dont use %pK through tracepoints
+Date: Tue, 29 Apr 2025 18:43:37 +0200
+Message-ID: <20250429161137.118122816@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,74 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 8c531e0a8c2d82509ad97c6d3a1e6217c7ed136d upstream.
+[ Upstream commit 6c9567e0850be2f0f94ab64fa6512413fd1a1eb1 ]
 
-usb_phy_init() may return an error code if e.g. its implementation fails
-to prepare/enable some clocks. And properly rollback on probe error path
-by calling the counterpart usb_phy_shutdown().
+Restricted pointers ("%pK") are not meant to be used through TP_format().
+It can unintentionally expose security sensitive, raw pointer values.
 
-Found by Linux Verification Center (linuxtesting.org).
+Use regular pointer formatting instead.
 
-Fixes: be9cae2479f4 ("usb: chipidea: imx: Fix ULPI on imx53")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250316102658.490340-4-pchelkin@ispras.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Michael Mueller <mimu@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Message-ID: <20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/s390/kvm/trace-s390.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -461,7 +461,11 @@ static int ci_hdrc_imx_probe(struct plat
- 	    of_usb_get_phy_mode(np) == USBPHY_INTERFACE_MODE_ULPI) {
- 		pdata.flags |= CI_HDRC_OVERRIDE_PHY_CONTROL;
- 		data->override_phy_control = true;
--		usb_phy_init(pdata.usb_phy);
-+		ret = usb_phy_init(pdata.usb_phy);
-+		if (ret) {
-+			dev_err(dev, "Failed to init phy\n");
-+			goto err_clk;
-+		}
- 	}
+diff --git a/arch/s390/kvm/trace-s390.h b/arch/s390/kvm/trace-s390.h
+index 6f0209d45164f..9c5f546a2e1a3 100644
+--- a/arch/s390/kvm/trace-s390.h
++++ b/arch/s390/kvm/trace-s390.h
+@@ -56,7 +56,7 @@ TRACE_EVENT(kvm_s390_create_vcpu,
+ 		    __entry->sie_block = sie_block;
+ 		    ),
  
- 	if (pdata.flags & CI_HDRC_SUPPORTS_RUNTIME_PM)
-@@ -470,7 +474,7 @@ static int ci_hdrc_imx_probe(struct plat
- 	ret = imx_usbmisc_init(data->usbmisc_data);
- 	if (ret) {
- 		dev_err(dev, "usbmisc init failed, ret=%d\n", ret);
--		goto err_clk;
-+		goto phy_shutdown;
- 	}
+-	    TP_printk("create cpu %d at 0x%pK, sie block at 0x%pK",
++	    TP_printk("create cpu %d at 0x%p, sie block at 0x%p",
+ 		      __entry->id, __entry->vcpu, __entry->sie_block)
+ 	);
  
- 	data->ci_pdev = ci_hdrc_add_device(dev,
-@@ -479,7 +483,7 @@ static int ci_hdrc_imx_probe(struct plat
- 	if (IS_ERR(data->ci_pdev)) {
- 		ret = PTR_ERR(data->ci_pdev);
- 		dev_err_probe(dev, ret, "ci_hdrc_add_device failed\n");
--		goto err_clk;
-+		goto phy_shutdown;
- 	}
+@@ -255,7 +255,7 @@ TRACE_EVENT(kvm_s390_enable_css,
+ 		    __entry->kvm = kvm;
+ 		    ),
  
- 	if (data->usbmisc_data) {
-@@ -513,6 +517,9 @@ static int ci_hdrc_imx_probe(struct plat
+-	    TP_printk("enabling channel I/O support (kvm @ %pK)\n",
++	    TP_printk("enabling channel I/O support (kvm @ %p)\n",
+ 		      __entry->kvm)
+ 	);
  
- disable_device:
- 	ci_hdrc_remove_device(data->ci_pdev);
-+phy_shutdown:
-+	if (data->override_phy_control)
-+		usb_phy_shutdown(data->phy);
- err_clk:
- 	imx_disable_unprepare_clks(dev);
- qos_remove_request:
+-- 
+2.39.5
+
 
 
