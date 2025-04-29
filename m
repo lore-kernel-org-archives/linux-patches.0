@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357B023C8D6;
-	Tue, 29 Apr 2025 17:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CF523C8D6;
+	Tue, 29 Apr 2025 17:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946565; cv=none; b=eWMY+IpLPMYV2j2NLhPO+mTG+FKwZ23zJUdApoXwWiKUm5UxhoNn18t1wyypto81/muF/+rNFKOenr5lT5Ym1KSAnO2+HieBRKKiybn520A8Zw2rTbdAqIBxFyRpXpEeBLUjXiuYDhcvC03Sg5B32NvPJHU7btOTPExW0C9PlMY=
+	t=1745946568; cv=none; b=ftwuNpY8IooxIEie5bsZ5kk74l4cyc+BpXxpr68+cgQQicoPEKj15FPKgo9InIRUoFpDr2/ecSkE1BnlwXbcr/jli6BGWJe69H4eKhxEusHSKei41GIn9H3Gypk2/Ay4+eY/4m42SFAtmbYlNAuxY+0yIiWb+EpzsSAszkoHxaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946565; c=relaxed/simple;
-	bh=IXY8bwPL9mXWiEgYADCfFSbGyTQ9FpWhJDmX4cCOlEY=;
+	s=arc-20240116; t=1745946568; c=relaxed/simple;
+	bh=W9/XQJJMS6Bsiai2ye+4wtHJuk4I5qiH1YZj0sOFDGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIpEI4eymjcldPXuwjDhl33+gh/kbZZTmdHRCOPeBSmNE/4AOazMDXj86KdmLCbBRFYrP0J4SxZU6n8wK/euuqFl815dRcbRwZs0b9OON1yuFoG6cnhCsdgNn0LYn0vOJ/HPI8bz5BqAZjoR5pszd8zP+S9g9fR7f4uSIpE1cQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ2XTwa4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaznPB6FKICuMMvSIuwGwprEDeOfiMoGK/raJl1ZlZKNEYfz58P6+ZmvBRq6SVzkehgdW0LD7nG3LqIus9y9JLWSPY+JIk5S8pnQInnJT9lc7N3/fTQ5MuplgYitp2tOD7jH2f9k6G7yMAQ3FF0xBzp5qF4f9DHjBVgwxOtzxhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVBUj+UH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ2XTwa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B9FC4CEE3;
-	Tue, 29 Apr 2025 17:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVBUj+UH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795AEC4CEEA;
+	Tue, 29 Apr 2025 17:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946565;
-	bh=IXY8bwPL9mXWiEgYADCfFSbGyTQ9FpWhJDmX4cCOlEY=;
+	s=korg; t=1745946567;
+	bh=W9/XQJJMS6Bsiai2ye+4wtHJuk4I5qiH1YZj0sOFDGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZ2XTwa4Agsge7I2Df4zNU33UIHx5Clbw8mH0pLv0nJwCGL2uXlysrtQ1du2Hd+Nu
-	 tK1O7z1Ggaf8bdVEU1dAjSwAusAAFrW3YHEa8QMOPJ9Mwg3GkzDYq3ITthHTN+G5tz
-	 PHSTCSr4ppq0AaBKju7NOqgjN21AFIkKAEph9Kdo=
+	b=GVBUj+UHBAgCDT/Qob5kq05CxHLquoEZ7h5aJ165kuj6KyzfiGyms8oJePlux4JqD
+	 DkgQ8yWDDxDh+KYTZjFTxwEd28ZTi/+V40V/rxDuifNftXK+Sd345NVukllwsdYyRb
+	 UCqZCwFzRCtQvZuRDoQQ8wdd9ehGFpzgMJRjt/xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 281/311] iomap: skip unnecessary ifs_block_is_uptodate check
-Date: Tue, 29 Apr 2025 18:41:58 +0200
-Message-ID: <20250429161132.523529783@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.14 308/311] usb: xhci: Fix Short Packet handling rework ignoring errors
+Date: Tue, 29 Apr 2025 18:42:25 +0200
+Message-ID: <20250429161133.611553012@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -54,43 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 8e3c15ee0d292c413c66fe10201d1b035a0bea72 ]
+commit 9e3a28793d2fde7a709e814d2504652eaba6ae98 upstream.
 
-In iomap_adjust_read_range, i is either the first !uptodate block, or it
-is past last for the second loop looking for trailing uptodate blocks.
-Assuming there's no overflow (there's no combination of huge folios and
-tiny blksize) then yeah, there is no point in retesting that the same
-block pointed to by i is uptodate since we hold the folio lock so nobody
-else could have set it uptodate.
+A Short Packet event before the last TRB of a TD is followed by another
+event on the final TRB on spec-compliant HCs, which is most of them.
 
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Link: https://lore.kernel.org/20250410071236.16017-1-gouhao@uniontech.com
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A 'last_td_was_short' flag was added to know if a TD has just completed
+as Short Packet and another event is to come. The flag was cleared after
+seeing the event (unless no TDs are pending, but that's a separate bug)
+or seeing a new TD complete as something other than Short Packet.
+
+A rework replaced the flag with an 'old_trb_comp_code' variable. When
+an event doesn't match the pending TD and the previous event was Short
+Packet, the new event is silently ignored.
+
+To preserve old behavior, 'old_trb_comp_code' should be cleared at this
+point, but instead it is being set to current comp code, which is often
+Short Packet again. This can cause more events to be silently ignored,
+even though they are no longer connected with the old TD that completed
+short and indicate a serious problem with the driver or the xHC.
+
+Common device classes like UAC in async mode, UVC, serial or the UAS
+status pipe complete as Short Packet routinely and could be affected.
+
+Clear 'old_trb_comp_code' to zero, which is an invalid completion code
+and the same value the variable starts with. This restores original
+behavior on Short Packet and also works for illegal Etron events, which
+the code has been extended to cover too.
+
+Fixes: b331a3d8097f ("xhci: Handle spurious events on Etron host isoc enpoints")
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250410151828.2868740-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c | 2 +-
+ drivers/usb/host/xhci-ring.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index d303e6c8900cd..a47e3afd724ca 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -263,7 +263,7 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
- 		}
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2926,7 +2926,7 @@ static int handle_tx_event(struct xhci_h
+ 			if (xhci_spurious_success_tx_event(xhci, ep_ring)) {
+ 				xhci_dbg(xhci, "Spurious event dma %pad, comp_code %u after %u\n",
+ 					 &ep_trb_dma, trb_comp_code, ep_ring->old_trb_comp_code);
+-				ep_ring->old_trb_comp_code = trb_comp_code;
++				ep_ring->old_trb_comp_code = 0;
+ 				return 0;
+ 			}
  
- 		/* truncate len if we find any trailing uptodate block(s) */
--		for ( ; i <= last; i++) {
-+		while (++i <= last) {
- 			if (ifs_block_is_uptodate(ifs, i)) {
- 				plen -= (last - i + 1) * block_size;
- 				last = i - 1;
--- 
-2.39.5
-
 
 
