@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A01227E95;
-	Tue, 29 Apr 2025 17:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D59F227E95;
+	Tue, 29 Apr 2025 17:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948624; cv=none; b=h/sDiBEjLxX5w7uPxUsZ5xcesV11Rolbkjznm5IVk6gfe/gVUew/OsLjEevp2TJSTgG6RuHCuFd1rs0gHKxSo9ulPZKN2va11MU6AsxJRUVUrOujFHUzy0XY5Kc8XpMqEI5Tju1SefKxcvBqqzxDI7mT23UKu4oA4gVwivJO2vQ=
+	t=1745948627; cv=none; b=tErbjKIL63LMBZMuuKZlHHXNKZVBv6mE46T6yJCQifdTxmMTY9EJqbhQyW/m+qVe1d+1dGKY2gzBatb4n+sCaaJztwHhlhqVcGhiu6uZfGt7x6qtVAxWT4jC8dchMZDZm1Y6UT5zhfhk4FeFnZvY1BoZMxNsosNYRR+MuhV6864=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948624; c=relaxed/simple;
-	bh=xoKGhzsJnj3jPglH43vY1DfTcjUY/uZrQvxK4BHjBgk=;
+	s=arc-20240116; t=1745948627; c=relaxed/simple;
+	bh=qWr5jns3XUmw62gcHqzOKn+OG/but6WhVn9rGDSDPOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SuckJVZeg6ybcWqxhMe65p4yJZeNWhfOftAmxlXPvkF2AWjy5EgVSLYsn70DvOkCvfbst3TWYOJC2FS4Og/rmh/SvGPp067NgWqphUZzmfyGE9UhaDmHZO57qgCZaMURywXCV7HwBiwHHR2mIAwvHkv/8gOIcyIhOko5KF/LxT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9h++9sp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ud2nTu0nrhpplZf9UF+aOaAMB49kzB3sBeBrOJGQfCzpw8OFT0zSjN1y+eNVM+yEMyZ2b5+6mjXkQ+zI3eoaJOd0wUb8bXahz3H0p+c984sS3vgOdtUK/ry9xgUop/iB/q4jVG59cyBoBz9NTNklCtfis9Dqq5CT20O7JQJleAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoUm/Eo/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9h++9sp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154A9C4CEE3;
-	Tue, 29 Apr 2025 17:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoUm/Eo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B740EC4CEE3;
+	Tue, 29 Apr 2025 17:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948624;
-	bh=xoKGhzsJnj3jPglH43vY1DfTcjUY/uZrQvxK4BHjBgk=;
+	s=korg; t=1745948627;
+	bh=qWr5jns3XUmw62gcHqzOKn+OG/but6WhVn9rGDSDPOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9h++9sptioMaPaQAmkL2HHCVR2vEDvix9aVLCmRWEy5XxsZi7O/LlX76fJhuR4vx
-	 gNAY6JP6DkGTonA/Gqv85YhO5xMG5RrDj4M305dVCRTEi9J2lQtG50OPI/BmYRKtmH
-	 8djzBUStCoNJpYnVJePX4OoBSphTX4xf3qHCkLdg=
+	b=JoUm/Eo/HeX+BYbexElolUMHtlvZTCBaL+4k8ON2TLH5NfokzIJSy4yIei3vK86Ny
+	 1M6D0w91MCilyBrSnr1wj1ZH31IcLGuX8GNj64FDVrDgEgqJqmDc/w0NK7Pe2yA0DH
+	 LpEEEjglLH0XfTfjrWTJiB51+7kyeQCtk3Za14Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Moeller <moeller.matt@gmail.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/373] bpf: support SKF_NET_OFF and SKF_LL_OFF on skb frags
-Date: Tue, 29 Apr 2025 18:38:53 +0200
-Message-ID: <20250429161125.430715003@linuxfoundation.org>
+	Scott Bauer <sbauer@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 065/373] arm64: errata: Add QCOM_KRYO_4XX_GOLD to the spectre_bhb_k24_list
+Date: Tue, 29 Apr 2025 18:39:02 +0200
+Message-ID: <20250429161125.810184005@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -48,186 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit d4bac0288a2b444e468e6df9cb4ed69479ddf14a ]
+commit ed1ce841245d8febe3badf51c57e81c3619d0a1d upstream.
 
-Classic BPF socket filters with SKB_NET_OFF and SKB_LL_OFF fail to
-read when these offsets extend into frags.
+Qualcomm Kryo 400-series Gold cores have a derivative of an ARM Cortex
+A76 in them. Since A76 needs Spectre mitigation via looping then the
+Kyro 400-series Gold cores also need Spectre mitigation via looping.
 
-This has been observed with iwlwifi and reproduced with tun with
-IFF_NAPI_FRAGS. The below straightforward socket filter on UDP port,
-applied to a RAW socket, will silently miss matching packets.
+Qualcomm has confirmed that the proper "k" value for Kryo 400-series
+Gold cores is 24.
 
-    const int offset_proto = offsetof(struct ip6_hdr, ip6_nxt);
-    const int offset_dport = sizeof(struct ip6_hdr) + offsetof(struct udphdr, dest);
-    struct sock_filter filter_code[] = {
-            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_AD_OFF + SKF_AD_PKTTYPE),
-            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, PACKET_HOST, 0, 4),
-            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_NET_OFF + offset_proto),
-            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_UDP, 0, 2),
-            BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, SKF_NET_OFF + offset_dport),
-
-This is unexpected behavior. Socket filter programs should be
-consistent regardless of environment. Silent misses are
-particularly concerning as hard to detect.
-
-Use skb_copy_bits for offsets outside linear, same as done for
-non-SKF_(LL|NET) offsets.
-
-Offset is always positive after subtracting the reference threshold
-SKB_(LL|NET)_OFF, so is always >= skb_(mac|network)_offset. The sum of
-the two is an offset against skb->data, and may be negative, but it
-cannot point before skb->head, as skb_(mac|network)_offset would too.
-
-This appears to go back to when frag support was introduced to
-sk_run_filter in linux-2.4.4, before the introduction of git.
-
-The amount of code change and 8/16/32 bit duplication are unfortunate.
-But any attempt I made to be smarter saved very few LoC while
-complicating the code.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/20250122200402.3461154-1-maze@google.com/
-Link: https://elixir.bootlin.com/linux/2.4.4/source/net/core/filter.c#L244
-Reported-by: Matt Moeller <moeller.matt@gmail.com>
-Co-developed-by: Maciej Żenczykowski <maze@google.com>
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://lore.kernel.org/r/20250408132833.195491-2-willemdebruijn.kernel@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+Cc: stable@vger.kernel.org
+Cc: Scott Bauer <sbauer@quicinc.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
+Link: https://lore.kernel.org/r/20250107120555.v4.1.Ie4ef54abe02e7eb0eee50f830575719bf23bda48@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 80 ++++++++++++++++++++++++++---------------------
- 1 file changed, 44 insertions(+), 36 deletions(-)
+ arch/arm64/kernel/proton-pack.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 45cde12e41284..9d358fb865e28 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -209,24 +209,36 @@ BPF_CALL_3(bpf_skb_get_nlattr_nest, struct sk_buff *, skb, u32, a, u32, x)
- 	return 0;
- }
- 
-+static int bpf_skb_load_helper_convert_offset(const struct sk_buff *skb, int offset)
-+{
-+	if (likely(offset >= 0))
-+		return offset;
-+
-+	if (offset >= SKF_NET_OFF)
-+		return offset - SKF_NET_OFF + skb_network_offset(skb);
-+
-+	if (offset >= SKF_LL_OFF && skb_mac_header_was_set(skb))
-+		return offset - SKF_LL_OFF + skb_mac_offset(skb);
-+
-+	return INT_MIN;
-+}
-+
- BPF_CALL_4(bpf_skb_load_helper_8, const struct sk_buff *, skb, const void *,
- 	   data, int, headlen, int, offset)
- {
--	u8 tmp, *ptr;
-+	u8 tmp;
- 	const int len = sizeof(tmp);
- 
--	if (offset >= 0) {
--		if (headlen - offset >= len)
--			return *(u8 *)(data + offset);
--		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
--			return tmp;
--	} else {
--		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
--		if (likely(ptr))
--			return *(u8 *)ptr;
--	}
-+	offset = bpf_skb_load_helper_convert_offset(skb, offset);
-+	if (offset == INT_MIN)
-+		return -EFAULT;
- 
--	return -EFAULT;
-+	if (headlen - offset >= len)
-+		return *(u8 *)(data + offset);
-+	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
-+		return tmp;
-+	else
-+		return -EFAULT;
- }
- 
- BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
-@@ -239,21 +251,19 @@ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
- BPF_CALL_4(bpf_skb_load_helper_16, const struct sk_buff *, skb, const void *,
- 	   data, int, headlen, int, offset)
- {
--	__be16 tmp, *ptr;
-+	__be16 tmp;
- 	const int len = sizeof(tmp);
- 
--	if (offset >= 0) {
--		if (headlen - offset >= len)
--			return get_unaligned_be16(data + offset);
--		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
--			return be16_to_cpu(tmp);
--	} else {
--		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
--		if (likely(ptr))
--			return get_unaligned_be16(ptr);
--	}
-+	offset = bpf_skb_load_helper_convert_offset(skb, offset);
-+	if (offset == INT_MIN)
-+		return -EFAULT;
- 
--	return -EFAULT;
-+	if (headlen - offset >= len)
-+		return get_unaligned_be16(data + offset);
-+	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
-+		return be16_to_cpu(tmp);
-+	else
-+		return -EFAULT;
- }
- 
- BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
-@@ -266,21 +276,19 @@ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
- BPF_CALL_4(bpf_skb_load_helper_32, const struct sk_buff *, skb, const void *,
- 	   data, int, headlen, int, offset)
- {
--	__be32 tmp, *ptr;
-+	__be32 tmp;
- 	const int len = sizeof(tmp);
- 
--	if (likely(offset >= 0)) {
--		if (headlen - offset >= len)
--			return get_unaligned_be32(data + offset);
--		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
--			return be32_to_cpu(tmp);
--	} else {
--		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
--		if (likely(ptr))
--			return get_unaligned_be32(ptr);
--	}
-+	offset = bpf_skb_load_helper_convert_offset(skb, offset);
-+	if (offset == INT_MIN)
-+		return -EFAULT;
- 
--	return -EFAULT;
-+	if (headlen - offset >= len)
-+		return get_unaligned_be32(data + offset);
-+	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
-+		return be32_to_cpu(tmp);
-+	else
-+		return -EFAULT;
- }
- 
- BPF_CALL_2(bpf_skb_load_helper_32_no_cache, const struct sk_buff *, skb,
--- 
-2.39.5
-
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -866,6 +866,7 @@ u8 spectre_bhb_loop_affected(int scope)
+ 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+ 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
++			MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+ 			{},
+ 		};
+ 		static const struct midr_range spectre_bhb_k11_list[] = {
 
 
