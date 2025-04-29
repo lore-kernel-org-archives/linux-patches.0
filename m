@@ -1,112 +1,141 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A719275101;
-	Tue, 29 Apr 2025 06:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDE1274FE7
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 06:38:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745907351; cv=none; b=R8y9aSoIs/U7uCmU5Rc7cTMnLyK1MECUm9CZagYj3zsRHlURY0XpZeSFg7Mqa0PWmKWPEWag4aZUzeKLS3iN98jFptsdPKEEvQJJXncgONCTMfwtM7KPqHPcInYqApUSNbvBufK0YwfAPl6r2saM8171kHa/vGf9w3wgdogwqew=
+	t=1745908685; cv=none; b=ITKZYbwq+KE1PmW5zDO8X0fyuSawMZ+VwcKc1D8Mxv5YMEBDSPmLfSXwd4eU2nksGtuiSNVZK6Z0TGBknyha6u3QreUR5RVuSLOK7d7yruCE3hQMKJqIlcuLtDMt2QcUTL9yg79wVmuQnjFqNwxIEd939BUOi3/2Tik3V6QJW4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745907351; c=relaxed/simple;
-	bh=ntheU5Y/cslp1UNyIwy6sjeZIMak9TTFnECtsJY2pH0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a3tuJoPKS9wMbGEFK4ks+rQYpS3F51mqrvL37V4CtW/YGeLpV4lYWlnlMmQYkBl4/oDVCayvg4bY+VuckiUjiOtH7Dizc4EQ9I254L590fVdCqBezax4JQl+vyRpIN37850S3mNOGJNmBTrtPO9zLvenwLzmnngEhB497gO3jWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KI/X3kqA; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1745908685; c=relaxed/simple;
+	bh=8eas/4/AnYGINUxqMFFXYPgxi4CkzW0giq7AvI1HQ1A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M2gj60iSxkIAZG6ujMTqFprCZD8IJJRe5nG6JnsEFyjyhEilF5zgWTjzj9IH7htY8YGkr+dJauKJVn7FvgfzOElVKRjba5Xnfjo3dY1pMRzVIBNWA1rgSw/nDPS9p6nVcIf9gbJdkg7V0zab7hcPSw56uZC9DNa2z8NmTnANL/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ExOyA1XS; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=AJPaCBWm; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ExOyA1XS; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=AJPaCBWm; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KI/X3kqA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745907350; x=1777443350;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ntheU5Y/cslp1UNyIwy6sjeZIMak9TTFnECtsJY2pH0=;
-  b=KI/X3kqASu8HQ6F7s5VleKu4Yv+XirTK+zxuDw5WR7xkFoGFDw6KMo/S
-   yQJ1Tf8kr3JEMmxWraU2ffidLbHtth0UHlCvXx52YJ+BI3vmAn/iR709m
-   H3rHSAKbzVti19cUYdttFFrfGGMe4b9yJymEBcv7384GT26xCBDr3FpUJ
-   i8cmYIEP5DA+CzgxM55FFCw65b9IRRR8Da0m39cEYMcZOPqQoCubhKllO
-   5MZouYtG/mjUuQ8uygHVDjG2+0ha1Kj9ivTiypsUg42Www4+3iQHne4Dw
-   n5Gz/8iT0L1S6y3iBPdNb4iVRMm+rxu+H7MplWdXfxqRAnfD8Ze+mQL+v
-   A==;
-X-CSE-ConnectionGUID: ng2jcSxyTQyWN1tWVrkSNQ==
-X-CSE-MsgGUID: IO7sVLtmQ6e2IfTqa8ALJA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58888014"
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; 
-   d="scan'208";a="58888014"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 23:15:50 -0700
-X-CSE-ConnectionGUID: hL/PpME8Qz2SjoN3Tm+rlQ==
-X-CSE-MsgGUID: k0NPyEOXRYmpI9s1uLRPIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; 
-   d="scan'208";a="134687731"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 23:15:44 -0700
-Message-ID: <8af1a3c7-d5e6-46ca-a946-5d349e843ed6@linux.intel.com>
-Date: Tue, 29 Apr 2025 14:11:32 +0800
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ExOyA1XS";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="AJPaCBWm";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ExOyA1XS";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="AJPaCBWm"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 285D11FB5A;
+	Tue, 29 Apr 2025 06:38:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1745908682;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TkaaCo63sFcXfE3cMCVUk6B4ngYZXwCftcAwG1Ak+5g=;
+	b=ExOyA1XSB6o9VSFoDQ99X20fq4CUf7kfwLb7vM12d3cz1b41vNMN1A7/tTOomM6S8JdWJP
+	NIamUdaIACyndErk/NLzfnA/t5CItkn8wR/Xe0/H2VDyKSNKYarc/4kiVWXKQitYyq2dY/
+	MNclgUW/AvnItu1IkZGNAAh2bA2yGks=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1745908682;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TkaaCo63sFcXfE3cMCVUk6B4ngYZXwCftcAwG1Ak+5g=;
+	b=AJPaCBWmw0E+YCrKSg5Pvm6z23qKoQ5rSI/UmHIxu3EdWWpAPXeZSGL2JjvNGThHh02Z49
+	Aps6+njkpZxuO1Cw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1745908682;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TkaaCo63sFcXfE3cMCVUk6B4ngYZXwCftcAwG1Ak+5g=;
+	b=ExOyA1XSB6o9VSFoDQ99X20fq4CUf7kfwLb7vM12d3cz1b41vNMN1A7/tTOomM6S8JdWJP
+	NIamUdaIACyndErk/NLzfnA/t5CItkn8wR/Xe0/H2VDyKSNKYarc/4kiVWXKQitYyq2dY/
+	MNclgUW/AvnItu1IkZGNAAh2bA2yGks=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1745908682;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TkaaCo63sFcXfE3cMCVUk6B4ngYZXwCftcAwG1Ak+5g=;
+	b=AJPaCBWmw0E+YCrKSg5Pvm6z23qKoQ5rSI/UmHIxu3EdWWpAPXeZSGL2JjvNGThHh02Z49
+	Aps6+njkpZxuO1Cw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 12E3C13931;
+	Tue, 29 Apr 2025 06:38:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id VSVlBMpzEGh0YgAAD6G6ig
+	(envelope-from <dsterba@suse.cz>); Tue, 29 Apr 2025 06:38:02 +0000
+Date: Tue, 29 Apr 2025 08:38:00 +0200
+From: David Sterba <dsterba@suse.cz>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Chris Mason <clm@fb.com>, Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>, linux-btrfs@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] btrfs: Fix use of GCC_VERSION in messages.h
+Message-ID: <20250429063800.GA18094@suse.cz>
+Reply-To: dsterba@suse.cz
+References: <20250428-btrfs-fix-messages-h-clang-v1-1-5ede51586a9c@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/22] iommufd/viommmu: Add IOMMUFD_CMD_VCMDQ_ALLOC
- ioctl
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
- bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
- thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
- shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
- peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
- praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
- linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
- alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-References: <cover.1745646960.git.nicolinc@nvidia.com>
- <094992b874190ffdcf6012104b419c8649b5e4b4.1745646960.git.nicolinc@nvidia.com>
- <dcfd9bfc-44db-4fd8-a49c-0c96c68f6b88@linux.intel.com>
- <aA/P02wgX27/EjBS@Asurada-Nvidia>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <aA/P02wgX27/EjBS@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250428-btrfs-fix-messages-h-clang-v1-1-5ede51586a9c@kernel.org>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	HAS_REPLYTO(0.30)[dsterba@suse.cz];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	REPLYTO_ADDR_EQ_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[]
+X-Spam-Score: -4.00
+X-Spam-Flag: NO
 
-On 4/29/25 02:58, Nicolin Chen wrote:
-> On Mon, Apr 28, 2025 at 09:32:04AM +0800, Baolu Lu wrote:
->> On 4/26/25 13:58, Nicolin Chen wrote:
->>> +int iommufd_vcmdq_alloc_ioctl(struct iommufd_ucmd *ucmd)
->>> +{
->>> +	struct iommu_vcmdq_alloc *cmd = ucmd->cmd;
->>> +	struct iommufd_viommu *viommu;
->>> +	struct iommufd_vcmdq *vcmdq;
->>> +	struct page **pages;
->>> +	int max_npages, i;
->>> +	dma_addr_t end;
->>> +	int rc;
->>> +
->>> +	if (cmd->flags || cmd->type == IOMMU_VCMDQ_TYPE_DEFAULT)
->> I don't follow the check of 'cmd->type == IOMMU_VCMDQ_TYPE_DEFAULT'
->> here. My understanding is that it states that "other values of type are
->> not supported". If so, shouldn't it be,
->>
->> 	if (cmd->flags || cmd->type != IOMMU_VCMDQ_TYPE_DEFAULT)
->>
->> ?
-> No. Only other (new) types will be supported. We have this:
-> "* @IOMMU_VCMDQ_TYPE_DEFAULT: Reserved for future use"
-> which means driver should define a new type.
+On Mon, Apr 28, 2025 at 03:01:35PM -0700, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR=y):
 > 
-> We have the same DEFAULT type in vIOMMU/vEVENTQ allocators by
-> the way.
+>   fs/btrfs/messages.h:188:5: error: 'GCC_VERSION' is not defined, evaluates to 0 [-Werror,-Wundef]
+>     188 | #if GCC_VERSION >= 80000
+>         |     ^
+> 
+> GCC_VERSION is defined in compiler-gcc.h, which is not included when
+> building with clang. Use the always defined Kconfig symbol,
+> CONFIG_GCC_VERSION, to do the comparison.
+> 
+> Additionally, as a comment above this #ifdef notes, clang supports
+> __VA_OPT__, which is really what is needed for this block to function.
+> Include a check for CONFIG_CC_IS_CLANG as well, since clang 13 is the
+> minimum supported version for building the kernel.
+> 
+> Fixes: 14d740332aa0 ("btrfs: enhance ASSERT() to take optional format string")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Okay, thanks for the explanation.
-
-The iommu driver's callback will return a failure if the type is not
-supported. Then it's fine.
-
-Thanks,
-baolu
+Thanks, back then I verified that the minimum clang version required for
+kernel compiles the code and using just GCC_VERSION looked correct from
+other code but apparently not. Folded to the patch, thanks.
