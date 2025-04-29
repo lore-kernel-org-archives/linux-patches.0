@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A05525228D;
-	Tue, 29 Apr 2025 18:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BED6253956;
+	Tue, 29 Apr 2025 18:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950264; cv=none; b=g9YMfdfICOj/hLYUZg5Sm/6PulyOq5n30x6cWJhFom/twRnIrwMPi3XZFpjH35KgY/U232VslHfuFxSw/tvNRN0FYZ8nWKZDfvWf3ywguQSNVhYK2ZIEmz9HfbSl6qCadms/yTKRi1Ch3zYpaOYGK+Sbj3jIZ/XKBc6JyHd1BO4=
+	t=1745950267; cv=none; b=vGAb8x57xliqtPnYGr/WNzblps7NelWk2knFeGCgA2uJsBu/3hU58ulFGlHGlvvOOOVdPLgLG7jiZwHs5IPZGeSApHhag5ehkQoNoYwrQQLwwacURJLqjaDC0QZlB5h40pqWr2aq9+UDPOSDAo+vgoWj7/ykEgIiZB+SW2PpthE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950264; c=relaxed/simple;
-	bh=EHssN/Tudz59hnRdokEC+lDs6rKfXs/v+MVsxFpjqN8=;
+	s=arc-20240116; t=1745950267; c=relaxed/simple;
+	bh=M4C08HLFNNc+IsH7C/bJzt8HkeKeb6SNszPiPy0jOgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bk/JIgt6oJEYJbRm1eU0f+fyK+NyLg+BI0bMtBfFJCDGlz/8CIOyaVl+2GfKryNAu3+OMXtYb/VPvpeNo44BJm92+JFr7FNO/sDZ46HBb6KsU8cxOwKG4CaIDRMuY5/dtJ0wqznnO5L0NYRJZR2tqLTpKtAQSsJAnAsMpeK8ySk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE5o9Ka6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NaV44TTZt69V1+ixo7W5QwlQa/0vxNNz4AnJlNYKJrMRagiw7y1duopiPwjV/SgphIvCM+Z91mewfWSw3PWNRyvN0ZEV52vDL/OIaA8XogZeaDJku1TFZQ5IDghqzG/WiOvreljHrOFBpFznmEt3VcLA3jnmMYDA1IyzMZSYyvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+8OQlpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE5o9Ka6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C942BC4CEE3;
-	Tue, 29 Apr 2025 18:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+8OQlpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9211C4CEE3;
+	Tue, 29 Apr 2025 18:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950264;
-	bh=EHssN/Tudz59hnRdokEC+lDs6rKfXs/v+MVsxFpjqN8=;
+	s=korg; t=1745950267;
+	bh=M4C08HLFNNc+IsH7C/bJzt8HkeKeb6SNszPiPy0jOgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aE5o9Ka6x+gCFVv10w/I/DAmdomLUYxdN9nihncuv+Yc8AQt+7y/CXdY+04fiiPXy
-	 wp0JtQ0ywgYWje2kN1Je2gxOoaeh2enIrFkn1Cx5PVT/3CYOuoIjiGvo7Y0p/1zDxw
-	 CrC0SnH1Q0RvpkDyd+5wDW/aBObyg49E7BzqrkZM=
+	b=i+8OQlpXDtWJ+NmE3M2Cb7OiE0MurxfQdjKAfaqSBdU78pnic7VAFwI7IugiZLBOg
+	 AvbchepQJm5aW95+mVJbJKoIrTSuBzINeMtpnZmZw/Xrf7Amc/nOi6PjVtgOJiLa1s
+	 F7MYOEp2whzbh8EAEYE7bhYLAERC5RQDI4wgNq84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/204] clk: renesas: r9a07g043: Fix HP clock source for RZ/Five
-Date: Tue, 29 Apr 2025 18:42:00 +0200
-Message-ID: <20250429161100.728755599@linuxfoundation.org>
+Subject: [PATCH 6.6 041/204] s390/pci: Support mmap() of PCI resources except for ISM devices
+Date: Tue, 29 Apr 2025 18:42:09 +0200
+Message-ID: <20250429161101.093967565@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,57 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 7f22a298d926664b51fcfe2f8ea5feb7f8b79952 ]
+[ Upstream commit aa9f168d55dc47c0de564f7dfe0e90467c9fee71 ]
 
-According to the Rev.1.20 hardware manual for the RZ/Five SoC, the clock
-source for HP is derived from PLL6 divided by 2.  Correct the
-implementation by configuring HP as a fixed clock source instead of a
-MUX.
+So far s390 does not allow mmap() of PCI resources to user-space via the
+usual mechanisms, though it does use it for RDMA. For the PCI sysfs
+resource files and /proc/bus/pci it defines neither HAVE_PCI_MMAP nor
+ARCH_GENERIC_PCI_MMAP_RESOURCE. For vfio-pci s390 previously relied on
+disabled VFIO_PCI_MMAP and now relies on setting pdev->non_mappable_bars
+for all devices.
 
-The `CPG_PL6_ETH_SSEL' register, which is available on the RZ/G2UL SoC,
-is not present on the RZ/Five SoC, necessitating this change.
+This is partly because access to mapped PCI resources from user-space
+requires special PCI load/store memory-I/O (MIO) instructions, or the
+special MMIO syscalls when these are not available. Still, such access is
+possible and useful not just for RDMA, in fact not being able to mmap() PCI
+resources has previously caused extra work when testing devices.
 
-Fixes: 95d48d270305ad2c ("clk: renesas: r9a07g043: Add support for RZ/Five SoC")
-Cc: stable@vger.kernel.org
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250127173159.34572-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+One thing that doesn't work with PCI resources mapped to user-space though
+is the s390 specific virtual ISM device. Not only because the BAR size of
+256 TiB prevents mapping the whole BAR but also because access requires use
+of the legacy PCI instructions which are not accessible to user-space on
+systems with the newer MIO PCI instructions.
+
+Now with the pdev->non_mappable_bars flag ISM can be excluded from mapping
+its resources while making this functionality available for all other PCI
+devices. To this end introduce a minimal implementation of PCI_QUIRKS and
+use that to set pdev->non_mappable_bars for ISM devices only. Then also set
+ARCH_GENERIC_PCI_MMAP_RESOURCE to take advantage of the generic
+implementation of pci_mmap_resource_range() enabling only the newer sysfs
+mmap() interface. This follows the recommendation in
+Documentation/PCI/sysfs-pci.rst.
+
+Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-3-c5c0f1d26efd@linux.ibm.com
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/s390/Kconfig           |  4 +---
+ arch/s390/include/asm/pci.h |  3 +++
+ arch/s390/pci/Makefile      |  2 +-
+ arch/s390/pci/pci_fixup.c   | 23 +++++++++++++++++++++++
+ drivers/s390/net/ism_drv.c  |  1 -
+ include/linux/pci_ids.h     |  1 +
+ 6 files changed, 29 insertions(+), 5 deletions(-)
+ create mode 100644 arch/s390/pci/pci_fixup.c
 
-diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
-index 3a717dcecba56..865d47800791b 100644
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -86,7 +86,9 @@ static const struct clk_div_table dtable_1_32[] = {
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index bd4782f23f66d..0882016af57c0 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -38,9 +38,6 @@ config AUDIT_ARCH
+ config NO_IOPORT_MAP
+ 	def_bool y
  
- /* Mux clock tables */
- static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
-+#ifdef CONFIG_ARM64
- static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
-+#endif
- static const char * const sel_sdhi[] = { ".clk_533", ".clk_400", ".clk_266" };
+-config PCI_QUIRKS
+-	def_bool n
+-
+ config ARCH_SUPPORTS_UPROBES
+ 	def_bool y
  
- static const u32 mtable_sdhi[] = { 1, 2, 3 };
-@@ -133,7 +135,12 @@ static const struct cpg_core_clk r9a07g043_core_clks[] __initconst = {
- 	DEF_DIV("P2", R9A07G043_CLK_P2, CLK_PLL3_DIV2_4_2, DIVPL3A, dtable_1_32),
- 	DEF_FIXED("M0", R9A07G043_CLK_M0, CLK_PLL3_DIV2_4, 1, 1),
- 	DEF_FIXED("ZT", R9A07G043_CLK_ZT, CLK_PLL3_DIV2_4_2, 1, 1),
-+#ifdef CONFIG_ARM64
- 	DEF_MUX("HP", R9A07G043_CLK_HP, SEL_PLL6_2, sel_pll6_2),
-+#endif
-+#ifdef CONFIG_RISCV
-+	DEF_FIXED("HP", R9A07G043_CLK_HP, CLK_PLL6_250, 1, 1),
-+#endif
- 	DEF_FIXED("SPI0", R9A07G043_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
- 	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_sdhi,
+@@ -229,6 +226,7 @@ config S390
+ 	select PCI_DOMAINS		if PCI
+ 	select PCI_MSI			if PCI
+ 	select PCI_MSI_ARCH_FALLBACKS	if PCI_MSI
++	select PCI_QUIRKS		if PCI
+ 	select SPARSE_IRQ
+ 	select SWIOTLB
+ 	select SYSCTL_EXCEPTION_TRACE
+diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
+index b248694e00247..211c69cd1f9c9 100644
+--- a/arch/s390/include/asm/pci.h
++++ b/arch/s390/include/asm/pci.h
+@@ -11,6 +11,9 @@
+ #include <asm/pci_insn.h>
+ #include <asm/sclp.h>
+ 
++#define ARCH_GENERIC_PCI_MMAP_RESOURCE	1
++#define arch_can_pci_mmap_wc()		1
++
+ #define PCIBIOS_MIN_IO		0x1000
+ #define PCIBIOS_MIN_MEM		0x10000000
+ 
+diff --git a/arch/s390/pci/Makefile b/arch/s390/pci/Makefile
+index eeef68901a15c..2f8dd3f688391 100644
+--- a/arch/s390/pci/Makefile
++++ b/arch/s390/pci/Makefile
+@@ -5,5 +5,5 @@
+ 
+ obj-$(CONFIG_PCI)	+= pci.o pci_irq.o pci_dma.o pci_clp.o pci_sysfs.o \
+ 			   pci_event.o pci_debug.o pci_insn.o pci_mmio.o \
+-			   pci_bus.o pci_kvm_hook.o pci_report.o
++			   pci_bus.o pci_kvm_hook.o pci_report.o pci_fixup.o
+ obj-$(CONFIG_PCI_IOV)	+= pci_iov.o
+diff --git a/arch/s390/pci/pci_fixup.c b/arch/s390/pci/pci_fixup.c
+new file mode 100644
+index 0000000000000..35688b6450983
+--- /dev/null
++++ b/arch/s390/pci/pci_fixup.c
+@@ -0,0 +1,23 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Exceptions for specific devices,
++ *
++ * Copyright IBM Corp. 2025
++ *
++ * Author(s):
++ *   Niklas Schnelle <schnelle@linux.ibm.com>
++ */
++#include <linux/pci.h>
++
++static void zpci_ism_bar_no_mmap(struct pci_dev *pdev)
++{
++	/*
++	 * ISM's BAR is special. Drivers written for ISM know
++	 * how to handle this but others need to be aware of their
++	 * special nature e.g. to prevent attempts to mmap() it.
++	 */
++	pdev->non_mappable_bars = 1;
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_IBM,
++			PCI_DEVICE_ID_IBM_ISM,
++			zpci_ism_bar_no_mmap);
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index af0d90beba638..390ebd4d7f3bc 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -20,7 +20,6 @@
+ MODULE_DESCRIPTION("ISM driver for s390");
+ MODULE_LICENSE("GPL");
+ 
+-#define PCI_DEVICE_ID_IBM_ISM 0x04ED
+ #define DRV_NAME "ism"
+ 
+ static const struct pci_device_id ism_device_table[] = {
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 3dce2be622e74..dcb9d5ac06937 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -517,6 +517,7 @@
+ #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM	0x0251
+ #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM_PCIE 0x0361
+ #define PCI_DEVICE_ID_IBM_ICOM_FOUR_PORT_MODEL	0x252
++#define PCI_DEVICE_ID_IBM_ISM		0x04ed
+ 
+ #define PCI_SUBVENDOR_ID_IBM		0x1014
+ #define PCI_SUBDEVICE_ID_IBM_SATURN_SERIAL_ONE_PORT	0x03d4
 -- 
 2.39.5
 
