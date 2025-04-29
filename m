@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A23EC148;
-	Tue, 29 Apr 2025 17:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D7BC148;
+	Tue, 29 Apr 2025 17:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948794; cv=none; b=OBsrzSq4jZhfN/MKb05+u9rDisayN1QKAqhEkMwms59To09frMtazRuQ4NifZ1KK3M0TKG+SOViRyaJOFmYpZaTLDR3cLCFJVVKUrW3FciwdtsVZ2zar2oyqAxgvOJuIGTZ0CSTs6KgUAMqdwssY19HEgRuAthez0zPXTSusWkc=
+	t=1745948796; cv=none; b=FluB/Ba9pZKEQRwlCJmR1tUXt145RUX/umxWvmc/bXj8Yy80H+Hc7MKhrH5qy2+ckPOJkRqdENbleVzCZRtKzoyj2hSHeWsCumi9WYKdA9fcw7zcRtHTVMqozbOM2mYYSPrjt0QCQJNwwWPwVgYq7hnliJihr0BKhbYqDHtj2xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948794; c=relaxed/simple;
-	bh=cSY+siYeStZUiTZMo1p5DRIrqYqmX1IRzSMPpt5hBhE=;
+	s=arc-20240116; t=1745948796; c=relaxed/simple;
+	bh=3WB7mIRx15b4R4Zl3Wor/D5u1pYkeCpzJjk1iMKWNDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqlbGSN0IVJ/NMy8nGs0jTLz65/wCYpYils2JRCG6wKR7KmsAgow4GgrDFEmH6o55gHkzql3qGZpDa0DDX8BUYGUrmHdtGscirf8A8rs5DXzUd6vlcOfkqRr4qixdMOK7uaLwWLqR+2abRjsJ0tWFywGIpGtLPN7yiOlIwfGS28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WBWpKNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baN/kRuf3yQz6R86nl3tnTS+cDopbO37RCklbw15mTLPArGnMKiYUym7vbkojv6lWyXzIZx7pD/YWvsRiatPxICFSy8RxmdysJ5be6idY4Va05L2r+H2iIAGBfwyq4tbB0aY5UjfHNqJLkWpaTX4xLva4mjKWn7NDU1VijZErBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNsW/Auu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WBWpKNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29D4C4CEE3;
-	Tue, 29 Apr 2025 17:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNsW/Auu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5985AC4CEE3;
+	Tue, 29 Apr 2025 17:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948794;
-	bh=cSY+siYeStZUiTZMo1p5DRIrqYqmX1IRzSMPpt5hBhE=;
+	s=korg; t=1745948796;
+	bh=3WB7mIRx15b4R4Zl3Wor/D5u1pYkeCpzJjk1iMKWNDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WBWpKNiWyglFXYJ1PZ9OLsRy0Pg+TnuMlbbx2LCWnLOGUfP1AM4mf876y79eOjcC
-	 PSWyXsiRWYosi5HXp2Hs+PZaqnLXZbFMsRuQP/jY9Cgfnkj9HZfzDjpvdUset5+AFa
-	 nb5CwFlhl5G1EZoazUYa18BCbvSQslKkkLTafaLQ=
+	b=MNsW/AuuNQUA20/0XvNHjNzUAgw2SNgg6NU6Mgn1oN+RLPx9Ip0NzKz+uLZbQR5Zx
+	 /Vx5yigtmIt+bZyGtdNBsFepb3PWLDcGIpMrkD2219BCPNeJwpxhcwxOM5yShGz1vg
+	 gSmNwyxX5u4xr/SxLfoK8166ZK6TzyctIKnJtOZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 115/373] HSI: ssi_protocol: Fix use after free vulnerability in ssi_protocol Driver Due to Race Condition
-Date: Tue, 29 Apr 2025 18:39:52 +0200
-Message-ID: <20250429161127.908007749@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 116/373] arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected() lists
+Date: Tue, 29 Apr 2025 18:39:53 +0200
+Message-ID: <20250429161127.947903746@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,49 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit e3f88665a78045fe35c7669d2926b8d97b892c11 upstream.
+commit a5951389e58d2e816eed3dbec5877de9327fd881 upstream.
 
-In the ssi_protocol_probe() function, &ssi->work is bound with
-ssip_xmit_work(), In ssip_pn_setup(), the ssip_pn_xmit() function
-within the ssip_pn_ops structure is capable of starting the
-work.
+When comparing to the ARM list [1], it appears that several ARM cores
+were missing from the lists in spectre_bhb_loop_affected(). Add them.
 
-If we remove the module which will call ssi_protocol_remove()
-to make a cleanup, it will free ssi through kfree(ssi),
-while the work mentioned above will be used. The sequence
-of operations that may lead to a UAF bug is as follows:
+NOTE: for some of these cores it may not matter since other ways of
+clearing the BHB may be used (like the CLRBHB instruction or ECBHB),
+but it still seems good to have all the info from ARM's whitepaper
+included.
 
-CPU0                                    CPU1
+[1] https://developer.arm.com/Arm%20Security%20Center/Spectre-BHB
 
-                        | ssip_xmit_work
-ssi_protocol_remove     |
-kfree(ssi);             |
-                        | struct hsi_client *cl = ssi->cl;
-                        | // use ssi
-
-Fix it by ensuring that the work is canceled before proceeding
-with the cleanup in ssi_protocol_remove().
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240918120749.1730-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+Cc: stable@vger.kernel.org
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20250107120555.v4.5.I4a9a527e03f663040721c5401c41de587d015c82@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hsi/clients/ssi_protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/proton-pack.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/hsi/clients/ssi_protocol.c
-+++ b/drivers/hsi/clients/ssi_protocol.c
-@@ -403,6 +403,7 @@ static void ssip_reset(struct hsi_client
- 	del_timer(&ssi->rx_wd);
- 	del_timer(&ssi->tx_wd);
- 	del_timer(&ssi->keep_alive);
-+	cancel_work_sync(&ssi->work);
- 	ssi->main_state = 0;
- 	ssi->send_state = 0;
- 	ssi->recv_state = 0;
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -876,6 +876,14 @@ static u8 spectre_bhb_loop_affected(void
+ {
+ 	u8 k = 0;
+ 
++	static const struct midr_range spectre_bhb_k132_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X3),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
++	};
++	static const struct midr_range spectre_bhb_k38_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
++	};
+ 	static const struct midr_range spectre_bhb_k32_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+@@ -889,6 +897,7 @@ static u8 spectre_bhb_loop_affected(void
+ 	};
+ 	static const struct midr_range spectre_bhb_k24_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76AE),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+ 		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+@@ -904,7 +913,11 @@ static u8 spectre_bhb_loop_affected(void
+ 		{},
+ 	};
+ 
+-	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
++	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k132_list))
++		k = 132;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k38_list))
++		k = 38;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+ 		k = 32;
+ 	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+ 		k = 24;
 
 
