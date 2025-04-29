@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8886B24DFF3;
-	Tue, 29 Apr 2025 17:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6B2C148;
+	Tue, 29 Apr 2025 17:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948736; cv=none; b=b33jsD+ruE1zQGp8eGK0m20VI/ywl/LPXmA4wk8VAnsXutDtrcCRE/OZdVV4qXcn4M8pgpPtKzf8DyUdAzDSBeMaqPQ21lPWeWs8OuYPYs96bqE7JsdxKFHcsx4l1VF4zMV9eZRsAPKVNSIbYq6WUQcR4xLFjm64hU+LZ6Q+qrU=
+	t=1745948740; cv=none; b=HpTX+liDnQHpBCMTiEGw5ejAH/gh5HzxcqeRA3fEmhX+qDZVxH0oBpNIm53gLaoriq4JzzRgD5Citz9/kCVymcInllIbjCY/0meJwduIaK0Je64i4RzbNE9FPJ9MAEIA0AkJUozAv0GPBMVY1rOKJJM+cGu9GC1TngEuL16oty8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948736; c=relaxed/simple;
-	bh=1dyTQkL2RGr94G/A83fwLKrIA3BUQ+KG/ngEDV8UzwE=;
+	s=arc-20240116; t=1745948740; c=relaxed/simple;
+	bh=7FUY+z8QC3OWU9tZw8NomU1KRRKZfvAJKTvP47IUfas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B7BSZzVvMsaLRMvUPUCiBjDmzssX9dtfj634z1EnqM3OuJYkXFTHACjo81I/X8E9iRXRVvi4jiWv1akGZcFqMq2SH6FcTvLL8tg5fZsuoweEk929VpkubTG1yeGrjGXBTFiqQRD4v0HKmJs6lFPl2hWOj5DC/FMSD2xzBmaIG0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm8U0DN9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRpF1ClemODew/l1RpgOmvMIYjBcWKDj/audiQDTQ+cdtcbuJABdowOUSptqpL37mIiAjrthFzPla3Z5z2ZwhdCl532JOVD+7TL4BZ8TU6XZjUtHw8YchCgYlCbhnHb6FqkRzBKBopA4o4whKRVKFnxK3eOqaWS8W6WeIcshqZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYjQRQln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm8U0DN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6F2C4CEE3;
-	Tue, 29 Apr 2025 17:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYjQRQln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D32C4CEE3;
+	Tue, 29 Apr 2025 17:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948736;
-	bh=1dyTQkL2RGr94G/A83fwLKrIA3BUQ+KG/ngEDV8UzwE=;
+	s=korg; t=1745948740;
+	bh=7FUY+z8QC3OWU9tZw8NomU1KRRKZfvAJKTvP47IUfas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fm8U0DN9cE9u5STt5Aj/L0hmKQqxFWhJO7LRaOVrEAOclNvf4WModjRfR9PTDnhPd
-	 h2dcfkoWAFHwXfxE0n+cwwhA3dmIQr+gqTEaL0bhrS7AOEI7wvXXfserD7+OWLMt3b
-	 fJahxB8E37thqrTDeFqwE0PKaByGQ0PUCAGEbezE=
+	b=TYjQRQlnC7XgLxAmpbovgyZia5g4errGpYepcsyex1Og51sZs6GJdaONa9oftGBLw
+	 uCbdMgM+RW93Moefr+Ta7QVYE0Tr0m8HBcs8TFXO77FQhrgzXaNSe7rUxSPiBxtYKp
+	 vAQxIJGMmE7rmOa8EXaT+bQryrnbzHGpk+AAkdao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 089/373] i3c: Add NULL pointer check in i3c_master_queue_ibi()
-Date: Tue, 29 Apr 2025 18:39:26 +0200
-Message-ID: <20250429161126.823377957@linuxfoundation.org>
+	YH Huang <yh.huang@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 5.15 098/373] arm64: dts: mediatek: mt8173: Fix disp-pwm compatible string
+Date: Tue, 29 Apr 2025 18:39:35 +0200
+Message-ID: <20250429161127.187462041@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,60 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-commit bd496a44f041da9ef3afe14d1d6193d460424e91 upstream.
+commit 46ad36002088eff8fc5cae200aa42ae9f9310ddd upstream.
 
-The I3C master driver may receive an IBI from a target device that has not
-been probed yet. In such cases, the master calls `i3c_master_queue_ibi()`
-to queue an IBI work task, leading to "Unable to handle kernel read from
-unreadable memory" and resulting in a kernel panic.
+The MT8173 disp-pwm device should have only one compatible string, based
+on the following DT validation error:
 
-Typical IBI handling flow:
-1. The I3C master scans target devices and probes their respective drivers.
-2. The target device driver calls `i3c_device_request_ibi()` to enable IBI
-   and assigns `dev->ibi = ibi`.
-3. The I3C master receives an IBI from the target device and calls
-   `i3c_master_queue_ibi()` to queue the target device driver’s IBI
-   handler task.
+    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401e000: compatible: 'oneOf' conditional failed, one must be fixed:
+	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' was expected
+	    'mediatek,mt8183-disp-pwm' was expected
+	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
+    arch/arm64/boot/dts/mediatek/mt8173-elm.dtb: pwm@1401f000: compatible: 'oneOf' conditional failed, one must be fixed:
+	    ['mediatek,mt8173-disp-pwm', 'mediatek,mt6595-disp-pwm'] is too long
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt6795-disp-pwm', 'mediatek,mt8167-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' is not one of ['mediatek,mt8186-disp-pwm', 'mediatek,mt8188-disp-pwm', 'mediatek,mt8192-disp-pwm', 'mediatek,mt8195-disp-pwm', 'mediatek,mt8365-disp-pwm']
+	    'mediatek,mt8173-disp-pwm' was expected
+	    'mediatek,mt8183-disp-pwm' was expected
+	    from schema $id: http://devicetree.org/schemas/pwm/mediatek,pwm-disp.yaml#
 
-However, since target device events are asynchronous to the I3C probe
-sequence, step 3 may occur before step 2, causing `dev->ibi` to be `NULL`,
-leading to a kernel panic.
+Drop the extra "mediatek,mt6595-disp-pwm" compatible string.
 
-Add a NULL pointer check in `i3c_master_queue_ibi()` to prevent accessing
-an uninitialized `dev->ibi`, ensuring stability.
-
-Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/Z9gjGYudiYyl3bSe@lizhi-Precision-Tower-5810/
-Signed-off-by: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250326123047.2797946-1-manjunatha.venkatesh@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 61aee9342514 ("arm64: dts: mt8173: add MT8173 display PWM driver support node")
+Cc: YH Huang <yh.huang@mediatek.com>
+Cc: stable@vger.kernel.org # v4.5+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250108083424.2732375-2-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8173.dtsi |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2240,6 +2240,9 @@ static void i3c_master_unregister_i3c_de
-  */
- void i3c_master_queue_ibi(struct i3c_dev_desc *dev, struct i3c_ibi_slot *slot)
- {
-+	if (!dev->ibi || !slot)
-+		return;
-+
- 	atomic_inc(&dev->ibi->pending_ibis);
- 	queue_work(dev->common.master->wq, &slot->work);
- }
+--- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
+@@ -1260,8 +1260,7 @@
+ 		};
+ 
+ 		pwm0: pwm@1401e000 {
+-			compatible = "mediatek,mt8173-disp-pwm",
+-				     "mediatek,mt6595-disp-pwm";
++			compatible = "mediatek,mt8173-disp-pwm";
+ 			reg = <0 0x1401e000 0 0x1000>;
+ 			#pwm-cells = <2>;
+ 			clocks = <&mmsys CLK_MM_DISP_PWM026M>,
+@@ -1271,8 +1270,7 @@
+ 		};
+ 
+ 		pwm1: pwm@1401f000 {
+-			compatible = "mediatek,mt8173-disp-pwm",
+-				     "mediatek,mt6595-disp-pwm";
++			compatible = "mediatek,mt8173-disp-pwm";
+ 			reg = <0 0x1401f000 0 0x1000>;
+ 			#pwm-cells = <2>;
+ 			clocks = <&mmsys CLK_MM_DISP_PWM126M>,
 
 
