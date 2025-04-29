@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3439221DA7;
-	Tue, 29 Apr 2025 17:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BE521ABC1;
+	Tue, 29 Apr 2025 17:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948999; cv=none; b=ZmGwfCGaeeeoyb+GdkixpXREJwtdbABMz3CsisrGU34BsREBMuM3izq4Ec4flzeOZNAk65LV/nWu1HXzrIzHikYrQBQX5jLi08C5I1sKDiAdDEVgGzMTQoB+zmCjcmsu443Qw9wj2A/hUfgK7cqPaBLRs+Z1XGPKT8HNoKG6drk=
+	t=1745949004; cv=none; b=pgI2ckMzdWQtiLuxzaea1e61/563o/K+l0y08OgsZDJq9OYdOMce1qangMma0SNt76Mfjrv/6oUykvC9Uom6/MeMlbx/OqUJJAvfVZmX9goAFnhy/ARog7IzcWkOYN6i3/kwK5v+JB6Sn/2wPaist0kYNqUJPYFvlDcBQxHT1XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948999; c=relaxed/simple;
-	bh=x9hB42/RSPgExuZQhQRzw5eb8cGi37ApQzq6G6x7oRQ=;
+	s=arc-20240116; t=1745949004; c=relaxed/simple;
+	bh=a6eL0LCyrLUXPOviMqsAxmcK2p3fu/QAoZTg/9v055c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZGW3HaVp+IenrOOtNGF23vrkFmER8M86jH3AvjaFbOtHdCog/TntoGXJxsC6fQiNLsUJm8LzbgUD3lT5v4kym9dLrX6I1dobjPfrzLuwJCprJZSOy3qQY8wemJ6QocPeT4RdN5JBRDls62uMP+cwbJnqp1gZkyrY8+iBhRAifc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEaHRosN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i2c/mWrkF+pWfM4VzXnVJiecofQRvZMrCjimN+IGzPsm3Wj1UOOjumIXXI0GsZcI9oPSmYt0ybyu6osTPrkQTTa4QFl60WXOghOCaOcB857iNPC+gj9HsOa+FtCYiB3j1LqFtpH2Dov6lMFWHV5EdXMnfoHNDl/9xWRx5mZuMTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcXQEy+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEaHRosN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCE0C4CEE3;
-	Tue, 29 Apr 2025 17:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcXQEy+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ADCC4CEE9;
+	Tue, 29 Apr 2025 17:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948999;
-	bh=x9hB42/RSPgExuZQhQRzw5eb8cGi37ApQzq6G6x7oRQ=;
+	s=korg; t=1745949004;
+	bh=a6eL0LCyrLUXPOviMqsAxmcK2p3fu/QAoZTg/9v055c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEaHRosNSyU0lDBR986fFU7lSeDD/GL1CNIyh3zGosve4eYW/pfnvoLTNHBY6omsA
-	 iyFoZJQ9GEhhjnTfwq8BDQVOBSx1puquCwHTBSMH1yWYL1dtYyKqxp8rT3v2Amj3U7
-	 1S8TXeEvLVx5caG7kc2noYf+670C1n989DmVFY6A=
+	b=hcXQEy+iX1bmhIePlNQJqwo3c9NQWAX0S7UtwfyrmEk5cTREZ/JAkwMymeEViDCfx
+	 7L9FWsVeG5eiFYGIznG2XoSJn9RZOmj59KxCOnqpcvsWQrq50vHec7Lr4E7d9ZDx5F
+	 PK4mZD4ygkzoJvp25oNYdxZU1SMwd6e2WyHxZJQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikantan R <quic_manrav@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 157/373] ASoC: codecs:lpass-wsa-macro: Fix logic of enabling vi channels
-Date: Tue, 29 Apr 2025 18:40:34 +0200
-Message-ID: <20250429161129.605074970@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 158/373] asus-laptop: Fix an uninitialized variable
+Date: Tue, 29 Apr 2025 18:40:35 +0200
+Message-ID: <20250429161129.644008753@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,173 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit 7648beb65600220996ebb2da207610b1ff9b735e upstream.
+commit 6c683c6887e4addcd6bd1ddce08cafccb0a21e32 upstream.
 
-Existing code only configures one of WSA_MACRO_TX0 or WSA_MACRO_TX1
-paths eventhough we enable both of them. Fix this bug by adding proper
-checks and rearranging some of the common code to able to allow setting
-both TX0 and TX1 paths
+The value returned by acpi_evaluate_integer() is not checked,
+but the result is not always successful, so it is necessary to
+add a check of the returned value.
 
-Without this patch only one channel gets enabled in VI path instead of 2
-channels. End result would be 1 channel recording instead of 2.
+If the result remains negative during three iterations of the loop,
+then the uninitialized variable 'val' will be used in the clamp_val()
+macro, so it must be initialized with the current value of the 'curr'
+variable.
 
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+In this case, the algorithm should be less noisy.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: b23910c2194e ("asus-laptop: Pegatron Lucid accelerometer")
 Cc: stable@vger.kernel.org
-Co-developed-by: Manikantan R <quic_manrav@quicinc.com>
-Signed-off-by: Manikantan R <quic_manrav@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250403160209.21613-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Link: https://lore.kernel.org/r/20250403122603.18172-1-arefev@swemel.ru
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |  108 +++++++++++++++++++++----------------
- 1 file changed, 63 insertions(+), 45 deletions(-)
+ drivers/platform/x86/asus-laptop.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1146,6 +1146,67 @@ static void wsa_macro_mclk_enable(struct
- 	}
- }
+--- a/drivers/platform/x86/asus-laptop.c
++++ b/drivers/platform/x86/asus-laptop.c
+@@ -427,11 +427,14 @@ static int asus_pega_lucid_set(struct as
  
-+static void wsa_macro_enable_disable_vi_sense(struct snd_soc_component *component, bool enable,
-+						u32 tx_reg0, u32 tx_reg1, u32 val)
-+{
-+	if (enable) {
-+		/* Enable V&I sensing */
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_RESET);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_RESET);
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
-+					      val);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
-+					      val);
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
-+	} else {
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_RESET);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_RESET);
-+		snd_soc_component_update_bits(component, tx_reg0,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
-+		snd_soc_component_update_bits(component, tx_reg1,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
-+					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
-+	}
-+}
-+
-+static void wsa_macro_enable_disable_vi_feedback(struct snd_soc_component *component,
-+						 bool enable, u32 rate)
-+{
-+	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
-+
-+	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
-+		wsa_macro_enable_disable_vi_sense(component, enable,
-+				CDC_WSA_TX0_SPKR_PROT_PATH_CTL,
-+				CDC_WSA_TX1_SPKR_PROT_PATH_CTL, rate);
-+
-+	if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI]))
-+		wsa_macro_enable_disable_vi_sense(component, enable,
-+				CDC_WSA_TX2_SPKR_PROT_PATH_CTL,
-+				CDC_WSA_TX3_SPKR_PROT_PATH_CTL, rate);
-+}
-+
- static int wsa_macro_mclk_event(struct snd_soc_dapm_widget *w,
- 				struct snd_kcontrol *kcontrol, int event)
+ static int pega_acc_axis(struct asus_laptop *asus, int curr, char *method)
  {
-@@ -1162,7 +1223,6 @@ static int wsa_macro_enable_vi_feedback(
- {
- 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
--	u32 tx_reg0, tx_reg1;
- 	u32 rate_val;
++	unsigned long long val = (unsigned long long)curr;
++	acpi_status status;
+ 	int i, delta;
+-	unsigned long long val;
+-	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
+-		acpi_evaluate_integer(asus->handle, method, NULL, &val);
  
- 	switch (wsa->pcm_rate_vi) {
-@@ -1186,56 +1246,14 @@ static int wsa_macro_enable_vi_feedback(
- 		break;
- 	}
- 
--	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
--		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
--		tx_reg1 = CDC_WSA_TX1_SPKR_PROT_PATH_CTL;
--	} else if (test_bit(WSA_MACRO_TX1, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
--		tx_reg0 = CDC_WSA_TX2_SPKR_PROT_PATH_CTL;
--		tx_reg1 = CDC_WSA_TX3_SPKR_PROT_PATH_CTL;
--	}
--
- 	switch (event) {
- 	case SND_SOC_DAPM_POST_PMU:
- 		/* Enable V&I sensing */
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_RESET);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_RESET);
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      rate_val);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
--					      rate_val);
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
--					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
--					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_NO_RESET);
-+		wsa_macro_enable_disable_vi_feedback(component, true, rate_val);
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* Disable V&I sensing */
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_RESET);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
--					      CDC_WSA_TX_SPKR_PROT_RESET);
--		snd_soc_component_update_bits(component, tx_reg0,
--					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
--					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
--		snd_soc_component_update_bits(component, tx_reg1,
--					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
--					      CDC_WSA_TX_SPKR_PROT_CLK_DISABLE);
-+		wsa_macro_enable_disable_vi_feedback(component, false, rate_val);
- 		break;
- 	}
- 
++	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
++		status = acpi_evaluate_integer(asus->handle, method, NULL, &val);
++		if (ACPI_FAILURE(status))
++			continue;
+ 		/* The output is noisy.  From reading the ASL
+ 		 * dissassembly, timeout errors are returned with 1's
+ 		 * in the high word, and the lack of locking around
 
 
