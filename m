@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DF52512E8;
-	Tue, 29 Apr 2025 17:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FF8224AE6;
+	Tue, 29 Apr 2025 17:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947400; cv=none; b=OZ0ECqtSrGeGEnjVrs5cGer1TSoEufz/UZflY/Kjfgf9Y0D3p0ahRkLNqNOB9zcXwnBwxdoC15dCJy5bPplTnuOMBMypLlPSRMbW7IF9JcoNOSLlFuKy5ERu6Kr9ZqWh9lrTMwmR1Iz7oDbeCPoBnFfp+NEq6PrMEMScK89IFyo=
+	t=1745947404; cv=none; b=cm0ZjOlCtpMIOlMLuPAWjBAcyqucsQTckqV0hC/ZCxOUtEX9v9TnJyy0fkzT1xXfbUxivwpTr/FK/SrToAjLQ3/p0keGSrArSOvt/IEyP6w8UAc9NSnCQDOjCO3e306oLzmFDNwmkUCZnO0twmmL3aPXIurp3YFx2dm2A4VDvBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947400; c=relaxed/simple;
-	bh=NNVR1LrHEUiwrPY5UJHyIT/+EcFSqr4KjuFmg2trLF0=;
+	s=arc-20240116; t=1745947404; c=relaxed/simple;
+	bh=zD5MpW9WDe9jwuEf5perCXueZIzBuoqYjNuohgnQA7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmVvweb94MMAJSR5d+mUdXEoxI7icpEuKVJTlao+K4eShAYnKrbWiEgo2Mr8vh7CF6e79dzEXCW+YErJlIe8XPBqKwkIujM4Eb0Lpy3NmZG7i68BnrJVNGGdrEp0Gp8gYQO56GOEv78pEJhwrS3BK2uRWqK1Zn4Mth9mZSoxvck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMQAYkE0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRa2BoWF5PRgRex3omlEiaZ9JlJETeb/UvoUx0L//3CxYm1xlZnJPtX09fq0ffGsBfUU5njkYS22L1VZ9bUT02qc/Li0WkSM/LHvMC/hXYRbO6l2wtzNwhudoz2U33G8/0G/gl5U160ZA141iG27cIf72Y1SgRM5K03QIQJeaWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1RgrKfN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMQAYkE0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EB6C4CEE3;
-	Tue, 29 Apr 2025 17:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1RgrKfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D6DC4CEE3;
+	Tue, 29 Apr 2025 17:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947399;
-	bh=NNVR1LrHEUiwrPY5UJHyIT/+EcFSqr4KjuFmg2trLF0=;
+	s=korg; t=1745947403;
+	bh=zD5MpW9WDe9jwuEf5perCXueZIzBuoqYjNuohgnQA7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMQAYkE0Pb6IrpsOYJhAMZW6PQAzvYLSDd7q7tZvqgB8PwU1M243zR0TQm+J5/heQ
-	 bhqkPABvAcaU6hEUoLtzCZxJftEeXqMH5bB1NeNSVSQsvcif363z2Y5w+RuQqm70fy
-	 07JIKy5oazxzTE1oBWB1bYBuOLTFuPqJVSgNqdao=
+	b=z1RgrKfN3O11ZN1hcy34X+KaE0i2i/9Luu3HjLVMQ/DMmP6NUzZF3jV2XGueofZ1F
+	 42EMvH1YLueH729i6HIlwy8i+TjZxC32cm1H5g+gflJAAQIsQAXT/mpREaP+fvJHIO
+	 ZThfzBSOY56ZMVFQge7Ex9O3rBC7Pq2eb8zUqMyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/286] nvme: re-read ANA log page after ns scan completes
-Date: Tue, 29 Apr 2025 18:42:53 +0200
-Message-ID: <20250429161118.986607596@linuxfoundation.org>
+Subject: [PATCH 5.10 270/286] objtool: Stop UNRET validation on UD2
+Date: Tue, 29 Apr 2025 18:42:54 +0200
+Message-ID: <20250429161119.026645853@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,45 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 62baf70c327444338c34703c71aa8cc8e4189bd6 ]
+[ Upstream commit 9f9cc012c2cbac4833746a0182e06a8eec940d19 ]
 
-When scanning for new namespaces we might have missed an ANA AEN.
+In preparation for simplifying INSN_SYSCALL, make validate_unret()
+terminate control flow on UD2 just like validate_branch() already does.
 
-The NVMe base spec (NVMe Base Specification v2.1, Figure 151 'Asynchonous
-Event Information - Notice': Asymmetric Namespace Access Change) states:
-
-  A controller shall not send this even if an Attached Namespace
-  Attribute Changed asynchronous event [...] is sent for the same event.
-
-so we need to re-read the ANA log page after we rescanned the namespace
-list to update the ANA states of the new namespaces.
-
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ce841269e7e28c8b7f32064464a9821034d724ff.1744095216.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/objtool/check.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 94225ffd4643d..5f22f8e8dce7c 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4270,6 +4270,11 @@ static void nvme_scan_work(struct work_struct *work)
- 	/* Requeue if we have missed AENs */
- 	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
- 		nvme_queue_scan(ctrl);
-+#ifdef CONFIG_NVME_MULTIPATH
-+	else
-+		/* Re-read the ANA log page to not miss updates */
-+		queue_work(nvme_wq, &ctrl->ana_work);
-+#endif
- }
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index bcc9948645a00..20ccdd60353be 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3249,6 +3249,9 @@ static int validate_entry(struct objtool_file *file, struct instruction *insn)
+ 			break;
+ 		}
  
- /*
++		if (insn->dead_end)
++			return 0;
++
+ 		if (!next) {
+ 			WARN_FUNC("teh end!", insn->sec, insn->offset);
+ 			return -1;
 -- 
 2.39.5
 
