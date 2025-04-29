@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953421C6B4;
-	Tue, 29 Apr 2025 17:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616E3242D6E;
+	Tue, 29 Apr 2025 17:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946831; cv=none; b=MQH5Ka2PxS0U/GTyA1duIs6uBx+qS7d+x66k5V9fRJtwr/hb2yRxuKxt1j8MHID1E/bnyPKklacwZV6grbipl+NTDAtnfrbYBFOAXXS2cKhIlyUzq/RyahXSECK3yUCT11lKba4BdQilPJOU2bFNbWms33CiofB1TV9XwTm8lIY=
+	t=1745946835; cv=none; b=ZAYMJSGp9cCbflk+/e/kKUxn9SwN7CYNJAANMkHsw/sk/1lCBQTvGeNRexgpnwHq87kGQ4iK8Qwoa3pfNmHQhuX1ZUadfpLUxQNILrxwgbrxMhGwezgoqWILBKzpZnyanbC+1tO8Q/IW9CtzxlnqslCiq9CKQd2fsOlD25BroNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946831; c=relaxed/simple;
-	bh=wKQc8cbXTcKVnA0+FgkAPQiUJnLD/qhUVZQBcfkYrjo=;
+	s=arc-20240116; t=1745946835; c=relaxed/simple;
+	bh=0j5eLLT51J+WVdH8TFGG77e87eqDnywxpZqCUGsymzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NyvQgvKwhPQuEgWLnk70sCjYTbtbqdWFLGuxIobzCaHbEuqNNp3ZYuuCQoSy8UMPt5ir2UzAq84k1Gufba7DD/WXF+ihyAV8zfCWeRuBpLo/oUDE2OaoruDiMAq99OYpKkSECgojRYnl44YPw2spdjOWR/AO5j4JDfnx20vfumE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVVrkfle; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXsnQwvPP4/RSyu8+ZVI8Yv9exH3gwRxIuebGE0QJMbcCetDBBgGp+bXdhct7aiabm1+yh4TLZanlhNsO/bKvqjh7YfNLsHabEuHzaKzpK9c7NlhfTUraySwvlDaBhk5HeX1drJ8qQESp8E3nRfIgIwNfO8eXb98CHXf7SkYFbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOzW7eDD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVVrkfle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03ACC4CEE3;
-	Tue, 29 Apr 2025 17:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOzW7eDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93998C4CEE3;
+	Tue, 29 Apr 2025 17:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946831;
-	bh=wKQc8cbXTcKVnA0+FgkAPQiUJnLD/qhUVZQBcfkYrjo=;
+	s=korg; t=1745946835;
+	bh=0j5eLLT51J+WVdH8TFGG77e87eqDnywxpZqCUGsymzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVVrkflesFyCzPM9affBUc4z9poi/oaACIauhsBFvgEwNT6f+4a0qw//H+3hs3O0v
-	 zujT/RK8nezYNo5MoBDG+ToqwIVZTAqbjSuVpiKK2PuJsjZlxVK2KQgIHt5k+5LaUn
-	 4CCK09gJyeCJZmQPtCExRZ8f2wQQaW9AxISOZ4ws=
+	b=mOzW7eDDyFVlhewWiKEI1E0iGr5GIS4y0zi2yWiiX0oHy+1tkmlgqzKBf/cY+2k5A
+	 CRvLZEO62nIIEWygfcramDO2mhovfwvMGSvDDWEh4n+b025KNU4c/hVCJRlpgO0sDw
+	 ibqy0C0J/xr8ylFJ57cFF4sPK6sIuIRCSi3v9tzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Juergen Gross <jgross@suse.com>,
-	Borislav Betkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
-	Thomas Gleinxer <tglx@linutronix.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 083/286] sparc/mm: disable preemption in lazy mmu mode
-Date: Tue, 29 Apr 2025 18:39:47 +0200
-Message-ID: <20250429161111.267614054@linuxfoundation.org>
+Subject: [PATCH 5.10 084/286] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
+Date: Tue, 29 Apr 2025 18:39:48 +0200
+Message-ID: <20250429161111.307888879@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -62,70 +62,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit a1d416bf9faf4f4871cb5a943614a07f80a7d70f upstream.
+commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
 
-Since commit 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy
-updates") it's been possible for arch_[enter|leave]_lazy_mmu_mode() to be
-called without holding a page table lock (for the kernel mappings case),
-and therefore it is possible that preemption may occur while in the lazy
-mmu mode.  The Sparc lazy mmu implementation is not robust to preemption
-since it stores the lazy mode state in a per-cpu structure and does not
-attempt to manage that state on task switch.
+The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
+reclaim for struct pglist_data using a single bit.
 
-Powerpc had the same issue and fixed it by explicitly disabling preemption
-in arch_enter_lazy_mmu_mode() and re-enabling in
-arch_leave_lazy_mmu_mode().  See commit b9ef323ea168 ("powerpc/64s:
-Disable preemption in hash lazy mmu mode").
+It is "locked" with a test_and_set_bit (similarly to a try lock) which
+provides full ordering with respect to loads and stores done within
+__node_reclaim().
 
-Given Sparc's lazy mmu mode is based on powerpc's, let's fix it in the
-same way here.
+It is "unlocked" with clear_bit(), which does not provide any ordering
+with respect to loads and stores done before clearing the bit.
 
-Link: https://lkml.kernel.org/r/20250303141542.3371656-4-ryan.roberts@arm.com
-Fixes: 38e0edb15bd0 ("mm/apply_to_range: call pte function with lazy updates")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Andreas Larsson <andreas@gaisler.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juegren Gross <jgross@suse.com>
-Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
+The lack of clear_bit() memory ordering with respect to stores within
+__node_reclaim() can cause a subsequent CPU to fail to observe stores from
+a prior node reclaim.  This is not an issue in practice on TSO (e.g.
+x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
+
+Fix this by using clear_bit_unlock rather than clear_bit to clear
+PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
+
+This provides stronger memory ordering (release rather than relaxed).
+
+Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
+Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Andrea Parri <parri.andrea@gmail.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Jade Alglave <j.alglave@ucl.ac.uk>
+Cc: Luc Maranget <luc.maranget@inria.fr>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/mm/tlb.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/sparc/mm/tlb.c
-+++ b/arch/sparc/mm/tlb.c
-@@ -51,8 +51,10 @@ out:
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4264,7 +4264,7 @@ int node_reclaim(struct pglist_data *pgd
+ 		return NODE_RECLAIM_NOSCAN;
  
- void arch_enter_lazy_mmu_mode(void)
- {
--	struct tlb_batch *tb = this_cpu_ptr(&tlb_batch);
-+	struct tlb_batch *tb;
+ 	ret = __node_reclaim(pgdat, gfp_mask, order);
+-	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
++	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
  
-+	preempt_disable();
-+	tb = this_cpu_ptr(&tlb_batch);
- 	tb->active = 1;
- }
- 
-@@ -63,6 +65,7 @@ void arch_leave_lazy_mmu_mode(void)
- 	if (tb->tlb_nr)
- 		flush_tlb_pending();
- 	tb->active = 0;
-+	preempt_enable();
- }
- 
- static void tlb_batch_add_one(struct mm_struct *mm, unsigned long vaddr,
+ 	if (!ret)
+ 		count_vm_event(PGSCAN_ZONE_RECLAIM_FAILED);
 
 
