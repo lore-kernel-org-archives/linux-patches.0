@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1309A238C21;
-	Tue, 29 Apr 2025 17:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB584238C21;
+	Tue, 29 Apr 2025 17:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948004; cv=none; b=Dc+oPwRBapVcvYytuYONBQASKHHXtT0ocSkhTakl7fXbEdM5ooFmQH2QY/GCYU+lYovoRuK4eJVMlJrjYmOStejF3OLeKJ1rz2KFscxAlYuDRQRElXip21mBg26//Vp/d2H6SRwwUZhn8abxEHuoPhWO50XeF9mRGeS15FW5/u4=
+	t=1745948008; cv=none; b=cEwj7X6IJueCN0Zd8UpbLiDESXVqXaFkodTx2dddeCZblsl80XarwhStopJt63LMr97B29beKmMZNHXxfRLAPpbWhJYD2T3K+rvaopCUpt5vTFJk/BduWPPbGAKjiMOGOqd7uBkTu6ve2KVvHorRIrGZO02VZxjgJaqrniOBleg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948004; c=relaxed/simple;
-	bh=yHW4AQEp6AvrNc7Zn9TICUwOmnyHI1uMSri9Po9WmO4=;
+	s=arc-20240116; t=1745948008; c=relaxed/simple;
+	bh=vBuJejzMUjFM3bTjk0/hQYlT43+oC7l/0zR0YoOG+zI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+r0X1OrP7/7LDJGaXASpAeRYoeb7oBdjAB1Dw4TK2oJgbfNUOYWTbvXhCLg/5UKz+r5kPfMUTs3pZ4UASJgjjSs9FadS4j4DcX1ZqcV4euNceYNvc+JqvRLs/bvwfYlzf5DpcRuePlFOBSUelqqiskW5LzECy7k12bXB4F08KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrFSzDhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrNuGIqXHzQeTt5TWIq+pQvkDiGtf+TfwuYTJxIl4WMxNtBqXymemcYn5hkfKGal39o+zmSfKG2fDNK1YcNaoz4yCUVMU9yihu5YAvmOPjEW9MHGaUeHRV3fWD6QfF3DqlE03ALxbe5MsmPaBGkJTAffc8ec9/EHExA+u1c4Uus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUXuElJc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrFSzDhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97384C4CEE3;
-	Tue, 29 Apr 2025 17:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUXuElJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F96FC4CEE3;
+	Tue, 29 Apr 2025 17:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948003;
-	bh=yHW4AQEp6AvrNc7Zn9TICUwOmnyHI1uMSri9Po9WmO4=;
+	s=korg; t=1745948007;
+	bh=vBuJejzMUjFM3bTjk0/hQYlT43+oC7l/0zR0YoOG+zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrFSzDhKok0mYJtBwwhcClEVrN006Fgy8E7ncyghuoqQwP+8xgR4+IfgRh9FnBOAp
-	 et7GsvCSuK4xp3L63Z+USGGFkz8FApiaRE3DZP/Z01n1WEOOb0GbVwOpNpSuVKzEfN
-	 B7OyLDyHeeQ/eUAmVCF4/cWwQMVPlmquRNkY9Gr0=
+	b=eUXuElJcZWeLfWH1Fz4GeLujWXcXfth43urt6UORWQL7qcCT1bx0pyTpzZTACnBwG
+	 Su6ATBCMP8otqQ30iKZeCFHnr105nJhmYXO7Zki7dWq8CV3PXViCXrRtMvr3qYmCPQ
+	 71NXVHnWtPWSfUr/ROMfsoXtT5MPaBi/fPNQ0ZtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sewon Nam <swnam0729@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/280] bpf: bpftool: Setting error code in do_loader()
-Date: Tue, 29 Apr 2025 18:41:46 +0200
-Message-ID: <20250429161121.863276093@linuxfoundation.org>
+Subject: [PATCH 6.12 166/280] bpf: Only fails the busy counter check in bpf_cgrp_storage_get if it creates storage
+Date: Tue, 29 Apr 2025 18:41:47 +0200
+Message-ID: <20250429161121.902623754@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,43 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sewon Nam <swnam0729@gmail.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 02a4694107b4c830d4bd6d194e98b3ac0bc86f29 ]
+[ Upstream commit f4edc66e48a694b3e6d164cc71f059de542dfaec ]
 
-We are missing setting error code in do_loader() when
-bpf_object__open_file() fails. This means the command's exit status code
-will be successful, even though the operation failed. So make sure to
-return the correct error code. To maintain consistency with other
-locations where bpf_object__open_file() is called, return -1.
+The current cgrp storage has a percpu counter, bpf_cgrp_storage_busy,
+to detect potential deadlock at a spin_lock that the local storage
+acquires during new storage creation.
 
-  [0] Closes: https://github.com/libbpf/bpftool/issues/156
+There are false positives. It turns out to be too noisy in
+production. For example, a bpf prog may be doing a
+bpf_cgrp_storage_get on map_a. An IRQ comes in and triggers
+another bpf_cgrp_storage_get on a different map_b. It will then
+trigger the false positive deadlock check in the percpu counter.
+On top of that, both are doing lookup only and no need to create
+new storage, so practically it does not need to acquire
+the spin_lock.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sewon Nam <swnam0729@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Quentin Monnet <qmo@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/d3b5b4b4-19bb-4619-b4dd-86c958c4a367@stanley.mountain/t/#u
-Link: https://lore.kernel.org/bpf/20250311031238.14865-1-swnam0729@gmail.com
+The bpf_task_storage_get already has a strategy to minimize this
+false positive by only failing if the bpf_task_storage_get needs
+to create a new storage and the percpu counter is busy. Creating
+a new storage is the only time it must acquire the spin_lock.
+
+This patch borrows the same idea. Unlike task storage that
+has a separate variant for tracing (_recur) and non-tracing, this
+patch stays with one bpf_cgrp_storage_get helper to keep it simple
+for now in light of the upcoming res_spin_lock.
+
+The variable could potentially use a better name noTbusy instead
+of nobusy. This patch follows the same naming in
+bpf_task_storage_get for now.
+
+I have tested it by temporarily adding noinline to
+the cgroup_storage_lookup(), traced it by fentry, and the fentry
+program succeeded in calling bpf_cgrp_storage_get().
+
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20250318182759.3676094-1-martin.lau@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/prog.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/bpf_cgrp_storage.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index e71be67f1d865..52ffb74ae4e89 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -1928,6 +1928,7 @@ static int do_loader(int argc, char **argv)
+diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
+index 6547fb7ac0dcb..129a51b1da1b1 100644
+--- a/kernel/bpf/bpf_cgrp_storage.c
++++ b/kernel/bpf/bpf_cgrp_storage.c
+@@ -162,6 +162,7 @@ BPF_CALL_5(bpf_cgrp_storage_get, struct bpf_map *, map, struct cgroup *, cgroup,
+ 	   void *, value, u64, flags, gfp_t, gfp_flags)
+ {
+ 	struct bpf_local_storage_data *sdata;
++	bool nobusy;
  
- 	obj = bpf_object__open_file(file, &open_opts);
- 	if (!obj) {
-+		err = -1;
- 		p_err("failed to open object file");
- 		goto err_close_obj;
- 	}
+ 	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 	if (flags & ~(BPF_LOCAL_STORAGE_GET_F_CREATE))
+@@ -170,21 +171,21 @@ BPF_CALL_5(bpf_cgrp_storage_get, struct bpf_map *, map, struct cgroup *, cgroup,
+ 	if (!cgroup)
+ 		return (unsigned long)NULL;
+ 
+-	if (!bpf_cgrp_storage_trylock())
+-		return (unsigned long)NULL;
++	nobusy = bpf_cgrp_storage_trylock();
+ 
+-	sdata = cgroup_storage_lookup(cgroup, map, true);
++	sdata = cgroup_storage_lookup(cgroup, map, nobusy);
+ 	if (sdata)
+ 		goto unlock;
+ 
+ 	/* only allocate new storage, when the cgroup is refcounted */
+ 	if (!percpu_ref_is_dying(&cgroup->self.refcnt) &&
+-	    (flags & BPF_LOCAL_STORAGE_GET_F_CREATE))
++	    (flags & BPF_LOCAL_STORAGE_GET_F_CREATE) && nobusy)
+ 		sdata = bpf_local_storage_update(cgroup, (struct bpf_local_storage_map *)map,
+ 						 value, BPF_NOEXIST, gfp_flags);
+ 
+ unlock:
+-	bpf_cgrp_storage_unlock();
++	if (nobusy)
++		bpf_cgrp_storage_unlock();
+ 	return IS_ERR_OR_NULL(sdata) ? (unsigned long)NULL : (unsigned long)sdata->data;
+ }
+ 
 -- 
 2.39.5
 
