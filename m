@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375FC247298;
-	Tue, 29 Apr 2025 16:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A042472B9;
+	Tue, 29 Apr 2025 16:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945826; cv=none; b=gR0WtvRMSvfiIulyrYvw3FkDEWRf5KfTdW8uiba2lTnnhi0vPM1P5MSwP/VXALVdHJZb/V//zUdwV/U5pdjMjYcmzLhpeurUc96yYwOFmdaVbwaNieWWEKNxpbypru77OH5H31LGfdvOjonhC3GFHwRhOVu00cyIadjekIAgILY=
+	t=1745945829; cv=none; b=H23ueVmkFGDF5ynXVRTFaQOz0dI66xH4exBQaKjQfI1QBqI6bnFFHIxEPD3IoVI5dIfKTGX/tq/fG9Kxuax+uGzM1AI5mawNMTHtunrP8rgf5MZSK6Ww1/dwGM+tDB+1qEWrm/0PLuRtudq4zbVyDE/JUs54g3P/fT2sNJM5tHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945826; c=relaxed/simple;
-	bh=x1hTQZuvCxwzQz8MHhkFjerI+mDv+sLyFQnM5u/UBJI=;
+	s=arc-20240116; t=1745945829; c=relaxed/simple;
+	bh=7hJqpmhpyD8boIXLfd5J4pBMCuoV0vxS4A9ebKX3f14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpBA15nHHQB6CZLMfkGtwfSPvC9m/Ww/Zl/WPDw+Dh8tqRkVyFW1dAH/T2kcHuRa91TewA4iY09FoT+B1MypCjuxa9Yo7RzkBxuXdou8U/QTKAEKpADcnLzN5Ua7G2iYIWfMwPoyG9x4S+itrU8EYoJVWZWV67wyhEpd/KvR9R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8lIR850; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uX7QzeX4tPE+H5lCxlyVjmr2bH9RTrzO0r2lNFk5iLJDTn/IIFoS8WqHqZ5ChZmA+RO3f1irsg0hZx7m3DtdDAC86oYlJ+H7A88Pff1+f/Efww/w70+xSdc5Wm06Ar9EwE9ZlikYde73XP8YSd6uf+X9+x3jahbYcutpJ57aGbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo2g5tCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8lIR850"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B676FC4CEE3;
-	Tue, 29 Apr 2025 16:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo2g5tCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95ABBC4CEE3;
+	Tue, 29 Apr 2025 16:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945826;
-	bh=x1hTQZuvCxwzQz8MHhkFjerI+mDv+sLyFQnM5u/UBJI=;
+	s=korg; t=1745945828;
+	bh=7hJqpmhpyD8boIXLfd5J4pBMCuoV0vxS4A9ebKX3f14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8lIR850WgQBh5AGxa05HaZP/x7lfKottECmjOlAwEm5Eg1XKRljkkDJd5lHIBG4J
-	 O1VAJW2NUGw9mU0fe8RM5H9YoFt8ZXGghMzIm2UvGtJLMFcXBdBROWHiU6N4u/WVsH
-	 kS5NNfM+R7ljWyzjSN3rlUQIfqTNSXM/BkSJMUw8=
+	b=Eo2g5tCwoxHJyDVdxbBLw4HtqDSwVytb8Kc6S1p8anDC85rWtj1hneAz7zsvp9gmu
+	 hu8xy/xepNYvAVz8TQHPRWbf3gKnzHSskwWREsQEfU7Q+LlCYt6//cPpC2lkiIdKDY
+	 f+WGIVZqUsduuEEJzLzyoSPgtDYnhZzTothPrQ78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
 	Jason Wang <jasowang@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 063/311] virtio-net: Refactor napi_disable paths
-Date: Tue, 29 Apr 2025 18:38:20 +0200
-Message-ID: <20250429161123.621862608@linuxfoundation.org>
+Subject: [PATCH 6.14 064/311] virtio-net: disable delayed refill when pausing rx
+Date: Tue, 29 Apr 2025 18:38:21 +0200
+Message-ID: <20250429161123.661836655@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -55,102 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit 986a93045183ae2f13e6d99d990ae8be36f6d6b0 ]
+[ Upstream commit 4bc12818b363bd30f0f7348dd9ab077290a637ae ]
 
-Create virtnet_napi_disable helper and refactor virtnet_napi_tx_disable
-to take a struct send_queue.
+When pausing rx (e.g. set up xdp, xsk pool, rx resize), we call
+napi_disable() on the receive queue's napi. In delayed refill_work, it
+also calls napi_disable() on the receive queue's napi.  When
+napi_disable() is called on an already disabled napi, it will sleep in
+napi_disable_locked while still holding the netdev_lock. As a result,
+later napi_enable gets stuck too as it cannot acquire the netdev_lock.
+This leads to refill_work and the pause-then-resume tx are stuck
+altogether.
 
-Signed-off-by: Joe Damato <jdamato@fastly.com>
+This scenario can be reproducible by binding a XDP socket to virtio-net
+interface without setting up the fill ring. As a result, try_fill_recv
+will fail until the fill ring is set up and refill_work is scheduled.
+
+This commit adds virtnet_rx_(pause/resume)_all helpers and fixes up the
+virtnet_rx_resume to disable future and cancel all inflights delayed
+refill_work before calling napi_disable() to pause the rx.
+
+Fixes: 413f0271f396 ("net: protect NAPI enablement with netdev_lock()")
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20250307011215.266806-3-jdamato@fastly.com
+Link: https://patch.msgid.link/20250417072806.18660-2-minhquangbui99@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4bc12818b363 ("virtio-net: disable delayed refill when pausing rx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/net/virtio_net.c | 69 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 57 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index d25f68004f97e..44dbb991787ed 100644
+index 44dbb991787ed..3e4896d9537ee 100644
 --- a/drivers/net/virtio_net.c
 +++ b/drivers/net/virtio_net.c
-@@ -2827,12 +2827,21 @@ static void virtnet_napi_tx_enable(struct send_queue *sq)
- 	virtnet_napi_do_enable(sq->vq, napi);
+@@ -3318,7 +3318,8 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return NETDEV_TX_OK;
  }
  
--static void virtnet_napi_tx_disable(struct napi_struct *napi)
-+static void virtnet_napi_tx_disable(struct send_queue *sq)
+-static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
++static void __virtnet_rx_pause(struct virtnet_info *vi,
++			       struct receive_queue *rq)
  {
-+	struct napi_struct *napi = &sq->napi;
-+
- 	if (napi->weight)
- 		napi_disable(napi);
- }
- 
-+static void virtnet_napi_disable(struct receive_queue *rq)
-+{
-+	struct napi_struct *napi = &rq->napi;
-+
-+	napi_disable(napi);
-+}
-+
- static void refill_work(struct work_struct *work)
- {
- 	struct virtnet_info *vi =
-@@ -2843,7 +2852,7 @@ static void refill_work(struct work_struct *work)
- 	for (i = 0; i < vi->curr_queue_pairs; i++) {
- 		struct receive_queue *rq = &vi->rq[i];
- 
--		napi_disable(&rq->napi);
-+		virtnet_napi_disable(rq);
- 		still_empty = !try_fill_recv(vi, rq, GFP_KERNEL);
- 		virtnet_napi_enable(rq);
- 
-@@ -3042,8 +3051,8 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
- 
- static void virtnet_disable_queue_pair(struct virtnet_info *vi, int qp_index)
- {
--	virtnet_napi_tx_disable(&vi->sq[qp_index].napi);
--	napi_disable(&vi->rq[qp_index].napi);
-+	virtnet_napi_tx_disable(&vi->sq[qp_index]);
-+	virtnet_napi_disable(&vi->rq[qp_index]);
- 	xdp_rxq_info_unreg(&vi->rq[qp_index].xdp_rxq);
- }
- 
-@@ -3314,7 +3323,7 @@ static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
  	bool running = netif_running(vi->dev);
  
- 	if (running) {
--		napi_disable(&rq->napi);
-+		virtnet_napi_disable(rq);
- 		virtnet_cancel_dim(vi, &rq->dim);
+@@ -3328,17 +3329,63 @@ static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
  	}
  }
-@@ -3356,7 +3365,7 @@ static void virtnet_tx_pause(struct virtnet_info *vi, struct send_queue *sq)
- 	qindex = sq - vi->sq;
+ 
+-static void virtnet_rx_resume(struct virtnet_info *vi, struct receive_queue *rq)
++static void virtnet_rx_pause_all(struct virtnet_info *vi)
++{
++	int i;
++
++	/*
++	 * Make sure refill_work does not run concurrently to
++	 * avoid napi_disable race which leads to deadlock.
++	 */
++	disable_delayed_refill(vi);
++	cancel_delayed_work_sync(&vi->refill);
++	for (i = 0; i < vi->max_queue_pairs; i++)
++		__virtnet_rx_pause(vi, &vi->rq[i]);
++}
++
++static void virtnet_rx_pause(struct virtnet_info *vi, struct receive_queue *rq)
++{
++	/*
++	 * Make sure refill_work does not run concurrently to
++	 * avoid napi_disable race which leads to deadlock.
++	 */
++	disable_delayed_refill(vi);
++	cancel_delayed_work_sync(&vi->refill);
++	__virtnet_rx_pause(vi, rq);
++}
++
++static void __virtnet_rx_resume(struct virtnet_info *vi,
++				struct receive_queue *rq,
++				bool refill)
+ {
+ 	bool running = netif_running(vi->dev);
+ 
+-	if (!try_fill_recv(vi, rq, GFP_KERNEL))
++	if (refill && !try_fill_recv(vi, rq, GFP_KERNEL))
+ 		schedule_delayed_work(&vi->refill, 0);
  
  	if (running)
--		virtnet_napi_tx_disable(&sq->napi);
-+		virtnet_napi_tx_disable(sq);
+ 		virtnet_napi_enable(rq);
+ }
  
- 	txq = netdev_get_tx_queue(vi->dev, qindex);
++static void virtnet_rx_resume_all(struct virtnet_info *vi)
++{
++	int i;
++
++	enable_delayed_refill(vi);
++	for (i = 0; i < vi->max_queue_pairs; i++) {
++		if (i < vi->curr_queue_pairs)
++			__virtnet_rx_resume(vi, &vi->rq[i], true);
++		else
++			__virtnet_rx_resume(vi, &vi->rq[i], false);
++	}
++}
++
++static void virtnet_rx_resume(struct virtnet_info *vi, struct receive_queue *rq)
++{
++	enable_delayed_refill(vi);
++	__virtnet_rx_resume(vi, rq, true);
++}
++
+ static int virtnet_rx_resize(struct virtnet_info *vi,
+ 			     struct receive_queue *rq, u32 ring_num)
+ {
+@@ -5939,12 +5986,12 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+ 	if (prog)
+ 		bpf_prog_add(prog, vi->max_queue_pairs - 1);
  
-@@ -5933,8 +5942,8 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
++	virtnet_rx_pause_all(vi);
++
  	/* Make sure NAPI is not using any XDP TX queues for RX. */
  	if (netif_running(dev)) {
- 		for (i = 0; i < vi->max_queue_pairs; i++) {
--			napi_disable(&vi->rq[i].napi);
--			virtnet_napi_tx_disable(&vi->sq[i].napi);
-+			virtnet_napi_disable(&vi->rq[i]);
-+			virtnet_napi_tx_disable(&vi->sq[i]);
- 		}
+-		for (i = 0; i < vi->max_queue_pairs; i++) {
+-			virtnet_napi_disable(&vi->rq[i]);
++		for (i = 0; i < vi->max_queue_pairs; i++)
+ 			virtnet_napi_tx_disable(&vi->sq[i]);
+-		}
  	}
  
+ 	if (!prog) {
+@@ -5976,13 +6023,12 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+ 		vi->xdp_enabled = false;
+ 	}
+ 
++	virtnet_rx_resume_all(vi);
+ 	for (i = 0; i < vi->max_queue_pairs; i++) {
+ 		if (old_prog)
+ 			bpf_prog_put(old_prog);
+-		if (netif_running(dev)) {
+-			virtnet_napi_enable(&vi->rq[i]);
++		if (netif_running(dev))
+ 			virtnet_napi_tx_enable(&vi->sq[i]);
+-		}
+ 	}
+ 
+ 	return 0;
+@@ -5994,11 +6040,10 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+ 			rcu_assign_pointer(vi->rq[i].xdp_prog, old_prog);
+ 	}
+ 
++	virtnet_rx_resume_all(vi);
+ 	if (netif_running(dev)) {
+-		for (i = 0; i < vi->max_queue_pairs; i++) {
+-			virtnet_napi_enable(&vi->rq[i]);
++		for (i = 0; i < vi->max_queue_pairs; i++)
+ 			virtnet_napi_tx_enable(&vi->sq[i]);
+-		}
+ 	}
+ 	if (prog)
+ 		bpf_prog_sub(prog, vi->max_queue_pairs - 1);
 -- 
 2.39.5
 
