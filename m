@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FCC40C03;
-	Tue, 29 Apr 2025 18:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444A6227E95;
+	Tue, 29 Apr 2025 18:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950447; cv=none; b=qd1mS0X6HGo0d+kZKHXk5J/0uPJxNRlRbxbYQBR7j+4UDx9VIG76+dgiCFx8eNnQlaQKe5Y5LadtasWR8n++r+hPXpujpFW4hbSAWAU30LqIQBQz5IIG7GmgHkbe4Xy5K7gqDh/YCJMAwRZidY0pBbKkNx+MXlP6/aHUbO4FQqI=
+	t=1745950450; cv=none; b=XbA8bwYyRp/9fzin5zLOTdP2l4VamLpUhqhOkWwngermnIYaS96T6bRlWHu/UzAb6Sm5oX5kTYinlpnJnLk5To2onVyuy/GvJiRQKYY8t5I0Mp/ppjhulD6dP4C7+xJFa/AJh4InE7sjtweqekJ0hjP1R+xiRlnjQ8zkPTe98hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950447; c=relaxed/simple;
-	bh=XGzaSmcNVgmLHB3ZomZtvsddH76vDJRKXBO/61DDBf0=;
+	s=arc-20240116; t=1745950450; c=relaxed/simple;
+	bh=61x824ZcWTCXzKT1V+iWVUrtPBIyo+/PecYAGsdntx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aa/91jrHt7vOYHvpGbDeZ5vrEBePP9LQ5XEn3RuMoiZ2tOgRhjWMdWy/fwOpOhwpARK26b4vUcR1XI8BEEMcJ3tBnVpcguh8yynw3oI3T66doSoSNUoeXRwn9Qn55Qhx4vNPe0PmJXM0buT7irzv5o80cFUOI1nbtpF+eAOupyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiBQkF3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k2mf1UEGjga5tGRwF3VLtjnppcvdmjbbpvox/f669oG7nBJ7ye3quzQcCHhKp73Dq0ftnlkmqzOB7ZbAY+3Sm6El9fad2FATG7JyqbbEF5VoN8zaBEv0ZsoplCZ9LxclN/pdYDTb2krAM0fiq6QqYr1Cp0Jx4pwRSH963Zdk8Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJOuwegj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiBQkF3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6393CC4CEE3;
-	Tue, 29 Apr 2025 18:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJOuwegj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69D9C4CEE3;
+	Tue, 29 Apr 2025 18:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950446;
-	bh=XGzaSmcNVgmLHB3ZomZtvsddH76vDJRKXBO/61DDBf0=;
+	s=korg; t=1745950450;
+	bh=61x824ZcWTCXzKT1V+iWVUrtPBIyo+/PecYAGsdntx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OiBQkF3NjEOWmJcdJwQKv+SwsLAm/92+xYC4C76rcKBBvNuPwyAeC7IcXaYB6kHsE
-	 qnI2GTspuRvLF9/+BEGamFg/uYZURSiuBLKenFuMNW3CSFDF7ukDZ4SX20J5tyCcNE
-	 vLhXEitUkSaBev5pzIthfIB1cp3Vb8v0LQBiUyfY=
+	b=kJOuwegjHIP1XWAmx0zqEQgq4pSHlyT3Wln5nm+1itpAM6cgBpE4J7pp4GYYVYsnS
+	 drDAwBeiDaonigUE158JXGWQ9Kk0DPYKMcVgah7MEusoXXQA+FlsCeKlEhEvsqXEgB
+	 YFI/V59+QKjBwtQQEMt4ROpP02kxcWR33QQxkKwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erpeng Xu <xuerpeng@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/204] LoongArch: Select ARCH_USE_MEMTEST
-Date: Tue, 29 Apr 2025 18:42:37 +0200
-Message-ID: <20250429161102.251388606@linuxfoundation.org>
+Subject: [PATCH 6.6 070/204] LoongArch: Make regs_irqs_disabled() more clear
+Date: Tue, 29 Apr 2025 18:42:38 +0200
+Message-ID: <20250429161102.292249177@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit fb8e9f59d6f292c3d9fea6c155c22ea5fc3053ab ]
+[ Upstream commit bb0511d59db9b3e40c8d51f0d151ccd0fd44071d ]
 
-As of commit dce44566192e ("mm/memtest: add ARCH_USE_MEMTEST"),
-architectures must select ARCH_USE_MEMTESET to enable CONFIG_MEMTEST.
+In the current code, the definition of regs_irqs_disabled() is actually
+"!(regs->csr_prmd & CSR_CRMD_IE)" because arch_irqs_disabled_flags() is
+defined as "!(flags & CSR_CRMD_IE)", it looks a little strange.
 
-Commit 628c3bb40e9a ("LoongArch: Add boot and setup routines") added
-support for early_memtest but did not select ARCH_USE_MEMTESET.
+Define regs_irqs_disabled() as !(regs->csr_prmd & CSR_PRMD_PIE) directly
+to make it more clear, no functional change.
 
-Fixes: 628c3bb40e9a ("LoongArch: Add boot and setup routines")
-Tested-by: Erpeng Xu <xuerpeng@uniontech.com>
-Tested-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
+While at it, the return value of regs_irqs_disabled() is true or false,
+so change its type to reflect that and also make it always inline.
+
+Fixes: 803b0fc5c3f2 ("LoongArch: Add process management")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/include/asm/ptrace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
-index 623cf80639dec..25aa993abebce 100644
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -59,6 +59,7 @@ config LOONGARCH
- 	select ARCH_SUPPORTS_NUMA_BALANCING
- 	select ARCH_USE_BUILTIN_BSWAP
- 	select ARCH_USE_CMPXCHG_LOCKREF
-+	select ARCH_USE_MEMTEST
- 	select ARCH_USE_QUEUED_RWLOCKS
- 	select ARCH_USE_QUEUED_SPINLOCKS
- 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT
+diff --git a/arch/loongarch/include/asm/ptrace.h b/arch/loongarch/include/asm/ptrace.h
+index f3ddaed9ef7f0..a5b63c84f8541 100644
+--- a/arch/loongarch/include/asm/ptrace.h
++++ b/arch/loongarch/include/asm/ptrace.h
+@@ -33,9 +33,9 @@ struct pt_regs {
+ 	unsigned long __last[];
+ } __aligned(8);
+ 
+-static inline int regs_irqs_disabled(struct pt_regs *regs)
++static __always_inline bool regs_irqs_disabled(struct pt_regs *regs)
+ {
+-	return arch_irqs_disabled_flags(regs->csr_prmd);
++	return !(regs->csr_prmd & CSR_PRMD_PIE);
+ }
+ 
+ static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
 -- 
 2.39.5
 
