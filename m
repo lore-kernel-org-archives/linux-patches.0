@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6D1244679;
-	Tue, 29 Apr 2025 16:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C284A244679;
+	Tue, 29 Apr 2025 16:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945698; cv=none; b=GigVOZ05Bw6IDCmTEVfltTG4jq7OWgGUU1RCJCr3Wi6muFsNHNKWqflnz77glH+dyxFd/nP0gMWLwhuzFMAgThZPwyWc8DbeLPeinK5KTaRZOQDwc2JVVGcPHpTkoervl9viD36SW8TVAhgVHWQvz8FJSs+544q9KXTknA2LGX8=
+	t=1745945701; cv=none; b=C7iy7J6HobQgjDYK3WlvzzeEm7AAg82dvczRgd+YZoPb8WFKRt7UfSz5oowc0HYtS4U8P7LV/qm5Z98eReUGKgcMSU21W9ZvNZuDzGccD6/PV2+O3l19YWAetaZbPNb+AX1e9JJDcg+hHBInXy9Sp7GcnFUK0QPjNSLy4ZNZSVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945698; c=relaxed/simple;
-	bh=f+m2ihbw4w9bc/7Wl4nVQcTiovLWxBIaACCQYx6CaMU=;
+	s=arc-20240116; t=1745945701; c=relaxed/simple;
+	bh=ERc/cIIQH5+19shBLhJi6kO30qJm2pFsFJDC4R+1YAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WlXYnJLyEnLJE+2ZXcf/SqqIom8lD/D8XxHiOs88QIfdijF2NJ1TUvpc4443zU1Bdo54X0tbrwIkLI/HwXJoRgYSlvLVDeDlp6EnjJ8gJMUchx8A+iiOYZpCRyNnY/om2VMFkFFc6aBXFiesLyFRDzOcdxWp86qLOnpSEJQm35A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrJv3qFm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lyt4kc8rJXvohhy3UOqmJsMgm4LzfouR/GSmd5h2j1b5eV3N6ohwhAwkqWK/++XcgFEumIB9dIK1Be5HNbiRX4PMLWXuEf21OCjP+aDECyG6uNkY3ko2JbTe3QJ/lwUivzDe2Z4KbUE4j3fKTufEXjFRG+XUErbdfNzHM2DE9Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNxwImF4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrJv3qFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E91EC4CEE3;
-	Tue, 29 Apr 2025 16:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNxwImF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A1C4CEE3;
+	Tue, 29 Apr 2025 16:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945698;
-	bh=f+m2ihbw4w9bc/7Wl4nVQcTiovLWxBIaACCQYx6CaMU=;
+	s=korg; t=1745945701;
+	bh=ERc/cIIQH5+19shBLhJi6kO30qJm2pFsFJDC4R+1YAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrJv3qFmP1gxjFMlSEGQ4+wWDESZi0wnLp724MgnF/ywRbZ/scIYgXIgL2mGER3rs
-	 nVkHH1w3mhGm5oPa13szQl4Xthr8O2Tmb4iG3PGOu+RvJOJ7xjmgYzVr0R6ixJgccv
-	 2irNt38uArmWo9iGakENGdvCNTgFzr8pbWFb+tVI=
+	b=GNxwImF4ymSYmBldzpWUOvkjeYODVVwDS+CTf8ahBPHSefgnSxKp0jxyvWWPd7bHf
+	 BYbNNq/CzJqjbuBIqPW/NC6XxyRZBfHy/0T9ETvtbCUfc/aUkm8K5oTYRan+6+75WO
+	 tbG5Up3K0L5izkTl9ezrv+gJzt8UQY14BaeEqpkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 005/311] PM: EM: Address RCU-related sparse warnings
-Date: Tue, 29 Apr 2025 18:37:22 +0200
-Message-ID: <20250429161121.248831047@linuxfoundation.org>
+Subject: [PATCH 6.14 006/311] media: i2c: imx214: Use subdev active state
+Date: Tue, 29 Apr 2025 18:37:23 +0200
+Message-ID: <20250429161121.293413613@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -45,256 +46,333 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit 3ee7be9e10dd5f79448788b899591d4bd2bf0c19 ]
+[ Upstream commit b6832ff659f55f86198bb8de40f278a20bda0920 ]
 
-The usage of __rcu in the Energy Model code is quite inconsistent
-which causes the following sparse warnings to trigger:
+Port the imx214 sensor driver to use the subdev active state.
 
-kernel/power/energy_model.c:169:15: warning: incorrect type in assignment (different address spaces)
-kernel/power/energy_model.c:169:15:    expected struct em_perf_table [noderef] __rcu *table
-kernel/power/energy_model.c:169:15:    got struct em_perf_table *
-kernel/power/energy_model.c:171:9: warning: incorrect type in argument 1 (different address spaces)
-kernel/power/energy_model.c:171:9:    expected struct callback_head *head
-kernel/power/energy_model.c:171:9:    got struct callback_head [noderef] __rcu *
-kernel/power/energy_model.c:171:9: warning: cast removes address space '__rcu' of expression
-kernel/power/energy_model.c:182:19: warning: incorrect type in argument 1 (different address spaces)
-kernel/power/energy_model.c:182:19:    expected struct kref *kref
-kernel/power/energy_model.c:182:19:    got struct kref [noderef] __rcu *
-kernel/power/energy_model.c:200:15: warning: incorrect type in assignment (different address spaces)
-kernel/power/energy_model.c:200:15:    expected struct em_perf_table [noderef] __rcu *table
-kernel/power/energy_model.c:200:15:    got void *[assigned] _res
-kernel/power/energy_model.c:204:20: warning: incorrect type in argument 1 (different address spaces)
-kernel/power/energy_model.c:204:20:    expected struct kref *kref
-kernel/power/energy_model.c:204:20:    got struct kref [noderef] __rcu *
-kernel/power/energy_model.c:320:19: warning: incorrect type in argument 1 (different address spaces)
-kernel/power/energy_model.c:320:19:    expected struct kref *kref
-kernel/power/energy_model.c:320:19:    got struct kref [noderef] __rcu *
-kernel/power/energy_model.c:325:45: warning: incorrect type in argument 2 (different address spaces)
-kernel/power/energy_model.c:325:45:    expected struct em_perf_state *table
-kernel/power/energy_model.c:325:45:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:425:45: warning: incorrect type in argument 3 (different address spaces)
-kernel/power/energy_model.c:425:45:    expected struct em_perf_state *table
-kernel/power/energy_model.c:425:45:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:442:15: warning: incorrect type in argument 1 (different address spaces)
-kernel/power/energy_model.c:442:15:    expected void const *objp
-kernel/power/energy_model.c:442:15:    got struct em_perf_table [noderef] __rcu *[assigned] em_table
-kernel/power/energy_model.c:626:55: warning: incorrect type in argument 2 (different address spaces)
-kernel/power/energy_model.c:626:55:    expected struct em_perf_state *table
-kernel/power/energy_model.c:626:55:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:681:16: warning: incorrect type in assignment (different address spaces)
-kernel/power/energy_model.c:681:16:    expected struct em_perf_state *new_ps
-kernel/power/energy_model.c:681:16:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:699:37: warning: incorrect type in argument 2 (different address spaces)
-kernel/power/energy_model.c:699:37:    expected struct em_perf_state *table
-kernel/power/energy_model.c:699:37:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:733:38: warning: incorrect type in argument 3 (different address spaces)
-kernel/power/energy_model.c:733:38:    expected struct em_perf_state *table
-kernel/power/energy_model.c:733:38:    got struct em_perf_state [noderef] __rcu *
-kernel/power/energy_model.c:855:53: warning: dereference of noderef expression
-kernel/power/energy_model.c:864:32: warning: dereference of noderef expression
+Move all the format configuration to the subdevice state and simplify
+the format handling, locking and initialization.
 
-This is because the __rcu annotation for sparse is only applicable to
-pointers that need rcu_dereference() or equivalent for protection, which
-basically means pointers assigned with rcu_assign_pointer().
+While at it, simplify imx214_start_streaming() by removing unneeded goto
+statements and the corresponding error label.
 
-Make all of the above sparse warnings go away by cleaning up the usage
-of __rcu and using rcu_dereference_protected() where applicable.
-
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5885405.DvuYhMxLoT@rjwysocki.net
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: acc294519f17 ("media: i2c: imx214: Fix link frequency validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/energy_model.h | 12 +++++------
- kernel/power/energy_model.c  | 39 ++++++++++++++++++------------------
- 2 files changed, 26 insertions(+), 25 deletions(-)
+ drivers/media/i2c/imx214.c | 155 ++++++++++++-------------------------
+ 1 file changed, 50 insertions(+), 105 deletions(-)
 
-diff --git a/include/linux/energy_model.h b/include/linux/energy_model.h
-index 78318d49276dc..b3b8389e9480d 100644
---- a/include/linux/energy_model.h
-+++ b/include/linux/energy_model.h
-@@ -167,13 +167,13 @@ struct em_data_callback {
- struct em_perf_domain *em_cpu_get(int cpu);
- struct em_perf_domain *em_pd_get(struct device *dev);
- int em_dev_update_perf_domain(struct device *dev,
--			      struct em_perf_table __rcu *new_table);
-+			      struct em_perf_table *new_table);
- int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
- 				struct em_data_callback *cb, cpumask_t *span,
- 				bool microwatts);
- void em_dev_unregister_perf_domain(struct device *dev);
--struct em_perf_table __rcu *em_table_alloc(struct em_perf_domain *pd);
--void em_table_free(struct em_perf_table __rcu *table);
-+struct em_perf_table *em_table_alloc(struct em_perf_domain *pd);
-+void em_table_free(struct em_perf_table *table);
- int em_dev_compute_costs(struct device *dev, struct em_perf_state *table,
- 			 int nr_states);
- int em_dev_update_chip_binning(struct device *dev);
-@@ -373,14 +373,14 @@ static inline int em_pd_nr_perf_states(struct em_perf_domain *pd)
+diff --git a/drivers/media/i2c/imx214.c b/drivers/media/i2c/imx214.c
+index 6a393e18267f4..af6a3859c3f13 100644
+--- a/drivers/media/i2c/imx214.c
++++ b/drivers/media/i2c/imx214.c
+@@ -59,8 +59,6 @@ struct imx214 {
+ 
+ 	struct v4l2_subdev sd;
+ 	struct media_pad pad;
+-	struct v4l2_mbus_framefmt fmt;
+-	struct v4l2_rect crop;
+ 
+ 	struct v4l2_ctrl_handler ctrls;
+ 	struct v4l2_ctrl *pixel_rate;
+@@ -71,12 +69,6 @@ struct imx214 {
+ 	struct regulator_bulk_data	supplies[IMX214_NUM_SUPPLIES];
+ 
+ 	struct gpio_desc *enable_gpio;
+-
+-	/*
+-	 * Serialize control access, get/set format, get selection
+-	 * and start streaming.
+-	 */
+-	struct mutex mutex;
+ };
+ 
+ struct reg_8 {
+@@ -490,6 +482,22 @@ static int __maybe_unused imx214_power_off(struct device *dev)
  	return 0;
  }
- static inline
--struct em_perf_table __rcu *em_table_alloc(struct em_perf_domain *pd)
-+struct em_perf_table *em_table_alloc(struct em_perf_domain *pd)
- {
- 	return NULL;
- }
--static inline void em_table_free(struct em_perf_table __rcu *table) {}
-+static inline void em_table_free(struct em_perf_table *table) {}
- static inline
- int em_dev_update_perf_domain(struct device *dev,
--			      struct em_perf_table __rcu *new_table)
-+			      struct em_perf_table *new_table)
- {
- 	return -EINVAL;
- }
-diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
-index 72655eff6fc52..76c4343796893 100644
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -163,12 +163,8 @@ static void em_debug_remove_pd(struct device *dev) {}
  
- static void em_release_table_kref(struct kref *kref)
- {
--	struct em_perf_table __rcu *table;
++static void imx214_update_pad_format(struct imx214 *imx214,
++				     const struct imx214_mode *mode,
++				     struct v4l2_mbus_framefmt *fmt, u32 code)
++{
++	fmt->code = IMX214_MBUS_CODE;
++	fmt->width = mode->width;
++	fmt->height = mode->height;
++	fmt->field = V4L2_FIELD_NONE;
++	fmt->colorspace = V4L2_COLORSPACE_SRGB;
++	fmt->ycbcr_enc = V4L2_MAP_YCBCR_ENC_DEFAULT(fmt->colorspace);
++	fmt->quantization = V4L2_MAP_QUANTIZATION_DEFAULT(true,
++							  fmt->colorspace,
++							  fmt->ycbcr_enc);
++	fmt->xfer_func = V4L2_MAP_XFER_FUNC_DEFAULT(fmt->colorspace);
++}
++
+ static int imx214_enum_mbus_code(struct v4l2_subdev *sd,
+ 				 struct v4l2_subdev_state *sd_state,
+ 				 struct v4l2_subdev_mbus_code_enum *code)
+@@ -549,52 +557,6 @@ static const struct v4l2_subdev_core_ops imx214_core_ops = {
+ #endif
+ };
+ 
+-static struct v4l2_mbus_framefmt *
+-__imx214_get_pad_format(struct imx214 *imx214,
+-			struct v4l2_subdev_state *sd_state,
+-			unsigned int pad,
+-			enum v4l2_subdev_format_whence which)
+-{
+-	switch (which) {
+-	case V4L2_SUBDEV_FORMAT_TRY:
+-		return v4l2_subdev_state_get_format(sd_state, pad);
+-	case V4L2_SUBDEV_FORMAT_ACTIVE:
+-		return &imx214->fmt;
+-	default:
+-		return NULL;
+-	}
+-}
 -
- 	/* It was the last owner of this table so we can free */
--	table = container_of(kref, struct em_perf_table, kref);
+-static int imx214_get_format(struct v4l2_subdev *sd,
+-			     struct v4l2_subdev_state *sd_state,
+-			     struct v4l2_subdev_format *format)
+-{
+-	struct imx214 *imx214 = to_imx214(sd);
 -
--	kfree_rcu(table, rcu);
-+	kfree_rcu(container_of(kref, struct em_perf_table, kref), rcu);
+-	mutex_lock(&imx214->mutex);
+-	format->format = *__imx214_get_pad_format(imx214, sd_state,
+-						  format->pad,
+-						  format->which);
+-	mutex_unlock(&imx214->mutex);
+-
+-	return 0;
+-}
+-
+-static struct v4l2_rect *
+-__imx214_get_pad_crop(struct imx214 *imx214,
+-		      struct v4l2_subdev_state *sd_state,
+-		      unsigned int pad, enum v4l2_subdev_format_whence which)
+-{
+-	switch (which) {
+-	case V4L2_SUBDEV_FORMAT_TRY:
+-		return v4l2_subdev_state_get_crop(sd_state, pad);
+-	case V4L2_SUBDEV_FORMAT_ACTIVE:
+-		return &imx214->crop;
+-	default:
+-		return NULL;
+-	}
+-}
+-
+ static int imx214_set_format(struct v4l2_subdev *sd,
+ 			     struct v4l2_subdev_state *sd_state,
+ 			     struct v4l2_subdev_format *format)
+@@ -604,34 +566,20 @@ static int imx214_set_format(struct v4l2_subdev *sd,
+ 	struct v4l2_rect *__crop;
+ 	const struct imx214_mode *mode;
+ 
+-	mutex_lock(&imx214->mutex);
+-
+-	__crop = __imx214_get_pad_crop(imx214, sd_state, format->pad,
+-				       format->which);
+-
+ 	mode = v4l2_find_nearest_size(imx214_modes,
+ 				      ARRAY_SIZE(imx214_modes), width, height,
+ 				      format->format.width,
+ 				      format->format.height);
+ 
+-	__crop->width = mode->width;
+-	__crop->height = mode->height;
+-
+-	__format = __imx214_get_pad_format(imx214, sd_state, format->pad,
+-					   format->which);
+-	__format->width = __crop->width;
+-	__format->height = __crop->height;
+-	__format->code = IMX214_MBUS_CODE;
+-	__format->field = V4L2_FIELD_NONE;
+-	__format->colorspace = V4L2_COLORSPACE_SRGB;
+-	__format->ycbcr_enc = V4L2_MAP_YCBCR_ENC_DEFAULT(__format->colorspace);
+-	__format->quantization = V4L2_MAP_QUANTIZATION_DEFAULT(true,
+-				__format->colorspace, __format->ycbcr_enc);
+-	__format->xfer_func = V4L2_MAP_XFER_FUNC_DEFAULT(__format->colorspace);
++	imx214_update_pad_format(imx214, mode, &format->format,
++				 format->format.code);
++	__format = v4l2_subdev_state_get_format(sd_state, 0);
+ 
+-	format->format = *__format;
++	*__format = format->format;
+ 
+-	mutex_unlock(&imx214->mutex);
++	__crop = v4l2_subdev_state_get_crop(sd_state, 0);
++	__crop->width = mode->width;
++	__crop->height = mode->height;
+ 
+ 	return 0;
  }
- 
- /**
-@@ -177,7 +173,7 @@ static void em_release_table_kref(struct kref *kref)
-  *
-  * No return values.
-  */
--void em_table_free(struct em_perf_table __rcu *table)
-+void em_table_free(struct em_perf_table *table)
+@@ -640,14 +588,9 @@ static int imx214_get_selection(struct v4l2_subdev *sd,
+ 				struct v4l2_subdev_state *sd_state,
+ 				struct v4l2_subdev_selection *sel)
  {
- 	kref_put(&table->kref, em_release_table_kref);
- }
-@@ -190,9 +186,9 @@ void em_table_free(struct em_perf_table __rcu *table)
-  * has a user.
-  * Returns allocated table or NULL.
-  */
--struct em_perf_table __rcu *em_table_alloc(struct em_perf_domain *pd)
-+struct em_perf_table *em_table_alloc(struct em_perf_domain *pd)
+-	struct imx214 *imx214 = to_imx214(sd);
+-
+ 	switch (sel->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		mutex_lock(&imx214->mutex);
+-		sel->r = *__imx214_get_pad_crop(imx214, sd_state, sel->pad,
+-						sel->which);
+-		mutex_unlock(&imx214->mutex);
++		sel->r = *v4l2_subdev_state_get_crop(sd_state, 0);
+ 		return 0;
+ 
+ 	case V4L2_SEL_TGT_NATIVE_SIZE:
+@@ -826,40 +769,35 @@ static int imx214_write_table(struct imx214 *imx214,
+ 
+ static int imx214_start_streaming(struct imx214 *imx214)
  {
--	struct em_perf_table __rcu *table;
-+	struct em_perf_table *table;
- 	int table_size;
- 
- 	table_size = sizeof(struct em_perf_state) * pd->nr_perf_states;
-@@ -300,9 +296,9 @@ int em_dev_compute_costs(struct device *dev, struct em_perf_state *table,
-  * Return 0 on success or an error code on failure.
-  */
- int em_dev_update_perf_domain(struct device *dev,
--			      struct em_perf_table __rcu *new_table)
-+			      struct em_perf_table *new_table)
- {
--	struct em_perf_table __rcu *old_table;
-+	struct em_perf_table *old_table;
- 	struct em_perf_domain *pd;
- 
- 	if (!dev)
-@@ -319,7 +315,8 @@ int em_dev_update_perf_domain(struct device *dev,
- 
- 	kref_get(&new_table->kref);
- 
--	old_table = pd->em_table;
-+	old_table = rcu_dereference_protected(pd->em_table,
-+					      lockdep_is_held(&em_pd_mutex));
- 	rcu_assign_pointer(pd->em_table, new_table);
- 
- 	em_cpufreq_update_efficiencies(dev, new_table->state);
-@@ -391,7 +388,7 @@ static int em_create_pd(struct device *dev, int nr_states,
- 			struct em_data_callback *cb, cpumask_t *cpus,
- 			unsigned long flags)
- {
--	struct em_perf_table __rcu *em_table;
-+	struct em_perf_table *em_table;
- 	struct em_perf_domain *pd;
- 	struct device *cpu_dev;
- 	int cpu, ret, num_cpus;
-@@ -551,6 +548,7 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
- 				struct em_data_callback *cb, cpumask_t *cpus,
- 				bool microwatts)
- {
-+	struct em_perf_table *em_table;
- 	unsigned long cap, prev_cap = 0;
- 	unsigned long flags = 0;
- 	int cpu, ret;
-@@ -623,7 +621,9 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
- 	dev->em_pd->min_perf_state = 0;
- 	dev->em_pd->max_perf_state = nr_states - 1;
- 
--	em_cpufreq_update_efficiencies(dev, dev->em_pd->em_table->state);
-+	em_table = rcu_dereference_protected(dev->em_pd->em_table,
-+					     lockdep_is_held(&em_pd_mutex));
-+	em_cpufreq_update_efficiencies(dev, em_table->state);
- 
- 	em_debug_create_pd(dev);
- 	dev_info(dev, "EM: created perf domain\n");
-@@ -660,7 +660,8 @@ void em_dev_unregister_perf_domain(struct device *dev)
- 	mutex_lock(&em_pd_mutex);
- 	em_debug_remove_pd(dev);
- 
--	em_table_free(dev->em_pd->em_table);
-+	em_table_free(rcu_dereference_protected(dev->em_pd->em_table,
-+						lockdep_is_held(&em_pd_mutex)));
- 
- 	kfree(dev->em_pd);
- 	dev->em_pd = NULL;
-@@ -668,9 +669,9 @@ void em_dev_unregister_perf_domain(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(em_dev_unregister_perf_domain);
- 
--static struct em_perf_table __rcu *em_table_dup(struct em_perf_domain *pd)
-+static struct em_perf_table *em_table_dup(struct em_perf_domain *pd)
- {
--	struct em_perf_table __rcu *em_table;
-+	struct em_perf_table *em_table;
- 	struct em_perf_state *ps, *new_ps;
- 	int ps_size;
- 
-@@ -692,7 +693,7 @@ static struct em_perf_table __rcu *em_table_dup(struct em_perf_domain *pd)
- }
- 
- static int em_recalc_and_update(struct device *dev, struct em_perf_domain *pd,
--				struct em_perf_table __rcu *em_table)
-+				struct em_perf_table *em_table)
- {
++	const struct v4l2_mbus_framefmt *fmt;
++	struct v4l2_subdev_state *state;
+ 	const struct imx214_mode *mode;
  	int ret;
  
-@@ -723,7 +724,7 @@ static void em_adjust_new_capacity(struct device *dev,
- 				   struct em_perf_domain *pd,
- 				   u64 max_cap)
- {
--	struct em_perf_table __rcu *em_table;
-+	struct em_perf_table *em_table;
+-	mutex_lock(&imx214->mutex);
+ 	ret = imx214_write_table(imx214, mode_table_common);
+ 	if (ret < 0) {
+ 		dev_err(imx214->dev, "could not sent common table %d\n", ret);
+-		goto error;
++		return ret;
+ 	}
  
- 	em_table = em_table_dup(pd);
- 	if (!em_table) {
-@@ -814,7 +815,7 @@ static void em_update_workfn(struct work_struct *work)
-  */
- int em_dev_update_chip_binning(struct device *dev)
- {
--	struct em_perf_table __rcu *em_table;
-+	struct em_perf_table *em_table;
- 	struct em_perf_domain *pd;
- 	int i, ret;
+-	mode = v4l2_find_nearest_size(imx214_modes,
+-				ARRAY_SIZE(imx214_modes), width, height,
+-				imx214->fmt.width, imx214->fmt.height);
++	state = v4l2_subdev_get_locked_active_state(&imx214->sd);
++	fmt = v4l2_subdev_state_get_format(state, 0);
++	mode = v4l2_find_nearest_size(imx214_modes, ARRAY_SIZE(imx214_modes),
++				      width, height, fmt->width, fmt->height);
+ 	ret = imx214_write_table(imx214, mode->reg_table);
+ 	if (ret < 0) {
+ 		dev_err(imx214->dev, "could not sent mode table %d\n", ret);
+-		goto error;
++		return ret;
+ 	}
+ 	ret = __v4l2_ctrl_handler_setup(&imx214->ctrls);
+ 	if (ret < 0) {
+ 		dev_err(imx214->dev, "could not sync v4l2 controls\n");
+-		goto error;
++		return ret;
+ 	}
+ 	ret = regmap_write(imx214->regmap, IMX214_REG_MODE_SELECT, IMX214_MODE_STREAMING);
+-	if (ret < 0) {
++	if (ret < 0)
+ 		dev_err(imx214->dev, "could not sent start table %d\n", ret);
+-		goto error;
+-	}
  
+-	mutex_unlock(&imx214->mutex);
+-	return 0;
+-
+-error:
+-	mutex_unlock(&imx214->mutex);
+ 	return ret;
+ }
+ 
+@@ -877,6 +815,7 @@ static int imx214_stop_streaming(struct imx214 *imx214)
+ static int imx214_s_stream(struct v4l2_subdev *subdev, int enable)
+ {
+ 	struct imx214 *imx214 = to_imx214(subdev);
++	struct v4l2_subdev_state *state;
+ 	int ret;
+ 
+ 	if (enable) {
+@@ -884,7 +823,9 @@ static int imx214_s_stream(struct v4l2_subdev *subdev, int enable)
+ 		if (ret < 0)
+ 			return ret;
+ 
++		state = v4l2_subdev_lock_and_get_active_state(subdev);
+ 		ret = imx214_start_streaming(imx214);
++		v4l2_subdev_unlock_state(state);
+ 		if (ret < 0)
+ 			goto err_rpm_put;
+ 	} else {
+@@ -948,7 +889,7 @@ static const struct v4l2_subdev_pad_ops imx214_subdev_pad_ops = {
+ 	.enum_mbus_code = imx214_enum_mbus_code,
+ 	.enum_frame_size = imx214_enum_frame_size,
+ 	.enum_frame_interval = imx214_enum_frame_interval,
+-	.get_fmt = imx214_get_format,
++	.get_fmt = v4l2_subdev_get_fmt,
+ 	.set_fmt = imx214_set_format,
+ 	.get_selection = imx214_get_selection,
+ 	.get_frame_interval = imx214_get_frame_interval,
+@@ -1079,9 +1020,6 @@ static int imx214_probe(struct i2c_client *client)
+ 	if (ret < 0)
+ 		goto error_power_off;
+ 
+-	mutex_init(&imx214->mutex);
+-	imx214->ctrls.lock = &imx214->mutex;
+-
+ 	imx214->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+ 	imx214->pad.flags = MEDIA_PAD_FL_SOURCE;
+ 	imx214->sd.dev = &client->dev;
+@@ -1093,7 +1031,12 @@ static int imx214_probe(struct i2c_client *client)
+ 		goto free_ctrl;
+ 	}
+ 
+-	imx214_entity_init_state(&imx214->sd, NULL);
++	imx214->sd.state_lock = imx214->ctrls.lock;
++	ret = v4l2_subdev_init_finalize(&imx214->sd);
++	if (ret < 0) {
++		dev_err(dev, "subdev init error: %d\n", ret);
++		goto free_entity;
++	}
+ 
+ 	pm_runtime_set_active(imx214->dev);
+ 	pm_runtime_enable(imx214->dev);
+@@ -1101,20 +1044,22 @@ static int imx214_probe(struct i2c_client *client)
+ 	ret = v4l2_async_register_subdev_sensor(&imx214->sd);
+ 	if (ret < 0) {
+ 		dev_err(dev, "could not register v4l2 device\n");
+-		goto free_entity;
++		goto error_subdev_cleanup;
+ 	}
+ 
+ 	pm_runtime_idle(imx214->dev);
+ 
+ 	return 0;
+ 
+-free_entity:
++error_subdev_cleanup:
+ 	pm_runtime_disable(imx214->dev);
+ 	pm_runtime_set_suspended(&client->dev);
++	v4l2_subdev_cleanup(&imx214->sd);
++
++free_entity:
+ 	media_entity_cleanup(&imx214->sd.entity);
+ 
+ free_ctrl:
+-	mutex_destroy(&imx214->mutex);
+ 	v4l2_ctrl_handler_free(&imx214->ctrls);
+ 
+ error_power_off:
+@@ -1129,9 +1074,9 @@ static void imx214_remove(struct i2c_client *client)
+ 	struct imx214 *imx214 = to_imx214(sd);
+ 
+ 	v4l2_async_unregister_subdev(&imx214->sd);
++	v4l2_subdev_cleanup(sd);
+ 	media_entity_cleanup(&imx214->sd.entity);
+ 	v4l2_ctrl_handler_free(&imx214->ctrls);
+-	mutex_destroy(&imx214->mutex);
+ 	pm_runtime_disable(&client->dev);
+ 	if (!pm_runtime_status_suspended(&client->dev)) {
+ 		imx214_power_off(imx214->dev);
 -- 
 2.39.5
 
