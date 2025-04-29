@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B6D2AE96;
-	Tue, 29 Apr 2025 18:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20BA2AE96;
+	Tue, 29 Apr 2025 18:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949916; cv=none; b=udRHn52CuzA1KiQYKchdrTnMPk2gX+zALt2rR6TJPOPM8E5XdYu6SQMaNsom43TjcO0mDZmFViX1zgpAJgud1e9GEdr6OR2Z5Qau76Y6kwo9PJpqaBTId/4StO0JHpNuOrjK6oXbp3NidcUYiVjfBo1rya/MBmMech7fMRnsdx8=
+	t=1745949919; cv=none; b=FBH3ozi9yZ0P3x9d5dxQYvU7FegS4mku8DqNeF4cz+e4Q44MSNd36DUxSI6w4mKYonGxVXcE8uThal4IK3kr6Fad3wgUzi8VkrnBs/rkPQPLZmJMu3alDVtKvA3lMx1oJyprq81KvlKFt7r5mN5m8Td763yFjtnATnLqJZhWH9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949916; c=relaxed/simple;
-	bh=6aJlFYi0n1hgC+wdu+I0R2DZP1O+71PHB/3U+Byqx/Y=;
+	s=arc-20240116; t=1745949919; c=relaxed/simple;
+	bh=/eSjBWNWBF/H6nwW5T8COVcoH213j2EENkx/sOHnMx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlmikwTjp0E7l54Lh8/qQoJ3gkR9ylC+FQba7NqvvnuGubTCR2NigYffY4k+AZsMo67FnNZXhayAHAeNkNktn6AoJJZgI8EOrD3V3QqxAfvuMzELRHygNI+hZescDj5D6FLlYDzG5/ttL0nsNYo3wl9eklt5yr3F28OPW0dtFD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLYr0fte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmzfQj8AIsbEjgWX65Ll/EHXcUp75aAoi81qFvh0qmmg/ZiDX94TtxQmdVdX6dkBd4DxCDNCo+//H96sBHAvMDhJrjZeqW3OPD0cJuhvi7iuP5z6J4+egVo2ArW8Qo58zXda4WchxfeuLnf82vn3YYGiNP5xgPOKnJkZ1MtPGTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1GpYHCs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLYr0fte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC30CC4CEE3;
-	Tue, 29 Apr 2025 18:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1GpYHCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E32C4CEE3;
+	Tue, 29 Apr 2025 18:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949916;
-	bh=6aJlFYi0n1hgC+wdu+I0R2DZP1O+71PHB/3U+Byqx/Y=;
+	s=korg; t=1745949919;
+	bh=/eSjBWNWBF/H6nwW5T8COVcoH213j2EENkx/sOHnMx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLYr0fteOfY5qJVurw7NIRqfocd1C0sxxGpK+b7cCulRK/c8Pg/qodn56mzahfr9s
-	 8dq/bndQ3h/k90KVotk6xCb7RTgfqUWviWccasgC68AQ4CMGHCEXovM9K8OygHHpbK
-	 vCN7yh/4D9LwN0Mt3n+h4M89fW2LQ2RNt2dqHVAw=
+	b=y1GpYHCsUhnKgX3ijcLapKzOFpBkfwLDfIMF9gpnWCG1kViFeXpUg43eTbpYdUEBw
+	 z/cf8x7IaMkdw3cq9PGfL3n7dGC3SCjNzvayCWUvT6QwWadOXtXBVZvuIhzVna3wg2
+	 PEuk6vndz4UPVbFdcHz24+MZ7zsHZzszoXjH87KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 090/167] usb: quirks: add DELAY_INIT quirk for Silicon Motion Flash Drive
-Date: Tue, 29 Apr 2025 18:43:18 +0200
-Message-ID: <20250429161055.393201644@linuxfoundation.org>
+	syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 099/167] crypto: null - Use spin lock instead of mutex
+Date: Tue, 29 Apr 2025 18:43:27 +0200
+Message-ID: <20250429161055.757434707@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,34 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 2932b6b547ec36ad2ed60fbf2117c0e46bb7d40a upstream.
+[ Upstream commit dcc47a028c24e793ce6d6efebfef1a1e92f80297 ]
 
-Silicon Motion Flash Drive connects to Huawei hisi platforms and
-performs a system reboot test for two thousand circles, it will
-randomly work incorrectly on boot, set DELAY_INIT quirk can workaround
-this issue.
+As the null algorithm may be freed in softirq context through
+af_alg, use spin locks instead of mutexes to protect the default
+null algorithm.
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250401023027.44894-1-limiao870622@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+b3e02953598f447d4d2a@syzkaller.appspotmail.com
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ crypto/crypto_null.c | 39 ++++++++++++++++++++++++++-------------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -383,6 +383,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0904, 0x6103), .driver_info =
- 			USB_QUIRK_LINEAR_FRAME_INTR_BINTERVAL },
+diff --git a/crypto/crypto_null.c b/crypto/crypto_null.c
+index 5b84b0f7cc178..3378670286535 100644
+--- a/crypto/crypto_null.c
++++ b/crypto/crypto_null.c
+@@ -17,10 +17,10 @@
+ #include <crypto/internal/skcipher.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
+-#include <linux/mm.h>
++#include <linux/spinlock.h>
+ #include <linux/string.h>
  
-+	/* Silicon Motion Flash Drive */
-+	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
+-static DEFINE_MUTEX(crypto_default_null_skcipher_lock);
++static DEFINE_SPINLOCK(crypto_default_null_skcipher_lock);
+ static struct crypto_sync_skcipher *crypto_default_null_skcipher;
+ static int crypto_default_null_skcipher_refcnt;
+ 
+@@ -152,23 +152,32 @@ MODULE_ALIAS_CRYPTO("cipher_null");
+ 
+ struct crypto_sync_skcipher *crypto_get_default_null_skcipher(void)
+ {
++	struct crypto_sync_skcipher *ntfm = NULL;
+ 	struct crypto_sync_skcipher *tfm;
+ 
+-	mutex_lock(&crypto_default_null_skcipher_lock);
++	spin_lock_bh(&crypto_default_null_skcipher_lock);
+ 	tfm = crypto_default_null_skcipher;
+ 
+ 	if (!tfm) {
+-		tfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
+-		if (IS_ERR(tfm))
+-			goto unlock;
+-
+-		crypto_default_null_skcipher = tfm;
++		spin_unlock_bh(&crypto_default_null_skcipher_lock);
 +
- 	/* Sound Devices USBPre2 */
- 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
- 			USB_QUIRK_ENDPOINT_IGNORE },
++		ntfm = crypto_alloc_sync_skcipher("ecb(cipher_null)", 0, 0);
++		if (IS_ERR(ntfm))
++			return ntfm;
++
++		spin_lock_bh(&crypto_default_null_skcipher_lock);
++		tfm = crypto_default_null_skcipher;
++		if (!tfm) {
++			tfm = ntfm;
++			ntfm = NULL;
++			crypto_default_null_skcipher = tfm;
++		}
+ 	}
+ 
+ 	crypto_default_null_skcipher_refcnt++;
++	spin_unlock_bh(&crypto_default_null_skcipher_lock);
+ 
+-unlock:
+-	mutex_unlock(&crypto_default_null_skcipher_lock);
++	crypto_free_sync_skcipher(ntfm);
+ 
+ 	return tfm;
+ }
+@@ -176,12 +185,16 @@ EXPORT_SYMBOL_GPL(crypto_get_default_null_skcipher);
+ 
+ void crypto_put_default_null_skcipher(void)
+ {
+-	mutex_lock(&crypto_default_null_skcipher_lock);
++	struct crypto_sync_skcipher *tfm = NULL;
++
++	spin_lock_bh(&crypto_default_null_skcipher_lock);
+ 	if (!--crypto_default_null_skcipher_refcnt) {
+-		crypto_free_sync_skcipher(crypto_default_null_skcipher);
++		tfm = crypto_default_null_skcipher;
+ 		crypto_default_null_skcipher = NULL;
+ 	}
+-	mutex_unlock(&crypto_default_null_skcipher_lock);
++	spin_unlock_bh(&crypto_default_null_skcipher_lock);
++
++	crypto_free_sync_skcipher(tfm);
+ }
+ EXPORT_SYMBOL_GPL(crypto_put_default_null_skcipher);
+ 
+-- 
+2.39.5
+
 
 
