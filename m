@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B922A81D;
-	Tue, 29 Apr 2025 17:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABABA23C8D6;
+	Tue, 29 Apr 2025 17:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946396; cv=none; b=mwXvBBYBf5/87rqU0LLkies9fBA6o3bNB7QQvMgzpsDc+lFWIJuhfuxcWkBSj2RGcq+Cl3qA94Wp2zo5P9vh0vafSSGofhT456Y9vBDr7URuRTmkyCVv8eO/Ib7sCFoX0ZaBWFJAhecSVcrMU1869qyRNhDXG5H9NttBAKUYwtc=
+	t=1745946400; cv=none; b=JV/BwnaN40DIxlGSlIuGnNa1p+a7j+43S62BM6sOsRzrMGjnzzomdDsaM3Cs3fPFfFa5WfvpfLFbJ06WBl1f4McYwpTcSfvw2Ft3Qyuou2UucV6ffBw2PbHUct+6WdMh4KjWSE48KqDpwhibXAPryzRpDGyJM913nXiPMHLOlwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946396; c=relaxed/simple;
-	bh=0RFffxN6E/3jiz7EKs7/4E3/X/WxaSgWb4qqvc0vG6U=;
+	s=arc-20240116; t=1745946400; c=relaxed/simple;
+	bh=DWFeldlnZ3IPa/9SY6C7tmK40jxiRFiKapb1p0lKNLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1epkpMa1Hm/DbsRe8NcnZUx9yTRZEk99KRw85tujeJHlRejdf3Z+0bGNchNgss8b0qFh49+Lt0QCTK7PygU9OKDDlCv0IT4zLZ5Yg0t43dWSEa5Vr9Xtx4AeKnUU05OFEiV2t51B+I1r3A3+rhjLCEFRc9H9f44KgnVRclF/CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wOMKWnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avHuPs+GCA4Buv9gDoxUep5jGGflluq3lx5A3/jQG7/ZOuSeitE4ihPNnrkj4NS8doxJL+ldpn47zaaN6k9ywXscAcDunu2S5TKgdRjTFlnxzGldnQrcdSYnsCmfJ1uxYgPJyMLjY0uy1J4jUQtMT1OPA4NKsbxb3D9BiAUQ/MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcswVKHU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wOMKWnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A470C4CEE9;
-	Tue, 29 Apr 2025 17:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcswVKHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35933C4CEE3;
+	Tue, 29 Apr 2025 17:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946396;
-	bh=0RFffxN6E/3jiz7EKs7/4E3/X/WxaSgWb4qqvc0vG6U=;
+	s=korg; t=1745946400;
+	bh=DWFeldlnZ3IPa/9SY6C7tmK40jxiRFiKapb1p0lKNLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wOMKWnrV6g6NgQHvlzEiqA3SKkRY0e+3d7uKSTKj6Q5XmoR1dOXlYx0uMV+Kthnf
-	 GqePC0Cp1uh51gaOF4JNQyVF48b35JqQ8c/hv1LCmjjDCNNK1rTq8ZdKJ9D+ahcKIj
-	 +cQQPEZCQETdvbvVFlXDj29m7JTtTRroAQbzlFbU=
+	b=CcswVKHUccE33gCaLAJEyjr4Q9G06/bvkxOEhDtrcm7XT8voHlx7u/p3TP1TNjqnm
+	 n2wmCfjrxo/f3RJ1bnBfYGrhv+rGOqAsVUIfAuSPEGBAI9ZAeP0ytEMU5/+l/N/XrT
+	 Ko0exq2lr7tL5DF+HEPJWlDBECqoXSg2+WyORRzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 213/311] dmaengine: dmatest: Fix dmatest waiting less when interrupted
-Date: Tue, 29 Apr 2025 18:40:50 +0200
-Message-ID: <20250429161129.723413691@linuxfoundation.org>
+Subject: [PATCH 6.14 247/311] nvme: requeue namespace scan on missed AENs
+Date: Tue, 29 Apr 2025 18:41:24 +0200
+Message-ID: <20250429161131.146675454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit e87ca16e99118ab4e130a41bdf12abbf6a87656c ]
+[ Upstream commit 9546ad1a9bda7362492114f5866b95b0ac4a100e ]
 
-Change the "wait for operation finish" logic to take interrupts into
-account.
+Scanning for namespaces can take some time, so if the target is
+reconfigured while the scan is running we may miss a Attached Namespace
+Attribute Changed AEN.
 
-When using dmatest with idxd DMA engine, it's possible that during
-longer tests, the interrupt notifying the finish of an operation
-happens during wait_event_freezable_timeout(), which causes dmatest to
-cleanup all the resources, some of which might still be in use.
+Check if the NVME_AER_NOTICE_NS_CHANGED bit is set once the scan has
+finished, and requeue scanning to pick up any missed change.
 
-This fix ensures that the wait logic correctly handles interrupts,
-preventing premature cleanup of resources.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202502171134.8c403348-lkp@intel.com
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250305230007.590178-1-vinicius.gomes@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmatest.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 91b2fbc0b8647..d891dfca358e2 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -841,9 +841,9 @@ static int dmatest_func(void *data)
- 		} else {
- 			dma_async_issue_pending(chan);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 8359d0aa0e44b..70f9c2d2b1130 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4292,6 +4292,10 @@ static void nvme_scan_work(struct work_struct *work)
+ 			nvme_scan_ns_sequential(ctrl);
+ 	}
+ 	mutex_unlock(&ctrl->scan_lock);
++
++	/* Requeue if we have missed AENs */
++	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
++		nvme_queue_scan(ctrl);
+ }
  
--			wait_event_freezable_timeout(thread->done_wait,
--					done->done,
--					msecs_to_jiffies(params->timeout));
-+			wait_event_timeout(thread->done_wait,
-+					   done->done,
-+					   msecs_to_jiffies(params->timeout));
- 
- 			status = dma_async_is_tx_complete(chan, cookie, NULL,
- 							  NULL);
+ /*
 -- 
 2.39.5
 
