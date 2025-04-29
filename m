@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A684252905;
-	Tue, 29 Apr 2025 18:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D300221D92;
+	Tue, 29 Apr 2025 18:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949703; cv=none; b=sWZu8XBFYS/j0sfli+t0orsAWXEEQvxw90js5b39RAW3s64OR1UHJNhOWUj22Be+RgvStX75lpcYYvQSh3Ixl5KB4gG8b3TGmGi+Lgnn9wWP4HRBVIgLiTD5IMI05FdA6OPBwJtf5ELVMyHJJgHuQoqBNXzw/qSaXh4K8WW4E78=
+	t=1745949706; cv=none; b=OSV28T75zXB/aG2MYtHaRZ8mdnZ7Ld89wH/XJxffuI+ClTdbi0ICWZzSQ215PN+g1phP2zPYE9C9HWpZbsTHpAMKhclLSmla5CRTzXiJvgd8RfXBEUduOcPC7HTtbx3JEqsE2NjYUSqKCq2bG7xO9uS20UmS2AY8D21GwUIwdsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949703; c=relaxed/simple;
-	bh=G74FP6qlEzUNNDSsv68y0azF0kCaaDYNYstZNIFOxSI=;
+	s=arc-20240116; t=1745949706; c=relaxed/simple;
+	bh=0HuXTdtDnNFYO+jQFw9AGhAhtYo44bHbbifhRdqWcsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqkTKiz2uLZkhiIB2AtXrFLqxvLt312XHBFC9MXU3oChc2mLtxvaeHfQEcE1Hsps/nbBGySFmC2nErIYYIr1QlKCpfAnJPdn7UYaqnT76dfGdniCSTaRJlmjxL+0bSZsV68/SoMj6xFiGtkNDIqFH0jjDDDl572d5NSEx7SULn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+ieZkPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LCmfJ1IQ5EggiMy8gwmW7XRE5b/PFpUdmdy3yM0QTRToeuyZD+Egook9okqUhtOX6tnwqPXS5uUkc4lfD/7l7MY2mp9/uD2CUxFKfQN0dgSotr/ejh4yL6B/1494iRpz6a866EK2tdNyMMiQVr01p5oYIhQt4mG+Mn/n4B5F1OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1R062et2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+ieZkPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE0BC4CEEE;
-	Tue, 29 Apr 2025 18:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R062et2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B0AC4CEE3;
+	Tue, 29 Apr 2025 18:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949703;
-	bh=G74FP6qlEzUNNDSsv68y0azF0kCaaDYNYstZNIFOxSI=;
+	s=korg; t=1745949706;
+	bh=0HuXTdtDnNFYO+jQFw9AGhAhtYo44bHbbifhRdqWcsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+ieZkPGElcuSVQfwexMCEQqYJ5DgcxEWLMBmLVpu5JkT8w5lbTyvKuawCV7TZ2Jq
-	 yrh6Kz40a5x/uq3OqCj9V03lq0doHJznIRi1bg707jIXMA4ze0m0qph5PPdM5KZ1hh
-	 4loBn54Dpr9DMIpbUVSBRCXWSGT6TVaZV1nDTcLk=
+	b=1R062et2PmeCOczVS1FMXu0PknWUkxxCd1DP8r4vG+0Gq3OvCF9h9esCGBag7aeno
+	 ODD4lR1PLc9h+8lZ11y23Uds+eLHgqYvifi0/qLNnQiAwAN/oLD6K9wNb3/hk3Cnbq
+	 ulIKeil3qBGd3VudFQsvgJzDyUgF0t6FCqPDNNhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Libo Chen <libo.chen@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/167] tracing: Verify event formats that have "%*p.."
-Date: Tue, 29 Apr 2025 18:41:55 +0200
-Message-ID: <20250429161052.048388375@linuxfoundation.org>
+Subject: [PATCH 6.1 008/167] auxdisplay: hd44780: Convert to platform remove callback returning void
+Date: Tue, 29 Apr 2025 18:41:56 +0200
+Message-ID: <20250429161052.088280452@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -47,97 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit ea8d7647f9ddf1f81e2027ed305299797299aa03 ]
+[ Upstream commit 9ea02f7cc39d484d16e8a14f3713fefcd33407c0 ]
 
-The trace event verifier checks the formats of trace events to make sure
-that they do not point at memory that is not in the trace event itself or
-in data that will never be freed. If an event references data that was
-allocated when the event triggered and that same data is freed before the
-event is read, then the kernel can crash by reading freed memory.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-The verifier runs at boot up (or module load) and scans the print formats
-of the events and checks their arguments to make sure that dereferenced
-pointers are safe. If the format uses "%*p.." the verifier will ignore it,
-and that could be dangerous. Cover this case as well.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Also add to the sample code a use case of "%*pbl".
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Link: https://lore.kernel.org/all/bcba4d76-2c3f-4d11-baf0-02905db953dd@oracle.com/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
-Link: https://lore.kernel.org/20250327195311.2d89ec66@gandalf.local.home
-Reported-by: Libo Chen <libo.chen@oracle.com>
-Reviewed-by: Libo Chen <libo.chen@oracle.com>
-Tested-by: Libo Chen <libo.chen@oracle.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Stable-dep-of: 9b98a7d2e5f4 ("auxdisplay: hd44780: Fix an API misuse in hd44780.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c                | 7 +++++++
- samples/trace_events/trace-events-sample.h | 8 ++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/auxdisplay/hd44780.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index ed0d0c8a2b4bb..8723ad2f9c63b 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -456,6 +456,7 @@ static void test_event_printk(struct trace_event_call *call)
- 			case '%':
- 				continue;
- 			case 'p':
-+ do_pointer:
- 				/* Find dereferencing fields */
- 				switch (fmt[i + 1]) {
- 				case 'B': case 'R': case 'r':
-@@ -484,6 +485,12 @@ static void test_event_printk(struct trace_event_call *call)
- 						continue;
- 					if (fmt[i + j] == '*') {
- 						star = true;
-+						/* Handle %*pbl case */
-+						if (!j && fmt[i + 1] == 'p') {
-+							arg++;
-+							i++;
-+							goto do_pointer;
-+						}
- 						continue;
- 					}
- 					if ((fmt[i + j] == 's')) {
-diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
-index 24ec968d481fb..06be777b3b14b 100644
---- a/samples/trace_events/trace-events-sample.h
-+++ b/samples/trace_events/trace-events-sample.h
-@@ -317,7 +317,8 @@ TRACE_EVENT(foo_bar,
- 		__assign_cpumask(cpum, cpumask_bits(mask));
- 	),
+diff --git a/drivers/auxdisplay/hd44780.c b/drivers/auxdisplay/hd44780.c
+index d56a5d508ccd7..7ac0b1b1d5482 100644
+--- a/drivers/auxdisplay/hd44780.c
++++ b/drivers/auxdisplay/hd44780.c
+@@ -319,7 +319,7 @@ static int hd44780_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
--	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
-+	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s [%d] %*pbl",
-+		  __entry->foo, __entry->bar,
+-static int hd44780_remove(struct platform_device *pdev)
++static void hd44780_remove(struct platform_device *pdev)
+ {
+ 	struct charlcd *lcd = platform_get_drvdata(pdev);
+ 	struct hd44780_common *hdc = lcd->drvdata;
+@@ -329,7 +329,6 @@ static int hd44780_remove(struct platform_device *pdev)
+ 	kfree(lcd->drvdata);
  
- /*
-  * Notice here the use of some helper functions. This includes:
-@@ -368,7 +369,10 @@ TRACE_EVENT(foo_bar,
+ 	kfree(lcd);
+-	return 0;
+ }
  
- 		  __get_str(str), __get_str(lstr),
- 		  __get_bitmask(cpus), __get_cpumask(cpum),
--		  __get_str(vstr))
-+		  __get_str(vstr),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array(cpus))
- );
+ static const struct of_device_id hd44780_of_match[] = {
+@@ -340,7 +339,7 @@ MODULE_DEVICE_TABLE(of, hd44780_of_match);
  
- /*
+ static struct platform_driver hd44780_driver = {
+ 	.probe = hd44780_probe,
+-	.remove = hd44780_remove,
++	.remove_new = hd44780_remove,
+ 	.driver		= {
+ 		.name	= "hd44780",
+ 		.of_match_table = hd44780_of_match,
 -- 
 2.39.5
 
