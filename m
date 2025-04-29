@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FBA244664;
-	Tue, 29 Apr 2025 17:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BEA227E95;
+	Tue, 29 Apr 2025 17:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948500; cv=none; b=l1exLucUoUugYyrRgSPz4H27xGYUn55sqkydLFz09nWLPw0igjMMsruhPKw4WHQgdHFoA53iONcHyQOdeIQX96FmzXK0xHUutO5jjtz8gEKCGEc+JcEM3jB9SYtZUWtrPyl1BcvKzqFwWmp24G82vjtNyZWxqH5zuQHJwoLtxEU=
+	t=1745948503; cv=none; b=ZY+vJvo5YDwWJP6OPfoKqeMjm3Ma6H1P62yb2Ai/r1A17FtPYINZE0Nhj5xP8TxQxK/JuI16Bx32u5Zz3MchWFSIsO1fzSiNfMWxvy1u7QciRkc9EWlGjRiNPx+XpCbsquQ5DibFwcwHhYydouHCBi+KV3tP7mM+OBQgGiZ3Z04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948500; c=relaxed/simple;
-	bh=7+5p+79vAVwDvEBYJlVXdidDHoQbNCDXzxR6+8CgzXk=;
+	s=arc-20240116; t=1745948503; c=relaxed/simple;
+	bh=1HIzW+TA/jZe7jMSJHIztBTCYWSLcRRujH1KHUl6teI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KG3EafQPIQaAdUv8eJv8vR+Wb57GYz476vfyuv3ZAF7kaETPkibKgDhnc7tV/6AIuteCWhz/V1APO17/gZnTVxAg7f9tmxNbqzVqEmHiWATxEEn5gbjBBRF2f0u6IfMFJX6ic32lc4m3Xy1W8iBkojipSyzpP+4Bhwn920xO3qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVQP+xj0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqa4P8TL0bETR5tP7QPSKWWP/Ml23BmY2AdhODYt9W/y065ZDG/UV69IEHeWBiVPYhR2xTboSWLTCQXtcAbVELZvDZx0SDbDic2dILZGBphvWmA6ezpfLT+ZgUSXaHjAqtoQRK3qxnbw9z641ok3m82G4Zo3ea1q/k6AwQOoXjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIpBz99K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVQP+xj0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D167C4CEEA;
-	Tue, 29 Apr 2025 17:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIpBz99K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98029C4CEE3;
+	Tue, 29 Apr 2025 17:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948499;
-	bh=7+5p+79vAVwDvEBYJlVXdidDHoQbNCDXzxR6+8CgzXk=;
+	s=korg; t=1745948502;
+	bh=1HIzW+TA/jZe7jMSJHIztBTCYWSLcRRujH1KHUl6teI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVQP+xj0sC3mUIkwdU9XL9WCkKDzeqPrZvv7BvJumUJUGGzkHbcqWlbcgLQ80mwBi
-	 RXAOOnqJkZdurkz78UFU2zrmAn2WIThkjIcFQEEq4blzICRzdiuBB2TO/9fKoTFibb
-	 LKj5Rf/B5psaU3qEyOX4/5O9LXuR4nI+ORYaxx/g=
+	b=VIpBz99KTHMcQIo9rJCA0R0SuhXI8iZImsE9MsOwHMEyLsl4A8SWIsDdIdFw3l91N
+	 9jPeNCHm62863gBVcyvDoUjg2dWmt2zQu386ZGoj+W2PRtfzArescN6itC7DypPdHi
+	 qhMXYuzghizx+FXZ3WfJHmVsCLSowqQHtf8Sl0bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Daniel Wagner <wagi@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/373] ata: sata_sx4: Add error handling in pdc20621_i2c_read()
-Date: Tue, 29 Apr 2025 18:38:04 +0200
-Message-ID: <20250429161123.438113177@linuxfoundation.org>
+Subject: [PATCH 5.15 008/373] nvmet-fcloop: swap list_add_tail arguments
+Date: Tue, 29 Apr 2025 18:38:05 +0200
+Message-ID: <20250429161123.478331152@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,64 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 8d46a27085039158eb5e253ab8a35a0e33b5e864 ]
+[ Upstream commit 2b5f0c5bc819af2b0759a8fcddc1b39102735c0f ]
 
-The function pdc20621_prog_dimm0() calls the function pdc20621_i2c_read()
-but does not handle the error if the read fails. This could lead to
-process with invalid data. A proper implementation can be found in
-/source/drivers/ata/sata_sx4.c, pdc20621_prog_dimm_global(). As mentioned
-in its commit: bb44e154e25125bef31fa956785e90fccd24610b, the variable spd0
-might be used uninitialized when pdc20621_i2c_read() fails.
+The newly element to be added to the list is the first argument of
+list_add_tail. This fix is missing dcfad4ab4d67 ("nvmet-fcloop: swap
+the list_add_tail arguments").
 
-Add error handling to pdc20621_i2c_read(). If a read operation fails,
-an error message is logged via dev_err(), and return a negative error
-code.
-
-Add error handling to pdc20621_prog_dimm0() in pdc20621_dimm_init(), and
-return a negative error code if pdc20621_prog_dimm0() fails.
-
-Fixes: 4447d3515616 ("libata: convert the remaining SATA drivers to new init model")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 437c0b824dbd ("nvme-fcloop: add target to host LS request support")
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_sx4.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/nvme/target/fcloop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
-index 7b28334aa26a2..20b73e0d835a3 100644
---- a/drivers/ata/sata_sx4.c
-+++ b/drivers/ata/sata_sx4.c
-@@ -1124,9 +1124,14 @@ static int pdc20621_prog_dimm0(struct ata_host *host)
- 	mmio += PDC_CHIP0_OFS;
- 
- 	for (i = 0; i < ARRAY_SIZE(pdc_i2c_read_data); i++)
--		pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
--				  pdc_i2c_read_data[i].reg,
--				  &spd0[pdc_i2c_read_data[i].ofs]);
-+		if (!pdc20621_i2c_read(host, PDC_DIMM0_SPD_DEV_ADDRESS,
-+				       pdc_i2c_read_data[i].reg,
-+				       &spd0[pdc_i2c_read_data[i].ofs])) {
-+			dev_err(host->dev,
-+				"Failed in i2c read at index %d: device=%#x, reg=%#x\n",
-+				i, PDC_DIMM0_SPD_DEV_ADDRESS, pdc_i2c_read_data[i].reg);
-+			return -EIO;
-+		}
- 
- 	data |= (spd0[4] - 8) | ((spd0[21] != 0) << 3) | ((spd0[3]-11) << 4);
- 	data |= ((spd0[17] / 4) << 6) | ((spd0[5] / 2) << 7) |
-@@ -1290,6 +1295,8 @@ static unsigned int pdc20621_dimm_init(struct ata_host *host)
- 
- 	/* Programming DIMM0 Module Control Register (index_CID0:80h) */
- 	size = pdc20621_prog_dimm0(host);
-+	if (size < 0)
-+		return size;
- 	dev_dbg(host->dev, "Local DIMM Size = %dMB\n", size);
- 
- 	/* Programming DIMM Module Global Control Register (index_CID0:88h) */
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index f5b8442b653db..787dfb3859a0d 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -478,7 +478,7 @@ fcloop_t2h_xmt_ls_rsp(struct nvme_fc_local_port *localport,
+ 	if (targetport) {
+ 		tport = targetport->private;
+ 		spin_lock(&tport->lock);
+-		list_add_tail(&tport->ls_list, &tls_req->ls_list);
++		list_add_tail(&tls_req->ls_list, &tport->ls_list);
+ 		spin_unlock(&tport->lock);
+ 		queue_work(nvmet_wq, &tport->ls_work);
+ 	}
 -- 
 2.39.5
 
