@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1BF238C21;
-	Tue, 29 Apr 2025 17:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C322DF91;
+	Tue, 29 Apr 2025 17:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948305; cv=none; b=pUq58vxkGDI6Xu5n/RojCRKyyaxhD5uuCPuay5bo1KxWLKFUd69aer6BYsazkG7jUcjdtNHjWrKdfkshF/X+Xth96Rq4b3C7Gr0ndb9JVsLdji58S9Yu70b8hC4gLSjE7CuzNO+7EMqHrJX+xpIHuFUSCAE00hYK9G9asQX/YkE=
+	t=1745948309; cv=none; b=hZtUFtYbWAlm4ZyQxAoLmJaOLP/mJo6bF8xNgjxWNn/y63CIDbeVLItLBc8Waje7mtxQ0FqXN8rYncw4sVf8VwjOFIxefxzbLKlR55fashZOwwbJPoU70z2AE9CuhCCiXZ0d0H0uxelG59xnOFRRQZMyu6uPZN2HgsoNxvRntj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948305; c=relaxed/simple;
-	bh=00s9bJ56fVdVhvFckSSS+CU5gzisYRvvi/7sRBofP8A=;
+	s=arc-20240116; t=1745948309; c=relaxed/simple;
+	bh=bwoGbFe51nGGB87f6J21M6247Aa+iheDRmH/Ab1OloM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCc3FH5gi0YQHRF3kaWH3FQAV7grW4uX5TuSulQ/qOmfq1awqGxVNz1J33jjCqUkmZDX01WsKi50T1gZWxpzRmAYg1m9g8/L+MKL7adPM9i3Gc2NncsJt7OXqwDlfG8Zawv1+yWh20T+uOQSUTi18XVDyZRU34OHQzZJVJ91pu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4qJD36C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOwHiUMJWeLTAlX/49gnXHb98gkgP9drpbvF8J+5zGY3iz0bL8dHZBb5soHpknZJnafk+nI2+EVXSdxhkhARw22kF6iSBL+8fdVogLkF1Tx0B9D+SjNjj5BEUr+1yAgPXwzaKPwUQmLVRBwLzEaco8bEwZA5N23TwMnfyH4RZ1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvLsSFd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4qJD36C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7C0C4CEE3;
-	Tue, 29 Apr 2025 17:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvLsSFd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B80BC4CEE3;
+	Tue, 29 Apr 2025 17:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948305;
-	bh=00s9bJ56fVdVhvFckSSS+CU5gzisYRvvi/7sRBofP8A=;
+	s=korg; t=1745948309;
+	bh=bwoGbFe51nGGB87f6J21M6247Aa+iheDRmH/Ab1OloM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4qJD36CxH9bLSlazPGEqxslGJZXq5mNynjQc+g4uZVD3yqlgdqNEJ5Rmm7go4WC6
-	 XC/gXDg39tMF0lua1OpidRcTesdOlZLmoowQYUoU2ZXPcj9F6ZzzezPuuFf2k/hzR0
-	 Lf3X9grOWaILeq9bjDakGCOIInQoX13QrY5rzO1A=
+	b=RvLsSFd4J6VTTj1w9NgLuBMzS3VzqIFPasMZRxzodG2vXGqakdJBt4WE6Q8cHF1Mv
+	 6H4971W4mw4q6zy6xMnmibgLUWciCVP0QGT3DV/xsxGxIEA0qegrlzsSNhVtS+7b9o
+	 d8UYSQLkXQib0oxo6T7y1VRNMOUk16NUFDQr/Snw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 249/280] driver core: introduce device_set_driver() helper
-Date: Tue, 29 Apr 2025 18:43:10 +0200
-Message-ID: <20250429161125.309395631@linuxfoundation.org>
+Subject: [PATCH 6.12 250/280] driver core: fix potential NULL pointer dereference in dev_uevent()
+Date: Tue, 29 Apr 2025 18:43:11 +0200
+Message-ID: <20250429161125.348994870@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,77 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 04d3e5461c1f5cf8eec964ab64948ebed826e95e upstream.
+commit 18daa52418e7e4629ed1703b64777294209d2622 upstream.
 
-In preparation to closing a race when reading driver pointer in
-dev_uevent() code, instead of setting device->driver pointer directly
-introduce device_set_driver() helper.
+If userspace reads "uevent" device attribute at the same time as another
+threads unbinds the device from its driver, change to dev->driver from a
+valid pointer to NULL may result in crash. Fix this by using READ_ONCE()
+when fetching the pointer, and take bus' drivers klist lock to make sure
+driver instance will not disappear while we access it.
+
+Use WRITE_ONCE() when setting the driver pointer to ensure there is no
+tearing.
 
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20250311052417.1846985-2-dmitry.torokhov@gmail.com
+Link: https://lore.kernel.org/r/20250311052417.1846985-3-dmitry.torokhov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/base.h |    6 ++++++
- drivers/base/core.c |    2 +-
- drivers/base/dd.c   |    7 +++----
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/base/base.h |   13 ++++++++++++-
+ drivers/base/bus.c  |    2 +-
+ drivers/base/core.c |   33 +++++++++++++++++++++++++++++++--
+ 3 files changed, 44 insertions(+), 4 deletions(-)
 
 --- a/drivers/base/base.h
 +++ b/drivers/base/base.h
-@@ -179,6 +179,12 @@ int driver_add_groups(const struct devic
- void driver_remove_groups(const struct device_driver *drv, const struct attribute_group **groups);
- void device_driver_detach(struct device *dev);
+@@ -73,6 +73,7 @@ static inline void subsys_put(struct sub
+ 		kset_put(&sp->subsys);
+ }
  
-+static inline void device_set_driver(struct device *dev, const struct device_driver *drv)
-+{
-+	// FIXME - this cast should not be needed "soon"
-+	dev->driver = (struct device_driver *)drv;
-+}
-+
++struct subsys_private *bus_to_subsys(const struct bus_type *bus);
+ struct subsys_private *class_to_subsys(const struct class *class);
+ 
+ struct driver_private {
+@@ -181,8 +182,18 @@ void device_driver_detach(struct device
+ 
+ static inline void device_set_driver(struct device *dev, const struct device_driver *drv)
+ {
++	/*
++	 * Majority (all?) read accesses to dev->driver happens either
++	 * while holding device lock or in bus/driver code that is only
++	 * invoked when the device is bound to a driver and there is no
++	 * concern of the pointer being changed while it is being read.
++	 * However when reading device's uevent file we read driver pointer
++	 * without taking device lock (so we do not block there for
++	 * arbitrary amount of time). We use WRITE_ONCE() here to prevent
++	 * tearing so that READ_ONCE() can safely be used in uevent code.
++	 */
+ 	// FIXME - this cast should not be needed "soon"
+-	dev->driver = (struct device_driver *)drv;
++	WRITE_ONCE(dev->driver, (struct device_driver *)drv);
+ }
+ 
  int devres_release_all(struct device *dev);
- void device_block_probing(void);
- void device_unblock_probing(void);
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -57,7 +57,7 @@ static int __must_check bus_rescan_devic
+  * NULL.  A call to subsys_put() must be done when finished with the pointer in
+  * order for it to be properly freed.
+  */
+-static struct subsys_private *bus_to_subsys(const struct bus_type *bus)
++struct subsys_private *bus_to_subsys(const struct bus_type *bus)
+ {
+ 	struct subsys_private *sp = NULL;
+ 	struct kobject *kobj;
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -3697,7 +3697,7 @@ done:
- 	device_pm_remove(dev);
- 	dpm_sysfs_remove(dev);
-  DPMError:
--	dev->driver = NULL;
-+	device_set_driver(dev, NULL);
- 	bus_remove_device(dev);
-  BusError:
- 	device_remove_attrs(dev);
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -550,7 +550,7 @@ static void device_unbind_cleanup(struct
- 	arch_teardown_dma_ops(dev);
- 	kfree(dev->dma_range_map);
- 	dev->dma_range_map = NULL;
--	dev->driver = NULL;
-+	device_set_driver(dev, NULL);
- 	dev_set_drvdata(dev, NULL);
- 	if (dev->pm_domain && dev->pm_domain->dismiss)
- 		dev->pm_domain->dismiss(dev);
-@@ -629,8 +629,7 @@ static int really_probe(struct device *d
- 	}
+@@ -2624,6 +2624,35 @@ static const char *dev_uevent_name(const
+ 	return NULL;
+ }
  
- re_probe:
--	// FIXME - this cast should not be needed "soon"
--	dev->driver = (struct device_driver *)drv;
-+	device_set_driver(dev, drv);
++/*
++ * Try filling "DRIVER=<name>" uevent variable for a device. Because this
++ * function may race with binding and unbinding the device from a driver,
++ * we need to be careful. Binding is generally safe, at worst we miss the
++ * fact that the device is already bound to a driver (but the driver
++ * information that is delivered through uevents is best-effort, it may
++ * become obsolete as soon as it is generated anyways). Unbinding is more
++ * risky as driver pointer is transitioning to NULL, so READ_ONCE() should
++ * be used to make sure we are dealing with the same pointer, and to
++ * ensure that driver structure is not going to disappear from under us
++ * we take bus' drivers klist lock. The assumption that only registered
++ * driver can be bound to a device, and to unregister a driver bus code
++ * will take the same lock.
++ */
++static void dev_driver_uevent(const struct device *dev, struct kobj_uevent_env *env)
++{
++	struct subsys_private *sp = bus_to_subsys(dev->bus);
++
++	if (sp) {
++		scoped_guard(spinlock, &sp->klist_drivers.k_lock) {
++			struct device_driver *drv = READ_ONCE(dev->driver);
++			if (drv)
++				add_uevent_var(env, "DRIVER=%s", drv->name);
++		}
++
++		subsys_put(sp);
++	}
++}
++
+ static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	const struct device *dev = kobj_to_dev(kobj);
+@@ -2655,8 +2684,8 @@ static int dev_uevent(const struct kobje
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
  
- 	/* If using pinctrl, bind pins now before probing */
- 	ret = pinctrl_bind_pins(dev);
-@@ -1014,7 +1013,7 @@ static int __device_attach(struct device
- 		if (ret == 0)
- 			ret = 1;
- 		else {
--			dev->driver = NULL;
-+			device_set_driver(dev, NULL);
- 			ret = 0;
- 		}
- 	} else {
+-	if (dev->driver)
+-		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
++	/* Add "DRIVER=%s" variable if the device is bound to a driver */
++	dev_driver_uevent(dev, env);
+ 
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
 
 
