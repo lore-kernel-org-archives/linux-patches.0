@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4212A24BC1A;
-	Tue, 29 Apr 2025 17:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5748246326;
+	Tue, 29 Apr 2025 17:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946152; cv=none; b=cWfScBOFs07STzw0NCnFQ+Wh+CKB3e4PJjZuj7pRIgvzdhN+ZQUf8eS2Mm14PXpgw4+c+yhk91Dx8KJlMUn+sXdsFPOqVjiPKlz0XT4xiASXO91o0kfVjHOzfvSpVNdyFqFxKQSn6YFivfvtmFvKfwRiR9ZcbwHgNy3bnepkUKc=
+	t=1745946155; cv=none; b=Uj4/6tCgQOcAYTzrXuGG8GeXjuPigoX+Mdpy+G5OxDsHSwWahHNCA3wSbLG/mHk9gt6/bxZKjWl6RkyZcCP7ccdXkXB/Ymh4GDZdX+wm0dC5+HjTcpeNCsfRIBfDBIClPLde03XrsTSXNu1abBE8eJKu20NTR5XkAnCGPxD68lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946152; c=relaxed/simple;
-	bh=AJ7rXWnGdOk2RIr4V8svv5blRr7543UuG0yZeQdzwuc=;
+	s=arc-20240116; t=1745946155; c=relaxed/simple;
+	bh=uBgtejF6uvw19pZzQ9fDS7CLi8laSvrdpwBs10JCmis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8uh9nDiCf8PimUkUe+41nOzRo9WLgsNZxqas+14kEjehu1OoUzL1VVeHttbarLVBJ6XFmfE90q48eTFfiGkd2WZtPsygM1+Y5XHSL1DFZq7e9oj1oucwY/li/GAMdGgjQRFfED54+LUo083wMwDRaP8Hvu/3cILohkwYfqirfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgpPdp1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KM2JwcOUngcGUPxmWD+Sx/6D8cRh8mI3AzRvbhgHRPYRESrIe7iC6TaTLbV0drZO3mLgorVjPKek1khZPqVrx52iCARRSj8MGqHZG+uitzi58WNELUYXhV942HLeN13XRMNoHzjcqFtvojB+OBC6u2/RpDxlX/g/LN1QIY8iWIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neppbEOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgpPdp1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B11C4CEE3;
-	Tue, 29 Apr 2025 17:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neppbEOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64215C4CEEE;
+	Tue, 29 Apr 2025 17:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946151;
-	bh=AJ7rXWnGdOk2RIr4V8svv5blRr7543UuG0yZeQdzwuc=;
+	s=korg; t=1745946154;
+	bh=uBgtejF6uvw19pZzQ9fDS7CLi8laSvrdpwBs10JCmis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgpPdp1x1vaIv/XVkC4hIlSNmwRAUwNcALs1twl9r/Sb3e6StsLV5WnUgKMT1Lf6R
-	 uyaIPiUY+2jYkYxP5T/Lr9SE98yM0Tqw5AEBetGp9Sm30+B4X3u06JatxPN40vhHQZ
-	 FTmPM+csEaaf09rxCOWkdHcs/aOZXgvBjIbaY7/E=
+	b=neppbEOyxsZvhMucqUHlZq9L8xONtD/isZMfGzeItPO3dEcK2Ukekxt3u6WjXq2LK
+	 c+6waM65cXwwPc3GRuJ9w4I4E2XaW9NlhdOw4A1jWhLcca0MHKcOH/7Xim7g8bdwyr
+	 W9Ol0sTkuIu5ETpYfGx0KL0lda4JmhixT5T04P+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.14 172/311] usb: typec: class: Unlocked on error in typec_register_partner()
-Date: Tue, 29 Apr 2025 18:40:09 +0200
-Message-ID: <20250429161128.078155409@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.14 173/311] USB: wdm: handle IO errors in wdm_wwan_port_start
+Date: Tue, 29 Apr 2025 18:40:10 +0200
+Message-ID: <20250429161128.118385834@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,32 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 429a98abfc01d3d4378b7a00969437dc3e8f647c upstream.
+commit 9697f5efcf5fdea65b8390b5eb81bebe746ceedc upstream.
 
-We recently added some locking to this function but this error path
-was accidentally missed.  Unlock before returning.
+In case submitting the URB fails we must undo
+what we've done so far.
 
-Fixes: ec27386de23a ("usb: typec: class: Fix NULL pointer access")
+Fixes: cac6fb015f71 ("usb: class: cdc-wdm: WWAN framework integration")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/Z_44tOtmml89wQcM@stanley.mountain
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250401084749.175246-2-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/cdc-wdm.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -1056,6 +1056,7 @@ struct typec_partner *typec_register_par
- 	ret = device_register(&partner->dev);
- 	if (ret) {
- 		dev_err(&port->dev, "failed to register partner (%d)\n", ret);
-+		mutex_unlock(&port->partner_link_lock);
- 		put_device(&partner->dev);
- 		return ERR_PTR(ret);
- 	}
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -829,6 +829,7 @@ static struct usb_class_driver wdm_class
+ static int wdm_wwan_port_start(struct wwan_port *port)
+ {
+ 	struct wdm_device *desc = wwan_port_get_drvdata(port);
++	int rv;
+ 
+ 	/* The interface is both exposed via the WWAN framework and as a
+ 	 * legacy usbmisc chardev. If chardev is already open, just fail
+@@ -848,7 +849,15 @@ static int wdm_wwan_port_start(struct ww
+ 	wwan_port_txon(port);
+ 
+ 	/* Start getting events */
+-	return usb_submit_urb(desc->validity, GFP_KERNEL);
++	rv = usb_submit_urb(desc->validity, GFP_KERNEL);
++	if (rv < 0) {
++		wwan_port_txoff(port);
++		desc->manage_power(desc->intf, 0);
++		/* this must be last lest we race with chardev open */
++		clear_bit(WDM_WWAN_IN_USE, &desc->flags);
++	}
++
++	return rv;
+ }
+ 
+ static void wdm_wwan_port_stop(struct wwan_port *port)
 
 
