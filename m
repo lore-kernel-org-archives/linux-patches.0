@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FAB188A0E;
-	Tue, 29 Apr 2025 18:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C8240611;
+	Tue, 29 Apr 2025 18:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950609; cv=none; b=nj/WGTbv+owduEjTYbihUE7WD7T6uXeDSVEvYm4kHLxTXy+TvsKZqHoxqIP7DWNq8fqAL3HBcVKo2nnvE9f8aLW1Jil6awr++Y26fcx8I9qFATa915tMDhJul1p20MGPlzK3KIjhsCGhr4Ir5DkabsayvX3+JpXVqJes3A88Muk=
+	t=1745950612; cv=none; b=LHaKeyAUSErBUPIJr9TPRouvbBjbEP9J1xyZ2F5onMAsebrkfSwvBpgRm1jj/p40RFZSjTkPugLzID2SfZrbyskTNKBNxGAP2VvYdObVJI9B7u8kqAqnZWOFdXGgY/nDieqMgx5bGZ/NAL6Qte/jTa97fBQY+Kj3t/Hu5W4vBg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950609; c=relaxed/simple;
-	bh=Qu1yVw9poMrguiacMiQrDN2mg5qzokCIRNyutHhsF/4=;
+	s=arc-20240116; t=1745950612; c=relaxed/simple;
+	bh=EB4H8ZFqtrGGXM18LBxZLDYaP4eDz0Y8yIlXK0hbs8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdJLQiLRCbI51bXheEQZzYOSIM5tEkgbeWfU0aIE7M5UPCNIhPheaxJgDFGVLqD21VV6Pto/5xbO2XMeKtmr+lBR/+lCha6WRtVp6c/CJ/z+nOEz7JpvcgdUZPJu14KMq86GOUpPM9Bwwuv8bv5tcp86g1dHjTI9QJgr7q+hwhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGY3r2zO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Te2zNP30Pnyjr6sBpy3g+OeZPSA4xxCWzDKv0Il8hSOBnJeXbD7NWoeFpUJVruyfzuYzxxyZoXeRhpXIN811SRKdSGXWcP/2zA6drgf9ZNwQtjyf2dmdhup3iyQwhKuPQRS443SxYRu96FKycDCsGm7wFK336lOs6MrbwoYEpGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJB/obPn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGY3r2zO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C697DC4CEE3;
-	Tue, 29 Apr 2025 18:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJB/obPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A553BC4CEE3;
+	Tue, 29 Apr 2025 18:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950609;
-	bh=Qu1yVw9poMrguiacMiQrDN2mg5qzokCIRNyutHhsF/4=;
+	s=korg; t=1745950612;
+	bh=EB4H8ZFqtrGGXM18LBxZLDYaP4eDz0Y8yIlXK0hbs8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGY3r2zOhsOsD2EqfM4WlDsMuktQ1SOOmu7fyOc/ca8wnijeQ81gQAtOZ5fumWPr6
-	 /7LMhyP4dITGWawrETNTLQdcP/JT/OtEEUPO5hwFu/ciYc5MdcVk1KX8HfSueBn78H
-	 keD9cpEflyGucDIl7H0OmrVz1DZBLdto1J0A1jRk=
+	b=cJB/obPn8qMyTzOw6BRk5GpevDNKaWfvJCrOd1eKu2+pkcJWrfPQ6QVSGEWwcLoSu
+	 n+ybNE+DF0LE3GgzZQM1SsfrWI8ueXLAQaLWVE8gcHZAGAqi31yx2VgphqLhLml+a7
+	 yAPq6bLje5AQQuQ+s1RqlpsQLcgAikPGLFx7+EWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@mit.edu>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Lukas Stockmann <lukas.stockmann@siemens.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/204] 9p/net: fix improper handling of bogus negative read/write replies
-Date: Tue, 29 Apr 2025 18:43:57 +0200
-Message-ID: <20250429161105.519648801@linuxfoundation.org>
+Subject: [PATCH 6.6 150/204] rtc: pcf85063: do a SW reset if POR failed
+Date: Tue, 29 Apr 2025 18:43:58 +0200
+Message-ID: <20250429161105.558978872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,137 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Lukas Stockmann <lukas.stockmann@siemens.com>
 
-[ Upstream commit d0259a856afca31d699b706ed5e2adf11086c73b ]
+[ Upstream commit 2b7cbd98495f6ee4cd6422fe77828a19e9edf87f ]
 
-In p9_client_write() and p9_client_read_once(), if the server
-incorrectly replies with success but a negative write/read count then we
-would consider written (negative) <= rsize (positive) because both
-variables were signed.
+Power-on Reset has a documented issue in PCF85063, refer to its datasheet,
+section "Software reset":
 
-Make variables unsigned to avoid this problem.
+"There is a low probability that some devices will have corruption of the
+registers after the automatic power-on reset if the device is powered up
+with a residual VDD level. It is required that the VDD starts at zero volts
+at power up or upon power cycling to ensure that there is no corruption of
+the registers. If this is not possible, a reset must be initiated after
+power-up (i.e. when power is stable) with the software reset command"
 
-The reproducer linked below now fails with the following error instead
-of a null pointer deref:
-9pnet: bogus RWRITE count (4294967295 > 3)
+Trigger SW reset if there is an indication that POR has failed.
 
-Reported-by: Robert Morris <rtm@mit.edu>
-Closes: https://lore.kernel.org/16271.1734448631@26-5-164.dynamic.csail.mit.edu
-Message-ID: <20250319-9p_unsigned_rw-v3-1-71327f1503d0@codewreck.org>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Link: https://www.nxp.com/docs/en/data-sheet/PCF85063A.pdf
+Signed-off-by: Lukas Stockmann <lukas.stockmann@siemens.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250120093451.30778-1-alexander.sverdlin@siemens.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/client.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/rtc/rtc-pcf85063.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/client.c b/net/9p/client.c
-index d841d82e908fe..cf73fe306219a 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -1547,7 +1547,8 @@ p9_client_read_once(struct p9_fid *fid, u64 offset, struct iov_iter *to,
- 	struct p9_client *clnt = fid->clnt;
- 	struct p9_req_t *req;
- 	int count = iov_iter_count(to);
--	int rsize, received, non_zc = 0;
-+	u32 rsize, received;
-+	bool non_zc = false;
- 	char *dataptr;
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 905986c616559..73848f764559b 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -35,6 +35,7 @@
+ #define PCF85063_REG_CTRL1_CAP_SEL	BIT(0)
+ #define PCF85063_REG_CTRL1_STOP		BIT(5)
+ #define PCF85063_REG_CTRL1_EXT_TEST	BIT(7)
++#define PCF85063_REG_CTRL1_SWR		0x58
  
- 	*err = 0;
-@@ -1570,7 +1571,7 @@ p9_client_read_once(struct p9_fid *fid, u64 offset, struct iov_iter *to,
- 				       0, 11, "dqd", fid->fid,
- 				       offset, rsize);
- 	} else {
--		non_zc = 1;
-+		non_zc = true;
- 		req = p9_client_rpc(clnt, P9_TREAD, "dqd", fid->fid, offset,
- 				    rsize);
- 	}
-@@ -1591,11 +1592,11 @@ p9_client_read_once(struct p9_fid *fid, u64 offset, struct iov_iter *to,
- 		return 0;
- 	}
- 	if (rsize < received) {
--		pr_err("bogus RREAD count (%d > %d)\n", received, rsize);
-+		pr_err("bogus RREAD count (%u > %u)\n", received, rsize);
- 		received = rsize;
- 	}
+ #define PCF85063_REG_CTRL2		0x01
+ #define PCF85063_CTRL2_AF		BIT(6)
+@@ -589,7 +590,7 @@ static int pcf85063_probe(struct i2c_client *client)
  
--	p9_debug(P9_DEBUG_9P, "<<< RREAD count %d\n", received);
-+	p9_debug(P9_DEBUG_9P, "<<< RREAD count %u\n", received);
+ 	i2c_set_clientdata(client, pcf85063);
  
- 	if (non_zc) {
- 		int n = copy_to_iter(dataptr, received, to);
-@@ -1622,9 +1623,9 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
- 	*err = 0;
+-	err = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL1, &tmp);
++	err = regmap_read(pcf85063->regmap, PCF85063_REG_SC, &tmp);
+ 	if (err) {
+ 		dev_err(&client->dev, "RTC chip is not present\n");
+ 		return err;
+@@ -599,6 +600,22 @@ static int pcf85063_probe(struct i2c_client *client)
+ 	if (IS_ERR(pcf85063->rtc))
+ 		return PTR_ERR(pcf85063->rtc);
  
- 	while (iov_iter_count(from)) {
--		int count = iov_iter_count(from);
--		int rsize = fid->iounit;
--		int written;
-+		size_t count = iov_iter_count(from);
-+		u32 rsize = fid->iounit;
-+		u32 written;
- 
- 		if (!rsize || rsize > clnt->msize - P9_IOHDRSZ)
- 			rsize = clnt->msize - P9_IOHDRSZ;
-@@ -1632,7 +1633,7 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
- 		if (count < rsize)
- 			rsize = count;
- 
--		p9_debug(P9_DEBUG_9P, ">>> TWRITE fid %d offset %llu count %d (/%d)\n",
-+		p9_debug(P9_DEBUG_9P, ">>> TWRITE fid %d offset %llu count %u (/%zu)\n",
- 			 fid->fid, offset, rsize, count);
- 
- 		/* Don't bother zerocopy for small IO (< 1024) */
-@@ -1658,11 +1659,11 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
- 			break;
- 		}
- 		if (rsize < written) {
--			pr_err("bogus RWRITE count (%d > %d)\n", written, rsize);
-+			pr_err("bogus RWRITE count (%u > %u)\n", written, rsize);
- 			written = rsize;
- 		}
- 
--		p9_debug(P9_DEBUG_9P, "<<< RWRITE count %d\n", written);
-+		p9_debug(P9_DEBUG_9P, "<<< RWRITE count %u\n", written);
- 
- 		p9_req_put(clnt, req);
- 		iov_iter_revert(from, count - written - iov_iter_count(from));
-@@ -2049,7 +2050,8 @@ EXPORT_SYMBOL_GPL(p9_client_xattrcreate);
- 
- int p9_client_readdir(struct p9_fid *fid, char *data, u32 count, u64 offset)
- {
--	int err, rsize, non_zc = 0;
-+	int err, non_zc = 0;
-+	u32 rsize;
- 	struct p9_client *clnt;
- 	struct p9_req_t *req;
- 	char *dataptr;
-@@ -2058,7 +2060,7 @@ int p9_client_readdir(struct p9_fid *fid, char *data, u32 count, u64 offset)
- 
- 	iov_iter_kvec(&to, ITER_DEST, &kv, 1, count);
- 
--	p9_debug(P9_DEBUG_9P, ">>> TREADDIR fid %d offset %llu count %d\n",
-+	p9_debug(P9_DEBUG_9P, ">>> TREADDIR fid %d offset %llu count %u\n",
- 		 fid->fid, offset, count);
- 
- 	clnt = fid->clnt;
-@@ -2093,11 +2095,11 @@ int p9_client_readdir(struct p9_fid *fid, char *data, u32 count, u64 offset)
- 		goto free_and_error;
- 	}
- 	if (rsize < count) {
--		pr_err("bogus RREADDIR count (%d > %d)\n", count, rsize);
-+		pr_err("bogus RREADDIR count (%u > %u)\n", count, rsize);
- 		count = rsize;
- 	}
- 
--	p9_debug(P9_DEBUG_9P, "<<< RREADDIR count %d\n", count);
-+	p9_debug(P9_DEBUG_9P, "<<< RREADDIR count %u\n", count);
- 
- 	if (non_zc)
- 		memmove(data, dataptr, count);
++	/*
++	 * If a Power loss is detected, SW reset the device.
++	 * From PCF85063A datasheet:
++	 * There is a low probability that some devices will have corruption
++	 * of the registers after the automatic power-on reset...
++	 */
++	if (tmp & PCF85063_REG_SC_OS) {
++		dev_warn(&client->dev,
++			 "POR issue detected, sending a SW reset\n");
++		err = regmap_write(pcf85063->regmap, PCF85063_REG_CTRL1,
++				   PCF85063_REG_CTRL1_SWR);
++		if (err < 0)
++			dev_warn(&client->dev,
++				 "SW reset failed, trying to continue\n");
++	}
++
+ 	err = pcf85063_load_capacitance(pcf85063, client->dev.of_node,
+ 					config->force_cap_7000 ? 7000 : 0);
+ 	if (err < 0)
 -- 
 2.39.5
 
