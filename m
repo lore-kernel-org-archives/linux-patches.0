@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B71254875;
-	Tue, 29 Apr 2025 16:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFAC2522AB;
+	Tue, 29 Apr 2025 16:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945669; cv=none; b=LBSgSvoO/B2Udyk1ASVaKVD4+93M5jzS8VqSMAsvVkJYI6fv4LB1n8iWdxs3GzN23uYKeB2fZdksaVXFV4FPs+v2NqxrymkNEzX76lXnjaT9Jo9hFmUagULSVp0NQIKm7afKbBQa7uFiXHeaSPlaV1hNZsxEBznWoWs1TpFSb50=
+	t=1745945672; cv=none; b=iUPgukwS2LzfLUfaunyd/rgf6zrNgDlQ4oyrRF1oxJ30xEE8IpZgyQZf2XOGYasJ2s8mmUHEchh5FU6nnl/SK6L8ICNonzZZ3q2yCbOsUR61ldqrtWbQRp9m+NTHFkMXh98Y13ecU8NPQYuTbdjVzYHbvid6LSDQrRB3hKczds8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945669; c=relaxed/simple;
-	bh=bWeyDxkvkm7mtz1kJ2fqMpQUoIfHr5yCJf5ukfIysTQ=;
+	s=arc-20240116; t=1745945672; c=relaxed/simple;
+	bh=uQ9vc51s2sWKE1bEiduQxo22ryczjr/kz4yUu+MMYu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hN2pG3+itf87SucD8ndb9QshHvh7cl48dBB1imuJzO1IFw0F2jj9ccHHyZgyWdqiXdUHp8y/f9ZoMbkD9T0sjnFp2E72UnvqB0cwd/f3OSqFqCB1ln2I2MsvDaTlw2jicL7d0ObeAcd0cmvcI711HPoAZWUuH1IOX5N2x7NdFEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiR1rCOW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ULgryNUsSkXPbwHjMFEvP5TI0++sJXNxhOVwTy1icZqvofWSDq2MmgL4T+n+pjTFYpVcfzQMNIJzvdAnY44dSpfUKwQ8oX6zX4m4CvFdKEmlBEN8JEHYPBzDDwU2PTvyFFaiMUwpMokZQl+7DNnX57AUJINdr2Auv7EGFzhpMAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCM3aNT+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiR1rCOW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE570C4CEE3;
-	Tue, 29 Apr 2025 16:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCM3aNT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34AFC4CEE3;
+	Tue, 29 Apr 2025 16:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945669;
-	bh=bWeyDxkvkm7mtz1kJ2fqMpQUoIfHr5yCJf5ukfIysTQ=;
+	s=korg; t=1745945672;
+	bh=uQ9vc51s2sWKE1bEiduQxo22ryczjr/kz4yUu+MMYu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiR1rCOWSwFOIZRFfFfsAIRGBB78CPaoGqq87d/ndW7S/0GhmERWafGo2dXANpdTf
-	 B+4qskEFkeOpgZ6o2LtzAncqwI7VAjDq4jUcLW0CIu485RWoPzLV9rrp/h8mrYgMim
-	 cjpuRzmE6QK2SvBTLA+J6lYn7RJ7R166luCzkdNI=
+	b=uCM3aNT+cGjAMkt0UXDbAQXC5+Tu4KmgGDn90UgoLHbmAdT+MRjenogdML0gGRxja
+	 nIXEfT3scBzE1Aw+TDp26uicCEUvE59KV3eZfePhIgLyfLtJ4qqsLGeHkrQQZH6mGX
+	 MIw/JxPKtlMf4m+lHTcYjSDRchE5ein22dnfA68g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 002/311] soc: qcom: ice: introduce devm_of_qcom_ice_get
-Date: Tue, 29 Apr 2025 18:37:19 +0200
-Message-ID: <20250429161121.118356185@linuxfoundation.org>
+Subject: [PATCH 6.14 011/311] media: i2c: imx214: Fix link frequency validation
+Date: Tue, 29 Apr 2025 18:37:28 +0200
+Message-ID: <20250429161121.495206835@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -48,111 +47,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit 1c13d6060d612601a61423f2e8fbf9e48126acca ]
+[ Upstream commit acc294519f1749041e1b8c74d46bbf6c57d8b061 ]
 
-Callers of of_qcom_ice_get() leak the device reference taken by
-of_find_device_by_node(). Introduce devm variant for of_qcom_ice_get().
-Existing consumers need the ICE instance for the entire life of their
-device, thus exporting qcom_ice_put() is not required.
+The driver defines IMX214_DEFAULT_LINK_FREQ 480000000, and then
+IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10),
+which works out as 384MPix/s. (The 8 is 4 lanes and DDR.)
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: cbef7442fba5 ("mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get")
+Parsing the PLL registers with the defined 24MHz input. We're in single
+PLL mode, so MIPI frequency is directly linked to pixel rate.  VTCK ends
+up being 1200MHz, and VTPXCK and OPPXCK both are 120MHz.  Section 5.3
+"Frame rate calculation formula" says "Pixel rate
+[pixels/s] = VTPXCK [MHz] * 4", so 120 * 4 = 480MPix/s, which basically
+agrees with my number above.
+
+3.1.4. MIPI global timing setting says "Output bitrate = OPPXCK * reg
+0x113[7:0]", so 120MHz * 10, or 1200Mbit/s. That would be a link
+frequency of 600MHz due to DDR.
+That also matches to 480MPix/s * 10bpp / 4 lanes / 2 for DDR.
+
+Keep the previous link frequency for backward compatibility.
+
+Acked-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Fixes: 436190596241 ("media: imx214: Add imx214 camera sensor driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ice.c | 48 ++++++++++++++++++++++++++++++++++++++++++
- include/soc/qcom/ice.h |  2 ++
- 2 files changed, 50 insertions(+)
+ drivers/media/i2c/imx214.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index 393d2d1d275f1..79e04bff3e331 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -11,6 +11,7 @@
- #include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/device.h>
- #include <linux/iopoll.h>
- #include <linux/of.h>
- #include <linux/of_platform.h>
-@@ -324,6 +325,53 @@ struct qcom_ice *of_qcom_ice_get(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(of_qcom_ice_get);
+diff --git a/drivers/media/i2c/imx214.c b/drivers/media/i2c/imx214.c
+index fdc2dfb4ebcdd..bdf2396c2482b 100644
+--- a/drivers/media/i2c/imx214.c
++++ b/drivers/media/i2c/imx214.c
+@@ -27,7 +27,9 @@
+ #define IMX214_REG_FAST_STANDBY_CTRL	CCI_REG8(0x0106)
  
-+static void qcom_ice_put(const struct qcom_ice *ice)
-+{
-+	struct platform_device *pdev = to_platform_device(ice->dev);
+ #define IMX214_DEFAULT_CLK_FREQ	24000000
+-#define IMX214_DEFAULT_LINK_FREQ 480000000
++#define IMX214_DEFAULT_LINK_FREQ	600000000
++/* Keep wrong link frequency for backward compatibility */
++#define IMX214_DEFAULT_LINK_FREQ_LEGACY	480000000
+ #define IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10)
+ #define IMX214_FPS 30
+ #define IMX214_MBUS_CODE MEDIA_BUS_FMT_SRGGB10_1X10
+@@ -965,18 +967,26 @@ static int imx214_parse_fwnode(struct device *dev)
+ 		goto done;
+ 	}
+ 
+-	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++)
++	if (bus_cfg.nr_of_link_frequencies != 1)
++		dev_warn(dev, "Only one link-frequency supported, please review your DT. Continuing anyway\n");
 +
-+	if (!platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice"))
-+		platform_device_put(pdev);
-+}
++	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++) {
+ 		if (bus_cfg.link_frequencies[i] == IMX214_DEFAULT_LINK_FREQ)
+ 			break;
+-
+-	if (i == bus_cfg.nr_of_link_frequencies) {
+-		dev_err_probe(dev, -EINVAL,
+-			      "link-frequencies %d not supported, Please review your DT\n",
+-			      IMX214_DEFAULT_LINK_FREQ);
+-		ret = -EINVAL;
+-		goto done;
++		if (bus_cfg.link_frequencies[i] ==
++		    IMX214_DEFAULT_LINK_FREQ_LEGACY) {
++			dev_warn(dev,
++				 "link-frequencies %d not supported, please review your DT. Continuing anyway\n",
++				 IMX214_DEFAULT_LINK_FREQ);
++			break;
++		}
+ 	}
+ 
++	if (i == bus_cfg.nr_of_link_frequencies)
++		ret = dev_err_probe(dev, -EINVAL,
++				    "link-frequencies %d not supported, please review your DT\n",
++				    IMX214_DEFAULT_LINK_FREQ);
 +
-+static void devm_of_qcom_ice_put(struct device *dev, void *res)
-+{
-+	qcom_ice_put(*(struct qcom_ice **)res);
-+}
-+
-+/**
-+ * devm_of_qcom_ice_get() - Devres managed helper to get an ICE instance from
-+ * a DT node.
-+ * @dev: device pointer for the consumer device.
-+ *
-+ * This function will provide an ICE instance either by creating one for the
-+ * consumer device if its DT node provides the 'ice' reg range and the 'ice'
-+ * clock (for legacy DT style). On the other hand, if consumer provides a
-+ * phandle via 'qcom,ice' property to an ICE DT, the ICE instance will already
-+ * be created and so this function will return that instead.
-+ *
-+ * Return: ICE pointer on success, NULL if there is no ICE data provided by the
-+ * consumer or ERR_PTR() on error.
-+ */
-+struct qcom_ice *devm_of_qcom_ice_get(struct device *dev)
-+{
-+	struct qcom_ice *ice, **dr;
-+
-+	dr = devres_alloc(devm_of_qcom_ice_put, sizeof(*dr), GFP_KERNEL);
-+	if (!dr)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ice = of_qcom_ice_get(dev);
-+	if (!IS_ERR_OR_NULL(ice)) {
-+		*dr = ice;
-+		devres_add(dev, dr);
-+	} else {
-+		devres_free(dr);
-+	}
-+
-+	return ice;
-+}
-+EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
-+
- static int qcom_ice_probe(struct platform_device *pdev)
- {
- 	struct qcom_ice *engine;
-diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-index 5870a94599a25..d5f6a228df659 100644
---- a/include/soc/qcom/ice.h
-+++ b/include/soc/qcom/ice.h
-@@ -34,4 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
- 			 int slot);
- int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
- struct qcom_ice *of_qcom_ice_get(struct device *dev);
-+struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
-+
- #endif /* __QCOM_ICE_H__ */
+ done:
+ 	v4l2_fwnode_endpoint_free(&bus_cfg);
+ 	fwnode_handle_put(endpoint);
 -- 
 2.39.5
 
