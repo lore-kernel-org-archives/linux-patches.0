@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DE0242D6E;
-	Tue, 29 Apr 2025 17:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7022A221DA7;
+	Tue, 29 Apr 2025 17:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946839; cv=none; b=N8M9hyoURHWUh+FP9Ge2vln0zga8LJcKDLVyy6J/BhjYdp5OjNBfObj1/1S6+YEvrtwnpAlQPVeY1z6Hv/BoAObUa6gTq5hr0YXBar1qZUrzeRA9zeHv6+P1XZyrTgCjwjREREVIIZhlCaB9V53bOVEAKvKMxyORRcg+Naw+1uo=
+	t=1745946841; cv=none; b=TRN7iEmPyfJ2esjmUyZvKLcZH+xGql3lJr2appjoqK4UNANnP+W2h0PqC5I7VHuvD9bPVD7VQLz3vtNJKOcVKwOeYOgHQMvdTlnuHnhxavj8CWZCghkk+nw3Fj71oSwcHyh/gIauF+hqEKOf8It7Gdq5KQcMbZtZ9Ebu1VZwSYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946839; c=relaxed/simple;
-	bh=ZNyb+W2WgvptMofXiucNfD9hiG8cbmZ9dCL/+7of/14=;
+	s=arc-20240116; t=1745946841; c=relaxed/simple;
+	bh=hNBtf9tMlUXYEzQ8voM5rYacm60gDwns/yC51qYc6WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XSRFZ9ye9/tM/IvygO3E5XsGIjWfD2iDxnO6iDhTSWH8bqVA7zzWuTI966vE+MMo16c/+c9QKa7eaHETlcyU3W1Alx2tI8UFynbGyy5iajs1l9lXLqV+l/eXvLTVzSWovdRrhGR7S2oeR59IDEtgsOBioYuC5YjNyCkpaKv5nRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM/IR3BG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B40Qc+Q815VYKzdYcAakjd/szL3yEZgtR3aK8Kk8a7AVhWWf7Bq9cj5XkZp8YC6IuwV8MrRfZLsyqYdMbRVybj3rtC8a6gGw4NxGtbyfFDx7nkf5jjdIsF9bYVx+QUjITf99kNRukomwoMiHRzNY+duWhKFDxv1prjRvIuul/c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjEc+1T1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM/IR3BG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE40BC4CEE3;
-	Tue, 29 Apr 2025 17:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjEc+1T1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D006CC4CEE3;
+	Tue, 29 Apr 2025 17:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946838;
-	bh=ZNyb+W2WgvptMofXiucNfD9hiG8cbmZ9dCL/+7of/14=;
+	s=korg; t=1745946841;
+	bh=hNBtf9tMlUXYEzQ8voM5rYacm60gDwns/yC51qYc6WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM/IR3BGA7I3hMBfQY3vHmRvNXiwga4MpCL5yLrK2P7qpyJ5Pb4UOXvShMOjVbW6j
-	 rQUpTWG3KD/yRS5e3vO/YLJrX/o3q5luETUVzWkqayZyIPf3vy5QbSy9uxjdQgTpE+
-	 ayT+lbqesnhD3bSE9YQvulrdekld9Dr76vlGykuQ=
+	b=zjEc+1T1omMv4TgcLuKSedV1ibzQ0pYzhfe15ZBkuceJMLlMegxrAgK7FkMXHretl
+	 IjsHgIpU668V5YNTn9R5zPTHnvAtfw4H0GOMYAYSo49+rGfhPhqJUbZ3UxXdCkhfy/
+	 lmOlW1Flz+QCsTv4StF08UfsH0vhwcXRYGjVzLrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 085/286] sctp: detect and prevent references to a freed transport in sendmsg
-Date: Tue, 29 Apr 2025 18:39:49 +0200
-Message-ID: <20250429161111.353911076@linuxfoundation.org>
+	Trevor Woerner <twoerner@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 5.10 086/286] thermal/drivers/rockchip: Add missing rk3328 mapping entry
+Date: Tue, 29 Apr 2025 18:39:50 +0200
+Message-ID: <20250429161111.394028013@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -45,163 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Cañuelo Navarro <rcn@igalia.com>
+From: Trevor Woerner <twoerner@gmail.com>
 
-commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
+commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
 
-sctp_sendmsg() re-uses associations and transports when possible by
-doing a lookup based on the socket endpoint and the message destination
-address, and then sctp_sendmsg_to_asoc() sets the selected transport in
-all the message chunks to be sent.
+The mapping table for the rk3328 is missing the entry for -25C which is
+found in the TRM section 9.5.2 "Temperature-to-code mapping".
 
-There's a possible race condition if another thread triggers the removal
-of that selected transport, for instance, by explicitly unbinding an
-address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
-been set up and before the message is sent. This can happen if the send
-buffer is full, during the period when the sender thread temporarily
-releases the socket lock in sctp_wait_for_sndbuf().
+NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
+      4096-<code in table>. Whereas the table in the TRM gives the code
+      "3774" for -25C, the kernel uses 4096-3774=322.
 
-This causes the access to the transport data in
-sctp_outq_select_transport(), when the association outqueue is flushed,
-to result in a use-after-free read.
+[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
+  well as through the downstream kernel code, it seems we may have
+  some troubles at our hands.  Let me explain, please.
 
-This change avoids this scenario by having sctp_transport_free() signal
-the freeing of the transport, tagging it as "dead". In order to do this,
-the patch restores the "dead" bit in struct sctp_transport, which was
-removed in
-commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
+  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
+  the equation for the output when tsadc_q_sel equals 1 is (4096 -
+  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
+  equation is (1024 - tsadc_q) in that case.
 
-Then, in the scenario where the sender thread has released the socket
-lock in sctp_wait_for_sndbuf(), the bit is checked again after
-re-acquiring the socket lock to detect the deletion. This is done while
-holding a reference to the transport to prevent it from being freed in
-the process.
+  The downstream kernel code, however, treats the RK3308 and RK3328
+  tables and their values as being the same.  It even mentions 1024 as
+  the "offset" value in a comment block for the rk_tsadcv3_control()
+  function, just like the upstream code does, which is obviously wrong
+  "offset" value when correlated with the table on page 544 of part 1
+  of the RK3308 TRM v1.1.
 
-If the transport was deleted while the socket lock was relinquished,
-sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
-send.
+  With all this in mind, it's obvious that more work is needed to make
+  it clear where's the actual mistake (it could be that the TRM is
+  wrong), which I'll volunteer for as part of the SoC binning project.
+  In the meantime, this patch looks fine as-is to me, by offering
+  what's a clear improvement to the current state of the upstream
+  code"
 
-The bug was found by a private syzbot instance (see the error report [1]
-and the C reproducer that triggers it [2]).
-
-Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
-Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
+Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
 Cc: stable@vger.kernel.org
-Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
+Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sctp/structs.h |    3 ++-
- net/sctp/socket.c          |   22 ++++++++++++++--------
- net/sctp/transport.c       |    2 ++
- 3 files changed, 18 insertions(+), 9 deletions(-)
+ drivers/thermal/rockchip_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/sctp/structs.h
-+++ b/include/net/sctp/structs.h
-@@ -771,6 +771,7 @@ struct sctp_transport {
- 
- 	/* Reference counting. */
- 	refcount_t refcnt;
-+	__u32	dead:1,
- 		/* RTO-Pending : A flag used to track if one of the DATA
- 		 *		chunks sent to this address is currently being
- 		 *		used to compute a RTT. If this flag is 0,
-@@ -780,7 +781,7 @@ struct sctp_transport {
- 		 *		calculation completes (i.e. the DATA chunk
- 		 *		is SACK'd) clear this flag.
- 		 */
--	__u32	rto_pending:1,
-+		rto_pending:1,
- 
- 		/*
- 		 * hb_sent : a flag that signals that we have a pending
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -70,8 +70,9 @@
- /* Forward declarations for internal helper functions. */
- static bool sctp_writeable(const struct sock *sk);
- static void sctp_wfree(struct sk_buff *skb);
--static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
--				size_t msg_len);
-+static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
-+				struct sctp_transport *transport,
-+				long *timeo_p, size_t msg_len);
- static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
- static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
- static int sctp_wait_for_accept(struct sock *sk, long timeo);
-@@ -1828,7 +1829,7 @@ static int sctp_sendmsg_to_asoc(struct s
- 
- 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
- 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
--		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
-+		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
- 		if (err)
- 			goto err;
- 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
-@@ -8963,8 +8964,9 @@ void sctp_sock_rfree(struct sk_buff *skb
- 
- 
- /* Helper function to wait for space in the sndbuf.  */
--static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
--				size_t msg_len)
-+static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
-+				struct sctp_transport *transport,
-+				long *timeo_p, size_t msg_len)
- {
- 	struct sock *sk = asoc->base.sk;
- 	long current_timeo = *timeo_p;
-@@ -8974,7 +8976,9 @@ static int sctp_wait_for_sndbuf(struct s
- 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
- 		 *timeo_p, msg_len);
- 
--	/* Increment the association's refcnt.  */
-+	/* Increment the transport and association's refcnt. */
-+	if (transport)
-+		sctp_transport_hold(transport);
- 	sctp_association_hold(asoc);
- 
- 	/* Wait on the association specific sndbuf space. */
-@@ -8983,7 +8987,7 @@ static int sctp_wait_for_sndbuf(struct s
- 					  TASK_INTERRUPTIBLE);
- 		if (asoc->base.dead)
- 			goto do_dead;
--		if (!*timeo_p)
-+		if ((!*timeo_p) || (transport && transport->dead))
- 			goto do_nonblock;
- 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
- 			goto do_error;
-@@ -9010,7 +9014,9 @@ static int sctp_wait_for_sndbuf(struct s
- out:
- 	finish_wait(&asoc->wait, &wait);
- 
--	/* Release the association's refcnt.  */
-+	/* Release the transport and association's refcnt. */
-+	if (transport)
-+		sctp_transport_put(transport);
- 	sctp_association_put(asoc);
- 
- 	return err;
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -116,6 +116,8 @@ fail:
-  */
- void sctp_transport_free(struct sctp_transport *transport)
- {
-+	transport->dead = 1;
-+
- 	/* Try to delete the heartbeat timer.  */
- 	if (del_timer(&transport->hb_timer))
- 		sctp_transport_put(transport);
+--- a/drivers/thermal/rockchip_thermal.c
++++ b/drivers/thermal/rockchip_thermal.c
+@@ -363,6 +363,7 @@ static const struct tsadc_table rk3328_c
+ 	{296, -40000},
+ 	{304, -35000},
+ 	{313, -30000},
++	{322, -25000},
+ 	{331, -20000},
+ 	{340, -15000},
+ 	{349, -10000},
 
 
