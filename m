@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5CF25228D;
-	Tue, 29 Apr 2025 18:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F9E23E32B;
+	Tue, 29 Apr 2025 18:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949734; cv=none; b=LKCLPoCEAuDipvIeJ5t40+tNfImlMb/lN8QSsVyo1L1U0qxDXXti0NFTfcZHNVZY8oVEUkMkiJE6xaFuuK6jZdoGLBjVEosoc67qqozsx5ZSILBDcEuVRBS+WcBmvIOUjaoQKxLJ2XZRvaMpbIGe8CuZzHZM2wiJfvJV8ho3DQM=
+	t=1745949737; cv=none; b=SHaGHToit2xZyuMWpX3N+BtXjHC5MYV7v2cad9TRsMkWH27M51mwddViMQP+j7PfabiKcgSSxZF0SQP6vs1z0HT8+3z/ziWaOYUq33gBFjowH5Ccpi8DqtGh7WExgdWnsmmTPn2xmivuE5gNzZHDIPNUJ1hqqmYe51NBIwXrvJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949734; c=relaxed/simple;
-	bh=XKduWQlQ8zUvVoeEYdZCkYqW8QEvRJM4Gvw6qe8k8tw=;
+	s=arc-20240116; t=1745949737; c=relaxed/simple;
+	bh=wQwpJIthJMXeUV1WE2Y8d3K9MyZ2bjbY2fVtaS5d0iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCgAQUBJbo5hbyzryJjXP+1fyrlLjTbLkVCHhXaIVtvYyVW0bKtzI7Llc3+MYA1svOAgmQ3DV5SE84tzNIvl4N+9C/p6UueC7x/B57LRBUubk+/04OYqhkuYKBVZJFHrESfrX8HzFnsoRraDdiqDmVfRYKkX9aOjObhfdHfhhMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbYtpjWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOrDz+ofIBnF/KiIiQL3Kn9cUCGJwl/5Kfn6lb9znLcAfIUBatPZQib0inFsp4yxOzmaykCuqDXNoovicWe14THuGuiyN7qWRR8xPlfAK1vgr2yQU7LVvRz2tv8nkgvOEZq8ll7KlqWFQqFgUHsmNb3CHItQCPgIhjc62+/hUzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+DU6var; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbYtpjWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC4DC4CEF4;
-	Tue, 29 Apr 2025 18:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+DU6var"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889B4C4CEE9;
+	Tue, 29 Apr 2025 18:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949733;
-	bh=XKduWQlQ8zUvVoeEYdZCkYqW8QEvRJM4Gvw6qe8k8tw=;
+	s=korg; t=1745949737;
+	bh=wQwpJIthJMXeUV1WE2Y8d3K9MyZ2bjbY2fVtaS5d0iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbYtpjWOoqZJXKkmyQw/q2sCsaPHSoc9dl7t0l1fc5NaOwvFJHPPYk3lF8jscGPZf
-	 dqchp+XWp+DAQZjMEoL6lh7/4uaJ0xFX5v8YVo9k54qqZWFIjXvTK4MvpHnjJifl32
-	 NyWADWCsI9IzrOrzGQChe6MG2FTyBcmLvYHp+/D8=
+	b=Z+DU6varJhWmGuzSG8FMv6sL4oxJqF8WtNM0/rBAPimlkrvUuwc51Igp+jwv+u2b+
+	 3/BszZLdJq9tO8qksWRAU4+qp6xdDN2L74ifA3PPpkKeZaxx0kAMIJeU1vq/B33MEn
+	 46w8cBJcOrwkk5FcncWYCwuE1zZ/plP0G0gAGDBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Evgeny Pimenov <pimenoveu12@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/167] ASoC: qcom: q6dsp: add support to more display ports
-Date: Tue, 29 Apr 2025 18:42:28 +0200
-Message-ID: <20250429161053.377987662@linuxfoundation.org>
+Subject: [PATCH 6.1 041/167] ASoC: qcom: Fix sc7280 lpass potential buffer overflow
+Date: Tue, 29 Apr 2025 18:42:29 +0200
+Message-ID: <20250429161053.418379416@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -49,112 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Evgeny Pimenov <pimenoveu12@gmail.com>
 
-[ Upstream commit 90848a2557fec0a6f1a35e58031a1f6f5e44e7d6 ]
+[ Upstream commit a31a4934b31faea76e735bab17e63d02fcd8e029 ]
 
-Existing code base only supports one display port, this patch adds
-support upto 8 display ports. This support is required to allow platforms
-like X13s which have 3 display ports, and some of the Qualcomm SoCs
-there are upto 7 Display ports.
+Case values introduced in commit
+5f78e1fb7a3e ("ASoC: qcom: Add driver support for audioreach solution")
+cause out of bounds access in arrays of sc7280 driver data (e.g. in case
+of RX_CODEC_DMA_RX_0 in sc7280_snd_hw_params()).
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org
-Link: https://lore.kernel.org/r/20230509112202.21471-4-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org
-Stable-dep-of: a31a4934b31f ("ASoC: qcom: Fix sc7280 lpass potential buffer overflow")
+Redefine LPASS_MAX_PORTS to consider the maximum possible port id for
+q6dsp as sc7280 driver utilizes some of those values.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 77d0ffef793d ("ASoC: qcom: Add macro for lpass DAI id's max limit")
+Cc: stable@vger.kernel.org # v6.0+
+Suggested-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Evgeny Pimenov <pimenoveu12@gmail.com>
+Link: https://patch.msgid.link/20250401204058.32261-1-pimenoveu12@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sound/qcom,q6dsp-lpass-ports.h            |  8 ++++
- sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      | 43 ++++++++++++-------
- 2 files changed, 35 insertions(+), 16 deletions(-)
+ sound/soc/qcom/lpass.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-index 9f7c5103bc82b..39f203256c4f6 100644
---- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-+++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-@@ -131,6 +131,14 @@
- #define RX_CODEC_DMA_RX_7	126
- #define QUINARY_MI2S_RX		127
- #define QUINARY_MI2S_TX		128
-+#define DISPLAY_PORT_RX_0	DISPLAY_PORT_RX
-+#define DISPLAY_PORT_RX_1	129
-+#define DISPLAY_PORT_RX_2	130
-+#define DISPLAY_PORT_RX_3	131
-+#define DISPLAY_PORT_RX_4	132
-+#define DISPLAY_PORT_RX_5	133
-+#define DISPLAY_PORT_RX_6	134
-+#define DISPLAY_PORT_RX_7	135
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index dd78600fc7b01..b96116ea81167 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -13,10 +13,11 @@
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <dt-bindings/sound/qcom,lpass.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
+ #include "lpass-hdmi.h"
  
- #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
- #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
-diff --git a/sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c b/sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c
-index f67c16fd90b9b..ac937a6bf909b 100644
---- a/sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c
-+++ b/sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c
-@@ -79,6 +79,22 @@
- 		.id = did,						\
- 	}
- 
-+#define Q6AFE_DP_RX_DAI(did) {						\
-+		.playback = {						\
-+			.stream_name = #did" Playback",			\
-+			.rates = SNDRV_PCM_RATE_48000 |			\
-+				SNDRV_PCM_RATE_96000 |			\
-+				SNDRV_PCM_RATE_192000,			\
-+			.formats = SNDRV_PCM_FMTBIT_S16_LE |		\
-+				   SNDRV_PCM_FMTBIT_S24_LE,		\
-+			.channels_min = 2,				\
-+			.channels_max = 8,				\
-+			.rate_min = 48000,				\
-+			.rate_max = 192000,				\
-+		},							\
-+		.name = #did,						\
-+		.id = did,						\
-+	}
- 
- static struct snd_soc_dai_driver q6dsp_audio_fe_dais[] = {
- 	{
-@@ -528,22 +544,14 @@ static struct snd_soc_dai_driver q6dsp_audio_fe_dais[] = {
- 	Q6AFE_TDM_CAP_DAI("Quinary", 5, QUINARY_TDM_TX_5),
- 	Q6AFE_TDM_CAP_DAI("Quinary", 6, QUINARY_TDM_TX_6),
- 	Q6AFE_TDM_CAP_DAI("Quinary", 7, QUINARY_TDM_TX_7),
--	{
--		.playback = {
--			.stream_name = "Display Port Playback",
--			.rates = SNDRV_PCM_RATE_48000 |
--				 SNDRV_PCM_RATE_96000 |
--				 SNDRV_PCM_RATE_192000,
--			.formats = SNDRV_PCM_FMTBIT_S16_LE |
--				   SNDRV_PCM_FMTBIT_S24_LE,
--			.channels_min = 2,
--			.channels_max = 8,
--			.rate_max =     192000,
--			.rate_min =	48000,
--		},
--		.id = DISPLAY_PORT_RX,
--		.name = "DISPLAY_PORT",
--	},
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_0),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_1),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_2),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_3),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_4),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_5),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_6),
-+	Q6AFE_DP_RX_DAI(DISPLAY_PORT_RX_7),
- 	Q6AFE_CDC_DMA_RX_DAI(WSA_CODEC_DMA_RX_0),
- 	Q6AFE_CDC_DMA_TX_DAI(WSA_CODEC_DMA_TX_0),
- 	Q6AFE_CDC_DMA_RX_DAI(WSA_CODEC_DMA_RX_1),
-@@ -603,6 +611,9 @@ struct snd_soc_dai_driver *q6dsp_audio_ports_set_config(struct device *dev,
- 		case DISPLAY_PORT_RX:
- 			q6dsp_audio_fe_dais[i].ops = cfg->q6hdmi_ops;
- 			break;
-+		case DISPLAY_PORT_RX_1 ... DISPLAY_PORT_RX_7:
-+			q6dsp_audio_fe_dais[i].ops = cfg->q6hdmi_ops;
-+			break;
- 		case SLIMBUS_0_RX ... SLIMBUS_6_TX:
- 			q6dsp_audio_fe_dais[i].ops = cfg->q6slim_ops;
- 			break;
+ #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+-#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
++#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
+ #define LPASS_MAX_MI2S_PORTS			(8)
+ #define LPASS_MAX_DMA_CHANNELS			(8)
+ #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
 -- 
 2.39.5
 
