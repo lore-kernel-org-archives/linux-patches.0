@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4E72AE96;
-	Tue, 29 Apr 2025 17:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7734B247280;
+	Tue, 29 Apr 2025 17:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949488; cv=none; b=S+X9Vuoo9V97k19wqk2Ov3YKP3n8nyFtfEfynI/mr31qYJgvph8TGlO9yv99o/pLLiNQ5jAgtXZSIpboDQ8X7L0SBysYSU7p6uT1F1QxS9Jlt7qSPLTxHJuOjPF8eW1zaRzVWTT6Owg0uj0WJMX1kInoFjBFq9a4cENct+hdt6g=
+	t=1745949491; cv=none; b=dwAIk3VvZoSLZBIEamxzFZQrLpAMzHNE1V9bWX8Qegky5dmSLlxMaiSZTMrAsAA0Vhi3fr/yr+/UvnhGEz4aKberxcd8WNljeJVvtRhpHzLGcekBTRExx4hxG5dqA8iOnFfhJd9fPGDQwc93c07GGXGcgHvbBJVxbwFaa5USKec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949488; c=relaxed/simple;
-	bh=Qw26Oz5uopgj9MYpqzMmMhSGzJbvA++hKlhk0iR3hUM=;
+	s=arc-20240116; t=1745949491; c=relaxed/simple;
+	bh=fpitSxlpB179KoL84r8NAxOkmLTko1yx8IjMsA/FlM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaF7JJYcoA83Kjd/Yu13G9tvZmNrHCOOex+kvtybJvg1g/5o/hJ37KkHqd6WSNFTYGLlRBKs0QQ11Enop/RBevLYkD5v5gX1Pq/emHnivEF68VqNJpylCrpGgza0uha0Hei/rULScAbe9t7P7r8y3XwoVsT0BVHMbOU/8oxb094=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZrCuHOG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qFyc73mAOdrN+MQWOpWKvRqp9SN6S5GSJ331I6d1S8ua5PBtFoCMPCwEw2OZIKFUlWn3q3kyJSmkF9U0Lr6cpZbZ5X5iYxSrjP9VdT3FFtZHz2/qvbIytXSQEBncFAkAFSIl7LN8Vow7PEUSmqjO0HlP6y1gCzpTB/psX+p3Ix4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbFoTBzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZrCuHOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EF0C4CEE3;
-	Tue, 29 Apr 2025 17:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbFoTBzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CBBC4CEE3;
+	Tue, 29 Apr 2025 17:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949488;
-	bh=Qw26Oz5uopgj9MYpqzMmMhSGzJbvA++hKlhk0iR3hUM=;
+	s=korg; t=1745949491;
+	bh=fpitSxlpB179KoL84r8NAxOkmLTko1yx8IjMsA/FlM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZrCuHOGQcAWEoEpCmJ+EZVaXb8F4evg/ivbECvWtdn5WN8xda/vIanu7scSY/2iU
-	 N3VCWHVMyTL6fCLDdxEiPyNYulxK6r5BmD1dZLKeaSAnpsuhA2SRaDzZIYiXWe+UOy
-	 cFsqPM1ftNNL18Xz/VRu1zRJgkujiCvKBjq/dZPQ=
+	b=ZbFoTBzCbyufadQIVpjLOUb2xVBeHcTeUQiWTo/13m7JHcEwPh84u2666F7DOHSsV
+	 vbJOnBxvk967oiSp93j9MUzA2Ncla5UESwbCP1LrweUmx2E846AHW4sDOTNcJU+qo0
+	 4HVn3I9FLqYKfSVdO/3Uizx7EjF6vD5Dynh4IXnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 334/373] usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running
-Date: Tue, 29 Apr 2025 18:43:31 +0200
-Message-ID: <20250429161136.869931099@linuxfoundation.org>
+Subject: [PATCH 5.15 335/373] usb: gadget: aspeed: Add NULL pointer check in ast_vhub_init_dev()
+Date: Tue, 29 Apr 2025 18:43:32 +0200
+Message-ID: <20250429161136.909173171@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,54 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 28a76fcc4c85dd39633fb96edb643c91820133e3 ]
+[ Upstream commit 8c75f3e6a433d92084ad4e78b029ae680865420f ]
 
-Nothing prevents a broken HC from claiming that an endpoint is Running
-and repeatedly rejecting Stop Endpoint with Context State Error.
+The variable d->name, returned by devm_kasprintf(), could be NULL.
+A pointer check is added to prevent potential NULL pointer dereference.
+This is similar to the fix in commit 3027e7b15b02
+("ice: Fix some null pointer dereference issues in ice_ptp.c").
 
-Avoid infinite retries and give back cancelled TDs.
+This issue is found by our static analysis tool
 
-No such cases known so far, but HCs have bugs.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250311154551.4035726-4-mathias.nyman@linux.intel.com
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250311012705.1233829-1-chenyuan0y@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 64bf50ea62a49..cd94b0a4e0211 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1183,16 +1183,19 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 			 * Stopped state, but it will soon change to Running.
- 			 *
- 			 * Assume this bug on unexpected Stop Endpoint failures.
--			 * Keep retrying until the EP starts and stops again, on
--			 * chips where this is known to help. Wait for 100ms.
-+			 * Keep retrying until the EP starts and stops again.
- 			 */
--			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
--				break;
- 			fallthrough;
- 		case EP_STATE_RUNNING:
- 			/* Race, HW handled stop ep cmd before ep was running */
- 			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
- 					GET_EP_CTX_STATE(ep_ctx));
-+			/*
-+			 * Don't retry forever if we guessed wrong or a defective HC never starts
-+			 * the EP or says 'Running' but fails the command. We must give back TDs.
-+			 */
-+			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
-+				break;
+diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+index d918e8b2af3c2..c5f7123837751 100644
+--- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+@@ -538,6 +538,9 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx)
+ 	d->vhub = vhub;
+ 	d->index = idx;
+ 	d->name = devm_kasprintf(parent, GFP_KERNEL, "port%d", idx+1);
++	if (!d->name)
++		return -ENOMEM;
++
+ 	d->regs = vhub->regs + 0x100 + 0x10 * idx;
  
- 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 			if (!command)
+ 	ast_vhub_init_ep0(vhub, &d->ep0, d);
 -- 
 2.39.5
 
