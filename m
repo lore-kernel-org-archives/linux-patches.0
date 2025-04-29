@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F54253334;
-	Tue, 29 Apr 2025 17:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2818F1FE468;
+	Tue, 29 Apr 2025 17:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947564; cv=none; b=tW/QMXU2caSCr0UsXvJx0PxlmOhxJvHQIMxlrQAsxX9x7seLVrLTGkINZQfvqD5E43mKXqmcXxzxTnRFSMPhwfaDTs0yTON6i8VezoXdVysQ35all0R6HWqDCEUSmPn4QNzx1yt6erTUJ5jq1K7URnTTMI8ATzNiYfYVXWAIMHE=
+	t=1745947567; cv=none; b=NCxrvDbYhTEaH1tuJJiE/70yUJHuywIIHBB3IjSVFlp2NZRJ3HaESAkw01EOWFemhazsZ6kddoN62DWJIN2S7urVBlmYJGKu3DuXIJI0fw50XmD5etruGPoEYoOzW3ANP3rl58VkPdQOMHLSPDanovxz4vd4cpuAXoLO5Q/xsfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947564; c=relaxed/simple;
-	bh=GqGgi9sBKQ7oD+pQbvio2ra7HszEm6pTtpQ3hGHyMYs=;
+	s=arc-20240116; t=1745947567; c=relaxed/simple;
+	bh=N4ujfe4WVNZsdFV8txgaT3JpqKT72/A0i3tJ8vrxVTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfm2yotvWy0U1Onjx1iL5l6Jg3DTUg16V16/bGGTKnia8RKLnWnhD7QCcvC9YrxXlv6cXkmn0Kts7LBqUePT3akE0ogql4HgBYi3EZHGWJLVFvki/8Taxsc71zo95ObgwCSnbGV+AlR2lcQ5PmVRcw6wmy8hWnaMcHw83c+0QPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmJY2UMR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iq/umiKRt88lsRF2+3TpZIqtIuwPMSolBCiJefvYQ5GQpIUtsLJ6Snmx5SaDhX82w+w84V0xG9ZvqC8dibbVi7SjRlnaoE4QsaRpTIDvQJZwtZqo+VaCISSHdk7xZ6cwCxaZzMvWrvx3xy6aIj7W+kf8fxFe2lLsiBmYkgOosUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmB11cry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmJY2UMR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9BCC4CEEE;
-	Tue, 29 Apr 2025 17:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmB11cry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E75C4CEE3;
+	Tue, 29 Apr 2025 17:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947563;
-	bh=GqGgi9sBKQ7oD+pQbvio2ra7HszEm6pTtpQ3hGHyMYs=;
+	s=korg; t=1745947566;
+	bh=N4ujfe4WVNZsdFV8txgaT3JpqKT72/A0i3tJ8vrxVTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmJY2UMREyduZaexeuFCDPXKWtJc2jGJfafOPi8TLkeL2OqAwHiJxEkBJm8veXews
-	 jL94lbMhtfGM/G6l8JM7/CGs1SEISpbPzPIv8Pj6HbGef0xAo7FBPo2bj0Mr3OBzYt
-	 UBz6m6VE/dGdL6VCk4COcMxct8fZcJ2AhSrPfawE=
+	b=nmB11cry5D9pgQeLIzjRj57dbLIK2/xC/QLaof8sAYgJ0ro3LKSs6CRkhBpAgYnse
+	 PeCSCnEU++uFDHwazVyAI4vVLIjcbIeY1Mq7Wh59L6U8BAtKjxTtMmDsI7nEGniScH
+	 eAOLE57kNqU6sxhW/+JACmo9BpXIx5AHODgnLKs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
+	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/280] accel/ivpu: Add auto selection logic for job scheduler
-Date: Tue, 29 Apr 2025 18:39:35 +0200
-Message-ID: <20250429161116.516147067@linuxfoundation.org>
+Subject: [PATCH 6.12 035/280] accel/ivpu: Fix the NPUs DPU frequency calculation
+Date: Tue, 29 Apr 2025 18:39:36 +0200
+Message-ID: <20250429161116.557553835@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,274 +53,373 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
 
-[ Upstream commit 436b67d6936b5658426e40d0df8f147239bc532b ]
+[ Upstream commit 6c2b75404d33caa46a582f2791a70f92232adb71 ]
 
-Add ivpu_fw_sched_mode_select() function that can select scheduling mode
-based on HW and FW versions. This prepares for a switch to HWS on
-selected platforms.
+Fix the frequency returned to the user space by
+the DRM_IVPU_PARAM_CORE_CLOCK_RATE GET_PARAM IOCTL.
+The kernel driver returned CPU frequency for MTL and bare
+PLL frequency for LNL - this was inconsistent and incorrect
+for both platforms. With this fix the driver returns maximum
+frequency of the NPU data processing unit (DPU) for all HW
+generations. This is what user space always expected.
 
-Reviewed-by: Karol Wachowski <karol.wachowski@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240930195322.461209-17-jacek.lawrynowicz@linux.intel.com
+Also do not set CPU frequency in boot params - the firmware
+does not use frequency passed from the driver, it was only
+used by the early pre-production firmware.
+With that we can remove CPU frequency calculation code.
+
+Show NPU frequency in FREQ_CHANGE interrupt when frequency
+tracking is enabled.
+
+Fixes: 8a27ad81f7d3 ("accel/ivpu: Split IP and buttress code")
+Cc: stable@vger.kernel.org # v6.11+
+Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Stable-dep-of: 6c2b75404d33 ("accel/ivpu: Fix the NPU's DPU frequency calculation")
+Link: https://lore.kernel.org/r/20250401155912.4049340-2-maciej.falkowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_drv.c     |  6 +++---
- drivers/accel/ivpu/ivpu_drv.h     |  2 ++
- drivers/accel/ivpu/ivpu_fw.c      | 15 +++++++++++++--
- drivers/accel/ivpu/ivpu_fw.h      |  3 +++
- drivers/accel/ivpu/ivpu_hw.h      |  1 -
- drivers/accel/ivpu/ivpu_hw_btrs.c |  2 --
- drivers/accel/ivpu/ivpu_job.c     | 14 +++++++-------
- drivers/accel/ivpu/ivpu_sysfs.c   | 24 ++++++++++++++++++++++++
- 8 files changed, 52 insertions(+), 15 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c     |   4 +-
+ drivers/accel/ivpu/ivpu_fw.c      |   3 +-
+ drivers/accel/ivpu/ivpu_hw.h      |  11 +--
+ drivers/accel/ivpu/ivpu_hw_btrs.c | 126 +++++++++++++-----------------
+ drivers/accel/ivpu/ivpu_hw_btrs.h |   6 +-
+ include/uapi/drm/ivpu_accel.h     |   4 +-
+ 6 files changed, 66 insertions(+), 88 deletions(-)
 
 diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
-index 38b4158f52784..c929be956280e 100644
+index c929be956280e..88df2cdc46b62 100644
 --- a/drivers/accel/ivpu/ivpu_drv.c
 +++ b/drivers/accel/ivpu/ivpu_drv.c
-@@ -54,9 +54,9 @@ u8 ivpu_pll_max_ratio = U8_MAX;
- module_param_named(pll_max_ratio, ivpu_pll_max_ratio, byte, 0644);
- MODULE_PARM_DESC(pll_max_ratio, "Maximum PLL ratio used to set NPU frequency");
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
  
--int ivpu_sched_mode;
-+int ivpu_sched_mode = IVPU_SCHED_MODE_AUTO;
- module_param_named(sched_mode, ivpu_sched_mode, int, 0444);
--MODULE_PARM_DESC(sched_mode, "Scheduler mode: 0 - Default scheduler, 1 - Force HW scheduler");
-+MODULE_PARM_DESC(sched_mode, "Scheduler mode: -1 - Use default scheduler, 0 - Use OS scheduler, 1 - Use HW scheduler");
- 
- bool ivpu_disable_mmu_cont_pages;
- module_param_named(disable_mmu_cont_pages, ivpu_disable_mmu_cont_pages, bool, 0444);
-@@ -347,7 +347,7 @@ static int ivpu_hw_sched_init(struct ivpu_device *vdev)
- {
- 	int ret = 0;
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW) {
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
- 		ret = ivpu_jsm_hws_setup_priority_bands(vdev);
- 		if (ret) {
- 			ivpu_err(vdev, "Failed to enable hw scheduler: %d", ret);
-diff --git a/drivers/accel/ivpu/ivpu_drv.h b/drivers/accel/ivpu/ivpu_drv.h
-index 2b30cc2e9272e..9430a24994c32 100644
---- a/drivers/accel/ivpu/ivpu_drv.h
-+++ b/drivers/accel/ivpu/ivpu_drv.h
-@@ -57,6 +57,8 @@
- #define IVPU_PLATFORM_FPGA    3
- #define IVPU_PLATFORM_INVALID 8
- 
-+#define IVPU_SCHED_MODE_AUTO -1
-+
- #define IVPU_DBG_REG	 BIT(0)
- #define IVPU_DBG_IRQ	 BIT(1)
- #define IVPU_DBG_MMU	 BIT(2)
+ #include <linux/firmware.h>
+@@ -165,7 +165,7 @@ static int ivpu_get_param_ioctl(struct drm_device *dev, void *data, struct drm_f
+ 		args->value = vdev->platform;
+ 		break;
+ 	case DRM_IVPU_PARAM_CORE_CLOCK_RATE:
+-		args->value = ivpu_hw_ratio_to_freq(vdev, vdev->hw->pll.max_ratio);
++		args->value = ivpu_hw_dpu_max_freq_get(vdev);
+ 		break;
+ 	case DRM_IVPU_PARAM_NUM_CONTEXTS:
+ 		args->value = ivpu_get_context_count(vdev);
 diff --git a/drivers/accel/ivpu/ivpu_fw.c b/drivers/accel/ivpu/ivpu_fw.c
-index b2b6d89f06537..153037dc62c07 100644
+index 153037dc62c07..8a9395a2abb5d 100644
 --- a/drivers/accel/ivpu/ivpu_fw.c
 +++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -134,6 +134,15 @@ static bool is_within_range(u64 addr, size_t size, u64 range_start, size_t range
- 	return true;
- }
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
  
-+static u32
-+ivpu_fw_sched_mode_select(struct ivpu_device *vdev, const struct vpu_firmware_header *fw_hdr)
-+{
-+	if (ivpu_sched_mode != IVPU_SCHED_MODE_AUTO)
-+		return ivpu_sched_mode;
-+
-+	return VPU_SCHEDULING_MODE_OS;
-+}
-+
- static int ivpu_fw_parse(struct ivpu_device *vdev)
- {
- 	struct ivpu_fw_info *fw = vdev->fw;
-@@ -215,8 +224,10 @@ static int ivpu_fw_parse(struct ivpu_device *vdev)
+ #include <linux/firmware.h>
+@@ -556,7 +556,6 @@ void ivpu_fw_boot_params_setup(struct ivpu_device *vdev, struct vpu_boot_params
  
- 	fw->dvfs_mode = 0;
+ 	boot_params->magic = VPU_BOOT_PARAMS_MAGIC;
+ 	boot_params->vpu_id = to_pci_dev(vdev->drm.dev)->bus->number;
+-	boot_params->frequency = ivpu_hw_pll_freq_get(vdev);
  
-+	fw->sched_mode = ivpu_fw_sched_mode_select(vdev, fw_hdr);
- 	fw->primary_preempt_buf_size = fw_hdr->preemption_buffer_1_size;
- 	fw->secondary_preempt_buf_size = fw_hdr->preemption_buffer_2_size;
-+	ivpu_info(vdev, "Scheduler mode: %s\n", fw->sched_mode ? "HW" : "OS");
- 
- 	if (fw_hdr->ro_section_start_address && !is_within_range(fw_hdr->ro_section_start_address,
- 								 fw_hdr->ro_section_size,
-@@ -605,8 +616,8 @@ void ivpu_fw_boot_params_setup(struct ivpu_device *vdev, struct vpu_boot_params
- 	boot_params->punit_telemetry_sram_base = ivpu_hw_telemetry_offset_get(vdev);
- 	boot_params->punit_telemetry_sram_size = ivpu_hw_telemetry_size_get(vdev);
- 	boot_params->vpu_telemetry_enable = ivpu_hw_telemetry_enable_get(vdev);
--	boot_params->vpu_scheduling_mode = vdev->hw->sched_mode;
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW)
-+	boot_params->vpu_scheduling_mode = vdev->fw->sched_mode;
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW)
- 		boot_params->vpu_focus_present_timer_ms = IVPU_FOCUS_PRESENT_TIMER_MS;
- 	boot_params->dvfs_mode = vdev->fw->dvfs_mode;
- 	if (!IVPU_WA(disable_d0i3_msg))
-diff --git a/drivers/accel/ivpu/ivpu_fw.h b/drivers/accel/ivpu/ivpu_fw.h
-index 5e8eb608b70f1..1d0b2bd9d65cf 100644
---- a/drivers/accel/ivpu/ivpu_fw.h
-+++ b/drivers/accel/ivpu/ivpu_fw.h
-@@ -6,6 +6,8 @@
- #ifndef __IVPU_FW_H__
- #define __IVPU_FW_H__
- 
-+#include "vpu_jsm_api.h"
-+
- #define FW_VERSION_HEADER_SIZE	SZ_4K
- #define FW_VERSION_STR_SIZE	SZ_256
- 
-@@ -36,6 +38,7 @@ struct ivpu_fw_info {
- 	u32 secondary_preempt_buf_size;
- 	u64 read_only_addr;
- 	u32 read_only_size;
-+	u32 sched_mode;
- };
- 
- int ivpu_fw_init(struct ivpu_device *vdev);
+ 	/*
+ 	 * This param is a debug firmware feature.  It switches default clock
 diff --git a/drivers/accel/ivpu/ivpu_hw.h b/drivers/accel/ivpu/ivpu_hw.h
-index a96a05b2acda9..fc4dbfc980c81 100644
+index fc4dbfc980c81..1e85306bcd065 100644
 --- a/drivers/accel/ivpu/ivpu_hw.h
 +++ b/drivers/accel/ivpu/ivpu_hw.h
-@@ -46,7 +46,6 @@ struct ivpu_hw_info {
- 		u32 profiling_freq;
- 	} pll;
- 	u32 tile_fuse;
--	u32 sched_mode;
- 	u32 sku;
- 	u16 config;
- 	int dma_bits;
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
+ 
+ #ifndef __IVPU_HW_H__
+@@ -86,9 +86,9 @@ static inline u64 ivpu_hw_range_size(const struct ivpu_addr_range *range)
+ 	return range->end - range->start;
+ }
+ 
+-static inline u32 ivpu_hw_ratio_to_freq(struct ivpu_device *vdev, u32 ratio)
++static inline u32 ivpu_hw_dpu_max_freq_get(struct ivpu_device *vdev)
+ {
+-	return ivpu_hw_btrs_ratio_to_freq(vdev, ratio);
++	return ivpu_hw_btrs_dpu_max_freq_get(vdev);
+ }
+ 
+ static inline void ivpu_hw_irq_clear(struct ivpu_device *vdev)
+@@ -96,11 +96,6 @@ static inline void ivpu_hw_irq_clear(struct ivpu_device *vdev)
+ 	ivpu_hw_ip_irq_clear(vdev);
+ }
+ 
+-static inline u32 ivpu_hw_pll_freq_get(struct ivpu_device *vdev)
+-{
+-	return ivpu_hw_btrs_pll_freq_get(vdev);
+-}
+-
+ static inline u32 ivpu_hw_profiling_freq_get(struct ivpu_device *vdev)
+ {
+ 	return vdev->hw->pll.profiling_freq;
 diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.c b/drivers/accel/ivpu/ivpu_hw_btrs.c
-index 745e5248803da..39c8fd51be32c 100644
+index 39c8fd51be32c..2d88357b9a3a4 100644
 --- a/drivers/accel/ivpu/ivpu_hw_btrs.c
 +++ b/drivers/accel/ivpu/ivpu_hw_btrs.c
-@@ -163,7 +163,6 @@ static int info_init_mtl(struct ivpu_device *vdev)
+@@ -1,8 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
+ 
++#include <linux/units.h>
++
+ #include "ivpu_drv.h"
+ #include "ivpu_hw.h"
+ #include "ivpu_hw_btrs.h"
+@@ -28,17 +30,13 @@
+ 
+ #define BTRS_LNL_ALL_IRQ_MASK ((u32)-1)
+ 
+-#define BTRS_MTL_WP_CONFIG_1_TILE_5_3_RATIO WP_CONFIG(MTL_CONFIG_1_TILE, MTL_PLL_RATIO_5_3)
+-#define BTRS_MTL_WP_CONFIG_1_TILE_4_3_RATIO WP_CONFIG(MTL_CONFIG_1_TILE, MTL_PLL_RATIO_4_3)
+-#define BTRS_MTL_WP_CONFIG_2_TILE_5_3_RATIO WP_CONFIG(MTL_CONFIG_2_TILE, MTL_PLL_RATIO_5_3)
+-#define BTRS_MTL_WP_CONFIG_2_TILE_4_3_RATIO WP_CONFIG(MTL_CONFIG_2_TILE, MTL_PLL_RATIO_4_3)
+-#define BTRS_MTL_WP_CONFIG_0_TILE_PLL_OFF   WP_CONFIG(0, 0)
+ 
+ #define PLL_CDYN_DEFAULT               0x80
+ #define PLL_EPP_DEFAULT                0x80
+ #define PLL_CONFIG_DEFAULT             0x0
+-#define PLL_SIMULATION_FREQ            10000000
+-#define PLL_REF_CLK_FREQ               50000000
++#define PLL_REF_CLK_FREQ               50000000ull
++#define PLL_RATIO_TO_FREQ(x)           ((x) * PLL_REF_CLK_FREQ)
++
+ #define PLL_TIMEOUT_US		       (1500 * USEC_PER_MSEC)
+ #define IDLE_TIMEOUT_US		       (5 * USEC_PER_MSEC)
+ #define TIMEOUT_US                     (150 * USEC_PER_MSEC)
+@@ -62,6 +60,8 @@
+ #define DCT_ENABLE                     0x1
+ #define DCT_DISABLE                    0x0
+ 
++static u32 pll_ratio_to_dpu_freq(struct ivpu_device *vdev, u32 ratio);
++
+ int ivpu_hw_btrs_irqs_clear_with_0_mtl(struct ivpu_device *vdev)
+ {
+ 	REGB_WR32(VPU_HW_BTRS_MTL_INTERRUPT_STAT, BTRS_MTL_ALL_IRQ_MASK);
+@@ -162,7 +162,7 @@ static int info_init_mtl(struct ivpu_device *vdev)
+ 
  	hw->tile_fuse = BTRS_MTL_TILE_FUSE_ENABLE_BOTH;
  	hw->sku = BTRS_MTL_TILE_SKU_BOTH;
- 	hw->config = BTRS_MTL_WP_CONFIG_2_TILE_4_3_RATIO;
--	hw->sched_mode = ivpu_sched_mode;
+-	hw->config = BTRS_MTL_WP_CONFIG_2_TILE_4_3_RATIO;
++	hw->config = WP_CONFIG(MTL_CONFIG_2_TILE, MTL_PLL_RATIO_4_3);
  
  	return 0;
  }
-@@ -178,7 +177,6 @@ static int info_init_lnl(struct ivpu_device *vdev)
- 	if (ret)
- 		return ret;
+@@ -344,8 +344,8 @@ int ivpu_hw_btrs_wp_drive(struct ivpu_device *vdev, bool enable)
  
--	hw->sched_mode = ivpu_sched_mode;
- 	hw->tile_fuse = tile_fuse_config;
- 	hw->pll.profiling_freq = PLL_PROFILING_FREQ_DEFAULT;
+ 	prepare_wp_request(vdev, &wp, enable);
  
-diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index be2e2bf0f43f0..91f7f6f3ca675 100644
---- a/drivers/accel/ivpu/ivpu_job.c
-+++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -37,7 +37,7 @@ static int ivpu_preemption_buffers_create(struct ivpu_device *vdev,
- 	u64 secondary_size = ALIGN(vdev->fw->secondary_preempt_buf_size, PAGE_SIZE);
- 	struct ivpu_addr_range range;
+-	ivpu_dbg(vdev, PM, "PLL workpoint request: %u Hz, config: 0x%x, epp: 0x%x, cdyn: 0x%x\n",
+-		 PLL_RATIO_TO_FREQ(wp.target), wp.cfg, wp.epp, wp.cdyn);
++	ivpu_dbg(vdev, PM, "PLL workpoint request: %lu MHz, config: 0x%x, epp: 0x%x, cdyn: 0x%x\n",
++		 pll_ratio_to_dpu_freq(vdev, wp.target) / HZ_PER_MHZ, wp.cfg, wp.epp, wp.cdyn);
  
--	if (vdev->hw->sched_mode != VPU_SCHEDULING_MODE_HW)
-+	if (vdev->fw->sched_mode != VPU_SCHEDULING_MODE_HW)
- 		return 0;
- 
- 	range.start = vdev->hw->ranges.user.end - (primary_size * IVPU_NUM_CMDQS_PER_CTX);
-@@ -68,7 +68,7 @@ static int ivpu_preemption_buffers_create(struct ivpu_device *vdev,
- static void ivpu_preemption_buffers_free(struct ivpu_device *vdev,
- 					 struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cmdq)
- {
--	if (vdev->hw->sched_mode != VPU_SCHEDULING_MODE_HW)
-+	if (vdev->fw->sched_mode != VPU_SCHEDULING_MODE_HW)
- 		return;
- 
- 	drm_WARN_ON(&vdev->drm, !cmdq->primary_preempt_buf);
-@@ -149,7 +149,7 @@ static int ivpu_register_db(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *
- 	struct ivpu_device *vdev = file_priv->vdev;
- 	int ret;
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW)
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW)
- 		ret = ivpu_jsm_hws_register_db(vdev, file_priv->ctx.id, cmdq->db_id, cmdq->db_id,
- 					       cmdq->mem->vpu_addr, ivpu_bo_size(cmdq->mem));
- 	else
-@@ -184,7 +184,7 @@ ivpu_cmdq_init(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cmdq, u16 eng
- 	jobq_header->tail = 0;
- 	wmb(); /* Flush WC buffer for jobq->header */
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW) {
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
- 		ret = ivpu_hws_cmdq_init(file_priv, cmdq, engine, priority);
- 		if (ret)
- 			return ret;
-@@ -211,7 +211,7 @@ static int ivpu_cmdq_fini(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cm
- 
- 	cmdq->db_registered = false;
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW) {
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
- 		ret = ivpu_jsm_hws_destroy_cmdq(vdev, file_priv->ctx.id, cmdq->db_id);
- 		if (!ret)
- 			ivpu_dbg(vdev, JOB, "Command queue %d destroyed\n", cmdq->db_id);
-@@ -335,7 +335,7 @@ void ivpu_context_abort_locked(struct ivpu_file_priv *file_priv)
- 
- 	ivpu_cmdq_fini_all(file_priv);
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_OS)
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_OS)
- 		ivpu_jsm_context_release(vdev, file_priv->ctx.id);
+ 	ret = wp_request_send(vdev, &wp);
+ 	if (ret) {
+@@ -586,6 +586,39 @@ int ivpu_hw_btrs_wait_for_idle(struct ivpu_device *vdev)
+ 		return REGB_POLL_FLD(VPU_HW_BTRS_LNL_VPU_STATUS, IDLE, 0x1, IDLE_TIMEOUT_US);
  }
  
-@@ -361,7 +361,7 @@ static int ivpu_cmdq_push_job(struct ivpu_cmdq *cmdq, struct ivpu_job *job)
- 	if (unlikely(ivpu_test_mode & IVPU_TEST_MODE_NULL_SUBMISSION))
- 		entry->flags = VPU_JOB_FLAGS_NULL_SUBMISSION_MASK;
- 
--	if (vdev->hw->sched_mode == VPU_SCHEDULING_MODE_HW &&
-+	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW &&
- 	    (unlikely(!(ivpu_test_mode & IVPU_TEST_MODE_PREEMPTION_DISABLE)))) {
- 		entry->primary_preempt_buf_addr = cmdq->primary_preempt_buf->vpu_addr;
- 		entry->primary_preempt_buf_size = ivpu_bo_size(cmdq->primary_preempt_buf);
-diff --git a/drivers/accel/ivpu/ivpu_sysfs.c b/drivers/accel/ivpu/ivpu_sysfs.c
-index 913669f1786e8..616477fc17fa0 100644
---- a/drivers/accel/ivpu/ivpu_sysfs.c
-+++ b/drivers/accel/ivpu/ivpu_sysfs.c
-@@ -6,6 +6,8 @@
- #include <linux/device.h>
- #include <linux/err.h>
- 
-+#include "ivpu_drv.h"
-+#include "ivpu_fw.h"
- #include "ivpu_hw.h"
- #include "ivpu_sysfs.h"
- 
-@@ -39,8 +41,30 @@ npu_busy_time_us_show(struct device *dev, struct device_attribute *attr, char *b
- 
- static DEVICE_ATTR_RO(npu_busy_time_us);
- 
-+/**
-+ * DOC: sched_mode
-+ *
-+ * The sched_mode is used to report current NPU scheduling mode.
-+ *
-+ * It returns following strings:
-+ * - "HW"		- Hardware Scheduler mode
-+ * - "OS"		- Operating System Scheduler mode
-+ *
-+ */
-+static ssize_t
-+sched_mode_show(struct device *dev, struct device_attribute *attr, char *buf)
++static u32 pll_config_get_mtl(struct ivpu_device *vdev)
 +{
-+	struct drm_device *drm = dev_get_drvdata(dev);
-+	struct ivpu_device *vdev = to_ivpu_device(drm);
-+
-+	return sysfs_emit(buf, "%s\n", vdev->fw->sched_mode ? "HW" : "OS");
++	return REGB_RD32(VPU_HW_BTRS_MTL_CURRENT_PLL);
 +}
 +
-+static DEVICE_ATTR_RO(sched_mode);
++static u32 pll_config_get_lnl(struct ivpu_device *vdev)
++{
++	return REGB_RD32(VPU_HW_BTRS_LNL_PLL_FREQ);
++}
 +
- static struct attribute *ivpu_dev_attrs[] = {
- 	&dev_attr_npu_busy_time_us.attr,
-+	&dev_attr_sched_mode.attr,
- 	NULL,
- };
++static u32 pll_ratio_to_dpu_freq_mtl(u16 ratio)
++{
++	return (PLL_RATIO_TO_FREQ(ratio) * 2) / 3;
++}
++
++static u32 pll_ratio_to_dpu_freq_lnl(u16 ratio)
++{
++	return PLL_RATIO_TO_FREQ(ratio) / 2;
++}
++
++static u32 pll_ratio_to_dpu_freq(struct ivpu_device *vdev, u32 ratio)
++{
++	if (ivpu_hw_btrs_gen(vdev) == IVPU_HW_BTRS_MTL)
++		return pll_ratio_to_dpu_freq_mtl(ratio);
++	else
++		return pll_ratio_to_dpu_freq_lnl(ratio);
++}
++
++u32 ivpu_hw_btrs_dpu_max_freq_get(struct ivpu_device *vdev)
++{
++	return pll_ratio_to_dpu_freq(vdev, vdev->hw->pll.max_ratio);
++}
++
+ /* Handler for IRQs from Buttress core (irqB) */
+ bool ivpu_hw_btrs_irq_handler_mtl(struct ivpu_device *vdev, int irq)
+ {
+@@ -595,9 +628,12 @@ bool ivpu_hw_btrs_irq_handler_mtl(struct ivpu_device *vdev, int irq)
+ 	if (!status)
+ 		return false;
  
+-	if (REG_TEST_FLD(VPU_HW_BTRS_MTL_INTERRUPT_STAT, FREQ_CHANGE, status))
+-		ivpu_dbg(vdev, IRQ, "FREQ_CHANGE irq: %08x",
+-			 REGB_RD32(VPU_HW_BTRS_MTL_CURRENT_PLL));
++	if (REG_TEST_FLD(VPU_HW_BTRS_MTL_INTERRUPT_STAT, FREQ_CHANGE, status)) {
++		u32 pll = pll_config_get_mtl(vdev);
++
++		ivpu_dbg(vdev, IRQ, "FREQ_CHANGE irq, wp %08x, %lu MHz",
++			 pll, pll_ratio_to_dpu_freq_mtl(pll) / HZ_PER_MHZ);
++	}
+ 
+ 	if (REG_TEST_FLD(VPU_HW_BTRS_MTL_INTERRUPT_STAT, ATS_ERR, status)) {
+ 		ivpu_err(vdev, "ATS_ERR irq 0x%016llx", REGB_RD64(VPU_HW_BTRS_MTL_ATS_ERR_LOG_0));
+@@ -647,8 +683,12 @@ bool ivpu_hw_btrs_irq_handler_lnl(struct ivpu_device *vdev, int irq)
+ 			ivpu_err_ratelimited(vdev, "IRQ FIFO full\n");
+ 	}
+ 
+-	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, FREQ_CHANGE, status))
+-		ivpu_dbg(vdev, IRQ, "FREQ_CHANGE irq: %08x", REGB_RD32(VPU_HW_BTRS_LNL_PLL_FREQ));
++	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, FREQ_CHANGE, status)) {
++		u32 pll = pll_config_get_lnl(vdev);
++
++		ivpu_dbg(vdev, IRQ, "FREQ_CHANGE irq, wp %08x, %lu MHz",
++			 pll, pll_ratio_to_dpu_freq_lnl(pll) / HZ_PER_MHZ);
++	}
+ 
+ 	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, ATS_ERR, status)) {
+ 		ivpu_err(vdev, "ATS_ERR LOG1 0x%08x ATS_ERR_LOG2 0x%08x\n",
+@@ -731,60 +771,6 @@ void ivpu_hw_btrs_dct_set_status(struct ivpu_device *vdev, bool enable, u32 acti
+ 	REGB_WR32(VPU_HW_BTRS_LNL_PCODE_MAILBOX_STATUS, val);
+ }
+ 
+-static u32 pll_ratio_to_freq_mtl(u32 ratio, u32 config)
+-{
+-	u32 pll_clock = PLL_REF_CLK_FREQ * ratio;
+-	u32 cpu_clock;
+-
+-	if ((config & 0xff) == MTL_PLL_RATIO_4_3)
+-		cpu_clock = pll_clock * 2 / 4;
+-	else
+-		cpu_clock = pll_clock * 2 / 5;
+-
+-	return cpu_clock;
+-}
+-
+-u32 ivpu_hw_btrs_ratio_to_freq(struct ivpu_device *vdev, u32 ratio)
+-{
+-	struct ivpu_hw_info *hw = vdev->hw;
+-
+-	if (ivpu_hw_btrs_gen(vdev) == IVPU_HW_BTRS_MTL)
+-		return pll_ratio_to_freq_mtl(ratio, hw->config);
+-	else
+-		return PLL_RATIO_TO_FREQ(ratio);
+-}
+-
+-static u32 pll_freq_get_mtl(struct ivpu_device *vdev)
+-{
+-	u32 pll_curr_ratio;
+-
+-	pll_curr_ratio = REGB_RD32(VPU_HW_BTRS_MTL_CURRENT_PLL);
+-	pll_curr_ratio &= VPU_HW_BTRS_MTL_CURRENT_PLL_RATIO_MASK;
+-
+-	if (!ivpu_is_silicon(vdev))
+-		return PLL_SIMULATION_FREQ;
+-
+-	return pll_ratio_to_freq_mtl(pll_curr_ratio, vdev->hw->config);
+-}
+-
+-static u32 pll_freq_get_lnl(struct ivpu_device *vdev)
+-{
+-	u32 pll_curr_ratio;
+-
+-	pll_curr_ratio = REGB_RD32(VPU_HW_BTRS_LNL_PLL_FREQ);
+-	pll_curr_ratio &= VPU_HW_BTRS_LNL_PLL_FREQ_RATIO_MASK;
+-
+-	return PLL_RATIO_TO_FREQ(pll_curr_ratio);
+-}
+-
+-u32 ivpu_hw_btrs_pll_freq_get(struct ivpu_device *vdev)
+-{
+-	if (ivpu_hw_btrs_gen(vdev) == IVPU_HW_BTRS_MTL)
+-		return pll_freq_get_mtl(vdev);
+-	else
+-		return pll_freq_get_lnl(vdev);
+-}
+-
+ u32 ivpu_hw_btrs_telemetry_offset_get(struct ivpu_device *vdev)
+ {
+ 	if (ivpu_hw_btrs_gen(vdev) == IVPU_HW_BTRS_MTL)
+diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.h b/drivers/accel/ivpu/ivpu_hw_btrs.h
+index 04f14f50fed62..71792dab3c210 100644
+--- a/drivers/accel/ivpu/ivpu_hw_btrs.h
++++ b/drivers/accel/ivpu/ivpu_hw_btrs.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
+ 
+ #ifndef __IVPU_HW_BTRS_H__
+@@ -13,7 +13,6 @@
+ 
+ #define PLL_PROFILING_FREQ_DEFAULT   38400000
+ #define PLL_PROFILING_FREQ_HIGH      400000000
+-#define PLL_RATIO_TO_FREQ(x)         ((x) * PLL_REF_CLK_FREQ)
+ 
+ #define DCT_DEFAULT_ACTIVE_PERCENT 15u
+ #define DCT_PERIOD_US		   35300u
+@@ -32,12 +31,11 @@ int ivpu_hw_btrs_ip_reset(struct ivpu_device *vdev);
+ void ivpu_hw_btrs_profiling_freq_reg_set_lnl(struct ivpu_device *vdev);
+ void ivpu_hw_btrs_ats_print_lnl(struct ivpu_device *vdev);
+ void ivpu_hw_btrs_clock_relinquish_disable_lnl(struct ivpu_device *vdev);
++u32 ivpu_hw_btrs_dpu_max_freq_get(struct ivpu_device *vdev);
+ bool ivpu_hw_btrs_irq_handler_mtl(struct ivpu_device *vdev, int irq);
+ bool ivpu_hw_btrs_irq_handler_lnl(struct ivpu_device *vdev, int irq);
+ int ivpu_hw_btrs_dct_get_request(struct ivpu_device *vdev, bool *enable);
+ void ivpu_hw_btrs_dct_set_status(struct ivpu_device *vdev, bool enable, u32 dct_percent);
+-u32 ivpu_hw_btrs_pll_freq_get(struct ivpu_device *vdev);
+-u32 ivpu_hw_btrs_ratio_to_freq(struct ivpu_device *vdev, u32 ratio);
+ u32 ivpu_hw_btrs_telemetry_offset_get(struct ivpu_device *vdev);
+ u32 ivpu_hw_btrs_telemetry_size_get(struct ivpu_device *vdev);
+ u32 ivpu_hw_btrs_telemetry_enable_get(struct ivpu_device *vdev);
+diff --git a/include/uapi/drm/ivpu_accel.h b/include/uapi/drm/ivpu_accel.h
+index 084fb529e1e96..13001da141c33 100644
+--- a/include/uapi/drm/ivpu_accel.h
++++ b/include/uapi/drm/ivpu_accel.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+ /*
+- * Copyright (C) 2020-2024 Intel Corporation
++ * Copyright (C) 2020-2025 Intel Corporation
+  */
+ 
+ #ifndef __UAPI_IVPU_DRM_H__
+@@ -131,7 +131,7 @@ struct drm_ivpu_param {
+ 	 * platform type when executing on a simulator or emulator (read-only)
+ 	 *
+ 	 * %DRM_IVPU_PARAM_CORE_CLOCK_RATE:
+-	 * Current PLL frequency (read-only)
++	 * Maximum frequency of the NPU data processing unit clock (read-only)
+ 	 *
+ 	 * %DRM_IVPU_PARAM_NUM_CONTEXTS:
+ 	 * Maximum number of simultaneously existing contexts (read-only)
 -- 
 2.39.5
 
