@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB863253359;
-	Tue, 29 Apr 2025 16:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740A8250C02;
+	Tue, 29 Apr 2025 16:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945607; cv=none; b=emSLgvQ1hVhy9E80lvUnjC29kUvI0J49UbsKl4N+cTYg782XgikXPLefA8LMwUm8XUmQW9kP2t3qugufOFUt0+ZgbomW4Og6BK1FIEmP6+lUU52zqeLmlfcQwOyDsQMgmsXxPsfONXkihdAD62ObzynkaKdOFpuibrlLEGegy9E=
+	t=1745945610; cv=none; b=ZGqHSLOFfWVxchZQTK95oO/raWfC2JYSIG20eajot/blYcrFHG16UMx+FTvv/V2BnU5wrUI6nAHm+sDqEvXy+qjnA5615GnoUwSPSADjHWF3lPDejDuVanRqRIFRxBDU5giB6ovzgvBK9SctvSgPxBnSLZifUDTriGvenDr6sWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945607; c=relaxed/simple;
-	bh=bk8UeQRBcHLR7qFhux1iU1mD6IpwBdirfOgPaTN3XeQ=;
+	s=arc-20240116; t=1745945610; c=relaxed/simple;
+	bh=roFMgTDoQBm5QlgSPAhZ1ZCOvIZcYWCpJBemWPUD+z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a4Q5YFz1k3pjiS9Dl5h+m58SgYxfRFfeR3iZcbuYBwPJ4BeK06/ILlaAF4hCWxbgaveVKBm3Cm/ScOs0LApDun1+2nSxYsD4fD7TDW3nJfJ7YA6lvPkFlOONBhGHvDO9sBRV6KOSU8CMPMl6585fXwUg4ZZXK0vVJ5edFl+4loE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orNwbLEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y8QdDkPyRoPeWqYGmtp0ybys6iL/nyjq29157R8LxgoWW8V5sVCXjspxOl+KmZLvdRM5rYdpM0OBlQW2VEd5ieTqX4qbVBroYTwjVWVdwGF6+LInfCazEqi94yeh8PLf8LdxTSJnjL+H+onEM7PAJsg97ZXGhpa9qUfptEaFjy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huE0BE6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orNwbLEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7844C4CEE3;
-	Tue, 29 Apr 2025 16:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huE0BE6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7989C4CEE3;
+	Tue, 29 Apr 2025 16:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945607;
-	bh=bk8UeQRBcHLR7qFhux1iU1mD6IpwBdirfOgPaTN3XeQ=;
+	s=korg; t=1745945610;
+	bh=roFMgTDoQBm5QlgSPAhZ1ZCOvIZcYWCpJBemWPUD+z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orNwbLEZcFyWYO90D8jpkHE3bwrV4xUSwQ6672gj213DT0ygpyskjoik0R7mKF/1Z
-	 5soSYF0pgQQ1jE3dpJdnghoM/KHzuelRwOlDmUIUraBaby+TJYlUYaYqVefdyZ2nnR
-	 j00rgAh4g4YkUumXpdBVyaCGlXcs/fd299RzwXjU=
+	b=huE0BE6Mhc7RsdWpLgvT8dmmcekYRewWy1WWRKVkNwxx8RBAxO0AMGZGi0GPRWLJz
+	 Ws1nz0ZjS38AXQti0p7jPux0NEU26v68Iddn0Nmad21UVMSg5frwp59iR6wgGgDvRu
+	 fAo8cdEDFjtIFL4YAVnGXdajnfOU7OQm+ffUSlGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Michael Mueller <mimu@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Xiaogang Chen <Xiaogang.Chen@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 169/179] KVM: s390: Dont use %pK through tracepoints
-Date: Tue, 29 Apr 2025 18:41:50 +0200
-Message-ID: <20250429161056.235916897@linuxfoundation.org>
+Subject: [PATCH 5.4 170/179] udmabuf: fix a buf size overflow issue during udmabuf creation
+Date: Tue, 29 Apr 2025 18:41:51 +0200
+Message-ID: <20250429161056.276685818@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -53,48 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit 6c9567e0850be2f0f94ab64fa6512413fd1a1eb1 ]
+[ Upstream commit 021ba7f1babd029e714d13a6bf2571b08af96d0f ]
 
-Restricted pointers ("%pK") are not meant to be used through TP_format().
-It can unintentionally expose security sensitive, raw pointer values.
+by casting size_limit_mb to u64  when calculate pglimit.
 
-Use regular pointer formatting instead.
-
-Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Michael Mueller <mimu@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Message-ID: <20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de>
+Signed-off-by: Xiaogang Chen<Xiaogang.Chen@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250321164126.329638-1-xiaogang.chen@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/trace-s390.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma-buf/udmabuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/trace-s390.h b/arch/s390/kvm/trace-s390.h
-index 6f0209d45164f..9c5f546a2e1a3 100644
---- a/arch/s390/kvm/trace-s390.h
-+++ b/arch/s390/kvm/trace-s390.h
-@@ -56,7 +56,7 @@ TRACE_EVENT(kvm_s390_create_vcpu,
- 		    __entry->sie_block = sie_block;
- 		    ),
+diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+index ae42e98cf8350..dfb572282097b 100644
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -138,7 +138,7 @@ static long udmabuf_create(const struct udmabuf_create_list *head,
+ 	if (!ubuf)
+ 		return -ENOMEM;
  
--	    TP_printk("create cpu %d at 0x%pK, sie block at 0x%pK",
-+	    TP_printk("create cpu %d at 0x%p, sie block at 0x%p",
- 		      __entry->id, __entry->vcpu, __entry->sie_block)
- 	);
- 
-@@ -255,7 +255,7 @@ TRACE_EVENT(kvm_s390_enable_css,
- 		    __entry->kvm = kvm;
- 		    ),
- 
--	    TP_printk("enabling channel I/O support (kvm @ %pK)\n",
-+	    TP_printk("enabling channel I/O support (kvm @ %p)\n",
- 		      __entry->kvm)
- 	);
- 
+-	pglimit = (size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
++	pglimit = ((u64)size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
+ 	for (i = 0; i < head->count; i++) {
+ 		if (!IS_ALIGNED(list[i].offset, PAGE_SIZE))
+ 			goto err;
 -- 
 2.39.5
 
