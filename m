@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0EF21ABC1;
-	Tue, 29 Apr 2025 17:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ED521ABC1;
+	Tue, 29 Apr 2025 17:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949015; cv=none; b=N3R71gvFI5+DVPwjAEuDk8Iyywn72BRXxm0CwdkDd5M6YgBEXqMLrktdb8d8+eFLlSsnh70uW0/G0CjyWWeU+HM2KJQIFFs9hQMntcE197cQ23NIsj4p7VKYzE6Sft0RW+a/7pv2YJ2VKA8r7wR424hDYXBNkcf0r0g52H9KDM0=
+	t=1745949020; cv=none; b=Sl4L85+QJ7YpZtRmR9D2bqlcQOd1F5BhWBe6i17vSZw6PqoBk55TVzn1trhOZtUv3Os6ovy2jw4IdC84zJTovH+7nGWGyo3oEC3nxEUA87C/tc/uVp86s7UFP5oU7cedl4L3iVr1hH3DlVkmmMsq1jBchz5AEFkFzAEsJWg+o9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949015; c=relaxed/simple;
-	bh=GVKoTZdJ7wwxkaTAvXK/o5NesNo0GaQKE2HHqmr/2AM=;
+	s=arc-20240116; t=1745949020; c=relaxed/simple;
+	bh=0jwdDYRV5KCNuGuJcabIEaC50NepMaO1RfbOpTjd09s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEmz14c8+S6Ikvp74lq0FSaP64vgYTzdMd0Prvbo2IXMcZF0+fkexPiYITaBsTp+OZE+VmypvC8iNub0ksMf3ntvR6hmdCzfU+U8pZpNyUP3u7t/poX6wuISbo1DlRqP+qIiXnygFEx0PMUgOPjq22OtUrpQ2uK20B00tCxDhMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQnT5S3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ePK7p2zj/u/gNc47MANDMDGxl98U/a3mqLVxtzj5X3NePEMsaBOsGTYyL85FFrnEoM+W3oegLSMeoBvAQLScGV6hJkuDAo7WucUHdoiEmqhhImq6YI9IGaNMlHWXAsacdCeM+VJwnqJNepQ63dUOwmTQ99yNIPjswcApSC1RUVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3/aAWk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQnT5S3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C1DC4CEE3;
-	Tue, 29 Apr 2025 17:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3/aAWk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086D2C4CEE3;
+	Tue, 29 Apr 2025 17:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949015;
-	bh=GVKoTZdJ7wwxkaTAvXK/o5NesNo0GaQKE2HHqmr/2AM=;
+	s=korg; t=1745949019;
+	bh=0jwdDYRV5KCNuGuJcabIEaC50NepMaO1RfbOpTjd09s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQnT5S3hz/VKTd667e0Tnh5nx17o8KzNqlWitiKYbdGQ7iTrNAYN9KprIlS2fs9Vc
-	 pEP1+EVqwPKmohA61di9KqWyKtxutdyf/lSkMt7HCDpOIy9LJ88ZXSwYkZTbyOUf9P
-	 PmMq4+tOrwo1meJuVG+YNiEIEXbg0kvtfxV2Q5ac=
+	b=o3/aAWk/qEjL9TLUyVZEQENJvXuMM1859yiAB5h4k69b4hUYRVTtVJhLapaViRIMD
+	 07t9YC6ZBPr05apVhDIdvLnGu9+bRGvdtgI0gH4NlDzouWpnw0uTh1PVidGxEk+MPQ
+	 lxVGCKpMB4nfQSwE9PBzMzMCIAIeNVmHdFH4j/X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/373] riscv: KGDB: Do not inline arch_kgdb_breakpoint()
-Date: Tue, 29 Apr 2025 18:40:28 +0200
-Message-ID: <20250429161129.366774788@linuxfoundation.org>
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Stable@vger.kernel.org,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.15 184/373] drm/nouveau: prime: fix ttm_bo_delayed_delete oops
+Date: Tue, 29 Apr 2025 18:41:01 +0200
+Message-ID: <20250429161130.731828454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,86 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Chris Bainbridge <chris.bainbridge@gmail.com>
 
-[ Upstream commit 3af4bec9c1db3f003be4d5ae09b6a737e4be1612 ]
+commit 8ec0fbb28d049273bfd4f1e7a5ae4c74884beed3 upstream.
 
-The arch_kgdb_breakpoint() function defines the kgdb_compiled_break
-symbol using inline assembly.
+Fix an oops in ttm_bo_delayed_delete which results from dererencing a
+dangling pointer:
 
-There's a potential issue where the compiler might inline
-arch_kgdb_breakpoint(), which would then define the kgdb_compiled_break
-symbol multiple times, leading to fail to link vmlinux.o.
+Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b7b: 0000 [#1] PREEMPT SMP
+CPU: 4 UID: 0 PID: 1082 Comm: kworker/u65:2 Not tainted 6.14.0-rc4-00267-g505460b44513-dirty #216
+Hardware name: LENOVO 82N6/LNVNB161216, BIOS GKCN65WW 01/16/2024
+Workqueue: ttm ttm_bo_delayed_delete [ttm]
+RIP: 0010:dma_resv_iter_first_unlocked+0x55/0x290
+Code: 31 f6 48 c7 c7 00 2b fa aa e8 97 bd 52 ff e8 a2 c1 53 00 5a 85 c0 74 48 e9 88 01 00 00 4c 89 63 20 4d 85 e4 0f 84 30 01 00 00 <41> 8b 44 24 10 c6 43 2c 01 48 89 df 89 43 28 e8 97 fd ff ff 4c 8b
+RSP: 0018:ffffbf9383473d60 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: ffffbf9383473d88 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffffbf9383473d78 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 6b6b6b6b6b6b6b6b
+R13: ffffa003bbf78580 R14: ffffa003a6728040 R15: 00000000000383cc
+FS:  0000000000000000(0000) GS:ffffa00991c00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000758348024dd0 CR3: 000000012c259000 CR4: 0000000000f50ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body.cold+0x19/0x26
+ ? die_addr+0x3d/0x70
+ ? exc_general_protection+0x159/0x460
+ ? asm_exc_general_protection+0x27/0x30
+ ? dma_resv_iter_first_unlocked+0x55/0x290
+ dma_resv_wait_timeout+0x56/0x100
+ ttm_bo_delayed_delete+0x69/0xb0 [ttm]
+ process_one_work+0x217/0x5c0
+ worker_thread+0x1c8/0x3d0
+ ? apply_wqattrs_cleanup.part.0+0xc0/0xc0
+ kthread+0x10b/0x240
+ ? kthreads_online_cpu+0x140/0x140
+ ret_from_fork+0x40/0x70
+ ? kthreads_online_cpu+0x140/0x140
+ ret_from_fork_asm+0x11/0x20
+ </TASK>
 
-This isn't merely a potential compilation problem. The intent here
-is to determine the global symbol address of kgdb_compiled_break,
-and if this function is inlined multiple times, it would logically
-be a grave error.
+The cause of this is:
 
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/5b0adf9b-2b22-43fe-ab74-68df94115b9a@ghiti.fr/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Co-developed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/F22359AFB6FF9FD8+20250411073222.56820-1-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- drm_prime_gem_destroy calls dma_buf_put(dma_buf) which releases the
+  reference to the shared dma_buf. The reference count is 0, so the
+  dma_buf is destroyed, which in turn decrements the corresponding
+  amdgpu_bo reference count to 0, and the amdgpu_bo is destroyed -
+  calling drm_gem_object_release then dma_resv_fini (which destroys the
+  reservation object), then finally freeing the amdgpu_bo.
+
+- nouveau_bo obj->bo.base.resv is now a dangling pointer to the memory
+  formerly allocated to the amdgpu_bo.
+
+- nouveau_gem_object_del calls ttm_bo_put(&nvbo->bo) which calls
+  ttm_bo_release, which schedules ttm_bo_delayed_delete.
+
+- ttm_bo_delayed_delete runs and dereferences the dangling resv pointer,
+  resulting in a general protection fault.
+
+Fix this by moving the drm_prime_gem_destroy call from
+nouveau_gem_object_del to nouveau_bo_del_ttm. This ensures that it will
+be run after ttm_bo_delayed_delete.
+
+Signed-off-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Fixes: 22b33e8ed0e3 ("nouveau: add PRIME support")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3937
+Cc: Stable@vger.kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/Z-P4epVK8k7tFZ7C@debian.local
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/kgdb.h | 9 +--------
- arch/riscv/kernel/kgdb.c      | 8 ++++++++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_bo.c  |    3 +++
+ drivers/gpu/drm/nouveau/nouveau_gem.c |    3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kgdb.h b/arch/riscv/include/asm/kgdb.h
-index 46677daf708bd..cc11c4544cffd 100644
---- a/arch/riscv/include/asm/kgdb.h
-+++ b/arch/riscv/include/asm/kgdb.h
-@@ -19,16 +19,9 @@
+--- a/drivers/gpu/drm/nouveau/nouveau_bo.c
++++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
+@@ -143,6 +143,9 @@ nouveau_bo_del_ttm(struct ttm_buffer_obj
+ 	nouveau_bo_del_io_reserve_lru(bo);
+ 	nv10_bo_put_tile_region(dev, nvbo->tile, NULL);
  
- #ifndef	__ASSEMBLY__
- 
-+void arch_kgdb_breakpoint(void);
- extern unsigned long kgdb_compiled_break;
- 
--static inline void arch_kgdb_breakpoint(void)
--{
--	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
--}
--
- #endif /* !__ASSEMBLY__ */
- 
- #define DBG_REG_ZERO "zero"
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 963ed7edcff26..b0db3350d243b 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -273,6 +273,14 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- 	regs->epc = pc;
- }
- 
-+noinline void arch_kgdb_breakpoint(void)
-+{
-+	asm(".global kgdb_compiled_break\n"
-+	    ".option norvc\n"
-+	    "kgdb_compiled_break: ebreak\n"
-+	    ".option rvc\n");
-+}
++	if (bo->base.import_attach)
++		drm_prime_gem_destroy(&bo->base, bo->sg);
 +
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
- 				char *remcom_out_buffer)
- {
--- 
-2.39.5
-
+ 	/*
+ 	 * If nouveau_bo_new() allocated this buffer, the GEM object was never
+ 	 * initialized, so don't attempt to release it.
+--- a/drivers/gpu/drm/nouveau/nouveau_gem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
+@@ -87,9 +87,6 @@ nouveau_gem_object_del(struct drm_gem_ob
+ 		return;
+ 	}
+ 
+-	if (gem->import_attach)
+-		drm_prime_gem_destroy(gem, nvbo->bo.sg);
+-
+ 	ttm_bo_put(&nvbo->bo);
+ 
+ 	pm_runtime_mark_last_busy(dev);
 
 
