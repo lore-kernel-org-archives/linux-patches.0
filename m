@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9E3240611;
-	Tue, 29 Apr 2025 17:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED9E2AE96;
+	Tue, 29 Apr 2025 17:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949500; cv=none; b=InyEM+ORS43AJjceSC9iilCUSmOMwbwJq/fEmArUPJWrdtMEWJN6wxPSzHyCOi9zBrtaXgdz2zbSv9ZqzM8etvrpdmiqBazTKzqspyEfRWbdD7Yl1bWNZE+Y2Y2zE0ZaIRZBP70By5FTgxX/qWDuYw3u7BWy5uwyvPEzG3Sp6y8=
+	t=1745949504; cv=none; b=OStWp31jmtJwTUkI9COP2GHBhFFjv4+CpkbCop3p9qxfUlo4WdqsWlUNO/EPlnIH+K83kLw86f6mM6G/X/6vclMbaCDQgrRLcNULPlGr1X5ZD6T4uSe9FzctAGxJUJ3bGkMUk8HWvp6JfYdhk39tHy/hn4g/AvK+SV5dh/rS8Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949500; c=relaxed/simple;
-	bh=tup2YvHfJep7yQGinCLY3ljpA62COMZeVKXGJ+I87UE=;
+	s=arc-20240116; t=1745949504; c=relaxed/simple;
+	bh=HAH2yo4p2xhlDJVA1gU0AGUsOsah+PSzXsRjJVOZF6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8nFEmKB+Zyuno5dLRQh/t9IC5PZHlddVh2Nbxvl0i+ElKBsJHJu31r11Us7fgB+WkP/wsbzo5i0MT4WL6JRz5wL8taNMVrvedPsZGtWqeKdkB/588UW/OUzRekbKCcsS8W/qmxPCM7Lv6jZT5UFakQnwvMHk/lFxsZe09DowDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxYN4jy/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QR3XcK5mKv5+dhJTkZWjazjcUu/mNQoq44DBTWb7Ker36M+0NpjoiQavoD2oI7vZlto1xPA7szIUcAHSiJgXN6xWjyWFzXySTH/+IALDjf8tTxLHEDdv5Oj0vgrP0Ayd6wAV6GbaPFyW9ixOZwzmlccbgimbRqZPmnPk1HMmdQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmDsAgvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxYN4jy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67239C4CEE3;
-	Tue, 29 Apr 2025 17:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmDsAgvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA4AC4CEE3;
+	Tue, 29 Apr 2025 17:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949500;
-	bh=tup2YvHfJep7yQGinCLY3ljpA62COMZeVKXGJ+I87UE=;
+	s=korg; t=1745949503;
+	bh=HAH2yo4p2xhlDJVA1gU0AGUsOsah+PSzXsRjJVOZF6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxYN4jy/PhWDP8f18B7vSmVZ8nzUZeLVU2WWQRtitNfyD4R1RWmlQXYqtPZi/MBbN
-	 wO34qiwfzyBp2/6Qo7bCUMkxJFQdYlE6YZCKdejdCUnx1MlQj0a2Dy67U77o5RDBiT
-	 uM51LgsC5cBIJF9jWhgsB08p+4sixHHA2tK86L9A=
+	b=DmDsAgvqjUv63gPSLUvehpMkMNjykZ+mFFHeAP3EhRhEU/BroliwDBAFGBsbKgie8
+	 A1TUQGgNTeZtNoREtgWH9fQx5csvItta07lfhuzjOfHlYUI2XNjMd0eXDX6ze43w3M
+	 5VfZmnyKOoxnQbPo2Zwq+hHWztRwme1WxtTXU2QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jon Mason <jdmason@kudzu.us>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/373] ntb: reduce stack usage in idt_scan_mws
-Date: Tue, 29 Apr 2025 18:43:35 +0200
-Message-ID: <20250429161137.036385633@linuxfoundation.org>
+Subject: [PATCH 5.15 339/373] sched/isolation: Make CONFIG_CPU_ISOLATION depend on CONFIG_SMP
+Date: Tue, 29 Apr 2025 18:43:36 +0200
+Message-ID: <20250429161137.075900893@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,75 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit aff12700b8dd7422bfe2277696e192af4df9de8f ]
+[ Upstream commit 975776841e689dd8ba36df9fa72ac3eca3c2957a ]
 
-idt_scan_mws() puts a large fixed-size array on the stack and copies
-it into a smaller dynamically allocated array at the end. On 32-bit
-targets, the fixed size can easily exceed the warning limit for
-possible stack overflow:
+kernel/sched/isolation.c obviously makes no sense without CONFIG_SMP, but
+the Kconfig entry we have right now:
 
-drivers/ntb/hw/idt/ntb_hw_idt.c:1041:27: error: stack frame size (1032) exceeds limit (1024) in 'idt_scan_mws' [-Werror,-Wframe-larger-than]
+	config CPU_ISOLATION
+		bool "CPU isolation"
+		depends on SMP || COMPILE_TEST
 
-Change it to instead just always use dynamic allocation for the
-array from the start. It's too big for the stack, but not actually
-all that much for a permanent allocation.
+allows the creation of pointless .config's which cause
+build failures.
 
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202205111109.PiKTruEj-lkp@intel.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250330134955.GA7910@redhat.com
+
+Closes: https://lore.kernel.org/oe-kbuild-all/202503260646.lrUqD3j5-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/idt/ntb_hw_idt.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ init/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
-index 72060acb9cafc..366e19dbae316 100644
---- a/drivers/ntb/hw/idt/ntb_hw_idt.c
-+++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
-@@ -1041,7 +1041,7 @@ static inline char *idt_get_mw_name(enum idt_mw_type mw_type)
- static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 				       unsigned char *mw_cnt)
- {
--	struct idt_mw_cfg mws[IDT_MAX_NR_MWS], *ret_mws;
-+	struct idt_mw_cfg *mws;
- 	const struct idt_ntb_bar *bars;
- 	enum idt_mw_type mw_type;
- 	unsigned char widx, bidx, en_cnt;
-@@ -1049,6 +1049,11 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 	int aprt_size;
- 	u32 data;
+diff --git a/init/Kconfig b/init/Kconfig
+index 4c9cacc866d4c..b66259bfd2352 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -674,7 +674,7 @@ endmenu # "CPU/Task time and stats accounting"
  
-+	mws = devm_kcalloc(&ndev->ntb.pdev->dev, IDT_MAX_NR_MWS,
-+			   sizeof(*mws), GFP_KERNEL);
-+	if (!mws)
-+		return ERR_PTR(-ENOMEM);
-+
- 	/* Retrieve the array of the BARs registers */
- 	bars = portdata_tbl[port].bars;
- 
-@@ -1103,16 +1108,7 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
- 		}
- 	}
- 
--	/* Allocate memory for memory window descriptors */
--	ret_mws = devm_kcalloc(&ndev->ntb.pdev->dev, *mw_cnt, sizeof(*ret_mws),
--			       GFP_KERNEL);
--	if (!ret_mws)
--		return ERR_PTR(-ENOMEM);
--
--	/* Copy the info of detected memory windows */
--	memcpy(ret_mws, mws, (*mw_cnt)*sizeof(*ret_mws));
--
--	return ret_mws;
-+	return mws;
- }
- 
- /*
+ config CPU_ISOLATION
+ 	bool "CPU isolation"
+-	depends on SMP || COMPILE_TEST
++	depends on SMP
+ 	default y
+ 	help
+ 	  Make sure that CPUs running critical tasks are not disturbed by
 -- 
 2.39.5
 
