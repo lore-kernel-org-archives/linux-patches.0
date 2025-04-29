@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E71CA5A;
-	Tue, 29 Apr 2025 18:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C4E3FFD;
+	Tue, 29 Apr 2025 18:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950456; cv=none; b=T6TtIc+WTckHKgCNFgwnrLjno6FdGpsGapWOWkrGpA5XqVWUbtq/o+J7WvYHSsrOnHQrSwNQMkltyCn81cYt38UJUZygVhUhBU3YHUk5xjwp12w0O497oJl05p6QCf9oOYx27n76E7IAH7KDZ7z2NrsS+JGq6Oe514sQUcX+wdg=
+	t=1745950460; cv=none; b=iM48kczUPxfTgrMuef3iktPJTSU+LExTRK8zk6vSY0hF6jN7WPvSOiM+sE1MSge7uUWi2wUVz1CByt17Td3JfEI3yEP1p9LOM6AxIxP7dWAKMDWPDJQYQEjSZYOJH/WzbTikTVG4sycjW4uvljhpnQXwtwRd7+RwxbXb86oiIys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950456; c=relaxed/simple;
-	bh=AQx/Og7OBvzO+I4PHRoXGNk7Pg7Jz18SXcg85st2mhU=;
+	s=arc-20240116; t=1745950460; c=relaxed/simple;
+	bh=3uvhvQRj2FNgiVlp5Hx8yOgMA3IhWuxUaTX8XhQBU1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsT5fAhNEhhM1fjHeZzXL/Zz0caHblpfQr4Clc+hAWefgvwjo2tJC5qbj48mirL/Y+7/HmEoZBl52+YKr+lfzJ9eWyZXyN/LvtTulLHSm9a1yqg4FD7r+atHiwpOw5abRkYHOUfUQpJlD5J7sNLmqxxE1YbkKc4cHGgXggIvP60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/8jBxuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWoNHxWO/90vrmLQHfoCNorbXMiJZkvDJSDaUlt7VR0Enc7K5RzQyEQVSQdjnjAcnl44kYG3jJh/TuvgVUOm0wS17qggkpnWW5NkdgxxiW3ayexDHxaDihTbpU8IN0bgK2FSKpTQ9+PbhzbUg1k+qsmdBx14DzCgPPDtQMv5r9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GBtObRU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/8jBxuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20992C4CEE3;
-	Tue, 29 Apr 2025 18:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GBtObRU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0DBC4CEE3;
+	Tue, 29 Apr 2025 18:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950456;
-	bh=AQx/Og7OBvzO+I4PHRoXGNk7Pg7Jz18SXcg85st2mhU=;
+	s=korg; t=1745950460;
+	bh=3uvhvQRj2FNgiVlp5Hx8yOgMA3IhWuxUaTX8XhQBU1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/8jBxuRFE9v3YfjQZ8bhqzkBuIysqbZjqN0JS0TUFSC2YzGw1SQ0LP1GgMRe/HA4
-	 NKe8hPISURp2WzJti4YKpLzJB9Ce4JsFRWBFxlhRB+uxge/+CykTwFIqbjaw1OujLy
-	 RtKYpU9DyfLEtA9jITC4g1uXgu4vu31CNND2SGvM=
+	b=1GBtObRUe+m8/R+GzhQDUDSuHNGGZihiJzCEpmkW0ULWsHRY4QACiGcyRJQr0wN4Z
+	 IAxSwOFeNUwN1fZJHVP2LlA4AwULtvpe5/RqsgJD1oQhKGy6NAiT5OgYW4H/CBCzXg
+	 +5LrLF5yPait1CtWw4g+bTim7J4VlY3yKQ9wzhAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.6 072/204] virtio_console: fix missing byte order handling for cols and rows
-Date: Tue, 29 Apr 2025 18:42:40 +0200
-Message-ID: <20250429161102.371122018@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 063/204] pds_core: Remove unnecessary check in pds_client_adminq_cmd()
+Date: Tue, 29 Apr 2025 18:42:31 +0200
+Message-ID: <20250429161102.007581981@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -50,60 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
+[ Upstream commit f9559d818205a4a0b9cd87181ef46e101ea11157 ]
 
-As per virtio spec the fields cols and rows are specified as little
-endian. Although there is no legacy interface requirement that would
-state that cols and rows need to be handled as native endian when legacy
-interface is used, unlike for the fields of the adjacent struct
-virtio_console_control, I decided to err on the side of caution based
-on some non-conclusive virtio spec repo archaeology and opt for using
-virtio16_to_cpu() much like for virtio_console_control.event. Strictly
-by the letter of the spec virtio_le_to_cpu() would have been sufficient.
-But when the legacy interface is not used, it boils down to the same.
+When the pds_core driver was first created there were some race
+conditions around using the adminq, especially for client drivers.
+To reduce the possibility of a race condition there's a check
+against pf->state in pds_client_adminq_cmd(). This is problematic
+for a couple of reasons:
 
-And when using the legacy interface, the device formatting these as
-little endian when the guest is big endian would surprise me more than
-it using guest native byte order (which would make it compatible with
-the current implementation). Nevertheless somebody trying to implement
-the spec following it to the letter could end up forcing little endian
-byte order when the legacy interface is in use. So IMHO this ultimately
-needs a judgement call by the maintainers.
+1. The PDSC_S_INITING_DRIVER bit is set during probe, but not
+   cleared until after everything in probe is complete, which
+   includes creating the auxiliary devices. For pds_fwctl this
+   means it can't make any adminq commands until after pds_core's
+   probe is complete even though the adminq is fully up by the
+   time pds_fwctl's auxiliary device is created.
 
-Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Cc: stable@vger.kernel.org # v2.6.35+
-Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+2. The race conditions around using the adminq have been fixed
+   and this path is already protected against client drivers
+   calling pds_client_adminq_cmd() if the adminq isn't ready,
+   i.e. see pdsc_adminq_post() -> pdsc_adminq_inc_if_up().
+
+Fix this by removing the pf->state check in pds_client_adminq_cmd()
+because invalid accesses to pds_core's adminq is already handled by
+pdsc_adminq_post()->pdsc_adminq_inc_if_up().
+
+Fixes: 10659034c622 ("pds_core: add the aux client API")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250421174606.3892-4-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/pds_core/auxbus.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1612,8 +1612,8 @@ static void handle_control_message(struc
- 		break;
- 	case VIRTIO_CONSOLE_RESIZE: {
- 		struct {
--			__u16 rows;
--			__u16 cols;
-+			__virtio16 rows;
-+			__virtio16 cols;
- 		} size;
+diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
+index fd1a5149c0031..fb7a5403e630d 100644
+--- a/drivers/net/ethernet/amd/pds_core/auxbus.c
++++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
+@@ -107,9 +107,6 @@ int pds_client_adminq_cmd(struct pds_auxiliary_dev *padev,
+ 	dev_dbg(pf->dev, "%s: %s opcode %d\n",
+ 		__func__, dev_name(&padev->aux_dev.dev), req->opcode);
  
- 		if (!is_console_port(port))
-@@ -1621,7 +1621,8 @@ static void handle_control_message(struc
- 
- 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
- 		       sizeof(size));
--		set_console_size(port, size.rows, size.cols);
-+		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
-+				 virtio16_to_cpu(vdev, size.cols));
- 
- 		port->cons.hvc->irq_requested = 1;
- 		resize_console(port);
+-	if (pf->state)
+-		return -ENXIO;
+-
+ 	/* Wrap the client's request */
+ 	cmd.client_request.opcode = PDS_AQ_CMD_CLIENT_CMD;
+ 	cmd.client_request.client_id = cpu_to_le16(padev->client_id);
+-- 
+2.39.5
+
 
 
