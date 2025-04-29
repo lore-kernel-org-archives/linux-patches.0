@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767B282C60;
-	Tue, 29 Apr 2025 17:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4865A2528EC;
+	Tue, 29 Apr 2025 17:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948033; cv=none; b=kegJIDZG1+LFvGX9+GaDBGiz0MwsdGdIILcpyJSm6QMWPxvIglCuMRw1X059FVvvrV3Dgm6MmWENtnAxE395gI84LDcbWW1WqEoDZUfk82uyt4kl/tGxyceZq5WWJDj5gW3jUOO0EKC+6c3OPpaQ/Kp7F5j2A6DdUesdg2wArMQ=
+	t=1745948037; cv=none; b=fjCIv8thDN928GZqWIXy9ICmWe+pwvStOtWZdnLF6IIthCNklZGTq/0POPzYEQH+Ru5E7gdH/SNNI3d4XpfAPe0ynHi7hqcf6JiD8EqZTWA7uLGiTwRmQGT/SfigqODmpr4/8REVzsxocy+7L5uczZe5Qd6irz0eVEfyoa5sMV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948033; c=relaxed/simple;
-	bh=2aH3gqOA7i7lbIMRCZ6tACvlOaJfJjdsUv6lxnhDewU=;
+	s=arc-20240116; t=1745948037; c=relaxed/simple;
+	bh=Cj0FqzQxBDUTY6UU0DBWgU+esLD7O4VquqjKzX7eqns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZU8RJBEUdkfPvnn1a8IRywcl2oYry/JBsq13B7SlDNJii2XrwYIYGfUxSdkZeh/M7jE6S3TRf0InPA6mEAfCT2gn2BptyYf8lCQWhz15CQ6r0jtxYcJ4ZvSDcdGPZVRkPOrFMA8MElY+2G/ICWOFElvr9xRrI/Csrq41DnYv7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J87OU4KK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lV+UqtuxiUmo4uDGIbTIkA48b2CFmNxLEnofXqQrPnVuRo1q82MRSpV/mYp4w5zOcl5ZER2TrjDl15W0ZYUncvnS1rSSwjRzbL4kSEXiK0HhB+mmE9SEA1z7F/A+m7FX4VcCO1+m085u6CdhWDwreyktFFNqBXGhOXwIZ0J+AzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlRFy/x3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J87OU4KK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4012C4CEE3;
-	Tue, 29 Apr 2025 17:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlRFy/x3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F6CC4CEEE;
+	Tue, 29 Apr 2025 17:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948033;
-	bh=2aH3gqOA7i7lbIMRCZ6tACvlOaJfJjdsUv6lxnhDewU=;
+	s=korg; t=1745948037;
+	bh=Cj0FqzQxBDUTY6UU0DBWgU+esLD7O4VquqjKzX7eqns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J87OU4KKELLC5GerHyKmZPPW6UvYJ3XcuXUL9DUvdiYRHp4z390joEi0n4oesE0Wl
-	 bUL6b6MbcRfZ/RJPxMxBXXB6j1ne5BfYAKYXcTQTBXF1hRWXfGzHy4/gnbFeCzzgoa
-	 k+3/xAdlpVpiacuPjNkfQ0G8afCDTMM4PynwWuJg=
+	b=RlRFy/x3gZg7aUnxsw5bcq73iwt7kmKMhRQo71XXK130m8A/MPLTBK3iv9G0/mNAc
+	 25kntWaZpB/dcRyevLLBRW2PzADSqXuTiRzfeKmQCnIYznLeHT01xZlFTXKGlkVVXf
+	 L1wt+9HAqhvkXLoeyD1wmgHe4ihZPPCd9dtAjK/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frode Isaksen <frode@meta.com>,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 143/280] usb: dwc3: gadget: check that event count does not exceed event buffer length
-Date: Tue, 29 Apr 2025 18:41:24 +0200
-Message-ID: <20250429161120.976467449@linuxfoundation.org>
+	Adam Xue <zxue@semtech.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 134/280] USB: serial: option: add Sierra Wireless EM9291
+Date: Tue, 29 Apr 2025 18:41:15 +0200
+Message-ID: <20250429161120.612308136@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,49 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frode Isaksen <frode@meta.com>
+From: Adam Xue <zxue@semtech.com>
 
-commit 63ccd26cd1f6600421795f6ca3e625076be06c9f upstream.
+commit 968e1cbb1f6293c3add9607f80b5ce3d29f57583 upstream.
 
-The event count is read from register DWC3_GEVNTCOUNT.
-There is a check for the count being zero, but not for exceeding the
-event buffer length.
-Check that event count does not exceed event buffer length,
-avoiding an out-of-bounds access when memcpy'ing the event.
-Crash log:
-Unable to handle kernel paging request at virtual address ffffffc0129be000
-pc : __memcpy+0x114/0x180
-lr : dwc3_check_event_buf+0xec/0x348
-x3 : 0000000000000030 x2 : 000000000000dfc4
-x1 : ffffffc0129be000 x0 : ffffff87aad60080
-Call trace:
-__memcpy+0x114/0x180
-dwc3_interrupt+0x24/0x34
+Add Sierra Wireless EM9291.
 
-Signed-off-by: Frode Isaksen <frode@meta.com>
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250403072907.448524-1-fisaksen@baylibre.com
+Interface 0: MBIM control
+          1: MBIM data
+          3: AT port
+          4: Diagnostic port
+
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1199 ProdID=90e3 Rev=00.06
+S:  Manufacturer=Sierra Wireless, Incorporated
+S:  Product=Sierra Wireless EM9291
+S:  SerialNumber=xxxxxxxxxxxxxxxx
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=(none)
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Adam Xue <zxue@semtech.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4570,6 +4570,12 @@ static irqreturn_t dwc3_check_event_buf(
- 	if (!count)
- 		return IRQ_NONE;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -611,6 +611,7 @@ static void option_instat_callback(struc
+ /* Sierra Wireless products */
+ #define SIERRA_VENDOR_ID			0x1199
+ #define SIERRA_PRODUCT_EM9191			0x90d3
++#define SIERRA_PRODUCT_EM9291			0x90e3
  
-+	if (count > evt->length) {
-+		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
-+			count, evt->length);
-+		return IRQ_NONE;
-+	}
-+
- 	evt->count = count;
- 	evt->flags |= DWC3_EVENT_PENDING;
- 
+ /* UNISOC (Spreadtrum) products */
+ #define UNISOC_VENDOR_ID			0x1782
+@@ -2432,6 +2433,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
 
 
