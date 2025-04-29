@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512EF2459EA;
-	Tue, 29 Apr 2025 17:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8742517A6;
+	Tue, 29 Apr 2025 17:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947381; cv=none; b=X1PvqzoA1oDBcI7ejITQHQLCnldM6z0UjFbdSbukDVg9EStCezGOepVYUvy072GWkgO7H0rQ4fD8u95jMwyKkqWoLjzPPjjYx5sOzxjnrhqObAm8H7r80KpurBahuntYwiZyXGPnt7/+cfaxasiW0Wjn8L/AHKfHcwghnV3jQmA=
+	t=1745947384; cv=none; b=OmGqH9o+/1kBFWaEE0LmdHCqn7n9KCLdF/pSvNWc3J3Sg/X0hB6WXqD9aCyjPZ7tYXAyODU7Yl8PX8ZgLmOUT8u9Ptc1nwwag4/TdtcwRx0yExRBl+MqatCPvA4CwVbSMg6bPKuhrz67zRCAi951xOHpdm+hYmq9HsqoWM2CoP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947381; c=relaxed/simple;
-	bh=M/98Cbl8dvewrZVOvjFo7uTLs56LLN/ArBE1aOzVsIc=;
+	s=arc-20240116; t=1745947384; c=relaxed/simple;
+	bh=BMN0W2cRyqsIw/IkEVhPHOJU+COdmMhKcD15rjWOe8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2XulY/ILZT+G5WilRLtj97NfosdXxEcwz/4yE/jdN9WuEBBx/Cu/1IqCRhwS3XhlM022gs4P9wMFEStbs+9IA/zpKh7mKLHvvdOeCp1LbsYwH4YvjneUG7IkZjbDxOrRcp/FMMOwhO7/jv/aKYeRm9Z4uKx1fhQFyozVbUUcPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7JrbUsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XrFGnr/Pnso8Pa+JeCRIxondwQ3OZHT8fh/l34w2Y2LAqpik0Ik/dVCaGvEwrq2ldet+AU5aTK8oEcX82mTfVUpGmO9/HGzgpiI8BXpSquqaWVR8/kmTJY8c+Psn13ZeKiMI8ShMAOfSV0/N/NmOcKSAp7npx9w07eC7PldbSK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4gDvkXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7JrbUsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF0BC4CEE3;
-	Tue, 29 Apr 2025 17:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4gDvkXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7428DC4CEE3;
+	Tue, 29 Apr 2025 17:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947380;
-	bh=M/98Cbl8dvewrZVOvjFo7uTLs56LLN/ArBE1aOzVsIc=;
+	s=korg; t=1745947383;
+	bh=BMN0W2cRyqsIw/IkEVhPHOJU+COdmMhKcD15rjWOe8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7JrbUsTjjNXRpBoqevn3f1TBLXhjWN0rtqe1rUxtBUQhlcH53u15850U1pvsMmh5
-	 Fxl/D4iGNlILD3QTM1Lql+zR6JChhO+csgJaUxKgfpUxtIKTekdPE1dFCf4p+rdht/
-	 s+sSAteSOy5cRvdcZe7rOaL0iqyZb7ipuVh4QZok=
+	b=K4gDvkXrEKLFn+JdQET+MGl8f9ZkURbPCyWHhS4aDoYCxN1hpggHUyiJ1nnOcW/G8
+	 toMpMfI3ettMtFhNfeTut7kmWHgue/xyXgsRTu2gqY1qocUIDkmdoLFsLWoYTXJ2AD
+	 Qiun6DeTc/jOLlAkbdkCmi/huHk7885pMedzty28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Guan <hao.guan@siflower.com.cn>,
-	Qingfang Deng <qingfang.deng@siflower.com.cn>,
-	Andrew Lunn <andrew@lunn.ch>,
+	syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/286] net: phy: leds: fix memory leak
-Date: Tue, 29 Apr 2025 18:42:16 +0200
-Message-ID: <20250429161117.477279661@linuxfoundation.org>
+Subject: [PATCH 5.10 233/286] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
+Date: Tue, 29 Apr 2025 18:42:17 +0200
+Message-ID: <20250429161117.516533263@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -53,99 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@siflower.com.cn>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit b7f0ee992adf601aa00c252418266177eb7ac2bc ]
+[ Upstream commit d63527e109e811ef11abb1c2985048fdb528b4cb ]
 
-A network restart test on a router led to an out-of-memory condition,
-which was traced to a memory leak in the PHY LED trigger code.
+syzbot reported:
 
-The root cause is misuse of the devm API. The registration function
-(phy_led_triggers_register) is called from phy_attach_direct, not
-phy_probe, and the unregister function (phy_led_triggers_unregister)
-is called from phy_detach, not phy_remove. This means the register and
-unregister functions can be called multiple times for the same PHY
-device, but devm-allocated memory is not freed until the driver is
-unbound.
+tipc: Node number set to 1055423674
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 3 UID: 0 PID: 6017 Comm: kworker/3:5 Not tainted 6.15.0-rc1-syzkaller-00246-g900241a5cc15 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: events tipc_net_finalize_work
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tipc_net_finalize+0x10b/0x180 net/tipc/net.c:140
+ process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3319 [inline]
+ worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
+ kthread+0x3c2/0x780 kernel/kthread.c:464
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+...
+RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
+...
+RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
+RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
+RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
+R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
+FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
-This also prevents kmemleak from detecting the leak, as the devm API
-internally stores the allocated pointer.
+There is a racing condition between workqueue created when enabling
+bearer and another thread created when disabling bearer right after
+that as follow:
 
-Fix this by replacing devm_kzalloc/devm_kcalloc with standard
-kzalloc/kcalloc, and add the corresponding kfree calls in the unregister
-path.
+enabling_bearer                          | disabling_bearer
+---------------                          | ----------------
+tipc_disc_timeout()                      |
+{                                        | bearer_disable()
+ ...                                     | {
+ schedule_work(&tn->work);               |  tipc_mon_delete()
+ ...                                     |  {
+}                                        |   ...
+                                         |   write_lock_bh(&mon->lock);
+                                         |   mon->self = NULL;
+                                         |   write_unlock_bh(&mon->lock);
+                                         |   ...
+                                         |  }
+tipc_net_finalize_work()                 | }
+{                                        |
+ ...                                     |
+ tipc_net_finalize()                     |
+ {                                       |
+  ...                                    |
+  tipc_mon_reinit_self()                 |
+  {                                      |
+   ...                                   |
+   write_lock_bh(&mon->lock);            |
+   mon->self->addr = tipc_own_addr(net); |
+   write_unlock_bh(&mon->lock);          |
+   ...                                   |
+  }                                      |
+  ...                                    |
+ }                                       |
+ ...                                     |
+}                                        |
 
-Fixes: 3928ee6485a3 ("net: phy: leds: Add support for "link" trigger")
-Fixes: 2e0bc452f472 ("net: phy: leds: add support for led triggers on phy link state change")
-Signed-off-by: Hao Guan <hao.guan@siflower.com.cn>
-Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250417032557.2929427-1-dqfext@gmail.com
+'mon->self' is set to NULL in disabling_bearer thread and dereferenced
+later in enabling_bearer thread.
+
+This commit fixes this issue by validating 'mon->self' before assigning
+node address to it.
+
+Reported-by: syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com
+Fixes: 46cb01eeeb86 ("tipc: update mon's self addr when node addr generated")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250417074826.578115-1-tung.quang.nguyen@est.tech
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_led_triggers.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ net/tipc/monitor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy_led_triggers.c b/drivers/net/phy/phy_led_triggers.c
-index 59a94e07e7c55..ae28aa2f9a392 100644
---- a/drivers/net/phy/phy_led_triggers.c
-+++ b/drivers/net/phy/phy_led_triggers.c
-@@ -91,9 +91,8 @@ int phy_led_triggers_register(struct phy_device *phy)
- 	if (!phy->phy_num_led_triggers)
- 		return 0;
- 
--	phy->led_link_trigger = devm_kzalloc(&phy->mdio.dev,
--					     sizeof(*phy->led_link_trigger),
--					     GFP_KERNEL);
-+	phy->led_link_trigger = kzalloc(sizeof(*phy->led_link_trigger),
-+					GFP_KERNEL);
- 	if (!phy->led_link_trigger) {
- 		err = -ENOMEM;
- 		goto out_clear;
-@@ -108,10 +107,9 @@ int phy_led_triggers_register(struct phy_device *phy)
- 	if (err)
- 		goto out_free_link;
- 
--	phy->phy_led_triggers = devm_kcalloc(&phy->mdio.dev,
--					    phy->phy_num_led_triggers,
--					    sizeof(struct phy_led_trigger),
--					    GFP_KERNEL);
-+	phy->phy_led_triggers = kcalloc(phy->phy_num_led_triggers,
-+					sizeof(struct phy_led_trigger),
-+					GFP_KERNEL);
- 	if (!phy->phy_led_triggers) {
- 		err = -ENOMEM;
- 		goto out_unreg_link;
-@@ -131,11 +129,11 @@ int phy_led_triggers_register(struct phy_device *phy)
- out_unreg:
- 	while (i--)
- 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
--	devm_kfree(&phy->mdio.dev, phy->phy_led_triggers);
-+	kfree(phy->phy_led_triggers);
- out_unreg_link:
- 	phy_led_trigger_unregister(phy->led_link_trigger);
- out_free_link:
--	devm_kfree(&phy->mdio.dev, phy->led_link_trigger);
-+	kfree(phy->led_link_trigger);
- 	phy->led_link_trigger = NULL;
- out_clear:
- 	phy->phy_num_led_triggers = 0;
-@@ -149,8 +147,13 @@ void phy_led_triggers_unregister(struct phy_device *phy)
- 
- 	for (i = 0; i < phy->phy_num_led_triggers; i++)
- 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
-+	kfree(phy->phy_led_triggers);
-+	phy->phy_led_triggers = NULL;
- 
--	if (phy->led_link_trigger)
-+	if (phy->led_link_trigger) {
- 		phy_led_trigger_unregister(phy->led_link_trigger);
-+		kfree(phy->led_link_trigger);
-+		phy->led_link_trigger = NULL;
-+	}
+diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
+index 1d90f39129ca0..ba0a308d41d85 100644
+--- a/net/tipc/monitor.c
++++ b/net/tipc/monitor.c
+@@ -685,7 +685,8 @@ void tipc_mon_reinit_self(struct net *net)
+ 		if (!mon)
+ 			continue;
+ 		write_lock_bh(&mon->lock);
+-		mon->self->addr = tipc_own_addr(net);
++		if (mon->self)
++			mon->self->addr = tipc_own_addr(net);
+ 		write_unlock_bh(&mon->lock);
+ 	}
  }
- EXPORT_SYMBOL_GPL(phy_led_triggers_unregister);
 -- 
 2.39.5
 
