@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1AAD530;
-	Tue, 29 Apr 2025 17:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613BD2517AF;
+	Tue, 29 Apr 2025 17:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946915; cv=none; b=VCg2QF77+mTNgLNuh9qj2EqltwxP3d9Fmbr/Yd92GT3MOTbHCGAJmzWLqUHrYScVL8+eISP17+pG4ZPXQ8K0kdH42jvmSwMR1pQTNbk+Oh5wKodCh6p4JpiEUMzRN+3VBAMicFxYzJcC6PgU8jpNA6bfVjJmKesDXGCCL8JbjJk=
+	t=1745946918; cv=none; b=r+WhoIS8jQwBqeFwgQ7zjAe7MCNl6aQdsQS1JI9O76Y+c3cJMsuG96bpMOSrLnPmE/IpykarcZEiJfToHT4+fGuuw4iCuSk8BFLfEiBxxp/Ndb1fh28Rn5JJ1isqXgBH0AJWL5kGkvpCh6/sdgjuydJzbsCs0mGNqpLHoeElviU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946915; c=relaxed/simple;
-	bh=wb8o+6aDsVNeL48lo1ktaLOUhLZgpAbHHKraeIWx5tc=;
+	s=arc-20240116; t=1745946918; c=relaxed/simple;
+	bh=sIkPlYtV5I/n6zj5OJrXDKljUFOADv0I2H4c1ELmbjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVggFuQsX+Wj4hyTCe/E8SDLzgO7t0lvh4xwBkTGFeTwurPBsSQGAW+zJAuUxwK7w6s5mY1gDPZu6USy1LCwUyiAXj4uhgHU6M3NZXgqK0/PtAadqSnj/ZYRCjIb68RNpI3xuxDzEbxA+4acASuexvL3NiErNfOZ/aEMeeFghVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FklWKpE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDjf6mqQkyFYlQKEHkYXfjDKhCnQr5wLR48IkqSv9Va7sBkZitmFFLxd9zFZgwKxtcQtenEP3Tc84aJ65TwU3POq+rqsiPsbBQr3ET7b9D5VzyQKCl6iHuF8BCqBsG8bGyJ/AttSRH24kSJWiD+pNUDBpnGnE8Dgk+P/16qw198=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA7A2qKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FklWKpE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDA0C4CEE3;
-	Tue, 29 Apr 2025 17:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA7A2qKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0E3C4CEE3;
+	Tue, 29 Apr 2025 17:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946915;
-	bh=wb8o+6aDsVNeL48lo1ktaLOUhLZgpAbHHKraeIWx5tc=;
+	s=korg; t=1745946918;
+	bh=sIkPlYtV5I/n6zj5OJrXDKljUFOADv0I2H4c1ELmbjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FklWKpE4A7CG/mzAxBtBPwolSWxoCJCiFbAp2wo0f4tgF07ibqT/P2jiJ1thlaGa
-	 2muqX3VLV87+MjD+uRsZruQ0C/yXxJhh7U+UZdXBOoFqmlWO+frPbh1Frq0hc34vmh
-	 vtLP3vlfvh7VxqRBjyOTI+yCZL5CB39bvt+ZnANA=
+	b=lA7A2qKouH3hD2m7+BJGVvArOSi+fvT7Fh3u2ecudkUSeX2u4kEiF/Us5ZjCz7WJi
+	 vSSFlSsp5mKxu+d/Z/C1ifdcUZWjBlFfC2jECW2J5uR0L6h1DxTUhQnZWc0xVJhnQ+
+	 DTwvQQYSr2SxVEDFrBUHBUWDfnX+ZFWvQcMaFVII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/286] Bluetooth: btrtl: Prevent potential NULL dereference
-Date: Tue, 29 Apr 2025 18:40:15 +0200
-Message-ID: <20250429161112.425804591@linuxfoundation.org>
+Subject: [PATCH 5.10 112/286] Revert "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
+Date: Tue, 29 Apr 2025 18:40:16 +0200
+Message-ID: <20250429161112.467286378@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,40 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 324dddea321078a6eeb535c2bff5257be74c9799 ]
+[ Upstream commit 0937cb5f345c79d702b4d0d744e2a2529b551cb2 ]
 
-The btrtl_initialize() function checks that rtl_load_file() either
-had an error or it loaded a zero length file.  However, if it loaded
-a zero length file then the error code is not set correctly.  It
-results in an error pointer vs NULL bug, followed by a NULL pointer
-dereference.  This was detected by Smatch:
+This reverts commit a104042e2bf6528199adb6ca901efe7b60c2c27f.
 
-drivers/bluetooth/btrtl.c:592 btrtl_initialize() warn: passing zero to 'ERR_PTR'
+Since the original bug seems to have been around for years,
+but a new issue was report with the fix, revert the fix for
+now. We have a couple of weeks to figure it out for this
+release, if needed.
 
-Fixes: 26503ad25de8 ("Bluetooth: btrtl: split the device initialization into smaller parts")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
+Fixes: a104042e2bf6 ("wifi: mac80211: Update skb's control block key in ieee80211_tx_dequeue()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 3a9afc905f243..77de43d8d7962 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -625,6 +625,8 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
- 			rtl_dev_err(hdev, "mandatory config file %s not found",
- 				    btrtl_dev->ic_info->cfg_name);
- 			ret = btrtl_dev->cfg_len;
-+			if (!ret)
-+				ret = -EINVAL;
- 			goto err_free;
- 		}
- 	}
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 5615575595efb..0d6d12fc3c07e 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3691,7 +3691,6 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	 * The key can be removed while the packet was queued, so need to call
+ 	 * this here to get the current key.
+ 	 */
+-	info->control.hw_key = NULL;
+ 	r = ieee80211_tx_h_select_key(&tx);
+ 	if (r != TX_CONTINUE) {
+ 		ieee80211_free_txskb(&local->hw, skb);
 -- 
 2.39.5
 
