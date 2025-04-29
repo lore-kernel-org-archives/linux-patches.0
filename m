@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C284A244679;
-	Tue, 29 Apr 2025 16:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F465241667;
+	Tue, 29 Apr 2025 16:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945701; cv=none; b=C7iy7J6HobQgjDYK3WlvzzeEm7AAg82dvczRgd+YZoPb8WFKRt7UfSz5oowc0HYtS4U8P7LV/qm5Z98eReUGKgcMSU21W9ZvNZuDzGccD6/PV2+O3l19YWAetaZbPNb+AX1e9JJDcg+hHBInXy9Sp7GcnFUK0QPjNSLy4ZNZSVA=
+	t=1745945705; cv=none; b=FjQ5B3J1Kp9kPW9Qj0RlDbbplHy6/AEWHRm+Jefo43S2Dh37krJk4OplIVmX/ziWdCAP908QccahHMQt2UTus69m5PH7eOg6A5P/TXb4wW3H/7j7DcavJcAwrYUK/T6hIXffjdUbEbbkijISZ8wovjWCgcSJ3bk6sKBAQfXyptc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945701; c=relaxed/simple;
-	bh=ERc/cIIQH5+19shBLhJi6kO30qJm2pFsFJDC4R+1YAg=;
+	s=arc-20240116; t=1745945705; c=relaxed/simple;
+	bh=nc+U1MkrdW6xYO8jKbtDXs+7FWx3IFruThIfgfVVB6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lyt4kc8rJXvohhy3UOqmJsMgm4LzfouR/GSmd5h2j1b5eV3N6ohwhAwkqWK/++XcgFEumIB9dIK1Be5HNbiRX4PMLWXuEf21OCjP+aDECyG6uNkY3ko2JbTe3QJ/lwUivzDe2Z4KbUE4j3fKTufEXjFRG+XUErbdfNzHM2DE9Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNxwImF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cWQ500fucXU8KNhlfO5PY+ur9a1Eu03tH9xmpAnvcxkg2uz/4r4rDS5kQhLdptqMFtivA90YgvLYQGdyU02hsPV0n+bIjQKFJdnYkRv9sQn2tCDu4Co5L/9pNQjYoNQSkOqcu8wYF6Zoi4RdHJ8Ne58ratY2csHOlxKR7zeUGvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1OaSv5Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNxwImF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A1C4CEE3;
-	Tue, 29 Apr 2025 16:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1OaSv5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCD4C4CEE3;
+	Tue, 29 Apr 2025 16:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945701;
-	bh=ERc/cIIQH5+19shBLhJi6kO30qJm2pFsFJDC4R+1YAg=;
+	s=korg; t=1745945704;
+	bh=nc+U1MkrdW6xYO8jKbtDXs+7FWx3IFruThIfgfVVB6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNxwImF4ymSYmBldzpWUOvkjeYODVVwDS+CTf8ahBPHSefgnSxKp0jxyvWWPd7bHf
-	 BYbNNq/CzJqjbuBIqPW/NC6XxyRZBfHy/0T9ETvtbCUfc/aUkm8K5oTYRan+6+75WO
-	 tbG5Up3K0L5izkTl9ezrv+gJzt8UQY14BaeEqpkY=
+	b=I1OaSv5ZtQa/SQWw+e3E/YKM3OgTDR1sjeOWYEJhges41Z6xwBCLkK7+NV7nRJIha
+	 Y3pQdaL9CHbOw/Zg571U+ytR9SSiBHROLOie4KvJvyDhkueQ2VT5oXsK8QIEYkMS9v
+	 S+EJrm9ovrjPLbbfMgvHDAFtmKALJ65054x9+CWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 006/311] media: i2c: imx214: Use subdev active state
-Date: Tue, 29 Apr 2025 18:37:23 +0200
-Message-ID: <20250429161121.293413613@linuxfoundation.org>
+Subject: [PATCH 6.14 007/311] media: i2c: imx214: Simplify with dev_err_probe()
+Date: Tue, 29 Apr 2025 18:37:24 +0200
+Message-ID: <20250429161121.332632155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -55,324 +56,130 @@ Content-Transfer-Encoding: 8bit
 
 From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit b6832ff659f55f86198bb8de40f278a20bda0920 ]
+[ Upstream commit 5d6dc133e6e4053b4b92a15a2e1b99d54b3f8adb ]
 
-Port the imx214 sensor driver to use the subdev active state.
+Error handling in probe() can be a bit simpler with dev_err_probe().
 
-Move all the format configuration to the subdevice state and simplify
-the format handling, locking and initialization.
-
-While at it, simplify imx214_start_streaming() by removing unneeded goto
-statements and the corresponding error label.
-
+Acked-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: André Apitzsch <git@apitzsch.eu>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Stable-dep-of: acc294519f17 ("media: i2c: imx214: Fix link frequency validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx214.c | 155 ++++++++++++-------------------------
- 1 file changed, 50 insertions(+), 105 deletions(-)
+ drivers/media/i2c/imx214.c | 54 +++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/media/i2c/imx214.c b/drivers/media/i2c/imx214.c
-index 6a393e18267f4..af6a3859c3f13 100644
+index af6a3859c3f13..db6cdc3b65e37 100644
 --- a/drivers/media/i2c/imx214.c
 +++ b/drivers/media/i2c/imx214.c
-@@ -59,8 +59,6 @@ struct imx214 {
- 
- 	struct v4l2_subdev sd;
- 	struct media_pad pad;
--	struct v4l2_mbus_framefmt fmt;
--	struct v4l2_rect crop;
- 
- 	struct v4l2_ctrl_handler ctrls;
- 	struct v4l2_ctrl *pixel_rate;
-@@ -71,12 +69,6 @@ struct imx214 {
- 	struct regulator_bulk_data	supplies[IMX214_NUM_SUPPLIES];
- 
- 	struct gpio_desc *enable_gpio;
--
--	/*
--	 * Serialize control access, get/set format, get selection
--	 * and start streaming.
--	 */
--	struct mutex mutex;
- };
- 
- struct reg_8 {
-@@ -490,6 +482,22 @@ static int __maybe_unused imx214_power_off(struct device *dev)
- 	return 0;
- }
- 
-+static void imx214_update_pad_format(struct imx214 *imx214,
-+				     const struct imx214_mode *mode,
-+				     struct v4l2_mbus_framefmt *fmt, u32 code)
-+{
-+	fmt->code = IMX214_MBUS_CODE;
-+	fmt->width = mode->width;
-+	fmt->height = mode->height;
-+	fmt->field = V4L2_FIELD_NONE;
-+	fmt->colorspace = V4L2_COLORSPACE_SRGB;
-+	fmt->ycbcr_enc = V4L2_MAP_YCBCR_ENC_DEFAULT(fmt->colorspace);
-+	fmt->quantization = V4L2_MAP_QUANTIZATION_DEFAULT(true,
-+							  fmt->colorspace,
-+							  fmt->ycbcr_enc);
-+	fmt->xfer_func = V4L2_MAP_XFER_FUNC_DEFAULT(fmt->colorspace);
-+}
-+
- static int imx214_enum_mbus_code(struct v4l2_subdev *sd,
- 				 struct v4l2_subdev_state *sd_state,
- 				 struct v4l2_subdev_mbus_code_enum *code)
-@@ -549,52 +557,6 @@ static const struct v4l2_subdev_core_ops imx214_core_ops = {
- #endif
- };
- 
--static struct v4l2_mbus_framefmt *
--__imx214_get_pad_format(struct imx214 *imx214,
--			struct v4l2_subdev_state *sd_state,
--			unsigned int pad,
--			enum v4l2_subdev_format_whence which)
--{
--	switch (which) {
--	case V4L2_SUBDEV_FORMAT_TRY:
--		return v4l2_subdev_state_get_format(sd_state, pad);
--	case V4L2_SUBDEV_FORMAT_ACTIVE:
--		return &imx214->fmt;
--	default:
--		return NULL;
--	}
--}
--
--static int imx214_get_format(struct v4l2_subdev *sd,
--			     struct v4l2_subdev_state *sd_state,
--			     struct v4l2_subdev_format *format)
--{
--	struct imx214 *imx214 = to_imx214(sd);
--
--	mutex_lock(&imx214->mutex);
--	format->format = *__imx214_get_pad_format(imx214, sd_state,
--						  format->pad,
--						  format->which);
--	mutex_unlock(&imx214->mutex);
--
--	return 0;
--}
--
--static struct v4l2_rect *
--__imx214_get_pad_crop(struct imx214 *imx214,
--		      struct v4l2_subdev_state *sd_state,
--		      unsigned int pad, enum v4l2_subdev_format_whence which)
--{
--	switch (which) {
--	case V4L2_SUBDEV_FORMAT_TRY:
--		return v4l2_subdev_state_get_crop(sd_state, pad);
--	case V4L2_SUBDEV_FORMAT_ACTIVE:
--		return &imx214->crop;
--	default:
--		return NULL;
--	}
--}
--
- static int imx214_set_format(struct v4l2_subdev *sd,
- 			     struct v4l2_subdev_state *sd_state,
- 			     struct v4l2_subdev_format *format)
-@@ -604,34 +566,20 @@ static int imx214_set_format(struct v4l2_subdev *sd,
- 	struct v4l2_rect *__crop;
- 	const struct imx214_mode *mode;
- 
--	mutex_lock(&imx214->mutex);
--
--	__crop = __imx214_get_pad_crop(imx214, sd_state, format->pad,
--				       format->which);
--
- 	mode = v4l2_find_nearest_size(imx214_modes,
- 				      ARRAY_SIZE(imx214_modes), width, height,
- 				      format->format.width,
- 				      format->format.height);
- 
--	__crop->width = mode->width;
--	__crop->height = mode->height;
--
--	__format = __imx214_get_pad_format(imx214, sd_state, format->pad,
--					   format->which);
--	__format->width = __crop->width;
--	__format->height = __crop->height;
--	__format->code = IMX214_MBUS_CODE;
--	__format->field = V4L2_FIELD_NONE;
--	__format->colorspace = V4L2_COLORSPACE_SRGB;
--	__format->ycbcr_enc = V4L2_MAP_YCBCR_ENC_DEFAULT(__format->colorspace);
--	__format->quantization = V4L2_MAP_QUANTIZATION_DEFAULT(true,
--				__format->colorspace, __format->ycbcr_enc);
--	__format->xfer_func = V4L2_MAP_XFER_FUNC_DEFAULT(__format->colorspace);
-+	imx214_update_pad_format(imx214, mode, &format->format,
-+				 format->format.code);
-+	__format = v4l2_subdev_state_get_format(sd_state, 0);
- 
--	format->format = *__format;
-+	*__format = format->format;
- 
--	mutex_unlock(&imx214->mutex);
-+	__crop = v4l2_subdev_state_get_crop(sd_state, 0);
-+	__crop->width = mode->width;
-+	__crop->height = mode->height;
- 
- 	return 0;
- }
-@@ -640,14 +588,9 @@ static int imx214_get_selection(struct v4l2_subdev *sd,
- 				struct v4l2_subdev_state *sd_state,
- 				struct v4l2_subdev_selection *sel)
- {
--	struct imx214 *imx214 = to_imx214(sd);
--
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		mutex_lock(&imx214->mutex);
--		sel->r = *__imx214_get_pad_crop(imx214, sd_state, sel->pad,
--						sel->which);
--		mutex_unlock(&imx214->mutex);
-+		sel->r = *v4l2_subdev_state_get_crop(sd_state, 0);
- 		return 0;
- 
- 	case V4L2_SEL_TGT_NATIVE_SIZE:
-@@ -826,40 +769,35 @@ static int imx214_write_table(struct imx214 *imx214,
- 
- static int imx214_start_streaming(struct imx214 *imx214)
- {
-+	const struct v4l2_mbus_framefmt *fmt;
-+	struct v4l2_subdev_state *state;
- 	const struct imx214_mode *mode;
+@@ -933,14 +933,12 @@ static int imx214_parse_fwnode(struct device *dev)
  	int ret;
  
--	mutex_lock(&imx214->mutex);
- 	ret = imx214_write_table(imx214, mode_table_common);
- 	if (ret < 0) {
- 		dev_err(imx214->dev, "could not sent common table %d\n", ret);
--		goto error;
-+		return ret;
+ 	endpoint = fwnode_graph_get_next_endpoint(dev_fwnode(dev), NULL);
+-	if (!endpoint) {
+-		dev_err(dev, "endpoint node not found\n");
+-		return -EINVAL;
+-	}
++	if (!endpoint)
++		return dev_err_probe(dev, -EINVAL, "endpoint node not found\n");
+ 
+ 	ret = v4l2_fwnode_endpoint_alloc_parse(endpoint, &bus_cfg);
+ 	if (ret) {
+-		dev_err(dev, "parsing endpoint node failed\n");
++		dev_err_probe(dev, ret, "parsing endpoint node failed\n");
+ 		goto done;
  	}
  
--	mode = v4l2_find_nearest_size(imx214_modes,
--				ARRAY_SIZE(imx214_modes), width, height,
--				imx214->fmt.width, imx214->fmt.height);
-+	state = v4l2_subdev_get_locked_active_state(&imx214->sd);
-+	fmt = v4l2_subdev_state_get_format(state, 0);
-+	mode = v4l2_find_nearest_size(imx214_modes, ARRAY_SIZE(imx214_modes),
-+				      width, height, fmt->width, fmt->height);
- 	ret = imx214_write_table(imx214, mode->reg_table);
- 	if (ret < 0) {
- 		dev_err(imx214->dev, "could not sent mode table %d\n", ret);
--		goto error;
-+		return ret;
+@@ -949,8 +947,9 @@ static int imx214_parse_fwnode(struct device *dev)
+ 			break;
+ 
+ 	if (i == bus_cfg.nr_of_link_frequencies) {
+-		dev_err(dev, "link-frequencies %d not supported, Please review your DT\n",
+-			IMX214_DEFAULT_LINK_FREQ);
++		dev_err_probe(dev, -EINVAL,
++			      "link-frequencies %d not supported, Please review your DT\n",
++			      IMX214_DEFAULT_LINK_FREQ);
+ 		ret = -EINVAL;
+ 		goto done;
  	}
- 	ret = __v4l2_ctrl_handler_setup(&imx214->ctrls);
- 	if (ret < 0) {
- 		dev_err(imx214->dev, "could not sync v4l2 controls\n");
--		goto error;
-+		return ret;
- 	}
- 	ret = regmap_write(imx214->regmap, IMX214_REG_MODE_SELECT, IMX214_MODE_STREAMING);
+@@ -978,34 +977,28 @@ static int imx214_probe(struct i2c_client *client)
+ 	imx214->dev = dev;
+ 
+ 	imx214->xclk = devm_clk_get(dev, NULL);
+-	if (IS_ERR(imx214->xclk)) {
+-		dev_err(dev, "could not get xclk");
+-		return PTR_ERR(imx214->xclk);
+-	}
++	if (IS_ERR(imx214->xclk))
++		return dev_err_probe(dev, PTR_ERR(imx214->xclk),
++				     "failed to get xclk\n");
+ 
+ 	ret = clk_set_rate(imx214->xclk, IMX214_DEFAULT_CLK_FREQ);
+-	if (ret) {
+-		dev_err(dev, "could not set xclk frequency\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "failed to set xclk frequency\n");
+ 
+ 	ret = imx214_get_regulators(dev, imx214);
 -	if (ret < 0) {
-+	if (ret < 0)
- 		dev_err(imx214->dev, "could not sent start table %d\n", ret);
--		goto error;
+-		dev_err(dev, "cannot get regulators\n");
+-		return ret;
 -	}
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "failed to get regulators\n");
  
--	mutex_unlock(&imx214->mutex);
--	return 0;
--
--error:
--	mutex_unlock(&imx214->mutex);
- 	return ret;
- }
+ 	imx214->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+-	if (IS_ERR(imx214->enable_gpio)) {
+-		dev_err(dev, "cannot get enable gpio\n");
+-		return PTR_ERR(imx214->enable_gpio);
+-	}
++	if (IS_ERR(imx214->enable_gpio))
++		return dev_err_probe(dev, PTR_ERR(imx214->enable_gpio),
++				     "failed to get enable gpio\n");
  
-@@ -877,6 +815,7 @@ static int imx214_stop_streaming(struct imx214 *imx214)
- static int imx214_s_stream(struct v4l2_subdev *subdev, int enable)
- {
- 	struct imx214 *imx214 = to_imx214(subdev);
-+	struct v4l2_subdev_state *state;
- 	int ret;
+ 	imx214->regmap = devm_regmap_init_i2c(client, &sensor_regmap_config);
+-	if (IS_ERR(imx214->regmap)) {
+-		dev_err(dev, "regmap init failed\n");
+-		return PTR_ERR(imx214->regmap);
+-	}
++	if (IS_ERR(imx214->regmap))
++		return dev_err_probe(dev, PTR_ERR(imx214->regmap),
++				     "regmap init failed\n");
  
- 	if (enable) {
-@@ -884,7 +823,9 @@ static int imx214_s_stream(struct v4l2_subdev *subdev, int enable)
- 		if (ret < 0)
- 			return ret;
+ 	v4l2_i2c_subdev_init(&imx214->sd, client, &imx214_subdev_ops);
+ 	imx214->sd.internal_ops = &imx214_internal_ops;
+@@ -1027,14 +1020,14 @@ static int imx214_probe(struct i2c_client *client)
  
-+		state = v4l2_subdev_lock_and_get_active_state(subdev);
- 		ret = imx214_start_streaming(imx214);
-+		v4l2_subdev_unlock_state(state);
- 		if (ret < 0)
- 			goto err_rpm_put;
- 	} else {
-@@ -948,7 +889,7 @@ static const struct v4l2_subdev_pad_ops imx214_subdev_pad_ops = {
- 	.enum_mbus_code = imx214_enum_mbus_code,
- 	.enum_frame_size = imx214_enum_frame_size,
- 	.enum_frame_interval = imx214_enum_frame_interval,
--	.get_fmt = imx214_get_format,
-+	.get_fmt = v4l2_subdev_get_fmt,
- 	.set_fmt = imx214_set_format,
- 	.get_selection = imx214_get_selection,
- 	.get_frame_interval = imx214_get_frame_interval,
-@@ -1079,9 +1020,6 @@ static int imx214_probe(struct i2c_client *client)
- 	if (ret < 0)
- 		goto error_power_off;
- 
--	mutex_init(&imx214->mutex);
--	imx214->ctrls.lock = &imx214->mutex;
--
- 	imx214->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
- 	imx214->pad.flags = MEDIA_PAD_FL_SOURCE;
- 	imx214->sd.dev = &client->dev;
-@@ -1093,7 +1031,12 @@ static int imx214_probe(struct i2c_client *client)
+ 	ret = media_entity_pads_init(&imx214->sd.entity, 1, &imx214->pad);
+ 	if (ret < 0) {
+-		dev_err(dev, "could not register media entity\n");
++		dev_err_probe(dev, ret, "failed to init entity pads\n");
  		goto free_ctrl;
  	}
  
--	imx214_entity_init_state(&imx214->sd, NULL);
-+	imx214->sd.state_lock = imx214->ctrls.lock;
-+	ret = v4l2_subdev_init_finalize(&imx214->sd);
-+	if (ret < 0) {
-+		dev_err(dev, "subdev init error: %d\n", ret);
-+		goto free_entity;
-+	}
- 
- 	pm_runtime_set_active(imx214->dev);
- 	pm_runtime_enable(imx214->dev);
-@@ -1101,20 +1044,22 @@ static int imx214_probe(struct i2c_client *client)
- 	ret = v4l2_async_register_subdev_sensor(&imx214->sd);
+ 	imx214->sd.state_lock = imx214->ctrls.lock;
+ 	ret = v4l2_subdev_init_finalize(&imx214->sd);
  	if (ret < 0) {
- 		dev_err(dev, "could not register v4l2 device\n");
--		goto free_entity;
-+		goto error_subdev_cleanup;
+-		dev_err(dev, "subdev init error: %d\n", ret);
++		dev_err_probe(dev, ret, "subdev init error\n");
+ 		goto free_entity;
  	}
  
- 	pm_runtime_idle(imx214->dev);
+@@ -1043,7 +1036,8 @@ static int imx214_probe(struct i2c_client *client)
  
- 	return 0;
+ 	ret = v4l2_async_register_subdev_sensor(&imx214->sd);
+ 	if (ret < 0) {
+-		dev_err(dev, "could not register v4l2 device\n");
++		dev_err_probe(dev, ret,
++			      "failed to register sensor sub-device\n");
+ 		goto error_subdev_cleanup;
+ 	}
  
--free_entity:
-+error_subdev_cleanup:
- 	pm_runtime_disable(imx214->dev);
- 	pm_runtime_set_suspended(&client->dev);
-+	v4l2_subdev_cleanup(&imx214->sd);
-+
-+free_entity:
- 	media_entity_cleanup(&imx214->sd.entity);
- 
- free_ctrl:
--	mutex_destroy(&imx214->mutex);
- 	v4l2_ctrl_handler_free(&imx214->ctrls);
- 
- error_power_off:
-@@ -1129,9 +1074,9 @@ static void imx214_remove(struct i2c_client *client)
- 	struct imx214 *imx214 = to_imx214(sd);
- 
- 	v4l2_async_unregister_subdev(&imx214->sd);
-+	v4l2_subdev_cleanup(sd);
- 	media_entity_cleanup(&imx214->sd.entity);
- 	v4l2_ctrl_handler_free(&imx214->ctrls);
--	mutex_destroy(&imx214->mutex);
- 	pm_runtime_disable(&client->dev);
- 	if (!pm_runtime_status_suspended(&client->dev)) {
- 		imx214_power_off(imx214->dev);
 -- 
 2.39.5
 
