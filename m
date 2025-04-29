@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EE421ABC6;
-	Tue, 29 Apr 2025 18:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9650E2AE96;
+	Tue, 29 Apr 2025 18:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949973; cv=none; b=EiwfF7HXUS8Ijw7CVL2f4h1B5qWEzJc/Mrbaigf43J4eNHipfjZNohB67lgKZ5129ZYnOZ1ui2PDgjkMEwDfQFMWYUEd+9CuxZLBVI1db0f8lZffzuBsndIAnG/76aCUjW+qZXlALrV5mAzsCkn+u+OgtK1iMGmnQjz0tp5F5yk=
+	t=1745949976; cv=none; b=Dk9obFfAt9SJlNp+Co/cmpGEUuyXJnoNz6xa+C5IpJ1eiKaA2H69TtUjwp90Ra8IfVmzKGoLOrLHoMl2X2pjnCl2+f6tXPLM/3vIvHYCxZwXgaXaBbdnEl/K0pOTxD8CJAsOUN5FsLDTY9j3FBGLy/6aDqUn6JShQaruD4VZ3gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949973; c=relaxed/simple;
-	bh=Y4TPz2ChioS+BiS83iMWz07EesnqSCOahG9unETglHo=;
+	s=arc-20240116; t=1745949976; c=relaxed/simple;
+	bh=QCT9phdQLquhut/TH1IKvfLz5qtPPNlApK1/tFpL9BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sc9wvmajlNDNyRiXQOEKhe0AguWDRCp+cmnZ2WgJzRTF22luQsIEkVnjjM9ZPTlt9xJc+J6m8NiBhz8Yqme6Uup3NHdbHSBoEUgGzZkYz4oLlmoYgUM11zmczzAlFTS2P4nhkP+AiPIiERL5ci725uvjJdYJ2yO5aPgKiwm4VFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8/Q1CVD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5HvdBbLOviXwKHYvYDGeVcTqaUi064lb1qSwdomAKOFeP0wO1ykPGQ5O+/7iYPuS3sWmJyApai/9+jX0QOR69b7WMRsmzgDOXGyI4X0BV1de4BAAXp4QirwpHv+gN1cLdPTIKykIFiBy2TS0dedlLlx4OjBWEBzMimwUgNbMsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMtnyZ+1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8/Q1CVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AD9C4CEE3;
-	Tue, 29 Apr 2025 18:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMtnyZ+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C8AC4CEE3;
+	Tue, 29 Apr 2025 18:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949973;
-	bh=Y4TPz2ChioS+BiS83iMWz07EesnqSCOahG9unETglHo=;
+	s=korg; t=1745949976;
+	bh=QCT9phdQLquhut/TH1IKvfLz5qtPPNlApK1/tFpL9BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8/Q1CVDCqvQfutzCwvCpIzQADo0BqmZEiBVWu1JxXGFGRRyv4g/fpXJA4SOt69Ns
-	 LsKtjFXU81B7xndnxgbbr0wj5j2zcTb9j9PHPjEZT5sAAgUiJjURK+u501MaZBlWa6
-	 E59673LyVqEX6YgJ4ZY+OHxjYD/acVdV/ROi93/Q=
+	b=EMtnyZ+1LZb7IX4KaScBmMOqqmftWCFEv1/PSkU0wITCEkq7fT/dFjnOMCqSQXVx/
+	 wEe2W1S8lfRKgCD6eVIpIO9iimDAobycj99fl7YRhjKhJL9aMwdjXVGM0VW3PsKQcp
+	 zkioa+IiCN+NsB4ymu+fnC7039P+hMPLX2huW57Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
 	kernel test robot <lkp@intel.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/167] objtool: Silence more KCOV warnings
-Date: Tue, 29 Apr 2025 18:43:43 +0200
-Message-ID: <20250429161056.391391374@linuxfoundation.org>
+Subject: [PATCH 6.1 116/167] objtool, ASoC: codecs: wcd934x: Remove potential undefined behavior in wcd934x_slim_irq_handler()
+Date: Tue, 29 Apr 2025 18:43:44 +0200
+Message-ID: <20250429161056.431364590@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -55,63 +60,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 6b023c7842048c4bbeede802f3cf36b96c7a8b25 ]
+[ Upstream commit 060aed9c0093b341480770457093449771cf1496 ]
 
-In the past there were issues with KCOV triggering unreachable
-instruction warnings, which is why unreachable warnings are now disabled
-with CONFIG_KCOV.
+If 'port_id' is negative, the shift counts in wcd934x_slim_irq_handler()
+also become negative, resulting in undefined behavior due to shift out
+of bounds.
 
-Now some new KCOV warnings are showing up with GCC 14:
+If I'm reading the code correctly, that appears to be not possible, but
+with KCOV enabled, Clang's range analysis isn't always able to determine
+that and generates undefined behavior.
 
-  vmlinux.o: warning: objtool: cpuset_write_resmask() falls through to next function cpuset_update_active_cpus.cold()
-  drivers/usb/core/driver.o: error: objtool: usb_deregister() falls through to next function usb_match_device()
+As a result the code generation isn't optimal, and undefined behavior
+should be avoided regardless.  Improve code generation and remove the
+undefined behavior by converting the signed variables to unsigned.
+
+Fixes the following warning with UBSAN:
+
   sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
 
-All are caused by GCC KCOV not finishing an optimization, leaving behind
-a never-taken conditional branch to a basic block which falls through to
-the next function (or end of section).
-
-At a high level this is similar to the unreachable warnings mentioned
-above, in that KCOV isn't fully removing dead code.  Treat it the same
-way by adding these to the list of warnings to ignore with CONFIG_KCOV.
-
-Reported-by: Ingo Molnar <mingo@kernel.org>
 Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/66a61a0b65d74e072d3dc02384e395edb2adc3c5.1742852846.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/Z9iTsI09AEBlxlHC@gmail.com
+Link: https://lore.kernel.org/r/7e863839ec7301bf9c0f429a03873d44e484c31c.1742852847.git.jpoimboe@kernel.org
 Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/wcd934x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 6ea78612635ba..b6c91bb5ce3e3 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -3368,6 +3368,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
- 			if (!strncmp(func->name, "__cfi_", 6))
- 				return 0;
- 
-+			if (file->ignore_unreachables)
-+				return 0;
-+
- 			WARN("%s() falls through to next function %s()",
- 			     func->name, insn->func->name);
- 			return 1;
-@@ -3582,6 +3585,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
- 		if (!next_insn) {
- 			if (state.cfi.cfa.base == CFI_UNDEFINED)
- 				return 0;
-+			if (file->ignore_unreachables)
-+				return 0;
-+
- 			WARN("%s: unexpected end of section", sec->name);
- 			return 1;
- 		}
+diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
+index 0b5999c819db9..04c50f9acda18 100644
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -2281,7 +2281,7 @@ static irqreturn_t wcd934x_slim_irq_handler(int irq, void *data)
+ {
+ 	struct wcd934x_codec *wcd = data;
+ 	unsigned long status = 0;
+-	int i, j, port_id;
++	unsigned int i, j, port_id;
+ 	unsigned int val, int_val = 0;
+ 	irqreturn_t ret = IRQ_NONE;
+ 	bool tx;
 -- 
 2.39.5
 
