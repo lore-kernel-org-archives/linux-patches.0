@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592AD38FB0;
-	Tue, 29 Apr 2025 17:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF5C1FE468;
+	Tue, 29 Apr 2025 17:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947678; cv=none; b=dNA2IhjhwDVaF3CmhG0pOs5OQsx+73xIOn2WOpKXfODf2Kp5Uhs4/SoVOAEt3Gz7qGmo906iIBY31KejBwDVfKafEMNPDs6+FVmQ76YPn/AOtjank3ZRczlmPFupTkGKqH+IzQxllhVz1Fck6lfiR7q4SWZI6yjB08DJdjmk16g=
+	t=1745947681; cv=none; b=ET6R1QHbj8xynvw0dLYimu4o5gRu9USirFKMK8c8IhAy/ZQssdBqK/aUx7xB8qosfeaJegqhBVe/QhNQVYgHfPi4djP3vZqeZ6zfwb9vWYNBqyQZYK7CJRWW+0ciUPhvl//pWQKrTBKAwjZa0f5dc2xYXyCotbAnkCp+rLZxyK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947678; c=relaxed/simple;
-	bh=abKK81F+pHpjyDr9XSVLyX1jnGVNqG7W8xaAvcwOt6k=;
+	s=arc-20240116; t=1745947681; c=relaxed/simple;
+	bh=zTARzdI1Ikc0B2a3YeAEgCKl/huQw9DBJgMHWhoN7dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIxNLh1O/ocBYTA8vxvtYxDVTxnH7Vx0v9VHmiUihlIhU52ssL5JURbR9kZGx/AkmERd9ji0VaD2HOlqdt/p6dNmnlY22A/xLsUjHAPw6A8iS5EmItLrcVpFQOWlWjxYNIxBvm9fu+jLRI54ooaTxZG/fmjUm5TS5Dvfl0ptbAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BctC1lKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z4gnbXS/tZJ70xifAB2JC2WHE3rgtTEorpEHDK5PXe/YLh+36+JqNoFtEZwd6+ZgMCodVCXGPgnyURdE7/FE72j1T8oay8T75Od+9j68XnZRVxhlWVNZ7vptsYCtvPmzqBhuEwNg/JKQn+5Y/aVFpUoChxl52lLbGobNEHjRyMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSi9oCya; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BctC1lKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE505C4CEE9;
-	Tue, 29 Apr 2025 17:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSi9oCya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E219DC4CEE9;
+	Tue, 29 Apr 2025 17:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947678;
-	bh=abKK81F+pHpjyDr9XSVLyX1jnGVNqG7W8xaAvcwOt6k=;
+	s=korg; t=1745947681;
+	bh=zTARzdI1Ikc0B2a3YeAEgCKl/huQw9DBJgMHWhoN7dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BctC1lKEZbKMw8/2kcSacI2Vn8q6qYZ7/iwrvvhAT+JDQm+uHU2mhKDJHoLHN5Uxi
-	 7avHNbSBX7AKfmvUd/Zi2i1cltpI7op8dwdfDwTaYH+mic1ouhVifqsoid/WEXpNJd
-	 mKBeGmn8tfx9W0VyaIq5SkBwDzL8thEZ02+OVeNo=
+	b=pSi9oCyalY9P7ChtVSFuRmG8iPUQBhkYi97XdCnMEw1djceuWoezBO4H9FfsULlex
+	 wTyhOq1A+kPeQTpAaSjY3s4G35AgKcTvT3D40rKda4/XcLZ0O8f3VhIc/1tqn8VYPN
+	 CaUODT6tU3T6o8wD587UWyDJF2XsGrQ95HXvCcfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
 	Bart Van Assche <bvanassche@acm.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Chanho Park <chanho61.park@samsung.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/280] scsi: ufs: exynos: Move UFS shareability value to drvdata
-Date: Tue, 29 Apr 2025 18:39:44 +0200
-Message-ID: <20250429161116.883530379@linuxfoundation.org>
+Subject: [PATCH 6.12 044/280] scsi: ufs: exynos: Disable iocc if dma-coherent property isnt set
+Date: Tue, 29 Apr 2025 18:39:45 +0200
+Message-ID: <20250429161116.922860311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,102 +55,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit 68f5ef7eebf0f41df4d38ea55a54c2462af1e3d6 ]
+[ Upstream commit f92bb7436802f8eb7ee72dc911a33c8897fde366 ]
 
-gs101 I/O coherency shareability bits differ from exynosauto SoC. To
-support both SoCs move this info the SoC drvdata.
+If dma-coherent property isn't set then descriptors are non-cacheable
+and the iocc shareability bits should be disabled. Without this UFS can
+end up in an incompatible configuration and suffer from random cache
+related stability issues.
 
-Currently both the value and mask are the same for both gs101 and
-exynosauto, thus we use the same value.
-
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: cc52e15397cc ("scsi: ufs: ufs-exynos: Support ExynosAuto v9 UFS")
 Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-2-96722cc2ba1b@linaro.org
-Fixes: d11e0a318df8 ("scsi: ufs: exynos: Add support for Tensor gs101 SoC")
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-3-96722cc2ba1b@linaro.org
+Cc: Chanho Park <chanho61.park@samsung.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 20 ++++++++++++++------
- drivers/ufs/host/ufs-exynos.h |  2 ++
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/ufs/host/ufs-exynos.c | 17 +++++++++++++----
+ drivers/ufs/host/ufs-exynos.h |  3 ++-
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 149c8127cf556..453f1dee103c8 100644
+index 453f1dee103c8..fd1ebb4fcd96c 100644
 --- a/drivers/ufs/host/ufs-exynos.c
 +++ b/drivers/ufs/host/ufs-exynos.c
-@@ -86,11 +86,16 @@
- 				 UIC_TRANSPORT_NO_CONNECTION_RX |\
- 				 UIC_TRANSPORT_BAD_TC)
- 
--/* FSYS UFS Shareability */
--#define UFS_WR_SHARABLE		BIT(2)
--#define UFS_RD_SHARABLE		BIT(1)
--#define UFS_SHARABLE		(UFS_WR_SHARABLE | UFS_RD_SHARABLE)
--#define UFS_SHAREABILITY_OFFSET	0x710
-+/* UFS Shareability */
-+#define UFS_EXYNOSAUTO_WR_SHARABLE	BIT(2)
-+#define UFS_EXYNOSAUTO_RD_SHARABLE	BIT(1)
-+#define UFS_EXYNOSAUTO_SHARABLE		(UFS_EXYNOSAUTO_WR_SHARABLE | \
-+					 UFS_EXYNOSAUTO_RD_SHARABLE)
-+#define UFS_GS101_WR_SHARABLE		BIT(1)
-+#define UFS_GS101_RD_SHARABLE		BIT(0)
-+#define UFS_GS101_SHARABLE		(UFS_GS101_WR_SHARABLE | \
-+					 UFS_GS101_RD_SHARABLE)
-+#define UFS_SHAREABILITY_OFFSET		0x710
- 
- /* Multi-host registers */
- #define MHCTRL			0xC4
-@@ -206,7 +211,7 @@ static int exynos_ufs_shareability(struct exynos_ufs *ufs)
+@@ -210,8 +210,8 @@ static int exynos_ufs_shareability(struct exynos_ufs *ufs)
+ 	/* IO Coherency setting */
  	if (ufs->sysreg) {
  		return regmap_update_bits(ufs->sysreg,
- 					  ufs->shareability_reg_offset,
--					  UFS_SHARABLE, UFS_SHARABLE);
-+					  ufs->iocc_mask, ufs->iocc_mask);
+-					  ufs->shareability_reg_offset,
+-					  ufs->iocc_mask, ufs->iocc_mask);
++					  ufs->iocc_offset,
++					  ufs->iocc_mask, ufs->iocc_val);
  	}
  
  	attr->tx_dif_p_nsec = 3200000;
-@@ -1148,6 +1153,7 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
+@@ -1147,13 +1147,22 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
+ 		ufs->sysreg = NULL;
+ 	else {
+ 		if (of_property_read_u32_index(np, "samsung,sysreg", 1,
+-					       &ufs->shareability_reg_offset)) {
++					       &ufs->iocc_offset)) {
+ 			dev_warn(dev, "can't get an offset from sysreg. Set to default value\n");
+-			ufs->shareability_reg_offset = UFS_SHAREABILITY_OFFSET;
++			ufs->iocc_offset = UFS_SHAREABILITY_OFFSET;
  		}
  	}
  
-+	ufs->iocc_mask = ufs->drv_data->iocc_mask;
+ 	ufs->iocc_mask = ufs->drv_data->iocc_mask;
++	/*
++	 * no 'dma-coherent' property means the descriptors are
++	 * non-cacheable so iocc shareability should be disabled.
++	 */
++	if (of_dma_is_coherent(dev->of_node))
++		ufs->iocc_val = ufs->iocc_mask;
++	else
++		ufs->iocc_val = 0;
++
  	ufs->pclk_avail_min = PCLK_AVAIL_MIN;
  	ufs->pclk_avail_max = PCLK_AVAIL_MAX;
  
-@@ -2021,6 +2027,7 @@ static const struct exynos_ufs_drv_data exynosauto_ufs_drvs = {
- 	.opts			= EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL |
- 				  EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR |
- 				  EXYNOS_UFS_OPT_BROKEN_RX_SEL_IDX,
-+	.iocc_mask		= UFS_EXYNOSAUTO_SHARABLE,
- 	.drv_init		= exynosauto_ufs_drv_init,
- 	.post_hce_enable	= exynosauto_ufs_post_hce_enable,
- 	.pre_link		= exynosauto_ufs_pre_link,
-@@ -2143,6 +2150,7 @@ static const struct exynos_ufs_drv_data gs101_ufs_drvs = {
- 				  EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR |
- 				  EXYNOS_UFS_OPT_UFSPR_SECURE |
- 				  EXYNOS_UFS_OPT_TIMER_TICK_SELECT,
-+	.iocc_mask		= UFS_GS101_SHARABLE,
- 	.drv_init		= gs101_ufs_drv_init,
- 	.pre_link		= gs101_ufs_pre_link,
- 	.post_link		= gs101_ufs_post_link,
 diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
-index 9670dc138d1e4..ad49d9cdd5c12 100644
+index ad49d9cdd5c12..d0b3df221503c 100644
 --- a/drivers/ufs/host/ufs-exynos.h
 +++ b/drivers/ufs/host/ufs-exynos.h
-@@ -181,6 +181,7 @@ struct exynos_ufs_drv_data {
- 	struct exynos_ufs_uic_attr *uic_attr;
- 	unsigned int quirks;
- 	unsigned int opts;
-+	u32 iocc_mask;
- 	/* SoC's specific operations */
- 	int (*drv_init)(struct exynos_ufs *ufs);
- 	int (*pre_link)(struct exynos_ufs *ufs);
-@@ -231,6 +232,7 @@ struct exynos_ufs {
+@@ -231,8 +231,9 @@ struct exynos_ufs {
+ 	ktime_t entry_hibern8_t;
  	const struct exynos_ufs_drv_data *drv_data;
  	struct regmap *sysreg;
- 	u32 shareability_reg_offset;
-+	u32 iocc_mask;
+-	u32 shareability_reg_offset;
++	u32 iocc_offset;
+ 	u32 iocc_mask;
++	u32 iocc_val;
  
  	u32 opts;
  #define EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL		BIT(0)
